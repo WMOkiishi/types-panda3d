@@ -8,7 +8,7 @@ from .main import main
 
 def cli() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-o', '--output', default='.',
+    parser.add_argument('-o', '--output', default='src',
                         help='the output directory for the stubs')
     parser.add_argument('-d', '--database',
                         help='the directory containing the database files')
