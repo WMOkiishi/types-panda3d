@@ -1,0 +1,29 @@
+[project]
+name = "types-panda3d"
+version = "0.0.1"
+authors = [
+  { name="W. M. Okiishi" },
+]
+description = "Type stubs for the Panda3D Python bindings"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/WMOKiishi/types-panda3d"
+"Bug Tracker" = "https://github.com/WMOKiishi/types-panda3d/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mypkg = ["*.pyi"]
