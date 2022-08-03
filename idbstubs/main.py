@@ -48,7 +48,7 @@ def write_module_stubs(
         _logger.debug(f'Writing file {path.resolve()}')
         if file.name == '__init__':
             file.imports |= {
-                other: ['*']
+                '.' + other: ['*']
                 for other in module.nested
                 if other != '__init__'
             }
