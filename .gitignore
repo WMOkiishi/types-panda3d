@@ -2,3 +2,5 @@
 *.log
 venv/*
 .idea/*
+.vscode/*
+*.code-workspace
