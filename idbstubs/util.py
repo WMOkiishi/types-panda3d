@@ -2,12 +2,9 @@ import ast
 import itertools
 import logging
 from collections.abc import Iterator
-from typing import Final, ParamSpec, TypeVar
+from typing import Final
 
 _logger: Final = logging.getLogger(__name__)
-
-P = ParamSpec('P')
-T = TypeVar('T')
 
 flatten = itertools.chain.from_iterable
 
@@ -65,16 +62,3 @@ def unpack_union(s: str, /) -> list[str]:
             type_list.append(s)
 
     return type_list
-
-
-# def print_stats(f: Callable[P, T], /) -> Callable[P, T]:
-#     @wraps(f)
-#     def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
-#         with cProfile.Profile() as prof:
-#             result = f(*args, **kwargs)
-#         stats = pstats.Stats(prof)
-#         stats.sort_stats(pstats.SortKey.TIME)
-#         stats.print_stats()
-#         return result
-#
-#     return wrapper

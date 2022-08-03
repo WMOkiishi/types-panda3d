@@ -198,9 +198,6 @@ class Class:
     def __str__(self) -> str:
         return f'Class {self.scoped_name!r}'
 
-    def __iter__(self) -> Iterator[StubRep]:
-        return iter(self.nested)
-
     def sort(self) -> tuple[int, int]:
         return 0, 1
 
