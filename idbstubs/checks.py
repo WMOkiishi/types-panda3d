@@ -9,7 +9,7 @@ from .util import flatten, is_sunder
 _logger: Final = logging.getLogger(__name__)
 
 ignored_type_attrs: Final = NO_STUBS | {
-    '__new__', '__init__', '__hash__',
+    '__new__', '__init__', '__str__', '__hash__',
     '__doc__', '__module__',
     '__copy__', '__deepcopy__',
     '__radd__', '__rsub__', '__rmul__',

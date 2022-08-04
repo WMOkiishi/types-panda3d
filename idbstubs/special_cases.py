@@ -11,7 +11,7 @@ NO_STUBS: Final = frozenset((
     '__getstate__', '__setstate__',
     '__reduce__', '__reduce_ex__', '__reduce_persist__',
     # Inherited from `object`; signature shouldn't change
-    '__dict__', '__repr__', '__str__'
+    '__dict__', '__repr__',
 ))
 
 
