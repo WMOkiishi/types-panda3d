@@ -11,6 +11,7 @@ from panda3d.core import (
     SocketStream,
     URLSpec,
 )
+from panda3d.direct import DCClass, DCFile
 
 class CConnectionRepository:
     DtoolClassDict: ClassVar[dict[str, Any]]

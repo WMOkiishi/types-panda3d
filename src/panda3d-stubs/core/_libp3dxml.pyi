@@ -1,5 +1,6 @@
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import ConfigVariableFilename, Filename, istream, ostream
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 _TiXmlEncoding: TypeAlias = Literal[0, 1, 2]

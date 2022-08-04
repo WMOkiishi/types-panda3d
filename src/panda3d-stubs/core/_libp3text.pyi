@@ -1,6 +1,30 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    ConfigVariableColor,
+    ConfigVariableFilename,
+    Filename,
+    FreetypeFont,
+    Geom,
+    LMatrix4f,
+    LPoint3f,
+    LVecBase2f,
+    LVecBase2i,
+    LVecBase4f,
+    LVector2f,
+    Namable,
+    NodePath,
+    PandaNode,
+    RenderState,
+    TextEncoder,
+    Texture,
+    TypeHandle,
+    TypedReferenceCount,
+    UnalignedLMatrix4f,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _GeomEnums_UsageHint: TypeAlias = Literal[0, 1, 2, 3, 4]

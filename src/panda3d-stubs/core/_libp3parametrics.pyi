@@ -2,6 +2,24 @@ from array import array
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    ConfigVariableColor,
+    ConfigVariableFilename,
+    Filename,
+    LMatrix3f,
+    LMatrix4f,
+    LPoint3f,
+    LVecBase3f,
+    LVecBase4f,
+    LVector3f,
+    NodePath,
+    PandaNode,
+    ReferenceCount,
+    TypeHandle,
+    UnalignedLMatrix4f,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike

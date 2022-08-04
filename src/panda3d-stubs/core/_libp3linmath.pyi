@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import ConfigVariable, Datagram, DatagramIterator, TypeHandle, ostream
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Mat4d: TypeAlias = LMatrix4d | UnalignedLMatrix4d

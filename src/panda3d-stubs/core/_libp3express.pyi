@@ -1,6 +1,22 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    ConfigVariableFilename,
+    ConfigVariableSearchPath,
+    DSearchPath,
+    Filename,
+    IStreamWrapper,
+    OStreamWrapper,
+    StreamReader,
+    StreamWrapper,
+    StreamWriter,
+    TypeHandle,
+    TypedObject,
+    iostream,
+    istream,
+    ostream,
+)
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 _ErrorUtilCode: TypeAlias = Literal[-80, -73, -72, -71, -70, -67, -66, -65, -64, -63, -62, -61, -60, -54, -53, -52, -51, -50, -42, -41, -40, -34, -33, -32, -31, -30, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7]

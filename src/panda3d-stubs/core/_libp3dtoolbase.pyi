@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, Literal, TypeAlias, final, overload
+from panda3d.core import ostream
 
 _TypeHandle_MemoryClass: TypeAlias = Literal[0, 1, 2, 3, 4]
 

@@ -1,5 +1,34 @@
 from collections.abc import Iterable, Sequence
 from typing import Any, ClassVar, TypeAlias, overload
+from panda3d.core import (
+    BitMask_uint32_t_32,
+    BoundingVolume,
+    ConfigVariableColor,
+    CopyOnWriteObject,
+    Datagram,
+    DatagramIterator,
+    DriveInterface,
+    LMatrix3f,
+    LMatrix4f,
+    LParabolaf,
+    LPlanef,
+    LPoint3f,
+    LPoint3i,
+    LVecBase2f,
+    LVecBase3f,
+    LVecBase4f,
+    LVector3f,
+    LensNode,
+    Namable,
+    NodePath,
+    PandaNode,
+    TypeHandle,
+    TypedObject,
+    TypedReferenceCount,
+    TypedWritableReferenceCount,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor

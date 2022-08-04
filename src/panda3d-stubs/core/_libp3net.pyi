@@ -1,5 +1,16 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
+from panda3d.core import (
+    Datagram,
+    DatagramGenerator,
+    DatagramSink,
+    PointerToVoid,
+    ReferenceCount,
+    Socket_Address,
+    Socket_IP,
+    TypeHandle,
+    ostream,
+)
 
 class PointerTo_Connection(PointerToBase_Connection):
     DtoolClassDict: ClassVar[dict[str, Any]]

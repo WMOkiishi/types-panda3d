@@ -218,7 +218,9 @@ def process_dependencies(file: File) -> None:
             file.nested.append(alias)
 
         def if_import(module: str) -> None:
-            if not current_dir.startswith(module):
+            if not module.startswith(current_dir):
+                if (end := module.find('._')) > 0:
+                    module = module[:end]
                 file.imports[module].append(name)
 
         processed = process_dependency(name, if_alias, if_import)

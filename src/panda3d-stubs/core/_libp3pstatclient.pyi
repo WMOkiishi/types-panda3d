@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
+from panda3d.core import PStatCollectorForwardBase, Thread, ostream
 
 class PStatClient:
     DtoolClassDict: ClassVar[dict[str, Any]]

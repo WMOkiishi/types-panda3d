@@ -1,5 +1,21 @@
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    Buffer,
+    ConfigVariableFilename,
+    Datagram,
+    Filename,
+    HashVal,
+    Ramfile,
+    ReferenceCount,
+    TypeHandle,
+    TypedReferenceCount,
+    VirtualFile,
+    VirtualFileMount,
+    iostream,
+    istream,
+    ostream,
+)
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 _ISocketStream_ReadState: TypeAlias = Literal[0, 1, 2, 3]

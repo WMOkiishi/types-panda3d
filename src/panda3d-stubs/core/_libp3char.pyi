@@ -1,4 +1,24 @@
 from typing import Any, ClassVar, TypeAlias, overload
+from panda3d.core import (
+    LMatrix3f,
+    LMatrix4f,
+    LVecBase3f,
+    MovingPartMatrix,
+    MovingPartScalar,
+    NodePathCollection,
+    PandaNode,
+    PartBundle,
+    PartBundleHandle,
+    PartBundleNode,
+    PartGroup,
+    RenderEffect,
+    TransformState,
+    TypeHandle,
+    UnalignedLMatrix4f,
+    VertexSlider,
+    VertexTransform,
+    ostream,
+)
 
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow

@@ -1,6 +1,19 @@
 from collections.abc import Sequence
 from enum import Enum
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    ButtonEventList,
+    ButtonHandle,
+    DataNode,
+    LMatrix4f,
+    LOrientationf,
+    LPoint3f,
+    PointerData,
+    PointerEventList,
+    TypeHandle,
+    TypedReferenceCount,
+    ostream,
+)
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 

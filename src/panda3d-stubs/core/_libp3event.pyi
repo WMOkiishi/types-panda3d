@@ -1,5 +1,19 @@
 from collections.abc import Callable, Sequence
 from typing import Any, Awaitable, ClassVar, Generator, Literal, TypeAlias, final, overload
+from panda3d.core import (
+    ButtonHandle,
+    ClockObject,
+    GlobPattern,
+    ModifierButtons,
+    Namable,
+    ParamValueBase,
+    PointerData,
+    TypeHandle,
+    TypedObject,
+    TypedReferenceCount,
+    TypedWritableReferenceCount,
+    ostream,
+)
 
 _AsyncTask_State: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]

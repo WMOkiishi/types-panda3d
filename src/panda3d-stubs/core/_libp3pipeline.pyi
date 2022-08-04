@@ -1,4 +1,5 @@
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import Namable, TypeHandle, TypedReferenceCount, ostream
 
 _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]
 

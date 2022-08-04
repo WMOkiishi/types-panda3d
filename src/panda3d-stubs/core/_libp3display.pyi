@@ -1,6 +1,48 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, final, overload
+from panda3d.core import (
+    AsyncFuture,
+    BitMask_uint32_t_32,
+    ButtonHandle,
+    ButtonMap,
+    CallbackData,
+    CallbackObject,
+    ConfigVariableColor,
+    ConfigVariableFilename,
+    CullResult,
+    CullTraverser,
+    DataNode,
+    Filename,
+    GraphicsOutputBase,
+    GraphicsStateGuardianBase,
+    InputDevice,
+    LMatrix4f,
+    LPoint2i,
+    LVecBase2i,
+    LVecBase3i,
+    LVecBase4f,
+    LVector2i,
+    Loader,
+    NodePath,
+    PNMImage,
+    PandaNode,
+    PointerData,
+    PreparedGraphicsObjects,
+    ReMutex,
+    ReferenceCount,
+    SceneSetup,
+    ShaderAttrib,
+    ShaderGenerator,
+    Texture,
+    TextureAttrib,
+    TextureStage,
+    Thread,
+    TypeHandle,
+    TypedReferenceCount,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _GraphicsStateGuardian_ShaderModel: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor

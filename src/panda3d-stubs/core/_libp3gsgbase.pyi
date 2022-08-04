@@ -1,4 +1,5 @@
 from typing import Any, ClassVar
+from panda3d.core import TypeHandle, TypedWritableReferenceCount
 
 class GraphicsOutputBase(TypedWritableReferenceCount):
     DtoolClassDict: ClassVar[dict[str, Any]]

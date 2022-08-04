@@ -1,6 +1,7 @@
 from collections.abc import Mapping, Sequence
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import ConfigVariableFilename, ConfigVariableSearchPath, TypeHandle
 
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int

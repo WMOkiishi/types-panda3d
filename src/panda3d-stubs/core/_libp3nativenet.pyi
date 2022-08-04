@@ -1,4 +1,5 @@
 from typing import Any, ClassVar, overload
+from panda3d.core import Datagram, TypeHandle, TypedObject
 
 class Socket_Address:
     DtoolClassDict: ClassVar[dict[str, Any]]

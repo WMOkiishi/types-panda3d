@@ -1,5 +1,32 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    ButtonHandle,
+    ConfigVariableColor,
+    DataNode,
+    DisplayRegion,
+    EventHandler,
+    EventParameter,
+    GeomNode,
+    LMatrix3f,
+    LMatrix4f,
+    LPoint2f,
+    LPoint3f,
+    LVecBase2f,
+    LVecBase3f,
+    LVecBase4f,
+    ModifierButtons,
+    Namable,
+    NodePath,
+    PandaNode,
+    PointerEventList,
+    ReferenceCount,
+    TypeHandle,
+    TypedWritableReferenceCount,
+    UnalignedLMatrix4f,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f

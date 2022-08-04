@@ -1,4 +1,30 @@
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    AudioSound,
+    ButtonHandle,
+    ConfigVariableColor,
+    LMatrix3f,
+    LMatrix4f,
+    LVecBase2f,
+    LVecBase3f,
+    LVecBase4f,
+    LVector3f,
+    MouseWatcher,
+    MouseWatcherGroup,
+    MouseWatcherParameter,
+    MouseWatcherRegion,
+    NodePath,
+    PandaNode,
+    TextGraphic,
+    TextNode,
+    TextProperties,
+    Texture,
+    TransformState,
+    TypeHandle,
+    TypedWritableReferenceCount,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor

@@ -1,6 +1,34 @@
 from collections.abc import Mapping, Sequence
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    AnimInterface,
+    BitArray,
+    ConfigVariableColor,
+    ConfigVariableFilename,
+    ConstPointerToArray_float,
+    CopyOnWriteObject,
+    Filename,
+    GlobPattern,
+    LMatrix3f,
+    LMatrix4f,
+    LVecBase3f,
+    LVecBase4f,
+    Loader,
+    LoaderOptions,
+    ModelLoadRequest,
+    Namable,
+    PandaNode,
+    PointerToArray_float,
+    ReferenceCount,
+    TransformState,
+    TypeHandle,
+    TypedReferenceCount,
+    TypedWritableReferenceCount,
+    UnalignedLMatrix4f,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f

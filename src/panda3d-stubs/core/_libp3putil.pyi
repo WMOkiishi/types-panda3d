@@ -2,6 +2,45 @@ from collections.abc import Callable, Sequence
 from enum import Enum
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, final, overload
+from panda3d.core import (
+    ConfigPage,
+    ConfigVariableColor,
+    ConfigVariableFilename,
+    ConfigVariableSearchPath,
+    DatagramGenerator,
+    DatagramIterator,
+    DatagramSink,
+    FileReference,
+    Filename,
+    HashVal,
+    LMatrix3d,
+    LMatrix3f,
+    LMatrix4d,
+    LMatrix4f,
+    LVecBase2d,
+    LVecBase2f,
+    LVecBase2i,
+    LVecBase3d,
+    LVecBase3f,
+    LVecBase3i,
+    LVecBase4d,
+    LVecBase4f,
+    LVecBase4i,
+    PointerToVoid,
+    ReferenceCount,
+    Thread,
+    TypeHandle,
+    TypedObject,
+    TypedReferenceCount,
+    UnalignedLMatrix4d,
+    UnalignedLMatrix4f,
+    UnalignedLVecBase4d,
+    UnalignedLVecBase4f,
+    UnalignedLVecBase4i,
+    VirtualFile,
+    istream,
+    ostream,
+)
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike

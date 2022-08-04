@@ -1,6 +1,7 @@
 from os import PathLike
 from typing import Literal, TypeAlias
 from panda3d.core import BamCacheRecord, ConfigVariableFilename, Filename, PandaNode
+from panda3d.egg import EggData
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]

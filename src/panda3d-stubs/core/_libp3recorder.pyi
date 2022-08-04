@@ -1,5 +1,15 @@
 from os import PathLike
 from typing import Any, ClassVar, TypeAlias, overload
+from panda3d.core import (
+    ConfigVariableFilename,
+    DataNode,
+    Datagram,
+    Filename,
+    ReferenceCount,
+    SocketStream,
+    TypeHandle,
+    TypedReferenceCount,
+)
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 

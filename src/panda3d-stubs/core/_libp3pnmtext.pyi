@@ -1,5 +1,15 @@
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    ConfigVariableColor,
+    ConfigVariableFilename,
+    Filename,
+    LMatrix4f,
+    LVecBase4f,
+    Namable,
+    PNMImage,
+    UnalignedLVecBase4f,
+)
 
 _FreetypeFont_WindingOrder: TypeAlias = Literal[0, 1, 2, 3]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor

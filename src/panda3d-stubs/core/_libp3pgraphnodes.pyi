@@ -1,5 +1,34 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    AnimInterface,
+    CallbackData,
+    CallbackObject,
+    Camera,
+    ConfigVariableColor,
+    CullTraverser,
+    CullTraverserData,
+    GeomVertexAnimationSpec,
+    GraphicsOutputBase,
+    GraphicsStateGuardianBase,
+    LMatrix3f,
+    LMatrix4f,
+    LPoint3f,
+    LVecBase2i,
+    LVecBase3f,
+    LVecBase3i,
+    LVecBase4f,
+    LVector3f,
+    Light,
+    PandaNode,
+    RenderState,
+    ShaderAttrib,
+    Texture,
+    TypeHandle,
+    TypedReferenceCount,
+    UnalignedLVecBase4f,
+    ostream,
+)
 
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow

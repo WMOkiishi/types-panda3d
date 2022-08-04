@@ -1,5 +1,16 @@
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    AsyncTask,
+    ConfigVariableFilename,
+    Filename,
+    LMatrix3f,
+    LVecBase3f,
+    MovieAudio,
+    TypeHandle,
+    TypedReferenceCount,
+    ostream,
+)
 
 _AudioSound_SoundStatus: TypeAlias = Literal[0, 1, 2]
 _AudioManager_SpeakerModeCategory: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]

@@ -1,4 +1,5 @@
 from typing import Any, ClassVar, overload
+from panda3d.core import PandaNode, Thread, TypeHandle, ostream
 
 class DataGraphTraverser:
     DtoolClassDict: ClassVar[dict[str, Any]]

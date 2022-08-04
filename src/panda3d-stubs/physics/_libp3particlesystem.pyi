@@ -19,6 +19,7 @@ from panda3d.core import (
     UnalignedLVecBase4f,
     ostream,
 )
+from panda3d.physics import Physical
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _BaseParticleEmitter_emissionType: TypeAlias = Literal[0, 1, 2]

@@ -1,6 +1,19 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, TypeAlias, overload
+from panda3d.core import (
+    ConfigVariableFilename,
+    Datagram,
+    DatagramIterator,
+    Filename,
+    Namable,
+    SubfileInfo,
+    Texture,
+    TypeHandle,
+    TypedReferenceCount,
+    TypedWritableReferenceCount,
+    istream,
+)
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 

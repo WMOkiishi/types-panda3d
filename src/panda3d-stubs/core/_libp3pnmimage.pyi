@@ -1,6 +1,36 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, Literal, TypeAlias, overload
+from panda3d.core import (
+    BoundingHexahedron,
+    ConfigVariableColor,
+    ConfigVariableFilename,
+    Filename,
+    LMatrix3d,
+    LMatrix3f,
+    LMatrix4d,
+    LMatrix4f,
+    LPoint2f,
+    LPoint3f,
+    LPoint4f,
+    LVecBase2d,
+    LVecBase2f,
+    LVecBase2i,
+    LVecBase3d,
+    LVecBase3f,
+    LVecBase4d,
+    LVecBase4f,
+    ReferenceCount,
+    StackedPerlinNoise2,
+    TypeHandle,
+    TypedWritable,
+    UnalignedLMatrix4d,
+    UnalignedLMatrix4f,
+    UnalignedLVecBase4d,
+    UnalignedLVecBase4f,
+    istream,
+    ostream,
+)
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _PNMImageHeader_ColorType: TypeAlias = Literal[0, 1, 2, 3, 4]
