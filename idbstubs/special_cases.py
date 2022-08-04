@@ -97,14 +97,13 @@ NO_MANGLING: Final = frozenset((
 ))
 
 
-# TODO: What's the best way to handle these?
 # These classes implement iteration via `__getitem__`
-# ITERABLE: Final = {
-#     'AsyncTaskCollection': 'AsyncTask',
-#     'LVecBase2f': 'float', 'LVecBase2d': 'float', 'LVecBase2i': 'int',
-#     'LVecBase3f': 'float', 'LVecBase3d': 'float', 'LVecBase3i': 'int',
-#     'LVecBase4f': 'float', 'LVecBase4d': 'float', 'LVecBase4i': 'int',
-# }
+ITERABLE: Final = {
+    'AsyncTaskCollection': 'AsyncTask',
+    'LVecBase2f': 'float', 'LVecBase2d': 'float', 'LVecBase2i': 'int',
+    'LVecBase3f': 'float', 'LVecBase3d': 'float', 'LVecBase3i': 'int',
+    'LVecBase4f': 'float', 'LVecBase4d': 'float', 'LVecBase4i': 'int',
+}
 
 
 PARAM_TYPE_OVERRIDES: Final[dict[str, tuple[int, int, str]]] = {

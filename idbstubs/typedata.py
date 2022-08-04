@@ -32,6 +32,7 @@ STDLIB_IMPORTS: Final = {
     'array': 'array',
     'Callable': 'collections.abc',
     'Iterable': 'collections.abc',
+    'Iterator': 'collections.abc',
     'Mapping': 'collections.abc',
     'Sequence': 'collections.abc',
     'Enum': 'enum',

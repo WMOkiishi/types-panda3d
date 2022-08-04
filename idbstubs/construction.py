@@ -18,7 +18,7 @@ from .reps import (
     Alias, Class, Element, Function, Module, Package, Parameter, Signature,
     StubRep
 )
-from .special_cases import NO_MANGLING, NO_STUBS, NOT_EXPOSED
+from .special_cases import ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
 from .translation import (
     check_keyword, class_name_from_cpp_name, method_name_from_cpp_name,
     snake_to_camel
@@ -308,6 +308,12 @@ def make_class_rep(
             ignore_coercion=ignore_coercion,
         )
         nested += with_alias(method)
+    if (iterable_of := ITERABLE.get(name)) is not None:
+        nested.append(Function(
+            '__iter__',
+            [Signature([Parameter.as_self()], f'Iterator[{iterable_of}]')],
+            True, this_namespace,
+        ))
     # Nested types
     for n in range(idb.interrogate_type_number_of_nested_types(t)):
         s = idb.interrogate_type_get_nested_type(t, n)

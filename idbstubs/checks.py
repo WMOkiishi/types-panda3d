@@ -3,7 +3,7 @@ import logging
 from typing import Final
 
 from .reps import Alias, Class, Module, StubRep
-from .special_cases import NO_STUBS
+from .special_cases import ITERABLE, NO_STUBS
 from .util import flatten, is_sunder
 
 _logger: Final = logging.getLogger(__name__)
@@ -55,6 +55,8 @@ def check_class(rep: Class, runtime: object) -> None:
             no_stub.discard('__gt__')
         if '__le__' in rep_attrs:
             no_stub.discard('__ge__')
+    if rep.name in ITERABLE:
+        no_runtime.discard('__iter__')
     if no_stub:
         _logger.warning(f'No stubs for attributes {no_stub} in {rep}')
     if no_runtime:
