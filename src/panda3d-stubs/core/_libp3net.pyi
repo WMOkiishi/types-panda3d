@@ -37,6 +37,9 @@ class PointerToBase_Connection(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class NetAddress:
+    """Represents a network address to which UDP packets may be sent or to which a
+    TCP socket may be bound.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -74,6 +77,7 @@ class NetAddress:
     getHash = get_hash
 
 class Connection(ReferenceCount):
+    """Represents a single TCP or UDP socket for input or output."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, socket: Socket_IP) -> None: ...
     def get_address(self) -> NetAddress: ...
@@ -113,6 +117,21 @@ class Connection(ReferenceCount):
     setMaxSegment = set_max_segment
 
 class ConnectionReader:
+    """This is an abstract base class for a family of classes that listen for
+    activity on a socket and respond to it, for instance by reading a datagram
+    and serving it (or queueing it up for later service).
+    
+    A ConnectionReader may define an arbitrary number of threads (at least one)
+    to process datagrams coming in from an arbitrary number of sockets that it
+    is monitoring.  The number of threads is specified at construction time and
+    cannot be changed, but the set of sockets that is to be monitored may be
+    constantly modified at will.
+    
+    This is an abstract class because it doesn't define how to process each
+    received datagram.  See QueuedConnectionReader.  Also note that
+    ConnectionListener derives from this class, extending it to accept
+    connections on a rendezvous socket rather than read datagrams.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def add_connection(self, connection: Connection) -> bool: ...
     def remove_connection(self, connection: Connection) -> bool: ...
@@ -138,9 +157,20 @@ class ConnectionReader:
     getTcpHeaderSize = get_tcp_header_size
 
 class ConnectionListener(ConnectionReader):
+    """This is a special kind of ConnectionReader that waits for activity on a
+    rendezvous port and accepts a TCP connection (instead of attempting to read
+    a datagram from the rendezvous port).
+    
+    It is itself an abstract class, as it doesn't define what to do with the
+    established connection.  See QueuedConnectionListener.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
 
 class NetDatagram(Datagram):
+    """A specific kind of Datagram, especially for sending across or receiving
+    from a network.  It's different only in that it knows which Connection
+    and/or NetAddress it is to be sent to or was received from.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -160,6 +190,16 @@ class NetDatagram(Datagram):
     getClassType = get_class_type
 
 class ConnectionManager:
+    """The primary interface to the low-level networking layer in this package.  A
+    ConnectionManager is used to establish and destroy TCP and UDP connections.
+    Communication on these connections, once established, is handled via
+    ConnectionReader, ConnectionWriter, and ConnectionListener.
+    
+    You may use this class directly if you don't care about tracking which
+    connections have been unexpectedly closed; otherwise, you should use
+    QueuedConnectionManager to get reports about these events (or derive your
+    own class to handle these events properly).
+    """
     class Interface:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: ConnectionManager.Interface) -> None: ...
@@ -224,6 +264,13 @@ class ConnectionManager:
     getInterfaces = get_interfaces
 
 class ConnectionWriter:
+    """This class handles threaded delivery of datagrams to various TCP or UDP
+    sockets.
+    
+    A ConnectionWriter may define an arbitrary number of threads (0 or more) to
+    write its datagrams to sockets.  The number of threads is specified at
+    construction time and cannot be changed.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int, thread_name: str = ...) -> None: ...
     def set_max_queue_size(self, max_size: int) -> None: ...
@@ -255,6 +302,10 @@ class ConnectionWriter:
     getTcpHeaderSize = get_tcp_header_size
 
 class DatagramGeneratorNet(DatagramGenerator, ConnectionReader, QueuedReturn_Datagram):
+    """This class provides datagrams one-at-a-time as read directly from the net,
+    via a TCP connection.  If a datagram is not available, get_datagram() will
+    block until one is.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_DatagramGenerator(self) -> DatagramGenerator: ...
@@ -284,6 +335,9 @@ class QueuedReturn_Datagram:
     resetOverflowFlag = reset_overflow_flag
 
 class DatagramSinkNet(DatagramSink, ConnectionWriter):
+    """This class accepts datagrams one-at-a-time and sends them over the net, via
+    a TCP connection.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_DatagramSink(self) -> DatagramSink: ...
@@ -301,6 +355,9 @@ class DatagramSinkNet(DatagramSink, ConnectionWriter):
     isError = is_error
 
 class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListenerData):
+    """This flavor of ConnectionListener will queue up all of the TCP connections
+    it established for later detection by the client code.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_ConnectionListener(self) -> ConnectionListener: ...
@@ -329,6 +386,15 @@ class QueuedReturn_ConnectionListenerData:
     resetOverflowFlag = reset_overflow_flag
 
 class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connection):
+    """This flavor of ConnectionManager will queue up all of the reset-connection
+    messages from the ConnectionReaders and ConnectionWriters and report them
+    to the client on demand.
+    
+    When a reset connection has been discovered via
+    reset_connection_available()/get_reset_connection(), it is still the
+    responsibility of the client to call close_connection() on that connection
+    to free up its resources.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def upcast_to_ConnectionManager(self) -> ConnectionManager: ...
@@ -354,6 +420,11 @@ class QueuedReturn_PointerTo_Connection:
     resetOverflowFlag = reset_overflow_flag
 
 class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
+    """This flavor of ConnectionReader will read from its sockets and queue up all
+    of the datagrams read for later receipt by the client code.  This class is
+    useful for client code that doesn't want to deal with threading and is
+    willing to poll for datagrams at its convenience.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_ConnectionReader(self) -> ConnectionReader: ...
@@ -379,6 +450,14 @@ class QueuedReturn_NetDatagram:
     resetOverflowFlag = reset_overflow_flag
 
 class RecentConnectionReader(ConnectionReader):
+    """This flavor of ConnectionReader will read from its sockets and retain only
+    the single most recent datagram for inspection by client code.  It's useful
+    particularly for reading telemetry-type data from UDP sockets where you
+    don't care about getting every last socket, and in fact if the sockets are
+    coming too fast you'd prefer to skip some of them.
+    
+    This class will always create one thread for itself.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager) -> None: ...
     def data_available(self) -> bool: ...

@@ -31,6 +31,9 @@ _RopeNode_UVMode: TypeAlias = Literal[0, 1, 2, 3]
 _RopeNode_NormalMode: TypeAlias = Literal[0, 1]
 
 class ParametricCurve(PandaNode):
+    """A virtual base class for parametric curves.  This encapsulates all curves
+    in 3-d space defined for a single parameter t in the range [0,get_max_t()].
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def is_valid(self) -> bool: ...
     def get_max_t(self) -> float: ...
@@ -77,12 +80,34 @@ class ParametricCurve(PandaNode):
     getClassType = get_class_type
 
 class CubicCurveseg(ParametricCurve):
+    """A CubicCurveseg is any curve that can be completely described by four
+    4-valued basis vectors, one for each dimension in three-space, and one for
+    the homogeneous coordinate.  This includes Beziers, Hermites, and NURBS.
+    
+    This class encapsulates a single curve segment of the cubic curve.
+    Normally, when we think of Bezier and Hermite curves, we think of a
+    piecewise collection of such segments.
+    
+    Although this class includes methods such as hermite_basis() and
+    nurbs_basis(), to generate a Hermite and NURBS curve segment, respectively,
+    only the final basis vectors are stored: the product of the basis matrix of
+    the corresponding curve type, and its geometry vectors.  This is the
+    minimum information needed to evaluate the curve.  However, the individual
+    CV's that were used to compute these basis vectors are not retained; this
+    might be handled in a subclass (for instance, HermiteCurve).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
 
 class ParametricCurveCollection(ReferenceCount):
+    """This is a set of zero or more ParametricCurves, which may or may not be
+    related.  If they are related, the set should contain no more than one XYZ
+    curve, no more than one HPR curve, and zero or more Timewarp curves, which
+    can then be evaluated as a unit to return a single transformation matrix
+    for a given unit of time.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     curves: Sequence[ParametricCurve]
     @property
@@ -220,6 +245,10 @@ class CurveFitter:
     getClassType = get_class_type
 
 class PiecewiseCurve(ParametricCurve):
+    """A PiecewiseCurve is a curve made up of several curve segments, connected in
+    a head-to-tail fashion.  The length of each curve segment in parametric
+    space is definable.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -227,6 +256,14 @@ class PiecewiseCurve(ParametricCurve):
     getClassType = get_class_type
 
 class HermiteCurve(PiecewiseCurve):
+    """A parametric curve defined by a sequence of control vertices, each with an
+    in and out tangent.
+    
+    This class is actually implemented as a PiecewiseCurve made up of several
+    CubicCurvesegs, each of which is created using the hermite_basis() method.
+    The HermiteCurve class itself keeps its own list of the CV's that are used
+    to define the curve (since the CubicCurveseg class doesn't retain these).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -294,6 +331,11 @@ class HermiteCurve(PiecewiseCurve):
     getClassType = get_class_type
 
 class NurbsCurveInterface:
+    """This abstract class defines the interface only for a Nurbs-style curve,
+    with knots and coordinates in homogeneous space.
+    
+    The NurbsCurve class inherits both from this and from ParametricCurve.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_order(self, order: int) -> None: ...
     def get_order(self) -> int: ...
@@ -344,6 +386,22 @@ class NurbsCurveInterface:
     getKnots = get_knots
 
 class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
+    """A Nonuniform Rational B-Spline.
+    
+    This class is actually implemented as a PiecewiseCurve made up of several
+    CubicCurvesegs, each of which is created using the nurbs_basis() method.
+    The list of CV's and knots is kept here, within the NurbsCurve class.
+    
+    This class is the original Panda-native implementation of a NURBS curve.
+    It is typedeffed as "NurbsCurve" and performs all NURBS curve functions if
+    we do not have the NURBS++ library available.
+    
+    However, if we *do* have the NURBS++ library, another class exists, the
+    NurbsPPCurve, which is a wrapper around that library and provides some
+    additional functionality.  In that case, the other class is typedeffed to
+    "NurbsCurve" instead of this one, and performs most of the NURBS curve
+    functions.  This class then becomes vestigial.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -358,6 +416,15 @@ class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
     getClassType = get_class_type
 
 class NurbsCurveResult(ReferenceCount):
+    """The result of a NurbsCurveEvaluator.  This object represents a curve in a
+    particular coordinate space.  It can return the point and/or tangent to the
+    curve at any point.
+    
+    This is not related to NurbsCurve, CubicCurveseg or any of the
+    ParametricCurve-derived objects in this module.  It is a completely
+    parallel implementation of NURBS curves, and will probably eventually
+    replace the whole ParametricCurve class hierarchy.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: NurbsCurveResult) -> None: ...
     def get_start_t(self) -> float: ...
@@ -398,6 +465,15 @@ class NurbsCurveResult(ReferenceCount):
     getSamplePoints = get_sample_points
 
 class NurbsCurveEvaluator(ReferenceCount):
+    """This class is an abstraction for evaluating NURBS curves.  It accepts an
+    array of vertices, each of which may be in a different coordinate space (as
+    defined by a NodePath), as well as an optional knot vector.
+    
+    This is not related to NurbsCurve, CubicCurveseg or any of the
+    ParametricCurve-derived objects in this module.  It is a completely
+    parallel implementation of NURBS curves, and will probably eventually
+    replace the whole ParametricCurve class hierarchy.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -451,6 +527,10 @@ class NurbsCurveEvaluator(ReferenceCount):
     getKnots = get_knots
 
 class NurbsSurfaceResult(ReferenceCount):
+    """The result of a NurbsSurfaceEvaluator.  This object represents a surface in
+    a particular coordinate space.  It can return the point and/or normal to
+    the surface at any point.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: NurbsSurfaceResult) -> None: ...
     def get_start_u(self) -> float: ...
@@ -487,6 +567,10 @@ class NurbsSurfaceResult(ReferenceCount):
     getSegmentV = get_segment_v
 
 class NurbsSurfaceEvaluator(ReferenceCount):
+    """This class is an abstraction for evaluating NURBS surfaces.  It accepts an
+    array of vertices, each of which may be in a different coordinate space (as
+    defined by a NodePath), as well as an optional knot vector.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     u_order: int
     v_order: int
@@ -557,6 +641,14 @@ class NurbsSurfaceEvaluator(ReferenceCount):
     getVKnots = get_v_knots
 
 class RopeNode(PandaNode):
+    """This class draws a visible representation of the NURBS curve stored in its
+    NurbsCurveEvaluator.  It automatically recomputes the curve every frame.
+    
+    This is not related to NurbsCurve, CubicCurveseg or any of the
+    ParametricCurve-derived objects in this module.  It is a completely
+    parallel implementation of NURBS curves, and will probably eventually
+    replace the whole ParametricCurve class hierarchy.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     curve: NurbsCurveEvaluator
     render_mode: _RopeNode_RenderMode
@@ -665,6 +757,15 @@ class RopeNode(PandaNode):
     NMVertex = NM_vertex
 
 class SheetNode(PandaNode):
+    """This class draws a visible representation of the NURBS surface stored in
+    its NurbsSurfaceEvaluator.  It automatically recomputes the surface every
+    frame.
+    
+    This is not related to NurbsSurface, CubicSurfaceseg or any of the
+    ParametricSurface-derived objects in this module.  It is a completely
+    parallel implementation of NURBS surfaces, and will probably eventually
+    replace the whole ParametricSurface class hierarchy.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
     def set_surface(self, surface: NurbsSurfaceEvaluator) -> None: ...

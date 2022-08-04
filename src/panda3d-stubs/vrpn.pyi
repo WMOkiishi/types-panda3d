@@ -2,6 +2,9 @@ from typing import Any, ClassVar
 from panda3d.core import ClientBase, TypeHandle, ostream
 
 class VrpnClient(ClientBase):
+    """A specific ClientBase that connects to a VRPN server and records
+    information on the connected VRPN devices.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, server_name: str) -> None: ...
     def get_server_name(self) -> str: ...

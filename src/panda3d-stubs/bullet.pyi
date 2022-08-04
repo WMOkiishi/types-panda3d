@@ -1286,6 +1286,11 @@ class BulletVehicleTuning:
     getMaxSuspensionForce = get_max_suspension_force
 
 class BulletVehicle(TypedReferenceCount):
+    """Simulates a raycast vehicle which casts a ray per wheel at the ground as a
+    cheap replacement for complex suspension simulation.  The suspension can be
+    tuned in various ways.  It is possible to add a (probably) arbitrary number
+    of wheels.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def chassis(self) -> BulletRigidBodyNode: ...
@@ -1333,6 +1338,9 @@ class BulletVehicle(TypedReferenceCount):
     getWheels = get_wheels
 
 class BulletWheel:
+    """One wheel of a BulletVehicle.  Instances should not be created directly but
+    using the factory method BulletVehicle::create_wheel().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     suspension_stiffness: float
     max_suspension_travel_cm: float
@@ -1761,6 +1769,7 @@ class BulletFilterCallbackData(CallbackData):
     getClassType = get_class_type
 
 class BulletRotationalLimitMotor:
+    """Rotation Limit structure for generic joints."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     motor_enabled: bool
     @property
@@ -1812,6 +1821,7 @@ class BulletRotationalLimitMotor:
     getAccumulatedImpulse = get_accumulated_impulse
 
 class BulletTranslationalLimitMotor:
+    """Rotation Limit structure for generic joints."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def current_error(self) -> LVector3f: ...
@@ -1941,6 +1951,9 @@ class BulletHelper:
     makeTexcoordsForPatch = make_texcoords_for_patch
 
 class BulletHingeConstraint(BulletConstraint):
+    """The hinge constraint lets two bodies rotate around a given axis while
+    adhering to specified limits.  It's motor can apply angular force to them.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     angular_only: bool
     @property
@@ -2195,6 +2208,12 @@ class BulletSphereShape(BulletShape):
     getClassType = get_class_type
 
 class BulletSphericalConstraint(BulletConstraint):
+    """A constraint between two rigid bodies, each with a pivot point.  The pivot
+    points are described in the body's local space.  The constraint limits
+    movement of the two rigid bodies in such a way that the pivot points match
+    in global space.  The spherical constraint can be seen as a "ball and
+    socket" joint.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     pivot_a: LPoint3f
     pivot_b: LPoint3f

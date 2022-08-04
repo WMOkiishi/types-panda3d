@@ -36,6 +36,14 @@ _Trackball_ControlMode: TypeAlias = Literal[0, 1, 2, 3, 4]
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 
 class ButtonThrower(DataNode):
+    """Throws Panda Events for button down/up events generated within the data
+    graph.
+    
+    This is a DataNode which is intended to be parented to the data graph below
+    a device which is generating a sequence of button events, like a
+    MouseAndKeyboard device.  It simply takes each button it finds and throws a
+    corresponding event based on the button name via the throw_event() call.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     button_down_event: str
     button_up_event: str
@@ -132,6 +140,12 @@ class ButtonThrower(DataNode):
     getParameters = get_parameters
 
 class MouseInterfaceNode(DataNode):
+    """This is the base class for some classes that monitor the mouse and keyboard
+    input and perform some action due to their state.
+    
+    It collects together some common interface; in particular, the
+    require_button() and related methods.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: MouseInterfaceNode) -> None: ...
     def require_button(self, button: ButtonHandle, is_down: bool) -> None: ...
@@ -145,6 +159,10 @@ class MouseInterfaceNode(DataNode):
     getClassType = get_class_type
 
 class DriveInterface(MouseInterfaceNode):
+    """This is a TFormer, similar to Trackball, that moves around a transform
+    matrix in response to mouse input.  The basic motion is on a horizontal
+    plane, as if driving a vehicle.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -254,6 +272,13 @@ class DriveInterface(MouseInterfaceNode):
     getClassType = get_class_type
 
 class MouseSubregion(MouseInterfaceNode):
+    """The MouseSubregion object scales the mouse inputs from within a rectangular
+    region of the screen, as if they were the full-screen inputs.
+    
+    If you choose your MouseSubregion coordinates to exactly match a
+    DisplayRegion within your window, you end up with a virtual mouse within
+    your DisplayRegion.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: MouseSubregion) -> None: ...
@@ -274,6 +299,9 @@ class MouseSubregion(MouseInterfaceNode):
     getClassType = get_class_type
 
 class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
+    """This is the class that defines a rectangular region on the screen for the
+    MouseWatcher.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     frame: LVecBase4f
     sort: int
@@ -332,6 +360,11 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     SFMousePosition = SF_mouse_position
 
 class MouseWatcherBase:
+    """This represents a collection of MouseWatcherRegions that may be managed as
+    a group.  This is the base class for both MouseWatcherGroup and
+    MouseWatcher, and exists so that we don't have to make MouseWatcher inherit
+    from ReferenceCount more than once.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def sorted(self) -> bool: ...
@@ -372,6 +405,10 @@ class MouseWatcherBase:
     getRegions = get_regions
 
 class MouseWatcherGroup(MouseWatcherBase, ReferenceCount):
+    """This represents a collection of MouseWatcherRegions that may be managed as
+    a group.  The implementation for this is in MouseWatcherBase; this class
+    exists so that we can inherit from ReferenceCount.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_MouseWatcherBase(self) -> MouseWatcherBase: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
@@ -382,6 +419,27 @@ class MouseWatcherGroup(MouseWatcherBase, ReferenceCount):
     getClassType = get_class_type
 
 class MouseWatcher(DataNode, MouseWatcherBase):
+    """This TFormer maintains a list of rectangular regions on the screen that are
+    considered special mouse regions; typically these will be click buttons.
+    When the mouse passes in or out of one of these regions, or when a button
+    is clicked while the mouse is in one of these regions, an event is thrown.
+    
+    Mouse events may also be suppressed from the rest of the datagraph in these
+    special regions.
+    
+    This class can also implement a software mouse pointer by automatically
+    generating a transform to apply to a piece of geometry placed under the 2-d
+    scene graph.  It will move the geometry around according to the mouse's
+    known position.
+    
+    Finally, this class can keep a record of the mouse trail.  This is useful
+    if you want to know, not just where the mouse is, but the exact sequence of
+    movements it took to get there.  This information is mainly useful for
+    gesture-recognition code.  To use trail logging, you need to enable the
+    generation of pointer events in the GraphicsWindowInputDevice and set the
+    trail log duration in the MouseWatcher.  Otherwise, the trail log will be
+    empty.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_DataNode(self) -> DataNode: ...
@@ -518,6 +576,9 @@ class MouseWatcher(DataNode, MouseWatcherBase):
     getGroups = get_groups
 
 class MouseWatcherParameter:
+    """This is sent along as a parameter to most events generated for a region to
+    indicate the mouse and button state for the event.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def has_button(self) -> bool: ...
     def get_button(self) -> ButtonHandle: ...
@@ -553,6 +614,14 @@ class MouseWatcherParameter:
     isOutside = is_outside
 
 class Trackball(MouseInterfaceNode):
+    """Trackball acts like Performer in trackball mode.  It can either spin around
+    a piece of geometry directly, or it can spin around a camera with the
+    inverse transform to make it appear that the whole world is spinning.
+    
+    The Trackball object actually just places a transform in the data graph;
+    parent a Transform2SG node under it to actually transform objects (or
+    cameras) in the world.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     CM_default: ClassVar[Literal[0]]
     CM_truck: ClassVar[Literal[1]]
@@ -646,6 +715,11 @@ class Trackball(MouseInterfaceNode):
     CMRoll = CM_roll
 
 class Transform2SG(DataNode):
+    """input: Transform (matrix)
+    
+    output: none, but applies the matrix as the transform transition for a
+    given arc of the scene graph.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: Transform2SG) -> None: ...

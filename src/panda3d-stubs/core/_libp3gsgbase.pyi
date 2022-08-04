@@ -2,6 +2,7 @@ from typing import Any, ClassVar
 from panda3d.core import TypeHandle, TypedWritableReferenceCount
 
 class GraphicsOutputBase(TypedWritableReferenceCount):
+    """An abstract base class for GraphicsOutput, for all the usual reasons."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_sort(self, sort: int) -> None: ...
     @staticmethod
@@ -10,6 +11,17 @@ class GraphicsOutputBase(TypedWritableReferenceCount):
     getClassType = get_class_type
 
 class GraphicsStateGuardianBase(TypedWritableReferenceCount):
+    """This is a base class for the GraphicsStateGuardian class, which is itself a
+    base class for the various GSG's for different platforms.  This class
+    contains all the function prototypes to support the double-dispatch of GSG
+    to geoms, transitions, etc.  It lives in a separate class in its own
+    package so we can avoid circular build dependency problems.
+    
+    GraphicsStateGuardians are not actually writable to bam files, of course,
+    but they may be passed as event parameters, so they inherit from
+    TypedWritableReferenceCount instead of TypedReferenceCount for that
+    convenience.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_incomplete_render(self) -> bool: ...
     def get_effective_incomplete_render(self) -> bool: ...

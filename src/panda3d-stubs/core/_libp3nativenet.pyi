@@ -2,6 +2,9 @@ from typing import Any, ClassVar, overload
 from panda3d.core import Datagram, TypeHandle, TypedObject
 
 class Socket_Address:
+    """A simple place to store and manipulate tcp and port address for
+    communication layer
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, port: int = ...) -> None: ...
@@ -42,6 +45,14 @@ class Socket_Address:
     isMcastRange = is_mcast_range
 
 class Socket_IP(TypedObject):
+    """Base functionality for a INET domain Socket This call should be the
+    starting point for all other unix domain sockets.
+    
+    SocketIP |
+    ------------------------------------------------------------------- |
+    |                       |                           | SocketTCP
+    SocketTCP_Listen    SocketUDP_Incoming   SocketUDP_OutBound
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -66,6 +77,10 @@ class Socket_IP(TypedObject):
     getClassType = get_class_type
 
 class Socket_TCP(Socket_IP):
+    """Base functionality for a TCP connected socket This class is pretty useless
+    by itself but it does hide some of the platform differences from machine to
+    machine
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -87,6 +102,7 @@ class Socket_TCP(Socket_IP):
     getClassType = get_class_type
 
 class Socket_TCP_Listen(Socket_IP):
+    """Base functionality for a TCP rendezvous socket"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @overload
@@ -99,6 +115,7 @@ class Socket_TCP_Listen(Socket_IP):
     getClassType = get_class_type
 
 class Socket_UDP_Incoming(Socket_IP):
+    """Base functionality for a UDP Reader"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @overload
@@ -114,6 +131,7 @@ class Socket_UDP_Incoming(Socket_IP):
     getClassType = get_class_type
 
 class Socket_UDP_Outgoing(Socket_IP):
+    """Base functionality for a UDP sending socket"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def InitToAddress(self, address: Socket_Address) -> bool: ...
@@ -139,6 +157,10 @@ class Socket_fdset:
     def clear(self) -> None: ...
 
 class Buffered_DatagramConnection(Socket_TCP):
+    """there are 3 states 1. Socket not even assigned,,,, 2. Socket Assigned and
+    trying to get a active connect open 3. Socket is open and  writable.. (
+    Fully powered up )...
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, rbufsize: int, wbufsize: int, write_flush_point: int) -> None: ...
     def GetMessage(self, val: Datagram) -> bool: ...
@@ -156,6 +178,10 @@ class Buffered_DatagramConnection(Socket_TCP):
     getClassType = get_class_type
 
 class Socket_UDP(Socket_UDP_Incoming):
+    """Base functionality for a combination UDP Reader and Writer.  This
+    duplicates code from Socket_UDP_Outgoing, to avoid the problems of multiple
+    inheritance.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def InitToAddress(self, address: Socket_Address) -> bool: ...

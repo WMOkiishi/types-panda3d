@@ -67,6 +67,13 @@ _EggCurve_CurveType: TypeAlias = Literal[0, 1, 2, 3]
 _EggTable_TableType: TypeAlias = Literal[0, 1, 2]
 
 class EggUserData(TypedReferenceCount):
+    """This is a base class for a user-defined data type to extend egg structures
+    in processing code.  The user of the egg library may derive from
+    EggUserData to associate any arbitrary data with various egg objects.
+    
+    However, this data will not be written out to the disk when the egg file is
+    written; it is an in-memory object only.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -78,6 +85,9 @@ class EggUserData(TypedReferenceCount):
     getClassType = get_class_type
 
 class EggObject(TypedReferenceCount):
+    """The highest-level base class in the egg directory.  (Almost) all things egg
+    inherit from this.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -106,6 +116,7 @@ class EggObject(TypedReferenceCount):
     getClassType = get_class_type
 
 class EggNamedObject(EggObject, Namable):
+    """This is a fairly low-level base class--any egg object that has a name."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -122,6 +133,10 @@ class EggNamedObject(EggObject, Namable):
     getClassType = get_class_type
 
 class EggNode(EggNamedObject):
+    """A base class for things that may be directly added into the egg hierarchy.
+    This includes groups, joints, polygons, vertex pools, etc., but does not
+    include things like vertices.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def parent(self) -> EggGroupNode: ...
@@ -201,6 +216,14 @@ class EggNode(EggNamedObject):
     getClassType = get_class_type
 
 class EggGroupNode(EggNode):
+    """A base class for nodes in the hierarchy that are not leaf nodes.  (See also
+    EggGroup, which is specifically the "<Group>" node in egg.)
+    
+    An EggGroupNode is an STL-style container of pointers to EggNodes, like a
+    vector.  Functions push_back()/pop_back() and insert()/erase() are provided
+    to manipulate the list.  The list may also be operated on (read-only) via
+    iterators and begin()/end().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_polygon: ClassVar[Literal[1]]
     T_convex: ClassVar[Literal[2]]
@@ -290,6 +313,9 @@ class EggGroupNode(EggNode):
     TFlatShaded = T_flat_shaded
 
 class EggAnimData(EggNode):
+    """A base class for EggSAnimData and EggXfmAnimData, which contain rows and
+    columns of numbers.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def assign(self, copy: EggAnimData) -> EggAnimData: ...
     def set_fps(self, type: float) -> None: ...
@@ -312,6 +338,7 @@ class EggAnimData(EggNode):
     getClassType = get_class_type
 
 class EggAnimPreload(EggNode):
+    """This corresponds to an <AnimPreload> entry."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     fps: float
     num_frames: int
@@ -341,6 +368,13 @@ class EggAnimPreload(EggNode):
     getClassType = get_class_type
 
 class EggAttributes:
+    """The set of attributes that may be applied to vertices as well as polygons,
+    such as surface normal and color.
+    
+    This class cannot inherit from EggObject, because it causes problems at the
+    EggPolygon level with multiple appearances of the EggObject base class.
+    And making EggObject a virtual base class is just no fun.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -382,6 +416,10 @@ class EggAttributes:
     getClassType = get_class_type
 
 class EggVertexUV(EggNamedObject):
+    """The set of UV's that may or may not be assigned to a vertex.  To support
+    multitexturing, there may be multiple sets of UV's on a particular vertex,
+    each with its own name.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: EggVertexUV) -> None: ...
@@ -441,6 +479,11 @@ class EggVertexUV(EggNamedObject):
     getClassType = get_class_type
 
 class EggVertexAux(EggNamedObject):
+    """The set of named auxiliary data that may or may not be assigned to a
+    vertex.  Panda will import this data and create a custom column for it in
+    the vertex data, but will not otherwise interpret it.  Presumably, a shader
+    will process the data later.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: EggVertexAux) -> None: ...
@@ -464,6 +507,9 @@ class EggVertexAux(EggNamedObject):
     getClassType = get_class_type
 
 class EggVertex(EggObject, EggAttributes):
+    """Any one-, two-, three-, or four-component vertex, possibly with attributes
+    such as a normal.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -585,6 +631,16 @@ class EggVertex(EggObject, EggAttributes):
     getClassType = get_class_type
 
 class EggVertexPool(EggNode):
+    """A collection of vertices.  There may be any number of vertex pools in a
+    single egg structure.  The vertices in a single pool need not necessarily
+    have any connection to each other, but it is necessary that any one
+    primitive (e.g.  a polygon) must pull all its vertices from the same pool.
+    
+    An EggVertexPool is an STL-style container of pointers to EggVertex's.
+    Functions add_vertex() and remove_vertex() are provided to manipulate the
+    list.  The list may also be operated on (read-only) via iterators and
+    begin()/end().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: EggVertexPool) -> None: ...
@@ -643,6 +699,15 @@ class EggVertexPool(EggNode):
     getClassType = get_class_type
 
 class EggRenderMode:
+    """This class stores miscellaneous rendering properties that is associated
+    with geometry, and which may be set on the geometry primitive level, on the
+    group above it, or indirectly via a texture.  It's intended to be a base
+    class for egg objects that can have these properties set.
+    
+    This class cannot inherit from EggObject, because it causes problems at the
+    EggPolygon level with multiple appearances of the EggObject base class.
+    And making EggObject a virtual base class is just no fun.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     AM_unspecified: ClassVar[Literal[0]]
     AM_off: ClassVar[Literal[1]]
@@ -749,6 +814,13 @@ class EggRenderMode:
     VMNormal = VM_normal
 
 class EggTransform:
+    """This represents the <Transform> entry of a group or texture node: a list of
+    component transform operations, applied in order, that describe a net
+    transform matrix.
+    
+    This may be either a 3-d transform, and therefore described by a 4x4
+    matrix, or a 2-d transform, described by a 3x3 matrix.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     CT_invalid: ClassVar[Literal[0]]
     CT_translate2d: ClassVar[Literal[1]]
@@ -843,6 +915,12 @@ class EggTransform:
     CTMatrix4 = CT_matrix4
 
 class EggSwitchCondition(EggObject):
+    """This corresponds to a <SwitchCondition> entry within a group.  It indicates
+    the condition at which a level-of-detail is switched in or out.  This is
+    actually an abstract base class for potentially any number of specific
+    different kinds of switching conditions; presently, only a <Distance> type
+    is actually supported.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def make_copy(self) -> EggSwitchCondition: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
@@ -853,6 +931,9 @@ class EggSwitchCondition(EggObject):
     getClassType = get_class_type
 
 class EggSwitchConditionDistance(EggSwitchCondition):
+    """A SwitchCondition that switches the levels-of-detail based on distance from
+    the camera's eyepoint.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, switch_in: float, switch_out: float, center: _Vec3d, fade: float = ...) -> None: ...
     @staticmethod
@@ -860,6 +941,9 @@ class EggSwitchConditionDistance(EggSwitchCondition):
     getClassType = get_class_type
 
 class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
+    """The main glue of the egg hierarchy, this corresponds to the <Group>,
+    <Instance>, and <Joint> type nodes.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     group_type: _EggGroup_GroupType
     billboard_type: _EggGroup_BillboardType
@@ -1317,6 +1401,10 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     BOOneMinusAlphaScale = BO_one_minus_alpha_scale
 
 class EggBin(EggGroup):
+    """A type of group node that holds related subnodes.  This is a special kind
+    of node that will never be read in from an egg file, but can only exist in
+    the egg scene graph if it is created via the use of an EggBinMaker.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -1331,6 +1419,10 @@ class EggBin(EggGroup):
     getClassType = get_class_type
 
 class EggBinMaker(EggObject):
+    """This is a handy class for collecting related nodes together.  It is an
+    abstract class; to use it you must subclass off of it.  See the somewhat
+    lengthy comment above.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def make_bins(self, root_group: EggGroupNode) -> int: ...
     def prepare_node(self, node: EggNode) -> None: ...
@@ -1351,6 +1443,7 @@ class EggBinMaker(EggObject):
     getClassType = get_class_type
 
 class EggComment(EggNode):
+    """A comment that appears in an egg file within a <Comment> entry."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: EggComment) -> None: ...
@@ -1370,6 +1463,10 @@ class EggComment(EggNode):
     getClassType = get_class_type
 
 class EggFilenameNode(EggNode):
+    """This is an egg node that contains a filename.  It references a physical
+    file relative to the directory the egg file was loaded in.  It is a base
+    class for EggTexture and EggExternalReference.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def assign(self, copy: EggFilenameNode) -> EggFilenameNode: ...
     def get_default_extension(self) -> str: ...
@@ -1387,6 +1484,7 @@ class EggFilenameNode(EggNode):
     getClassType = get_class_type
 
 class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
+    """Defines a texture map that may be applied to geometry."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     texture_type: _EggTexture_TextureType
     format: _EggTexture_Format
@@ -2008,6 +2106,15 @@ class EggMaterial(EggNode):
     EMrefName = E_mref_name
 
 class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
+    """A base class for any of a number of kinds of geometry primitives: polygons,
+    point lights, nurbs patches, parametrics curves, etc.  Things with a set of
+    vertices and some rendering properties like color.
+    
+    An EggPrimitive is an STL-style container of pointers to EggVertex's.  In
+    fact, it IS a vector, and can be manipulated in all the ways that vectors
+    can.  However, it is necessary that all vertices belong to the same vertex
+    pool.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     material: EggMaterial
     bface_flag: bool
@@ -2150,6 +2257,10 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     SPerVertex = S_per_vertex
 
 class EggCompositePrimitive(EggPrimitive):
+    """The base class for primitives such as triangle strips and triangle fans,
+    which include several component triangles, each of which might have its own
+    color and/or normal.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     components: Sequence[EggAttributes]
     def assign(self, copy: EggCompositePrimitive) -> EggCompositePrimitive: ...
@@ -2170,6 +2281,15 @@ class EggCompositePrimitive(EggPrimitive):
     getComponents = get_components
 
 class EggData(EggGroupNode):
+    """This is the primary interface into all the egg data, and the root of the
+    egg file structure.  An EggData structure corresponds exactly with an egg
+    file on the disk.
+    
+    The EggData class inherits from EggGroupNode its collection of children,
+    which are accessed by using the EggData itself as an STL container with
+    begin() and end() calls.  The children of the EggData class are the
+    toplevel nodes in the egg file.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     auto_resolve_externals: bool
     coordinate_system: _CoordinateSystem
@@ -2231,6 +2351,10 @@ class EggData(EggGroupNode):
     getClassType = get_class_type
 
 class EggCoordinateSystem(EggNode):
+    """The <CoordinateSystem> entry at the top of an egg file.  Don't confuse this
+    with the enum EggData::CoordinateSystem, which is the value contained by
+    this entry.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, value: _CoordinateSystem = ...) -> None: ...
@@ -2245,6 +2369,7 @@ class EggCoordinateSystem(EggNode):
     getClassType = get_class_type
 
 class EggCurve(EggPrimitive):
+    """A parametric curve of some kind.  See EggNurbsCurve."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     CT_none: ClassVar[Literal[0]]
     CT_xyz: ClassVar[Literal[1]]
@@ -2271,6 +2396,9 @@ class EggCurve(EggPrimitive):
     CTT = CT_t
 
 class EggExternalReference(EggFilenameNode):
+    """Defines a reference to another egg file which should be inserted at this
+    point.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: EggExternalReference) -> None: ...
@@ -2282,6 +2410,10 @@ class EggExternalReference(EggFilenameNode):
     getClassType = get_class_type
 
 class EggNameUniquifier(EggObject):
+    """This is a handy class for guaranteeing unique node names in an egg
+    hierarchy.  It is an abstract class; to use it you must subclass off of it.
+    See the comment above.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def uniquify(self, node: EggNode) -> None: ...
@@ -2302,6 +2434,10 @@ class EggNameUniquifier(EggObject):
     getClassType = get_class_type
 
 class EggGroupUniquifier(EggNameUniquifier):
+    """This is a specialization of EggNameUniquifier to generate unique names for
+    EggGroup nodes.  It's not called automatically; you must invoke it yourself
+    if you want it.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, filter_names: bool = ...) -> None: ...
     @staticmethod
@@ -2309,6 +2445,9 @@ class EggGroupUniquifier(EggNameUniquifier):
     getClassType = get_class_type
 
 class EggLine(EggCompositePrimitive):
+    """A line segment, or a series of connected line segments, defined by a <Line>
+    entry.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2328,6 +2467,10 @@ class EggLine(EggCompositePrimitive):
     getClassType = get_class_type
 
 class EggMaterialCollection:
+    """This is a collection of materials by MRef name.  It can extract the
+    materials from an egg file and sort them all together; it can also manage
+    the creation of unique materials and the assignment of unique MRef names.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -2357,6 +2500,7 @@ class EggMaterialCollection:
     findMref = find_mref
 
 class EggPolygon(EggPrimitive):
+    """A single polygon."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2378,6 +2522,7 @@ class EggPolygon(EggPrimitive):
     getClassType = get_class_type
 
 class EggNurbsCurve(EggCurve):
+    """A parametric NURBS curve."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     order: int
     knots: Sequence[float]
@@ -2418,6 +2563,7 @@ class EggNurbsCurve(EggCurve):
     getKnots = get_knots
 
 class EggSurface(EggPrimitive):
+    """A parametric surface of some kind.  See EggNurbsSurface."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def assign(self, copy: EggSurface) -> EggSurface: ...
     def set_u_subdiv(self, subdiv: int) -> None: ...
@@ -2433,6 +2579,7 @@ class EggSurface(EggPrimitive):
     getClassType = get_class_type
 
 class EggNurbsSurface(EggSurface):
+    """A parametric NURBS surface."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2499,6 +2646,9 @@ class EggNurbsSurface(EggSurface):
     getVKnots = get_v_knots
 
 class EggPatch(EggPrimitive):
+    """A single "patch", a special primitive to be rendered only with a
+    tessellation shader.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2510,6 +2660,9 @@ class EggPatch(EggPrimitive):
     getClassType = get_class_type
 
 class EggPoint(EggPrimitive):
+    """A single point, or a collection of points as defined by a single
+    <PointLight> entry.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2537,6 +2690,14 @@ class EggPoint(EggPrimitive):
     getClassType = get_class_type
 
 class EggPolysetMaker(EggBinMaker):
+    """A specialization on EggBinMaker for making polysets that share the same
+    basic rendering characteristic.  This really just defines the example
+    functions described in the leading comment to EggBinMaker.
+    
+    It makes some common assumptions about how polysets should be grouped; if
+    these are not sufficient, you can always rederive your own further
+    specialization of this class.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     BN_none: ClassVar[Literal[0]]
     BN_polyset: ClassVar[Literal[1]]
@@ -2570,6 +2731,10 @@ class EggPolysetMaker(EggBinMaker):
     PBface = P_bface
 
 class EggPoolUniquifier(EggNameUniquifier):
+    """This is a specialization of EggNameUniquifier to generate unique names for
+    textures, materials, and vertex pools prior to writing out an egg file.
+    It's automatically called by EggData prior to writing out an egg file.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -2577,6 +2742,9 @@ class EggPoolUniquifier(EggNameUniquifier):
     getClassType = get_class_type
 
 class EggSAnimData(EggAnimData):
+    """Corresponding to an <S$Anim> entry, this stores a single column of numbers,
+    for instance for a morph target, or as one column in an EggXfmSAnim.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2595,6 +2763,11 @@ class EggSAnimData(EggAnimData):
     getClassType = get_class_type
 
 class EggTable(EggGroupNode):
+    """This corresponds to a <Table> or a <Bundle> entry.  As such, it doesn't
+    actually contain a table of numbers, but it may be a parent to an
+    EggSAnimData or an EggXfmAnimData, which do.  It may also be a parent to
+    another <Table> or <Bundle>, establishing a hierarchy of tables.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     TT_invalid: ClassVar[Literal[0]]
     TT_table: ClassVar[Literal[1]]
@@ -2621,6 +2794,10 @@ class EggTable(EggGroupNode):
     TTBundle = TT_bundle
 
 class EggTextureCollection:
+    """This is a collection of textures by TRef name.  It can extract the textures
+    from an egg file and sort them all together; it can also manage the
+    creation of unique textures and the assignment of unique TRef names.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -2664,6 +2841,9 @@ class EggTextureCollection:
     getTextures = get_textures
 
 class EggTriangleFan(EggCompositePrimitive):
+    """A connected fan of triangles.  This does not normally appear in an egg
+    file; it is typically generated as a result of meshing.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2675,6 +2855,9 @@ class EggTriangleFan(EggCompositePrimitive):
     getClassType = get_class_type
 
 class EggTriangleStrip(EggCompositePrimitive):
+    """A connected strip of triangles.  This does not normally appear in an egg
+    file; it is typically generated as a result of meshing.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -2686,6 +2869,11 @@ class EggTriangleStrip(EggCompositePrimitive):
     getClassType = get_class_type
 
 class EggXfmSAnim(EggGroupNode):
+    """This corresponds to an <Xfm$Anim_S$> entry, which is a collection of up to
+    nine <S$Anim> entries that specify the nine components of a transformation.
+    It's implemented as a group that can contain any number of EggSAnimData
+    children.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ..., cs: _CoordinateSystem = ...) -> None: ...
@@ -2742,6 +2930,11 @@ class EggXfmSAnim(EggGroupNode):
     getClassType = get_class_type
 
 class EggXfmAnimData(EggAnimData):
+    """Corresponding to an <Xfm$Anim> entry, this stores a two-dimensional table
+    with up to nine columns, one for each component of a transformation.  This
+    is an older syntax of egg anim table, not often used currently--it's
+    replaced by EggXfmSAnim.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ..., cs: _CoordinateSystem = ...) -> None: ...

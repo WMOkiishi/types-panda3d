@@ -85,6 +85,24 @@ class PStatClient:
     getThreads = get_threads
 
 class PStatCollector:
+    """A lightweight class that represents a single element that may be timed
+    and/or counted via stats.
+    
+    Collectors can be used to measure two different kinds of values: elapsed
+    time, and "other".
+    
+    To measure elapsed time, call start() and stop() as appropriate to bracket
+    the section of code you want to time (or use a PStatTimer to do this
+    automatically).
+    
+    To measure anything else, call set_level() and/or add_level() to set the
+    "level" value associated with this collector.  The meaning of the value set
+    for the "level" is entirely up to the user; it may represent the number of
+    triangles rendered or the kilobytes of texture memory consumed, for
+    instance.  The level set will remain fixed across multiple frames until it
+    is reset via another set_level() or adjusted via a call to add_level().  It
+    may also be completely removed via clear_level().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: PStatCollector) -> None: ...
@@ -167,6 +185,9 @@ class PStatCollector:
     getIndex = get_index
 
 class PStatThread:
+    """A lightweight class that represents a single thread of execution to PStats.
+    It corresponds one-to-one with Panda's Thread instance.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def thread(self) -> Thread: ...
@@ -187,5 +208,9 @@ class PStatThread:
     getIndex = get_index
 
 class PStatCollectorForward(PStatCollectorForwardBase):
+    """This class serves as a cheap forward reference to a PStatCollector, so that
+    classes that are defined before the pstats module may access the
+    PStatCollector.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, col: PStatCollector) -> None: ...

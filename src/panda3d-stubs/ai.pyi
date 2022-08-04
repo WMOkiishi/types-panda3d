@@ -4,6 +4,15 @@ from panda3d.core import LMatrix3f, LVecBase3f, NodePath, ReferenceCount
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class AIBehaviors:
+    """This class implements all the steering behaviors of the AI framework, such
+    as seek, flee, pursue, evade, wander and flock.  Each steering behavior has
+    a weight which is used when more than one type of steering behavior is
+    acting on the same ai character.  The weight decides the contribution of
+    each type of steering behavior.  The AICharacter class has a handle to an
+    object of this class and this allows to invoke the steering behaviors via
+    the AICharacter.  This class also provides functionality such as pausing,
+    resuming and removing the AI behaviors of an AI character at anytime.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: AIBehaviors) -> None: ...
     @overload
@@ -75,6 +84,12 @@ class AICharacter(ReferenceCount):
     setPfGuide = set_pf_guide
 
 class AINode:
+    """This class is used to assign the nodes on the mesh.  It holds all the data
+    necessary to compute A* algorithm.  It also maintains a lot of vital
+    information such as the neighbor nodes of each node and also its position
+    on the mesh.  Note: The Mesh Generator which is a standalone tool makes use
+    of this class to generate the nodes on the mesh.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AINode) -> None: ...
@@ -83,6 +98,9 @@ class AINode:
     def contains(self, x: float, y: float) -> bool: ...
 
 class Flock:
+    """This class is used to define the flock attributes and the AI characters
+    which are part of the flock.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: Flock) -> None: ...
@@ -94,6 +112,12 @@ class Flock:
     getId = get_id
 
 class AIWorld:
+    """A class that implements the virtual AI world which keeps track of the AI
+    characters active at any given time.  It contains a linked list of AI
+    characters, obstactle data and unique name for each character.  It also
+    updates each characters state.  The AI characters can also be added to the
+    world as flocks.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AIWorld) -> None: ...

@@ -888,6 +888,12 @@ class PointerToArray_UnalignedLVecBase4i(PointerToArrayBase_UnalignedLVecBase4i)
     getNodeRefCount = get_node_ref_count
 
 class BoundingVolume(TypedReferenceCount):
+    """This is an abstract class for any volume in any sense which can be said to
+    define the locality of reference of a node in a graph, along with all of
+    its descendants.  It is not necessarily a geometric volume (although see
+    GeometricBoundingVolume); this is simply an abstract interface for bounds
+    of any sort.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     IF_no_intersection: ClassVar[Literal[0]]
     IF_possible: ClassVar[Literal[1]]
@@ -927,6 +933,10 @@ class BoundingVolume(TypedReferenceCount):
     BTFastest = BT_fastest
 
 class GeometricBoundingVolume(BoundingVolume):
+    """This is another abstract class, for a general class of bounding volumes
+    that actually enclose points in 3-d space, such as BSP's and bounding
+    spheres.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def extend_by(self, vol: GeometricBoundingVolume) -> bool: ...
@@ -947,6 +957,10 @@ class GeometricBoundingVolume(BoundingVolume):
     getClassType = get_class_type
 
 class FiniteBoundingVolume(GeometricBoundingVolume):
+    """A special kind of GeometricBoundingVolume that is known to be finite.  It
+    is possible to query this kind of volume for its minimum and maximum
+    extents.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def min(self) -> LPoint3f: ...
@@ -965,6 +979,11 @@ class FiniteBoundingVolume(GeometricBoundingVolume):
     getClassType = get_class_type
 
 class LParabolaf:
+    """An abstract mathematical description of a parabola, particularly useful for
+    describing arcs of projectiles.
+    
+    The parabolic equation, given parametrically here, is P = At^2 + Bt + C.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -994,6 +1013,11 @@ class LParabolaf:
     readDatagram = read_datagram
 
 class LParabolad:
+    """An abstract mathematical description of a parabola, particularly useful for
+    describing arcs of projectiles.
+    
+    The parabolic equation, given parametrically here, is P = At^2 + Bt + C.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1023,6 +1047,9 @@ class LParabolad:
     readDatagram = read_datagram
 
 class LPlanef(LVecBase4f):
+    """An abstract mathematical description of a plane.  A plane is defined by the
+    equation Ax + By + Cz + D = 0.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1058,6 +1085,9 @@ class LPlanef(LVecBase4f):
     intersectsPlane = intersects_plane
 
 class LPlaned(LVecBase4d):
+    """An abstract mathematical description of a plane.  A plane is defined by the
+    equation Ax + By + Cz + D = 0.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1093,6 +1123,12 @@ class LPlaned(LVecBase4d):
     intersectsPlane = intersects_plane
 
 class BoundingBox(FiniteBoundingVolume):
+    """An axis-aligned bounding box; that is, a minimum and maximum coordinate
+    triple.
+    
+    This box is always axis-aligned.  If you need a more general bounding box,
+    try BoundingHexahedron.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def points(self) -> Sequence[LPoint3f]: ...
@@ -1167,6 +1203,11 @@ class LFrustumd:
     makePerspective = make_perspective
 
 class BoundingHexahedron(FiniteBoundingVolume):
+    """This defines a bounding convex hexahedron.  It is typically used to
+    represent a frustum, but may represent any enclosing convex hexahedron,
+    including simple boxes.  However, if all you want is an axis-aligned
+    bounding box, you may be better off with the simpler BoundingBox class.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def points(self) -> Sequence[LPoint3f]: ...
@@ -1193,6 +1234,13 @@ class BoundingHexahedron(FiniteBoundingVolume):
     getPlanes = get_planes
 
 class BoundingLine(GeometricBoundingVolume):
+    """This funny bounding volume is an infinite line with no thickness and
+    extending to infinity in both directions.
+    
+    Note that it *always* extends in both directions, despite the fact that you
+    specify two points to the constructor.  These are not endpoints, they are
+    two arbitrary points on the line.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, a: _Vec3f, b: _Vec3f) -> None: ...
     def get_point_a(self) -> LPoint3f: ...
@@ -1204,6 +1252,11 @@ class BoundingLine(GeometricBoundingVolume):
     getClassType = get_class_type
 
 class BoundingPlane(GeometricBoundingVolume):
+    """This funny bounding volume is an infinite plane that divides space into two
+    regions: the part behind the normal, which is "inside" the bounding volume,
+    and the part in front of the normal, which is "outside" the bounding
+    volume.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def plane(self) -> LPlanef: ...
@@ -1218,6 +1271,9 @@ class BoundingPlane(GeometricBoundingVolume):
     getClassType = get_class_type
 
 class BoundingSphere(FiniteBoundingVolume):
+    """This defines a bounding sphere, consisting of a center and a radius.  It is
+    always a sphere, and never an ellipsoid or other quadric.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     center: LPoint3f
     radius: float
@@ -1238,6 +1294,12 @@ class BoundingSphere(FiniteBoundingVolume):
     getClassType = get_class_type
 
 class IntersectionBoundingVolume(GeometricBoundingVolume):
+    """This special bounding volume is the intersection of all of its constituent
+    bounding volumes.
+    
+    A point is defined to be within an IntersectionBoundingVolume if it is
+    within all of its component bounding volumes.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def components(self) -> Sequence[GeometricBoundingVolume]: ...
@@ -1267,6 +1329,7 @@ class Mersenne:
     getUint31 = get_uint31
 
 class OmniBoundingVolume(GeometricBoundingVolume):
+    """This is a special kind of GeometricBoundingVolume that fills all of space."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -1274,6 +1337,12 @@ class OmniBoundingVolume(GeometricBoundingVolume):
     getClassType = get_class_type
 
 class UnionBoundingVolume(GeometricBoundingVolume):
+    """This special bounding volume is the union of all of its constituent
+    bounding volumes.
+    
+    A point is defined to be within a UnionBoundingVolume if it is within any
+    one or more of its component bounding volumes.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def components(self) -> Sequence[GeometricBoundingVolume]: ...
@@ -1295,6 +1364,7 @@ class UnionBoundingVolume(GeometricBoundingVolume):
     getComponents = get_components
 
 class Randomizer:
+    """A handy class to return random numbers."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, seed: int = ...) -> None: ...
@@ -1314,11 +1384,19 @@ class Randomizer:
     getSeed = get_seed
 
 class PerlinNoise:
+    """This is the base class for PerlinNoise2 and PerlinNoise3, different
+    dimensions of Perlin noise implementation.  The base class just collects
+    the common functionality.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_seed(self) -> int: ...
     getSeed = get_seed
 
 class PerlinNoise2(PerlinNoise):
+    """This class provides an implementation of Perlin noise for 2 variables.
+    This code is loosely based on the reference implementation at
+    https://mrl.nyu.edu/~perlin/noise/ .
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1342,6 +1420,10 @@ class PerlinNoise2(PerlinNoise):
     setScale = set_scale
 
 class PerlinNoise3(PerlinNoise):
+    """This class provides an implementation of Perlin noise for 3 variables.
+    This code is loosely based on the reference implementation at
+    http://mrl.nyu.edu/~perlin/noise/ .
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1365,6 +1447,9 @@ class PerlinNoise3(PerlinNoise):
     setScale = set_scale
 
 class StackedPerlinNoise2:
+    """Implements a multi-layer PerlinNoise, with one or more high-frequency noise
+    functions added to a lower-frequency base noise function.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1386,6 +1471,9 @@ class StackedPerlinNoise2:
     addLevel = add_level
 
 class StackedPerlinNoise3:
+    """Implements a multi-layer PerlinNoise, with one or more high-frequency noise
+    functions added to a lower-frequency base noise function.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1407,6 +1495,16 @@ class StackedPerlinNoise3:
     addLevel = add_level
 
 class Triangulator:
+    """This class can triangulate a convex or concave polygon, even one with
+    holes.  It is adapted from an algorithm published as:
+    
+    Narkhede A. and Manocha D., Fast polygon triangulation algorithm based on
+    Seidel's Algorithm, UNC-CH, 1994.
+    
+    http://www.cs.unc.edu/~dm/CODE/GEM/chapter.html
+    
+    It works strictly on 2-d points.  See Triangulator3 for 3-d points.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def vertices(self) -> Sequence[LPoint2d]: ...
@@ -1447,6 +1545,11 @@ class Triangulator:
     getVertices = get_vertices
 
 class Triangulator3(Triangulator):
+    """This is an extension of Triangulator to handle polygons with three-
+    dimensional points.  It assumes all of the points lie in a single plane,
+    and internally projects the supplied points into 2-D for passing to the
+    underlying Triangulator object.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def vertices(self) -> Sequence[LPoint3d]: ...

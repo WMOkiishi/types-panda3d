@@ -20,8 +20,8 @@ from .reps import (
 )
 from .special_cases import ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
 from .translation import (
-    check_keyword, class_name_from_cpp_name, method_name_from_cpp_name,
-    snake_to_camel
+    check_keyword, class_name_from_cpp_name, comment_to_docstring,
+    method_name_from_cpp_name, snake_to_camel
 )
 from .typedata import get_direct_type_name, get_type_name
 from .util import flatten
@@ -330,10 +330,16 @@ def make_class_rep(
             infer_opt_params=infer_opt_params,
             ignore_coercion=ignore_coercion
         )
+    # Docstring
+    if idb.interrogate_type_has_comment(t):
+        doc = comment_to_docstring(idb.interrogate_type_comment(t))
+    else:
+        doc = ''
     return Class(
         name, derivations, nested,
         is_final=idb.interrogate_type_is_final(t),
         namespace=namespace,
+        doc=doc,
     )
 
 

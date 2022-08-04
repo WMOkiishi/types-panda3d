@@ -35,6 +35,10 @@ _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _SceneGraphAnalyzer_LodMode: TypeAlias = Literal[0, 1, 2, 3]
 
 class LightNode(Light, PandaNode):
+    """A derivative of Light and of PandaNode.  All kinds of Light except
+    Spotlight (which must inherit from LensNode instead) inherit from this
+    class.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_Light(self) -> Light: ...
     def upcast_to_PandaNode(self) -> PandaNode: ...
@@ -47,6 +51,10 @@ class LightNode(Light, PandaNode):
     getClassType = get_class_type
 
 class AmbientLight(LightNode):
+    """A light source that seems to illuminate all points in space at once.  This
+    kind of light need not actually be part of the scene graph, since it has no
+    meaningful position.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
     @staticmethod
@@ -54,6 +62,9 @@ class AmbientLight(LightNode):
     getClassType = get_class_type
 
 class CallbackNode(PandaNode):
+    """A special node that can issue arbitrary callbacks to user code, either
+    during the cull or draw traversals.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     cull_callback: CallbackObject
     draw_callback: CallbackObject
@@ -75,6 +86,9 @@ class CallbackNode(PandaNode):
     getClassType = get_class_type
 
 class ComputeNode(PandaNode):
+    """A special node, the sole purpose of which is to invoke a dispatch operation
+    on the assigned compute shader.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     dispatches: Sequence[LVecBase3i]
     def __init__(self, name: str) -> None: ...
@@ -102,6 +116,10 @@ class ComputeNode(PandaNode):
     getDispatches = get_dispatches
 
 class LightLensNode(Light, Camera):
+    """A derivative of Light and of Camera.  The name might be misleading: it does
+    not directly derive from LensNode, but through the Camera class.  The
+    Camera serves no purpose unless shadows are enabled.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     shadow_buffer_size: LVecBase2i
     @property
@@ -134,6 +152,9 @@ class LightLensNode(Light, Camera):
     getClassType = get_class_type
 
 class DirectionalLight(LightLensNode):
+    """A light shining from infinitely far away in a particular direction, like
+    sunlight.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     specular_color: LVecBase4f
     point: LPoint3f
@@ -156,6 +177,10 @@ class DirectionalLight(LightLensNode):
     getClassType = get_class_type
 
 class LODNode(PandaNode):
+    """A Level-of-Detail node.  This selects only one of its children for
+    rendering, according to the distance from the camera and the table
+    indicated in the associated LOD object.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     lod_scale: float
     center: LPoint3f
@@ -223,6 +248,7 @@ class LODNode(PandaNode):
     getOuts = get_outs
 
 class FadeLODNode(LODNode):
+    """A Level-of-Detail node with alpha based switching."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     fade_time: float
     fade_state_override: int
@@ -250,6 +276,9 @@ class FadeLODNode(LODNode):
     getClassType = get_class_type
 
 class NodeCullCallbackData(CallbackData):
+    """This kind of CallbackData is passed to the CallbackObject added to
+    CallbackNode:set_cull_callback().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_trav(self) -> CullTraverser: ...
     def get_data(self) -> CullTraverserData: ...
@@ -260,6 +289,9 @@ class NodeCullCallbackData(CallbackData):
     getClassType = get_class_type
 
 class PointLight(LightLensNode):
+    """A light originating from a single point in space, and shining in all
+    directions.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     specular_color: LVecBase4f
     attenuation: LVecBase3f
@@ -285,6 +317,11 @@ class PointLight(LightLensNode):
     getClassType = get_class_type
 
 class RectangleLight(LightLensNode):
+    """This is a type of area light that is an axis aligned rectangle, pointing
+    along the Y axis in the positive direction.
+    
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     max_distance: float
     def __init__(self, name: str) -> None: ...
@@ -297,6 +334,9 @@ class RectangleLight(LightLensNode):
     getClassType = get_class_type
 
 class SelectiveChildNode(PandaNode):
+    """A base class for nodes like LODNode and SequenceNode that select only one
+    visible child at a time.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
     @staticmethod
@@ -304,6 +344,9 @@ class SelectiveChildNode(PandaNode):
     getClassType = get_class_type
 
 class SequenceNode(SelectiveChildNode, AnimInterface):
+    """A node that automatically cycles through rendering each one of its children
+    according to its frame rate.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     frame_rate: float
     def __init__(self, name: str) -> None: ...
@@ -320,6 +363,27 @@ class SequenceNode(SelectiveChildNode, AnimInterface):
     getClassType = get_class_type
 
 class ShaderGenerator(TypedReferenceCount):
+    """The ShaderGenerator is a device that effectively replaces the classic fixed
+    function pipeline with a 'next-gen' fixed function pipeline.  The next-gen
+    fixed function pipeline supports features like normal mapping, gloss
+    mapping, cartoon lighting, and so forth.  It works by automatically
+    generating a shader from a given RenderState.
+    
+    Currently, there is one ShaderGenerator object per GraphicsStateGuardian.
+    It is our intent that in time, people will write classes that derive from
+    ShaderGenerator but which yield slightly different results.
+    
+    The ShaderGenerator owes its existence to the 'Bamboo Team' at Carnegie
+    Mellon's Entertainment Technology Center.  This is a group of students who,
+    as a semester project, decided that next-gen graphics should be accessible
+    to everyone, even if they don't know shader programming.  The group
+    consisted of:
+    
+    Aaron Lo, Programmer Heegun Lee, Programmer Erin Fernandez, Artist/Tester
+    Joe Grubb, Artist/Tester Ivan Ortega, Technical Artist/Tester
+    
+    Thanks to them!
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, gsg: GraphicsStateGuardianBase) -> None: ...
@@ -336,6 +400,11 @@ class ShaderGenerator(TypedReferenceCount):
     getClassType = get_class_type
 
 class SphereLight(PointLight):
+    """A sphere light is like a point light, except that it represents a sphere
+    with a radius, rather than being an infinitely thin point in space.
+    
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
     def __init__(self, name: str) -> None: ...
@@ -348,6 +417,15 @@ class SphereLight(PointLight):
     getClassType = get_class_type
 
 class Spotlight(LightLensNode):
+    """A light originating from a single point in space, and shining in a
+    particular direction, with a cone-shaped falloff.
+    
+    The Spotlight frustum is defined using a Lens, so it can have any of the
+    properties that a camera lens can have.
+    
+    Note that the class is named Spotlight instead of SpotLight, because
+    "spotlight" is a single English word, instead of two words.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     exponent: float
     specular_color: LVecBase4f
@@ -374,6 +452,9 @@ class Spotlight(LightLensNode):
     getClassType = get_class_type
 
 class SwitchNode(SelectiveChildNode):
+    """A node that renders only one of its children, according to the user's
+    indication.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     visible_child: int
     def __init__(self, name: str) -> None: ...
@@ -386,6 +467,7 @@ class SwitchNode(SelectiveChildNode):
     getClassType = get_class_type
 
 class UvScrollNode(PandaNode):
+    """This node is placed at key points within the scene graph to animate uvs."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     u_speed: float
     v_speed: float
@@ -416,6 +498,9 @@ class UvScrollNode(PandaNode):
     getClassType = get_class_type
 
 class SceneGraphAnalyzer:
+    """A handy class that can scrub over a scene graph and collect interesting
+    statistics on it.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     LM_lowest: ClassVar[Literal[0]]
     LM_highest: ClassVar[Literal[1]]

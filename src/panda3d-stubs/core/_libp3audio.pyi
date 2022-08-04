@@ -241,6 +241,11 @@ class AudioManager(TypedReferenceCount):
     SMStream = SM_stream
 
 class AudioLoadRequest(AsyncTask):
+    """A class object that manages a single asynchronous audio load request.  This
+    works in conjunction with the Loader class defined in pgraph, or really
+    with any AsyncTaskManager.  Create a new AudioLoadRequest, and add it to
+    the loader via load_async(), to begin an asynchronous load.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AudioLoadRequest) -> None: ...

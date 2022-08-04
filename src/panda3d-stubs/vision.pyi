@@ -6,6 +6,17 @@ from panda3d.core import ConfigVariableFilename, Filename, MovieVideo, NodePath,
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 
 class ARToolKit:
+    """ARToolKit is a software library for building Augmented Reality (AR)
+    applications.  These are applications that involve the overlay of virtual
+    imagery on the real world.  It was developed by Dr.  Hirokazu Kato.  Its
+    ongoing development is being supported by the Human Interface Technology
+    Laboratory (HIT Lab) at the University of Washington, HIT Lab NZ at the
+    University of Canterbury, New Zealand, and ARToolworks, Inc, Seattle.  It
+    is available under a GPL license.  It is also possible to negotiate other
+    licenses with the copyright holders.
+    
+    This class is a wrapper around the ARToolKit library.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ARToolKit) -> None: ...
     @staticmethod
@@ -19,6 +30,9 @@ class ARToolKit:
     detachPatterns = detach_patterns
 
 class WebcamVideo(MovieVideo):
+    """Allows you to open a webcam or other video capture device as a video
+    stream.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def options(self) -> Sequence[WebcamVideo]: ...

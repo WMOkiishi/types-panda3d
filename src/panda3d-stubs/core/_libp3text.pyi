@@ -38,6 +38,9 @@ _TextProperties_Direction: TypeAlias = Literal[0, 1]
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 
 class TextGlyph(TypedReferenceCount):
+    """A representation of a single glyph (character) from a font.  This is a
+    piece of renderable geometry of some kind.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def character(self) -> int: ...
@@ -64,6 +67,12 @@ class TextGlyph(TypedReferenceCount):
     getClassType = get_class_type
 
 class TextFont(TypedReferenceCount, Namable):
+    """An encapsulation of a font; i.e.  a set of glyphs that may be assembled
+    together by a TextNode to represent a string of text.
+    
+    This is just an abstract interface; see StaticTextFont or DynamicTextFont
+    for an actual implementation.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     line_height: float
     space_advance: float
@@ -110,6 +119,10 @@ class TextFont(TypedReferenceCount, Namable):
     RMInvalid = RM_invalid
 
 class DynamicTextGlyph(TextGlyph):
+    """A specialization on TextGlyph that is generated and stored by a
+    DynamicTextFont.  This keeps some additional information, such as where the
+    glyph appears on a texture map.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def page(self) -> DynamicTextPage: ...
@@ -137,6 +150,10 @@ class DynamicTextGlyph(TextGlyph):
     getClassType = get_class_type
 
 class DynamicTextPage(Texture):
+    """A single "page" of a DynamicTextFont.  This is a single texture that holds
+    a number of glyphs for rendering.  The font starts out with one page, and
+    will add more as it needs them.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: DynamicTextPage) -> None: ...
     def get_size(self) -> LVecBase2i: ...
@@ -152,6 +169,10 @@ class DynamicTextPage(Texture):
     getClassType = get_class_type
 
 class DynamicTextFont(TextFont, FreetypeFont):
+    """A DynamicTextFont is a special TextFont object that rasterizes its glyphs
+    from a standard font file (e.g.  a TTF file) on the fly.  It requires the
+    FreeType 2.0 library (or any higher, backward-compatible version).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     point_size: float
     pixels_per_unit: float
@@ -276,6 +297,10 @@ class DynamicTextFont(TextFont, FreetypeFont):
     getPages = get_pages
 
 class FontPool:
+    """This is the preferred interface for loading fonts for the TextNode system.
+    It is similar to ModelPool and TexturePool in that it unifies references to
+    the same filename.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def has_font(filename: str) -> bool: ...
@@ -305,12 +330,22 @@ class FontPool:
     listContents = list_contents
 
 class GeomTextGlyph(Geom):
+    """This is a specialization on Geom for containing a primitive intended to
+    represent a TextGlyph.  Its sole purpose is to maintain the geom count on
+    the glyph, so we can determine the actual usage count on a dynamic glyph
+    (and thus know when it is safe to recycle the glyph).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
 
 class StaticTextFont(TextFont):
+    """A StaticTextFont is loaded up from a model that was previously generated
+    via egg-mkfont, and contains all of its glyphs already generated and
+    available for use.  It doesn't require linking with any external libraries
+    like FreeType.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, font_def: PandaNode, cs: _CoordinateSystem = ...) -> None: ...
     @staticmethod
@@ -318,6 +353,21 @@ class StaticTextFont(TextFont):
     getClassType = get_class_type
 
 class TextProperties:
+    """This defines the set of visual properties that may be assigned to the
+    individual characters of the text.  (Properties which affect the overall
+    block of text can only be specified on the TextNode directly).
+    
+    Typically, there is just one set of properties on a given block of text,
+    which is set directly on the TextNode (TextNode inherits from
+    TextProperties). That makes all of the text within a particular block have
+    the same appearance.
+    
+    This separate class exists in order to implement multiple different kinds
+    of text appearing within one block.  The text string itself may reference a
+    TextProperties structure by name using the \1 and \2 tokens embedded within
+    the string; each nested TextProperties structure modifies the appearance of
+    subsequent text within the block.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     font: TextFont
     small_caps: bool
@@ -548,6 +598,20 @@ class TextProperties:
     DRtl = D_rtl
 
 class TextGraphic:
+    """This defines a special model that has been constructed for the purposes of
+    embedding an arbitrary graphic image within a text paragraph.
+    
+    It can be any arbitrary model, though it should be built along the same
+    scale as the text, and it should probably be at least mostly two-
+    dimensional.  Typically, this means it should be constructed in the X-Z
+    plane, and it should have a maximum vertical (Z) height of 1.0.
+    
+    The frame specifies an arbitrary bounding volume in the form (left, right,
+    bottom, top).  This indicates the amount of space that will be reserved
+    within the paragraph.  The actual model is not actually required to fit
+    within this rectangle, but if it does not, it may visually overlap with
+    nearby text.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     model: NodePath
     frame: LVecBase4f
@@ -577,6 +641,26 @@ class TextGraphic:
     setInstanceFlag = set_instance_flag
 
 class TextPropertiesManager:
+    """This defines all of the TextProperties structures that might be referenced
+    by name from an embedded text string.
+    
+    A text string, as rendered by a TextNode, can contain embedded references
+    to one of the TextProperties defined here, by enclosing the name between \1
+    (ASCII 0x01) characters; this causes a "push" to the named state.  All text
+    following the closing \1 character will then be rendered in the new state.
+    The next \2 (ASCII 0x02) character will then restore the previous state for
+    subsequent text.
+    
+    For instance, "x\1up\1n\2 + y" indicates that the character "x" will be
+    rendered in the normal state, the character "n" will be rendered in the
+    "up" state, and then " + y" will be rendered in the normal state again.
+    
+    This can also be used to define arbitrary models that can serve as embedded
+    graphic images in a text paragraph.  This works similarly; the convention
+    is to create a TextGraphic that describes the graphic image, and then
+    associate it here via the set_graphic() call.  Then "\5name\5" will embed
+    the named graphic.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_properties(self, name: str, properties: TextProperties) -> None: ...
     def get_properties(self, name: str) -> TextProperties: ...
@@ -603,6 +687,11 @@ class TextPropertiesManager:
     getGlobalPtr = get_global_ptr
 
 class TextAssembler:
+    """This class is not normally used directly by user code, but is used by the
+    TextNode to lay out a block of text and convert it into rows of Geoms
+    according to the TextProperties.  However, user code may take advantage of
+    it, if desired, for very low-level text operations.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     usage_hint: _GeomEnums_UsageHint
     max_rows: int
@@ -707,6 +796,23 @@ class TextAssembler:
     isWhitespace = is_whitespace
 
 class TextNode(PandaNode, TextEncoder, TextProperties):
+    """The primary interface to this module.  This class does basic text assembly;
+    given a string of text and a TextFont object, it creates a piece of
+    geometry that may be placed in the 3-d or 2-d world to represent the
+    indicated text.
+    
+    The TextNode may be used in one of two ways.  Naively, it may simply be
+    parented directly into the scene graph and rendered as if it were a
+    GeomNode; in this mode, the actual polygon geometry that renders the text
+    is not directly visible or accessible, but remains hidden within the
+    TextNode.
+    
+    The second way TextNode may be used is as a text generator.  To use it in
+    this way, do not parent the TextNode to the scene graph; instead, set the
+    properties of the text and call generate() to return an ordinary node,
+    containing ordinary geometry, which you may use however you like.  Each
+    time you call generate() a new node is returned.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     max_rows: int
     frame_color: LVecBase4f

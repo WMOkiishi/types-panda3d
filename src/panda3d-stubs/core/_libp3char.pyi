@@ -24,6 +24,9 @@ _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class CharacterJoint(MovingPartMatrix):
+    """This represents one joint of the character's animation, containing an
+    animating transform matrix.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, character: Character, root: PartBundle, parent: PartGroup, name: str, default_value: _Mat4f) -> None: ...
     def add_net_transform(self, node: PandaNode) -> bool: ...
@@ -62,6 +65,10 @@ class CharacterJoint(MovingPartMatrix):
     getClassType = get_class_type
 
 class CharacterSlider(MovingPartScalar):
+    """This is a morph slider within the character.  It's simply a single
+    floating-point value that animates generally between 0 and 1, that controls
+    the effects of one or more morphs within the character.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, parent: PartGroup, name: str) -> None: ...
@@ -72,6 +79,9 @@ class CharacterSlider(MovingPartScalar):
     getClassType = get_class_type
 
 class CharacterVertexSlider(VertexSlider):
+    """This is a specialization on VertexSlider that returns the slider value
+    associated with a particular CharacterSlider object.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, char_slider: CharacterSlider) -> None: ...
     def get_char_slider(self) -> CharacterSlider: ...
@@ -81,6 +91,15 @@ class CharacterVertexSlider(VertexSlider):
     getClassType = get_class_type
 
 class JointVertexTransform(VertexTransform):
+    """This is a specialization on VertexTransform that returns the transform
+    necessary to move vertices as if they were assigned to the indicated joint.
+    The geometry itself should be parented to the scene graph at the level of
+    the character's root joint; that is, it should not be parented under a node
+    directly animated by any joints.
+    
+    Multiple combinations of these with different weights are used to implement
+    soft-skinned vertices for an animated character.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, joint: CharacterJoint) -> None: ...
     def get_joint(self) -> CharacterJoint: ...
@@ -90,6 +109,9 @@ class JointVertexTransform(VertexTransform):
     getClassType = get_class_type
 
 class Character(PartBundleNode):
+    """An animated character, with skeleton-morph animation and either soft-
+    skinned or hard-skinned vertices.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: Character) -> None: ...
@@ -124,6 +146,7 @@ class Character(PartBundleNode):
     getClassType = get_class_type
 
 class CharacterJointBundle(PartBundle):
+    """The collection of all the joints and sliders in the character."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def get_node(self, n: int) -> Character: ...
@@ -133,6 +156,14 @@ class CharacterJointBundle(PartBundle):
     getClassType = get_class_type
 
 class CharacterJointEffect(RenderEffect):
+    """This effect will be added automatically to a node by
+    CharacterJoint::add_net_transform() and
+    CharacterJoint::add_local_transform().
+    
+    The effect binds the node back to the character, so that querying the
+    relative transform of the affected node will automatically force the
+    indicated character to be updated first.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def make(character: Character) -> RenderEffect: ...

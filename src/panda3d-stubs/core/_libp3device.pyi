@@ -18,6 +18,7 @@ from panda3d.core import (
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 
 class TrackerData:
+    """Stores the kinds of data that a tracker might output."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     time: float
     pos: LPoint3f
@@ -25,6 +26,26 @@ class TrackerData:
     dt: float
 
 class InputDevice(TypedReferenceCount):
+    """This is a structure representing a single input device.  Input devices may
+    have zero or more buttons, pointers, or axes associated with them, and
+    optionally a motion tracker.
+    
+    These devices are brought under a common interface because there is such a
+    large range of devices out there that may support any number of these types
+    of axes, we couldn't even begin to cover them with type-specific
+    subclasses.
+    
+    Use the various has_() and get_num_() methods to determine information about
+    the device capabilities. For instance, has_keyboard() will give an
+    indication that you can receive keystroke events from this device, and
+    get_num_buttons() will tell you that the device may send button events.
+    
+    There is the DeviceType enumeration, however, which will (if known) contain
+    identification of the general category of devices this fits in, such as
+    keyboard, mouse, gamepad, or flight stick.
+    
+    @since 1.10.0
+    """
     class DeviceClass(Enum):
         unknown: int
         virtual_device: int
@@ -155,6 +176,13 @@ class InputDevice(TypedReferenceCount):
     SDown = S_down
 
 class ClientBase(TypedReferenceCount):
+    """An abstract base class for a family of client device interfaces--including
+    trackers, buttons, dials, and other analog inputs.
+    
+    This provides a common interface to connect to such devices and extract
+    their data; it is used by TrackerNode etc.  to put these devices in the
+    data graph.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def fork_asynchronous_thread(self, poll_time: float) -> bool: ...
     def is_forked(self) -> bool: ...
@@ -172,6 +200,19 @@ class ClientBase(TypedReferenceCount):
     getClassType = get_class_type
 
 class AnalogNode(DataNode):
+    """This is the primary interface to analog controls like sliders and joysticks
+    associated with a ClientBase.  This creates a node that connects to the
+    named analog device, if it exists, and provides hooks to the user to read
+    the state of any of the sequentially numbered controls associated with that
+    device.
+    
+    Each control can return a value ranging from -1 to 1, reflecting the
+    current position of the control within its total range of motion.
+    
+    The user may choose up to two analog controls to place on the data graph as
+    the two channels of an xy datagram, similarly to the way a mouse places its
+    position data.  In this way, an AnalogNode may be used in place of a mouse.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AnalogNode) -> None: ...
@@ -200,6 +241,15 @@ class AnalogNode(DataNode):
     getClassType = get_class_type
 
 class ButtonNode(DataNode):
+    """This is the primary interface to on/off button devices associated with a
+    ClientBase.  This creates a node that connects to the named button device,
+    if it exists, and provides hooks to the user to read the state of any of
+    the sequentially numbered buttons associated with that device.
+    
+    It also can associate an arbitrary ButtonHandle with each button; when
+    buttons are associated with ButtonHandles, this node will put appropriate
+    up and down events on the data graph for each button state change.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ButtonNode) -> None: ...
@@ -224,6 +274,15 @@ class ButtonNode(DataNode):
     getClassType = get_class_type
 
 class DialNode(DataNode):
+    """This is the primary interface to infinite dial type devices associated with
+    a ClientBase.  This creates a node that connects to the named dial device,
+    if it exists, and provides hooks to the user to read the state of any of
+    the sequentially numbered dial controls associated with that device.
+    
+    A dial is a rotating device that does not have stops--it can keep rotating
+    any number of times.  Therefore it does not have a specific position at any
+    given time, unlike an AnalogDevice.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: DialNode) -> None: ...
@@ -242,6 +301,10 @@ class DialNode(DataNode):
     getClassType = get_class_type
 
 class InputDeviceSet:
+    """Manages a list of InputDevice objects, as returned by various
+    InputDeviceManager methods.  This is implemented like a set, meaning the
+    same device cannot occur more than once.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -256,6 +319,11 @@ class InputDeviceSet:
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
 
 class InputDeviceManager:
+    """This class keeps track of all the devices on a system, and sends out events
+    when a device has been hot-plugged.
+    
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def get_devices(self) -> InputDeviceSet: ...
@@ -272,6 +340,11 @@ class InputDeviceManager:
     getGlobalPtr = get_global_ptr
 
 class InputDeviceNode(DataNode):
+    """Reads the controller data sent from the InputDeviceManager, and transmits
+    it down the data graph.
+    
+    This is intended to only be accessed from the app thread.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     device: InputDevice
     @overload
@@ -283,6 +356,11 @@ class InputDeviceNode(DataNode):
     getClassType = get_class_type
 
 class TrackerNode(DataNode):
+    """This class reads the position and orientation information from a tracker
+    device and makes it available as a transformation on the data graph.
+    It is also the primary interface to a Tracker object associated with a
+    ClientBase.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, device: InputDevice) -> None: ...
@@ -315,6 +393,11 @@ class TrackerNode(DataNode):
     getClassType = get_class_type
 
 class VirtualMouse(DataNode):
+    """Poses as a MouseAndKeyboard object in the datagraph, but accepts input from
+    user calls, rather than reading the actual mouse and keyboard from an input
+    device.  The user can write high-level code to put the mouse wherever
+    he/she wants, and to insert keypresses on demand.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: VirtualMouse) -> None: ...

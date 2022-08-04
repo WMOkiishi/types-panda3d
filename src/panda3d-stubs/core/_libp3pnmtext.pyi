@@ -17,6 +17,11 @@ _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLik
 _PNMTextMaker_Alignment: TypeAlias = Literal[0, 1, 2]
 
 class FreetypeFont(Namable):
+    """This is a common base class for both DynamicTextFont and PNMTextMaker.
+    Both of these are utility classes that use the FreeType library to generate
+    glyphs from fonts; this class abstracts out that common wrapper around
+    FreeType.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     winding_order: _FreetypeFont_WindingOrder
     WO_default: ClassVar[Literal[0]]
@@ -65,6 +70,7 @@ class FreetypeFont(Namable):
     WOInvalid = WO_invalid
 
 class PNMTextGlyph:
+    """A single glyph in a PNMTextMaker."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: PNMTextGlyph) -> None: ...
@@ -94,6 +100,11 @@ class PNMTextGlyph:
     getInteriorFlag = get_interior_flag
 
 class PNMTextMaker(FreetypeFont):
+    """This object uses the Freetype library to generate text directly into an
+    image.  It is different from the TextNode/DynamicTextFont interface, which
+    use the Freetype library to generate text in the scene graph, to be
+    rendered onscreen via the Panda render traversal.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     A_left: ClassVar[Literal[0]]
     A_right: ClassVar[Literal[1]]

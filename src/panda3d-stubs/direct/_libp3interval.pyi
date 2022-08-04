@@ -25,6 +25,15 @@ _CMetaInterval_RelativeStart: TypeAlias = Literal[0, 1, 2]
 _CMetaInterval_DefType: TypeAlias = Literal[0, 1, 2, 3]
 
 class CInterval(TypedReferenceCount):
+    """The base class for timeline components.  A CInterval represents a single
+    action, event, or collection of nested intervals that will be performed at
+    some specific time or over a period of time.
+    
+    This is essentially similar to the Python "Interval" class, but it is
+    implemented in C++ (hence the name). Intervals that may be implemented in
+    C++ will inherit from this class; Intervals that must be implemented in
+    Python will inherit from the similar Python class.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     done_event: str
     t: float
@@ -155,6 +164,17 @@ class CInterval(TypedReferenceCount):
     SFinal = S_final
 
 class CIntervalManager:
+    """This object holds a number of currently-playing intervals and is
+    responsible for advancing them each frame as needed.
+    
+    There is normally only one IntervalManager object in the world, and it is
+    the responsibility of the scripting language to call step() on this object
+    once each frame, and to then process the events indicated by
+    get_next_event().
+    
+    It is also possible to create multiple IntervalManager objects for special
+    needs.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def set_event_queue(self, event_queue: EventQueue) -> None: ...
@@ -186,6 +206,9 @@ class CIntervalManager:
     getGlobalPtr = get_global_ptr
 
 class CConstraintInterval(CInterval):
+    """The base class for a family of intervals that constrain some property to a
+    value over time.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     bogus_variable: bool
     def __init__(self, __param0: CConstraintInterval) -> None: ...
@@ -194,6 +217,9 @@ class CConstraintInterval(CInterval):
     getClassType = get_class_type
 
 class CConstrainHprInterval(CConstraintInterval):
+    """A constraint interval that will constrain the orientation of one node to
+    the orientation of another.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainHprInterval) -> None: ...
@@ -208,6 +234,9 @@ class CConstrainHprInterval(CConstraintInterval):
     getClassType = get_class_type
 
 class CConstrainPosHprInterval(CConstraintInterval):
+    """A constraint interval that will constrain the position and orientation of
+    one node to the position and orientation of another.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainPosHprInterval) -> None: ...
@@ -222,6 +251,9 @@ class CConstrainPosHprInterval(CConstraintInterval):
     getClassType = get_class_type
 
 class CConstrainPosInterval(CConstraintInterval):
+    """A constraint interval that will constrain the position of one node to the
+    position of another.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainPosInterval) -> None: ...
@@ -236,6 +268,9 @@ class CConstrainPosInterval(CConstraintInterval):
     getClassType = get_class_type
 
 class CConstrainTransformInterval(CConstraintInterval):
+    """A constraint interval that will constrain the transform of one node to the
+    transform of another.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainTransformInterval) -> None: ...
@@ -250,6 +285,9 @@ class CConstrainTransformInterval(CConstraintInterval):
     getClassType = get_class_type
 
 class CLerpInterval(CInterval):
+    """The base class for a family of intervals that linearly interpolate one or
+    more numeric values over time.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     BT_no_blend: ClassVar[Literal[0]]
     BT_ease_in: ClassVar[Literal[1]]
@@ -272,6 +310,14 @@ class CLerpInterval(CInterval):
     BTInvalid = BT_invalid
 
 class CLerpAnimEffectInterval(CLerpInterval):
+    """This interval lerps between different amounts of control effects for
+    various AnimControls that might be playing on an actor.  It's used to
+    change the blending amount between multiple animations.
+    
+    The idea is to start all the animations playing first, then use a
+    CLerpAnimEffectInterval to adjust the degree to which each animation
+    affects the actor.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CLerpAnimEffectInterval) -> None: ...
@@ -284,6 +330,9 @@ class CLerpAnimEffectInterval(CLerpInterval):
     getClassType = get_class_type
 
 class CLerpNodePathInterval(CLerpInterval):
+    """An interval that lerps one or more properties (like pos, hpr, etc.) on a
+    NodePath over time.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CLerpNodePathInterval) -> None: ...
@@ -350,6 +399,10 @@ class CLerpNodePathInterval(CLerpInterval):
     getClassType = get_class_type
 
 class CMetaInterval(CInterval):
+    """This interval contains a list of nested intervals, each of which has its
+    own begin and end times.  Some of them may overlap and some of them may
+    not.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     RS_previous_end: ClassVar[Literal[0]]
     RS_previous_begin: ClassVar[Literal[1]]
@@ -413,6 +466,7 @@ class CMetaInterval(CInterval):
     DTPopLevel = DT_pop_level
 
 class HideInterval(CInterval):
+    """An interval that calls NodePath::hide()."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: HideInterval) -> None: ...
@@ -458,6 +512,7 @@ class NoBlendType(LerpBlendType):
     getClassType = get_class_type
 
 class ShowInterval(CInterval):
+    """An interval that calls NodePath::show()."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ShowInterval) -> None: ...
@@ -468,6 +523,9 @@ class ShowInterval(CInterval):
     getClassType = get_class_type
 
 class WaitInterval(CInterval):
+    """This interval does absolutely nothing, and is mainly useful for marking
+    time between other intervals within a sequence.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: WaitInterval) -> None: ...

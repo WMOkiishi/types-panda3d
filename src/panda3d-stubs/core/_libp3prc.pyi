@@ -8,6 +8,10 @@ _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLik
 _NotifySeverity: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 
 class ConfigFlags:
+    """This class is the base class of both ConfigVariable and ConfigVariableCore.
+    It exists only to provide a convenient name scoping for some enumerated
+    values common to both classes.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     VT_undefined: ClassVar[Literal[0]]
     VT_list: ClassVar[Literal[1]]
@@ -47,6 +51,11 @@ class ConfigFlags:
     FDconfig = F_dconfig
 
 class ConfigPage:
+    """A page of ConfigDeclarations that may be loaded or unloaded.  Typically
+    this represents a single .prc file that is read from disk at runtime, but
+    it may also represent a list of declarations built up by application code
+    and explicitly loaded.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     sort: int
     trust_level: int
@@ -113,6 +122,11 @@ class ConfigPage:
     outputBriefSignature = output_brief_signature
 
 class ConfigDeclaration(ConfigFlags):
+    """A single declaration of a config variable, typically defined as one line in
+    a .prc file, e.g.  "show-frame-rate-meter 1".  This is really just a
+    pairing of a string name (actually, a ConfigVariableCore pointer) to a
+    string value.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def page(self) -> ConfigPage: ...
@@ -166,6 +180,13 @@ class ConfigDeclaration(ConfigFlags):
     getDeclSeq = get_decl_seq
 
 class ConfigVariableCore(ConfigFlags):
+    """The internal definition of a ConfigVariable.  This object is shared between
+    all instances of a ConfigVariable that use the same variable name.
+    
+    You cannot create a ConfigVariableCore instance directly; instead, use the
+    make() method, which may return a shared instance.  Once created, these
+    objects are never destructed.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     value_type: _ConfigFlags_ValueType
     description: str
@@ -252,6 +273,15 @@ class ConfigVariableCore(ConfigFlags):
     getUniqueReferences = get_unique_references
 
 class Notify:
+    """An object that handles general error reporting to the user.  It contains a
+    pointer to an ostream, initially cerr, which can be reset at will to point
+    to different output devices, according to the needs of the application.
+    All output generated within Panda should vector through the Notify ostream.
+    
+    This also includes a collection of Categories and Severities, which may be
+    independently enabled or disabled, so that error messages may be squelched
+    or respected according to the wishes of the user.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -291,6 +321,9 @@ class Notify:
     writeString = write_string
 
 class ConfigPageManager(ConfigFlags):
+    """A global object that maintains the set of ConfigPages everywhere in the
+    world, and keeps them in sorted order.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def search_path(self) -> DSearchPath: ...
@@ -343,6 +376,10 @@ class ConfigPageManager(ConfigFlags):
     getGlobalPtr = get_global_ptr
 
 class ConfigVariableManager:
+    """A global object that maintains the set of ConfigVariables (actually,
+    ConfigVariableCores) everywhere in the world, and keeps them in sorted
+    order.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def variables(self) -> Sequence[ConfigVariableCore]: ...
@@ -375,6 +412,15 @@ class ConfigVariableManager:
     getVariables = get_variables
 
 class ConfigVariableBase(ConfigFlags):
+    """This class is the base class for both ConfigVariableList and ConfigVariable
+    (and hence for all of the ConfigVariableBool, ConfigVaribleString, etc.
+    classes).  It collects together the common interface for all generic
+    ConfigVariables.
+    
+    Mostly, this class serves as a thin wrapper around ConfigVariableCore
+    and/or ConfigDeclaration, more or less duplicating the interface presented
+    there.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def name(self) -> str: ...
@@ -412,6 +458,15 @@ class ConfigVariableBase(ConfigFlags):
     hasValue = has_value
 
 class ConfigVariable(ConfigVariableBase):
+    """This is a generic, untyped ConfigVariable.  It is also the base class for
+    the typed ConfigVariables, and contains all of the code common to
+    ConfigVariables of all types (except ConfigVariableList, which is a bit of
+    a special case).
+    
+    Mostly, this class serves as a thin wrapper around ConfigVariableCore
+    and/or ConfigDeclaration, more or less duplicating the interface presented
+    there.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ConfigVariable) -> None: ...
@@ -427,6 +482,7 @@ class ConfigVariable(ConfigVariableBase):
     getNumWords = get_num_words
 
 class ConfigVariableBool(ConfigVariable):
+    """This is a convenience class to specialize ConfigVariable as a boolean type."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     value: bool
     @property
@@ -453,6 +509,9 @@ class ConfigVariableBool(ConfigVariable):
     setWord = set_word
 
 class ConfigVariableDouble(ConfigVariable):
+    """This is a convenience class to specialize ConfigVariable as a floating-
+    point type.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     value: float
     @property
@@ -479,6 +538,12 @@ class ConfigVariableDouble(ConfigVariable):
     setWord = set_word
 
 class ConfigVariableFilename(ConfigVariable):
+    """This is a convenience class to specialize ConfigVariable as a Filename
+    type.  It is almost the same thing as ConfigVariableString, except it
+    handles an implicit Filename::expand_from() operation so that the user may
+    put OS-specific filenames, or filenames based on environment variables, in
+    the prc file.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     value: Filename
     @property
@@ -525,6 +590,9 @@ class ConfigVariableFilename(ConfigVariable):
     setWord = set_word
 
 class ConfigVariableInt(ConfigVariable):
+    """This is a convenience class to specialize ConfigVariable as an integer
+    type.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     value: int
     @property
@@ -551,6 +619,9 @@ class ConfigVariableInt(ConfigVariable):
     setWord = set_word
 
 class ConfigVariableInt64(ConfigVariable):
+    """This is a convenience class to specialize ConfigVariable as a 64-bit
+    integer type.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     value: int
     @property
@@ -577,6 +648,16 @@ class ConfigVariableInt64(ConfigVariable):
     setWord = set_word
 
 class ConfigVariableList(ConfigVariableBase):
+    """This class is similar to ConfigVariable, but it reports its value as a list
+    of strings.  In this special case, all of the declarations of the variable
+    are returned as the elements of this list, in order.
+    
+    Note that this is different from a normal ConfigVariableString, which just
+    returns its topmost value, which can optionally be treated as a number of
+    discrete words by dividing it at the spaces.
+    
+    A ConfigVariableList cannot be modified locally.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ConfigVariableList) -> None: ...
@@ -596,6 +677,20 @@ class ConfigVariableList(ConfigVariableBase):
     getUniqueValue = get_unique_value
 
 class ConfigVariableSearchPath(ConfigVariableBase):
+    """This is similar to a ConfigVariableList, but it returns its list as a
+    DSearchPath, as a list of directories.
+    
+    You may locally append directories to the end of the search path with the
+    methods here, or prepend them to the beginning.  Use these methods to make
+    adjustments to the path; do not attempt to directly modify the const
+    DSearchPath object returned by get_value().
+    
+    Unlike other ConfigVariable types, local changes (made by calling
+    append_directory() and prepend_directory()) are specific to this particular
+    instance of the ConfigVariableSearchPath.  A separate instance of the same
+    variable, created by using the same name to the constructor, will not
+    reflect the local changes.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def value(self) -> DSearchPath: ...
@@ -646,6 +741,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     getDirectories = get_directories
 
 class ConfigVariableString(ConfigVariable):
+    """This is a convenience class to specialize ConfigVariable as a string type."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     value: str
     @property
@@ -679,6 +775,11 @@ class ConfigVariableString(ConfigVariable):
     setWord = set_word
 
 class NotifyCategory(ConfigFlags):
+    """A particular category of error messages.  Typically there will be one of
+    these per package, so that we can turn on or off error messages at least at
+    a package level; further nested categories can be created within a package
+    if a finer grain of control is required.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     severity: _NotifySeverity
     @property
@@ -730,6 +831,15 @@ class NotifyCategory(ConfigFlags):
     getChildren = get_children
 
 class IDecryptStream(istream):
+    """An input stream object that uses OpenSSL to decrypt the input from another
+    source stream on-the-fly.
+    
+    Attach an IDecryptStream to an existing istream that provides encrypted
+    data, as generated by an OEncryptStream, and read the corresponding
+    unencrypted data from the IDecryptStream.
+    
+    Seeking is not supported.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def algorithm(self) -> str: ...
@@ -751,6 +861,14 @@ class IDecryptStream(istream):
     getIterationCount = get_iteration_count
 
 class OEncryptStream(ostream):
+    """An input stream object that uses OpenSSL to encrypt data to another
+    destination stream on-the-fly.
+    
+    Attach an OEncryptStream to an existing ostream that will accept encrypted
+    data, and write your unencrypted source data to the OEncryptStream.
+    
+    Seeking is not supported.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     algorithm: str
     key_length: int
@@ -769,6 +887,9 @@ class OEncryptStream(ostream):
     setIterationCount = set_iteration_count
 
 class StreamReader:
+    """A class to read sequential binary data directly from an istream.  Its
+    interface is similar to DatagramIterator by design; see also StreamWriter.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def istream(self) -> istream: ...
@@ -833,6 +954,11 @@ class StreamReader:
     extractBytes = extract_bytes
 
 class StreamWriter:
+    """A StreamWriter object is used to write sequential binary data directly to
+    an ostream.  Its interface is very similar to Datagram by design; it's
+    primarily intended as a convenience to eliminate the overhead of writing
+    bytes to a Datagram and then writing the Datagram to a stream.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     softspace: int
     @property
@@ -898,11 +1024,18 @@ class StreamWriter:
     appendData = append_data
 
 class StreamWrapperBase:
+    """The base class for both IStreamWrapper and OStreamWrapper, this provides
+    the common locking interface.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self) -> None: ...
     def release(self) -> None: ...
 
 class IStreamWrapper(StreamWrapperBase):
+    """This class provides a locking wrapper around an arbitrary istream pointer.
+    A thread may use this class to perform an atomic seek/read/gcount
+    operation.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def istream(self) -> istream: ...
@@ -913,6 +1046,9 @@ class IStreamWrapper(StreamWrapperBase):
     getIstream = get_istream
 
 class OStreamWrapper(StreamWrapperBase):
+    """This class provides a locking wrapper around an arbitrary ostream pointer.
+    A thread may use this class to perform an atomic seek/write operation.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def ostream(self) -> ostream: ...
@@ -923,6 +1059,9 @@ class OStreamWrapper(StreamWrapperBase):
     getOstream = get_ostream
 
 class StreamWrapper(IStreamWrapper, OStreamWrapper):
+    """This class provides a locking wrapper around a combination ostream/istream
+    pointer.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def iostream(self) -> iostream: ...

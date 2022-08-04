@@ -25,6 +25,10 @@ _DocumentSpec_RequestMode: TypeAlias = Literal[0, 1, 2, 3]
 _DocumentSpec_CacheControl: TypeAlias = Literal[0, 1, 2]
 
 class SSReader:
+    """An internal class for reading from a socket stream.  This serves as a base
+    class for both ISocketStream and SocketStream; its purpose is to minimize
+    redundant code between them.  Do not use it directly.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def receive_datagram(self, dg: Datagram) -> bool: ...
     def is_closed(self) -> bool: ...
@@ -37,6 +41,10 @@ class SSReader:
     getTcpHeaderSize = get_tcp_header_size
 
 class SSWriter:
+    """An internal class for writing to a socket stream.  This serves as a base
+    class for both OSocketStream and SocketStream; its purpose is to minimize
+    redundant code between them.  Do not use it directly.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def send_datagram(self, dg: Datagram) -> bool: ...
     def is_closed(self) -> bool: ...
@@ -60,6 +68,11 @@ class SSWriter:
     considerFlush = consider_flush
 
 class ISocketStream(istream, SSReader):
+    """This is a base class for istreams implemented in Panda that read from a
+    (possibly non-blocking) socket.  It adds is_closed(), which can be called
+    after an eof condition to check whether the socket has been closed, or
+    whether more data may be available later.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     RS_initial: ClassVar[Literal[0]]
     RS_reading: ClassVar[Literal[1]]
@@ -80,6 +93,11 @@ class ISocketStream(istream, SSReader):
     RSError = RS_error
 
 class OSocketStream(ostream, SSWriter):
+    """A base class for ostreams that write to a (possibly non-blocking) socket.
+    It adds is_closed(), which can be called after any write operation fails to
+    check whether the socket has been closed, or whether more data may be sent
+    later.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_ostream(self) -> ostream: ...
     def upcast_to_SSWriter(self) -> SSWriter: ...
@@ -91,6 +109,9 @@ class OSocketStream(ostream, SSWriter):
     isClosed = is_closed
 
 class SocketStream(iostream, SSReader, SSWriter):
+    """A base class for iostreams that read and write to a (possibly non-blocking)
+    socket.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_iostream(self) -> iostream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
@@ -108,6 +129,11 @@ class SocketStream(iostream, SSReader, SSWriter):
     getTcpHeaderSize = get_tcp_header_size
 
 class URLSpec:
+    """A container for a URL, e.g.  "http://server:port/path".
+    
+    The URLSpec object is similar to a Filename in that it contains logic to
+    identify the various parts of a URL and return (or modify) them separately.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     scheme: str
     authority: str
@@ -219,6 +245,9 @@ class URLSpec:
     unquotePlus = unquote_plus
 
 class HTTPEnum:
+    """This class is just used as a namespace wrapper for some of the enumerated
+    types used by various classes within the HTTPClient family.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     HV_09: ClassVar[Literal[0]]
     HV_10: ClassVar[Literal[1]]
@@ -250,6 +279,11 @@ class HTTPEnum:
     MConnect = M_connect
 
 class HTTPDate:
+    """A container for an HTTP-legal time/date indication.  This can accept a
+    string from an HTTP header and will decode it into a C time_t value;
+    conversely, it can accept a time_t value and encode it for output as a
+    string.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -286,6 +320,9 @@ class HTTPDate:
     compareTo = compare_to
 
 class HTTPCookie:
+    """A cookie sent from an HTTP server to be stored on the client and returned
+    when the path and/or domain matches.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     value: str
@@ -341,6 +378,17 @@ class HTTPCookie:
     matchesUrl = matches_url
 
 class HTTPClient(ReferenceCount):
+    """Handles contacting an HTTP server and retrieving a document.  Each
+    HTTPClient object represents a separate context, and stores its own list of
+    cookies, passwords, and certificates; however, a given HTTPClient is
+    capable of making multiple simultaneous requests to the same or different
+    servers.
+    
+    It is up to the programmer whether one HTTPClient should be used to
+    retrieve all documents, or a separate one should be created each time.
+    There is a default, global HTTPClient available in
+    HTTPClient::get_global_ptr().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     VS_no_verify: ClassVar[Literal[0]]
     VS_no_date_check: ClassVar[Literal[1]]
@@ -454,6 +502,10 @@ class HTTPClient(ReferenceCount):
     VSNormal = VS_normal
 
 class HTTPEntityTag:
+    """A container for an "entity tag" from an HTTP server.  This is used to
+    identify a particular version of a document or resource, particularly
+    useful for verifying caches.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -483,6 +535,13 @@ class HTTPEntityTag:
     compareTo = compare_to
 
 class DocumentSpec:
+    """A descriptor that refers to a particular version of a document.  This
+    includes the URL of the document and its identity tag and last-modified
+    dates.
+    
+    The DocumentSpec may also be used to request a newer document than a
+    particular one if available, for instance to refresh a cached document.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     url: URLSpec
     tag: HTTPEntityTag
@@ -549,6 +608,16 @@ class DocumentSpec:
     CCNoCache = CC_no_cache
 
 class HTTPChannel(TypedReferenceCount):
+    """A single channel of communication from an HTTPClient.  This is similar to
+    the concept of a 'connection', except that HTTP is technically
+    connectionless; in fact, a channel may represent one unbroken connection or
+    it may transparently close and reopen a new connection with each request.
+    
+    A channel is conceptually a single thread of I/O. One document at a time
+    may be requested using a channel; a new document may (in general) not be
+    requested from the same HTTPChannel until the first document has been fully
+    retrieved.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     SC_incomplete: ClassVar[Literal[0]]
     SC_internal_error: ClassVar[Literal[1]]
@@ -748,6 +817,9 @@ class HTTPChannel(TypedReferenceCount):
     SCDownloadInvalidRange = SC_download_invalid_range
 
 class Decompressor:
+    """This manages run-time decompression of a zlib-compressed stream, as a
+    background or foreground task.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def progress(self) -> float: ...
@@ -768,6 +840,13 @@ class Decompressor:
     getProgress = get_progress
 
 class DownloadDb:
+    """A listing of files within multifiles for management of client-side
+    synchronization with a server-provided set of files.
+    
+    This class manages one copy of the database for the client, representing
+    the files on the client system, and another copy for the server,
+    representing the files the server has available.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     Status_incomplete: ClassVar[Literal[0]]
     Status_complete: ClassVar[Literal[1]]
@@ -869,6 +948,16 @@ class DownloadDb:
     StatusExtracted = Status_extracted
 
 class Extractor:
+    """This class automatically extracts the contents of a Multifile to the
+    current directory (or to a specified directory) in the background.
+    
+    It is designed to limit its use of system resources and run unobtrusively
+    in the background.  After specifying the files you wish to extract via
+    repeated calls to request_subfile(), begin the process by calling run()
+    repeatedly.  Each call to run() extracts another small portion of the
+    Multifile.  Call run() whenever you have spare cycles until run() returns
+    EU_success.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def progress(self) -> float: ...
@@ -888,6 +977,11 @@ class Extractor:
     getProgress = get_progress
 
 class MultiplexStream(ostream):
+    """This is a special ostream that forwards the data that is written to it to
+    any number of other sources, for instance other ostreams, or explicitly to
+    a disk file or to system logging utilities.  It's a very handy thing to set
+    Notify to refer to when running in batch mode.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def add_ostream(self, out: ostream, delete_later: bool = ...) -> None: ...
@@ -901,12 +995,17 @@ class MultiplexStream(ostream):
     addSystemDebug = add_system_debug
 
 class VirtualFileHTTP(VirtualFile):
+    """This maps a document retrieved from an HTTPClient into the
+    VirtualFileSystem, allowing models etc.  to be loaded directly from a web
+    page.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
 
 class VirtualFileMountHTTP(VirtualFileMount):
+    """Maps a web page (URL root) into the VirtualFileSystem."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, root: URLSpec, http: HTTPClient = ...) -> None: ...
     def get_http_client(self) -> HTTPClient: ...
@@ -921,6 +1020,7 @@ class VirtualFileMountHTTP(VirtualFileMount):
     getClassType = get_class_type
 
 class Patcher:
+    """Applies a patch synchronously"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -934,6 +1034,10 @@ class Patcher:
     getProgress = get_progress
 
 class StringStream(iostream):
+    """A bi-directional stream object that reads and writes data to an internal
+    buffer, which can be retrieved and/or set as a string in Python 2 or a
+    bytes object in Python 3.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     data: Any
     @overload

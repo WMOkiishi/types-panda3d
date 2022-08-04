@@ -5,6 +5,15 @@ from panda3d.core import ostream
 _TypeHandle_MemoryClass: TypeAlias = Literal[0, 1, 2, 3, 4]
 
 class NeverFreeMemory:
+    """This class is used to allocate bytes of memory from a pool that is never
+    intended to be freed.  It is particularly useful to support DeletedChain,
+    which allocates memory in just such a fashion.
+    
+    When it is known that memory will not be freed, it is preferable to use
+    this instead of the standard malloc() (or global_operator_new()) call,
+    since this will help reduce fragmentation problems in the dynamic heap.
+    Also, memory allocated from here will exhibit less wasted space.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_total_alloc() -> int: ...
@@ -18,6 +27,18 @@ class NeverFreeMemory:
 
 @final
 class TypeHandle:
+    """TypeHandle is the identifier used to differentiate C++ class types.  Any
+    C++ classes that inherit from some base class, and must be differentiated
+    at run time, should store a static TypeHandle object that can be queried
+    through a static member function named get_class_type().  Most of the time,
+    it is also desirable to inherit from TypedObject, which provides some
+    virtual functions to return the TypeHandle for a particular instance.
+    
+    At its essence, a TypeHandle is simply a unique identifier that is assigned
+    by the TypeRegistry.  The TypeRegistry stores a tree of TypeHandles, so
+    that ancestry of a particular type may be queried, and the type name may be
+    retrieved for run-time display.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     MC_singleton: ClassVar[Literal[0]]
     MC_array: ClassVar[Literal[1]]
@@ -81,6 +102,12 @@ class TypeHandle:
     MCLimit = MC_limit
 
 class TypeRegistry:
+    """The TypeRegistry class maintains all the assigned TypeHandles in a given
+    system.  There should be only one TypeRegistry class during the lifetime of
+    the application.  It will be created on the local heap initially, and it
+    should be migrated to shared memory as soon as shared memory becomes
+    available.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def typehandles(self) -> Sequence[TypeHandle]: ...
@@ -133,6 +160,68 @@ class TypeRegistry:
     getRootClasses = get_root_classes
 
 class TypedObject:
+    """This is an abstract class that all classes which use TypeHandle, and also
+    provide virtual functions to support polymorphism, should inherit from.
+    Each derived class should define get_type(), which should return the
+    specific type of the derived class.  Inheriting from this automatically
+    provides support for is_of_type() and is_exact_type().
+    
+    All classes that inherit directly or indirectly from TypedObject should
+    redefine get_type() and force_init_type(), as shown below.  Some classes
+    that do not inherit from TypedObject may still declare TypeHandles for
+    themselves by defining methods called get_class_type() and init_type().
+    Classes such as these may serve as base classes, but the dynamic type
+    identification system will be limited.  Classes that do not inherit from
+    TypedObject need not define the virtual functions get_type() and
+    force_init_type() (or any other virtual functions).
+    
+    There is a specific layout for defining the overrides from this class.
+    Keeping the definitions formatted just like these examples will allow
+    someone in the future to use a sed (or similar) script to make global
+    changes, if necessary.  Avoid rearranging the braces or the order of the
+    functions unless you're ready to change them in every file all at once.
+    
+    What follows are some examples that can be used in new classes that you
+    create.
+    
+    @par In the class definition (.h file):
+    @code
+    public:
+      static TypeHandle get_class_type() {
+        return _type_handle;
+      }
+      static void init_type() {
+        <<<BaseClassOne>>>::init_type();
+        <<<BaseClassTwo>>>::init_type();
+        <<<BaseClassN>>>::init_type();
+        register_type(_type_handle, "<<<ThisClassStringName>>>",
+                      <<<BaseClassOne>>>::get_class_type(),
+                      <<<BaseClassTwo>>>::get_class_type(),
+                      <<<BaseClassN>>>::get_class_type());
+      }
+      virtual TypeHandle get_type() const {
+        return get_class_type();
+      }
+      virtual TypeHandle force_init_type() {init_type(); return get_class_type();}
+    
+    private:
+      static TypeHandle _type_handle;
+    @endcode
+    
+    @par In the class .cxx file:
+    @code
+    TypeHandle <<<ThisClassStringName>>>::_type_handle;
+    @endcode
+    
+    @par In the class config_<<<PackageName>>>.cxx file:
+    @code
+    ConfigureFn(config_<<<PackageName>>>) {
+      <<<ClassOne>>>::init_type();
+      <<<ClassTwo>>>::init_type();
+      <<<ClassN>>>::init_type();
+    }
+    @endcode
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def type(self) -> TypeHandle: ...

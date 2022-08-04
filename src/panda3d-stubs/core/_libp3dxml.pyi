@@ -6,6 +6,28 @@ _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLik
 _TiXmlEncoding: TypeAlias = Literal[0, 1, 2]
 
 class TiXmlBase:
+    """TiXmlBase is a base class for every class in TinyXml.
+        It does little except to establish that TinyXml classes
+        can be printed and provide some utility functions.
+    
+        In XML, the document and elements can contain
+        other elements and other types of nodes.
+    
+        @verbatim
+        A Document can contain: Element (container or leaf)
+                                Comment (leaf)
+                                Unknown (leaf)
+                                Declaration( leaf )
+    
+        An Element can contain: Element (container or leaf)
+                                Text    (leaf)
+                                Attributes (not on tree)
+                                Comment (leaf)
+                                Unknown (leaf)
+    
+        A Decleration contains: Attributes (not on tree)
+        @endverbatim
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     TIXML_NO_ERROR: ClassVar[Literal[0]]
     TIXML_ERROR: ClassVar[Literal[1]]
@@ -32,6 +54,19 @@ class TiXmlBase:
     def Column(self) -> int: ...
 
 class TiXmlDeclaration(TiXmlNode):
+    """In correct XML the declaration is the first entry in the file.
+        @verbatim
+            <?xml version="1.0" standalone="yes"?>
+        @endverbatim
+    
+        TinyXml will happily read or write files without a declaration,
+        however. There are 3 possible attributes to the declaration:
+        version, encoding, and standalone.
+    
+        Note: In this version of the code, the attributes are
+        handled as special cases, not generic attributes, simply
+        because there can only be at most 3 and they are always the same.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -45,6 +80,12 @@ class TiXmlDeclaration(TiXmlNode):
     def Standalone(self) -> str: ...
 
 class TiXmlNode(TiXmlBase):
+    """The parent class for everything in the Document Object Model.
+        (Except for attributes).
+        Nodes have siblings, a parent, and children. A node can be
+        in a document, or stand on its own. The type of a TiXmlNode
+        can be queried, and it can be cast to its more defined type.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     TINYXML_DOCUMENT: ClassVar[Literal[0]]
     TINYXML_ELEMENT: ClassVar[Literal[1]]
@@ -124,6 +165,10 @@ class TiXmlNode(TiXmlBase):
     TINYXMLTYPECOUNT = TINYXML_TYPECOUNT
 
 class TiXmlDocument(TiXmlNode):
+    """Always the top level node. A document binds together all the
+        XML pieces. It can be saved, loaded, and printed to the screen.
+        The 'value' of a document node is the xml file name.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -152,6 +197,10 @@ class TiXmlDocument(TiXmlNode):
     def Print(self) -> None: ...
 
 class TiXmlElement(TiXmlNode):
+    """The element is a container class. It has a value, the element name,
+        and can contain other elements, text, comments, and unknowns.
+        Elements also contain an arbitrary number of attributes.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, in_value: str) -> None: ...
@@ -172,10 +221,31 @@ class TiXmlElement(TiXmlNode):
     def GetText(self) -> str: ...
 
 class TiXmlCursor:
+    """Internal structure for tracking location of items
+        in the XML file.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: TiXmlCursor) -> None: ...
 
 class TiXmlVisitor:
+    """Implements the interface to the "Visitor pattern" (see the Accept() method.)
+        If you call the Accept() method, it requires being passed a TiXmlVisitor
+        class to handle callbacks. For nodes that contain other nodes (Document, Element)
+        you will get called with a VisitEnter/VisitExit pair. Nodes that are always leaves
+        are simply called with Visit().
+    
+        If you return 'true' from a Visit method, recursive parsing will continue. If you return
+        false, <b>no children of this node or its sibilings</b> will be Visited.
+    
+        All flavors of Visit methods have a default implementation that returns 'true' (continue
+        visiting). You need to only override methods that are interesting to you.
+    
+        Generally Accept() is called on the TiXmlDocument, although all nodes suppert Visiting.
+    
+        You should never change the document from a callback.
+    
+        @sa TiXmlNode::Accept()
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -189,6 +259,13 @@ class TiXmlVisitor:
     def Visit(self, __param0: TiXmlComment | TiXmlDeclaration | TiXmlText | TiXmlUnknown) -> bool: ...
 
 class TiXmlAttribute(TiXmlBase):
+    """An attribute is a name-value pair. Elements have an arbitrary
+        number of attributes, each with a unique name.
+    
+        @note The attributes are not TiXmlNodes, since they are not
+              part of the tinyXML document object model. There are other
+              suggested ways to look at this problem.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -213,6 +290,18 @@ class TiXmlAttribute(TiXmlBase):
     def SetDocument(self, doc: TiXmlDocument) -> None: ...
 
 class TiXmlAttributeSet:
+    """A class used to manage a group of attributes.
+        It is only used internally, both by the ELEMENT and the DECLARATION.
+    
+        The set can be changed transparent to the Element and Declaration
+        classes that use it, but NOT transparent to the Attribute
+        which has to implement a next() and previous() method. Which makes
+        it a bit problematic and prevents the use of STL.
+    
+        This version is implemented with circular lists because:
+            - I like circular lists
+            - it demonstrates some independence from the (typical) doubly linked list.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def Add(self, attribute: TiXmlAttribute) -> None: ...
@@ -223,6 +312,7 @@ class TiXmlAttributeSet:
     def FindOrCreate(self, _name: str) -> TiXmlAttribute: ...
 
 class TiXmlComment(TiXmlNode):
+    """An XML comment."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -233,6 +323,11 @@ class TiXmlComment(TiXmlNode):
     def assign(self, base: TiXmlComment) -> TiXmlComment: ...
 
 class TiXmlText(TiXmlNode):
+    """XML text. A text node can have 2 ways to output the next. "normal" output
+        and CDATA. It will default to the mode it was parsed from the XML file and
+        you generally want to leave it alone, but you can change the output mode with
+        SetCDATA() and query it with CDATA().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, initValue: str) -> None: ...
@@ -243,6 +338,13 @@ class TiXmlText(TiXmlNode):
     def SetCDATA(self, _cdata: bool) -> None: ...
 
 class TiXmlUnknown(TiXmlNode):
+    """Any tag that tinyXml doesn't recognize is saved as an
+        unknown. It is a tag of text, but should not be modified.
+        It will be written back to the XML, unchanged, when the file
+        is saved.
+    
+        DTD tags get thrown into TiXmlUnknowns.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -251,6 +353,85 @@ class TiXmlUnknown(TiXmlNode):
     def assign(self, copy: TiXmlUnknown) -> TiXmlUnknown: ...
 
 class TiXmlHandle:
+    """A TiXmlHandle is a class that wraps a node pointer with null checks; this is
+        an incredibly useful thing. Note that TiXmlHandle is not part of the TinyXml
+        DOM structure. It is a separate utility class.
+    
+        Take an example:
+        @verbatim
+        <Document>
+            <Element attributeA = "valueA">
+                <Child attributeB = "value1" />
+                <Child attributeB = "value2" />
+            </Element>
+        <Document>
+        @endverbatim
+    
+        Assuming you want the value of "attributeB" in the 2nd "Child" element, it's very
+        easy to write a *lot* of code that looks like:
+    
+        @verbatim
+        TiXmlElement* root = document.FirstChildElement( "Document" );
+        if ( root )
+        {
+            TiXmlElement* element = root->FirstChildElement( "Element" );
+            if ( element )
+            {
+                TiXmlElement* child = element->FirstChildElement( "Child" );
+                if ( child )
+                {
+                    TiXmlElement* child2 = child->NextSiblingElement( "Child" );
+                    if ( child2 )
+                    {
+                        // Finally do something useful.
+        @endverbatim
+    
+        And that doesn't even cover "else" cases. TiXmlHandle addresses the verbosity
+        of such code. A TiXmlHandle checks for null pointers so it is perfectly safe
+        and correct to use:
+    
+        @verbatim
+        TiXmlHandle docHandle( &document );
+        TiXmlElement* child2 = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).Child( "Child", 1 ).ToElement();
+        if ( child2 )
+        {
+            // do something useful
+        @endverbatim
+    
+        Which is MUCH more concise and useful.
+    
+        It is also safe to copy handles - internally they are nothing more than node pointers.
+        @verbatim
+        TiXmlHandle handleCopy = handle;
+        @endverbatim
+    
+        What they should not be used for is iteration:
+    
+        @verbatim
+        int i=0;
+        while ( true )
+        {
+            TiXmlElement* child = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).Child( "Child", i ).ToElement();
+            if ( !child )
+                break;
+            // do something
+            ++i;
+        }
+        @endverbatim
+    
+        It seems reasonable, but it is in fact two embedded while loops. The Child method is
+        a linear walk to find the element, so this code would iterate much more than it needs
+        to. Instead, prefer:
+    
+        @verbatim
+        TiXmlElement* child = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).FirstChild( "Child" ).ToElement();
+    
+        for( child; child; child=child->NextSiblingElement() )
+        {
+            // do something
+        }
+        @endverbatim
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, ref: TiXmlHandle) -> None: ...
@@ -291,6 +472,25 @@ class TiXmlHandle:
     def Unknown(self) -> TiXmlUnknown: ...
 
 class TiXmlPrinter(TiXmlVisitor):
+    """Print to memory functionality. The TiXmlPrinter is useful when you need to:
+    
+        -# Print to memory (especially in non-STL mode)
+        -# Control formatting (line endings, etc.)
+    
+        When constructed, the TiXmlPrinter is in its default "pretty printing" mode.
+        Before calling Accept() you can call methods to control the printing
+        of the XML document. After TiXmlNode::Accept() is called, the printed document can
+        be accessed via the CStr(), Str(), and Size() methods.
+    
+        TiXmlPrinter uses the Visitor API.
+        @verbatim
+        TiXmlPrinter printer;
+        printer.SetIndent( "\t" );
+    
+        doc.Accept( &printer );
+        fprintf( stdout, "%s", printer.CStr() );
+        @endverbatim
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...

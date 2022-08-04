@@ -34,6 +34,14 @@ _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 
 class CollisionSolid(CopyOnWriteObject):
+    """The abstract base class for all things that can collide with other things
+    in the world, and all the things they can collide with (except geometry).
+    
+    This class and its derivatives really work very similarly to the way
+    BoundingVolume and all of its derivatives work.  There's a different
+    subclass for each basic shape of solid, and double-dispatch function calls
+    handle the subset of the N*N intersection tests that we care about.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     tangible: bool
     respect_effective_normal: bool
@@ -69,6 +77,7 @@ class CollisionSolid(CopyOnWriteObject):
     getClassType = get_class_type
 
 class CollisionBox(CollisionSolid):
+    """A cuboid collision volume or object."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def center(self) -> LPoint3f: ...
@@ -112,6 +121,11 @@ class CollisionBox(CollisionSolid):
     getClassType = get_class_type
 
 class CollisionCapsule(CollisionSolid):
+    """This implements a solid consisting of a cylinder with hemispherical endcaps,
+    also known as a capsule or a spherocylinder.
+    
+    This shape was previously erroneously called CollisionTube.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     point_a: LPoint3f
     point_b: LPoint3f
@@ -143,6 +157,11 @@ class CollisionCapsule(CollisionSolid):
     getClassType = get_class_type
 
 class CollisionHandler(TypedReferenceCount):
+    """The abstract interface to a number of classes that decide what to do when a
+    collision is detected.  One of these must be assigned to the
+    CollisionTraverser that is processing collisions in order to specify how to
+    dispatch detected collisions.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: CollisionHandler) -> None: ...
     @staticmethod
@@ -150,6 +169,11 @@ class CollisionHandler(TypedReferenceCount):
     getClassType = get_class_type
 
 class CollisionNode(PandaNode):
+    """A node in the scene graph that can hold any number of CollisionSolids.
+    This may either represent a bit of static geometry in the scene that things
+    will collide with, or an animated object twirling around in the world and
+    running into things.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     from_collide_mask: BitMask_uint32_t_32
     into_collide_mask: BitMask_uint32_t_32
@@ -198,6 +222,15 @@ class CollisionNode(PandaNode):
     getSolids = get_solids
 
 class CollisionTraverser(Namable):
+    """This class manages the traversal through the scene graph to detect
+    collisions.  It holds ownership of a number of collider objects, each of
+    which is a CollisionNode and an associated CollisionHandler.
+    
+    When traverse() is called, it begins at the indicated root and detects all
+    collisions with any of its collider objects against nodes at or below the
+    indicated root, calling the appropriate CollisionHandler for each detected
+    collision.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     respect_preV_transform: bool
     respect_prev_transform: bool
@@ -248,6 +281,10 @@ class CollisionTraverser(Namable):
     getColliders = get_colliders
 
 class CollisionRecorder(TypedObject):
+    """This class is used to help debug the work the collisions system is doing.
+    It is a virtual base class that just provides an interface for recording
+    collisions tested and detected each frame.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def output(self, out: ostream) -> None: ...
     @staticmethod
@@ -255,6 +292,15 @@ class CollisionRecorder(TypedObject):
     getClassType = get_class_type
 
 class CollisionEntry(TypedWritableReferenceCount):
+    """Defines a single collision event.  One of these is created for each
+    collision detected by a CollisionTraverser, to be dealt with by the
+    CollisionHandler.
+    
+    A CollisionEntry provides slots for a number of data values (such as
+    intersection point and normal) that might or might not be known for each
+    collision.  It is up to the handler to determine what information is known
+    and to do the right thing with it.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     t: float
     @property
@@ -357,6 +403,9 @@ class CollisionPlane(CollisionSolid):
     getClassType = get_class_type
 
 class CollisionFloorMesh(CollisionSolid):
+    """This object represents a solid made entirely of triangles, which will only
+    be tested again z axis aligned rays
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def vertices(self) -> Sequence[LPoint3f]: ...
@@ -417,6 +466,11 @@ class CollisionPolygon(CollisionPlane):
     getPoints = get_points
 
 class CollisionHandlerEvent(CollisionHandler):
+    """A specialized kind of CollisionHandler that throws an event for each
+    collision detected.  The event thrown may be based on the name of the
+    moving object or the struck object, or both.  The first parameter of the
+    event will be a pointer to the CollisionEntry that triggered it.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def in_patterns(self) -> Sequence[str]: ...
@@ -475,6 +529,10 @@ class CollisionHandlerEvent(CollisionHandler):
     getOutPatterns = get_out_patterns
 
 class CollisionHandlerPhysical(CollisionHandlerEvent):
+    """The abstract base class for a number of CollisionHandlers that have some
+    physical effect on their moving bodies: they need to update the nodes'
+    positions based on the effects of the collision.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     center: NodePath
     @overload
@@ -503,6 +561,11 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
     getClassType = get_class_type
 
 class CollisionHandlerFloor(CollisionHandlerPhysical):
+    """A specialized kind of CollisionHandler that sets the Z height of the
+    collider to a fixed linear offset from the highest detected collision point
+    each frame.  It's intended to implement walking around on a floor of
+    varying height by casting a ray down from the avatar's head.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     offset: float
     reach: float
@@ -529,6 +592,10 @@ class CollisionHandlerFloor(CollisionHandlerPhysical):
     getClassType = get_class_type
 
 class CollisionHandlerPusher(CollisionHandlerPhysical):
+    """A specialized kind of CollisionHandler that simply pushes back on things
+    that attempt to move into solid walls.  This is the simplest kind of "real-
+    world" collisions you can have.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     horizontal: bool
     def __init__(self) -> None: ...
@@ -545,6 +612,9 @@ class CollisionHandlerPusher(CollisionHandlerPhysical):
     getClassType = get_class_type
 
 class CollisionHandlerFluidPusher(CollisionHandlerPusher):
+    """A CollisionHandlerPusher that makes use of timing and spatial information
+    from fluid collisions to improve collision response
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -552,6 +622,11 @@ class CollisionHandlerFluidPusher(CollisionHandlerPusher):
     getClassType = get_class_type
 
 class CollisionHandlerGravity(CollisionHandlerPhysical):
+    """A specialized kind of CollisionHandler that sets the Z height of the
+    collider to a fixed linear offset from the highest detected collision point
+    each frame.  It's intended to implement walking around on a floor of
+    varying height by casting a ray down from the avatar's head.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     offset: float
     reach: float
@@ -610,6 +685,11 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
     getClassType = get_class_type
 
 class CollisionHandlerHighestEvent(CollisionHandlerEvent):
+    """A specialized kind of CollisionHandler that throws an event for each
+    collision detected.  The event thrown may be based on the name of the
+    moving object or the struck object, or both.  The first parameter of the
+    event will be a pointer to the CollisionEntry that triggered it.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -620,6 +700,11 @@ class CollisionHandlerHighestEvent(CollisionHandlerEvent):
     getClassType = get_class_type
 
 class CollisionHandlerQueue(CollisionHandler):
+    """A special kind of CollisionHandler that does nothing except remember the
+    CollisionEntries detected the last pass.  This set of CollisionEntries may
+    then be queried by the calling function.  It's primarily useful when a
+    simple intersection test is being made, e.g.  for picking from the window.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def entries(self) -> Sequence[CollisionEntry]: ...
@@ -644,6 +729,7 @@ class CollisionHandlerQueue(CollisionHandler):
     getEntries = get_entries
 
 class CollisionSphere(CollisionSolid):
+    """A spherical collision volume or object."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     center: LPoint3f
     radius: float
@@ -667,6 +753,11 @@ class CollisionSphere(CollisionSolid):
     getClassType = get_class_type
 
 class CollisionInvSphere(CollisionSphere):
+    """An inverted sphere: this is a sphere whose collision surface is the inside
+    surface of the sphere.  Everything outside the sphere is solid matter;
+    everything inside is empty space.  Useful for constraining objects to
+    remain within a spherical perimeter.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, center: _Vec3f, radius: float) -> None: ...
@@ -677,6 +768,10 @@ class CollisionInvSphere(CollisionSphere):
     getClassType = get_class_type
 
 class CollisionRay(CollisionSolid):
+    """An infinite ray, with a specific origin and direction.  It begins at its
+    origin and continues in one direction to infinity, and it has no radius.
+    Useful for picking from a window, or for gravity effects.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     origin: LPoint3f
     direction: LVector3f
@@ -710,6 +805,9 @@ class CollisionRay(CollisionSolid):
     getClassType = get_class_type
 
 class CollisionLine(CollisionRay):
+    """An infinite line, similar to a CollisionRay, except that it extends in both
+    directions.  It is, however, directional.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -722,6 +820,13 @@ class CollisionLine(CollisionRay):
     getClassType = get_class_type
 
 class CollisionParabola(CollisionSolid):
+    """This defines a parabolic arc, or subset of an arc, similar to the path of a
+    projectile or falling object.  It is finite, having a specific beginning
+    and end, but it is infinitely thin.
+    
+    Think of it as a wire bending from point t1 to point t2 along the path of a
+    pre-defined parabola.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     parabola: LParabolaf
     t1: float
@@ -747,6 +852,13 @@ class CollisionParabola(CollisionSolid):
     getClassType = get_class_type
 
 class CollisionSegment(CollisionSolid):
+    """A finite line segment, with two specific endpoints but no thickness.  It's
+    similar to a CollisionRay, except it does not continue to infinity.
+    
+    It does have an ordering, from point A to point B. If more than a single
+    point of the segment is intersecting a solid, the reported intersection
+    point is generally the closest on the segment to point A.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     point_a: LPoint3f
     point_b: LPoint3f
@@ -780,6 +892,13 @@ class CollisionSegment(CollisionSolid):
     getClassType = get_class_type
 
 class CollisionVisualizer(PandaNode, CollisionRecorder):
+    """This class is used to help debug the work the collisions system is doing.
+    It shows the polygons that are detected as collisions, as well as those
+    that are simply considered for collisions.
+    
+    It may be parented anywhere in the scene graph where it will be rendered to
+    achieve this.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     point_scale: float
     normal_scale: float

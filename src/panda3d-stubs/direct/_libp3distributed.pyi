@@ -14,6 +14,16 @@ from panda3d.core import (
 from panda3d.direct import DCClass, DCFile
 
 class CConnectionRepository:
+    """This class implements the C++ side of the ConnectionRepository object.  In
+    particular, it manages the connection to the server once it has been opened
+    (but does not open it directly).  It manages reading and writing datagrams
+    on the connection and monitoring for unexpected disconnects as well as
+    handling intentional disconnects.
+    
+    Certain server messages, like field updates, are handled entirely within
+    the C++ layer, while server messages that are not understood by the C++
+    layer are returned up to the Python layer for processing.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, has_owner_view: bool = ..., threaded_net: bool = ...) -> None: ...
     def get_dc_file(self) -> DCFile: ...
@@ -114,6 +124,9 @@ class CConnectionRepository:
     getTimeWarning = get_time_warning
 
 class CDistributedSmoothNodeBase:
+    """This class defines some basic methods of DistributedSmoothNodeBase which
+    have been moved into C++ as a performance optimization.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...

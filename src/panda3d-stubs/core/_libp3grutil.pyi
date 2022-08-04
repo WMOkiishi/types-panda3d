@@ -52,6 +52,9 @@ _PfmVizzer_ColumnType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 _PfmVizzer_MeshFace: TypeAlias = Literal[1, 2, 3]
 
 class CardMaker(Namable):
+    """This class generates 2-d "cards", that is, rectangular polygons,
+    particularly useful for showing textures etc.  in the 2-d scene graph.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CardMaker) -> None: ...
@@ -98,6 +101,14 @@ class CardMaker(Namable):
     clearSourceGeometry = clear_source_geometry
 
 class FisheyeMaker(Namable):
+    """This class is similar to CardMaker, but instead of generating ordinary
+    cards, it generates a circular rose that represents the projection of a 3-D
+    scene through a fisheye lens.  The texture coordinates of the rose are
+    defined so that each 2-D vertex has a 3-D UVW that reflects the
+    corresponding position in 3-D space of that particular vertex.
+    
+    This class is particularly suited for converting cube maps to sphere maps.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FisheyeMaker) -> None: ...
@@ -115,6 +126,14 @@ class FisheyeMaker(Namable):
     setReflection = set_reflection
 
 class FrameRateMeter(TextNode):
+    """This is a special TextNode that automatically updates itself with the
+    current frame rate.  It can be placed anywhere in the world where you'd
+    like to see the frame rate.
+    
+    It also has a special mode in which it may be attached directly to a
+    channel or window.  If this is done, it creates a DisplayRegion for itself
+    and renders itself in the upper-right-hand corner.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FrameRateMeter) -> None: ...
@@ -146,6 +165,13 @@ class FrameRateMeter(TextNode):
     getClassType = get_class_type
 
 class GeoMipTerrain(TypedObject):
+    """GeoMipTerrain, meaning Panda3D GeoMipMapping, can convert a heightfield
+    image into a 3D terrain, consisting of several GeomNodes.  It uses the
+    GeoMipMapping algorithm, or Geometrical MipMapping, based on the LOD (Level
+    of Detail) algorithm.  For more information about the GeoMipMapping
+    algoritm, see this paper, written by Willem H. de Boer:
+    https://flipcode.com/articles/article_geomipmaps.pdf
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     AFM_off: ClassVar[Literal[0]]
     AFM_light: ClassVar[Literal[1]]
@@ -269,6 +295,11 @@ class HeightfieldTesselator(Namable):
     getElevation = get_elevation
 
 class LineSegs(Namable):
+    """Encapsulates creation of a series of connected or disconnected line
+    segments or points, for drawing paths or rays.  This class doesn't attempt
+    to be the smartest it could possibly be; it's intended primarily as a
+    visualization and editing tool.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -322,6 +353,16 @@ class LineSegs(Namable):
     getVertexColors = get_vertex_colors
 
 class MeshDrawer(TypedObject):
+    """Mesh drawer creates a single geom object that can be shaped with different
+    draw commands.  This is an efficient way to render bunch of billboards,
+    particles, fast changing triangles.  Its implemented by recycling same geom
+    over and over again.  Max budget specifies how many triangles are allowed.
+    Some uses of this class can be : particle system, radar icons, health bars,
+    2d icons, 2d ui, bullets, missile trails.  Any that can be drawn with
+    triangles can be drawn with this class.  At the low level this uses the
+    GeomVertexRewriter's.  The internal geom consists of vertex, normal, uv and
+    color channels.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def set_budget(self, budget: int) -> None: ...
@@ -354,6 +395,9 @@ class MeshDrawer(TypedObject):
     getClassType = get_class_type
 
 class MeshDrawer2D(TypedObject):
+    """This class allows the drawing of 2D objects - mainly based on quads and
+    rectangles.  It allows clipping and several high level UI theme functions.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def set_budget(self, budget: int) -> None: ...
@@ -382,6 +426,9 @@ class MeshDrawer2D(TypedObject):
     getClassType = get_class_type
 
 class MovieTexture(Texture):
+    """A texture that fetches video frames from an underlying object of class
+    Movie.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     time: float
     loop: bool
@@ -438,6 +485,17 @@ class MovieTexture(Texture):
     getClassType = get_class_type
 
 class MultitexReducer:
+    """This object presents an interface for generating new texture images that
+    represent the combined images from one or more individual textures,
+    reproducing certain kinds of multitexture effects without depending on
+    multitexture support in the hardware.
+    
+    This also flattens out texture matrices and removes extra texture
+    coordinates from the Geoms.  It is thus not a complete substitute for true
+    multitexturing, because it does not lend itself well to dynamic animation
+    of the textures once they have been flattened.  It is, however, useful for
+    "baking in" a particular multitexture effect.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -459,6 +517,11 @@ class MultitexReducer:
     setAllowTexMat = set_allow_tex_mat
 
 class NodeVertexTransform(VertexTransform):
+    """This VertexTransform gets its matrix from the Transform stored on a node.
+    It can also compose its node's transform with another VertexTransform,
+    allowing you to build up a chain of NodeVertexTransforms that represent a
+    list of composed matrices.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def node(self) -> PandaNode: ...
@@ -474,6 +537,19 @@ class NodeVertexTransform(VertexTransform):
     getClassType = get_class_type
 
 class ShaderTerrainMesh(PandaNode):
+    """@brief Terrain Renderer class utilizing the GPU
+    @details This class provides functionality to render heightfields of large
+      sizes utilizing the GPU. Internally a quadtree is used to generate the LODs.
+      The final terrain is then rendered using instancing on the GPU. This makes
+      it possible to use very large heightfields (8192+) with very reasonable
+      performance. The terrain provides options to control the LOD using a
+      target triangle width, see ShaderTerrainMesh::set_target_triangle_width().
+    
+      Because the Terrain is rendered entirely on the GPU, it needs a special
+      vertex shader. There is a default vertex shader available, which you can
+      use in your own shaders. IMPORTANT: If you don't set an appropriate shader
+      on the terrain, nothing will be visible.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     heightfield: Texture
     chunk_size: int
@@ -512,6 +588,14 @@ class ShaderTerrainMesh(PandaNode):
     getClassType = get_class_type
 
 class SceneGraphAnalyzerMeter(TextNode):
+    """This is a special TextNode that automatically updates itself with output
+    from a SceneGraphAnalyzer instance.  It can be placed anywhere in the world
+    where you'd like to see the output from SceneGraphAnalyzer.
+    
+    It also has a special mode in which it may be attached directly to a
+    channel or window.  If this is done, it creates a DisplayRegion for itself
+    and renders itself in the upper-right-hand corner.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: SceneGraphAnalyzerMeter) -> None: ...
@@ -539,6 +623,24 @@ class SceneGraphAnalyzerMeter(TextNode):
     getClassType = get_class_type
 
 class RigidBodyCombiner(PandaNode):
+    """This is a special node that combines multiple independently-moving rigid
+    nodes into one Geom internally (or as few Geoms as possible), for the
+    purposes of improving rendering performance.
+    
+    To use it, parent a number of moving objects to this node and call
+    collect().  A child node is identified as "moving" if (a) it has a non-
+    identity transform initially, or (b) it is a ModelNode with the
+    preserve_transform flag set.  Any other nodes will be considered static,
+    and later transforms applied to them will not be identified.
+    
+    You should call collect() only at startup or if you change the set of
+    children; it is a relatively expensive call.
+    
+    Once you call collect(), you may change the transforms on the child nodes
+    freely without having to call collect() again.
+    
+    RenderEffects such as Billboards are not supported below this node.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def internal_scene(self) -> NodePath: ...
@@ -551,6 +653,18 @@ class RigidBodyCombiner(PandaNode):
     getClassType = get_class_type
 
 class PipeOcclusionCullTraverser(CullTraverser):
+    """This specialization of CullTraverser uses the graphics pipe itself to
+    perform occlusion culling.  As such, it's likely to be inefficient (since
+    it interferes with the pipe's normal mode of rendering), and is mainly
+    useful to test other, CPU-based occlusion algorithms.
+    
+    This cannot be used in a multithreaded pipeline environment where cull and
+    draw are operating simultaneously.
+    
+    It can't be defined in the cull subdirectory, because it needs access to
+    GraphicsPipe and DisplayRegion and other classes in display.  So we put it
+    in grutil instead, for lack of any better ideas.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, host: GraphicsOutput) -> None: ...
     def upcast_to_CullTraverser(self) -> CullTraverser: ...
@@ -572,6 +686,7 @@ class PipeOcclusionCullTraverser(CullTraverser):
     getClassType = get_class_type
 
 class PfmVizzer:
+    """This class aids in the visualization and manipulation of PfmFile objects."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     CT_texcoord2: ClassVar[Literal[0]]
     CT_texcoord3: ClassVar[Literal[1]]

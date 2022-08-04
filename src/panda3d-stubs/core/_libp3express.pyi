@@ -52,6 +52,14 @@ class PointerToBase_ReferenceCountedVector_double(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToVoid:
+    """This is the non-template part of the base class for PointerTo and
+    ConstPointerTo.  It is necessary so we can keep a pointer to a non-template
+    class within the ReferenceCount object, to implement weak reference
+    pointers--we need to have something to clean up when the ReferenceCount
+    object destructs.
+    
+    This is the base class for PointerToBase<T>.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def is_null(self) -> bool: ...
     def get_hash(self) -> int: ...
@@ -291,6 +299,13 @@ class PointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
     getNodeRefCount = get_node_ref_count
 
 class MemoryUsage:
+    """This class is used strictly for debugging purposes, specifically for
+    tracking memory leaks of reference-counted objects: it keeps a record of
+    every such object currently allocated.
+    
+    When compiled with NDEBUG set, this entire class does nothing and compiles
+    to a stub.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def tracking(self) -> bool: ...
@@ -374,6 +389,10 @@ class MemoryUsage:
     showTrendAges = show_trend_ages
 
 class ReferenceCount:
+    """A base class for all things that want to be reference-counted.
+    ReferenceCount works in conjunction with PointerTo to automatically delete
+    objects when the last pointer to them goes away.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def ref_count(self) -> int: ...
@@ -396,11 +415,29 @@ class Buffer(ReferenceCount):
     getLength = get_length
 
 class PStatCollectorForwardBase(ReferenceCount):
+    """This class serves as a cheap forward reference to a PStatCollector, which
+    is defined in the pstatclient module (and is not directly accessible here
+    in the express module).
+    
+    This is subclassed as PStatCollectorForward, which defines the actual
+    functionality.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def add_level(self, level: float) -> None: ...
     addLevel = add_level
 
 class NodeReferenceCount(ReferenceCount):
+    """This class specializes ReferenceCount to add an additional counter, called
+    node_ref_count, for the purposes of counting the number of times the object
+    is referenced by a "node", whatever that may mean in context.
+    
+    The new methods node_ref() and node_unref() automatically increment and
+    decrement the primary reference count as well.  There also exists a
+    NodePointerTo<> class to maintain the node_ref counters automatically.
+    
+    See also CachedTypedWritableReferenceCount, which is similar in principle,
+    as well as NodeCachedReferenceCount, which combines both of these.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_node_ref_count(self) -> int: ...
     def node_ref(self) -> None: ...
@@ -417,6 +454,18 @@ class NodeReferenceCount(ReferenceCount):
     getClassType = get_class_type
 
 class Datagram(TypedObject):
+    """An ordered list of data elements, formatted in memory for transmission over
+    a socket or writing to a data file.
+    
+    Data elements should be added one at a time, in order, to the Datagram.
+    The nature and contents of the data elements are totally up to the user.
+    When a Datagram has been transmitted and received, its data elements may be
+    extracted using a DatagramIterator; it is up to the caller to know the
+    correct type of each data element in order.
+    
+    A Datagram is itself headerless; it is simply a collection of data
+    elements.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -515,6 +564,9 @@ class Datagram(TypedObject):
     getClassType = get_class_type
 
 class DatagramGenerator:
+    """This class defines the abstract interace to any source of datagrams,
+    whether it be from a file or from the net.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_datagram(self, data: Datagram) -> bool: ...
     def save_datagram(self, info: SubfileInfo) -> bool: ...
@@ -536,6 +588,13 @@ class DatagramGenerator:
     getFilePos = get_file_pos
 
 class DatagramIterator:
+    """A class to retrieve the individual data elements previously stored in a
+    Datagram.  Elements may be retrieved one at a time; it is up to the caller
+    to know the correct type and order of each element.
+    
+    Note that it is the responsibility of the caller to ensure that the datagram
+    object is not destructed while this DatagramIterator is in use.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -616,6 +675,9 @@ class DatagramIterator:
     getClassType = get_class_type
 
 class DatagramSink:
+    """This class defines the abstract interface to sending datagrams to any
+    target, whether it be into a file or across the net
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def filename(self) -> Filename: ...
@@ -641,6 +703,9 @@ class DatagramSink:
     getFilePos = get_file_pos
 
 class FileReference(TypedReferenceCount):
+    """Keeps a reference-counted pointer to a file on disk.  As long as the
+    FileReference is held, someone presumably has a use for this file.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FileReference) -> None: ...
@@ -653,6 +718,14 @@ class FileReference(TypedReferenceCount):
     getClassType = get_class_type
 
 class TypedReferenceCount(TypedObject, ReferenceCount):
+    """A base class for things which need to inherit from both TypedObject and
+    from ReferenceCount.  It's convenient to define this intermediate base
+    class instead of multiply inheriting from the two classes each time they
+    are needed, so that we can sensibly pass around pointers to things which
+    are both TypedObjects and ReferenceCounters.
+    
+    See also TypedObject for detailed instructions.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedObject(self) -> TypedObject: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
@@ -663,6 +736,7 @@ class TypedReferenceCount(TypedObject, ReferenceCount):
     getClassType = get_class_type
 
 class Ramfile:
+    """An in-memory buffer specifically designed for downloading files to memory."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -680,6 +754,9 @@ class Ramfile:
     getDataSize = get_data_size
 
 class HashVal:
+    """Stores a 128-bit value that represents the hashed contents (typically MD5)
+    of a file or buffer.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -741,6 +818,20 @@ class HashVal:
     hashBuffer = hash_buffer
 
 class MemoryUsagePointers:
+    """This is a list of pointers returned by a MemoryUsage object in response to
+    some query.
+    
+    Warning: once pointers are stored in a MemoryUsagePointers object, they are
+    reference-counted, and will not be freed until the MemoryUsagePointers
+    object is freed (or clear() is called on the object).  However, they may
+    not even be freed then; pointers may leak once they have been added to this
+    structure.  This is because we don't store enough information in this
+    structure to correctly free the pointers that have been added.  Since this
+    is intended primarily as a debugging tool, this is not a major issue.
+    
+    This class is just a user interface to talk about pointers stored in a
+    MemoryUsage object.  It doesn't even exist when compiled with NDEBUG.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -768,6 +859,14 @@ class MemoryUsagePointers:
     getTypedPointers = get_typed_pointers
 
 class ISubStream(istream):
+    """An istream object that presents a subwindow into another istream.  The
+    first character read from this stream will be the "start" character from
+    the source istream; just before the file pointer reaches the "end"
+    character, eof is returned.
+    
+    The source stream must be one that we can randomly seek within.  The
+    resulting ISubStream will also support arbitrary seeks.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -777,6 +876,14 @@ class ISubStream(istream):
     def close(self) -> ISubStream: ...
 
 class OSubStream(ostream):
+    """An ostream object that presents a subwindow into another ostream.  The
+    first character written to this stream will be the "start" character in the
+    dest istream; no characters may be written to character "end" or later
+    (unless end is zero).
+    
+    The dest stream must be one that we can randomly seek within.  The
+    resulting OSubStream will also support arbitrary seeks.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -786,6 +893,7 @@ class OSubStream(ostream):
     def close(self) -> OSubStream: ...
 
 class SubStream(iostream):
+    """Combined ISubStream and OSubStream for bidirectional I/O."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -795,6 +903,7 @@ class SubStream(iostream):
     def close(self) -> SubStream: ...
 
 class Multifile(ReferenceCount):
+    """A file that contains a set of files."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def magic_number(self) -> str: ...
@@ -940,6 +1049,9 @@ class Multifile(ReferenceCount):
     getSubfileNames = get_subfile_names
 
 class Namable:
+    """A base class for all things which can have a name.  The name is either
+    empty or nonempty, but it is never NULL.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     @overload
@@ -960,6 +1072,10 @@ class Namable:
     getClassType = get_class_type
 
 class OpenSSLWrapper:
+    """Provides an interface wrapper around the OpenSSL library, to ensure that
+    the library is properly initialized in the application, and to provide some
+    hooks into global OpenSSL context data.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def clear_certificates(self) -> None: ...
     def load_certificates(self, filename: _Filename) -> int: ...
@@ -984,6 +1100,10 @@ class OpenSSLWrapper:
     getGlobalPtr = get_global_ptr
 
 class SubfileInfo:
+    """This class records a particular byte sub-range within an existing file on
+    disk.  Generally, the filename is understood as a physical file on disk,
+    and not to be looked up via the vfs.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1007,6 +1127,9 @@ class SubfileInfo:
     getSize = get_size
 
 class VirtualFile(TypedReferenceCount):
+    """The abstract base class for a file or directory within the
+    VirtualFileSystem.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_file_system(self) -> VirtualFileSystem: ...
     def get_filename(self) -> Filename: ...
@@ -1070,12 +1193,20 @@ class VirtualFile(TypedReferenceCount):
     getClassType = get_class_type
 
 class VirtualFileComposite(VirtualFile):
+    """A composite directory within the VirtualFileSystem: this maps to more than
+    one directory on different mount points.  The resulting directory appears
+    to be the union of all the individual simple directories.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
 
 class VirtualFileMount(TypedReferenceCount):
+    """The abstract base class for a mount definition used within a
+    VirtualFileSystem.  Normally users don't need to monkey with this class
+    directly.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_file_system(self) -> VirtualFileSystem: ...
     def get_mount_point(self) -> Filename: ...
@@ -1090,6 +1221,7 @@ class VirtualFileMount(TypedReferenceCount):
     getClassType = get_class_type
 
 class VirtualFileMountMultifile(VirtualFileMount):
+    """Maps a Multifile's contents into the VirtualFileSystem."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, multifile: Multifile) -> None: ...
     def get_multifile(self) -> Multifile: ...
@@ -1099,6 +1231,12 @@ class VirtualFileMountMultifile(VirtualFileMount):
     getClassType = get_class_type
 
 class VirtualFileMountRamdisk(VirtualFileMount):
+    """Simulates an actual directory on disk with in-memory storage.  This is
+    useful mainly for performing high level functions that expect disk I/O
+    without actually writing files to disk.  Naturally, there are significant
+    limits to the size of the files that may be written with this system; and
+    "files" written here are not automatically persistent between sessions.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -1106,6 +1244,7 @@ class VirtualFileMountRamdisk(VirtualFileMount):
     getClassType = get_class_type
 
 class VirtualFileMountSystem(VirtualFileMount):
+    """Maps an actual OS directory into the VirtualFileSystem."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, physical_filename: _Filename) -> None: ...
     def get_physical_filename(self) -> Filename: ...
@@ -1115,6 +1254,10 @@ class VirtualFileMountSystem(VirtualFileMount):
     getClassType = get_class_type
 
 class VirtualFileSimple(VirtualFile):
+    """A simple file or directory within the VirtualFileSystem: this maps to
+    exactly one file on one mount point.  Most directories, and all regular
+    files, are of this kind.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mount(self) -> VirtualFileMount: ...
     def is_implicit_pz_file(self) -> bool: ...
@@ -1125,6 +1268,10 @@ class VirtualFileSimple(VirtualFile):
     getClassType = get_class_type
 
 class TemporaryFile(FileReference):
+    """This is a special kind of FileReference class that automatically deletes
+    the file in question when it is deleted.  It is not responsible for
+    creating, opening, or closing the file, however.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, filename: _Filename) -> None: ...
@@ -1135,6 +1282,15 @@ class TemporaryFile(FileReference):
     getClassType = get_class_type
 
 class IDecompressStream(istream):
+    """An input stream object that uses zlib to decompress (inflate) the input
+    from another source stream on-the-fly.
+    
+    Attach an IDecompressStream to an existing istream that provides compressed
+    data, and read the corresponding uncompressed data from the
+    IDecompressStream.
+    
+    Seeking is not supported.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1144,6 +1300,15 @@ class IDecompressStream(istream):
     def close(self) -> IDecompressStream: ...
 
 class OCompressStream(ostream):
+    """An input stream object that uses zlib to compress (deflate) data to another
+    destination stream on-the-fly.
+    
+    Attach an OCompressStream to an existing ostream that will accept
+    compressed data, and write your uncompressed source data to the
+    OCompressStream.
+    
+    Seeking is not supported.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1153,6 +1318,7 @@ class OCompressStream(ostream):
     def close(self) -> OCompressStream: ...
 
 class VirtualFileList(ReferenceCount):
+    """A list of VirtualFiles, as returned by VirtualFile::scan_directory()."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: VirtualFileList) -> None: ...
     def __getitem__(self, n: int) -> VirtualFile: ...
@@ -1167,6 +1333,13 @@ class VirtualFileList(ReferenceCount):
     getFiles = get_files
 
 class VirtualFileSystem:
+    """A hierarchy of directories and files that appears to be one continuous file
+    system, even though the files may originate from several different sources
+    that may not be related to the actual OS's file system.
+    
+    For instance, a VirtualFileSystem can transparently mount one or more
+    Multifiles as their own subdirectory hierarchies.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     MF_read_only: ClassVar[Literal[2]]
     @property
@@ -1283,6 +1456,15 @@ class PointerToBase_VirtualFileMount(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class TrueClock:
+    """An interface to whatever real-time clock we might have available in the
+    current environment.  There is only one TrueClock in existence, and it
+    constructs itself.
+    
+    The TrueClock returns elapsed real time in seconds since some undefined
+    epoch.  Since it is not defined at what time precisely the clock indicates
+    zero, this value can only be meaningfully used to measure elapsed time, by
+    sampling it at two different times and subtracting.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def long_time(self) -> float: ...
@@ -1352,6 +1534,26 @@ class Patchfile:
     getResultHash = get_result_hash
 
 class ProfileTimer:
+    """ProfileTimer
+    
+        HowTo:
+          Create a ProfileTimer and hold onto it.
+          Call init() whenever you like (the timer doesn't
+            start yet).
+          Call on() to start the timer.
+          While the timer is on, call mark() at each point of interest,
+            in the code you are timing.
+          You can turn the timer off() and on() to skip things you
+            don't want to time.
+          When your timing is finished, call printTo() to see the
+            results (e.g. myTimer.printTo(cerr)).
+    
+        Notes:
+          You should be able to time things down to the millisecond
+          well enough, but if you call on() and off() within micro-
+          seconds of each other, I don't think you'll get very good
+          results.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ..., maxEntries: int = ...) -> None: ...
@@ -1373,6 +1575,9 @@ class ProfileTimer:
     def printTo(self, out: ostream = ...) -> None: ...
 
 class WeakPointerToVoid(PointerToVoid):
+    """This is the specialization of PointerToVoid for weak pointers.  It needs an
+    additional flag to indicate that the pointer has been deleted.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def was_deleted(self) -> bool: ...
     def is_valid_pointer(self) -> bool: ...
@@ -1380,6 +1585,11 @@ class WeakPointerToVoid(PointerToVoid):
     isValidPointer = is_valid_pointer
 
 class WindowsRegistry:
+    """This class provides a hook to Python to read and write strings and integers
+    to the windows registry.  It automatically converts strings from utf-8
+    encoding and stores them in Unicode (and conversely reconverts them on
+    retrieval).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     rl_machine: ClassVar[Literal[0]]
     rl_user: ClassVar[Literal[1]]

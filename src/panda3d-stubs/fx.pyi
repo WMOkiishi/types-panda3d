@@ -19,6 +19,17 @@ from panda3d.core import (
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 
 class CylindricalLens(Lens):
+    """A cylindrical lens.  This is the kind of lens generally used for extremely
+    wide panoramic shots.  It behaves like a normal perspective lens in the
+    vertical direction, but it is non-linear in the horizontal dimension: a
+    point on the film corresponds to a point in space in linear proportion to
+    its angle to the camera, not to its straight-line distance from the center.
+    
+    This allows up to 360 degree lenses in the horizontal dimension, with
+    relatively little distortion.  The distortion is not very apparent between
+    two relatively nearby points on the film, but it becomes increasingly
+    evident as you compare points widely spaced on the film.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -26,6 +37,10 @@ class CylindricalLens(Lens):
     getClassType = get_class_type
 
 class FisheyeLens(Lens):
+    """A fisheye lens.  This nonlinear lens introduces a spherical distortion to
+    the image, which is minimal at small angles from the lens, and increases at
+    larger angles from the lens.  The field of view may extend to 360 degrees.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -33,6 +48,23 @@ class FisheyeLens(Lens):
     getClassType = get_class_type
 
 class ProjectionScreen(PandaNode):
+    """A ProjectionScreen implements a simple system for projective texturing.
+    The ProjectionScreen node is the parent of a hierarchy of geometry that is
+    considered a "screen"; the ProjectionScreen will automatically recompute
+    all the UV's (for a particular texture stage) on its subordinate geometry
+    according to the relative position and lens parameters of the indicated
+    LensNode.
+    
+    All this does is recompute UV's; the caller is responsible for applying the
+    appropriate texture(s) to the geometry.
+    
+    This does not take advantage of any hardware-assisted projective texturing;
+    all of the UV's are computed in the CPU.  (Use NodePath::project_texture()
+    to enable hardware-assisted projective texturing.)  However, the
+    ProjectionScreen interface does support any kind of lens, linear or
+    nonlinear, that might be defined using the Lens interface, including
+    fisheye and cylindrical lenses.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def set_projector(self, projector: NodePath) -> None: ...
@@ -94,6 +126,49 @@ class ProjectionScreen(PandaNode):
     getClassType = get_class_type
 
 class NonlinearImager:
+    """This class object combines the rendered output of a 3-d from one or more
+    linear (e.g.  perspective) cameras, as seen through a single, possibly
+    nonlinear camera.
+    
+    This can be used to generate real-time imagery of a 3-d scene using a
+    nonlinear camera, for instance a fisheye camera, even though the underlying
+    graphics engine may only support linear cameras.  It can also pre-distort
+    imagery to compensate for off-axis projectors, and/or curved screens of any
+    complexity.
+    
+    
+    
+    A NonlinearImager may be visualized as a dark room into which a number of
+    projection screens have been placed, of arbitrary size and shape and at any
+    arbitrary position and orientation to each other.  Onto each of these
+    screens is projected the view as seen by a normal perspective camera that
+    exists in the world (that is, under render).
+    
+    There also exist in the room one or more (possibly nonlinear) cameras,
+    called viewers, that observe these screens.  The image of the projection
+    screens seen by each viewer is finally displayed on the viewer's associated
+    DisplayRegion.  By placing the viewer(s) appropriately relative to the
+    screens, and by choosing suitable lens properties for the viewer(s), you
+    can achieve a wide variety of distortion effects.
+    
+    
+    
+    There are several different LensNode (Camera) objects involved at each
+    stage in the process.  To help keep them all straight, different words are
+    used to refer to each different kind of Camera used within this object.
+    The camera(s) under render, that capture the original view of the world to
+    be projected onto the screens, are called source cameras, and are set per
+    screen via set_source_camera().  The LensNode that is associated with each
+    screen to project the image as seen from the screen's source camera is
+    called a projector; these are set via the ProjectionScreen::set_projector()
+    interface.  Finally, the cameras that view the whole configuration of
+    screens are called viewers; each of these is associated with a
+    DisplayRegion, and they are set via set_viewer_camera().
+    
+    Of all these lenses, only the source cameras must use linear (that is,
+    perspective or orthographic) lenses.  The projectors and viewers may be any
+    arbitrary lens, linear or otherwise.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -155,6 +230,14 @@ class NonlinearImager:
     getViewers = get_viewers
 
 class OSphereLens(Lens):
+    """A OSphereLens is a special nonlinear lens that doesn't correspond to any
+    real physical lenses.  It's primarily useful for generating 360-degree
+    wraparound images while avoiding the distortion associated with fisheye
+    images.
+    
+    A OSphereLens is similar to a Cylindrical lens and PSphereLens, except that
+    it is orthographic in the vertical direction.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod
@@ -162,6 +245,17 @@ class OSphereLens(Lens):
     getClassType = get_class_type
 
 class PSphereLens(Lens):
+    """A PSphereLens is a special nonlinear lens that doesn't correspond to any
+    real physical lenses.  It's primarily useful for generating 360-degree
+    wraparound images while avoiding the distortion associated with fisheye
+    images.
+    
+    A PSphereLens is similar to a cylindrical lens, except it is also curved in
+    the vertical direction.  This allows it to extend to both poles in the
+    vertical direction.  The mapping is similar to what many modeling packages
+    call a sphere mapping: the x coordinate is proportional to azimuth, while
+    the y coordinate is proportional to altitude.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @staticmethod

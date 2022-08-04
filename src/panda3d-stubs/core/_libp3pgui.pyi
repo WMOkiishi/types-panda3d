@@ -96,6 +96,15 @@ class PGFrameStyle:
     TTextureBorder = T_texture_border
 
 class PGItem(PandaNode):
+    """This is the base class for all the various kinds of gui widget objects.
+    
+    It is a Node which corresponds to a rectangular region on the screen, and
+    it may have any number of "state" subgraphs, one of which is rendered at
+    any given time according to its current state.
+    
+    The PGItem node must be parented to the scene graph somewhere beneath a
+    PGTop node in order for this behavior to work.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
     def set_name(self, name: str) -> None: ...
@@ -225,6 +234,10 @@ class PGItem(PandaNode):
     getStateDefs = get_state_defs
 
 class PGButton(PGItem):
+    """This is a particular kind of PGItem that is specialized to behave like a
+    normal button object.  It keeps track of its own state, and handles mouse
+    events sensibly.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     S_ready: ClassVar[Literal[0]]
     S_depressed: ClassVar[Literal[1]]
@@ -265,6 +278,15 @@ class PGButton(PGItem):
     SInactive = S_inactive
 
 class PGTop(PandaNode):
+    """The "top" node of the new Panda GUI system.  This node must be parented to
+    the 2-d scene graph, and all PG objects should be parented to this node or
+    somewhere below it.  PG objects not parented within this hierarchy will not
+    be clickable.
+    
+    This node begins the special traversal of the PG objects that registers
+    each node within the MouseWatcher and forces everything to render in a
+    depth-first, left-to-right order, appropriate for 2-d objects.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
     def set_mouse_watcher(self, watcher: MouseWatcher) -> None: ...
@@ -282,6 +304,15 @@ class PGTop(PandaNode):
     getClassType = get_class_type
 
 class PGEntry(PGItem):
+    """This is a particular kind of PGItem that handles simple one-line or short
+    multi-line text entries, of the sort where the user can type any string.
+    
+    A PGEntry does all of its internal manipulation on a wide string, so it can
+    store the full Unicode character set.  The interface can support either the
+    wide string getters and setters, or the normal 8-bit string getters and
+    setters, which use whatever encoding method is specified by the associated
+    TextNode.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     S_focus: ClassVar[Literal[0]]
     S_no_focus: ClassVar[Literal[1]]
@@ -404,6 +435,10 @@ class PGEntry(PGItem):
     SInactive = S_inactive
 
 class PGMouseWatcherParameter(TypedWritableReferenceCount, MouseWatcherParameter):
+    """This specialization on MouseWatcherParameter allows us to tag on additional
+    elements to events for the gui system, and also inherits from
+    TypedWritableReferenceCount so we can attach this thing to an event.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: PGMouseWatcherParameter) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
@@ -416,6 +451,10 @@ class PGMouseWatcherParameter(TypedWritableReferenceCount, MouseWatcherParameter
     getClassType = get_class_type
 
 class PGMouseWatcherBackground(MouseWatcherRegion):
+    """This is a special kind of MouseWatcherRegion that doesn't have a rectangle
+    and is never active, but just quietly listens for keypresses and sends them
+    to all the PGItems with background focus.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -426,6 +465,24 @@ class PGMouseWatcherBackground(MouseWatcherRegion):
     getClassType = get_class_type
 
 class PGVirtualFrame(PGItem):
+    """This represents a frame that is rendered as a window onto another (possibly
+    much larger) canvas.  You can only see the portion of the canvas that is
+    below the window at any given time.
+    
+    This works simply by automatically defining a scissor effect to be applied
+    to a special child node, called the canvas_node, of the PGVirtualFrame
+    node.  Every object that is parented to the canvas_node will be clipped by
+    the scissor effect.  Also, you can modify the canvas_transform through
+    convenience methods here, which actually modifies the transform on the
+    canvas_node.
+    
+    The net effect is that the virtual canvas is arbitrarily large, and we can
+    peek at it through the scissor region, and scroll through different parts
+    of it by modifying the canvas_transform.
+    
+    See PGScrollFrame for a specialization of this class that handles the
+    traditional scrolling canvas, with scroll bars.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float) -> None: ...
@@ -453,6 +510,12 @@ class PGVirtualFrame(PGItem):
     getClassType = get_class_type
 
 class PGSliderBar(PGItem):
+    """This is a particular kind of PGItem that draws a little bar with a slider
+    that moves from left to right indicating a value between the ranges.
+    
+    This is used as an implementation for both DirectSlider and for
+    DirectScrollBar.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGItem(self) -> PGItem: ...
@@ -529,6 +592,17 @@ class PGSliderBar(PGItem):
     getClassType = get_class_type
 
 class PGScrollFrame(PGVirtualFrame):
+    """This is a special kind of frame that pretends to be much larger than it
+    actually is.  You can scroll through the frame, as if you're looking
+    through a window at the larger frame beneath.  All children of this frame
+    node are scrolled and clipped as if they were children of the larger,
+    virtual frame.
+    
+    This is implemented as a specialization of PGVirtualFrame, which handles
+    the meat of the virtual canvas.  This class adds automatic support for
+    scroll bars, and restricts the virtual transform to translate only (no
+    scale or rotate).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGVirtualFrame(self) -> PGVirtualFrame: ...
@@ -572,6 +646,10 @@ class PGScrollFrame(PGVirtualFrame):
     getClassType = get_class_type
 
 class PGWaitBar(PGItem):
+    """This is a particular kind of PGItem that draws a little bar that fills from
+    left to right to indicate a slow process gradually completing, like a
+    traditional "wait, loading" bar.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float, range: float) -> None: ...

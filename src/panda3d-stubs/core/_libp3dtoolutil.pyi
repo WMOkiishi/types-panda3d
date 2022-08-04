@@ -18,6 +18,10 @@ class basic_ios_char(ios_base):
     def clear(self) -> None: ...
 
 class ios_base:
+    """We need to expose one method in each class to force it to publish.
+    But we'd like to expose some of these methods anyway, so no
+    problem.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     beg: ClassVar[Literal[0]]
     cur: ClassVar[Literal[1]]
@@ -73,6 +77,11 @@ class ofstream(ostream):
     def close(self) -> None: ...
 
 class IFileStream(istream):
+    """Implements a C++ stream object suitable for reading from files on disk.
+    This is similar to ifstream, but it provides low-level support for Panda's
+    simple-threading implementation (using this interface will block only the
+    current thread, rather than the entire process, on I/O waits).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -82,6 +91,11 @@ class IFileStream(istream):
     def close(self) -> None: ...
 
 class OFileStream(ostream):
+    """Implements a C++ stream object suitable for writing to files on disk.  This
+    is similar to ofstream, but it provides low-level support for Panda's
+    simple-threading implementation (using this interface will block only the
+    current thread, rather than the entire process, on I/O waits).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -91,6 +105,12 @@ class OFileStream(ostream):
     def close(self) -> None: ...
 
 class FileStream(iostream):
+    """Implements a C++ stream object suitable for reading from and/or writing to
+    files on disk.  This is similar to fstream, but it provides low-level
+    support for Panda's simple-threading implementation (using this interface
+    will block only the current thread, rather than the entire process, on I/O
+    waits).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -100,6 +120,14 @@ class FileStream(iostream):
     def close(self) -> None: ...
 
 class TextEncoder:
+    """This class can be used to convert text between multiple representations,
+    e.g.  UTF-8 to UTF-16.  You may use it as a static class object, passing
+    the encoding each time, or you may create an instance and use that object,
+    which will record the current encoding and retain the current string.
+    
+    This class is also a base class of TextNode, which inherits this
+    functionality.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     default_encoding: _TextEncoder_Encoding
     text: Any
@@ -224,6 +252,16 @@ class TextEncoder:
     EUnicode = E_unicode
 
 class Filename:
+    """The name of a file, such as a texture file or an Egg file.  Stores the full
+    pathname, and includes functions for extracting out the directory prefix
+    part and the file extension and stuff.
+    
+    A Filename is also aware of the mapping between the Unix-like filename
+    convention we use internally, and the local OS's specific filename
+    convention, and it knows how to perform basic OS-specific I/O, like testing
+    for file existence and searching a searchpath, as well as the best way to
+    open an fstream for reading or writing.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_general: ClassVar[Literal[0]]
     T_dso: ClassVar[Literal[1]]
@@ -438,6 +476,10 @@ class Filename:
     TExecutable = T_executable
 
 class PandaSystem:
+    """This class is used as a namespace to group several global properties of
+    Panda.  Application developers can use this class to query the runtime
+    version or capabilities of the current Panda environment.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def version_string(self) -> str: ...
@@ -531,6 +573,11 @@ class PandaSystem:
     getSystems = get_systems
 
 class DSearchPath:
+    """This class stores a list of directories that can be searched, in order, to
+    locate a particular file.  It is normally constructed by passing it a
+    traditional searchpath-style string, e.g.  a list of directory names
+    delimited by spaces or colons, but it can also be built up explicitly.
+    """
     class Results:
         DtoolClassDict: ClassVar[dict[str, Any]]
         @overload
@@ -593,6 +640,10 @@ class DSearchPath:
     getDirectories = get_directories
 
 class ExecutionEnvironment:
+    """Encapsulates access to the environment variables and command-line arguments
+    at the time of execution.  This is encapsulated to support accessing these
+    things during static init time, which seems to be risky at best.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     environment_variables: Mapping[Any, str]
     binary_name: str
@@ -643,6 +694,16 @@ class ExecutionEnvironment:
     getCwd = get_cwd
 
 class GlobPattern:
+    """This class can be used to test for string matches against standard Unix-
+    shell filename globbing conventions.  It serves as a portable standin for
+    the Posix fnmatch() call.
+    
+    A GlobPattern is given a pattern string, which can contain operators like
+    *, ?, and [].  Then it can be tested against any number of candidate
+    strings; for each candidate, it will indicate whether the string matches
+    the pattern or not.  It can be used, for example, to scan a directory for
+    all files matching a particular pattern.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     pattern: str
     case_sensitive: bool
@@ -680,6 +741,15 @@ class GlobPattern:
     matchFiles = match_files
 
 class LineStream(ostream):
+    """This is a special ostream that writes to a memory buffer, like ostrstream.
+    However, its contents can be continuously extracted as a sequence of lines
+    of text.
+    
+    Unlike ostrstream, which can only be extracted from once (and then the
+    buffer freezes and it can no longer be written to), the LineStream is not
+    otherwise affected when a line of text is extracted.  More text can still
+    be written to it and continuously extracted.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def is_text_available(self) -> bool: ...

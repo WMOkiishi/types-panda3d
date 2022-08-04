@@ -2,6 +2,12 @@ from typing import Any, ClassVar, overload
 from panda3d.core import TypeHandle, TypedObject
 
 class BasicSkel:
+    """This is the most basic of the skeleton classes.  It stores an integer, and
+    will return it on request.
+    
+    The skeleton classes are intended to help you learn how to add C++ classes
+    to panda.  See also the manual, "Adding C++ Classes to Panda."
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -17,6 +23,12 @@ class BasicSkel:
     getValueAlt = get_value_alt
 
 class TypedSkel(TypedObject):
+    """Skeleton object that inherits from TypedObject.  Stores an integer, and
+    will return it on request.
+    
+    The skeleton classes are intended to help you learn how to add C++ classes
+    to panda.  See also the manual, "Adding C++ Classes to Panda."
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def set_value(self, n: int) -> None: ...

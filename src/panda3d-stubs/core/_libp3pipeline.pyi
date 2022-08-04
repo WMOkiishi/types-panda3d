@@ -4,6 +4,14 @@ from panda3d.core import Namable, TypeHandle, TypedReferenceCount, ostream
 _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]
 
 class Thread(TypedReferenceCount, Namable):
+    """A thread; that is, a lightweight process.  This is an abstract base class;
+    to use it, you must subclass from it and redefine thread_main().
+    
+    The thread itself will keep a reference count on the Thread object while it
+    is running; when the thread returns from its root function, the Thread
+    object will automatically be destructed if no other pointers are
+    referencing it.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     pipeline_stage: int
     @property
@@ -109,6 +117,10 @@ class Thread(TypedReferenceCount, Namable):
     getClassType = get_class_type
 
 class MutexDirect:
+    """This class implements a standard mutex by making direct calls to the
+    underlying implementation layer.  It doesn't perform any debugging
+    operations.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self) -> None: ...
     def try_acquire(self) -> bool: ...
@@ -134,6 +146,14 @@ class Mutex(MutexDirect):
     def __init__(self, name: str) -> None: ...
 
 class ConditionVarDirect:
+    """A condition variable, usually used to communicate information about
+    changing state to a thread that is waiting for something to happen.  A
+    condition variable can be used to "wake up" a thread when some arbitrary
+    condition has changed.
+    
+    A condition variable is associated with a single mutex, and several
+    condition variables may share the same mutex.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect: ...
     @overload
@@ -151,6 +171,14 @@ class ConditionVar(ConditionVarDirect):
     getMutex = get_mutex
 
 class ConditionVarFullDirect:
+    """A condition variable, usually used to communicate information about
+    changing state to a thread that is waiting for something to happen.  A
+    condition variable can be used to "wake up" a thread when some arbitrary
+    condition has changed.
+    
+    A condition variable is associated with a single mutex, and several
+    condition variables may share the same mutex.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect: ...
     @overload
@@ -170,6 +198,10 @@ class ConditionVarFull(ConditionVarFullDirect):
     getMutex = get_mutex
 
 class ReMutexDirect:
+    """This class implements a standard reMutex by making direct calls to the
+    underlying implementation layer.  It doesn't perform any debugging
+    operations.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def acquire(self) -> None: ...
@@ -203,12 +235,19 @@ class ReMutex(ReMutexDirect):
     def __init__(self, name: str) -> None: ...
 
 class ExternalThread(Thread):
+    """The special "external thread" class.  There is one instance of these in the
+    world, and it is returned by Thread::get_external_thread().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
 
 class LightMutexDirect:
+    """This class implements a lightweight Mutex by making direct calls to the
+    underlying implementation layer.  It doesn't perform any debugging
+    operations.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self) -> None: ...
     def release(self) -> None: ...
@@ -232,6 +271,10 @@ class LightMutex(LightMutexDirect):
     def __init__(self, name: str) -> None: ...
 
 class LightReMutexDirect:
+    """This class implements a standard lightReMutex by making direct calls to the
+    underlying implementation layer.  It doesn't perform any debugging
+    operations.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def acquire(self) -> None: ...
@@ -260,12 +303,22 @@ class LightReMutex(LightReMutexDirect):
     def __init__(self, name: str) -> None: ...
 
 class MainThread(Thread):
+    """The special "main thread" class.  There is one instance of these in the
+    world, and it is returned by Thread::get_main_thread().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
 
 class Semaphore:
+    """A classic semaphore synchronization primitive.
+    
+    A semaphore manages an internal counter which is decremented by each
+    acquire() call and incremented by each release() call.  The counter can
+    never go below zero; when acquire() finds that it is zero, it blocks,
+    waiting until some other thread calls release().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, initial_count: int = ...) -> None: ...
     def acquire(self) -> None: ...
@@ -277,6 +330,10 @@ class Semaphore:
     getCount = get_count
 
 class PythonThread(Thread):
+    """This class is exposed to Python to allow creation of a Panda thread from
+    the Python level.  It will spawn a thread that executes an arbitrary Python
+    functor.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     args: Any
     def __init__(self, function: Any, args: Any, name: str, sync_name: str) -> None: ...

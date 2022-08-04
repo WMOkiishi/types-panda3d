@@ -20,6 +20,13 @@ _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]
 _ButtonEvent_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 class EventParameter:
+    """An optional parameter associated with an event.  Each event may have zero
+    or more of these.  Each parameter stores a pointer to a
+    TypedWritableReferenceCount object, which of course could be pretty much
+    anything.  To store a simple value like a double or a string, the
+    EventParameter constructors transparently use the ParamValue template class
+    from paramValue.h.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -57,6 +64,39 @@ class EventParameter:
     getPtr = get_ptr
 
 class AsyncFuture(TypedReferenceCount):
+    """This class represents a thread-safe handle to a promised future result of
+    an asynchronous operation, providing methods to query its status and result
+    as well as register callbacks for this future's completion.
+    
+    An AsyncFuture can be awaited from within a coroutine or task.  It keeps
+    track of tasks waiting for this future and automatically reactivates them
+    upon this future's completion.
+    
+    A task itself is also a subclass of AsyncFuture.  Other subclasses are
+    not generally necessary, except to override the function of `cancel()`.
+    
+    Until the future is done, it is "owned" by the resolver thread, though it's
+    still legal for other threads to query its state.  When the resolver thread
+    resolves this future using `set_result()`, or any thread calls `cancel()`,
+    it instantly enters the "done" state, after which the result becomes a
+    read-only field that all threads can access.
+    
+    When the future returns true for done(), a thread can use cancelled() to
+    determine whether the future was cancelled or get_result() to access the
+    result of the operation.  Not all operations define a meaningful result
+    value, so some will always return nullptr.
+    
+    In Python, the `cancelled()`, `wait()` and `get_result()` methods are
+    wrapped up into a single `result()` method which waits for the future to
+    complete before either returning the result or throwing an exception if the
+    future was cancelled.
+    However, it is preferable to use the `await` keyword when running from a
+    coroutine, which only suspends the current task and not the entire thread.
+    
+    This API aims to mirror and be compatible with Python's Future class.
+    
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     done_event: str
     @overload
@@ -91,6 +131,10 @@ class AsyncFuture(TypedReferenceCount):
     getClassType = get_class_type
 
 class AsyncTask(AsyncFuture, Namable):
+    """This class represents a concrete task performed by an AsyncManager.
+    Normally, you would subclass from this class, and override do_task(), to
+    define the functionality you wish to have the task perform.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     task_chain: str
@@ -207,6 +251,19 @@ class AsyncTask(AsyncFuture, Namable):
     SAwaiting = S_awaiting
 
 class AsyncTaskManager(TypedReferenceCount, Namable):
+    """A class to manage a loose queue of isolated tasks, which can be performed
+    either synchronously (in the foreground thread) or asynchronously (by a
+    background thread).
+    
+    The AsyncTaskManager is actually a collection of AsyncTaskChains, each of
+    which maintains a list of tasks.  Each chain can be either foreground or
+    background (it may run only in the main thread, or it may be serviced by
+    one or more background threads). See AsyncTaskChain for more information.
+    
+    If you do not require background processing, it is perfectly acceptable to
+    create only one AsyncTaskChain, which runs in the main thread.  This is a
+    common configuration.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     clock: ClockObject
     @property
@@ -279,6 +336,11 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
     getTaskChains = get_task_chains
 
 class AsyncTaskCollection:
+    """A list of tasks, for instance as returned by some of the AsyncTaskManager
+    query functions.  This also serves to define an AsyncTaskSequence.
+    
+    TODO: None of this is thread-safe yet.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -318,6 +380,24 @@ class AsyncTaskCollection:
     getTasks = get_tasks
 
 class AsyncTaskChain(TypedReferenceCount, Namable):
+    """The AsyncTaskChain is a subset of the AsyncTaskManager.  Each chain
+    maintains a separate list of tasks, and will execute them with its own set
+    of threads.  Each chain may thereby operate independently of the other
+    chains.
+    
+    The AsyncTaskChain will spawn a specified number of threads (possibly 0) to
+    serve the tasks.  If there are no threads, you must call poll() from time
+    to time to serve the tasks in the main thread.  Normally this is done by
+    calling AsyncTaskManager::poll().
+    
+    Each task will run exactly once each epoch.  Beyond that, the tasks' sort
+    and priority values control the order in which they are run: tasks are run
+    in increasing order by sort value, and within the same sort value, they are
+    run roughly in decreasing order by priority value, with some exceptions for
+    parallelism.  Tasks with different sort values are never run in parallel
+    together, but tasks with different priority values might be (if there is
+    more than one thread).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedReferenceCount(self) -> TypedReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
@@ -377,6 +457,10 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
     getClassType = get_class_type
 
 class AsyncTaskPause(AsyncTask):
+    """A special kind of task that simple returns DS_pause, to pause for a
+    specified number of seconds and then finish.  It's intended to be used
+    within an AsyncTaskSequence.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AsyncTaskPause) -> None: ...
@@ -387,6 +471,14 @@ class AsyncTaskPause(AsyncTask):
     getClassType = get_class_type
 
 class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
+    """A special kind of task that serves as a list of tasks internally.  Each
+    task on the list is executed in sequence, one per epoch.
+    
+    This is similar to a Sequence interval, though it has some slightly
+    different abilities.  For instance, although you can't start at any
+    arbitrary point in the sequence, you can construct a task sequence whose
+    duration changes during playback.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AsyncTaskSequence) -> None: ...
@@ -407,6 +499,28 @@ class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
     getClassType = get_class_type
 
 class ButtonEvent:
+    """Records a button event of some kind.  This is either a keyboard or mouse
+    button (or some other kind of button) changing state from up to down, or
+    vice-versa, or it is a single "keystroke".
+    
+    A keystroke is different than a button event in that (a) it does not
+    necessarily correspond to a physical button on a keyboard, but might be the
+    result of a combination of buttons (e.g.  "A" is the result of shift +
+    "a"); and (b) it does not manage separate "up" and "down" events, but is
+    itself an instantaneous event.
+    
+    Normal up/down button events can be used to track the state of a particular
+    button on the keyboard, while keystroke events are best used to monitor
+    what a user is attempting to type.
+    
+    Button up/down events are defined across all the physical keys on the
+    keyboard (and other buttons for which there is a corresponding ButtonHandle
+    object), while keystroke events are defined across the entire Unicode
+    character set.
+    
+    This API should not be considered stable and may change in a future version
+    of Panda3D.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_down: ClassVar[Literal[0]]
     T_resume_down: ClassVar[Literal[1]]
@@ -440,6 +554,10 @@ class ButtonEvent:
     TRawUp = T_raw_up
 
 class ButtonEventList(ParamValueBase):
+    """Records a set of button events that happened recently.  This class is
+    usually used only in the data graph, to transmit the recent button presses,
+    but it may be used anywhere a list of ButtonEvents is desired.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def events(self) -> Sequence[ButtonEvent]: ...
@@ -465,6 +583,14 @@ class ButtonEventList(ParamValueBase):
     getClassType = get_class_type
 
 class Event(TypedReferenceCount):
+    """A named event, possibly with parameters.  Anyone in any thread may throw an
+    event at any time; there will be one process responsible for reading and
+    dispacting on the events (but not necessarily immediately).
+    
+    This function use to inherit from Namable, but that makes it too expensive
+    to get its name the Python code.  Now it just copies the Namable interface
+    in.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     @property
@@ -497,6 +623,14 @@ class Event(TypedReferenceCount):
     getParameters = get_parameters
 
 class EventHandler(TypedObject):
+    """A class to monitor events from the C++ side of things.  It maintains a set
+    of "hooks", function pointers assigned to event names, and calls the
+    appropriate hooks when the matching event is detected.
+    
+    This class is not necessary when the hooks are detected and processed
+    entirely by the scripting language, e.g.  via Scheme hooks or the messenger
+    in Python.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, ev_queue: EventQueue) -> None: ...
     def get_future(self, event_name: str) -> AsyncFuture: ...
@@ -514,6 +648,10 @@ class EventHandler(TypedObject):
     getClassType = get_class_type
 
 class EventQueue:
+    """A queue of pending events.  As events are thrown, they are added to this
+    queue; eventually, they will be extracted out again by an EventHandler and
+    processed.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def queue_event(self, event: Event) -> None: ...
@@ -530,6 +668,10 @@ class EventQueue:
     getGlobalEventQueue = get_global_event_queue
 
 class PointerEventList(ParamValueBase):
+    """Records a set of pointer events that happened recently.  This class is
+    usually used only in the data graph, to transmit the recent pointer
+    presses, but it may be used anywhere a list of PointerEvents is desired.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def get_num_events(self) -> int: ...
@@ -575,6 +717,9 @@ class PointerEventList(ParamValueBase):
 
 @final
 class PythonTask(AsyncTask):
+    """This class exists to allow association of a Python function or coroutine
+    with the AsyncTaskManager.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     delay_time: float
     delayTime: float

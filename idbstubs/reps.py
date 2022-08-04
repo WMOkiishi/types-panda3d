@@ -190,6 +190,7 @@ class Class:
     nested: Sequence[StubRep] = Factory(list)
     is_final: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
+    doc: str = field(default='', kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -215,10 +216,13 @@ class Class:
         if self.derivations:
             declaration += f"({', '.join(self.derivations)})"
         declaration += ':'
-        if not self.nested:
+        if not (self.nested or self.doc):
             yield declaration + ' ...'
             return
         yield declaration
+        if self.doc:
+            for line in self.doc.splitlines():
+                yield '    ' + line
         sorted_nested = sorted(self.nested, key=lambda i: i.sort())
         for line in flatten(i.definition() for i in sorted_nested):
             yield '    ' + line

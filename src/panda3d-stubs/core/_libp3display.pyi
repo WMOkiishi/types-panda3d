@@ -58,6 +58,11 @@ _CallbackGraphicsWindow_RenderCallbackType: TypeAlias = Literal[0, 1, 2, 3]
 _GraphicsOutput_FrameMode: TypeAlias = Literal[0, 1, 2]
 
 class GraphicsDevice(TypedReferenceCount):
+    """An abstract device object that is part of Graphics Pipe.  This device is
+    set to NULL for OpenGL. But DirectX uses it to take control of multiple
+    windows under single device or multiple devices (i.e.  more than one
+    adapters in the machine).
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_pipe(self) -> GraphicsPipe: ...
     @staticmethod
@@ -66,6 +71,21 @@ class GraphicsDevice(TypedReferenceCount):
     getClassType = get_class_type
 
 class GraphicsPipe(TypedReferenceCount):
+    """An object to create GraphicsOutputs that share a particular 3-D API.
+    Normally, there will only be one GraphicsPipe in an application, although
+    it is possible to have multiple of these at once if there are multiple
+    different API's available in the same machine.
+    
+    Often, the GraphicsPipe corresponds to a physical output device, hence the
+    term "pipe", but this is not necessarily the case.
+    
+    The GraphicsPipe is used by the GraphicsEngine object to create and destroy
+    windows; it keeps ownership of the windows it creates.
+    
+    M. Asad added new/interim functionality where GraphicsPipe now contains a
+    device interface to directx/opengl which will be used to handle multiple
+    windows from same device.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     OT_window: ClassVar[Literal[1]]
     OT_fullscreen_window: ClassVar[Literal[2]]
@@ -136,6 +156,7 @@ class GraphicsPipe(TypedReferenceCount):
     BFCanBindLayered = BF_can_bind_layered
 
 class DisplayInformation:
+    """This class contains various display information."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     DS_unknown: ClassVar[Literal[0]]
     DS_success: ClassVar[Literal[1]]
@@ -258,6 +279,12 @@ class DisplayInformation:
     DSCreateDeviceError = DS_create_device_error
 
 class DrawableRegion:
+    """This is a base class for GraphicsWindow (actually, GraphicsOutput) and
+    DisplayRegion, both of which are conceptually rectangular regions into
+    which drawing commands may be issued.  Sometimes you want to deal with a
+    single display region, and sometimes you want to deal with the whole window
+    at once, particularly for issuing clear commands and capturing screenshots.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     clear_color: LVecBase4f
     clear_depth: float
@@ -348,7 +375,21 @@ class DrawableRegion:
     RTPCOUNT = RTP_COUNT
 
 class WindowHandle(TypedReferenceCount):
+    """This object represents a window on the desktop, not necessarily a Panda
+    window.  This structure can be assigned to a WindowProperties to indicate a
+    parent window.
+    
+    It also has callbacks so the Panda window can communicate with its parent
+    window, which is particularly important when running embedded in a browser.
+    
+    To create a WindowHandle, you would usually call one of the
+    NativeWindowHandle::make_*() methods, depending on the kind of native
+    window handle object you already have.
+    """
     class OSHandle(TypedReferenceCount):
+        """This internal pointer within WindowHandle stores the actual OS-specific
+        window handle type, whatever type that is.  It is subclassed for each OS.
+        """
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: WindowHandle.OSHandle) -> None: ...
         def get_int_handle(self) -> int: ...
@@ -377,6 +418,10 @@ class WindowHandle(TypedReferenceCount):
     getClassType = get_class_type
 
 class WindowProperties:
+    """A container for the various kinds of properties we might ask to have on a
+    graphics window before we open it.  This also serves to hold the current
+    properties for a window after it has been opened.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     default: WindowProperties
     origin: LPoint2i
@@ -583,6 +628,13 @@ class WindowProperties:
     MConfined = M_confined
 
 class DisplayRegion(TypedReferenceCount, DrawableRegion):
+    """A rectangular subregion within a window for rendering into.  Typically,
+    there is one DisplayRegion that covers the whole window, but you may also
+    create smaller DisplayRegions for having different regions within the
+    window that represent different scenes.  You may also stack up
+    DisplayRegions like panes of glass, usually for layering 2-d interfaces on
+    top of a 3-d scene.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     dimensions: LVecBase4f
     camera: NodePath
@@ -725,6 +777,20 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     getClassType = get_class_type
 
 class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
+    """This is a base class for the various different classes that represent the
+    result of a frame of rendering.  The most common kind of GraphicsOutput is
+    a GraphicsWindow, which is a real-time window on the desktop, but another
+    example is GraphicsBuffer, which is an offscreen buffer.
+    
+    The actual rendering, and anything associated with the graphics context
+    itself, is managed by the associated GraphicsStateGuardian (which might
+    output to multiple GraphicsOutput objects).
+    
+    GraphicsOutputs are not actually writable to bam files, of course, but they
+    may be passed as event parameters, so they inherit from
+    TypedWritableReferenceCount instead of TypedReferenceCount for that
+    convenience.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     active: bool
     one_shot: bool
@@ -961,6 +1027,13 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     FMRefresh = FM_refresh
 
 class GraphicsStateGuardian(GraphicsStateGuardianBase):
+    """Encapsulates all the communication with a particular instance of a given
+    rendering backend.  Tries to guarantee that redundant state-change requests
+    are not issued (hence "state guardian").
+    
+    There will be one of these objects for each different graphics context
+    active in the system.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     active: bool
     incomplete_render: bool
@@ -1295,6 +1368,16 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     SM51 = SM_51
 
 class GraphicsEngine(ReferenceCount):
+    """This class is the main interface to controlling the render process.  There
+    is typically only one GraphicsEngine in an application, and it synchronizes
+    rendering to all all of the active windows; although it is possible to have
+    multiple GraphicsEngine objects if multiple synchronicity groups are
+    required.
+    
+    The GraphicsEngine is responsible for managing the various cull and draw
+    threads.  The application simply calls engine->render_frame() and considers
+    it done.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     threading_model: GraphicsThreadingModel
     auto_flip: bool
@@ -1366,6 +1449,9 @@ class GraphicsEngine(ReferenceCount):
     getWindows = get_windows
 
 class GraphicsThreadingModel:
+    """This represents the user's specification of how a particular frame is
+    handled by the various threads.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, model: str = ...) -> None: ...
@@ -1397,6 +1483,16 @@ class GraphicsThreadingModel:
     isDefault = is_default
 
 class StereoDisplayRegion(DisplayRegion):
+    """This is a special DisplayRegion wrapper that actually includes a pair of
+    DisplayRegions internally: the left and right eyes.  The DisplayRegion
+    represented here does not have a physical association with the window, but
+    it pretends it does.  Instead, it maintains a pointer to the left and right
+    DisplayRegions separately.
+    
+    Operations on the StereoDisplayRegion object affect both left and right
+    eyes together.  To access the left or right eyes independently, use
+    get_left_eye() and get_right_eye().
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def left_eye(self) -> DisplayRegion: ...
@@ -1411,6 +1507,9 @@ class StereoDisplayRegion(DisplayRegion):
     getClassType = get_class_type
 
 class FrameBufferProperties:
+    """A container for the various kinds of properties we might ask to have on a
+    graphics frameBuffer before we create a GSG.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     depth_bits: int
     color_bits: int
@@ -1564,6 +1663,10 @@ class FrameBufferProperties:
     setupDepthTexture = setup_depth_texture
 
 class GraphicsWindowInputDevice(InputDevice):
+    """This is a virtual input device that represents the keyboard and mouse pair
+    that is associated with a particular window.  It collects mouse and
+    keyboard events from the windowing system while the window is in focus.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def button_down(self, button: ButtonHandle, time: float = ...) -> None: ...
     def button_resume_down(self, button: ButtonHandle, time: float = ...) -> None: ...
@@ -1596,6 +1699,7 @@ class GraphicsWindowInputDevice(InputDevice):
     getClassType = get_class_type
 
 class TouchInfo:
+    """Stores information for a single touch event."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     TIF_move: ClassVar[Literal[1]]
     TIF_down: ClassVar[Literal[2]]
@@ -1614,6 +1718,10 @@ class TouchInfo:
     TIFUp = TIF_up
 
 class GraphicsWindowProcCallbackData(CallbackData):
+    """This specialization on CallbackData is passed when the callback is
+    initiated from from an implementation of the GraphicsWindowProc class, such
+    as PythonGraphicsWindowProc.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_hwnd(self) -> int: ...
     def get_msg(self) -> int: ...
@@ -1634,6 +1742,9 @@ class GraphicsWindowProcCallbackData(CallbackData):
     getClassType = get_class_type
 
 class GraphicsWindow(GraphicsOutput):
+    """A window, fullscreen or on a desktop, into which a graphics device sends
+    its output for interactive display.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     window_event: str
     close_request_event: str
@@ -1707,6 +1818,11 @@ class GraphicsWindow(GraphicsOutput):
     getInputDeviceNames = get_input_device_names
 
 class CallbackGraphicsWindow(GraphicsWindow):
+    """This special window object doesn't represent a window in its own right, but
+    instead hooks into some third-party API for creating and rendering to
+    windows via callbacks.  This can be used to allow Panda to render into an
+    already-created OpenGL context, for instance.
+    """
     class WindowCallbackData(CallbackData):
         DtoolClassDict: ClassVar[dict[str, Any]]
         @property
@@ -1795,6 +1911,9 @@ class DisplayMode:
     def output(self, out: ostream) -> None: ...
 
 class DisplayRegionCullCallbackData(CallbackData):
+    """This specialization on CallbackData is passed when the callback is
+    initiated from the cull traversal, for a DisplayRegion.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_scene_setup(self) -> SceneSetup: ...
     @staticmethod
@@ -1803,6 +1922,9 @@ class DisplayRegionCullCallbackData(CallbackData):
     getClassType = get_class_type
 
 class DisplayRegionDrawCallbackData(CallbackData):
+    """This specialization on CallbackData is passed when the callback is
+    initiated from the draw traversal, for a DisplayRegion.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_cull_result(self) -> CullResult: ...
     def get_scene_setup(self) -> SceneSetup: ...
@@ -1813,6 +1935,7 @@ class DisplayRegionDrawCallbackData(CallbackData):
     getClassType = get_class_type
 
 class DisplaySearchParameters:
+    """Parameters used for searching display capabilities."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -1832,6 +1955,9 @@ class DisplaySearchParameters:
     setMaximumBitsPerPixel = set_maximum_bits_per_pixel
 
 class GraphicsBuffer(GraphicsOutput):
+    """An offscreen buffer for rendering into.  This is similar in function to a
+    GraphicsWindow, except that the output is not visible to the user.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_size(self, x: int, y: int) -> None: ...
     @staticmethod
@@ -1840,6 +1966,10 @@ class GraphicsBuffer(GraphicsOutput):
     getClassType = get_class_type
 
 class GraphicsPipeSelection:
+    """This maintains a list of GraphicsPipes by type that are available for
+    creation.  Normally there is one default interactive GraphicsPipe, and
+    possibly other types available as well.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def pipe_types(self) -> Sequence[TypeHandle]: ...
@@ -1869,6 +1999,20 @@ class GraphicsPipeSelection:
     getPipeTypes = get_pipe_types
 
 class MouseAndKeyboard(DataNode):
+    """Reads the mouse and/or keyboard data sent from a GraphicsWindow, and
+    transmits it down the data graph.
+    
+    The mouse and keyboard devices are bundled together into one device here,
+    because they interrelate so much.  A mouse might be constrained by the
+    holding down of the shift key, for instance, or the clicking of the mouse
+    button might be handled in much the same way as a keyboard key.
+    
+    Mouse data is sent down the data graph as an x,y position as well as the
+    set of buttons currently being held down; keyboard data is sent down as a
+    set of keypress events in an EventDataTransition.  To throw these events to
+    the system, you must attach an EventThrower to the MouseAndKeyboard object;
+    otherwise, the events will be discarded.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: MouseAndKeyboard) -> None: ...
@@ -1882,6 +2026,12 @@ class MouseAndKeyboard(DataNode):
 
 @final
 class NativeWindowHandle(WindowHandle):
+    """This subclass of WindowHandle exists to allow simple creation of a
+    WindowHandle of the appropriate type to the current OS.
+    
+    This class exists for name scoping only.  Don't use the constructor
+    directly; use one of the make_* methods.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def make_int(window: int) -> WindowHandle: ...
@@ -1894,6 +2044,25 @@ class NativeWindowHandle(WindowHandle):
     getClassType = get_class_type
 
 class ParasiteBuffer(GraphicsOutput):
+    """This is a special GraphicsOutput type that acts a lot like a
+    GraphicsBuffer, effectively allowing rendering to an offscreen buffer,
+    except it does not create any framebuffer space for itself.  Instead, it
+    renders into the framebuffer owned by some other GraphicsOutput.
+    
+    The x_size and y_size must therefore fit within the bounds of the source
+    GraphicsOutput.
+    
+    Since the framebuffer will be subsequently cleared when the actual owner
+    draws in it later, this only makes sense if we are going to copy the
+    contents of the framebuffer to a texture immediately after we draw it.
+    Thus, has_texture() is implicitly true for a ParasiteBuffer.
+    
+    This class is useful to render offscreen to a texture while preventing the
+    waste of framebuffer memory for API's that are unable to render directly
+    into a texture (and must render into a separate framebuffer first and then
+    copy to texture).  It is also the only way to render to a texture on API's
+    that do not support offscreen rendering.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_size(self, x: int, y: int) -> None: ...
     @staticmethod

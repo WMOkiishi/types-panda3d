@@ -71,6 +71,7 @@ class BaseParticleEmitter(ReferenceCount):
     ETCUSTOM = ET_CUSTOM
 
 class RingEmitter(BaseParticleEmitter):
+    """Describes a planar ring region in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -94,6 +95,7 @@ class RingEmitter(BaseParticleEmitter):
     getUniformEmission = get_uniform_emission
 
 class ArcEmitter(RingEmitter):
+    """Describes a planar ring region in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -111,6 +113,7 @@ class ArcEmitter(RingEmitter):
     getEndAngle = get_end_angle
 
 class BaseParticleFactory(ReferenceCount):
+    """Pure Virtual base class for creating particles"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_lifespan_base(self, lb: float) -> None: ...
     def set_lifespan_spread(self, ls: float) -> None: ...
@@ -140,6 +143,7 @@ class BaseParticleFactory(ReferenceCount):
     getTerminalVelocitySpread = get_terminal_velocity_spread
 
 class BaseParticleRenderer(ReferenceCount):
+    """Pure virtual particle renderer base class"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     PR_ALPHA_NONE: ClassVar[Literal[0]]
     PR_ALPHA_OUT: ClassVar[Literal[1]]
@@ -181,6 +185,7 @@ class BaseParticleRenderer(ReferenceCount):
     PPBLENDCUBIC = PP_BLEND_CUBIC
 
 class BoxEmitter(BaseParticleEmitter):
+    """Describes a voluminous box region in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -291,6 +296,7 @@ class ColorInterpolationManager(ReferenceCount):
     clearToInitial = clear_to_initial
 
 class DiscEmitter(BaseParticleEmitter):
+    """Describes a planar disc region from which particles are generated"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -371,6 +377,7 @@ class GeomParticleRenderer(BaseParticleRenderer):
     getFinalZScale = get_final_z_scale
 
 class LineEmitter(BaseParticleEmitter):
+    """Describes a linear region in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -407,6 +414,7 @@ class LineParticleRenderer(BaseParticleRenderer):
     getLineScaleFactor = get_line_scale_factor
 
 class ParticleSystem(Physical):
+    """Contains and manages a particle system."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, pool_size: int = ...) -> None: ...
@@ -520,6 +528,7 @@ class ParticleSystem(Physical):
     getClassType = get_class_type
 
 class PointEmitter(BaseParticleEmitter):
+    """Describes a planar ring region in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -571,6 +580,7 @@ class PointParticleRenderer(BaseParticleRenderer):
     PPBLENDVEL = PP_BLEND_VEL
 
 class RectangleEmitter(BaseParticleEmitter):
+    """Describes a planar square region in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -586,6 +596,7 @@ class RectangleEmitter(BaseParticleEmitter):
     getMaxBound = get_max_bound
 
 class SparkleParticleRenderer(BaseParticleRenderer):
+    """pretty sparkly things."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     SP_NO_SCALE: ClassVar[Literal[0]]
     SP_SCALE: ClassVar[Literal[1]]
@@ -619,6 +630,7 @@ class SparkleParticleRenderer(BaseParticleRenderer):
     SPSCALE = SP_SCALE
 
 class SphereSurfaceEmitter(BaseParticleEmitter):
+    """Describes a curved space in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -630,6 +642,7 @@ class SphereSurfaceEmitter(BaseParticleEmitter):
     getRadius = get_radius
 
 class SphereVolumeEmitter(BaseParticleEmitter):
+    """Describes a voluminous spherical region in which particles are generated."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -641,6 +654,9 @@ class SphereVolumeEmitter(BaseParticleEmitter):
     getRadius = get_radius
 
 class SpriteAnim(ReferenceCount):
+    """Helper class used by SpriteParticleRenderer to keep track of its textures
+    and their respective UVs and source types.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     ST_texture: ClassVar[Literal[0]]
     ST_from_node: ClassVar[Literal[1]]
@@ -664,6 +680,7 @@ class SpriteAnim(ReferenceCount):
     STFromNode = ST_from_node
 
 class SpriteParticleRenderer(BaseParticleRenderer):
+    """Renders a particle system with high-speed nasty trick sprites."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, tex: Texture = ...) -> None: ...
@@ -784,6 +801,9 @@ class SpriteParticleRenderer(BaseParticleRenderer):
     getAnims = get_anims
 
 class TangentRingEmitter(BaseParticleEmitter):
+    """Describes a planar ring region in which tangent particles are generated,
+    and particles fly off tangential to the ring.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -834,6 +854,10 @@ class ZSpinParticleFactory(BaseParticleFactory):
     getAngularVelocityEnabled = get_angular_velocity_enabled
 
 class ParticleSystemManager:
+    """Manages a set of individual ParticleSystem objects, so that each individual
+    one doesn't have to be updated and rendered every frame See Also :
+    particleSystemManager.cxx
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, every_nth_frame: int = ...) -> None: ...

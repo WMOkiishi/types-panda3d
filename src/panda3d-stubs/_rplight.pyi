@@ -32,6 +32,11 @@ _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _RPLight_LightType: TypeAlias = Literal[0, 1, 2]
 
 class GPUCommand:
+    """@brief Class for storing data to be transferred to the GPU.
+    @details This class can be seen like a packet, to be transferred to the GPU.
+      It has a command type, which tells the GPU what to do once it recieved this
+      "packet". It stores a limited amount of floating point components.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     CMD_invalid: ClassVar[Literal[0]]
     CMD_store_light: ClassVar[Literal[1]]
@@ -67,6 +72,10 @@ class GPUCommand:
     CMDRemoveSources = CMD_remove_sources
 
 class GPUCommandList:
+    """@brief Class to store a list of commands.
+    @details This is a class to store a list of GPUCommands. It provides
+      functionality to only provide the a given amount of commands at one time.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_commands(self) -> int: ...
@@ -82,6 +91,12 @@ class GPUCommandList:
     writeCommandsTo = write_commands_to
 
 class IESDataset:
+    """@brief This class generates a LUT from IES data.
+    @details This class is used by the IESLoader to generate a LUT texture which
+      is used in the shaders to perform IES lighting. It takes a set of vertical
+      and horizontal angles, as well as a set of candela values, which then are
+      lineary interpolated onto a 2D LUT Texture.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
@@ -97,6 +112,11 @@ class IESDataset:
     generateDatasetTextureInto = generate_dataset_texture_into
 
 class RPLight(ReferenceCount):
+    """@brief Base class for Lights
+    @details This is the base class for all lights in the render pipeline. It
+      stores common properties, and provides methods to modify these.
+      It also defines some interface functions which subclasses have to implement.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     pos: LVecBase3f
     color: LVecBase3f
@@ -159,6 +179,10 @@ class RPLight(ReferenceCount):
     LTSpotLight = LT_spot_light
 
 class ShadowAtlas:
+    """@brief Class which manages distributing shadow maps in an atlas.
+    @details This class manages the shadow atlas. It handles finding and reserving
+      space for new shadow maps.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_used_tiles(self) -> int: ...
@@ -174,6 +198,14 @@ class ShadowAtlas:
     getCoverage = get_coverage
 
 class TagStateManager:
+    """@brief This class handles all different tag states
+    @details The TagStateManager stores a list of RenderStates assigned to different
+      steps in the pipeline. For example, there are a list of shadow states, which
+      are applied whenever objects are rendered from a shadow camera.
+    
+      The Manager also stores a list of all cameras used in the different stages,
+      to keep track of the states used and to be able to attach new states.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, main_cam_node: NodePath) -> None: ...
@@ -221,6 +253,12 @@ class ShadowManager(ReferenceCount):
     getAtlas = get_atlas
 
 class InternalLightManager:
+    """@brief Internal class used for handling lights and shadows.
+    @details This is the internal class used by the pipeline to handle all
+      lights and shadows. It stores references to the lights, manages handling
+      the light and shadow slots, and also communicates with the GPU with the
+      GPUCommandQueue to store light and shadow source data.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     shadow_manager: ShadowManager
     @property
@@ -256,6 +294,11 @@ class InternalLightManager:
     setCommandList = set_command_list
 
 class RPPointLight(RPLight):
+    """@brief PointLight class
+    @details This represents a point light, a light which has a position and
+      radius. Checkout the RenderPipeline documentation for more information
+      about this type of light.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
     inner_radius: float
@@ -270,6 +313,26 @@ class RPPointLight(RPLight):
     getInnerRadius = get_inner_radius
 
 class PSSMCameraRig:
+    """@brief Main class used for handling PSSM
+    @details This is the main class for supporting PSSM, it is used by the PSSM
+      plugin to compute the position of the splits.
+    
+      It supports handling a varying amount of cameras, and fitting those cameras
+      into the main camera frustum, to render distant shadows. It also supports
+      various optimizations for fitting the frustum, e.g. rotating the sources
+      to get a better coverage.
+    
+      It also provides methods to get arrays of data about the used cameras
+      view-projection matrices and their near and far plane, which is required for
+      processing the data in the shadow sampling shader.
+    
+      In this class, there is often referred to "Splits" or also called "Cascades".
+      These denote the different cameras which are used to split the frustum,
+      and are a common term related to the PSSM algorithm.
+    
+      To understand the functionality of this class, a detailed knowledge of the
+      PSSM algorithm is helpful.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: PSSMCameraRig) -> None: ...
@@ -302,6 +365,11 @@ class PSSMCameraRig:
     getNearfarArray = get_nearfar_array
 
 class RPSpotLight(RPLight):
+    """@brief SpotLight class
+    @details This represents a spot light, a light which has a position, radius,
+      direction and FoV. Checkout the RenderPipeline documentation for more
+      information about this type of light.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
     fov: float

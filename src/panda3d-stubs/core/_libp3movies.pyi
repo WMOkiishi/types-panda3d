@@ -18,6 +18,14 @@ from panda3d.core import (
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 
 class MovieAudio(TypedWritableReferenceCount, Namable):
+    """A MovieAudio is actually any source that provides a sequence of audio
+    samples.  That could include an AVI file, a microphone, or an internet TV
+    station.
+    
+    The difference between a MovieAudio and a MovieAudioCursor is like the
+    difference between a filename and a file handle.  The MovieAudio just
+    indicates a particular movie.  The MovieAudioCursor is what allows access.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def filename(self) -> Filename: ...
@@ -39,6 +47,10 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     getClassType = get_class_type
 
 class FlacAudio(MovieAudio):
+    """Reads FLAC audio files.  Ogg-encapsulated FLAC files are not supported.
+    
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None: ...
@@ -51,6 +63,16 @@ class FlacAudio(MovieAudio):
     getClassType = get_class_type
 
 class MovieAudioCursor(TypedWritableReferenceCount):
+    """A MovieAudio is actually any source that provides a sequence of audio
+    samples.  That could include an AVI file, a microphone, or an internet TV
+    station.  A MovieAudioCursor is a handle that lets you read data
+    sequentially from a MovieAudio.
+    
+    Thread safety: each individual MovieAudioCursor must be owned and accessed
+    by a single thread.  It is OK for two different threads to open the same
+    file at the same time, as long as they use separate MovieAudioCursor
+    objects.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, src: MovieAudio) -> None: ...
@@ -83,6 +105,11 @@ class MovieAudioCursor(TypedWritableReferenceCount):
     getClassType = get_class_type
 
 class FlacAudioCursor(MovieAudioCursor):
+    """Implements decoding of FLAC audio files.
+    
+    @see FlacAudio
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FlacAudioCursor) -> None: ...
@@ -93,6 +120,14 @@ class FlacAudioCursor(MovieAudioCursor):
     getClassType = get_class_type
 
 class MovieVideo(TypedWritableReferenceCount, Namable):
+    """A MovieVideo is actually any source that provides a sequence of video
+    frames.  That could include an AVI file, a digital camera, or an internet
+    TV station.
+    
+    The difference between a MovieVideo and a MovieVideoCursor is like the
+    difference between a filename and a file handle.  The MovieVideo just
+    indicates a particular movie.  The MovieVideoCursor is what allows access.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def filename(self) -> Filename: ...
@@ -118,6 +153,7 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
     getClassType = get_class_type
 
 class InkblotVideo(MovieVideo):
+    """A cellular automaton that generates an amusing pattern of swirling colors."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: InkblotVideo) -> None: ...
@@ -128,6 +164,16 @@ class InkblotVideo(MovieVideo):
     getClassType = get_class_type
 
 class MovieVideoCursor(TypedWritableReferenceCount):
+    """A MovieVideo is actually any source that provides a sequence of video
+    frames.  That could include an AVI file, a digital camera, or an internet
+    TV station.  A MovieVideoCursor is a handle that lets you read data
+    sequentially from a MovieVideo.
+    
+    Thread safety: each individual MovieVideoCursor must be owned and accessed
+    by a single thread.  It is OK for two different threads to open the same
+    file at the same time, as long as they use separate MovieVideoCursor
+    objects.
+    """
     class Buffer(TypedReferenceCount):
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: MovieVideoCursor.Buffer) -> None: ...
@@ -173,6 +219,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
     getClassType = get_class_type
 
 class InkblotVideoCursor(MovieVideoCursor):
+    """A cellular automaton that generates an amusing pattern of swirling colors."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, src: InkblotVideo) -> None: ...
@@ -183,6 +230,9 @@ class InkblotVideoCursor(MovieVideoCursor):
     getClassType = get_class_type
 
 class MicrophoneAudio(MovieAudio):
+    """Class MicrophoneAudio provides the means to read raw audio samples from a
+    microphone.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def options(self) -> Sequence[MicrophoneAudio]: ...
@@ -207,6 +257,11 @@ class MicrophoneAudio(MovieAudio):
     getOptions = get_options
 
 class OpusAudio(MovieAudio):
+    """Interfaces with the libopusfile library to implement decoding of Opus
+    audio files.
+    
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None: ...
@@ -219,6 +274,12 @@ class OpusAudio(MovieAudio):
     getClassType = get_class_type
 
 class OpusAudioCursor(MovieAudioCursor):
+    """Interfaces with the libopusfile library to implement decoding of Opus
+    audio files.
+    
+    @see OpusAudio
+    @since 1.10.0
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: OpusAudioCursor) -> None: ...
@@ -229,6 +290,12 @@ class OpusAudioCursor(MovieAudioCursor):
     getClassType = get_class_type
 
 class UserDataAudio(MovieAudio):
+    """A UserDataAudio is a way for the user to manually supply raw audio samples.
+    remove_after_read means the data will be removed if read once.  Else data
+    will be stored (enable looping and seeking). Expects data as 16 bit signed
+    (word); Example for stereo: 1.word = 1.channel,2.word = 2.channel, 3.word =
+    1.channel,4.word = 2.channel, etc.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: UserDataAudio) -> None: ...
@@ -244,6 +311,9 @@ class UserDataAudio(MovieAudio):
     getClassType = get_class_type
 
 class UserDataAudioCursor(MovieAudioCursor):
+    """A UserDataAudioCursor is a means to manually supply a sequence of raw audio
+    samples.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, src: UserDataAudio) -> None: ...
@@ -254,6 +324,9 @@ class UserDataAudioCursor(MovieAudioCursor):
     getClassType = get_class_type
 
 class VorbisAudio(MovieAudio):
+    """Interfaces with the libvorbisfile library to implement decoding of Ogg
+    Vorbis audio files.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None: ...
@@ -266,6 +339,9 @@ class VorbisAudio(MovieAudio):
     getClassType = get_class_type
 
 class VorbisAudioCursor(MovieAudioCursor):
+    """Interfaces with the libvorbisfile library to implement decoding of Ogg
+    Vorbis audio files.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: VorbisAudioCursor) -> None: ...
@@ -276,6 +352,9 @@ class VorbisAudioCursor(MovieAudioCursor):
     getClassType = get_class_type
 
 class WavAudio(MovieAudio):
+    """A native PCM .wav loader.  Supported formats are linear PCM, IEEE float,
+    A-law and mu-law.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None: ...
@@ -288,6 +367,9 @@ class WavAudio(MovieAudio):
     getClassType = get_class_type
 
 class WavAudioCursor(MovieAudioCursor):
+    """Used for reading PCM .wav files.  Supported formats are linear PCM, IEEE
+    float, A-law and mu-law.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: WavAudioCursor) -> None: ...

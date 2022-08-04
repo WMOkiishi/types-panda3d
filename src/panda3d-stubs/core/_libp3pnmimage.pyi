@@ -75,6 +75,9 @@ class pixel:
     def output(self, out: ostream) -> None: ...
 
 class PNMFileType(TypedWritable):
+    """This is the base class of a family of classes that represent particular
+    image file types that PNMImage supports.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def name(self) -> str: ...
@@ -97,6 +100,7 @@ class PNMFileType(TypedWritable):
     getExtensions = get_extensions
 
 class PNMFileTypeRegistry:
+    """This class maintains the set of all known PNMFileTypes in the universe."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def types(self) -> Sequence[PNMFileType]: ...
@@ -119,7 +123,17 @@ class PNMFileTypeRegistry:
     getTypes = get_types
 
 class PNMImageHeader:
+    """This is the base class of PNMImage, PNMReader, and PNMWriter.  It
+    encapsulates all the information associated with an image that describes
+    its size, number of channels, etc; that is, all the information about the
+    image except the image data itself.  It's the sort of information you
+    typically read from the image file's header.
+    """
     class PixelSpec:
+        """Contains a single pixel specification used in compute_histogram() and
+        make_histogram().  Note that pixels are stored by integer value, not by
+        floating-point scaled value.
+        """
         DtoolClassDict: ClassVar[dict[str, Any]]
         @overload
         def __init__(self, __param0: PNMImageHeader.PixelSpec) -> None: ...
@@ -162,9 +176,13 @@ class PNMImageHeader:
         setBlue = set_blue
         setAlpha = set_alpha
     class PixelSpecCount:
+        """Associates a pixel specification with an appearance count, for use in
+        Histogram, below.
+        """
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImageHeader.PixelSpecCount) -> None: ...
     class Histogram:
+        """Used to return a pixel histogram in PNMImage::get_histogram()."""
         DtoolClassDict: ClassVar[dict[str, Any]]
         @overload
         def __init__(self) -> None: ...
@@ -251,6 +269,9 @@ class PNMImageHeader:
     CTFourChannel = CT_four_channel
 
 class PfmFile(PNMImageHeader):
+    """Defines a pfm file, a 2-d table of floating-point numbers, either
+    3-component or 1-component, or with a special extension, 2- or 4-component.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     scale: float
     @property
@@ -427,6 +448,17 @@ class PfmFile(PNMImageHeader):
     getPoints = get_points
 
 class PNMBrush(ReferenceCount):
+    """This class is used to control the shape and color of the drawing operations
+    performed by a PNMPainter object.
+    
+    Normally, you don't create a PNMBrush directly; instead, use one of the
+    static PNMBrush::make_*() methods provided here.
+    
+    A PNMBrush is used to draw the border of a polygon or rectangle, as well as
+    for filling its interior.  When it is used to draw a border, the brush is
+    "smeared" over the border; when it is used to fill the interior, it is
+    tiled through the interior.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     BE_set: ClassVar[Literal[0]]
     BE_blend: ClassVar[Literal[1]]
@@ -450,7 +482,38 @@ class PNMBrush(ReferenceCount):
     BELighten = BE_lighten
 
 class PNMImage(PNMImageHeader):
+    """The name of this class derives from the fact that we originally implemented
+    it as a layer on top of the "pnm library", based on netpbm, which was built
+    to implement pbm, pgm, and pbm files, and is the underlying support of a
+    number of public-domain image file converters.  Nowadays we are no longer
+    derived directly from the pnm library, mainly to allow support of C++
+    iostreams instead of the C stdio FILE interface.
+    
+    Conceptually, a PNMImage is a two-dimensional array of xels, which are the
+    PNM-defined generic pixel type.  Each xel may have a red, green, and blue
+    component, or (if the image is grayscale) a gray component.  The image may
+    be read in, the individual xels manipulated, and written out again, or a
+    black image may be constructed from scratch.
+    
+    A PNMImage has a color space and a maxval, the combination of which defines
+    how a floating-point linear color value is encoded as an integer value in
+    memory.  The functions ending in _val operate on encoded colors, whereas
+    the regular ones work with linear floating-point values.  All operations
+    are color space correct unless otherwise specified.
+    
+    The image is of size XSize() by YSize() xels, numbered from top to bottom,
+    left to right, beginning at zero.
+    
+    Files can be specified by filename, or by an iostream pointer.  The
+    filename "-" refers to stdin or stdout.
+    
+    This class is not inherently thread-safe; use it from a single thread or
+    protect access using a mutex.
+    """
     class Row:
+        """Provides an accessor for reading or writing the contents of one row of
+        the image in-place.
+        """
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImage.Row) -> None: ...
         def __len__(self) -> int: ...
@@ -465,6 +528,9 @@ class PNMImage(PNMImageHeader):
         getAlphaVal = get_alpha_val
         setAlphaVal = set_alpha_val
     class CRow:
+        """Provides an accessor for reading the contents of one row of the image in-
+        place.
+        """
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImage.CRow) -> None: ...
         def __len__(self) -> int: ...
@@ -748,6 +814,13 @@ class PNMImage(PNMImageHeader):
     doFillDistance = do_fill_distance
 
 class PNMPainter:
+    """This class provides a number of convenient methods for painting drawings
+    directly into a PNMImage.
+    
+    It stores a pointer to the PNMImage you pass it, but it does not take
+    ownership of the object; you are responsible for ensuring that the PNMImage
+    does not destruct during the lifetime of the PNMPainter object.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     pen: PNMBrush
     fill: PNMBrush

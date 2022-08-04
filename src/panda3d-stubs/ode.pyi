@@ -875,6 +875,7 @@ class OdeContactGeom(TypedReferenceCount):
     getClassType = get_class_type
 
 class OdeCollisionEntry(TypedReferenceCount):
+    """A class used to hold information about a collision that has occurred."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: OdeCollisionEntry) -> None: ...
     def __bool__(self) -> bool: ...

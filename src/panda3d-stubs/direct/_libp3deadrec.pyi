@@ -6,6 +6,18 @@ _SmoothMover_SmoothMode: TypeAlias = Literal[0, 1]
 _SmoothMover_PredictionMode: TypeAlias = Literal[0, 1]
 
 class SmoothMover:
+    """This class handles smoothing of sampled motion points over time, e.g.  for
+    smoothing the apparent movement of remote avatars, whose positions are sent
+    via occasional telemetry updates.
+    
+    It can operate in any of three modes: off, in which it does not smooth any
+    motion but provides the last position it was told; smoothing only, in which
+    it smooths motion information but never tries to anticipate where the
+    avatar might be going; or full prediction, in which it smooths motion as
+    well as tries to predict the avatar's position in lead of the last position
+    update.  The assumption is that all SmoothMovers in the world will be
+    operating in the same mode together.
+    """
     DtoolClassDict: ClassVar[dict[str, Any]]
     SM_off: ClassVar[Literal[0]]
     SM_on: ClassVar[Literal[1]]

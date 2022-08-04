@@ -125,3 +125,19 @@ def method_name_from_cpp_name(cpp_name: str, mangle: bool = False) -> str:
         else:
             py_name_parts.append(char)
     return check_keyword(''.join(py_name_parts))
+
+
+def comment_to_docstring(comment: str) -> str:
+    docstring_lines: list[str] = []
+    comment = comment.strip('\n /*')
+    if not comment:
+        return ''
+    for line in comment.splitlines():
+        if line == ' *':
+            docstring_lines.append('')
+        else:
+            docstring_lines.append(line.removeprefix(' * ').removeprefix('// '))
+    docstring = '\n'.join(docstring_lines)
+    if '\n' in docstring:
+        docstring += '\n'
+    return f'"""{docstring}"""'
