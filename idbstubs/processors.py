@@ -13,7 +13,7 @@ from .util import flatten
 
 _logger: Final = logging.getLogger(__name__)
 
-_absent_param: Final = Parameter('', 'Never', True, False)
+_absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
 
 REQUIRED_SIGS: Final = {
     '__eq__': Signature(
@@ -67,9 +67,9 @@ def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
     return Parameter(
         p.name if p.named else q.name,
         merged_type,
-        p.is_optional or q.is_optional,
-        p.named or q.named,
-        p.is_self
+        is_optional=p.is_optional or q.is_optional,
+        named=p.named or q.named,
+        is_self=p.is_self
     )
 
 

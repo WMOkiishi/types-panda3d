@@ -129,7 +129,8 @@ def make_element_rep(
     elif idb.interrogate_element_is_mapping(e):
         type_name = f'Mapping[Any, {type_name}]'
     read_only = not idb.interrogate_element_setter(e)
-    return Element(check_keyword(name), type_name, read_only, namespace)
+    return Element(check_keyword(name), type_name,
+                   read_only=read_only, namespace=namespace)
 
 
 def make_signature_rep(
@@ -152,8 +153,8 @@ def make_signature_rep(
         params.append(Parameter(
             check_keyword(idb.interrogate_wrapper_parameter_name(w, n)),
             get_type_name(idb.interrogate_wrapper_parameter_type(w, n)),
-            idb.interrogate_wrapper_parameter_is_optional(w, n),
-            idb.interrogate_wrapper_parameter_has_name(w, n),
+            is_optional=idb.interrogate_wrapper_parameter_is_optional(w, n),
+            named=idb.interrogate_wrapper_parameter_has_name(w, n),
         ))
     return Signature(params, return_type)
 
@@ -181,7 +182,7 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
         ):
             signature.parameters = [Parameter.as_self(), *signature.parameters]
         signatures.append(signature)
-    return Function(name, signatures, is_method, namespace)
+    return Function(name, signatures, is_method=is_method, namespace=namespace)
 
 
 def make_type_reps(
@@ -224,7 +225,7 @@ def make_make_seq_rep(ms: MakeSeqIndex, /) -> Function:
     return_type_index = idb.interrogate_wrapper_return_type(element_getter_wrapper)
     return_type = get_type_name(return_type_index)
     signature = Signature([Parameter.as_self()], f'tuple[{return_type}, ...]')
-    return Function(name, [signature], True, namespace)
+    return Function(name, [signature], is_method=True, namespace=namespace)
 
 
 def make_enum_alias_rep(t: TypeIndex, /) -> Alias:
@@ -269,7 +270,8 @@ def make_scoped_enum_rep(t: TypeIndex, /, namespace: Sequence[str] = ()) -> Clas
         for n in range(idb.interrogate_type_number_of_enum_values(t))
     ]
     is_final = idb.interrogate_type_is_final(t)
-    return Class(name, ['Enum'], value_elements, is_final, namespace)
+    return Class(name, ['Enum'], value_elements,
+                 is_final=is_final, namespace=namespace)
 
 
 def make_class_rep(
@@ -312,7 +314,7 @@ def make_class_rep(
         nested.append(Function(
             '__iter__',
             [Signature([Parameter.as_self()], f'Iterator[{iterable_of}]')],
-            True, this_namespace,
+            is_method=True, namespace=this_namespace,
         ))
     # Nested types
     for n in range(idb.interrogate_type_number_of_nested_types(t)):
@@ -330,8 +332,8 @@ def make_class_rep(
         )
     return Class(
         name, derivations, nested,
-        idb.interrogate_type_is_final(t),
-        namespace,
+        is_final=idb.interrogate_type_is_final(t),
+        namespace=namespace,
     )
 
 
@@ -372,6 +374,6 @@ def make_package_rep(
         nested_by_lib = cast(dict[str, Sequence[StubRep]], nested_by_lib)
         modules.append(Module(
             mod_name.removeprefix(package_name + '.'),
-            nested_by_lib, (package_name,)
+            nested_by_lib, namespace=(package_name,)
         ))
     return Package(package_name, modules)

@@ -20,8 +20,8 @@ class StubRep(Protocol):
 class Alias:
     name: str
     alias_of: str
-    is_type_alias: bool = False
-    of_local: bool = False
+    is_type_alias: bool = field(default=False, kw_only=True)
+    of_local: bool = field(default=False, kw_only=True)
 
     def __str__(self) -> str:
         if self.is_type_alias:
@@ -51,9 +51,9 @@ class Alias:
 class Parameter:
     name: str
     type: str = ''
-    is_optional: bool = False
-    named: bool = True
-    is_self: bool = False
+    is_optional: bool = field(default=False, kw_only=True)
+    named: bool = field(default=True, kw_only=True)
+    is_self: bool = field(default=False, kw_only=True)
 
     @classmethod
     def as_self(cls) -> 'Parameter':
@@ -119,8 +119,8 @@ class Signature:
 class Function:
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
-    is_method: bool = False
-    namespace: Sequence[str] = field(default=(), converter=tuple)
+    is_method: bool = field(default=False, kw_only=True)
+    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -161,8 +161,8 @@ class Function:
 class Element:
     name: str
     type: str
-    read_only: bool = False
-    namespace: Sequence[str] = field(default=(), converter=tuple)
+    read_only: bool = field(default=False, kw_only=True)
+    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -188,8 +188,8 @@ class Class:
     name: str
     derivations: Sequence[str] = field(default=(), converter=tuple)
     nested: Sequence[StubRep] = Factory(list)
-    is_final: bool = False
-    namespace: Sequence[str] = field(default=(), converter=tuple)
+    is_final: bool = field(default=False, kw_only=True)
+    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -228,8 +228,9 @@ class Class:
 class File:
     name: str
     nested: list[StubRep] = field(factory=list, converter=list)
-    namespace: Sequence[str] = field(default=(), converter=tuple)
-    imports: defaultdict[str, list[str]] = Factory(lambda: defaultdict(list))
+    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
+    imports: defaultdict[str, list[str]] = field(
+        factory=lambda: defaultdict(list), kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -289,7 +290,7 @@ class File:
 class Module:
     name: str
     nested: dict[str, Sequence[StubRep]] = Factory(dict)
-    namespace: Sequence[str] = field(default=(), converter=tuple)
+    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -304,13 +305,13 @@ class Module:
             # Convert to a list because the type checker doesn't know about
             # attrs field converters.
             nested = list(nested)
-            yield File(self.name, nested, self.namespace)
+            yield File(self.name, nested, namespace=self.namespace)
             return
         this_namespace = (*self.namespace, self.name)
         for file_name, nested in self.nested.items():
             # See previous comment.
             nested = list(nested)
-            yield File(file_name, nested, this_namespace)
+            yield File(file_name, nested, namespace=this_namespace)
 
 
 @define
