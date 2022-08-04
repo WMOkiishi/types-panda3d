@@ -30,7 +30,9 @@ _implicit_cast_param_names = frozenset(
 BUILTIN_NAMES: Final = frozenset(dir(builtins))
 STDLIB_IMPORTS: Final = {
     'array': 'array',
+    'Awaitable': 'collections.abc',
     'Callable': 'collections.abc',
+    'Generator': 'collections.abc',
     'Iterable': 'collections.abc',
     'Iterator': 'collections.abc',
     'Mapping': 'collections.abc',
@@ -38,10 +40,8 @@ STDLIB_IMPORTS: Final = {
     'Enum': 'enum',
     'PathLike': 'os',
     'Any': 'typing',
-    'Awaitable': 'typing',
     'ClassVar': 'typing',
     'final': 'typing',
-    'Generator': 'typing',
     'Literal': 'typing',
     'NoReturn': 'typing',
     'overload': 'typing',
