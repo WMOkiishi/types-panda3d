@@ -260,7 +260,11 @@ class AsyncTask(AsyncFuture, Namable):
     @property
     def manager(self) -> AsyncTaskManager: ...
     @property
-    def id(self) -> int: ...
+    def id(self) -> int:
+        """This is a number guaranteed to be unique for each different AsyncTask
+        object in the universe.
+        """
+        ...
     @property
     def dt(self) -> float: ...
     @property
@@ -1368,13 +1372,30 @@ class PythonTask(AsyncTask):
     delayTime: float
     __dict__: Any
     @property
-    def time(self) -> float: ...
+    def time(self) -> float:
+        """The amount of seconds that have elapsed since the task was started,
+        according to the task manager's clock.
+        """
+        ...
     @property
-    def wake_time(self) -> float: ...
+    def wake_time(self) -> float:
+        """If this task has been added to an AsyncTaskManager with a delay in
+        effect, this contains the time at which the task is expected to awaken.
+        It has no meaning of the task has not yet been added to a queue, or if
+        there was no delay in effect at the time the task was added.  If the
+        task's status is not S_sleeping, this contains 0.0.
+        """
+        ...
     @property
-    def wakeTime(self) -> float: ...
+    def wakeTime(self) -> float:
+        """Alias of wake_time."""
+        ...
     @property
-    def frame(self) -> int: ...
+    def frame(self) -> int:
+        """The number of frames that have elapsed since the task was started,
+        according to the task manager's clock.
+        """
+        ...
     @overload
     def __init__(self, function: Callable = ..., name: str = ...) -> None: ...
     @overload

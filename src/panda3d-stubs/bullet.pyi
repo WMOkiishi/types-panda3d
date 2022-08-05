@@ -1563,7 +1563,9 @@ class BulletVehicle(TypedReferenceCount):
     @property
     def wheels(self) -> Sequence[BulletWheel]: ...
     @property
-    def tuning(self) -> BulletVehicleTuning: ...
+    def tuning(self) -> BulletVehicleTuning:
+        """Tuning"""
+        ...
     def __init__(self, world: BulletWorld, chassis: BulletRigidBodyNode) -> None:
         """Creates a new BulletVehicle instance in the given world and with a chassis
         node.
@@ -2391,7 +2393,9 @@ class BulletHeightfieldShape(BulletShape):
 class BulletHelper:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
-    def sb_index(self) -> InternalName: ...
+    def sb_index(self) -> InternalName:
+        """Internal names"""
+        ...
     @property
     def sb_flip(self) -> InternalName: ...
     @overload

@@ -129,8 +129,12 @@ def make_element_rep(
     elif idb.interrogate_element_is_mapping(e):
         type_name = f'Mapping[Any, {type_name}]'
     read_only = not idb.interrogate_element_setter(e)
-    return Element(check_keyword(name), type_name,
-                   read_only=read_only, namespace=namespace)
+    if idb.interrogate_element_has_comment(e):
+        doc = comment_to_docstring(idb.interrogate_element_comment(e))
+    else:
+        doc = ''
+    return Element(check_keyword(name), type_name, read_only=read_only,
+                   namespace=namespace, doc=doc)
 
 
 def make_signature_rep(

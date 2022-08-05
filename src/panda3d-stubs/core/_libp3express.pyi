@@ -505,7 +505,9 @@ class ReferenceCount:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
-    def ref_count(self) -> int: ...
+    def ref_count(self) -> int:
+        """The current reference count."""
+        ...
     def get_ref_count(self) -> int:
         """Returns the current reference count."""
         ...
@@ -3046,11 +3048,25 @@ class TrueClock:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
-    def long_time(self) -> float: ...
+    def long_time(self) -> float:
+        """get_long_time() returns the most accurate timer we have over a long
+        interval.  It may not be very precise for measuring short intervals, but
+        it should not drift substantially over the long haul.
+        """
+        ...
     @property
-    def short_time(self) -> float: ...
+    def short_time(self) -> float:
+        """get_short_time() returns the most precise timer we have over a short
+        interval.  It may tend to drift over the long haul, but it should have
+        lots of digits to measure short intervals very precisely.
+        """
+        ...
     @property
-    def short_raw_time(self) -> float: ...
+    def short_raw_time(self) -> float:
+        """get_short_raw_time() is like get_short_time(), but does not apply any
+        corrections (e.g.  paranoid-clock) to the result returned by the OS.
+        """
+        ...
     @property
     def error_count(self) -> int: ...
     def get_long_time(self) -> float:

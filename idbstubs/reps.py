@@ -170,6 +170,7 @@ class Element:
     type: str
     read_only: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
+    doc: str = field(default='', kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -186,8 +187,16 @@ class Element:
 
     def definition(self) -> Iterator[str]:
         if self.read_only:
-            return iter(('@property', f'def {self.name}(self) -> {self.type}: ...'))
-        return iter((f'{self.name}: {self.type}',))
+            yield '@property'
+            if self.doc:
+                yield f'def {self.name}(self) -> {self.type}:'
+                for line in self.doc.splitlines():
+                    yield '    ' + line
+                yield '    ...'  # This isn't really necessary
+            else:
+                yield f'def {self.name}(self) -> {self.type}: ...'
+        else:
+            yield f'{self.name}: {self.type}'
 
 
 @define

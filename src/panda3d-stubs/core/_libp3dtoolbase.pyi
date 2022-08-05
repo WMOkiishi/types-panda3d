@@ -428,7 +428,9 @@ class TypedObject:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
-    def type(self) -> TypeHandle: ...
+    def type(self) -> TypeHandle:
+        """Returns the TypeHandle representing this object's type."""
+        ...
     def get_type(self) -> TypeHandle:
         """Derived classes should override this function to return get_class_type()."""
         ...
