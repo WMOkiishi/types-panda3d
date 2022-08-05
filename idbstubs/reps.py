@@ -1,6 +1,6 @@
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Sequence
-from itertools import chain
+from itertools import chain, repeat
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -121,6 +121,7 @@ class Function:
     signatures: Sequence[Signature] = field(converter=tuple)
     is_method: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
+    docs: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -149,12 +150,18 @@ class Function:
     def definition(self) -> Iterator[str]:
         is_method = self.is_method
         is_overloaded = self.is_overloaded
-        for signature in self.signatures:
+        for signature, doc in zip(self.signatures, chain(self.docs, repeat(''))):
             if is_overloaded:
                 yield '@overload'
             if is_method and signature.is_static:
                 yield '@staticmethod'
-            yield f'def {self.name}{signature}: ...'
+            if doc:
+                yield f'def {self.name}{signature}:'
+                for line in doc.splitlines():
+                    yield '    ' + line
+                yield '    ...'  # This isn't really necessary
+            else:
+                yield f'def {self.name}{signature}: ...'
 
 
 @define

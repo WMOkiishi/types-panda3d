@@ -43,7 +43,9 @@ class ConstPointerToArray_double(PointerToArrayBase_double):
 
 class PointerToArrayBase_double(PointerToBase_ReferenceCountedVector_double):
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
+        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_double(PointerToVoid):
@@ -61,7 +63,11 @@ class PointerToVoid:
     This is the base class for PointerToBase<T>.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def is_null(self) -> bool: ...
+    def is_null(self) -> bool:
+        """Returns true if the PointerTo is a NULL pointer, false otherwise.  (Direct
+        comparison to a NULL pointer also works.)
+        """
+        ...
     def get_hash(self) -> int: ...
     isNull = is_null
     getHash = get_hash
@@ -86,7 +92,9 @@ class ConstPointerToArray_float(PointerToArrayBase_float):
 
 class PointerToArrayBase_float(PointerToBase_ReferenceCountedVector_float):
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
+        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_float(PointerToVoid):
@@ -114,7 +122,9 @@ class ConstPointerToArray_int(PointerToArrayBase_int):
 
 class PointerToArrayBase_int(PointerToBase_ReferenceCountedVector_int):
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
+        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_int(PointerToVoid):
@@ -142,7 +152,9 @@ class ConstPointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
 
 class PointerToArrayBase_unsigned_char(PointerToBase_ReferenceCountedVector_unsigned_char):
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
+        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_unsigned_char(PointerToVoid):
@@ -329,45 +341,143 @@ class MemoryUsage:
     def total_size(self) -> int: ...
     def __init__(self, __param0: MemoryUsage) -> None: ...
     @staticmethod
-    def is_tracking() -> bool: ...
+    def is_tracking() -> bool:
+        """Returns true if the MemoryUsage object is currently tracking memory (e.g.
+        track-memory-usage is configured #t).
+        """
+        ...
     @staticmethod
-    def is_counting() -> bool: ...
+    def is_counting() -> bool:
+        """Returns true if the MemoryUsage object is currently at least counting
+        memory (e.g.  this is a Windows debug build), even if it's not fully
+        tracking it.
+        """
+        ...
     @staticmethod
-    def get_current_cpp_size() -> int: ...
+    def get_current_cpp_size() -> int:
+        """Returns the total number of bytes of allocated memory consumed by C++
+        objects, not including the memory previously frozen.
+        """
+        ...
     @staticmethod
-    def get_total_cpp_size() -> int: ...
+    def get_total_cpp_size() -> int:
+        """Returns the total number of bytes of allocated memory consumed by C++
+        objects, including the memory previously frozen.
+        """
+        ...
     @staticmethod
-    def get_panda_heap_single_size() -> int: ...
+    def get_panda_heap_single_size() -> int:
+        """Returns the total number of bytes allocated from the heap from code within
+        Panda, for individual objects.
+        """
+        ...
     @staticmethod
-    def get_panda_heap_array_size() -> int: ...
+    def get_panda_heap_array_size() -> int:
+        """Returns the total number of bytes allocated from the heap from code within
+        Panda, for arrays.
+        """
+        ...
     @staticmethod
-    def get_panda_heap_overhead() -> int: ...
+    def get_panda_heap_overhead() -> int:
+        """Returns the extra bytes allocated from the system that are not immediately
+        used for holding allocated objects.  This can only be determined if
+        ALTERNATIVE_MALLOC is enabled.
+        """
+        ...
     @staticmethod
-    def get_panda_mmap_size() -> int: ...
+    def get_panda_mmap_size() -> int:
+        """Returns the total number of bytes allocated from the virtual memory pool
+        from code within Panda.
+        """
+        ...
     @staticmethod
-    def get_external_size() -> int: ...
+    def get_external_size() -> int:
+        """Returns the total number of bytes of allocated memory in the heap that
+        Panda didn't seem to be responsible for.  This includes a few bytes for
+        very low-level objects (like ConfigVariables) that cannot use Panda memory
+        tracking because they are so very low-level.
+        
+        This also includes all of the memory that might have been allocated by a
+        high-level interpreter, like Python.
+        
+        This number is only available if Panda is able to hook into the actual heap
+        callback.
+        """
+        ...
     @staticmethod
-    def get_total_size() -> int: ...
+    def get_total_size() -> int:
+        """Returns the total size of allocated memory consumed by the process, as
+        nearly as can be determined.
+        """
+        ...
     @staticmethod
-    def get_num_pointers() -> int: ...
+    def get_num_pointers() -> int:
+        """Returns the number of pointers currently active."""
+        ...
     @staticmethod
-    def get_pointers(result: MemoryUsagePointers) -> None: ...
+    def get_pointers(result: MemoryUsagePointers) -> None:
+        """Fills the indicated MemoryUsagePointers with the set of all pointers
+        currently active.
+        """
+        ...
     @staticmethod
-    def get_pointers_of_type(result: MemoryUsagePointers, type: TypeHandle) -> None: ...
+    def get_pointers_of_type(result: MemoryUsagePointers, type: TypeHandle) -> None:
+        """Fills the indicated MemoryUsagePointers with the set of all pointers of the
+        indicated type currently active.
+        """
+        ...
     @staticmethod
-    def get_pointers_of_age(result: MemoryUsagePointers, _from: float, to: float) -> None: ...
+    def get_pointers_of_age(result: MemoryUsagePointers, _from: float, to: float) -> None:
+        """Fills the indicated MemoryUsagePointers with the set of all pointers that
+        were allocated within the range of the indicated number of seconds ago.
+        """
+        ...
     @staticmethod
-    def get_pointers_with_zero_count(result: MemoryUsagePointers) -> None: ...
+    def get_pointers_with_zero_count(result: MemoryUsagePointers) -> None:
+        """Fills the indicated MemoryUsagePointers with the set of all currently
+        active pointers (that is, pointers allocated since the last call to
+        freeze(), and not yet freed) that have a zero reference count.
+        
+        Generally, an undeleted pointer with a zero reference count means its
+        reference count has never been incremented beyond zero (since once it has
+        been incremented, the only way it can return to zero would free the
+        pointer).  This may include objects that are allocated statically or on the
+        stack, which are never intended to be deleted.  Or, it might represent a
+        programmer or compiler error.
+        
+        This function has the side-effect of incrementing each of their reference
+        counts by one, thus preventing them from ever being freed--but since they
+        hadn't been freed anyway, probably no additional harm is done.
+        """
+        ...
     @staticmethod
-    def freeze() -> None: ...
+    def freeze() -> None:
+        """'Freezes' all pointers currently stored so that they are no longer
+        reported; only newly allocate pointers from this point on will appear in
+        future information requests.  This makes it easier to differentiate between
+        continuous leaks and one-time memory allocations.
+        """
+        ...
     @staticmethod
-    def show_current_types() -> None: ...
+    def show_current_types() -> None:
+        """Shows the breakdown of types of all of the active pointers."""
+        ...
     @staticmethod
-    def show_trend_types() -> None: ...
+    def show_trend_types() -> None:
+        """Shows the breakdown of types of all of the pointers allocated and freed
+        since the last call to freeze().
+        """
+        ...
     @staticmethod
-    def show_current_ages() -> None: ...
+    def show_current_ages() -> None:
+        """Shows the breakdown of ages of all of the active pointers."""
+        ...
     @staticmethod
-    def show_trend_ages() -> None: ...
+    def show_trend_ages() -> None:
+        """Shows the breakdown of ages of all of the pointers allocated and freed
+        since the last call to freeze().
+        """
+        ...
     isTracking = is_tracking
     isCounting = is_counting
     getCurrentCppSize = get_current_cpp_size
@@ -396,11 +506,50 @@ class ReferenceCount:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def ref_count(self) -> int: ...
-    def get_ref_count(self) -> int: ...
-    def ref(self) -> None: ...
-    def unref(self) -> bool: ...
-    def test_ref_count_integrity(self) -> bool: ...
-    def test_ref_count_nonzero(self) -> bool: ...
+    def get_ref_count(self) -> int:
+        """Returns the current reference count."""
+        ...
+    def ref(self) -> None:
+        """Explicitly increments the reference count.  User code should avoid using
+        ref() and unref() directly, which can result in missed reference counts.
+        Instead, let a PointerTo object manage the reference counting
+        automatically.
+        
+        This function is const, even though it changes the object, because
+        generally fiddling with an object's reference count isn't considered part
+        of fiddling with the object.  An object might be const in other ways, but
+        we still need to accurately count the number of references to it.
+        """
+        ...
+    def unref(self) -> bool:
+        """Explicitly decrements the reference count.  Note that the object will not
+        be implicitly deleted by unref() simply because the reference count drops
+        to zero.  (Having a member function delete itself is problematic.) However,
+        see the helper function unref_delete().
+        
+        User code should avoid using ref() and unref() directly, which can result
+        in missed reference counts.  Instead, let a PointerTo object manage the
+        reference counting automatically.
+        
+        This function is const, even though it changes the object, because
+        generally fiddling with an object's reference count isn't considered part
+        of fiddling with the object.  An object might be const in other ways, but
+        we still need to accurately count the number of references to it.
+        
+        The return value is true if the new reference count is nonzero, false if it
+        is zero.
+        """
+        ...
+    def test_ref_count_integrity(self) -> bool:
+        """Does some easy checks to make sure that the reference count isn't
+        completely bogus.  Returns true if ok, false otherwise.
+        """
+        ...
+    def test_ref_count_nonzero(self) -> bool:
+        """Does some easy checks to make sure that the reference count isn't zero, or
+        completely bogus.  Returns true if ok, false otherwise.
+        """
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getRefCount = get_ref_count
@@ -439,11 +588,33 @@ class NodeReferenceCount(ReferenceCount):
     as well as NodeCachedReferenceCount, which combines both of these.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def get_node_ref_count(self) -> int: ...
-    def node_ref(self) -> None: ...
-    def node_unref(self) -> bool: ...
-    def test_ref_count_integrity(self) -> bool: ...
-    def node_unref_only(self) -> None: ...
+    def get_node_ref_count(self) -> int:
+        """Returns the current reference count."""
+        ...
+    def node_ref(self) -> None:
+        """Explicitly increments the node reference count and the normal reference
+        count simultaneously.
+        """
+        ...
+    def node_unref(self) -> bool:
+        """Explicitly decrements the node reference count and the normal reference
+        count simultaneously.
+        
+        The return value is true if the new reference count is nonzero, false if it
+        is zero.
+        """
+        ...
+    def test_ref_count_integrity(self) -> bool:
+        """Does some easy checks to make sure that the reference count isn't
+        completely bogus.
+        """
+        ...
+    def node_unref_only(self) -> None:
+        """Decrements the node reference count without affecting the normal reference
+        count.  Intended to be called by derived classes only, presumably to
+        reimplement node_unref().
+        """
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getNodeRefCount = get_node_ref_count
@@ -472,54 +643,171 @@ class Datagram(TypedObject):
     @overload
     def __init__(self, copy: Datagram) -> None: ...
     @overload
-    def __init__(self, data: bytes) -> None: ...
+    def __init__(self, data: bytes) -> None:
+        """Constructs a datagram from an existing block of data."""
+        ...
     def __bytes__(self) -> bytes: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: Datagram) -> bool: ...
     def __le__(self, other: Datagram) -> bool: ...
     def assign(self, copy: Datagram) -> Datagram: ...
-    def clear(self) -> None: ...
-    def dump_hex(self, out: ostream, indent: int = ...) -> None: ...
-    def add_bool(self, value: bool) -> None: ...
-    def add_int8(self, value: str) -> None: ...
-    def add_uint8(self, value: str) -> None: ...
-    def add_int16(self, value: int) -> None: ...
-    def add_int32(self, value: int) -> None: ...
-    def add_int64(self, value: int) -> None: ...
-    def add_uint16(self, value: int) -> None: ...
-    def add_uint32(self, value: int) -> None: ...
-    def add_uint64(self, value: int) -> None: ...
-    def add_float32(self, value: float) -> None: ...
-    def add_float64(self, value: float) -> None: ...
-    def add_stdfloat(self, value: float) -> None: ...
-    def add_be_int16(self, value: int) -> None: ...
-    def add_be_int32(self, value: int) -> None: ...
-    def add_be_int64(self, value: int) -> None: ...
-    def add_be_uint16(self, value: int) -> None: ...
-    def add_be_uint32(self, value: int) -> None: ...
-    def add_be_uint64(self, value: int) -> None: ...
-    def add_be_float32(self, value: float) -> None: ...
-    def add_be_float64(self, value: float) -> None: ...
-    def add_string(self, str: str) -> None: ...
-    def add_string32(self, str: str) -> None: ...
-    def add_z_string(self, str: str) -> None: ...
-    def add_fixed_string(self, str: str, size: int) -> None: ...
-    def add_wstring(self, str: str) -> None: ...
-    def add_blob(self, __param0: bytes) -> None: ...
-    def add_blob32(self, __param0: bytes) -> None: ...
-    def pad_bytes(self, size: int) -> None: ...
-    def append_data(self, data: bytes) -> None: ...
-    def get_message(self) -> bytes: ...
-    def get_length(self) -> int: ...
-    def set_array(self, data: PointerToArray_unsigned_char) -> None: ...
-    def copy_array(self, data: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char) -> None: ...
-    def get_array(self) -> ConstPointerToArray_unsigned_char: ...
-    def modify_array(self) -> PointerToArray_unsigned_char: ...
-    def set_stdfloat_double(self, stdfloat_double: bool) -> None: ...
-    def get_stdfloat_double(self) -> bool: ...
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream, indent: int = ...) -> None: ...
+    def clear(self) -> None:
+        """Resets the datagram to empty, in preparation for building up a new
+        datagram.
+        """
+        ...
+    def dump_hex(self, out: ostream, indent: int = ...) -> None:
+        """Writes a representation of the entire datagram contents, as a sequence of
+        hex (and ASCII) values.
+        """
+        ...
+    def add_bool(self, value: bool) -> None:
+        """Adds a boolean value to the datagram."""
+        ...
+    def add_int8(self, value: str) -> None:
+        """Adds a signed 8-bit integer to the datagram."""
+        ...
+    def add_uint8(self, value: str) -> None:
+        """Adds an unsigned 8-bit integer to the datagram."""
+        ...
+    def add_int16(self, value: int) -> None:
+        """Adds a signed 16-bit integer to the datagram."""
+        ...
+    def add_int32(self, value: int) -> None:
+        """Adds a signed 32-bit integer to the datagram."""
+        ...
+    def add_int64(self, value: int) -> None:
+        """Adds a signed 64-bit integer to the datagram."""
+        ...
+    def add_uint16(self, value: int) -> None:
+        """Adds an unsigned 16-bit integer to the datagram."""
+        ...
+    def add_uint32(self, value: int) -> None:
+        """Adds an unsigned 32-bit integer to the datagram."""
+        ...
+    def add_uint64(self, value: int) -> None:
+        """Adds an unsigned 64-bit integer to the datagram."""
+        ...
+    def add_float32(self, value: float) -> None:
+        """Adds a 32-bit single-precision floating-point number to the datagram.
+        Since this kind of float is not necessarily portable across different
+        architectures, special care is required.
+        """
+        ...
+    def add_float64(self, value: float) -> None:
+        """Adds a 64-bit floating-point number to the datagram."""
+        ...
+    def add_stdfloat(self, value: float) -> None:
+        """Adds either a 32-bit or a 64-bit floating-point number, according to
+        set_stdfloat_double().
+        """
+        ...
+    def add_be_int16(self, value: int) -> None:
+        """These functions pack numbers big-endian, in case that's desired."""
+        ...
+    def add_be_int32(self, value: int) -> None:
+        """Adds a signed 32-bit big-endian integer to the datagram."""
+        ...
+    def add_be_int64(self, value: int) -> None:
+        """Adds a signed 64-bit big-endian integer to the datagram."""
+        ...
+    def add_be_uint16(self, value: int) -> None:
+        """Adds an unsigned 16-bit big-endian integer to the datagram."""
+        ...
+    def add_be_uint32(self, value: int) -> None:
+        """Adds an unsigned 32-bit big-endian integer to the datagram."""
+        ...
+    def add_be_uint64(self, value: int) -> None:
+        """Adds an unsigned 64-bit big-endian integer to the datagram."""
+        ...
+    def add_be_float32(self, value: float) -> None:
+        """Adds a 32-bit single-precision big-endian floating-point number to the
+        datagram.
+        """
+        ...
+    def add_be_float64(self, value: float) -> None:
+        """Adds a 64-bit big-endian floating-point number to the datagram."""
+        ...
+    def add_string(self, str: str) -> None:
+        """Adds a variable-length string to the datagram.  This actually adds a count
+        followed by n bytes.
+        """
+        ...
+    def add_string32(self, str: str) -> None:
+        """Adds a variable-length string to the datagram, using a 32-bit length field
+        to allow very long strings.
+        """
+        ...
+    def add_z_string(self, str: str) -> None:
+        """Adds a variable-length string to the datagram, as a NULL-terminated string."""
+        ...
+    def add_fixed_string(self, str: str, size: int) -> None:
+        """Adds a fixed-length string to the datagram.  If the string given is less
+        than the requested size, this will pad the string out with zeroes; if it is
+        greater than the requested size, this will silently truncate the string.
+        """
+        ...
+    def add_wstring(self, str: str) -> None:
+        """Adds a variable-length wstring to the datagram."""
+        ...
+    def add_blob(self, __param0: bytes) -> None:
+        """Adds a variable-length binary blob to the datagram.  This actually adds a
+        count followed by n bytes.
+        """
+        ...
+    def add_blob32(self, __param0: bytes) -> None:
+        """Adds a variable-length binary blob to the datagram, using a 32-bit length
+        field to allow very long blobs.
+        """
+        ...
+    def pad_bytes(self, size: int) -> None:
+        """Adds the indicated number of zero bytes to the datagram."""
+        ...
+    def append_data(self, data: bytes) -> None:
+        """Appends some more raw data to the end of the datagram."""
+        ...
+    def get_message(self) -> bytes:
+        """Returns the datagram's data as a string."""
+        ...
+    def get_length(self) -> int:
+        """Returns the number of bytes in the datagram."""
+        ...
+    def set_array(self, data: PointerToArray_unsigned_char) -> None:
+        """Replaces the data in the Datagram with the data in the indicated PTA_uchar.
+        This is assignment by reference: subsequent changes to the Datagram will
+        also change the source PTA_uchar.
+        """
+        ...
+    def copy_array(self, data: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char) -> None:
+        """Replaces the data in the Datagram with a copy of the data in the indicated
+        CPTA_uchar.  Unlike set_array(), a complete copy is made of the data;
+        subsequent changes to the Datagram will *not* change the source CPTA_uchar.
+        """
+        ...
+    def get_array(self) -> ConstPointerToArray_unsigned_char:
+        """Returns a const pointer to the actual data in the Datagram."""
+        ...
+    def modify_array(self) -> PointerToArray_unsigned_char:
+        """Returns a modifiable pointer to the actual data in the Datagram."""
+        ...
+    def set_stdfloat_double(self, stdfloat_double: bool) -> None:
+        """Changes the stdfloat_double flag, which defines the operation performed by
+        add_stdfloat() and DatagramIterator::get_stdfloat().  When this is true,
+        add_stdfloat() adds a 64-bit floating-point number; when it is false, it
+        adds a 32-bit floating-point number.  The default is based on the
+        STDFLOAT_DOUBLE compilation flag.
+        """
+        ...
+    def get_stdfloat_double(self) -> bool:
+        """Returns the stdfloat_double flag.  See set_stdfloat_double()."""
+        ...
+    def output(self, out: ostream) -> None:
+        """Write a string representation of this instance to <out>."""
+        ...
+    def write(self, out: ostream, indent: int = ...) -> None:
+        """Write a string representation of this instance to <out>."""
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     dumpHex = dump_hex
@@ -569,14 +857,47 @@ class DatagramGenerator:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_datagram(self, data: Datagram) -> bool: ...
-    def save_datagram(self, info: SubfileInfo) -> bool: ...
+    def save_datagram(self, info: SubfileInfo) -> bool:
+        """Skips over the next datagram without extracting it, but saves the relevant
+        file information in the SubfileInfo object so that its data may be read
+        later.  For non-file-based datagram generators, this may mean creating a
+        temporary file and copying the contents of the datagram to disk.
+        
+        Returns true on success, false on failure or if this method is
+        unimplemented.
+        """
+        ...
     def is_eof(self) -> bool: ...
     def is_error(self) -> bool: ...
-    def get_filename(self) -> Filename: ...
-    def get_timestamp(self) -> int: ...
-    def get_file(self) -> FileReference: ...
-    def get_vfile(self) -> VirtualFile: ...
-    def get_file_pos(self) -> int: ...
+    def get_filename(self) -> Filename:
+        """Returns the filename that provides the source for these datagrams, if any,
+        or empty string if the datagrams do not originate from a file on disk.
+        """
+        ...
+    def get_timestamp(self) -> int:
+        """Returns the on-disk timestamp of the file that was read, at the time it was
+        opened, if that is available, or 0 if it is not.
+        """
+        ...
+    def get_file(self) -> FileReference:
+        """Returns the FileReference that provides the source for these datagrams, if
+        any, or NULL if the datagrams do not originate from a file on disk.
+        """
+        ...
+    def get_vfile(self) -> VirtualFile:
+        """Returns the VirtualFile that provides the source for these datagrams, if
+        any, or NULL if the datagrams do not originate from a VirtualFile.
+        """
+        ...
+    def get_file_pos(self) -> int:
+        """Returns the current file position within the data stream, if any, or 0 if
+        the file position is not meaningful or cannot be determined.
+        
+        For DatagramGenerators that return a meaningful file position, this will be
+        pointing to the first byte following the datagram returned after a call to
+        get_datagram().
+        """
+        ...
     getDatagram = get_datagram
     saveDatagram = save_datagram
     isEof = is_eof
@@ -602,41 +923,121 @@ class DatagramIterator:
     def __init__(self, __param0: DatagramIterator) -> None: ...
     @overload
     def __init__(self, datagram: Datagram, offset: int = ...) -> None: ...
-    def get_bool(self) -> bool: ...
-    def get_int8(self) -> str: ...
-    def get_uint8(self) -> str: ...
-    def get_int16(self) -> int: ...
-    def get_int32(self) -> int: ...
-    def get_int64(self) -> int: ...
-    def get_uint16(self) -> int: ...
-    def get_uint32(self) -> int: ...
-    def get_uint64(self) -> int: ...
-    def get_float32(self) -> float: ...
-    def get_float64(self) -> float: ...
-    def get_stdfloat(self) -> float: ...
-    def get_be_int16(self) -> int: ...
-    def get_be_int32(self) -> int: ...
-    def get_be_int64(self) -> int: ...
-    def get_be_uint16(self) -> int: ...
-    def get_be_uint32(self) -> int: ...
-    def get_be_uint64(self) -> int: ...
-    def get_be_float32(self) -> float: ...
-    def get_be_float64(self) -> float: ...
-    def get_string(self) -> str: ...
-    def get_string32(self) -> str: ...
-    def get_z_string(self) -> str: ...
-    def get_fixed_string(self, size: int) -> str: ...
-    def get_wstring(self) -> str: ...
-    def get_blob(self) -> bytes: ...
-    def get_blob32(self) -> bytes: ...
-    def skip_bytes(self, size: int) -> None: ...
-    def extract_bytes(self, size: int) -> bytes: ...
-    def get_remaining_bytes(self) -> bytes: ...
-    def get_remaining_size(self) -> int: ...
-    def get_datagram(self) -> Datagram: ...
-    def get_current_index(self) -> int: ...
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream, indent: int = ...) -> None: ...
+    def get_bool(self) -> bool:
+        """Extracts a boolean value."""
+        ...
+    def get_int8(self) -> str:
+        """Extracts a signed 8-bit integer."""
+        ...
+    def get_uint8(self) -> str:
+        """Extracts an unsigned 8-bit integer."""
+        ...
+    def get_int16(self) -> int:
+        """Extracts a signed 16-bit integer."""
+        ...
+    def get_int32(self) -> int:
+        """Extracts a signed 32-bit integer."""
+        ...
+    def get_int64(self) -> int:
+        """Extracts a signed 64-bit integer."""
+        ...
+    def get_uint16(self) -> int:
+        """Extracts an unsigned 16-bit integer."""
+        ...
+    def get_uint32(self) -> int:
+        """Extracts an unsigned 32-bit integer."""
+        ...
+    def get_uint64(self) -> int:
+        """Extracts an unsigned 64-bit integer."""
+        ...
+    def get_float32(self) -> float:
+        """Extracts a 32-bit single-precision floating-point number."""
+        ...
+    def get_float64(self) -> float:
+        """Extracts a 64-bit floating-point number."""
+        ...
+    def get_stdfloat(self) -> float:
+        """Extracts either a 32-bit or a 64-bit floating-point number, according to
+        Datagram::set_stdfloat_double().
+        """
+        ...
+    def get_be_int16(self) -> int:
+        """Extracts a signed 16-bit big-endian integer."""
+        ...
+    def get_be_int32(self) -> int:
+        """Extracts a signed 32-bit big-endian integer."""
+        ...
+    def get_be_int64(self) -> int:
+        """Extracts a signed 64-bit big-endian integer."""
+        ...
+    def get_be_uint16(self) -> int:
+        """Extracts an unsigned 16-bit big-endian integer."""
+        ...
+    def get_be_uint32(self) -> int:
+        """Extracts an unsigned 32-bit big-endian integer."""
+        ...
+    def get_be_uint64(self) -> int:
+        """Extracts an unsigned 64-bit big-endian integer."""
+        ...
+    def get_be_float32(self) -> float:
+        """Extracts a 32-bit big-endian single-precision floating-point number."""
+        ...
+    def get_be_float64(self) -> float:
+        """Extracts a 64-bit big-endian floating-point number."""
+        ...
+    def get_string(self) -> str:
+        """Extracts a variable-length string."""
+        ...
+    def get_string32(self) -> str:
+        """Extracts a variable-length string with a 32-bit length field."""
+        ...
+    def get_z_string(self) -> str:
+        """Extracts a variable-length string, as a NULL-terminated string."""
+        ...
+    def get_fixed_string(self, size: int) -> str:
+        """Extracts a fixed-length string.  However, if a zero byte occurs within the
+        string, it marks the end of the string.
+        """
+        ...
+    def get_wstring(self) -> str:
+        """Extracts a variable-length wstring (with a 32-bit length field)."""
+        ...
+    def get_blob(self) -> bytes:
+        """Extracts a variable-length binary blob."""
+        ...
+    def get_blob32(self) -> bytes:
+        """Extracts a variable-length binary blob with a 32-bit size field."""
+        ...
+    def skip_bytes(self, size: int) -> None:
+        """Skips over the indicated number of bytes in the datagram."""
+        ...
+    def extract_bytes(self, size: int) -> bytes:
+        """Extracts the indicated number of bytes in the datagram and returns them as
+        a string.
+        """
+        ...
+    def get_remaining_bytes(self) -> bytes:
+        """Returns the remaining bytes in the datagram as a string, but does not
+        extract them from the iterator.
+        """
+        ...
+    def get_remaining_size(self) -> int:
+        """Return the bytes left in the datagram."""
+        ...
+    def get_datagram(self) -> Datagram:
+        """Return the datagram of this iterator."""
+        ...
+    def get_current_index(self) -> int:
+        """Returns the current position within the datagram of the next piece of data
+        to extract.
+        """
+        ...
+    def output(self, out: ostream) -> None:
+        """Write a string representation of this instance to <out>."""
+        ...
+    def write(self, out: ostream, indent: int = ...) -> None:
+        """Write a string representation of this instance to <out>."""
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getBool = get_bool
@@ -687,14 +1088,48 @@ class DatagramSink:
     def file_pos(self) -> int: ...
     def put_datagram(self, data: Datagram) -> bool: ...
     @overload
-    def copy_datagram(self, result: SubfileInfo, filename: _Filename) -> bool: ...
+    def copy_datagram(self, result: SubfileInfo, filename: _Filename) -> bool:
+        """Copies the file data from the entire indicated file (via the vfs) as the
+        next datagram.  This is intended to support potentially very large
+        datagrams.
+        
+        Returns true on success, false on failure or if this method is
+        unimplemented.  On true, fills "result" with the information that
+        references the copied file, if possible.
+        """
+        ...
     @overload
-    def copy_datagram(self, result: SubfileInfo, source: SubfileInfo) -> bool: ...
+    def copy_datagram(self, result: SubfileInfo, source: SubfileInfo) -> bool:
+        """Copies the file data from the range of the indicated file (outside of the
+        vfs) as the next datagram.  This is intended to support potentially very
+        large datagrams.
+        
+        Returns true on success, false on failure or if this method is
+        unimplemented.  On true, fills "result" with the information that
+        references the copied file, if possible.
+        """
+        ...
     def is_error(self) -> bool: ...
     def flush(self) -> None: ...
-    def get_filename(self) -> Filename: ...
-    def get_file(self) -> FileReference: ...
-    def get_file_pos(self) -> int: ...
+    def get_filename(self) -> Filename:
+        """Returns the filename that provides the target for these datagrams, if any,
+        or empty string if the datagrams do not get written to a file on disk.
+        """
+        ...
+    def get_file(self) -> FileReference:
+        """Returns the FileReference that provides the target for these datagrams, if
+        any, or NULL if the datagrams do not written to a file on disk.
+        """
+        ...
+    def get_file_pos(self) -> int:
+        """Returns the current file position within the data stream, if any, or 0 if
+        the file position is not meaningful or cannot be determined.
+        
+        For DatagramSinks that return a meaningful file position, this will be
+        pointing to the first byte following the datagram returned after a call to
+        put_datagram().
+        """
+        ...
     putDatagram = put_datagram
     copyDatagram = copy_datagram
     isError = is_error
@@ -711,7 +1146,9 @@ class FileReference(TypedReferenceCount):
     def __init__(self, __param0: FileReference) -> None: ...
     @overload
     def __init__(self, filename: _Filename) -> None: ...
-    def get_filename(self) -> Filename: ...
+    def get_filename(self) -> Filename:
+        """Returns the filename of the reference."""
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getFilename = get_filename
@@ -742,14 +1179,46 @@ class Ramfile:
     def __init__(self) -> None: ...
     @overload
     def __init__(self, __param0: Ramfile) -> None: ...
-    def seek(self, pos: int) -> None: ...
-    def tell(self) -> int: ...
-    def read(self, length: int) -> bytes: ...
-    def readline(self) -> bytes: ...
+    def seek(self, pos: int) -> None:
+        """Moves the data pointer to the indicated byte position.  It is not an error
+        to move the pointer past the end of data.
+        """
+        ...
+    def tell(self) -> int:
+        """Returns the current data pointer position as a byte offset from the
+        beginning of the stream.
+        """
+        ...
+    def read(self, length: int) -> bytes:
+        """Extracts and returns the indicated number of characters from the current
+        data pointer, and advances the data pointer.  If the data pointer exceeds
+        the end of the buffer, returns empty string.
+        
+        The interface here is intentionally designed to be similar to that for
+        Python's file.read() function.
+        """
+        ...
+    def readline(self) -> bytes:
+        """Assumes the stream represents a text file, and extracts one line up to and
+        including the trailing newline character.  Returns empty string when the
+        end of file is reached.
+        
+        The interface here is intentionally designed to be similar to that for
+        Python's file.readline() function.
+        """
+        ...
     def readlines(self) -> list[bytes]: ...
-    def get_data(self) -> bytes: ...
-    def get_data_size(self) -> int: ...
-    def clear(self) -> None: ...
+    def get_data(self) -> bytes:
+        """Returns the entire buffer contents as a string, regardless of the current
+        data pointer.
+        """
+        ...
+    def get_data_size(self) -> int:
+        """Returns the size of the entire buffer contents."""
+        ...
+    def clear(self) -> None:
+        """Empties the current buffer contents."""
+        ...
     getData = get_data
     getDataSize = get_data_size
 
@@ -768,30 +1237,96 @@ class HashVal:
     def __le__(self, other: HashVal) -> bool: ...
     def assign(self, copy: HashVal) -> HashVal: ...
     def compare_to(self, other: HashVal) -> int: ...
-    def merge_with(self, other: HashVal) -> None: ...
-    def output_dec(self, out: ostream) -> None: ...
-    def input_dec(self, _in: istream) -> None: ...
-    def output_hex(self, out: ostream) -> None: ...
-    def input_hex(self, _in: istream) -> None: ...
-    def output_binary(self, out: ostream) -> None: ...
-    def input_binary(self, _in: istream) -> None: ...
+    def merge_with(self, other: HashVal) -> None:
+        """Generates a new HashVal representing the xor of this one and the other one."""
+        ...
+    def output_dec(self, out: ostream) -> None:
+        """Outputs the HashVal as four unsigned decimal integers."""
+        ...
+    def input_dec(self, _in: istream) -> None:
+        """Inputs the HashVal as four unsigned decimal integers."""
+        ...
+    def output_hex(self, out: ostream) -> None:
+        """Outputs the HashVal as a 32-digit hexadecimal number."""
+        ...
+    def input_hex(self, _in: istream) -> None:
+        """Inputs the HashVal as a 32-digit hexadecimal number."""
+        ...
+    def output_binary(self, out: ostream) -> None:
+        """Outputs the HashVal as a binary stream of bytes in order.  This is not the
+        same order generated by write_stream().
+        """
+        ...
+    def input_binary(self, _in: istream) -> None:
+        """Inputs the HashVal as a binary stream of bytes in order.  This is not the
+        same order expected by read_stream().
+        """
+        ...
     def output(self, out: ostream) -> None: ...
-    def as_dec(self) -> str: ...
-    def set_from_dec(self, text: str) -> bool: ...
-    def as_hex(self) -> str: ...
-    def set_from_hex(self, text: str) -> bool: ...
-    def as_bin(self) -> bytes: ...
-    def set_from_bin(self, text: bytes) -> bool: ...
+    def as_dec(self) -> str:
+        """Returns the HashVal as a string with four decimal numbers."""
+        ...
+    def set_from_dec(self, text: str) -> bool:
+        """Sets the HashVal from a string with four decimal numbers.  Returns true if
+        valid, false otherwise.
+        """
+        ...
+    def as_hex(self) -> str:
+        """Returns the HashVal as a 32-byte hexadecimal string."""
+        ...
+    def set_from_hex(self, text: str) -> bool:
+        """Sets the HashVal from a 32-byte hexademical string.  Returns true if
+        successful, false otherwise.
+        """
+        ...
+    def as_bin(self) -> bytes:
+        """Returns the HashVal as a 16-byte binary string."""
+        ...
+    def set_from_bin(self, text: bytes) -> bool:
+        """Sets the HashVal from a 16-byte binary string.  Returns true if successful,
+        false otherwise.
+        """
+        ...
     def write_datagram(self, destination: Datagram) -> None: ...
     def read_datagram(self, source: DatagramIterator) -> None: ...
     def write_stream(self, destination: StreamWriter) -> None: ...
     def read_stream(self, source: StreamReader) -> None: ...
-    def hash_file(self, filename: _Filename) -> bool: ...
-    def hash_stream(self, stream: istream) -> bool: ...
-    def hash_ramfile(self, ramfile: Ramfile) -> None: ...
-    def hash_string(self, data: str) -> None: ...
-    def hash_bytes(self, data: bytes) -> None: ...
-    def hash_buffer(self, buffer: str, length: int) -> None: ...
+    def hash_file(self, filename: _Filename) -> bool:
+        """Generates the hash value from the indicated file.  Returns true on success,
+        false if the file cannot be read.  This method is only defined if we have
+        the OpenSSL library (which provides md5 functionality) available.
+        """
+        ...
+    def hash_stream(self, stream: istream) -> bool:
+        """Generates the hash value from the indicated file.  Returns true on success,
+        false if the file cannot be read.  This method is only defined if we have
+        the OpenSSL library (which provides md5 functionality) available.
+        """
+        ...
+    def hash_ramfile(self, ramfile: Ramfile) -> None:
+        """Generates the hash value by hashing the indicated data.  This method is
+        only defined if we have the OpenSSL library (which provides md5
+        functionality) available.
+        """
+        ...
+    def hash_string(self, data: str) -> None:
+        """Generates the hash value by hashing the indicated data.  This method is
+        only defined if we have the OpenSSL library (which provides md5
+        functionality) available.
+        """
+        ...
+    def hash_bytes(self, data: bytes) -> None:
+        """Generates the hash value by hashing the indicated data.  This method is
+        only defined if we have the OpenSSL library (which provides md5
+        functionality) available.
+        """
+        ...
+    def hash_buffer(self, buffer: str, length: int) -> None:
+        """Generates the hash value by hashing the indicated data.  This method is
+        only defined if we have the OpenSSL library (which provides md5
+        functionality) available.
+        """
+        ...
     compareTo = compare_to
     mergeWith = merge_with
     outputDec = output_dec
@@ -837,14 +1372,34 @@ class MemoryUsagePointers:
     def __init__(self) -> None: ...
     @overload
     def __init__(self, __param0: MemoryUsagePointers) -> None: ...
-    def get_num_pointers(self) -> int: ...
-    def get_pointer(self, n: int) -> ReferenceCount: ...
-    def get_typed_pointer(self, n: int) -> TypedObject: ...
-    def get_type(self, n: int) -> TypeHandle: ...
-    def get_type_name(self, n: int) -> str: ...
-    def get_age(self, n: int) -> float: ...
+    def get_num_pointers(self) -> int:
+        """Returns the number of pointers in the set."""
+        ...
+    def get_pointer(self, n: int) -> ReferenceCount:
+        """Returns the nth pointer of the set."""
+        ...
+    def get_typed_pointer(self, n: int) -> TypedObject:
+        """Returns the nth pointer of the set, typecast to a TypedObject if possible.
+        If the pointer is not a TypedObject or if the cast cannot be made, returns
+        nullptr.
+        """
+        ...
+    def get_type(self, n: int) -> TypeHandle:
+        """Returns the actual type of the nth pointer, if it is known."""
+        ...
+    def get_type_name(self, n: int) -> str:
+        """Returns the type name of the nth pointer, if it is known."""
+        ...
+    def get_age(self, n: int) -> float:
+        """Returns the age of the nth pointer: the number of seconds elapsed between
+        the time it was allocated and the time it was added to this set via a call
+        to MemoryUsage::get_pointers().
+        """
+        ...
     def get_python_pointer(self, n: int) -> Any: ...
-    def clear(self) -> None: ...
+    def clear(self) -> None:
+        """Empties the set of pointers."""
+        ...
     def output(self, out: ostream) -> None: ...
     def get_pointers(self) -> tuple[ReferenceCount, ...]: ...
     def get_typed_pointers(self) -> tuple[TypedObject, ...]: ...
@@ -872,8 +1427,21 @@ class ISubStream(istream):
     def __init__(self) -> None: ...
     @overload
     def __init__(self, source: IStreamWrapper, start: int, end: int) -> None: ...
-    def open(self, source: IStreamWrapper, start: int, end: int) -> ISubStream: ...
-    def close(self) -> ISubStream: ...
+    def open(self, source: IStreamWrapper, start: int, end: int) -> ISubStream:
+        """Starts the SubStream reading from the indicated source, with the first
+        character being the character at position "start" within the source, for
+        end - start total characters.  The character at "end" within the source
+        will never be read; this will appear to be EOF.
+        
+        If end is zero, it indicates that the ISubStream will continue until the
+        end of the source stream.
+        """
+        ...
+    def close(self) -> ISubStream:
+        """Resets the SubStream to empty, but does not actually close the source
+        istream.
+        """
+        ...
 
 class OSubStream(ostream):
     """An ostream object that presents a subwindow into another ostream.  The
@@ -889,8 +1457,21 @@ class OSubStream(ostream):
     def __init__(self) -> None: ...
     @overload
     def __init__(self, dest: OStreamWrapper, start: int, end: int, append: bool = ...) -> None: ...
-    def open(self, dest: OStreamWrapper, start: int, end: int, append: bool = ...) -> OSubStream: ...
-    def close(self) -> OSubStream: ...
+    def open(self, dest: OStreamWrapper, start: int, end: int, append: bool = ...) -> OSubStream:
+        """Starts the SubStream reading from the indicated dest, with the first
+        character being the character at position "start" within the dest, for end
+        - start total characters.  The character at "end" within the dest will
+        never be read; this will appear to be EOF.
+        
+        If end is zero, it indicates that the OSubStream will continue until the
+        end of the dest stream.
+        """
+        ...
+    def close(self) -> OSubStream:
+        """Resets the SubStream to empty, but does not actually close the dest
+        ostream.
+        """
+        ...
 
 class SubStream(iostream):
     """Combined ISubStream and OSubStream for bidirectional I/O."""
@@ -899,8 +1480,20 @@ class SubStream(iostream):
     def __init__(self) -> None: ...
     @overload
     def __init__(self, nested: StreamWrapper, start: int, end: int, append: bool = ...) -> None: ...
-    def open(self, nested: StreamWrapper, start: int, end: int, append: bool = ...) -> SubStream: ...
-    def close(self) -> SubStream: ...
+    def open(self, nested: StreamWrapper, start: int, end: int, append: bool = ...) -> SubStream:
+        """Starts the SubStream reading and writing from the indicated nested stream,
+        within the indicated range.  "end" is the first character outside of the
+        range.
+        
+        If end is zero, it indicates that the SubStream will continue until the end
+        of the nested stream.
+        """
+        ...
+    def close(self) -> SubStream:
+        """Resets the SubStream to empty, but does not actually close the nested
+        ostream.
+        """
+        ...
 
 class Multifile(ReferenceCount):
     """A file that contains a set of files."""
@@ -909,86 +1502,587 @@ class Multifile(ReferenceCount):
     def magic_number(self) -> str: ...
     def __init__(self) -> None: ...
     @overload
-    def open_read(self, multifile_name: _Filename, offset: int = ...) -> bool: ...
+    def open_read(self, multifile_name: _Filename, offset: int = ...) -> bool:
+        """Opens the named Multifile on disk for reading.  The Multifile index is read
+        in, and the list of subfiles becomes available; individual subfiles may
+        then be extracted or read, but the list of subfiles may not be modified.
+        
+        Also see the version of open_read() which accepts an istream.  Returns true
+        on success, false on failure.
+        """
+        ...
     @overload
-    def open_read(self, multifile_stream: IStreamWrapper, owns_pointer: bool = ..., offset: int = ...) -> bool: ...
+    def open_read(self, multifile_stream: IStreamWrapper, owns_pointer: bool = ..., offset: int = ...) -> bool:
+        """Opens an anonymous Multifile for reading using an istream.  There must be
+        seek functionality via seekg() and tellg() on the istream.
+        
+        If owns_pointer is true, then the Multifile assumes ownership of the stream
+        pointer and will delete it when the multifile is closed, including if this
+        function returns false.
+        """
+        ...
     @overload
-    def open_write(self, multifile_name: _Filename) -> bool: ...
+    def open_write(self, multifile_name: _Filename) -> bool:
+        """Opens the named Multifile on disk for writing.  If there already exists a
+        file by that name, it is truncated.  The Multifile is then prepared for
+        accepting a brand new set of subfiles, which will be written to the
+        indicated filename.  Individual subfiles may not be extracted or read.
+        
+        Also see the version of open_write() which accepts an ostream.  Returns
+        true on success, false on failure.
+        """
+        ...
     @overload
-    def open_write(self, multifile_stream: ostream, owns_pointer: bool = ...) -> bool: ...
+    def open_write(self, multifile_stream: ostream, owns_pointer: bool = ...) -> bool:
+        """Opens an anonymous Multifile for writing using an ostream.  There must be
+        seek functionality via seekp() and tellp() on the pstream.
+        
+        If owns_pointer is true, then the Multifile assumes ownership of the stream
+        pointer and will delete it when the multifile is closed, including if this
+        function returns false.
+        """
+        ...
     @overload
-    def open_read_write(self, multifile_name: _Filename) -> bool: ...
+    def open_read_write(self, multifile_name: _Filename) -> bool:
+        """Opens the named Multifile on disk for reading and writing.  If there
+        already exists a file by that name, its index is read.  Subfiles may be
+        added or removed, and the resulting changes will be written to the named
+        file.
+        
+        Also see the version of open_read_write() which accepts an iostream.
+        Returns true on success, false on failure.
+        """
+        ...
     @overload
-    def open_read_write(self, multifile_stream: iostream, owns_pointer: bool = ...) -> bool: ...
-    def close(self) -> None: ...
-    def get_multifile_name(self) -> Filename: ...
-    def set_multifile_name(self, multifile_name: _Filename) -> None: ...
-    def is_read_valid(self) -> bool: ...
-    def is_write_valid(self) -> bool: ...
-    def needs_repack(self) -> bool: ...
-    def get_timestamp(self) -> int: ...
-    def set_timestamp(self, timestamp: int) -> None: ...
-    def set_record_timestamp(self, record_timestamp: bool) -> None: ...
-    def get_record_timestamp(self) -> bool: ...
-    def set_scale_factor(self, scale_factor: int) -> None: ...
-    def get_scale_factor(self) -> int: ...
-    def set_encryption_flag(self, flag: bool) -> None: ...
-    def get_encryption_flag(self) -> bool: ...
-    def set_encryption_password(self, encryption_password: str) -> None: ...
-    def get_encryption_password(self) -> str: ...
-    def set_encryption_algorithm(self, encryption_algorithm: str) -> None: ...
-    def get_encryption_algorithm(self) -> str: ...
-    def set_encryption_key_length(self, encryption_key_length: int) -> None: ...
-    def get_encryption_key_length(self) -> int: ...
-    def set_encryption_iteration_count(self, encryption_iteration_count: int) -> None: ...
-    def get_encryption_iteration_count(self) -> int: ...
+    def open_read_write(self, multifile_stream: iostream, owns_pointer: bool = ...) -> bool:
+        """Opens an anonymous Multifile for reading and writing using an iostream.
+        There must be seek functionality via seekg()/seekp() and tellg()/tellp() on
+        the iostream.
+        
+        If owns_pointer is true, then the Multifile assumes ownership of the stream
+        pointer and will delete it when the multifile is closed, including if this
+        function returns false.
+        """
+        ...
+    def close(self) -> None:
+        """Closes the Multifile if it is open.  All changes are flushed to disk, and
+        the file becomes invalid for further operations until the next call to
+        open().
+        """
+        ...
+    def get_multifile_name(self) -> Filename:
+        """Returns the filename of the Multifile, if it is available."""
+        ...
+    def set_multifile_name(self, multifile_name: _Filename) -> None:
+        """Replaces the filename of the Multifile.  This is primarily used for
+        documentation purposes only; changing this name does not open the indicated
+        file.  See open_read() or open_write() for that.
+        """
+        ...
+    def is_read_valid(self) -> bool:
+        """Returns true if the Multifile has been opened for read mode and there have
+        been no errors, and individual Subfile contents may be extracted.
+        """
+        ...
+    def is_write_valid(self) -> bool:
+        """Returns true if the Multifile has been opened for write mode and there have
+        been no errors, and Subfiles may be added or removed from the Multifile.
+        """
+        ...
+    def needs_repack(self) -> bool:
+        """Returns true if the Multifile index is suboptimal and should be repacked.
+        Call repack() to achieve this.
+        """
+        ...
+    def get_timestamp(self) -> int:
+        """Returns the modification timestamp of the overall Multifile.  This
+        indicates the most recent date at which subfiles were added or removed from
+        the Multifile.  Note that it is logically possible for an individual
+        subfile to have a more recent timestamp than the overall timestamp.
+        """
+        ...
+    def set_timestamp(self, timestamp: int) -> None:
+        """Changes the overall mudification timestamp of the multifile.  Note that this
+        will be reset to the current time every time you modify a subfile.
+        Only set this if you know what you are doing!
+        """
+        ...
+    def set_record_timestamp(self, record_timestamp: bool) -> None:
+        """Sets the flag indicating whether timestamps should be recorded within the
+        Multifile or not.  The default is true, indicating the Multifile will
+        record timestamps for the overall file and also for each subfile.
+        
+        If this is false, the Multifile will not record timestamps internally.  In
+        this case, the return value from get_timestamp() or get_subfile_timestamp()
+        will be estimations.
+        
+        You may want to set this false to minimize the bitwise difference between
+        independently-generated Multifiles.
+        """
+        ...
+    def get_record_timestamp(self) -> bool:
+        """Returns the flag indicating whether timestamps should be recorded within
+        the Multifile or not.  See set_record_timestamp().
+        """
+        ...
+    def set_scale_factor(self, scale_factor: int) -> None:
+        """Changes the internal scale factor for this Multifile.
+        
+        This is normally 1, but it may be set to any arbitrary value (greater than
+        zero) to support Multifile archives that exceed 4GB, if necessary.
+        (Individual subfiles may still not exceed 4GB.)
+        
+        All addresses within the file are rounded up to the next multiple of
+        _scale_factor, and zeros are written to the file to fill the resulting
+        gaps.  Then the address is divided by _scale_factor and written out as a
+        32-bit integer.  Thus, setting a scale factor of 2 supports up to 8GB
+        files, 3 supports 12GB files, etc.
+        
+        Calling this function on an already-existing Multifile will have no
+        immediate effect until a future call to repack() or close() (or until the
+        Multifile is destructed).
+        """
+        ...
+    def get_scale_factor(self) -> int:
+        """Returns the internal scale factor for this Multifile.  See
+        set_scale_factor().
+        """
+        ...
+    def set_encryption_flag(self, flag: bool) -> None:
+        """Sets the flag indicating whether subsequently-added subfiles should be
+        encrypted before writing them to the multifile.  If true, subfiles will be
+        encrypted; if false (the default), they will be written without encryption.
+        
+        When true, subfiles will be encrypted with the password specified by
+        set_encryption_password().  It is possible to apply a different password to
+        different files, but the resulting file can't be mounted via VFS.
+        """
+        ...
+    def get_encryption_flag(self) -> bool:
+        """Returns the flag indicating whether subsequently-added subfiles should be
+        encrypted before writing them to the multifile.  See set_encryption_flag().
+        """
+        ...
+    def set_encryption_password(self, encryption_password: str) -> None:
+        """Specifies the password that will be used to encrypt subfiles subsequently
+        added to the multifile, if the encryption flag is also set true (see
+        set_encryption_flag()).
+        
+        It is possible to apply a different password to different files, but the
+        resulting file can't be mounted via VFS.  Changing this value may cause an
+        implicit call to flush().
+        """
+        ...
+    def get_encryption_password(self) -> str:
+        """Returns the password that will be used to encrypt subfiles subsequently
+        added to the multifile.  See set_encryption_password().
+        """
+        ...
+    def set_encryption_algorithm(self, encryption_algorithm: str) -> None:
+        """Specifies the encryption algorithm that should be used for future calls to
+        add_subfile().  The default is whatever is specified by the encryption-
+        algorithm config variable.  The complete set of available algorithms is
+        defined by the current version of OpenSSL.
+        
+        If an invalid algorithm is specified, there is no immediate error return
+        code, but flush() will fail and the file will be invalid.
+        
+        It is possible to apply a different encryption algorithm to different
+        files, and unlike the password, this does not interfere with mounting the
+        multifile via VFS.  Changing this value may cause an implicit call to
+        flush().
+        """
+        ...
+    def get_encryption_algorithm(self) -> str:
+        """Returns the encryption algorithm that was specified by
+        set_encryption_algorithm().
+        """
+        ...
+    def set_encryption_key_length(self, encryption_key_length: int) -> None:
+        """Specifies the length of the key, in bits, that should be used to encrypt
+        the stream in future calls to add_subfile().  The default is whatever is
+        specified by the encryption-key-length config variable.
+        
+        If an invalid key_length for the chosen algorithm is specified, there is no
+        immediate error return code, but flush() will fail and the file will be
+        invalid.
+        
+        It is possible to apply a different key length to different files, and
+        unlike the password, this does not interfere with mounting the multifile
+        via VFS. Changing this value may cause an implicit call to flush().
+        """
+        ...
+    def get_encryption_key_length(self) -> int:
+        """Returns the encryption key length, in bits, that was specified by
+        set_encryption_key_length().
+        """
+        ...
+    def set_encryption_iteration_count(self, encryption_iteration_count: int) -> None:
+        """Specifies the number of times to repeatedly hash the key before writing it
+        to the stream in future calls to add_subfile().  Its purpose is to make it
+        computationally more expensive for an attacker to search the key space
+        exhaustively.  This should be a multiple of 1,000 and should not exceed
+        about 65 million; the value 0 indicates just one application of the hashing
+        algorithm.
+        
+        The default is whatever is specified by the multifile-encryption-iteration-
+        count config variable.
+        
+        It is possible to apply a different iteration count to different files, and
+        unlike the password, this does not interfere with mounting the multifile
+        via VFS.  Changing this value causes an implicit call to flush().
+        """
+        ...
+    def get_encryption_iteration_count(self) -> int:
+        """Returns the value that was specified by set_encryption_iteration_count()."""
+        ...
     @overload
-    def add_subfile(self, subfile_name: str, filename: _Filename, compression_level: int) -> str: ...
+    def add_subfile(self, subfile_name: str, filename: _Filename, compression_level: int) -> str:
+        """Adds a file on disk as a subfile to the Multifile.  The file named by
+        filename will be read and added to the Multifile at the next call to
+        flush().  If there already exists a subfile with the indicated name, it is
+        replaced without examining its contents (but see also update_subfile).
+        
+        Either Filename:::set_binary() or set_text() must have been called
+        previously to specify the nature of the source file.  If set_text() was
+        called, the text flag will be set on the subfile.
+        
+        Returns the subfile name on success (it might have been modified slightly),
+        or empty string on failure.
+        """
+        ...
     @overload
-    def add_subfile(self, subfile_name: str, subfile_data: istream, compression_level: int) -> str: ...
-    def update_subfile(self, subfile_name: str, filename: _Filename, compression_level: int) -> str: ...
+    def add_subfile(self, subfile_name: str, subfile_data: istream, compression_level: int) -> str:
+        """Adds a file from a stream as a subfile to the Multifile.  The indicated
+        istream will be read and its contents added to the Multifile at the next
+        call to flush(). The file will be added as a binary subfile.
+        
+        Note that the istream must remain untouched and unused by any other code
+        until flush() is called.  At that time, the Multifile will read the entire
+        contents of the istream from the current file position to the end of the
+        file.  Subsequently, the Multifile will *not* close or delete the istream.
+        It is the caller's responsibility to ensure that the istream pointer does
+        not destruct during the lifetime of the Multifile.
+        
+        Returns the subfile name on success (it might have been modified slightly),
+        or empty string on failure.
+        """
+        ...
+    def update_subfile(self, subfile_name: str, filename: _Filename, compression_level: int) -> str:
+        """Adds a file on disk to the subfile.  If a subfile already exists with the
+        same name, its contents are compared byte-for-byte to the disk file, and it
+        is replaced only if it is different; otherwise, the multifile is left
+        unchanged.
+        
+        Either Filename:::set_binary() or set_text() must have been called
+        previously to specify the nature of the source file.  If set_text() was
+        called, the text flag will be set on the subfile.
+        """
+        ...
     @overload
-    def add_signature(self, composite: _Filename, password: str = ...) -> bool: ...
+    def add_signature(self, composite: _Filename, password: str = ...) -> bool:
+        """Adds a new signature to the Multifile.  This signature associates the
+        indicated certificate with the current contents of the Multifile.  When the
+        Multifile is read later, the signature will still be present only if the
+        Multifile is unchanged; any subsequent changes to the Multifile will
+        automatically invalidate and remove the signature.
+        
+        The chain filename may be empty if the certificate does not require an
+        authenticating certificate chain (e.g.  because it is self-signed).
+        
+        The specified private key must match the certificate, and the Multifile
+        must be open in read-write mode.  The private key is only used for
+        generating the signature; it is not written to the Multifile and cannot be
+        retrieved from the Multifile later.  (However, the certificate *can* be
+        retrieved from the Multifile later, to identify the entity that created the
+        signature.)
+        
+        This implicitly causes a repack() operation if one is needed.  Returns true
+        on success, false on failure.
+        
+        This flavor of add_signature() reads the certificate and private key from a
+        PEM-formatted file, for instance as generated by the openssl command.  If
+        the private key file is password-encrypted, the third parameter will be
+        used as the password to decrypt it.
+        """
+        ...
     @overload
-    def add_signature(self, certificate: _Filename, chain: _Filename, pkey: _Filename, password: str = ...) -> bool: ...
-    def get_num_signatures(self) -> int: ...
-    def get_signature_subject_name(self, n: int) -> str: ...
-    def get_signature_friendly_name(self, n: int) -> str: ...
-    def get_signature_public_key(self, n: int) -> str: ...
-    def print_signature_certificate(self, n: int, out: ostream) -> None: ...
-    def write_signature_certificate(self, n: int, out: ostream) -> None: ...
-    def validate_signature_certificate(self, n: int) -> int: ...
-    def flush(self) -> bool: ...
-    def repack(self) -> bool: ...
-    def get_num_subfiles(self) -> int: ...
-    def find_subfile(self, subfile_name: str) -> int: ...
-    def has_directory(self, subfile_name: str) -> bool: ...
+    def add_signature(self, certificate: _Filename, chain: _Filename, pkey: _Filename, password: str = ...) -> bool:
+        """Adds a new signature to the Multifile.  This signature associates the
+        indicated certificate with the current contents of the Multifile.  When the
+        Multifile is read later, the signature will still be present only if the
+        Multifile is unchanged; any subsequent changes to the Multifile will
+        automatically invalidate and remove the signature.
+        
+        This flavor of add_signature() reads the certificate, private key, and
+        certificate chain from the same PEM-formatted file.  It takes the first
+        private key found as the intended key, and then uses the first certificate
+        found that matches that key as the signing certificate.  Any other
+        certificates in the file are taken to be part of the chain.
+        """
+        ...
+    def get_num_signatures(self) -> int:
+        """Returns the number of matching signatures found on the Multifile.  These
+        signatures may be iterated via get_signature() and related methods.
+        
+        A signature on this list is guaranteed to match the Multifile contents,
+        proving that the Multifile has been unmodified since the signature was
+        applied.  However, this does not guarantee that the certificate itself is
+        actually from who it says it is from; only that it matches the Multifile
+        contents.  See validate_signature_certificate() to authenticate a
+        particular certificate.
+        """
+        ...
+    def get_signature_subject_name(self, n: int) -> str:
+        """Returns the "subject name" for the nth signature found on the Multifile.
+        This is a string formatted according to RFC2253 that should more-or-less
+        identify a particular certificate; when paired with the public key (see
+        get_signature_public_key()), it can uniquely identify a certificate.  See
+        the comments in get_num_signatures().
+        """
+        ...
+    def get_signature_friendly_name(self, n: int) -> str:
+        """Returns a "friendly name" for the nth signature found on the Multifile.
+        This attempts to extract out the most meaningful part of the subject name.
+        It returns the emailAddress, if it is defined; otherwise, it returns the
+        commonName.
+        
+        See the comments in get_num_signatures().
+        """
+        ...
+    def get_signature_public_key(self, n: int) -> str:
+        """Returns the public key used for the nth signature found on the Multifile.
+        This is encoded in DER form and returned as a string of hex digits.
+        
+        This can be used, in conjunction with the subject name (see
+        get_signature_subject_name()), to uniquely identify a particular
+        certificate and its subsequent reissues.  See the comments in
+        get_num_signatures().
+        """
+        ...
+    def print_signature_certificate(self, n: int, out: ostream) -> None:
+        """Writes the certificate for the nth signature, in user-readable verbose
+        form, to the indicated stream.  See the comments in get_num_signatures().
+        """
+        ...
+    def write_signature_certificate(self, n: int, out: ostream) -> None:
+        """Writes the certificate for the nth signature, in PEM form, to the indicated
+        stream.  See the comments in get_num_signatures().
+        """
+        ...
+    def validate_signature_certificate(self, n: int) -> int:
+        """Checks that the certificate used for the nth signature is a valid,
+        authorized certificate with some known certificate authority.  Returns 0 if
+        it is valid, -1 if there is some error, or the corresponding OpenSSL error
+        code if it is invalid, out-of-date, or self-signed.
+        """
+        ...
+    def flush(self) -> bool:
+        """Writes all contents of the Multifile to disk.  Until flush() is called,
+        add_subfile() and remove_subfile() do not actually do anything to disk.  At
+        this point, all of the recently-added subfiles are read and their contents
+        are added to the end of the Multifile, and the recently-removed subfiles
+        are marked gone from the Multifile.
+        
+        This may result in a suboptimal index.  To guarantee that the index is
+        written at the beginning of the file, call repack() instead of flush().
+        
+        It is not necessary to call flush() explicitly unless you are concerned
+        about reading the recently-added subfiles immediately.
+        
+        Returns true on success, false on failure.
+        """
+        ...
+    def repack(self) -> bool:
+        """Forces a complete rewrite of the Multifile and all of its contents, so that
+        its index will appear at the beginning of the file with all of the subfiles
+        listed in alphabetical order.  This is considered optimal for reading, and
+        is the standard configuration; but it is not essential to do this.
+        
+        It is only valid to call this if the Multifile was opened using
+        open_read_write() and an explicit filename, rather than an iostream.  Also,
+        we must have write permission to the directory containing the Multifile.
+        
+        Returns true on success, false on failure.
+        """
+        ...
+    def get_num_subfiles(self) -> int:
+        """Returns the number of subfiles within the Multifile.  The subfiles may be
+        accessed in alphabetical order by iterating through [0 ..
+        get_num_subfiles()).
+        """
+        ...
+    def find_subfile(self, subfile_name: str) -> int:
+        """Returns the index of the subfile with the indicated name, or -1 if the
+        named subfile is not within the Multifile.
+        """
+        ...
+    def has_directory(self, subfile_name: str) -> bool:
+        """Returns true if the indicated subfile name is the directory prefix to one
+        or more files within the Multifile.  That is, the Multifile contains at
+        least one file named "subfile_name/...".
+        """
+        ...
     @overload
-    def remove_subfile(self, index: int) -> None: ...
+    def remove_subfile(self, index: int) -> None:
+        """Removes the nth subfile from the Multifile.  This will cause all subsequent
+        index numbers to decrease by one.  The file will not actually be removed
+        from the disk until the next call to flush().
+        
+        Note that this does not actually remove the data from the indicated
+        subfile; it simply removes it from the index.  The Multifile will not be
+        reduced in size after this operation, until the next call to repack().
+        """
+        ...
     @overload
-    def remove_subfile(self, subfile_name: str) -> bool: ...
-    def get_subfile_name(self, index: int) -> str: ...
-    def get_subfile_length(self, index: int) -> int: ...
-    def get_subfile_timestamp(self, index: int) -> int: ...
-    def is_subfile_compressed(self, index: int) -> bool: ...
-    def is_subfile_encrypted(self, index: int) -> bool: ...
-    def is_subfile_text(self, index: int) -> bool: ...
-    def get_index_end(self) -> int: ...
-    def get_subfile_internal_start(self, index: int) -> int: ...
-    def get_subfile_internal_length(self, index: int) -> int: ...
-    def read_subfile(self, index: int) -> bytes: ...
-    def open_read_subfile(self, index: int) -> istream: ...
+    def remove_subfile(self, subfile_name: str) -> bool:
+        """Removes the named subfile from the Multifile, if it exists; returns true if
+        successfully removed, or false if it did not exist in the first place.  The
+        file will not actually be removed from the disk until the next call to
+        flush().
+        
+        Note that this does not actually remove the data from the indicated
+        subfile; it simply removes it from the index.  The Multifile will not be
+        reduced in size after this operation, until the next call to repack().
+        """
+        ...
+    def get_subfile_name(self, index: int) -> str:
+        """Returns the name of the nth subfile."""
+        ...
+    def get_subfile_length(self, index: int) -> int:
+        """Returns the uncompressed data length of the nth subfile.  This might return
+        0 if the subfile has recently been added and flush() has not yet been
+        called.
+        """
+        ...
+    def get_subfile_timestamp(self, index: int) -> int:
+        """Returns the modification time of the nth subfile.  If this is called on an
+        older .mf file, which did not store individual timestamps in the file (or
+        if get_record_timestamp() is false), this will return the modification time
+        of the overall multifile.
+        """
+        ...
+    def is_subfile_compressed(self, index: int) -> bool:
+        """Returns true if the indicated subfile has been compressed when stored
+        within the archive, false otherwise.
+        """
+        ...
+    def is_subfile_encrypted(self, index: int) -> bool:
+        """Returns true if the indicated subfile has been encrypted when stored within
+        the archive, false otherwise.
+        """
+        ...
+    def is_subfile_text(self, index: int) -> bool:
+        """Returns true if the indicated subfile represents text data, or false if it
+        represents binary data.  If the file is text data, it may have been
+        processed by end-of-line conversion when it was added.  (But the actual
+        bits in the multifile will represent the standard Unix end-of-line
+        convention, e.g.  \n instead of \r\n.)
+        """
+        ...
+    def get_index_end(self) -> int:
+        """Returns the first byte that is guaranteed to follow any index byte already
+        written to disk in the Multifile.
+        
+        This number is largely meaningless in many cases, but if needs_repack() is
+        false, and the file is flushed, this will indicate the number of bytes in
+        the header + index.  Everything at this byte position and later will be
+        actual data.
+        """
+        ...
+    def get_subfile_internal_start(self, index: int) -> int:
+        """Returns the starting byte position within the Multifile at which the
+        indicated subfile begins.  This may be used, with
+        get_subfile_internal_length(), for low-level access to the subfile, but
+        usually it is better to use open_read_subfile() instead (which
+        automatically decrypts and/or uncompresses the subfile data).
+        """
+        ...
+    def get_subfile_internal_length(self, index: int) -> int:
+        """Returns the number of bytes the indicated subfile consumes within the
+        archive.  For compressed subfiles, this will generally be smaller than
+        get_subfile_length(); for encrypted (but noncompressed) subfiles, it may be
+        slightly different, for noncompressed and nonencrypted subfiles, it will be
+        equal.
+        """
+        ...
+    def read_subfile(self, index: int) -> bytes:
+        """Returns a vector_uchar that contains the entire contents of the indicated
+        subfile.
+        """
+        ...
+    def open_read_subfile(self, index: int) -> istream:
+        """Returns an istream that may be used to read the indicated subfile.  You may
+        seek() within this istream to your heart's content; even though it will be
+        a reference to the already-opened pfstream of the Multifile itself, byte 0
+        appears to be the beginning of the subfile and EOF appears to be the end of
+        the subfile.
+        
+        The returned istream will have been allocated via new; you should pass the
+        pointer to close_read_subfile() when you are finished with it to delete it
+        and release its resources.
+        
+        Any future calls to repack() or close() (or the Multifile destructor) will
+        invalidate all currently open subfile pointers.
+        
+        The return value will be NULL if the stream cannot be opened for some
+        reason.
+        """
+        ...
     @staticmethod
-    def close_read_subfile(stream: istream) -> None: ...
-    def extract_subfile(self, index: int, filename: _Filename) -> bool: ...
-    def extract_subfile_to(self, index: int, out: ostream) -> bool: ...
-    def compare_subfile(self, index: int, filename: _Filename) -> bool: ...
+    def close_read_subfile(stream: istream) -> None:
+        """Closes a file opened by a previous call to open_read_subfile().  This
+        really just deletes the istream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+        ...
+    def extract_subfile(self, index: int, filename: _Filename) -> bool:
+        """Extracts the nth subfile into a file with the given name."""
+        ...
+    def extract_subfile_to(self, index: int, out: ostream) -> bool:
+        """Extracts the nth subfile to the indicated ostream."""
+        ...
+    def compare_subfile(self, index: int, filename: _Filename) -> bool:
+        """Performs a byte-for-byte comparison of the indicated file on disk with the
+        nth subfile.  Returns true if the files are equivalent, or false if they
+        are different (or the file is missing).
+        
+        If Filename::set_binary() or set_text() has already been called, it
+        specifies the nature of the source file.  If this is different from the
+        text flag of the subfile, the comparison will always return false.  If this
+        has not been specified, it will be set from the text flag of the subfile.
+        """
+        ...
     def output(self, out: ostream) -> None: ...
-    def ls(self, out: ostream = ...) -> None: ...
+    def ls(self, out: ostream = ...) -> None:
+        """Shows a list of all subfiles within the Multifile."""
+        ...
     @staticmethod
-    def get_magic_number() -> str: ...
-    def set_header_prefix(self, header_prefix: str) -> None: ...
-    def get_header_prefix(self) -> str: ...
+    def get_magic_number() -> str:
+        """Returns a string with the first n bytes written to a Multifile, to identify
+        it as a Multifile.
+        """
+        ...
+    def set_header_prefix(self, header_prefix: str) -> None:
+        """Sets the string which is written to the Multifile before the Multifile
+        header.  This string must begin with a hash mark and end with a newline
+        character; and if it includes embedded newline characters, each one must be
+        followed by a hash mark.  If these conditions are not initially true, the
+        string will be modified as necessary to make it so.
+        
+        This is primarily useful as a simple hack to allow p3d applications to be
+        run directly from the command line on Unix-like systems.
+        
+        The return value is true if successful, or false on failure (for instance,
+        because the header prefix violates the above rules).
+        """
+        ...
+    def get_header_prefix(self) -> str:
+        """Returns the string that preceded the Multifile header on the file, if any.
+        See set_header_prefix().
+        """
+        ...
     def get_subfile_names(self) -> tuple[str, ...]: ...
     openRead = open_read
     openWrite = open_write
@@ -1059,10 +2153,20 @@ class Namable:
     @overload
     def __init__(self, __param0: Namable) -> None: ...
     def set_name(self, name: str) -> None: ...
-    def clear_name(self) -> None: ...
-    def has_name(self) -> bool: ...
+    def clear_name(self) -> None:
+        """Resets the Namable's name to empty."""
+        ...
+    def has_name(self) -> bool:
+        """Returns true if the Namable has a nonempty name set, false if the name is
+        empty.
+        """
+        ...
     def get_name(self) -> str: ...
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream) -> None:
+        """Outputs the Namable.  This function simply writes the name to the output
+        stream; most Namable derivatives will probably redefine this.
+        """
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     setName = set_name
@@ -1077,18 +2181,77 @@ class OpenSSLWrapper:
     hooks into global OpenSSL context data.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def clear_certificates(self) -> None: ...
-    def load_certificates(self, filename: _Filename) -> int: ...
+    def clear_certificates(self) -> None:
+        """Removes all the certificates from the global store, including the compiled-
+        in certificates loaded from ca_bundle_data.c.  You can add new certificates
+        by calling load_certificates().
+        """
+        ...
+    def load_certificates(self, filename: _Filename) -> int:
+        """Reads the PEM-formatted certificate(s) (delimited by -----BEGIN
+        CERTIFICATE----- and -----END CERTIFICATE-----) from the indicated file and
+        adds them to the global store object, retrieved via get_x509_store().
+        
+        Returns the number of certificates read on success, or 0 on failure.
+        
+        You should call this only with trusted, locally-stored certificates; not
+        with certificates received from an untrusted source.
+        """
+        ...
     @overload
-    def load_certificates_from_pem_ram(self, data: str) -> int: ...
+    def load_certificates_from_pem_ram(self, data: str) -> int:
+        """Reads a chain of trusted certificates from the indicated data buffer and
+        adds them to the X509_STORE object.  The data buffer should be PEM-
+        formatted.  Returns the number of certificates read on success, or 0 on
+        failure.
+        
+        You should call this only with trusted, locally-stored certificates; not
+        with certificates received from an untrusted source.
+        """
+        ...
     @overload
-    def load_certificates_from_pem_ram(self, data: str, data_size: int) -> int: ...
+    def load_certificates_from_pem_ram(self, data: str, data_size: int) -> int:
+        """Reads a chain of trusted certificates from the indicated data buffer and
+        adds them to the X509_STORE object.  The data buffer should be PEM-
+        formatted.  Returns the number of certificates read on success, or 0 on
+        failure.
+        
+        You should call this only with trusted, locally-stored certificates; not
+        with certificates received from an untrusted source.
+        """
+        ...
     @overload
-    def load_certificates_from_der_ram(self, data: str) -> int: ...
+    def load_certificates_from_der_ram(self, data: str) -> int:
+        """Reads a chain of trusted certificates from the indicated data buffer and
+        adds them to the X509_STORE object.  The data buffer should be DER-
+        formatted.  Returns the number of certificates read on success, or 0 on
+        failure.
+        
+        You should call this only with trusted, locally-stored certificates; not
+        with certificates received from an untrusted source.
+        """
+        ...
     @overload
-    def load_certificates_from_der_ram(self, data: str, data_size: int) -> int: ...
-    def notify_ssl_errors(self) -> None: ...
-    def notify_debug_ssl_errors(self) -> None: ...
+    def load_certificates_from_der_ram(self, data: str, data_size: int) -> int:
+        """Reads a chain of trusted certificates from the indicated data buffer and
+        adds them to the X509_STORE object.  The data buffer should be DER-
+        formatted.  Returns the number of certificates read on success, or 0 on
+        failure.
+        
+        You should call this only with trusted, locally-stored certificates; not
+        with certificates received from an untrusted source.
+        """
+        ...
+    def notify_ssl_errors(self) -> None:
+        """A convenience function that is itself a wrapper around the OpenSSL
+        convenience function to output the recent OpenSSL errors.  This function
+        sends the error string to express_cat.warning().  If REPORT_OPENSSL_ERRORS
+        is not defined, the function does nothing.
+        """
+        ...
+    def notify_debug_ssl_errors(self) -> None:
+        """As notify_ssl_errors(), but sends the output to debug instead of warning."""
+        ...
     @staticmethod
     def get_global_ptr() -> OpenSSLWrapper: ...
     clearCertificates = clear_certificates
@@ -1114,11 +2277,25 @@ class SubfileInfo:
     @overload
     def __init__(self, filename: _Filename, start: int, size: int) -> None: ...
     def assign(self, copy: SubfileInfo) -> SubfileInfo: ...
-    def is_empty(self) -> bool: ...
-    def get_file(self) -> FileReference: ...
-    def get_filename(self) -> Filename: ...
-    def get_start(self) -> int: ...
-    def get_size(self) -> int: ...
+    def is_empty(self) -> bool:
+        """Returns true if this SubfileInfo doesn't define any file, false if it has
+        real data.
+        """
+        ...
+    def get_file(self) -> FileReference:
+        """Returns the FileReference that represents this file."""
+        ...
+    def get_filename(self) -> Filename:
+        """A shortcut to the filename."""
+        ...
+    def get_start(self) -> int:
+        """Returns the offset within the file at which this file data begins."""
+        ...
+    def get_size(self) -> int:
+        """Returns the number of consecutive bytes, beginning at get_start(), that
+        correspond to this file data.
+        """
+        ...
     def output(self, out: ostream) -> None: ...
     isEmpty = is_empty
     getFile = get_file
@@ -1133,35 +2310,164 @@ class VirtualFile(TypedReferenceCount):
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_file_system(self) -> VirtualFileSystem: ...
     def get_filename(self) -> Filename: ...
-    def get_original_filename(self) -> Filename: ...
-    def has_file(self) -> bool: ...
-    def is_directory(self) -> bool: ...
-    def is_regular_file(self) -> bool: ...
-    def is_writable(self) -> bool: ...
-    def delete_file(self) -> bool: ...
-    def rename_file(self, new_file: VirtualFile) -> bool: ...
-    def copy_file(self, new_file: VirtualFile) -> bool: ...
-    def scan_directory(self) -> VirtualFileList: ...
+    def get_original_filename(self) -> Filename:
+        """Returns the original filename as it was used to locate this VirtualFile.
+        This is usually, but not always, the same string returned by
+        get_filename().
+        """
+        ...
+    def has_file(self) -> bool:
+        """Returns true if this file exists, false otherwise."""
+        ...
+    def is_directory(self) -> bool:
+        """Returns true if this file represents a directory (and scan_directory() may
+        be called), false otherwise.
+        """
+        ...
+    def is_regular_file(self) -> bool:
+        """Returns true if this file represents a regular file (and read_file() may be
+        called), false otherwise.
+        """
+        ...
+    def is_writable(self) -> bool:
+        """Returns true if this file may be written to, which implies write_file() may
+        be called (unless it is a directory instead of a regular file).
+        """
+        ...
+    def delete_file(self) -> bool:
+        """Attempts to delete this file or directory.  This can remove a single file
+        or an empty directory.  It will not remove a nonempty directory.  Returns
+        true on success, false on failure.
+        """
+        ...
+    def rename_file(self, new_file: VirtualFile) -> bool:
+        """Attempts to move or rename this file or directory.  If the original file is
+        an ordinary file, it will quietly replace any already-existing file in the
+        new filename (but not a directory).  If the original file is a directory,
+        the new filename must not already exist.
+        
+        If the file is a directory, the new filename must be within the same mount
+        point.  If the file is an ordinary file, the new filename may be anywhere;
+        but if it is not within the same mount point then the rename operation is
+        automatically performed as a two-step copy-and-delete operation.
+        """
+        ...
+    def copy_file(self, new_file: VirtualFile) -> bool:
+        """Attempts to copy the contents of this file to the indicated file.  Returns
+        true on success, false on failure.
+        """
+        ...
+    def scan_directory(self) -> VirtualFileList:
+        """If the file represents a directory (that is, is_directory() returns true),
+        this returns the list of files within the directory at the current time.
+        Returns NULL if the file is not a directory or if the directory cannot be
+        read.
+        """
+        ...
     def output(self, out: ostream) -> None: ...
-    def ls(self, out: ostream = ...) -> None: ...
-    def ls_all(self, out: ostream = ...) -> None: ...
-    def read_file(self, auto_unwrap: bool) -> bytes: ...
-    def open_read_file(self, auto_unwrap: bool) -> istream: ...
-    def close_read_file(self, stream: istream) -> None: ...
-    def was_read_successful(self) -> bool: ...
+    def ls(self, out: ostream = ...) -> None:
+        """If the file represents a directory, lists its contents."""
+        ...
+    def ls_all(self, out: ostream = ...) -> None:
+        """If the file represents a directory, recursively lists its contents and
+        those of all subdirectories.
+        """
+        ...
+    def read_file(self, auto_unwrap: bool) -> bytes:
+        """Returns the entire contents of the file as a string."""
+        ...
+    def open_read_file(self, auto_unwrap: bool) -> istream:
+        """Opens the file for reading.  Returns a newly allocated istream on success
+        (which you should eventually delete when you are done reading). Returns
+        NULL on failure.
+        """
+        ...
+    def close_read_file(self, stream: istream) -> None:
+        """Closes a file opened by a previous call to open_read_file().  This really
+        just deletes the istream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+        ...
+    def was_read_successful(self) -> bool:
+        """Call this method after a reading the istream returned by open_read_file()
+        to completion.  If it returns true, the file was read completely and
+        without error; if it returns false, there may have been some errors or a
+        truncated file read.  This is particularly likely if the stream is a
+        VirtualFileHTTP.
+        """
+        ...
     def write_file(self, data: Any, auto_wrap: bool) -> Any: ...
-    def open_write_file(self, auto_wrap: bool, truncate: bool) -> ostream: ...
-    def open_append_file(self) -> ostream: ...
-    def close_write_file(self, stream: ostream) -> None: ...
-    def open_read_write_file(self, truncate: bool) -> iostream: ...
-    def open_read_append_file(self) -> iostream: ...
-    def close_read_write_file(self, stream: iostream) -> None: ...
+    def open_write_file(self, auto_wrap: bool, truncate: bool) -> ostream:
+        """Opens the file for writing.  Returns a newly allocated ostream on success
+        (which you should eventually delete when you are done writing). Returns
+        NULL on failure.
+        """
+        ...
+    def open_append_file(self) -> ostream:
+        """Works like open_write_file(), but the file is opened in append mode.  Like
+        open_write_file, the returned pointer should eventually be passed to
+        close_write_file().
+        """
+        ...
+    def close_write_file(self, stream: ostream) -> None:
+        """Closes a file opened by a previous call to open_write_file().  This really
+        just deletes the ostream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+        ...
+    def open_read_write_file(self, truncate: bool) -> iostream:
+        """Opens the file for writing.  Returns a newly allocated iostream on success
+        (which you should eventually delete when you are done writing). Returns
+        NULL on failure.
+        """
+        ...
+    def open_read_append_file(self) -> iostream:
+        """Works like open_read_write_file(), but the file is opened in append mode.
+        Like open_read_write_file, the returned pointer should eventually be passed
+        to close_read_write_file().
+        """
+        ...
+    def close_read_write_file(self, stream: iostream) -> None:
+        """Closes a file opened by a previous call to open_read_write_file().  This
+        really just deletes the iostream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+        ...
     @overload
-    def get_file_size(self) -> int: ...
+    def get_file_size(self) -> int:
+        """Returns the current size on disk (or wherever it is) of the file before it
+        has been opened.
+        """
+        ...
     @overload
-    def get_file_size(self, stream: istream) -> int: ...
-    def get_timestamp(self) -> int: ...
-    def get_system_info(self, info: SubfileInfo) -> bool: ...
+    def get_file_size(self, stream: istream) -> int:
+        """Returns the current size on disk (or wherever it is) of the already-open
+        file.  Pass in the stream that was returned by open_read_file(); some
+        implementations may require this stream to determine the size.
+        """
+        ...
+    def get_timestamp(self) -> int:
+        """Returns a time_t value that represents the time the file was last modified,
+        to within whatever precision the operating system records this information
+        (on a Windows95 system, for instance, this may only be accurate to within 2
+        seconds).
+        
+        If the timestamp cannot be determined, either because it is not supported
+        by the operating system or because there is some error (such as file not
+        found), returns 0.
+        """
+        ...
+    def get_system_info(self, info: SubfileInfo) -> bool:
+        """Populates the SubfileInfo structure with the data representing where the
+        file actually resides on disk, if this is knowable.  Returns true if the
+        file might reside on disk, and the info is populated, or false if it does
+        not (or it is not known where the file resides), in which case the info is
+        meaningless.
+        """
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getFileSystem = get_file_system
@@ -1208,9 +2514,19 @@ class VirtualFileMount(TypedReferenceCount):
     directly.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def get_file_system(self) -> VirtualFileSystem: ...
-    def get_mount_point(self) -> Filename: ...
-    def get_mount_flags(self) -> int: ...
+    def get_file_system(self) -> VirtualFileSystem:
+        """Returns the file system this mount object is attached to."""
+        ...
+    def get_mount_point(self) -> Filename:
+        """Returns the name of the directory within the virtual file system that this
+        mount object is attached to.  This directory name will end with a slash.
+        """
+        ...
+    def get_mount_flags(self) -> int:
+        """Returns the set of flags passed by the user to the
+        VirtualFileSystem::mount() command.
+        """
+        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
     @staticmethod
@@ -1224,7 +2540,9 @@ class VirtualFileMountMultifile(VirtualFileMount):
     """Maps a Multifile's contents into the VirtualFileSystem."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, multifile: Multifile) -> None: ...
-    def get_multifile(self) -> Multifile: ...
+    def get_multifile(self) -> Multifile:
+        """Returns the Multifile pointer that this mount object is based on."""
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getMultifile = get_multifile
@@ -1247,7 +2565,11 @@ class VirtualFileMountSystem(VirtualFileMount):
     """Maps an actual OS directory into the VirtualFileSystem."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, physical_filename: _Filename) -> None: ...
-    def get_physical_filename(self) -> Filename: ...
+    def get_physical_filename(self) -> Filename:
+        """Returns the name of the source file on the OS filesystem of the directory
+        or file that is mounted.
+        """
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getPhysicalFilename = get_physical_filename
@@ -1259,8 +2581,15 @@ class VirtualFileSimple(VirtualFile):
     files, are of this kind.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def get_mount(self) -> VirtualFileMount: ...
-    def is_implicit_pz_file(self) -> bool: ...
+    def get_mount(self) -> VirtualFileMount:
+        """Returns the VirtualFileMount this file is associated with."""
+        ...
+    def is_implicit_pz_file(self) -> bool:
+        """Returns true if this file is a .pz file that should be implicitly
+        decompressed on load, or false if it is not a .pz file or if it should not
+        be decompressed.
+        """
+        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getMount = get_mount
@@ -1297,7 +2626,11 @@ class IDecompressStream(istream):
     @overload
     def __init__(self, source: istream, owns_source: bool) -> None: ...
     def open(self, source: istream, owns_source: bool) -> IDecompressStream: ...
-    def close(self) -> IDecompressStream: ...
+    def close(self) -> IDecompressStream:
+        """Resets the ZStream to empty, but does not actually close the source istream
+        unless owns_source was true.
+        """
+        ...
 
 class OCompressStream(ostream):
     """An input stream object that uses zlib to compress (deflate) data to another
@@ -1315,18 +2648,30 @@ class OCompressStream(ostream):
     @overload
     def __init__(self, dest: ostream, owns_dest: bool, compression_level: int = ...) -> None: ...
     def open(self, dest: ostream, owns_dest: bool, compression_level: int = ...) -> OCompressStream: ...
-    def close(self) -> OCompressStream: ...
+    def close(self) -> OCompressStream:
+        """Resets the ZStream to empty, but does not actually close the dest ostream
+        unless owns_dest was true.
+        """
+        ...
 
 class VirtualFileList(ReferenceCount):
     """A list of VirtualFiles, as returned by VirtualFile::scan_directory()."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: VirtualFileList) -> None: ...
-    def __getitem__(self, n: int) -> VirtualFile: ...
-    def __len__(self) -> int: ...
+    def __getitem__(self, n: int) -> VirtualFile:
+        """Returns the nth file in the list."""
+        ...
+    def __len__(self) -> int:
+        """Returns the number of files in the list."""
+        ...
     def __iadd__(self, other: VirtualFileList) -> VirtualFileList: ...
     def __add__(self, other: VirtualFileList) -> VirtualFileList: ...
-    def get_num_files(self) -> int: ...
-    def get_file(self, n: int) -> VirtualFile: ...
+    def get_num_files(self) -> int:
+        """Returns the number of files in the list."""
+        ...
+    def get_file(self, n: int) -> VirtualFile:
+        """Returns the nth file in the list."""
+        ...
     def get_files(self) -> tuple[VirtualFile, ...]: ...
     getNumFiles = get_num_files
     getFile = get_file
@@ -1346,56 +2691,284 @@ class VirtualFileSystem:
     def mounts(self) -> Sequence[PointerTo_VirtualFileMount]: ...
     def __init__(self) -> None: ...
     @overload
-    def mount(self, multifile: Multifile, mount_point: _Filename, flags: int) -> bool: ...
+    def mount(self, multifile: Multifile, mount_point: _Filename, flags: int) -> bool:
+        """Mounts the indicated system file or directory at the given mount point.  If
+        the named file is a directory, mounts the directory.  If the named file is
+        a Multifile, mounts it as a Multifile.  Returns true on success, false on
+        failure.
+        
+        A given system directory may be mounted to multiple different mount point,
+        and the same mount point may share multiple system directories.  In the
+        case of ambiguities (that is, two different files with exactly the same
+        full pathname), the most-recently mounted system wins.
+        
+        The filename specified as the first parameter must refer to a real,
+        physical filename on disk; it cannot be a virtual file already appearing
+        within the vfs filespace.  However, it is possible to mount such a file;
+        see mount_loop() for this.
+        
+        Note that a mounted VirtualFileSystem directory is fully case-sensitive,
+        unlike the native Windows file system, so you must refer to files within
+        the virtual file system with exactly the right case.
+        """
+        ...
     @overload
-    def mount(self, mount: VirtualFileMount, mount_point: _Filename, flags: int) -> bool: ...
+    def mount(self, mount: VirtualFileMount, mount_point: _Filename, flags: int) -> bool:
+        """Mounts the indicated Multifile at the given mount point."""
+        ...
     @overload
-    def mount(self, physical_filename: _Filename, mount_point: _Filename, flags: int, password: str = ...) -> bool: ...
-    def mount_loop(self, virtual_filename: _Filename, mount_point: _Filename, flags: int, password: str = ...) -> bool: ...
+    def mount(self, physical_filename: _Filename, mount_point: _Filename, flags: int, password: str = ...) -> bool:
+        """Adds the given VirtualFileMount object to the mount list.  This is a lower-
+        level function than the other flavors of mount(); it requires you to create
+        a VirtualFileMount object specifically.
+        """
+        ...
+    def mount_loop(self, virtual_filename: _Filename, mount_point: _Filename, flags: int, password: str = ...) -> bool:
+        """This is similar to mount(), but it receives the name of a Multifile that
+        already appears within the virtual file system.  It can be used to mount a
+        Multifile that is itself hosted within a virtually-mounted Multifile.
+        
+        This interface can also be used to mount physical files (that appear within
+        the virtual filespace), but it cannot be used to mount directories.  Use
+        mount() if you need to mount a directory.
+        
+        Note that there is additional overhead, in the form of additional buffer
+        copies of the data, for recursively mounting a multifile like this.
+        """
+        ...
     @overload
-    def unmount(self, physical_filename: _Filename) -> int: ...
+    def unmount(self, physical_filename: _Filename) -> int:
+        """Unmounts all appearances of the indicated directory name or multifile name
+        from the file system.  Returns the number of appearances unmounted.
+        """
+        ...
     @overload
-    def unmount(self, multifile: Multifile) -> int: ...
+    def unmount(self, multifile: Multifile) -> int:
+        """Unmounts all appearances of the indicated Multifile from the file system.
+        Returns the number of appearances unmounted.
+        """
+        ...
     @overload
-    def unmount(self, mount: VirtualFileMount) -> int: ...
-    def unmount_point(self, mount_point: _Filename) -> int: ...
-    def unmount_all(self) -> int: ...
-    def get_num_mounts(self) -> int: ...
-    def get_mount(self, n: int) -> VirtualFileMount: ...
-    def chdir(self, new_directory: _Filename) -> bool: ...
-    def get_cwd(self) -> Filename: ...
-    def make_directory(self, filename: _Filename) -> bool: ...
-    def make_directory_full(self, filename: _Filename) -> bool: ...
-    def get_file(self, filename: _Filename, status_only: bool = ...) -> VirtualFile: ...
-    def create_file(self, filename: _Filename) -> VirtualFile: ...
-    def find_file(self, filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath, status_only: bool = ...) -> VirtualFile: ...
-    def delete_file(self, filename: _Filename) -> bool: ...
-    def rename_file(self, orig_filename: _Filename, new_filename: _Filename) -> bool: ...
-    def copy_file(self, orig_filename: _Filename, new_filename: _Filename) -> bool: ...
-    def resolve_filename(self, filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath, default_extension: str = ...) -> bool: ...
-    def find_all_files(self, filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath, results: DSearchPath.Results) -> int: ...
-    def exists(self, filename: _Filename) -> bool: ...
-    def is_directory(self, filename: _Filename) -> bool: ...
-    def is_regular_file(self, filename: _Filename) -> bool: ...
-    def scan_directory(self, filename: _Filename) -> VirtualFileList: ...
-    def ls(self, filename: _Filename) -> None: ...
-    def ls_all(self, filename: _Filename) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def unmount(self, mount: VirtualFileMount) -> int:
+        """Unmounts the indicated VirtualFileMount object from the file system.
+        Returns the number of appearances unmounted.
+        """
+        ...
+    def unmount_point(self, mount_point: _Filename) -> int:
+        """Unmounts all systems attached to the given mount point from the file
+        system.  Returns the number of appearances unmounted.
+        """
+        ...
+    def unmount_all(self) -> int:
+        """Unmounts all files from the file system.  Returns the number of systems
+        unmounted.
+        """
+        ...
+    def get_num_mounts(self) -> int:
+        """Returns the number of individual mounts in the system."""
+        ...
+    def get_mount(self, n: int) -> VirtualFileMount:
+        """Returns the nth mount in the system."""
+        ...
+    def chdir(self, new_directory: _Filename) -> bool:
+        """Changes the current directory.  This is used to resolve relative pathnames
+        in get_file() and/or find_file().  Returns true if successful, false
+        otherwise.
+        """
+        ...
+    def get_cwd(self) -> Filename:
+        """Returns the current directory name.  See chdir()."""
+        ...
+    def make_directory(self, filename: _Filename) -> bool:
+        """Attempts to create a directory within the file system.  Returns true on
+        success, false on failure (for instance, because the parent directory does
+        not exist, or is read-only).  If the directory already existed prior to
+        this call, returns true.
+        """
+        ...
+    def make_directory_full(self, filename: _Filename) -> bool:
+        """Attempts to create a directory within the file system.  Will also create
+        any intervening directories needed.  Returns true on success, false on
+        failure.
+        """
+        ...
+    def get_file(self, filename: _Filename, status_only: bool = ...) -> VirtualFile:
+        """Looks up the file by the indicated name in the file system.  Returns a
+        VirtualFile pointer representing the file if it is found, or NULL if it is
+        not.
+        
+        If status_only is true, the file will be checked for existence and length
+        and so on, but the returned file's contents cannot be read.  This is an
+        optimization which is especially important for certain mount types, for
+        instance HTTP, for which opening a file to determine its status is
+        substantially less expensive than opening it to read its contents.
+        """
+        ...
+    def create_file(self, filename: _Filename) -> VirtualFile:
+        """Attempts to create a file by the indicated name in the filesystem, if
+        possible, and returns it.  If a file by this name already exists, returns
+        the same thing as get_file().  If the filename is located within a read-
+        only directory, or the directory doesn't exist, returns NULL.
+        """
+        ...
+    def find_file(self, filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath, status_only: bool = ...) -> VirtualFile:
+        """Uses the indicated search path to find the file within the file system.
+        Returns the first occurrence of the file found, or NULL if the file cannot
+        be found.
+        """
+        ...
+    def delete_file(self, filename: _Filename) -> bool:
+        """Attempts to delete the indicated file or directory.  This can remove a
+        single file or an empty directory.  It will not remove a nonempty
+        directory.  Returns true on success, false on failure.
+        """
+        ...
+    def rename_file(self, orig_filename: _Filename, new_filename: _Filename) -> bool:
+        """Attempts to move or rename the indicated file or directory.  If the
+        original file is an ordinary file, it will quietly replace any already-
+        existing file in the new filename (but not a directory).  If the original
+        file is a directory, the new filename must not already exist.
+        
+        If the file is a directory, the new filename must be within the same mount
+        point.  If the file is an ordinary file, the new filename may be anywhere;
+        but if it is not within the same mount point then the rename operation is
+        automatically performed as a two-step copy-and-delete operation.
+        """
+        ...
+    def copy_file(self, orig_filename: _Filename, new_filename: _Filename) -> bool:
+        """Attempts to copy the contents of the indicated file to the indicated file.
+        Returns true on success, false on failure.
+        """
+        ...
+    def resolve_filename(self, filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath, default_extension: str = ...) -> bool:
+        """Searches the given search path for the filename.  If it is found, updates
+        the filename to the full pathname found and returns true; otherwise,
+        returns false.
+        """
+        ...
+    def find_all_files(self, filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath, results: DSearchPath.Results) -> int:
+        """Searches all the directories in the search list for the indicated file, in
+        order.  Fills up the results list with *all* of the matching filenames
+        found, if any.  Returns the number of matches found.
+        
+        It is the responsibility of the the caller to clear the results list first;
+        otherwise, the newly-found files will be appended to the list.
+        """
+        ...
+    def exists(self, filename: _Filename) -> bool:
+        """Convenience function; returns true if the named file exists."""
+        ...
+    def is_directory(self, filename: _Filename) -> bool:
+        """Convenience function; returns true if the named file exists and is a
+        directory.
+        """
+        ...
+    def is_regular_file(self, filename: _Filename) -> bool:
+        """Convenience function; returns true if the named file exists and is a
+        regular file.
+        """
+        ...
+    def scan_directory(self, filename: _Filename) -> VirtualFileList:
+        """If the file represents a directory (that is, is_directory() returns true),
+        this returns the list of files within the directory at the current time.
+        Returns NULL if the file is not a directory or if the directory cannot be
+        read.
+        """
+        ...
+    def ls(self, filename: _Filename) -> None:
+        """Convenience function; lists the files within the indicated directory."""
+        ...
+    def ls_all(self, filename: _Filename) -> None:
+        """Convenience function; lists the files within the indicated directory, and
+        all files below, recursively.
+        """
+        ...
+    def write(self, out: ostream) -> None:
+        """Print debugging information.  (e.g.  from Python or gdb prompt)."""
+        ...
     @staticmethod
-    def get_global_ptr() -> VirtualFileSystem: ...
-    def read_file(self, filename: _Filename, auto_unwrap: bool) -> Any: ...
-    def open_read_file(self, filename: _Filename, auto_unwrap: bool) -> istream: ...
+    def get_global_ptr() -> VirtualFileSystem:
+        """Returns the default global VirtualFileSystem.  You may create your own
+        personal VirtualFileSystem objects and use them for whatever you like, but
+        Panda will attempt to load models and stuff from this default object.
+        
+        Initially, the global VirtualFileSystem is set up to mount the OS
+        filesystem to root; i.e.  it is equivalent to the OS filesystem.  This may
+        be subsequently adjusted by the user.
+        """
+        ...
+    def read_file(self, filename: _Filename, auto_unwrap: bool) -> Any:
+        """Convenience function; returns the entire contents of the indicated file as
+        a string.
+        
+        If auto_unwrap is true, an explicitly-named .pz/.gz file is automatically
+        decompressed and the decompressed contents are returned.  This is different
+        than vfs-implicit-pz, which will automatically decompress a file if the
+        extension .pz is *not* given.
+        """
+        ...
+    def open_read_file(self, filename: _Filename, auto_unwrap: bool) -> istream:
+        """Convenience function; returns a newly allocated istream if the file exists
+        and can be read, or NULL otherwise.  Does not return an invalid istream.
+        
+        If auto_unwrap is true, an explicitly-named .pz file is automatically
+        decompressed and the decompressed contents are returned.  This is different
+        than vfs-implicit-pz, which will automatically decompress a file if the
+        extension .pz is *not* given.
+        """
+        ...
     @staticmethod
-    def close_read_file(stream: istream) -> None: ...
+    def close_read_file(stream: istream) -> None:
+        """Closes a file opened by a previous call to open_read_file().  This really
+        just deletes the istream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+        ...
     def write_file(self, filename: _Filename, data: Any, auto_wrap: bool) -> Any: ...
-    def open_write_file(self, filename: _Filename, auto_wrap: bool, truncate: bool) -> ostream: ...
-    def open_append_file(self, filename: _Filename) -> ostream: ...
+    def open_write_file(self, filename: _Filename, auto_wrap: bool, truncate: bool) -> ostream:
+        """Convenience function; returns a newly allocated ostream if the file exists
+        and can be written, or NULL otherwise.  Does not return an invalid ostream.
+        
+        If auto_wrap is true, an explicitly-named .pz file is automatically
+        compressed while writing.  If truncate is true, the file is truncated to
+        zero length before writing.
+        """
+        ...
+    def open_append_file(self, filename: _Filename) -> ostream:
+        """Works like open_write_file(), but the file is opened in append mode.  Like
+        open_write_file, the returned pointer should eventually be passed to
+        close_write_file().
+        """
+        ...
     @staticmethod
-    def close_write_file(stream: ostream) -> None: ...
-    def open_read_write_file(self, filename: _Filename, truncate: bool) -> iostream: ...
-    def open_read_append_file(self, filename: _Filename) -> iostream: ...
+    def close_write_file(stream: ostream) -> None:
+        """Closes a file opened by a previous call to open_write_file().  This really
+        just deletes the ostream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+        ...
+    def open_read_write_file(self, filename: _Filename, truncate: bool) -> iostream:
+        """Convenience function; returns a newly allocated iostream if the file exists
+        and can be written, or NULL otherwise.  Does not return an invalid
+        iostream.
+        """
+        ...
+    def open_read_append_file(self, filename: _Filename) -> iostream:
+        """Works like open_read_write_file(), but the file is opened in append mode.
+        Like open_read_write_file, the returned pointer should eventually be passed
+        to close_read_write_file().
+        """
+        ...
     @staticmethod
-    def close_read_write_file(stream: iostream) -> None: ...
+    def close_read_write_file(stream: iostream) -> None:
+        """Closes a file opened by a previous call to open_read_write_file().  This
+        really just deletes the iostream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+        ...
     def get_mounts(self) -> tuple[VirtualFileMount, ...]: ...
     mountLoop = mount_loop
     unmountPoint = unmount_point
@@ -1441,7 +3014,13 @@ class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
     def __init__(self, ptr: VirtualFileMount) -> None: ...
     @overload
     def __init__(self, __param0: None) -> None: ...
-    def p(self) -> VirtualFileMount: ...
+    def p(self) -> VirtualFileMount:
+        """If your base class is a derivative of TypedObject, you might want to use
+        the DCAST macro defined in typedObject.h instead, e.g.  DCAST(MyType,
+        ptr).  This provides a clean downcast that doesn't require .p() or any
+        double-casting, and it can be run-time checked for correctness.
+        """
+        ...
     @overload
     def assign(self, copy: VirtualFileMount) -> PointerTo_VirtualFileMount: ...
     @overload
@@ -1474,12 +3053,35 @@ class TrueClock:
     def short_raw_time(self) -> float: ...
     @property
     def error_count(self) -> int: ...
-    def get_long_time(self) -> float: ...
-    def get_short_time(self) -> float: ...
-    def get_short_raw_time(self) -> float: ...
-    def get_error_count(self) -> int: ...
+    def get_long_time(self) -> float:
+        """get_long_time() returns the most accurate timer we have over a long
+        interval.  It may not be very precise for measuring short intervals, but
+        it should not drift substantially over the long haul.
+        """
+        ...
+    def get_short_time(self) -> float:
+        """get_short_time() returns the most precise timer we have over a short
+        interval.  It may tend to drift over the long haul, but it should have
+        lots of digits to measure short intervals very precisely.
+        """
+        ...
+    def get_short_raw_time(self) -> float:
+        """get_short_raw_time() is like get_short_time(), but does not apply any
+        corrections (e.g.  paranoid-clock) to the result returned by the OS.
+        """
+        ...
+    def get_error_count(self) -> int:
+        """Returns the number of clock errors that have been detected.  Each time a
+        clock error is detected, in which the value returned by either of the above
+        methods is suspect, the value returned by this method will be incremented.
+        Applications can monitor this value and react, for instance, by
+        resynchronizing their clocks each time this value changes.
+        """
+        ...
     @staticmethod
-    def get_global_ptr() -> TrueClock: ...
+    def get_global_ptr() -> TrueClock:
+        """Returns a pointer to the one TrueClock object in the world."""
+        ...
     def set_cpu_affinity(self, mask: int) -> bool: ...
     getLongTime = get_long_time
     getShortTime = get_short_time
@@ -1499,29 +3101,98 @@ class Patchfile:
     @property
     def result_hash(self) -> HashVal: ...
     @overload
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        """Create a patch file and initializes internal data"""
+        ...
     @overload
-    def __init__(self, buffer: Buffer) -> None: ...
-    def build(self, file_orig: _Filename, file_new: _Filename, patch_name: _Filename) -> bool: ...
-    def read_header(self, patch_file: _Filename) -> int: ...
+    def __init__(self, buffer: Buffer) -> None:
+        """Create patch file with buffer to patch"""
+        ...
+    def build(self, file_orig: _Filename, file_new: _Filename, patch_name: _Filename) -> bool:
+        """This implementation uses the "greedy differencing algorithm" described in
+        the masters thesis "Differential Compression: A Generalized Solution for
+        Binary Files" by Randal C. Burns (p.13). For an original file of size M and
+        a new file of size N, this algorithm is O(M) in space and O(M*N) (worst-
+        case) in time.  return false on error
+        """
+        ...
+    def read_header(self, patch_file: _Filename) -> int:
+        """Opens the patch file for reading, and gets the header information from the
+        file but does not begin to do any real work.  This can be used to query the
+        data stored in the patch.
+        """
+        ...
     @overload
-    def initiate(self, patch_file: _Filename, file: _Filename) -> int: ...
+    def initiate(self, patch_file: _Filename, file: _Filename) -> int:
+        """Set up to apply the patch to the file (original file and patch are
+        destroyed in the process).
+        """
+        ...
     @overload
-    def initiate(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> int: ...
-    def run(self) -> int: ...
+    def initiate(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> int:
+        """Set up to apply the patch to the file.  In this form, neither the original
+        file nor the patch file are destroyed.
+        """
+        ...
+    def run(self) -> int:
+        """Perform one buffer's worth of patching.
+        Returns one of the following values:
+        @li @c EU_ok : while patching
+        @li @c EU_success : when done
+        @li @c EU_error_abort : Patching has not been initiated
+        @li @c EU_error_file_invalid : file is corrupted
+        @li @c EU_error_invalid_checksum : incompatible patch file
+        @li @c EU_error_write_file_rename : could not rename file
+        """
+        ...
     @overload
-    def apply(self, patch_file: _Filename, file: _Filename) -> bool: ...
+    def apply(self, patch_file: _Filename, file: _Filename) -> bool:
+        """Patches the entire file in one call returns true on success and false on
+        error
+        
+        This version will delete the patch file and overwrite the original file.
+        """
+        ...
     @overload
-    def apply(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> bool: ...
-    def get_progress(self) -> float: ...
-    def set_allow_multifile(self, allow_multifile: bool) -> None: ...
-    def get_allow_multifile(self) -> bool: ...
+    def apply(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> bool:
+        """Patches the entire file in one call returns true on success and false on
+        error
+        
+        This version will not delete any files.
+        """
+        ...
+    def get_progress(self) -> float:
+        """Returns a value in the range 0..1, representing the amount of progress
+        through the patchfile, during a session.
+        """
+        ...
+    def set_allow_multifile(self, allow_multifile: bool) -> None:
+        """If this flag is set true, the Patchfile will make a special case for
+        patching Panda Multifiles, if detected, and attempt to patch them on a
+        subfile-by-subfile basis.  If this flag is false, the Patchfile will always
+        patch the file on a full-file basis.
+        
+        This has effect only when building patches; it is not used for applying
+        patches.
+        """
+        ...
+    def get_allow_multifile(self) -> bool:
+        """See set_allow_multifile()."""
+        ...
     def set_footprint_length(self, length: int) -> None: ...
     def get_footprint_length(self) -> int: ...
     def reset_footprint_length(self) -> None: ...
-    def has_source_hash(self) -> bool: ...
-    def get_source_hash(self) -> HashVal: ...
-    def get_result_hash(self) -> HashVal: ...
+    def has_source_hash(self) -> bool:
+        """Returns true if the MD5 hash for the source file is known.  (Some early
+        versions of the patch file did not store this information.)
+        """
+        ...
+    def get_source_hash(self) -> HashVal:
+        """Returns the MD5 hash for the source file."""
+        ...
+    def get_result_hash(self) -> HashVal:
+        """Returns the MD5 hash for the file after the patch has been applied."""
+        ...
     readHeader = read_header
     getProgress = get_progress
     setAllowMultifile = set_allow_multifile
@@ -1566,7 +3237,11 @@ class ProfileTimer:
     def off(self) -> None: ...
     @overload
     def off(self, tag: str) -> None: ...
-    def getTotalTime(self) -> float: ...
+    def getTotalTime(self) -> float:
+        """Don't call any of the following during timing: (Because they are slow,
+        not because anything will break).
+        """
+        ...
     @staticmethod
     def consolidateAllTo(out: ostream = ...) -> None: ...
     def consolidateTo(self, out: ostream = ...) -> None: ...
@@ -1579,8 +3254,20 @@ class WeakPointerToVoid(PointerToVoid):
     additional flag to indicate that the pointer has been deleted.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def was_deleted(self) -> bool: ...
-    def is_valid_pointer(self) -> bool: ...
+    def was_deleted(self) -> bool:
+        """Returns true if the object we are pointing to has been deleted, false
+        otherwise.  If this returns true, it means that the pointer can not yet be
+        reused, but it does not guarantee that it can be safely accessed.  See the
+        lock() method for a safe way to access the underlying pointer.
+        
+        This will always return true for a null pointer, unlike is_valid_pointer().
+        """
+        ...
+    def is_valid_pointer(self) -> bool:
+        """Returns true if the pointer is not null and the object has not been
+        deleted.  See was_deleted() for caveats.
+        """
+        ...
     wasDeleted = was_deleted
     isValidPointer = is_valid_pointer
 
@@ -1601,15 +3288,40 @@ class WindowsRegistry:
     @overload
     def __init__(self, __param0: WindowsRegistry) -> None: ...
     @staticmethod
-    def set_string_value(key: str, name: str, value: str, rl: _WindowsRegistry_RegLevel = ...) -> bool: ...
+    def set_string_value(key: str, name: str, value: str, rl: _WindowsRegistry_RegLevel = ...) -> bool:
+        """Sets the registry key to the indicated value as a string.  The supplied
+        string value is automatically converted from whatever encoding is set by
+        TextEncoder::set_default_encoding() and written as a Unicode string.  The
+        registry key must already exist prior to calling this function.
+        """
+        ...
     @staticmethod
-    def set_int_value(key: str, name: str, value: int, rl: _WindowsRegistry_RegLevel = ...) -> bool: ...
+    def set_int_value(key: str, name: str, value: int, rl: _WindowsRegistry_RegLevel = ...) -> bool:
+        """Sets the registry key to the indicated value as an integer.  The registry
+        key must already exist prior to calling this function.
+        """
+        ...
     @staticmethod
-    def get_key_type(key: str, name: str, rl: _WindowsRegistry_RegLevel = ...) -> _WindowsRegistry_Type: ...
+    def get_key_type(key: str, name: str, rl: _WindowsRegistry_RegLevel = ...) -> _WindowsRegistry_Type:
+        """Returns the type of the indicated key, or T_none if the key is not known or
+        is some unsupported type.
+        """
+        ...
     @staticmethod
-    def get_string_value(key: str, name: str, default_value: str, rl: _WindowsRegistry_RegLevel = ...) -> str: ...
+    def get_string_value(key: str, name: str, default_value: str, rl: _WindowsRegistry_RegLevel = ...) -> str:
+        """Returns the value associated with the indicated registry key, assuming it
+        is a string value.  The string value is automatically encoded using
+        TextEncoder::get_default_encoding().  If the key is not defined or is not a
+        string type value, default_value is returned instead.
+        """
+        ...
     @staticmethod
-    def get_int_value(key: str, name: str, default_value: int, rl: _WindowsRegistry_RegLevel = ...) -> int: ...
+    def get_int_value(key: str, name: str, default_value: int, rl: _WindowsRegistry_RegLevel = ...) -> int:
+        """Returns the value associated with the indicated registry key, assuming it
+        is an integer value.  If the key is not defined or is not an integer type
+        value, default_value is returned instead.
+        """
+        ...
     setStringValue = set_string_value
     setIntValue = set_int_value
     getKeyType = get_key_type
