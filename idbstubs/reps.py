@@ -157,8 +157,11 @@ class Function:
                 yield '@staticmethod'
             if doc:
                 yield f'def {self.name}{signature}:'
-                for line in doc.splitlines():
-                    yield '    ' + line
+                if '\n' in doc:
+                    for line in f'"""{doc}\n"""'.splitlines():
+                        yield '    ' + line
+                else:
+                    yield f'    """{doc}"""'
                 yield '    ...'  # This isn't really necessary
             else:
                 yield f'def {self.name}{signature}: ...'
@@ -190,8 +193,11 @@ class Element:
             yield '@property'
             if self.doc:
                 yield f'def {self.name}(self) -> {self.type}:'
-                for line in self.doc.splitlines():
-                    yield '    ' + line
+                if '\n' in self.doc:
+                    for line in f'"""{self.doc}\n"""'.splitlines():
+                        yield '    ' + line
+                else:
+                    yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
             else:
                 yield f'def {self.name}(self) -> {self.type}: ...'
@@ -237,8 +243,11 @@ class Class:
             return
         yield declaration
         if self.doc:
-            for line in self.doc.splitlines():
-                yield '    ' + line
+            if '\n' in self.doc:
+                for line in f'"""{self.doc}\n"""'.splitlines():
+                    yield '    ' + line
+            else:
+                yield f'    """{self.doc}"""'
         sorted_nested = sorted(self.nested, key=lambda i: i.sort())
         for line in flatten(i.definition() for i in sorted_nested):
             yield '    ' + line

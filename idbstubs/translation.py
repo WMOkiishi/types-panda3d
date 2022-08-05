@@ -137,7 +137,4 @@ def comment_to_docstring(comment: str) -> str:
             docstring_lines.append('')
         else:
             docstring_lines.append(line.removeprefix(' * ').removeprefix('// '))
-    docstring = '\n'.join(docstring_lines)
-    if '\n' in docstring:
-        docstring += '\n'
-    return f'"""{docstring}"""'
+    return '\n'.join(docstring_lines)
