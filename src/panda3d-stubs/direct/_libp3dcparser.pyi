@@ -33,14 +33,13 @@ class DCPackerInterface:
     def as_class_parameter(self) -> DCClassParameter: ...
     @overload
     def check_match(self, other: DCPackerInterface) -> bool:
-        """Returns true if the other interface is bitwise the same as this one--that
+        """`(self, other: DCPackerInterface)`:
+        Returns true if the other interface is bitwise the same as this one--that
         is, a uint32 only matches a uint32, etc.  Names of components, and range
         limits, are not compared.
-        """
-        ...
-    @overload
-    def check_match(self, description: str, dcfile: DCFile = ...) -> bool:
-        """Returns true if this interface is bitwise the same as the interface
+        
+        `(self, description: str, dcfile: DCFile = ...)`:
+        Returns true if this interface is bitwise the same as the interface
         described with the indicated formatted string, e.g.  "(uint8, uint8,
         int16)", or false otherwise.
         
@@ -49,6 +48,8 @@ class DCPackerInterface:
         description string.
         """
         ...
+    @overload
+    def check_match(self, description: str, dcfile: DCFile = ...) -> bool: ...
     getName = get_name
     findSeekIndex = find_seek_index
     asField = as_field
@@ -66,9 +67,7 @@ class DCKeywordList:
         """Returns true if this list includes the indicated keyword, false otherwise."""
         ...
     @overload
-    def has_keyword(self, name: str) -> bool:
-        """Returns true if this list includes the indicated keyword, false otherwise."""
-        ...
+    def has_keyword(self, name: str) -> bool: ...
     def get_num_keywords(self) -> int:
         """Returns the number of keywords in the list."""
         ...
@@ -353,17 +352,16 @@ class DCPacker:
         ...
     @overload
     def seek(self, seek_index: int) -> bool:
-        """Seeks to the field indentified by seek_index, which was returned by an
+        """`(self, seek_index: int)`:
+        Seeks to the field indentified by seek_index, which was returned by an
         earlier call to DCField::find_seek_index() to get the index of some nested
         field.  Also see the version of seek() that accepts a field name.
         
         Returns true if successful, false if the field is not known (or if the
         packer is in an invalid mode).
-        """
-        ...
-    @overload
-    def seek(self, field_name: str) -> bool:
-        """Sets the current unpack (or repack) position to the named field.  In unpack
+        
+        `(self, field_name: str)`:
+        Sets the current unpack (or repack) position to the named field.  In unpack
         mode, the next call to unpack_*() or push() will begin to read the named
         field.  In repack mode, the next call to pack_*() or push() will modify the
         named field.
@@ -372,6 +370,8 @@ class DCPacker:
         packer is in an invalid mode).
         """
         ...
+    @overload
+    def seek(self, field_name: str) -> bool: ...
     def has_nested_fields(self) -> bool:
         """Returns true if the current field has any nested fields (and thus expects a
         push() .. pop() interface), or false otherwise.  If this returns true,
@@ -542,12 +542,7 @@ class DCPacker:
         """
         ...
     @overload
-    def parse_and_pack(self, formatted_object: str) -> bool:
-        """Parses an object's value according to the DC file syntax (e.g.  as a
-        default value string) and packs it.  Returns true on success, false on a
-        parse error.
-        """
-        ...
+    def parse_and_pack(self, formatted_object: str) -> bool: ...
     @overload
     def unpack_and_format(self, show_field_names: bool = ...) -> str:
         """Unpacks an object and formats its value into a syntax suitable for parsing
@@ -555,11 +550,7 @@ class DCPacker:
         """
         ...
     @overload
-    def unpack_and_format(self, out: ostream, show_field_names: bool = ...) -> None:
-        """Unpacks an object and formats its value into a syntax suitable for parsing
-        in the dc file (e.g.  as a default value), or as an input to parse_object.
-        """
-        ...
+    def unpack_and_format(self, out: ostream, show_field_names: bool = ...) -> None: ...
     def had_parse_error(self) -> bool:
         """Returns true if there has been an parse error since the most recent call to
         begin(); this can only happen if you call parse_and_pack().
@@ -1053,25 +1044,27 @@ class DCClass(DCDeclaration):
         ...
     @overload
     def direct_update(self, distobj: Any, field_name: str, datagram: Datagram) -> None:
-        """Processes an update for a named field from a packed datagram."""
+        """`(self, distobj: Any, field_name: str, datagram: Datagram)`:
+        Processes an update for a named field from a packed datagram.
+        
+        `(self, distobj: Any, field_name: str, value_blob: bytes)`:
+        Processes an update for a named field from a packed value blob.
+        """
         ...
     @overload
-    def direct_update(self, distobj: Any, field_name: str, value_blob: bytes) -> None:
-        """Processes an update for a named field from a packed value blob."""
-        ...
+    def direct_update(self, distobj: Any, field_name: str, value_blob: bytes) -> None: ...
     @overload
     def pack_required_field(self, packer: DCPacker, distobj: Any, field: DCField) -> bool:
-        """Looks up the current value of the indicated field by calling the
+        """`(self, packer: DCPacker, distobj: Any, field: DCField)`:
+        Looks up the current value of the indicated field by calling the
         appropriate get*() function, then packs that value into the packer.  This
         field is presumably either a required field or a specified optional field,
         and we are building up a datagram for the generate-with-required message.
         
         Returns true on success, false on failure.
-        """
-        ...
-    @overload
-    def pack_required_field(self, datagram: Datagram, distobj: Any, field: DCField) -> bool:
-        """Looks up the current value of the indicated field by calling the
+        
+        `(self, datagram: Datagram, distobj: Any, field: DCField)`:
+        Looks up the current value of the indicated field by calling the
         appropriate get*() function, then packs that value into the datagram.  This
         field is presumably either a required field or a specified optional field,
         and we are building up a datagram for the generate-with-required message.
@@ -1079,6 +1072,8 @@ class DCClass(DCDeclaration):
         Returns true on success, false on failure.
         """
         ...
+    @overload
+    def pack_required_field(self, datagram: Datagram, distobj: Any, field: DCField) -> bool: ...
     def client_format_update(self, field_name: str, do_id: int, args: Any) -> Datagram:
         """Generates a datagram containing the message necessary to send an update for
         the indicated distributed object from the client.
@@ -1175,17 +1170,16 @@ class DCFile:
         ...
     @overload
     def read(self, filename: _Filename) -> bool:
-        """Opens and reads the indicated .dc file by name.  The distributed classes
+        """`(self, filename: Filename)`:
+        Opens and reads the indicated .dc file by name.  The distributed classes
         defined in the file will be appended to the set of distributed classes
         already recorded, if any.
         
         Returns true if the file is successfully read, false if there was an error
         (in which case the file might have been partially read).
-        """
-        ...
-    @overload
-    def read(self, _in: istream, filename: str = ...) -> bool:
-        """Parses the already-opened input stream for distributed class descriptions.
+        
+        `(self, _in: istream, filename: str = ...)`:
+        Parses the already-opened input stream for distributed class descriptions.
         The filename parameter is optional and is only used when reporting errors.
         
         The distributed classes defined in the file will be appended to the set of
@@ -1196,21 +1190,24 @@ class DCFile:
         """
         ...
     @overload
+    def read(self, _in: istream, filename: str = ...) -> bool: ...
+    @overload
     def write(self, filename: _Filename, brief: bool) -> bool:
-        """Opens the indicated filename for output and writes a parseable description
+        """`(self, filename: Filename, brief: bool)`:
+        Opens the indicated filename for output and writes a parseable description
         of all the known distributed classes to the file.
         
         Returns true if the description is successfully written, false otherwise.
-        """
-        ...
-    @overload
-    def write(self, out: ostream, brief: bool) -> bool:
-        """Writes a parseable description of all the known distributed classes to the
+        
+        `(self, out: ostream, brief: bool)`:
+        Writes a parseable description of all the known distributed classes to the
         stream.
         
         Returns true if the description is successfully written, false otherwise.
         """
         ...
+    @overload
+    def write(self, out: ostream, brief: bool) -> bool: ...
     def get_num_classes(self) -> int:
         """Returns the number of classes read from the .dc file(s)."""
         ...

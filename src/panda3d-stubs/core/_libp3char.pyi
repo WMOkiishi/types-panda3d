@@ -103,12 +103,15 @@ class CharacterJoint(MovingPartMatrix):
         ...
     @overload
     def get_transform(self) -> LMatrix4f:
-        """Returns the transform matrix of the joint"""
+        """`(self)`:
+        Returns the transform matrix of the joint
+        
+        `(self, transform: LMatrix4f)`:
+        Copies the joint's current transform into the indicated matrix.
+        """
         ...
     @overload
-    def get_transform(self, transform: _Mat4f) -> None:
-        """Copies the joint's current transform into the indicated matrix."""
-        ...
+    def get_transform(self, transform: _Mat4f) -> None: ...
     def get_transform_state(self) -> TransformState: ...
     def get_net_transform(self, transform: _Mat4f) -> None:
         """Copies the joint's current net transform (composed from the root of the
@@ -206,17 +209,16 @@ class Character(PartBundleNode):
     def get_bundle(self, i: int) -> CharacterJointBundle: ...
     @overload
     def merge_bundles(self, old_bundle: PartBundle, other_bundle: PartBundle) -> None:
-        """Merges old_bundle with new_bundle.  old_bundle must be one of the
+        """`(self, old_bundle: PartBundle, other_bundle: PartBundle)`:
+        Merges old_bundle with new_bundle.  old_bundle must be one of the
         PartBundles within this node.  At the end of this call, the old_bundle
         pointer within this node will be replaced with the new_bundle pointer, and
         all geometry within this node will be updated to reference new_bundle.
         
         @deprecated Use the newer version of this method, below.
-        """
-        ...
-    @overload
-    def merge_bundles(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle) -> None:
-        """Merges old_bundle_handle->get_bundle() with new_bundle.  old_bundle_handle
+        
+        `(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle)`:
+        Merges old_bundle_handle->get_bundle() with new_bundle.  old_bundle_handle
         must be one of the PartBundleHandle within this node.  At the end of this
         call, the bundle pointer within the old_bundle_handle will be replaced with
         that within the new_bundle_handle pointer, and all geometry within this
@@ -235,6 +237,8 @@ class Character(PartBundleNode):
         skeleton, for instance, different LOD's of the same model.
         """
         ...
+    @overload
+    def merge_bundles(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle) -> None: ...
     def set_lod_animation(self, center: _Vec3f, far_distance: float, near_distance: float, delay_factor: float) -> None:
         """Activates a special mode in which the character animates less frequently as
         it gets further from the camera.  This is intended as a simple optimization

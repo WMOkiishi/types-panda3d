@@ -541,12 +541,15 @@ class InputDeviceManager:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def get_devices(self) -> InputDeviceSet:
-        """Description: Returns all currently connected devices."""
+        """`(self)`:
+        Description: Returns all currently connected devices.
+        
+        `(self, device_class: InputDevice.DeviceClass)`:
+        Description: Returns all currently connected devices of the given device class.
+        """
         ...
     @overload
-    def get_devices(self, device_class: InputDevice.DeviceClass) -> InputDeviceSet:
-        """Description: Returns all currently connected devices of the given device class."""
-        ...
+    def get_devices(self, device_class: InputDevice.DeviceClass) -> InputDeviceSet: ...
     def add_device(self, device: InputDevice) -> None:
         """Called when a new device has been discovered.  This may also be used to
         register virtual devices.

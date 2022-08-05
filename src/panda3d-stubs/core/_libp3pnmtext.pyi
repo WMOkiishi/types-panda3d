@@ -168,18 +168,19 @@ class PNMTextGlyph:
         ...
     @overload
     def place(self, dest_image: PNMImage, xp: int, yp: int, fg: _Vec4f) -> None:
-        """Copies the glyph to the indicated destination image at the indicated
+        """`(self, dest_image: PNMImage, xp: int, yp: int, fg: LVecBase4f)`:
+        Copies the glyph to the indicated destination image at the indicated
         origin.  It colors the glyph pixels the indicated foreground color, blends
         antialiased pixels with the appropriate amount of the foreground color and
         the existing background color, and leaves other pixels alone.
-        """
-        ...
-    @overload
-    def place(self, dest_image: PNMImage, xp: int, yp: int, fg: _Vec4f, interior: _Vec4f) -> None:
-        """This flavor of place() also fills in the interior color.  This requires
+        
+        `(self, dest_image: PNMImage, xp: int, yp: int, fg: LVecBase4f, interior: LVecBase4f)`:
+        This flavor of place() also fills in the interior color.  This requires
         that determine_interior was called earlier.
         """
         ...
+    @overload
+    def place(self, dest_image: PNMImage, xp: int, yp: int, fg: _Vec4f, interior: _Vec4f) -> None: ...
     def get_left(self) -> int:
         """Returns the x coordinate of the leftmost pixel in the glyph."""
         ...
@@ -231,9 +232,14 @@ class PNMTextMaker(FreetypeFont):
     A_center: ClassVar[Literal[2]]
     @overload
     def __init__(self, copy: FreetypeFont) -> None:
-        """The constructor expects the name of some font file that FreeType can read,
+        """`(self, font_filename: Filename, face_index: int)`:
+        The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load
         (usually 0).
+        
+        `(self, font_data: str, data_length: int, face_index: int)`:
+        This constructor works as above, but it takes the font data from an in-
+        memory buffer instead of from a named file.
         """
         ...
     @overload

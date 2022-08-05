@@ -7,11 +7,11 @@ class Socket_Address:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, port: int = ...) -> None: ...
-    @overload
-    def __init__(self, inaddr: Socket_Address) -> None:
+    def __init__(self, port: int = ...) -> None:
         """Constructor that lets us set a port value"""
         ...
+    @overload
+    def __init__(self, inaddr: Socket_Address) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, _in: Socket_Address) -> bool: ...
@@ -30,17 +30,18 @@ class Socket_Address:
         ...
     @overload
     def set_host(self, hostname: str) -> bool:
-        """Initializes the address from a string specifying both the address and port,
+        """`(self, hostname: str)`:
+        Initializes the address from a string specifying both the address and port,
         separated by a colon.  An IPv6 address must be enclosed in brackets.
-        """
-        ...
-    @overload
-    def set_host(self, hostname: str, port: int) -> bool:
-        """This function will take a port and string-based TCP address and initialize
+        
+        `(self, hostname: str, port: int)`:
+        This function will take a port and string-based TCP address and initialize
         the address with this information.  Returns true on success; on failure, it
         returns false and the address may be undefined.
         """
         ...
+    @overload
+    def set_host(self, hostname: str, port: int) -> bool: ...
     @overload
     def set_host(self, ip4addr: int, port: int) -> bool: ...
     def clear(self) -> None:
@@ -97,12 +98,15 @@ class Socket_IP(TypedObject):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
-        """Def Constructor"""
+        """`(self)`:
+        Def Constructor
+        
+        `(self, _in: int)`:
+        Assigns an existing socket to this class
+        """
         ...
     @overload
-    def __init__(self, _in: int) -> None:
-        """Assigns an existing socket to this class"""
-        ...
+    def __init__(self, _in: int) -> None: ...
     def Close(self) -> None:
         """Closes a socket if it is open (allocated)."""
         ...
@@ -136,7 +140,12 @@ class Socket_IP(TypedObject):
         """Assigns an existing socket to this class"""
         ...
     def GetSocket(self) -> int:
-        """Gets the base socket type"""
+        """`(self)`:
+        Gets the base socket type
+        
+        `(self)`:
+        Get The RAW file id of the socket
+        """
         ...
     def GetPeerName(self) -> Socket_Address:
         """Wrapper on berkly getpeername..."""
@@ -206,9 +215,7 @@ class Socket_TCP_Listen(Socket_IP):
         """This function will initialize a listening Socket"""
         ...
     @overload
-    def OpenForListen(self, port: int, backlog_size: int = ...) -> bool:
-        """This function will initialize a listening Socket"""
-        ...
+    def OpenForListen(self, port: int, backlog_size: int = ...) -> bool: ...
     def GetIncomingConnection(self, newsession: Socket_TCP | int, address: Socket_Address) -> bool: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -223,9 +230,7 @@ class Socket_UDP_Incoming(Socket_IP):
         """Starts a UDP socket listening on a port"""
         ...
     @overload
-    def OpenForInput(self, port: int) -> bool:
-        """Starts a UDP socket listening on a port"""
-        ...
+    def OpenForInput(self, port: int) -> bool: ...
     def OpenForInputMCast(self, address: Socket_Address) -> bool:
         """Starts a UDP socket listening on a port"""
         ...

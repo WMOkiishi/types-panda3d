@@ -121,7 +121,7 @@ class Function:
     signatures: Sequence[Signature] = field(converter=tuple)
     is_method: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-    docs: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
+    doc: str = field(default='', kw_only=True)
 
     @property
     def scoped_name(self) -> str:
@@ -150,19 +150,21 @@ class Function:
     def definition(self) -> Iterator[str]:
         is_method = self.is_method
         is_overloaded = self.is_overloaded
-        for signature, doc in zip(self.signatures, chain(self.docs, repeat(''))):
+        doc_printed = False
+        for signature in self.signatures:
             if is_overloaded:
                 yield '@overload'
             if is_method and signature.is_static:
                 yield '@staticmethod'
-            if doc:
+            if self.doc and not doc_printed:
                 yield f'def {self.name}{signature}:'
-                if '\n' in doc:
-                    for line in f'"""{doc}\n"""'.splitlines():
+                if '\n' in self.doc:
+                    for line in f'"""{self.doc}\n"""'.splitlines():
                         yield '    ' + line
                 else:
-                    yield f'    """{doc}"""'
+                    yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
+                doc_printed = True
             else:
                 yield f'def {self.name}{signature}: ...'
 

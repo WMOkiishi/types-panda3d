@@ -29,12 +29,9 @@ class EventParameter:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, value: float | str) -> None: ...
-    @overload
-    def __init__(self, copy: EventParameter | float | int | str | None) -> None:
-        """Defines an EventParameter that stores a pointer to a TypedReferenceCount
+    def __init__(self) -> None:
+        """`(self, ptr: TypedReferenceCount)`:
+        Defines an EventParameter that stores a pointer to a TypedReferenceCount
         object.  Note that a TypedReferenceCount is not the same kind of pointer as
         a TypedWritableReferenceCount, hence we require both constructors.
         
@@ -42,19 +39,35 @@ class EventParameter:
         returns) a non-const pointer.  This is just the simplest way to allow both
         const and non-const pointers to be stored, but it does lose the constness.
         Be careful.
-        """
-        ...
-    @overload
-    def __init__(self, ptr: TypedReferenceCount | TypedWritableReferenceCount) -> None:
-        """Defines an EventParameter that stores a pointer to any kind of
+        
+        `(self, ptr: TypedWritableReferenceCount)`:
+        Defines an EventParameter that stores a pointer to any kind of
         TypedWritableReferenceCount object.  This is the most general constructor.
         
         This accepts a const pointer, even though it stores (and eventually
         returns) a non-const pointer.  This is just the simplest way to allow both
         const and non-const pointers to be stored, but it does lose the constness.
         Be careful.
+        
+        `(self, value: float)`:
+        Defines an EventParameter that stores a floating-point value.
+        
+        `(self, value: int)`:
+        Defines an EventParameter that stores an integer value.
+        
+        `(self, value: str)`:
+        Defines an EventParameter that stores a string value.
+        
+        `(self, value: str)`:
+        Defines an EventParameter that stores a wstring value.
         """
         ...
+    @overload
+    def __init__(self, value: float | str) -> None: ...
+    @overload
+    def __init__(self, copy: EventParameter | float | int | str | None) -> None: ...
+    @overload
+    def __init__(self, ptr: TypedReferenceCount | TypedWritableReferenceCount) -> None: ...
     def assign(self, copy: EventParameter | float | int | str | None) -> EventParameter: ...
     def is_empty(self) -> bool:
         """These functions are conveniences to easily determine if the
@@ -212,12 +225,15 @@ class AsyncFuture(TypedReferenceCount):
     def output(self, out: ostream) -> None: ...
     @overload
     def wait(self) -> None:
-        """Waits until the future is done."""
+        """`(self)`:
+        Waits until the future is done.
+        
+        `(self, timeout: float)`:
+        Waits until the future is done, or until the timeout is reached.
+        """
         ...
     @overload
-    def wait(self, timeout: float) -> None:
-        """Waits until the future is done, or until the timeout is reached."""
-        ...
+    def wait(self, timeout: float) -> None: ...
     def set_result(self, __param0: Any) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -601,16 +617,17 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         ...
     @overload
     def remove(self, task: AsyncTask) -> bool:
-        """Removes the indicated task from the active queue.  Returns true if the task
+        """`(self, task: AsyncTask)`:
+        Removes the indicated task from the active queue.  Returns true if the task
         is successfully removed, or false if it wasn't there.
-        """
-        ...
-    @overload
-    def remove(self, tasks: AsyncTaskCollection) -> int:
-        """Removes all of the tasks in the AsyncTaskCollection.  Returns the number of
+        
+        `(self, tasks: AsyncTaskCollection)`:
+        Removes all of the tasks in the AsyncTaskCollection.  Returns the number of
         tasks removed.
         """
         ...
+    @overload
+    def remove(self, tasks: AsyncTaskCollection) -> int: ...
     def wait_for_tasks(self) -> None:
         """Blocks until the task list is empty."""
         ...
@@ -724,14 +741,16 @@ class AsyncTaskCollection:
         ...
     @overload
     def remove_task(self, task: AsyncTask) -> bool:
-        """Removes the indicated AsyncTask from the collection.  Returns true if the
+        """`(self, task: AsyncTask)`:
+        Removes the indicated AsyncTask from the collection.  Returns true if the
         task was removed, false if it was not a member of the collection.
+        
+        `(self, index: int)`:
+        Removes the nth AsyncTask from the collection.
         """
         ...
     @overload
-    def remove_task(self, index: int) -> None:
-        """Removes the nth AsyncTask from the collection."""
-        ...
+    def remove_task(self, index: int) -> None: ...
     def add_tasks_from(self, other: AsyncTaskCollection) -> None:
         """Adds all the AsyncTasks indicated in the other collection to this task.
         The other tasks are simply appended to the end of the tasks in this list;
@@ -1309,18 +1328,21 @@ class PointerEventList(ParamValueBase):
         ...
     @overload
     def add_event(self, data: PointerData, seq: int, time: float) -> None:
-        """Adds a new event from the given PointerData object."""
-        ...
-    @overload
-    def add_event(self, in_win: bool, xpos: int, ypos: int, seq: int, time: float) -> None:
-        """Adds a new event to the end of the list based on the given mouse movement."""
-        ...
-    @overload
-    def add_event(self, in_win: bool, xpos: int, ypos: int, xdelta: float, ydelta: float, seq: int, time: float) -> None:
-        """Adds a new event to the end of the list.  Automatically calculates the dx,
+        """`(self, data: PointerData, seq: int, time: float)`:
+        Adds a new event from the given PointerData object.
+        
+        `(self, in_win: bool, xpos: int, ypos: int, xdelta: float, ydelta: float, seq: int, time: float)`:
+        Adds a new event to the end of the list based on the given mouse movement.
+        
+        `(self, in_win: bool, xpos: int, ypos: int, seq: int, time: float)`:
+        Adds a new event to the end of the list.  Automatically calculates the dx,
         dy, length, direction, and rotation for all but the first event.
         """
         ...
+    @overload
+    def add_event(self, in_win: bool, xpos: int, ypos: int, seq: int, time: float) -> None: ...
+    @overload
+    def add_event(self, in_win: bool, xpos: int, ypos: int, xdelta: float, ydelta: float, seq: int, time: float) -> None: ...
     def encircles(self, x: int, y: int) -> bool:
         """Returns true if the trail loops around the specified point."""
         ...

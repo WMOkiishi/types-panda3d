@@ -44,9 +44,7 @@ class GPUCommand:
     CMD_store_source: ClassVar[Literal[3]]
     CMD_remove_sources: ClassVar[Literal[4]]
     @overload
-    def __init__(self, __param0: GPUCommand) -> None: ...
-    @overload
-    def __init__(self, command_type: _GPUCommand_CommandType) -> None:
+    def __init__(self, __param0: GPUCommand) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
         @details This will construct a new GPUCommand of the given command type.
           The command type should be of GPUCommand::CommandType, and determines
@@ -55,6 +53,8 @@ class GPUCommand:
         @param command_type The type of the GPUCommand
         """
         ...
+    @overload
+    def __init__(self, command_type: _GPUCommand_CommandType) -> None: ...
     def push_int(self, v: int) -> None:
         """@brief Appends an integer to the GPUCommand.
         @details This adds an integer to the back of the GPUCommand. Depending on the
@@ -75,19 +75,37 @@ class GPUCommand:
         """
         ...
     def push_vec3(self, v: LVecBase3i | _Vec3f) -> None:
-        """@brief Appends a 3-component floating point vector to the GPUCommand.
+        """`(self, v: LVecBase3f)`:
+        @brief Appends a 3-component floating point vector to the GPUCommand.
         @details This appends a 3-component floating point vector to the command.
           It basically just calls push_float() for every component, in the order
+          x, y, z, which causes the vector to occupy the space of 3 floats.
+        
+        @param v Int-Vector to append.
+        
+        `(self, v: LVecBase3i)`:
+        @brief Appends a 3-component integer vector to the GPUCommand.
+        @details This appends a 3-component integer vector to the command.
+          It basically just calls push_int() for every component, in the order
           x, y, z, which causes the vector to occupy the space of 3 floats.
         
         @param v Int-Vector to append.
         """
         ...
     def push_vec4(self, v: _Vec4f | _Vec4i) -> None:
-        """@brief Appends a 4-component floating point vector to the GPUCommand.
+        """`(self, v: LVecBase4f)`:
+        @brief Appends a 4-component floating point vector to the GPUCommand.
         @details This appends a 4-component floating point vector to the command.
           It basically just calls push_float() for every component, in the order
           x, y, z, which causes the vector to occupy the space of 3 floats.
+        
+        @param v Int-Vector to append.
+        
+        `(self, v: LVecBase4i)`:
+        @brief Appends a 4-component integer vector to the GPUCommand.
+        @details This appends a 4-component integer vector to the command.
+          It basically just calls push_int() for every component, in the order
+          x, y, z, w, which causes the vector to occupy the space of 4 floats.
         
         @param v Int-Vector to append.
         """
@@ -292,16 +310,15 @@ class RPLight(ReferenceCount):
         ...
     @overload
     def set_pos(self, pos: _Vec3f) -> None:
-        """@brief Sets the position of the light
+        """`(self, pos: LVecBase3f)`:
+        @brief Sets the position of the light
         @details This sets the position of the light in world space. It will cause
           the light to get invalidated, and resubmitted to the GPU.
         
         @param pos Position in world space
-        """
-        ...
-    @overload
-    def set_pos(self, x: float, y: float, z: float) -> None:
-        """@brief Sets the position of the light
+        
+        `(self, x: float, y: float, z: float)`:
+        @brief Sets the position of the light
         @details @copydetails RPLight::set_pos(const LVecBase3 &pos)
         
         @param x X-component of the position
@@ -309,6 +326,8 @@ class RPLight(ReferenceCount):
         @param z Z-component of the position
         """
         ...
+    @overload
+    def set_pos(self, x: float, y: float, z: float) -> None: ...
     def get_pos(self) -> LVecBase3f:
         """@brief Returns the position of the light
         @details This returns the position of the light previously set with
@@ -318,7 +337,8 @@ class RPLight(ReferenceCount):
         ...
     @overload
     def set_color(self, color: _Vec3f) -> None:
-        """@brief Sets the lights color
+        """`(self, color: LVecBase3f)`:
+        @brief Sets the lights color
         @details This sets the lights color. The color should not include the brightness
           of the light, you should control that with the energy. The color specifies
           the lights "tint" and will get multiplied with its specular and diffuse
@@ -328,11 +348,9 @@ class RPLight(ReferenceCount):
           higher values than 1.0 will have no effect.
         
         @param color Light color
-        """
-        ...
-    @overload
-    def set_color(self, r: float, g: float, b: float) -> None:
-        """@brief Sets the lights color
+        
+        `(self, r: float, g: float, b: float)`:
+        @brief Sets the lights color
         @details @copydetails RPLight::set_color(const LVecBase3 &color)
         
         @param r Red-component of the color
@@ -340,6 +358,8 @@ class RPLight(ReferenceCount):
         @param b Blue-component of the color
         """
         ...
+    @overload
+    def set_color(self, r: float, g: float, b: float) -> None: ...
     def get_color(self) -> LVecBase3f:
         """@brief Returns the lights color
         @details This returns the light color, previously set with RPLight::set_color.
@@ -514,9 +534,7 @@ class ShadowAtlas:
     @property
     def coverage(self) -> float: ...
     @overload
-    def __init__(self, __param0: ShadowAtlas) -> None: ...
-    @overload
-    def __init__(self, size: int, tile_size: int = ...) -> None:
+    def __init__(self, __param0: ShadowAtlas) -> None:
         """@brief Constructs a new shadow atlas.
         @details This constructs a new shadow atlas with the given size and tile size.
         
@@ -536,6 +554,8 @@ class ShadowAtlas:
         @param tile_size tile-size in pixels, or 1 to use no tiles.
         """
         ...
+    @overload
+    def __init__(self, size: int, tile_size: int = ...) -> None: ...
     def get_num_used_tiles(self) -> int:
         """@brief Returns the amount of used tiles
         @details Returns the amount of used tiles in the atlas
@@ -1036,9 +1056,7 @@ class PSSMCameraRig:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: PSSMCameraRig) -> None: ...
-    @overload
-    def __init__(self, num_splits: int) -> None:
+    def __init__(self, __param0: PSSMCameraRig) -> None:
         """@brief Constructs a new PSSM camera rig
         @details This constructs a new camera rig, with a given amount of splits.
           The splits can not be changed later on. Splits are also called Cascades.
@@ -1048,6 +1066,8 @@ class PSSMCameraRig:
         @param num_splits Amount of PSSM splits
         """
         ...
+    @overload
+    def __init__(self, num_splits: int) -> None: ...
     def set_pssm_distance(self, distance: float) -> None:
         """@brief Sets the maximum pssm distance.
         @details This sets the maximum distance in world space until which shadows

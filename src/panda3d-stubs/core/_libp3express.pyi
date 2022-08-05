@@ -641,13 +641,13 @@ class Datagram(TypedObject):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        """Constructs a datagram from an existing block of data."""
+        ...
     @overload
     def __init__(self, copy: Datagram) -> None: ...
     @overload
-    def __init__(self, data: bytes) -> None:
-        """Constructs a datagram from an existing block of data."""
-        ...
+    def __init__(self, data: bytes) -> None: ...
     def __bytes__(self) -> bytes: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -1091,18 +1091,17 @@ class DatagramSink:
     def put_datagram(self, data: Datagram) -> bool: ...
     @overload
     def copy_datagram(self, result: SubfileInfo, filename: _Filename) -> bool:
-        """Copies the file data from the entire indicated file (via the vfs) as the
+        """`(self, result: SubfileInfo, filename: Filename)`:
+        Copies the file data from the entire indicated file (via the vfs) as the
         next datagram.  This is intended to support potentially very large
         datagrams.
         
         Returns true on success, false on failure or if this method is
         unimplemented.  On true, fills "result" with the information that
         references the copied file, if possible.
-        """
-        ...
-    @overload
-    def copy_datagram(self, result: SubfileInfo, source: SubfileInfo) -> bool:
-        """Copies the file data from the range of the indicated file (outside of the
+        
+        `(self, result: SubfileInfo, source: SubfileInfo)`:
+        Copies the file data from the range of the indicated file (outside of the
         vfs) as the next datagram.  This is intended to support potentially very
         large datagrams.
         
@@ -1111,6 +1110,8 @@ class DatagramSink:
         references the copied file, if possible.
         """
         ...
+    @overload
+    def copy_datagram(self, result: SubfileInfo, source: SubfileInfo) -> bool: ...
     def is_error(self) -> bool: ...
     def flush(self) -> None: ...
     def get_filename(self) -> Filename:
@@ -1505,17 +1506,16 @@ class Multifile(ReferenceCount):
     def __init__(self) -> None: ...
     @overload
     def open_read(self, multifile_name: _Filename, offset: int = ...) -> bool:
-        """Opens the named Multifile on disk for reading.  The Multifile index is read
+        """`(self, multifile_name: Filename, offset: int = ...)`:
+        Opens the named Multifile on disk for reading.  The Multifile index is read
         in, and the list of subfiles becomes available; individual subfiles may
         then be extracted or read, but the list of subfiles may not be modified.
         
         Also see the version of open_read() which accepts an istream.  Returns true
         on success, false on failure.
-        """
-        ...
-    @overload
-    def open_read(self, multifile_stream: IStreamWrapper, owns_pointer: bool = ..., offset: int = ...) -> bool:
-        """Opens an anonymous Multifile for reading using an istream.  There must be
+        
+        `(self, multifile_stream: IStreamWrapper, owns_pointer: bool = ..., offset: int = ...)`:
+        Opens an anonymous Multifile for reading using an istream.  There must be
         seek functionality via seekg() and tellg() on the istream.
         
         If owns_pointer is true, then the Multifile assumes ownership of the stream
@@ -1524,19 +1524,20 @@ class Multifile(ReferenceCount):
         """
         ...
     @overload
+    def open_read(self, multifile_stream: IStreamWrapper, owns_pointer: bool = ..., offset: int = ...) -> bool: ...
+    @overload
     def open_write(self, multifile_name: _Filename) -> bool:
-        """Opens the named Multifile on disk for writing.  If there already exists a
+        """`(self, multifile_name: Filename)`:
+        Opens the named Multifile on disk for writing.  If there already exists a
         file by that name, it is truncated.  The Multifile is then prepared for
         accepting a brand new set of subfiles, which will be written to the
         indicated filename.  Individual subfiles may not be extracted or read.
         
         Also see the version of open_write() which accepts an ostream.  Returns
         true on success, false on failure.
-        """
-        ...
-    @overload
-    def open_write(self, multifile_stream: ostream, owns_pointer: bool = ...) -> bool:
-        """Opens an anonymous Multifile for writing using an ostream.  There must be
+        
+        `(self, multifile_stream: ostream, owns_pointer: bool = ...)`:
+        Opens an anonymous Multifile for writing using an ostream.  There must be
         seek functionality via seekp() and tellp() on the pstream.
         
         If owns_pointer is true, then the Multifile assumes ownership of the stream
@@ -1545,19 +1546,20 @@ class Multifile(ReferenceCount):
         """
         ...
     @overload
+    def open_write(self, multifile_stream: ostream, owns_pointer: bool = ...) -> bool: ...
+    @overload
     def open_read_write(self, multifile_name: _Filename) -> bool:
-        """Opens the named Multifile on disk for reading and writing.  If there
+        """`(self, multifile_name: Filename)`:
+        Opens the named Multifile on disk for reading and writing.  If there
         already exists a file by that name, its index is read.  Subfiles may be
         added or removed, and the resulting changes will be written to the named
         file.
         
         Also see the version of open_read_write() which accepts an iostream.
         Returns true on success, false on failure.
-        """
-        ...
-    @overload
-    def open_read_write(self, multifile_stream: iostream, owns_pointer: bool = ...) -> bool:
-        """Opens an anonymous Multifile for reading and writing using an iostream.
+        
+        `(self, multifile_stream: iostream, owns_pointer: bool = ...)`:
+        Opens an anonymous Multifile for reading and writing using an iostream.
         There must be seek functionality via seekg()/seekp() and tellg()/tellp() on
         the iostream.
         
@@ -1566,6 +1568,8 @@ class Multifile(ReferenceCount):
         function returns false.
         """
         ...
+    @overload
+    def open_read_write(self, multifile_stream: iostream, owns_pointer: bool = ...) -> bool: ...
     def close(self) -> None:
         """Closes the Multifile if it is open.  All changes are flushed to disk, and
         the file becomes invalid for further operations until the next call to
@@ -1740,7 +1744,8 @@ class Multifile(ReferenceCount):
         ...
     @overload
     def add_subfile(self, subfile_name: str, filename: _Filename, compression_level: int) -> str:
-        """Adds a file on disk as a subfile to the Multifile.  The file named by
+        """`(self, subfile_name: str, filename: Filename, compression_level: int)`:
+        Adds a file on disk as a subfile to the Multifile.  The file named by
         filename will be read and added to the Multifile at the next call to
         flush().  If there already exists a subfile with the indicated name, it is
         replaced without examining its contents (but see also update_subfile).
@@ -1751,11 +1756,9 @@ class Multifile(ReferenceCount):
         
         Returns the subfile name on success (it might have been modified slightly),
         or empty string on failure.
-        """
-        ...
-    @overload
-    def add_subfile(self, subfile_name: str, subfile_data: istream, compression_level: int) -> str:
-        """Adds a file from a stream as a subfile to the Multifile.  The indicated
+        
+        `(self, subfile_name: str, subfile_data: istream, compression_level: int)`:
+        Adds a file from a stream as a subfile to the Multifile.  The indicated
         istream will be read and its contents added to the Multifile at the next
         call to flush(). The file will be added as a binary subfile.
         
@@ -1770,6 +1773,8 @@ class Multifile(ReferenceCount):
         or empty string on failure.
         """
         ...
+    @overload
+    def add_subfile(self, subfile_name: str, subfile_data: istream, compression_level: int) -> str: ...
     def update_subfile(self, subfile_name: str, filename: _Filename, compression_level: int) -> str:
         """Adds a file on disk to the subfile.  If a subfile already exists with the
         same name, its contents are compared byte-for-byte to the disk file, and it
@@ -1783,7 +1788,8 @@ class Multifile(ReferenceCount):
         ...
     @overload
     def add_signature(self, composite: _Filename, password: str = ...) -> bool:
-        """Adds a new signature to the Multifile.  This signature associates the
+        """`(self, certificate: Filename, chain: Filename, pkey: Filename, password: str = ...)`:
+        Adds a new signature to the Multifile.  This signature associates the
         indicated certificate with the current contents of the Multifile.  When the
         Multifile is read later, the signature will still be present only if the
         Multifile is unchanged; any subsequent changes to the Multifile will
@@ -1806,11 +1812,9 @@ class Multifile(ReferenceCount):
         PEM-formatted file, for instance as generated by the openssl command.  If
         the private key file is password-encrypted, the third parameter will be
         used as the password to decrypt it.
-        """
-        ...
-    @overload
-    def add_signature(self, certificate: _Filename, chain: _Filename, pkey: _Filename, password: str = ...) -> bool:
-        """Adds a new signature to the Multifile.  This signature associates the
+        
+        `(self, composite: Filename, password: str = ...)`:
+        Adds a new signature to the Multifile.  This signature associates the
         indicated certificate with the current contents of the Multifile.  When the
         Multifile is read later, the signature will still be present only if the
         Multifile is unchanged; any subsequent changes to the Multifile will
@@ -1823,6 +1827,8 @@ class Multifile(ReferenceCount):
         certificates in the file are taken to be part of the chain.
         """
         ...
+    @overload
+    def add_signature(self, certificate: _Filename, chain: _Filename, pkey: _Filename, password: str = ...) -> bool: ...
     def get_num_signatures(self) -> int:
         """Returns the number of matching signatures found on the Multifile.  These
         signatures may be iterated via get_signature() and related methods.
@@ -1927,18 +1933,17 @@ class Multifile(ReferenceCount):
         ...
     @overload
     def remove_subfile(self, index: int) -> None:
-        """Removes the nth subfile from the Multifile.  This will cause all subsequent
+        """`(self, index: int)`:
+        Removes the nth subfile from the Multifile.  This will cause all subsequent
         index numbers to decrease by one.  The file will not actually be removed
         from the disk until the next call to flush().
         
         Note that this does not actually remove the data from the indicated
         subfile; it simply removes it from the index.  The Multifile will not be
         reduced in size after this operation, until the next call to repack().
-        """
-        ...
-    @overload
-    def remove_subfile(self, subfile_name: str) -> bool:
-        """Removes the named subfile from the Multifile, if it exists; returns true if
+        
+        `(self, subfile_name: str)`:
+        Removes the named subfile from the Multifile, if it exists; returns true if
         successfully removed, or false if it did not exist in the first place.  The
         file will not actually be removed from the disk until the next call to
         flush().
@@ -1948,6 +1953,8 @@ class Multifile(ReferenceCount):
         reduced in size after this operation, until the next call to repack().
         """
         ...
+    @overload
+    def remove_subfile(self, subfile_name: str) -> bool: ...
     def get_subfile_name(self, index: int) -> str:
         """Returns the name of the nth subfile."""
         ...
@@ -2212,16 +2219,7 @@ class OpenSSLWrapper:
         """
         ...
     @overload
-    def load_certificates_from_pem_ram(self, data: str, data_size: int) -> int:
-        """Reads a chain of trusted certificates from the indicated data buffer and
-        adds them to the X509_STORE object.  The data buffer should be PEM-
-        formatted.  Returns the number of certificates read on success, or 0 on
-        failure.
-        
-        You should call this only with trusted, locally-stored certificates; not
-        with certificates received from an untrusted source.
-        """
-        ...
+    def load_certificates_from_pem_ram(self, data: str, data_size: int) -> int: ...
     @overload
     def load_certificates_from_der_ram(self, data: str) -> int:
         """Reads a chain of trusted certificates from the indicated data buffer and
@@ -2234,16 +2232,7 @@ class OpenSSLWrapper:
         """
         ...
     @overload
-    def load_certificates_from_der_ram(self, data: str, data_size: int) -> int:
-        """Reads a chain of trusted certificates from the indicated data buffer and
-        adds them to the X509_STORE object.  The data buffer should be DER-
-        formatted.  Returns the number of certificates read on success, or 0 on
-        failure.
-        
-        You should call this only with trusted, locally-stored certificates; not
-        with certificates received from an untrusted source.
-        """
-        ...
+    def load_certificates_from_der_ram(self, data: str, data_size: int) -> int: ...
     def notify_ssl_errors(self) -> None:
         """A convenience function that is itself a wrapper around the OpenSSL
         convenience function to output the recent OpenSSL errors.  This function
@@ -2440,17 +2429,18 @@ class VirtualFile(TypedReferenceCount):
         ...
     @overload
     def get_file_size(self) -> int:
-        """Returns the current size on disk (or wherever it is) of the file before it
+        """`(self)`:
+        Returns the current size on disk (or wherever it is) of the file before it
         has been opened.
-        """
-        ...
-    @overload
-    def get_file_size(self, stream: istream) -> int:
-        """Returns the current size on disk (or wherever it is) of the already-open
+        
+        `(self, stream: istream)`:
+        Returns the current size on disk (or wherever it is) of the already-open
         file.  Pass in the stream that was returned by open_read_file(); some
         implementations may require this stream to determine the size.
         """
         ...
+    @overload
+    def get_file_size(self, stream: istream) -> int: ...
     def get_timestamp(self) -> int:
         """Returns a time_t value that represents the time the file was last modified,
         to within whatever precision the operating system records this information
@@ -2694,7 +2684,8 @@ class VirtualFileSystem:
     def __init__(self) -> None: ...
     @overload
     def mount(self, multifile: Multifile, mount_point: _Filename, flags: int) -> bool:
-        """Mounts the indicated system file or directory at the given mount point.  If
+        """`(self, physical_filename: Filename, mount_point: Filename, flags: int, password: str = ...)`:
+        Mounts the indicated system file or directory at the given mount point.  If
         the named file is a directory, mounts the directory.  If the named file is
         a Multifile, mounts it as a Multifile.  Returns true on success, false on
         failure.
@@ -2712,19 +2703,20 @@ class VirtualFileSystem:
         Note that a mounted VirtualFileSystem directory is fully case-sensitive,
         unlike the native Windows file system, so you must refer to files within
         the virtual file system with exactly the right case.
-        """
-        ...
-    @overload
-    def mount(self, mount: VirtualFileMount, mount_point: _Filename, flags: int) -> bool:
-        """Mounts the indicated Multifile at the given mount point."""
-        ...
-    @overload
-    def mount(self, physical_filename: _Filename, mount_point: _Filename, flags: int, password: str = ...) -> bool:
-        """Adds the given VirtualFileMount object to the mount list.  This is a lower-
+        
+        `(self, multifile: Multifile, mount_point: Filename, flags: int)`:
+        Mounts the indicated Multifile at the given mount point.
+        
+        `(self, mount: VirtualFileMount, mount_point: Filename, flags: int)`:
+        Adds the given VirtualFileMount object to the mount list.  This is a lower-
         level function than the other flavors of mount(); it requires you to create
         a VirtualFileMount object specifically.
         """
         ...
+    @overload
+    def mount(self, mount: VirtualFileMount, mount_point: _Filename, flags: int) -> bool: ...
+    @overload
+    def mount(self, physical_filename: _Filename, mount_point: _Filename, flags: int, password: str = ...) -> bool: ...
     def mount_loop(self, virtual_filename: _Filename, mount_point: _Filename, flags: int, password: str = ...) -> bool:
         """This is similar to mount(), but it receives the name of a Multifile that
         already appears within the virtual file system.  It can be used to mount a
@@ -2740,22 +2732,23 @@ class VirtualFileSystem:
         ...
     @overload
     def unmount(self, physical_filename: _Filename) -> int:
-        """Unmounts all appearances of the indicated directory name or multifile name
+        """`(self, physical_filename: Filename)`:
+        Unmounts all appearances of the indicated directory name or multifile name
         from the file system.  Returns the number of appearances unmounted.
-        """
-        ...
-    @overload
-    def unmount(self, multifile: Multifile) -> int:
-        """Unmounts all appearances of the indicated Multifile from the file system.
+        
+        `(self, multifile: Multifile)`:
+        Unmounts all appearances of the indicated Multifile from the file system.
+        Returns the number of appearances unmounted.
+        
+        `(self, mount: VirtualFileMount)`:
+        Unmounts the indicated VirtualFileMount object from the file system.
         Returns the number of appearances unmounted.
         """
         ...
     @overload
-    def unmount(self, mount: VirtualFileMount) -> int:
-        """Unmounts the indicated VirtualFileMount object from the file system.
-        Returns the number of appearances unmounted.
-        """
-        ...
+    def unmount(self, multifile: Multifile) -> int: ...
+    @overload
+    def unmount(self, mount: VirtualFileMount) -> int: ...
     def unmount_point(self, mount_point: _Filename) -> int:
         """Unmounts all systems attached to the given mount point from the file
         system.  Returns the number of appearances unmounted.
@@ -3118,12 +3111,15 @@ class Patchfile:
     def result_hash(self) -> HashVal: ...
     @overload
     def __init__(self) -> None:
-        """Create a patch file and initializes internal data"""
+        """`(self)`:
+        Create a patch file and initializes internal data
+        
+        `(self, buffer: Buffer)`:
+        Create patch file with buffer to patch
+        """
         ...
     @overload
-    def __init__(self, buffer: Buffer) -> None:
-        """Create patch file with buffer to patch"""
-        ...
+    def __init__(self, buffer: Buffer) -> None: ...
     def build(self, file_orig: _Filename, file_new: _Filename, patch_name: _Filename) -> bool:
         """This implementation uses the "greedy differencing algorithm" described in
         the masters thesis "Differential Compression: A Generalized Solution for
@@ -3140,16 +3136,17 @@ class Patchfile:
         ...
     @overload
     def initiate(self, patch_file: _Filename, file: _Filename) -> int:
-        """Set up to apply the patch to the file (original file and patch are
+        """`(self, patch_file: Filename, file: Filename)`:
+        Set up to apply the patch to the file (original file and patch are
         destroyed in the process).
-        """
-        ...
-    @overload
-    def initiate(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> int:
-        """Set up to apply the patch to the file.  In this form, neither the original
+        
+        `(self, patch_file: Filename, orig_file: Filename, target_file: Filename)`:
+        Set up to apply the patch to the file.  In this form, neither the original
         file nor the patch file are destroyed.
         """
         ...
+    @overload
+    def initiate(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> int: ...
     def run(self) -> int:
         """Perform one buffer's worth of patching.
         Returns one of the following values:
@@ -3163,20 +3160,21 @@ class Patchfile:
         ...
     @overload
     def apply(self, patch_file: _Filename, file: _Filename) -> bool:
-        """Patches the entire file in one call returns true on success and false on
+        """`(self, patch_file: Filename, file: Filename)`:
+        Patches the entire file in one call returns true on success and false on
         error
         
         This version will delete the patch file and overwrite the original file.
-        """
-        ...
-    @overload
-    def apply(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> bool:
-        """Patches the entire file in one call returns true on success and false on
+        
+        `(self, patch_file: Filename, orig_file: Filename, target_file: Filename)`:
+        Patches the entire file in one call returns true on success and false on
         error
         
         This version will not delete any files.
         """
         ...
+    @overload
+    def apply(self, patch_file: _Filename, orig_file: _Filename, target_file: _Filename) -> bool: ...
     def get_progress(self) -> float:
         """Returns a value in the range 0..1, representing the amount of progress
         through the patchfile, during a session.

@@ -176,7 +176,7 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
     first_wrapper = idb.interrogate_function_python_wrapper(f, 0)
     not_static = idb.interrogate_wrapper_parameter_is_this(first_wrapper, 0)
     signatures: list[Signature] = []
-    docs: list[str] = []
+    sigs_by_doc = defaultdict[str, list[str]](list)
     for w in get_python_wrappers(f):
         if not wrapper_is_exposed(w):
             continue
@@ -188,12 +188,19 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
             signature.parameters = [Parameter.as_self(), *signature.parameters]
         signatures.append(signature)
         if idb.interrogate_wrapper_has_comment(w):
-            doc = comment_to_docstring(idb.interrogate_wrapper_comment(w))
-        else:
-            doc = ''
-        docs.append(doc)
+            sig_doc = comment_to_docstring(idb.interrogate_wrapper_comment(w))
+            if sig_doc:
+                param_string = f"`({', '.join(str(p) for p in signature.parameters)})`"
+                sigs_by_doc[sig_doc].append(param_string)
+    if len(sigs_by_doc) <= 1:
+        doc = ''.join(sigs_by_doc)
+    else:
+        doc = '\n\n'.join(
+            f"{'; '.join(p)}:\n{d}"
+            for d, p in sigs_by_doc.items()
+        )
     return Function(name, signatures, is_method=is_method,
-                    namespace=namespace, docs=docs)
+                    namespace=namespace, doc=doc)
 
 
 def make_type_reps(
@@ -237,10 +244,10 @@ def make_make_seq_rep(ms: MakeSeqIndex, /) -> Function:
     return_type = get_type_name(return_type_index)
     signature = Signature([Parameter.as_self()], f'tuple[{return_type}, ...]')
     if idb.interrogate_make_seq_has_comment(ms):
-        docs = [comment_to_docstring(idb.interrogate_make_seq_comment(ms))]
+        doc = comment_to_docstring(idb.interrogate_make_seq_comment(ms))
     else:
-        docs = ()
-    return Function(name, [signature], is_method=True, namespace=namespace, docs=docs)
+        doc = ''
+    return Function(name, [signature], is_method=True, namespace=namespace, doc=doc)
 
 
 def make_enum_alias_rep(t: TypeIndex, /) -> Alias:

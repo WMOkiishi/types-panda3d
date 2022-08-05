@@ -359,7 +359,8 @@ class ConditionVarDirect:
         ...
     @overload
     def wait(self) -> None:
-        """Waits on the condition.  The caller must already be holding the lock
+        """`(self)`:
+        Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
         
         wait() will release the lock, then go to sleep until some other thread
@@ -374,11 +375,9 @@ class ConditionVarDirect:
         Note the semantics of a condition variable: the mutex must be held before
         wait() is called, and it will still be held when wait() returns.  However,
         it will be temporarily released during the wait() call itself.
-        """
-        ...
-    @overload
-    def wait(self, timeout: float) -> None:
-        """Waits on the condition, with a timeout.  The function will return when the
+        
+        `(self, timeout: float)`:
+        Waits on the condition, with a timeout.  The function will return when the
         condition variable is notified, or the timeout occurs.  There is no way to
         directly tell which happened, and it is possible that neither in fact
         happened (spurious wakeups are possible).
@@ -386,6 +385,8 @@ class ConditionVarDirect:
         See wait() with no parameters for more.
         """
         ...
+    @overload
+    def wait(self, timeout: float) -> None: ...
     def notify(self) -> None:
         """Informs one of the other threads who are currently blocked on wait() that
         the relevant condition has changed.  If multiple threads are currently
@@ -435,7 +436,8 @@ class ConditionVarFullDirect:
         ...
     @overload
     def wait(self) -> None:
-        """Waits on the condition.  The caller must already be holding the lock
+        """`(self)`:
+        Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
         
         wait() will release the lock, then go to sleep until some other thread
@@ -450,11 +452,9 @@ class ConditionVarFullDirect:
         Note the semantics of a condition variable: the mutex must be held before
         wait() is called, and it will still be held when wait() returns.  However,
         it will be temporarily released during the wait() call itself.
-        """
-        ...
-    @overload
-    def wait(self, timeout: float) -> None:
-        """Waits on the condition, with a timeout.  The function will return when the
+        
+        `(self, timeout: float)`:
+        Waits on the condition, with a timeout.  The function will return when the
         condition variable is notified, or the timeout occurs.  There is no way to
         directly tell which happened, and it is possible that neither in fact
         happened (spurious wakeups are possible).
@@ -462,6 +462,8 @@ class ConditionVarFullDirect:
         See wait() with no parameters for more.
         """
         ...
+    @overload
+    def wait(self, timeout: float) -> None: ...
     def notify(self) -> None:
         """Informs one of the other threads who are currently blocked on wait() that
         the relevant condition has changed.  If multiple threads are currently
@@ -515,7 +517,8 @@ class ReMutexDirect:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def acquire(self) -> None:
-        """Grabs the reMutex if it is available.  If it is not available, blocks until
+        """`(self)`:
+        Grabs the reMutex if it is available.  If it is not available, blocks until
         it becomes available, then grabs it.  In either case, the function does not
         return until the reMutex is held; you should then call unlock().
         
@@ -523,14 +526,14 @@ class ReMutexDirect:
         reMutexes, mainly to allow thread-safe access to otherwise const data.
         
         Also see ReMutexHolder.
-        """
-        ...
-    @overload
-    def acquire(self, current_thread: Thread) -> None:
-        """This variant on acquire() accepts the current thread as a parameter, if it
+        
+        `(self, current_thread: Thread)`:
+        This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
         """
         ...
+    @overload
+    def acquire(self, current_thread: Thread) -> None: ...
     @overload
     def try_acquire(self) -> bool:
         """Returns immediately, with a true value indicating the mutex has been
@@ -538,11 +541,7 @@ class ReMutexDirect:
         """
         ...
     @overload
-    def try_acquire(self, current_thread: Thread) -> bool:
-        """Returns immediately, with a true value indicating the mutex has been
-        acquired, and false indicating it has not.
-        """
-        ...
+    def try_acquire(self, current_thread: Thread) -> bool: ...
     def elevate_lock(self) -> None:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one
@@ -681,7 +680,8 @@ class LightReMutexDirect:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def acquire(self) -> None:
-        """Grabs the lightReMutex if it is available.  If it is not available, blocks
+        """`(self)`:
+        Grabs the lightReMutex if it is available.  If it is not available, blocks
         until it becomes available, then grabs it.  In either case, the function
         does not return until the lightReMutex is held; you should then call
         unlock().
@@ -690,14 +690,14 @@ class LightReMutexDirect:
         lightReMutexes, mainly to allow thread-safe access to otherwise const data.
         
         Also see LightReMutexHolder.
-        """
-        ...
-    @overload
-    def acquire(self, current_thread: Thread) -> None:
-        """This variant on acquire() accepts the current thread as a parameter, if it
+        
+        `(self, current_thread: Thread)`:
+        This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
         """
         ...
+    @overload
+    def acquire(self, current_thread: Thread) -> None: ...
     def elevate_lock(self) -> None:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one

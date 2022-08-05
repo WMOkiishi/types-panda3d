@@ -300,19 +300,20 @@ class ButtonThrower(DataNode):
         ...
     @overload
     def has_throw_button(self, button: ButtonHandle) -> bool:
-        """Returns true if the indicated button, in conjunction with any nonspecified
+        """`(self, button: ButtonHandle)`:
+        Returns true if the indicated button, in conjunction with any nonspecified
         modifier buttons, is on the set of buttons that will be processed by the
         ButtonThrower.  That is to say, returns true if this button was ever passed
         as the second parameter add_throw_button(), regardless of what the first
         parameter was.
-        """
-        ...
-    @overload
-    def has_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool:
-        """Returns true if the indicated button is on the set of buttons that will be
+        
+        `(self, mods: ModifierButtons, button: ButtonHandle)`:
+        Returns true if the indicated button is on the set of buttons that will be
         processed by the ButtonThrower, false otherwise.  See add_throw_button().
         """
         ...
+    @overload
+    def has_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool: ...
     def clear_throw_buttons(self) -> None:
         """Empties the set of buttons that were added via add_throw_button().  See
         add_throw_button().
@@ -956,7 +957,8 @@ class MouseWatcher(DataNode, MouseWatcherBase):
         ...
     @overload
     def set_frame(self, frame: _Vec4f) -> None:
-        """Sets the frame of the MouseWatcher.  This determines the coordinate space
+        """`(self, frame: LVecBase4f)`:
+        Sets the frame of the MouseWatcher.  This determines the coordinate space
         in which the MouseWatcherRegions should be expected to live.  Normally,
         this is left at -1, 1, -1, 1, which is the default setting, and matches the
         mouse coordinate range.
@@ -965,14 +967,14 @@ class MouseWatcher(DataNode, MouseWatcherBase):
         the MouseWatcherRegions will be given in coordinate space matching it.  For
         instance, if you specify (0, 1, 0, 1), then a MouseWatcherRegion with the
         frame (0, 1, 0, .5) will cover the lower half of the screen.
-        """
-        ...
-    @overload
-    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None:
-        """Sets the frame of the MouseWatcher.  See the next flavor of this method for
+        
+        `(self, left: float, right: float, bottom: float, top: float)`:
+        Sets the frame of the MouseWatcher.  See the next flavor of this method for
         a more verbose explanation.
         """
         ...
+    @overload
+    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
     def get_frame(self) -> LVecBase4f:
         """Returns the frame of the MouseWatcher.  See set_frame()."""
         ...
@@ -981,32 +983,29 @@ class MouseWatcher(DataNode, MouseWatcherBase):
         """Returns true if the mouse is over any rectangular region, false otherwise."""
         ...
     @overload
-    def is_over_region(self, pos: LVecBase2f) -> bool:
-        """Returns true if the mouse is over any rectangular region, false otherwise."""
-        ...
+    def is_over_region(self, pos: LVecBase2f) -> bool: ...
     @overload
-    def is_over_region(self, x: float, y: float) -> bool:
-        """Returns true if the mouse is over any rectangular region, false otherwise."""
-        ...
+    def is_over_region(self, x: float, y: float) -> bool: ...
     @overload
     def get_over_region(self) -> MouseWatcherRegion:
-        """Returns the smallest region the mouse is currently over, or NULL if it is
+        """`(self)`:
+        Returns the smallest region the mouse is currently over, or NULL if it is
         over no region.
-        """
-        ...
-    @overload
-    def get_over_region(self, pos: LVecBase2f) -> MouseWatcherRegion:
-        """Returns the preferred region the mouse is over.  In the case of overlapping
+        
+        `(self, pos: LPoint2f)`:
+        Returns the preferred region the mouse is over.  In the case of overlapping
         regions, the region with the largest sort order is preferred; if two
         regions have the same sort order, then the smaller region is preferred.
-        """
-        ...
-    @overload
-    def get_over_region(self, x: float, y: float) -> MouseWatcherRegion:
-        """Returns the smallest region the indicated point is over, or NULL if it is
+        
+        `(self, x: float, y: float)`:
+        Returns the smallest region the indicated point is over, or NULL if it is
         over no region.
         """
         ...
+    @overload
+    def get_over_region(self, pos: LVecBase2f) -> MouseWatcherRegion: ...
+    @overload
+    def get_over_region(self, x: float, y: float) -> MouseWatcherRegion: ...
     def is_button_down(self, button: ButtonHandle) -> bool:
         """Returns true if the indicated button is currently being held down, false
         otherwise.
@@ -1413,11 +1412,7 @@ class MouseWatcherParameter:
         """
         ...
     @overload
-    def get_candidate_string_encoded(self, encoding: _TextEncoder_Encoding) -> str:
-        """Returns the candidate string associated with this event.  If
-        has_candidate(), above, returns false, this returns the empty string.
-        """
-        ...
+    def get_candidate_string_encoded(self, encoding: _TextEncoder_Encoding) -> str: ...
     def get_highlight_start(self) -> int:
         """Returns the first highlighted character in the candidate string."""
         ...

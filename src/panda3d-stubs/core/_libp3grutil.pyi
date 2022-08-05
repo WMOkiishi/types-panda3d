@@ -65,42 +65,25 @@ class CardMaker(Namable):
         ...
     @overload
     def set_uv_range(self, tex: Texture) -> None:
-        """Sets the range of UV's that will be applied to the vertices.  If
+        """`(self, ll: LPoint2f, ur: LPoint2f)`; `(self, ll: LPoint2f, lr: LPoint2f, ur: LPoint2f, ul: LPoint2f)`; `(self, ll: LPoint3f, lr: LPoint3f, ur: LPoint3f, ul: LPoint3f)`; `(self, x: LVector4f, y: LVector4f, z: LVector4f)`:
+        Sets the range of UV's that will be applied to the vertices.  If
         set_has_uvs() is true (as it is by default), the vertices will be generated
         with the indicated range of UV's, which will be useful if a texture is
         applied.
-        """
-        ...
-    @overload
-    def set_uv_range(self, ll: LVecBase2f, ur: LVecBase2f) -> None:
-        """Sets the range of UV's that will be applied to the vertices.  If
-        set_has_uvs() is true (as it is by default), the vertices will be generated
-        with the indicated range of UV's, which will be useful if a texture is
-        applied.
-        """
-        ...
-    @overload
-    def set_uv_range(self, x: _Vec4f, y: _Vec4f, z: _Vec4f) -> None:
-        """Sets the range of UV's that will be applied to the vertices.  If
-        set_has_uvs() is true (as it is by default), the vertices will be generated
-        with the indicated range of UV's, which will be useful if a texture is
-        applied.
-        """
-        ...
-    @overload
-    def set_uv_range(self, ll: LVecBase2f, lr: LVecBase2f, ur: LVecBase2f, ul: LVecBase2f) -> None:
-        """Sets the range of UV's that will be applied to the vertices.  If
-        set_has_uvs() is true (as it is by default), the vertices will be generated
-        with the indicated range of UV's, which will be useful if a texture is
-        applied.
-        """
-        ...
-    @overload
-    def set_uv_range(self, ll: _Vec3f, lr: _Vec3f, ur: _Vec3f, ul: _Vec3f) -> None:
-        """Sets the range of UV's that will be applied to the vertices appropriately
+        
+        `(self, tex: Texture)`:
+        Sets the range of UV's that will be applied to the vertices appropriately
         to show the non-pad region of the texture.
         """
         ...
+    @overload
+    def set_uv_range(self, ll: LVecBase2f, ur: LVecBase2f) -> None: ...
+    @overload
+    def set_uv_range(self, x: _Vec4f, y: _Vec4f, z: _Vec4f) -> None: ...
+    @overload
+    def set_uv_range(self, ll: LVecBase2f, lr: LVecBase2f, ur: LVecBase2f, ul: LVecBase2f) -> None: ...
+    @overload
+    def set_uv_range(self, ll: _Vec3f, lr: _Vec3f, ur: _Vec3f, ul: _Vec3f) -> None: ...
     def set_uv_range_cube(self, face: int) -> None:
         """Sets the range of UV's that will be applied to the vertices appropriately
         for a cube-map face.
@@ -122,24 +105,20 @@ class CardMaker(Namable):
         """Sets the size of the card."""
         ...
     @overload
-    def set_frame(self, ll: _Vec3f, lr: _Vec3f, ur: _Vec3f, ul: _Vec3f) -> None:
-        """Sets the size of the card."""
-        ...
+    def set_frame(self, ll: _Vec3f, lr: _Vec3f, ur: _Vec3f, ul: _Vec3f) -> None: ...
     @overload
-    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None:
-        """Sets the size of the card."""
-        ...
+    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
     def set_frame_fullscreen_quad(self) -> None:
         """Sets the card to (-1,1,-1,1), which is appropriate if you plan to parent it
         to render2d and use it as a fullscreen quad.
         """
         ...
     @overload
-    def set_color(self, color: _Vec4f) -> None: ...
-    @overload
-    def set_color(self, r: float, g: float, b: float, a: float) -> None:
+    def set_color(self, color: _Vec4f) -> None:
         """Sets the color of the card."""
         ...
+    @overload
+    def set_color(self, r: float, g: float, b: float, a: float) -> None: ...
     def set_has_normals(self, flag: bool) -> None:
         """Sets the flag indicating whether vertices will be generated with normals or
         not.  Normals are required if you intend to enable lighting on the card,
@@ -342,12 +321,7 @@ class GeoMipTerrain(TypedObject):
         """
         ...
     @overload
-    def set_heightfield(self, filename: _Filename, type: PNMFileType = ...) -> bool:
-        """Loads the specified heightmap image file into the heightfield.  Returns
-        true if succeeded, or false if an error has occured.  If the heightmap is
-        not a power of two plus one, it is scaled up using a gaussian filter.
-        """
-        ...
+    def set_heightfield(self, filename: _Filename, type: PNMFileType = ...) -> bool: ...
     def color_map(self) -> PNMImage:
         """Returns a reference to the color map (a PNMImage) contained inside
         GeoMipTerrain.  You can use the reference to alter the color map.
@@ -389,7 +363,8 @@ class GeoMipTerrain(TypedObject):
         ...
     @overload
     def get_normal(self, x: int, y: int) -> LVector3f:
-        """Fetches the terrain normal at (x, y), where the input coordinate is
+        """`(self, x: int, y: int)`:
+        Fetches the terrain normal at (x, y), where the input coordinate is
         specified in pixels.  This ignores the current LOD level and instead
         provides an accurate number.  Terrain scale is NOT taken into account!  To
         get accurate normals, please divide it by the terrain scale and normalize
@@ -398,17 +373,17 @@ class GeoMipTerrain(TypedObject):
         LVector3 normal (terr.get_normal(x, y)); normal.set(normal.get_x() /
         root.get_sx(), normal.get_y() / root.get_sy(), normal.get_z() /
         root.get_sz()); normal.normalize();
-        """
-        ...
-    @overload
-    def get_normal(self, mx: int, my: int, x: int, y: int) -> LVector3f:
-        """Fetches the terrain normal at (x,y), where the input coordinate is
+        
+        `(self, mx: int, my: int, x: int, y: int)`:
+        Fetches the terrain normal at (x,y), where the input coordinate is
         specified in pixels.  This ignores the current LOD level and instead
         provides an accurate number.  Terrain scale is NOT taken into account!  To
         get accurate normals, please divide it by the terrain scale and normalize
         it again!
         """
         ...
+    @overload
+    def get_normal(self, mx: int, my: int, x: int, y: int) -> LVector3f: ...
     def set_bruteforce(self, bf: bool) -> None:
         """Sets a boolean specifying whether the terrain will be rendered bruteforce.
         If the terrain is rendered bruteforce, there will be no Level of Detail,
@@ -428,10 +403,18 @@ class GeoMipTerrain(TypedObject):
         ...
     @overload
     def set_focal_point(self, fp: LVecBase2d | LVecBase2f | _Vec3d | _Vec3f) -> None:
-        """The focal point is the point at which the terrain will have the highest
+        """`(self, fp: LPoint2d)`:
+        The focal point is the point at which the terrain will have the highest
         quality (lowest level of detail). Parts farther away from the focal point
         will have a lower quality (higher level of detail). The focal point is
         not taken in respect if bruteforce is set true.
+        
+        `(self, x: float, y: float)`:
+        Sets the focal point.  GeoMipTerrain generates high-resolution terrain
+        around the focal point, and progressively lower and lower resolution
+        terrain as you get farther away.  If a point is supplied and not a
+        NodePath, make sure it's relative to the terrain.  Only the x and y
+        coordinates of the focal point are taken in respect.
         """
         ...
     @overload
@@ -685,9 +668,7 @@ class LineSegs(Namable):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, name: str = ...) -> None: ...
-    @overload
-    def __init__(self, __param0: LineSegs) -> None:
+    def __init__(self, name: str = ...) -> None:
         """Constructs a LineSegs object, which can be used to create any number of
         disconnected lines or points of various thicknesses and colors through the
         visible scene.  After creating the object, call move_to() and draw_to()
@@ -695,6 +676,8 @@ class LineSegs(Namable):
         which will render the described path.
         """
         ...
+    @overload
+    def __init__(self, __param0: LineSegs) -> None: ...
     def reset(self) -> None:
         """Removes any lines in progress and resets to the initial empty state."""
         ...
@@ -705,11 +688,7 @@ class LineSegs(Namable):
         """
         ...
     @overload
-    def set_color(self, r: float, g: float, b: float, a: float = ...) -> None:
-        """Establishes the color that will be assigned to all vertices created by
-        future calls to move_to() and draw_to().
-        """
-        ...
+    def set_color(self, r: float, g: float, b: float, a: float = ...) -> None: ...
     def set_thickness(self, thick: float) -> None:
         """Establishes the line thickness or point size in pixels that will be
         assigned to all lines and points created by future calls to create().
@@ -723,12 +702,7 @@ class LineSegs(Namable):
         """
         ...
     @overload
-    def move_to(self, x: float, y: float, z: float) -> None:
-        """Moves the pen to the given point without drawing a line.  When followed by
-        draw_to(), this marks the first point of a line segment; when followed by
-        move_to() or create(), this creates a single point.
-        """
-        ...
+    def move_to(self, x: float, y: float, z: float) -> None: ...
     @overload
     def draw_to(self, v: _Vec3f) -> None:
         """Draws a line segment from the pen's last position (the last call to move_to
@@ -737,12 +711,7 @@ class LineSegs(Namable):
         """
         ...
     @overload
-    def draw_to(self, x: float, y: float, z: float) -> None:
-        """Draws a line segment from the pen's last position (the last call to move_to
-        or draw_to) to the indicated point.  move_to() and draw_to() only update
-        tables; the actual drawing is performed when create() is called.
-        """
-        ...
+    def draw_to(self, x: float, y: float, z: float) -> None: ...
     def get_current_position(self) -> LPoint3f:
         """Returns the pen's current position.  The next call to draw_to() will draw a
         line segment from this point.
@@ -755,18 +724,17 @@ class LineSegs(Namable):
         ...
     @overload
     def create(self, dynamic: bool = ...) -> GeomNode:
-        """Appends to an existing GeomNode a new Geom that will render the series of
+        """`(self, previous: GeomNode, dynamic: bool = ...)`:
+        Appends to an existing GeomNode a new Geom that will render the series of
         line segments and points described via calls to move_to() and draw_to().
         The lines and points are created with the color and thickness established
         by calls to set_color() and set_thickness().
         
         If dynamic is true, the line segments will be created with the dynamic Geom
         setting, optimizing them for runtime vertex animation.
-        """
-        ...
-    @overload
-    def create(self, previous: GeomNode, dynamic: bool = ...) -> GeomNode:
-        """Creates a new GeomNode that will render the series of line segments and
+        
+        `(self, dynamic: bool = ...)`:
+        Creates a new GeomNode that will render the series of line segments and
         points described via calls to move_to() and draw_to().  The lines and
         points are created with the color and thickness established by calls to
         set_color() and set_thickness().
@@ -775,6 +743,8 @@ class LineSegs(Namable):
         setting, optimizing them for runtime vertex animation.
         """
         ...
+    @overload
+    def create(self, previous: GeomNode, dynamic: bool = ...) -> GeomNode: ...
     def get_num_vertices(self) -> int:
         """Returns the total number of line segment and point vertices generated by
         the last call to create().  The positions of these vertices may be read and
@@ -796,12 +766,7 @@ class LineSegs(Namable):
         """
         ...
     @overload
-    def set_vertex(self, vertex: int, x: float, y: float, z: float) -> None:
-        """Moves the nth point or vertex of the line segment sequence generated by the
-        last call to create().  The first move_to() generates vertex 0; subsequent
-        move_to() and draw_to() calls generate consecutively higher vertex numbers.
-        """
-        ...
+    def set_vertex(self, vertex: int, x: float, y: float, z: float) -> None: ...
     def get_vertex_color(self, vertex: int) -> LVecBase4f:
         """Returns the color of the nth point or vertex."""
         ...
@@ -810,9 +775,7 @@ class LineSegs(Namable):
         """Changes the vertex color of the nth point or vertex.  See set_vertex()."""
         ...
     @overload
-    def set_vertex_color(self, vertex: int, r: float, g: float, b: float, a: float = ...) -> None:
-        """Changes the vertex color of the nth point or vertex.  See set_vertex()."""
-        ...
+    def set_vertex_color(self, vertex: int, r: float, g: float, b: float, a: float = ...) -> None: ...
     def get_vertices(self) -> tuple[LPoint3f, ...]: ...
     def get_vertex_colors(self) -> tuple[LVecBase4f, ...]: ...
     setColor = set_color
@@ -1019,14 +982,16 @@ class MovieTexture(Texture):
     def playing(self) -> bool: ...
     @overload
     def __init__(self, video: MovieVideo) -> None:
-        """Creates a texture playing the specified movie."""
-        ...
-    @overload
-    def __init__(self, name: str) -> None:
-        """Creates a blank movie texture.  Movies must be added using do_read_one or
+        """`(self, video: MovieVideo)`:
+        Creates a texture playing the specified movie.
+        
+        `(self, name: str)`:
+        Creates a blank movie texture.  Movies must be added using do_read_one or
         do_load_one.
         """
         ...
+    @overload
+    def __init__(self, name: str) -> None: ...
     def get_video_length(self) -> float:
         """Returns the length of the video."""
         ...
@@ -1148,7 +1113,8 @@ class MultitexReducer:
     def clear(self) -> None: ...
     @overload
     def scan(self, node: NodePath) -> None:
-        """Starts scanning the hierarchy beginning at the indicated node.  Any
+        """`(self, node: NodePath)`:
+        Starts scanning the hierarchy beginning at the indicated node.  Any
         GeomNodes discovered in the hierarchy with multitexture will be added to
         internal structures in the MultitexReducer so that a future call to
         flatten() will operate on all of these at once.
@@ -1156,11 +1122,9 @@ class MultitexReducer:
         This version of this method does not accumulate state from the parents of
         the indicated node; thus, only multitexture effects that have been applied
         at node and below will be considered.
-        """
-        ...
-    @overload
-    def scan(self, node: NodePath, state_from: NodePath) -> None:
-        """Starts scanning the hierarchy beginning at the indicated node.  Any
+        
+        `(self, node: NodePath, state_from: NodePath)`:
+        Starts scanning the hierarchy beginning at the indicated node.  Any
         GeomNodes discovered in the hierarchy with multitexture will be added to
         internal structures in the MultitexReducer so that a future call to
         flatten() will operate on all of these at once.
@@ -1175,6 +1139,8 @@ class MultitexReducer:
         flattening by the MultitexReducer.
         """
         ...
+    @overload
+    def scan(self, node: NodePath, state_from: NodePath) -> None: ...
     @overload
     def scan(self, node: PandaNode, state: RenderState, transform: TransformState) -> None: ...
     def set_target(self, stage: TextureStage) -> None: ...
@@ -1342,19 +1308,21 @@ class ShaderTerrainMesh(PandaNode):
         ...
     @overload
     def uv_to_world(self, coord: LVecBase2f) -> LPoint3f:
-        """@brief Transforms a texture coordinate to world space
+        """`(self, coord: LPoint2f)`:
+        @brief Transforms a texture coordinate to world space
         @details This transforms a texture coordinatefrom uv-space (0 to 1) to world
           space. This takes the terrains transform into account, and also samples the
           heightmap. This method should be called after generate().
         
         @param coord Coordinate in uv-space from 0, 0 to 1, 1
         @return World-Space point
+        
+        `(self, u: float, v: float)`:
+        @see ShaderTerrainMesh::uv_to_world(LTexCoord)
         """
         ...
     @overload
-    def uv_to_world(self, u: float, v: float) -> LPoint3f:
-        """@see ShaderTerrainMesh::uv_to_world(LTexCoord)"""
-        ...
+    def uv_to_world(self, u: float, v: float) -> LPoint3f: ...
     def generate(self) -> bool:
         """@brief Generates the terrain mesh
         @details This generates the terrain mesh, initializing all chunks of the
@@ -1738,7 +1706,8 @@ class PfmVizzer:
         """
         ...
     def make_displacement(self, result: PNMImage | PfmFile, max_u: float, max_v: float, for_32bit: bool) -> None:
-        """Assuming the underlying PfmFile is a 2-d distortion mesh, with the U and V
+        """`(self, result: PNMImage, max_u: float, max_v: float, for_32bit: bool)`:
+        Assuming the underlying PfmFile is a 2-d distortion mesh, with the U and V
         in the first two components and the third component unused, this computes
         an AfterEffects-style displacement map that represents the same distortion.
         The indicated PNMImage will be filled in with a displacement map image,
@@ -1754,6 +1723,24 @@ class PfmVizzer:
         footage section for each displacement image.  Set for_32bit true if this is
         meant to be used in a 32-bit project file, and false if it is meant to be
         used in a 16-bit project file.
+        
+        `(self, result: PfmFile, max_u: float, max_v: float, for_32bit: bool)`:
+        Assuming the underlying PfmFile is a 2-d distortion mesh, with the U and V
+        in the first two components and the third component unused, this computes
+        an AfterEffects-style displacement map that represents the same distortion.
+        The indicated PNMImage will be filled in with a displacement map image,
+        with horizontal shift in the red channel and vertical shift in the green
+        channel, where a fully bright (or fully black) pixel indicates a shift of
+        max_u or max_v pixels.
+        
+        Use calc_max_u_displacement() and calc_max_v_displacement() to compute
+        suitable values for max_u and max_v.
+        
+        This generates a 32-bit floating-point displacement image.  It is essential
+        to check "Preserve RGB" in the interpret footage section for each
+        displacement image.  Set for_32bit true if this is meant to be used in a
+        32-bit project file, and false if it is meant to be used in a 16-bit
+        project file.
         """
         ...
     getPfm = get_pfm

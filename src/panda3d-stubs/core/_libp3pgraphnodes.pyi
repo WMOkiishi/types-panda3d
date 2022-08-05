@@ -157,12 +157,7 @@ class ComputeNode(PandaNode):
         """
         ...
     @overload
-    def add_dispatch(self, num_groups_x: int, num_groups_y: int, num_groups_z: int) -> None:
-        """Adds a dispatch command with the given number of work groups in the X, Y,
-        and Z dimensions.  Any of these values may be set to 1 if the respective
-        dimension should not be used.
-        """
-        ...
+    def add_dispatch(self, num_groups_x: int, num_groups_y: int, num_groups_z: int) -> None: ...
     def get_num_dispatches(self) -> int:
         """Returns the number of times add_dispatch has been called on this object."""
         ...
@@ -219,20 +214,21 @@ class LightLensNode(Light, Camera):
         ...
     @overload
     def set_shadow_caster(self, caster: bool) -> None:
-        """Sets the flag indicating whether this light should cast shadows or not.
+        """`(self, caster: bool)`:
+        Sets the flag indicating whether this light should cast shadows or not.
         This is the variant without buffer size, meaning that the current buffer
         size will be kept (512x512 is the default). Note that enabling shadows will
         require the shader generator to be enabled on the scene.
-        """
-        ...
-    @overload
-    def set_shadow_caster(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...) -> None:
-        """Sets the flag indicating whether this light should cast shadows or not.
+        
+        `(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...)`:
+        Sets the flag indicating whether this light should cast shadows or not.
         The xsize and ysize parameters specify the size of the shadow buffer that
         will be set up, the sort parameter specifies the sort.  Note that enabling
         shadows will require the shader generator to be enabled on the scene.
         """
         ...
+    @overload
+    def set_shadow_caster(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...) -> None: ...
     def get_shadow_buffer_sort(self) -> int:
         """Returns the sort of the shadow buffer to be created for this light source."""
         ...
@@ -428,18 +424,7 @@ class LODNode(PandaNode):
         """
         ...
     @overload
-    def show_switch(self, index: int, color: _Vec4f) -> None:
-        """This is provided as a debugging aid.  show_switch() will put the LODNode
-        into a special mode where rather than computing and drawing the appropriate
-        level of the LOD, a ring is drawn around the LODNode center indicating the
-        switch distances from the camera for the indicated level, and the geometry
-        of the indicated level is drawn in wireframe.
-        
-        Multiple different levels can be visualized this way at once.  Call
-        hide_switch() or hide_all_switches() to undo this mode and restore the
-        LODNode to its normal behavior.
-        """
-        ...
+    def show_switch(self, index: int, color: _Vec4f) -> None: ...
     def hide_switch(self, index: int) -> None:
         """Disables a previous call to show_switch()."""
         ...

@@ -127,48 +127,46 @@ class LVecBase2f:
         ...
     @overload
     def compare_to(self, other: LVecBase2f) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LVecBase2f)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: LVecBase2f, threshold: float) -> int:
-        """Sorts vectors lexicographically, componentwise.  Returns a number less than
+        
+        `(self, other: LVecBase2f, threshold: float)`:
+        Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: LVecBase2f, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def componentwise_mult(self, other: LVecBase2f) -> None: ...
     def fmax(self, other: LVecBase2f) -> LVecBase2f: ...
     def fmin(self, other: LVecBase2f) -> LVecBase2f: ...
     @overload
     def almost_equal(self, other: LVecBase2f) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase2f)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: LVecBase2f, threshold: float) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase2f, threshold: float)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: LVecBase2f, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -331,48 +329,46 @@ class LVecBase2d:
         ...
     @overload
     def compare_to(self, other: LVecBase2d) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LVecBase2d)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: LVecBase2d, threshold: float) -> int:
-        """Sorts vectors lexicographically, componentwise.  Returns a number less than
+        
+        `(self, other: LVecBase2d, threshold: float)`:
+        Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: LVecBase2d, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def componentwise_mult(self, other: LVecBase2d) -> None: ...
     def fmax(self, other: LVecBase2d) -> LVecBase2d: ...
     def fmin(self, other: LVecBase2d) -> LVecBase2d: ...
     @overload
     def almost_equal(self, other: LVecBase2d) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase2d)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: LVecBase2d, threshold: float) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase2d, threshold: float)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: LVecBase2d, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -529,16 +525,17 @@ class LVecBase2i:
     def fmin(self, other: LVecBase2i) -> LVecBase2i: ...
     @overload
     def almost_equal(self, other: LVecBase2i) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase2i)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: LVecBase2i, threshold: int) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase2i, threshold: int)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: LVecBase2i, threshold: int) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -596,17 +593,20 @@ class LVector2f(LVecBase2f):
     """This is a two-component vector offset."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: LVecBase2f) -> None:
-        """Constructs a new LVector2 from a LVecBase2"""
+    def __init__(self) -> None:
+        """`(self, copy: LVecBase2f)`:
+        Constructs a new LVector2 from a LVecBase2
+        
+        `(self, fill_value: float)`:
+        Constructs a new LVector2 with all components set to the fill value.
+        """
         ...
+    @overload
+    def __init__(self, copy: LVecBase2f) -> None: ...
     @overload
     def __init__(self, fill_value: float) -> None: ...
     @overload
-    def __init__(self, x: float, y: float) -> None:
-        """Constructs a new LVector2 with all components set to the fill value."""
-        ...
+    def __init__(self, x: float, y: float) -> None: ...
     def __neg__(self) -> LVector2f: ...
     @overload
     def __add__(self, other: LVector2f) -> LVector2f: ...
@@ -662,17 +662,20 @@ class LVector2d(LVecBase2d):
     """This is a two-component vector offset."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: LVecBase2d) -> None:
-        """Constructs a new LVector2 from a LVecBase2"""
+    def __init__(self) -> None:
+        """`(self, copy: LVecBase2d)`:
+        Constructs a new LVector2 from a LVecBase2
+        
+        `(self, fill_value: float)`:
+        Constructs a new LVector2 with all components set to the fill value.
+        """
         ...
+    @overload
+    def __init__(self, copy: LVecBase2d) -> None: ...
     @overload
     def __init__(self, fill_value: float) -> None: ...
     @overload
-    def __init__(self, x: float, y: float) -> None:
-        """Constructs a new LVector2 with all components set to the fill value."""
-        ...
+    def __init__(self, x: float, y: float) -> None: ...
     def __neg__(self) -> LVector2d: ...
     @overload
     def __add__(self, other: LVector2d) -> LVector2d: ...
@@ -728,17 +731,20 @@ class LVector2i(LVecBase2i):
     """This is a two-component vector offset."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: LVecBase2i) -> None:
-        """Constructs a new LVector2 from a LVecBase2"""
+    def __init__(self) -> None:
+        """`(self, copy: LVecBase2i)`:
+        Constructs a new LVector2 from a LVecBase2
+        
+        `(self, fill_value: int)`:
+        Constructs a new LVector2 with all components set to the fill value.
+        """
         ...
+    @overload
+    def __init__(self, copy: LVecBase2i) -> None: ...
     @overload
     def __init__(self, fill_value: int) -> None: ...
     @overload
-    def __init__(self, x: int, y: int) -> None:
-        """Constructs a new LVector2 with all components set to the fill value."""
-        ...
+    def __init__(self, x: int, y: int) -> None: ...
     def __neg__(self) -> LVector2i: ...
     @overload
     def __add__(self, other: LVector2i) -> LVector2i: ...
@@ -771,17 +777,23 @@ class LPoint2f(LVecBase2f):
     """This is a two-component point in space."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        """`(self, copy: LVecBase2f)`:
+        Constructs a new LPoint2 from a LVecBase2
+        
+        `(self, fill_value: float)`:
+        Constructs a new LPoint2 all components set to the fill value.
+        
+        `(self, x: float, y: float)`:
+        Constructs a new LPoint2 with the given components
+        """
+        ...
     @overload
     def __init__(self, copy: LVecBase2f) -> None: ...
     @overload
-    def __init__(self, fill_value: float) -> None:
-        """Constructs a new LPoint2 from a LVecBase2"""
-        ...
+    def __init__(self, fill_value: float) -> None: ...
     @overload
-    def __init__(self, x: float, y: float) -> None:
-        """Constructs a new LPoint2 all components set to the fill value."""
-        ...
+    def __init__(self, x: float, y: float) -> None: ...
     def __neg__(self) -> LPoint2f: ...
     @overload
     def __add__(self, other: LVector2f) -> LPoint2f: ...
@@ -827,17 +839,23 @@ class LPoint2d(LVecBase2d):
     """This is a two-component point in space."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        """`(self, copy: LVecBase2d)`:
+        Constructs a new LPoint2 from a LVecBase2
+        
+        `(self, fill_value: float)`:
+        Constructs a new LPoint2 all components set to the fill value.
+        
+        `(self, x: float, y: float)`:
+        Constructs a new LPoint2 with the given components
+        """
+        ...
     @overload
     def __init__(self, copy: LVecBase2d) -> None: ...
     @overload
-    def __init__(self, fill_value: float) -> None:
-        """Constructs a new LPoint2 from a LVecBase2"""
-        ...
+    def __init__(self, fill_value: float) -> None: ...
     @overload
-    def __init__(self, x: float, y: float) -> None:
-        """Constructs a new LPoint2 all components set to the fill value."""
-        ...
+    def __init__(self, x: float, y: float) -> None: ...
     def __neg__(self) -> LPoint2d: ...
     @overload
     def __add__(self, other: LVector2d) -> LPoint2d: ...
@@ -883,17 +901,23 @@ class LPoint2i(LVecBase2i):
     """This is a two-component point in space."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        """`(self, copy: LVecBase2i)`:
+        Constructs a new LPoint2 from a LVecBase2
+        
+        `(self, fill_value: int)`:
+        Constructs a new LPoint2 all components set to the fill value.
+        
+        `(self, x: int, y: int)`:
+        Constructs a new LPoint2 with the given components
+        """
+        ...
     @overload
     def __init__(self, copy: LVecBase2i) -> None: ...
     @overload
-    def __init__(self, fill_value: int) -> None:
-        """Constructs a new LPoint2 from a LVecBase2"""
-        ...
+    def __init__(self, fill_value: int) -> None: ...
     @overload
-    def __init__(self, x: int, y: int) -> None:
-        """Constructs a new LPoint2 all components set to the fill value."""
-        ...
+    def __init__(self, x: int, y: int) -> None: ...
     def __neg__(self) -> LPoint2i: ...
     @overload
     def __add__(self, other: LVector2i) -> LPoint2i: ...
@@ -1078,49 +1102,47 @@ class LVecBase3f:
         ...
     @overload
     def compare_to(self, other: _Vec3f) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LVecBase3f)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: _Vec3f, threshold: float) -> int:
-        """Sorts vectors lexicographically, componentwise.  Returns a number less than
+        
+        `(self, other: LVecBase3f, threshold: float)`:
+        Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: _Vec3f, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def componentwise_mult(self, other: _Vec3f) -> None: ...
     def fmax(self, other: _Vec3f) -> LVecBase3f: ...
     def fmin(self, other: _Vec3f) -> LVecBase3f: ...
     def cross_into(self, other: _Vec3f) -> None: ...
     @overload
     def almost_equal(self, other: _Vec3f) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase3f)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Vec3f, threshold: float) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase3f, threshold: float)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Vec3f, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -1337,49 +1359,47 @@ class LVecBase3d:
         ...
     @overload
     def compare_to(self, other: _Vec3d) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LVecBase3d)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: _Vec3d, threshold: float) -> int:
-        """Sorts vectors lexicographically, componentwise.  Returns a number less than
+        
+        `(self, other: LVecBase3d, threshold: float)`:
+        Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: _Vec3d, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def componentwise_mult(self, other: _Vec3d) -> None: ...
     def fmax(self, other: _Vec3d) -> LVecBase3d: ...
     def fmin(self, other: _Vec3d) -> LVecBase3d: ...
     def cross_into(self, other: _Vec3d) -> None: ...
     @overload
     def almost_equal(self, other: _Vec3d) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase3d)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Vec3d, threshold: float) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase3d, threshold: float)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Vec3d, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -1578,16 +1598,17 @@ class LVecBase3i:
     def cross_into(self, other: LVecBase3i) -> None: ...
     @overload
     def almost_equal(self, other: LVecBase3i) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase3i)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: LVecBase3i, threshold: int) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase3i, threshold: int)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: LVecBase3i, threshold: int) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -2373,19 +2394,22 @@ class LVecBase4f:
     @property
     def xy(self) -> LVecBase2f: ...
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, point: _Vec3f) -> None:
-        """Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0."""
+    def __init__(self) -> None:
+        """`(self, point: LPoint3f)`:
+        Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0.
+        
+        `(self, vector: LVector3f)`:
+        Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
+        """
         ...
+    @overload
+    def __init__(self, point: _Vec3f) -> None: ...
     @overload
     def __init__(self, copy: _Vec4f) -> None: ...
     @overload
     def __init__(self, vector: _Vec3f) -> None: ...
     @overload
-    def __init__(self, fill_value: float) -> None:
-        """Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0."""
-        ...
+    def __init__(self, fill_value: float) -> None: ...
     @overload
     def __init__(self, copy: _Vec3f, w: float) -> None: ...
     @overload
@@ -2504,48 +2528,46 @@ class LVecBase4f:
         ...
     @overload
     def compare_to(self, other: _Vec4f) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LVecBase4f)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: _Vec4f, threshold: float) -> int:
-        """Sorts vectors lexicographically, componentwise.  Returns a number less than
+        
+        `(self, other: LVecBase4f, threshold: float)`:
+        Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: _Vec4f, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def componentwise_mult(self, other: _Vec4f) -> None: ...
     def fmax(self, other: _Vec4f) -> LVecBase4f: ...
     def fmin(self, other: _Vec4f) -> LVecBase4f: ...
     @overload
     def almost_equal(self, other: _Vec4f) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase4f)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Vec4f, threshold: float) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase4f, threshold: float)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Vec4f, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -2663,19 +2685,22 @@ class LVecBase4d:
     @property
     def xy(self) -> LVecBase2d: ...
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, point: _Vec3d) -> None:
-        """Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0."""
+    def __init__(self) -> None:
+        """`(self, point: LPoint3d)`:
+        Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0.
+        
+        `(self, vector: LVector3d)`:
+        Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
+        """
         ...
+    @overload
+    def __init__(self, point: _Vec3d) -> None: ...
     @overload
     def __init__(self, copy: _Vec4d) -> None: ...
     @overload
     def __init__(self, vector: _Vec3d) -> None: ...
     @overload
-    def __init__(self, fill_value: float) -> None:
-        """Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0."""
-        ...
+    def __init__(self, fill_value: float) -> None: ...
     @overload
     def __init__(self, copy: _Vec3d, w: float) -> None: ...
     @overload
@@ -2794,48 +2819,46 @@ class LVecBase4d:
         ...
     @overload
     def compare_to(self, other: _Vec4d) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LVecBase4d)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: _Vec4d, threshold: float) -> int:
-        """Sorts vectors lexicographically, componentwise.  Returns a number less than
+        
+        `(self, other: LVecBase4d, threshold: float)`:
+        Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: _Vec4d, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def componentwise_mult(self, other: _Vec4d) -> None: ...
     def fmax(self, other: _Vec4d) -> LVecBase4d: ...
     def fmin(self, other: _Vec4d) -> LVecBase4d: ...
     @overload
     def almost_equal(self, other: _Vec4d) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase4d)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Vec4d, threshold: float) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase4d, threshold: float)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Vec4d, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -2953,19 +2976,22 @@ class LVecBase4i:
     @property
     def xy(self) -> LVecBase2i: ...
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, point: LVecBase3i) -> None:
-        """Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0."""
+    def __init__(self) -> None:
+        """`(self, point: LPoint3i)`:
+        Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0.
+        
+        `(self, vector: LVector3i)`:
+        Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
+        """
         ...
+    @overload
+    def __init__(self, point: LVecBase3i) -> None: ...
     @overload
     def __init__(self, copy: _Vec4i) -> None: ...
     @overload
     def __init__(self, vector: LVecBase3i) -> None: ...
     @overload
-    def __init__(self, fill_value: int) -> None:
-        """Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0."""
-        ...
+    def __init__(self, fill_value: int) -> None: ...
     @overload
     def __init__(self, copy: LVecBase3i, w: int) -> None: ...
     @overload
@@ -3078,16 +3104,17 @@ class LVecBase4i:
     def fmin(self, other: _Vec4i) -> LVecBase4i: ...
     @overload
     def almost_equal(self, other: _Vec4i) -> bool:
-        """Returns true if two vectors are memberwise equal within a default tolerance
+        """`(self, other: LVecBase4i)`:
+        Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Vec4i, threshold: int) -> bool:
-        """Returns true if two vectors are memberwise equal within a specified
+        
+        `(self, other: LVecBase4i, threshold: int)`:
+        Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Vec4i, threshold: int) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -3657,13 +3684,13 @@ class LMatrix3f:
     @property
     def cols(self) -> Sequence[LVecBase3f]: ...
     @overload
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        """Constructs the matrix from three individual rows."""
+        ...
     @overload
     def __init__(self, other: LMatrix3f) -> None: ...
     @overload
-    def __init__(self, __param0: _Vec3f, __param1: _Vec3f, __param2: _Vec3f) -> None:
-        """Constructs the matrix from three individual rows."""
-        ...
+    def __init__(self, __param0: _Vec3f, __param1: _Vec3f, __param2: _Vec3f) -> None: ...
     @overload
     def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float) -> None: ...
     def __getitem__(self, i: int) -> LMatrix3f.CRow | LMatrix3f.Row: ...
@@ -3687,11 +3714,11 @@ class LMatrix3f:
         """Performs a memberwise subtraction between two matrices."""
         ...
     @overload
-    def __imul__(self, other: LMatrix3f) -> LMatrix3f: ...
-    @overload
-    def __imul__(self, scalar: float) -> LMatrix3f:
+    def __imul__(self, other: LMatrix3f) -> LMatrix3f:
         """Performs a memberwise scale."""
         ...
+    @overload
+    def __imul__(self, scalar: float) -> LMatrix3f: ...
     def __itruediv__(self, scalar: float) -> LMatrix3f:
         """Performs a memberwise scale."""
         ...
@@ -3707,23 +3734,34 @@ class LMatrix3f:
         ...
     def set(self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float) -> None: ...
     def set_row(self, row: int, v: LVecBase2f | _Vec3f) -> None:
-        """Replaces the indicated row of the matrix from a two-component vector,
+        """`(self, row: int, v: LVecBase2f)`:
+        Replaces the indicated row of the matrix from a two-component vector,
         ignoring the last column.
+        
+        `(self, row: int, v: LVecBase3f)`:
+        Replaces the indicated row of the matrix from a three-component vector.
         """
         ...
     def set_col(self, col: int, v: LVecBase2f | _Vec3f) -> None:
-        """Replaces the indicated column of the matrix from a two-component vector,
+        """`(self, col: int, v: LVecBase2f)`:
+        Replaces the indicated column of the matrix from a two-component vector,
         ignoring the last row.
+        
+        `(self, col: int, v: LVecBase3f)`:
+        Replaces the indicated column of the matrix from a three-component vector.
         """
         ...
     @overload
     def get_row(self, row: int) -> LVecBase3f:
-        """Stores the indicated row of the matrix as a three-component vector."""
+        """`(self, result_vec: LVecBase3f, row: int)`:
+        Stores the indicated row of the matrix as a three-component vector.
+        
+        `(self, row: int)`:
+        Returns the indicated row of the matrix as a three-component vector.
+        """
         ...
     @overload
-    def get_row(self, result_vec: _Vec3f, row: int) -> None:
-        """Returns the indicated row of the matrix as a three-component vector."""
-        ...
+    def get_row(self, result_vec: _Vec3f, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase3f:
         """Returns the indicated column of the matrix as a three-component vector."""
         ...
@@ -3758,33 +3796,30 @@ class LMatrix3f:
         ...
     @overload
     def compare_to(self, other: LMatrix3f) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LMatrix3f)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: LMatrix3f, threshold: float) -> int:
-        """Sorts matrices lexicographically, componentwise.  Returns a number less
+        
+        `(self, other: LMatrix3f, threshold: float)`:
+        Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: LMatrix3f, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def xform(self, v: _Vec3f) -> LVecBase3f:
         """3-component vector or point times matrix."""
         ...
@@ -3795,18 +3830,19 @@ class LMatrix3f:
         ...
     @overload
     def xform_vec(self, v: LVecBase2f) -> LVecBase2f:
-        """The matrix transforms a 2-component vector (without translation component)
+        """`(self, v: LVecBase2f)`:
+        The matrix transforms a 2-component vector (without translation component)
         and returns the result.  This assumes the matrix is an affine transform.
-        """
-        ...
-    @overload
-    def xform_vec(self, v: _Vec3f) -> LVecBase3f:
-        """The matrix transforms a 3-component vector and returns the result.  This
+        
+        `(self, v: LVecBase3f)`:
+        The matrix transforms a 3-component vector and returns the result.  This
         assumes the matrix is an orthonormal transform.
         
         In practice, this is the same computation as xform().
         """
         ...
+    @overload
+    def xform_vec(self, v: _Vec3f) -> LVecBase3f: ...
     def xform_vec_general(self, v: _Vec3f) -> LVecBase3f:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result, as a fully general operation.
@@ -3821,8 +3857,15 @@ class LMatrix3f:
         """
         ...
     def xform_vec_in_place(self, v: LVecBase2f | _Vec3f) -> None:
-        """The matrix transforms a 2-component vector (without translation component).
+        """`(self, v: LVecBase2f)`:
+        The matrix transforms a 2-component vector (without translation component).
         This assumes the matrix is an affine transform.
+        
+        `(self, v: LVecBase3f)`:
+        The matrix transforms a 3-component vector.  This assumes the matrix is an
+        orthonormal transform.
+        
+        In practice, this is the same computation as xform().
         """
         ...
     def xform_vec_general_in_place(self, v: _Vec3f) -> None:
@@ -3874,19 +3917,25 @@ class LMatrix3f:
         ...
     @overload
     def set_rotate_mat(self, angle: float) -> None:
-        """Fills mat with a matrix that rotates by the given angle in degrees
+        """`(self, angle: float)`:
+        Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise.
-        """
-        ...
-    @overload
-    def set_rotate_mat(self, angle: float, axis: _Vec3f, cs: _CoordinateSystem = ...) -> None:
-        """Fills mat with a matrix that rotates by the given angle in degrees
+        
+        `(self, angle: float, axis: LVecBase3f, cs: _CoordinateSystem = ...)`:
+        Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
         ...
+    @overload
+    def set_rotate_mat(self, angle: float, axis: _Vec3f, cs: _CoordinateSystem = ...) -> None: ...
     def set_scale_mat(self, scale: LVecBase2f | _Vec3f) -> None:
-        """Fills mat with a matrix that applies the indicated scale in each of the two
+        """`(self, scale: LVecBase2f)`:
+        Fills mat with a matrix that applies the indicated scale in each of the two
         axes.
+        
+        `(self, scale: LVecBase3f)`:
+        Fills mat with a matrix that applies the indicated scale in each of the
+        three axes.
         """
         ...
     @overload
@@ -3896,40 +3945,39 @@ class LMatrix3f:
         ...
     @overload
     @staticmethod
-    def translate_mat(tx: float, ty: float) -> LMatrix3f:
-        """Returns a matrix that applies the indicated translation."""
-        ...
+    def translate_mat(tx: float, ty: float) -> LMatrix3f: ...
     @overload
     @staticmethod
     def rotate_mat(angle: float) -> LMatrix3f:
-        """Returns a matrix that rotates by the given angle in degrees
+        """`(angle: float)`:
+        Returns a matrix that rotates by the given angle in degrees
         counterclockwise.
-        """
-        ...
-    @overload
-    @staticmethod
-    def rotate_mat(angle: float, axis: _Vec3f, cs: _CoordinateSystem = ...) -> LMatrix3f:
-        """Returns a matrix that rotates by the given angle in degrees
+        
+        `(angle: float, axis: LVecBase3f, cs: _CoordinateSystem = ...)`:
+        Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
         ...
     @overload
     @staticmethod
-    def scale_mat(scale: LVecBase2f | _Vec3f) -> LMatrix3f:
-        """Returns a matrix that applies the indicated scale in each of the two axes."""
-        ...
+    def rotate_mat(angle: float, axis: _Vec3f, cs: _CoordinateSystem = ...) -> LMatrix3f: ...
     @overload
     @staticmethod
-    def scale_mat(sx: float, sy: float) -> LMatrix3f:
-        """Returns a matrix that applies the indicated scale in each of the three
+    def scale_mat(scale: LVecBase2f | _Vec3f) -> LMatrix3f:
+        """`(scale: LVecBase2f)`; `(sx: float, sy: float)`:
+        Returns a matrix that applies the indicated scale in each of the two axes.
+        
+        `(scale: LVecBase3f)`; `(sx: float, sy: float, sz: float)`:
+        Returns a matrix that applies the indicated scale in each of the three
         axes.
         """
         ...
     @overload
     @staticmethod
-    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix3f:
-        """Returns a matrix that applies the indicated scale in each of the two axes."""
-        ...
+    def scale_mat(sx: float, sy: float) -> LMatrix3f: ...
+    @overload
+    @staticmethod
+    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix3f: ...
     def set_rotate_mat_normaxis(self, angle: float, axis: _Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
@@ -3957,11 +4005,7 @@ class LMatrix3f:
         ...
     @overload
     @staticmethod
-    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3f:
-        """Returns a matrix that applies the indicated shear in each of the three
-        planes.
-        """
-        ...
+    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3f: ...
     def set_scale_shear_mat(self, scale: _Vec3f, shear: _Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated scale and shear."""
         ...
@@ -3972,9 +4016,7 @@ class LMatrix3f:
         ...
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3f:
-        """Returns a matrix that applies the indicated scale and shear."""
-        ...
+    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3f: ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix3f:
         """Returns a matrix that transforms from the indicated coordinate system to
@@ -3983,16 +4025,17 @@ class LMatrix3f:
         ...
     @overload
     def almost_equal(self, other: LMatrix3f) -> bool:
-        """Returns true if two matrices are memberwise equal within a default
+        """`(self, other: LMatrix3f)`:
+        Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: LMatrix3f, threshold: float) -> bool:
-        """Returns true if two matrices are memberwise equal within a specified
+        
+        `(self, other: LMatrix3f, threshold: float)`:
+        Returns true if two matrices are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: LMatrix3f, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -4109,21 +4152,23 @@ class LMatrix4f:
     @property
     def cols(self) -> Sequence[LVecBase4f]: ...
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, upper3: LMatrix3f) -> None:
-        """Construct a 4x4 matrix given a 3x3 rotation matrix and an optional
+    def __init__(self) -> None:
+        """`(self, upper3: LMatrix3f)`:
+        Construct a 4x4 matrix given a 3x3 rotation matrix and an optional
         translation component.
+        
+        `(self, __param0: LVecBase4f, __param1: LVecBase4f, __param2: LVecBase4f, __param3: LVecBase4f)`:
+        Constructs the matrix from four individual rows.
         """
         ...
+    @overload
+    def __init__(self, upper3: LMatrix3f) -> None: ...
     @overload
     def __init__(self, other: _Mat4f) -> None: ...
     @overload
     def __init__(self, upper3: LMatrix3f, trans: _Vec3f) -> None: ...
     @overload
-    def __init__(self, __param0: _Vec4f, __param1: _Vec4f, __param2: _Vec4f, __param3: _Vec4f) -> None:
-        """Constructs the matrix from four individual rows."""
-        ...
+    def __init__(self, __param0: _Vec4f, __param1: _Vec4f, __param2: _Vec4f, __param3: _Vec4f) -> None: ...
     @overload
     def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float, __param9: float, __param10: float, __param11: float, __param12: float, __param13: float, __param14: float, __param15: float) -> None: ...
     def __getitem__(self, i: int) -> LMatrix4f.CRow | LMatrix4f.Row: ...
@@ -4169,38 +4214,50 @@ class LMatrix4f:
         """Retrieves the upper 3x3 submatrix."""
         ...
     def set_row(self, row: int, v: _Vec3f | _Vec4f) -> None:
-        """Replaces the indicated row of the matrix with the indicated 3-component
+        """`(self, row: int, v: LVecBase3f)`:
+        Replaces the indicated row of the matrix with the indicated 3-component
         vector, ignoring the last column.
+        
+        `(self, row: int, v: LVecBase4f)`:
+        Replaces the indicated row of the matrix.
         """
         ...
     def set_col(self, col: int, v: _Vec3f | _Vec4f) -> None:
-        """Replaces the indicated column of the matrix with the indicated 3-component
+        """`(self, col: int, v: LVecBase3f)`:
+        Replaces the indicated column of the matrix with the indicated 3-component
         vector, ignoring the last row.
+        
+        `(self, col: int, v: LVecBase4f)`:
+        Replaces the indicated column of the matrix.
         """
         ...
     @overload
     def get_row(self, row: int) -> LVecBase4f:
-        """Stores the indicated row of the matrix as a 4-component vector."""
+        """`(self, result_vec: LVecBase4f, row: int)`:
+        Stores the indicated row of the matrix as a 4-component vector.
+        
+        `(self, row: int)`:
+        Retrieves the indicated row of the matrix as a 4-component vector.
+        """
         ...
     @overload
-    def get_row(self, result_vec: _Vec4f, row: int) -> None:
-        """Retrieves the indicated row of the matrix as a 4-component vector."""
-        ...
+    def get_row(self, result_vec: _Vec4f, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase4f:
         """Retrieves the indicated column of the matrix as a 4-component vector."""
         ...
     @overload
     def get_row3(self, row: int) -> LVecBase3f:
-        """Stores the row column of the matrix as a 3-component vector, ignoring the
+        """`(self, result_vec: LVecBase3f, row: int)`:
+        Stores the row column of the matrix as a 3-component vector, ignoring the
         last column.
-        """
-        ...
-    @overload
-    def get_row3(self, result_vec: _Vec3f, row: int) -> None:
-        """Retrieves the row column of the matrix as a 3-component vector, ignoring
+        
+        `(self, row: int)`:
+        Retrieves the row column of the matrix as a 3-component vector, ignoring
         the last column.
         """
         ...
+    @overload
+    def get_row3(self, result_vec: _Vec3f, row: int) -> None: ...
     def get_col3(self, col: int) -> LVecBase3f:
         """Retrieves the indicated column of the matrix as a 3-component vector,
         ignoring the last row.
@@ -4227,33 +4284,30 @@ class LMatrix4f:
         ...
     @overload
     def compare_to(self, other: _Mat4f) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LMatrix4f)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: _Mat4f, threshold: float) -> int:
-        """Sorts matrices lexicographically, componentwise.  Returns a number less
+        
+        `(self, other: LMatrix4f, threshold: float)`:
+        Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: _Mat4f, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def xform(self, v: _Vec4f) -> LVecBase4f:
         """4-component vector or point times matrix.  This is a fully general
         operation.
@@ -4386,9 +4440,7 @@ class LMatrix4f:
         ...
     @overload
     @staticmethod
-    def translate_mat(tx: float, ty: float, tz: float) -> LMatrix4f:
-        """Returns a matrix that applies the indicated translation."""
-        ...
+    def translate_mat(tx: float, ty: float, tz: float) -> LMatrix4f: ...
     @staticmethod
     def rotate_mat(angle: float, axis: _Vec3f, cs: _CoordinateSystem = ...) -> LMatrix4f:
         """Returns a matrix that rotates by the given angle in degrees
@@ -4405,15 +4457,17 @@ class LMatrix4f:
     @overload
     @staticmethod
     def scale_mat(scale: _Vec3f | float) -> LMatrix4f:
-        """Returns a matrix that applies the indicated scale in each of the three
+        """`(scale: LVecBase3f)`; `(sx: float, sy: float, sz: float)`:
+        Returns a matrix that applies the indicated scale in each of the three
         axes.
+        
+        `(scale: float)`:
+        Returns a matrix that applies the indicated uniform scale.
         """
         ...
     @overload
     @staticmethod
-    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix4f:
-        """Returns a matrix that applies the indicated uniform scale."""
-        ...
+    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix4f: ...
     @overload
     @staticmethod
     def shear_mat(shear: _Vec3f, cs: _CoordinateSystem = ...) -> LMatrix4f:
@@ -4423,11 +4477,7 @@ class LMatrix4f:
         ...
     @overload
     @staticmethod
-    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4f:
-        """Returns a matrix that applies the indicated shear in each of the three
-        planes.
-        """
-        ...
+    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4f: ...
     @overload
     @staticmethod
     def scale_shear_mat(scale: _Vec3f, shear: _Vec3f, cs: _CoordinateSystem = ...) -> LMatrix4f:
@@ -4435,9 +4485,7 @@ class LMatrix4f:
         ...
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4f:
-        """Returns a matrix that applies the indicated scale and shear."""
-        ...
+    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4f: ...
     @staticmethod
     def y_to_z_up_mat() -> LMatrix4f:
         """Returns a matrix that transforms from the Y-up coordinate system to the
@@ -4458,17 +4506,18 @@ class LMatrix4f:
         ...
     @overload
     def almost_equal(self, other: _Mat4f) -> bool:
-        """Returns true if two matrices are memberwise equal within a default
+        """`(self, other: LMatrix4f)`:
+        Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Mat4f, threshold: float) -> bool:
-        """Returns true if two matrices are memberwise equal within a specified
+        
+        `(self, other: LMatrix4f, threshold: float)`:
+        Returns true if two matrices are memberwise equal within a specified
         tolerance.  This is faster than the equivalence operator as this doesn't
         have to guarantee that it is transitive.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Mat4f, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -4623,13 +4672,13 @@ class LMatrix3d:
     @property
     def cols(self) -> Sequence[LVecBase3d]: ...
     @overload
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        """Constructs the matrix from three individual rows."""
+        ...
     @overload
     def __init__(self, other: LMatrix3d) -> None: ...
     @overload
-    def __init__(self, __param0: _Vec3d, __param1: _Vec3d, __param2: _Vec3d) -> None:
-        """Constructs the matrix from three individual rows."""
-        ...
+    def __init__(self, __param0: _Vec3d, __param1: _Vec3d, __param2: _Vec3d) -> None: ...
     @overload
     def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float) -> None: ...
     def __getitem__(self, i: int) -> LMatrix3d.CRow | LMatrix3d.Row: ...
@@ -4653,11 +4702,11 @@ class LMatrix3d:
         """Performs a memberwise subtraction between two matrices."""
         ...
     @overload
-    def __imul__(self, other: LMatrix3d) -> LMatrix3d: ...
-    @overload
-    def __imul__(self, scalar: float) -> LMatrix3d:
+    def __imul__(self, other: LMatrix3d) -> LMatrix3d:
         """Performs a memberwise scale."""
         ...
+    @overload
+    def __imul__(self, scalar: float) -> LMatrix3d: ...
     def __itruediv__(self, scalar: float) -> LMatrix3d:
         """Performs a memberwise scale."""
         ...
@@ -4673,23 +4722,34 @@ class LMatrix3d:
         ...
     def set(self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float) -> None: ...
     def set_row(self, row: int, v: LVecBase2d | _Vec3d) -> None:
-        """Replaces the indicated row of the matrix from a two-component vector,
+        """`(self, row: int, v: LVecBase2d)`:
+        Replaces the indicated row of the matrix from a two-component vector,
         ignoring the last column.
+        
+        `(self, row: int, v: LVecBase3d)`:
+        Replaces the indicated row of the matrix from a three-component vector.
         """
         ...
     def set_col(self, col: int, v: LVecBase2d | _Vec3d) -> None:
-        """Replaces the indicated column of the matrix from a two-component vector,
+        """`(self, col: int, v: LVecBase2d)`:
+        Replaces the indicated column of the matrix from a two-component vector,
         ignoring the last row.
+        
+        `(self, col: int, v: LVecBase3d)`:
+        Replaces the indicated column of the matrix from a three-component vector.
         """
         ...
     @overload
     def get_row(self, row: int) -> LVecBase3d:
-        """Stores the indicated row of the matrix as a three-component vector."""
+        """`(self, result_vec: LVecBase3d, row: int)`:
+        Stores the indicated row of the matrix as a three-component vector.
+        
+        `(self, row: int)`:
+        Returns the indicated row of the matrix as a three-component vector.
+        """
         ...
     @overload
-    def get_row(self, result_vec: _Vec3d, row: int) -> None:
-        """Returns the indicated row of the matrix as a three-component vector."""
-        ...
+    def get_row(self, result_vec: _Vec3d, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase3d:
         """Returns the indicated column of the matrix as a three-component vector."""
         ...
@@ -4724,33 +4784,30 @@ class LMatrix3d:
         ...
     @overload
     def compare_to(self, other: LMatrix3d) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LMatrix3d)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: LMatrix3d, threshold: float) -> int:
-        """Sorts matrices lexicographically, componentwise.  Returns a number less
+        
+        `(self, other: LMatrix3d, threshold: float)`:
+        Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: LMatrix3d, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def xform(self, v: _Vec3d) -> LVecBase3d:
         """3-component vector or point times matrix."""
         ...
@@ -4761,18 +4818,19 @@ class LMatrix3d:
         ...
     @overload
     def xform_vec(self, v: LVecBase2d) -> LVecBase2d:
-        """The matrix transforms a 2-component vector (without translation component)
+        """`(self, v: LVecBase2d)`:
+        The matrix transforms a 2-component vector (without translation component)
         and returns the result.  This assumes the matrix is an affine transform.
-        """
-        ...
-    @overload
-    def xform_vec(self, v: _Vec3d) -> LVecBase3d:
-        """The matrix transforms a 3-component vector and returns the result.  This
+        
+        `(self, v: LVecBase3d)`:
+        The matrix transforms a 3-component vector and returns the result.  This
         assumes the matrix is an orthonormal transform.
         
         In practice, this is the same computation as xform().
         """
         ...
+    @overload
+    def xform_vec(self, v: _Vec3d) -> LVecBase3d: ...
     def xform_vec_general(self, v: _Vec3d) -> LVecBase3d:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result, as a fully general operation.
@@ -4787,8 +4845,15 @@ class LMatrix3d:
         """
         ...
     def xform_vec_in_place(self, v: LVecBase2d | _Vec3d) -> None:
-        """The matrix transforms a 2-component vector (without translation component).
+        """`(self, v: LVecBase2d)`:
+        The matrix transforms a 2-component vector (without translation component).
         This assumes the matrix is an affine transform.
+        
+        `(self, v: LVecBase3d)`:
+        The matrix transforms a 3-component vector.  This assumes the matrix is an
+        orthonormal transform.
+        
+        In practice, this is the same computation as xform().
         """
         ...
     def xform_vec_general_in_place(self, v: _Vec3d) -> None:
@@ -4840,19 +4905,25 @@ class LMatrix3d:
         ...
     @overload
     def set_rotate_mat(self, angle: float) -> None:
-        """Fills mat with a matrix that rotates by the given angle in degrees
+        """`(self, angle: float)`:
+        Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise.
-        """
-        ...
-    @overload
-    def set_rotate_mat(self, angle: float, axis: _Vec3d, cs: _CoordinateSystem = ...) -> None:
-        """Fills mat with a matrix that rotates by the given angle in degrees
+        
+        `(self, angle: float, axis: LVecBase3d, cs: _CoordinateSystem = ...)`:
+        Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
         ...
+    @overload
+    def set_rotate_mat(self, angle: float, axis: _Vec3d, cs: _CoordinateSystem = ...) -> None: ...
     def set_scale_mat(self, scale: LVecBase2d | _Vec3d) -> None:
-        """Fills mat with a matrix that applies the indicated scale in each of the two
+        """`(self, scale: LVecBase2d)`:
+        Fills mat with a matrix that applies the indicated scale in each of the two
         axes.
+        
+        `(self, scale: LVecBase3d)`:
+        Fills mat with a matrix that applies the indicated scale in each of the
+        three axes.
         """
         ...
     @overload
@@ -4862,40 +4933,39 @@ class LMatrix3d:
         ...
     @overload
     @staticmethod
-    def translate_mat(tx: float, ty: float) -> LMatrix3d:
-        """Returns a matrix that applies the indicated translation."""
-        ...
+    def translate_mat(tx: float, ty: float) -> LMatrix3d: ...
     @overload
     @staticmethod
     def rotate_mat(angle: float) -> LMatrix3d:
-        """Returns a matrix that rotates by the given angle in degrees
+        """`(angle: float)`:
+        Returns a matrix that rotates by the given angle in degrees
         counterclockwise.
-        """
-        ...
-    @overload
-    @staticmethod
-    def rotate_mat(angle: float, axis: _Vec3d, cs: _CoordinateSystem = ...) -> LMatrix3d:
-        """Returns a matrix that rotates by the given angle in degrees
+        
+        `(angle: float, axis: LVecBase3d, cs: _CoordinateSystem = ...)`:
+        Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
         ...
     @overload
     @staticmethod
-    def scale_mat(scale: LVecBase2d | _Vec3d) -> LMatrix3d:
-        """Returns a matrix that applies the indicated scale in each of the two axes."""
-        ...
+    def rotate_mat(angle: float, axis: _Vec3d, cs: _CoordinateSystem = ...) -> LMatrix3d: ...
     @overload
     @staticmethod
-    def scale_mat(sx: float, sy: float) -> LMatrix3d:
-        """Returns a matrix that applies the indicated scale in each of the three
+    def scale_mat(scale: LVecBase2d | _Vec3d) -> LMatrix3d:
+        """`(scale: LVecBase2d)`; `(sx: float, sy: float)`:
+        Returns a matrix that applies the indicated scale in each of the two axes.
+        
+        `(scale: LVecBase3d)`; `(sx: float, sy: float, sz: float)`:
+        Returns a matrix that applies the indicated scale in each of the three
         axes.
         """
         ...
     @overload
     @staticmethod
-    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix3d:
-        """Returns a matrix that applies the indicated scale in each of the two axes."""
-        ...
+    def scale_mat(sx: float, sy: float) -> LMatrix3d: ...
+    @overload
+    @staticmethod
+    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix3d: ...
     def set_rotate_mat_normaxis(self, angle: float, axis: _Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
@@ -4923,11 +4993,7 @@ class LMatrix3d:
         ...
     @overload
     @staticmethod
-    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3d:
-        """Returns a matrix that applies the indicated shear in each of the three
-        planes.
-        """
-        ...
+    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3d: ...
     def set_scale_shear_mat(self, scale: _Vec3d, shear: _Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated scale and shear."""
         ...
@@ -4938,9 +5004,7 @@ class LMatrix3d:
         ...
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3d:
-        """Returns a matrix that applies the indicated scale and shear."""
-        ...
+    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3d: ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix3d:
         """Returns a matrix that transforms from the indicated coordinate system to
@@ -4949,16 +5013,17 @@ class LMatrix3d:
         ...
     @overload
     def almost_equal(self, other: LMatrix3d) -> bool:
-        """Returns true if two matrices are memberwise equal within a default
+        """`(self, other: LMatrix3d)`:
+        Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: LMatrix3d, threshold: float) -> bool:
-        """Returns true if two matrices are memberwise equal within a specified
+        
+        `(self, other: LMatrix3d, threshold: float)`:
+        Returns true if two matrices are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: LMatrix3d, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -5075,21 +5140,23 @@ class LMatrix4d:
     @property
     def cols(self) -> Sequence[LVecBase4d]: ...
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, upper3: LMatrix3d) -> None:
-        """Construct a 4x4 matrix given a 3x3 rotation matrix and an optional
+    def __init__(self) -> None:
+        """`(self, upper3: LMatrix3d)`:
+        Construct a 4x4 matrix given a 3x3 rotation matrix and an optional
         translation component.
+        
+        `(self, __param0: LVecBase4d, __param1: LVecBase4d, __param2: LVecBase4d, __param3: LVecBase4d)`:
+        Constructs the matrix from four individual rows.
         """
         ...
+    @overload
+    def __init__(self, upper3: LMatrix3d) -> None: ...
     @overload
     def __init__(self, other: _Mat4d) -> None: ...
     @overload
     def __init__(self, upper3: LMatrix3d, trans: _Vec3d) -> None: ...
     @overload
-    def __init__(self, __param0: _Vec4d, __param1: _Vec4d, __param2: _Vec4d, __param3: _Vec4d) -> None:
-        """Constructs the matrix from four individual rows."""
-        ...
+    def __init__(self, __param0: _Vec4d, __param1: _Vec4d, __param2: _Vec4d, __param3: _Vec4d) -> None: ...
     @overload
     def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float, __param9: float, __param10: float, __param11: float, __param12: float, __param13: float, __param14: float, __param15: float) -> None: ...
     def __getitem__(self, i: int) -> LMatrix4d.CRow | LMatrix4d.Row: ...
@@ -5135,38 +5202,50 @@ class LMatrix4d:
         """Retrieves the upper 3x3 submatrix."""
         ...
     def set_row(self, row: int, v: _Vec3d | _Vec4d) -> None:
-        """Replaces the indicated row of the matrix with the indicated 3-component
+        """`(self, row: int, v: LVecBase3d)`:
+        Replaces the indicated row of the matrix with the indicated 3-component
         vector, ignoring the last column.
+        
+        `(self, row: int, v: LVecBase4d)`:
+        Replaces the indicated row of the matrix.
         """
         ...
     def set_col(self, col: int, v: _Vec3d | _Vec4d) -> None:
-        """Replaces the indicated column of the matrix with the indicated 3-component
+        """`(self, col: int, v: LVecBase3d)`:
+        Replaces the indicated column of the matrix with the indicated 3-component
         vector, ignoring the last row.
+        
+        `(self, col: int, v: LVecBase4d)`:
+        Replaces the indicated column of the matrix.
         """
         ...
     @overload
     def get_row(self, row: int) -> LVecBase4d:
-        """Stores the indicated row of the matrix as a 4-component vector."""
+        """`(self, result_vec: LVecBase4d, row: int)`:
+        Stores the indicated row of the matrix as a 4-component vector.
+        
+        `(self, row: int)`:
+        Retrieves the indicated row of the matrix as a 4-component vector.
+        """
         ...
     @overload
-    def get_row(self, result_vec: _Vec4d, row: int) -> None:
-        """Retrieves the indicated row of the matrix as a 4-component vector."""
-        ...
+    def get_row(self, result_vec: _Vec4d, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase4d:
         """Retrieves the indicated column of the matrix as a 4-component vector."""
         ...
     @overload
     def get_row3(self, row: int) -> LVecBase3d:
-        """Stores the row column of the matrix as a 3-component vector, ignoring the
+        """`(self, result_vec: LVecBase3d, row: int)`:
+        Stores the row column of the matrix as a 3-component vector, ignoring the
         last column.
-        """
-        ...
-    @overload
-    def get_row3(self, result_vec: _Vec3d, row: int) -> None:
-        """Retrieves the row column of the matrix as a 3-component vector, ignoring
+        
+        `(self, row: int)`:
+        Retrieves the row column of the matrix as a 3-component vector, ignoring
         the last column.
         """
         ...
+    @overload
+    def get_row3(self, result_vec: _Vec3d, row: int) -> None: ...
     def get_col3(self, col: int) -> LVecBase3d:
         """Retrieves the indicated column of the matrix as a 3-component vector,
         ignoring the last row.
@@ -5193,33 +5272,30 @@ class LMatrix4d:
         ...
     @overload
     def compare_to(self, other: _Mat4d) -> int:
-        """This flavor of compare_to uses a default threshold value based on the
+        """`(self, other: LMatrix4d)`:
+        This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        """
-        ...
-    @overload
-    def compare_to(self, other: _Mat4d, threshold: float) -> int:
-        """Sorts matrices lexicographically, componentwise.  Returns a number less
+        
+        `(self, other: LMatrix4d, threshold: float)`:
+        Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
         ...
     @overload
+    def compare_to(self, other: _Mat4d, threshold: float) -> int: ...
+    @overload
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
         ...
     @overload
-    def get_hash(self, threshold: float) -> int:
-        """Returns a suitable hash for phash_map."""
-        ...
+    def get_hash(self, threshold: float) -> int: ...
     @overload
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
         ...
     @overload
-    def add_hash(self, hash: int, threshold: float) -> int:
-        """Adds the vector into the running hash."""
-        ...
+    def add_hash(self, hash: int, threshold: float) -> int: ...
     def xform(self, v: _Vec4d) -> LVecBase4d:
         """4-component vector or point times matrix.  This is a fully general
         operation.
@@ -5352,9 +5428,7 @@ class LMatrix4d:
         ...
     @overload
     @staticmethod
-    def translate_mat(tx: float, ty: float, tz: float) -> LMatrix4d:
-        """Returns a matrix that applies the indicated translation."""
-        ...
+    def translate_mat(tx: float, ty: float, tz: float) -> LMatrix4d: ...
     @staticmethod
     def rotate_mat(angle: float, axis: _Vec3d, cs: _CoordinateSystem = ...) -> LMatrix4d:
         """Returns a matrix that rotates by the given angle in degrees
@@ -5371,15 +5445,17 @@ class LMatrix4d:
     @overload
     @staticmethod
     def scale_mat(scale: _Vec3d | float) -> LMatrix4d:
-        """Returns a matrix that applies the indicated scale in each of the three
+        """`(scale: LVecBase3d)`; `(sx: float, sy: float, sz: float)`:
+        Returns a matrix that applies the indicated scale in each of the three
         axes.
+        
+        `(scale: float)`:
+        Returns a matrix that applies the indicated uniform scale.
         """
         ...
     @overload
     @staticmethod
-    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix4d:
-        """Returns a matrix that applies the indicated uniform scale."""
-        ...
+    def scale_mat(sx: float, sy: float, sz: float) -> LMatrix4d: ...
     @overload
     @staticmethod
     def shear_mat(shear: _Vec3d, cs: _CoordinateSystem = ...) -> LMatrix4d:
@@ -5389,11 +5465,7 @@ class LMatrix4d:
         ...
     @overload
     @staticmethod
-    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4d:
-        """Returns a matrix that applies the indicated shear in each of the three
-        planes.
-        """
-        ...
+    def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4d: ...
     @overload
     @staticmethod
     def scale_shear_mat(scale: _Vec3d, shear: _Vec3d, cs: _CoordinateSystem = ...) -> LMatrix4d:
@@ -5401,9 +5473,7 @@ class LMatrix4d:
         ...
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4d:
-        """Returns a matrix that applies the indicated scale and shear."""
-        ...
+    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4d: ...
     @staticmethod
     def y_to_z_up_mat() -> LMatrix4d:
         """Returns a matrix that transforms from the Y-up coordinate system to the
@@ -5424,17 +5494,18 @@ class LMatrix4d:
         ...
     @overload
     def almost_equal(self, other: _Mat4d) -> bool:
-        """Returns true if two matrices are memberwise equal within a default
+        """`(self, other: LMatrix4d)`:
+        Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Mat4d, threshold: float) -> bool:
-        """Returns true if two matrices are memberwise equal within a specified
+        
+        `(self, other: LMatrix4d, threshold: float)`:
+        Returns true if two matrices are memberwise equal within a specified
         tolerance.  This is faster than the equivalence operator as this doesn't
         have to guarantee that it is transitive.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Mat4d, threshold: float) -> bool: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -5588,12 +5659,15 @@ class LQuaternionf(LVecBase4f):
         ...
     @overload
     def xform(self, v: _Vec3f) -> LVecBase3f:
-        """Transforms a 3-d vector by the indicated rotation"""
+        """`(self, v: LVecBase3f)`:
+        Transforms a 3-d vector by the indicated rotation
+        
+        `(self, v: LVecBase4f)`:
+        Transforms a 4-d vector by the indicated rotation
+        """
         ...
     @overload
-    def xform(self, v: _Vec4f) -> LVecBase4f:
-        """Transforms a 4-d vector by the indicated rotation"""
-        ...
+    def xform(self, v: _Vec4f) -> LVecBase4f: ...
     def multiply(self, rhs: _Vec4f) -> LQuaternionf:
         """actual multiply call (non virtual)"""
         ...
@@ -5609,16 +5683,17 @@ class LQuaternionf(LVecBase4f):
         ...
     @overload
     def almost_equal(self, other: _Vec4f) -> bool:
-        """Returns true if two quaternions are memberwise equal within a default
+        """`(self, other: LQuaternionf)`:
+        Returns true if two quaternions are memberwise equal within a default
         tolerance based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Vec4f, threshold: float) -> bool:
-        """Returns true if two quaternions are memberwise equal within a specified
+        
+        `(self, other: LQuaternionf, threshold: float)`:
+        Returns true if two quaternions are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Vec4f, threshold: float) -> bool: ...
     def is_same_direction(self, other: _Vec4f) -> bool:
         """Returns true if two quaternions represent the same rotation within a
         default tolerance based on the numeric type.
@@ -5829,12 +5904,15 @@ class LQuaterniond(LVecBase4d):
         ...
     @overload
     def xform(self, v: _Vec3d) -> LVecBase3d:
-        """Transforms a 3-d vector by the indicated rotation"""
+        """`(self, v: LVecBase3d)`:
+        Transforms a 3-d vector by the indicated rotation
+        
+        `(self, v: LVecBase4d)`:
+        Transforms a 4-d vector by the indicated rotation
+        """
         ...
     @overload
-    def xform(self, v: _Vec4d) -> LVecBase4d:
-        """Transforms a 4-d vector by the indicated rotation"""
-        ...
+    def xform(self, v: _Vec4d) -> LVecBase4d: ...
     def multiply(self, rhs: _Vec4d) -> LQuaterniond:
         """actual multiply call (non virtual)"""
         ...
@@ -5850,16 +5928,17 @@ class LQuaterniond(LVecBase4d):
         ...
     @overload
     def almost_equal(self, other: _Vec4d) -> bool:
-        """Returns true if two quaternions are memberwise equal within a default
+        """`(self, other: LQuaterniond)`:
+        Returns true if two quaternions are memberwise equal within a default
         tolerance based on the numeric type.
-        """
-        ...
-    @overload
-    def almost_equal(self, other: _Vec4d, threshold: float) -> bool:
-        """Returns true if two quaternions are memberwise equal within a specified
+        
+        `(self, other: LQuaterniond, threshold: float)`:
+        Returns true if two quaternions are memberwise equal within a specified
         tolerance.
         """
         ...
+    @overload
+    def almost_equal(self, other: _Vec4d, threshold: float) -> bool: ...
     def is_same_direction(self, other: _Vec4d) -> bool:
         """Returns true if two quaternions represent the same rotation within a
         default tolerance based on the numeric type.
@@ -6038,15 +6117,24 @@ class LRotationf(LQuaternionf):
     """This is a unit quaternion representing a rotation."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, c: LQuaternionf) -> None:
-        """lmatrix3"""
+    def __init__(self) -> None:
+        """`(self, m: LMatrix3f)`:
+        lmatrix3
+        
+        `(self, m: LMatrix4f)`:
+        lmatrix4
+        
+        `(self, axis: LVector3f, angle: float)`:
+        axis + angle (in degrees)
+        
+        `(self, h: float, p: float, r: float)`:
+        Sets the rotation from the given Euler angles.
+        """
         ...
     @overload
-    def __init__(self, m: LMatrix3f | _Mat4f) -> None:
-        """lmatrix4"""
-        ...
+    def __init__(self, c: LQuaternionf) -> None: ...
+    @overload
+    def __init__(self, m: LMatrix3f | _Mat4f) -> None: ...
     @overload
     def __init__(self, copy: _Vec4f) -> None: ...
     @overload
@@ -6054,9 +6142,7 @@ class LRotationf(LQuaternionf):
     @overload
     def __init__(self, h: float, p: float, r: float) -> None: ...
     @overload
-    def __init__(self, r: float, i: float, j: float, k: float) -> None:
-        """axis + angle (in degrees)"""
-        ...
+    def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
     @overload
     def __mul__(self, other: LRotationf) -> LRotationf: ...
     @overload
@@ -6072,15 +6158,24 @@ class LRotationd(LQuaterniond):
     """This is a unit quaternion representing a rotation."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, c: LQuaterniond) -> None:
-        """lmatrix3"""
+    def __init__(self) -> None:
+        """`(self, m: LMatrix3d)`:
+        lmatrix3
+        
+        `(self, m: LMatrix4d)`:
+        lmatrix4
+        
+        `(self, axis: LVector3d, angle: float)`:
+        axis + angle (in degrees)
+        
+        `(self, h: float, p: float, r: float)`:
+        Sets the rotation from the given Euler angles.
+        """
         ...
     @overload
-    def __init__(self, m: LMatrix3d | _Mat4d) -> None:
-        """lmatrix4"""
-        ...
+    def __init__(self, c: LQuaterniond) -> None: ...
+    @overload
+    def __init__(self, m: LMatrix3d | _Mat4d) -> None: ...
     @overload
     def __init__(self, copy: _Vec4d) -> None: ...
     @overload
@@ -6088,9 +6183,7 @@ class LRotationd(LQuaterniond):
     @overload
     def __init__(self, h: float, p: float, r: float) -> None: ...
     @overload
-    def __init__(self, r: float, i: float, j: float, k: float) -> None:
-        """axis + angle (in degrees)"""
-        ...
+    def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
     @overload
     def __mul__(self, other: LRotationd) -> LRotationd: ...
     @overload
@@ -6106,15 +6199,21 @@ class LOrientationf(LQuaternionf):
     """This is a unit quaternion representing an orientation."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, c: _Vec4f) -> None:
-        """matrix3"""
+    def __init__(self) -> None:
+        """`(self, m: LMatrix3f)`:
+        matrix3
+        
+        `(self, m: LMatrix4f)`:
+        matrix4
+        
+        `(self, point_at: LVector3f, twist: float)`:
+        vector + twist
+        """
         ...
     @overload
-    def __init__(self, m: LMatrix3f | _Mat4f) -> None:
-        """matrix4"""
-        ...
+    def __init__(self, c: _Vec4f) -> None: ...
+    @overload
+    def __init__(self, m: LMatrix3f | _Mat4f) -> None: ...
     @overload
     def __init__(self, point_at: _Vec3f, twist: float) -> None: ...
     @overload
@@ -6128,15 +6227,21 @@ class LOrientationd(LQuaterniond):
     """This is a unit quaternion representing an orientation."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, c: _Vec4d) -> None:
-        """matrix3"""
+    def __init__(self) -> None:
+        """`(self, m: LMatrix3d)`:
+        matrix3
+        
+        `(self, m: LMatrix4d)`:
+        matrix4
+        
+        `(self, point_at: LVector3d, twist: float)`:
+        vector + twist
+        """
         ...
     @overload
-    def __init__(self, m: LMatrix3d | _Mat4d) -> None:
-        """matrix4"""
-        ...
+    def __init__(self, c: _Vec4d) -> None: ...
+    @overload
+    def __init__(self, m: LMatrix3d | _Mat4d) -> None: ...
     @overload
     def __init__(self, point_at: _Vec3d, twist: float) -> None: ...
     @overload

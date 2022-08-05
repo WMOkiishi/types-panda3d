@@ -30,14 +30,14 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     @property
     def filename(self) -> Filename: ...
     @overload
-    def __init__(self, name: str = ...) -> None: ...
-    @overload
-    def __init__(self, __param0: MovieAudio) -> None:
+    def __init__(self, name: str = ...) -> None:
         """This constructor returns a null audio stream --- a stream of total silence,
         at 8000 samples per second.  To get more interesting audio, you need to
         construct a subclass of this class.
         """
         ...
+    @overload
+    def __init__(self, __param0: MovieAudio) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def open(self) -> MovieAudioCursor:
@@ -195,23 +195,24 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         ...
     @overload
     def read_samples(self, n: int) -> str:
-        """Read audio samples from the stream and returns them as a string.  The
+        """`(self, n: int)`:
+        Read audio samples from the stream and returns them as a string.  The
         samples are stored little-endian in the string.  N is the number of samples
         you wish to read.  Multiple-channel audio will be interleaved.
         
         This is not particularly efficient, but it may be a convenient way to
         manipulate samples in python.
-        """
-        ...
-    @overload
-    def read_samples(self, n: int, dg: Datagram) -> None:
-        """Read audio samples from the stream into a Datagram.  N is the number of
+        
+        `(self, n: int, dg: Datagram)`:
+        Read audio samples from the stream into a Datagram.  N is the number of
         samples you wish to read.  Multiple-channel audio will be interleaved.
         
         This is not particularly efficient, but it may be a convenient way to
         manipulate samples in python.
         """
         ...
+    @overload
+    def read_samples(self, n: int, dg: Datagram) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getSource = get_source
@@ -257,14 +258,14 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
     @property
     def subfile_info(self) -> SubfileInfo: ...
     @overload
-    def __init__(self, name: str = ...) -> None: ...
-    @overload
-    def __init__(self, __param0: MovieVideo) -> None:
+    def __init__(self, name: str = ...) -> None:
         """This constructor returns a null video stream --- a stream of plain blue and
         white frames that last one second each.  To get more interesting video, you
         need to construct a subclass of this class.
         """
         ...
+    @overload
+    def __init__(self, __param0: MovieVideo) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def open(self) -> MovieVideoCursor:
@@ -300,11 +301,11 @@ class InkblotVideo(MovieVideo):
     """A cellular automaton that generates an amusing pattern of swirling colors."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: InkblotVideo) -> None: ...
-    @overload
-    def __init__(self, x: int, y: int, fps: int) -> None:
+    def __init__(self, __param0: InkblotVideo) -> None:
         """xxx"""
         ...
+    @overload
+    def __init__(self, x: int, y: int, fps: int) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
@@ -578,26 +579,27 @@ class UserDataAudio(MovieAudio):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: UserDataAudio) -> None: ...
-    @overload
-    def __init__(self, rate: int, channels: int, remove_after_read: bool = ...) -> None:
+    def __init__(self, __param0: UserDataAudio) -> None:
         """This constructor returns a UserDataAudio --- a means to supply raw audio
         samples manually.
         """
         ...
     @overload
-    def append(self, str: str) -> None:
-        """Appends audio samples to the buffer from a datagram.  This is intended to
-        make it easy to send streaming raw audio over a network.
-        """
-        ...
+    def __init__(self, rate: int, channels: int, remove_after_read: bool = ...) -> None: ...
     @overload
-    def append(self, src: DatagramIterator, len: int = ...) -> None:
-        """Appends audio samples to the buffer from a string.  The samples must be
+    def append(self, str: str) -> None:
+        """`(self, src: DatagramIterator, len: int = ...)`:
+        Appends audio samples to the buffer from a datagram.  This is intended to
+        make it easy to send streaming raw audio over a network.
+        
+        `(self, str: str)`:
+        Appends audio samples to the buffer from a string.  The samples must be
         stored little-endian in the string.  This is not particularly efficient,
         but it may be convenient to deal with samples in python.
         """
         ...
+    @overload
+    def append(self, src: DatagramIterator, len: int = ...) -> None: ...
     def done(self) -> None:
         """Promises not to append any more samples, ie, this marks the end of the
         audio stream.

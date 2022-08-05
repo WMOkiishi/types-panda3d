@@ -223,15 +223,15 @@ class URLSpec:
     @property
     def ssl(self) -> bool: ...
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: URLSpec) -> None: ...
-    @overload
-    def __init__(self, url: str, server_name_expected: bool = ...) -> None:
+    def __init__(self) -> None:
         """Creates a URLSpec by appending a path to the end of the old URLSpec,
         inserting an intervening forward slash if necessary.
         """
         ...
+    @overload
+    def __init__(self, __param0: URLSpec) -> None: ...
+    @overload
+    def __init__(self, url: str, server_name_expected: bool = ...) -> None: ...
     @overload
     def __init__(self, url: URLSpec, path: _Filename) -> None: ...
     def __str__(self) -> str: ...
@@ -368,7 +368,13 @@ class URLSpec:
         """
         ...
     def set_port(self, port: int | str) -> None:
-        """Replaces the port part of the URL specification."""
+        """`(self, port: str)`:
+        Replaces the port part of the URL specification.
+        
+        `(self, port: int)`:
+        Replaces the port part of the URL specification, given a numeric port
+        number.
+        """
         ...
     def set_server_and_port(self, server_and_port: str) -> None:
         """Replaces the server and port parts of the URL specification simultaneously.
@@ -503,15 +509,15 @@ class HTTPDate:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: HTTPDate) -> None: ...
-    @overload
-    def __init__(self, format: str) -> None:
+    def __init__(self) -> None:
         """Decodes the string into a sensible date.  Returns 0 (!is_valid()) if the
         string cannot be correctly decoded.
         """
         ...
+    @overload
+    def __init__(self, copy: HTTPDate) -> None: ...
+    @overload
+    def __init__(self, format: str) -> None: ...
     @overload
     def __init__(self, time: int) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -565,24 +571,26 @@ class HTTPCookie:
     secure: bool
     @overload
     def __init__(self) -> None:
-        """Constructs an empty cookie."""
-        ...
-    @overload
-    def __init__(self, __param0: HTTPCookie) -> None: ...
-    @overload
-    def __init__(self, format: str, url: URLSpec) -> None:
-        """Constructs a cookie according to the indicated string, presumably the tag
+        """`(self)`:
+        Constructs an empty cookie.
+        
+        `(self, format: str, url: URLSpec)`:
+        Constructs a cookie according to the indicated string, presumably the tag
         of a Set-Cookie header.  There is no way to detect a formatting error in
         the string with this constructor.
-        """
-        ...
-    @overload
-    def __init__(self, name: str, path: str, domain: str) -> None:
-        """Constructs a cookie with the indicated name, path, and domain values, but
+        
+        `(self, name: str, path: str, domain: str)`:
+        Constructs a cookie with the indicated name, path, and domain values, but
         no other data.  This is most useful for looking up an existing cookie in
         the HTTPClient.
         """
         ...
+    @overload
+    def __init__(self, __param0: HTTPCookie) -> None: ...
+    @overload
+    def __init__(self, format: str, url: URLSpec) -> None: ...
+    @overload
+    def __init__(self, name: str, path: str, domain: str) -> None: ...
     def __lt__(self, other: HTTPCookie) -> bool: ...
     def set_name(self, name: str) -> None: ...
     def get_name(self) -> str:
@@ -1081,21 +1089,22 @@ class HTTPEntityTag:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: HTTPEntityTag) -> None: ...
-    @overload
-    def __init__(self, text: str) -> None:
-        """This constructor accepts an explicit weak flag and a literal (not quoted)
+    def __init__(self) -> None:
+        """`(self, weak: bool, tag: str)`:
+        This constructor accepts an explicit weak flag and a literal (not quoted)
         tag string.
-        """
-        ...
-    @overload
-    def __init__(self, weak: bool, tag: str) -> None:
-        """This constructor accepts a string as formatted from an HTTP server (e.g.
+        
+        `(self, text: str)`:
+        This constructor accepts a string as formatted from an HTTP server (e.g.
         the tag is quoted, with an optional W/ prefix.)
         """
         ...
+    @overload
+    def __init__(self, copy: HTTPEntityTag) -> None: ...
+    @overload
+    def __init__(self, text: str) -> None: ...
+    @overload
+    def __init__(self, weak: bool, tag: str) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: HTTPEntityTag) -> bool: ...
@@ -2085,17 +2094,18 @@ class Decompressor:
     def __init__(self, __param0: Decompressor) -> None: ...
     @overload
     def initiate(self, source_file: _Filename) -> int:
-        """Begins a background decompression of the named file (whose filename must
+        """`(self, source_file: Filename)`:
+        Begins a background decompression of the named file (whose filename must
         end in ".pz") to a new file without the .pz extension.  The source file is
         removed after successful completion.
-        """
-        ...
-    @overload
-    def initiate(self, source_file: _Filename, dest_file: _Filename) -> int:
-        """Begins a background decompression from the named source file to the named
+        
+        `(self, source_file: Filename, dest_file: Filename)`:
+        Begins a background decompression from the named source file to the named
         destination file.  The source file is removed after successful completion.
         """
         ...
+    @overload
+    def initiate(self, source_file: _Filename, dest_file: _Filename) -> int: ...
     def run(self) -> int:
         """Called each frame to do the next bit of work in the background task.
         Returns EU_ok if a chunk is completed but there is more to go, or
@@ -2104,16 +2114,17 @@ class Decompressor:
         ...
     @overload
     def decompress(self, source_file: _Filename) -> bool:
-        """Performs a foreground decompression of the named file; does not return
+        """`(self, source_file: Filename)`:
+        Performs a foreground decompression of the named file; does not return
         until the decompression is complete.
-        """
-        ...
-    @overload
-    def decompress(self, source_and_dest_file: Ramfile) -> bool:
-        """Does an in-memory decompression of the indicated Ramfile.  The decompressed
+        
+        `(self, source_and_dest_file: Ramfile)`:
+        Does an in-memory decompression of the indicated Ramfile.  The decompressed
         contents are written back into the same Ramfile on completion.
         """
         ...
+    @overload
+    def decompress(self, source_and_dest_file: Ramfile) -> bool: ...
     def get_progress(self) -> float:
         """Returns the ratio through the decompression step in the background."""
         ...
@@ -2134,14 +2145,17 @@ class DownloadDb:
     Status_extracted: ClassVar[Literal[3]]
     @overload
     def __init__(self) -> None:
-        """Primarily used for testing."""
+        """`(self)`:
+        Primarily used for testing.
+        
+        `(self, server_file: Filename, client_file: Filename)`; `(self, server_file: Ramfile, client_file: Filename)`:
+        Create a download db with these client and server dbs
+        """
         ...
     @overload
     def __init__(self, __param0: DownloadDb) -> None: ...
     @overload
-    def __init__(self, server_file: Ramfile | _Filename, client_file: _Filename) -> None:
-        """Create a download db with these client and server dbs"""
-        ...
+    def __init__(self, server_file: Ramfile | _Filename, client_file: _Filename) -> None: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
     def write_version_map(self, out: ostream) -> None: ...

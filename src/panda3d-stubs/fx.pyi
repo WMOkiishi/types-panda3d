@@ -259,12 +259,7 @@ class ProjectionScreen(PandaNode):
         """
         ...
     @overload
-    def recompute_if_stale(self, this_np: NodePath) -> bool:
-        """Calls recompute() only if the relative transform between the
-        ProjectionScreen and the projector has changed, or if any other relevant
-        property has changed.  Returns true if recomputed, false otherwise.
-        """
-        ...
+    def recompute_if_stale(self, this_np: NodePath) -> bool: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     setProjector = set_projector
@@ -345,7 +340,8 @@ class NonlinearImager:
     def __init__(self, __param0: NonlinearImager) -> None: ...
     @overload
     def add_screen(self, screen: ProjectionScreen) -> int:
-        """Adds a new ProjectionScreen to the list of screens that will be processed
+        """`(self, screen: NodePath, name: str)`:
+        Adds a new ProjectionScreen to the list of screens that will be processed
         by the NonlinearImager.  Each ProjectionScreen represents a view into the
         world.  It must be based on a linear camera (or whatever kind of camera is
         respected by the graphics engine).
@@ -358,16 +354,16 @@ class NonlinearImager:
         image will be applied to the screen geometry.
         
         The return value is the index number of the new screen.
-        """
-        ...
-    @overload
-    def add_screen(self, screen: NodePath, name: str) -> int:
-        """This version of this method is deprecated and will soon be removed.  Use
+        
+        `(self, screen: ProjectionScreen)`:
+        This version of this method is deprecated and will soon be removed.  Use
         the version that takes two parameters instead.
         
         @deprecated Use the version that takes two parameters instead.
         """
         ...
+    @overload
+    def add_screen(self, screen: NodePath, name: str) -> int: ...
     def find_screen(self, screen: NodePath) -> int:
         """Returns the index number of the first appearance of the indicated screen
         within the imager's list, or -1 if it does not appear.

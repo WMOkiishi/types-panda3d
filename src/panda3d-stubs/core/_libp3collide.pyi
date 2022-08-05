@@ -130,14 +130,16 @@ class CollisionBox(CollisionSolid):
     def dimensions(self) -> LVector3f: ...
     @overload
     def __init__(self, min: _Vec3f, max: _Vec3f) -> None:
-        """Create the Box by Specifying the Diagonal Points"""
-        ...
-    @overload
-    def __init__(self, center: _Vec3f, x: float, y: float, z: float) -> None:
-        """Create the Box by giving a Center and distances of each of the sides of
+        """`(self, min: LPoint3f, max: LPoint3f)`:
+        Create the Box by Specifying the Diagonal Points
+        
+        `(self, center: LPoint3f, x: float, y: float, z: float)`:
+        Create the Box by giving a Center and distances of each of the sides of
         box from the Center.
         """
         ...
+    @overload
+    def __init__(self, center: _Vec3f, x: float, y: float, z: float) -> None: ...
     def get_num_points(self) -> int:
         """Returns 8: the number of vertices of a rectangular solid."""
         ...
@@ -839,12 +841,7 @@ class CollisionPolygon(CollisionPlane):
         ...
     @overload
     @staticmethod
-    def verify_points(a: _Vec3f, b: _Vec3f, c: _Vec3f, d: _Vec3f) -> bool:
-        """Verifies that the indicated set of points will define a valid
-        CollisionPolygon: that is, at least three non-collinear points, with no
-        points repeated.
-        """
-        ...
+    def verify_points(a: _Vec3f, b: _Vec3f, c: _Vec3f, d: _Vec3f) -> bool: ...
     def is_valid(self) -> bool:
         """Returns true if the CollisionPolygon is valid (that is, it has at least
         three vertices), or false otherwise.
@@ -1056,14 +1053,13 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
     center: NodePath
     @overload
     def add_collider(self, collider: NodePath, target: NodePath) -> None:
-        """Adds a new collider to the list with a NodePath that will be updated with
+        """`(self, collider: NodePath, target: NodePath)`:
+        Adds a new collider to the list with a NodePath that will be updated with
         the collider's new position, or updates the existing collider with a new
         NodePath object.
-        """
-        ...
-    @overload
-    def add_collider(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface) -> None:
-        """Adds a new collider to the list with a NodePath that will be updated with
+        
+        `(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface)`:
+        Adds a new collider to the list with a NodePath that will be updated with
         the collider's new position, or updates the existing collider with a new
         NodePath object.
         
@@ -1072,6 +1068,8 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
         directly controlled by a DriveInterface.
         """
         ...
+    @overload
+    def add_collider(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface) -> None: ...
     def remove_collider(self, collider: NodePath) -> bool:
         """Removes the collider from the list of colliders that this handler knows
         about.
@@ -1487,22 +1485,23 @@ class CollisionRay(CollisionSolid):
     def get_direction(self) -> LVector3f: ...
     @overload
     def set_from_lens(self, camera: LensNode, point: LVecBase2f) -> bool:
-        """Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
+        """`(self, camera: LensNode, point: LPoint2f)`:
+        Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionRay so that it begins at the LensNode's near plane and extends to
         infinity, making it suitable for picking objects from the screen given a
         camera and a mouse location.
         
         Returns true if the point was acceptable, false otherwise.
-        """
-        ...
-    @overload
-    def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool:
-        """Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
+        
+        `(self, camera: LensNode, px: float, py: float)`:
+        Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionRay so that it begins at the LensNode's near plane and extends to
         infinity, making it suitable for picking objects from the screen given a
         camera and a mouse location.
         """
         ...
+    @overload
+    def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     setOrigin = set_origin
@@ -1546,14 +1545,16 @@ class CollisionParabola(CollisionSolid):
     t2: float
     @overload
     def __init__(self) -> None:
-        """Creates an invalid parabola."""
-        ...
-    @overload
-    def __init__(self, parabola: LParabolaf, t1: float, t2: float) -> None:
-        """Creates a parabola with the endpoints between t1 and t2 in the parametric
+        """`(self)`:
+        Creates an invalid parabola.
+        
+        `(self, parabola: LParabolaf, t1: float, t2: float)`:
+        Creates a parabola with the endpoints between t1 and t2 in the parametric
         space of the parabola.
         """
         ...
+    @overload
+    def __init__(self, parabola: LParabolaf, t1: float, t2: float) -> None: ...
     def set_parabola(self, parabola: LParabolaf) -> None:
         """Replaces the parabola specified by this solid."""
         ...
@@ -1616,22 +1617,23 @@ class CollisionSegment(CollisionSolid):
     def get_point_b(self) -> LPoint3f: ...
     @overload
     def set_from_lens(self, camera: LensNode, point: LVecBase2f) -> bool:
-        """Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
+        """`(self, camera: LensNode, point: LPoint2f)`:
+        Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionSegment so that it begins at the LensNode's near plane and extends
         to the far plane, making it suitable for picking objects from the screen
         given a camera and a mouse location.
         
         Returns true if the point was acceptable, false otherwise.
-        """
-        ...
-    @overload
-    def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool:
-        """Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
+        
+        `(self, camera: LensNode, px: float, py: float)`:
+        Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionSegment so that it begins at the LensNode's near plane and extends
         to the far plane, making it suitable for picking objects from the screen
         given a camera and a mouse location.
         """
         ...
+    @overload
+    def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     setPointA = set_point_a

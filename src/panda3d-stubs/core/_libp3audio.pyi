@@ -412,13 +412,13 @@ class AudioLoadRequest(AsyncTask):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: AudioLoadRequest) -> None: ...
-    @overload
-    def __init__(self, audio_manager: AudioManager, filename: str, positional: bool) -> None:
+    def __init__(self, __param0: AudioLoadRequest) -> None:
         """Create a new AudioLoadRequest, and add it to the loader via load_async(),
         to begin an asynchronous load.
         """
         ...
+    @overload
+    def __init__(self, audio_manager: AudioManager, filename: str, positional: bool) -> None: ...
     def get_audio_manager(self) -> AudioManager:
         """Returns the AudioManager that will serve this asynchronous
         AudioLoadRequest.

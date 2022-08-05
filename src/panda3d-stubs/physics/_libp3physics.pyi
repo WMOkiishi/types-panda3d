@@ -43,12 +43,15 @@ class PhysicsObject(TypedReferenceCount):
     def implicit_velocity(self) -> LVector3f: ...
     @overload
     def __init__(self) -> None:
-        """Default Constructor"""
+        """`(self)`:
+        Default Constructor
+        
+        `(self, copy: PhysicsObject)`:
+        copy constructor
+        """
         ...
     @overload
-    def __init__(self, copy: PhysicsObject) -> None:
-        """copy constructor"""
-        ...
+    def __init__(self, copy: PhysicsObject) -> None: ...
     def assign(self, other: PhysicsObject) -> PhysicsObject: ...
     def set_active(self, flag: bool) -> None:
         """Process Flag assignment"""
@@ -64,12 +67,15 @@ class PhysicsObject(TypedReferenceCount):
         ...
     @overload
     def set_position(self, pos: _Vec3f) -> None:
-        """Vector position assignment.  This is also used as the center of mass."""
+        """`(self, pos: LPoint3f)`:
+        Vector position assignment.  This is also used as the center of mass.
+        
+        `(self, x: float, y: float, z: float)`:
+        Piecewise position assignment
+        """
         ...
     @overload
-    def set_position(self, x: float, y: float, z: float) -> None:
-        """Piecewise position assignment"""
-        ...
+    def set_position(self, x: float, y: float, z: float) -> None: ...
     def get_position(self) -> LPoint3f:
         """Position Query"""
         ...
@@ -88,12 +94,15 @@ class PhysicsObject(TypedReferenceCount):
         ...
     @overload
     def set_velocity(self, vel: _Vec3f) -> None:
-        """Vector velocity assignment"""
+        """`(self, vel: LVector3f)`:
+        Vector velocity assignment
+        
+        `(self, x: float, y: float, z: float)`:
+        Piecewise velocity assignment
+        """
         ...
     @overload
-    def set_velocity(self, x: float, y: float, z: float) -> None:
-        """Piecewise velocity assignment"""
-        ...
+    def set_velocity(self, x: float, y: float, z: float) -> None: ...
     def get_velocity(self) -> LVector3f:
         """Velocity Query per second"""
         ...
@@ -383,13 +392,12 @@ class Physical(TypedReferenceCount):
     def objects(self) -> PhysicsObjectCollection: ...
     @overload
     def __init__(self, total_objects: int = ..., pre_alloc: bool = ...) -> None:
-        """copy constructor (note- does deep copy of pn's) but does NOT attach itself
+        """`(self, copy: Physical)`:
+        copy constructor (note- does deep copy of pn's) but does NOT attach itself
         to its template's physicsmanager.
-        """
-        ...
-    @overload
-    def __init__(self, copy: Physical) -> None:
-        """Default Constructor The idea here is that most physicals will NOT be
+        
+        `(self, total_objects: int = ..., pre_alloc: bool = ...)`:
+        Default Constructor The idea here is that most physicals will NOT be
         collections of sets (i.e.  particle systems and whatever else).  Because of
         this, the default constructor, unless otherwise specified, will
         automatically allocate and initialize one PhysicalObject.  This makes it
@@ -400,6 +408,8 @@ class Physical(TypedReferenceCount):
         the speed-vs-overhead deal.
         """
         ...
+    @overload
+    def __init__(self, copy: Physical) -> None: ...
     def get_physics_manager(self) -> PhysicsManager:
         """helpers"""
         ...
@@ -515,9 +525,7 @@ class PhysicalNode(PandaNode):
         """remove operation"""
         ...
     @overload
-    def remove_physical(self, index: int) -> None:
-        """remove operation"""
-        ...
+    def remove_physical(self, index: int) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_physicals(self) -> tuple[Physical, ...]: ...
@@ -540,12 +548,15 @@ class ActorNode(PhysicalNode):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None:
-        """Copy Constructor."""
+        """`(self, copy: ActorNode)`:
+        Copy Constructor.
+        
+        `(self, name: str = ...)`:
+        Constructor
+        """
         ...
     @overload
-    def __init__(self, copy: ActorNode) -> None:
-        """Constructor"""
-        ...
+    def __init__(self, copy: ActorNode) -> None: ...
     def get_physics_object(self) -> PhysicsObject: ...
     def set_contact_vector(self, contact_vector: _Vec3f) -> None: ...
     def get_contact_vector(self) -> LVector3f: ...
@@ -607,16 +618,17 @@ class AngularVectorForce(AngularForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: AngularVectorForce) -> None:
-        """copy constructor"""
+        """`(self, copy: AngularVectorForce)`:
+        copy constructor
+        
+        `(self, quat: LRotationf)`; `(self, h: float, p: float, r: float)`:
+        constructor
+        """
         ...
     @overload
-    def __init__(self, quat: _Vec4f) -> None:
-        """constructor"""
-        ...
+    def __init__(self, quat: _Vec4f) -> None: ...
     @overload
-    def __init__(self, h: float, p: float, r: float) -> None:
-        """constructor"""
-        ...
+    def __init__(self, h: float, p: float, r: float) -> None: ...
     def set_quat(self, quat: _Vec4f) -> None: ...
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     def get_local_quat(self) -> LRotationf: ...
@@ -655,9 +667,7 @@ class ForceNode(PandaNode):
         """remove operation"""
         ...
     @overload
-    def remove_force(self, index: int) -> None:
-        """remove operation"""
-        ...
+    def remove_force(self, index: int) -> None: ...
     def write_forces(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
         ...
@@ -684,12 +694,15 @@ class LinearControlForce(LinearForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...) -> None:
-        """Copy Constructor"""
+        """`(self, copy: LinearControlForce)`:
+        Copy Constructor
+        
+        `(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...)`:
+        Vector Constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearControlForce) -> None:
-        """Vector Constructor"""
-        ...
+    def __init__(self, copy: LinearControlForce) -> None: ...
     def clear_physics_object(self) -> None:
         """encapsulating wrapper"""
         ...
@@ -701,12 +714,15 @@ class LinearControlForce(LinearForce):
         ...
     @overload
     def set_vector(self, v: _Vec3f) -> None:
-        """encapsulating wrapper"""
+        """`(self, v: LVector3f)`:
+        encapsulating wrapper
+        
+        `(self, x: float, y: float, z: float)`:
+        piecewise encapsulating wrapper
+        """
         ...
     @overload
-    def set_vector(self, x: float, y: float, z: float) -> None:
-        """piecewise encapsulating wrapper"""
-        ...
+    def set_vector(self, x: float, y: float, z: float) -> None: ...
     def get_local_vector(self) -> LVector3f: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -727,12 +743,15 @@ class LinearCylinderVortexForce(LinearForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...) -> None:
-        """copy Constructor"""
+        """`(self, copy: LinearCylinderVortexForce)`:
+        copy Constructor
+        
+        `(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...)`:
+        Simple Constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearCylinderVortexForce) -> None:
-        """Simple Constructor"""
-        ...
+    def __init__(self, copy: LinearCylinderVortexForce) -> None: ...
     def set_coef(self, coef: float) -> None: ...
     def get_coef(self) -> float: ...
     def set_radius(self, radius: float) -> None: ...
@@ -810,12 +829,15 @@ class LinearFrictionForce(LinearForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, coef: float = ..., a: float = ..., m: bool = ...) -> None:
-        """copy constructor"""
+        """`(self, copy: LinearFrictionForce)`:
+        copy constructor
+        
+        `(self, coef: float = ..., a: float = ..., m: bool = ...)`:
+        Constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearFrictionForce) -> None:
-        """Constructor"""
-        ...
+    def __init__(self, copy: LinearFrictionForce) -> None: ...
     def set_coef(self, coef: float) -> None: ...
     def get_coef(self) -> float: ...
     @staticmethod
@@ -838,12 +860,15 @@ class LinearJitterForce(LinearRandomForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, a: float = ..., m: bool = ...) -> None:
-        """copy constructor"""
+        """`(self, copy: LinearJitterForce)`:
+        copy constructor
+        
+        `(self, a: float = ..., m: bool = ...)`:
+        constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearJitterForce) -> None:
-        """constructor"""
-        ...
+    def __init__(self, copy: LinearJitterForce) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
@@ -853,12 +878,15 @@ class LinearNoiseForce(LinearRandomForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, a: float = ..., m: bool = ...) -> None:
-        """copy constructor"""
+        """`(self, copy: LinearNoiseForce)`:
+        copy constructor
+        
+        `(self, a: float = ..., m: bool = ...)`:
+        constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearNoiseForce) -> None:
-        """constructor"""
-        ...
+    def __init__(self, copy: LinearNoiseForce) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
@@ -868,16 +896,17 @@ class LinearSinkForce(LinearDistanceForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
-        """Simple constructor"""
+        """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...)`:
+        Simple constructor
+        
+        `(self, copy: LinearSinkForce)`:
+        copy constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearSinkForce) -> None:
-        """Simple constructor"""
-        ...
+    def __init__(self, copy: LinearSinkForce) -> None: ...
     @overload
-    def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None:
-        """copy constructor"""
-        ...
+    def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
@@ -887,16 +916,17 @@ class LinearSourceForce(LinearDistanceForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
-        """Simple constructor"""
+        """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...)`:
+        Simple constructor
+        
+        `(self, copy: LinearSourceForce)`:
+        copy constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearSourceForce) -> None:
-        """Simple constructor"""
-        ...
+    def __init__(self, copy: LinearSourceForce) -> None: ...
     @overload
-    def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None:
-        """copy constructor"""
-        ...
+    def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type
@@ -918,24 +948,31 @@ class LinearVectorForce(LinearForce):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...) -> None:
-        """Vector Constructor"""
+        """`(self, vec: LVector3f, a: float = ..., mass: bool = ...)`:
+        Vector Constructor
+        
+        `(self, copy: LinearVectorForce)`:
+        Copy Constructor
+        
+        `(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...)`:
+        Default/Piecewise constructor
+        """
         ...
     @overload
-    def __init__(self, copy: LinearVectorForce) -> None:
-        """Copy Constructor"""
-        ...
+    def __init__(self, copy: LinearVectorForce) -> None: ...
     @overload
-    def __init__(self, vec: _Vec3f, a: float = ..., mass: bool = ...) -> None:
-        """Default/Piecewise constructor"""
-        ...
+    def __init__(self, vec: _Vec3f, a: float = ..., mass: bool = ...) -> None: ...
     @overload
     def set_vector(self, v: _Vec3f) -> None:
-        """encapsulating wrapper"""
+        """`(self, v: LVector3f)`:
+        encapsulating wrapper
+        
+        `(self, x: float, y: float, z: float)`:
+        piecewise encapsulating wrapper
+        """
         ...
     @overload
-    def set_vector(self, x: float, y: float, z: float) -> None:
-        """piecewise encapsulating wrapper"""
-        ...
+    def set_vector(self, x: float, y: float, z: float) -> None: ...
     def get_local_vector(self) -> LVector3f: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -1029,16 +1066,17 @@ class PhysicsManager:
         ...
     @overload
     def do_physics(self, dt: float) -> None:
-        """This is the main high-level API call.  Performs integration on every
+        """`(self, dt: float)`:
+        This is the main high-level API call.  Performs integration on every
         attached Physical.
-        """
-        ...
-    @overload
-    def do_physics(self, dt: float, p: Physical) -> None:
-        """This is the main high-level API call.  Performs integration on a single
+        
+        `(self, dt: float, p: Physical)`:
+        This is the main high-level API call.  Performs integration on a single
         physical.  Make sure its associated forces are active.
         """
         ...
+    @overload
+    def do_physics(self, dt: float, p: Physical) -> None: ...
     def init_random_seed(self) -> None:
         """One-time config function, sets up the random seed used by the physics and
         particle systems.  For synchronizing across distributed computers

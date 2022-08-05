@@ -16,22 +16,22 @@ class AIBehaviors:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: AIBehaviors) -> None: ...
     @overload
-    def seek(self, pos: _Vec3f, seek_wt: float = ...) -> None: ...
-    @overload
-    def seek(self, target_object: NodePath, seek_wt: float = ...) -> None:
+    def seek(self, pos: _Vec3f, seek_wt: float = ...) -> None:
         """This function activates seek and makes an object of the Seek class.  This
         is the function we want the user to call for seek to be done.  This
         function is overloaded to accept a NodePath or an LVecBase3.
         """
         ...
     @overload
-    def flee(self, pos: _Vec3f, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None: ...
+    def seek(self, target_object: NodePath, seek_wt: float = ...) -> None: ...
     @overload
-    def flee(self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None:
+    def flee(self, pos: _Vec3f, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None:
         """This function activates flee_activate and creates an object of the Flee
         class.  This function is overloaded to accept a NodePath or an LVecBase3.
         """
         ...
+    @overload
+    def flee(self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None: ...
     def pursue(self, target_object: NodePath, pursue_wt: float = ...) -> None:
         """This function activates pursue.  This is the function we want the user to
         call for pursue to be done.
@@ -83,12 +83,7 @@ class AIBehaviors:
         """
         ...
     @overload
-    def path_find_to(self, target: NodePath, type: str = ...) -> None:
-        """This function checks for the source and target in the navigation mesh for
-        its availability and then finds the best path via the A* algorithm Then it
-        calls the path follower to make the object follow the path.
-        """
-        ...
+    def path_find_to(self, target: NodePath, type: str = ...) -> None: ...
     def add_static_obstacle(self, obstacle: NodePath) -> None:
         """This function allows the user to dynamically add obstacles to the game
         environment.  The function will update the nodes within the bounding volume

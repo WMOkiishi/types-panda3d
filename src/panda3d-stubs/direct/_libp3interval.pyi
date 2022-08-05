@@ -183,16 +183,17 @@ class CInterval(TypedReferenceCount):
         ...
     @overload
     def resume(self) -> None:
-        """Restarts the interval from its current point after a previous call to
+        """`(self)`:
+        Restarts the interval from its current point after a previous call to
+        pause().
+        
+        `(self, start_t: float)`:
+        Restarts the interval from the indicated point after a previous call to
         pause().
         """
         ...
     @overload
-    def resume(self, start_t: float) -> None:
-        """Restarts the interval from the indicated point after a previous call to
-        pause().
-        """
-        ...
+    def resume(self, start_t: float) -> None: ...
     def resume_until(self, end_t: float) -> None:
         """Restarts the interval from the current point after a previous call to
         pause() (or a previous play-to-point-and-stop), to play until the indicated
@@ -512,9 +513,7 @@ class CConstrainHprInterval(CConstraintInterval):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: CConstrainHprInterval) -> None: ...
-    @overload
-    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, hprOffset: _Vec3f = ...) -> None:
+    def __init__(self, __param0: CConstrainHprInterval) -> None:
         """Constructs a constraint interval that will constrain the orientation of one
         node to the orientation of another, possibly with an added rotation.
         
@@ -523,6 +522,8 @@ class CConstrainHprInterval(CConstraintInterval):
         node's local orientation will be copied unaltered.
         """
         ...
+    @overload
+    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, hprOffset: _Vec3f = ...) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
         ...
@@ -541,9 +542,7 @@ class CConstrainPosHprInterval(CConstraintInterval):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: CConstrainPosHprInterval) -> None: ...
-    @overload
-    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: _Vec3f = ..., hprOffset: _Vec3f = ...) -> None:
+    def __init__(self, __param0: CConstrainPosHprInterval) -> None:
         """Constructs a constraint interval that will constrain the position and
         orientation of one node to the position and orientation of another.
         
@@ -553,6 +552,8 @@ class CConstrainPosHprInterval(CConstraintInterval):
         unaltered.
         """
         ...
+    @overload
+    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: _Vec3f = ..., hprOffset: _Vec3f = ...) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
         ...
@@ -571,9 +572,7 @@ class CConstrainPosInterval(CConstraintInterval):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: CConstrainPosInterval) -> None: ...
-    @overload
-    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: _Vec3f = ...) -> None:
+    def __init__(self, __param0: CConstrainPosInterval) -> None:
         """Constructs a constraint interval that will constrain the position of one
         node to the position of another.
         
@@ -582,6 +581,8 @@ class CConstrainPosInterval(CConstraintInterval):
         node's local position will be copied unaltered.
         """
         ...
+    @overload
+    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: _Vec3f = ...) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
         ...
@@ -600,9 +601,7 @@ class CConstrainTransformInterval(CConstraintInterval):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: CConstrainTransformInterval) -> None: ...
-    @overload
-    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool) -> None:
+    def __init__(self, __param0: CConstrainTransformInterval) -> None:
         """Constructs a constraint interval that will constrain the transform of one
         node to the transform of another.  To clarify, the transform of node will
         be copied to target.
@@ -612,6 +611,8 @@ class CConstrainTransformInterval(CConstraintInterval):
         local transform will be copied unaltered.
         """
         ...
+    @overload
+    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
         ...
@@ -691,9 +692,7 @@ class CLerpNodePathInterval(CLerpInterval):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: CLerpNodePathInterval) -> None: ...
-    @overload
-    def __init__(self, name: str, duration: float, blend_type: _CLerpInterval_BlendType, bake_in_start: bool, fluid: bool, node: NodePath, other: NodePath) -> None:
+    def __init__(self, __param0: CLerpNodePathInterval) -> None:
         """Constructs a lerp interval that will lerp some properties on the indicated
         node, possibly relative to the indicated other node (if other is nonempty).
         
@@ -717,6 +716,8 @@ class CLerpNodePathInterval(CLerpInterval):
         otherwise, it is reset.
         """
         ...
+    @overload
+    def __init__(self, name: str, duration: float, blend_type: _CLerpInterval_BlendType, bake_in_start: bool, fluid: bool, node: NodePath, other: NodePath) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the node being lerped."""
         ...
@@ -749,7 +750,8 @@ class CLerpNodePathInterval(CLerpInterval):
         ...
     @overload
     def set_end_hpr(self, quat: _Vec4f) -> None:
-        """Indicates that the rotation of the node should be lerped, and specifies the
+        """`(self, quat: LQuaternionf)`:
+        Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
         
@@ -757,11 +759,9 @@ class CLerpNodePathInterval(CLerpInterval):
         function name is set_end_hpr().  The quaternion will be implicitly
         converted to a HPR trio, and the lerp will be performed in HPR space,
         componentwise.
-        """
-        ...
-    @overload
-    def set_end_hpr(self, hpr: _Vec3f) -> None:
-        """Indicates that the rotation of the node should be lerped, and specifies the
+        
+        `(self, hpr: LVecBase3f)`:
+        Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
         
@@ -770,6 +770,8 @@ class CLerpNodePathInterval(CLerpInterval):
         the lerp.
         """
         ...
+    @overload
+    def set_end_hpr(self, hpr: _Vec3f) -> None: ...
     def set_start_quat(self, quat: _Vec4f) -> None:
         """Indicates the initial rotation of the lerped node.  This is meaningful only
         if either set_end_quat() or set_end_hpr() is also called.  This parameter
@@ -781,7 +783,8 @@ class CLerpNodePathInterval(CLerpInterval):
         ...
     @overload
     def set_end_quat(self, quat: _Vec4f) -> None:
-        """Indicates that the rotation of the node should be lerped, and specifies the
+        """`(self, quat: LQuaternionf)`:
+        Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
         
@@ -790,11 +793,9 @@ class CLerpNodePathInterval(CLerpInterval):
         the lerp.
         
         The given quaternion needs to be normalized.
-        """
-        ...
-    @overload
-    def set_end_quat(self, hpr: _Vec3f) -> None:
-        """Indicates that the rotation of the node should be lerped, and specifies the
+        
+        `(self, hpr: LVecBase3f)`:
+        Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
         
@@ -808,6 +809,8 @@ class CLerpNodePathInterval(CLerpInterval):
         spherical lerp.
         """
         ...
+    @overload
+    def set_end_quat(self, hpr: _Vec3f) -> None: ...
     def set_start_scale(self, scale: _Vec3f | float) -> None:
         """Indicates the initial scale of the lerped node.  This is meaningful only if
         set_end_scale() is also called.  This parameter is optional; if
@@ -1205,13 +1208,13 @@ class WaitInterval(CInterval):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: WaitInterval) -> None: ...
-    @overload
-    def __init__(self, duration: float) -> None:
+    def __init__(self, __param0: WaitInterval) -> None:
         """All Wait intervals have the same name.  No one really cares if their names
         are unique, after all.
         """
         ...
+    @overload
+    def __init__(self, duration: float) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getClassType = get_class_type

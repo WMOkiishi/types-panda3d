@@ -662,28 +662,29 @@ class Notify:
         ...
     @overload
     def get_category(self, fullname: str) -> NotifyCategory:
-        """Finds or creates a new Category given the fullname of the Category.  This
+        """`(self, fullname: str)`:
+        Finds or creates a new Category given the fullname of the Category.  This
         name should be a sequence of colon-separated names of parent Categories,
         ending in the basename of this Category, e.g.  display:glxdisplay.  This is
         a shorthand way to define a Category when a pointer to its parent is not
         handy.
-        """
-        ...
-    @overload
-    def get_category(self, basename: str, parent_category: NotifyCategory) -> NotifyCategory:
-        """Finds or creates a new Category given the basename of the category and its
+        
+        `(self, basename: str, parent_category: NotifyCategory)`:
+        Finds or creates a new Category given the basename of the category and its
         parent in the category hierarchy.  The parent pointer may be NULL to
         indicate this is a top-level Category.
-        """
-        ...
-    @overload
-    def get_category(self, basename: str, parent_fullname: str) -> NotifyCategory:
-        """Finds or creates a new Category given the basename of the category and the
+        
+        `(self, basename: str, parent_fullname: str)`:
+        Finds or creates a new Category given the basename of the category and the
         fullname of its parent.  This is another way to create a category when you
         don't have a pointer to its parent handy, but you know the name of its
         parent.  If the parent Category does not already exist, it will be created.
         """
         ...
+    @overload
+    def get_category(self, basename: str, parent_category: NotifyCategory) -> NotifyCategory: ...
+    @overload
+    def get_category(self, basename: str, parent_fullname: str) -> NotifyCategory: ...
     @staticmethod
     def out() -> ostream:
         """A convenient way to get the ostream that should be written to for a Notify-
@@ -1061,14 +1062,14 @@ class ConfigVariable(ConfigVariableBase):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: ConfigVariable) -> None: ...
-    @overload
-    def __init__(self, name: str) -> None:
+    def __init__(self, __param0: ConfigVariable) -> None:
         """Use this constructor to make a ConfigVariable of an unspecified type.
         Usually you'd want to do this just to reference a previously-defined
         ConfigVariable of a specific type, without having to know what type it is.
         """
         ...
+    @overload
+    def __init__(self, name: str) -> None: ...
     def get_string_value(self) -> str:
         """Returns the toplevel value of the variable, formatted as a string."""
         ...
@@ -1445,11 +1446,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         """
         ...
     @overload
-    def append_path(self, path: str, separator: str = ...) -> None:
-        """Adds all of the directories listed in the search path to the end of the
-        search list.
-        """
-        ...
+    def append_path(self, path: str, separator: str = ...) -> None: ...
     def prepend_path(self, path: ConfigVariableSearchPath | DSearchPath) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
@@ -1472,14 +1469,13 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         ...
     @overload
     def find_all_files(self, filename: _Filename) -> DSearchPath.Results:
-        """This variant of find_all_files() returns the new Results object, instead of
+        """`(self, filename: Filename)`:
+        This variant of find_all_files() returns the new Results object, instead of
         filling on in on the parameter list.  This is a little more convenient to
         call from Python.
-        """
-        ...
-    @overload
-    def find_all_files(self, filename: _Filename, results: DSearchPath.Results) -> int:
-        """Searches all the directories in the search list for the indicated file, in
+        
+        `(self, filename: Filename, results: DSearchPath.Results)`:
+        Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
         found, if any.  Returns the number of matches found.
         
@@ -1487,6 +1483,8 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         otherwise, the newly-found files will be appended to the list.
         """
         ...
+    @overload
+    def find_all_files(self, filename: _Filename, results: DSearchPath.Results) -> int: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
     def get_directories(self) -> tuple[Filename, ...]: ...
@@ -1771,14 +1769,16 @@ class StreamReader:
     def istream(self) -> istream: ...
     @overload
     def __init__(self, copy: StreamReader) -> None:
-        """The copy constructor does not copy ownership of the stream."""
-        ...
-    @overload
-    def __init__(self, _in: istream, owns_stream: bool) -> None:
-        """If owns_stream is true, the stream pointer will be deleted when the
+        """`(self, copy: StreamReader)`:
+        The copy constructor does not copy ownership of the stream.
+        
+        `(self, _in: istream, owns_stream: bool)`:
+        If owns_stream is true, the stream pointer will be deleted when the
         StreamReader destructs.
         """
         ...
+    @overload
+    def __init__(self, _in: istream, owns_stream: bool) -> None: ...
     def assign(self, copy: StreamReader) -> StreamReader: ...
     def get_istream(self) -> istream:
         """Returns the stream in use."""

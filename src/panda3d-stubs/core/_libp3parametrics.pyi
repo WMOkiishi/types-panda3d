@@ -80,14 +80,16 @@ class ParametricCurve(PandaNode):
         ...
     @overload
     def calc_length(self) -> float:
-        """Approximates the length of the entire curve to within a few decimal places."""
-        ...
-    @overload
-    def calc_length(self, _from: float, to: float) -> float:
-        """Approximates the length of the curve segment from parametric time 'from' to
+        """`(self)`:
+        Approximates the length of the entire curve to within a few decimal places.
+        
+        `(self, _from: float, to: float)`:
+        Approximates the length of the curve segment from parametric time 'from' to
         time 'to'.
         """
         ...
+    @overload
+    def calc_length(self, _from: float, to: float) -> float: ...
     def find_length(self, start_t: float, length_offset: float) -> float:
         """Returns the parametric value corresponding to the indicated distance along
         the curve from the starting parametric value.
@@ -133,16 +135,17 @@ class ParametricCurve(PandaNode):
         ...
     @overload
     def write_egg(self, filename: _Filename, cs: _CoordinateSystem = ...) -> bool:
-        """Writes an egg description of the nurbs curve to the specified output file.
+        """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
+        Writes an egg description of the nurbs curve to the specified output file.
         Returns true if the file is successfully written.
-        """
-        ...
-    @overload
-    def write_egg(self, out: ostream, filename: _Filename, cs: _CoordinateSystem) -> bool:
-        """Writes an egg description of the nurbs curve to the specified output
+        
+        `(self, out: ostream, filename: Filename, cs: _CoordinateSystem)`:
+        Writes an egg description of the nurbs curve to the specified output
         stream.  Returns true if the file is successfully written.
         """
         ...
+    @overload
+    def write_egg(self, out: ostream, filename: _Filename, cs: _CoordinateSystem) -> bool: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     isValid = is_valid
@@ -210,14 +213,16 @@ class ParametricCurveCollection(ReferenceCount):
     def __init__(self, __param0: ParametricCurveCollection) -> None: ...
     @overload
     def add_curve(self, curve: ParametricCurve) -> None:
-        """Adds a new ParametricCurve to the collection."""
-        ...
-    @overload
-    def add_curve(self, curve: ParametricCurve, index: int) -> None:
-        """Adds a new ParametricCurve to the collection at the indicated index.
+        """`(self, curve: ParametricCurve)`:
+        Adds a new ParametricCurve to the collection.
+        
+        `(self, curve: ParametricCurve, index: int)`:
+        Adds a new ParametricCurve to the collection at the indicated index.
         @deprecated Use insert_curve(index, curve) instead.
         """
         ...
+    @overload
+    def add_curve(self, curve: ParametricCurve, index: int) -> None: ...
     def insert_curve(self, index: int, curve: ParametricCurve) -> None:
         """Adds a new ParametricCurve to the collection at the indicated index."""
         ...
@@ -228,16 +233,17 @@ class ParametricCurveCollection(ReferenceCount):
         ...
     @overload
     def remove_curve(self, curve: ParametricCurve) -> bool:
-        """Removes the indicated ParametricCurve from the collection.  Returns true if
+        """`(self, curve: ParametricCurve)`:
+        Removes the indicated ParametricCurve from the collection.  Returns true if
         the curve was removed, false if it was not a member of the collection.
-        """
-        ...
-    @overload
-    def remove_curve(self, index: int) -> None:
-        """Removes the indicated ParametricCurve from the collection, by its index
+        
+        `(self, index: int)`:
+        Removes the indicated ParametricCurve from the collection, by its index
         number.
         """
         ...
+    @overload
+    def remove_curve(self, index: int) -> None: ...
     def set_curve(self, index: int, curve: ParametricCurve) -> None:
         """Replaces the indicated ParametricCurve from the collection, by its index
         number.
@@ -316,7 +322,8 @@ class ParametricCurveCollection(ReferenceCount):
         ...
     @overload
     def evaluate(self, t: float, result: _Mat4f, cs: _CoordinateSystem = ...) -> bool:
-        """Computes the transform matrix representing translation to the position
+        """`(self, t: float, result: LMatrix4f, cs: _CoordinateSystem = ...)`:
+        Computes the transform matrix representing translation to the position
         indicated by the first XYZ curve in the collection and the rotation
         indicated by the first HPR curve in the collection, after t has been
         modified by all the timewarp curves in the collection applied in sequence,
@@ -325,11 +332,9 @@ class ParametricCurveCollection(ReferenceCount):
         Returns true if the point is valid (i.e.  t is within the bounds indicated
         by all the timewarp curves and within the bounds of the curves themselves),
         or false otherwise.
-        """
-        ...
-    @overload
-    def evaluate(self, t: float, xyz: _Vec3f, hpr: _Vec3f) -> bool:
-        """Computes the position and rotation represented by the first XYZ and HPR
+        
+        `(self, t: float, xyz: LVecBase3f, hpr: LVecBase3f)`:
+        Computes the position and rotation represented by the first XYZ and HPR
         curves in the collection at the given point t, after t has been modified by
         all the timewarp curves in the collection applied in sequence, from back to
         front.
@@ -339,6 +344,8 @@ class ParametricCurveCollection(ReferenceCount):
         or false otherwise.
         """
         ...
+    @overload
+    def evaluate(self, t: float, xyz: _Vec3f, hpr: _Vec3f) -> bool: ...
     def evaluate_t(self, t: float) -> float:
         """Determines the value of t that should be passed to the XYZ and HPR curves,
         after applying the given value of t to all the timewarps.  Return -1.0f if
@@ -359,12 +366,7 @@ class ParametricCurveCollection(ReferenceCount):
         """
         ...
     @overload
-    def adjust_xyz(self, t: float, x: float, y: float, z: float) -> bool:
-        """Adjust the XYZ curve at the indicated time to the new value.  The curve
-        shape will change correspondingly.  Returns true if successful, false if
-        unable to make the adjustment for some reason.
-        """
-        ...
+    def adjust_xyz(self, t: float, x: float, y: float, z: float) -> bool: ...
     @overload
     def adjust_hpr(self, t: float, xyz: _Vec3f) -> bool:
         """Adjust the HPR curve at the indicated time to the new value.  The curve
@@ -373,12 +375,7 @@ class ParametricCurveCollection(ReferenceCount):
         """
         ...
     @overload
-    def adjust_hpr(self, t: float, h: float, p: float, r: float) -> bool:
-        """Adjust the HPR curve at the indicated time to the new value.  The curve
-        shape will change correspondingly.  Returns true if successful, false if
-        unable to make the adjustment for some reason.
-        """
-        ...
+    def adjust_hpr(self, t: float, h: float, p: float, r: float) -> bool: ...
     def recompute(self) -> bool:
         """Ensures all the curves are freshly computed and up-to-date.  Returns true
         if everything is valid, false if at least one curve is incorrect.
@@ -404,16 +401,17 @@ class ParametricCurveCollection(ReferenceCount):
         ...
     @overload
     def write_egg(self, filename: _Filename, cs: _CoordinateSystem = ...) -> bool:
-        """Writes an egg description of all the nurbs curves in the collection to the
+        """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
+        Writes an egg description of all the nurbs curves in the collection to the
         specified output file.  Returns true if the file is successfully written.
-        """
-        ...
-    @overload
-    def write_egg(self, out: ostream, filename: _Filename, cs: _CoordinateSystem) -> bool:
-        """Writes an egg description of all the nurbs curves in the collection to the
+        
+        `(self, out: ostream, filename: Filename, cs: _CoordinateSystem)`:
+        Writes an egg description of all the nurbs curves in the collection to the
         specified output stream.  Returns true if the file is successfully written.
         """
         ...
+    @overload
+    def write_egg(self, out: ostream, filename: _Filename, cs: _CoordinateSystem) -> bool: ...
     def get_curves(self) -> tuple[ParametricCurve, ...]: ...
     def get_timewarp_curves(self) -> tuple[ParametricCurve, ...]: ...
     addCurve = add_curve
@@ -564,11 +562,11 @@ class HermiteCurve(PiecewiseCurve):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, pc: ParametricCurve) -> None:
+    def __init__(self) -> None:
         """Constructs a Hermite from the indicated (possibly non-hermite) curve."""
         ...
+    @overload
+    def __init__(self, pc: ParametricCurve) -> None: ...
     def get_num_cvs(self) -> int:
         """Returns the number of CV's in the curve."""
         ...
@@ -585,13 +583,13 @@ class HermiteCurve(PiecewiseCurve):
         """
         ...
     @overload
-    def append_cv(self, type: int, v: _Vec3f) -> int: ...
-    @overload
-    def append_cv(self, type: int, x: float, y: float, z: float) -> int:
+    def append_cv(self, type: int, v: _Vec3f) -> int:
         """Adds a new CV to the end of the curve.  The new CV is given initial in/out
         tangents of 0.  The return value is the index of the new CV.
         """
         ...
+    @overload
+    def append_cv(self, type: int, x: float, y: float, z: float) -> int: ...
     def remove_cv(self, n: int) -> bool:
         """Removes the given CV from the curve.  Returns true if the CV existed, false
         otherwise.
@@ -614,27 +612,27 @@ class HermiteCurve(PiecewiseCurve):
         """
         ...
     @overload
-    def set_cv_point(self, n: int, v: _Vec3f) -> bool: ...
-    @overload
-    def set_cv_point(self, n: int, x: float, y: float, z: float) -> bool:
+    def set_cv_point(self, n: int, v: _Vec3f) -> bool:
         """Changes the given CV's position."""
         ...
     @overload
-    def set_cv_in(self, n: int, v: _Vec3f) -> bool: ...
+    def set_cv_point(self, n: int, x: float, y: float, z: float) -> bool: ...
     @overload
-    def set_cv_in(self, n: int, x: float, y: float, z: float) -> bool:
+    def set_cv_in(self, n: int, v: _Vec3f) -> bool:
         """Changes the given CV's in tangent.  Depending on the continuity type, this
         may also adjust the out tangent.
         """
         ...
     @overload
-    def set_cv_out(self, n: int, v: _Vec3f) -> bool: ...
+    def set_cv_in(self, n: int, x: float, y: float, z: float) -> bool: ...
     @overload
-    def set_cv_out(self, n: int, x: float, y: float, z: float) -> bool:
+    def set_cv_out(self, n: int, v: _Vec3f) -> bool:
         """Changes the given CV's out tangent.  Depending on the continuity type, this
         may also adjust the in tangent.
         """
         ...
+    @overload
+    def set_cv_out(self, n: int, x: float, y: float, z: float) -> bool: ...
     def set_cv_tstart(self, n: int, tstart: float) -> bool:
         """Changes the given CV's parametric starting time.  This may affect the shape
         of the curve.
@@ -718,9 +716,7 @@ class NurbsCurveInterface:
         """Repositions the indicated CV.  Returns true if successful, false otherwise."""
         ...
     @overload
-    def set_cv_point(self, n: int, x: float, y: float, z: float) -> bool:
-        """Repositions the indicated CV.  Returns true if successful, false otherwise."""
-        ...
+    def set_cv_point(self, n: int, x: float, y: float, z: float) -> bool: ...
     def get_cv_point(self, n: int) -> LVecBase3f:
         """Returns the position of the indicated CV."""
         ...
@@ -781,13 +777,13 @@ class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, pc: ParametricCurve) -> None:
+    def __init__(self) -> None:
         """Constructs a NURBS curve equivalent to the indicated (possibly non-NURBS)
         curve.
         """
         ...
+    @overload
+    def __init__(self, pc: ParametricCurve) -> None: ...
     def upcast_to_PiecewiseCurve(self) -> PiecewiseCurve: ...
     def upcast_to_NurbsCurveInterface(self) -> NurbsCurveInterface: ...
     @staticmethod
@@ -967,39 +963,50 @@ class NurbsCurveEvaluator(ReferenceCount):
         ...
     @overload
     def set_vertex(self, i: int, vertex: _Vec4f) -> None:
-        """Sets the nth control vertex of the curve.  This flavor sets the vertex as a
+        """`(self, i: int, vertex: LVecBase3f, weight: float = ...)`:
+        Sets the nth control vertex of the curve.  This flavor sets the vertex as a
         3-d coordinate and a weight; the 3-d coordinate values are implicitly
         scaled up by the weight factor.
-        """
-        ...
-    @overload
-    def set_vertex(self, i: int, vertex: _Vec3f, weight: float = ...) -> None:
-        """Sets the nth control vertex of the curve, as a vertex in 4-d homogeneous
+        
+        `(self, i: int, vertex: LVecBase4f)`:
+        Sets the nth control vertex of the curve, as a vertex in 4-d homogeneous
         space.  In this form, the first three components of the vertex should
         already have been scaled by the fourth component, which is the homogeneous
         weight.
         """
         ...
     @overload
+    def set_vertex(self, i: int, vertex: _Vec3f, weight: float = ...) -> None: ...
+    @overload
     def get_vertex(self, i: int) -> LVecBase4f:
-        """Returns the nth control vertex of the curve, relative to its indicated
+        """`(self, i: int)`:
+        Returns the nth control vertex of the curve, relative to its indicated
+        coordinate space.
+        
+        `(self, i: int, rel_to: NodePath)`:
+        Returns the nth control vertex of the curve, relative to the given
         coordinate space.
         """
         ...
     @overload
-    def get_vertex(self, i: int, rel_to: NodePath) -> LVecBase4f:
-        """Returns the nth control vertex of the curve, relative to the given
-        coordinate space.
-        """
-        ...
+    def get_vertex(self, i: int, rel_to: NodePath) -> LVecBase4f: ...
     def set_vertex_space(self, i: int, space: NodePath | str) -> None:
-        """Sets the coordinate space of the nth control vertex.  If this is not
+        """`(self, i: int, space: NodePath)`:
+        Sets the coordinate space of the nth control vertex.  If this is not
         specified, or is set to an empty NodePath, the nth control vertex is deemed
         to be in the coordinate space passed to evaluate().
         
         This specifies the space as a fixed NodePath, which is always the same
         NodePath.  Also see setting the space as a path string, which can specify a
         different NodePath for different instances of the curve.
+        
+        `(self, i: int, space: str)`:
+        Sets the coordinate space of the nth control vertex.  If this is not
+        specified, or is set to an empty string, the nth control vertex is deemed
+        to be in the coordinate space passed to evaluate().
+        
+        This specifies the space as a string, which describes the path to find the
+        node relative to the rel_to NodePath when the curve is evaluated.
         """
         ...
     def get_vertex_space(self, i: int, rel_to: NodePath) -> NodePath:
@@ -1062,19 +1069,20 @@ class NurbsCurveEvaluator(ReferenceCount):
         ...
     @overload
     def evaluate(self, rel_to: NodePath = ...) -> NurbsCurveResult:
-        """Returns a NurbsCurveResult object that represents the result of applying
+        """`(self, rel_to: NodePath = ...)`:
+        Returns a NurbsCurveResult object that represents the result of applying
         the knots to all of the current values of the vertices, transformed into
         the indicated coordinate space.
-        """
-        ...
-    @overload
-    def evaluate(self, rel_to: NodePath, mat: _Mat4f) -> NurbsCurveResult:
-        """Returns a NurbsCurveResult object that represents the result of applying
+        
+        `(self, rel_to: NodePath, mat: LMatrix4f)`:
+        Returns a NurbsCurveResult object that represents the result of applying
         the knots to all of the current values of the vertices, transformed into
         the indicated coordinate space, and then further transformed by the
         indicated matrix.
         """
         ...
+    @overload
+    def evaluate(self, rel_to: NodePath, mat: _Mat4f) -> NurbsCurveResult: ...
     def output(self, out: ostream) -> None: ...
     def get_vertices(self) -> tuple[LVecBase4f, ...]: ...
     def get_knots(self) -> tuple[float, ...]: ...
@@ -1270,39 +1278,50 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         ...
     @overload
     def set_vertex(self, ui: int, vi: int, vertex: _Vec4f) -> None:
-        """Sets the nth control vertex of the surface.  This flavor sets the vertex as
+        """`(self, ui: int, vi: int, vertex: LVecBase3f, weight: float = ...)`:
+        Sets the nth control vertex of the surface.  This flavor sets the vertex as
         a 3-d coordinate and a weight; the 3-d coordinate values are implicitly
         scaled up by the weight factor.
-        """
-        ...
-    @overload
-    def set_vertex(self, ui: int, vi: int, vertex: _Vec3f, weight: float = ...) -> None:
-        """Sets the nth control vertex of the surface, as a vertex in 4-d homogeneous
+        
+        `(self, ui: int, vi: int, vertex: LVecBase4f)`:
+        Sets the nth control vertex of the surface, as a vertex in 4-d homogeneous
         space.  In this form, the first three components of the vertex should
         already have been scaled by the fourth component, which is the homogeneous
         weight.
         """
         ...
     @overload
+    def set_vertex(self, ui: int, vi: int, vertex: _Vec3f, weight: float = ...) -> None: ...
+    @overload
     def get_vertex(self, ui: int, vi: int) -> LVecBase4f:
-        """Returns the nth control vertex of the surface, relative to its indicated
+        """`(self, ui: int, vi: int)`:
+        Returns the nth control vertex of the surface, relative to its indicated
+        coordinate space.
+        
+        `(self, ui: int, vi: int, rel_to: NodePath)`:
+        Returns the nth control vertex of the surface, relative to the given
         coordinate space.
         """
         ...
     @overload
-    def get_vertex(self, ui: int, vi: int, rel_to: NodePath) -> LVecBase4f:
-        """Returns the nth control vertex of the surface, relative to the given
-        coordinate space.
-        """
-        ...
+    def get_vertex(self, ui: int, vi: int, rel_to: NodePath) -> LVecBase4f: ...
     def set_vertex_space(self, ui: int, vi: int, space: NodePath | str) -> None:
-        """Sets the coordinate space of the nth control vertex.  If this is not
+        """`(self, ui: int, vi: int, space: NodePath)`:
+        Sets the coordinate space of the nth control vertex.  If this is not
         specified, or is set to an empty NodePath, the nth control vertex is deemed
         to be in the coordinate space passed to evaluate().
         
         This specifies the space as a fixed NodePath, which is always the same
         NodePath.  Also see setting the space as a path string, which can specify a
         different NodePath for different instances of the surface.
+        
+        `(self, ui: int, vi: int, space: str)`:
+        Sets the coordinate space of the nth control vertex.  If this is not
+        specified, or is set to an empty string, the nth control vertex is deemed
+        to be in the coordinate space passed to evaluate().
+        
+        This specifies the space as a string, which describes the path to find the
+        node relative to the rel_to NodePath when the surface is evaluated.
         """
         ...
     def get_vertex_space(self, ui: int, vi: int, rel_to: NodePath) -> NodePath:

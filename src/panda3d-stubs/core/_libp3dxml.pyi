@@ -100,14 +100,20 @@ class TiXmlDeclaration(TiXmlNode):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
-        """Construct an empty declaration."""
+        """`(self)`:
+        Construct an empty declaration.
+        
+        `(self, _version: str, _encoding: str, _standalone: str)`:
+        Construct.
+        
+        `(self, _version: str, _encoding: str, _standalone: str)`:
+        Constructor.
+        """
         ...
     @overload
     def __init__(self, copy: TiXmlDeclaration) -> None: ...
     @overload
-    def __init__(self, _version: str, _encoding: str, _standalone: str) -> None:
-        """Construct."""
-        ...
+    def __init__(self, _version: str, _encoding: str, _standalone: str) -> None: ...
     def assign(self, copy: TiXmlDeclaration) -> TiXmlDeclaration: ...
     def Version(self) -> str:
         """Version. Will return an empty string if none was found."""
@@ -156,7 +162,8 @@ class TiXmlNode(TiXmlBase):
         ...
     def ValueTStr(self) -> str: ...
     def SetValue(self, _value: str) -> None:
-        """Changes the value of the node. Defined as:
+        """`(self, _value: str)`:
+        Changes the value of the node. Defined as:
                 @verbatim
                 Document:   filename of the xml file
                 Element:    name of the element
@@ -164,6 +171,9 @@ class TiXmlNode(TiXmlBase):
                 Unknown:    the tag contents
                 Text:       the text string
                 @endverbatim
+        
+        `(self, _value: str)`:
+        STL std::string form.
         """
         ...
     def Clear(self) -> None:
@@ -174,35 +184,41 @@ class TiXmlNode(TiXmlBase):
         ...
     @overload
     def FirstChild(self) -> TiXmlNode:
-        """< The first child of this node. Will be null if there are no children."""
-        ...
-    @overload
-    def FirstChild(self, _value: str) -> TiXmlNode:
-        """< The first child of this node. Will be null if there are no children."""
-        ...
-    @overload
-    def FirstChild(self, value: str) -> TiXmlNode:
-        """< The first child of this node with the matching 'value'. Will be null if none found.
+        """`(self)`; `(self)`:
+        < The first child of this node. Will be null if there are no children.
+        
+        `(self, _value: str)`:
+        < The first child of this node with the matching 'value'. Will be null if none found.
         /// The first child of this node with the matching 'value'. Will be null if none found.
+        
+        `(self, _value: str)`; `(self, _value: str)`:
+        < STL std::string form.
         """
         ...
     @overload
+    def FirstChild(self, _value: str) -> TiXmlNode: ...
+    @overload
+    def FirstChild(self, value: str) -> TiXmlNode: ...
+    @overload
     def LastChild(self) -> TiXmlNode:
-        """The last child of this node. Will be null if there are no children."""
+        """`(self)`; `(self)`:
+        The last child of this node. Will be null if there are no children.
+        
+        `(self, _value: str)`; `(self, value: str)`:
+        The last child of this node matching 'value'. Will be null if there are no children.
+        
+        `(self, _value: str)`; `(self, _value: str)`:
+        < STL std::string form.
+        """
         ...
     @overload
-    def LastChild(self, _value: str) -> TiXmlNode:
-        """The last child of this node. Will be null if there are no children."""
-        ...
+    def LastChild(self, _value: str) -> TiXmlNode: ...
     @overload
-    def LastChild(self, value: str) -> TiXmlNode:
-        """The last child of this node matching 'value'. Will be null if there are no children."""
-        ...
+    def LastChild(self, value: str) -> TiXmlNode: ...
     @overload
-    def IterateChildren(self, previous: TiXmlNode) -> TiXmlNode: ...
-    @overload
-    def IterateChildren(self, _value: str, previous: TiXmlNode) -> TiXmlNode:
-        """An alternate way to walk the children of a node.
+    def IterateChildren(self, previous: TiXmlNode) -> TiXmlNode:
+        """`(self, previous: TiXmlNode)`:
+        An alternate way to walk the children of a node.
                 One way to iterate over nodes is:
                 @verbatim
                     for( child = parent->FirstChild(); child; child = child->NextSibling() )
@@ -217,8 +233,16 @@ class TiXmlNode(TiXmlBase):
                 IterateChildren takes the previous child as input and finds
                 the next one. If the previous child is null, it returns the
                 first. IterateChildren will return null when done.
+        
+        `(self, value: str, previous: TiXmlNode)`:
+        This flavor of IterateChildren searches for children with a particular 'value'
+        
+        `(self, _value: str, previous: TiXmlNode)`; `(self, _value: str, previous: TiXmlNode)`:
+        < STL std::string form.
         """
         ...
+    @overload
+    def IterateChildren(self, _value: str, previous: TiXmlNode) -> TiXmlNode: ...
     @overload
     def IterateChildren(self, value: str, previous: TiXmlNode) -> TiXmlNode: ...
     def InsertEndChild(self, addThis: TiXmlNode) -> TiXmlNode:
@@ -245,45 +269,71 @@ class TiXmlNode(TiXmlBase):
         """Delete a child of this node."""
         ...
     @overload
-    def PreviousSibling(self) -> TiXmlNode: ...
-    @overload
-    def PreviousSibling(self, _prev: str) -> TiXmlNode:
-        """Navigate to a sibling node."""
-        ...
-    @overload
-    def PreviousSibling(self, _value: str) -> TiXmlNode: ...
-    @overload
-    def NextSibling(self) -> TiXmlNode: ...
-    @overload
-    def NextSibling(self, _next: str) -> TiXmlNode:
-        """Navigate to a sibling node."""
-        ...
-    @overload
-    def NextSibling(self, _value: str) -> TiXmlNode: ...
-    @overload
-    def NextSiblingElement(self) -> TiXmlElement: ...
-    @overload
-    def NextSiblingElement(self, _next: str) -> TiXmlElement:
-        """Convenience function to get through elements.
-                Calls NextSibling and ToElement. Will skip all non-Element
-                nodes. Returns 0 if there is not another element.
+    def PreviousSibling(self) -> TiXmlNode:
+        """`(self)`; `(self, __param0: str)`:
+        Navigate to a sibling node.
+        
+        `(self, _value: str)`; `(self, _value: str)`:
+        < STL std::string form.
         """
         ...
     @overload
+    def PreviousSibling(self, _prev: str) -> TiXmlNode: ...
+    @overload
+    def PreviousSibling(self, _value: str) -> TiXmlNode: ...
+    @overload
+    def NextSibling(self) -> TiXmlNode:
+        """`(self)`:
+        Navigate to a sibling node.
+        
+        `(self, __param0: str)`:
+        Navigate to a sibling node with the given 'value'.
+        
+        `(self, _value: str)`; `(self, _value: str)`:
+        < STL std::string form.
+        """
+        ...
+    @overload
+    def NextSibling(self, _next: str) -> TiXmlNode: ...
+    @overload
+    def NextSibling(self, _value: str) -> TiXmlNode: ...
+    @overload
+    def NextSiblingElement(self) -> TiXmlElement:
+        """`(self)`; `(self, __param0: str)`:
+        Convenience function to get through elements.
+                Calls NextSibling and ToElement. Will skip all non-Element
+                nodes. Returns 0 if there is not another element.
+        
+        `(self, _value: str)`; `(self, _value: str)`:
+        < STL std::string form.
+        """
+        ...
+    @overload
+    def NextSiblingElement(self, _next: str) -> TiXmlElement: ...
+    @overload
     def NextSiblingElement(self, _value: str) -> TiXmlElement: ...
     @overload
-    def FirstChildElement(self) -> TiXmlElement: ...
-    @overload
-    def FirstChildElement(self, _value: str) -> TiXmlElement:
-        """Convenience function to get through elements."""
+    def FirstChildElement(self) -> TiXmlElement:
+        """`(self)`; `(self, _value: str)`:
+        Convenience function to get through elements.
+        
+        `(self, _value: str)`; `(self, _value: str)`:
+        < STL std::string form.
+        """
         ...
+    @overload
+    def FirstChildElement(self, _value: str) -> TiXmlElement: ...
     def Type(self) -> int:
         """Query the type (as an enumerated value, above) of this node.
                 The possible types are: DOCUMENT, ELEMENT, COMMENT,
                                         UNKNOWN, TEXT, and DECLARATION.
         """
         ...
-    def GetDocument(self) -> TiXmlDocument: ...
+    def GetDocument(self) -> TiXmlDocument:
+        """Return a pointer to the Document this node lives in.
+                Returns null if not in a document.
+        """
+        ...
     def NoChildren(self) -> bool:
         """Returns true if this node has no children."""
         ...
@@ -350,35 +400,57 @@ class TiXmlDocument(TiXmlNode):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
-        """Create an empty document, that has no name."""
+        """`(self)`:
+        Create an empty document, that has no name.
+        
+        `(self, documentName: str)`:
+        Create a document with a name. The name of the document is also the filename of the xml.
+        
+        `(self, documentName: str)`:
+        Constructor.
+        """
         ...
     @overload
     def __init__(self, documentName: str) -> None: ...
     @overload
-    def __init__(self, copy: TiXmlDocument) -> None:
-        """Create a document with a name. The name of the document is also the filename of the xml."""
-        ...
+    def __init__(self, copy: TiXmlDocument) -> None: ...
     def assign(self, copy: TiXmlDocument) -> TiXmlDocument: ...
     @overload
     def LoadFile(self, encoding: _TiXmlEncoding = ...) -> bool:
-        """Load a file using the current document value.
+        """`(self, encoding: _TiXmlEncoding = ...)`:
+        Load a file using the current document value.
                 Returns true if successful. Will delete any existing
                 document data before loading.
+        
+        `(self, filename: str, encoding: _TiXmlEncoding = ...)`:
+        Load a file using the given filename. Returns true if successful.
+        
+        `(self, filename: str, encoding: _TiXmlEncoding = ...)`:
+        < STL std::string version.
         """
         ...
     @overload
-    def LoadFile(self, filename: str, encoding: _TiXmlEncoding = ...) -> bool:
-        """Load a file using the given filename. Returns true if successful."""
-        ...
+    def LoadFile(self, filename: str, encoding: _TiXmlEncoding = ...) -> bool: ...
     @overload
     def SaveFile(self) -> bool:
-        """Save a file using the current document value. Returns true if successful."""
+        """`(self)`:
+        Save a file using the current document value. Returns true if successful.
+        
+        `(self, filename: str)`:
+        Save a file using the given filename. Returns true if successful.
+        
+        `(self, filename: str)`:
+        < STL std::string version.
+        """
         ...
     @overload
-    def SaveFile(self, filename: str) -> bool:
-        """Save a file using the given filename. Returns true if successful."""
+    def SaveFile(self, filename: str) -> bool: ...
+    def RootElement(self) -> TiXmlElement:
+        """Get the root element -- the only top level element -- of the document.
+                In well formed XML, there should only be one. TinyXml is tolerant of
+                multiple elements at the document level.
+        """
         ...
-    def RootElement(self) -> TiXmlElement: ...
     def Error(self) -> bool:
         """If an error occurs, Error will be set to true. Also,
                 - The ErrorId() will contain the integer identifier of the error (not generally useful)
@@ -449,15 +521,18 @@ class TiXmlElement(TiXmlNode):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, in_value: str) -> None: ...
-    @overload
-    def __init__(self, __param0: TiXmlElement) -> None:
-        """Construct an element."""
+    def __init__(self, in_value: str) -> None:
+        """`(self, in_value: str)`:
+        Construct an element.
+        
+        `(self, _value: str)`:
+        std::string constructor.
+        """
         ...
     @overload
-    def __init__(self, _value: str) -> None:
-        """std::string constructor."""
-        ...
+    def __init__(self, __param0: TiXmlElement) -> None: ...
+    @overload
+    def __init__(self, _value: str) -> None: ...
     def assign(self, base: TiXmlElement) -> TiXmlElement: ...
     def Attribute(self, name: str) -> str:
         """Given an attribute name, Attribute() returns the value
@@ -466,23 +541,35 @@ class TiXmlElement(TiXmlNode):
         ...
     @overload
     def SetAttribute(self, name: str, _value: int | str) -> None:
-        """Sets an attribute of name to a given value. The attribute
+        """`(self, name: str, _value: str)`; `(self, name: str, value: int)`:
+        Sets an attribute of name to a given value. The attribute
                 will be created if it does not exist, or changed if it does.
+        
+        `(self, name: str, _value: int)`:
+        < STL std::string form.
+        
+        `(self, name: str, _value: str)`:
+        STL std::string form.
         """
         ...
     @overload
-    def SetAttribute(self, name: str, value: int) -> None:
-        """Sets an attribute of name to a given value. The attribute
-                will be created if it does not exist, or changed if it does.
-        """
-        ...
+    def SetAttribute(self, name: str, value: int) -> None: ...
     def SetDoubleAttribute(self, name: str, value: float) -> None:
-        """Sets an attribute of name to a given value. The attribute
+        """`(self, name: str, value: float)`:
+        Sets an attribute of name to a given value. The attribute
                 will be created if it does not exist, or changed if it does.
+        
+        `(self, name: str, value: float)`:
+        < STL std::string form.
         """
         ...
     def RemoveAttribute(self, name: str) -> None:
-        """Deletes an attribute with the given name."""
+        """`(self, name: str)`:
+        Deletes an attribute with the given name.
+        
+        `(self, name: str)`:
+        < STL std::string form.
+        """
         ...
     def FirstAttribute(self) -> TiXmlAttribute:
         """< Access the first attribute in this element."""
@@ -558,17 +645,36 @@ class TiXmlVisitor:
     def __init__(self, __param0: TiXmlVisitor) -> None: ...
     @overload
     def VisitEnter(self, __param0: TiXmlDocument) -> bool:
-        """doc"""
+        """`(self, __param0: TiXmlDocument)`:
+        doc
+        
+        `(self, __param0: TiXmlElement, __param1: TiXmlAttribute)`:
+        firstAttribute
+        """
         ...
     @overload
-    def VisitEnter(self, __param0: TiXmlElement, __param1: TiXmlAttribute) -> bool:
-        """firstAttribute"""
-        ...
+    def VisitEnter(self, __param0: TiXmlElement, __param1: TiXmlAttribute) -> bool: ...
     def VisitExit(self, __param0: TiXmlDocument | TiXmlElement) -> bool:
-        """doc"""
+        """`(self, __param0: TiXmlDocument)`:
+        doc
+        
+        `(self, __param0: TiXmlElement)`:
+        element
+        """
         ...
     def Visit(self, __param0: TiXmlComment | TiXmlDeclaration | TiXmlText | TiXmlUnknown) -> bool:
-        """comment"""
+        """`(self, __param0: TiXmlComment)`:
+        comment
+        
+        `(self, __param0: TiXmlDeclaration)`:
+        declaration
+        
+        `(self, __param0: TiXmlText)`:
+        text
+        
+        `(self, __param0: TiXmlUnknown)`:
+        unknown
+        """
         ...
 
 class TiXmlAttribute(TiXmlBase):
@@ -582,12 +688,18 @@ class TiXmlAttribute(TiXmlBase):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
-        """Construct an empty attribute."""
+        """`(self)`:
+        Construct an empty attribute.
+        
+        `(self, _name: str, _value: str)`:
+        Construct an attribute with a name and value.
+        
+        `(self, _name: str, _value: str)`:
+        std::string constructor.
+        """
         ...
     @overload
-    def __init__(self, _name: str, _value: str) -> None:
-        """Construct an attribute with a name and value."""
-        ...
+    def __init__(self, _name: str, _value: str) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __lt__(self, rhs: TiXmlAttribute) -> bool: ...
     def __gt__(self, rhs: TiXmlAttribute) -> bool: ...
@@ -611,10 +723,20 @@ class TiXmlAttribute(TiXmlBase):
         """Get the tinyxml string representation"""
         ...
     def SetName(self, _name: str) -> None:
-        """< Set the name of this attribute."""
+        """`(self, _name: str)`:
+        < Set the name of this attribute.
+        
+        `(self, _name: str)`:
+        STL std::string form.
+        """
         ...
     def SetValue(self, _value: str) -> None:
-        """< Set the value."""
+        """`(self, _value: str)`:
+        < Set the value.
+        
+        `(self, _value: str)`:
+        STL std::string form.
+        """
         ...
     def SetIntValue(self, _value: int) -> None:
         """< Set the value from an integer."""
@@ -622,8 +744,12 @@ class TiXmlAttribute(TiXmlBase):
     def SetDoubleValue(self, _value: float) -> None:
         """< Set the value from a double."""
         ...
-    def Next(self) -> TiXmlAttribute: ...
-    def Previous(self) -> TiXmlAttribute: ...
+    def Next(self) -> TiXmlAttribute:
+        """Get the next sibling attribute in the DOM. Returns null at end."""
+        ...
+    def Previous(self) -> TiXmlAttribute:
+        """Get the previous sibling attribute in the DOM. Returns null at beginning."""
+        ...
     def SetDocument(self, doc: TiXmlDocument) -> None:
         """[internal use]
         Set the document pointer so the attribute can report errors.
@@ -657,14 +783,17 @@ class TiXmlComment(TiXmlNode):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
-        """Constructs an empty comment."""
+        """`(self)`:
+        Constructs an empty comment.
+        
+        `(self, _value: str)`:
+        Construct a comment from text.
+        """
         ...
     @overload
     def __init__(self, __param0: TiXmlComment) -> None: ...
     @overload
-    def __init__(self, _value: str) -> None:
-        """Construct a comment from text."""
-        ...
+    def __init__(self, _value: str) -> None: ...
     def assign(self, base: TiXmlComment) -> TiXmlComment: ...
 
 class TiXmlText(TiXmlNode):
@@ -675,14 +804,18 @@ class TiXmlText(TiXmlNode):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, initValue: str) -> None: ...
-    @overload
-    def __init__(self, copy: TiXmlText) -> None:
-        """Constructor for text element. By default, it is treated as
+    def __init__(self, initValue: str) -> None:
+        """`(self, initValue: str)`:
+        Constructor for text element. By default, it is treated as
                 normal, encoded text. If you want it be output as a CDATA text
                 element, set the parameter _cdata to 'true'
+        
+        `(self, initValue: str)`:
+        Constructor.
         """
         ...
+    @overload
+    def __init__(self, copy: TiXmlText) -> None: ...
     def assign(self, base: TiXmlText) -> TiXmlText: ...
     def CDATA(self) -> bool:
         """Queries whether this represents text using a CDATA section."""
@@ -789,61 +922,72 @@ class TiXmlHandle:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, ref: TiXmlHandle) -> None:
-        """Copy constructor"""
+        """`(self, ref: TiXmlHandle)`:
+        Copy constructor
+        
+        `(self, _node: TiXmlNode)`:
+        Create a handle from any node (at any depth of the tree.) This can be a null pointer.
+        """
         ...
     @overload
-    def __init__(self, _node: TiXmlNode) -> None:
-        """Create a handle from any node (at any depth of the tree.) This can be a null pointer."""
-        ...
+    def __init__(self, _node: TiXmlNode) -> None: ...
     def assign(self, ref: TiXmlHandle) -> TiXmlHandle: ...
     @overload
     def FirstChild(self) -> TiXmlHandle:
-        """Return a handle to the first child node."""
+        """`(self)`:
+        Return a handle to the first child node.
+        
+        `(self, value: str)`:
+        Return a handle to the first child node with the given name.
+        """
         ...
     @overload
-    def FirstChild(self, value: str) -> TiXmlHandle:
-        """Return a handle to the first child node with the given name."""
-        ...
+    def FirstChild(self, value: str) -> TiXmlHandle: ...
     @overload
     def FirstChild(self, _value: str) -> TiXmlHandle: ...
     @overload
     def FirstChildElement(self) -> TiXmlHandle:
-        """Return a handle to the first child element."""
+        """`(self)`:
+        Return a handle to the first child element.
+        
+        `(self, value: str)`:
+        Return a handle to the first child element with the given name.
+        """
         ...
     @overload
-    def FirstChildElement(self, value: str) -> TiXmlHandle:
-        """Return a handle to the first child element with the given name."""
-        ...
+    def FirstChildElement(self, value: str) -> TiXmlHandle: ...
     @overload
     def FirstChildElement(self, _value: str) -> TiXmlHandle: ...
     @overload
     def Child(self, index: int) -> TiXmlHandle:
-        """Return a handle to the "index" child with the given name.
+        """`(self, value: str, index: int)`:
+        Return a handle to the "index" child with the given name.
+                The first child is 0, the second 1, etc.
+        
+        `(self, index: int)`:
+        Return a handle to the "index" child.
                 The first child is 0, the second 1, etc.
         """
         ...
     @overload
-    def Child(self, value: str, index: int) -> TiXmlHandle:
-        """Return a handle to the "index" child.
-                The first child is 0, the second 1, etc.
-        """
-        ...
+    def Child(self, value: str, index: int) -> TiXmlHandle: ...
     @overload
     def Child(self, _value: str, index: int) -> TiXmlHandle: ...
     @overload
     def ChildElement(self, index: int) -> TiXmlHandle:
-        """Return a handle to the "index" child element with the given name.
+        """`(self, value: str, index: int)`:
+        Return a handle to the "index" child element with the given name.
+                The first child element is 0, the second 1, etc. Note that only TiXmlElements
+                are indexed: other types are not counted.
+        
+        `(self, index: int)`:
+        Return a handle to the "index" child element.
                 The first child element is 0, the second 1, etc. Note that only TiXmlElements
                 are indexed: other types are not counted.
         """
         ...
     @overload
-    def ChildElement(self, value: str, index: int) -> TiXmlHandle:
-        """Return a handle to the "index" child element.
-                The first child element is 0, the second 1, etc. Note that only TiXmlElements
-                are indexed: other types are not counted.
-        """
-        ...
+    def ChildElement(self, value: str, index: int) -> TiXmlHandle: ...
     @overload
     def ChildElement(self, _value: str, index: int) -> TiXmlHandle: ...
     def ToNode(self) -> TiXmlNode:

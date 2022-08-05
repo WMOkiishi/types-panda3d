@@ -1096,11 +1096,11 @@ class BulletSoftBodyNode(BulletBodyNode):
     def link_surface(self, surface: NurbsSurfaceEvaluator) -> None: ...
     def unlink_surface(self) -> None: ...
     @overload
-    def append_anchor(self, node: int, body: BulletRigidBodyNode, disable: bool = ...) -> None: ...
-    @overload
-    def append_anchor(self, node: int, body: BulletRigidBodyNode, pivot: _Vec3f, disable: bool = ...) -> None:
+    def append_anchor(self, node: int, body: BulletRigidBodyNode, disable: bool = ...) -> None:
         """Anchors"""
         ...
+    @overload
+    def append_anchor(self, node: int, body: BulletRigidBodyNode, pivot: _Vec3f, disable: bool = ...) -> None: ...
     @overload
     def append_linear_joint(self, body: BulletBodyNode, pos: _Vec3f, erp: float = ..., cfm: float = ..., split: float = ...) -> None: ...
     @overload
@@ -2368,22 +2368,23 @@ class BulletGenericConstraint(BulletConstraint):
 class BulletHeightfieldShape(BulletShape):
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: BulletHeightfieldShape) -> None: ...
-    @overload
-    def __init__(self, image: PNMImage, max_height: float, up: _BulletUpAxis = ...) -> None:
-        """@brief Creates a collision shape suited for terrains from a rectangular image.
+    def __init__(self, copy: BulletHeightfieldShape) -> None:
+        """`(self, image: PNMImage, max_height: float, up: _BulletUpAxis = ...)`:
+        @brief Creates a collision shape suited for terrains from a rectangular image.
         @details Stores the image's brightness values in a vector Bullet can use, 
           while rotating it 90 degrees to the right.
-        """
-        ...
-    @overload
-    def __init__(self, tex: Texture, max_height: float, up: _BulletUpAxis = ...) -> None:
-        """@brief Creates a collision shape suited for terrains from a rectangular texture.
+        
+        `(self, tex: Texture, max_height: float, up: _BulletUpAxis = ...)`:
+        @brief Creates a collision shape suited for terrains from a rectangular texture.
         @details Alternative constructor intended for use with ShaderTerrainMesh. This will
           do bilinear sampling at the corners of all texels. Also works with textures 
           that are non-power-of-two and/or rectangular.
         """
         ...
+    @overload
+    def __init__(self, image: PNMImage, max_height: float, up: _BulletUpAxis = ...) -> None: ...
+    @overload
+    def __init__(self, tex: Texture, max_height: float, up: _BulletUpAxis = ...) -> None: ...
     def set_use_diamond_subdivision(self, flag: bool = ...) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -2453,30 +2454,32 @@ class BulletHingeConstraint(BulletConstraint):
     def frame_b(self) -> TransformState: ...
     @overload
     def __init__(self, node_a: BulletRigidBodyNode, ts_a: TransformState, use_frame_a: bool = ...) -> None:
-        """Creates a hinge connecting node_a to node_b.  The pivot point is the point
+        """`(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, pivot_a: LPoint3f, pivot_b: LPoint3f, axis_a: LVector3f, axis_b: LVector3f, use_frame_a: bool = ...)`:
+        Creates a hinge connecting node_a to node_b.  The pivot point is the point
         at which the body is fixed to the constraint.  In other words: It specifies
         where on each body the rotation axis should be.  This axis is specified
         using axis_a and axis_b.  Remember, everything is specified in the bodies
         own coordinate system!
-        """
-        ...
-    @overload
-    def __init__(self, node_a: BulletRigidBodyNode, pivot_a: _Vec3f, axis_a: _Vec3f, use_frame_a: bool = ...) -> None:
-        """Constructs a hinge constraint which connects two rigid bodies."""
-        ...
-    @overload
-    def __init__(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, ts_a: TransformState, ts_b: TransformState, use_frame_a: bool = ...) -> None:
-        """Creates a hinge constraint in the same way as the other constructor, but
+        
+        `(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, ts_a: TransformState, ts_b: TransformState, use_frame_a: bool = ...)`:
+        Constructs a hinge constraint which connects two rigid bodies.
+        
+        `(self, node_a: BulletRigidBodyNode, pivot_a: LPoint3f, axis_a: LVector3f, use_frame_a: bool = ...)`:
+        Creates a hinge constraint in the same way as the other constructor, but
         uses the world as second body so that node_a is fixed to some point in mid-
         air for example.
-        """
-        ...
-    @overload
-    def __init__(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, pivot_a: _Vec3f, pivot_b: _Vec3f, axis_a: _Vec3f, axis_b: _Vec3f, use_frame_a: bool = ...) -> None:
-        """Creates a hinge constraint which connects one rigid body with some fixe
+        
+        `(self, node_a: BulletRigidBodyNode, ts_a: TransformState, use_frame_a: bool = ...)`:
+        Creates a hinge constraint which connects one rigid body with some fixe
         dpoint in the world.
         """
         ...
+    @overload
+    def __init__(self, node_a: BulletRigidBodyNode, pivot_a: _Vec3f, axis_a: _Vec3f, use_frame_a: bool = ...) -> None: ...
+    @overload
+    def __init__(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, ts_a: TransformState, ts_b: TransformState, use_frame_a: bool = ...) -> None: ...
+    @overload
+    def __init__(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, pivot_a: _Vec3f, pivot_b: _Vec3f, axis_a: _Vec3f, axis_b: _Vec3f, use_frame_a: bool = ...) -> None: ...
     def get_hinge_angle(self) -> float:
         """Returns the angle between node_a and node_b in degrees."""
         ...
@@ -2593,11 +2596,11 @@ class BulletPlaneShape(BulletShape):
     @property
     def plane_constant(self) -> float: ...
     @overload
-    def __init__(self, copy: BulletPlaneShape) -> None: ...
-    @overload
-    def __init__(self, plane: _Vec4f) -> None:
+    def __init__(self, copy: BulletPlaneShape) -> None:
         """Creates a plane shape from a plane definition."""
         ...
+    @overload
+    def __init__(self, plane: _Vec4f) -> None: ...
     @overload
     def __init__(self, normal: _Vec3f, constant: float) -> None: ...
     def get_plane(self) -> LPlanef: ...
