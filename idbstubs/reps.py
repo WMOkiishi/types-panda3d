@@ -81,7 +81,10 @@ class Signature:
 
     def __str__(self) -> str:
         param_string = ', '.join(map(str, self.parameters))
-        return f'({param_string}) -> {self.return_type}'
+        if self.return_type:
+            return f'({param_string}) -> {self.return_type}'
+        else:
+            return f'({param_string})'
 
     @property
     def is_static(self) -> bool:
@@ -193,8 +196,12 @@ class Element:
     def definition(self) -> Iterator[str]:
         if self.read_only:
             yield '@property'
+            if self.type:
+                function_def = f'def {self.name}(self) -> {self.type}:'
+            else:
+                function_def = f'def {self.name}(self):'
             if self.doc:
-                yield f'def {self.name}(self) -> {self.type}:'
+                yield function_def
                 if '\n' in self.doc:
                     for line in f'"""{self.doc}\n"""'.splitlines():
                         yield '    ' + line
@@ -202,9 +209,11 @@ class Element:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
             else:
-                yield f'def {self.name}(self) -> {self.type}: ...'
-        else:
+                yield function_def + ' ...'
+        elif self.type:
             yield f'{self.name}: {self.type}'
+        else:
+            yield f'{self.name} = ...'
 
 
 @define

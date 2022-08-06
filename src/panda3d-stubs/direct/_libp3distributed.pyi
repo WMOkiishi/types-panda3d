@@ -76,7 +76,7 @@ class CConnectionRepository:
     def get_tcp_header_size(self) -> int:
         """Returns the current setting of TCP header size.  See set_tcp_header_size()."""
         ...
-    def set_python_repository(self, python_repository: Any) -> None:
+    def set_python_repository(self, python_repository) -> None:
         """Records the pointer to the Python class that derives from
         CConnectionRepository.  This allows the C++ implementation to directly
         manipulation some python structures on the repository.
@@ -314,7 +314,7 @@ class CDistributedSmoothNodeBase:
         for sending datagrams.
         """
         ...
-    def set_clock_delta(self, clock_delta: Any) -> None:
+    def set_clock_delta(self, clock_delta) -> None:
         """Tells the C++ instance definition about the global ClockDelta object."""
         ...
     def initialize(self, node_path: NodePath, dclass: DCClass, do_id: int) -> None:

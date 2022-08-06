@@ -125,9 +125,9 @@ def make_element_rep(
     name = idb.interrogate_element_name(e)
     type_name = get_type_name(idb.interrogate_element_type(e))
     if idb.interrogate_element_is_sequence(e):
-        type_name = f'Sequence[{type_name}]'
+        type_name = f'Sequence[{type_name}]' if type_name else 'Sequence'
     elif idb.interrogate_element_is_mapping(e):
-        type_name = f'Mapping[Any, {type_name}]'
+        type_name = f'Mapping[Any, {type_name}]' if type_name else 'Mapping'
     read_only = not idb.interrogate_element_setter(e)
     if idb.interrogate_element_has_comment(e):
         doc = comment_to_docstring(idb.interrogate_element_comment(e))

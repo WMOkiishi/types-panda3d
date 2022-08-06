@@ -83,7 +83,7 @@ def get_type_name(t: TypeIndex, /) -> str:
         return ATOMIC_TYPES[atomic_token]
     # We can't use `str.removeprefix` because of `ParamValue< std::string >`
     name = idb.interrogate_type_scoped_name(t).replace('std::', '')
-    if override := TYPE_NAME_OVERRIDES.get(name):
+    if (override := TYPE_NAME_OVERRIDES.get(name)) is not None:
         return override
     if not idb.interrogate_type_is_fully_defined(t):
         if name.startswith('PointerTo< '):

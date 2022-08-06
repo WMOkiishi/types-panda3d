@@ -196,7 +196,7 @@ def process_function(
         for sig in new_sigs:
             if return_override is not None:
                 return_type = return_override
-            elif default_return is not None and sig.return_type == 'Any':
+            elif default_return is not None and not sig.return_type:
                 return_type = default_return
             else:
                 continue

@@ -228,7 +228,7 @@ class TypeRegistry:
         correctly read from old Bam files.
         """
         ...
-    def record_python_type(self, type: TypeHandle, python_type: Any) -> None:
+    def record_python_type(self, type: TypeHandle, python_type) -> None:
         """Records the given Python type pointer in the type registry for the benefit
         of interrogate, which expects this to contain a Dtool_PyTypedObject.
         """

@@ -21,7 +21,7 @@ ManifestIndex: TypeAlias = int
 
 # See `translated_type_name` in extract_docs.py
 TYPE_NAME_OVERRIDES: Final = {
-    '_object': 'Any',
+    '_object': '',
     '_typeobject': 'type',
     'PN_stdfloat []': 'array[float]',
     'PN_stdfloat const []': 'array[float]',
