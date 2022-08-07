@@ -1,5 +1,5 @@
 from os import PathLike
-from typing import Literal, TypeAlias
+from typing_extensions import Literal, TypeAlias
 from panda3d.core import BamCacheRecord, ConfigVariableFilename, Filename, PandaNode
 from panda3d.egg import EggData
 

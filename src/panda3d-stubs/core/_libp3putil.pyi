@@ -1,7 +1,8 @@
 from collections.abc import Callable, Sequence
 from enum import Enum
 from os import PathLike
-from typing import Any, ClassVar, Literal, TypeAlias, final, overload
+from typing import Any, ClassVar, overload
+from typing_extensions import Literal, TypeAlias, final
 from panda3d.core import (
     ConfigPage,
     ConfigVariableColor,

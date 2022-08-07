@@ -1,5 +1,6 @@
 from collections.abc import Iterator, Sequence
-from typing import Any, ClassVar, Literal, TypeAlias, overload
+from typing import Any, ClassVar, overload
+from typing_extensions import Literal, TypeAlias
 from panda3d.core import ConfigVariable, Datagram, DatagramIterator, TypeHandle, ostream
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]

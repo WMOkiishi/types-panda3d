@@ -32,7 +32,7 @@ from ._libp3putil import *
 from ._libp3recorder import *
 from ._libp3text import *
 from ._libp3tform import *
-from typing import Literal
+from typing_extensions import Literal
 
 END_PUBLISH: Literal['__end_publish']
 TINYXML_INCLUDED: Literal['']

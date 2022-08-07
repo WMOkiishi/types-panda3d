@@ -1,4 +1,5 @@
-from typing import Any, ClassVar, TypeAlias, overload
+from typing import Any, ClassVar, overload
+from typing_extensions import TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     DisplayRegion,

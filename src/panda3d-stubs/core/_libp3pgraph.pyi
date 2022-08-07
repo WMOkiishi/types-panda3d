@@ -1,6 +1,7 @@
 from collections.abc import Mapping, Sequence
 from os import PathLike
-from typing import Any, ClassVar, Generic, Literal, TypeAlias, TypeVar, final, overload
+from typing import Any, ClassVar, Generic, TypeVar, overload
+from typing_extensions import Literal, TypeAlias, final
 from panda3d.core import (
     AsyncTask,
     AsyncTaskManager,

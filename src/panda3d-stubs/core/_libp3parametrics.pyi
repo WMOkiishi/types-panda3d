@@ -1,7 +1,8 @@
 from array import array
 from collections.abc import Sequence
 from os import PathLike
-from typing import Any, ClassVar, Literal, TypeAlias, overload
+from typing import Any, ClassVar, overload
+from typing_extensions import Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     ConfigVariableFilename,

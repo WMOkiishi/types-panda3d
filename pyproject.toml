@@ -7,7 +7,7 @@ authors = [
 description = "Type stubs for the Panda3D Python bindings"
 readme = "README.md"
 license = { file="LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

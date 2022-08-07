@@ -1,5 +1,6 @@
 from collections.abc import Awaitable, Callable, Generator, Iterator, Sequence
-from typing import Any, ClassVar, Literal, TypeAlias, final, overload
+from typing import Any, ClassVar, overload
+from typing_extensions import Literal, TypeAlias, final
 from panda3d.core import (
     ButtonHandle,
     ClockObject,

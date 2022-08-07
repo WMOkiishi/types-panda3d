@@ -1,5 +1,6 @@
 from collections.abc import Sequence
-from typing import Any, ClassVar, Literal, TypeAlias, overload
+from typing import Any, ClassVar, overload
+from typing_extensions import Literal, TypeAlias
 from panda3d.core import (
     BitMask_uint32_t_32,
     ConfigVariableColor,

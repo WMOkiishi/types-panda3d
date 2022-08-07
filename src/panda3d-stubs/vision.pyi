@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from os import PathLike
-from typing import Any, ClassVar, TypeAlias
+from typing import Any, ClassVar
+from typing_extensions import TypeAlias
 from panda3d.core import ConfigVariableFilename, Filename, MovieVideo, NodePath, Texture, TypeHandle, ostream
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike

@@ -1,4 +1,5 @@
-from typing import Any, ClassVar, Literal, TypeAlias, overload
+from typing import Any, ClassVar, overload
+from typing_extensions import Literal, TypeAlias
 from panda3d.core import (
     AudioSound,
     ButtonHandle,
