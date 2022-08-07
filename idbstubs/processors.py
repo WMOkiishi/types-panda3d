@@ -4,7 +4,7 @@ from itertools import combinations, zip_longest
 from typing import Final
 
 from . import special_cases
-from .reps import Alias, File, Function, Parameter, Signature
+from .reps import Alias, File, Function, Parameter, Signature, TypeVariable
 from .typedata import (
     combine_types, get_param_type_replacement, process_dependency,
     subtype_relationship
@@ -177,14 +177,6 @@ def process_function(
         *, infer_opt_params: bool = True,
         ignore_coercion: bool = False) -> Function:
     name, scoped_name = function.name, function.scoped_name
-    param_override_info = special_cases.PARAM_TYPE_OVERRIDES.get(scoped_name)
-    if param_override_info is not None:
-        i, j, param_override = param_override_info
-        param = function.signatures[i].parameters[j]
-        if param.type:
-            _logger.debug(f"Changed type of parameter '{param}'"
-                          f" in {function} to {param_override}")
-        param.type = param_override
     if (required_sig := REQUIRED_SIGS.get(name)) is not None:
         new_sigs = [required_sig]
     else:
@@ -194,19 +186,27 @@ def process_function(
             ignore_coercion=ignore_coercion,
         )
     default_return = DEFAULT_RETURNS.get(name)
-    return_override = special_cases.RETURN_TYPE_OVERRIDES.get(scoped_name)
-    if (default_return or return_override) is not None:
-        for sig in new_sigs:
-            if return_override is not None:
-                return_type = return_override
-            elif default_return is not None and not sig.return_type:
-                return_type = default_return
-            else:
-                continue
+    return_overrides = special_cases.RETURN_TYPE_OVERRIDES.get(scoped_name, {})
+    param_overrides = special_cases.PARAM_TYPE_OVERRIDES.get(scoped_name, {})
+    if isinstance(return_overrides, str):
+        return_overrides = {i: return_overrides for i in range(len(new_sigs))}
+    for i, sig in enumerate(new_sigs):
+        if sig.return_type:
+            return_override = return_overrides.get(i)
+        else:
+            return_override = return_overrides.get(i, default_return)
+        if return_override is not None:
             if sig.return_type:
                 _logger.debug(f"Changed return type of {function} from"
-                              f" {sig.return_type} to {return_type}")
-            sig.return_type = return_type
+                              f" {sig.return_type} to {return_override}")
+            sig.return_type = return_override
+        for j, param in enumerate(sig.parameters):
+            param_override = param_overrides.get((i, j))
+            if param_override is not None:
+                if param.type:
+                    _logger.debug(f"Changed type of parameter '{param}'"
+                                  f" in {function} to {param_override}")
+                param.type = param_override
     function.signatures = new_sigs
     return function
 
@@ -219,16 +219,23 @@ def process_dependencies(file: File) -> None:
             continue
         seen.add(name)
 
-        def if_alias(definition: str) -> None:
+        def alias_of(definition: str) -> None:
             alias = Alias(name, definition, is_type_alias=True)
             file.nested.append(alias)
 
-        def if_import(module: str) -> None:
+        def as_type_var(bounds: Sequence[str]) -> None:
+            type_var = TypeVariable(name, bounds)
+            file.nested.append(type_var)
+
+        def import_from(module: str) -> None:
             if not module.startswith(current_dir):
                 if (end := module.find('._')) > 0:
                     module = module[:end]
                 file.imports[module].append(name)
 
-        processed = process_dependency(name, if_alias, if_import)
+        processed = process_dependency(
+            name, if_alias=alias_of, if_import=import_from,
+            if_type_var=as_type_var
+        )
         if not processed:
             _logger.warning(f"Unknown type '{name}' in '{current_dir}'")

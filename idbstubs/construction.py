@@ -18,7 +18,9 @@ from .reps import (
     Alias, Class, Element, Function, Module, Package, Parameter, Signature,
     StubRep
 )
-from .special_cases import ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
+from .special_cases import (
+    GENERIC, ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
+)
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
     method_name_from_cpp_name, snake_to_camel
@@ -310,6 +312,8 @@ def make_class_rep(
         for j in get_derivations(t)
         if type_is_exposed(j)
     ]
+    if (type_vars := GENERIC.get(name)) is not None:
+        derivations.append(f'Generic[{type_vars}]')
     # Elements
     nested.append(
         Element('DtoolClassDict', 'ClassVar[dict[str, Any]]',

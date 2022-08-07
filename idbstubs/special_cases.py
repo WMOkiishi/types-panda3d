@@ -105,18 +105,28 @@ ITERABLE: Final = {
     'LVecBase4f': 'float', 'LVecBase4d': 'float', 'LVecBase4i': 'int',
 }
 
-
-PARAM_TYPE_OVERRIDES: Final[dict[str, tuple[int, int, str]]] = {
-    'panda3d.core.Filename.__init__': (2, 1, 'str | bytes | PathLike'),
-    'panda3d.core.PythonCallbackObject.__init__': (0, 1, 'Callable'),
-    'panda3d.core.PythonCallbackObject.set_function': (0, 1, 'Callable'),
-    'panda3d.core.PythonTask.__init__': (0, 1, 'Callable'),
-    'panda3d.core.PythonTask.set_function': (0, 1, 'Callable'),
-    'panda3d.core.PythonTask.set_upon_death': (0, 1, 'Callable'),
-    'panda3d.core.TextEncoder.decode_text': (0, 1, 'bytes'),
+# These classes are effectively generic
+GENERIC: Final = {
+    'NodePath': '_N',
 }
 
-RETURN_TYPE_OVERRIDES = {
+
+PARAM_TYPE_OVERRIDES: Final[dict[str, dict[tuple[int, int], str]]] = {
+    'panda3d.core.Filename.__init__': {(1, 1): 'str | bytes | PathLike'},
+    'panda3d.core.NodePath.__init__': {
+        (1, 1): 'NodePath[_N]', (2, 1): '_N', (4, 2): '_N'
+    },
+    'panda3d.core.NodePath.any_path': {(0, 0): '_M'},
+    'panda3d.core.NodePath.attach_new_node': {(0, 1): '_M'},
+    'panda3d.core.PythonCallbackObject.__init__': {(0, 1): 'Callable'},
+    'panda3d.core.PythonCallbackObject.set_function': {(0, 1): 'Callable'},
+    'panda3d.core.PythonTask.__init__': {(0, 1): 'Callable'},
+    'panda3d.core.PythonTask.set_function': {(0, 1): 'Callable'},
+    'panda3d.core.PythonTask.set_upon_death': {(0, 1): 'Callable'},
+    'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes'},
+}
+
+RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.core.AsyncFuture.__await__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.__iter__': 'Generator[Awaitable, None, None]',
     'panda3d.core.Datagram.get_message': 'bytes',
@@ -124,7 +134,10 @@ RETURN_TYPE_OVERRIDES = {
     'panda3d.core.Filename.scan_directory': 'list[str]',
     'panda3d.core.GlobPattern.match_files': 'list[str]',
     'panda3d.core.GraphicsStateGuardian.get_prepared_textures': 'list[Any]',
+    'panda3d.core.NodePath.any_path': 'NodePath[_M]',
+    'panda3d.core.NodePath.attach_new_node': {0: 'NodePath[_M]'},
     'panda3d.core.NodePath.get_python_tags': 'dict[Any, Any] | None',
+    'panda3d.core.NodePath.node': '_N',
     'panda3d.core.PandaNode.get_python_tags': 'dict[Any, Any]',
     'panda3d.core.PythonCallbackObject.get_function': 'Callable',
     'panda3d.core.PythonTask.get_args': 'tuple[Any, ...]',

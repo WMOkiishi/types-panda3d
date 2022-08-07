@@ -1,6 +1,6 @@
 from collections.abc import Mapping, Sequence
 from os import PathLike
-from typing import Any, ClassVar, Literal, TypeAlias, final, overload
+from typing import Any, ClassVar, Generic, Literal, TypeAlias, TypeVar, final, overload
 from panda3d.core import (
     AsyncTask,
     AsyncTaskManager,
@@ -61,7 +61,9 @@ _RenderAttrib_PandaCompareFunc: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _BoundingVolume_BoundsType: TypeAlias = Literal[0, 1, 2, 3, 4]
 _TransparencyAttrib_Mode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _LogicOpAttrib_Operation: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+_N = TypeVar('_N', bound=PandaNode)
 _NodePath_ErrorType: TypeAlias = Literal[0, 1, 2, 3]
+_M = TypeVar('_M', bound=PandaNode)
 _RenderAttrib_TexGenMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 _BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
@@ -3420,7 +3422,7 @@ class TextureStageCollection:
     getTextureStage = get_texture_stage
     getTextureStages = get_texture_stages
 
-class NodePath:
+class NodePath(Generic[_N]):
     """NodePath is the fundamental system for disambiguating instances, and also
     provides a higher-level interface for manipulating the scene graph.
     
@@ -3483,13 +3485,13 @@ class NodePath:
         """
         ...
     @overload
-    def __init__(self, copy: NodePath) -> None: ...
+    def __init__(self, copy: NodePath[_N]) -> None: ...
     @overload
-    def __init__(self, node: PandaNode, current_thread: Thread = ...) -> None: ...
+    def __init__(self, node: _N, current_thread: Thread = ...) -> None: ...
     @overload
     def __init__(self, top_node_name: str, current_thread: Thread = ...) -> None: ...
     @overload
-    def __init__(self, parent: NodePath, child_node: PandaNode, current_thread: Thread = ...) -> None: ...
+    def __init__(self, parent: NodePath, child_node: _N, current_thread: Thread = ...) -> None: ...
     def __bool__(self) -> bool: ...
     def __copy__(self) -> NodePath: ...
     def __deepcopy__(self, memo): ...
@@ -3500,7 +3502,7 @@ class NodePath:
     def __lt__(self, other: NodePath | WeakNodePath) -> bool: ...
     def __le__(self, other: NodePath | WeakNodePath) -> bool: ...
     @staticmethod
-    def any_path(node: PandaNode, current_thread: Thread = ...) -> NodePath:
+    def any_path(node: _M, current_thread: Thread = ...) -> NodePath[_M]:
         """Returns a new NodePath that represents any arbitrary path from the root to
         the indicated node.  This is the same thing that would be returned by
         NodePath(node), except that no warning is issued if the path is ambiguous.
@@ -3592,7 +3594,7 @@ class NodePath:
         NodePath if this path is empty.
         """
         ...
-    def node(self) -> PandaNode:
+    def node(self) -> _N:
         """Returns the referenced node of the path."""
         ...
     def get_key(self) -> int:
@@ -3757,7 +3759,7 @@ class NodePath:
         """
         ...
     @overload
-    def attach_new_node(self, node: PandaNode, sort: int = ..., current_thread: Thread = ...) -> NodePath:
+    def attach_new_node(self, node: _M, sort: int = ..., current_thread: Thread = ...) -> NodePath[_M]:
         """`(self, node: PandaNode, sort: int = ..., current_thread: Thread = ...)`:
         Attaches a new node, with or without existing parents, to the scene graph
         below the referenced node of this NodePath.  This is the preferred way to

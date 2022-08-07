@@ -1,7 +1,7 @@
 import builtins
 import logging
 from collections import defaultdict
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Sequence
 from functools import cache
 from itertools import combinations, product
 from typing import Final
@@ -42,10 +42,12 @@ STDLIB_IMPORTS: Final = {
     'Any': 'typing',
     'ClassVar': 'typing',
     'final': 'typing',
+    'Generic': 'typing',
     'Literal': 'typing',
     'NoReturn': 'typing',
     'overload': 'typing',
     'TypeAlias': 'typing',
+    'TypeVar': 'typing',
 }
 
 # These exist entirely for readability and brevity
@@ -63,6 +65,11 @@ _type_alias_data = [
     (k, frozenset(v.split(' | ')))
     for k, v in TYPE_ALIASES.items()
 ]
+
+TYPE_VARIABLES: Final = {
+    '_N': ('PandaNode',),
+    '_M': ('PandaNode',),
+}
 
 
 @cache
@@ -214,12 +221,15 @@ def get_module(name: str) -> str | None:
 
 def process_dependency(
         name: str,
-        if_alias: Callable[[str], object],
-        if_import: Callable[[str], object]) -> bool:
+        *, if_alias: Callable[[str], object],
+        if_import: Callable[[str], object],
+        if_type_var: Callable[[Sequence], object]) -> bool:
     if name in BUILTIN_NAMES:
         pass
     elif (alias_def := get_alias_def(name)) is not None:
         if_alias(alias_def)
+    elif (type_var_bounds := TYPE_VARIABLES.get(name)) is not None:
+        if_type_var(type_var_bounds)
     elif (module := get_module(name)) is not None:
         if_import(module)
     else:

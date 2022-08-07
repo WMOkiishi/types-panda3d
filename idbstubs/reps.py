@@ -1,6 +1,6 @@
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Sequence
-from itertools import chain, repeat
+from itertools import chain
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -14,6 +14,32 @@ class StubRep(Protocol):
     def sort(self) -> tuple[int, int]: ...
     def get_dependencies(self) -> Iterator[str]: ...
     def definition(self) -> Iterator[str]: ...
+
+
+@define
+class TypeVariable:
+    name: str
+    bounds: Sequence[str] = field(default=(), converter=tuple)
+
+    def __str__(self) -> str:
+        if not self.bounds:
+            definition = f'TypeVar({self.name!r})'
+        elif len(self.bounds) == 1:
+            definition = f'TypeVar({self.name!r}, bound={self.bounds[0]})'
+        else:
+            constraints = ', '.join(self.bounds)
+            definition = f'TypeVar({self.name!r}, {constraints})'
+        return f'{self.name} = {definition}'
+
+    def sort(self) -> tuple[int, int]:
+        return 0, 0
+
+    def get_dependencies(self) -> Iterator[str]:
+        yield 'TypeVar'
+        yield from flatten(names_within(i) for i in self.bounds)
+
+    def definition(self) -> Iterator[str]:
+        yield str(self)
 
 
 @define
@@ -214,6 +240,9 @@ class Element:
             yield f'{self.name}: {self.type}'
         else:
             yield f'{self.name} = ...'
+        # if self.doc:
+        #     one_line_doc = self.doc.strip('"\n').replace('\n', ' ')
+        #     yield f'{definition}  # {one_line_doc}'
 
 
 @define
