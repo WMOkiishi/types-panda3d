@@ -111,7 +111,7 @@ GENERIC: Final = {
 }
 
 
-PARAM_TYPE_OVERRIDES: Final[dict[str, dict[tuple[int, int], str]]] = {
+PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
     'panda3d.core.Filename.__init__': {(1, 1): 'str | bytes | PathLike'},
     'panda3d.core.NodePath.__init__': {
         (1, 1): 'NodePath[_N]', (2, 1): '_N', (4, 2): '_N'
@@ -163,9 +163,11 @@ _returns_self = product(
     ('LVecBase2f', 'LVecBase2d', 'LVecBase2i',
      'LVecBase3f', 'LVecBase3d', 'LVecBase3i',
      'LVecBase4f', 'LVecBase4d', 'LVecBase4i'),
-    ('__floordiv__', '__ifloordiv__',
-     '__rmul__', '__pow__', '__ipow__',
+    ('__floordiv__', '__ifloordiv__', '__pow__', '__ipow__',
+     '__iadd__', '__isub__', '__imul__', '__itruediv__',
      '__round__', '__floor__', '__ceil__')
 )
 for _name, _func in _returns_self:
-    RETURN_TYPE_OVERRIDES['.'.join(('panda3d.core', _name, _func))] = _name
+    _func_name = '.'.join(('panda3d.core', _name, _func))
+    RETURN_TYPE_OVERRIDES[_func_name] = 'Self'
+    PARAM_TYPE_OVERRIDES.setdefault(_func_name, {})[(0, 0)] = 'Self'

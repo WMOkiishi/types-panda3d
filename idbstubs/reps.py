@@ -90,7 +90,7 @@ class Parameter:
         s = self.name
         if not self.named:
             s = '__' + s.lstrip('_')
-        if self.type and not self.is_self:
+        if self.type:
             s += ': ' + self.type
         if self.is_optional:
             s += ' = ...'
