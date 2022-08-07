@@ -181,6 +181,9 @@ def process_function(
     if param_override_info is not None:
         i, j, param_override = param_override_info
         param = function.signatures[i].parameters[j]
+        if param.type:
+            _logger.debug(f"Changed type of parameter '{param}'"
+                          f" in {function} to {param_override}")
         param.type = param_override
     if (required_sig := REQUIRED_SIGS.get(name)) is not None:
         new_sigs = [required_sig]
@@ -200,6 +203,9 @@ def process_function(
                 return_type = default_return
             else:
                 continue
+            if sig.return_type:
+                _logger.debug(f"Changed return type of {function} from"
+                              f" {sig.return_type} to {return_type}")
             sig.return_type = return_type
     function.signatures = new_sigs
     return function

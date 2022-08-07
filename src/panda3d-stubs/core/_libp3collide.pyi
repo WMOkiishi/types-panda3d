@@ -1,4 +1,4 @@
-from collections.abc import Iterable, Sequence
+from collections.abc import Sequence
 from typing import Any, ClassVar, TypeAlias, overload
 from panda3d.core import (
     BitMask_uint32_t_32,
@@ -833,7 +833,7 @@ class CollisionPolygon(CollisionPlane):
         ...
     @overload
     @staticmethod
-    def verify_points(a: Iterable[LPoint3f], b: _Vec3f, c: _Vec3f) -> bool:
+    def verify_points(a: _Vec3f, b: _Vec3f, c: _Vec3f) -> bool:
         """Verifies that the indicated set of points will define a valid
         CollisionPolygon: that is, at least three non-collinear points, with no
         points repeated.

@@ -107,9 +107,7 @@ ITERABLE: Final = {
 
 
 PARAM_TYPE_OVERRIDES: Final[dict[str, tuple[int, int, str]]] = {
-    'panda3d.core.CollisionPolygon.setup_points': (0, 1, 'Iterable[LPoint3f]'),
-    'panda3d.core.CollisionPolygon.verify_points': (0, 0, 'Iterable[LPoint3f]'),
-    'panda3d.core.Filename.__init__': (1, 1, 'str | bytes | PathLike'),
+    'panda3d.core.Filename.__init__': (2, 1, 'str | bytes | PathLike'),
     'panda3d.core.PythonCallbackObject.__init__': (0, 1, 'Callable'),
     'panda3d.core.PythonCallbackObject.set_function': (0, 1, 'Callable'),
     'panda3d.core.PythonTask.__init__': (0, 1, 'Callable'),
