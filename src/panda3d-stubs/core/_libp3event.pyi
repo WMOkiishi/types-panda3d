@@ -1393,7 +1393,6 @@ class PythonTask(AsyncTask):
     DtoolClassDict: ClassVar[dict[str, Any]]
     delay_time: float
     delayTime: float
-    __dict__ = ...
     @property
     def time(self) -> float:
         """The amount of seconds that have elapsed since the task was started,

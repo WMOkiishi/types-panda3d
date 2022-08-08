@@ -321,7 +321,7 @@ def make_class_rep(
     )
     for n in range(idb.interrogate_type_number_of_elements(t)):
         e = idb.interrogate_type_get_element(t, n)
-        if element_is_exposed(e):
+        if element_is_exposed(e) and not idb.interrogate_element_name(e) in NO_STUBS:
             nested.append(make_element_rep(e, namespace))
     if name.startswith('ParamValue_'):
         value = name[11:]
