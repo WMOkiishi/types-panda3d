@@ -1,0 +1,66 @@
+from typing import ClassVar, TypeVar
+from typing_extensions import Literal, Protocol, TypeAlias
+
+from panda3d.core import NodePath, PandaNode
+from panda3d.physics import (
+    ArcEmitter,
+    BaseForce,
+    ParticleSystem,
+    PhysicalNode,
+    PointParticleFactory,
+    PointParticleRenderer,
+)
+from ..directnotify.Notifier import Notifier
+
+_T_contra = TypeVar("_T_contra", contravariant=True)
+
+_OldBool: TypeAlias = Literal[0, 1]
+
+class _SupportsWrite(Protocol[_T_contra]):
+    def write(self, s: _T_contra, /) -> object: ...
+
+class Particles(ParticleSystem):
+    notify: ClassVar[Notifier]
+    id: ClassVar[int]
+    name: str
+    node: PhysicalNode
+    nodePath: NodePath[PhysicalNode]
+    factory: PointParticleFactory | None
+    factoryType: str
+    renderer: PointParticleRenderer | None
+    rendererType: str
+    emitter: ArcEmitter | None
+    emitterType: str
+    fEnabled: bool | _OldBool
+    geomReference: str
+    def __init__(self, name: str | None = None, poolSize: int = 1024) -> None: ...
+    def cleanup(self) -> None: ...
+    def enable(self) -> None: ...
+    def disable(self) -> None: ...
+    def is_enabled(self) -> bool | _OldBool: ...
+    def getNode(self) -> PhysicalNode: ...
+    def set_factory(self, type: str) -> None: ...
+    def set_renderer(self, type: str) -> None: ...
+    def set_emitter(self, type: str) -> None: ...
+    def add_force(self, force: BaseForce) -> None: ...
+    def remove_force(self, force: BaseForce | None) -> None: ...
+    def set_render_node_path(self, nodePath: PandaNode) -> None: ...
+    def getName(self) -> str: ...
+    def get_factory(self) -> PointParticleFactory | None: ...
+    def get_emitter(self) -> ArcEmitter | None: ...
+    def get_renderer(self) -> PointParticleRenderer | None: ...
+    def print_params(self, file: _SupportsWrite[str] = ..., targ: str = 'self') -> None: ...
+    def get_pool_size_ranges(self): ...
+    def accelerate(self, time: float, stepCount: int = 1, stepTime: float = 0) -> None: ...
+    isEnabled = is_enabled
+    setFactory = set_factory
+    setRenderer = set_renderer
+    setEmitter = set_emitter
+    addForce = add_force
+    removeForce = remove_force
+    setRenderNodePath = set_render_node_path
+    getFactory = get_factory
+    getEmitter = get_emitter
+    getRenderer = get_renderer
+    printParams = print_params
+    getPoolSizeRanges = get_pool_size_ranges
