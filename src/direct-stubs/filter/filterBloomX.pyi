@@ -1,0 +1,1 @@
+BLOOM_X: str
