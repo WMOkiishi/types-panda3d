@@ -4,8 +4,8 @@ from collections.abc import Iterable, Iterator, Sequence
 from itertools import chain
 from typing import Final, TypeVar, cast
 
-import attrs
 import panda3d.interrogatedb as idb
+from attrs import evolve
 
 from .idbutil import (
     ElementIndex, FunctionIndex, FunctionWrapperIndex, MakeSeqIndex, TypeIndex,
@@ -91,7 +91,22 @@ def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
         method = make_function_rep(f)
         if method.name in NO_STUBS:
             continue
-        if method.name == '__len__':
+        elif method.name == '__getitem__':
+            # Sometimes, the signatures for '__setitem__' are mixed in
+            # with those for '__getitem__'. I'm not entirely sure why.
+            getitem_sigs: list[Signature] = []
+            setitem_sigs: list[Signature] = []
+            for sig in method.signatures:
+                if len(sig.parameters) <= 2:
+                    getitem_sigs.append(sig)
+                else:
+                    setitem_sigs.append(sig)
+            if getitem_sigs:
+                yield evolve(method, signatures=getitem_sigs)
+            if setitem_sigs:
+                yield evolve(method, name='__setitem__', signatures=setitem_sigs)
+            continue
+        elif method.name == '__len__':
             if idb.interrogate_type_name(t) in SIZE_NOT_LEN:
                 method.name = 'size'
         elif method.name == '__lt__':
@@ -102,7 +117,7 @@ def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
             seen_le = True
         yield method
     if lt_function is not None and seen_eq and not seen_le:
-        yield attrs.evolve(lt_function, name='__le__')
+        yield evolve(lt_function, name='__le__')
     for n in range(idb.interrogate_type_number_of_make_seqs(t)):
         yield make_make_seq_rep(idb.interrogate_type_get_make_seq(t, n))
 
