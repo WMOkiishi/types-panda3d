@@ -27,3 +27,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "*" = ["*.pyi"]
+
+[tool.isort]
+multi_line_output = 5
+extra_standard_library = ["typing_extensions"]
