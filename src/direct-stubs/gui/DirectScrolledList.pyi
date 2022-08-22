@@ -1,4 +1,4 @@
-__all__ = ['DirectScrolledListItem', 'DirectScrolledList']
+__all__ = ['DirectScrolledList', 'DirectScrolledListItem']
 
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias

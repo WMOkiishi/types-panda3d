@@ -1,7 +1,14 @@
 __all__ = [
-    'Task', 'TaskManager',
-    'cont', 'done', 'again', 'pickup', 'exit',
-    'sequence', 'loop', 'pause',
+    'Task',
+    'TaskManager',
+    'again',
+    'cont',
+    'done',
+    'exit',
+    'loop',
+    'pause',
+    'pickup',
+    'sequence',
 ]
 
 from collections.abc import Callable, Sequence

@@ -1,8 +1,18 @@
 __all__ = [
-    'FunctionInterval', 'EventInterval', 'AcceptInterval', 'IgnoreInterval',
-    'ParentInterval', 'WrtParentInterval', 'PosInterval', 'HprInterval',
-    'ScaleInterval', 'PosHprInterval', 'HprScaleInterval', 'PosHprScaleInterval',
-    'Func', 'Wait',
+    'AcceptInterval',
+    'EventInterval',
+    'Func',
+    'FunctionInterval',
+    'HprInterval',
+    'HprScaleInterval',
+    'IgnoreInterval',
+    'ParentInterval',
+    'PosHprInterval',
+    'PosInterval',
+    'PosHprScaleInterval',
+    'ScaleInterval',
+    'Wait',
+    'WrtParentInterval',
 ]
 
 from collections.abc import Callable, Iterable

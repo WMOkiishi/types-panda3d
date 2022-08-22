@@ -1,4 +1,4 @@
-__all__ = ['FSMException', 'FSM']
+__all__ = ['FSM', 'FSMException']
 
 from collections.abc import Callable, Collection, Mapping, Sequence
 from typing import Any, ClassVar

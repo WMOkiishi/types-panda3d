@@ -1,6 +1,12 @@
 __all__ = [
-    'findDialog', 'cleanupDialog', 'DirectDialog', 'OkDialog',
-    'OkCancelDialog', 'YesNoDialog', 'YesNoCancelDialog', 'RetryCancelDialog',
+    'DirectDialog',
+    'OkCancelDialog',
+    'OkDialog',
+    'RetryCancelDialog',
+    'YesNoCancelDialog',
+    'YesNoDialog',
+    'cleanupDialog',
+    'findDialog',
 ]
 
 from typing import Any, ClassVar

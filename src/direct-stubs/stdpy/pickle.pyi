@@ -1,6 +1,14 @@
 __all__ = [
-    'PickleError', 'PicklingError', 'UnpicklingError', 'Pickler',
-    'Unpickler', 'dump', 'dumps', 'load', 'loads', 'HIGHEST_PROTOCOL',
+    'HIGHEST_PROTOCOL',
+    'PickleError',
+    'Pickler',
+    'PicklingError',
+    'Unpickler',
+    'UnpicklingError',
+    'dump',
+    'dumps',
+    'load',
+    'loads',
 ]
 
 from pickle import (

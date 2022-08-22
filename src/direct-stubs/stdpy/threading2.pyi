@@ -1,9 +1,23 @@
 __all__ = [
-    'get_ident', 'active_count', 'Condition', 'current_thread',
-    'enumerate', 'main_thread', 'TIMEOUT_MAX',
-    'Event', 'Lock', 'RLock', 'Semaphore', 'BoundedSemaphore', 'Thread',
-    'Timer', 'ThreadError',
-    'setprofile', 'settrace', 'local', 'stack_size',
+    'BoundedSemaphore',
+    'Condition',
+    'Event',
+    'Lock',
+    'RLock',
+    'Semaphore',
+    'TIMEOUT_MAX',
+    'Thread',
+    'ThreadError',
+    'Timer',
+    'active_count',
+    'current_thread',
+    'enumerate',
+    'get_ident',
+    'local',
+    'main_thread',
+    'setprofile',
+    'settrace',
+    'stack_size',
 ]
 
 from collections.abc import Callable, Iterable, Mapping

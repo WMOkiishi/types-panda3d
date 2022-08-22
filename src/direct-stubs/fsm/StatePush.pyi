@@ -1,4 +1,4 @@
-__all__ = ['StateVar', 'FunctionCall', 'EnterExit', 'Pulse', 'EventPulse', 'EventArgument']
+__all__ = ['EnterExit', 'EventArgument', 'EventPulse', 'FunctionCall', 'Pulse', 'StateVar']
 
 from collections.abc import Callable
 from typing import Any

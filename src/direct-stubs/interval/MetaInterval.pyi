@@ -1,4 +1,4 @@
-__all__ = ['MetaInterval', 'Sequence', 'Parallel', 'ParallelEndTogether', 'Track']
+__all__ = ['MetaInterval', 'Parallel', 'ParallelEndTogether', 'Sequence', 'Track']
 
 from collections.abc import Iterable
 from typing import ClassVar, SupportsIndex

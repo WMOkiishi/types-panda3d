@@ -1,4 +1,4 @@
-__all__ = ['OnscreenText', 'Plain', 'ScreenTitle', 'ScreenPrompt', 'NameConfirm', 'BlackOnWhite']
+__all__ = ['BlackOnWhite', 'NameConfirm', 'OnscreenText', 'Plain', 'ScreenPrompt', 'ScreenTitle']
 
 from typing import Any, overload
 from typing_extensions import Literal, TypeAlias

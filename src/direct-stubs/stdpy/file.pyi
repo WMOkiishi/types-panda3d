@@ -1,7 +1,15 @@
 __all__ = [
-    'open', 'listdir', 'walk', 'join',
-    'isfile', 'isdir', 'exists', 'lexists', 'getmtime', 'getsize',
     'execfile',
+    'exists',
+    'getmtime',
+    'getsize',
+    'isdir',
+    'isfile',
+    'join',
+    'lexists',
+    'listdir',
+    'open',
+    'walk',
 ]
 
 from collections.abc import Mapping
