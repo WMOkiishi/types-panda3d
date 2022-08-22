@@ -1,0 +1,16 @@
+from typing_extensions import Literal, TypeAlias
+
+from .GravityWalker import GravityWalker
+
+_OldBool: TypeAlias = Literal[0, 1]
+
+BattleStrafe: bool | _OldBool
+
+def ToggleStrafe() -> None: ...
+def SetStrafe(status: bool) -> None: ...
+
+class BattleWalker(GravityWalker):
+    advanceSpeed: float
+    def __init__(self) -> None: ...
+    def getSpeeds(self) -> tuple[float, float, float, float]: ...
+    def handleAvatarControls(self, task: object) -> Literal[1]: ...
