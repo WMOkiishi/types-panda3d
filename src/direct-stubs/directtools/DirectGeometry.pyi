@@ -1,5 +1,5 @@
 from collections.abc import Iterable, Sequence
-from typing import Any, TypeAlias, overload
+from typing import TypeAlias, overload
 
 from panda3d.core import (
     GeomNode,
@@ -21,7 +21,6 @@ _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f
 class LineNodePath(NodePath[GeomNode]):
     lineNode: GeomNode
     lineSegs: LineSegs
-    def __getattr__(self, name: str) -> Any: ...  # incomplete
     def __init__(
         self,
         parent: NodePath | None = None,
@@ -52,7 +51,7 @@ class LineNodePath(NodePath[GeomNode]):
     @overload
     def setVertexColor(self, vertex: int, c: _Vec4f, /) -> None: ...
     @overload
-    def set_vertex_color(self, vertex: int, r: float, g: float, b: float, a: float = ..., /) -> None: ...
+    def setVertexColor(self, vertex: int, r: float, g: float, b: float, a: float = ..., /) -> None: ...
     def getCurrentPosition(self) -> LPoint3f: ...
     def getNumVertices(self) -> int: ...
     def getVertex(self, index: int) -> LPoint3f: ...
