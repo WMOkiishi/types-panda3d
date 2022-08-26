@@ -1,5 +1,5 @@
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import (
     BitMask_uint32_t_32,
@@ -17,22 +17,20 @@ from panda3d.physics import ActorNode, PhysicsCollisionHandler, PhysicsManager
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 
-_OldBool: TypeAlias = Literal[0, 1]
-
 class PhysicsWalker(DirectObject):
     notify: ClassVar[Notifier]
     wantDebugIndicator: ClassVar[ConfigVariableBool]
-    useLifter: ClassVar[bool | _OldBool]
-    useHeightRay: ClassVar[bool | _OldBool]
-    needToDeltaPos: bool | _OldBool
+    useLifter: ClassVar[bool]
+    useHeightRay: ClassVar[bool]
+    needToDeltaPos: bool
     physVelocityIndicator = ...
     avatarControlForwardSpeed: float
     avatarControlJumpForce: float
     avatarControlReverseSpeed: float
     avatarControlRotateSpeed: float
     getAirborneHeight = ...
-    collisionsActive: bool | _OldBool
-    isAirborne: bool | _OldBool
+    collisionsActive: bool
+    isAirborne: bool
     highMark: float
     cRay: CollisionRay
     cRayNodePath: NodePath[CollisionNode]
@@ -72,7 +70,7 @@ class PhysicsWalker(DirectObject):
     def avatarPhysicsIndicator(self, task: object) -> Literal[1]: ...
     def deleteCollisions(self) -> None: ...
     def setCollisionsActive(self, active: bool = True) -> None: ...
-    def getCollisionsActive(self) -> bool | _OldBool: ...
+    def getCollisionsActive(self) -> bool: ...
     def placeOnFloor(self) -> None: ...
     def oneTimeCollide(self) -> None: ...
     def addBlastForce(self, vector: object) -> None: ...

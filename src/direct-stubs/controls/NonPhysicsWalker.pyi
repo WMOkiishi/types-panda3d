@@ -1,5 +1,5 @@
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import (
     BitMask_uint32_t_32,
@@ -16,19 +16,17 @@ from panda3d.core import (
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 
-_OldBool: TypeAlias = Literal[0, 1]
-
 class NonPhysicsWalker(DirectObject):
     notify: ClassVar[Notifier]
     wantDebugIndicator: ClassVar[ConfigVariableBool]
     slideName: ClassVar[str]
     worldVelocity: LVector3f
-    collisionsActive: bool | _OldBool
+    collisionsActive: bool
     speed: float
     rotationSpeed: float
     slideSpeed: float
     vel: LVector3f
-    stopThisFrame: bool | _OldBool
+    stopThisFrame: bool
     avatarControlForwardSpeed: float
     avatarControlReverseSpeed: float
     avatarControlRotateSpeed: float

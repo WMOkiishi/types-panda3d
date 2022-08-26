@@ -1,13 +1,11 @@
 __all__ = ['DirectEntry']
 
 from typing import Any, ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import ConfigVariableBool, NodePath, TextFont
 from .DirectFrame import DirectFrame
 from .OnscreenText import OnscreenText
-
-_OldBool: TypeAlias = Literal[0, 1]
 
 ENTRY_FOCUS_STATE: Literal[0]
 ENTRY_NO_FOCUS_STATE: Literal[1]
@@ -18,7 +16,7 @@ class DirectEntry(DirectFrame):
     AllowCapNamePrefixes: ClassVar[tuple[str, ...]]
     ForceCapNamePrefixes: ClassVar[tuple[str, ...]]
     onscreenText: OnscreenText
-    unicodeText: bool | _OldBool
+    unicodeText: bool
     def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
     def destroy(self) -> None: ...
     def setup(self) -> None: ...

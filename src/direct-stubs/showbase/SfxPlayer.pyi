@@ -1,14 +1,11 @@
 __all__ = ['SfxPlayer']
 
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import AudioSound, NodePath
 
-_OldBool: TypeAlias = Literal[0, 1]
-
 class SfxPlayer:
-    UseInverseSquare: ClassVar[bool | _OldBool]
+    UseInverseSquare: ClassVar[bool]
     cutoffVolume: float
     cutoffDistance: float
     distanceScale: float

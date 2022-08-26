@@ -1,14 +1,11 @@
 __all__ = ['IntervalManager', 'ivalMgr']
 
-from typing_extensions import Literal, TypeAlias
-
 from panda3d.core import EventQueue
 from panda3d.direct import CInterval, CIntervalManager
 from ..showbase.EventManager import EventManager
 from .Interval import Interval
 
 _Interval = Interval | CInterval
-_OldBool: TypeAlias = Literal[0, 1]
 
 class IntervalManager(CIntervalManager):
     eventQueue: EventQueue
@@ -16,7 +13,7 @@ class IntervalManager(CIntervalManager):
     ivals: list[_Interval | None]
     def __init__(self, globalPtr: bool = False) -> None: ...
     def addInterval(self, interval: CInterval) -> None: ...
-    def removeInterval(self, interval: _Interval) -> _OldBool: ...
+    def removeInterval(self, interval: _Interval) -> bool: ...
     def getInterval(self, name: str) -> _Interval | None: ...
     def getIntervalsMatching(self, pattern: str) -> list[_Interval]: ...
     def finishIntervalsMatching(self, pattern: str) -> int: ...

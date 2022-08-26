@@ -1,27 +1,24 @@
 __all__ = ['AnimControlInterval']
 
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import AnimControlCollection
 from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
-_OldBool: TypeAlias = Literal[0, 1]
-
 class AnimControlInterval(Interval):
     notify: ClassVar[Notifier]
     animNum: ClassVar[int]
     controls: AnimControlCollection
-    loopAnim: bool | _OldBool
-    constrainedLoop: bool | _OldBool
+    loopAnim: bool
+    constrainedLoop: bool
     playRate: float
     frameRate: float
     startFrame: int
     endFrame: int
     reverse: bool
     numFrames: int
-    implicitDuration: bool | _OldBool
+    implicitDuration: bool
     def __init__(
         self,
         controls,

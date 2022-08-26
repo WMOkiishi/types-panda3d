@@ -1,28 +1,25 @@
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import GeomNode, LPoint3f, LVector3f, NodePath, ParametricCurve
 from ..showbase.DirectObject import DirectObject
 
-_OldBool: TypeAlias = Literal[0, 1]
-
 class Mopath(DirectObject):
     nameIndex: ClassVar[int]
     name: str
-    fluid: bool | _OldBool
+    fluid: bool
     tPoint: LPoint3f
     tPoint: LPoint3f
     posPoint: LPoint3f
     hprPoint: LPoint3f
     tangentVec: LVector3f
-    fFaceForward: bool | _OldBool
+    fFaceForward: bool
     faceForwardDelta: float | None
     faceForwardNode: NodePath | None
     timeScale: float
     upVectorNodePath: NodePath | None
     reverseUpVector: bool
     maxT: float
-    loop: bool | _OldBool
+    loop: bool
     xyzNurbsCurve: ParametricCurve | None
     hprNurbsCurve: ParametricCurve | None
     tNurbsCurve: list

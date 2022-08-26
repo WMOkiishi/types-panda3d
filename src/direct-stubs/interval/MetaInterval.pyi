@@ -11,7 +11,6 @@ from .Interval import Interval
 
 _EventType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _Interval: TypeAlias = Interval | CInterval
-_OldBool: TypeAlias = Literal[0, 1]
 _RelativeStart: TypeAlias = Literal[0, 1, 2]
 
 PREVIOUS_END: Literal[0]
@@ -25,7 +24,7 @@ class MetaInterval(CMetaInterval):
     ivals: tuple | list
     pstats: PStatCollector | None
     pythonIvals: list[_Interval]
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         *ivals: _Interval,
@@ -110,4 +109,4 @@ class ParallelEndTogether(MetaInterval):
 
 class Track(MetaInterval):
     def applyIvals(self, meta: MetaInterval, relTime: float, relTo: _RelativeStart) -> None: ...
-    def validateComponent(self, tupleObj: object) -> _OldBool: ...
+    def validateComponent(self, tupleObj: object) -> bool: ...

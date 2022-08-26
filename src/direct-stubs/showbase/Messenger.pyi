@@ -2,7 +2,7 @@ __all__ = ['Messenger']
 
 from collections.abc import Callable, Sequence
 from typing import Any, ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import TypeAlias
 
 from panda3d.core import AsyncFuture
 from ..directnotify.Notifier import Notifier
@@ -12,12 +12,10 @@ from .DirectObject import DirectObject
 # Ideally, this should just be Sequence[Any], but the code specifically checks
 # for one of these types.
 _Args: TypeAlias = tuple[Any, ...] | list[Any] | set[Any]
-_OldBool: TypeAlias = Literal[0, 1]
-
 class Messenger:
     notify: ClassVar[Notifier]
     lock: Lock
-    quieting: dict[str, _OldBool]
+    quieting: dict[str, bool]
     def __init__(self) -> None: ...
     def future(self, event: str) -> AsyncFuture: ...
     def accept(
@@ -26,12 +24,12 @@ class Messenger:
         object: DirectObject,
         method: Callable[..., object],
         extraArgs: _Args = ...,
-        persistent: bool | _OldBool = 1,
+        persistent: bool = 1,
     ) -> None: ...
     def ignore(self, event: str, object: DirectObject) -> None: ...
     def ignore_all(self, object: DirectObject) -> None: ...
     def get_all_accepting(self, object: DirectObject): ...
-    def is_accepting(self, event: str, object: DirectObject) -> _OldBool: ...
+    def is_accepting(self, event: str, object: DirectObject) -> bool: ...
     def who_accepts(self, event: str): ...
     def is_ignoring(self, event: str, object: DirectObject) -> bool: ...
     def send(self, event: str, sentArgs: Sequence[Any] = ..., taskChain: str | None = None) -> None: ...

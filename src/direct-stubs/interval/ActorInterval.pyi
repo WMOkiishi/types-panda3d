@@ -10,7 +10,6 @@ from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
-_OldBool: TypeAlias = Literal[0, 1]
 
 class ActorInterval(Interval):
     notify: ClassVar[Notifier]
@@ -18,16 +17,16 @@ class ActorInterval(Interval):
     actor: Actor
     animName: str
     controls: list[AnimControl]
-    loopAnim: bool | _OldBool
-    constrainedLoop: bool | _OldBool
-    forceUpdate: bool | _OldBool
+    loopAnim: bool
+    constrainedLoop: bool
+    forceUpdate: bool
     playRate: float
     frameRate: float
     startFrame: float
     endFrame: float
     reverse: bool
     numFrames: int
-    implicitDuration: bool | _OldBool
+    implicitDuration: bool
     def __init__(
         self,
         actor: Actor,

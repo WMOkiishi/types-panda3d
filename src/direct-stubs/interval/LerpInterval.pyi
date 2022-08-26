@@ -45,7 +45,6 @@ from .Interval import Interval
 _T = TypeVar('_T')
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
 _EventType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
-_OldBool: TypeAlias = Literal[0, 1]
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow
 
@@ -61,14 +60,14 @@ class LerpNodePathInterval(CLerpNodePathInterval):
         nodePath: NodePath,
         other: NodePath | None,
     ) -> None: ...
-    def anyCallable(self, *params: object) -> _OldBool: ...
+    def anyCallable(self, *params: object) -> bool: ...
     def setupParam(self, func: Callable[[_T], object], param: _T | Callable[[], _T]) -> None: ...
 
 class LerpPosInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endPos: _Vec3f
     startPos: _Vec3f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -84,11 +83,11 @@ class LerpPosInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpHprInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endHpr: _Vec3f
     startHpr: _Vec3f | None
     startQuat: _Vec4f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -105,11 +104,11 @@ class LerpHprInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpQuatInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endQuat: _Vec4f
     startHpr: _Vec3f | None
     startQuat: _Vec4f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -127,10 +126,10 @@ class LerpQuatInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpScaleInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endScale: _Vec3f | float
     startScale: _Vec3f | float | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -146,10 +145,10 @@ class LerpScaleInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpShearInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endShear: _Vec3f
     startShear: _Vec3f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -165,13 +164,13 @@ class LerpShearInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosHprInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endPos: _Vec3f
     startPos: _Vec3f | None
     endHpr: _Vec3f
     startHpr: _Vec3f | None
     startQuat: _Vec4f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -190,13 +189,13 @@ class LerpPosHprInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosQuatInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endPos: _Vec3f
     startPos: _Vec3f | None
     endQuat: _Vec4f
     startHpr: _Vec3f | None
     startQuat: _Vec4f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -215,13 +214,13 @@ class LerpPosQuatInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpHprScaleInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endHpr: _Vec3f
     startHpr: _Vec3f | None
     startQuat: _Vec4f | None
     endScale: _Vec3f | float
     startScale: _Vec3f | float | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -239,13 +238,13 @@ class LerpHprScaleInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpQuatScaleInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endQuat: _Vec4f
     startHpr: _Vec3f | None
     startQuat: _Vec4f | None
     endScale: _Vec3f | float
     startScale: _Vec3f | float | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -265,7 +264,7 @@ class LerpQuatScaleInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosHprScaleInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endPos: _Vec3f
     startPos: _Vec3f | None
     endHpr: _Vec3f
@@ -273,7 +272,7 @@ class LerpPosHprScaleInterval(LerpNodePathInterval):
     startQuat: _Vec4f | None
     endScale: _Vec3f | float
     startScale: _Vec3f | float | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -294,7 +293,7 @@ class LerpPosHprScaleInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosQuatScaleInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endPos: _Vec3f
     startPos: _Vec3f | None
     endQuat: _Vec4f
@@ -302,7 +301,7 @@ class LerpPosQuatScaleInterval(LerpNodePathInterval):
     startQuat: _Vec4f | None
     endScale: _Vec3f | float
     startScale: _Vec3f | float | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -323,7 +322,7 @@ class LerpPosQuatScaleInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosHprScaleShearInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endPos: _Vec3f
     startPos: _Vec3f | None
     endHpr: _Vec3f
@@ -333,7 +332,7 @@ class LerpPosHprScaleShearInterval(LerpNodePathInterval):
     startScale: _Vec3f | float | None
     endShear: _Vec3f
     startShear: _Vec3f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
@@ -356,7 +355,7 @@ class LerpPosHprScaleShearInterval(LerpNodePathInterval):
     def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosQuatScaleShearInterval(LerpNodePathInterval):
-    paramSetup: bool | _OldBool
+    paramSetup: bool
     endPos: _Vec3f
     startPos: _Vec3f | None
     endQuat: _Vec4f
@@ -366,7 +365,7 @@ class LerpPosQuatScaleShearInterval(LerpNodePathInterval):
     startScale: _Vec3f | float | None
     endShear: _Vec3f
     startShear: _Vec3f | None
-    inPython: bool | _OldBool
+    inPython: bool
     def __init__(
         self,
         nodePath: NodePath,

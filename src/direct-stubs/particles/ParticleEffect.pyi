@@ -1,19 +1,18 @@
 from os import PathLike
 from typing import ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename, NodePath
 from ..directnotify.Notifier import Notifier
 from .ForceGroup import ForceGroup
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
-_OldBool: TypeAlias = Literal[0, 1]
 
 class ParticleEffect(NodePath):
     notify: ClassVar[Notifier]
     pid: ClassVar[int]
     name: str
-    fEnabled: bool | _OldBool
+    fEnabled: bool
     particlesDict: dict
     forceGroupDict: dict[str, ForceGroup]
     renderParent = ...
@@ -24,7 +23,7 @@ class ParticleEffect(NodePath):
     def start(self, parent: NodePath | None = None, renderParent = None) -> None: ...
     def enable(self) -> None: ...
     def disable(self) -> None: ...
-    def is_enabled(self) -> bool | _OldBool: ...
+    def is_enabled(self) -> bool: ...
     def add_force_group(self, forceGroup: ForceGroup) -> None: ...
     def add_force(self, force) -> None: ...
     def remove_force_group(self, forceGroup) -> None: ...

@@ -11,7 +11,6 @@ CAM_MOVE_DURATION: float
 COA_MARKER_SF: float
 Y_AXIS: LVector3f
 
-_OldBool: TypeAlias = Literal[0, 1]
 _TaskCont: TypeAlias = Literal[1]
 
 class DirectCameraControl(DirectObject):
@@ -24,7 +23,7 @@ class DirectCameraControl(DirectObject):
     coaMarker: NodePath
     coaMarkerPos: LPoint3f
     coaMarkerColorIval: MetaInterval | None
-    fLockCOA: bool | _OldBool
+    fLockCOA: bool
     nullHitPointCount: int
     cqEntries: list
     coaMarkerRef: NodePath[PandaNode]
@@ -35,8 +34,8 @@ class DirectCameraControl(DirectObject):
     actionEvents: list[list[Any]]
     keyEvents: list[list[Any]]
     lockRoll: bool
-    useMayaCamControls: bool | _OldBool
-    altDown: bool | _OldBool
+    useMayaCamControls: bool
+    altDown: bool
     perspCollPlane: NodePath | None
     perspCOllPlane2: NodePath | None
     def __init__(self) -> None: ...
@@ -87,7 +86,7 @@ class DirectCameraControl(DirectObject):
     def fitOnWidget(self, nodePath: object = 'None Given') -> None: ...
     def moveToFit(self) -> None: ...
     def stickToWidgetTask(self, state: object) -> _TaskCont: ...
-    def enableMouseFly(self, fKeyEvents: bool | _OldBool) -> None: ...
+    def enableMouseFly(self, fKeyEvents: bool) -> None: ...
     def disableMouseFly(self) -> None: ...
     def removeManipulateCameraTask(self) -> None: ...
 

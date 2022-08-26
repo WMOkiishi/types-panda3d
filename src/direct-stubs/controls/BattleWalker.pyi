@@ -1,10 +1,8 @@
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from .GravityWalker import GravityWalker
 
-_OldBool: TypeAlias = Literal[0, 1]
-
-BattleStrafe: bool | _OldBool
+BattleStrafe: bool
 
 def ToggleStrafe() -> None: ...
 def SetStrafe(status: bool) -> None: ...

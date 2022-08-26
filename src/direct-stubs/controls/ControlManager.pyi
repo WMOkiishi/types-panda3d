@@ -1,10 +1,8 @@
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import ConfigVariableBool
 from ..directnotify.Notifier import Notifier
-
-_OldBool: TypeAlias = Literal[0, 1]
 
 CollisionHandlerRayStart: float
 
@@ -17,7 +15,7 @@ class ControlManager:
     controls: dict
     currentControls = ...
     currentControlsName: str | None
-    isEnabled: bool | _OldBool
+    isEnabled: bool
     forceAvJumpToken = ...
     def __init__(self, enable: bool = True, passMessagesThrough: bool = False) -> None: ...
     def __str__(self) -> str: ...

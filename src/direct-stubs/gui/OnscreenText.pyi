@@ -7,7 +7,6 @@ from panda3d.core import LVecBase4f, NodePath, TextFont, TextNode
 
 _Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Color: TypeAlias = LVecBase4f | tuple[float, float, float, float]
-_OldBool: TypeAlias = Literal[0, 1]
 _OrderedPair: TypeAlias = tuple[float, float]
 
 Plain: Literal[1]
@@ -18,8 +17,8 @@ BlackOnWhite: Literal[5]
 
 class OnscreenText(NodePath[TextNode]):
     textNode: TextNode
-    mayChange: bool | _OldBool
-    isClean: bool | _OldBool
+    mayChange: bool
+    isClean: bool
     decal: bool
     font: TextFont
     text: str

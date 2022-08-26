@@ -1,13 +1,12 @@
 __all__ = ['ProjectileInterval']
 
 from typing import Any, ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import TypeAlias
 
 from panda3d.core import CollisionNode, LMatrix3f, LParabolaf, LVecBase3f, NodePath
 from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
-_OldBool: TypeAlias = Literal[0, 1]
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class ProjectileInterval(Interval):
@@ -16,7 +15,7 @@ class ProjectileInterval(Interval):
     gravity: ClassVar[float]
     node: NodePath
     collNode: CollisionNode | None
-    implicitStartPos: bool | _OldBool
+    implicitStartPos: bool
     trajectoryArgs = tuple[Any, ...]
     startPos: _Vec3f
     zAcc: float

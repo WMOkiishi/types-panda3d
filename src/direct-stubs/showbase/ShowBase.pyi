@@ -58,7 +58,6 @@ from .Messenger import Messenger
 from .PythonUtil import Stack
 from .Transitions import Transitions
 
-_OldBool: TypeAlias = Literal[0, 1]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _WindowType: TypeAlias = Literal['onscreen', 'offscreen', 'none']
 
@@ -96,8 +95,8 @@ class ShowBase(DirectObject):
     sceneGraphAnalyzerMeter: SceneGraphAnalyzerMeter | None
     winList: list[GraphicsEngine]
     winControls: list[WindowControls]
-    mainWinMinimized: bool | _OldBool
-    mainWinForeground: bool | _OldBool
+    mainWinMinimized: bool
+    mainWinForeground: bool
     pipe: GraphicsPipe | None
     pipeList: list[GraphicsPipe]
     mouse2cam: NodePath[Transform2SG] | None
@@ -145,21 +144,21 @@ class ShowBase(DirectObject):
     task_mgr: TaskManager
     jobMgr: JobManager
     particleMgr: ParticleSystemManager | None
-    particleMgrEnabled: bool | _OldBool
+    particleMgrEnabled: bool
     physicsMgr: PhysicsManager | None
-    phyiscsMgrEnabled: bool | _OldBool
-    physicsMgrAngular: bool | _OldBool
+    phyiscsMgrEnabled: bool
+    physicsMgrAngular: bool
     devices: InputDeviceManager
-    AppHasAudioFocus: bool | _OldBool
+    AppHasAudioFocus: bool
     clock: ClockObject
     transitions: Transitions
     clientSleep: float
-    multiClientSleep: bool | _OldBool
+    multiClientSleep: bool
     bufferViewer: BufferViewer
     render: NodePath[PandaNode]
-    backfaceCullingEnabled: bool | _OldBool
-    textureEnabled: bool | _OldBool
-    wireframeEnabled: bool | _OldBool
+    backfaceCullingEnabled: bool
+    textureEnabled: bool
+    wireframeEnabled: bool
     render2d: NodePath[PandaNode]
     a2dBackground: NodePath[PandaNode]
     a2dTop: float
@@ -292,8 +291,8 @@ class ShowBase(DirectObject):
     def enable_particles(self) -> None: ...
     def disable_particles(self) -> None: ...
     def toggle_particles(self) -> None: ...
-    def isParticleMgrEnabled(self) -> bool | _OldBool: ...
-    def isPhysicsMgrEnabled(self) -> bool | _OldBool: ...
+    def isParticleMgrEnabled(self) -> bool: ...
+    def isPhysicsMgrEnabled(self) -> bool: ...
     def updateManagers(self, state: object) -> Literal[1]: ...
     def create_stats(self, hostname: str | None = None, port: int | None = None) -> bool: ...
     def add_sfx_manager(self, extraSfxManager: AudioManager) -> None: ...

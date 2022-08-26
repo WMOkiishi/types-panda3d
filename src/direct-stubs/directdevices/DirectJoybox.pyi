@@ -1,13 +1,11 @@
 from collections.abc import Callable
-from typing import ClassVar, TypeAlias
+from typing import ClassVar
 from typing_extensions import Literal
 
 from panda3d.core import ButtonRegistry, NodePath
 from ..gui.OnscreenText import OnscreenText
 from ..showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectAnalogs, DirectButtons
-
-_OldBool: TypeAlias = Literal[0, 1]
 
 L_STICK: Literal[0]
 L_UPPER: Literal[1]
@@ -38,7 +36,7 @@ class DirectJoybox(DirectObject):
     analogs: DirectAnalogs
     buttons: DirectButtons
     aList: list[float]
-    bList: list[bool | _OldBool]
+    bList: list[bool]
     mapping: list[int]
     modifier: list[Literal[-1, 0, 1]]
     lastTime: float

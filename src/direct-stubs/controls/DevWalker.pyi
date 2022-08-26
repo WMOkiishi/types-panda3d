@@ -1,11 +1,9 @@
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import CollisionTraverser, ConfigVariableBool, LVector3f, PythonTask
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
-
-_OldBool: TypeAlias = Literal[0, 1]
 
 class DevWalker(DirectObject):
     notify: ClassVar[Notifier]

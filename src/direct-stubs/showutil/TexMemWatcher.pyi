@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import (
     BitArray,
@@ -17,8 +17,6 @@ from panda3d.core import (
     Texture,
 )
 from ..showbase.DirectObject import DirectObject
-
-_OldBool: TypeAlias = Literal[0, 1]
 
 class TexMemWatcher(DirectObject):
     NextIndex: ClassVar[int]
@@ -101,7 +99,7 @@ class TexRecord:
     root: NodePath | None
     regions: list[MouseWatcherRegion]
     placements: list[TexPlacement]
-    overflowed: bool | _OldBool
+    overflowed: bool
     size: int
     tw: float
     th: float
@@ -123,7 +121,7 @@ class TexPlacement:
     p: tuple[int, int, int, int]
     area: int
     rotated: bool
-    overflowed: bool | _OldBool
+    overflowed: bool
     def __init__(self, l: int, r: int, b: int, t: int) -> None: ...
     def intersects(self, other: TexPlacement) -> bool: ...
     def setBitmasks(self, bitmasks: Sequence[BitArray]) -> None: ...

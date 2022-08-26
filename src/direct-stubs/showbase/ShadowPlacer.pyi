@@ -1,17 +1,14 @@
 __all__ = ['ShadowPlacer']
 
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import BitMask_uint32_t_32, CollisionHandlerFloor, CollisionNode, CollisionRay, CollisionTraverser, NodePath
 from ..directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
 
-_OldBool: TypeAlias = Literal[0, 1]
-
 class ShadowPlacer(DirectObject):
     notify: ClassVar[Notifier]
-    isActive: bool | _OldBool
+    isActive: bool
     cTrav: CollisionTraverser
     shadowNodePath: NodePath
     cRay: CollisionRay

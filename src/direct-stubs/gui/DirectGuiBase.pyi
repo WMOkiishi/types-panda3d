@@ -11,7 +11,6 @@ _T = TypeVar('_T')
 _P = ParamSpec('_P')
 
 _Args: TypeAlias = tuple[Any, ...] | list[Any] | set[Any]
-_OldBool: TypeAlias = Literal[0, 1]
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 
 guiObjectCollector: PStatCollector
@@ -19,7 +18,7 @@ guiObjectCollector: PStatCollector
 class DirectGuiBase(DirectObject):
     guiId: str
     postInitialiseFuncList: list[Callable[[], object]]
-    fInit: bool | _OldBool
+    fInit: bool
     def __init__(self) -> None: ...
     def defineoptions(
         self,
@@ -77,7 +76,7 @@ def toggleGuiGridSnap() -> None: ...
 def setGuiGridSpacing(spacing: float) -> None: ...
 
 class DirectGuiWidget(DirectGuiBase, NodePath[PGItem]):
-    snapToGrid: ClassVar[bool | _OldBool]
+    snapToGrid: ClassVar[bool]
     gridSpacing: ClassVar[float]
     guiEdit: ClassVar[bool]
     inactiveInitState: ClassVar[Literal['normal', 'disabled']]

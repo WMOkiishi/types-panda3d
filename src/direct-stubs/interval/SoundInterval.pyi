@@ -1,20 +1,17 @@
 __all__ = ['SoundInterval']
 
 from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import AudioSound, NodePath
 from ..directnotify.Notifier import Notifier
 from .Interval import Interval
-
-_OldBool: TypeAlias = Literal[0, 1]
 
 class SoundInterval(Interval):
     soundNum: ClassVar[int]
     notify: ClassVar[Notifier]
     sound: AudioSound
     soundDuration: float
-    fLoop: bool | _OldBool
+    fLoop: bool
     volume: float
     startTime: float
     node: NodePath | None

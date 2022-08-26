@@ -1,5 +1,5 @@
 from typing import Any, ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import Camera, DisplayRegion, Lens, LVecBase3f, NodePath, TextFont
 from ..gui.OnscreenText import OnscreenText
@@ -10,16 +10,14 @@ from .DirectLights import DirectLights
 from .DirectManipulation import DirectManipulationControl
 from .DirectSelection import SelectedNodePaths, SelectionRay
 
-_OldBool: TypeAlias = Literal[0, 1]
-
 class DirectSession(DirectObject):
     DIRECTdisablePost: ClassVar[Literal['disableDIRECT']]
     group: NodePath
     font: TextFont
-    fEnabled: bool | _OldBool
-    fEnabledLight: bool | _OldBool
-    fScaleWidgetByCam: bool | _OldBool
-    fIgnoreDirectOnlyKeyMap: bool | _OldBool
+    fEnabled: bool
+    fEnabledLight: bool
+    fScaleWidgetByCam: bool
+    fIgnoreDirectOnlyKeyMap: bool
     drList: DisplayRegionList
     iRayList: list[SelectionRay]
     dr: DisplayRegionContext
@@ -44,12 +42,12 @@ class DirectSession(DirectObject):
     joybox = ...
     radamec = ...
     fastrak: list
-    fControl: bool | _OldBool
-    fAlt: bool | _OldBool
-    fShift: bool | _OldBool
-    fMouse1: bool | _OldBool
-    fMouse2: bool | _OldBool
-    fMouse3: bool | _OldBool
+    fControl: bool
+    fAlt: bool
+    fShift: bool
+    fMouse1: bool
+    fMouse2: bool
+    fMouse3: bool
     pos: LVecBase3f
     hpr: LVecBase3f
     scale: LVecBase3f
@@ -121,7 +119,7 @@ class DirectSession(DirectObject):
     def deselectAllCB(self) -> None: ...
     def setActiveParent(self, nodePath: NodePath | None = None) -> None: ...
     def reparent(self, nodePath: NodePath | None, fWrt: bool = False) -> None: ...
-    def isNotCycle(self, nodePath: NodePath, parent: NodePath) -> _OldBool: ...
+    def isNotCycle(self, nodePath: NodePath, parent: NodePath) -> bool: ...
     def flash(self, nodePath: NodePath | Literal['None Given'] | None = 'None Given') -> None: ...
     def flashDummy(self, state: object) -> Literal[1]: ...
     def flashDone(self, state) -> None: ...
@@ -148,7 +146,7 @@ class DirectSession(DirectObject):
     def hideActiveParentReadout(self) -> None: ...
     def toggleWidgetVis(self) -> None: ...
     def setCOAMode(self, mode: int) -> None: ...
-    def isEnabled(self) -> bool | _OldBool: ...
+    def isEnabled(self) -> bool: ...
     def addUnpickable(self, item: str) -> None: ...
     def removeUnpickable(self, item: str) -> None: ...
 
@@ -167,7 +165,7 @@ class DisplayRegionContext(DirectObject):
     originY: float
     scaleX: float
     scaleY: float
-    isSideways: bool | _OldBool
+    isSideways: bool
     near: float
     far: float
     fovH: float

@@ -7,13 +7,12 @@ from panda3d.core import CardMaker, GeomNode, GraphicsEngine, GraphicsOutput, No
 from ..directnotify.Notifier import Notifier
 
 _Layout: TypeAlias = Literal['vline', 'hline', 'vgrid', 'hgrid', 'cycle']
-_OldBool: TypeAlias = Literal[0, 1]
 _Position: TypeAlias = Literal['llcorner', 'lrcorner', 'ulcorner', 'urcorner']
 _Texture: TypeAlias = Texture | GraphicsOutput | Literal['all']
 
 class BufferViewer:
     notify: ClassVar[Notifier]
-    enabled: bool | _OldBool
+    enabled: bool
     sizex: float
     sizey: float
     position: _Position
@@ -29,11 +28,11 @@ class BufferViewer:
     cardindex: int
     cardmaker: CardMaker
     task: PythonTask | Literal[0]
-    dirty: bool | _OldBool
+    dirty: bool
     def __init__(self, win: GraphicsOutput, parent: NodePath) -> None: ...
     def refreshReadout(self) -> None: ...
     def isValidtextureSet(self, x) -> TypeGuard[_Texture | list[_Texture]]: ...
-    def isEnabled(self) -> bool | _OldBool: ...
+    def isEnabled(self) -> bool: ...
     def enable(self, x: bool) -> None: ...
     def toggleEnable(self) -> None: ...
     def setCardSize(self, x: float, y: float) -> None: ...

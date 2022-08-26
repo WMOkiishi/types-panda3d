@@ -1,11 +1,9 @@
 from collections.abc import Sequence
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from panda3d.core import LPoint3f, LVecBase3f, LVector3f, NodePath
 from ..showbase.DirectObject import DirectObject
 from .DirectGeometry import LineNodePath
-
-_OldBool: TypeAlias = Literal[0, 1]
 
 class DirectManipulationControl(DirectObject):
     objectHandles: ObjectHandles
@@ -18,15 +16,15 @@ class DirectManipulationControl(DirectObject):
     constraint = ...
     rotateAxis: Literal['x', 'y', 'z']
     lastCrankAngle: float
-    fSetCoa: bool | _OldBool
-    fHitInit: bool | _OldBool
-    fScaleInit: bool | _OldBool
-    fScaleInit1: bool | _OldBool
-    fWidgetTop: bool | _OldBool
-    fFreeManip: bool | _OldBool
-    fScaling3D: bool | _OldBool
-    fScaling1D: bool | _OldBool
-    fMovable: bool | _OldBool
+    fSetCoa: bool
+    fHitInit: bool
+    fScaleInit: bool
+    fScaleInit1: bool
+    fWidgetTop: bool
+    fFreeManip: bool
+    fScaling3D: bool
+    fScaling1D: bool
+    fMovable: bool
     mode: Literal['select', 'camera', 'move', None]
     worldSpaceManip: bool
     useSeparateScaleHandles: bool
@@ -34,11 +32,11 @@ class DirectManipulationControl(DirectObject):
     defaultSkipFlags: int
     optionalSkipFlags: int
     unmovableTagList: list[str]
-    fAllowSelectionOnly: bool | _OldBool
-    fAllowMarquee: bool | _OldBool
+    fAllowSelectionOnly: bool
+    fAllowMarquee: bool
     marquee = ...
-    gMultiView: bool | _OldBool
-    fGridSnap: bool | _OldBool
+    gMultiView: bool
+    fGridSnap: bool
     def __init__(self) -> None: ...
     def scaleWidget(self, factor: float) -> None: ...
     def supportMultiView(self) -> None: ...
@@ -113,7 +111,7 @@ class ObjectHandles(NodePath, DirectObject):
     zDiscCollision: NodePath
     zScaleGroup: NodePath
     zScaleCollision: NodePath
-    fActive: bool | _OldBool
+    fActive: bool
     guideLines: NodePath
     def coaModeColor(self) -> None: ...
     def disabledModeColor(self) -> None: ...
