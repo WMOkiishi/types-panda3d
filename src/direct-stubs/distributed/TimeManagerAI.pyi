@@ -1,6 +1,4 @@
-from .ClientRepository import ClientRepository
 from .DistributedObjectAI import DistributedObjectAI
 
 class TimeManagerAI(DistributedObjectAI):
-    def __init__(self, air: ClientRepository) -> None: ...
     def requestServerTime(self, context: int) -> None: ...

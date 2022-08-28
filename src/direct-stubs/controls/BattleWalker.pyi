@@ -1,5 +1,3 @@
-from typing_extensions import Literal
-
 from .GravityWalker import GravityWalker
 
 BattleStrafe: bool
@@ -11,4 +9,3 @@ class BattleWalker(GravityWalker):
     advanceSpeed: float
     def __init__(self) -> None: ...
     def getSpeeds(self) -> tuple[float, float, float, float]: ...
-    def handleAvatarControls(self, task: object) -> Literal[1]: ...

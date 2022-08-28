@@ -23,7 +23,6 @@ from pickle import (
 from typing import Any
 
 class Pickler(BasePickler):
-    def clear_memo(self) -> None: ...
     def save(self, obj, save_persistent_id: bool = True) -> None: ...
 
 class Unpickler(BaseUnpickler):

@@ -1,8 +1,7 @@
 from collections.abc import Container, Iterable, Mapping, Sequence
-from modulefinder import Module, ModuleFinder
+from modulefinder import ModuleFinder
 from os import PathLike
-from types import CodeType
-from typing import Any, IO, TypeVar
+from typing import TypeVar
 from typing_extensions import TypeAlias
 
 from panda3d.core import Filename
@@ -139,12 +138,3 @@ class PandaModuleFinder(ModuleFinder):
         *,
         suffixes: Iterable[tuple[str, str, int]] = ...,
     ) -> None: ...
-    def load_module(self, fqname: str, fp: IO[str], pathname: str, file_info: tuple[str, str, str]) -> Module: ...
-    def scan_code(self, co: CodeType, m: Module) -> None: ...
-    def find_module(
-        self,
-        name: str,
-        path: str | None = None,
-        parent: Module | None = None,
-    ) -> tuple[IO[Any] | None, str | None, tuple[str, str, int]]: ...
-    def find_all_submodules(self, m: Module) -> Iterable[str]: ...

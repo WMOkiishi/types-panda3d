@@ -1,5 +1,3 @@
-from typing_extensions import Literal
-
 from .GravityWalker import GravityWalker
 
 class TwoDWalker(GravityWalker):
@@ -9,5 +7,4 @@ class TwoDWalker(GravityWalker):
         standableGround: float = 0.707,
         hardLandingForce: float = 16.0,
     ) -> None: ...
-    def handleAvatarControls(self, task: object) -> Literal[1]: ...
     def jumpPressed(self) -> None: ...
