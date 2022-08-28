@@ -1,8 +1,7 @@
 from collections.abc import Sequence
-from typing import Any, ClassVar
+from typing import Any
 from typing_extensions import Literal, TypedDict
 
-from ..directnotify.Notifier import Notifier
 from ..showbase.Messenger import Messenger
 from .ClientRepository import ClientRepository
 
@@ -24,7 +23,6 @@ class _message_strings(TypedDict):
 MESSAGE_STRINGS: _message_strings
 
 class NetMessenger(Messenger):
-    notify: ClassVar[Notifier]
     air: ClientRepository
     channels: Sequence[int]
     def __init__(self, air: ClientRepository, channels: Sequence[int]) -> None: ...

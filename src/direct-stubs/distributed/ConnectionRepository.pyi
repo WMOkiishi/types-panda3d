@@ -12,7 +12,6 @@ from .DoCollectionManager import DoCollectionManager
 from .DoInterestManager import DoInterestManager
 
 class ConnectionRepository(DoInterestManager, DoCollectionManager, CConnectionRepository):
-    notify: ClassVar[Notifier]
     taskPriority: ClassVar[int]
     taskChain: ClassVar[str | None]
     CM_HTTP: ClassVar[Literal[0]]

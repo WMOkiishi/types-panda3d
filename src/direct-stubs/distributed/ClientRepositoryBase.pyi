@@ -1,11 +1,10 @@
 from collections.abc import Iterable
 from os import PathLike
-from typing import Any, ClassVar, TypeVar
+from typing import Any, TypeVar
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import Datagram, DatagramIterator, NodePath, RecorderController
 from panda3d.direct import DCClass
-from ..directnotify.Notifier import Notifier
 from .CRCache import CRCache
 from .CRDataCache import CRDataCache
 from .ConnectionRepository import ConnectionRepository
@@ -23,7 +22,6 @@ _DeferredInfo: TypeAlias = tuple[
 _MsgType: TypeAlias = Literal[1, 2, 3, 4]
 
 class ClientRepositoryBase(ConnectionRepository):
-    notify: ClassVar[Notifier]
     context: int
     deferredGenerates: list[tuple[_MsgType, Any]]
     deferredDoIds: dict[int, _DeferredInfo]

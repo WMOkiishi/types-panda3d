@@ -2,7 +2,6 @@ from typing import ClassVar
 from typing_extensions import Literal, Protocol
 
 from panda3d.core import ConfigVariableBool, LVector3f
-from ..directnotify.Notifier import Notifier
 from .CartesianGridBase import CartesianGridBase
 from .ClientRepository import ClientRepository
 from .DistributedNode import DistributedNode
@@ -14,7 +13,6 @@ class _HasGridParent(Protocol):
 GRID_Z_OFFSET: float
 
 class DistributedCartesianGrid(DistributedNode, CartesianGridBase):
-    notify: ClassVar[Notifier]
     VisualizeGrid: ClassVar[ConfigVariableBool]
     RuleSeparator: ClassVar[str]
     visAvatar = ...

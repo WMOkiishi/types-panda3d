@@ -1,12 +1,7 @@
-from typing import ClassVar
-
 from panda3d.core import CollisionTraverser
-from ..directnotify.Notifier import Notifier
 from .NonPhysicsWalker import NonPhysicsWalker
 
 class ObserverWalker(NonPhysicsWalker):
-    notify: ClassVar[Notifier]
-    slideName: str
     def initializeCollisions(
         self,
         collisionTraverser: CollisionTraverser,

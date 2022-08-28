@@ -1,10 +1,9 @@
 from collections.abc import Callable, Iterable, Sequence
-from typing import Any, ClassVar
+from typing import Any
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
-from ..directnotify.Notifier import Notifier
 from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase
 from .DoInterestManager import InterestHandle
@@ -20,7 +19,6 @@ ESGenerated: Literal[6]
 ESNum2Str: dict[_State, str]
 
 class DistributedObject(DistributedObjectBase):
-    notify: ClassVar[Notifier]
     neverDisable: bool
     DistributedObject_initialized: Literal[1]
     activeState: _State

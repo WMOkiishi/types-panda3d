@@ -1,13 +1,11 @@
 from types import CodeType
-from typing import Any, ClassVar
+from typing import Any
 from typing_extensions import Literal
 
-from ..directnotify.Notifier import Notifier
 from .ClientRepository import ClientRepository
 from .DistributedObjectUD import DistributedObjectUD
 
 class DistributedObjectGlobalUD(DistributedObjectUD):
-    notify: ClassVar[Notifier]
     doNotDeallocateChannel: bool
     isGlobalDistObj: bool
     ExecNamespace: dict[str, Any]

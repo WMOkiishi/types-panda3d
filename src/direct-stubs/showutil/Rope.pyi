@@ -10,7 +10,6 @@ class Rope(NodePath):
     showRope: bool | ConfigVariableBool
     ropeNode: RopeNode
     curve: NurbsCurveEvaluator
-    name: str
     order: _Order
     verts: Sequence[_Vert]
     knots: Sequence[float] | None

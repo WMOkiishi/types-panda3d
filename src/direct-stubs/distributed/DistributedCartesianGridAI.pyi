@@ -2,13 +2,11 @@ from typing import Any, ClassVar
 from typing_extensions import Literal
 
 from panda3d.core import AsyncTask
-from ..directnotify.Notifier import Notifier
 from .CartesianGridBase import CartesianGridBase
 from .ClientRepository import ClientRepository
 from .DistributedNodeAI import DistributedNodeAI
 
 class DistributedCartesianGridAI(DistributedNodeAI, CartesianGridBase):
-    notify: ClassVar[Notifier]
     RuleSeparator: ClassVar[str]
     style: str
     startingZone: int

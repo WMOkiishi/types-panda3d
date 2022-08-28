@@ -6,13 +6,11 @@ from typing_extensions import Literal, TypeAlias
 from panda3d.core import AnimControl
 from panda3d.direct import CLerpAnimEffectInterval
 from ..actor.Actor import Actor
-from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
 
 class ActorInterval(Interval):
-    notify: ClassVar[Notifier]
     animNum: ClassVar[int]
     actor: Actor
     animName: str

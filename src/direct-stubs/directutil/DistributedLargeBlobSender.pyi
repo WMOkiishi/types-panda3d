@@ -1,12 +1,9 @@
 from os import PathLike
-from typing import ClassVar
 
-from ..directnotify.Notifier import Notifier
 from ..distributed.ClientRepository import ClientRepository
 from ..distributed.DistributedObject import DistributedObject
 
 class DistributedLargeBlobSender(DistributedObject):
-    notify: ClassVar[Notifier]
     complete: bool
     doneEvent: str | None
     mode: int

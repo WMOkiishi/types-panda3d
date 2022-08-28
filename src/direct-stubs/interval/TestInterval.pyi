@@ -3,13 +3,11 @@ __all__ = ['TestInterval']
 from typing import ClassVar
 
 from panda3d.core import NodePath
-from ..directnotify.Notifier import Notifier
 from ..particles.ParticleEffect import ParticleEffect
 from .Interval import Interval
 
 class TestInterval(Interval):
     particleNum: ClassVar[int]
-    notify: ClassVar[Notifier]
     def __init__(
         self,
         particleEffect: ParticleEffect,

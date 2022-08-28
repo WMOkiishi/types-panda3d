@@ -39,7 +39,6 @@ from panda3d.core import (
     UnalignedLVecBase4f,
 )
 from panda3d.direct import CLerpNodePathInterval
-from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
 _T = TypeVar('_T')
@@ -459,7 +458,6 @@ class LerpTexScaleInterval(LerpNodePathInterval):
 
 class LerpFunctionNoStateInterval(Interval):
     lerpFunctionIntervalNum: ClassVar[int]
-    notify: ClassVar[Notifier]
     function: Callable[..., object]
     fromData: float
     toData: float
@@ -481,7 +479,6 @@ class LerpFuncNS(LerpFunctionNoStateInterval): ...
 
 class LerpFunctionInterval(Interval):
     lerpFunctionIntervalNum: ClassVar[int]
-    notify: ClassVar[Notifier]
     function: Callable[..., object]
     fromData: float
     toData: float

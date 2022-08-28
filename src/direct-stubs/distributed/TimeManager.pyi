@@ -1,12 +1,10 @@
 from typing import ClassVar
 from typing_extensions import Literal
 
-from ..directnotify.Notifier import Notifier
 from .ClientRepository import ClientRepository
 from .DistributedObject import DistributedObject
 
 class TimeManager(DistributedObject):
-    notify: ClassVar[Notifier]
     updateFreq: ClassVar[float]
     minWait: ClassVar[float]
     maxUncertainty: ClassVar[float]

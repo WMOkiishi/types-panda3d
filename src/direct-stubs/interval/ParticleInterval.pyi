@@ -3,13 +3,11 @@ __all__ = ['ParticleInterval']
 from typing import ClassVar
 
 from panda3d.core import NodePath
-from ..directnotify.Notifier import Notifier
 from ..particles.ParticleEffect import ParticleEffect
 from .Interval import Interval
 
 class ParticleInterval(Interval):
     particleNum: ClassVar[int]
-    notify: ClassVar[Notifier]
     particleEffect: ParticleEffect
     cleanup: bool
     softStopT: float

@@ -21,7 +21,6 @@ from typing_extensions import TypeAlias
 
 from panda3d.core import LMatrix3f, LVecBase3f, NodePath
 from panda3d.direct import WaitInterval
-from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 from .Interval import Interval
 
@@ -29,7 +28,6 @@ _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class FunctionInterval(Interval):
     functionIntervalNum: ClassVar[int]
-    notify: ClassVar[Notifier]
     function: Callable[..., object]
     extraArgs: Iterable[Any]
     kw: Any

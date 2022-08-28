@@ -1,13 +1,10 @@
 from collections.abc import Mapping
-from typing import ClassVar
 
 from panda3d.core import BitMask_uint32_t_32, CollisionNode, CollisionTraverser, NodePath
-from ..directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
 from .PhasedObject import PhasedObject
 
 class DistancePhasedNode(PhasedObject, DirectObject, NodePath):
-    notify: ClassVar[Notifier]
     phaseParamMap: Mapping[str, float]
     phaseParamList: list[tuple[str, float]]
     autoCleanup: bool
@@ -34,7 +31,6 @@ class DistancePhasedNode(PhasedObject, DirectObject, NodePath):
     def setPhase(self, aPhase: int | str) -> None: ...
 
 class BufferedDistancePhaseNode(DistancePhasedNode):
-    notify: ClassVar[Notifier]
     bufferParamMap: Mapping[str, tuple[float, int]]
     bufferParamList: list[tuple[str, tuple[float, int]]]
     def __init__(

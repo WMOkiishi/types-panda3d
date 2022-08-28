@@ -5,12 +5,10 @@ from typing_extensions import Literal
 
 from panda3d.core import Datagram, DatagramIterator
 from panda3d.direct import DCClass
-from ..directnotify.Notifier import Notifier
 from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase as DistributedObjectBase
 
 class DistributedObjectUD(DistributedObjectBase):
-    notify: ClassVar[Notifier]
     QuietZone: ClassVar[int]
     DistributedObjectUD_initialized: Literal[1]
     accountName: str

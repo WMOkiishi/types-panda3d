@@ -21,7 +21,6 @@ class DirectDeviceManager(VrpnClient, DirectObject):
 
 class DirectButtons(ButtonNode, DirectObject):
     buttonCount: ClassVar[int]
-    name: str
     nodePath: NodePath[Self]
     def __init__(self, vrpnClient: ClientBase, device: str) -> None: ...
     def __getitem__(self, index: int) -> bool: ...
@@ -33,7 +32,6 @@ class DirectButtons(ButtonNode, DirectObject):
 
 class DirectAnalogs(AnalogNode, DirectObject):
     analogCount: ClassVar[int]
-    name: str
     nodePath: NodePath[Self]
     analogDeadband: float
     analogMin: float
@@ -52,7 +50,6 @@ class DirectAnalogs(AnalogNode, DirectObject):
 
 class DirectTracker(TrackerNode, DirectObject):
     trackerCount: ClassVar[int]
-    name: str
     nodePath: NodePath[Self]
     def __init__(self, vrpnClient: ClientBase, device: str) -> None: ...
     def enable(self) -> None: ...
@@ -62,7 +59,6 @@ class DirectTracker(TrackerNode, DirectObject):
 
 class DirectDials(DialNode, DirectObject):
     dialCount: ClassVar[int]
-    name: str
     nodePath: NodePath[Self]
     def __init__(self, vrpnClient: ClientBase, device: str) -> None: ...
     def __getitem__(self, index: int) -> float: ...
@@ -74,7 +70,6 @@ class DirectDials(DialNode, DirectObject):
 
 class DirectTimecodeReader(AnalogNode, DirectObject):
     timecodeReaderCount: ClassVar[int]
-    name: str
     frames: int
     seconds: int
     minutes: int

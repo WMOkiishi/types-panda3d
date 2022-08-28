@@ -1,9 +1,7 @@
-from typing import ClassVar
 from typing_extensions import Literal
 
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
-from ..directnotify.Notifier import Notifier
 from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase
 
@@ -15,7 +13,6 @@ ESGenerating: Literal[5]
 ESGenerated: Literal[6]
 
 class DistributedObjectOV(DistributedObjectBase):
-    notify: ClassVar[Notifier]
     DistributedObjectOV_initialized: Literal[1]
     DistributedObjectOV_deleted: Literal[1]
     activeState: Literal[1, 2, 3, 4, 5, 6]

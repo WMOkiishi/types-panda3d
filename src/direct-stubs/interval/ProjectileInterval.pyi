@@ -4,13 +4,11 @@ from typing import Any, ClassVar
 from typing_extensions import TypeAlias
 
 from panda3d.core import CollisionNode, LMatrix3f, LParabolaf, LVecBase3f, NodePath
-from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class ProjectileInterval(Interval):
-    notify: ClassVar[Notifier]
     projectileIntervalNum: ClassVar[int]
     gravity: ClassVar[float]
     node: NodePath

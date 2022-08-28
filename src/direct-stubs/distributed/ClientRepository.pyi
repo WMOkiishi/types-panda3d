@@ -1,15 +1,11 @@
 from collections.abc import Iterable
 from os import PathLike
-from typing import ClassVar
 
 from panda3d.core import DatagramIterator, UniqueIdAllocator
-from ..directnotify.Notifier import Notifier
 from .ClientRepositoryBase import ClientRepositoryBase
 from .DistributedObject import DistributedObject
 
 class ClientRepository(ClientRepositoryBase):
-    notify: ClassVar[Notifier]
-    GameGlobalsId: int
     doNotDeallocateChannel: bool
     doIdAllocator: UniqueIdAllocator | None
     doIdBase: int

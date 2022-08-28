@@ -3,17 +3,14 @@ from typing_extensions import Literal
 
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
-from ..directnotify.Notifier import Notifier
 from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase
 
 class DistributedObjectAI(DistributedObjectBase):
-    notify: ClassVar[Notifier]
     QuietZone: ClassVar[bool]
     DistributedObjectAI_initialized: Literal[1]
     accountName: str
     air: ClientRepository
-    dclass: DCClass
     lastNonQuietZone = ...
     def __init__(self, air: ClientRepository) -> None: ...
     def getDeleteEvent(self) -> str | None: ...

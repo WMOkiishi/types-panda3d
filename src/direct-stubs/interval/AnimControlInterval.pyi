@@ -3,11 +3,9 @@ __all__ = ['AnimControlInterval']
 from typing import ClassVar
 
 from panda3d.core import AnimControlCollection
-from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
 class AnimControlInterval(Interval):
-    notify: ClassVar[Notifier]
     animNum: ClassVar[int]
     controls: AnimControlCollection
     loopAnim: bool

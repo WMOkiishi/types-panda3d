@@ -11,7 +11,6 @@ _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLik
 class ParticleEffect(NodePath):
     notify: ClassVar[Notifier]
     pid: ClassVar[int]
-    name: str
     fEnabled: bool
     particlesDict: dict
     forceGroupDict: dict[str, ForceGroup]
@@ -49,7 +48,7 @@ class ParticleEffect(NodePath):
     def soft_start(self, firstBirthDelay = None) -> None: ...
     isEnabled = is_enabled
     addForceGroup = add_force_group
-    addFroce = add_force
+    addForce = add_force
     removeForceGroup = remove_force_group
     removeForce = remove_force
     removeAllForces = remove_all_forces

@@ -4,14 +4,12 @@ from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.direct import LerpBlendType
-from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
 
 class IndirectInterval(Interval):
     indirectIntervalNum: ClassVar[int]
-    notify: ClassVar[Notifier]
     interval: Interval
     startAtSTart: bool
     endAtEnd: bool

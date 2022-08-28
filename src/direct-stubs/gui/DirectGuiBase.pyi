@@ -82,7 +82,6 @@ class DirectGuiWidget(DirectGuiBase, NodePath[PGItem]):
     inactiveInitState: ClassVar[Literal['normal', 'disabled']]
     guiDict: ClassVar[dict]
     guiItem: PGItem
-    guiId: str
     stateNodePath: list
     frameStyle: list
     ll: LPoint3f
