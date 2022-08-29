@@ -1,0 +1,19 @@
+from collections.abc import Iterable, Sequence
+from typing_extensions import Literal
+
+from panda3d.core import BamCache, Loader, LoaderOptions
+
+class EggCacher:
+    bamcache: BamCache
+    pandaloader: Loader
+    loaderopts: LoaderOptions
+    concise: bool
+    pzkeep: bool
+    paths: Sequence[str]
+    def __init__(self, args: Sequence[str]) -> None: ...
+    def parseArgs(self, args: Sequence[str]) -> None: ...
+    def scanPath(self, eggs: list[tuple[str, int]], path: str) -> None: ...
+    def scanPaths(self, paths: Iterable[str]) -> list[tuple[str, int]]: ...
+    def processFiles(self, files: Iterable[tuple[str, int]]) -> None: ...
+
+def main(args: Sequence[str] | None = None) -> Literal[0]: ...
