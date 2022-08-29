@@ -171,3 +171,16 @@ for _name, _func in _returns_self:
     _func_name = '.'.join(('panda3d.core', _name, _func))
     RETURN_TYPE_OVERRIDES[_func_name] = 'Self'
     PARAM_TYPE_OVERRIDES.setdefault(_func_name, {})[(0, 0)] = 'Self'
+
+_fixed_lengths = [
+    ('LVecBase2f', 2), ('LVecBase2d', 2), ('LVecBase2i', 2),
+    ('LVecBase3f', 3), ('LVecBase3d', 3), ('LVecBase3i', 3),
+    ('LVecBase4f', 4), ('LVecBase4d', 4), ('LVecBase4i', 4),
+    ('LMatrix3f', 3), ('LMatrix3f.Row', 3), ('LMatrix3f.CRow', 3),
+    ('LMatrix3d', 3), ('LMatrix3d.Row', 3), ('LMatrix3d.CRow', 3),
+    ('LMatrix4f', 4), ('LMatrix4f.Row', 4), ('LMatrix4f.CRow', 4),
+    ('LMatrix4d', 4), ('LMatrix4d.Row', 4), ('LMatrix4d.CRow', 4),
+    ('UnalignedLVecBase4f', 4), ('UnalignedLVecBase4d', 4), ('UnalignedLVecBase4i', 4),
+]
+for _name, _len in _fixed_lengths:
+    RETURN_TYPE_OVERRIDES[f'panda3d.core.{_name}.__len__'] = f'Literal[{_len}]'
