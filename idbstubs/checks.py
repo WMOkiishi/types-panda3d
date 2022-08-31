@@ -60,7 +60,8 @@ def check_class(rep: Class, runtime: object) -> None:
     if no_stub:
         _logger.warning(f'No stubs for attributes {no_stub} in {rep}')
     if no_runtime:
-        _logger.warning(f'Attributes {no_runtime} in {rep} do not exist at runtime')
+        _logger.warning(f'Attributes {no_runtime} in {rep}'
+                        f' do not exist at runtime')
     for i in rep.nested:
         if isinstance(i, Class):
             name = i.name
@@ -82,7 +83,8 @@ def check_module(mod_rep: Module) -> None:
     if no_stub:
         _logger.warning(f'No stubs for attributes {no_stub} in {mod_rep}')
     if no_runtime:
-        _logger.warning(f'Attributes {no_runtime} in {mod_rep} do not exist at runtime')
+        _logger.warning(f'Attributes {no_runtime} in {mod_rep}'
+                        f' do not exist at runtime')
     for i in all_nested:
         if isinstance(i, Class):
             name = i.name

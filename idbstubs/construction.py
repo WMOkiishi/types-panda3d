@@ -41,7 +41,7 @@ def get_function_name(f: FunctionIndex, /) -> str:
     if idb.interrogate_function_is_operator_typecast(f):
         if idb.interrogate_function_number_of_python_wrappers(f) != 1:
             scoped_name = idb.interrogate_function_scoped_name(f)
-            _logger.warning(f"Typecast '{scoped_name}' has multiple wrappers")
+            _logger.warning(f'Typecast {scoped_name!r} has multiple wrappers')
         w = idb.interrogate_function_python_wrapper(f, 0)
         return_type = unwrap_type(idb.interrogate_wrapper_return_type(w))
         if idb.interrogate_type_is_atomic(return_type):

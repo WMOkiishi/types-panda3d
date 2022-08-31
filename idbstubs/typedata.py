@@ -205,8 +205,8 @@ def get_param_type_replacement(type_name: str) -> str | None:
     """
     replacement = _param_type_replacements.get(type_name)
     if replacement is not None:
-        _logger.debug(
-            f"Replaced parameter type '{type_name}' with '{replacement}'")
+        _logger.debug(f'Replaced parameter type {type_name!r}'
+                      f' with {replacement!r}')
     return replacement
 
 

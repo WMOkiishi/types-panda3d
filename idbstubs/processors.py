@@ -197,15 +197,15 @@ def process_function(
             return_override = return_overrides.get(i, default_return)
         if return_override is not None:
             if sig.return_type:
-                _logger.debug(f"Changed return type of {function} from"
-                              f" {sig.return_type} to {return_override}")
+                _logger.debug(f'Changed return type of {function} from'
+                              f' {sig.return_type!r} to {return_override!r}')
             sig.return_type = return_override
         for j, param in enumerate(sig.parameters):
             param_override = param_overrides.get((i, j))
             if param_override is not None:
                 if param.type:
-                    _logger.debug(f"Changed type of parameter '{param}'"
-                                  f" in {function} to {param_override}")
+                    _logger.debug(f'Changed type of parameter {param}'
+                                  f' in {function} to {param_override!r}')
                 param.type = param_override
     function.signatures = new_sigs
     return function
@@ -238,4 +238,4 @@ def process_dependencies(file: File) -> None:
             if_type_var=as_type_var
         )
         if not processed:
-            _logger.warning(f"Unknown type '{name}' in '{current_dir}'")
+            _logger.warning(f'Unknown type {name!r} in {current_dir!r}')
