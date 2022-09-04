@@ -1,14 +1,14 @@
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectAnalogs
 
-RAD_PAN: Literal[0]
-RAD_TILT: Literal[1]
-RAD_ZOOM: Literal[2]
-RAD_FOCUS: Literal[3]
+RAD_PAN: Final[Literal[0]]
+RAD_TILT: Final[Literal[1]]
+RAD_ZOOM: Final[Literal[2]]
+RAD_FOCUS: Final[Literal[3]]
 
 class DirectRadamec(DirectObject):
     radamecCount: ClassVar[int]

@@ -1,15 +1,15 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import AsyncTask, LPoint3f, LVector3f, NodePath, PandaNode
 from ..directnotify.Notifier import Notifier
 from ..interval.MetaInterval import MetaInterval
 from ..showbase.DirectObject import DirectObject
 
-CAM_MOVE_DURATION: float
-COA_MARKER_SF: float
-Y_AXIS: LVector3f
+CAM_MOVE_DURATION: Final[float]
+COA_MARKER_SF: Final[float]
+Y_AXIS: Final[LVector3f]
 
 _TaskCont: TypeAlias = Literal[1]
 

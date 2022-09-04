@@ -1,14 +1,14 @@
 from typing import ClassVar
-from typing_extensions import Self
+from typing_extensions import Final, Self
 
 from panda3d.core import AnalogNode, ButtonNode, ClientBase, DialNode, NodePath, TrackerNode
 from panda3d.vrpn import VrpnClient
 from ..showbase.DirectObject import DirectObject
 
-ANALOG_MIN: float
-ANALOG_MAX: float
-ANALOG_DEADBAND: float
-ANALOG_CENTER: float
+ANALOG_MIN: Final[float]
+ANALOG_MAX: Final[float]
+ANALOG_DEADBAND: Final[float]
+ANALOG_CENTER: Final[float]
 
 class DirectDeviceManager(VrpnClient, DirectObject):
     server: str

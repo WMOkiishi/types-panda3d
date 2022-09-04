@@ -1,17 +1,17 @@
 from collections.abc import Sequence
 from typing import Any
-from typing_extensions import Literal, TypedDict
+from typing_extensions import Final, Literal, TypedDict
 
 from ..showbase.Messenger import Messenger
 from .ClientRepository import ClientRepository
 
-MESSAGE_TYPES: tuple[
+MESSAGE_TYPES: Final[tuple[
     Literal['avatarOnline'],
     Literal['avatarOffline'],
     Literal['create'],
     Literal['needUberdogCreates'],
     Literal['transferDo'],
-]
+]]
 
 class _message_strings(TypedDict):
     avatarOnline: Literal[1]
@@ -20,7 +20,7 @@ class _message_strings(TypedDict):
     needUberdogCreates: Literal[4]
     transferDo: Literal[5]
 
-MESSAGE_STRINGS: _message_strings
+MESSAGE_STRINGS: Final[_message_strings]
 
 class NetMessenger(Messenger):
     air: ClientRepository

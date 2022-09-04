@@ -1,1 +1,3 @@
-DOWN_4: str
+from typing_extensions import Final
+
+DOWN_4: Final[str]

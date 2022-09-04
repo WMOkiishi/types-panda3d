@@ -1,13 +1,13 @@
 from collections.abc import Container, Iterable, MutableSequence, Sequence
 from re import Pattern
 from typing import overload
-from typing_extensions import Literal, Never
+from typing_extensions import Final, Literal, Never
 
-SECHEADER: Pattern[str]
-JUNKHEADER: Pattern[str]
-IMPORTSTAR: Pattern[str]
-IDENTIFIER: Pattern[str]
-FILEHEADER: Pattern[str]
+SECHEADER: Final[Pattern[str]]
+JUNKHEADER: Final[Pattern[str]]
+IMPORTSTAR: Final[Pattern[str]]
+IDENTIFIER: Final[Pattern[str]]
+FILEHEADER: Final[Pattern[str]]
 
 def readFile(fn: str) -> str: ...
 def writeFile(wfile: str, data: bytes) -> None: ...
@@ -107,10 +107,10 @@ class InterrogateDatabase:
     def __init__(self, tokzr: InterrogateTokenizer) -> None: ...
 
 def printTree(tree, indent: int) -> None: ...
-COMPOUND_STMT_PATTERN: tuple
-DOCSTRING_STMT_PATTERN: tuple
-DERIVATION_PATTERN: tuple
-ASSIGNMENT_STMT_PATTERN: tuple
+COMPOUND_STMT_PATTERN: Final[tuple]
+DOCSTRING_STMT_PATTERN: Final[tuple]
+DERIVATION_PATTERN: Final[tuple]
+ASSIGNMENT_STMT_PATTERN: Final[tuple]
 
 class ParseTreeInfo:
     docstring: str

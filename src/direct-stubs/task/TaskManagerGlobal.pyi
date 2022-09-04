@@ -1,5 +1,7 @@
 __all__ = ['taskMgr']
 
+from typing_extensions import Final
+
 from .Task import TaskManager
 
-taskMgr: TaskManager
+taskMgr: Final[TaskManager]

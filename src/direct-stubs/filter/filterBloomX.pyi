@@ -1,1 +1,3 @@
-BLOOM_X: str
+from typing_extensions import Final
+
+BLOOM_X: Final[str]

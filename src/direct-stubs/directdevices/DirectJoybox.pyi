@@ -1,31 +1,31 @@
 from collections.abc import Callable
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from panda3d.core import ButtonRegistry, NodePath
 from ..gui.OnscreenText import OnscreenText
 from ..showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectAnalogs, DirectButtons
 
-L_STICK: Literal[0]
-L_UPPER: Literal[1]
-L_LOWER: Literal[2]
-R_STICK: Literal[3]
-R_UPPER: Literal[4]
-R_LOWER: Literal[5]
-NULL_AXIS: Literal[-1]
-L_LEFT_RIGHT: Literal[0]
-L_FWD_BACK: Literal[1]
-L_TWIST: Literal[2]
-L_SLIDE: Literal[3]
-R_LEFT_RIGHT: Literal[4]
-R_FWD_BACK: Literal[5]
-R_TWIST: Literal[6]
-R_SLIDE: Literal[7]
-JOYBOX_MIN: float
-JOYBOX_MAX: float
-JOYBOX_RANGE: float
-JOYBOX_TREAD_SEPERATION: float
+L_STICK: Final[Literal[0]]
+L_UPPER: Final[Literal[1]]
+L_LOWER: Final[Literal[2]]
+R_STICK: Final[Literal[3]]
+R_UPPER: Final[Literal[4]]
+R_LOWER: Final[Literal[5]]
+NULL_AXIS: Final[Literal[-1]]
+L_LEFT_RIGHT: Final[Literal[0]]
+L_FWD_BACK: Final[Literal[1]]
+L_TWIST: Final[Literal[2]]
+L_SLIDE: Final[Literal[3]]
+R_LEFT_RIGHT: Final[Literal[4]]
+R_FWD_BACK: Final[Literal[5]]
+R_TWIST: Final[Literal[6]]
+R_SLIDE: Final[Literal[7]]
+JOYBOX_MIN: Final[float]
+JOYBOX_MAX: Final[float]
+JOYBOX_RANGE: Final[float]
+JOYBOX_TREAD_SEPERATION: Final[float]
 
 class DirectJoybox(DirectObject):
     joyboxCount: ClassVar[int]

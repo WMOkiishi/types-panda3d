@@ -1,13 +1,13 @@
 from typing import TypeVar
-from typing_extensions import Protocol
+from typing_extensions import Final, Protocol
 
 _T_contra = TypeVar("_T_contra", contravariant=True)
 
 class _SupportsWrite(Protocol[_T_contra]):
     def write(self, __s: _T_contra) -> object: ...
 
-LICENSE: list[str]
-MAINPAGE: str
+LICENSE: Final[list[str]]
+MAINPAGE: Final[str]
 
 def comment(code: str) -> str: ...
 def block_comment(code: str) -> str: ...

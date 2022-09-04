@@ -1,11 +1,11 @@
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from panda3d.core import NodePath, Texture
 from ..task.Task import Task
 from .FilterManager import FilterManager
 
-CARTOON_BODY: str
-SSAO_BODY: str
+CARTOON_BODY: Final[str]
+SSAO_BODY: Final[str]
 
 class FilterConfig:
     separation: int

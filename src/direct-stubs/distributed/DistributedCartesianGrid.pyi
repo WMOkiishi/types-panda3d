@@ -1,11 +1,11 @@
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from panda3d.core import ConfigVariableBool, LVector3f
 from .CartesianGridBase import CartesianGridBase
 from .DistributedNode import DistributedNode
 
-GRID_Z_OFFSET: float
+GRID_Z_OFFSET: Final[float]
 
 class DistributedCartesianGrid(DistributedNode, CartesianGridBase):
     VisualizeGrid: ClassVar[ConfigVariableBool]

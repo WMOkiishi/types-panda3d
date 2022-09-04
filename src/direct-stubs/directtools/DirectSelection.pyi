@@ -1,5 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import (
     BitMask_uint32_t_32,
@@ -25,8 +25,8 @@ from .DirectGeometry import LineNodePath
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow
 
-COA_ORIGIN: Literal[0]
-COA_CENTER: Literal[1]
+COA_ORIGIN: Final[Literal[0]]
+COA_CENTER: Final[Literal[1]]
 
 class DirectNodePath(NodePath):
     bbox: DirectBoundingBox

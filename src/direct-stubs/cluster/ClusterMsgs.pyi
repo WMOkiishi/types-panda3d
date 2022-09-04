@@ -1,4 +1,4 @@
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import (
     Datagram,
@@ -28,18 +28,18 @@ _Vec2f: TypeAlias = LVecBase2f | tuple[float, float]
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow | tuple[float, float, float]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | tuple[float, float, float, float]
 
-CLUSTER_NONE: Literal[0]
-CLUSTER_CAM_OFFSET: Literal[1]
-CLUSTER_CAM_FRUSTUM: Literal[2]
-CLUSTER_CAM_MOVEMENT: Literal[3]
-CLUSTER_SWAP_READY: Literal[4]
-CLUSTER_SWAP_NOW: Literal[5]
-CLUSTER_COMMAND_STRING: Literal[6]
-CLUSTER_SELECTED_MOVEMENT: Literal[7]
-CLUSTER_TIME_DATA: Literal[8]
-CLUSTER_NAMED_OBJECT_MOVEMENT: Literal[9]
-CLUSTER_NAMED_MOVEMENT_DONE: Literal[10]
-CLUSTER_EXIT: Literal[100]
+CLUSTER_NONE: Final[Literal[0]]
+CLUSTER_CAM_OFFSET: Final[Literal[1]]
+CLUSTER_CAM_FRUSTUM: Final[Literal[2]]
+CLUSTER_CAM_MOVEMENT: Final[Literal[3]]
+CLUSTER_SWAP_READY: Final[Literal[4]]
+CLUSTER_SWAP_NOW: Final[Literal[5]]
+CLUSTER_COMMAND_STRING: Final[Literal[6]]
+CLUSTER_SELECTED_MOVEMENT: Final[Literal[7]]
+CLUSTER_TIME_DATA: Final[Literal[8]]
+CLUSTER_NAMED_OBJECT_MOVEMENT: Final[Literal[9]]
+CLUSTER_NAMED_MOVEMENT_DONE: Final[Literal[10]]
+CLUSTER_EXIT: Final[Literal[100]]
 CLUSTER_DAEMON_PORT: int
 CLUSTER_SERVER_PORT: int
 SERVER_STARTUP_STRING: str

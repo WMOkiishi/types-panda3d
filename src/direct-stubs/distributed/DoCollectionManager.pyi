@@ -1,6 +1,6 @@
 from collections.abc import Callable
 from typing import TypeVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import DatagramIterator
 from .DistributedObject import DistributedObject
@@ -8,9 +8,9 @@ from .DistributedObject import DistributedObject
 _D = TypeVar('_D', bound=DistributedObject)
 _DOCallback: TypeAlias = Callable[[DistributedObject], object]
 
-BAD_DO_ID: Literal[0]
-BAD_ZONE_ID: Literal[0]
-BAD_CHANNEL_ID: Literal[0]
+BAD_DO_ID: Final[Literal[0]]
+BAD_ZONE_ID: Final[Literal[0]]
+BAD_CHANNEL_ID: Final[Literal[0]]
 
 class DoCollectionManager:
     doId2do: dict[int, DistributedObject]

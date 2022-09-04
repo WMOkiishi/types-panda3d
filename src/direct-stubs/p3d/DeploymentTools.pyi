@@ -4,7 +4,7 @@ from collections.abc import Generator, Mapping
 from os import PathLike
 from tarfile import TarInfo
 from typing import AnyStr, ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename, HTTPClient, PNMImage
 from ..directnotify.Notifier import Notifier
@@ -12,7 +12,7 @@ from .HostInfo import HostInfo
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 
-P3DEMBED_MAGIC: Literal[0xFF3D3D00]
+P3DEMBED_MAGIC: Final[Literal[0xFF3D3D00]]
 def archiveFilter(info): ...
 class TarInfoRoot(TarInfo): ...
 class TarInfoRootOSX(TarInfoRoot): ...

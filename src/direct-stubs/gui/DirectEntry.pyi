@@ -1,15 +1,15 @@
 __all__ = ['DirectEntry']
 
 from typing import Any, ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from panda3d.core import ConfigVariableBool, NodePath, TextFont
 from .DirectFrame import DirectFrame
 from .OnscreenText import OnscreenText
 
-ENTRY_FOCUS_STATE: Literal[0]
-ENTRY_NO_FOCUS_STATE: Literal[1]
-ENTRY_INACTIVE_STATE: Literal[2]
+ENTRY_FOCUS_STATE: Final[Literal[0]]
+ENTRY_NO_FOCUS_STATE: Final[Literal[1]]
+ENTRY_INACTIVE_STATE: Final[Literal[2]]
 
 class DirectEntry(DirectFrame):
     directWtext: ClassVar[ConfigVariableBool]

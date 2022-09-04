@@ -1,7 +1,7 @@
 __all__ = ['BlackOnWhite', 'NameConfirm', 'OnscreenText', 'Plain', 'ScreenPrompt', 'ScreenTitle']
 
 from typing import Any, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import LVecBase4f, NodePath, TextFont, TextNode
 
@@ -9,11 +9,11 @@ _Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Color: TypeAlias = LVecBase4f | tuple[float, float, float, float]
 _OrderedPair: TypeAlias = tuple[float, float]
 
-Plain: Literal[1]
-ScreenTitle: Literal[2]
-ScreenPrompt: Literal[3]
-NameConfirm: Literal[4]
-BlackOnWhite: Literal[5]
+Plain: Final[Literal[1]]
+ScreenTitle: Final[Literal[2]]
+ScreenPrompt: Final[Literal[3]]
+NameConfirm: Final[Literal[4]]
+BlackOnWhite: Final[Literal[5]]
 
 class OnscreenText(NodePath[TextNode]):
     textNode: TextNode

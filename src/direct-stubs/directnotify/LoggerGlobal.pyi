@@ -1,3 +1,5 @@
+from typing_extensions import Final
+
 from .Logger import Logger
 
-defaultLogger: Logger
+defaultLogger: Final[Logger]

@@ -21,11 +21,12 @@ __all__ = [
 
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, NoReturn
+from typing_extensions import Final
 
 from panda3d import core
 from .thread import error as ThreadError
 
-TIMEOUT_MAX: float
+TIMEOUT_MAX: Final[float]
 
 class local:
     def __del__(self) -> None: ...

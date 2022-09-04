@@ -1,16 +1,16 @@
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
 from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase
 
-ESNew: Literal[1]
-ESDeleted: Literal[2]
-ESDisabling: Literal[3]
-ESDisabled: Literal[4]
-ESGenerating: Literal[5]
-ESGenerated: Literal[6]
+ESNew: Final[Literal[1]]
+ESDeleted: Final[Literal[2]]
+ESDisabling: Final[Literal[3]]
+ESDisabled: Final[Literal[4]]
+ESGenerating: Final[Literal[5]]
+ESGenerated: Final[Literal[6]]
 
 class DistributedObjectOV(DistributedObjectBase):
     DistributedObjectOV_initialized: Literal[1]

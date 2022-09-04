@@ -1,6 +1,6 @@
 from collections.abc import Callable, Iterable, Sequence
 from typing import Any
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
@@ -10,13 +10,13 @@ from .DoInterestManager import InterestHandle
 
 _State: TypeAlias = Literal[1, 2, 3, 4, 5, 6]
 
-ESNew: Literal[1]
-ESDeleted: Literal[2]
-ESDisabling: Literal[3]
-ESDisabled: Literal[4]
-ESGenerating: Literal[5]
-ESGenerated: Literal[6]
-ESNum2Str: dict[_State, str]
+ESNew: Final[Literal[1]]
+ESDeleted: Final[Literal[2]]
+ESDisabling: Final[Literal[3]]
+ESDisabled: Final[Literal[4]]
+ESGenerating: Final[Literal[5]]
+ESGenerated: Final[Literal[6]]
+ESNum2Str: Final[dict[_State, str]]
 
 class DistributedObject(DistributedObjectBase):
     neverDisable: bool

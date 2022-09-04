@@ -2,7 +2,7 @@ __all__ = ['MetaInterval', 'Parallel', 'ParallelEndTogether', 'Sequence', 'Track
 
 from collections.abc import Iterable
 from typing import ClassVar, SupportsIndex
-from typing_extensions import Literal, Self, TypeAlias, TypeGuard
+from typing_extensions import Final, Literal, Self, TypeAlias, TypeGuard
 
 from panda3d.core import PStatCollector, ostream
 from panda3d.direct import CInterval, CMetaInterval
@@ -12,9 +12,9 @@ from .Interval import Interval
 _Interval: TypeAlias = Interval | CInterval
 _RelativeStart: TypeAlias = Literal[0, 1, 2]
 
-PREVIOUS_END: Literal[0]
-PREVIOUS_START: Literal[1]
-TRACK_START: Literal[2]
+PREVIOUS_END: Final[Literal[0]]
+PREVIOUS_START: Final[Literal[1]]
+TRACK_START: Final[Literal[2]]
 
 class MetaInterval(CMetaInterval):
     notify: ClassVar[Notifier]

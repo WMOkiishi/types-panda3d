@@ -13,7 +13,7 @@ __all__ = [
 
 from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, NoReturn, overload
-from typing_extensions import Literal, Protocol
+from typing_extensions import Final, Literal, Protocol
 
 from panda3d.core import (
     AsyncTask, AsyncTaskPause, AsyncTaskSequence,
@@ -27,11 +27,11 @@ from ..fsm.StatePush import StateVar
 
 def print_exc_plus() -> None: ...
 
-done: Literal[0]
-cont: Literal[1]
-again: Literal[2]
-pickup: Literal[3]
-exit: Literal[4]
+done: Final[Literal[0]]
+cont: Final[Literal[1]]
+again: Final[Literal[2]]
+pickup: Final[Literal[3]]
+exit: Final[Literal[4]]
 
 class Task(PythonTask):
     cont: ClassVar[Literal[1]]

@@ -1,7 +1,8 @@
 from collections.abc import Callable, Mapping, Sequence
 from typing import Any, NoReturn
+from typing_extensions import Final
 
-TIMEOUT_MAX: float
+TIMEOUT_MAX: Final[float]
 def force_yield() -> None: ...
 def consider_yield() -> None: ...
 forceYield = force_yield

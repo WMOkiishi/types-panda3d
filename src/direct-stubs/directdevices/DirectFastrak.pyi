@@ -1,16 +1,16 @@
 from collections.abc import Callable
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from panda3d.core import LVector3f
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectTracker
 
-NULL_AXIS: Literal[-1]
-FAST_X: Literal[0]
-FAST_Y: Literal[1]
-FAST_Z: Literal[2]
+NULL_AXIS: Final[Literal[-1]]
+FAST_X: Final[Literal[0]]
+FAST_Y: Final[Literal[1]]
+FAST_Z: Final[Literal[2]]
 
 class DirectFastrak(DirectObject):
     fastrakCount: ClassVar[int]

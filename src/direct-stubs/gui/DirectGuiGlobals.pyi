@@ -1,6 +1,6 @@
 __all__ = []
 
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 defaultFont = ...
 defaultFontFunc = ...
@@ -11,69 +11,69 @@ defaultDialogRelief: Literal[0, 1, 2, 3, 4, 5, 6]
 drawOrder: int
 panel = ...
 
-INITOPT: list[Literal['initopt']]
+INITOPT: Final[list[Literal['initopt']]]
 
-LMB: Literal[0]
-MMB: Literal[1]
-RMB: Literal[2]
+LMB: Final[Literal[0]]
+MMB: Final[Literal[1]]
+RMB: Final[Literal[2]]
 
-NORMAL: Literal['normal']
-DISABLED: Literal['disabled']
+NORMAL: Final[Literal['normal']]
+DISABLED: Final[Literal['disabled']]
 
-FLAT: Literal[1]
-RAISED: Literal[2]
-SUNKEN: Literal[3]
-GROOVE: Literal[4]
-RIDGE: Literal[5]
-TEXTUREBORDER: Literal[6]
-FrameStyleDict: dict[Literal['flat', 'raised', 'sunken', 'groove', 'ridge', 'texture_border'], Literal[1, 2, 3, 4, 5, 6]]
+FLAT: Final[Literal[1]]
+RAISED: Final[Literal[2]]
+SUNKEN: Final[Literal[3]]
+GROOVE: Final[Literal[4]]
+RIDGE: Final[Literal[5]]
+TEXTUREBORDER: Final[Literal[6]]
+FrameStyleDict: Final[dict[Literal['flat', 'raised', 'sunken', 'groove', 'ridge', 'texture_border'], Literal[1, 2, 3, 4, 5, 6]]]
 
-HORIZONTAL: Literal['horizontal']
-VERTICAL: Literal['vertical']
-VERTICAL_INVERTED: Literal['vertical_inverted']
+HORIZONTAL: Final[Literal['horizontal']]
+VERTICAL: Final[Literal['vertical']]
+VERTICAL_INVERTED: Final[Literal['vertical_inverted']]
 
-DIALOG_NO: Literal[0]
-DIALOG_OK: Literal[1]
-DIALOG_YES: Literal[1]
-DIALOG_RETRY: Literal[1]
-DIALOG_CANCEL: Literal[-1]
+DIALOG_NO: Final[Literal[0]]
+DIALOG_OK: Final[Literal[1]]
+DIALOG_YES: Final[Literal[1]]
+DIALOG_RETRY: Final[Literal[1]]
+DIALOG_CANCEL: Final[Literal[-1]]
 
-DESTROY: Literal['destroy-']
-PRINT: Literal['print-']
-ENTER: str
-EXIT: str
-WITHIN: str
-WITHOUT: str
-B1CLICK: str
-B2CLICK: str
-B3CLICK: str
-B1PRESS: str
-B2PRESS: str
-B3PRESS: str
-B1RELEASE: str
-B2RELEASE: str
-B3RELEASE: str
-OVERFLOW: str
-ACCEPT: str
-ACCEPTFAILED: str
-TYPE: str
-ERASE: str
-CURSORMOVE: str
-ADJUST: str
+DESTROY: Final[Literal['destroy-']]
+PRINT: Final[Literal['print-']]
+ENTER: Final[str]
+EXIT: Final[str]
+WITHIN: Final[str]
+WITHOUT: Final[str]
+B1CLICK: Final[str]
+B2CLICK: Final[str]
+B3CLICK: Final[str]
+B1PRESS: Final[str]
+B2PRESS: Final[str]
+B3PRESS: Final[str]
+B1RELEASE: Final[str]
+B2RELEASE: Final[str]
+B3RELEASE: Final[str]
+OVERFLOW: Final[str]
+ACCEPT: Final[str]
+ACCEPTFAILED: Final[str]
+TYPE: Final[str]
+ERASE: Final[str]
+CURSORMOVE: Final[str]
+ADJUST: Final[str]
 
-IMAGE_SORT_INDEX: Literal[10]
-GEOM_SORT_INDEX: Literal[20]
-TEXT_SORT_INDEX: Literal[30]
-FADE_SORT_INDEX: Literal[1000]
-NO_FADE_SORT_INDEX: Literal[2000]
-BACKGROUND_SORT_INDEX: Literal[-100]
-MIDGROUND_SORT_INDEX: Literal[0]
-FOREGROUND_SORT_INDEX: Literal[100]
+IMAGE_SORT_INDEX: Final[Literal[10]]
+GEOM_SORT_INDEX: Final[Literal[20]]
+TEXT_SORT_INDEX: Final[Literal[30]]
+FADE_SORT_INDEX: Final[Literal[1000]]
+NO_FADE_SORT_INDEX: Final[Literal[2000]]
+BACKGROUND_SORT_INDEX: Final[Literal[-100]]
+MIDGROUND_SORT_INDEX: Final[Literal[0]]
+FOREGROUND_SORT_INDEX: Final[Literal[100]]
 
-BUTTON_READY_STATE: Literal[0]
-BUTTON_DEPRESSED_STATE: Literal[1]
-BUTTON_ROLLOVER_STATE: Literal[2]
-BUTTON_INACTIVE_STATE: Literal[3]
+BUTTON_READY_STATE: Final[Literal[0]]
+BUTTON_DEPRESSED_STATE: Final[Literal[1]]
+BUTTON_ROLLOVER_STATE: Final[Literal[2]]
+BUTTON_INACTIVE_STATE: Final[Literal[3]]
 
 def get_default_rolloverSound(): ...
 def set_default_rolloverSound(newSound) -> None: ...

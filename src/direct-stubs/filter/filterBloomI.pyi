@@ -1,1 +1,3 @@
-BOOM_I: str
+from typing_extensions import Final
+
+BOOM_I: Final[str]

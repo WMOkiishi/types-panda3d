@@ -1,15 +1,16 @@
 from collections.abc import Callable
 from typing import ClassVar, overload
+from typing_extensions import Final
 from setuptools import Command
 
 def egg2bam(_build_cmd: object, srcpath: str, dstpath: str) -> str: ...
-macosx_binary_magics: tuple[bytes, ...]
-PACKAGE_DATA_DIRS: dict[str, list[tuple[str, str, set[str]]]]
-PACKAGE_LIB_DIRS: dict[str, list[tuple[str, str | None]]]
-SITE_PY2: str
-SITE_PY3: str
-SITE_PY_TKINTER_ADDENDUM: str
-SITE_PY: str
+macosx_binary_magics: Final[tuple[bytes, ...]]
+PACKAGE_DATA_DIRS: Final[dict[str, list[tuple[str, str, set[str]]]]]
+PACKAGE_LIB_DIRS: Final[dict[str, list[tuple[str, str | None]]]]
+SITE_PY2: Final[str]
+SITE_PY3: Final[str]
+SITE_PY_TKINTER_ADDENDUM: Final[str]
+SITE_PY: Final[str]
 
 class build_apps(Command):
     description: ClassVar[str]
