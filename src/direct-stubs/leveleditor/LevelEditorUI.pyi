@@ -1,0 +1,3 @@
+from .LevelEditorUIBase import LevelEditorUIBase
+
+class LevelEditorUI(LevelEditorUIBase): ...
