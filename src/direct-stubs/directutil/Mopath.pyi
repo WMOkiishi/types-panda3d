@@ -8,7 +8,6 @@ class Mopath(DirectObject):
     name: str
     fluid: bool
     tPoint: LPoint3f
-    tPoint: LPoint3f
     posPoint: LPoint3f
     hprPoint: LPoint3f
     tangentVec: LVector3f

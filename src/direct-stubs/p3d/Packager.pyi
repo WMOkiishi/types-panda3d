@@ -142,7 +142,6 @@ class Packager:
         extracts: list[tuple[str, TiXmlElement]]
         components: list[tuple[str, str, TiXmlElement]]
         packageSeq: SeqValue
-        packageSetVer: SeqValue
         patchVersion: str | None
         patches: list[TiXmlNode]
         oldCompressedBasename: _Filename
@@ -286,10 +285,9 @@ class Packager:
     ) -> Packager.Package | None: ...
     def do_setVer(self, value: tuple[int, ...] | str) -> None: ...
     def do_config(self, **kw: Any) -> None: ...
-    do_require = requirePackagesNamed
     def requirePackagesNamed(self, names: Iterable[str], version: str | None = None, host: str | None = None) -> None: ...
+    do_require = requirePackagesNamed
     def requirePackage(self, package: Packager.Package) -> None: ...
-    do_module = addModule
     def addModule(
         self,
         moduleNames: Sequence[str],
@@ -297,6 +295,7 @@ class Packager:
         filename: _Filename | None = None,
         required: bool = False,
     ) -> None: ...
+    do_module = addModule
     def do_excludeModule(self, *args: str) -> None: ...
     def do_main(self, filename: _Filename | None) -> None: ...
     def do_mainModule(self, moduleName: str, newName: str | None = None, filename: _Filename | None = None) -> None: ...
@@ -311,7 +310,6 @@ class Packager:
         resources: Sequence[_Filename] | None = None,
         dependencyDir: str | None = None,
     ) -> None: ...
-    do_file = addFiles
     def addFiles(
         self,
         filenames: Sequence[_Filename],
@@ -325,6 +323,7 @@ class Packager:
         dependencyDir: str | None = None,
         required: bool = False,
     ) -> None: ...
+    do_file = addFiles
     def do_exclude(self, filename: _Filename) -> None: ...
     def do_includeExtensions(
         self,

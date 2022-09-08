@@ -35,13 +35,11 @@ class Actor(DirectObject, NodePath):
     modelLoaderOptions: ClassVar[LoaderOptions]
     animLoaderOptions: ClassVar[LoaderOptions]
     validateSubparts: ClassVar[ConfigVariableBool]
-    mergeLODBundles: ClassVar[ConfigVariableBool]
-    allowAsyncBind: ClassVar[ConfigVariableBool]
+    mergeLODBundles: ConfigVariableBool | bool
+    allowAsyncBind: ConfigVariableBool | bool
     Actor_initialized: Literal[1]
     Actor_deleted: Literal[1]
     loader: Loader
-    mergeLODBundles: bool
-    allowAsyncBind: bool
     switches = ...
     gotName: bool
     class PartDef:

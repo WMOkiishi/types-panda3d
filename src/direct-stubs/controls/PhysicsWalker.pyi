@@ -23,7 +23,7 @@ class PhysicsWalker(DirectObject):
     useLifter: ClassVar[bool]
     useHeightRay: ClassVar[bool]
     needToDeltaPos: bool
-    physVelocityIndicator = ...
+    physVelocityIndicator: NodePath
     avatarControlForwardSpeed: float
     avatarControlJumpForce: float
     avatarControlReverseSpeed: float
@@ -47,7 +47,6 @@ class PhysicsWalker(DirectObject):
     cTrav: CollisionTraverser
     floorOffset: float
     avatarNodePath: NodePath[ActorNode]
-    physVelocityIndicator: NodePath
     physContactIndicator: NodePath
     def __init__(self, gravity: float = -32.1740, standableGround: float = 0.707, hardLandingForce: float = 16) -> None: ...
     def setWalkSpeed(self, forward: float, jump: float, reverse: float, rotate: float) -> None: ...

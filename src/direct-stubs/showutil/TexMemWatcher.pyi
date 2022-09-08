@@ -63,9 +63,6 @@ class TexMemWatcher(DirectObject):
     bitmasks: list[BitArray]
     w: int
     h: int
-    placedSize: int
-    placedQSize: int
-    totalSize: int
     area: int
     def __init__(self, gsg: GraphicsOutput | GraphicsStateGuardian | None = None, limit: int | None = None) -> None: ...
     def setupGui(self) -> None: ...
