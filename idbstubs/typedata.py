@@ -118,7 +118,7 @@ def load_data() -> None:
             continue
         if idb.interrogate_type_is_global(t) and not idb.interrogate_type_is_nested(t):
             mod_name = idb.interrogate_type_module_name(t)
-            lib_name = idb.interrogate_type_library_name(t)
+            lib_name = idb.interrogate_type_library_name(t).removeprefix('libp3')
             _modules[get_type_name(t)] = mod_name + '._' + lib_name
         for cast_to in explicit_cast_to(t):
             _coercions[cast_to].add(t)

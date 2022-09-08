@@ -399,7 +399,7 @@ def make_package_rep(
             ignore_coercion=ignore_coercion,
         )
         mod_name = idb.interrogate_function_module_name(f)
-        lib_name = '_' + idb.interrogate_function_library_name(f)
+        lib_name = '_' + idb.interrogate_function_library_name(f).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += with_alias(function)
 
     # Gather global types
@@ -408,7 +408,7 @@ def make_package_rep(
         if idb.interrogate_type_is_nested(t):
             continue
         mod_name = idb.interrogate_type_module_name(t)
-        lib_name = '_' + idb.interrogate_type_library_name(t)
+        lib_name = '_' + idb.interrogate_type_library_name(t).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(
             t, mod_name.split('.'),
             infer_opt_params=infer_opt_params,

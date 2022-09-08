@@ -1,2 +1,2 @@
-from ._libp3egg import *
-from ._libp3egg2pg import *
+from ._egg import *
+from ._egg2pg import *
