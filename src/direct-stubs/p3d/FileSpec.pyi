@@ -5,7 +5,6 @@ from typing_extensions import TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename, TiXmlElement
 from ..directnotify.Notifier import Notifier
-from .FileSpec import FileSpec
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 

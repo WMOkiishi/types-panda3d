@@ -1,5 +1,7 @@
-__all__ = ["PEFile"]
+__all__ = ['PEFile']
+
 import array
+import builtins
 import ctypes
 import mmap
 import pickle
@@ -88,7 +90,7 @@ class DataResource:
 class IconGroupResource:
     code_page: ClassVar[int]
     type: ClassVar[int]
-    Icon: ClassVar[type[_Icon]]
+    Icon: ClassVar[builtins.type[_Icon]]
     icons: list[_Icon]
     def __init__(self) -> None: ...
     def add_icon(self, *args, **kwargs) -> None: ...
