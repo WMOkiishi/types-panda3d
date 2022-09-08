@@ -42,8 +42,8 @@ class DirectGuiBase(DirectObject):
     @overload
     def configure(self, option: str | None = None, **kw: Any) -> None: ...
     def __setitem__(self, key: str, value: Any) -> None: ...
-    cget = __getitem__
     def __getitem__(self, option: str) -> Any: ...
+    cget = __getitem__
     @overload
     def createcomponent(
         self,
