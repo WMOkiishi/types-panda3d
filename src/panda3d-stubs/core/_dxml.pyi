@@ -1,6 +1,6 @@
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import ConfigVariableFilename, Filename, istream, ostream
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
@@ -30,23 +30,23 @@ class TiXmlBase:
         @endverbatim
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    TIXML_NO_ERROR: ClassVar[Literal[0]]
-    TIXML_ERROR: ClassVar[Literal[1]]
-    TIXML_ERROR_OPENING_FILE: ClassVar[Literal[2]]
-    TIXML_ERROR_PARSING_ELEMENT: ClassVar[Literal[3]]
-    TIXML_ERROR_FAILED_TO_READ_ELEMENT_NAME: ClassVar[Literal[4]]
-    TIXML_ERROR_READING_ELEMENT_VALUE: ClassVar[Literal[5]]
-    TIXML_ERROR_READING_ATTRIBUTES: ClassVar[Literal[6]]
-    TIXML_ERROR_PARSING_EMPTY: ClassVar[Literal[7]]
-    TIXML_ERROR_READING_END_TAG: ClassVar[Literal[8]]
-    TIXML_ERROR_PARSING_UNKNOWN: ClassVar[Literal[9]]
-    TIXML_ERROR_PARSING_COMMENT: ClassVar[Literal[10]]
-    TIXML_ERROR_PARSING_DECLARATION: ClassVar[Literal[11]]
-    TIXML_ERROR_DOCUMENT_EMPTY: ClassVar[Literal[12]]
-    TIXML_ERROR_EMBEDDED_NULL: ClassVar[Literal[13]]
-    TIXML_ERROR_PARSING_CDATA: ClassVar[Literal[14]]
-    TIXML_ERROR_DOCUMENT_TOP_ONLY: ClassVar[Literal[15]]
-    TIXML_ERROR_STRING_COUNT: ClassVar[Literal[16]]
+    TIXML_NO_ERROR: Final[Literal[0]]
+    TIXML_ERROR: Final[Literal[1]]
+    TIXML_ERROR_OPENING_FILE: Final[Literal[2]]
+    TIXML_ERROR_PARSING_ELEMENT: Final[Literal[3]]
+    TIXML_ERROR_FAILED_TO_READ_ELEMENT_NAME: Final[Literal[4]]
+    TIXML_ERROR_READING_ELEMENT_VALUE: Final[Literal[5]]
+    TIXML_ERROR_READING_ATTRIBUTES: Final[Literal[6]]
+    TIXML_ERROR_PARSING_EMPTY: Final[Literal[7]]
+    TIXML_ERROR_READING_END_TAG: Final[Literal[8]]
+    TIXML_ERROR_PARSING_UNKNOWN: Final[Literal[9]]
+    TIXML_ERROR_PARSING_COMMENT: Final[Literal[10]]
+    TIXML_ERROR_PARSING_DECLARATION: Final[Literal[11]]
+    TIXML_ERROR_DOCUMENT_EMPTY: Final[Literal[12]]
+    TIXML_ERROR_EMBEDDED_NULL: Final[Literal[13]]
+    TIXML_ERROR_PARSING_CDATA: Final[Literal[14]]
+    TIXML_ERROR_DOCUMENT_TOP_ONLY: Final[Literal[15]]
+    TIXML_ERROR_STRING_COUNT: Final[Literal[16]]
     @staticmethod
     def SetCondenseWhiteSpace(condense: bool) -> None:
         """The world does not agree on whether white space should be kept or
@@ -132,13 +132,13 @@ class TiXmlNode(TiXmlBase):
         in a document, or stand on its own. The type of a TiXmlNode
         can be queried, and it can be cast to its more defined type.
     """
-    TINYXML_DOCUMENT: ClassVar[Literal[0]]
-    TINYXML_ELEMENT: ClassVar[Literal[1]]
-    TINYXML_COMMENT: ClassVar[Literal[2]]
-    TINYXML_UNKNOWN: ClassVar[Literal[3]]
-    TINYXML_TEXT: ClassVar[Literal[4]]
-    TINYXML_DECLARATION: ClassVar[Literal[5]]
-    TINYXML_TYPECOUNT: ClassVar[Literal[6]]
+    TINYXML_DOCUMENT: Final[Literal[0]]
+    TINYXML_ELEMENT: Final[Literal[1]]
+    TINYXML_COMMENT: Final[Literal[2]]
+    TINYXML_UNKNOWN: Final[Literal[3]]
+    TINYXML_TEXT: Final[Literal[4]]
+    TINYXML_DECLARATION: Final[Literal[5]]
+    TINYXML_TYPECOUNT: Final[Literal[6]]
     def Value(self) -> str:
         """The meaning of 'value' changes for the specific type of
                 TiXmlNode.
@@ -1072,9 +1072,9 @@ class TiXmlPrinter(TiXmlVisitor):
         """Return the result."""
         ...
 
-TIXML_ENCODING_UNKNOWN: Literal[0]
-TIXML_ENCODING_UTF8: Literal[1]
-TIXML_ENCODING_LEGACY: Literal[2]
+TIXML_ENCODING_UNKNOWN: Final[Literal[0]]
+TIXML_ENCODING_UTF8: Final[Literal[1]]
+TIXML_ENCODING_LEGACY: Final[Literal[2]]
 def read_xml_stream(_in: istream) -> TiXmlDocument:
     """Reads an XML document from the indicated stream.
     @returns the document, or NULL on error.

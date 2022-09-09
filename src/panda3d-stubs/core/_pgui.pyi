@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AudioSound,
     ButtonHandle,
@@ -33,13 +33,13 @@ _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class PGFrameStyle:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    T_none: ClassVar[Literal[0]]
-    T_flat: ClassVar[Literal[1]]
-    T_bevel_out: ClassVar[Literal[2]]
-    T_bevel_in: ClassVar[Literal[3]]
-    T_groove: ClassVar[Literal[4]]
-    T_ridge: ClassVar[Literal[5]]
-    T_texture_border: ClassVar[Literal[6]]
+    T_none: Final[Literal[0]]
+    T_flat: Final[Literal[1]]
+    T_bevel_out: Final[Literal[2]]
+    T_bevel_in: Final[Literal[3]]
+    T_groove: Final[Literal[4]]
+    T_ridge: Final[Literal[5]]
+    T_texture_border: Final[Literal[6]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -524,10 +524,10 @@ class PGButton(PGItem):
     normal button object.  It keeps track of its own state, and handles mouse
     events sensibly.
     """
-    S_ready: ClassVar[Literal[0]]
-    S_depressed: ClassVar[Literal[1]]
-    S_rollover: ClassVar[Literal[2]]
-    S_inactive: ClassVar[Literal[3]]
+    S_ready: Final[Literal[0]]
+    S_depressed: Final[Literal[1]]
+    S_rollover: Final[Literal[2]]
+    S_inactive: Final[Literal[3]]
     @property
     def click_prefix(self) -> str: ...
     @overload
@@ -657,9 +657,9 @@ class PGEntry(PGItem):
     setters, which use whatever encoding method is specified by the associated
     TextNode.
     """
-    S_focus: ClassVar[Literal[0]]
-    S_no_focus: ClassVar[Literal[1]]
-    S_inactive: ClassVar[Literal[2]]
+    S_focus: Final[Literal[0]]
+    S_no_focus: Final[Literal[1]]
+    S_inactive: Final[Literal[2]]
     def setup(self, width: float, num_lines: int) -> None:
         """Sets up the entry for normal use.  The width is the maximum width of
         characters that will be typed, and num_lines is the integer number of lines

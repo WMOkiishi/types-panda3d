@@ -1,6 +1,6 @@
 from os import PathLike
-from typing import ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing import overload
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AsyncTask,
     ConfigVariableFilename,
@@ -71,9 +71,9 @@ class FilterProperties(TypedReferenceCount):
     addCompress = add_compress
 
 class AudioSound(TypedReferenceCount):
-    BAD: ClassVar[Literal[0]]
-    READY: ClassVar[Literal[1]]
-    PLAYING: ClassVar[Literal[2]]
+    BAD: Final[Literal[0]]
+    READY: Final[Literal[1]]
+    PLAYING: Final[Literal[2]]
     def play(self) -> None:
         """For best compatibility, set the loop_count, volume, and balance, prior to
         calling play().  You may set them while they're playing, but it's
@@ -206,28 +206,28 @@ class AudioSound(TypedReferenceCount):
     configureFilters = configure_filters
 
 class AudioManager(TypedReferenceCount):
-    SPEAKERMODE_raw: ClassVar[Literal[0]]
-    SPEAKERMODE_mono: ClassVar[Literal[1]]
-    SPEAKERMODE_stereo: ClassVar[Literal[2]]
-    SPEAKERMODE_quad: ClassVar[Literal[3]]
-    SPEAKERMODE_surround: ClassVar[Literal[4]]
-    SPEAKERMODE_5point1: ClassVar[Literal[5]]
-    SPEAKERMODE_7point1: ClassVar[Literal[6]]
-    SPEAKERMODE_max: ClassVar[Literal[7]]
-    SPEAKERMODE_COUNT: ClassVar[Literal[8]]
-    SPK_none: ClassVar[Literal[0]]
-    SPK_frontleft: ClassVar[Literal[1]]
-    SPK_frontright: ClassVar[Literal[2]]
-    SPK_center: ClassVar[Literal[3]]
-    SPK_sub: ClassVar[Literal[4]]
-    SPK_backleft: ClassVar[Literal[5]]
-    SPK_backright: ClassVar[Literal[6]]
-    SPK_sideleft: ClassVar[Literal[7]]
-    SPK_sideright: ClassVar[Literal[8]]
-    SPK_COUNT: ClassVar[Literal[9]]
-    SM_heuristic: ClassVar[Literal[0]]
-    SM_sample: ClassVar[Literal[1]]
-    SM_stream: ClassVar[Literal[2]]
+    SPEAKERMODE_raw: Final[Literal[0]]
+    SPEAKERMODE_mono: Final[Literal[1]]
+    SPEAKERMODE_stereo: Final[Literal[2]]
+    SPEAKERMODE_quad: Final[Literal[3]]
+    SPEAKERMODE_surround: Final[Literal[4]]
+    SPEAKERMODE_5point1: Final[Literal[5]]
+    SPEAKERMODE_7point1: Final[Literal[6]]
+    SPEAKERMODE_max: Final[Literal[7]]
+    SPEAKERMODE_COUNT: Final[Literal[8]]
+    SPK_none: Final[Literal[0]]
+    SPK_frontleft: Final[Literal[1]]
+    SPK_frontright: Final[Literal[2]]
+    SPK_center: Final[Literal[3]]
+    SPK_sub: Final[Literal[4]]
+    SPK_backleft: Final[Literal[5]]
+    SPK_backright: Final[Literal[6]]
+    SPK_sideleft: Final[Literal[7]]
+    SPK_sideright: Final[Literal[8]]
+    SPK_COUNT: Final[Literal[9]]
+    SM_heuristic: Final[Literal[0]]
+    SM_sample: Final[Literal[1]]
+    SM_stream: Final[Literal[2]]
     @property
     def dls_pathname(self) -> Filename: ...
     def get_speaker_setup(self) -> int: ...

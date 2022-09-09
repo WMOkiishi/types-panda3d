@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import DSearchPath, Filename, iostream, istream, ostream
 
 _ConfigFlags_ValueType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -14,22 +14,22 @@ class ConfigFlags:
     values common to both classes.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    VT_undefined: ClassVar[Literal[0]]
-    VT_list: ClassVar[Literal[1]]
-    VT_string: ClassVar[Literal[2]]
-    VT_filename: ClassVar[Literal[3]]
-    VT_bool: ClassVar[Literal[4]]
-    VT_int: ClassVar[Literal[5]]
-    VT_double: ClassVar[Literal[6]]
-    VT_enum: ClassVar[Literal[7]]
-    VT_search_path: ClassVar[Literal[8]]
-    VT_int64: ClassVar[Literal[9]]
-    VT_color: ClassVar[Literal[10]]
-    F_trust_level_mask: ClassVar[Literal[4095]]
-    F_open: ClassVar[Literal[4096]]
-    F_closed: ClassVar[Literal[8192]]
-    F_dynamic: ClassVar[Literal[16384]]
-    F_dconfig: ClassVar[Literal[32768]]
+    VT_undefined: Final[Literal[0]]
+    VT_list: Final[Literal[1]]
+    VT_string: Final[Literal[2]]
+    VT_filename: Final[Literal[3]]
+    VT_bool: Final[Literal[4]]
+    VT_int: Final[Literal[5]]
+    VT_double: Final[Literal[6]]
+    VT_enum: Final[Literal[7]]
+    VT_search_path: Final[Literal[8]]
+    VT_int64: Final[Literal[9]]
+    VT_color: Final[Literal[10]]
+    F_trust_level_mask: Final[Literal[4095]]
+    F_open: Final[Literal[4096]]
+    F_closed: Final[Literal[8192]]
+    F_dynamic: Final[Literal[16384]]
+    F_dconfig: Final[Literal[32768]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2096,13 +2096,13 @@ class StreamWrapper(IStreamWrapper, OStreamWrapper):
     upcastToOStreamWrapper = upcast_to_OStreamWrapper
     getIostream = get_iostream
 
-NS_unspecified: Literal[0]
-NS_spam: Literal[1]
-NS_debug: Literal[2]
-NS_info: Literal[3]
-NS_warning: Literal[4]
-NS_error: Literal[5]
-NS_fatal: Literal[6]
+NS_unspecified: Final[Literal[0]]
+NS_spam: Final[Literal[1]]
+NS_debug: Final[Literal[2]]
+NS_info: Final[Literal[3]]
+NS_warning: Final[Literal[4]]
+NS_error: Final[Literal[5]]
+NS_fatal: Final[Literal[6]]
 NSUnspecified = NS_unspecified
 NSSpam = NS_spam
 NSDebug = NS_debug

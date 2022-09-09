@@ -2,7 +2,7 @@ from array import array
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     ConfigVariableFilename,
@@ -1443,16 +1443,16 @@ class RopeNode(PandaNode):
     use_vertex_thickness: bool
     thickness: float
     matrix: LMatrix4f
-    RM_thread: ClassVar[Literal[0]]
-    RM_tape: ClassVar[Literal[1]]
-    RM_billboard: ClassVar[Literal[2]]
-    RM_tube: ClassVar[Literal[3]]
-    UV_none: ClassVar[Literal[0]]
-    UV_parametric: ClassVar[Literal[1]]
-    UV_distance: ClassVar[Literal[2]]
-    UV_distance2: ClassVar[Literal[3]]
-    NM_none: ClassVar[Literal[0]]
-    NM_vertex: ClassVar[Literal[1]]
+    RM_thread: Final[Literal[0]]
+    RM_tape: Final[Literal[1]]
+    RM_billboard: Final[Literal[2]]
+    RM_tube: Final[Literal[3]]
+    UV_none: Final[Literal[0]]
+    UV_parametric: Final[Literal[1]]
+    UV_distance: Final[Literal[2]]
+    UV_distance2: Final[Literal[3]]
+    NM_none: Final[Literal[0]]
+    NM_vertex: Final[Literal[1]]
     @property
     def vertex_color_dimension(self) -> int: ...
     @property

@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from enum import Enum
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ButtonEventList,
     ButtonHandle,
@@ -110,9 +110,9 @@ class InputDevice(TypedReferenceCount):
         def __init__(self) -> None: ...
         @overload
         def __init__(self, __param0: InputDevice.BatteryData) -> None: ...
-    S_unknown: ClassVar[Literal[0]]
-    S_up: ClassVar[Literal[1]]
-    S_down: ClassVar[Literal[2]]
+    S_unknown: Final[Literal[0]]
+    S_up: Final[Literal[1]]
+    S_down: Final[Literal[2]]
     @property
     def name(self) -> str:
         """The human-readable name of this input device."""

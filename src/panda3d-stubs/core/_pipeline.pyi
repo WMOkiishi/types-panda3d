@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import Namable, TypeHandle, TypedReferenceCount, ostream
 
 _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]
@@ -796,10 +796,10 @@ class PythonThread(Thread):
     def __init__(self, function, args, name: str, sync_name: str) -> None: ...
     def join(self): ...
 
-TP_low: Literal[0]
-TP_normal: Literal[1]
-TP_high: Literal[2]
-TP_urgent: Literal[3]
+TP_low: Final[Literal[0]]
+TP_normal: Final[Literal[1]]
+TP_high: Final[Literal[2]]
+TP_urgent: Final[Literal[3]]
 TPLow = TP_low
 TPNormal = TP_normal
 TPHigh = TP_high

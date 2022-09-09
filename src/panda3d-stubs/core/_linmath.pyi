@@ -1,6 +1,6 @@
 from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, TypeVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import ConfigVariable, Datagram, DatagramIterator, TypeHandle, ostream
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
@@ -25,8 +25,8 @@ class LVecBase2f:
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
-    num_components: ClassVar[Literal[2]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[2]]
+    is_int: Final[Literal[0]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -225,8 +225,8 @@ class LVecBase2d:
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
-    num_components: ClassVar[Literal[2]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[2]]
+    is_int: Final[Literal[0]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -425,8 +425,8 @@ class LVecBase2i:
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: int
     y: int
-    num_components: ClassVar[Literal[2]]
-    is_int: ClassVar[Literal[1]]
+    num_components: Final[Literal[2]]
+    is_int: Final[Literal[1]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -926,8 +926,8 @@ class LVecBase3f:
     x: float
     y: float
     z: float
-    num_components: ClassVar[Literal[3]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[3]]
+    is_int: Final[Literal[0]]
     @property
     def xy(self) -> LVecBase2f: ...
     @property
@@ -1181,8 +1181,8 @@ class LVecBase3d:
     x: float
     y: float
     z: float
-    num_components: ClassVar[Literal[3]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[3]]
+    is_int: Final[Literal[0]]
     @property
     def xy(self) -> LVecBase2d: ...
     @property
@@ -1436,8 +1436,8 @@ class LVecBase3i:
     x: int
     y: int
     z: int
-    num_components: ClassVar[Literal[3]]
-    is_int: ClassVar[Literal[1]]
+    num_components: Final[Literal[3]]
+    is_int: Final[Literal[1]]
     @property
     def xy(self) -> LVecBase2i: ...
     @property
@@ -2329,8 +2329,8 @@ class LVecBase4f:
     x: float
     y: float
     z: float
-    num_components: ClassVar[Literal[4]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[4]]
+    is_int: Final[Literal[0]]
     @property
     def xyz(self) -> LVecBase3f: ...
     @property
@@ -2581,8 +2581,8 @@ class UnalignedLVecBase4f:
     it.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[4]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[4]]
+    is_int: Final[Literal[0]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2616,8 +2616,8 @@ class LVecBase4d:
     x: float
     y: float
     z: float
-    num_components: ClassVar[Literal[4]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[4]]
+    is_int: Final[Literal[0]]
     @property
     def xyz(self) -> LVecBase3d: ...
     @property
@@ -2868,8 +2868,8 @@ class UnalignedLVecBase4d:
     it.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[4]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[4]]
+    is_int: Final[Literal[0]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2903,8 +2903,8 @@ class LVecBase4i:
     x: int
     y: int
     z: int
-    num_components: ClassVar[Literal[4]]
-    is_int: ClassVar[Literal[1]]
+    num_components: Final[Literal[4]]
+    is_int: Final[Literal[1]]
     @property
     def xyz(self) -> LVecBase3i: ...
     @property
@@ -3120,8 +3120,8 @@ class UnalignedLVecBase4i:
     it.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[4]]
-    is_int: ClassVar[Literal[1]]
+    num_components: Final[Literal[4]]
+    is_int: Final[Literal[1]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -3581,8 +3581,8 @@ class LMatrix3f:
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[9]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[9]]
+    is_int: Final[Literal[0]]
     @property
     def rows(self) -> Sequence[LVecBase3f]: ...
     @property
@@ -4047,8 +4047,8 @@ class LMatrix4f:
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[16]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[16]]
+    is_int: Final[Literal[0]]
     @property
     def rows(self) -> Sequence[LVecBase4f]: ...
     @property
@@ -4517,7 +4517,7 @@ class UnalignedLMatrix4f:
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[16]]
+    num_components: Final[Literal[16]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -4565,8 +4565,8 @@ class LMatrix3d:
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[9]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[9]]
+    is_int: Final[Literal[0]]
     @property
     def rows(self) -> Sequence[LVecBase3d]: ...
     @property
@@ -5031,8 +5031,8 @@ class LMatrix4d:
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[16]]
-    is_int: ClassVar[Literal[0]]
+    num_components: Final[Literal[16]]
+    is_int: Final[Literal[0]]
     @property
     def rows(self) -> Sequence[LVecBase4d]: ...
     @property
@@ -5501,7 +5501,7 @@ class UnalignedLMatrix4d:
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: ClassVar[Literal[16]]
+    num_components: Final[Literal[16]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -6158,12 +6158,12 @@ class ConfigVariableColor(ConfigVariable):
     getValue = get_value
     getDefaultValue = get_default_value
 
-CS_default: Literal[0]
-CS_zup_right: Literal[1]
-CS_yup_right: Literal[2]
-CS_zup_left: Literal[3]
-CS_yup_left: Literal[4]
-CS_invalid: Literal[5]
+CS_default: Final[Literal[0]]
+CS_zup_right: Final[Literal[1]]
+CS_yup_right: Final[Literal[2]]
+CS_zup_left: Final[Literal[3]]
+CS_yup_left: Final[Literal[4]]
+CS_invalid: Final[Literal[5]]
 @overload
 def __mul__(v: LPoint3d, m: LMatrix3d) -> LPoint3d: ...
 @overload

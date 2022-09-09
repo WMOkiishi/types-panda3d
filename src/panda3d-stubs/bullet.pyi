@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     BitMask_uint32_t_32,
     BoundingBox,
@@ -498,10 +498,10 @@ class BulletConstraint(TypedReferenceCount):
     debug_draw_size: float
     breaking_threshold: float
     enabled: bool
-    CP_erp: ClassVar[Literal[1]]
-    CP_stop_erp: ClassVar[Literal[2]]
-    CP_cfm: ClassVar[Literal[3]]
-    CP_stop_cfm: ClassVar[Literal[4]]
+    CP_erp: Final[Literal[1]]
+    CP_stop_erp: Final[Literal[2]]
+    CP_cfm: Final[Literal[3]]
+    CP_stop_cfm: Final[Literal[4]]
     @property
     def rigid_body_a(self) -> BulletRigidBodyNode: ...
     @property
@@ -1162,18 +1162,18 @@ class BulletSoftBodyConfig:
     velocities_solver_iterations: int
     drift_solver_iterations: int
     cluster_solver_iterations: int
-    CF_rigid_vs_soft_mask: ClassVar[Literal[15]]
-    CF_sdf_rigid_soft: ClassVar[Literal[1]]
-    CF_cluster_rigid_soft: ClassVar[Literal[2]]
-    CF_soft_vs_soft_mask: ClassVar[Literal[48]]
-    CF_vertex_face_soft_soft: ClassVar[Literal[16]]
-    CF_cluster_soft_soft: ClassVar[Literal[32]]
-    CF_cluster_self: ClassVar[Literal[64]]
-    AM_vertex_point: ClassVar[Literal[0]]
-    AM_vertex_two_sided: ClassVar[Literal[1]]
-    AM_vertex_one_sided: ClassVar[Literal[2]]
-    AM_face_two_sided: ClassVar[Literal[3]]
-    AM_face_one_sided: ClassVar[Literal[4]]
+    CF_rigid_vs_soft_mask: Final[Literal[15]]
+    CF_sdf_rigid_soft: Final[Literal[1]]
+    CF_cluster_rigid_soft: Final[Literal[2]]
+    CF_soft_vs_soft_mask: Final[Literal[48]]
+    CF_vertex_face_soft_soft: Final[Literal[16]]
+    CF_cluster_soft_soft: Final[Literal[32]]
+    CF_cluster_self: Final[Literal[64]]
+    AM_vertex_point: Final[Literal[0]]
+    AM_vertex_two_sided: Final[Literal[1]]
+    AM_vertex_one_sided: Final[Literal[2]]
+    AM_face_two_sided: Final[Literal[3]]
+    AM_face_one_sided: Final[Literal[4]]
     def __init__(self, __param0: BulletSoftBodyConfig) -> None: ...
     def clear_all_collision_flags(self) -> None: ...
     def set_collision_flag(self, flag: _BulletSoftBodyConfig_CollisionFlag, value: bool) -> None: ...
@@ -1826,11 +1826,11 @@ class BulletWorld(TypedReferenceCount):
     gravity: LVector3f
     debug_node: BulletDebugNode
     force_update_all_aabbs: bool
-    BA_sweep_and_prune: ClassVar[Literal[0]]
-    BA_dynamic_aabb_tree: ClassVar[Literal[1]]
-    FA_mask: ClassVar[Literal[0]]
-    FA_groups_mask: ClassVar[Literal[1]]
-    FA_callback: ClassVar[Literal[2]]
+    BA_sweep_and_prune: Final[Literal[0]]
+    BA_dynamic_aabb_tree: Final[Literal[1]]
+    FA_mask: Final[Literal[0]]
+    FA_groups_mask: Final[Literal[1]]
+    FA_callback: Final[Literal[2]]
     @property
     def world_info(self) -> BulletSoftBodyWorldInfo: ...
     @property
@@ -2750,9 +2750,9 @@ class BulletTriangleMeshShape(BulletShape):
     isStatic = is_static
     isDynamic = is_dynamic
 
-X_up: Literal[0]
-Y_up: Literal[1]
-Z_up: Literal[2]
+X_up: Final[Literal[0]]
+Y_up: Final[Literal[1]]
+Z_up: Final[Literal[2]]
 def get_default_up_axis() -> _BulletUpAxis: ...
 def get_bullet_version() -> int:
     """Returns the version of the linked Bullet library."""

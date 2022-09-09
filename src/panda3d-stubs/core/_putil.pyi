@@ -2,7 +2,7 @@ from collections.abc import Callable, Sequence
 from enum import Enum
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias, final
+from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import (
     ConfigPage,
     ConfigVariableColor,
@@ -803,19 +803,19 @@ class BamEnums:
     and BamWriter.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    BE_bigendian: ClassVar[Literal[0]]
-    BE_littleendian: ClassVar[Literal[1]]
-    BE_native: ClassVar[Literal[1]]
-    BOC_push: ClassVar[Literal[0]]
-    BOC_pop: ClassVar[Literal[1]]
-    BOC_adjunct: ClassVar[Literal[2]]
-    BOC_remove: ClassVar[Literal[3]]
-    BOC_file_data: ClassVar[Literal[4]]
-    BTM_unchanged: ClassVar[Literal[0]]
-    BTM_fullpath: ClassVar[Literal[1]]
-    BTM_relative: ClassVar[Literal[2]]
-    BTM_basename: ClassVar[Literal[3]]
-    BTM_rawdata: ClassVar[Literal[4]]
+    BE_bigendian: Final[Literal[0]]
+    BE_littleendian: Final[Literal[1]]
+    BE_native: Final[Literal[1]]
+    BOC_push: Final[Literal[0]]
+    BOC_pop: Final[Literal[1]]
+    BOC_adjunct: Final[Literal[2]]
+    BOC_remove: Final[Literal[3]]
+    BOC_file_data: Final[Literal[4]]
+    BTM_unchanged: Final[Literal[0]]
+    BTM_fullpath: Final[Literal[1]]
+    BTM_relative: Final[Literal[2]]
+    BTM_basename: Final[Literal[3]]
+    BTM_rawdata: Final[Literal[4]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -841,24 +841,24 @@ class LoaderOptions:
     texture_flags: int
     texture_num_views: int
     auto_texture_scale: _AutoTextureScale
-    LF_search: ClassVar[Literal[1]]
-    LF_report_errors: ClassVar[Literal[2]]
-    LF_convert_skeleton: ClassVar[Literal[4]]
-    LF_convert_channels: ClassVar[Literal[8]]
-    LF_convert_anim: ClassVar[Literal[12]]
-    LF_no_disk_cache: ClassVar[Literal[16]]
-    LF_no_ram_cache: ClassVar[Literal[32]]
-    LF_no_cache: ClassVar[Literal[48]]
-    LF_cache_only: ClassVar[Literal[64]]
-    LF_allow_instance: ClassVar[Literal[128]]
-    TF_preload: ClassVar[Literal[4]]
-    TF_preload_simple: ClassVar[Literal[8]]
-    TF_allow_1d: ClassVar[Literal[16]]
-    TF_generate_mipmaps: ClassVar[Literal[32]]
-    TF_multiview: ClassVar[Literal[64]]
-    TF_integer: ClassVar[Literal[128]]
-    TF_float: ClassVar[Literal[256]]
-    TF_allow_compression: ClassVar[Literal[512]]
+    LF_search: Final[Literal[1]]
+    LF_report_errors: Final[Literal[2]]
+    LF_convert_skeleton: Final[Literal[4]]
+    LF_convert_channels: Final[Literal[8]]
+    LF_convert_anim: Final[Literal[12]]
+    LF_no_disk_cache: Final[Literal[16]]
+    LF_no_ram_cache: Final[Literal[32]]
+    LF_no_cache: Final[Literal[48]]
+    LF_cache_only: Final[Literal[64]]
+    LF_allow_instance: Final[Literal[128]]
+    TF_preload: Final[Literal[4]]
+    TF_preload_simple: Final[Literal[8]]
+    TF_allow_1d: Final[Literal[16]]
+    TF_generate_mipmaps: Final[Literal[32]]
+    TF_multiview: Final[Literal[64]]
+    TF_integer: Final[Literal[128]]
+    TF_float: Final[Literal[256]]
+    TF_allow_compression: Final[Literal[512]]
     @overload
     def __init__(self, flags: int = ...) -> None: ...
     @overload
@@ -1635,7 +1635,7 @@ class BitArray:
     number of bits.  You can use it very much as you would use a BitMask.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_bits_per_word: ClassVar[Literal[64]]
+    num_bits_per_word: Final[Literal[64]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2203,14 +2203,14 @@ class ClockObject(ReferenceCount):
     max_dt: float
     degrade_factor: float
     average_frame_rate_interval: float
-    M_normal: ClassVar[Literal[0]]
-    M_non_real_time: ClassVar[Literal[1]]
-    M_forced: ClassVar[Literal[2]]
-    M_degrade: ClassVar[Literal[3]]
-    M_slave: ClassVar[Literal[4]]
-    M_limited: ClassVar[Literal[5]]
-    M_integer: ClassVar[Literal[6]]
-    M_integer_limited: ClassVar[Literal[7]]
+    M_normal: Final[Literal[0]]
+    M_non_real_time: Final[Literal[1]]
+    M_forced: Final[Literal[2]]
+    M_degrade: Final[Literal[3]]
+    M_slave: Final[Literal[4]]
+    M_limited: Final[Literal[5]]
+    M_integer: Final[Literal[6]]
+    M_integer_limited: Final[Literal[7]]
     @property
     def long_time(self) -> float: ...
     @property
@@ -3298,8 +3298,8 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     there does exist a NodePointerTo<> class to maintain the node_ref counters
     automatically.
     """
-    R_node: ClassVar[Literal[1]]
-    R_cache: ClassVar[Literal[2]]
+    R_node: Final[Literal[1]]
+    R_cache: Final[Literal[2]]
     def get_node_ref_count(self) -> int:
         """Returns the current reference count."""
         ...
@@ -3805,15 +3805,15 @@ class UniqueIdAllocator:
     initialReserveId = initial_reserve_id
     fractionUsed = fraction_used
 
-ATS_none: Literal[0]
-ATS_down: Literal[1]
-ATS_up: Literal[2]
-ATS_pad: Literal[3]
-ATS_unspecified: Literal[4]
-CS_unspecified: Literal[0]
-CS_linear: Literal[1]
-CS_sRGB: Literal[2]
-CS_scRGB: Literal[3]
+ATS_none: Final[Literal[0]]
+ATS_down: Final[Literal[1]]
+ATS_up: Final[Literal[2]]
+ATS_pad: Final[Literal[3]]
+ATS_unspecified: Final[Literal[4]]
+CS_unspecified: Final[Literal[0]]
+CS_linear: Final[Literal[1]]
+CS_sRGB: Final[Literal[2]]
+CS_scRGB: Final[Literal[3]]
 def parse_color_space_string(str: str) -> _ColorSpace: ...
 def format_color_space(cs: _ColorSpace) -> str: ...
 def get_model_path() -> ConfigVariableSearchPath: ...

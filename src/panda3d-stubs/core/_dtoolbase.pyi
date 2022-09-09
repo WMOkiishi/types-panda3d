@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias, final
+from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import ostream
 
 _TypeHandle_MemoryClass: TypeAlias = Literal[0, 1, 2, 3, 4]
@@ -54,11 +54,11 @@ class TypeHandle:
     retrieved for run-time display.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    MC_singleton: ClassVar[Literal[0]]
-    MC_array: ClassVar[Literal[1]]
-    MC_deleted_chain_active: ClassVar[Literal[2]]
-    MC_deleted_chain_inactive: ClassVar[Literal[3]]
-    MC_limit: ClassVar[Literal[4]]
+    MC_singleton: Final[Literal[0]]
+    MC_array: Final[Literal[1]]
+    MC_deleted_chain_active: Final[Literal[2]]
+    MC_deleted_chain_inactive: Final[Literal[3]]
+    MC_limit: Final[Literal[4]]
     @property
     def index(self) -> int: ...
     @property

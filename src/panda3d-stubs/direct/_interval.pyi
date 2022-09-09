@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AnimControl,
     ConfigVariableColor,
@@ -41,18 +41,18 @@ class CInterval(TypedReferenceCount):
     auto_finish: bool
     manager: CIntervalManager
     play_rate: float
-    ET_initialize: ClassVar[Literal[0]]
-    ET_instant: ClassVar[Literal[1]]
-    ET_step: ClassVar[Literal[2]]
-    ET_finalize: ClassVar[Literal[3]]
-    ET_reverse_initialize: ClassVar[Literal[4]]
-    ET_reverse_instant: ClassVar[Literal[5]]
-    ET_reverse_finalize: ClassVar[Literal[6]]
-    ET_interrupt: ClassVar[Literal[7]]
-    S_initial: ClassVar[Literal[0]]
-    S_started: ClassVar[Literal[1]]
-    S_paused: ClassVar[Literal[2]]
-    S_final: ClassVar[Literal[3]]
+    ET_initialize: Final[Literal[0]]
+    ET_instant: Final[Literal[1]]
+    ET_step: Final[Literal[2]]
+    ET_finalize: Final[Literal[3]]
+    ET_reverse_initialize: Final[Literal[4]]
+    ET_reverse_instant: Final[Literal[5]]
+    ET_reverse_finalize: Final[Literal[6]]
+    ET_interrupt: Final[Literal[7]]
+    S_initial: Final[Literal[0]]
+    S_started: Final[Literal[1]]
+    S_paused: Final[Literal[2]]
+    S_final: Final[Literal[3]]
     @property
     def name(self) -> str: ...
     @property
@@ -606,11 +606,11 @@ class CLerpInterval(CInterval):
     """The base class for a family of intervals that linearly interpolate one or
     more numeric values over time.
     """
-    BT_no_blend: ClassVar[Literal[0]]
-    BT_ease_in: ClassVar[Literal[1]]
-    BT_ease_out: ClassVar[Literal[2]]
-    BT_ease_in_out: ClassVar[Literal[3]]
-    BT_invalid: ClassVar[Literal[4]]
+    BT_no_blend: Final[Literal[0]]
+    BT_ease_in: Final[Literal[1]]
+    BT_ease_out: Final[Literal[2]]
+    BT_ease_in_out: Final[Literal[3]]
+    BT_invalid: Final[Literal[4]]
     def __init__(self, __param0: CLerpInterval) -> None: ...
     def get_blend_type(self) -> _CLerpInterval_BlendType:
         """Returns the blend type specified for the interval.  This controls how the
@@ -924,13 +924,13 @@ class CMetaInterval(CInterval):
     own begin and end times.  Some of them may overlap and some of them may
     not.
     """
-    RS_previous_end: ClassVar[Literal[0]]
-    RS_previous_begin: ClassVar[Literal[1]]
-    RS_level_begin: ClassVar[Literal[2]]
-    DT_c_interval: ClassVar[Literal[0]]
-    DT_ext_index: ClassVar[Literal[1]]
-    DT_push_level: ClassVar[Literal[2]]
-    DT_pop_level: ClassVar[Literal[3]]
+    RS_previous_end: Final[Literal[0]]
+    RS_previous_begin: Final[Literal[1]]
+    RS_level_begin: Final[Literal[2]]
+    DT_c_interval: Final[Literal[0]]
+    DT_ext_index: Final[Literal[1]]
+    DT_push_level: Final[Literal[2]]
+    DT_pop_level: Final[Literal[3]]
     @overload
     def __init__(self, __param0: CMetaInterval) -> None: ...
     @overload

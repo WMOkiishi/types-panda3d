@@ -1,6 +1,6 @@
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     Buffer,
     ConfigVariableFilename,
@@ -135,10 +135,10 @@ class ISocketStream(istream, SSReader):
     whether more data may be available later.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    RS_initial: ClassVar[Literal[0]]
-    RS_reading: ClassVar[Literal[1]]
-    RS_complete: ClassVar[Literal[2]]
-    RS_error: ClassVar[Literal[3]]
+    RS_initial: Final[Literal[0]]
+    RS_reading: Final[Literal[1]]
+    RS_complete: Final[Literal[2]]
+    RS_error: Final[Literal[3]]
     def upcast_to_istream(self) -> istream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
     def is_closed(self) -> bool: ...
@@ -471,18 +471,18 @@ class HTTPEnum:
     types used by various classes within the HTTPClient family.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    HV_09: ClassVar[Literal[0]]
-    HV_10: ClassVar[Literal[1]]
-    HV_11: ClassVar[Literal[2]]
-    HV_other: ClassVar[Literal[3]]
-    M_options: ClassVar[Literal[0]]
-    M_get: ClassVar[Literal[1]]
-    M_head: ClassVar[Literal[2]]
-    M_post: ClassVar[Literal[3]]
-    M_put: ClassVar[Literal[4]]
-    M_delete: ClassVar[Literal[5]]
-    M_trace: ClassVar[Literal[6]]
-    M_connect: ClassVar[Literal[7]]
+    HV_09: Final[Literal[0]]
+    HV_10: Final[Literal[1]]
+    HV_11: Final[Literal[2]]
+    HV_other: Final[Literal[3]]
+    M_options: Final[Literal[0]]
+    M_get: Final[Literal[1]]
+    M_head: Final[Literal[2]]
+    M_post: Final[Literal[3]]
+    M_put: Final[Literal[4]]
+    M_delete: Final[Literal[5]]
+    M_trace: Final[Literal[6]]
+    M_connect: Final[Literal[7]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -685,9 +685,9 @@ class HTTPClient(ReferenceCount):
     There is a default, global HTTPClient available in
     HTTPClient::get_global_ptr().
     """
-    VS_no_verify: ClassVar[Literal[0]]
-    VS_no_date_check: ClassVar[Literal[1]]
-    VS_normal: ClassVar[Literal[2]]
+    VS_no_verify: Final[Literal[0]]
+    VS_no_date_check: Final[Literal[1]]
+    VS_normal: Final[Literal[2]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1161,13 +1161,13 @@ class DocumentSpec:
     date: HTTPDate
     request_mode: _DocumentSpec_RequestMode
     cache_control: _DocumentSpec_CacheControl
-    RM_any: ClassVar[Literal[0]]
-    RM_equal: ClassVar[Literal[1]]
-    RM_newer: ClassVar[Literal[2]]
-    RM_equal_or_newer: ClassVar[Literal[3]]
-    CC_allow_cache: ClassVar[Literal[0]]
-    CC_revalidate: ClassVar[Literal[1]]
-    CC_no_cache: ClassVar[Literal[2]]
+    RM_any: Final[Literal[0]]
+    RM_equal: Final[Literal[1]]
+    RM_newer: Final[Literal[2]]
+    RM_equal_or_newer: Final[Literal[3]]
+    CC_allow_cache: Final[Literal[0]]
+    CC_revalidate: Final[Literal[1]]
+    CC_no_cache: Final[Literal[2]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1319,26 +1319,26 @@ class HTTPChannel(TypedReferenceCount):
     requested from the same HTTPChannel until the first document has been fully
     retrieved.
     """
-    SC_incomplete: ClassVar[Literal[0]]
-    SC_internal_error: ClassVar[Literal[1]]
-    SC_no_connection: ClassVar[Literal[2]]
-    SC_timeout: ClassVar[Literal[3]]
-    SC_lost_connection: ClassVar[Literal[4]]
-    SC_non_http_response: ClassVar[Literal[5]]
-    SC_invalid_http: ClassVar[Literal[6]]
-    SC_socks_invalid_version: ClassVar[Literal[7]]
-    SC_socks_no_acceptable_login_method: ClassVar[Literal[8]]
-    SC_socks_refused: ClassVar[Literal[9]]
-    SC_socks_no_connection: ClassVar[Literal[10]]
-    SC_ssl_internal_failure: ClassVar[Literal[11]]
-    SC_ssl_no_handshake: ClassVar[Literal[12]]
-    SC_http_error_watermark: ClassVar[Literal[13]]
-    SC_ssl_invalid_server_certificate: ClassVar[Literal[14]]
-    SC_ssl_self_signed_server_certificate: ClassVar[Literal[15]]
-    SC_ssl_unexpected_server: ClassVar[Literal[16]]
-    SC_download_open_error: ClassVar[Literal[17]]
-    SC_download_write_error: ClassVar[Literal[18]]
-    SC_download_invalid_range: ClassVar[Literal[19]]
+    SC_incomplete: Final[Literal[0]]
+    SC_internal_error: Final[Literal[1]]
+    SC_no_connection: Final[Literal[2]]
+    SC_timeout: Final[Literal[3]]
+    SC_lost_connection: Final[Literal[4]]
+    SC_non_http_response: Final[Literal[5]]
+    SC_invalid_http: Final[Literal[6]]
+    SC_socks_invalid_version: Final[Literal[7]]
+    SC_socks_no_acceptable_login_method: Final[Literal[8]]
+    SC_socks_refused: Final[Literal[9]]
+    SC_socks_no_connection: Final[Literal[10]]
+    SC_ssl_internal_failure: Final[Literal[11]]
+    SC_ssl_no_handshake: Final[Literal[12]]
+    SC_http_error_watermark: Final[Literal[13]]
+    SC_ssl_invalid_server_certificate: Final[Literal[14]]
+    SC_ssl_self_signed_server_certificate: Final[Literal[15]]
+    SC_ssl_unexpected_server: Final[Literal[16]]
+    SC_download_open_error: Final[Literal[17]]
+    SC_download_write_error: Final[Literal[18]]
+    SC_download_invalid_range: Final[Literal[19]]
     def __init__(self, __param0: HTTPChannel) -> None: ...
     def get_client(self) -> HTTPClient:
         """Returns the HTTPClient object that owns this channel."""
@@ -2133,10 +2133,10 @@ class DownloadDb:
     representing the files the server has available.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    Status_incomplete: ClassVar[Literal[0]]
-    Status_complete: ClassVar[Literal[1]]
-    Status_decompressed: ClassVar[Literal[2]]
-    Status_extracted: ClassVar[Literal[3]]
+    Status_incomplete: Final[Literal[0]]
+    Status_complete: Final[Literal[1]]
+    Status_decompressed: Final[Literal[2]]
+    Status_extracted: Final[Literal[3]]
     @overload
     def __init__(self) -> None:
         """`(self)`:

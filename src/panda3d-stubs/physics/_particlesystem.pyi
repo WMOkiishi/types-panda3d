@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     GeomNode,
@@ -34,9 +34,9 @@ _SparkleParticleRenderer_SparkleParticleLifeScale: TypeAlias = Literal[0, 1]
 _SpriteAnim_SourceType: TypeAlias = Literal[0, 1]
 
 class BaseParticleEmitter(ReferenceCount):
-    ET_EXPLICIT: ClassVar[Literal[0]]
-    ET_RADIATE: ClassVar[Literal[1]]
-    ET_CUSTOM: ClassVar[Literal[2]]
+    ET_EXPLICIT: Final[Literal[0]]
+    ET_RADIATE: Final[Literal[1]]
+    ET_CUSTOM: Final[Literal[2]]
     def make_copy(self) -> BaseParticleEmitter: ...
     def generate(self, pos: _Vec3f, vel: _Vec3f) -> None:
         """parent generation function"""
@@ -213,15 +213,15 @@ class BaseParticleFactory(ReferenceCount):
 
 class BaseParticleRenderer(ReferenceCount):
     """Pure virtual particle renderer base class"""
-    PR_ALPHA_NONE: ClassVar[Literal[0]]
-    PR_ALPHA_OUT: ClassVar[Literal[1]]
-    PR_ALPHA_IN: ClassVar[Literal[2]]
-    PR_ALPHA_IN_OUT: ClassVar[Literal[3]]
-    PR_ALPHA_USER: ClassVar[Literal[4]]
-    PR_NOT_INITIALIZED_YET: ClassVar[Literal[5]]
-    PP_NO_BLEND: ClassVar[Literal[0]]
-    PP_BLEND_LINEAR: ClassVar[Literal[1]]
-    PP_BLEND_CUBIC: ClassVar[Literal[2]]
+    PR_ALPHA_NONE: Final[Literal[0]]
+    PR_ALPHA_OUT: Final[Literal[1]]
+    PR_ALPHA_IN: Final[Literal[2]]
+    PR_ALPHA_IN_OUT: Final[Literal[3]]
+    PR_ALPHA_USER: Final[Literal[4]]
+    PR_NOT_INITIALIZED_YET: Final[Literal[5]]
+    PP_NO_BLEND: Final[Literal[0]]
+    PP_BLEND_LINEAR: Final[Literal[1]]
+    PP_BLEND_CUBIC: Final[Literal[2]]
     def get_render_node(self) -> GeomNode:
         """Query the geomnode pointer"""
         ...
@@ -706,9 +706,9 @@ class PointParticleFactory(BaseParticleFactory):
     def __init__(self, copy: PointParticleFactory) -> None: ...
 
 class PointParticleRenderer(BaseParticleRenderer):
-    PP_ONE_COLOR: ClassVar[Literal[0]]
-    PP_BLEND_LIFE: ClassVar[Literal[1]]
-    PP_BLEND_VEL: ClassVar[Literal[2]]
+    PP_ONE_COLOR: Final[Literal[0]]
+    PP_BLEND_LIFE: Final[Literal[1]]
+    PP_BLEND_VEL: Final[Literal[2]]
     @overload
     def __init__(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: _Vec4f = ..., ec: _Vec4f = ...) -> None:
         """`(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: LVecBase4f = ..., ec: LVecBase4f = ...)`:
@@ -776,8 +776,8 @@ class RectangleEmitter(BaseParticleEmitter):
 
 class SparkleParticleRenderer(BaseParticleRenderer):
     """pretty sparkly things."""
-    SP_NO_SCALE: ClassVar[Literal[0]]
-    SP_SCALE: ClassVar[Literal[1]]
+    SP_NO_SCALE: Final[Literal[0]]
+    SP_SCALE: Final[Literal[1]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -854,8 +854,8 @@ class SpriteAnim(ReferenceCount):
     """Helper class used by SpriteParticleRenderer to keep track of its textures
     and their respective UVs and source types.
     """
-    ST_texture: ClassVar[Literal[0]]
-    ST_from_node: ClassVar[Literal[1]]
+    ST_texture: Final[Literal[0]]
+    ST_from_node: Final[Literal[1]]
     def __init__(self, __param0: SpriteAnim) -> None: ...
     @overload
     def set_source_info(self, tex: str) -> None: ...

@@ -42,6 +42,7 @@ STDLIB_IMPORTS: Final = {
     'PathLike': 'os',
     'Any': 'typing',
     'ClassVar': 'typing',
+    'Final': 'typing_extensions',  # Introduced in 3.8
     'final': 'typing_extensions',  # Introduced in 3.8
     'Generic': 'typing',
     'Literal': 'typing_extensions',  # Introduced in 3.8

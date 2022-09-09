@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     Datagram,
@@ -843,16 +843,16 @@ class BoundingVolume(TypedReferenceCount):
     GeometricBoundingVolume); this is simply an abstract interface for bounds
     of any sort.
     """
-    IF_no_intersection: ClassVar[Literal[0]]
-    IF_possible: ClassVar[Literal[1]]
-    IF_some: ClassVar[Literal[2]]
-    IF_all: ClassVar[Literal[4]]
-    IF_dont_understand: ClassVar[Literal[8]]
-    BT_default: ClassVar[Literal[0]]
-    BT_best: ClassVar[Literal[1]]
-    BT_sphere: ClassVar[Literal[2]]
-    BT_box: ClassVar[Literal[3]]
-    BT_fastest: ClassVar[Literal[4]]
+    IF_no_intersection: Final[Literal[0]]
+    IF_possible: Final[Literal[1]]
+    IF_some: Final[Literal[2]]
+    IF_all: Final[Literal[4]]
+    IF_dont_understand: Final[Literal[8]]
+    BT_default: Final[Literal[0]]
+    BT_best: Final[Literal[1]]
+    BT_sphere: Final[Literal[2]]
+    BT_box: Final[Literal[3]]
+    BT_fastest: Final[Literal[4]]
     def make_copy(self) -> BoundingVolume: ...
     def is_empty(self) -> bool:
         """Any kind of volume might be empty.  This is a degenerate volume that
@@ -1554,7 +1554,7 @@ class IntersectionBoundingVolume(GeometricBoundingVolume):
 
 class Mersenne:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    max_value: ClassVar[Literal[2147483647]]
+    max_value: Final[Literal[2147483647]]
     @overload
     def __init__(self, __param0: Mersenne) -> None:
         """initializes mt[N] with a seed"""

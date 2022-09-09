@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     CollisionHandlerPusher,
     ConfigVariableColor,
@@ -723,9 +723,9 @@ class LinearCylinderVortexForce(LinearForce):
 
 class LinearDistanceForce(LinearForce):
     """Pure virtual class for sinks and sources"""
-    FT_ONE_OVER_R: ClassVar[Literal[0]]
-    FT_ONE_OVER_R_SQUARED: ClassVar[Literal[1]]
-    FT_ONE_OVER_R_CUBED: ClassVar[Literal[2]]
+    FT_ONE_OVER_R: Final[Literal[0]]
+    FT_ONE_OVER_R_SQUARED: Final[Literal[1]]
+    FT_ONE_OVER_R_CUBED: Final[Literal[2]]
     def set_radius(self, r: float) -> None:
         """set the radius"""
         ...

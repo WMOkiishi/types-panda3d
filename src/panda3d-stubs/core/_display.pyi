@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias, final
+from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import (
     AsyncFuture,
     BitMask_uint32_t_32,
@@ -85,24 +85,24 @@ class GraphicsPipe(TypedReferenceCount):
     device interface to directx/opengl which will be used to handle multiple
     windows from same device.
     """
-    OT_window: ClassVar[Literal[1]]
-    OT_fullscreen_window: ClassVar[Literal[2]]
-    OT_buffer: ClassVar[Literal[4]]
-    OT_texture_buffer: ClassVar[Literal[8]]
-    BF_refuse_parasite: ClassVar[Literal[1]]
-    BF_require_parasite: ClassVar[Literal[2]]
-    BF_refuse_window: ClassVar[Literal[4]]
-    BF_require_window: ClassVar[Literal[8]]
-    BF_require_callback_window: ClassVar[Literal[16]]
-    BF_can_bind_color: ClassVar[Literal[64]]
-    BF_can_bind_every: ClassVar[Literal[128]]
-    BF_resizeable: ClassVar[Literal[256]]
-    BF_size_track_host: ClassVar[Literal[512]]
-    BF_rtt_cumulative: ClassVar[Literal[1024]]
-    BF_fb_props_optional: ClassVar[Literal[2048]]
-    BF_size_square: ClassVar[Literal[4096]]
-    BF_size_power_2: ClassVar[Literal[8192]]
-    BF_can_bind_layered: ClassVar[Literal[16384]]
+    OT_window: Final[Literal[1]]
+    OT_fullscreen_window: Final[Literal[2]]
+    OT_buffer: Final[Literal[4]]
+    OT_texture_buffer: Final[Literal[8]]
+    BF_refuse_parasite: Final[Literal[1]]
+    BF_require_parasite: Final[Literal[2]]
+    BF_refuse_window: Final[Literal[4]]
+    BF_require_window: Final[Literal[8]]
+    BF_require_callback_window: Final[Literal[16]]
+    BF_can_bind_color: Final[Literal[64]]
+    BF_can_bind_every: Final[Literal[128]]
+    BF_resizeable: Final[Literal[256]]
+    BF_size_track_host: Final[Literal[512]]
+    BF_rtt_cumulative: Final[Literal[1024]]
+    BF_fb_props_optional: Final[Literal[2048]]
+    BF_size_square: Final[Literal[4096]]
+    BF_size_power_2: Final[Literal[8192]]
+    BF_can_bind_layered: Final[Literal[16384]]
     @property
     def display_width(self) -> int: ...
     @property
@@ -208,11 +208,11 @@ class GraphicsPipe(TypedReferenceCount):
 class DisplayInformation:
     """This class contains various display information."""
     DtoolClassDict: ClassVar[dict[str, Any]]
-    DS_unknown: ClassVar[Literal[0]]
-    DS_success: ClassVar[Literal[1]]
-    DS_direct_3d_create_error: ClassVar[Literal[2]]
-    DS_create_window_error: ClassVar[Literal[3]]
-    DS_create_device_error: ClassVar[Literal[4]]
+    DS_unknown: Final[Literal[0]]
+    DS_success: Final[Literal[1]]
+    DS_direct_3d_create_error: Final[Literal[2]]
+    DS_create_window_error: Final[Literal[3]]
+    DS_create_device_error: Final[Literal[4]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -360,23 +360,23 @@ class DrawableRegion:
     clear_depth: float
     clear_stencil: int
     pixel_zoom: float
-    RTP_stencil: ClassVar[Literal[0]]
-    RTP_depth_stencil: ClassVar[Literal[1]]
-    RTP_color: ClassVar[Literal[2]]
-    RTP_aux_rgba_0: ClassVar[Literal[3]]
-    RTP_aux_rgba_1: ClassVar[Literal[4]]
-    RTP_aux_rgba_2: ClassVar[Literal[5]]
-    RTP_aux_rgba_3: ClassVar[Literal[6]]
-    RTP_aux_hrgba_0: ClassVar[Literal[7]]
-    RTP_aux_hrgba_1: ClassVar[Literal[8]]
-    RTP_aux_hrgba_2: ClassVar[Literal[9]]
-    RTP_aux_hrgba_3: ClassVar[Literal[10]]
-    RTP_aux_float_0: ClassVar[Literal[11]]
-    RTP_aux_float_1: ClassVar[Literal[12]]
-    RTP_aux_float_2: ClassVar[Literal[13]]
-    RTP_aux_float_3: ClassVar[Literal[14]]
-    RTP_depth: ClassVar[Literal[15]]
-    RTP_COUNT: ClassVar[Literal[16]]
+    RTP_stencil: Final[Literal[0]]
+    RTP_depth_stencil: Final[Literal[1]]
+    RTP_color: Final[Literal[2]]
+    RTP_aux_rgba_0: Final[Literal[3]]
+    RTP_aux_rgba_1: Final[Literal[4]]
+    RTP_aux_rgba_2: Final[Literal[5]]
+    RTP_aux_rgba_3: Final[Literal[6]]
+    RTP_aux_hrgba_0: Final[Literal[7]]
+    RTP_aux_hrgba_1: Final[Literal[8]]
+    RTP_aux_hrgba_2: Final[Literal[9]]
+    RTP_aux_hrgba_3: Final[Literal[10]]
+    RTP_aux_float_0: Final[Literal[11]]
+    RTP_aux_float_1: Final[Literal[12]]
+    RTP_aux_float_2: Final[Literal[13]]
+    RTP_aux_float_3: Final[Literal[14]]
+    RTP_depth: Final[Literal[15]]
+    RTP_COUNT: Final[Literal[16]]
     @property
     def pixel_factor(self) -> float: ...
     def set_clear_color_active(self, clear_color_active: bool) -> None:
@@ -644,12 +644,12 @@ class WindowProperties:
     cursor_filename: Filename
     z_order: _WindowProperties_ZOrder
     parent_window: WindowHandle
-    Z_bottom: ClassVar[Literal[0]]
-    Z_normal: ClassVar[Literal[1]]
-    Z_top: ClassVar[Literal[2]]
-    M_absolute: ClassVar[Literal[0]]
-    M_relative: ClassVar[Literal[1]]
-    M_confined: ClassVar[Literal[2]]
+    Z_bottom: Final[Literal[0]]
+    Z_normal: Final[Literal[1]]
+    Z_top: Final[Literal[2]]
+    M_absolute: Final[Literal[0]]
+    M_relative: Final[Literal[1]]
+    M_confined: Final[Literal[2]]
     @property
     def config_properties(self) -> WindowProperties: ...
     def __init__(self, args, kwds) -> None: ...
@@ -1577,16 +1577,16 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     swap_eyes: bool
     sort: int
     child_sort: int
-    RTM_none: ClassVar[Literal[0]]
-    RTM_bind_or_copy: ClassVar[Literal[1]]
-    RTM_copy_texture: ClassVar[Literal[2]]
-    RTM_copy_ram: ClassVar[Literal[3]]
-    RTM_triggered_copy_texture: ClassVar[Literal[4]]
-    RTM_triggered_copy_ram: ClassVar[Literal[5]]
-    RTM_bind_layered: ClassVar[Literal[6]]
-    FM_render: ClassVar[Literal[0]]
-    FM_parasite: ClassVar[Literal[1]]
-    FM_refresh: ClassVar[Literal[2]]
+    RTM_none: Final[Literal[0]]
+    RTM_bind_or_copy: Final[Literal[1]]
+    RTM_copy_texture: Final[Literal[2]]
+    RTM_copy_ram: Final[Literal[3]]
+    RTM_triggered_copy_texture: Final[Literal[4]]
+    RTM_triggered_copy_ram: Final[Literal[5]]
+    RTM_bind_layered: Final[Literal[6]]
+    FM_render: Final[Literal[0]]
+    FM_parasite: Final[Literal[1]]
+    FM_refresh: Final[Literal[2]]
     @property
     def gsg(self) -> GraphicsStateGuardian: ...
     @property
@@ -2364,14 +2364,14 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     texture_quality_override: _Texture_QualityLevel
     flash_texture: Texture
     scene: SceneSetup
-    SM_00: ClassVar[Literal[0]]
-    SM_11: ClassVar[Literal[1]]
-    SM_20: ClassVar[Literal[2]]
-    SM_2X: ClassVar[Literal[3]]
-    SM_30: ClassVar[Literal[4]]
-    SM_40: ClassVar[Literal[5]]
-    SM_50: ClassVar[Literal[6]]
-    SM_51: ClassVar[Literal[7]]
+    SM_00: Final[Literal[0]]
+    SM_11: Final[Literal[1]]
+    SM_20: Final[Literal[2]]
+    SM_2X: Final[Literal[3]]
+    SM_30: Final[Literal[4]]
+    SM_40: Final[Literal[5]]
+    SM_50: Final[Literal[6]]
+    SM_51: Final[Literal[7]]
     @property
     def valid(self) -> bool: ...
     @property
@@ -3740,9 +3740,9 @@ class GraphicsWindowInputDevice(InputDevice):
 class TouchInfo:
     """Stores information for a single touch event."""
     DtoolClassDict: ClassVar[dict[str, Any]]
-    TIF_move: ClassVar[Literal[1]]
-    TIF_down: ClassVar[Literal[2]]
-    TIF_up: ClassVar[Literal[4]]
+    TIF_move: Final[Literal[1]]
+    TIF_down: Final[Literal[2]]
+    TIF_up: Final[Literal[4]]
     def __init__(self, __param0: TouchInfo) -> None: ...
     def get_x(self) -> int: ...
     def get_y(self) -> int: ...
@@ -4062,10 +4062,10 @@ class CallbackGraphicsWindow(GraphicsWindow):
         setRenderFlag = set_render_flag
         getRenderFlag = get_render_flag
         getClassType = get_class_type
-    RCT_begin_frame: ClassVar[Literal[0]]
-    RCT_end_frame: ClassVar[Literal[1]]
-    RCT_begin_flip: ClassVar[Literal[2]]
-    RCT_end_flip: ClassVar[Literal[3]]
+    RCT_begin_frame: Final[Literal[0]]
+    RCT_end_frame: Final[Literal[1]]
+    RCT_begin_flip: Final[Literal[2]]
+    RCT_end_flip: Final[Literal[3]]
     def set_events_callback(self, object: CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this window is polled
         for window events, including mouse and keyboard events, as well as window

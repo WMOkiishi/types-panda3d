@@ -1,7 +1,7 @@
 from collections.abc import Mapping, Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import ConfigVariableFilename, ConfigVariableSearchPath, TypeHandle
 
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
@@ -23,9 +23,9 @@ class ios_base:
     problem.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    beg: ClassVar[Literal[0]]
-    cur: ClassVar[Literal[1]]
-    end: ClassVar[Literal[2]]
+    beg: Final[Literal[0]]
+    cur: Final[Literal[1]]
+    end: Final[Literal[2]]
     Beg = beg
     Cur = cur
     End = end
@@ -123,10 +123,10 @@ class TextEncoder:
     DtoolClassDict: ClassVar[dict[str, Any]]
     default_encoding: _TextEncoder_Encoding
     text = ...
-    E_iso8859: ClassVar[Literal[0]]
-    E_utf8: ClassVar[Literal[1]]
-    E_utf16be: ClassVar[Literal[2]]
-    E_unicode: ClassVar[Literal[2]]
+    E_iso8859: Final[Literal[0]]
+    E_utf8: Final[Literal[1]]
+    E_utf16be: Final[Literal[2]]
+    E_unicode: Final[Literal[2]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -427,9 +427,9 @@ class Filename:
     open an fstream for reading or writing.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    T_general: ClassVar[Literal[0]]
-    T_dso: ClassVar[Literal[1]]
-    T_executable: ClassVar[Literal[2]]
+    T_general: Final[Literal[0]]
+    T_dso: Final[Literal[1]]
+    T_executable: Final[Literal[2]]
     @overload
     def __init__(self) -> None:
         """`(self)`:

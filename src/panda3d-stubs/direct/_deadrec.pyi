@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import LMatrix3f, LPoint3f, LVecBase3f, NodePath, ostream
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
@@ -20,10 +20,10 @@ class SmoothMover:
     operating in the same mode together.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    SM_off: ClassVar[Literal[0]]
-    SM_on: ClassVar[Literal[1]]
-    PM_off: ClassVar[Literal[0]]
-    PM_on: ClassVar[Literal[1]]
+    SM_off: Final[Literal[0]]
+    SM_on: Final[Literal[1]]
+    PM_off: Final[Literal[0]]
+    PM_on: Final[Literal[1]]
     @overload
     def __init__(self) -> None: ...
     @overload

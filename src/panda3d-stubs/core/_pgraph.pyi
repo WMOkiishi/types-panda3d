@@ -1,7 +1,7 @@
 from collections.abc import Mapping, Sequence
 from os import PathLike
 from typing import Any, ClassVar, Generic, TypeVar, overload
-from typing_extensions import Literal, TypeAlias, final
+from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import (
     AsyncTask,
     AsyncTaskManager,
@@ -850,27 +850,27 @@ class RenderAttrib(TypedWritableReferenceCount):
     and it may share pointers if possible.  Do not modify the new RenderAttrib
     if you wish to change its properties; instead, create a new one.
     """
-    M_none: ClassVar[Literal[0]]
-    M_never: ClassVar[Literal[1]]
-    M_less: ClassVar[Literal[2]]
-    M_equal: ClassVar[Literal[3]]
-    M_less_equal: ClassVar[Literal[4]]
-    M_greater: ClassVar[Literal[5]]
-    M_not_equal: ClassVar[Literal[6]]
-    M_greater_equal: ClassVar[Literal[7]]
-    M_always: ClassVar[Literal[8]]
-    M_off: ClassVar[Literal[0]]
-    M_eye_sphere_map: ClassVar[Literal[1]]
-    M_world_cube_map: ClassVar[Literal[2]]
-    M_eye_cube_map: ClassVar[Literal[3]]
-    M_world_normal: ClassVar[Literal[4]]
-    M_eye_normal: ClassVar[Literal[5]]
-    M_world_position: ClassVar[Literal[6]]
-    M_unused: ClassVar[Literal[7]]
-    M_eye_position: ClassVar[Literal[8]]
-    M_point_sprite: ClassVar[Literal[9]]
-    M_unused2: ClassVar[Literal[10]]
-    M_constant: ClassVar[Literal[11]]
+    M_none: Final[Literal[0]]
+    M_never: Final[Literal[1]]
+    M_less: Final[Literal[2]]
+    M_equal: Final[Literal[3]]
+    M_less_equal: Final[Literal[4]]
+    M_greater: Final[Literal[5]]
+    M_not_equal: Final[Literal[6]]
+    M_greater_equal: Final[Literal[7]]
+    M_always: Final[Literal[8]]
+    M_off: Final[Literal[0]]
+    M_eye_sphere_map: Final[Literal[1]]
+    M_world_cube_map: Final[Literal[2]]
+    M_eye_cube_map: Final[Literal[3]]
+    M_world_normal: Final[Literal[4]]
+    M_eye_normal: Final[Literal[5]]
+    M_world_position: Final[Literal[6]]
+    M_unused: Final[Literal[7]]
+    M_eye_position: Final[Literal[8]]
+    M_point_sprite: Final[Literal[9]]
+    M_unused2: Final[Literal[10]]
+    M_constant: Final[Literal[11]]
     @property
     def slot(self) -> int: ...
     def compose(self, other: RenderAttrib) -> RenderAttrib:
@@ -996,12 +996,12 @@ class RenderAttrib(TypedWritableReferenceCount):
 
 class RenderModeAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
-    M_unchanged: ClassVar[Literal[0]]
-    M_filled: ClassVar[Literal[1]]
-    M_wireframe: ClassVar[Literal[2]]
-    M_point: ClassVar[Literal[3]]
-    M_filled_flat: ClassVar[Literal[4]]
-    M_filled_wireframe: ClassVar[Literal[5]]
+    M_unchanged: Final[Literal[0]]
+    M_filled: Final[Literal[1]]
+    M_wireframe: Final[Literal[2]]
+    M_point: Final[Literal[3]]
+    M_filled_flat: Final[Literal[4]]
+    M_filled_wireframe: Final[Literal[5]]
     @property
     def mode(self) -> _RenderModeAttrib_Mode: ...
     @property
@@ -1659,15 +1659,15 @@ class AntialiasAttrib(RenderAttrib):
     """Specifies whether or how to enable antialiasing, if supported by the
     backend renderer.
     """
-    M_point: ClassVar[Literal[1]]
-    M_line: ClassVar[Literal[2]]
-    M_polygon: ClassVar[Literal[4]]
-    M_multisample: ClassVar[Literal[8]]
-    M_auto: ClassVar[Literal[31]]
-    M_type_mask: ClassVar[Literal[31]]
-    M_faster: ClassVar[Literal[32]]
-    M_better: ClassVar[Literal[64]]
-    M_dont_care: ClassVar[Literal[96]]
+    M_point: Final[Literal[1]]
+    M_line: Final[Literal[2]]
+    M_polygon: Final[Literal[4]]
+    M_multisample: Final[Literal[8]]
+    M_auto: Final[Literal[31]]
+    M_type_mask: Final[Literal[31]]
+    M_faster: Final[Literal[32]]
+    M_better: Final[Literal[64]]
+    M_dont_care: Final[Literal[96]]
     @property
     def mode(self) -> int: ...
     @property
@@ -1951,17 +1951,17 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     overall_hidden: bool
     into_collide_mask: BitMask_uint32_t_32
     final: bool
-    UC_parents: ClassVar[Literal[1]]
-    UC_children: ClassVar[Literal[2]]
-    UC_transform: ClassVar[Literal[4]]
-    UC_state: ClassVar[Literal[8]]
-    UC_draw_mask: ClassVar[Literal[16]]
-    FB_transform: ClassVar[Literal[1]]
-    FB_state: ClassVar[Literal[2]]
-    FB_effects: ClassVar[Literal[4]]
-    FB_tag: ClassVar[Literal[16]]
-    FB_draw_mask: ClassVar[Literal[32]]
-    FB_cull_callback: ClassVar[Literal[64]]
+    UC_parents: Final[Literal[1]]
+    UC_children: Final[Literal[2]]
+    UC_transform: Final[Literal[4]]
+    UC_state: Final[Literal[8]]
+    UC_draw_mask: Final[Literal[16]]
+    FB_transform: Final[Literal[1]]
+    FB_state: Final[Literal[2]]
+    FB_effects: Final[Literal[4]]
+    FB_tag: Final[Literal[16]]
+    FB_draw_mask: Final[Literal[32]]
+    FB_cull_callback: Final[Literal[64]]
     @property
     def prev_transform(self) -> TransformState: ...
     @property
@@ -2942,12 +2942,12 @@ class TransparencyAttrib(RenderAttrib):
     effect unless you actually want it to be at least partially transparent
     (and it has alpha components less than 1).
     """
-    M_alpha: ClassVar[Literal[1]]
-    M_premultiplied_alpha: ClassVar[Literal[2]]
-    M_multisample: ClassVar[Literal[3]]
-    M_multisample_mask: ClassVar[Literal[4]]
-    M_binary: ClassVar[Literal[5]]
-    M_dual: ClassVar[Literal[6]]
+    M_alpha: Final[Literal[1]]
+    M_premultiplied_alpha: Final[Literal[2]]
+    M_multisample: Final[Literal[3]]
+    M_multisample_mask: Final[Literal[4]]
+    M_binary: Final[Literal[5]]
+    M_dual: Final[Literal[6]]
     @property
     def mode(self) -> _TransparencyAttrib_Mode: ...
     @property
@@ -2984,23 +2984,23 @@ class LogicOpAttrib(RenderAttrib):
     
     @since 1.10.0
     """
-    O_none: ClassVar[Literal[0]]
-    O_clear: ClassVar[Literal[1]]
-    O_and: ClassVar[Literal[2]]
-    O_and_reverse: ClassVar[Literal[3]]
-    O_copy: ClassVar[Literal[4]]
-    O_and_inverted: ClassVar[Literal[5]]
-    O_noop: ClassVar[Literal[6]]
-    O_xor: ClassVar[Literal[7]]
-    O_or: ClassVar[Literal[8]]
-    O_nor: ClassVar[Literal[9]]
-    O_equivalent: ClassVar[Literal[10]]
-    O_invert: ClassVar[Literal[11]]
-    O_or_reverse: ClassVar[Literal[12]]
-    O_copy_inverted: ClassVar[Literal[13]]
-    O_or_inverted: ClassVar[Literal[14]]
-    O_nand: ClassVar[Literal[15]]
-    O_set: ClassVar[Literal[16]]
+    O_none: Final[Literal[0]]
+    O_clear: Final[Literal[1]]
+    O_and: Final[Literal[2]]
+    O_and_reverse: Final[Literal[3]]
+    O_copy: Final[Literal[4]]
+    O_and_inverted: Final[Literal[5]]
+    O_noop: Final[Literal[6]]
+    O_xor: Final[Literal[7]]
+    O_or: Final[Literal[8]]
+    O_nor: Final[Literal[9]]
+    O_equivalent: Final[Literal[10]]
+    O_invert: Final[Literal[11]]
+    O_or_reverse: Final[Literal[12]]
+    O_copy_inverted: Final[Literal[13]]
+    O_or_inverted: Final[Literal[14]]
+    O_nand: Final[Literal[15]]
+    O_set: Final[Literal[16]]
     @property
     def operation(self) -> _LogicOpAttrib_Operation: ...
     @property
@@ -3053,18 +3053,18 @@ class ShaderInput:
     that can be passed as input to a shader.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    A_read: ClassVar[Literal[1]]
-    A_write: ClassVar[Literal[2]]
-    A_layered: ClassVar[Literal[4]]
-    M_invalid: ClassVar[Literal[0]]
-    M_texture: ClassVar[Literal[1]]
-    M_nodepath: ClassVar[Literal[2]]
-    M_vector: ClassVar[Literal[3]]
-    M_numeric: ClassVar[Literal[4]]
-    M_texture_sampler: ClassVar[Literal[5]]
-    M_param: ClassVar[Literal[6]]
-    M_texture_image: ClassVar[Literal[7]]
-    M_buffer: ClassVar[Literal[8]]
+    A_read: Final[Literal[1]]
+    A_write: Final[Literal[2]]
+    A_layered: Final[Literal[4]]
+    M_invalid: Final[Literal[0]]
+    M_texture: Final[Literal[1]]
+    M_nodepath: Final[Literal[2]]
+    M_vector: Final[Literal[3]]
+    M_numeric: Final[Literal[4]]
+    M_texture_sampler: Final[Literal[5]]
+    M_param: Final[Literal[6]]
+    M_texture_image: Final[Literal[7]]
+    M_buffer: Final[Literal[8]]
     @overload
     def __init__(self, __param0: ShaderInput) -> None: ...
     @overload
@@ -3392,10 +3392,10 @@ class NodePath(Generic[_N]):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
-    ET_ok: ClassVar[Literal[0]]
-    ET_not_found: ClassVar[Literal[1]]
-    ET_removed: ClassVar[Literal[2]]
-    ET_fail: ClassVar[Literal[3]]
+    ET_ok: Final[Literal[0]]
+    ET_not_found: Final[Literal[1]]
+    ET_removed: Final[Literal[2]]
+    ET_fail: Final[Literal[3]]
     @property
     def nodes(self) -> Sequence[PandaNode]: ...
     @property
@@ -7095,9 +7095,9 @@ class AuxBitplaneAttrib(RenderAttrib):
     AuxBitplaneAttrib is relevant only when shader generation is enabled.
     Otherwise, it has no effect.
     """
-    ABO_glow: ClassVar[Literal[1]]
-    ABO_aux_normal: ClassVar[Literal[2]]
-    ABO_aux_glow: ClassVar[Literal[4]]
+    ABO_glow: Final[Literal[1]]
+    ABO_aux_normal: Final[Literal[2]]
+    ABO_aux_glow: Final[Literal[4]]
     @property
     def outputs(self) -> int: ...
     @property
@@ -7802,8 +7802,8 @@ class PlaneNode(PandaNode):
     viz_scale: float
     priority: int
     clip_effect: int
-    CE_visible: ClassVar[Literal[1]]
-    CE_collision: ClassVar[Literal[2]]
+    CE_visible: Final[Literal[1]]
+    CE_collision: Final[Literal[2]]
     def __init__(self, name: str, plane: _Vec4f = ...) -> None: ...
     def set_plane(self, plane: _Vec4f) -> None:
         """Sets the particular plane represented by the PlaneNode."""
@@ -7865,9 +7865,9 @@ class ClipPlaneAttrib(RenderAttrib):
     ClipPlaneAttrib can either add planes or remove planes from the total set
     of clipping planes in effect.
     """
-    O_set: ClassVar[Literal[0]]
-    O_add: ClassVar[Literal[1]]
-    O_remove: ClassVar[Literal[2]]
+    O_set: Final[Literal[0]]
+    O_add: Final[Literal[1]]
+    O_remove: Final[Literal[2]]
     @property
     def class_slot(self) -> int: ...
     @overload
@@ -8058,9 +8058,9 @@ class ClipPlaneAttrib(RenderAttrib):
 
 class ColorAttrib(RenderAttrib):
     """Indicates what color should be applied to renderable geometry."""
-    T_vertex: ClassVar[Literal[0]]
-    T_flat: ClassVar[Literal[1]]
-    T_off: ClassVar[Literal[2]]
+    T_vertex: Final[Literal[0]]
+    T_flat: Final[Literal[1]]
+    T_off: Final[Literal[2]]
     @property
     def color_type(self) -> _ColorAttrib_Type: ...
     @property
@@ -8124,34 +8124,34 @@ class ColorBlendAttrib(RenderAttrib):
     """This specifies how colors are blended into the frame buffer, for special
     effects.  This overrides transparency if transparency is also specified.
     """
-    M_add: ClassVar[Literal[1]]
-    M_subtract: ClassVar[Literal[2]]
-    M_inv_subtract: ClassVar[Literal[3]]
-    M_min: ClassVar[Literal[4]]
-    M_max: ClassVar[Literal[5]]
-    O_zero: ClassVar[Literal[0]]
-    O_one: ClassVar[Literal[1]]
-    O_incoming_color: ClassVar[Literal[2]]
-    O_one_minus_incoming_color: ClassVar[Literal[3]]
-    O_fbuffer_color: ClassVar[Literal[4]]
-    O_one_minus_fbuffer_color: ClassVar[Literal[5]]
-    O_incoming_alpha: ClassVar[Literal[6]]
-    O_one_minus_incoming_alpha: ClassVar[Literal[7]]
-    O_fbuffer_alpha: ClassVar[Literal[8]]
-    O_one_minus_fbuffer_alpha: ClassVar[Literal[9]]
-    O_constant_color: ClassVar[Literal[10]]
-    O_one_minus_constant_color: ClassVar[Literal[11]]
-    O_constant_alpha: ClassVar[Literal[12]]
-    O_one_minus_constant_alpha: ClassVar[Literal[13]]
-    O_incoming_color_saturate: ClassVar[Literal[14]]
-    O_incoming1_color: ClassVar[Literal[15]]
-    O_one_minus_incoming1_color: ClassVar[Literal[16]]
-    O_incoming1_alpha: ClassVar[Literal[17]]
-    O_one_minus_incoming1_alpha: ClassVar[Literal[18]]
-    O_color_scale: ClassVar[Literal[19]]
-    O_one_minus_color_scale: ClassVar[Literal[20]]
-    O_alpha_scale: ClassVar[Literal[21]]
-    O_one_minus_alpha_scale: ClassVar[Literal[22]]
+    M_add: Final[Literal[1]]
+    M_subtract: Final[Literal[2]]
+    M_inv_subtract: Final[Literal[3]]
+    M_min: Final[Literal[4]]
+    M_max: Final[Literal[5]]
+    O_zero: Final[Literal[0]]
+    O_one: Final[Literal[1]]
+    O_incoming_color: Final[Literal[2]]
+    O_one_minus_incoming_color: Final[Literal[3]]
+    O_fbuffer_color: Final[Literal[4]]
+    O_one_minus_fbuffer_color: Final[Literal[5]]
+    O_incoming_alpha: Final[Literal[6]]
+    O_one_minus_incoming_alpha: Final[Literal[7]]
+    O_fbuffer_alpha: Final[Literal[8]]
+    O_one_minus_fbuffer_alpha: Final[Literal[9]]
+    O_constant_color: Final[Literal[10]]
+    O_one_minus_constant_color: Final[Literal[11]]
+    O_constant_alpha: Final[Literal[12]]
+    O_one_minus_constant_alpha: Final[Literal[13]]
+    O_incoming_color_saturate: Final[Literal[14]]
+    O_incoming1_color: Final[Literal[15]]
+    O_one_minus_incoming1_color: Final[Literal[16]]
+    O_incoming1_alpha: Final[Literal[17]]
+    O_one_minus_incoming1_alpha: Final[Literal[18]]
+    O_color_scale: Final[Literal[19]]
+    O_one_minus_color_scale: Final[Literal[20]]
+    O_alpha_scale: Final[Literal[21]]
+    O_one_minus_alpha_scale: Final[Literal[22]]
     @property
     def rgb_mode(self) -> _ColorBlendAttrib_Mode: ...
     @property
@@ -8377,13 +8377,13 @@ class ColorWriteAttrib(RenderAttrib):
     for certain special effects in which it is important to write to the depth
     buffer without affecting the color buffer.
     """
-    C_off: ClassVar[Literal[0]]
-    C_red: ClassVar[Literal[1]]
-    C_green: ClassVar[Literal[2]]
-    C_blue: ClassVar[Literal[4]]
-    C_rgb: ClassVar[Literal[7]]
-    C_alpha: ClassVar[Literal[8]]
-    C_all: ClassVar[Literal[15]]
+    C_off: Final[Literal[0]]
+    C_red: Final[Literal[1]]
+    C_green: Final[Literal[2]]
+    C_blue: Final[Literal[4]]
+    C_rgb: Final[Literal[7]]
+    C_alpha: Final[Literal[8]]
+    C_all: Final[Literal[15]]
     @property
     def channels(self) -> int: ...
     @property
@@ -8437,16 +8437,16 @@ class CompassEffect(RenderEffect):
     need to explicitly set a large (or infinite) bounding volume on the effect
     node.
     """
-    P_x: ClassVar[Literal[1]]
-    P_y: ClassVar[Literal[2]]
-    P_z: ClassVar[Literal[4]]
-    P_pos: ClassVar[Literal[7]]
-    P_rot: ClassVar[Literal[8]]
-    P_sx: ClassVar[Literal[16]]
-    P_sy: ClassVar[Literal[32]]
-    P_sz: ClassVar[Literal[64]]
-    P_scale: ClassVar[Literal[112]]
-    P_all: ClassVar[Literal[127]]
+    P_x: Final[Literal[1]]
+    P_y: Final[Literal[2]]
+    P_z: Final[Literal[4]]
+    P_pos: Final[Literal[7]]
+    P_rot: Final[Literal[8]]
+    P_sx: Final[Literal[16]]
+    P_sy: Final[Literal[32]]
+    P_sz: Final[Literal[64]]
+    P_scale: Final[Literal[112]]
+    P_all: Final[Literal[127]]
     @staticmethod
     def make(reference: NodePath, properties: int = ...) -> RenderEffect:
         """Constructs a new CompassEffect object.  If the reference is an empty
@@ -8484,12 +8484,12 @@ class CullBinEnums:
     CullBinManager.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    BT_invalid: ClassVar[Literal[0]]
-    BT_unsorted: ClassVar[Literal[1]]
-    BT_state_sorted: ClassVar[Literal[2]]
-    BT_back_to_front: ClassVar[Literal[3]]
-    BT_front_to_back: ClassVar[Literal[4]]
-    BT_fixed: ClassVar[Literal[5]]
+    BT_invalid: Final[Literal[0]]
+    BT_unsorted: Final[Literal[1]]
+    BT_state_sorted: Final[Literal[2]]
+    BT_back_to_front: Final[Literal[3]]
+    BT_front_to_back: Final[Literal[4]]
+    BT_fixed: Final[Literal[5]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -8891,10 +8891,10 @@ class CullBinManager(CullBinEnums):
 
 class CullFaceAttrib(RenderAttrib):
     """Indicates which faces should be culled based on their vertex ordering."""
-    M_cull_none: ClassVar[Literal[0]]
-    M_cull_clockwise: ClassVar[Literal[1]]
-    M_cull_counter_clockwise: ClassVar[Literal[2]]
-    M_cull_unchanged: ClassVar[Literal[3]]
+    M_cull_none: Final[Literal[0]]
+    M_cull_clockwise: Final[Literal[1]]
+    M_cull_counter_clockwise: Final[Literal[2]]
+    M_cull_unchanged: Final[Literal[3]]
     @property
     def mode(self) -> _CullFaceAttrib_Mode: ...
     @property
@@ -9204,9 +9204,9 @@ class Fog(PandaNode):
     linear_onset_point: LPoint3f
     linear_opaque_point: LPoint3f
     exp_density: float
-    M_linear: ClassVar[Literal[0]]
-    M_exponential: ClassVar[Literal[1]]
-    M_exponential_squared: ClassVar[Literal[2]]
+    M_linear: Final[Literal[0]]
+    M_exponential: Final[Literal[1]]
+    M_exponential_squared: Final[Literal[2]]
     def get_mode(self) -> _Fog_Mode: ...
     def set_mode(self, mode: _Fog_Mode) -> None:
         """Specifies the computation that is used to determine the fog effect.  If
@@ -9548,9 +9548,9 @@ class GeomDrawCallbackData(CallbackData):
 
 class RescaleNormalAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
-    M_rescale: ClassVar[Literal[1]]
-    M_normalize: ClassVar[Literal[2]]
-    M_auto: ClassVar[Literal[3]]
+    M_rescale: Final[Literal[1]]
+    M_normalize: Final[Literal[2]]
+    M_auto: Final[Literal[3]]
     @property
     def mode(self) -> _RescaleNormalAttrib_Mode: ...
     @property
@@ -9735,7 +9735,7 @@ class DepthTestAttrib(RenderAttrib):
 
 class DepthWriteAttrib(RenderAttrib):
     """Enables or disables writing to the depth buffer."""
-    M_on: ClassVar[Literal[1]]
+    M_on: Final[Literal[1]]
     @property
     def mode(self) -> _DepthWriteAttrib_Mode: ...
     @property
@@ -9859,9 +9859,9 @@ class LightAttrib(RenderAttrib):
     geometry at this level and below.  A LightAttrib can either add lights or
     remove lights from the total set of "on" lights.
     """
-    O_set: ClassVar[Literal[0]]
-    O_add: ClassVar[Literal[1]]
-    O_remove: ClassVar[Literal[2]]
+    O_set: Final[Literal[0]]
+    O_add: Final[Literal[1]]
+    O_remove: Final[Literal[2]]
     @property
     def on_lights(self) -> Sequence[NodePath]: ...
     @property
@@ -10086,13 +10086,13 @@ class LightRampAttrib(RenderAttrib):
     a kind of light ramp.  So is HDR tone mapping.  So is cartoon shading.  See
     the constructors for an explanation of each kind of ramp.
     """
-    LRT_default: ClassVar[Literal[0]]
-    LRT_identity: ClassVar[Literal[1]]
-    LRT_single_threshold: ClassVar[Literal[2]]
-    LRT_double_threshold: ClassVar[Literal[3]]
-    LRT_hdr0: ClassVar[Literal[4]]
-    LRT_hdr1: ClassVar[Literal[5]]
-    LRT_hdr2: ClassVar[Literal[6]]
+    LRT_default: Final[Literal[0]]
+    LRT_identity: Final[Literal[1]]
+    LRT_single_threshold: Final[Literal[2]]
+    LRT_double_threshold: Final[Literal[3]]
+    LRT_hdr0: Final[Literal[4]]
+    LRT_hdr1: Final[Literal[5]]
+    LRT_hdr2: Final[Literal[6]]
     @property
     def mode(self) -> _LightRampAttrib_LightRampMode: ...
     @property
@@ -10610,11 +10610,11 @@ class ModelNode(PandaNode):
     ModelNodes are created in response to a <Model> { 1 } flag within an egg
     file.
     """
-    PT_none: ClassVar[Literal[0]]
-    PT_local: ClassVar[Literal[1]]
-    PT_net: ClassVar[Literal[2]]
-    PT_drop_node: ClassVar[Literal[3]]
-    PT_no_touch: ClassVar[Literal[4]]
+    PT_none: Final[Literal[0]]
+    PT_local: Final[Literal[1]]
+    PT_net: Final[Literal[2]]
+    PT_drop_node: Final[Literal[3]]
+    PT_no_touch: Final[Literal[4]]
     def set_preserve_transform(self, preserve_transform: _ModelNode_PreserveTransform) -> None:
         """Sets the preserve_transform flag.  This restricts the ability of a flatten
         operation to affect the transform stored on this node, and/or the node
@@ -11352,11 +11352,11 @@ class OccluderEffect(RenderEffect):
 
 class PolylightNode(PandaNode):
     """A PolylightNode"""
-    FRANDOM: ClassVar[Literal[0]]
-    FSIN: ClassVar[Literal[1]]
-    FCUSTOM: ClassVar[Literal[2]]
-    ALINEAR: ClassVar[Literal[0]]
-    AQUADRATIC: ClassVar[Literal[1]]
+    FRANDOM: Final[Literal[0]]
+    FSIN: Final[Literal[1]]
+    FCUSTOM: Final[Literal[2]]
+    ALINEAR: Final[Literal[0]]
+    AQUADRATIC: Final[Literal[1]]
     @overload
     def __init__(self, __param0: PolylightNode) -> None:
         """Use PolylightNode() to construct a new PolylightNode object."""
@@ -11550,8 +11550,8 @@ class PolylightEffect(RenderEffect):
     that add color to the polygons of a model based on distance.  PolylightNode
     is a cheap way to get lighting effects specially for night scenes
     """
-    CT_proximal: ClassVar[Literal[0]]
-    CT_all: ClassVar[Literal[1]]
+    CT_proximal: Final[Literal[0]]
+    CT_all: Final[Literal[1]]
     @overload
     @staticmethod
     def make() -> RenderEffect:
@@ -11614,10 +11614,10 @@ class PolylightEffect(RenderEffect):
     CTAll = CT_all
 
 class ShaderAttrib(RenderAttrib):
-    F_disable_alpha_write: ClassVar[Literal[0]]
-    F_subsume_alpha_test: ClassVar[Literal[1]]
-    F_hardware_skinning: ClassVar[Literal[2]]
-    F_shader_point_size: ClassVar[Literal[3]]
+    F_disable_alpha_write: Final[Literal[0]]
+    F_subsume_alpha_test: Final[Literal[1]]
+    F_hardware_skinning: Final[Literal[2]]
+    F_shader_point_size: Final[Literal[3]]
     @property
     def shader(self) -> Shader: ...
     @property
@@ -11979,29 +11979,29 @@ class SceneGraphReducer:
     behavior is sufficient.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    TT_transform: ClassVar[Literal[1]]
-    TT_color: ClassVar[Literal[2]]
-    TT_color_scale: ClassVar[Literal[4]]
-    TT_tex_matrix: ClassVar[Literal[8]]
-    TT_clip_plane: ClassVar[Literal[16]]
-    TT_cull_face: ClassVar[Literal[32]]
-    TT_apply_texture_color: ClassVar[Literal[64]]
-    TT_other: ClassVar[Literal[128]]
-    CS_geom_node: ClassVar[Literal[1]]
-    CS_within_radius: ClassVar[Literal[2]]
-    CS_other: ClassVar[Literal[4]]
-    CS_recurse: ClassVar[Literal[8]]
-    CVD_name: ClassVar[Literal[1]]
-    CVD_model: ClassVar[Literal[2]]
-    CVD_transform: ClassVar[Literal[4]]
-    CVD_avoid_dynamic: ClassVar[Literal[8]]
-    CVD_one_node_only: ClassVar[Literal[16]]
-    CVD_format: ClassVar[Literal[32]]
-    CVD_usage_hint: ClassVar[Literal[64]]
-    CVD_animation_type: ClassVar[Literal[128]]
-    MN_composite_only: ClassVar[Literal[1]]
-    MN_avoid_animated: ClassVar[Literal[2]]
-    MN_avoid_dynamic: ClassVar[Literal[4]]
+    TT_transform: Final[Literal[1]]
+    TT_color: Final[Literal[2]]
+    TT_color_scale: Final[Literal[4]]
+    TT_tex_matrix: Final[Literal[8]]
+    TT_clip_plane: Final[Literal[16]]
+    TT_cull_face: Final[Literal[32]]
+    TT_apply_texture_color: Final[Literal[64]]
+    TT_other: Final[Literal[128]]
+    CS_geom_node: Final[Literal[1]]
+    CS_within_radius: Final[Literal[2]]
+    CS_other: Final[Literal[4]]
+    CS_recurse: Final[Literal[8]]
+    CVD_name: Final[Literal[1]]
+    CVD_model: Final[Literal[2]]
+    CVD_transform: Final[Literal[4]]
+    CVD_avoid_dynamic: Final[Literal[8]]
+    CVD_one_node_only: Final[Literal[16]]
+    CVD_format: Final[Literal[32]]
+    CVD_usage_hint: Final[Literal[64]]
+    CVD_animation_type: Final[Literal[128]]
+    MN_composite_only: Final[Literal[1]]
+    MN_avoid_animated: Final[Literal[2]]
+    MN_avoid_dynamic: Final[Literal[4]]
     @overload
     def __init__(self, gsg: GraphicsStateGuardianBase = ...) -> None: ...
     @overload
@@ -12417,8 +12417,8 @@ class ShadeModelAttrib(RenderAttrib):
     """Specifies whether flat shading (per-polygon) or smooth shading (per-vertex)
     is in effect.
     """
-    M_flat: ClassVar[Literal[0]]
-    M_smooth: ClassVar[Literal[1]]
+    M_flat: Final[Literal[0]]
+    M_smooth: Final[Literal[1]]
     @property
     def mode(self) -> _ShadeModelAttrib_Mode: ...
     @property
@@ -12452,36 +12452,36 @@ class StencilAttrib(RenderAttrib):
     make or make_2_sided.  To determine if two sided stencil is supported, call
     the function GraphicsStateGuardian:: get_supports_two_sided_stencil.
     """
-    SRS_front_comparison_function: ClassVar[Literal[0]]
-    SRS_front_stencil_fail_operation: ClassVar[Literal[1]]
-    SRS_front_stencil_pass_z_fail_operation: ClassVar[Literal[2]]
-    SRS_front_stencil_pass_z_pass_operation: ClassVar[Literal[3]]
-    SRS_reference: ClassVar[Literal[4]]
-    SRS_read_mask: ClassVar[Literal[5]]
-    SRS_write_mask: ClassVar[Literal[6]]
-    SRS_back_comparison_function: ClassVar[Literal[7]]
-    SRS_back_stencil_fail_operation: ClassVar[Literal[8]]
-    SRS_back_stencil_pass_z_fail_operation: ClassVar[Literal[9]]
-    SRS_back_stencil_pass_z_pass_operation: ClassVar[Literal[10]]
-    SRS_clear: ClassVar[Literal[11]]
-    SRS_clear_value: ClassVar[Literal[12]]
-    SRS_total: ClassVar[Literal[13]]
-    SCF_never: ClassVar[Literal[1]]
-    SCF_less_than: ClassVar[Literal[2]]
-    SCF_equal: ClassVar[Literal[3]]
-    SCF_less_than_or_equal: ClassVar[Literal[4]]
-    SCF_greater_than: ClassVar[Literal[5]]
-    SCF_not_equal: ClassVar[Literal[6]]
-    SCF_greater_than_or_equal: ClassVar[Literal[7]]
-    SCF_always: ClassVar[Literal[8]]
-    SO_keep: ClassVar[Literal[0]]
-    SO_zero: ClassVar[Literal[1]]
-    SO_replace: ClassVar[Literal[2]]
-    SO_increment: ClassVar[Literal[3]]
-    SO_decrement: ClassVar[Literal[4]]
-    SO_invert: ClassVar[Literal[5]]
-    SO_increment_saturate: ClassVar[Literal[6]]
-    SO_decrement_saturate: ClassVar[Literal[7]]
+    SRS_front_comparison_function: Final[Literal[0]]
+    SRS_front_stencil_fail_operation: Final[Literal[1]]
+    SRS_front_stencil_pass_z_fail_operation: Final[Literal[2]]
+    SRS_front_stencil_pass_z_pass_operation: Final[Literal[3]]
+    SRS_reference: Final[Literal[4]]
+    SRS_read_mask: Final[Literal[5]]
+    SRS_write_mask: Final[Literal[6]]
+    SRS_back_comparison_function: Final[Literal[7]]
+    SRS_back_stencil_fail_operation: Final[Literal[8]]
+    SRS_back_stencil_pass_z_fail_operation: Final[Literal[9]]
+    SRS_back_stencil_pass_z_pass_operation: Final[Literal[10]]
+    SRS_clear: Final[Literal[11]]
+    SRS_clear_value: Final[Literal[12]]
+    SRS_total: Final[Literal[13]]
+    SCF_never: Final[Literal[1]]
+    SCF_less_than: Final[Literal[2]]
+    SCF_equal: Final[Literal[3]]
+    SCF_less_than_or_equal: Final[Literal[4]]
+    SCF_greater_than: Final[Literal[5]]
+    SCF_not_equal: Final[Literal[6]]
+    SCF_greater_than_or_equal: Final[Literal[7]]
+    SCF_always: Final[Literal[8]]
+    SO_keep: Final[Literal[0]]
+    SO_zero: Final[Literal[1]]
+    SO_replace: Final[Literal[2]]
+    SO_increment: Final[Literal[3]]
+    SO_decrement: Final[Literal[4]]
+    SO_invert: Final[Literal[5]]
+    SO_increment_saturate: Final[Literal[6]]
+    SO_decrement_saturate: Final[Literal[7]]
     @property
     def class_slot(self) -> int: ...
     @staticmethod

@@ -1,7 +1,7 @@
 from collections.abc import Mapping, Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AnimInterface,
     BitArray,
@@ -164,9 +164,9 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     of MovingParts.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    HMF_ok_part_extra: ClassVar[Literal[1]]
-    HMF_ok_anim_extra: ClassVar[Literal[2]]
-    HMF_ok_wrong_root_name: ClassVar[Literal[4]]
+    HMF_ok_part_extra: Final[Literal[1]]
+    HMF_ok_anim_extra: Final[Literal[2]]
+    HMF_ok_wrong_root_name: Final[Literal[4]]
     @property
     def children(self) -> Sequence[PartGroup]: ...
     def __init__(self, parent: PartGroup, name: str) -> None:
@@ -852,10 +852,10 @@ class PartBundle(PartGroup):
     anim_blend_flag: bool
     frame_blend_flag: bool
     root_xform: LMatrix4f
-    BT_linear: ClassVar[Literal[0]]
-    BT_normalized_linear: ClassVar[Literal[1]]
-    BT_componentwise: ClassVar[Literal[2]]
-    BT_componentwise_quat: ClassVar[Literal[3]]
+    BT_linear: Final[Literal[0]]
+    BT_normalized_linear: Final[Literal[1]]
+    BT_componentwise: Final[Literal[2]]
+    BT_componentwise_quat: Final[Literal[3]]
     @property
     def nodes(self) -> Sequence[PartBundleNode]: ...
     def __init__(self, name: str = ...) -> None:

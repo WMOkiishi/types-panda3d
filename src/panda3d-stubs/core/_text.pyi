@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     ConfigVariableFilename,
@@ -109,13 +109,13 @@ class TextFont(TypedReferenceCount, Namable):
     DtoolClassDict: ClassVar[dict[str, Any]]
     line_height: float
     space_advance: float
-    RM_texture: ClassVar[Literal[0]]
-    RM_wireframe: ClassVar[Literal[1]]
-    RM_polygon: ClassVar[Literal[2]]
-    RM_extruded: ClassVar[Literal[3]]
-    RM_solid: ClassVar[Literal[4]]
-    RM_distance_field: ClassVar[Literal[5]]
-    RM_invalid: ClassVar[Literal[6]]
+    RM_texture: Final[Literal[0]]
+    RM_wireframe: Final[Literal[1]]
+    RM_polygon: Final[Literal[2]]
+    RM_extruded: Final[Literal[3]]
+    RM_solid: Final[Literal[4]]
+    RM_distance_field: Final[Literal[5]]
+    RM_invalid: Final[Literal[6]]
     @property
     def valid(self) -> bool: ...
     def __bool__(self) -> bool: ...
@@ -753,14 +753,14 @@ class TextProperties:
     glyph_shift: float
     text_scale: float
     direction: _TextProperties_Direction
-    A_left: ClassVar[Literal[0]]
-    A_right: ClassVar[Literal[1]]
-    A_center: ClassVar[Literal[2]]
-    A_boxed_left: ClassVar[Literal[3]]
-    A_boxed_right: ClassVar[Literal[4]]
-    A_boxed_center: ClassVar[Literal[5]]
-    D_ltr: ClassVar[Literal[0]]
-    D_rtl: ClassVar[Literal[1]]
+    A_left: Final[Literal[0]]
+    A_right: Final[Literal[1]]
+    A_center: Final[Literal[2]]
+    A_boxed_left: Final[Literal[3]]
+    A_boxed_right: Final[Literal[4]]
+    A_boxed_center: Final[Literal[5]]
+    D_ltr: Final[Literal[0]]
+    D_rtl: Final[Literal[1]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1754,11 +1754,11 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     glyph_scale: float
     glyph_shift: float
     text_scale: float
-    FF_none: ClassVar[Literal[0]]
-    FF_light: ClassVar[Literal[1]]
-    FF_medium: ClassVar[Literal[2]]
-    FF_strong: ClassVar[Literal[4]]
-    FF_dynamic_merge: ClassVar[Literal[8]]
+    FF_none: Final[Literal[0]]
+    FF_light: Final[Literal[1]]
+    FF_medium: Final[Literal[2]]
+    FF_strong: Final[Literal[4]]
+    FF_dynamic_merge: Final[Literal[8]]
     @overload
     def __init__(self, name: str) -> None:
         """It's sort of a copy constructor: it copies the indicated TextProperties,

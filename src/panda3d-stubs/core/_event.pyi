@@ -1,6 +1,6 @@
 from collections.abc import Awaitable, Callable, Generator, Iterator, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias, final
+from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import (
     ButtonHandle,
     ClockObject,
@@ -251,21 +251,21 @@ class AsyncTask(AsyncFuture, Namable):
     sort: int
     priority: int
     done_event: str
-    DS_done: ClassVar[Literal[0]]
-    DS_cont: ClassVar[Literal[1]]
-    DS_again: ClassVar[Literal[2]]
-    DS_pickup: ClassVar[Literal[3]]
-    DS_exit: ClassVar[Literal[4]]
-    DS_pause: ClassVar[Literal[5]]
-    DS_interrupt: ClassVar[Literal[6]]
-    DS_await: ClassVar[Literal[7]]
-    S_inactive: ClassVar[Literal[0]]
-    S_active: ClassVar[Literal[1]]
-    S_servicing: ClassVar[Literal[2]]
-    S_servicing_removed: ClassVar[Literal[3]]
-    S_sleeping: ClassVar[Literal[4]]
-    S_active_nested: ClassVar[Literal[5]]
-    S_awaiting: ClassVar[Literal[6]]
+    DS_done: Final[Literal[0]]
+    DS_cont: Final[Literal[1]]
+    DS_again: Final[Literal[2]]
+    DS_pickup: Final[Literal[3]]
+    DS_exit: Final[Literal[4]]
+    DS_pause: Final[Literal[5]]
+    DS_interrupt: Final[Literal[6]]
+    DS_await: Final[Literal[7]]
+    S_inactive: Final[Literal[0]]
+    S_active: Final[Literal[1]]
+    S_servicing: Final[Literal[2]]
+    S_servicing_removed: Final[Literal[3]]
+    S_sleeping: Final[Literal[4]]
+    S_active_nested: Final[Literal[5]]
+    S_awaiting: Final[Literal[6]]
     @property
     def state(self) -> _AsyncTask_State: ...
     @property
@@ -1082,15 +1082,15 @@ class ButtonEvent:
     of Panda3D.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    T_down: ClassVar[Literal[0]]
-    T_resume_down: ClassVar[Literal[1]]
-    T_up: ClassVar[Literal[2]]
-    T_repeat: ClassVar[Literal[3]]
-    T_keystroke: ClassVar[Literal[4]]
-    T_candidate: ClassVar[Literal[5]]
-    T_move: ClassVar[Literal[6]]
-    T_raw_down: ClassVar[Literal[7]]
-    T_raw_up: ClassVar[Literal[8]]
+    T_down: Final[Literal[0]]
+    T_resume_down: Final[Literal[1]]
+    T_up: Final[Literal[2]]
+    T_repeat: Final[Literal[3]]
+    T_keystroke: Final[Literal[4]]
+    T_candidate: Final[Literal[5]]
+    T_move: Final[Literal[6]]
+    T_raw_down: Final[Literal[7]]
+    T_raw_up: Final[Literal[8]]
     @property
     def button(self) -> ButtonHandle: ...
     @property

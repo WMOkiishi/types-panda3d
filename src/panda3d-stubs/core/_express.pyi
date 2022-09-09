@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableFilename,
     ConfigVariableSearchPath,
@@ -2602,7 +2602,7 @@ class VirtualFileSystem:
     Multifiles as their own subdirectory hierarchies.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    MF_read_only: ClassVar[Literal[2]]
+    MF_read_only: Final[Literal[2]]
     @property
     def mounts(self) -> Sequence[PointerTo_VirtualFileMount]: ...
     def __init__(self) -> None: ...
@@ -3210,11 +3210,11 @@ class WindowsRegistry:
     retrieval).
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    rl_machine: ClassVar[Literal[0]]
-    rl_user: ClassVar[Literal[1]]
-    T_none: ClassVar[Literal[0]]
-    T_int: ClassVar[Literal[1]]
-    T_string: ClassVar[Literal[2]]
+    rl_machine: Final[Literal[0]]
+    rl_user: Final[Literal[1]]
+    T_none: Final[Literal[0]]
+    T_int: Final[Literal[1]]
+    T_string: Final[Literal[2]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -3265,43 +3265,43 @@ class WindowsRegistry:
     TInt = T_int
     TString = T_string
 
-EU_http_redirect: Literal[7]
-EU_eof: Literal[6]
-EU_network_no_data: Literal[5]
-EU_write_ram: Literal[4]
-EU_write: Literal[3]
-EU_ok: Literal[2]
-EU_success: Literal[1]
-EU_error_abort: Literal[-1]
-EU_error_file_empty: Literal[-2]
-EU_error_file_invalid: Literal[-3]
-EU_error_invalid_checksum: Literal[-4]
-EU_error_network_dead: Literal[-30]
-EU_error_network_unreachable: Literal[-31]
-EU_error_network_disconnected: Literal[-32]
-EU_error_network_timeout: Literal[-33]
-EU_error_network_no_data: Literal[-34]
-EU_error_network_disconnected_locally: Literal[-40]
-EU_error_network_buffer_overflow: Literal[-41]
-EU_error_network_disk_quota_exceeded: Literal[-42]
-EU_error_network_remote_host_disconnected: Literal[-50]
-EU_error_network_remote_host_down: Literal[-51]
-EU_error_network_remote_host_unreachable: Literal[-52]
-EU_error_network_remote_host_not_found: Literal[-53]
-EU_error_network_remote_host_no_response: Literal[-54]
-EU_error_write_out_of_files: Literal[-60]
-EU_error_write_out_of_memory: Literal[-61]
-EU_error_write_sharing_violation: Literal[-62]
-EU_error_write_disk_full: Literal[-63]
-EU_error_write_disk_not_found: Literal[-64]
-EU_error_write_disk_sector_not_found: Literal[-65]
-EU_error_write_disk_fault: Literal[-66]
-EU_error_write_file_rename: Literal[-67]
-EU_error_http_server_timeout: Literal[-70]
-EU_error_http_gateway_timeout: Literal[-71]
-EU_error_http_service_unavailable: Literal[-72]
-EU_error_http_proxy_authentication: Literal[-73]
-EU_error_zlib: Literal[-80]
+EU_http_redirect: Final[Literal[7]]
+EU_eof: Final[Literal[6]]
+EU_network_no_data: Final[Literal[5]]
+EU_write_ram: Final[Literal[4]]
+EU_write: Final[Literal[3]]
+EU_ok: Final[Literal[2]]
+EU_success: Final[Literal[1]]
+EU_error_abort: Final[Literal[-1]]
+EU_error_file_empty: Final[Literal[-2]]
+EU_error_file_invalid: Final[Literal[-3]]
+EU_error_invalid_checksum: Final[Literal[-4]]
+EU_error_network_dead: Final[Literal[-30]]
+EU_error_network_unreachable: Final[Literal[-31]]
+EU_error_network_disconnected: Final[Literal[-32]]
+EU_error_network_timeout: Final[Literal[-33]]
+EU_error_network_no_data: Final[Literal[-34]]
+EU_error_network_disconnected_locally: Final[Literal[-40]]
+EU_error_network_buffer_overflow: Final[Literal[-41]]
+EU_error_network_disk_quota_exceeded: Final[Literal[-42]]
+EU_error_network_remote_host_disconnected: Final[Literal[-50]]
+EU_error_network_remote_host_down: Final[Literal[-51]]
+EU_error_network_remote_host_unreachable: Final[Literal[-52]]
+EU_error_network_remote_host_not_found: Final[Literal[-53]]
+EU_error_network_remote_host_no_response: Final[Literal[-54]]
+EU_error_write_out_of_files: Final[Literal[-60]]
+EU_error_write_out_of_memory: Final[Literal[-61]]
+EU_error_write_sharing_violation: Final[Literal[-62]]
+EU_error_write_disk_full: Final[Literal[-63]]
+EU_error_write_disk_not_found: Final[Literal[-64]]
+EU_error_write_disk_sector_not_found: Final[Literal[-65]]
+EU_error_write_disk_fault: Final[Literal[-66]]
+EU_error_write_file_rename: Final[Literal[-67]]
+EU_error_http_server_timeout: Final[Literal[-70]]
+EU_error_http_gateway_timeout: Final[Literal[-71]]
+EU_error_http_service_unavailable: Final[Literal[-72]]
+EU_error_http_proxy_authentication: Final[Literal[-73]]
+EU_error_zlib: Final[Literal[-80]]
 def compress_string(source: str, compression_level: int) -> str: ...
 def decompress_string(source: str) -> str: ...
 def compress_file(source: _Filename, dest: _Filename, compression_level: int) -> bool: ...

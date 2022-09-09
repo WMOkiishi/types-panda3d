@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ButtonHandle,
     ConfigVariableColor,
@@ -690,10 +690,10 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     active: bool
     keyboard: bool
     suppress_flags: int
-    SF_mouse_button: ClassVar[Literal[1]]
-    SF_other_button: ClassVar[Literal[2]]
-    SF_any_button: ClassVar[Literal[3]]
-    SF_mouse_position: ClassVar[Literal[4]]
+    SF_mouse_button: Final[Literal[1]]
+    SF_other_button: Final[Literal[2]]
+    SF_any_button: Final[Literal[3]]
+    SF_mouse_position: Final[Literal[4]]
     @property
     def area(self) -> float: ...
     @overload
@@ -1455,11 +1455,11 @@ class Trackball(MouseInterfaceNode):
     parent a Transform2SG node under it to actually transform objects (or
     cameras) in the world.
     """
-    CM_default: ClassVar[Literal[0]]
-    CM_truck: ClassVar[Literal[1]]
-    CM_pan: ClassVar[Literal[2]]
-    CM_dolly: ClassVar[Literal[3]]
-    CM_roll: ClassVar[Literal[4]]
+    CM_default: Final[Literal[0]]
+    CM_truck: Final[Literal[1]]
+    CM_pan: Final[Literal[2]]
+    CM_dolly: Final[Literal[3]]
+    CM_roll: Final[Literal[4]]
     @overload
     def __init__(self, __param0: Trackball) -> None: ...
     @overload

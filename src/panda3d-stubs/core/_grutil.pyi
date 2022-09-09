@@ -1,6 +1,6 @@
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AudioSound,
     BitMask_uint32_t_32,
@@ -297,10 +297,10 @@ class GeoMipTerrain(TypedObject):
     algoritm, see this paper, written by Willem H. de Boer:
     https://flipcode.com/articles/article_geomipmaps.pdf
     """
-    AFM_off: ClassVar[Literal[0]]
-    AFM_light: ClassVar[Literal[1]]
-    AFM_medium: ClassVar[Literal[2]]
-    AFM_strong: ClassVar[Literal[3]]
+    AFM_off: Final[Literal[0]]
+    AFM_light: Final[Literal[1]]
+    AFM_medium: Final[Literal[2]]
+    AFM_strong: Final[Literal[3]]
     def __init__(self, name: str) -> None: ...
     def heightfield(self) -> PNMImage:
         """Returns a reference to the heightfield (a PNMImage) contained inside
@@ -1486,19 +1486,19 @@ class PipeOcclusionCullTraverser(CullTraverser):
 class PfmVizzer:
     """This class aids in the visualization and manipulation of PfmFile objects."""
     DtoolClassDict: ClassVar[dict[str, Any]]
-    CT_texcoord2: ClassVar[Literal[0]]
-    CT_texcoord3: ClassVar[Literal[1]]
-    CT_vertex1: ClassVar[Literal[2]]
-    CT_vertex2: ClassVar[Literal[3]]
-    CT_vertex3: ClassVar[Literal[4]]
-    CT_normal3: ClassVar[Literal[5]]
-    CT_blend1: ClassVar[Literal[6]]
-    CT_aux_vertex1: ClassVar[Literal[7]]
-    CT_aux_vertex2: ClassVar[Literal[8]]
-    CT_aux_vertex3: ClassVar[Literal[9]]
-    MF_front: ClassVar[Literal[1]]
-    MF_back: ClassVar[Literal[2]]
-    MF_both: ClassVar[Literal[3]]
+    CT_texcoord2: Final[Literal[0]]
+    CT_texcoord3: Final[Literal[1]]
+    CT_vertex1: Final[Literal[2]]
+    CT_vertex2: Final[Literal[3]]
+    CT_vertex3: Final[Literal[4]]
+    CT_normal3: Final[Literal[5]]
+    CT_blend1: Final[Literal[6]]
+    CT_aux_vertex1: Final[Literal[7]]
+    CT_aux_vertex2: Final[Literal[8]]
+    CT_aux_vertex3: Final[Literal[9]]
+    MF_front: Final[Literal[1]]
+    MF_back: Final[Literal[2]]
+    MF_both: Final[Literal[3]]
     @overload
     def __init__(self, pfm: PfmFile) -> None:
         """The PfmVizzer constructor receives a reference to a PfmFile which it will

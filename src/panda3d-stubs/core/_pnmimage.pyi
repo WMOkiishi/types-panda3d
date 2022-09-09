@@ -1,7 +1,7 @@
 from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     BoundingHexahedron,
     ConfigVariableColor,
@@ -254,11 +254,11 @@ class PNMImageHeader:
         getPixels = get_pixels
     DtoolClassDict: ClassVar[dict[str, Any]]
     comment: str
-    CT_invalid: ClassVar[Literal[0]]
-    CT_grayscale: ClassVar[Literal[1]]
-    CT_two_channel: ClassVar[Literal[2]]
-    CT_color: ClassVar[Literal[3]]
-    CT_four_channel: ClassVar[Literal[4]]
+    CT_invalid: Final[Literal[0]]
+    CT_grayscale: Final[Literal[1]]
+    CT_two_channel: Final[Literal[2]]
+    CT_color: Final[Literal[3]]
+    CT_four_channel: Final[Literal[4]]
     @property
     def num_channels(self) -> int: ...
     @property
@@ -991,10 +991,10 @@ class PNMBrush(ReferenceCount):
     "smeared" over the border; when it is used to fill the interior, it is
     tiled through the interior.
     """
-    BE_set: ClassVar[Literal[0]]
-    BE_blend: ClassVar[Literal[1]]
-    BE_darken: ClassVar[Literal[2]]
-    BE_lighten: ClassVar[Literal[3]]
+    BE_set: Final[Literal[0]]
+    BE_blend: Final[Literal[1]]
+    BE_darken: Final[Literal[2]]
+    BE_lighten: Final[Literal[3]]
     @staticmethod
     def make_transparent() -> PNMBrush:
         """Returns a new brush that does not paint anything.  Can be used as either a

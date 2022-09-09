@@ -1,6 +1,6 @@
 from os import PathLike
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     ConfigVariableFilename,
@@ -24,10 +24,10 @@ class FreetypeFont(Namable):
     FreeType.
     """
     winding_order: _FreetypeFont_WindingOrder
-    WO_default: ClassVar[Literal[0]]
-    WO_left: ClassVar[Literal[1]]
-    WO_right: ClassVar[Literal[2]]
-    WO_invalid: ClassVar[Literal[3]]
+    WO_default: Final[Literal[0]]
+    WO_left: Final[Literal[1]]
+    WO_right: Final[Literal[2]]
+    WO_invalid: Final[Literal[3]]
     def set_point_size(self, point_size: float) -> bool:
         """Sets the point size of the font.  This controls the apparent size of the
         font onscreen.  By convention, a 10 point font is about 1 screen unit high.
@@ -226,9 +226,9 @@ class PNMTextMaker(FreetypeFont):
     use the Freetype library to generate text in the scene graph, to be
     rendered onscreen via the Panda render traversal.
     """
-    A_left: ClassVar[Literal[0]]
-    A_right: ClassVar[Literal[1]]
-    A_center: ClassVar[Literal[2]]
+    A_left: Final[Literal[0]]
+    A_right: Final[Literal[1]]
+    A_center: Final[Literal[2]]
     @overload
     def __init__(self, copy: FreetypeFont) -> None:
         """`(self, font_filename: Filename, face_index: int)`:

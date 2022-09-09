@@ -300,15 +300,14 @@ def make_enum_value_reps(
         t: TypeIndex, /,
         namespace: Sequence[str] = ()) -> list[Element]:
     """Return variable representations for an enum type known to interrogate."""
-    is_nested = idb.interrogate_type_is_nested(t)
     value_reps: list[Element] = []
     for n in range(idb.interrogate_type_number_of_enum_values(t)):
         if idb.interrogate_type_enum_value_scoped_name(t, n) in NOT_EXPOSED:
             continue
         value = idb.interrogate_type_enum_value(t, n)
         value_name = idb.interrogate_type_enum_value_name(t, n)
-        type = f'ClassVar[Literal[{value}]]' if is_nested else f'Literal[{value}]'
-        value_reps.append(Element(value_name, type, namespace=namespace))
+        type_string = f'Final[Literal[{value}]]'
+        value_reps.append(Element(value_name, type_string, namespace=namespace))
     return value_reps
 
 

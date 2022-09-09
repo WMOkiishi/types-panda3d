@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     BitMask_uint32_t_32,
     Camera,
@@ -39,11 +39,11 @@ class GPUCommand:
       "packet". It stores a limited amount of floating point components.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    CMD_invalid: ClassVar[Literal[0]]
-    CMD_store_light: ClassVar[Literal[1]]
-    CMD_remove_light: ClassVar[Literal[2]]
-    CMD_store_source: ClassVar[Literal[3]]
-    CMD_remove_sources: ClassVar[Literal[4]]
+    CMD_invalid: Final[Literal[0]]
+    CMD_store_light: Final[Literal[1]]
+    CMD_remove_light: Final[Literal[2]]
+    CMD_store_source: Final[Literal[3]]
+    CMD_remove_sources: Final[Literal[4]]
     @overload
     def __init__(self, __param0: GPUCommand) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
@@ -293,9 +293,9 @@ class RPLight(ReferenceCount):
     shadow_map_resolution: int
     ies_profile: int
     near_plane: float
-    LT_empty: ClassVar[Literal[0]]
-    LT_point_light: ClassVar[Literal[1]]
-    LT_spot_light: ClassVar[Literal[2]]
+    LT_empty: Final[Literal[0]]
+    LT_point_light: Final[Literal[1]]
+    LT_spot_light: Final[Literal[2]]
     @property
     def light_type(self) -> _RPLight_LightType: ...
     def invalidate_shadows(self) -> None:

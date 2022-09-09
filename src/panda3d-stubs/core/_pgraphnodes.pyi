@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AnimInterface,
     CallbackData,
@@ -842,10 +842,10 @@ class SceneGraphAnalyzer:
     statistics on it.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    LM_lowest: ClassVar[Literal[0]]
-    LM_highest: ClassVar[Literal[1]]
-    LM_all: ClassVar[Literal[2]]
-    LM_none: ClassVar[Literal[3]]
+    LM_lowest: Final[Literal[0]]
+    LM_highest: Final[Literal[1]]
+    LM_all: Final[Literal[2]]
+    LM_none: Final[Literal[3]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -932,7 +932,7 @@ class SceneGraphAnalyzer:
     LMAll = LM_all
     LMNone = LM_none
 
-LNT_pop: Literal[0]
-LNT_fade: Literal[1]
+LNT_pop: Final[Literal[0]]
+LNT_fade: Final[Literal[1]]
 LNTPop = LNT_pop
 LNTFade = LNT_fade
