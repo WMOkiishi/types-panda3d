@@ -339,7 +339,6 @@ class MutexDirect:
     getName = get_name
 
 class Mutex(MutexDirect):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -409,7 +408,6 @@ class ConditionVarDirect:
     getMutex = get_mutex
 
 class ConditionVar(ConditionVarDirect):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, mutex: Mutex) -> None:
         """You must pass in a Mutex to the condition variable constructor.  This mutex
         may be shared by other condition variables, if desired.  It is the caller's
@@ -497,7 +495,6 @@ class ConditionVarFullDirect:
     notifyAll = notify_all
 
 class ConditionVarFull(ConditionVarFullDirect):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, mutex: Mutex) -> None:
         """You must pass in a Mutex to the condition variable constructor.  This mutex
         may be shared by other condition variables, if desired.  It is the caller's
@@ -595,7 +592,6 @@ class ReMutexDirect:
     getName = get_name
 
 class ReMutex(ReMutexDirect):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -605,10 +601,6 @@ class ExternalThread(Thread):
     """The special "external thread" class.  There is one instance of these in the
     world, and it is returned by Thread::get_external_thread().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LightMutexDirect:
     """This class implements a lightweight Mutex by making direct calls to the
@@ -667,7 +659,6 @@ class LightMutexDirect:
     getName = get_name
 
 class LightMutex(LightMutexDirect):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -750,7 +741,6 @@ class LightReMutexDirect:
     getName = get_name
 
 class LightReMutex(LightReMutexDirect):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -760,10 +750,6 @@ class MainThread(Thread):
     """The special "main thread" class.  There is one instance of these in the
     world, and it is returned by Thread::get_main_thread().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class Semaphore:
     """A classic semaphore synchronization primitive.
@@ -806,13 +792,9 @@ class PythonThread(Thread):
     the Python level.  It will spawn a thread that executes an arbitrary Python
     functor.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     args = ...
     def __init__(self, function, args, name: str, sync_name: str) -> None: ...
     def join(self): ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 TP_low: Literal[0]
 TP_normal: Literal[1]

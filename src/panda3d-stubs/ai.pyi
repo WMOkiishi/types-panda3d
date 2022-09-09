@@ -125,7 +125,6 @@ class AIBehaviors:
     behaviorStatus = behavior_status
 
 class AICharacter(ReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def name(self) -> str: ...
     @overload

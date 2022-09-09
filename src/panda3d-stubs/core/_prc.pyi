@@ -230,7 +230,6 @@ class ConfigDeclaration(ConfigFlags):
     pairing of a string name (actually, a ConfigVariableCore pointer) to a
     string value.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def page(self) -> ConfigPage: ...
     @property
@@ -378,7 +377,6 @@ class ConfigVariableCore(ConfigFlags):
     make() method, which may return a shared instance.  Once created, these
     objects are never destructed.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value_type: _ConfigFlags_ValueType
     description: str
     default_value: ConfigDeclaration
@@ -727,7 +725,6 @@ class ConfigPageManager(ConfigFlags):
     """A global object that maintains the set of ConfigPages everywhere in the
     world, and keeps them in sorted order.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def search_path(self) -> DSearchPath: ...
     @property
@@ -962,7 +959,6 @@ class ConfigVariableBase(ConfigFlags):
     and/or ConfigDeclaration, more or less duplicating the interface presented
     there.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def name(self) -> str: ...
     @property
@@ -1061,7 +1057,6 @@ class ConfigVariable(ConfigVariableBase):
     and/or ConfigDeclaration, more or less duplicating the interface presented
     there.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ConfigVariable) -> None:
         """Use this constructor to make a ConfigVariable of an unspecified type.
@@ -1097,7 +1092,6 @@ class ConfigVariable(ConfigVariableBase):
 
 class ConfigVariableBool(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a boolean type."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: bool
     @property
     def default_value(self) -> bool: ...
@@ -1140,7 +1134,6 @@ class ConfigVariableDouble(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a floating-
     point type.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: float
     @property
     def default_value(self) -> float: ...
@@ -1186,7 +1179,6 @@ class ConfigVariableFilename(ConfigVariable):
     put OS-specific filenames, or filenames based on environment variables, in
     the prc file.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: Filename
     @property
     def default_value(self) -> Filename: ...
@@ -1274,7 +1266,6 @@ class ConfigVariableInt(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as an integer
     type.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: int
     @property
     def default_value(self) -> int: ...
@@ -1317,7 +1308,6 @@ class ConfigVariableInt64(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a 64-bit
     integer type.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: int
     @property
     def default_value(self) -> int: ...
@@ -1367,7 +1357,6 @@ class ConfigVariableList(ConfigVariableBase):
     
     A ConfigVariableList cannot be modified locally.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ConfigVariableList) -> None: ...
     @overload
@@ -1388,8 +1377,6 @@ class ConfigVariableList(ConfigVariableBase):
     def get_unique_value(self, n: int) -> str:
         """Returns the nth unique value of the variable."""
         ...
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
     getNumValues = get_num_values
     getStringValue = get_string_value
     getNumUniqueValues = get_num_unique_values
@@ -1410,7 +1397,6 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     variable, created by using the same name to the constructor, will not
     reflect the local changes.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def value(self) -> DSearchPath: ...
     @property
@@ -1486,8 +1472,6 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         ...
     @overload
     def find_all_files(self, filename: _Filename, results: DSearchPath.Results) -> int: ...
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
     def get_directories(self) -> tuple[Filename, ...]: ...
     operatorTypecastDSearchPath = operator_typecast_DSearchPath
     getValue = get_value
@@ -1506,7 +1490,6 @@ class ConfigVariableSearchPath(ConfigVariableBase):
 
 class ConfigVariableString(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a string type."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: str
     @property
     def default_value(self) -> str: ...
@@ -1516,7 +1499,6 @@ class ConfigVariableString(ConfigVariable):
     def __init__(self, name: str) -> None: ...
     @overload
     def __init__(self, name: str, default_value: str, description: str = ..., flags: int = ...) -> None: ...
-    def __str__(self) -> str: ...
     def __getitem__(self, n: int) -> str: ...
     def __eq__(self, __other: object) -> bool:
         """Comparison operators are handy."""
@@ -1673,7 +1655,6 @@ class IDecryptStream(istream):
     
     Seeking is not supported.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def algorithm(self) -> str: ...
     @property
@@ -1712,7 +1693,6 @@ class OEncryptStream(ostream):
     
     Seeking is not supported.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     algorithm: str
     key_length: int
     iteration_count: int
@@ -2075,7 +2055,6 @@ class IStreamWrapper(StreamWrapperBase):
     A thread may use this class to perform an atomic seek/read/gcount
     operation.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def istream(self) -> istream: ...
     def __init__(self, stream: istream) -> None: ...
@@ -2090,7 +2069,6 @@ class OStreamWrapper(StreamWrapperBase):
     """This class provides a locking wrapper around an arbitrary ostream pointer.
     A thread may use this class to perform an atomic seek/write operation.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def ostream(self) -> ostream: ...
     def __init__(self, stream: ostream) -> None: ...

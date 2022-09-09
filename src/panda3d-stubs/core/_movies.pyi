@@ -67,7 +67,6 @@ class FlacAudio(MovieAudio):
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None:
         """xxx"""
@@ -78,9 +77,6 @@ class FlacAudio(MovieAudio):
     def make(name: _Filename) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class MovieAudioCursor(TypedWritableReferenceCount):
     """A MovieAudio is actually any source that provides a sequence of audio
@@ -93,7 +89,6 @@ class MovieAudioCursor(TypedWritableReferenceCount):
     file at the same time, as long as they use separate MovieAudioCursor
     objects.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, src: MovieAudio) -> None:
         """This constructor returns a null audio stream --- a stream of total silence,
@@ -214,8 +209,6 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         ...
     @overload
     def read_samples(self, n: int, dg: Datagram) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getSource = get_source
     audioRate = audio_rate
     audioChannels = audio_channels
@@ -223,7 +216,6 @@ class MovieAudioCursor(TypedWritableReferenceCount):
     canSeekFast = can_seek_fast
     skipSamples = skip_samples
     readSamples = read_samples
-    getClassType = get_class_type
 
 class FlacAudioCursor(MovieAudioCursor):
     """Implements decoding of FLAC audio files.
@@ -231,7 +223,6 @@ class FlacAudioCursor(MovieAudioCursor):
     @see FlacAudio
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FlacAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
@@ -240,9 +231,6 @@ class FlacAudioCursor(MovieAudioCursor):
         ...
     @overload
     def __init__(self, src: FlacAudio, stream: istream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class MovieVideo(TypedWritableReferenceCount, Namable):
     """A MovieVideo is actually any source that provides a sequence of video
@@ -300,16 +288,12 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
 
 class InkblotVideo(MovieVideo):
     """A cellular automaton that generates an amusing pattern of swirling colors."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: InkblotVideo) -> None:
         """xxx"""
         ...
     @overload
     def __init__(self, x: int, y: int, fps: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class MovieVideoCursor(TypedWritableReferenceCount):
     """A MovieVideo is actually any source that provides a sequence of video
@@ -345,7 +329,6 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         compareTimestamp = compare_timestamp
         getTimestamp = get_timestamp
         getClassType = get_class_type
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: MovieVideoCursor) -> None: ...
     def get_source(self) -> MovieVideo:
         """Get the MovieVideo which this cursor references."""
@@ -463,8 +446,6 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         texture.  The RGB channels of the texture are not touched.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getSource = get_source
     sizeX = size_x
     sizeY = size_y
@@ -477,26 +458,20 @@ class MovieVideoCursor(TypedWritableReferenceCount):
     applyToTexture = apply_to_texture
     applyToTextureRgb = apply_to_texture_rgb
     applyToTextureAlpha = apply_to_texture_alpha
-    getClassType = get_class_type
 
 class InkblotVideoCursor(MovieVideoCursor):
     """A cellular automaton that generates an amusing pattern of swirling colors."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, src: InkblotVideo) -> None:
         """xxx"""
         ...
     @overload
     def __init__(self, __param0: InkblotVideoCursor) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class MicrophoneAudio(MovieAudio):
     """Class MicrophoneAudio provides the means to read raw audio samples from a
     microphone.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def options(self) -> Sequence[MicrophoneAudio]: ...
     @property
@@ -520,14 +495,11 @@ class MicrophoneAudio(MovieAudio):
     def get_rate(self) -> int:
         """Returns the sample rate."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_options(self) -> tuple[MicrophoneAudio, ...]: ...
     getNumOptions = get_num_options
     getOption = get_option
     getChannels = get_channels
     getRate = get_rate
-    getClassType = get_class_type
     getOptions = get_options
 
 class OpusAudio(MovieAudio):
@@ -536,7 +508,6 @@ class OpusAudio(MovieAudio):
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None:
         """xxx"""
@@ -547,9 +518,6 @@ class OpusAudio(MovieAudio):
     def make(name: _Filename) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class OpusAudioCursor(MovieAudioCursor):
     """Interfaces with the libopusfile library to implement decoding of Opus
@@ -558,7 +526,6 @@ class OpusAudioCursor(MovieAudioCursor):
     @see OpusAudio
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: OpusAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
@@ -567,9 +534,6 @@ class OpusAudioCursor(MovieAudioCursor):
         ...
     @overload
     def __init__(self, src: OpusAudio, stream: istream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class UserDataAudio(MovieAudio):
     """A UserDataAudio is a way for the user to manually supply raw audio samples.
@@ -578,7 +542,6 @@ class UserDataAudio(MovieAudio):
     (word); Example for stereo: 1.word = 1.channel,2.word = 2.channel, 3.word =
     1.channel,4.word = 2.channel, etc.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: UserDataAudio) -> None:
         """This constructor returns a UserDataAudio --- a means to supply raw audio
@@ -606,28 +569,20 @@ class UserDataAudio(MovieAudio):
         audio stream.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class UserDataAudioCursor(MovieAudioCursor):
     """A UserDataAudioCursor is a means to manually supply a sequence of raw audio
     samples.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, src: UserDataAudio) -> None: ...
     @overload
     def __init__(self, __param0: UserDataAudioCursor) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class VorbisAudio(MovieAudio):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
     Vorbis audio files.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None:
         """xxx"""
@@ -638,15 +593,11 @@ class VorbisAudio(MovieAudio):
     def make(name: _Filename) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class VorbisAudioCursor(MovieAudioCursor):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
     Vorbis audio files.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: VorbisAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
@@ -655,15 +606,11 @@ class VorbisAudioCursor(MovieAudioCursor):
         ...
     @overload
     def __init__(self, src: VorbisAudio, stream: istream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class WavAudio(MovieAudio):
     """A native PCM .wav loader.  Supported formats are linear PCM, IEEE float,
     A-law and mu-law.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: _Filename) -> None:
         """xxx"""
@@ -674,15 +621,11 @@ class WavAudio(MovieAudio):
     def make(name: _Filename) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class WavAudioCursor(MovieAudioCursor):
     """Used for reading PCM .wav files.  Supported formats are linear PCM, IEEE
     float, A-law and mu-law.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: WavAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
@@ -691,6 +634,3 @@ class WavAudioCursor(MovieAudioCursor):
         ...
     @overload
     def __init__(self, src: WavAudio, stream: istream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type

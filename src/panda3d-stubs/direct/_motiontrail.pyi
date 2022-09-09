@@ -1,11 +1,10 @@
-from typing import Any, ClassVar, overload
+from typing import overload
 from typing_extensions import TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     GeomNode,
     LMatrix4f,
     LVecBase4f,
-    TypeHandle,
     TypedReferenceCount,
     UnalignedLMatrix4f,
     UnalignedLVecBase4f,
@@ -42,7 +41,6 @@ class CMotionTrail(TypedReferenceCount):
     coordinate of the texture corresponds to time and the v coordinate
     corresponds to the "shape" of the motion trail.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """Constructor"""
@@ -90,12 +88,9 @@ class CMotionTrail(TypedReferenceCount):
     def update_motion_trail(self, current_time: float, transform: _Mat4f) -> None:
         """See class header comments."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     resetVertexList = reset_vertex_list
     setGeomNode = set_geom_node
     addVertex = add_vertex
     setParameters = set_parameters
     checkForUpdate = check_for_update
     updateMotionTrail = update_motion_trail
-    getClassType = get_class_type

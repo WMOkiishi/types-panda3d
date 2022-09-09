@@ -105,7 +105,6 @@ class AnimBundle(AnimGroup):
     number of frames of all the channels in the hierarchy (which must all
     match).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def base_frame_rate(self) -> float: ...
     @property
@@ -132,19 +131,15 @@ class AnimBundle(AnimGroup):
         fixed number of frames.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     copyBundle = copy_bundle
     getBaseFrameRate = get_base_frame_rate
     getNumFrames = get_num_frames
-    getClassType = get_class_type
 
 class AnimBundleNode(PandaNode):
     """This is a node that contains a pointer to an AnimBundle.  Like
     PartBundleNode, it exists solely to make it easy to store AnimBundles in
     the scene graph.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def bundle(self) -> AnimBundle: ...
     def __init__(self, name: str, bundle: AnimBundle) -> None:
@@ -161,11 +156,8 @@ class AnimBundleNode(PandaNode):
         Returns NULL if no AnimBundle can be found.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getBundle = get_bundle
     findAnimBundle = find_anim_bundle
-    getClassType = get_class_type
 
 class PartGroup(TypedWritableReferenceCount, Namable):
     """This is the base class for PartRoot and MovingPart.  It defines a hierarchy
@@ -408,15 +400,10 @@ class AnimChannelBase(AnimGroup):
     a table read from an egg file (but possibly computed or generated in any
     other way).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_type(self) -> TypeHandle: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getType = get_type
-    getClassType = get_class_type
 
 class AnimChannel_ACMatrixSwitchType(AnimChannelBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_value(self, frame: int, value: _Mat4f) -> None: ...
     def get_value_no_scale_shear(self, frame: int, value: _Mat4f) -> None:
         """These transform-component methods only have meaning for matrix types."""
@@ -427,8 +414,6 @@ class AnimChannel_ACMatrixSwitchType(AnimChannelBase):
     def get_pos(self, frame: int, pos: _Vec3f) -> None: ...
     def get_shear(self, frame: int, shear: _Vec3f) -> None: ...
     def get_value_type(self) -> TypeHandle: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getValue = get_value
     getValueNoScaleShear = get_value_no_scale_shear
     getScale = get_scale
@@ -437,25 +422,20 @@ class AnimChannel_ACMatrixSwitchType(AnimChannelBase):
     getPos = get_pos
     getShear = get_shear
     getValueType = get_value_type
-    getClassType = get_class_type
 
 class AnimChannel_ACScalarSwitchType(AnimChannelBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_scale(self, frame: int, scale: _Vec3f) -> None: ...
     def get_hpr(self, frame: int, hpr: _Vec3f) -> None: ...
     def get_quat(self, frame: int, quat: _Vec4f) -> None: ...
     def get_pos(self, frame: int, pos: _Vec3f) -> None: ...
     def get_shear(self, frame: int, shear: _Vec3f) -> None: ...
     def get_value_type(self) -> TypeHandle: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getScale = get_scale
     getHpr = get_hpr
     getQuat = get_quat
     getPos = get_pos
     getShear = get_shear
     getValueType = get_value_type
-    getClassType = get_class_type
 
 class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     """An animation channel that accepts a matrix each frame from some dynamic
@@ -466,7 +446,6 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     the programmer should call set_value_node() to indicate the node whose
     transform will be copied to the joint each frame.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value_node: PandaNode
     def set_value(self, value: TransformState | _Mat4f) -> None:
         """`(self, value: LMatrix4f)`:
@@ -490,13 +469,10 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     def get_value_node(self) -> PandaNode:
         """Returns the node that was set via set_value_node(), if any."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     setValueNode = set_value_node
     getValueTransform = get_value_transform
     getValueNode = get_value_node
-    getClassType = get_class_type
 
 class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     """An animation channel that issues a matrix each frame, read from a table
@@ -504,7 +480,6 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     of nine sub-tables, each representing one component of the transform:
     scale, rotate, translate.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     tables: Mapping[Any, ConstPointerToArray_float]
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     @staticmethod
@@ -534,15 +509,12 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     def clear_table(self, table_id: str) -> None:
         """Removes the indicated table from the definition."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isValidId = is_valid_id
     setTable = set_table
     getTable = get_table
     clearAllTables = clear_all_tables
     hasTable = has_table
     clearTable = clear_table
-    getClassType = get_class_type
 
 class AnimChannelScalarDynamic(AnimChannel_ACScalarSwitchType):
     """An animation channel that accepts a scalar each frame from some dynamic
@@ -553,7 +525,6 @@ class AnimChannelScalarDynamic(AnimChannel_ACScalarSwitchType):
     the programmer should call set_value_node() to indicate the node whose X
     component will be copied to the scalar each frame.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: float
     value_node: PandaNode
     def set_value(self, value: float) -> None:
@@ -567,17 +538,13 @@ class AnimChannelScalarDynamic(AnimChannel_ACScalarSwitchType):
         set_value().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     setValueNode = set_value_node
-    getClassType = get_class_type
 
 class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
     """An animation channel that issues a scalar each frame, read from a table
     such as might have been read from an egg file.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     table: ConstPointerToArray_float
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     def set_table(self, table: ConstPointerToArray_float | PointerToArray_float) -> None:
@@ -594,13 +561,10 @@ class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
     def clear_table(self) -> None:
         """Empties the data table."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setTable = set_table
     getTable = get_table
     hasTable = has_table
     clearTable = clear_table
-    getClassType = get_class_type
 
 class AnimControlCollection:
     """This is a named collection of AnimControl pointers.  An AnimControl may be
@@ -762,7 +726,6 @@ class AnimPreloadTable(CopyOnWriteObject):
     
     This table is normally built by an offline tool, such as egg-optchar.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def get_num_anims(self) -> int:
         """Returns the number of animation records in the table."""
@@ -805,8 +768,6 @@ class AnimPreloadTable(CopyOnWriteObject):
         ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNumAnims = get_num_anims
     findAnim = find_anim
     getBasename = get_basename
@@ -816,7 +777,6 @@ class AnimPreloadTable(CopyOnWriteObject):
     removeAnim = remove_anim
     addAnim = add_anim
     addAnimsFrom = add_anims_from
-    getClassType = get_class_type
 
 class PartSubset:
     """This class is used to define a subset of part names to apply to the
@@ -879,20 +839,15 @@ class BindAnimRequest(ModelLoadRequest):
     """This class object manages an asynchronous load-and-bind animation request,
     as issued through PartBundle::load_bind_anim().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: BindAnimRequest) -> None: ...
     @overload
     def __init__(self, name: str, filename: _Filename, options: LoaderOptions, loader: Loader, control: AnimControl, hierarchy_match_flags: int, subset: PartSubset) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class PartBundle(PartGroup):
     """This is the root of a MovingPart hierarchy.  It defines the hierarchy of
     moving parts that make up an animatable object.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     blend_type: _PartBundle_BlendType
     anim_blend_flag: bool
     frame_blend_flag: bool
@@ -1135,8 +1090,6 @@ class PartBundle(PartGroup):
         frame, whether we believe it needs it or not.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_nodes(self) -> tuple[PartBundleNode, ...]: ...
     getAnimPreload = get_anim_preload
     modifyAnimPreload = modify_anim_preload
@@ -1164,7 +1117,6 @@ class PartBundle(PartGroup):
     controlJoint = control_joint
     releaseJoint = release_joint
     forceUpdate = force_update
-    getClassType = get_class_type
     getNodes = get_nodes
     BTLinear = BT_linear
     BTNormalizedLinear = BT_normalized_linear
@@ -1180,7 +1132,6 @@ class PartBundleNode(PandaNode):
     it is also the base class of the Character node type, which adds additional
     functionality.)
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def bundles(self) -> Sequence[PartBundle]: ...
     @property
@@ -1199,14 +1150,11 @@ class PartBundleNode(PandaNode):
         operation, the PartBundleHandle will not.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_bundles(self) -> tuple[PartBundle, ...]: ...
     def get_bundle_handles(self) -> tuple[PartBundleHandle, ...]: ...
     getNumBundles = get_num_bundles
     getBundle = get_bundle
     getBundleHandle = get_bundle_handle
-    getClassType = get_class_type
     getBundles = get_bundles
     getBundleHandles = get_bundle_handles
 
@@ -1221,7 +1169,6 @@ class PartBundleHandle(ReferenceCount):
     store a list of PartBundleHandles instead of on actual PartBundles, so that
     it will be immune to changes from these flatten operations.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     bundle: PartBundle
     @overload
     def __init__(self, bundle: PartBundle) -> None: ...
@@ -1244,7 +1191,6 @@ class MovingPartBase(PartGroup):
     MovingPartBase does not have a particular value type.  See the derived
     template class, MovingPart, for this.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_max_bound(self) -> int:
         """Returns the number of channels that might be bound to this PartGroup.  This
         might not be the actual number of channels, since there might be holes in
@@ -1263,44 +1209,25 @@ class MovingPartBase(PartGroup):
         """
         ...
     def output_value(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getMaxBound = get_max_bound
     getBound = get_bound
     outputValue = output_value
-    getClassType = get_class_type
 
 class MovingPartMatrix(MovingPart_ACMatrixSwitchType):
     """This is a particular kind of MovingPart that accepts a matrix each frame."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class MovingPart_ACMatrixSwitchType(MovingPartBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_value(self) -> LMatrix4f: ...
     def get_default_value(self) -> LMatrix4f: ...
-    getClassType = get_class_type
     getValue = get_value
     getDefaultValue = get_default_value
 
 class MovingPartScalar(MovingPart_ACScalarSwitchType):
     """This is a particular kind of MovingPart that accepts a scalar each frame."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class MovingPart_ACScalarSwitchType(MovingPartBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_value(self) -> float: ...
     def get_default_value(self) -> float: ...
-    getClassType = get_class_type
     getValue = get_value
     getDefaultValue = get_default_value
 

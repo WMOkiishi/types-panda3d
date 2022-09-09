@@ -74,7 +74,6 @@ class RecorderController(TypedReferenceCount):
     """This object manages the process of recording the user's runtime inputs to a
     bam file so that the session can be recreated later.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def begin_record(self, filename: _Filename) -> bool:
         """Begins recording data to the indicated filename.  All of the recorders in
@@ -210,8 +209,6 @@ class RecorderController(TypedReferenceCount):
         the output file.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     beginRecord = begin_record
     beginPlayback = begin_playback
     getStartTime = get_start_time
@@ -232,7 +229,6 @@ class RecorderController(TypedReferenceCount):
     getFrameTie = get_frame_tie
     recordFrame = record_frame
     playFrame = play_frame
-    getClassType = get_class_type
 
 class SocketStreamRecorder(RecorderBase, ReferenceCount):
     """Records any data received from the indicated socket stream.  On playback,

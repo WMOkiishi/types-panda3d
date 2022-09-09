@@ -42,7 +42,6 @@ class TextGlyph(TypedReferenceCount):
     """A representation of a single glyph (character) from a font.  This is a
     piece of renderable geometry of some kind.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def character(self) -> int: ...
     @property
@@ -92,8 +91,6 @@ class TextGlyph(TypedReferenceCount):
         modify it.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getCharacter = get_character
     hasQuad = has_quad
     getQuad = get_quad
@@ -101,7 +98,6 @@ class TextGlyph(TypedReferenceCount):
     getAdvance = get_advance
     isWhitespace = is_whitespace
     getGeom = get_geom
-    getClassType = get_class_type
 
 class TextFont(TypedReferenceCount, Namable):
     """An encapsulation of a font; i.e.  a set of glyphs that may be assembled
@@ -181,7 +177,6 @@ class DynamicTextGlyph(TextGlyph):
     DynamicTextFont.  This keeps some additional information, such as where the
     glyph appears on a texture map.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def page(self) -> DynamicTextPage: ...
     def get_page(self) -> DynamicTextPage:
@@ -233,8 +228,6 @@ class DynamicTextGlyph(TextGlyph):
         renderer.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPage = get_page
     getLeft = get_left
     getBottom = get_bottom
@@ -244,14 +237,12 @@ class DynamicTextGlyph(TextGlyph):
     getUvBottom = get_uv_bottom
     getUvRight = get_uv_right
     getUvTop = get_uv_top
-    getClassType = get_class_type
 
 class DynamicTextPage(Texture):
     """A single "page" of a DynamicTextFont.  This is a single texture that holds
     a number of glyphs for rendering.  The font starts out with one page, and
     will add more as it needs them.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: DynamicTextPage) -> None: ...
     def get_size(self) -> LVecBase2i:
         """Returns the size of the page (texture), in pixels."""
@@ -265,13 +256,10 @@ class DynamicTextPage(Texture):
     def is_empty(self) -> bool:
         """Returns true if the page has no glyphs, false otherwise."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getSize = get_size
     getXSize = get_x_size
     getYSize = get_y_size
     isEmpty = is_empty
-    getClassType = get_class_type
 
 class DynamicTextFont(TextFont, FreetypeFont):
     """A DynamicTextFont is a special TextFont object that rasterizes its glyphs
@@ -711,10 +699,6 @@ class GeomTextGlyph(Geom):
     the glyph, so we can determine the actual usage count on a dynamic glyph
     (and thus know when it is safe to recycle the glyph).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class StaticTextFont(TextFont):
     """A StaticTextFont is loaded up from a model that was previously generated
@@ -722,7 +706,6 @@ class StaticTextFont(TextFont):
     available for use.  It doesn't require linking with any external libraries
     like FreeType.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, font_def: PandaNode, cs: _CoordinateSystem = ...) -> None:
         """The constructor expects the root node to a model generated via egg-mkfont,
         which consists of a set of models, one per each character in the font.
@@ -732,9 +715,6 @@ class StaticTextFont(TextFont):
         coordinate system will be the direction of the top of the letters.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class TextProperties:
     """This defines the set of visual properties that may be assigned to the

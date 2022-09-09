@@ -43,7 +43,6 @@ class CollisionSolid(CopyOnWriteObject):
     subclass for each basic shape of solid, and double-dispatch function calls
     handle the subset of the N*N intersection tests that we care about.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     tangible: bool
     respect_effective_normal: bool
     bounds: BoundingVolume
@@ -103,8 +102,6 @@ class CollisionSolid(CopyOnWriteObject):
         ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getCollisionOrigin = get_collision_origin
     setTangible = set_tangible
     isTangible = is_tangible
@@ -116,11 +113,9 @@ class CollisionSolid(CopyOnWriteObject):
     getRespectEffectiveNormal = get_respect_effective_normal
     getBounds = get_bounds
     setBounds = set_bounds
-    getClassType = get_class_type
 
 class CollisionBox(CollisionSolid):
     """A cuboid collision volume or object."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def center(self) -> LPoint3f: ...
     @property
@@ -167,8 +162,6 @@ class CollisionBox(CollisionSolid):
     def get_min(self) -> LPoint3f: ...
     def get_max(self) -> LPoint3f: ...
     def get_dimensions(self) -> LVector3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNumPoints = get_num_points
     getPointAabb = get_point_aabb
     getPoint = get_point
@@ -180,7 +173,6 @@ class CollisionBox(CollisionSolid):
     getMin = get_min
     getMax = get_max
     getDimensions = get_dimensions
-    getClassType = get_class_type
 
 class CollisionCapsule(CollisionSolid):
     """This implements a solid consisting of a cylinder with hemispherical endcaps,
@@ -188,7 +180,6 @@ class CollisionCapsule(CollisionSolid):
     
     This shape was previously erroneously called CollisionTube.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     point_a: LPoint3f
     point_b: LPoint3f
     radius: float
@@ -208,15 +199,12 @@ class CollisionCapsule(CollisionSolid):
     def get_point_b(self) -> LPoint3f: ...
     def set_radius(self, radius: float) -> None: ...
     def get_radius(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setPointA = set_point_a
     getPointA = get_point_a
     setPointB = set_point_b
     getPointB = get_point_b
     setRadius = set_radius
     getRadius = get_radius
-    getClassType = get_class_type
 
 class CollisionHandler(TypedReferenceCount):
     """The abstract interface to a number of classes that decide what to do when a
@@ -224,11 +212,7 @@ class CollisionHandler(TypedReferenceCount):
     CollisionTraverser that is processing collisions in order to specify how to
     dispatch detected collisions.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: CollisionHandler) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CollisionNode(PandaNode):
     """A node in the scene graph that can hold any number of CollisionSolids.
@@ -236,14 +220,11 @@ class CollisionNode(PandaNode):
     will collide with, or an animated object twirling around in the world and
     running into things.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     from_collide_mask: BitMask_uint32_t_32
-    into_collide_mask: BitMask_uint32_t_32
     solids: Sequence[CollisionSolid]
     collider_sort: int
     @property
     def default_collide_mask(self) -> BitMask_uint32_t_32: ...
-    def __init__(self, name: str) -> None: ...
     def set_collide_mask(self, mask: BitMask_uint32_t_32) -> None:
         """Simultaneously sets both the "from" and "into" CollideMask values to the
         same thing.
@@ -317,8 +298,6 @@ class CollisionNode(PandaNode):
     def get_default_collide_mask() -> BitMask_uint32_t_32:
         """Returns the default into_collide_mask assigned to new CollisionNodes."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_solids(self) -> tuple[CollisionSolid, ...]: ...
     setCollideMask = set_collide_mask
     setFromCollideMask = set_from_collide_mask
@@ -336,7 +315,6 @@ class CollisionNode(PandaNode):
     getColliderSort = get_collider_sort
     setColliderSort = set_collider_sort
     getDefaultCollideMask = get_default_collide_mask
-    getClassType = get_class_type
     getSolids = get_solids
 
 class CollisionTraverser(Namable):
@@ -349,7 +327,6 @@ class CollisionTraverser(Namable):
     indicated root, calling the appropriate CollisionHandler for each detected
     collision.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     respect_preV_transform: bool
     respect_prev_transform: bool
     recorder: CollisionRecorder
@@ -464,10 +441,7 @@ class CollisionTraverser(Namable):
     def hide_collisions(self) -> None:
         """Undoes the effect of a previous call to show_collisions()."""
         ...
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_colliders(self) -> tuple[NodePath, ...]: ...
     setRespectPrevTransform = set_respect_prev_transform
     getRespectPrevTransform = get_respect_prev_transform
@@ -484,7 +458,6 @@ class CollisionTraverser(Namable):
     clearRecorder = clear_recorder
     showCollisions = show_collisions
     hideCollisions = hide_collisions
-    getClassType = get_class_type
     getColliders = get_colliders
 
 class CollisionRecorder(TypedObject):
@@ -492,11 +465,7 @@ class CollisionRecorder(TypedObject):
     It is a virtual base class that just provides an interface for recording
     collisions tested and detected each frame.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CollisionEntry(TypedWritableReferenceCount):
     """Defines a single collision event.  One of these is created for each
@@ -508,7 +477,6 @@ class CollisionEntry(TypedWritableReferenceCount):
     collision.  It is up to the handler to determine what information is known
     and to do the right thing with it.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     t: float
     @property
     def from_solid(self) -> CollisionSolid: ...
@@ -720,8 +688,6 @@ class CollisionEntry(TypedWritableReferenceCount):
         ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getFrom = get_from
     hasInto = has_into
     getInto = get_into
@@ -750,10 +716,8 @@ class CollisionEntry(TypedWritableReferenceCount):
     getContactPos = get_contact_pos
     getContactNormal = get_contact_normal
     getAllContactInfo = get_all_contact_info
-    getClassType = get_class_type
 
 class CollisionPlane(CollisionSolid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     plane: LPlanef
     @property
     def normal(self) -> LVector3f: ...
@@ -768,19 +732,15 @@ class CollisionPlane(CollisionSolid):
     def flip(self) -> None:
         """Convenience method to flip the plane in-place."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNormal = get_normal
     distToPlane = dist_to_plane
     setPlane = set_plane
     getPlane = get_plane
-    getClassType = get_class_type
 
 class CollisionFloorMesh(CollisionSolid):
     """This object represents a solid made entirely of triangles, which will only
     be tested again z axis aligned rays
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def vertices(self) -> Sequence[LPoint3f]: ...
     @property
@@ -800,8 +760,6 @@ class CollisionFloorMesh(CollisionSolid):
     def get_vertex(self, index: int) -> LPoint3f: ...
     def get_num_triangles(self) -> int: ...
     def get_triangle(self, index: int) -> LPoint3i: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_vertices(self) -> tuple[LPoint3f, ...]: ...
     def get_triangles(self) -> tuple[LPoint3i, ...]: ...
     addVertex = add_vertex
@@ -810,12 +768,10 @@ class CollisionFloorMesh(CollisionSolid):
     getVertex = get_vertex
     getNumTriangles = get_num_triangles
     getTriangle = get_triangle
-    getClassType = get_class_type
     getVertices = get_vertices
     getTriangles = get_triangles
 
 class CollisionPolygon(CollisionPlane):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def points(self) -> Sequence[LPoint3f]: ...
     @property
@@ -853,15 +809,12 @@ class CollisionPolygon(CollisionPlane):
         is safely convex.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_points(self) -> tuple[LPoint3f, ...]: ...
     getNumPoints = get_num_points
     getPoint = get_point
     verifyPoints = verify_points
     isValid = is_valid
     isConcave = is_concave
-    getClassType = get_class_type
     getPoints = get_points
 
 class CollisionHandlerEvent(CollisionHandler):
@@ -870,7 +823,6 @@ class CollisionHandlerEvent(CollisionHandler):
     moving object or the struck object, or both.  The first parameter of the
     event will be a pointer to the CollisionEntry that triggered it.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def in_patterns(self) -> Sequence[str]: ...
     @property
@@ -1018,8 +970,6 @@ class CollisionHandlerEvent(CollisionHandler):
         __getstate__.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_in_patterns(self) -> tuple[str, ...]: ...
     def get_again_patterns(self) -> tuple[str, ...]: ...
     def get_out_patterns(self) -> tuple[str, ...]: ...
@@ -1040,7 +990,6 @@ class CollisionHandlerEvent(CollisionHandler):
     getOutPattern = get_out_pattern
     writeDatagram = write_datagram
     readDatagram = read_datagram
-    getClassType = get_class_type
     getInPatterns = get_in_patterns
     getAgainPatterns = get_again_patterns
     getOutPatterns = get_out_patterns
@@ -1050,7 +999,6 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
     physical effect on their moving bodies: they need to update the nodes'
     positions based on the effects of the collision.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     center: NodePath
     @overload
     def add_collider(self, collider: NodePath, target: NodePath) -> None:
@@ -1111,8 +1059,6 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
         of this call.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addCollider = add_collider
     removeCollider = remove_collider
     hasCollider = has_collider
@@ -1122,7 +1068,6 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
     getCenter = get_center
     hasCenter = has_center
     hasContact = has_contact
-    getClassType = get_class_type
 
 class CollisionHandlerFloor(CollisionHandlerPhysical):
     """A specialized kind of CollisionHandler that sets the Z height of the
@@ -1130,7 +1075,6 @@ class CollisionHandlerFloor(CollisionHandlerPhysical):
     each frame.  It's intended to implement walking around on a floor of
     varying height by casting a ray down from the avatar's head.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     offset: float
     reach: float
     max_velocity: float
@@ -1164,61 +1108,29 @@ class CollisionHandlerFloor(CollisionHandlerPhysical):
         towards a floor below it, in units per second.  See set_max_velocity().
         """
         ...
-    def write_datagram(self, destination: Datagram) -> None:
-        """Serializes this object, to implement pickle support."""
-        ...
-    def read_datagram(self, source: DatagramIterator) -> None:
-        """Restores the object state from the given datagram, previously obtained using
-        __getstate__.
-        """
-        ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setOffset = set_offset
     getOffset = get_offset
     setReach = set_reach
     getReach = get_reach
     setMaxVelocity = set_max_velocity
     getMaxVelocity = get_max_velocity
-    writeDatagram = write_datagram
-    readDatagram = read_datagram
-    getClassType = get_class_type
 
 class CollisionHandlerPusher(CollisionHandlerPhysical):
     """A specialized kind of CollisionHandler that simply pushes back on things
     that attempt to move into solid walls.  This is the simplest kind of "real-
     world" collisions you can have.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     horizontal: bool
     def __init__(self) -> None: ...
     def set_horizontal(self, flag: bool) -> None: ...
     def get_horizontal(self) -> bool: ...
-    def write_datagram(self, destination: Datagram) -> None:
-        """Serializes this object, to implement pickle support."""
-        ...
-    def read_datagram(self, source: DatagramIterator) -> None:
-        """Restores the object state from the given datagram, previously obtained using
-        __getstate__.
-        """
-        ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setHorizontal = set_horizontal
     getHorizontal = get_horizontal
-    writeDatagram = write_datagram
-    readDatagram = read_datagram
-    getClassType = get_class_type
 
 class CollisionHandlerFluidPusher(CollisionHandlerPusher):
     """A CollisionHandlerPusher that makes use of timing and spatial information
     from fluid collisions to improve collision response
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CollisionHandlerGravity(CollisionHandlerPhysical):
     """A specialized kind of CollisionHandler that sets the Z height of the
@@ -1226,7 +1138,6 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
     each frame.  It's intended to implement walking around on a floor of
     varying height by casting a ray down from the avatar's head.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     offset: float
     reach: float
     velocity: float
@@ -1324,16 +1235,6 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
     def get_legacy_mode(self) -> bool:
         """returns true if legacy mode is enabled"""
         ...
-    def write_datagram(self, destination: Datagram) -> None:
-        """Serializes this object, to implement pickle support."""
-        ...
-    def read_datagram(self, source: DatagramIterator) -> None:
-        """Restores the object state from the given datagram, previously obtained using
-        __getstate__.
-        """
-        ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setOffset = set_offset
     getOffset = get_offset
     setReach = set_reach
@@ -1351,9 +1252,6 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
     getMaxVelocity = get_max_velocity
     setLegacyMode = set_legacy_mode
     getLegacyMode = get_legacy_mode
-    writeDatagram = write_datagram
-    readDatagram = read_datagram
-    getClassType = get_class_type
 
 class CollisionHandlerHighestEvent(CollisionHandlerEvent):
     """A specialized kind of CollisionHandler that throws an event for each
@@ -1361,7 +1259,6 @@ class CollisionHandlerHighestEvent(CollisionHandlerEvent):
     moving object or the struck object, or both.  The first parameter of the
     event will be a pointer to the CollisionEntry that triggered it.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """The default CollisionHandlerEvent will throw no events.  Its pattern
@@ -1371,9 +1268,6 @@ class CollisionHandlerHighestEvent(CollisionHandlerEvent):
         ...
     @overload
     def __init__(self, __param0: CollisionHandlerHighestEvent) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CollisionHandlerQueue(CollisionHandler):
     """A special kind of CollisionHandler that does nothing except remember the
@@ -1381,7 +1275,6 @@ class CollisionHandlerQueue(CollisionHandler):
     then be queried by the calling function.  It's primarily useful when a
     simple intersection test is being made, e.g.  for picking from the window.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def entries(self) -> Sequence[CollisionEntry]: ...
     @overload
@@ -1406,19 +1299,15 @@ class CollisionHandlerQueue(CollisionHandler):
         ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_entries(self) -> tuple[CollisionEntry, ...]: ...
     sortEntries = sort_entries
     clearEntries = clear_entries
     getNumEntries = get_num_entries
     getEntry = get_entry
-    getClassType = get_class_type
     getEntries = get_entries
 
 class CollisionSphere(CollisionSolid):
     """A spherical collision volume or object."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     center: LPoint3f
     radius: float
     @overload
@@ -1432,13 +1321,10 @@ class CollisionSphere(CollisionSolid):
     def get_center(self) -> LPoint3f: ...
     def set_radius(self, radius: float) -> None: ...
     def get_radius(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setCenter = set_center
     getCenter = get_center
     setRadius = set_radius
     getRadius = get_radius
-    getClassType = get_class_type
 
 class CollisionInvSphere(CollisionSphere):
     """An inverted sphere: this is a sphere whose collision surface is the inside
@@ -1446,21 +1332,12 @@ class CollisionInvSphere(CollisionSphere):
     everything inside is empty space.  Useful for constraining objects to
     remain within a spherical perimeter.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self, center: _Vec3f, radius: float) -> None: ...
-    @overload
-    def __init__(self, cx: float, cy: float, cz: float, radius: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CollisionRay(CollisionSolid):
     """An infinite ray, with a specific origin and direction.  It begins at its
     origin and continues in one direction to infinity, and it has no radius.
     Useful for picking from a window, or for gravity effects.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     origin: LPoint3f
     direction: LVector3f
     @overload
@@ -1503,20 +1380,16 @@ class CollisionRay(CollisionSolid):
         ...
     @overload
     def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setOrigin = set_origin
     getOrigin = get_origin
     setDirection = set_direction
     getDirection = get_direction
     setFromLens = set_from_lens
-    getClassType = get_class_type
 
 class CollisionLine(CollisionRay):
     """An infinite line, similar to a CollisionRay, except that it extends in both
     directions.  It is, however, directional.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """Creates an invalid line.  This isn't terribly useful; it's expected that
@@ -1528,9 +1401,6 @@ class CollisionLine(CollisionRay):
     def __init__(self, origin: _Vec3f, direction: _Vec3f) -> None: ...
     @overload
     def __init__(self, ox: float, oy: float, oz: float, dx: float, dy: float, dz: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CollisionParabola(CollisionSolid):
     """This defines a parabolic arc, or subset of an arc, similar to the path of a
@@ -1540,7 +1410,6 @@ class CollisionParabola(CollisionSolid):
     Think of it as a wire bending from point t1 to point t2 along the path of a
     pre-defined parabola.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     parabola: LParabolaf
     t1: float
     t2: float
@@ -1574,15 +1443,12 @@ class CollisionParabola(CollisionSolid):
     def get_t2(self) -> float:
         """Returns the ending point on the parabola."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setParabola = set_parabola
     getParabola = get_parabola
     setT1 = set_t1
     getT1 = get_t1
     setT2 = set_t2
     getT2 = get_t2
-    getClassType = get_class_type
 
 class CollisionSegment(CollisionSolid):
     """A finite line segment, with two specific endpoints but no thickness.  It's
@@ -1592,7 +1458,6 @@ class CollisionSegment(CollisionSolid):
     point of the segment is intersecting a solid, the reported intersection
     point is generally the closest on the segment to point A.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     point_a: LPoint3f
     point_b: LPoint3f
     @overload
@@ -1635,14 +1500,11 @@ class CollisionSegment(CollisionSolid):
         ...
     @overload
     def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setPointA = set_point_a
     getPointA = get_point_a
     setPointB = set_point_b
     getPointB = get_point_b
     setFromLens = set_from_lens
-    getClassType = get_class_type
 
 class CollisionVisualizer(PandaNode, CollisionRecorder):
     """This class is used to help debug the work the collisions system is doing.

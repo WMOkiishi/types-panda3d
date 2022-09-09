@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, overload
+from typing import overload
 from typing_extensions import TypeAlias
 from panda3d.core import (
     LMatrix3f,
@@ -14,7 +14,6 @@ from panda3d.core import (
     PartGroup,
     RenderEffect,
     TransformState,
-    TypeHandle,
     UnalignedLMatrix4f,
     VertexSlider,
     VertexTransform,
@@ -28,7 +27,6 @@ class CharacterJoint(MovingPartMatrix):
     """This represents one joint of the character's animation, containing an
     animating transform matrix.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, character: Character, root: PartBundle, parent: PartGroup, name: str, default_value: _Mat4f) -> None: ...
     def add_net_transform(self, node: PandaNode) -> bool:
         """Adds the indicated node to the list of nodes that will be updated each
@@ -122,8 +120,6 @@ class CharacterJoint(MovingPartMatrix):
     def get_character(self) -> Character:
         """Returns the Character that owns this joint."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addNetTransform = add_net_transform
     removeNetTransform = remove_net_transform
     hasNetTransform = has_net_transform
@@ -138,27 +134,21 @@ class CharacterJoint(MovingPartMatrix):
     getTransformState = get_transform_state
     getNetTransform = get_net_transform
     getCharacter = get_character
-    getClassType = get_class_type
 
 class CharacterSlider(MovingPartScalar):
     """This is a morph slider within the character.  It's simply a single
     floating-point value that animates generally between 0 and 1, that controls
     the effects of one or more morphs within the character.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, parent: PartGroup, name: str) -> None: ...
     @overload
     def __init__(self, parent: PartGroup, name: str, default_value: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CharacterVertexSlider(VertexSlider):
     """This is a specialization on VertexSlider that returns the slider value
     associated with a particular CharacterSlider object.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, char_slider: CharacterSlider) -> None:
         """Constructs a new object that converts vertices from the indicated joint's
         coordinate space, into the other indicated joint's space.
@@ -169,10 +159,7 @@ class CharacterVertexSlider(VertexSlider):
         value.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getCharSlider = get_char_slider
-    getClassType = get_class_type
 
 class JointVertexTransform(VertexTransform):
     """This is a specialization on VertexTransform that returns the transform
@@ -184,7 +171,6 @@ class JointVertexTransform(VertexTransform):
     Multiple combinations of these with different weights are used to implement
     soft-skinned vertices for an animated character.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, joint: CharacterJoint) -> None:
         """Constructs a new object that converts vertices from the indicated joint's
         coordinate space, into the other indicated joint's space.
@@ -193,16 +179,12 @@ class JointVertexTransform(VertexTransform):
     def get_joint(self) -> CharacterJoint:
         """Returns the joint for which this object returns the transform."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getJoint = get_joint
-    getClassType = get_class_type
 
 class Character(PartBundleNode):
     """An animated character, with skeleton-morph animation and either soft-
     skinned or hard-skinned vertices.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: Character) -> None: ...
     @overload
@@ -310,8 +292,6 @@ class Character(PartBundleNode):
     def force_update(self) -> None:
         """Recalculates the character even if we think it doesn't need it."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getBundle = get_bundle
     mergeBundles = merge_bundles
     setLodAnimation = set_lod_animation
@@ -322,11 +302,9 @@ class Character(PartBundleNode):
     writePartValues = write_part_values
     updateToNow = update_to_now
     forceUpdate = force_update
-    getClassType = get_class_type
 
 class CharacterJointBundle(PartBundle):
     """The collection of all the joints and sliders in the character."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None:
         """Normally, there is no need to create a CharacterJointBundle directly.  The
         Character node will automatically create one for itself.
@@ -335,10 +313,7 @@ class CharacterJointBundle(PartBundle):
     def get_node(self, n: int) -> Character:
         """Returns the nth Character associated with this PartBundle."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode = get_node
-    getClassType = get_class_type
 
 class CharacterJointEffect(RenderEffect):
     """This effect will be added automatically to a node by
@@ -349,7 +324,6 @@ class CharacterJointEffect(RenderEffect):
     relative transform of the affected node will automatically force the
     indicated character to be updated first.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def make(character: Character) -> RenderEffect:
         """Constructs a new CharacterJointEffect object that references the indicated
@@ -363,7 +337,4 @@ class CharacterJointEffect(RenderEffect):
         relative transform is queried, or NULL if there is no such character.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getCharacter = get_character
-    getClassType = get_class_type

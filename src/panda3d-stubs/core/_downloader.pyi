@@ -9,7 +9,6 @@ from panda3d.core import (
     HashVal,
     Ramfile,
     ReferenceCount,
-    TypeHandle,
     TypedReferenceCount,
     VirtualFile,
     VirtualFileMount,
@@ -235,7 +234,6 @@ class URLSpec:
     def __init__(self, url: str, server_name_expected: bool = ...) -> None: ...
     @overload
     def __init__(self, url: URLSpec, path: _Filename) -> None: ...
-    def __str__(self) -> str: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -687,7 +685,6 @@ class HTTPClient(ReferenceCount):
     There is a default, global HTTPClient available in
     HTTPClient::get_global_ptr().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     VS_no_verify: ClassVar[Literal[0]]
     VS_no_date_check: ClassVar[Literal[1]]
     VS_normal: ClassVar[Literal[2]]
@@ -1322,7 +1319,6 @@ class HTTPChannel(TypedReferenceCount):
     requested from the same HTTPChannel until the first document has been fully
     retrieved.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     SC_incomplete: ClassVar[Literal[0]]
     SC_internal_error: ClassVar[Literal[1]]
     SC_no_connection: ClassVar[Literal[2]]
@@ -1982,8 +1978,6 @@ class HTTPChannel(TypedReferenceCount):
         retrieved.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_redirect_steps(self) -> tuple[URLSpec, ...]: ...
     getClient = get_client
     isValid = is_valid
@@ -2059,7 +2053,6 @@ class HTTPChannel(TypedReferenceCount):
     getBytesDownloaded = get_bytes_downloaded
     getBytesRequested = get_bytes_requested
     isDownloadComplete = is_download_complete
-    getClassType = get_class_type
     getRedirectSteps = get_redirect_steps
     SCIncomplete = SC_incomplete
     SCInternalError = SC_internal_error
@@ -2374,7 +2367,6 @@ class MultiplexStream(ostream):
     a disk file or to system logging utilities.  It's a very handy thing to set
     Notify to refer to when running in batch mode.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def add_ostream(self, out: ostream, delete_later: bool = ...) -> None:
         """Adds the indicated generic ostream to the multiplex output.  The ostream
@@ -2410,14 +2402,9 @@ class VirtualFileHTTP(VirtualFile):
     VirtualFileSystem, allowing models etc.  to be loaded directly from a web
     page.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class VirtualFileMountHTTP(VirtualFileMount):
     """Maps a web page (URL root) into the VirtualFileSystem."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, root: URLSpec, http: HTTPClient = ...) -> None: ...
     def get_http_client(self) -> HTTPClient:
         """Returns the HTTPClient object that services this mount point."""
@@ -2436,12 +2423,9 @@ class VirtualFileMountHTTP(VirtualFileMount):
         have fiddled with some config settings.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getHttpClient = get_http_client
     getRoot = get_root
     reloadVfsMountUrl = reload_vfs_mount_url
-    getClassType = get_class_type
 
 class Patcher:
     """Applies a patch synchronously"""
@@ -2462,7 +2446,6 @@ class StringStream(iostream):
     buffer, which can be retrieved and/or set as a string in Python 2 or a
     bytes object in Python 3.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     data = ...
     @overload
     def __init__(self) -> None: ...

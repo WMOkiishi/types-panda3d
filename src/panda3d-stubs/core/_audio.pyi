@@ -1,5 +1,5 @@
 from os import PathLike
-from typing import Any, ClassVar, overload
+from typing import ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 from panda3d.core import (
     AsyncTask,
@@ -8,7 +8,6 @@ from panda3d.core import (
     LMatrix3f,
     LVecBase3f,
     MovieAudio,
-    TypeHandle,
     TypedReferenceCount,
     ostream,
 )
@@ -19,7 +18,6 @@ _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLik
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class FilterProperties(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -60,8 +58,6 @@ class FilterProperties(TypedReferenceCount):
     def add_compress(self, threshold: float, attack: float, release: float, gainmakeup: float) -> None:
         """Add a compress filter to the end of the DSP chain."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addLowpass = add_lowpass
     addHighpass = add_highpass
     addEcho = add_echo
@@ -73,10 +69,8 @@ class FilterProperties(TypedReferenceCount):
     addChorus = add_chorus
     addSfxreverb = add_sfxreverb
     addCompress = add_compress
-    getClassType = get_class_type
 
 class AudioSound(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     BAD: ClassVar[Literal[0]]
     READY: ClassVar[Literal[1]]
     PLAYING: ClassVar[Literal[2]]
@@ -181,8 +175,6 @@ class AudioSound(TypedReferenceCount):
     def status(self) -> _AudioSound_SoundStatus: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setLoop = set_loop
     getLoop = get_loop
     setLoopCount = set_loop_count
@@ -212,10 +204,8 @@ class AudioSound(TypedReferenceCount):
     getPriority = get_priority
     setPriority = set_priority
     configureFilters = configure_filters
-    getClassType = get_class_type
 
 class AudioManager(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     SPEAKERMODE_raw: ClassVar[Literal[0]]
     SPEAKERMODE_mono: ClassVar[Literal[1]]
     SPEAKERMODE_stereo: ClassVar[Literal[2]]
@@ -351,8 +341,6 @@ class AudioManager(TypedReferenceCount):
     def set_speaker_configuration(self, speaker1: _Vec3f, speaker2: _Vec3f = ..., speaker3: _Vec3f = ..., speaker4: _Vec3f = ..., speaker5: _Vec3f = ..., speaker6: _Vec3f = ..., speaker7: _Vec3f = ..., speaker8: _Vec3f = ..., speaker9: _Vec3f = ...) -> None:
         """set_speaker_configuration is a Miles only method."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getSpeakerSetup = get_speaker_setup
     setSpeakerSetup = set_speaker_setup
     configureFilters = configure_filters
@@ -381,7 +369,6 @@ class AudioManager(TypedReferenceCount):
     audio3dGetDropOffFactor = audio_3d_get_drop_off_factor
     getDlsPathname = get_dls_pathname
     setSpeakerConfiguration = set_speaker_configuration
-    getClassType = get_class_type
     SPEAKERMODERaw = SPEAKERMODE_raw
     SPEAKERMODEMono = SPEAKERMODE_mono
     SPEAKERMODEStereo = SPEAKERMODE_stereo
@@ -411,7 +398,6 @@ class AudioLoadRequest(AsyncTask):
     with any AsyncTaskManager.  Create a new AudioLoadRequest, and add it to
     the loader via load_async(), to begin an asynchronous load.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AudioLoadRequest) -> None:
         """Create a new AudioLoadRequest, and add it to the loader via load_async(),
@@ -448,11 +434,8 @@ class AudioLoadRequest(AsyncTask):
         @deprecated Use result() instead.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getAudioManager = get_audio_manager
     getFilename = get_filename
     getPositional = get_positional
     isReady = is_ready
     getSound = get_sound
-    getClassType = get_class_type

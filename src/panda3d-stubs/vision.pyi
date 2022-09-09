@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from os import PathLike
 from typing import Any, ClassVar
 from typing_extensions import TypeAlias
-from panda3d.core import ConfigVariableFilename, Filename, MovieVideo, NodePath, Texture, TypeHandle, ostream
+from panda3d.core import ConfigVariableFilename, Filename, MovieVideo, NodePath, Texture, ostream
 
 _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
 
@@ -63,7 +63,6 @@ class WebcamVideo(MovieVideo):
     """Allows you to open a webcam or other video capture device as a video
     stream.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def options(self) -> Sequence[WebcamVideo]: ...
     @staticmethod
@@ -96,8 +95,6 @@ class WebcamVideo(MovieVideo):
         FPS to the output stream.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_options(self) -> tuple[WebcamVideo, ...]: ...
     getNumOptions = get_num_options
     getOption = get_option
@@ -105,5 +102,4 @@ class WebcamVideo(MovieVideo):
     getSizeY = get_size_y
     getFps = get_fps
     getPixelFormat = get_pixel_format
-    getClassType = get_class_type
     getOptions = get_options

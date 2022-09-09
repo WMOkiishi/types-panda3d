@@ -180,7 +180,6 @@ class AsyncFuture(TypedReferenceCount):
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     done_event: str
     @overload
     def __init__(self) -> None:
@@ -236,13 +235,10 @@ class AsyncFuture(TypedReferenceCount):
     @overload
     def wait(self, timeout: float) -> None: ...
     def set_result(self, __param0) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setDoneEvent = set_done_event
     getDoneEvent = get_done_event
     addDoneCallback = add_done_callback
     setResult = set_result
-    getClassType = get_class_type
 
 class AsyncTask(AsyncFuture, Namable):
     """This class represents a concrete task performed by an AsyncManager.
@@ -1017,14 +1013,10 @@ class AsyncTaskPause(AsyncTask):
     specified number of seconds and then finish.  It's intended to be used
     within an AsyncTaskSequence.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AsyncTaskPause) -> None: ...
     @overload
     def __init__(self, delay: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
     """A special kind of task that serves as a list of tasks internally.  Each
@@ -1126,7 +1118,6 @@ class ButtonEventList(ParamValueBase):
     usually used only in the data graph, to transmit the recent button presses,
     but it may be used anywhere a list of ButtonEvents is desired.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def events(self) -> Sequence[ButtonEvent]: ...
     @overload
@@ -1158,14 +1149,11 @@ class ButtonEventList(ParamValueBase):
         """
         ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addEvent = add_event
     getNumEvents = get_num_events
     getEvent = get_event
     addEvents = add_events
     updateMods = update_mods
-    getClassType = get_class_type
 
 class Event(TypedReferenceCount):
     """A named event, possibly with parameters.  Anyone in any thread may throw an
@@ -1176,7 +1164,6 @@ class Event(TypedReferenceCount):
     to get its name the Python code.  Now it just copies the Namable interface
     in.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     @property
     def parameters(self) -> Sequence[EventParameter]: ...
@@ -1198,8 +1185,6 @@ class Event(TypedReferenceCount):
     def has_receiver(self) -> bool: ...
     def clear_receiver(self) -> None: ...
     def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_parameters(self) -> tuple[EventParameter, ...]: ...
     setName = set_name
     clearName = clear_name
@@ -1210,7 +1195,6 @@ class Event(TypedReferenceCount):
     getParameter = get_parameter
     hasReceiver = has_receiver
     clearReceiver = clear_receiver
-    getClassType = get_class_type
     getParameters = get_parameters
 
 class EventHandler(TypedObject):
@@ -1222,7 +1206,6 @@ class EventHandler(TypedObject):
     entirely by the scripting language, e.g.  via Scheme hooks or the messenger
     in Python.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, ev_queue: EventQueue) -> None: ...
     def get_future(self, event_name: str) -> AsyncFuture:
         """Returns a pending future that will be marked as done when the event is next
@@ -1245,13 +1228,10 @@ class EventHandler(TypedObject):
         object has not yet been created, this will create it.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getFuture = get_future
     processEvents = process_events
     dispatchEvent = dispatch_event
     getGlobalEventHandler = get_global_event_handler
-    getClassType = get_class_type
 
 class EventQueue:
     """A queue of pending events.  As events are thrown, they are added to this
@@ -1286,7 +1266,6 @@ class PointerEventList(ParamValueBase):
     usually used only in the data graph, to transmit the recent pointer
     presses, but it may be used anywhere a list of PointerEvents is desired.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def get_num_events(self) -> int:
         """Returns the number of events in the list."""
@@ -1366,8 +1345,6 @@ class PointerEventList(ParamValueBase):
         to be in order to be considered significant.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNumEvents = get_num_events
     getInWindow = get_in_window
     getXpos = get_xpos
@@ -1383,14 +1360,12 @@ class PointerEventList(ParamValueBase):
     addEvent = add_event
     totalTurns = total_turns
     matchPattern = match_pattern
-    getClassType = get_class_type
 
 @final
 class PythonTask(AsyncTask):
     """This class exists to allow association of a Python function or coroutine
     with the AsyncTaskManager.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     delay_time: float
     delayTime: float
     @property
@@ -1442,8 +1417,6 @@ class PythonTask(AsyncTask):
         This can only be called while the task is still alive.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setFunction = set_function
     getFunction = get_function
     setArgs = set_args
@@ -1453,4 +1426,3 @@ class PythonTask(AsyncTask):
     setOwner = set_owner
     getOwner = get_owner
     setResult = set_result
-    getClassType = get_class_type

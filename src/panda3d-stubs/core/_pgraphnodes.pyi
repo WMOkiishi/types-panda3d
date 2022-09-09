@@ -60,20 +60,14 @@ class AmbientLight(LightNode):
     kind of light need not actually be part of the scene graph, since it has no
     meaningful position.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CallbackNode(PandaNode):
     """A special node that can issue arbitrary callbacks to user code, either
     during the cull or draw traversals.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     cull_callback: CallbackObject
     draw_callback: CallbackObject
-    def __init__(self, name: str) -> None: ...
     def set_cull_callback(self, object: CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this node is visited
         during the cull traversal.  This callback will be made during the cull
@@ -129,21 +123,17 @@ class CallbackNode(PandaNode):
     def get_draw_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_draw_callback()."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setCullCallback = set_cull_callback
     clearCullCallback = clear_cull_callback
     getCullCallback = get_cull_callback
     setDrawCallback = set_draw_callback
     clearDrawCallback = clear_draw_callback
     getDrawCallback = get_draw_callback
-    getClassType = get_class_type
 
 class ComputeNode(PandaNode):
     """A special node, the sole purpose of which is to invoke a dispatch operation
     on the assigned compute shader.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     dispatches: Sequence[LVecBase3i]
     def __init__(self, name: str) -> None:
         """Creates a ComputeNode with the given name.  Use add_dispatch and  also
@@ -181,8 +171,6 @@ class ComputeNode(PandaNode):
     def clear_dispatches(self) -> None:
         """Removes all dispatch commands."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_dispatches(self) -> tuple[LVecBase3i, ...]: ...
     addDispatch = add_dispatch
     getNumDispatches = get_num_dispatches
@@ -191,7 +179,6 @@ class ComputeNode(PandaNode):
     insertDispatch = insert_dispatch
     removeDispatch = remove_dispatch
     clearDispatches = clear_dispatches
-    getClassType = get_class_type
     getDispatches = get_dispatches
 
 class LightLensNode(Light, Camera):
@@ -268,7 +255,6 @@ class DirectionalLight(LightLensNode):
     """A light shining from infinitely far away in a particular direction, like
     sunlight.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     specular_color: LVecBase4f
     point: LPoint3f
     direction: LVector3f
@@ -301,22 +287,18 @@ class DirectionalLight(LightLensNode):
     def set_direction(self, direction: _Vec3f) -> None:
         """Sets the direction in which the light is aimed."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSpecularColor = set_specular_color
     clearSpecularColor = clear_specular_color
     getPoint = get_point
     setPoint = set_point
     getDirection = get_direction
     setDirection = set_direction
-    getClassType = get_class_type
 
 class LODNode(PandaNode):
     """A Level-of-Detail node.  This selects only one of its children for
     rendering, according to the distance from the camera and the table
     indicated in the associated LOD object.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     lod_scale: float
     center: LPoint3f
     @property
@@ -327,7 +309,6 @@ class LODNode(PandaNode):
     def lowest_switch(self) -> int: ...
     @property
     def highest_switch(self) -> int: ...
-    def __init__(self, name: str) -> None: ...
     @staticmethod
     def make_default_lod(name: str) -> LODNode:
         """Creates a new LODNode of the type specified by the default-lod-type config
@@ -447,8 +428,6 @@ class LODNode(PandaNode):
         to be larger than its switch_in radius.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_ins(self) -> tuple[float, ...]: ...
     def get_outs(self) -> tuple[float, ...]: ...
     makeDefaultLod = make_default_lod
@@ -472,20 +451,17 @@ class LODNode(PandaNode):
     hideAllSwitches = hide_all_switches
     isAnyShown = is_any_shown
     verifyChildBounds = verify_child_bounds
-    getClassType = get_class_type
     getIns = get_ins
     getOuts = get_outs
 
 class FadeLODNode(LODNode):
     """A Level-of-Detail node with alpha based switching."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     fade_time: float
     fade_state_override: int
     @property
     def fade_bin_name(self) -> str: ...
     @property
     def fade_bin_draw_order(self) -> int: ...
-    def __init__(self, name: str) -> None: ...
     def set_fade_time(self, t: float) -> None:
         """set the time taken to complete an LOD switch"""
         ...
@@ -519,8 +495,6 @@ class FadeLODNode(LODNode):
         on the fading geometry.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setFadeTime = set_fade_time
     getFadeTime = get_fade_time
     setFadeBin = set_fade_bin
@@ -528,13 +502,11 @@ class FadeLODNode(LODNode):
     getFadeBinDrawOrder = get_fade_bin_draw_order
     setFadeStateOverride = set_fade_state_override
     getFadeStateOverride = get_fade_state_override
-    getClassType = get_class_type
 
 class NodeCullCallbackData(CallbackData):
     """This kind of CallbackData is passed to the CallbackObject added to
     CallbackNode:set_cull_callback().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_trav(self) -> CullTraverser:
         """Returns the CullTraverser in use at the time of the callback.  This object
         contains data that does not change during the traversal, such as the
@@ -547,17 +519,13 @@ class NodeCullCallbackData(CallbackData):
         the current node and the current net transform to that node.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getTrav = get_trav
     getData = get_data
-    getClassType = get_class_type
 
 class PointLight(LightLensNode):
     """A light originating from a single point in space, and shining in all
     directions.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     specular_color: LVecBase4f
     attenuation: LVecBase3f
     max_distance: float
@@ -595,8 +563,6 @@ class PointLight(LightLensNode):
     def set_point(self, point: _Vec3f) -> None:
         """Sets the point in space at which the light is located.  Usually 0."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSpecularColor = set_specular_color
     clearSpecularColor = clear_specular_color
     setAttenuation = set_attenuation
@@ -604,7 +570,6 @@ class PointLight(LightLensNode):
     setMaxDistance = set_max_distance
     getPoint = get_point
     setPoint = set_point
-    getClassType = get_class_type
 
 class RectangleLight(LightLensNode):
     """This is a type of area light that is an axis aligned rectangle, pointing
@@ -612,7 +577,6 @@ class RectangleLight(LightLensNode):
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     max_distance: float
     def __init__(self, name: str) -> None: ...
     def get_max_distance(self) -> float:
@@ -625,21 +589,13 @@ class RectangleLight(LightLensNode):
         light may be attenuated to zero, if this is supported by the shader.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getMaxDistance = get_max_distance
     setMaxDistance = set_max_distance
-    getClassType = get_class_type
 
 class SelectiveChildNode(PandaNode):
     """A base class for nodes like LODNode and SequenceNode that select only one
     visible child at a time.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, name: str) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class SequenceNode(SelectiveChildNode, AnimInterface):
     """A node that automatically cycles through rendering each one of its children
@@ -693,7 +649,6 @@ class ShaderGenerator(TypedReferenceCount):
     
     Thanks to them!
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, gsg: GraphicsStateGuardianBase) -> None:
         """Create a ShaderGenerator.  This has no state, except possibly to cache
@@ -749,12 +704,9 @@ class ShaderGenerator(TypedReferenceCount):
         @since 1.10.0
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     synthesizeShader = synthesize_shader
     rehashGeneratedShaders = rehash_generated_shaders
     clearGeneratedShaders = clear_generated_shaders
-    getClassType = get_class_type
 
 class SphereLight(PointLight):
     """A sphere light is like a point light, except that it represents a sphere
@@ -762,20 +714,15 @@ class SphereLight(PointLight):
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
-    def __init__(self, name: str) -> None: ...
     def get_radius(self) -> float:
         """Returns the radius of the sphere."""
         ...
     def set_radius(self, radius: float) -> None:
         """Sets the radius of the sphere."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getRadius = get_radius
     setRadius = set_radius
-    getClassType = get_class_type
 
 class Spotlight(LightLensNode):
     """A light originating from a single point in space, and shining in a
@@ -787,7 +734,6 @@ class Spotlight(LightLensNode):
     Note that the class is named Spotlight instead of SpotLight, because
     "spotlight" is a single English word, instead of two words.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     exponent: float
     specular_color: LVecBase4f
     attenuation: LVecBase3f
@@ -840,8 +786,6 @@ class Spotlight(LightLensNode):
         interior and exterior of the spot, respectively.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setExponent = set_exponent
     setSpecularColor = set_specular_color
     clearSpecularColor = clear_specular_color
@@ -849,15 +793,12 @@ class Spotlight(LightLensNode):
     getMaxDistance = get_max_distance
     setMaxDistance = set_max_distance
     makeSpot = make_spot
-    getClassType = get_class_type
 
 class SwitchNode(SelectiveChildNode):
     """A node that renders only one of its children, according to the user's
     indication.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     visible_child: int
-    def __init__(self, name: str) -> None: ...
     def set_visible_child(self, index: int) -> None:
         """Specifies the particular child of this node, by index, that will be
         visible.
@@ -866,15 +807,11 @@ class SwitchNode(SelectiveChildNode):
     def get_visible_child(self) -> int:
         """Returns the index of the child that should be visible."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setVisibleChild = set_visible_child
     getVisibleChild = get_visible_child
-    getClassType = get_class_type
 
 class UvScrollNode(PandaNode):
     """This node is placed at key points within the scene graph to animate uvs."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     u_speed: float
     v_speed: float
     w_speed: float
@@ -891,8 +828,6 @@ class UvScrollNode(PandaNode):
     def get_v_speed(self) -> float: ...
     def get_w_speed(self) -> float: ...
     def get_r_speed(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setUSpeed = set_u_speed
     setVSpeed = set_v_speed
     setWSpeed = set_w_speed
@@ -901,7 +836,6 @@ class UvScrollNode(PandaNode):
     getVSpeed = get_v_speed
     getWSpeed = get_w_speed
     getRSpeed = get_r_speed
-    getClassType = get_class_type
 
 class SceneGraphAnalyzer:
     """A handy class that can scrub over a scene graph and collect interesting

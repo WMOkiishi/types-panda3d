@@ -149,8 +149,9 @@ class Function:
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
     is_method: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-    doc: str = field(default='', kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    doc: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
@@ -203,8 +204,9 @@ class Element:
     name: str
     type: str
     read_only: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-    doc: str = field(default='', kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    doc: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
@@ -251,8 +253,9 @@ class Class:
     derivations: Sequence[str] = field(default=(), converter=tuple)
     nested: Sequence[StubRep] = Factory(list)
     is_final: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-    doc: str = field(default='', kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    doc: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:

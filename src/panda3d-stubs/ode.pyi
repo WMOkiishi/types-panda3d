@@ -12,7 +12,6 @@ from panda3d.core import (
     LVecBase4f,
     LVector3f,
     NodePath,
-    TypeHandle,
     TypedObject,
     TypedReferenceCount,
     UnalignedLVecBase4f,
@@ -44,7 +43,6 @@ class dxWorld:
     DtoolClassDict: ClassVar[dict[str, Any]]
 
 class OdeWorld(TypedObject):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -100,8 +98,6 @@ class OdeWorld(TypedObject):
         ...
     def set_surface_entry(self, pos1: str, pos2: str, mu: float, bounce: float, bounce_vel: float, soft_erp: float, soft_cfm: float, slip: float, dampen: float) -> None: ...
     def apply_dampening(self, dt: float, body: OdeBody) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isEmpty = is_empty
     getId = get_id
     setGravity = set_gravity
@@ -135,20 +131,15 @@ class OdeWorld(TypedObject):
     addBodyDampening = add_body_dampening
     setSurfaceEntry = set_surface_entry
     applyDampening = apply_dampening
-    getClassType = get_class_type
 
 class OdeJointGroup(TypedObject):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def destroy(self) -> None: ...
     def get_id(self) -> dxJointGroup: ...
     def empty(self) -> None: ...
     def compare_to(self, other: OdeJointGroup) -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getId = get_id
     compareTo = compare_to
-    getClassType = get_class_type
 
 class OdeJointFeedback:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -166,7 +157,6 @@ class OdeJointFeedback:
     getTorque2 = get_torque2
 
 class OdeJoint(TypedObject):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     JT_none: ClassVar[Literal[0]]
     JT_ball: ClassVar[Literal[1]]
     JT_hinge: ClassVar[Literal[2]]
@@ -228,8 +218,6 @@ class OdeJoint(TypedObject):
     def convert_to_a_motor(self) -> OdeAMotorJoint: ...
     def convert_to_l_motor(self) -> OdeLMotorJoint: ...
     def convert_to_plane2d(self) -> OdePlane2dJoint: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isEmpty = is_empty
     getId = get_id
     getJointType = get_joint_type
@@ -250,7 +238,6 @@ class OdeJoint(TypedObject):
     convertToAMotor = convert_to_a_motor
     convertToLMotor = convert_to_l_motor
     convertToPlane2d = convert_to_plane2d
-    getClassType = get_class_type
     JTNone = JT_none
     JTBall = JT_ball
     JTHinge = JT_hinge
@@ -265,7 +252,6 @@ class OdeJoint(TypedObject):
     JTPlane2d = JT_plane2d
 
 class OdeAMotorJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -302,8 +288,6 @@ class OdeAMotorJoint(OdeJoint):
     def get_param_CFM(self, axis: int) -> float: ...
     def get_param_stop_ERP(self, axis: int) -> float: ...
     def get_param_stop_CFM(self, axis: int) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_axes(self) -> tuple[LVecBase3f, ...]: ...
     setNumAxes = set_num_axes
     setAxis = set_axis
@@ -334,11 +318,9 @@ class OdeAMotorJoint(OdeJoint):
     getParamCFM = get_param_CFM
     getParamStopERP = get_param_stop_ERP
     getParamStopCFM = get_param_stop_CFM
-    getClassType = get_class_type
     getAxes = get_axes
 
 class OdeBallJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -353,16 +335,12 @@ class OdeBallJoint(OdeJoint):
     def set_anchor2(self, x: float, y: float, z: float) -> None: ...
     def get_anchor(self) -> LVecBase3f: ...
     def get_anchor2(self) -> LVecBase3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setAnchor = set_anchor
     setAnchor2 = set_anchor2
     getAnchor = get_anchor
     getAnchor2 = get_anchor2
-    getClassType = get_class_type
 
 class OdeMass(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -398,8 +376,6 @@ class OdeMass(TypedReferenceCount):
     def get_center(self) -> LPoint3f: ...
     def get_inertial_tensor(self) -> LMatrix3f: ...
     def write(self, out: ostream = ..., indent: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setZero = set_zero
     setParameters = set_parameters
     setSphere = set_sphere
@@ -413,10 +389,8 @@ class OdeMass(TypedReferenceCount):
     getMagnitude = get_magnitude
     getCenter = get_center
     getInertialTensor = get_inertial_tensor
-    getClassType = get_class_type
 
 class OdeBody(TypedObject):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def joints(self) -> Sequence: ...
     def __init__(self, world: OdeWorld) -> None: ...
@@ -546,8 +520,6 @@ class OdeBody(TypedObject):
     def get_gravity_mode(self) -> int: ...
     def write(self, out: ostream = ..., indent: int = ...) -> None: ...
     def compare_to(self, other: OdeBody) -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_joints(self) -> tuple[OdeJoint, ...]: ...
     isEmpty = is_empty
     getId = get_id
@@ -603,11 +575,9 @@ class OdeBody(TypedObject):
     setGravityMode = set_gravity_mode
     getGravityMode = get_gravity_mode
     compareTo = compare_to
-    getClassType = get_class_type
     getJoints = get_joints
 
 class OdeSpace(TypedObject):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __bool__(self) -> bool: ...
     def destroy(self) -> None: ...
     def is_empty(self) -> bool:
@@ -674,8 +644,6 @@ class OdeSpace(TypedObject):
     def get_collide_id(self, o1: dxGeom) -> int: ...
     def set_collision_event(self, event_name: str) -> None: ...
     def get_collision_event(self) -> str: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isEmpty = is_empty
     setCleanup = set_cleanup
     getCleanup = get_cleanup
@@ -705,10 +673,8 @@ class OdeSpace(TypedObject):
     getCollideId = get_collide_id
     setCollisionEvent = set_collision_event
     getCollisionEvent = get_collision_event
-    getClassType = get_class_type
 
 class OdeGeom(TypedObject):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     GC_sphere: ClassVar[Literal[0]]
     GC_box: ClassVar[Literal[1]]
     GC_capped_cylinder: ClassVar[Literal[2]]
@@ -791,8 +757,6 @@ class OdeGeom(TypedObject):
     def convert_to_simple_space(self) -> OdeSimpleSpace: ...
     def convert_to_hash_space(self) -> OdeHashSpace: ...
     def convert_to_quad_tree_space(self) -> OdeQuadTreeSpace: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isEmpty = is_empty
     getId = get_id
     setBody = set_body
@@ -837,7 +801,6 @@ class OdeGeom(TypedObject):
     convertToSimpleSpace = convert_to_simple_space
     convertToHashSpace = convert_to_hash_space
     convertToQuadTreeSpace = convert_to_quad_tree_space
-    getClassType = get_class_type
     GCSphere = GC_sphere
     GCBox = GC_box
     GCCappedCylinder = GC_capped_cylinder
@@ -850,7 +813,6 @@ class OdeGeom(TypedObject):
     GCQuadTreeSpace = GC_quad_tree_space
 
 class OdeBoxGeom(OdeGeom):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, space: OdeSpace, size: _Vec3f) -> None: ...
     @overload
@@ -866,15 +828,11 @@ class OdeBoxGeom(OdeGeom):
     def get_point_depth(self, p: _Vec3f) -> float: ...
     @overload
     def get_point_depth(self, x: float, y: float, z: float) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setLengths = set_lengths
     getLengths = get_lengths
     getPointDepth = get_point_depth
-    getClassType = get_class_type
 
 class OdeCappedCylinderGeom(OdeGeom):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, radius: float, length: float) -> None: ...
     @overload
@@ -886,16 +844,12 @@ class OdeCappedCylinderGeom(OdeGeom):
     def get_point_depth(self, p: _Vec3f) -> float: ...
     @overload
     def get_point_depth(self, x: float, y: float, z: float) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setParams = set_params
     getRadius = get_radius
     getLength = get_length
     getPointDepth = get_point_depth
-    getClassType = get_class_type
 
 class OdeContactGeom(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -912,8 +866,6 @@ class OdeContactGeom(TypedReferenceCount):
     def set_depth(self, depth: float) -> None: ...
     def set_g1(self, geom: OdeGeom) -> None: ...
     def set_g2(self, geom: OdeGeom) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPos = get_pos
     getNormal = get_normal
     getDepth = get_depth
@@ -926,11 +878,9 @@ class OdeContactGeom(TypedReferenceCount):
     setDepth = set_depth
     setG1 = set_g1
     setG2 = set_g2
-    getClassType = get_class_type
 
 class OdeCollisionEntry(TypedReferenceCount):
     """A class used to hold information about a collision that has occurred."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: OdeCollisionEntry) -> None: ...
     def __bool__(self) -> bool: ...
     def __getitem__(self, n: int) -> OdeContactGeom: ...
@@ -960,8 +910,6 @@ class OdeCollisionEntry(TypedReferenceCount):
     def is_empty(self) -> bool:
         """Returns true if the entry holds no contacts."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_contact_points(self) -> tuple[LPoint3f, ...]: ...
     def get_contact_geoms(self) -> tuple[OdeContactGeom, ...]: ...
     getGeom1 = get_geom1
@@ -972,12 +920,10 @@ class OdeCollisionEntry(TypedReferenceCount):
     getContactPoint = get_contact_point
     getContactGeom = get_contact_geom
     isEmpty = is_empty
-    getClassType = get_class_type
     getContactPoints = get_contact_points
     getContactGeoms = get_contact_geoms
 
 class OdeSurfaceParameters(TypedObject):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     MF_contact_mu2: ClassVar[Literal[1]]
     MF_contactFDir1: ClassVar[Literal[2]]
     MF_contactBounce: ClassVar[Literal[4]]
@@ -1014,8 +960,6 @@ class OdeSurfaceParameters(TypedObject):
     def get_motion2(self) -> float: ...
     def get_slip1(self) -> float: ...
     def get_slip2(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setMode = set_mode
     setMu = set_mu
     setMu2 = set_mu2
@@ -1038,7 +982,6 @@ class OdeSurfaceParameters(TypedObject):
     getMotion2 = get_motion2
     getSlip1 = get_slip1
     getSlip2 = get_slip2
-    getClassType = get_class_type
     MFContactMu2 = MF_contact_mu2
     MFContactFDir1 = MF_contactFDir1
     MFContactBounce = MF_contactBounce
@@ -1054,7 +997,6 @@ class OdeSurfaceParameters(TypedObject):
     MFContactApprox1 = MF_contactApprox1
 
 class OdeContact(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def get_surface(self) -> OdeSurfaceParameters: ...
     def get_geom(self) -> OdeContactGeom: ...
@@ -1062,28 +1004,20 @@ class OdeContact(TypedReferenceCount):
     def set_surface(self, surface_parameters: OdeSurfaceParameters) -> None: ...
     def set_geom(self, contact_geom: OdeContactGeom) -> None: ...
     def set_fdir1(self, fdir1: _Vec3f) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getSurface = get_surface
     getGeom = get_geom
     getFdir1 = get_fdir1
     setSurface = set_surface
     setGeom = set_geom
     setFdir1 = set_fdir1
-    getClassType = get_class_type
 
 class OdeContactJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld, contact: OdeContact) -> None: ...
     @overload
     def __init__(self, world: OdeWorld, joint_group: OdeJointGroup, contact: OdeContact) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class OdeCylinderGeom(OdeGeom):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, radius: float, length: float) -> None: ...
     @overload
@@ -1091,26 +1025,18 @@ class OdeCylinderGeom(OdeGeom):
     def set_params(self, radius: float, length: float) -> None: ...
     def get_radius(self) -> float: ...
     def get_length(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setParams = set_params
     getRadius = get_radius
     getLength = get_length
-    getClassType = get_class_type
 
 class OdeFixedJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
     def __init__(self, world: OdeWorld, joint_group: OdeJointGroup) -> None: ...
     def set(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class OdeHashSpace(OdeSpace):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1118,15 +1044,11 @@ class OdeHashSpace(OdeSpace):
     def set_levels(self, minlevel: int, maxlevel: int) -> None: ...
     def get_min_level(self) -> int: ...
     def get_max_level(self) -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setLevels = set_levels
     getMinLevel = get_min_level
     getMaxLevel = get_max_level
-    getClassType = get_class_type
 
 class OdeHinge2Joint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -1173,8 +1095,6 @@ class OdeHinge2Joint(OdeJoint):
     def get_param_stop_CFM(self, axis: int) -> float: ...
     def get_param_suspension_ERP(self, axis: int) -> float: ...
     def get_param_suspension_CFM(self, axis: int) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setAnchor = set_anchor
     setAxis1 = set_axis1
     setAxis2 = set_axis2
@@ -1208,10 +1128,8 @@ class OdeHinge2Joint(OdeJoint):
     getParamStopCFM = get_param_stop_CFM
     getParamSuspensionERP = get_param_suspension_ERP
     getParamSuspensionCFM = get_param_suspension_CFM
-    getClassType = get_class_type
 
 class OdeHingeJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -1252,8 +1170,6 @@ class OdeHingeJoint(OdeJoint):
     def get_param_CFM(self) -> float: ...
     def get_param_stop_ERP(self) -> float: ...
     def get_param_stop_CFM(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setAnchor = set_anchor
     setAnchorDelta = set_anchor_delta
     setAxis = set_axis
@@ -1281,7 +1197,6 @@ class OdeHingeJoint(OdeJoint):
     getParamCFM = get_param_CFM
     getParamStopERP = get_param_stop_ERP
     getParamStopCFM = get_param_stop_CFM
-    getClassType = get_class_type
 
 class OdeJointCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -1321,7 +1236,6 @@ class OdeJointCollection:
     getJoints = get_joints
 
 class OdeLMotorJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -1335,8 +1249,6 @@ class OdeLMotorJoint(OdeJoint):
     def get_num_axes(self) -> int: ...
     def get_axis(self, anum: int) -> LVecBase3f: ...
     def get_param(self, parameter: int) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_axes(self) -> tuple[LVecBase3f, ...]: ...
     setNumAxes = set_num_axes
     setAxis = set_axis
@@ -1344,21 +1256,15 @@ class OdeLMotorJoint(OdeJoint):
     getNumAxes = get_num_axes
     getAxis = get_axis
     getParam = get_param
-    getClassType = get_class_type
     getAxes = get_axes
 
 class OdeNullJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
     def __init__(self, world: OdeWorld, joint_group: OdeJointGroup) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class OdePlane2dJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -1366,15 +1272,11 @@ class OdePlane2dJoint(OdeJoint):
     def set_x_param(self, parameter: int, value: float) -> None: ...
     def set_y_param(self, parameter: int, value: float) -> None: ...
     def set_angle_param(self, parameter: int, value: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setXParam = set_x_param
     setYParam = set_y_param
     setAngleParam = set_angle_param
-    getClassType = get_class_type
 
 class OdePlaneGeom(OdeGeom):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, params: _Vec4f) -> None: ...
     @overload
@@ -1392,25 +1294,17 @@ class OdePlaneGeom(OdeGeom):
     def get_point_depth(self, p: _Vec3f) -> float: ...
     @overload
     def get_point_depth(self, x: float, y: float, z: float) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setParams = set_params
     getParams = get_params
     getPointDepth = get_point_depth
-    getClassType = get_class_type
 
 class OdeQuadTreeSpace(OdeSpace):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, center: _Vec3f, extents: _Vec3f, depth: int) -> None: ...
     @overload
     def __init__(self, space: OdeSpace, center: _Vec3f, extents: _Vec3f, depth: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class OdeRayGeom(OdeGeom):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, length: float) -> None: ...
     @overload
@@ -1429,8 +1323,6 @@ class OdeRayGeom(OdeGeom):
     def get_backface_cull(self) -> int: ...
     def set_closest_hit(self, closest_hit: int) -> None: ...
     def get_closest_hit(self) -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setLength = set_length
     getLength = get_length
     getStart = get_start
@@ -1440,20 +1332,14 @@ class OdeRayGeom(OdeGeom):
     getBackfaceCull = get_backface_cull
     setClosestHit = set_closest_hit
     getClosestHit = get_closest_hit
-    getClassType = get_class_type
 
 class OdeSimpleSpace(OdeSpace):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
     def __init__(self, space: OdeSpace) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class OdeSliderJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -1488,8 +1374,6 @@ class OdeSliderJoint(OdeJoint):
     def get_param_CFM(self) -> float: ...
     def get_param_stop_ERP(self) -> float: ...
     def get_param_stop_CFM(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setAxis = set_axis
     setAxisDelta = set_axis_delta
     addForce = add_force
@@ -1514,10 +1398,8 @@ class OdeSliderJoint(OdeJoint):
     getParamCFM = get_param_CFM
     getParamStopERP = get_param_stop_ERP
     getParamStopCFM = get_param_stop_CFM
-    getClassType = get_class_type
 
 class OdeSphereGeom(OdeGeom):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, geom: OdeGeom) -> None: ...
     @overload
@@ -1530,30 +1412,22 @@ class OdeSphereGeom(OdeGeom):
     def get_point_depth(self, p: _Vec3f) -> float: ...
     @overload
     def get_point_depth(self, x: float, y: float, z: float) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setRadius = set_radius
     getRadius = get_radius
     getPointDepth = get_point_depth
-    getClassType = get_class_type
 
 class OdeTriMeshData(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     DT_face_normals: ClassVar[Literal[0]]
     DT_last_transformation: ClassVar[Literal[1]]
     def __init__(self, model: NodePath, use_normals: bool = ...) -> None: ...
     def destroy(self) -> None: ...
     def write(self, out: ostream = ..., indent: int = ...) -> None: ...
     def write_faces(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     writeFaces = write_faces
-    getClassType = get_class_type
     DTFaceNormals = DT_face_normals
     DTLastTransformation = DT_last_transformation
 
 class OdeTriMeshGeom(OdeGeom):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, data: OdeTriMeshData) -> None:
         """ODE_API dGeomID dCreateTriMesh(dSpaceID space, dTriMeshDataID Data, dTriCallback* Callback, dTriArrayCallback* ArrayCallback, dTriRayCallback* RayCallback);"""
@@ -1562,7 +1436,6 @@ class OdeTriMeshGeom(OdeGeom):
     def __init__(self, copy: OdeTriMeshGeom) -> None: ...
     @overload
     def __init__(self, space: OdeSpace, data: OdeTriMeshData) -> None: ...
-    def destroy(self) -> None: ...
     def set_tri_mesh_data(self, data: OdeTriMeshData) -> None: ...
     def get_tri_mesh_data(self) -> OdeTriMeshData: ...
     def set_data(self, data: OdeTriMeshData) -> None: ...
@@ -1573,8 +1446,6 @@ class OdeTriMeshGeom(OdeGeom):
     def get_triangle(self, face_index: int, v0: _Vec3f, v1: _Vec3f, v2: _Vec3f) -> None: ...
     def get_point(self, face_index: int, u: float, v: float) -> LPoint3f: ...
     def get_num_triangles(self) -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setTriMeshData = set_tri_mesh_data
     getTriMeshData = get_tri_mesh_data
     setData = set_data
@@ -1585,10 +1456,8 @@ class OdeTriMeshGeom(OdeGeom):
     getTriangle = get_triangle
     getPoint = get_point
     getNumTriangles = get_num_triangles
-    getClassType = get_class_type
 
 class OdeUniversalJoint(OdeJoint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, world: OdeWorld) -> None: ...
     @overload
@@ -1632,8 +1501,6 @@ class OdeUniversalJoint(OdeJoint):
     def get_param_CFM(self, axis: int) -> float: ...
     def get_param_stop_ERP(self, axis: int) -> float: ...
     def get_param_stop_CFM(self, axis: int) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setAnchor = set_anchor
     setAxis1 = set_axis1
     setAxis2 = set_axis2
@@ -1664,7 +1531,6 @@ class OdeUniversalJoint(OdeJoint):
     getParamCFM = get_param_CFM
     getParamStopERP = get_param_stop_ERP
     getParamStopCFM = get_param_stop_CFM
-    getClassType = get_class_type
 
 class OdeUtil:
     DtoolClassDict: ClassVar[dict[str, Any]]

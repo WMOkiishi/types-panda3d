@@ -58,11 +58,9 @@ _Mat4d: TypeAlias = LMatrix4d | UnalignedLMatrix4d
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 
 class ConstPointerToArray_ushort(PointerToArrayBase_ushort):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: ConstPointerToArray_ushort | PointerToArray_ushort) -> None: ...
     def __len__(self) -> int: ...
     def __getitem__(self, n: int) -> int: ...
-    def clear(self) -> None: ...
     def get_element(self, n: int) -> int: ...
     def get_data(self) -> bytes: ...
     def get_subdata(self, n: int, count: int) -> bytes: ...
@@ -76,19 +74,16 @@ class ConstPointerToArray_ushort(PointerToArrayBase_ushort):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_ushort(PointerToBase_ReferenceCountedVector_ushort):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
         ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_ushort(PointerToVoid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
 class PointerToArray_ushort(PointerToArrayBase_ushort):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, type_handle: TypeHandle = ...) -> None: ...
     @overload
@@ -100,7 +95,6 @@ class PointerToArray_ushort(PointerToArrayBase_ushort):
     def __setitem__(self, n: int, value: int) -> None: ...
     @staticmethod
     def empty_array(n: int, type_handle: TypeHandle = ...) -> PointerToArray_ushort: ...
-    def clear(self) -> None: ...
     def push_back(self, x: int) -> None: ...
     def pop_back(self) -> None: ...
     def get_element(self, n: int) -> int: ...
@@ -363,7 +357,6 @@ class TypedWritable(TypedObject):
     
     See also TypedObject for detailed instructions.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def fillin(self, scan: DatagramIterator, manager: BamReader) -> None:
         """This internal function is intended to be called by each class's
         make_from_bam() method to read in all of the relevant data from the BamFile
@@ -409,12 +402,9 @@ class TypedWritable(TypedObject):
         ...
     @overload
     def encode_to_bam_stream(self, data: bytes, writer: BamWriter = ...) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     markBamModified = mark_bam_modified
     getBamModified = get_bam_modified
     encodeToBamStream = encode_to_bam_stream
-    getClassType = get_class_type
 
 class TypedWritableReferenceCount(TypedWritable, ReferenceCount):
     """A base class for things which need to inherit from both TypedWritable and
@@ -953,7 +943,6 @@ class BamReader(BamEnums):
     See also BamFile, which defines a higher-level interface to read and write
     Bam files on disk.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     source: DatagramGenerator
     loader_options: LoaderOptions
     @property
@@ -1126,7 +1115,6 @@ class BamWriter(BamEnums):
     See also BamFile, which defines a higher-level interface to read and write
     Bam files on disk.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     target: DatagramSink
     root_node: TypedWritable
     @property
@@ -2037,7 +2025,6 @@ class ButtonMap(TypedReferenceCount):
     which may optionally be associated with an appropriate platform-specific
     name for the button.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2085,13 +2072,10 @@ class ButtonMap(TypedReferenceCount):
     def get_mapped_button_label(self, raw_name: str) -> str: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNumButtons = get_num_buttons
     getRawButton = get_raw_button
     getMappedButton = get_mapped_button
     getMappedButtonLabel = get_mapped_button_label
-    getClassType = get_class_type
 
 class CallbackObject(TypedReferenceCount):
     """This is a generic object that can be assigned to a callback at various
@@ -2099,14 +2083,10 @@ class CallbackObject(TypedReferenceCount):
     handful of specialized callback object types.  You can also subclass it
     yourself to make your own callback handler.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: CallbackObject) -> None: ...
     def output(self, out: ostream) -> None: ...
     @staticmethod
     def make(function) -> CallbackObject: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
     """This is a special extension to ReferenceCount that includes dual reference
@@ -2121,7 +2101,6 @@ class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
     count is automatically included in the overall reference count: calling
     cache_ref() and cache_unref() automatically calls ref() and unref().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def cache_ref_count(self) -> int: ...
     def get_cache_ref_count(self) -> int:
@@ -2145,13 +2124,10 @@ class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
         completely bogus.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getCacheRefCount = get_cache_ref_count
     cacheRef = cache_ref
     cacheUnref = cache_unref
     testRefCountIntegrity = test_ref_count_integrity
-    getClassType = get_class_type
 
 class CallbackData(TypedObject):
     """This is a generic data block that is passed along to a CallbackObject when
@@ -2162,22 +2138,17 @@ class CallbackData(TypedObject):
     Specializations of this class will contain the actual data relevant to each
     callback type.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def output(self, out: ostream) -> None: ...
     def upcall(self) -> None:
         """You should make this call during the callback if you want to continue the
         normal function that would have been done in the absence of a callback.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class PythonCallbackObject(CallbackObject):
     """This is a specialization on CallbackObject to allow a callback to directly
     call an arbitrary Python function.  Powerful!  But use with caution.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     function = ...
     @overload
     def __init__(self, function: Callable = ...) -> None: ...
@@ -2191,11 +2162,8 @@ class PythonCallbackObject(CallbackObject):
     def get_function(self) -> Callable:
         """Returns the function that is called for the callback."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setFunction = set_function
     getFunction = get_function
-    getClassType = get_class_type
 
 class TimeVal:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -2227,7 +2195,6 @@ class ClockObject(ReferenceCount):
     every frame so that its get_frame_time() will return the time for the
     current frame.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     mode: _ClockObject_Mode
     frame_time: float
     real_time: float
@@ -2487,8 +2454,6 @@ class ClockObject(ReferenceCount):
         most code should use for handling scene graph rendering and animation.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setMode = set_mode
     getMode = get_mode
     getFrameTime = get_frame_time
@@ -2514,7 +2479,6 @@ class ClockObject(ReferenceCount):
     syncFrameTime = sync_frame_time
     checkErrors = check_errors
     getGlobalClock = get_global_clock
-    getClassType = get_class_type
     MNormal = M_normal
     MNonRealTime = M_non_real_time
     MForced = M_forced
@@ -2529,18 +2493,14 @@ class CopyOnWriteObject(CachedTypedWritableReferenceCount):
     with a CopyOnWritePointer to provide get_read_pointer() and
     get_write_pointer().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def cache_ref(self) -> None:
         """@see CachedTypedWritableReferenceCount::cache_ref()"""
         ...
     def cache_unref(self) -> bool:
         """@see CachedTypedWritableReferenceCount::cache_unref()"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     cacheRef = cache_ref
     cacheUnref = cache_unref
-    getClassType = get_class_type
 
 class DatagramBuffer(DatagramSink, DatagramGenerator):
     """This class can be used to write a series of datagrams into a memory buffer.
@@ -2575,7 +2535,6 @@ class DatagramInputFile(DatagramGenerator):
     """This class can be used to read a binary file that consists of an arbitrary
     header followed by a number of datagrams.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @overload
     def open(self, file: FileReference) -> bool:
@@ -2607,7 +2566,6 @@ class DatagramOutputFile(DatagramSink):
     """This class can be used to write a binary file that consists of an arbitrary
     header followed by a number of datagrams.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def stream(self) -> ostream: ...
     def __init__(self) -> None: ...
@@ -3340,7 +3298,6 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     there does exist a NodePointerTo<> class to maintain the node_ref counters
     automatically.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     R_node: ClassVar[Literal[1]]
     R_cache: ClassVar[Literal[2]]
     def get_node_ref_count(self) -> int:
@@ -3363,11 +3320,6 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
         is zero.
         """
         ...
-    def test_ref_count_integrity(self) -> bool:
-        """Does some easy checks to make sure that the reference count isn't
-        completely bogus.
-        """
-        ...
     def get_referenced_bits(self) -> int:
         """Returns the union of the values defined in the Referenced enum that
         represents the various things that appear to be holding a pointer to this
@@ -3377,14 +3329,10 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
         is included, at least one cache element is.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNodeRefCount = get_node_ref_count
     nodeRef = node_ref
     nodeUnref = node_unref
-    testRefCountIntegrity = test_ref_count_integrity
     getReferencedBits = get_referenced_bits
-    getClassType = get_class_type
     RNode = R_node
     RCache = R_cache
 
@@ -3648,211 +3596,143 @@ class ParamValueBase(TypedWritableReferenceCount):
     """A non-template base class of ParamValue (below), which serves mainly to
     define the placeholder for the virtual output function.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_value_type(self) -> TypeHandle:
         """Returns the type of the underlying value."""
         ...
     def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getValueType = get_value_type
-    getClassType = get_class_type
 
 class ParamTypedRefCount(ParamValueBase):
     """A class object for storing specifically objects of type
     TypedReferenceCount, which is different than TypedWritableReferenceCount.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def value(self) -> TypedReferenceCount: ...
     def __init__(self, value: TypedReferenceCount) -> None: ...
     def get_value(self) -> TypedReferenceCount:
         """Retrieves the value stored in the parameter."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_string(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: str
     def __init__(self, value: str) -> None: ...
     def set_value(self, value: str) -> None: ...
     def get_value(self) -> str: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_wstring(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: str
     def __init__(self, value: str) -> None: ...
     def set_value(self, value: str) -> None: ...
     def get_value(self) -> str: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase2d(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase2d
     def __init__(self, value: LVecBase2d) -> None: ...
     def set_value(self, value: LVecBase2d) -> None: ...
     def get_value(self) -> LVecBase2d: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase2f(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase2f
     def __init__(self, value: LVecBase2f) -> None: ...
     def set_value(self, value: LVecBase2f) -> None: ...
     def get_value(self) -> LVecBase2f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase2i(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase2i
     def __init__(self, value: LVecBase2i) -> None: ...
     def set_value(self, value: LVecBase2i) -> None: ...
     def get_value(self) -> LVecBase2i: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase3d(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase3d
     def __init__(self, value: _Vec3d) -> None: ...
     def set_value(self, value: _Vec3d) -> None: ...
     def get_value(self) -> LVecBase3d: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase3f(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase3f
     def __init__(self, value: _Vec3f) -> None: ...
     def set_value(self, value: _Vec3f) -> None: ...
     def get_value(self) -> LVecBase3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase3i(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase3i
     def __init__(self, value: LVecBase3i) -> None: ...
     def set_value(self, value: LVecBase3i) -> None: ...
     def get_value(self) -> LVecBase3i: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase4d(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase4d
     def __init__(self, value: _Vec4d) -> None: ...
     def set_value(self, value: _Vec4d) -> None: ...
     def get_value(self) -> LVecBase4d: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase4f(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase4f
     def __init__(self, value: _Vec4f) -> None: ...
     def set_value(self, value: _Vec4f) -> None: ...
     def get_value(self) -> LVecBase4f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LVecBase4i(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LVecBase4i
     def __init__(self, value: _Vec4i) -> None: ...
     def set_value(self, value: _Vec4i) -> None: ...
     def get_value(self) -> LVecBase4i: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LMatrix3d(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LMatrix3d
     def __init__(self, value: LMatrix3d) -> None: ...
     def set_value(self, value: LMatrix3d) -> None: ...
     def get_value(self) -> LMatrix3d: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LMatrix3f(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LMatrix3f
     def __init__(self, value: LMatrix3f) -> None: ...
     def set_value(self, value: LMatrix3f) -> None: ...
     def get_value(self) -> LMatrix3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LMatrix4d(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LMatrix4d
     def __init__(self, value: _Mat4d) -> None: ...
     def set_value(self, value: _Mat4d) -> None: ...
     def get_value(self) -> LMatrix4d: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class ParamValue_LMatrix4f(ParamValueBase):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     value: LMatrix4f
     def __init__(self, value: _Mat4f) -> None: ...
     def set_value(self, value: _Mat4f) -> None: ...
     def get_value(self) -> LMatrix4f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
-    getClassType = get_class_type
 
 class WritableConfigurable(TypedWritable):
     """Defined as a fix to allow creating Configurable and Writable objects.
@@ -3863,10 +3743,6 @@ class WritableConfigurable(TypedWritable):
     least occasionally) than every frame.  We can cache the configuration info
     by by using the "dirty" flag.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class UniqueIdAllocator:
     """Manage a set of ID values from min to max inclusive.  The ID numbers that

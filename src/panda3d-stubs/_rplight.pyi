@@ -286,7 +286,6 @@ class RPLight(ReferenceCount):
       stores common properties, and provides methods to modify these.
       It also defines some interface functions which subclasses have to implement.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     pos: LVecBase3f
     color: LVecBase3f
     energy: float
@@ -651,7 +650,6 @@ class TagStateManager:
     getMask = get_mask
 
 class ShadowManager(ReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     atlas_size: int
     @property
     def num_update_slots_left(self) -> int: ...
@@ -980,7 +978,6 @@ class RPPointLight(RPLight):
       radius. Checkout the RenderPipeline documentation for more information
       about this type of light.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
     inner_radius: float
     def __init__(self) -> None:
@@ -1254,7 +1251,6 @@ class RPSpotLight(RPLight):
       direction and FoV. Checkout the RenderPipeline documentation for more
       information about this type of light.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
     fov: float
     direction: LVecBase3f

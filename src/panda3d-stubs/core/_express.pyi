@@ -25,11 +25,9 @@ _WindowsRegistry_RegLevel: TypeAlias = Literal[0, 1]
 _WindowsRegistry_Type: TypeAlias = Literal[0, 1, 2]
 
 class ConstPointerToArray_double(PointerToArrayBase_double):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: ConstPointerToArray_double | PointerToArray_double) -> None: ...
     def __len__(self) -> int: ...
     def __getitem__(self, n: int) -> float: ...
-    def clear(self) -> None: ...
     def get_element(self, n: int) -> float: ...
     def get_data(self) -> bytes: ...
     def get_subdata(self, n: int, count: int) -> bytes: ...
@@ -43,14 +41,12 @@ class ConstPointerToArray_double(PointerToArrayBase_double):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_double(PointerToBase_ReferenceCountedVector_double):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
         ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_double(PointerToVoid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
@@ -74,11 +70,9 @@ class PointerToVoid:
     getHash = get_hash
 
 class ConstPointerToArray_float(PointerToArrayBase_float):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: ConstPointerToArray_float | PointerToArray_float) -> None: ...
     def __len__(self) -> int: ...
     def __getitem__(self, n: int) -> float: ...
-    def clear(self) -> None: ...
     def get_element(self, n: int) -> float: ...
     def get_data(self) -> bytes: ...
     def get_subdata(self, n: int, count: int) -> bytes: ...
@@ -92,23 +86,19 @@ class ConstPointerToArray_float(PointerToArrayBase_float):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_float(PointerToBase_ReferenceCountedVector_float):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
         ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_float(PointerToVoid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
 class ConstPointerToArray_int(PointerToArrayBase_int):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: ConstPointerToArray_int | PointerToArray_int) -> None: ...
     def __len__(self) -> int: ...
     def __getitem__(self, n: int) -> int: ...
-    def clear(self) -> None: ...
     def get_element(self, n: int) -> int: ...
     def get_data(self) -> bytes: ...
     def get_subdata(self, n: int, count: int) -> bytes: ...
@@ -122,23 +112,19 @@ class ConstPointerToArray_int(PointerToArrayBase_int):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_int(PointerToBase_ReferenceCountedVector_int):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
         ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_int(PointerToVoid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
 class ConstPointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char) -> None: ...
     def __len__(self) -> int: ...
     def __getitem__(self, n: int) -> str: ...
-    def clear(self) -> None: ...
     def get_element(self, n: int) -> str: ...
     def get_data(self) -> bytes: ...
     def get_subdata(self, n: int, count: int) -> bytes: ...
@@ -152,19 +138,16 @@ class ConstPointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_unsigned_char(PointerToBase_ReferenceCountedVector_unsigned_char):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
         ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_unsigned_char(PointerToVoid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
 class PointerToArray_double(PointerToArrayBase_double):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, type_handle: TypeHandle = ...) -> None: ...
     @overload
@@ -176,7 +159,6 @@ class PointerToArray_double(PointerToArrayBase_double):
     def __setitem__(self, n: int, value: float) -> None: ...
     @staticmethod
     def empty_array(n: int, type_handle: TypeHandle = ...) -> PointerToArray_double: ...
-    def clear(self) -> None: ...
     def push_back(self, x: float) -> None: ...
     def pop_back(self) -> None: ...
     def get_element(self, n: int) -> float: ...
@@ -201,7 +183,6 @@ class PointerToArray_double(PointerToArrayBase_double):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArray_float(PointerToArrayBase_float):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, type_handle: TypeHandle = ...) -> None: ...
     @overload
@@ -213,7 +194,6 @@ class PointerToArray_float(PointerToArrayBase_float):
     def __setitem__(self, n: int, value: float) -> None: ...
     @staticmethod
     def empty_array(n: int, type_handle: TypeHandle = ...) -> PointerToArray_float: ...
-    def clear(self) -> None: ...
     def push_back(self, x: float) -> None: ...
     def pop_back(self) -> None: ...
     def get_element(self, n: int) -> float: ...
@@ -238,7 +218,6 @@ class PointerToArray_float(PointerToArrayBase_float):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArray_int(PointerToArrayBase_int):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, type_handle: TypeHandle = ...) -> None: ...
     @overload
@@ -250,7 +229,6 @@ class PointerToArray_int(PointerToArrayBase_int):
     def __setitem__(self, n: int, value: int) -> None: ...
     @staticmethod
     def empty_array(n: int, type_handle: TypeHandle = ...) -> PointerToArray_int: ...
-    def clear(self) -> None: ...
     def push_back(self, x: int) -> None: ...
     def pop_back(self) -> None: ...
     def get_element(self, n: int) -> int: ...
@@ -275,7 +253,6 @@ class PointerToArray_int(PointerToArrayBase_int):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, type_handle: TypeHandle = ...) -> None: ...
     @overload
@@ -287,7 +264,6 @@ class PointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
     def __setitem__(self, n: int, value: str) -> None: ...
     @staticmethod
     def empty_array(n: int, type_handle: TypeHandle = ...) -> PointerToArray_unsigned_char: ...
-    def clear(self) -> None: ...
     def push_back(self, x: str) -> None: ...
     def pop_back(self) -> None: ...
     def get_element(self, n: int) -> str: ...
@@ -561,7 +537,6 @@ class ReferenceCount:
     getClassType = get_class_type
 
 class Buffer(ReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: Buffer) -> None: ...
     def get_length(self) -> int: ...
     getLength = get_length
@@ -574,7 +549,6 @@ class PStatCollectorForwardBase(ReferenceCount):
     This is subclassed as PStatCollectorForward, which defines the actual
     functionality.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def add_level(self, level: float) -> None: ...
     addLevel = add_level
 
@@ -590,7 +564,6 @@ class NodeReferenceCount(ReferenceCount):
     See also CachedTypedWritableReferenceCount, which is similar in principle,
     as well as NodeCachedReferenceCount, which combines both of these.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_node_ref_count(self) -> int:
         """Returns the current reference count."""
         ...
@@ -618,14 +591,11 @@ class NodeReferenceCount(ReferenceCount):
         reimplement node_unref().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNodeRefCount = get_node_ref_count
     nodeRef = node_ref
     nodeUnref = node_unref
     testRefCountIntegrity = test_ref_count_integrity
     nodeUnrefOnly = node_unref_only
-    getClassType = get_class_type
 
 class Datagram(TypedObject):
     """An ordered list of data elements, formatted in memory for transmission over
@@ -640,7 +610,6 @@ class Datagram(TypedObject):
     A Datagram is itself headerless; it is simply a collection of data
     elements.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """Constructs a datagram from an existing block of data."""
@@ -811,8 +780,6 @@ class Datagram(TypedObject):
     def write(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     dumpHex = dump_hex
     addBool = add_bool
     addInt8 = add_int8
@@ -852,7 +819,6 @@ class Datagram(TypedObject):
     modifyArray = modify_array
     setStdfloatDouble = set_stdfloat_double
     getStdfloatDouble = get_stdfloat_double
-    getClassType = get_class_type
 
 class DatagramGenerator:
     """This class defines the abstract interace to any source of datagrams,
@@ -1145,7 +1111,6 @@ class FileReference(TypedReferenceCount):
     """Keeps a reference-counted pointer to a file on disk.  As long as the
     FileReference is held, someone presumably has a use for this file.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FileReference) -> None: ...
     @overload
@@ -1153,10 +1118,7 @@ class FileReference(TypedReferenceCount):
     def get_filename(self) -> Filename:
         """Returns the filename of the reference."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getFilename = get_filename
-    getClassType = get_class_type
 
 class TypedReferenceCount(TypedObject, ReferenceCount):
     """A base class for things which need to inherit from both TypedObject and
@@ -1426,7 +1388,6 @@ class ISubStream(istream):
     The source stream must be one that we can randomly seek within.  The
     resulting ISubStream will also support arbitrary seeks.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1456,7 +1417,6 @@ class OSubStream(ostream):
     The dest stream must be one that we can randomly seek within.  The
     resulting OSubStream will also support arbitrary seeks.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1479,7 +1439,6 @@ class OSubStream(ostream):
 
 class SubStream(iostream):
     """Combined ISubStream and OSubStream for bidirectional I/O."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1501,7 +1460,6 @@ class SubStream(iostream):
 
 class Multifile(ReferenceCount):
     """A file that contains a set of files."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def magic_number(self) -> str: ...
     def __init__(self) -> None: ...
@@ -2299,7 +2257,6 @@ class VirtualFile(TypedReferenceCount):
     """The abstract base class for a file or directory within the
     VirtualFileSystem.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_file_system(self) -> VirtualFileSystem: ...
     def get_filename(self) -> Filename: ...
     def get_original_filename(self) -> Filename:
@@ -2461,8 +2418,6 @@ class VirtualFile(TypedReferenceCount):
         meaningless.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getFileSystem = get_file_system
     getFilename = get_filename
     getOriginalFilename = get_original_filename
@@ -2489,24 +2444,18 @@ class VirtualFile(TypedReferenceCount):
     getFileSize = get_file_size
     getTimestamp = get_timestamp
     getSystemInfo = get_system_info
-    getClassType = get_class_type
 
 class VirtualFileComposite(VirtualFile):
     """A composite directory within the VirtualFileSystem: this maps to more than
     one directory on different mount points.  The resulting directory appears
     to be the union of all the individual simple directories.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class VirtualFileMount(TypedReferenceCount):
     """The abstract base class for a mount definition used within a
     VirtualFileSystem.  Normally users don't need to monkey with this class
     directly.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_file_system(self) -> VirtualFileSystem:
         """Returns the file system this mount object is attached to."""
         ...
@@ -2522,24 +2471,17 @@ class VirtualFileMount(TypedReferenceCount):
         ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getFileSystem = get_file_system
     getMountPoint = get_mount_point
     getMountFlags = get_mount_flags
-    getClassType = get_class_type
 
 class VirtualFileMountMultifile(VirtualFileMount):
     """Maps a Multifile's contents into the VirtualFileSystem."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, multifile: Multifile) -> None: ...
     def get_multifile(self) -> Multifile:
         """Returns the Multifile pointer that this mount object is based on."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getMultifile = get_multifile
-    getClassType = get_class_type
 
 class VirtualFileMountRamdisk(VirtualFileMount):
     """Simulates an actual directory on disk with in-memory storage.  This is
@@ -2548,32 +2490,23 @@ class VirtualFileMountRamdisk(VirtualFileMount):
     limits to the size of the files that may be written with this system; and
     "files" written here are not automatically persistent between sessions.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class VirtualFileMountSystem(VirtualFileMount):
     """Maps an actual OS directory into the VirtualFileSystem."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, physical_filename: _Filename) -> None: ...
     def get_physical_filename(self) -> Filename:
         """Returns the name of the source file on the OS filesystem of the directory
         or file that is mounted.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPhysicalFilename = get_physical_filename
-    getClassType = get_class_type
 
 class VirtualFileSimple(VirtualFile):
     """A simple file or directory within the VirtualFileSystem: this maps to
     exactly one file on one mount point.  Most directories, and all regular
     files, are of this kind.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mount(self) -> VirtualFileMount:
         """Returns the VirtualFileMount this file is associated with."""
         ...
@@ -2583,25 +2516,18 @@ class VirtualFileSimple(VirtualFile):
         be decompressed.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getMount = get_mount
     isImplicitPzFile = is_implicit_pz_file
-    getClassType = get_class_type
 
 class TemporaryFile(FileReference):
     """This is a special kind of FileReference class that automatically deletes
     the file in question when it is deleted.  It is not responsible for
     creating, opening, or closing the file, however.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, filename: _Filename) -> None: ...
     @overload
     def __init__(self, __param0: TemporaryFile) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class IDecompressStream(istream):
     """An input stream object that uses zlib to decompress (inflate) the input
@@ -2613,7 +2539,6 @@ class IDecompressStream(istream):
     
     Seeking is not supported.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2635,7 +2560,6 @@ class OCompressStream(ostream):
     
     Seeking is not supported.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2649,7 +2573,6 @@ class OCompressStream(ostream):
 
 class VirtualFileList(ReferenceCount):
     """A list of VirtualFiles, as returned by VirtualFile::scan_directory()."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: VirtualFileList) -> None: ...
     def __getitem__(self, n: int) -> VirtualFile:
         """Returns the nth file in the list."""
@@ -3001,7 +2924,6 @@ class VirtualFileSystem:
     MFReadOnly = MF_read_only
 
 class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -3021,12 +2943,8 @@ class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
     def assign(self, copy: VirtualFileMount) -> PointerTo_VirtualFileMount: ...
     @overload
     def assign(self, ptr: VirtualFileMount) -> PointerTo_VirtualFileMount: ...
-    def is_null(self) -> bool: ...
-    def clear(self) -> None: ...
-    isNull = is_null
 
 class PointerToBase_VirtualFileMount(PointerToVoid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
@@ -3268,7 +3186,6 @@ class WeakPointerToVoid(PointerToVoid):
     """This is the specialization of PointerToVoid for weak pointers.  It needs an
     additional flag to indicate that the pointer has been deleted.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def was_deleted(self) -> bool:
         """Returns true if the object we are pointing to has been deleted, false
         otherwise.  If this returns true, it means that the pointer can not yet be

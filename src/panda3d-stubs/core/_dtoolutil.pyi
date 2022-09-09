@@ -11,7 +11,6 @@ _Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLik
 _Filename_Type: TypeAlias = Literal[0, 1, 2]
 
 class basic_ios_char(ios_base):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def good(self) -> bool: ...
     def eof(self) -> bool: ...
     def fail(self) -> bool: ...
@@ -32,7 +31,6 @@ class ios_base:
     End = end
 
 class fstream(iostream):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def close(self) -> None: ...
 
@@ -45,7 +43,6 @@ class iostream(istream, ostream):
     upcastToOstream = upcast_to_ostream
 
 class istream(basic_ios_char):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_basic_ios_char(self) -> basic_ios_char: ...
     def get(self) -> int: ...
     def tellg(self) -> int: ...
@@ -56,7 +53,6 @@ class istream(basic_ios_char):
     upcastToBasicIosChar = upcast_to_basic_ios_char
 
 class ostream(basic_ios_char):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_basic_ios_char(self) -> basic_ios_char: ...
     def put(self, c: str) -> None: ...
     def flush(self) -> None: ...
@@ -68,12 +64,10 @@ class ostream(basic_ios_char):
     upcastToBasicIosChar = upcast_to_basic_ios_char
 
 class ifstream(istream):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def close(self) -> None: ...
 
 class ofstream(ostream):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def close(self) -> None: ...
 
@@ -83,7 +77,6 @@ class IFileStream(istream):
     simple-threading implementation (using this interface will block only the
     current thread, rather than the entire process, on I/O waits).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -97,7 +90,6 @@ class OFileStream(ostream):
     simple-threading implementation (using this interface will block only the
     current thread, rather than the entire process, on I/O waits).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -112,7 +104,6 @@ class FileStream(iostream):
     will block only the current thread, rather than the entire process, on I/O
     waits).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -453,9 +444,6 @@ class Filename:
     def __init__(self, path: str | bytes | PathLike) -> None: ...
     @overload
     def __init__(self, dirname: _Filename, basename: _Filename) -> None: ...
-    def __str__(self) -> str:
-        """And retrieval is by any of the classic string operations."""
-        ...
     def __getitem__(self, n: int) -> str: ...
     def __fspath__(self) -> str: ...
     def __iadd__(self, other: str) -> Filename: ...
@@ -1708,7 +1696,6 @@ class LineStream(ostream):
     otherwise affected when a line of text is extracted.  More text can still
     be written to it and continuously extracted.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def is_text_available(self) -> bool:
         """Returns true if there is at least one line of text (or even a partial line)

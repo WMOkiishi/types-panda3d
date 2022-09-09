@@ -2,6 +2,7 @@ import importlib
 import logging
 from typing import Final
 
+from .construction import get_removed_attributes
 from .reps import Alias, Class, Module, StubRep
 from .special_cases import ITERABLE, NO_STUBS
 from .util import flatten, is_sunder
@@ -36,6 +37,7 @@ def is_stub_only(rep: StubRep) -> bool:
 
 def check_class(rep: Class, runtime: object) -> None:
     rep_attrs = {i.name for i in rep.nested if not is_stub_only(i)}
+    rep_attrs |= get_removed_attributes(rep.scoped_name)
     runtime_attrs = {i for i in runtime.__dict__ if not is_sunder(i)}
     no_stub = runtime_attrs - rep_attrs - ignored_type_attrs
     no_runtime = rep_attrs - runtime_attrs

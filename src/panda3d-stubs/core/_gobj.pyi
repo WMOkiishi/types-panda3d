@@ -99,7 +99,6 @@ class AdaptiveLru(Namable):
     The interface is designed to be identical to that for SimpleLru, so that it
     may be used as a drop-in replacement.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str, max_size: int) -> None: ...
     def get_total_size(self) -> int:
         """Returns the total size of all objects currently active on the LRU."""
@@ -140,7 +139,6 @@ class AdaptiveLru(Namable):
         successful, false if there is some problem.
         """
         ...
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def set_weight(self, weight: float) -> None:
         """The following methods are specific to AdaptiveLru, and do not exist in
@@ -411,7 +409,6 @@ class GeomVertexAnimationSpec(GeomEnums):
     actually performed; this just specifies how the vertices are set up to be
     animated.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def animation_type(self) -> _GeomEnums_AnimationType: ...
     @property
@@ -477,7 +474,6 @@ class InternalName(TypedWritableReferenceCount):
     composition of one or more other names, or by giving it a source string
     directly.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def parent(self) -> InternalName: ...
     @property
@@ -717,8 +713,6 @@ class InternalName(TypedWritableReferenceCount):
         shader subsystem.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getParent = get_parent
     getName = get_name
     getBasename = get_basename
@@ -749,14 +743,12 @@ class InternalName(TypedWritableReferenceCount):
     getCamera = get_camera
     getModel = get_model
     getView = get_view
-    getClassType = get_class_type
 
 class GeomVertexColumn(GeomEnums):
     """This defines how a single column is interleaved within a vertex array
     stored within a Geom.  The GeomVertexArrayFormat class maintains a list of
     these to completely define a particular array structure.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: GeomVertexColumn) -> None: ...
     @overload
@@ -1808,7 +1800,6 @@ class VertexDataSaveFile(SimpleAllocator):
     and written to disk.  All vertex data arrays are written into one large
     flat file.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def is_valid(self) -> bool:
         """Returns true if the save file was successfully created and is ready for
         use, false if there was an error.
@@ -2417,7 +2408,6 @@ class VertexTransform(TypedWritableReferenceCount):
     rendering.  This is used to implement soft-skinned and animated vertices.
     Derived classes will define how the transform is actually computed.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def modified(self) -> UpdateSeq: ...
     def get_matrix(self, matrix: _Mat4f) -> None: ...
@@ -2459,15 +2449,12 @@ class VertexTransform(TypedWritableReferenceCount):
         VertexTransforms have changed value recently.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getMatrix = get_matrix
     multMatrix = mult_matrix
     accumulateMatrix = accumulate_matrix
     getModified = get_modified
     getNextModified = get_next_modified
     getGlobalModified = get_global_modified
-    getClassType = get_class_type
 
 class TransformTable(TypedWritableReferenceCount):
     """Stores the total set of VertexTransforms that the vertices in a particular
@@ -2477,7 +2464,6 @@ class TransformTable(TypedWritableReferenceCount):
     vertices on the graphics card.  See TransformBlendTable for one set up to
     compute its dynamic vertices on the CPU.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     transforms: Sequence[VertexTransform]
     @property
     def registered(self) -> bool: ...
@@ -2544,8 +2530,6 @@ class TransformTable(TypedWritableReferenceCount):
         """
         ...
     def write(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_transforms(self) -> tuple[VertexTransform, ...]: ...
     isRegistered = is_registered
     registerTable = register_table
@@ -2556,7 +2540,6 @@ class TransformTable(TypedWritableReferenceCount):
     insertTransform = insert_transform
     removeTransform = remove_transform
     addTransform = add_transform
-    getClassType = get_class_type
     getTransforms = get_transforms
 
 class TransformBlend:
@@ -2714,7 +2697,6 @@ class TransformBlendTable(CopyOnWriteObject):
     vertices on the CPU.  See TransformTable for one set up to compute its
     dynamic vertices on the graphics card.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     blends: Sequence[TransformBlend]
     rows: SparseArray
     @property
@@ -2781,8 +2763,6 @@ class TransformBlendTable(CopyOnWriteObject):
         """
         ...
     def write(self, out: ostream, indent_level: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_blends(self) -> tuple[TransformBlend, ...]: ...
     getNumBlends = get_num_blends
     getBlend = get_blend
@@ -2795,7 +2775,6 @@ class TransformBlendTable(CopyOnWriteObject):
     setRows = set_rows
     getRows = get_rows
     modifyRows = modify_rows
-    getClassType = get_class_type
     getBlends = get_blends
 
 class VertexSlider(TypedWritableReferenceCount):
@@ -2806,7 +2785,6 @@ class VertexSlider(TypedWritableReferenceCount):
     It is similar to VertexTransform, which keeps a full 4x4 transform matrix,
     but the VertexSlider only keeps a single float value.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def name(self) -> InternalName: ...
     @property
@@ -2827,12 +2805,9 @@ class VertexSlider(TypedWritableReferenceCount):
         ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getName = get_name
     getSlider = get_slider
     getModified = get_modified
-    getClassType = get_class_type
 
 class SliderTable(TypedWritableReferenceCount):
     """Stores the total set of VertexSliders that the vertices in a particular
@@ -2843,7 +2818,6 @@ class SliderTable(TypedWritableReferenceCount):
     Also, it is only used when animating vertices on the CPU, since GPU's don't
     support morphs at this point in time.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def modified(self) -> UpdateSeq: ...
     @overload
@@ -2917,8 +2891,6 @@ class SliderTable(TypedWritableReferenceCount):
         """
         ...
     def write(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_sliders(self) -> tuple[VertexSlider, ...]: ...
     isRegistered = is_registered
     registerTable = register_table
@@ -2933,7 +2905,6 @@ class SliderTable(TypedWritableReferenceCount):
     setSliderRows = set_slider_rows
     removeSlider = remove_slider
     addSlider = add_slider
-    getClassType = get_class_type
     getSliders = get_sliders
 
 class GeomVertexData(CopyOnWriteObject, GeomEnums):
@@ -3451,7 +3422,6 @@ class AnimateVerticesRequest(AsyncTask):
     requests are being run (presumably on multiple CPUs/cores), to ensure that
     the data has been computed by the time it's needed.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AnimateVerticesRequest) -> None:
         """Create a new AnimateVerticesRequest."""
@@ -3464,20 +3434,13 @@ class AnimateVerticesRequest(AsyncTask):
         @see done()
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isReady = is_ready
-    getClassType = get_class_type
 
 class SavedContext(TypedObject):
     """This is the base class for all GSG-specific context objects, such as
     TextureContext and GeomContext.  It exists mainly to provide some
     structural organization.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class BufferContext(SavedContext):
     """This is a base class for those kinds of SavedContexts that occupy an
@@ -3489,7 +3452,6 @@ class BufferContext(SavedContext):
     This class provides methods for tracking the video memory utilization, as
     well as residency of each object, via PStats.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def object(self) -> TypedWritableReferenceCount: ...
     @property
@@ -3523,14 +3485,11 @@ class BufferContext(SavedContext):
         considered "resident" if it appears to be resident in texture memory.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToSavedContext = upcast_to_SavedContext
     getDataSizeBytes = get_data_size_bytes
     getModified = get_modified
     getActive = get_active
     getResident = get_resident
-    getClassType = get_class_type
 
 class GeomPrimitive(CopyOnWriteObject, GeomEnums):
     """This is an abstract base class for a family of classes that represent the
@@ -4243,7 +4202,6 @@ class TextureStage(TypedWritableReferenceCount):
     active TextureStages in order and then issuing the appropriate rendering
     calls to activate them.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     sort: int
     priority: int
@@ -4576,8 +4534,6 @@ class TextureStage(TypedWritableReferenceCount):
         single-texture case.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setName = set_name
     getName = get_name
     setSort = set_sort
@@ -4625,7 +4581,6 @@ class TextureStage(TypedWritableReferenceCount):
     usesLastSavedResult = uses_last_saved_result
     compareTo = compare_to
     getDefault = get_default
-    getClassType = get_class_type
     MModulate = M_modulate
     MDecal = M_decal
     MBlend = M_blend
@@ -5221,25 +5176,17 @@ class GeomContext(SavedContext):
     In the case of OpenGL, for example, a GeomContext corresponds to a display
     list identifier.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def geom(self) -> Geom: ...
     def get_geom(self) -> Geom: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getGeom = get_geom
-    getClassType = get_class_type
 
 class GeomLines(GeomPrimitive):
     """Defines a series of disconnected line segments."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomLines) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomLinesAdjacency(GeomPrimitive):
     """Defines a series of disconnected line segments with adjacency information,
@@ -5247,45 +5194,32 @@ class GeomLinesAdjacency(GeomPrimitive):
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomLinesAdjacency) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomLinestrips(GeomPrimitive):
     """Defines a series of line strips."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomLinestrips) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomLinestripsAdjacency(GeomPrimitive):
     """Defines a series of line strips with adjacency information.
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomLinestripsAdjacency) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomPatches(GeomPrimitive):
     """Defines a series of "patches", fixed-size groupings of vertices that must
     be processed by a tessellation shader.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: GeomPatches) -> None:
         """The number of vertices per patch must be specified to the GeomPatches
@@ -5296,81 +5230,54 @@ class GeomPatches(GeomPrimitive):
         ...
     @overload
     def __init__(self, num_vertices_per_patch: int, usage_hint: _GeomEnums_UsageHint) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomPoints(GeomPrimitive):
     """Defines a series of disconnected points."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomPoints) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomTriangles(GeomPrimitive):
     """Defines a series of disconnected triangles."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomTriangles) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomTrianglesAdjacency(GeomPrimitive):
     """Defines a series of disconnected triangles, with adjacency information.
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomTrianglesAdjacency) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomTrifans(GeomPrimitive):
     """Defines a series of triangle fans."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomTrifans) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomTristrips(GeomPrimitive):
     """Defines a series of triangle strips."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomTristrips) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomTristripsAdjacency(GeomPrimitive):
     """Defines a series of triangle strips with adjacency information.
     
     @since 1.10.0
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
     def __init__(self, copy: GeomTristripsAdjacency) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class GeomVertexReader(GeomEnums):
     """This object provides a high-level interface for quickly reading a sequence
@@ -5395,7 +5302,6 @@ class GeomVertexReader(GeomEnums):
     cause the vertex buffer to be deallocated.  Better yet, use a
     GeomVertexRewriter if you are going to create both of them anyway.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
@@ -5740,7 +5646,6 @@ class GeomVertexWriter(GeomEnums):
     cause the vertex buffer to be deallocated.  Better yet, use a
     GeomVertexRewriter if you are going to create both of them anyway.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
@@ -8906,7 +8811,6 @@ class Texture(TypedWritableReferenceCount, Namable):
     QLBest = QL_best
 
 class Shader(TypedWritableReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     SL_none: ClassVar[Literal[0]]
     SL_Cg: ClassVar[Literal[1]]
     SL_GLSL: ClassVar[Literal[2]]
@@ -9046,8 +8950,6 @@ class Shader(TypedWritableReferenceCount):
         be rendered.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     loadCompute = load_compute
     makeCompute = make_compute
     getFilename = get_filename
@@ -9062,7 +8964,6 @@ class Shader(TypedWritableReferenceCount):
     isPrepared = is_prepared
     releaseAll = release_all
     prepareNow = prepare_now
-    getClassType = get_class_type
     SLNone = SL_none
     SLCg = SL_Cg
     SLGLSL = SL_GLSL
@@ -9175,7 +9076,6 @@ class PreparedGraphicsObjects(ReferenceCount):
     hence their storage here in a separate object rather than as a part of the
     GraphicsStateGuardian.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_name(self) -> str:
         """Returns the name of the PreparedGraphicsObjects structure.  This is an
         arbitrary name that serves mainly to uniquify the context for PStats
@@ -9763,7 +9663,6 @@ class Lens(TypedWritableReferenceCount):
     in other contexts, however; for instance, a Spotlight is also defined using
     a lens.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     change_event: str
     coordinate_system: _CoordinateSystem
     film_size: LVecBase2f
@@ -10309,8 +10208,6 @@ class Lens(TypedWritableReferenceCount):
         properties are unchanged.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     makeCopy = make_copy
     extrudeDepth = extrude_depth
     extrudeVec = extrude_vec
@@ -10372,7 +10269,6 @@ class Lens(TypedWritableReferenceCount):
     getLensMat = get_lens_mat
     getLensMatInv = get_lens_mat_inv
     getLastChange = get_last_change
-    getClassType = get_class_type
     SCMono = SC_mono
     SCLeft = SC_left
     SCRight = SC_right
@@ -10771,7 +10667,6 @@ class MatrixLens(Lens):
     an explicit projection matrix, but not mess around with fov's or focal
     lengths or any of that nonsense.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     user_mat: LMatrix4f
     def __init__(self) -> None: ...
     def set_user_mat(self, user_mat: _Mat4f) -> None:
@@ -10843,8 +10738,6 @@ class MatrixLens(Lens):
         center matrix if there is no custom matrix set for the right eye.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setUserMat = set_user_mat
     getUserMat = get_user_mat
     setLeftEyeMat = set_left_eye_mat
@@ -10855,7 +10748,6 @@ class MatrixLens(Lens):
     clearRightEyeMat = clear_right_eye_mat
     hasRightEyeMat = has_right_eye_mat
     getRightEyeMat = get_right_eye_mat
-    getClassType = get_class_type
 
 class OrthographicLens(Lens):
     """An orthographic lens.  Although this kind of lens is linear, like a
@@ -10865,17 +10757,12 @@ class OrthographicLens(Lens):
     represents a planar projection onto its imaginary film of the specified
     size, hanging in space.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class ParamTextureSampler(ParamValueBase):
     """A class object for storing a pointer to a Texture along with a sampler
     state that indicates how to to sample the given texture.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def texture(self) -> Texture: ...
     @property
@@ -10891,11 +10778,8 @@ class ParamTextureSampler(ParamValueBase):
     def get_sampler(self) -> SamplerState:
         """Retrieves the sampler state stored in the parameter."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getTexture = get_texture
     getSampler = get_sampler
-    getClassType = get_class_type
 
 class ParamTextureImage(ParamValueBase):
     """A class object for storing a pointer to a Texture along with a set of
@@ -10904,7 +10788,6 @@ class ParamTextureImage(ParamValueBase):
     This class is useful for binding texture images to a shader, which is a
     fairly esoteric feature.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def texture(self) -> Texture: ...
     @property
@@ -10940,26 +10823,19 @@ class ParamTextureImage(ParamValueBase):
         get_bind_layered() returns false.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getTexture = get_texture
     hasReadAccess = has_read_access
     hasWriteAccess = has_write_access
     getBindLayered = get_bind_layered
     getBindLevel = get_bind_level
     getBindLayer = get_bind_layer
-    getClassType = get_class_type
 
 class PerspectiveLens(Lens):
     """A perspective-type lens: a normal camera."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
     def __init__(self, hfov: float, vfov: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class TextureReloadRequest(AsyncTask):
     """This loader request will call Texture::get_ram_image() in a sub-thread, to
@@ -10967,7 +10843,6 @@ class TextureReloadRequest(AsyncTask):
     GraphicsStateGuardian::async_reload_texture(), when get_incomplete_render()
     is true.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def texture(self) -> Texture: ...
     @overload
@@ -10999,13 +10874,10 @@ class TextureReloadRequest(AsyncTask):
         @see done()
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPreparedGraphicsObjects = get_prepared_graphics_objects
     getTexture = get_texture
     getAllowCompressed = get_allow_compressed
     isReady = is_ready
-    getClassType = get_class_type
 
 class TextureContext(BufferContext, AdaptiveLruPage):
     """This is a special class object that holds all the information returned by a
@@ -11093,36 +10965,27 @@ class TextureContext(BufferContext, AdaptiveLruPage):
     getClassType = get_class_type
 
 class ShaderContext(SavedContext):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def shader(self) -> Shader: ...
     def get_shader(self) -> Shader: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getShader = get_shader
-    getClassType = get_class_type
 
 class UserVertexSlider(VertexSlider):
     """This is a specialization on VertexSlider that allows the user to specify
     any arbitrary slider valie he likes.  This is rarely used except for
     testing.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: InternalName | str) -> None: ...
     def set_slider(self, slider: float) -> None:
         """Stores the indicated slider value."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSlider = set_slider
-    getClassType = get_class_type
 
 class UserVertexTransform(VertexTransform):
     """This is a specialization on VertexTransform that allows the user to specify
     any arbitrary transform matrix he likes.  This is rarely used except for
     testing.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
     def get_name(self) -> str:
         """Returns the name passed to the constructor.  Completely arbitrary."""
@@ -11130,11 +10993,8 @@ class UserVertexTransform(VertexTransform):
     def set_matrix(self, matrix: _Mat4f) -> None:
         """Stores the indicated matrix."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getName = get_name
     setMatrix = set_matrix
-    getClassType = get_class_type
 
 class VideoTexture(Texture, AnimInterface):
     """The base class for a family of animated Textures that take their input from
@@ -11554,7 +11414,6 @@ class TexturePeeker(ReferenceCount):
     allows quick and easy inspection of a texture's texels by (u, v)
     coordinates.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: TexturePeeker) -> None: ...
     def get_x_size(self) -> int:
         """Returns the width of the texture image that is contributing to the

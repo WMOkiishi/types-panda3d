@@ -587,7 +587,6 @@ class LVecBase2i:
 
 class LVector2f(LVecBase2f):
     """This is a two-component vector offset."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, copy: LVecBase2f)`:
@@ -646,17 +645,13 @@ class LVector2f(LVecBase2f):
         necessary
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     signedAngleRad = signed_angle_rad
     signedAngleDeg = signed_angle_deg
-    getClassType = get_class_type
 
 class LVector2d(LVecBase2d):
     """This is a two-component vector offset."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, copy: LVecBase2d)`:
@@ -715,17 +710,13 @@ class LVector2d(LVecBase2d):
         necessary
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     signedAngleRad = signed_angle_rad
     signedAngleDeg = signed_angle_deg
-    getClassType = get_class_type
 
 class LVector2i(LVecBase2i):
     """This is a two-component vector offset."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, copy: LVecBase2i)`:
@@ -763,15 +754,11 @@ class LVector2i(LVecBase2i):
     def unit_y() -> LVector2i:
         """Returns a unit Y vector."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
-    getClassType = get_class_type
 
 class LPoint2f(LVecBase2f):
     """This is a two-component point in space."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, copy: LVecBase2f)`:
@@ -825,15 +812,11 @@ class LPoint2f(LVecBase2f):
         another one.  The resulting vector will be a scalar multiple of onto.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
-    getClassType = get_class_type
 
 class LPoint2d(LVecBase2d):
     """This is a two-component point in space."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, copy: LVecBase2d)`:
@@ -887,15 +870,11 @@ class LPoint2d(LVecBase2d):
         another one.  The resulting vector will be a scalar multiple of onto.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
-    getClassType = get_class_type
 
 class LPoint2i(LVecBase2i):
     """This is a two-component point in space."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, copy: LVecBase2i)`:
@@ -938,11 +917,8 @@ class LPoint2i(LVecBase2i):
     def unit_y() -> LPoint2i:
         """Returns a unit Y point."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
-    getClassType = get_class_type
 
 class LVecBase3f:
     """This is the base class for all three-component vectors and points."""
@@ -1667,7 +1643,6 @@ class LVector3f(LVecBase3f):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xy(self) -> LVector2f: ...
     @property
@@ -1799,8 +1774,6 @@ class LVector3f(LVecBase3f):
         components, in whatever way the coordinate system represents that vector.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -1813,7 +1786,6 @@ class LVector3f(LVecBase3f):
     signedAngleDeg = signed_angle_deg
     relativeAngleRad = relative_angle_rad
     relativeAngleDeg = relative_angle_deg
-    getClassType = get_class_type
 
 class LVector3d(LVecBase3d):
     """This is a three-component vector distance (as opposed to a three-component
@@ -1822,7 +1794,6 @@ class LVector3d(LVecBase3d):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xy(self) -> LVector2d: ...
     @property
@@ -1954,8 +1925,6 @@ class LVector3d(LVecBase3d):
         components, in whatever way the coordinate system represents that vector.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -1968,7 +1937,6 @@ class LVector3d(LVecBase3d):
     signedAngleDeg = signed_angle_deg
     relativeAngleRad = relative_angle_rad
     relativeAngleDeg = relative_angle_deg
-    getClassType = get_class_type
 
 class LVector3i(LVecBase3i):
     """This is a three-component vector distance (as opposed to a three-component
@@ -1977,7 +1945,6 @@ class LVector3i(LVecBase3i):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xy(self) -> LVector2i: ...
     @property
@@ -2066,15 +2033,12 @@ class LVector3i(LVecBase3i):
         components, in whatever way the coordinate system represents that vector.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     getXy = get_xy
     getXz = get_xz
     getYz = get_yz
-    getClassType = get_class_type
 
 class LPoint3f(LVecBase3f):
     """This is a three-component point in space (as opposed to a three-component
@@ -2083,7 +2047,6 @@ class LPoint3f(LVecBase3f):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xy(self) -> LPoint2f: ...
     @property
@@ -2168,15 +2131,12 @@ class LPoint3f(LVecBase3f):
         origin, wherever that maps to in the given coordinate system.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     getXy = get_xy
     getXz = get_xz
     getYz = get_yz
-    getClassType = get_class_type
 
 class LPoint3d(LVecBase3d):
     """This is a three-component point in space (as opposed to a three-component
@@ -2185,7 +2145,6 @@ class LPoint3d(LVecBase3d):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xy(self) -> LPoint2d: ...
     @property
@@ -2270,15 +2229,12 @@ class LPoint3d(LVecBase3d):
         origin, wherever that maps to in the given coordinate system.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     getXy = get_xy
     getXz = get_xz
     getYz = get_yz
-    getClassType = get_class_type
 
 class LPoint3i(LVecBase3i):
     """This is a three-component point in space (as opposed to a three-component
@@ -2287,7 +2243,6 @@ class LPoint3i(LVecBase3i):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xy(self) -> LPoint2i: ...
     @property
@@ -2361,15 +2316,12 @@ class LPoint3i(LVecBase3i):
         origin, wherever that maps to in the given coordinate system.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     getXy = get_xy
     getXz = get_xz
     getYz = get_yz
-    getClassType = get_class_type
 
 class LVecBase4f:
     """This is the base class for all three-component vectors and points."""
@@ -3199,7 +3151,6 @@ class UnalignedLVecBase4i:
 
 class LVector4f(LVecBase4f):
     """This is a four-component vector distance."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xyz(self) -> LVector3f: ...
     @property
@@ -3261,19 +3212,15 @@ class LVector4f(LVecBase4f):
         another one.  The resulting vector will be a scalar multiple of onto.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     unitW = unit_w
     getXyz = get_xyz
     getXy = get_xy
-    getClassType = get_class_type
 
 class LVector4d(LVecBase4d):
     """This is a four-component vector distance."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xyz(self) -> LVector3d: ...
     @property
@@ -3335,19 +3282,15 @@ class LVector4d(LVecBase4d):
         another one.  The resulting vector will be a scalar multiple of onto.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     unitW = unit_w
     getXyz = get_xyz
     getXy = get_xy
-    getClassType = get_class_type
 
 class LVector4i(LVecBase4i):
     """This is a four-component vector distance."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xyz(self) -> LVector3i: ...
     @property
@@ -3398,19 +3341,15 @@ class LVector4i(LVecBase4i):
     def get_xy(self) -> LVector2i:
         """Returns the x and y component of this vector"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     unitW = unit_w
     getXyz = get_xyz
     getXy = get_xy
-    getClassType = get_class_type
 
 class LPoint4f(LVecBase4f):
     """This is a four-component point in space."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xyz(self) -> LPoint3f: ...
     @property
@@ -3474,19 +3413,15 @@ class LPoint4f(LVecBase4f):
         another one.  The resulting vector will be a scalar multiple of onto.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     unitW = unit_w
     getXyz = get_xyz
     getXy = get_xy
-    getClassType = get_class_type
 
 class LPoint4d(LVecBase4d):
     """This is a four-component point in space."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xyz(self) -> LPoint3d: ...
     @property
@@ -3550,19 +3485,15 @@ class LPoint4d(LVecBase4d):
         another one.  The resulting vector will be a scalar multiple of onto.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     unitW = unit_w
     getXyz = get_xyz
     getXy = get_xy
-    getClassType = get_class_type
 
 class LPoint4i(LVecBase4i):
     """This is a four-component point in space."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def xyz(self) -> LPoint3i: ...
     @property
@@ -3615,15 +3546,12 @@ class LPoint4i(LVecBase4i):
     def get_xy(self) -> LPoint2i:
         """Returns the x and y component of this vector"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
     unitW = unit_w
     getXyz = get_xyz
     getXy = get_xy
-    getClassType = get_class_type
 
 class LMatrix3f:
     """This is a 3-by-3 transform matrix.  It typically will represent either a
@@ -5595,7 +5523,6 @@ class UnalignedLMatrix4d:
 
 class LQuaternionf(LVecBase4f):
     """This is the base quaternion class"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -5751,7 +5678,6 @@ class LQuaternionf(LVecBase4f):
     def set_i(self, i: float) -> None: ...
     def set_j(self, j: float) -> None: ...
     def set_k(self, k: float) -> None: ...
-    def normalize(self) -> bool: ...
     def conjugate_from(self, other: _Vec4f) -> bool:
         """Computes the conjugate of the other quat, and stores the result in this
         quat.  This is a fully general operation and makes no assumptions about the
@@ -5800,8 +5726,6 @@ class LQuaternionf(LVecBase4f):
     def ident_quat() -> LQuaternionf:
         """Returns an identity quaternion."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     pureImaginary = pure_imaginary
     angleRad = angle_rad
     angleDeg = angle_deg
@@ -5836,11 +5760,9 @@ class LQuaternionf(LVecBase4f):
     isIdentity = is_identity
     isAlmostIdentity = is_almost_identity
     identQuat = ident_quat
-    getClassType = get_class_type
 
 class LQuaterniond(LVecBase4d):
     """This is the base quaternion class"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -5996,7 +5918,6 @@ class LQuaterniond(LVecBase4d):
     def set_i(self, i: float) -> None: ...
     def set_j(self, j: float) -> None: ...
     def set_k(self, k: float) -> None: ...
-    def normalize(self) -> bool: ...
     def conjugate_from(self, other: _Vec4d) -> bool:
         """Computes the conjugate of the other quat, and stores the result in this
         quat.  This is a fully general operation and makes no assumptions about the
@@ -6045,8 +5966,6 @@ class LQuaterniond(LVecBase4d):
     def ident_quat() -> LQuaterniond:
         """Returns an identity quaternion."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     pureImaginary = pure_imaginary
     angleRad = angle_rad
     angleDeg = angle_deg
@@ -6081,11 +6000,9 @@ class LQuaterniond(LVecBase4d):
     isIdentity = is_identity
     isAlmostIdentity = is_almost_identity
     identQuat = ident_quat
-    getClassType = get_class_type
 
 class LRotationf(LQuaternionf):
     """This is a unit quaternion representing a rotation."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, m: LMatrix3f)`:
@@ -6120,13 +6037,9 @@ class LRotationf(LQuaternionf):
     @overload
     def __mul__(self, scalar: float) -> LRotationf: ...
     def __truediv__(self, scalar: float) -> LRotationf: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LRotationd(LQuaterniond):
     """This is a unit quaternion representing a rotation."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, m: LMatrix3d)`:
@@ -6161,13 +6074,9 @@ class LRotationd(LQuaterniond):
     @overload
     def __mul__(self, scalar: float) -> LRotationd: ...
     def __truediv__(self, scalar: float) -> LRotationd: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LOrientationf(LQuaternionf):
     """This is a unit quaternion representing an orientation."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, m: LMatrix3f)`:
@@ -6189,13 +6098,9 @@ class LOrientationf(LQuaternionf):
     @overload
     def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
     def __mul__(self, other: _Vec4f) -> LOrientationf: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LOrientationd(LQuaterniond):
     """This is a unit quaternion representing an orientation."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self, m: LMatrix3d)`:
@@ -6217,9 +6122,6 @@ class LOrientationd(LQuaterniond):
     @overload
     def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
     def __mul__(self, other: _Vec4d) -> LOrientationd: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class ConfigVariableColor(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a set of
@@ -6233,7 +6135,6 @@ class ConfigVariableColor(ConfigVariable):
     This isn't defined in dtool because it relies on the LColor class, which is
     defined in linmath.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ConfigVariableColor) -> None: ...
     @overload

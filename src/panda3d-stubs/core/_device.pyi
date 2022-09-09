@@ -11,7 +11,6 @@ from panda3d.core import (
     LPoint3f,
     PointerData,
     PointerEventList,
-    TypeHandle,
     TypedReferenceCount,
     ostream,
 )
@@ -111,7 +110,6 @@ class InputDevice(TypedReferenceCount):
         def __init__(self) -> None: ...
         @overload
         def __init__(self, __param0: InputDevice.BatteryData) -> None: ...
-    DtoolClassDict: ClassVar[dict[str, Any]]
     S_unknown: ClassVar[Literal[0]]
     S_up: ClassVar[Literal[1]]
     S_down: ClassVar[Literal[2]]
@@ -240,8 +238,6 @@ class InputDevice(TypedReferenceCount):
     def output(self, out: ostream) -> None:
         """Writes a one-line string describing the device."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     hasFeature = has_feature
     mapButton = map_button
     mapAxis = map_axis
@@ -254,7 +250,6 @@ class InputDevice(TypedReferenceCount):
     getButtonEvents = get_button_events
     hasPointerEvent = has_pointer_event
     getPointerEvents = get_pointer_events
-    getClassType = get_class_type
     SUnknown = S_unknown
     SUp = S_up
     SDown = S_down
@@ -267,7 +262,6 @@ class ClientBase(TypedReferenceCount):
     their data; it is used by TrackerNode etc.  to put these devices in the
     data graph.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def fork_asynchronous_thread(self, poll_time: float) -> bool:
         """Forks a separate thread to do all the polling of connected devices.  The
         forked thread will poll after every poll_time seconds has elapsed.  Returns
@@ -301,14 +295,11 @@ class ClientBase(TypedReferenceCount):
         will operate in.  Normally, this is CS_default.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     forkAsynchronousThread = fork_asynchronous_thread
     isForked = is_forked
     getLastPollTime = get_last_poll_time
     setCoordinateSystem = set_coordinate_system
     getCoordinateSystem = get_coordinate_system
-    getClassType = get_class_type
 
 class AnalogNode(DataNode):
     """This is the primary interface to analog controls like sliders and joysticks
@@ -324,7 +315,6 @@ class AnalogNode(DataNode):
     the two channels of an xy datagram, similarly to the way a mouse places its
     position data.  In this way, an AnalogNode may be used in place of a mouse.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AnalogNode) -> None: ...
     @overload
@@ -375,8 +365,6 @@ class AnalogNode(DataNode):
         on the indicated channel is flipped.  See set_output().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isValid = is_valid
     getNumControls = get_num_controls
     getControlState = get_control_state
@@ -385,7 +373,6 @@ class AnalogNode(DataNode):
     clearOutput = clear_output
     getOutput = get_output
     isOutputFlipped = is_output_flipped
-    getClassType = get_class_type
 
 class ButtonNode(DataNode):
     """This is the primary interface to on/off button devices associated with a
@@ -397,7 +384,6 @@ class ButtonNode(DataNode):
     buttons are associated with ButtonHandles, this node will put appropriate
     up and down events on the data graph for each button state change.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ButtonNode) -> None: ...
     @overload
@@ -443,15 +429,12 @@ class ButtonNode(DataNode):
         have never heard anything about this particular button.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isValid = is_valid
     getNumButtons = get_num_buttons
     setButtonMap = set_button_map
     getButtonMap = get_button_map
     getButtonState = get_button_state
     isButtonKnown = is_button_known
-    getClassType = get_class_type
 
 class DialNode(DataNode):
     """This is the primary interface to infinite dial type devices associated with
@@ -463,7 +446,6 @@ class DialNode(DataNode):
     any number of times.  Therefore it does not have a specific position at any
     given time, unlike an AnalogDevice.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: DialNode) -> None: ...
     @overload
@@ -489,13 +471,10 @@ class DialNode(DataNode):
         we have never heard anything about this particular dial.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isValid = is_valid
     getNumDials = get_num_dials
     readDial = read_dial
     isDialKnown = is_dial_known
-    getClassType = get_class_type
 
 class InputDeviceSet:
     """Manages a list of InputDevice objects, as returned by various
@@ -585,15 +564,11 @@ class InputDeviceNode(DataNode):
     
     This is intended to only be accessed from the app thread.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     device: InputDevice
     @overload
     def __init__(self, __param0: InputDeviceNode) -> None: ...
     @overload
     def __init__(self, device: InputDevice, name: str) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class TrackerNode(DataNode):
     """This class reads the position and orientation information from a tracker
@@ -601,7 +576,6 @@ class TrackerNode(DataNode):
     It is also the primary interface to a Tracker object associated with a
     ClientBase.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, device: InputDevice) -> None: ...
     @overload
@@ -654,8 +628,6 @@ class TrackerNode(DataNode):
         CS_default.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isValid = is_valid
     getPos = get_pos
     getOrient = get_orient
@@ -666,7 +638,6 @@ class TrackerNode(DataNode):
     getTrackerCoordinateSystem = get_tracker_coordinate_system
     setGraphCoordinateSystem = set_graph_coordinate_system
     getGraphCoordinateSystem = get_graph_coordinate_system
-    getClassType = get_class_type
 
 class VirtualMouse(DataNode):
     """Poses as a MouseAndKeyboard object in the datagraph, but accepts input from
@@ -674,7 +645,6 @@ class VirtualMouse(DataNode):
     device.  The user can write high-level code to put the mouse wherever
     he/she wants, and to insert keypresses on demand.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: VirtualMouse) -> None: ...
     @overload
@@ -706,11 +676,8 @@ class VirtualMouse(DataNode):
         press_button().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setMousePos = set_mouse_pos
     setWindowSize = set_window_size
     setMouseOn = set_mouse_on
     pressButton = press_button
     releaseButton = release_button
-    getClassType = get_class_type

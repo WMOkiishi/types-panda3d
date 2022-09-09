@@ -35,7 +35,6 @@ class ParametricCurve(PandaNode):
     """A virtual base class for parametric curves.  This encapsulates all curves
     in 3-d space defined for a single parameter t in the range [0,get_max_t()].
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def is_valid(self) -> bool:
         """Returns true if the curve is defined.  This base class function always
         returns true; derived classes might override this to sometimes return
@@ -147,8 +146,6 @@ class ParametricCurve(PandaNode):
         ...
     @overload
     def write_egg(self, out: ostream, filename: _Filename, cs: _CoordinateSystem) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isValid = is_valid
     getMaxT = get_max_t
     setCurveType = set_curve_type
@@ -165,7 +162,6 @@ class ParametricCurve(PandaNode):
     adjustTangent = adjust_tangent
     adjustPt = adjust_pt
     writeEgg = write_egg
-    getClassType = get_class_type
 
 class CubicCurveseg(ParametricCurve):
     """A CubicCurveseg is any curve that can be completely described by four
@@ -184,10 +180,6 @@ class CubicCurveseg(ParametricCurve):
     CV's that were used to compute these basis vectors are not retained; this
     might be handled in a subclass (for instance, HermiteCurve).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class ParametricCurveCollection(ReferenceCount):
     """This is a set of zero or more ParametricCurves, which may or may not be
@@ -196,7 +188,6 @@ class ParametricCurveCollection(ReferenceCount):
     can then be evaluated as a unit to return a single transformation matrix
     for a given unit of time.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     curves: Sequence[ParametricCurve]
     @property
     def xyz_curve(self) -> ParametricCurve: ...
@@ -546,11 +537,7 @@ class PiecewiseCurve(ParametricCurve):
     a head-to-tail fashion.  The length of each curve segment in parametric
     space is definable.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class HermiteCurve(PiecewiseCurve):
     """A parametric curve defined by a sequence of control vertices, each with an
@@ -561,7 +548,6 @@ class HermiteCurve(PiecewiseCurve):
     The HermiteCurve class itself keeps its own list of the CV's that are used
     to define the curve (since the CubicCurveseg class doesn't retain these).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """Constructs a Hermite from the indicated (possibly non-hermite) curve."""
@@ -672,8 +658,6 @@ class HermiteCurve(PiecewiseCurve):
         """Returns the name of the given CV, or NULL."""
         ...
     def write_cv(self, out: ostream, n: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNumCvs = get_num_cvs
     insertCv = insert_cv
     appendCv = append_cv
@@ -692,7 +676,6 @@ class HermiteCurve(PiecewiseCurve):
     getCvTstart = get_cv_tstart
     getCvName = get_cv_name
     writeCv = write_cv
-    getClassType = get_class_type
 
 class NurbsCurveInterface:
     """This abstract class defines the interface only for a Nurbs-style curve,
@@ -803,7 +786,6 @@ class NurbsCurveResult(ReferenceCount):
     parallel implementation of NURBS curves, and will probably eventually
     replace the whole ParametricCurve class hierarchy.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: NurbsCurveResult) -> None: ...
     def get_start_t(self) -> float:
         """Returns the first legal value of t on the curve.  Usually this is 0.0."""
@@ -935,7 +917,6 @@ class NurbsCurveEvaluator(ReferenceCount):
     parallel implementation of NURBS curves, and will probably eventually
     replace the whole ParametricCurve class hierarchy.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -1110,7 +1091,6 @@ class NurbsSurfaceResult(ReferenceCount):
     a particular coordinate space.  It can return the point and/or normal to
     the surface at any point.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: NurbsSurfaceResult) -> None: ...
     def get_start_u(self) -> float:
         """Returns the first legal value of u on the surface.  Usually this is 0.0."""
@@ -1226,7 +1206,6 @@ class NurbsSurfaceEvaluator(ReferenceCount):
     array of vertices, each of which may be in a different coordinate space (as
     defined by a NodePath), as well as an optional knot vector.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     u_order: int
     v_order: int
     u_knots: Sequence[float]
@@ -1451,7 +1430,6 @@ class RopeNode(PandaNode):
     parallel implementation of NURBS curves, and will probably eventually
     replace the whole ParametricCurve class hierarchy.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     curve: NurbsCurveEvaluator
     render_mode: _RopeNode_RenderMode
     uv_mode: _RopeNode_UVMode
@@ -1479,7 +1457,6 @@ class RopeNode(PandaNode):
     def vertex_color_dimension(self) -> int: ...
     @property
     def vertex_thickness_dimension(self) -> int: ...
-    def __init__(self, name: str) -> None: ...
     def set_curve(self, curve: NurbsCurveEvaluator) -> None:
         """Sets the particular curve represented by the RopeNode."""
         ...
@@ -1644,8 +1621,6 @@ class RopeNode(PandaNode):
         properties outside of this node's knowledge.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setCurve = set_curve
     getCurve = get_curve
     setRenderMode = set_render_mode
@@ -1677,7 +1652,6 @@ class RopeNode(PandaNode):
     hasMatrix = has_matrix
     getMatrix = get_matrix
     resetBound = reset_bound
-    getClassType = get_class_type
     RMThread = RM_thread
     RMTape = RM_tape
     RMBillboard = RM_billboard
@@ -1699,8 +1673,6 @@ class SheetNode(PandaNode):
     parallel implementation of NURBS surfaces, and will probably eventually
     replace the whole ParametricSurface class hierarchy.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, name: str) -> None: ...
     def set_surface(self, surface: NurbsSurfaceEvaluator) -> None:
         """Sets the particular surface represented by the SheetNode."""
         ...
@@ -1745,8 +1717,6 @@ class SheetNode(PandaNode):
         properties outside of this node's knowledge.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSurface = set_surface
     getSurface = get_surface
     setUseVertexColor = set_use_vertex_color
@@ -1756,4 +1726,3 @@ class SheetNode(PandaNode):
     setNumVSubdiv = set_num_v_subdiv
     getNumVSubdiv = get_num_v_subdiv
     resetBound = reset_bound
-    getClassType = get_class_type

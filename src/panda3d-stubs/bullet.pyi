@@ -35,7 +35,6 @@ from panda3d.core import (
     PointerToArray_int,
     Texture,
     TransformState,
-    TypeHandle,
     TypedObject,
     TypedReferenceCount,
     TypedWritableReferenceCount,
@@ -121,7 +120,6 @@ class BulletAllHitsRayResult:
     getHits = get_hits
 
 class BulletShape(TypedWritableReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     margin: float
     @property
     def polyhedral(self) -> bool: ...
@@ -154,8 +152,6 @@ class BulletShape(TypedWritableReferenceCount):
     def get_shape_bounds(self) -> BoundingSphere:
         """Returns the current bounds of this collision shape."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isPolyhedral = is_polyhedral
     isConvex = is_convex
     isConvex2d = is_convex_2d
@@ -167,16 +163,10 @@ class BulletShape(TypedWritableReferenceCount):
     getName = get_name
     getMargin = get_margin
     getShapeBounds = get_shape_bounds
-    getClassType = get_class_type
 
-class BulletBaseCharacterControllerNode(PandaNode):
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
+class BulletBaseCharacterControllerNode(PandaNode): ...
 
 class BulletBodyNode(PandaNode):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     static: bool
     kinematic: bool
     collision_notification: bool
@@ -279,8 +269,6 @@ class BulletBodyNode(PandaNode):
         the protected PandaNode hook 'transform_changed'.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_shapes(self) -> tuple[BulletShape, ...]: ...
     addShape = add_shape
     removeShape = remove_shape
@@ -325,11 +313,9 @@ class BulletBodyNode(PandaNode):
     setCcdSweptSphereRadius = set_ccd_swept_sphere_radius
     setCcdMotionThreshold = set_ccd_motion_threshold
     setTransformDirty = set_transform_dirty
-    getClassType = get_class_type
     getShapes = get_shapes
 
 class BulletBoxShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def half_extents_with_margin(self) -> LVecBase3f: ...
     @property
@@ -342,15 +328,11 @@ class BulletBoxShape(BulletShape):
     def get_half_extents_with_margin(self) -> LVecBase3f: ...
     @staticmethod
     def make_from_solid(solid: CollisionBox) -> BulletBoxShape: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getHalfExtentsWithoutMargin = get_half_extents_without_margin
     getHalfExtentsWithMargin = get_half_extents_with_margin
     makeFromSolid = make_from_solid
-    getClassType = get_class_type
 
 class BulletCapsuleShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def radius(self) -> float: ...
     @property
@@ -373,15 +355,11 @@ class BulletCapsuleShape(BulletShape):
         @deprecated see get_height() instead.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     makeFromSolid = make_from_solid
     getRadius = get_radius
     getHalfHeight = get_half_height
-    getClassType = get_class_type
 
 class BulletCharacterControllerNode(BulletBaseCharacterControllerNode):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     gravity: float
     max_slope: float
     @property
@@ -403,8 +381,6 @@ class BulletCharacterControllerNode(BulletBaseCharacterControllerNode):
     def is_on_ground(self) -> bool: ...
     def can_jump(self) -> bool: ...
     def do_jump(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setLinearMovement = set_linear_movement
     setAngularMovement = set_angular_movement
     getShape = get_shape
@@ -419,7 +395,6 @@ class BulletCharacterControllerNode(BulletBaseCharacterControllerNode):
     isOnGround = is_on_ground
     canJump = can_jump
     doJump = do_jump
-    getClassType = get_class_type
 
 class BulletClosestHitRayResult:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -502,7 +477,6 @@ class BulletClosestHitSweepResult:
     getHitFraction = get_hit_fraction
 
 class BulletConeShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def radius(self) -> float: ...
     @property
@@ -517,14 +491,10 @@ class BulletConeShape(BulletShape):
     def get_height(self) -> float:
         """Returns the height that was passed into the constructor."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getRadius = get_radius
     getHeight = get_height
-    getClassType = get_class_type
 
 class BulletConstraint(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     debug_draw_size: float
     breaking_threshold: float
     enabled: bool
@@ -559,8 +529,6 @@ class BulletConstraint(TypedReferenceCount):
         ...
     def set_param(self, num: _BulletConstraint_ConstraintParam, value: float, axis: int = ...) -> None: ...
     def get_param(self, num: _BulletConstraint_ConstraintParam, axis: int = ...) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getRigidBodyA = get_rigid_body_a
     getRigidBodyB = get_rigid_body_b
     enableFeedback = enable_feedback
@@ -573,14 +541,12 @@ class BulletConstraint(TypedReferenceCount):
     isEnabled = is_enabled
     setParam = set_param
     getParam = get_param
-    getClassType = get_class_type
     CPErp = CP_erp
     CPStopErp = CP_stop_erp
     CPCfm = CP_cfm
     CPStopCfm = CP_stop_cfm
 
 class BulletRigidBodyNode(BulletBodyNode):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     mass: float
     inertia: LVector3f
     linear_velocity: LVector3f
@@ -681,8 +647,6 @@ class BulletRigidBodyNode(BulletBodyNode):
         since the last call to this method.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setMass = set_mass
     getMass = get_mass
     getInvMass = get_inv_mass
@@ -718,10 +682,8 @@ class BulletRigidBodyNode(BulletBodyNode):
     setLinearFactor = set_linear_factor
     setAngularFactor = set_angular_factor
     pickDirtyFlag = pick_dirty_flag
-    getClassType = get_class_type
 
 class BulletConeTwistConstraint(BulletConstraint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     fix_threshold: float
     @property
     def frame_a(self) -> TransformState: ...
@@ -746,8 +708,6 @@ class BulletConeTwistConstraint(BulletConstraint):
     def set_frames(self, ts_a: TransformState, ts_b: TransformState) -> None: ...
     def get_frame_a(self) -> TransformState: ...
     def get_frame_b(self) -> TransformState: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setLimit = set_limit
     setDamping = set_damping
     getFixThreshold = get_fix_threshold
@@ -760,7 +720,6 @@ class BulletConeTwistConstraint(BulletConstraint):
     setFrames = set_frames
     getFrameA = get_frame_a
     getFrameB = get_frame_b
-    getClassType = get_class_type
 
 class BulletManifoldPoint:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -870,7 +829,6 @@ class BulletManifoldPoint:
     getContactCfm2 = get_contact_cfm2
 
 class BulletContactCallbackData(CallbackData):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def manifold(self) -> BulletManifoldPoint: ...
     @property
@@ -893,8 +851,6 @@ class BulletContactCallbackData(CallbackData):
     def get_part_id1(self) -> int: ...
     def get_index0(self) -> int: ...
     def get_index1(self) -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getManifold = get_manifold
     getNode0 = get_node0
     getNode1 = get_node1
@@ -902,7 +858,6 @@ class BulletContactCallbackData(CallbackData):
     getPartId1 = get_part_id1
     getIndex0 = get_index0
     getIndex1 = get_index1
-    getClassType = get_class_type
 
 class BulletContact:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -947,7 +902,6 @@ class BulletContactResult:
     getContacts = get_contacts
 
 class BulletDebugNode(PandaNode):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     wireframe: bool
     constraints: bool
     bounding_boxes: bool
@@ -975,8 +929,6 @@ class BulletDebugNode(PandaNode):
     def get_show_constraints(self) -> bool: ...
     def get_show_bounding_boxes(self) -> bool: ...
     def get_show_normals(self) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     drawMaskChanged = draw_mask_changed
     showWireframe = show_wireframe
     showConstraints = show_constraints
@@ -986,10 +938,8 @@ class BulletDebugNode(PandaNode):
     getShowConstraints = get_show_constraints
     getShowBoundingBoxes = get_show_bounding_boxes
     getShowNormals = get_show_normals
-    getClassType = get_class_type
 
 class BulletGhostNode(BulletBodyNode):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def overlapping_nodes(self) -> Sequence[PandaNode]: ...
     def __init__(self, name: str = ...) -> None: ...
@@ -997,12 +947,9 @@ class BulletGhostNode(BulletBodyNode):
         """Overlapping"""
         ...
     def get_overlapping_node(self, idx: int) -> PandaNode: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_overlapping_nodes(self) -> tuple[PandaNode, ...]: ...
     getNumOverlappingNodes = get_num_overlapping_nodes
     getOverlappingNode = get_overlapping_node
-    getClassType = get_class_type
     getOverlappingNodes = get_overlapping_nodes
 
 class BulletSoftBodyNodeElement:
@@ -1040,7 +987,6 @@ class BulletSoftBodyNodeElement:
     isAttached = is_attached
 
 class BulletSoftBodyNode(BulletBodyNode):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     wind_velocity: LVector3f
     @property
     def cfg(self) -> BulletSoftBodyConfig: ...
@@ -1140,8 +1086,6 @@ class BulletSoftBodyNode(BulletBodyNode):
     @overload
     @staticmethod
     def make_tet_mesh(info: BulletSoftBodyWorldInfo, ele: str, face: str, node: str) -> BulletSoftBodyNode: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_materials(self) -> tuple[BulletSoftBodyMaterial, ...]: ...
     def get_nodes(self) -> tuple[BulletSoftBodyNodeElement, ...]: ...
     getCfg = get_cfg
@@ -1188,7 +1132,6 @@ class BulletSoftBodyNode(BulletBodyNode):
     makeEllipsoid = make_ellipsoid
     makeTriMesh = make_tri_mesh
     makeTetMesh = make_tet_mesh
-    getClassType = get_class_type
     getMaterials = get_materials
     getNodes = get_nodes
 
@@ -1554,7 +1497,6 @@ class BulletVehicle(TypedReferenceCount):
     tuned in various ways.  It is possible to add a (probably) arbitrary number
     of wheels.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def chassis(self) -> BulletRigidBodyNode: ...
     @property
@@ -1623,8 +1565,6 @@ class BulletVehicle(TypedReferenceCount):
         before adding wheels!
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_wheels(self) -> tuple[BulletWheel, ...]: ...
     setCoordinateSystem = set_coordinate_system
     setSteeringValue = set_steering_value
@@ -1640,7 +1580,6 @@ class BulletVehicle(TypedReferenceCount):
     getNumWheels = get_num_wheels
     getWheel = get_wheel
     getTuning = get_tuning
-    getClassType = get_class_type
     getWheels = get_wheels
 
 class BulletWheel:
@@ -1884,7 +1823,6 @@ class BulletWheelRaycastInfo:
     getGroundObject = get_ground_object
 
 class BulletWorld(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     gravity: LVector3f
     debug_node: BulletDebugNode
     force_update_all_aabbs: bool
@@ -2037,8 +1975,6 @@ class BulletWorld(TypedReferenceCount):
     def remove_constraint(self, constraint: BulletConstraint) -> None:
         """@deprecated Please use BulletWorld::remove"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_ghosts(self) -> tuple[BulletGhostNode, ...]: ...
     def get_rigid_bodies(self) -> tuple[BulletRigidBodyNode, ...]: ...
     def get_soft_bodies(self) -> tuple[BulletSoftBodyNode, ...]: ...
@@ -2097,7 +2033,6 @@ class BulletWorld(TypedReferenceCount):
     attachVehicle = attach_vehicle
     removeVehicle = remove_vehicle
     removeConstraint = remove_constraint
-    getClassType = get_class_type
     getGhosts = get_ghosts
     getRigidBodies = get_rigid_bodies
     getSoftBodies = get_soft_bodies
@@ -2144,7 +2079,6 @@ class BulletPersistentManifold:
     getManifoldPoints = get_manifold_points
 
 class BulletConvexHullShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2152,15 +2086,11 @@ class BulletConvexHullShape(BulletShape):
     def add_point(self, p: _Vec3f) -> None: ...
     def add_array(self, points: PointerToArray_LVecBase3f) -> None: ...
     def add_geom(self, geom: Geom, ts: TransformState = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addPoint = add_point
     addArray = add_array
     addGeom = add_geom
-    getClassType = get_class_type
 
 class BulletConvexPointCloudShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_points(self) -> int: ...
     @overload
@@ -2170,13 +2100,9 @@ class BulletConvexPointCloudShape(BulletShape):
     @overload
     def __init__(self, points: PointerToArray_LVecBase3f, scale: _Vec3f = ...) -> None: ...
     def get_num_points(self) -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNumPoints = get_num_points
-    getClassType = get_class_type
 
 class BulletCylinderShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def radius(self) -> float: ...
     @property
@@ -2192,15 +2118,11 @@ class BulletCylinderShape(BulletShape):
     def get_radius(self) -> float: ...
     def get_half_extents_without_margin(self) -> LVecBase3f: ...
     def get_half_extents_with_margin(self) -> LVecBase3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getRadius = get_radius
     getHalfExtentsWithoutMargin = get_half_extents_without_margin
     getHalfExtentsWithMargin = get_half_extents_with_margin
-    getClassType = get_class_type
 
 class BulletFilterCallbackData(CallbackData):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     collide: bool
     @property
     def node_0(self) -> PandaNode: ...
@@ -2211,13 +2133,10 @@ class BulletFilterCallbackData(CallbackData):
     def get_node_1(self) -> PandaNode: ...
     def set_collide(self, collide: bool) -> None: ...
     def get_collide(self) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode0 = get_node_0
     getNode1 = get_node_1
     setCollide = set_collide
     getCollide = get_collide
-    getClassType = get_class_type
 
 class BulletRotationalLimitMotor:
     """Rotation Limit structure for generic joints."""
@@ -2325,7 +2244,6 @@ class BulletTranslationalLimitMotor:
     getAccumulatedImpulse = get_accumulated_impulse
 
 class BulletGenericConstraint(BulletConstraint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def translational_limit_motor(self) -> BulletTranslationalLimitMotor: ...
     @property
@@ -2352,8 +2270,6 @@ class BulletGenericConstraint(BulletConstraint):
         ...
     def get_frame_a(self) -> TransformState: ...
     def get_frame_b(self) -> TransformState: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getAxis = get_axis
     getPivot = get_pivot
     getAngle = get_angle
@@ -2364,10 +2280,8 @@ class BulletGenericConstraint(BulletConstraint):
     setFrames = set_frames
     getFrameA = get_frame_a
     getFrameB = get_frame_b
-    getClassType = get_class_type
 
 class BulletHeightfieldShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: BulletHeightfieldShape) -> None:
         """`(self, image: PNMImage, max_height: float, up: _BulletUpAxis = ...)`:
@@ -2387,10 +2301,7 @@ class BulletHeightfieldShape(BulletShape):
     @overload
     def __init__(self, tex: Texture, max_height: float, up: _BulletUpAxis = ...) -> None: ...
     def set_use_diamond_subdivision(self, flag: bool = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setUseDiamondSubdivision = set_use_diamond_subdivision
-    getClassType = get_class_type
 
 class BulletHelper:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -2441,7 +2352,6 @@ class BulletHingeConstraint(BulletConstraint):
     """The hinge constraint lets two bodies rotate around a given axis while
     adhering to specified limits.  It's motor can apply angular force to them.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     angular_only: bool
     @property
     def hinge_angle(self) -> float: ...
@@ -2519,8 +2429,6 @@ class BulletHingeConstraint(BulletConstraint):
     def set_frames(self, ts_a: TransformState, ts_b: TransformState) -> None: ...
     def get_frame_a(self) -> TransformState: ...
     def get_frame_b(self) -> TransformState: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getHingeAngle = get_hinge_angle
     getLowerLimit = get_lower_limit
     getUpperLimit = get_upper_limit
@@ -2535,10 +2443,8 @@ class BulletHingeConstraint(BulletConstraint):
     setFrames = set_frames
     getFrameA = get_frame_a
     getFrameB = get_frame_b
-    getClassType = get_class_type
 
 class BulletMinkowskiSumShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     transform_a: TransformState
     transform_b: TransformState
     @property
@@ -2555,18 +2461,14 @@ class BulletMinkowskiSumShape(BulletShape):
     def get_transform_b(self) -> TransformState: ...
     def get_shape_a(self) -> BulletShape: ...
     def get_shape_b(self) -> BulletShape: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setTransformA = set_transform_a
     setTransformB = set_transform_b
     getTransformA = get_transform_a
     getTransformB = get_transform_b
     getShapeA = get_shape_a
     getShapeB = get_shape_b
-    getClassType = get_class_type
 
 class BulletMultiSphereShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def sphere_count(self) -> int: ...
     @property
@@ -2581,15 +2483,11 @@ class BulletMultiSphereShape(BulletShape):
     def get_sphere_count(self) -> int: ...
     def get_sphere_pos(self, index: int) -> LPoint3f: ...
     def get_sphere_radius(self, index: int) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getSphereCount = get_sphere_count
     getSpherePos = get_sphere_pos
     getSphereRadius = get_sphere_radius
-    getClassType = get_class_type
 
 class BulletPlaneShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def plane(self) -> LPlanef: ...
     @property
@@ -2609,16 +2507,12 @@ class BulletPlaneShape(BulletShape):
     def get_plane_constant(self) -> float: ...
     @staticmethod
     def make_from_solid(solid: CollisionPlane) -> BulletPlaneShape: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPlane = get_plane
     getPlaneNormal = get_plane_normal
     getPlaneConstant = get_plane_constant
     makeFromSolid = make_from_solid
-    getClassType = get_class_type
 
 class BulletSliderConstraint(BulletConstraint):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     lower_linear_limit: float
     upper_linear_limit: float
     lower_angular_limit: float
@@ -2674,8 +2568,6 @@ class BulletSliderConstraint(BulletConstraint):
         ...
     def get_frame_a(self) -> TransformState: ...
     def get_frame_b(self) -> TransformState: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getLinearPos = get_linear_pos
     getAngularPos = get_angular_pos
     getLowerLinearLimit = get_lower_linear_limit
@@ -2701,7 +2593,6 @@ class BulletSliderConstraint(BulletConstraint):
     setFrames = set_frames
     getFrameA = get_frame_a
     getFrameB = get_frame_b
-    getClassType = get_class_type
 
 class BulletSoftBodyControl:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -2719,17 +2610,12 @@ class BulletSoftBodyControl:
     setSign = set_sign
 
 class BulletSoftBodyShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def body(self) -> BulletSoftBodyNode: ...
     def get_body(self) -> BulletSoftBodyNode: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getBody = get_body
-    getClassType = get_class_type
 
 class BulletSphereShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def radius(self) -> float: ...
     @overload
@@ -2741,11 +2627,8 @@ class BulletSphereShape(BulletShape):
         ...
     @staticmethod
     def make_from_solid(solid: CollisionSphere) -> BulletSphereShape: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getRadius = get_radius
     makeFromSolid = make_from_solid
-    getClassType = get_class_type
 
 class BulletSphericalConstraint(BulletConstraint):
     """A constraint between two rigid bodies, each with a pivot point.  The pivot
@@ -2754,7 +2637,6 @@ class BulletSphericalConstraint(BulletConstraint):
     in global space.  The spherical constraint can be seen as a "ball and
     socket" joint.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     pivot_a: LPoint3f
     pivot_b: LPoint3f
     @overload
@@ -2767,27 +2649,19 @@ class BulletSphericalConstraint(BulletConstraint):
     def set_pivot_b(self, pivot_b: _Vec3f) -> None: ...
     def get_pivot_in_a(self) -> LPoint3f: ...
     def get_pivot_in_b(self) -> LPoint3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setPivotA = set_pivot_a
     setPivotB = set_pivot_b
     getPivotInA = get_pivot_in_a
     getPivotInB = get_pivot_in_b
-    getClassType = get_class_type
 
 class BulletTickCallbackData(CallbackData):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def timestep(self) -> float: ...
     def __init__(self, timestep: float) -> None: ...
     def get_timestep(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getTimestep = get_timestep
-    getClassType = get_class_type
 
 class BulletTriangleMesh(TypedWritableReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     welding_distance: float
     @property
     def vertices(self) -> Sequence[LPoint3f]: ...
@@ -2848,18 +2722,14 @@ class BulletTriangleMesh(TypedWritableReferenceCount):
         ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addTriangle = add_triangle
     addArray = add_array
     addGeom = add_geom
     setWeldingDistance = set_welding_distance
     getNumTriangles = get_num_triangles
     getWeldingDistance = get_welding_distance
-    getClassType = get_class_type
 
 class BulletTriangleMeshShape(BulletShape):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def static(self) -> bool: ...
     @property
@@ -2876,12 +2746,9 @@ class BulletTriangleMeshShape(BulletShape):
     def refit_tree(self, aabb_min: _Vec3f, aabb_max: _Vec3f) -> None: ...
     def is_static(self) -> bool: ...
     def is_dynamic(self) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     refitTree = refit_tree
     isStatic = is_static
     isDynamic = is_dynamic
-    getClassType = get_class_type
 
 X_up: Literal[0]
 Y_up: Literal[1]

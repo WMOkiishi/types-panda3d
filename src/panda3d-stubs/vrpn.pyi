@@ -1,11 +1,9 @@
-from typing import Any, ClassVar
-from panda3d.core import ClientBase, TypeHandle, ostream
+from panda3d.core import ClientBase, ostream
 
 class VrpnClient(ClientBase):
     """A specific ClientBase that connects to a VRPN server and records
     information on the connected VRPN devices.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, server_name: str) -> None: ...
     def get_server_name(self) -> str:
         """Returns the name of the server as passed to the VrpnClient constructor."""
@@ -25,9 +23,6 @@ class VrpnClient(ClientBase):
         polling each frame.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getServerName = get_server_name
     isValid = is_valid
     isConnected = is_connected
-    getClassType = get_class_type

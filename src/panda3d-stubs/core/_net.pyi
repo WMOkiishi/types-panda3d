@@ -8,12 +8,10 @@ from panda3d.core import (
     ReferenceCount,
     Socket_Address,
     Socket_IP,
-    TypeHandle,
     ostream,
 )
 
 class PointerTo_Connection(PointerToBase_Connection):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -33,12 +31,8 @@ class PointerTo_Connection(PointerToBase_Connection):
     def assign(self, ptr: Connection) -> PointerTo_Connection: ...
     @overload
     def assign(self, copy: Connection) -> PointerTo_Connection: ...
-    def is_null(self) -> bool: ...
-    def clear(self) -> None: ...
-    isNull = is_null
 
 class PointerToBase_Connection(PointerToVoid):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
@@ -128,7 +122,6 @@ class NetAddress:
 
 class Connection(ReferenceCount):
     """Represents a single TCP or UDP socket for input or output."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, socket: Socket_IP) -> None:
         """Creates a connection.  Normally this constructor should not be used
         directly by user code; use one of the methods in ConnectionManager to make
@@ -354,14 +347,12 @@ class ConnectionListener(ConnectionReader):
     It is itself an abstract class, as it doesn't define what to do with the
     established connection.  See QueuedConnectionListener.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
 
 class NetDatagram(Datagram):
     """A specific kind of Datagram, especially for sending across or receiving
     from a network.  It's different only in that it knows which Connection
     and/or NetAddress it is to be sent to or was received from.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """Constructs an empty datagram."""
@@ -385,13 +376,10 @@ class NetDatagram(Datagram):
         scheduled to be sent.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setConnection = set_connection
     getConnection = get_connection
     setAddress = set_address
     getAddress = get_address
-    getClassType = get_class_type
 
 class ConnectionManager:
     """The primary interface to the low-level networking layer in this package.  A
@@ -967,7 +955,6 @@ class RecentConnectionReader(ConnectionReader):
     
     This class will always create one thread for itself.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager) -> None: ...
     def data_available(self) -> bool:
         """Returns true if a datagram is available on the queue; call get_data() to

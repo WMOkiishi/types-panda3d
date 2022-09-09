@@ -56,7 +56,6 @@ class CardMaker(Namable):
     """This class generates 2-d "cards", that is, rectangular polygons,
     particularly useful for showing textures etc.  in the 2-d scene graph.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CardMaker) -> None: ...
     @overload
@@ -165,7 +164,6 @@ class FisheyeMaker(Namable):
     
     This class is particularly suited for converting cube maps to sphere maps.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FisheyeMaker) -> None: ...
     @overload
@@ -222,7 +220,6 @@ class FrameRateMeter(TextNode):
     channel or window.  If this is done, it creates a DisplayRegion for itself
     and renders itself in the upper-right-hand corner.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: FrameRateMeter) -> None: ...
     @overload
@@ -281,8 +278,6 @@ class FrameRateMeter(TextNode):
         call this explicitly.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setupWindow = setup_window
     clearWindow = clear_window
     getWindow = get_window
@@ -293,7 +288,6 @@ class FrameRateMeter(TextNode):
     getTextPattern = get_text_pattern
     setClockObject = set_clock_object
     getClockObject = get_clock_object
-    getClassType = get_class_type
 
 class GeoMipTerrain(TypedObject):
     """GeoMipTerrain, meaning Panda3D GeoMipMapping, can convert a heightfield
@@ -303,7 +297,6 @@ class GeoMipTerrain(TypedObject):
     algoritm, see this paper, written by Willem H. de Boer:
     https://flipcode.com/articles/article_geomipmaps.pdf
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     AFM_off: ClassVar[Literal[0]]
     AFM_light: ClassVar[Literal[1]]
     AFM_medium: ClassVar[Literal[2]]
@@ -555,8 +548,6 @@ class GeoMipTerrain(TypedObject):
         auto-flatten if you want to keep your terrain flattened.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setHeightfield = set_heightfield
     colorMap = color_map
     setColorMap = set_color_map
@@ -589,14 +580,12 @@ class GeoMipTerrain(TypedObject):
     getNear = get_near
     getFlattenMode = get_flatten_mode
     makeSlopeImage = make_slope_image
-    getClassType = get_class_type
     AFMOff = AFM_off
     AFMLight = AFM_light
     AFMMedium = AFM_medium
     AFMStrong = AFM_strong
 
 class HeightfieldTesselator(Namable):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: HeightfieldTesselator) -> None: ...
     @overload
@@ -667,7 +656,6 @@ class LineSegs(Namable):
     to be the smartest it could possibly be; it's intended primarily as a
     visualization and editing tool.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None:
         """Constructs a LineSegs object, which can be used to create any number of
@@ -804,7 +792,6 @@ class MeshDrawer(TypedObject):
     GeomVertexRewriter's.  The internal geom consists of vertex, normal, uv and
     color channels.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None:
         """Creates the MeshDrawer low level system."""
         ...
@@ -893,8 +880,6 @@ class MeshDrawer(TypedObject):
     def end(self) -> None:
         """Finish the drawing and clearing off the remaining vertexes."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setBudget = set_budget
     getBudget = get_budget
     getRoot = get_root
@@ -903,13 +888,11 @@ class MeshDrawer(TypedObject):
     unevenSegment = uneven_segment
     linkSegment = link_segment
     linkSegmentEnd = link_segment_end
-    getClassType = get_class_type
 
 class MeshDrawer2D(TypedObject):
     """This class allows the drawing of 2D objects - mainly based on quads and
     rectangles.  It allows clipping and several high level UI theme functions.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None:
         """Creates the MeshDrawer2D low level system."""
         ...
@@ -951,8 +934,6 @@ class MeshDrawer2D(TypedObject):
     def end(self) -> None:
         """Finish the drawing and clearing off the remaining vertexes."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setBudget = set_budget
     getBudget = get_budget
     getRoot = get_root
@@ -962,13 +943,11 @@ class MeshDrawer2D(TypedObject):
     rectangleBorder = rectangle_border
     rectangleBorderTiled = rectangle_border_tiled
     rectangleTiled = rectangle_tiled
-    getClassType = get_class_type
 
 class MovieTexture(Texture):
     """A texture that fetches video frames from an underlying object of class
     Movie.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     time: float
     loop: bool
     loop_count: int
@@ -1075,8 +1054,6 @@ class MovieTexture(Texture):
     def unsynchronize(self) -> None:
         """Stop synchronizing with a sound."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getVideoLength = get_video_length
     getVideoWidth = get_video_width
     getVideoHeight = get_video_height
@@ -1092,7 +1069,6 @@ class MovieTexture(Texture):
     getPlayRate = get_play_rate
     isPlaying = is_playing
     synchronizeTo = synchronize_to
-    getClassType = get_class_type
 
 class MultitexReducer:
     """This object presents an interface for generating new texture images that
@@ -1158,7 +1134,6 @@ class NodeVertexTransform(VertexTransform):
     allowing you to build up a chain of NodeVertexTransforms that represent a
     list of composed matrices.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def node(self) -> PandaNode: ...
     @property
@@ -1172,11 +1147,8 @@ class NodeVertexTransform(VertexTransform):
         result of this node's transform.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode = get_node
     getPrev = get_prev
-    getClassType = get_class_type
 
 class ShaderTerrainMesh(PandaNode):
     """@brief Terrain Renderer class utilizing the GPU
@@ -1192,7 +1164,6 @@ class ShaderTerrainMesh(PandaNode):
       use in your own shaders. IMPORTANT: If you don't set an appropriate shader
       on the terrain, nothing will be visible.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     heightfield: Texture
     chunk_size: int
     generate_patches: bool
@@ -1336,8 +1307,6 @@ class ShaderTerrainMesh(PandaNode):
         @return true if the terrain was initialized, false if an error occured
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setHeightfield = set_heightfield
     getHeightfield = get_heightfield
     setChunkSize = set_chunk_size
@@ -1349,7 +1318,6 @@ class ShaderTerrainMesh(PandaNode):
     setTargetTriangleWidth = set_target_triangle_width
     getTargetTriangleWidth = get_target_triangle_width
     uvToWorld = uv_to_world
-    getClassType = get_class_type
 
 class SceneGraphAnalyzerMeter(TextNode):
     """This is a special TextNode that automatically updates itself with output
@@ -1360,7 +1328,6 @@ class SceneGraphAnalyzerMeter(TextNode):
     channel or window.  If this is done, it creates a DisplayRegion for itself
     and renders itself in the upper-right-hand corner.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: SceneGraphAnalyzerMeter) -> None: ...
     @overload
@@ -1408,8 +1375,6 @@ class SceneGraphAnalyzerMeter(TextNode):
         not necessary to call this explicitly.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setupWindow = setup_window
     clearWindow = clear_window
     getWindow = get_window
@@ -1418,7 +1383,6 @@ class SceneGraphAnalyzerMeter(TextNode):
     getUpdateInterval = get_update_interval
     setNode = set_node
     getNode = get_node
-    getClassType = get_class_type
 
 class RigidBodyCombiner(PandaNode):
     """This is a special node that combines multiple independently-moving rigid
@@ -1439,10 +1403,8 @@ class RigidBodyCombiner(PandaNode):
     
     RenderEffects such as Billboards are not supported below this node.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def internal_scene(self) -> NodePath: ...
-    def __init__(self, name: str) -> None: ...
     def collect(self) -> None:
         """Walks through the entire subgraph of nodes rooted at this node, accumulates
         all of the RenderAttribs and Geoms below this node, flattening them into
@@ -1470,10 +1432,7 @@ class RigidBodyCombiner(PandaNode):
         This node is filled up by the last call to collect().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getInternalScene = get_internal_scene
-    getClassType = get_class_type
 
 class PipeOcclusionCullTraverser(CullTraverser):
     """This specialization of CullTraverser uses the graphics pipe itself to

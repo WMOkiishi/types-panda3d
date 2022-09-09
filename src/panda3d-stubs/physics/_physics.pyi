@@ -15,7 +15,6 @@ from panda3d.core import (
     NodePath,
     PandaNode,
     ReferenceCount,
-    TypeHandle,
     TypedReferenceCount,
     UnalignedLVecBase4f,
     ostream,
@@ -30,7 +29,6 @@ class PhysicsObject(TypedReferenceCount):
     motion to your class, do NOT derive from this.  Derive from Physical
     instead.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     active: bool
     mass: float
     position: LPoint3f
@@ -196,8 +194,6 @@ class PhysicsObject(TypedReferenceCount):
     def write(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setActive = set_active
     getActive = get_active
     setMass = set_mass
@@ -230,7 +226,6 @@ class PhysicsObject(TypedReferenceCount):
     makeCopy = make_copy
     setName = set_name
     getName = get_name
-    getClassType = get_class_type
 
 class PhysicsObjectCollection:
     """This is a set of zero or more PhysicsObjects.  It's handy for returning
@@ -319,7 +314,6 @@ class PhysicsObjectCollection:
 
 class BaseForce(TypedReferenceCount):
     """pure virtual base class for all forces that could POSSIBLY exist."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_active(self) -> bool: ...
     def set_active(self, active: bool) -> None: ...
     def is_linear(self) -> bool: ...
@@ -331,20 +325,16 @@ class BaseForce(TypedReferenceCount):
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getActive = get_active
     setActive = set_active
     isLinear = is_linear
     getForceNode = get_force_node
     getForceNodePath = get_force_node_path
-    getClassType = get_class_type
 
 class LinearForce(BaseForce):
     """A force that acts on a PhysicsObject by way of an Integrator.  This is a
     pure virtual base class.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def set_amplitude(self, a: float) -> None: ...
     def set_mass_dependent(self, m: bool) -> None: ...
     def get_amplitude(self) -> float: ...
@@ -353,8 +343,6 @@ class LinearForce(BaseForce):
     def get_vector_masks(self) -> LVector3f: ...
     def get_vector(self, po: PhysicsObject) -> LVector3f: ...
     def make_copy(self) -> LinearForce: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setAmplitude = set_amplitude
     setMassDependent = set_mass_dependent
     getAmplitude = get_amplitude
@@ -363,26 +351,20 @@ class LinearForce(BaseForce):
     getVectorMasks = get_vector_masks
     getVector = get_vector
     makeCopy = make_copy
-    getClassType = get_class_type
 
 class AngularForce(BaseForce):
     """pure virtual parent of all quat-based forces."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def make_copy(self) -> AngularForce: ...
     def get_quat(self, po: PhysicsObject) -> LRotationf:
         """access query"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     makeCopy = make_copy
     getQuat = get_quat
-    getClassType = get_class_type
 
 class Physical(TypedReferenceCount):
     """Defines a set of physically modeled attributes.  If you want physics
     applied to your class, derive it from this.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def linear_forces(self) -> Sequence[LinearForce]: ...
     @property
@@ -467,8 +449,6 @@ class Physical(TypedReferenceCount):
     def write(self, out: ostream = ..., indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_linear_forces(self) -> tuple[LinearForce, ...]: ...
     def get_angular_forces(self) -> tuple[AngularForce, ...]: ...
     getPhysicsManager = get_physics_manager
@@ -493,13 +473,11 @@ class Physical(TypedReferenceCount):
     writePhysicsObjects = write_physics_objects
     writeLinearForces = write_linear_forces
     writeAngularForces = write_angular_forces
-    getClassType = get_class_type
     getLinearForces = get_linear_forces
     getAngularForces = get_angular_forces
 
 class PhysicalNode(PandaNode):
     """Graph node that encapsulated a series of physical objects"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     physicals: Sequence[Physical]
     def __init__(self, name: str) -> None:
         """default constructor"""
@@ -527,8 +505,6 @@ class PhysicalNode(PandaNode):
         ...
     @overload
     def remove_physical(self, index: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_physicals(self) -> tuple[Physical, ...]: ...
     getPhysical = get_physical
     getNumPhysicals = get_num_physicals
@@ -537,7 +513,6 @@ class PhysicalNode(PandaNode):
     setPhysical = set_physical
     insertPhysical = insert_physical
     removePhysical = remove_physical
-    getClassType = get_class_type
     getPhysicals = get_physicals
 
 class ActorNode(PhysicalNode):
@@ -546,7 +521,6 @@ class ActorNode(PhysicalNode):
     will be reflected as transforms.  This relation goes both ways; changes in
     the transform will update the object's position (shoves).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None:
         """`(self, copy: ActorNode)`:
@@ -567,20 +541,16 @@ class ActorNode(PhysicalNode):
         """
         ...
     def set_transform_limit(self, limit: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPhysicsObject = get_physics_object
     setContactVector = set_contact_vector
     getContactVector = get_contact_vector
     updateTransform = update_transform
     setTransformLimit = set_transform_limit
-    getClassType = get_class_type
 
 class BaseIntegrator(ReferenceCount):
     """pure virtual integrator class that holds cached matrix information that
     really should be common to any possible child implementation.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: BaseIntegrator) -> None: ...
     def output(self, out: ostream) -> None:
         """Write a string representation of this instance to <out>."""
@@ -601,13 +571,11 @@ class AngularIntegrator(BaseIntegrator):
     """Pure virtual base class for physical modeling.  Takes physically modelable
     objects and applies forces to them.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
 
 class AngularEulerIntegrator(AngularIntegrator):
     """Performs Euler integration on a vector of physically modelable objects
     given a quantum dt.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None:
         """constructor"""
         ...
@@ -616,7 +584,6 @@ class AngularVectorForce(AngularForce):
     """a simple directed torque force, the angular equivalent of simple vector
     force.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: AngularVectorForce) -> None:
         """`(self, copy: AngularVectorForce)`:
@@ -633,19 +600,15 @@ class AngularVectorForce(AngularForce):
     def set_quat(self, quat: _Vec4f) -> None: ...
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     def get_local_quat(self) -> LRotationf: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setQuat = set_quat
     setHpr = set_hpr
     getLocalQuat = get_local_quat
-    getClassType = get_class_type
 
 class ForceNode(PandaNode):
     """A force that lives in the scene graph and is therefore subject to local
     coordinate systems.  An example of this would be simulating gravity in a
     rotating space station.  or something.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     forces: Sequence[BaseForce]
     def __init__(self, name: str) -> None:
         """default constructor"""
@@ -672,8 +635,6 @@ class ForceNode(PandaNode):
     def write_forces(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_forces(self) -> tuple[BaseForce, ...]: ...
     getForce = get_force
     getNumForces = get_num_forces
@@ -683,7 +644,6 @@ class ForceNode(PandaNode):
     insertForce = insert_force
     removeForce = remove_force
     writeForces = write_forces
-    getClassType = get_class_type
     getForces = get_forces
 
 class LinearControlForce(LinearForce):
@@ -692,7 +652,6 @@ class LinearControlForce(LinearForce):
     not make sense for a physics simulation, but it's very handy for a game.
     I.e.  this is the force applied by user on the selected object.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...) -> None:
         """`(self, copy: LinearControlForce)`:
@@ -725,14 +684,11 @@ class LinearControlForce(LinearForce):
     @overload
     def set_vector(self, x: float, y: float, z: float) -> None: ...
     def get_local_vector(self) -> LVector3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     clearPhysicsObject = clear_physics_object
     setPhysicsObject = set_physics_object
     getPhysicsObject = get_physics_object
     setVector = set_vector
     getLocalVector = get_local_vector
-    getClassType = get_class_type
 
 class LinearCylinderVortexForce(LinearForce):
     """Defines a cylinder inside of which all forces are tangential to the theta
@@ -741,7 +697,6 @@ class LinearCylinderVortexForce(LinearForce):
     warned- this will suck anything that it can reach directly into orbit and
     will NOT let go.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...) -> None:
         """`(self, copy: LinearCylinderVortexForce)`:
@@ -759,19 +714,15 @@ class LinearCylinderVortexForce(LinearForce):
     def get_radius(self) -> float: ...
     def set_length(self, length: float) -> None: ...
     def get_length(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setCoef = set_coef
     getCoef = get_coef
     setRadius = set_radius
     getRadius = get_radius
     setLength = set_length
     getLength = get_length
-    getClassType = get_class_type
 
 class LinearDistanceForce(LinearForce):
     """Pure virtual class for sinks and sources"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     FT_ONE_OVER_R: ClassVar[Literal[0]]
     FT_ONE_OVER_R_SQUARED: ClassVar[Literal[1]]
     FT_ONE_OVER_R_CUBED: ClassVar[Literal[2]]
@@ -796,8 +747,6 @@ class LinearDistanceForce(LinearForce):
     def get_scalar_term(self) -> float:
         """calculate the term based on falloff"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setRadius = set_radius
     setFalloffType = set_falloff_type
     setForceCenter = set_force_center
@@ -805,7 +754,6 @@ class LinearDistanceForce(LinearForce):
     getFalloffType = get_falloff_type
     getForceCenter = get_force_center
     getScalarTerm = get_scalar_term
-    getClassType = get_class_type
     FTONEOVERR = FT_ONE_OVER_R
     FTONEOVERRSQUARED = FT_ONE_OVER_R_SQUARED
     FTONEOVERRCUBED = FT_ONE_OVER_R_CUBED
@@ -814,20 +762,17 @@ class LinearIntegrator(BaseIntegrator):
     """Pure virtual base class for physical modeling.  Takes physically modelable
     objects and applies forces to them.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
 
 class LinearEulerIntegrator(LinearIntegrator):
     """Performs Euler integration on a vector of physically modelable objects
     given a quantum dt.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None:
         """constructor"""
         ...
 
 class LinearFrictionForce(LinearForce):
     """Friction-based drag force"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, coef: float = ..., a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearFrictionForce)`:
@@ -841,24 +786,16 @@ class LinearFrictionForce(LinearForce):
     def __init__(self, copy: LinearFrictionForce) -> None: ...
     def set_coef(self, coef: float) -> None: ...
     def get_coef(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setCoef = set_coef
     getCoef = get_coef
-    getClassType = get_class_type
 
 class LinearRandomForce(LinearForce):
     """Pure virtual, parent to noiseForce and jitterForce"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LinearJitterForce(LinearRandomForce):
     """Completely random noise force vector.  Not repeatable, reliable, or
     predictable.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearJitterForce)`:
@@ -870,13 +807,9 @@ class LinearJitterForce(LinearRandomForce):
         ...
     @overload
     def __init__(self, copy: LinearJitterForce) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LinearNoiseForce(LinearRandomForce):
     """Repeating noise force vector."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearNoiseForce)`:
@@ -888,13 +821,9 @@ class LinearNoiseForce(LinearRandomForce):
         ...
     @overload
     def __init__(self, copy: LinearNoiseForce) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LinearSinkForce(LinearDistanceForce):
     """Attractor force.  Think black hole."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...)`:
@@ -908,13 +837,9 @@ class LinearSinkForce(LinearDistanceForce):
     def __init__(self, copy: LinearSinkForce) -> None: ...
     @overload
     def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LinearSourceForce(LinearDistanceForce):
     """Repellant force."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...)`:
@@ -928,25 +853,17 @@ class LinearSourceForce(LinearDistanceForce):
     def __init__(self, copy: LinearSourceForce) -> None: ...
     @overload
     def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LinearUserDefinedForce(LinearForce):
     """A programmable force that takes an evaluator function."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: LinearUserDefinedForce) -> None:
         """copy constructor"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LinearVectorForce(LinearForce):
     """Simple directed vector force.  Suitable for gravity, non-turbulent wind,
     etc...
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...) -> None:
         """`(self, vec: LVector3f, a: float = ..., mass: bool = ...)`:
@@ -975,19 +892,14 @@ class LinearVectorForce(LinearForce):
     @overload
     def set_vector(self, x: float, y: float, z: float) -> None: ...
     def get_local_vector(self) -> LVector3f: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setVector = set_vector
     getLocalVector = get_local_vector
-    getClassType = get_class_type
 
 class PhysicsCollisionHandler(CollisionHandlerPusher):
     """A specialized kind of CollisionHandler that simply pushes back on things
     that attempt to move into solid walls.  This also puts forces onto the
     physics objects
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self) -> None: ...
     def set_almost_stationary_speed(self, speed: float) -> None:
         """These setters and getter are a bit of a hack:"""
         ...
@@ -996,15 +908,12 @@ class PhysicsCollisionHandler(CollisionHandlerPusher):
     def get_static_friction_coef(self) -> float: ...
     def set_dynamic_friction_coef(self, coef: float) -> None: ...
     def get_dynamic_friction_coef(self) -> float: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setAlmostStationarySpeed = set_almost_stationary_speed
     getAlmostStationarySpeed = get_almost_stationary_speed
     setStaticFrictionCoef = set_static_friction_coef
     getStaticFrictionCoef = get_static_friction_coef
     setDynamicFrictionCoef = set_dynamic_friction_coef
     getDynamicFrictionCoef = get_dynamic_friction_coef
-    getClassType = get_class_type
 
 class PhysicsManager:
     """Physics don't get much higher-level than this.  Attach as many Physicals

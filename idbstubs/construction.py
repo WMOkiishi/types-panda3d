@@ -25,15 +25,28 @@ from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
     method_name_from_cpp_name, snake_to_camel
 )
-from .typedata import get_direct_type_name, get_type_name
+from .typedata import (
+    get_direct_type_name, get_linear_superclasses, get_type_name
+)
 from .util import flatten
 
 _logger: Final = logging.getLogger(__name__)
+_class_bodies: Final[dict[str, dict[str, StubRep]]] = {}
+
+# This is a bit of a hack for the checks to reference
+_removed_attributes: Final = defaultdict[str, set[str]](set)
 
 # Don't replace `size` with `__len__` for these
 SIZE_NOT_LEN: Final = ('EggGroupNode', 'WindowProperties')
 
 SR = TypeVar('SR', bound=StubRep)
+
+
+def get_removed_attributes(class_: str, /) -> set[str]:
+    """Return a set of the names of attributes removed from the stubs for the
+    class with the given (scoped) name.
+    """
+    return _removed_attributes[class_]
 
 
 def get_function_name(f: FunctionIndex, /) -> str:
@@ -244,6 +257,8 @@ def make_type_reps(
         )
         if class_.name == 'BitMaskNative':
             return ()
+        if not idb.interrogate_type_is_nested(t):
+            _class_bodies[class_.name] = {i.name: i for i in class_.nested}
     return with_alias(class_, True)
 
 
@@ -418,9 +433,51 @@ def make_package_rep(
     # Make package
     modules: list[Module] = []
     for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
+        for rep in flatten(nested_by_lib.values()):
+            if isinstance(rep, Class):
+                process_class(rep)
         nested_by_lib = cast(dict[str, Sequence[StubRep]], nested_by_lib)
         modules.append(Module(
             mod_name.removeprefix(package_name + '.'),
             nested_by_lib, namespace=(package_name,)
         ))
     return Package(package_name, modules)
+
+
+def process_class(class_: Class) -> None:
+    class_body = _class_bodies.get(class_.name)
+    if class_body is None:
+        return
+    nested_names = set(class_body.keys())
+    for base_class in get_linear_superclasses(class_.name):
+        base_class_body = _class_bodies.get(base_class)
+        if base_class_body is None:
+            continue
+        for name in nested_names & base_class_body.keys():
+            match class_body[name], base_class_body[name]:
+                case Class() | Alias(of_local=True), _:
+                    continue
+                case (
+                    Function(doc=doc_1),
+                    Function(doc=doc_2)
+                ) if doc_1 and doc_1 != doc_2:
+                    continue
+                case (
+                    Element(doc=doc_1, read_only=True),
+                    Element(doc=doc_2, read_only=True)
+                ) if doc_1 and doc_1 != doc_2:
+                    continue
+                case a, b if a == b:
+                    del class_body[name]
+                    nested_names.remove(name)
+    new_nested: list[StubRep] = []
+    for rep in class_.nested:
+        if isinstance(rep, Alias) and rep.of_local:
+            name_to_check = rep.alias_of
+        else:
+            name_to_check = rep.name
+        if name_to_check in nested_names:
+            new_nested.append(rep)
+        else:
+            _removed_attributes[class_.scoped_name].add(rep.name)
+    class_.nested = new_nested

@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from panda3d.core import PandaNode, Thread, TypeHandle, ostream
+from panda3d.core import PandaNode, Thread, ostream
 
 class DataGraphTraverser:
     """This object supervises the traversal of the data graph and the moving of
@@ -38,8 +38,6 @@ class DataNode(PandaNode):
     DataNode does not attempt to cycle its data with a PipelineCycler.  The
     data graph is intended to be used only within a single thread.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, name: str) -> None: ...
     def write_inputs(self, out: ostream) -> None:
         """Writes to the indicated ostream a list of all the inputs this DataNode
         might expect to receive.
@@ -55,9 +53,6 @@ class DataNode(PandaNode):
         showing between this DataNode and its parent(s).
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     writeInputs = write_inputs
     writeOutputs = write_outputs
     writeConnections = write_connections
-    getClassType = get_class_type

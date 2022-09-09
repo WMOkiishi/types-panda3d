@@ -64,14 +64,10 @@ class GraphicsDevice(TypedReferenceCount):
     windows under single device or multiple devices (i.e.  more than one
     adapters in the machine).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_pipe(self) -> GraphicsPipe:
         """Returns the GraphicsPipe that this device is associated with."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPipe = get_pipe
-    getClassType = get_class_type
 
 class GraphicsPipe(TypedReferenceCount):
     """An object to create GraphicsOutputs that share a particular 3-D API.
@@ -89,7 +85,6 @@ class GraphicsPipe(TypedReferenceCount):
     device interface to directx/opengl which will be used to handle multiple
     windows from same device.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     OT_window: ClassVar[Literal[1]]
     OT_fullscreen_window: ClassVar[Literal[2]]
     OT_buffer: ClassVar[Literal[4]]
@@ -182,8 +177,6 @@ class GraphicsPipe(TypedReferenceCount):
         """
         ...
     def get_interface_name(self) -> str: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     isValid = is_valid
     getSupportedTypes = get_supported_types
     supportsType = supports_type
@@ -193,7 +186,6 @@ class GraphicsPipe(TypedReferenceCount):
     getDisplayInformation = get_display_information
     lookupCpuData = lookup_cpu_data
     getInterfaceName = get_interface_name
-    getClassType = get_class_type
     OTWindow = OT_window
     OTFullscreenWindow = OT_fullscreen_window
     OTBuffer = OT_buffer
@@ -597,7 +589,6 @@ class WindowHandle(TypedReferenceCount):
         def get_class_type() -> TypeHandle: ...
         getIntHandle = get_int_handle
         getClassType = get_class_type
-    DtoolClassDict: ClassVar[dict[str, Any]]
     os_handle: WindowHandle.OSHandle
     @overload
     def __init__(self, copy: WindowHandle) -> None: ...
@@ -626,13 +617,10 @@ class WindowHandle(TypedReferenceCount):
         """
         ...
     def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getOsHandle = get_os_handle
     setOsHandle = set_os_handle
     sendWindowsMessage = send_windows_message
     getIntHandle = get_int_handle
-    getClassType = get_class_type
 
 class WindowProperties:
     """A container for the various kinds of properties we might ask to have on a
@@ -2366,7 +2354,6 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     There will be one of these objects for each different graphics context
     active in the system.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     active: bool
     incomplete_render: bool
     loader: Loader
@@ -2921,8 +2908,6 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def get_scene(self) -> SceneSetup: ...
     def begin_scene(self) -> bool: ...
     def end_scene(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     releaseAll = release_all
     releaseAllTextures = release_all_textures
     releaseAllSamplers = release_all_samplers
@@ -3015,7 +3000,6 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     getScene = get_scene
     beginScene = begin_scene
     endScene = end_scene
-    getClassType = get_class_type
     SM00 = SM_00
     SM11 = SM_11
     SM20 = SM_20
@@ -3036,7 +3020,6 @@ class GraphicsEngine(ReferenceCount):
     threads.  The application simply calls engine->render_frame() and considers
     it done.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     threading_model: GraphicsThreadingModel
     auto_flip: bool
     portal_cull: bool
@@ -3400,7 +3383,6 @@ class StereoDisplayRegion(DisplayRegion):
     eyes together.  To access the left or right eyes independently, use
     get_left_eye() and get_right_eye().
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def left_eye(self) -> DisplayRegion: ...
     @property
@@ -3411,11 +3393,8 @@ class StereoDisplayRegion(DisplayRegion):
     def get_right_eye(self) -> DisplayRegion:
         """Returns a pointer to the right DisplayRegion managed by this stereo object."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getLeftEye = get_left_eye
     getRightEye = get_right_eye
-    getClassType = get_class_type
 
 class FrameBufferProperties:
     """A container for the various kinds of properties we might ask to have on a
@@ -3678,7 +3657,6 @@ class GraphicsWindowInputDevice(InputDevice):
     that is associated with a particular window.  It collects mouse and
     keyboard events from the windowing system while the window is in focus.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def button_down(self, button: ButtonHandle, time: float = ...) -> None:
         """The following interface is for the various kinds of GraphicsWindows to
         record the data incoming on the device.
@@ -3746,8 +3724,6 @@ class GraphicsWindowInputDevice(InputDevice):
         pointer no longer exists.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     buttonDown = button_down
     buttonResumeDown = button_resume_down
     buttonUp = button_up
@@ -3760,7 +3736,6 @@ class GraphicsWindowInputDevice(InputDevice):
     updatePointer = update_pointer
     pointerMoved = pointer_moved
     removePointer = remove_pointer
-    getClassType = get_class_type
 
 class TouchInfo:
     """Stores information for a single touch event."""
@@ -3786,7 +3761,6 @@ class GraphicsWindowProcCallbackData(CallbackData):
     initiated from from an implementation of the GraphicsWindowProc class, such
     as PythonGraphicsWindowProc.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_hwnd(self) -> int:
         """Returns the Windows proc hwnd parameter."""
         ...
@@ -3808,8 +3782,6 @@ class GraphicsWindowProcCallbackData(CallbackData):
     def get_touch_info(self, index: int) -> TouchInfo:
         """Returns the TouchInfo object describing the specified touch."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getHwnd = get_hwnd
     getMsg = get_msg
     getWparam = get_wparam
@@ -3817,13 +3789,11 @@ class GraphicsWindowProcCallbackData(CallbackData):
     isTouchEvent = is_touch_event
     getNumTouches = get_num_touches
     getTouchInfo = get_touch_info
-    getClassType = get_class_type
 
 class GraphicsWindow(GraphicsOutput):
     """A window, fullscreen or on a desktop, into which a graphics device sends
     its output for interactive display.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     window_event: str
     close_request_event: str
     unexposed_draw: bool
@@ -3992,8 +3962,6 @@ class GraphicsWindow(GraphicsOutput):
     def close_ime(self) -> None:
         """Forces the ime window to close if any"""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_input_devices(self) -> tuple[InputDevice, ...]: ...
     def get_input_device_names(self) -> tuple[str, ...]: ...
     getProperties = get_properties
@@ -4021,7 +3989,6 @@ class GraphicsWindow(GraphicsOutput):
     getPointer = get_pointer
     movePointer = move_pointer
     closeIme = close_ime
-    getClassType = get_class_type
     getInputDevices = get_input_devices
     getInputDeviceNames = get_input_device_names
 
@@ -4095,7 +4062,6 @@ class CallbackGraphicsWindow(GraphicsWindow):
         setRenderFlag = set_render_flag
         getRenderFlag = get_render_flag
         getClassType = get_class_type
-    DtoolClassDict: ClassVar[dict[str, Any]]
     RCT_begin_frame: ClassVar[Literal[0]]
     RCT_end_frame: ClassVar[Literal[1]]
     RCT_begin_flip: ClassVar[Literal[2]]
@@ -4159,8 +4125,6 @@ class CallbackGraphicsWindow(GraphicsWindow):
         Returns the index of the new device.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setEventsCallback = set_events_callback
     clearEventsCallback = clear_events_callback
     getEventsCallback = get_events_callback
@@ -4171,7 +4135,6 @@ class CallbackGraphicsWindow(GraphicsWindow):
     clearRenderCallback = clear_render_callback
     getRenderCallback = get_render_callback
     createInputDevice = create_input_device
-    getClassType = get_class_type
     RCTBeginFrame = RCT_begin_frame
     RCTEndFrame = RCT_end_frame
     RCTBeginFlip = RCT_begin_flip
@@ -4196,22 +4159,17 @@ class DisplayRegionCullCallbackData(CallbackData):
     """This specialization on CallbackData is passed when the callback is
     initiated from the cull traversal, for a DisplayRegion.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_scene_setup(self) -> SceneSetup:
         """Returns a pointer to the SceneSetup object, which contains information
         about the camera and such.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getSceneSetup = get_scene_setup
-    getClassType = get_class_type
 
 class DisplayRegionDrawCallbackData(CallbackData):
     """This specialization on CallbackData is passed when the callback is
     initiated from the draw traversal, for a DisplayRegion.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_cull_result(self) -> CullResult:
         """Returns a pointer to the CullResult, the list of CullableObjects that
         should be drawn in this DisplayRegion.
@@ -4222,11 +4180,8 @@ class DisplayRegionDrawCallbackData(CallbackData):
         about the camera and such.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getCullResult = get_cull_result
     getSceneSetup = get_scene_setup
-    getClassType = get_class_type
 
 class DisplaySearchParameters:
     """Parameters used for searching display capabilities."""
@@ -4252,7 +4207,6 @@ class GraphicsBuffer(GraphicsOutput):
     """An offscreen buffer for rendering into.  This is similar in function to a
     GraphicsWindow, except that the output is not visible to the user.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def set_size(self, x: int, y: int) -> None:
         """This is called by the GraphicsEngine to request that the buffer resize
         itself.  Although calls to get the size will return the new value, much of
@@ -4260,10 +4214,7 @@ class GraphicsBuffer(GraphicsOutput):
         Not all buffers are resizeable.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSize = set_size
-    getClassType = get_class_type
 
 class GraphicsPipeSelection:
     """This maintains a list of GraphicsPipes by type that are available for
@@ -4358,7 +4309,6 @@ class MouseAndKeyboard(DataNode):
     the system, you must attach an EventThrower to the MouseAndKeyboard object;
     otherwise, the events will be discarded.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: MouseAndKeyboard) -> None: ...
     @overload
@@ -4368,10 +4318,7 @@ class MouseAndKeyboard(DataNode):
         with a different window and/or device number.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSource = set_source
-    getClassType = get_class_type
 
 @final
 class NativeWindowHandle(WindowHandle):
@@ -4381,7 +4328,6 @@ class NativeWindowHandle(WindowHandle):
     This class exists for name scoping only.  Don't use the constructor
     directly; use one of the make_* methods.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def make_int(window: int) -> WindowHandle:
         """Constructs a new WindowHandle with an int value, which is understood to be
@@ -4400,11 +4346,8 @@ class NativeWindowHandle(WindowHandle):
         where parenting child windows is particularly problematic.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     makeInt = make_int
     makeSubprocess = make_subprocess
-    getClassType = get_class_type
 
 class ParasiteBuffer(GraphicsOutput):
     """This is a special GraphicsOutput type that acts a lot like a
@@ -4426,7 +4369,6 @@ class ParasiteBuffer(GraphicsOutput):
     copy to texture).  It is also the only way to render to a texture on API's
     that do not support offscreen rendering.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def set_size(self, x: int, y: int) -> None:
         """This is called by the GraphicsEngine to request that the buffer resize
         itself.  Although calls to get the size will return the new value, much of
@@ -4434,7 +4376,4 @@ class ParasiteBuffer(GraphicsOutput):
         Not all buffers are resizeable.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSize = set_size
-    getClassType = get_class_type

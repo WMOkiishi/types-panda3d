@@ -12,7 +12,6 @@ from panda3d.core import (
     NodePath,
     PandaNode,
     PfmFile,
-    TypeHandle,
     UnalignedLVecBase4f,
     UpdateSeq,
 )
@@ -31,22 +30,14 @@ class CylindricalLens(Lens):
     two relatively nearby points on the film, but it becomes increasingly
     evident as you compare points widely spaced on the film.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class FisheyeLens(Lens):
     """A fisheye lens.  This nonlinear lens introduces a spherical distortion to
     the image, which is minimal at small angles from the lens, and increases at
     larger angles from the lens.  The field of view may extend to 360 degrees.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class ProjectionScreen(PandaNode):
     """A ProjectionScreen implements a simple system for projective texturing.
@@ -66,7 +57,6 @@ class ProjectionScreen(PandaNode):
     nonlinear, that might be defined using the Lens interface, including
     fisheye and cylindrical lenses.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def set_projector(self, projector: NodePath) -> None:
         """Specifies the LensNode that is to serve as the projector for this screen.
@@ -261,8 +251,6 @@ class ProjectionScreen(PandaNode):
         ...
     @overload
     def recompute_if_stale(self, this_np: NodePath) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setProjector = set_projector
     getProjector = get_projector
     clearUndistLut = clear_undist_lut
@@ -288,7 +276,6 @@ class ProjectionScreen(PandaNode):
     getAutoRecompute = get_auto_recompute
     getLastScreen = get_last_screen
     recomputeIfStale = recompute_if_stale
-    getClassType = get_class_type
 
 class NonlinearImager:
     """This class object combines the rendered output of a 3-d from one or more
@@ -531,11 +518,7 @@ class OSphereLens(Lens):
     A OSphereLens is similar to a Cylindrical lens and PSphereLens, except that
     it is orthographic in the vertical direction.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class PSphereLens(Lens):
     """A PSphereLens is a special nonlinear lens that doesn't correspond to any
@@ -549,8 +532,4 @@ class PSphereLens(Lens):
     call a sphere mapping: the x coordinate is proportional to azimuth, while
     the y coordinate is proportional to altitude.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type

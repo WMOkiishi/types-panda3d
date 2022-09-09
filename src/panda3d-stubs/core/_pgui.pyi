@@ -157,8 +157,6 @@ class PGItem(PandaNode):
     The PGItem node must be parented to the scene graph somewhere beneath a
     PGTop node in order for this behavior to work.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, name: str) -> None: ...
     def set_name(self, name: str) -> None: ...
     @overload
     def set_frame(self, frame: _Vec4f) -> None:
@@ -466,8 +464,6 @@ class PGItem(PandaNode):
         activate or deactivate keyboard focus on a particular item.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_state_defs(self) -> tuple[NodePath, ...]: ...
     setName = set_name
     setFrame = set_frame
@@ -521,7 +517,6 @@ class PGItem(PandaNode):
     getTextNode = get_text_node
     setTextNode = set_text_node
     getFocusItem = get_focus_item
-    getClassType = get_class_type
     getStateDefs = get_state_defs
 
 class PGButton(PGItem):
@@ -529,14 +524,12 @@ class PGButton(PGItem):
     normal button object.  It keeps track of its own state, and handles mouse
     events sensibly.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     S_ready: ClassVar[Literal[0]]
     S_depressed: ClassVar[Literal[1]]
     S_rollover: ClassVar[Literal[2]]
     S_inactive: ClassVar[Literal[3]]
     @property
     def click_prefix(self) -> str: ...
-    def __init__(self, name: str) -> None: ...
     @overload
     def setup(self, ready: NodePath) -> None:
         """`(self, ready: NodePath)`; `(self, ready: NodePath, depressed: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath)`:
@@ -592,15 +585,12 @@ class PGButton(PGItem):
         normally.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addClickButton = add_click_button
     removeClickButton = remove_click_button
     hasClickButton = has_click_button
     isButtonDown = is_button_down
     getClickPrefix = get_click_prefix
     getClickEvent = get_click_event
-    getClassType = get_class_type
     SReady = S_ready
     SDepressed = S_depressed
     SRollover = S_rollover
@@ -616,8 +606,6 @@ class PGTop(PandaNode):
     each node within the MouseWatcher and forces everything to render in a
     depth-first, left-to-right order, appropriate for 2-d objects.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, name: str) -> None: ...
     def set_mouse_watcher(self, watcher: MouseWatcher) -> None:
         """Sets the MouseWatcher pointer that the PGTop object registers its PG items
         with.  This must be set before the PG items are active.
@@ -653,14 +641,11 @@ class PGTop(PandaNode):
         PGItem that is discovered during traversal.  See set_start_sort().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setMouseWatcher = set_mouse_watcher
     getMouseWatcher = get_mouse_watcher
     getGroup = get_group
     setStartSort = set_start_sort
     getStartSort = get_start_sort
-    getClassType = get_class_type
 
 class PGEntry(PGItem):
     """This is a particular kind of PGItem that handles simple one-line or short
@@ -672,11 +657,9 @@ class PGEntry(PGItem):
     setters, which use whatever encoding method is specified by the associated
     TextNode.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     S_focus: ClassVar[Literal[0]]
     S_no_focus: ClassVar[Literal[1]]
     S_inactive: ClassVar[Literal[2]]
-    def __init__(self, name: str) -> None: ...
     def setup(self, width: float, num_lines: int) -> None:
         """Sets up the entry for normal use.  The width is the maximum width of
         characters that will be typed, and num_lines is the integer number of lines
@@ -983,8 +966,6 @@ class PGEntry(PGItem):
         should be called in preference to get_text()).
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setupMinimal = setup_minimal
     setText = set_text
     getPlainText = get_plain_text
@@ -1036,7 +1017,6 @@ class PGEntry(PGItem):
     getWtext = get_wtext
     setAcceptEnabled = set_accept_enabled
     isWtext = is_wtext
-    getClassType = get_class_type
     SFocus = S_focus
     SNoFocus = S_no_focus
     SInactive = S_inactive
@@ -1062,14 +1042,10 @@ class PGMouseWatcherBackground(MouseWatcherRegion):
     and is never active, but just quietly listens for keypresses and sends them
     to all the PGItems with background focus.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
     def __init__(self, __param0: PGMouseWatcherBackground) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class PGVirtualFrame(PGItem):
     """This represents a frame that is rendered as a window onto another (possibly
@@ -1090,7 +1066,6 @@ class PGVirtualFrame(PGItem):
     See PGScrollFrame for a specialization of this class that handles the
     traditional scrolling canvas, with scroll bars.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float) -> None:
         """Creates a PGVirtualFrame with the indicated dimensions."""
@@ -1136,8 +1111,6 @@ class PGVirtualFrame(PGItem):
     def get_canvas_parent(self) -> PandaNode:
         """Returns the parent node of the canvas_node."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setClipFrame = set_clip_frame
     getClipFrame = get_clip_frame
     hasClipFrame = has_clip_frame
@@ -1146,7 +1119,6 @@ class PGVirtualFrame(PGItem):
     getCanvasTransform = get_canvas_transform
     getCanvasNode = get_canvas_node
     getCanvasParent = get_canvas_parent
-    getClassType = get_class_type
 
 class PGSliderBar(PGItem):
     """This is a particular kind of PGItem that draws a little bar with a slider
@@ -1517,7 +1489,6 @@ class PGWaitBar(PGItem):
     left to right to indicate a slow process gradually completing, like a
     traditional "wait, loading" bar.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float, range: float) -> None:
         """Creates a PGWaitBar with the indicated dimensions, with the indicated
@@ -1551,8 +1522,6 @@ class PGWaitBar(PGItem):
         the amount completed.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setRange = set_range
     getRange = get_range
     setValue = set_value
@@ -1560,4 +1529,3 @@ class PGWaitBar(PGItem):
     getPercent = get_percent
     setBarStyle = set_bar_style
     getBarStyle = get_bar_style
-    getClassType = get_class_type

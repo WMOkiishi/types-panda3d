@@ -35,7 +35,6 @@ class CInterval(TypedReferenceCount):
     C++ will inherit from this class; Intervals that must be implemented in
     Python will inherit from the similar Python class.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     done_event: str
     t: float
     auto_pause: bool
@@ -318,8 +317,6 @@ class CInterval(TypedReferenceCount):
         should stop.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getName = get_name
     getDuration = get_duration
     getOpenEnded = get_open_ended
@@ -355,7 +352,6 @@ class CInterval(TypedReferenceCount):
     setupResume = setup_resume
     setupResumeUntil = setup_resume_until
     stepPlay = step_play
-    getClassType = get_class_type
     ETInitialize = ET_initialize
     ETInstant = ET_instant
     ETStep = ET_step
@@ -501,18 +497,13 @@ class CConstraintInterval(CInterval):
     """The base class for a family of intervals that constrain some property to a
     value over time.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     bogus_variable: bool
     def __init__(self, __param0: CConstraintInterval) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class CConstrainHprInterval(CConstraintInterval):
     """A constraint interval that will constrain the orientation of one node to
     the orientation of another.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainHprInterval) -> None:
         """Constructs a constraint interval that will constrain the orientation of one
@@ -531,17 +522,13 @@ class CConstrainHprInterval(CConstraintInterval):
     def get_target(self) -> NodePath:
         """Returns the "target" node."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode = get_node
     getTarget = get_target
-    getClassType = get_class_type
 
 class CConstrainPosHprInterval(CConstraintInterval):
     """A constraint interval that will constrain the position and orientation of
     one node to the position and orientation of another.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainPosHprInterval) -> None:
         """Constructs a constraint interval that will constrain the position and
@@ -561,17 +548,13 @@ class CConstrainPosHprInterval(CConstraintInterval):
     def get_target(self) -> NodePath:
         """Returns the "target" node."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode = get_node
     getTarget = get_target
-    getClassType = get_class_type
 
 class CConstrainPosInterval(CConstraintInterval):
     """A constraint interval that will constrain the position of one node to the
     position of another.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainPosInterval) -> None:
         """Constructs a constraint interval that will constrain the position of one
@@ -590,17 +573,13 @@ class CConstrainPosInterval(CConstraintInterval):
     def get_target(self) -> NodePath:
         """Returns the "target" node."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode = get_node
     getTarget = get_target
-    getClassType = get_class_type
 
 class CConstrainTransformInterval(CConstraintInterval):
     """A constraint interval that will constrain the transform of one node to the
     transform of another.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CConstrainTransformInterval) -> None:
         """Constructs a constraint interval that will constrain the transform of one
@@ -620,17 +599,13 @@ class CConstrainTransformInterval(CConstraintInterval):
     def get_target(self) -> NodePath:
         """Returns the "target" node."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode = get_node
     getTarget = get_target
-    getClassType = get_class_type
 
 class CLerpInterval(CInterval):
     """The base class for a family of intervals that linearly interpolate one or
     more numeric values over time.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     BT_no_blend: ClassVar[Literal[0]]
     BT_ease_in: ClassVar[Literal[1]]
     BT_ease_out: ClassVar[Literal[2]]
@@ -648,11 +623,8 @@ class CLerpInterval(CInterval):
         string, or BT_invalid if the string doesn't match anything.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getBlendType = get_blend_type
     stringBlendType = string_blend_type
-    getClassType = get_class_type
     BTNoBlend = BT_no_blend
     BTEaseIn = BT_ease_in
     BTEaseOut = BT_ease_out
@@ -668,7 +640,6 @@ class CLerpAnimEffectInterval(CLerpInterval):
     CLerpAnimEffectInterval to adjust the degree to which each animation
     affects the actor.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CLerpAnimEffectInterval) -> None: ...
     @overload
@@ -682,16 +653,12 @@ class CLerpAnimEffectInterval(CLerpInterval):
         for output.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     addControl = add_control
-    getClassType = get_class_type
 
 class CLerpNodePathInterval(CLerpInterval):
     """An interval that lerps one or more properties (like pos, hpr, etc.) on a
     NodePath over time.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: CLerpNodePathInterval) -> None:
         """Constructs a lerp interval that will lerp some properties on the indicated
@@ -926,8 +893,6 @@ class CLerpNodePathInterval(CLerpInterval):
         applied by the lerp.  See set_override().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getNode = get_node
     getOther = get_other
     setStartPos = set_start_pos
@@ -953,14 +918,12 @@ class CLerpNodePathInterval(CLerpInterval):
     setEndTexScale = set_end_tex_scale
     setOverride = set_override
     getOverride = get_override
-    getClassType = get_class_type
 
 class CMetaInterval(CInterval):
     """This interval contains a list of nested intervals, each of which has its
     own begin and end times.  Some of them may overlap and some of them may
     not.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     RS_previous_end: ClassVar[Literal[0]]
     RS_previous_begin: ClassVar[Literal[1]]
     RS_level_begin: ClassVar[Literal[2]]
@@ -1106,8 +1069,6 @@ class CMetaInterval(CInterval):
     def timeline(self, out: ostream) -> None:
         """Outputs a list of all events in the order in which they occur."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setPrecision = set_precision
     getPrecision = get_precision
     clearIntervals = clear_intervals
@@ -1127,7 +1088,6 @@ class CMetaInterval(CInterval):
     getEventT = get_event_t
     getEventType = get_event_type
     popEvent = pop_event
-    getClassType = get_class_type
     RSPreviousEnd = RS_previous_end
     RSPreviousBegin = RS_previous_begin
     RSLevelBegin = RS_level_begin
@@ -1138,17 +1098,12 @@ class CMetaInterval(CInterval):
 
 class HideInterval(CInterval):
     """An interval that calls NodePath::hide()."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: HideInterval) -> None: ...
     @overload
     def __init__(self, node: NodePath, name: str = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class LerpBlendType(TypedReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __call__(self, __param0: float) -> float: ...
     @staticmethod
     def get_class_type() -> TypeHandle:
@@ -1157,57 +1112,28 @@ class LerpBlendType(TypedReferenceCount):
     getClassType = get_class_type
 
 class EaseInBlendType(LerpBlendType):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle:
-        """now for typehandle stuff"""
-        ...
-    getClassType = get_class_type
 
 class EaseOutBlendType(LerpBlendType):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle:
-        """now for typehandle stuff"""
-        ...
-    getClassType = get_class_type
 
 class EaseInOutBlendType(LerpBlendType):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle:
-        """now for typehandle stuff"""
-        ...
-    getClassType = get_class_type
 
 class NoBlendType(LerpBlendType):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle:
-        """now for typehandle stuff"""
-        ...
-    getClassType = get_class_type
 
 class ShowInterval(CInterval):
     """An interval that calls NodePath::show()."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: ShowInterval) -> None: ...
     @overload
     def __init__(self, node: NodePath, name: str = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class WaitInterval(CInterval):
     """This interval does absolutely nothing, and is mainly useful for marking
     time between other intervals within a sequence.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: WaitInterval) -> None:
         """All Wait intervals have the same name.  No one really cares if their names
@@ -1216,6 +1142,3 @@ class WaitInterval(CInterval):
         ...
     @overload
     def __init__(self, duration: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type

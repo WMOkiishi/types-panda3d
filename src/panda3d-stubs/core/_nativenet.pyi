@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from panda3d.core import Datagram, TypeHandle, TypedObject
+from panda3d.core import Datagram, TypedObject
 
 class Socket_Address:
     """A simple place to store and manipulate tcp and port address for
@@ -95,7 +95,6 @@ class Socket_IP(TypedObject):
     |                       |                           | SocketTCP
     SocketTCP_Listen    SocketUDP_Incoming   SocketUDP_OutBound
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -152,16 +151,12 @@ class Socket_IP(TypedObject):
         ...
     @staticmethod
     def InitNetworkDriver() -> int: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class Socket_TCP(Socket_IP):
     """Base functionality for a TCP connected socket This class is pretty useless
     by itself but it does hide some of the platform differences from machine to
     machine
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -201,14 +196,10 @@ class Socket_TCP(Socket_IP):
         length is 0 + bytes read (May be smaller than requested)
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     ErrorIsWouldBlocking = ErrorIs_WouldBlocking
-    getClassType = get_class_type
 
 class Socket_TCP_Listen(Socket_IP):
     """Base functionality for a TCP rendezvous socket"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @overload
     def OpenForListen(self, address: Socket_Address, backlog_size: int = ...) -> bool:
@@ -217,13 +208,9 @@ class Socket_TCP_Listen(Socket_IP):
     @overload
     def OpenForListen(self, port: int, backlog_size: int = ...) -> bool: ...
     def GetIncomingConnection(self, newsession: Socket_TCP | int, address: Socket_Address) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class Socket_UDP_Incoming(Socket_IP):
     """Base functionality for a UDP Reader"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     @overload
     def OpenForInput(self, address: Socket_Address) -> bool:
@@ -243,13 +230,9 @@ class Socket_UDP_Incoming(Socket_IP):
     def SetToBroadCast(self) -> bool:
         """Flips the OS bits that allow for brodcast packets to come in on this port."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class Socket_UDP_Outgoing(Socket_IP):
     """Base functionality for a UDP sending socket"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def InitToAddress(self, address: Socket_Address) -> bool:
         """Connects the Socket to a specified address"""
@@ -266,9 +249,6 @@ class Socket_UDP_Outgoing(Socket_IP):
     def SetToBroadCast(self) -> bool:
         """Ask the OS to let us receive broadcast packets on this port."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class Socket_fdset:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -302,7 +282,6 @@ class Buffered_DatagramConnection(Socket_TCP):
     trying to get a active connect open 3. Socket is open and  writable.. (
     Fully powered up )...
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, rbufsize: int, wbufsize: int, write_flush_point: int) -> None: ...
     def GetMessage(self, val: Datagram) -> bool:
         """Reads a message.  Returns false on failure."""
@@ -330,17 +309,12 @@ class Buffered_DatagramConnection(Socket_TCP):
         """must be called to set value to the server"""
         ...
     def ClearAddresses(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class Socket_UDP(Socket_UDP_Incoming):
     """Base functionality for a combination UDP Reader and Writer.  This
     duplicates code from Socket_UDP_Outgoing, to avoid the problems of multiple
     inheritance.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self) -> None: ...
     def InitToAddress(self, address: Socket_Address) -> bool:
         """Connects the socket to a Specified address"""
         ...
@@ -353,9 +327,6 @@ class Socket_UDP(Socket_UDP_Incoming):
     def SetToBroadCast(self) -> bool:
         """Ask the OS to let us receive broadcast packets on this port."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 SocketAddress = Socket_Address
 SocketIP = Socket_IP

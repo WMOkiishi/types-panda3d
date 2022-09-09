@@ -768,7 +768,6 @@ class DCParameter(DCField):
     This may also be a typedef reference to another type, which has the same
     properties as the referenced type, but a different name.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def as_simple_parameter(self) -> DCSimpleParameter: ...
     def as_array_parameter(self) -> DCArrayParameter: ...
     def make_copy(self) -> DCParameter: ...
@@ -789,7 +788,6 @@ class DCArrayParameter(DCParameter):
     parameter type accepts an arbitrary (or possibly fixed) number of nested
     fields, all of which are of the same type.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_element_type(self) -> DCParameter:
         """Returns the type of the individual elements of this array."""
         ...
@@ -806,7 +804,6 @@ class DCAtomicField(DCField):
     This defines an interface to the Distributed Class, and is always
     implemented as a remote procedure method.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_num_elements(self) -> int:
         """Returns the number of elements (parameters) of the atomic field."""
         ...
@@ -883,7 +880,6 @@ class DCDeclaration:
 
 class DCClass(DCDeclaration):
     """Defines a particular DistributedClass as read from an input .dc file."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_dc_file(self) -> DCFile:
         """Returns the DCFile object that contains the class."""
         ...
@@ -980,9 +976,6 @@ class DCClass(DCDeclaration):
         """Stops the PStats timer on the "generate" task.  This should balance with a
         preceding call to start_generate().
         """
-        ...
-    def output(self, out: ostream) -> None:
-        """Write a string representation of this instance to <out>."""
         ...
     def has_class_def(self) -> bool:
         """Returns true if the DCClass object has an associated Python class
@@ -1144,7 +1137,6 @@ class DCClassParameter(DCParameter):
     """This represents a class (or struct) object used as a parameter itself.
     This means that all the fields of the class get packed into the message.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_class(self) -> DCClass:
         """Returns the class object this parameter represents."""
         ...
@@ -1310,7 +1302,6 @@ class DCKeyword(DCDeclaration):
     define a communication property associated with a field, for instance
     "broadcast" or "airecv".
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_name(self) -> str:
         """Returns the name of this keyword."""
         ...
@@ -1321,7 +1312,6 @@ class DCMolecularField(DCField):
     This represents a combination of two or more related atomic fields, that
     will often be treated as a unit.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_num_atomics(self) -> int:
         """Returns the number of atomic fields that make up this molecular field."""
         ...
@@ -1340,7 +1330,6 @@ class DCSimpleParameter(DCParameter):
     divisor, which is meaningful only for the numeric type elements (and
     represents a fixed-point numeric convention).
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_type(self) -> _DCSubatomicType:
         """Returns the particular subatomic type represented by this instance."""
         ...
@@ -1372,7 +1361,6 @@ class DCSwitch(DCDeclaration):
     and represents two or more alternative unpacking schemes based on the first
     field read.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_name(self) -> str:
         """Returns the name of this switch."""
         ...
@@ -1429,7 +1417,6 @@ class DCSwitchParameter(DCParameter):
     """This represents a switch object used as a parameter itself, which packs the
     appropriate fields of the switch into the message.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_switch(self) -> DCSwitch:
         """Returns the switch object this parameter represents."""
         ...
@@ -1439,7 +1426,6 @@ class DCTypedef(DCDeclaration):
     """This represents a single typedef declaration in the dc file.  It assigns a
     particular type to a new name, just like a C typedef.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_number(self) -> int:
         """Returns a unique index number associated with this typedef definition.
         This is defined implicitly when the .dc file(s) are read.

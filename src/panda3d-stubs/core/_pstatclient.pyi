@@ -524,5 +524,4 @@ class PStatCollectorForward(PStatCollectorForwardBase):
     classes that are defined before the pstats module may access the
     PStatCollector.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, col: PStatCollector) -> None: ...

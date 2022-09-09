@@ -1,14 +1,9 @@
-from typing import Any, ClassVar
-from panda3d.core import TypeHandle, TypedWritableReferenceCount
+from panda3d.core import TypedWritableReferenceCount
 
 class GraphicsOutputBase(TypedWritableReferenceCount):
     """An abstract base class for GraphicsOutput, for all the usual reasons."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def set_sort(self, sort: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setSort = set_sort
-    getClassType = get_class_type
 
 class GraphicsStateGuardianBase(TypedWritableReferenceCount):
     """This is a base class for the GraphicsStateGuardian class, which is itself a
@@ -22,7 +17,6 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
     TypedWritableReferenceCount instead of TypedReferenceCount for that
     convenience.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_incomplete_render(self) -> bool: ...
     def get_effective_incomplete_render(self) -> bool: ...
     def prefers_triangle_strips(self) -> bool: ...
@@ -61,8 +55,6 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
         and remove themselves from this list as they are created and destroyed.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_gsgs(self) -> tuple[GraphicsStateGuardianBase, ...]: ...
     getIncompleteRender = get_incomplete_render
     getEffectiveIncompleteRender = get_effective_incomplete_render
@@ -80,5 +72,4 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
     setDefaultGsg = set_default_gsg
     getNumGsgs = get_num_gsgs
     getGsg = get_gsg
-    getClassType = get_class_type
     getGsgs = get_gsgs

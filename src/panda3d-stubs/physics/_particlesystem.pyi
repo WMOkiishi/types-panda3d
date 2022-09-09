@@ -34,7 +34,6 @@ _SparkleParticleRenderer_SparkleParticleLifeScale: TypeAlias = Literal[0, 1]
 _SpriteAnim_SourceType: TypeAlias = Literal[0, 1]
 
 class BaseParticleEmitter(ReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     ET_EXPLICIT: ClassVar[Literal[0]]
     ET_RADIATE: ClassVar[Literal[1]]
     ET_CUSTOM: ClassVar[Literal[2]]
@@ -103,7 +102,6 @@ class BaseParticleEmitter(ReferenceCount):
 
 class RingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -134,7 +132,6 @@ class RingEmitter(BaseParticleEmitter):
 
 class ArcEmitter(RingEmitter):
     """Describes a planar ring region in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -159,7 +156,6 @@ class ArcEmitter(RingEmitter):
 
 class BaseParticleFactory(ReferenceCount):
     """Pure Virtual base class for creating particles"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def set_lifespan_base(self, lb: float) -> None:
         """public"""
         ...
@@ -217,7 +213,6 @@ class BaseParticleFactory(ReferenceCount):
 
 class BaseParticleRenderer(ReferenceCount):
     """Pure virtual particle renderer base class"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     PR_ALPHA_NONE: ClassVar[Literal[0]]
     PR_ALPHA_OUT: ClassVar[Literal[1]]
     PR_ALPHA_IN: ClassVar[Literal[2]]
@@ -284,7 +279,6 @@ class BaseParticleRenderer(ReferenceCount):
 
 class BoxEmitter(BaseParticleEmitter):
     """Describes a voluminous box region in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -324,41 +318,28 @@ class ColorInterpolationFunctionConstant:
     getClassType = get_class_type
 
 class ColorInterpolationFunctionLinear(ColorInterpolationFunctionConstant):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_color_b(self) -> LVecBase4f: ...
     def set_color_b(self, c: _Vec4f) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getColorB = get_color_b
     setColorB = set_color_b
-    getClassType = get_class_type
 
 class ColorInterpolationFunctionStepwave(ColorInterpolationFunctionLinear):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_width_a(self) -> float: ...
     def get_width_b(self) -> float: ...
     def set_width_a(self, w: float) -> None: ...
     def set_width_b(self, w: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getWidthA = get_width_a
     getWidthB = get_width_b
     setWidthA = set_width_a
     setWidthB = set_width_b
-    getClassType = get_class_type
 
 class ColorInterpolationFunctionSinusoid(ColorInterpolationFunctionLinear):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def get_period(self) -> float: ...
     def set_period(self, p: float) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getPeriod = get_period
     setPeriod = set_period
-    getClassType = get_class_type
 
 class ColorInterpolationSegment(ReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, s: ColorInterpolationSegment) -> None: ...
     def get_function(self) -> TypedReferenceCount:
         """INLINE ColorInterpolationFunction* get_function() const;"""
@@ -384,7 +365,6 @@ class ColorInterpolationSegment(ReferenceCount):
     setEnabled = set_enabled
 
 class ColorInterpolationManager(ReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -412,7 +392,6 @@ class ColorInterpolationManager(ReferenceCount):
 
 class DiscEmitter(BaseParticleEmitter):
     """Describes a planar disc region from which particles are generated"""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -450,7 +429,6 @@ class DiscEmitter(BaseParticleEmitter):
     getCubicLerping = get_cubic_lerping
 
 class GeomParticleRenderer(BaseParticleRenderer):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, am: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., geom_node: PandaNode = ...) -> None: ...
     @overload
@@ -500,7 +478,6 @@ class GeomParticleRenderer(BaseParticleRenderer):
 
 class LineEmitter(BaseParticleEmitter):
     """Describes a linear region in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """constructor"""
@@ -525,7 +502,6 @@ class LineEmitter(BaseParticleEmitter):
     getEndpoint2 = get_endpoint2
 
 class LineParticleRenderer(BaseParticleRenderer):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -551,7 +527,6 @@ class LineParticleRenderer(BaseParticleRenderer):
 
 class ParticleSystem(Physical):
     """Contains and manages a particle system."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, pool_size: int = ...) -> None:
         """`(self, copy: ParticleSystem)`:
@@ -647,8 +622,6 @@ class ParticleSystem(Physical):
     def write_spawn_templates(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setPoolSize = set_pool_size
     setBirthRate = set_birth_rate
     setSoftBirthRate = set_soft_birth_rate
@@ -698,11 +671,9 @@ class ParticleSystem(Physical):
     softStart = soft_start
     writeFreeParticleFifo = write_free_particle_fifo
     writeSpawnTemplates = write_spawn_templates
-    getClassType = get_class_type
 
 class PointEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -722,7 +693,6 @@ class PointEmitter(BaseParticleEmitter):
     getLocation = get_location
 
 class PointParticleFactory(BaseParticleFactory):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -736,7 +706,6 @@ class PointParticleFactory(BaseParticleFactory):
     def __init__(self, copy: PointParticleFactory) -> None: ...
 
 class PointParticleRenderer(BaseParticleRenderer):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     PP_ONE_COLOR: ClassVar[Literal[0]]
     PP_BLEND_LIFE: ClassVar[Literal[1]]
     PP_BLEND_VEL: ClassVar[Literal[2]]
@@ -777,7 +746,6 @@ class PointParticleRenderer(BaseParticleRenderer):
 
 class RectangleEmitter(BaseParticleEmitter):
     """Describes a planar square region in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -808,7 +776,6 @@ class RectangleEmitter(BaseParticleEmitter):
 
 class SparkleParticleRenderer(BaseParticleRenderer):
     """pretty sparkly things."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     SP_NO_SCALE: ClassVar[Literal[0]]
     SP_SCALE: ClassVar[Literal[1]]
     @overload
@@ -849,7 +816,6 @@ class SparkleParticleRenderer(BaseParticleRenderer):
 
 class SphereSurfaceEmitter(BaseParticleEmitter):
     """Describes a curved space in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -868,7 +834,6 @@ class SphereSurfaceEmitter(BaseParticleEmitter):
 
 class SphereVolumeEmitter(BaseParticleEmitter):
     """Describes a voluminous spherical region in which particles are generated."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -889,7 +854,6 @@ class SpriteAnim(ReferenceCount):
     """Helper class used by SpriteParticleRenderer to keep track of its textures
     and their respective UVs and source types.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     ST_texture: ClassVar[Literal[0]]
     ST_from_node: ClassVar[Literal[1]]
     def __init__(self, __param0: SpriteAnim) -> None: ...
@@ -913,7 +877,6 @@ class SpriteAnim(ReferenceCount):
 
 class SpriteParticleRenderer(BaseParticleRenderer):
     """Renders a particle system with high-speed nasty trick sprites."""
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, tex: Texture = ...) -> None:
         """`(self, copy: SpriteParticleRenderer)`:
@@ -1139,7 +1102,6 @@ class TangentRingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which tangent particles are generated,
     and particles fly off tangential to the ring.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -1161,7 +1123,6 @@ class TangentRingEmitter(BaseParticleEmitter):
     getRadiusSpread = get_radius_spread
 
 class ZSpinParticleFactory(BaseParticleFactory):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None:
         """`(self)`:

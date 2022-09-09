@@ -45,7 +45,6 @@ class ButtonThrower(DataNode):
     MouseAndKeyboard device.  It simply takes each button it finds and throws a
     corresponding event based on the button name via the throw_event() call.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     button_down_event: str
     button_up_event: str
     button_repeat_event: str
@@ -320,8 +319,6 @@ class ButtonThrower(DataNode):
         add_throw_button().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_parameters(self) -> tuple[EventParameter, ...]: ...
     setButtonDownEvent = set_button_down_event
     getButtonDownEvent = get_button_down_event
@@ -356,7 +353,6 @@ class ButtonThrower(DataNode):
     removeThrowButton = remove_throw_button
     hasThrowButton = has_throw_button
     clearThrowButtons = clear_throw_buttons
-    getClassType = get_class_type
     getParameters = get_parameters
 
 class MouseInterfaceNode(DataNode):
@@ -366,7 +362,6 @@ class MouseInterfaceNode(DataNode):
     It collects together some common interface; in particular, the
     require_button() and related methods.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: MouseInterfaceNode) -> None: ...
     def require_button(self, button: ButtonHandle, is_down: bool) -> None:
         """Indicates that the indicated button must be in the required state (either
@@ -385,19 +380,15 @@ class MouseInterfaceNode(DataNode):
         require_button().
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     requireButton = require_button
     clearButton = clear_button
     clearAllButtons = clear_all_buttons
-    getClassType = get_class_type
 
 class DriveInterface(MouseInterfaceNode):
     """This is a TFormer, similar to Trackball, that moves around a transform
     matrix in response to mouse input.  The basic motion is on a horizontal
     plane, as if driving a vehicle.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload
@@ -597,8 +588,6 @@ class DriveInterface(MouseInterfaceNode):
         depend on this matrix to be updated immediately.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setForwardSpeed = set_forward_speed
     getForwardSpeed = get_forward_speed
     setReverseSpeed = set_reverse_speed
@@ -645,7 +634,6 @@ class DriveInterface(MouseInterfaceNode):
     setMat = set_mat
     getMat = get_mat
     forceDgraph = force_dgraph
-    getClassType = get_class_type
 
 class MouseSubregion(MouseInterfaceNode):
     """The MouseSubregion object scales the mouse inputs from within a rectangular
@@ -655,7 +643,6 @@ class MouseSubregion(MouseInterfaceNode):
     DisplayRegion within your window, you end up with a virtual mouse within
     your DisplayRegion.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: MouseSubregion) -> None: ...
     @overload
@@ -687,14 +674,11 @@ class MouseSubregion(MouseInterfaceNode):
         right; (0, 1, 0, 1) represents the whole window.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getLeft = get_left
     getRight = get_right
     getBottom = get_bottom
     getTop = get_top
     setDimensions = set_dimensions
-    getClassType = get_class_type
 
 class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     """This is the class that defines a rectangular region on the screen for the
@@ -1471,7 +1455,6 @@ class Trackball(MouseInterfaceNode):
     parent a Transform2SG node under it to actually transform objects (or
     cameras) in the world.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     CM_default: ClassVar[Literal[0]]
     CM_truck: ClassVar[Literal[1]]
     CM_pan: ClassVar[Literal[2]]
@@ -1597,8 +1580,6 @@ class Trackball(MouseInterfaceNode):
         is the same as get_mat(), unless invert is in effect.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     getForwardScale = get_forward_scale
     setForwardScale = set_forward_scale
     getPos = get_pos
@@ -1632,7 +1613,6 @@ class Trackball(MouseInterfaceNode):
     setMat = set_mat
     getMat = get_mat
     getTransMat = get_trans_mat
-    getClassType = get_class_type
     CMDefault = CM_default
     CMTruck = CM_truck
     CMPan = CM_pan
@@ -1645,7 +1625,6 @@ class Transform2SG(DataNode):
     output: none, but applies the matrix as the transform transition for a
     given arc of the scene graph.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: Transform2SG) -> None: ...
     @overload
@@ -1658,8 +1637,5 @@ class Transform2SG(DataNode):
         yet been set.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setNode = set_node
     getNode = get_node
-    getClassType = get_class_type

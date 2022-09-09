@@ -77,7 +77,6 @@ class PNMFileType(TypedWritable):
     """This is the base class of a family of classes that represent particular
     image file types that PNMImage supports.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def name(self) -> str: ...
     @property
@@ -100,14 +99,11 @@ class PNMFileType(TypedWritable):
         for files of this type, or empty string if no suggestions are available.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_extensions(self) -> tuple[str, ...]: ...
     getName = get_name
     getNumExtensions = get_num_extensions
     getExtension = get_extension
     getSuggestedExtension = get_suggested_extension
-    getClassType = get_class_type
     getExtensions = get_extensions
 
 class PNMFileTypeRegistry:
@@ -410,7 +406,6 @@ class PfmFile(PNMImageHeader):
     """Defines a pfm file, a 2-d table of floating-point numbers, either
     3-component or 1-component, or with a special extension, 2- or 4-component.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     scale: float
     @property
     def valid(self) -> bool: ...
@@ -915,7 +910,6 @@ class PfmFile(PNMImageHeader):
     def apply_exponent(self, c0_exponent: float, c1_exponent: float, c2_exponent: float) -> None: ...
     @overload
     def apply_exponent(self, c0_exponent: float, c1_exponent: float, c2_exponent: float, c3_exponent: float) -> None: ...
-    def output(self, out: ostream) -> None: ...
     def get_points(self): ...
     storeMask = store_mask
     isValid = is_valid
@@ -997,7 +991,6 @@ class PNMBrush(ReferenceCount):
     "smeared" over the border; when it is used to fill the interior, it is
     tiled through the interior.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     BE_set: ClassVar[Literal[0]]
     BE_blend: ClassVar[Literal[1]]
     BE_darken: ClassVar[Literal[2]]
@@ -1116,7 +1109,6 @@ class PNMImage(PNMImageHeader):
             ...
         getXelVal = get_xel_val
         getAlphaVal = get_alpha_val
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
