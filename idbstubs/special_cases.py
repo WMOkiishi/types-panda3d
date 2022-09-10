@@ -73,6 +73,7 @@ NOT_EXPOSED: Final = frozenset((
     'LMatrix4d::get_data',
     'UnalignedLMatrix4f::get_data',
     'UnalignedLMatrix4d::get_data',
+    'Filename::operator /',
 ))
 
 
@@ -112,7 +113,7 @@ GENERIC: Final = {
 
 
 PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
-    'panda3d.core.Filename.__init__': {(1, 1): 'str | bytes | PathLike'},
+    'panda3d.core.Filename.__init__': {(1, 1): 'Filename | StrOrBytesPath'},
     'panda3d.core.NodePath.__init__': {
         (1, 1): 'NodePath[_N]', (2, 1): '_N', (4, 2): '_N'
     },

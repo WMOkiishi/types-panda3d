@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Mapping, Sequence
-from os import PathLike
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import (
@@ -84,7 +84,7 @@ _Texture_ComponentType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _Texture_CompressionMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 _Texture_QualityLevel: TypeAlias = Literal[0, 1, 2, 3]
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _Shader_ShaderLanguage: TypeAlias = Literal[0, 1, 2, 3, 4]
 _Shader_ShaderType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]

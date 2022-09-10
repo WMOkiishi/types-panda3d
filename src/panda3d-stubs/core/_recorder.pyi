@@ -1,4 +1,4 @@
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import TypeAlias
 from panda3d.core import (
@@ -12,7 +12,7 @@ from panda3d.core import (
     TypedReferenceCount,
 )
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class RecorderBase:
     """This is the base class to a number of objects that record particular kinds

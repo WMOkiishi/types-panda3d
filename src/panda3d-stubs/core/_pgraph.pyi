@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Mapping, Sequence
-from os import PathLike
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import (
@@ -66,7 +66,7 @@ _N = TypeVar('_N', bound=PandaNode)
 _NodePath_ErrorType: TypeAlias = Literal[0, 1, 2, 3]
 _M = TypeVar('_M', bound=PandaNode)
 _RenderAttrib_TexGenMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
 _ClipPlaneAttrib_Operation: TypeAlias = Literal[0, 1, 2]
 _ColorAttrib_Type: TypeAlias = Literal[0, 1, 2]

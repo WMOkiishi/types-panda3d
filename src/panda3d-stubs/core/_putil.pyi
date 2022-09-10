@@ -1,6 +1,6 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Sequence
 from enum import Enum
-from os import PathLike
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d.core import (
@@ -44,7 +44,7 @@ from panda3d.core import (
 )
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]
 _BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
 _BamEnums_BamTextureMode: TypeAlias = Literal[0, 1, 2, 3, 4]

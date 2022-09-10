@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from os import PathLike
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
@@ -33,7 +33,7 @@ from panda3d.core import (
 )
 
 _Mat4d: TypeAlias = LMatrix4d | UnalignedLMatrix4d
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor

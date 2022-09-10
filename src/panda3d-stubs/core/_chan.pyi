@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Mapping, Sequence
-from os import PathLike
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
@@ -34,7 +34,7 @@ from panda3d.core import (
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _PartBundle_BlendType: TypeAlias = Literal[0, 1, 2, 3]
 
 class AnimGroup(TypedWritableReferenceCount, Namable):

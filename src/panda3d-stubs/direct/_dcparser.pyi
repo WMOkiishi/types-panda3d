@@ -1,11 +1,11 @@
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import ConfigVariableFilename, Datagram, DatagramIterator, Filename, istream, ostream
 
 _DCPackType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 _DCSubatomicType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class DCPackerInterface:
     """This defines the internal interface for packing values into a DCField.  The

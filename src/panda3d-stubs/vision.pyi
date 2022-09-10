@@ -1,10 +1,10 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from os import PathLike
 from typing import Any, ClassVar
 from typing_extensions import TypeAlias
 from panda3d.core import ConfigVariableFilename, Filename, MovieVideo, NodePath, Texture, ostream
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class ARToolKit:
     """ARToolKit is a software library for building Augmented Reality (AR)

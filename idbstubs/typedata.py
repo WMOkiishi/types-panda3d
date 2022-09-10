@@ -39,7 +39,6 @@ STDLIB_IMPORTS: Final = {
     'Mapping': 'collections.abc',
     'Sequence': 'collections.abc',
     'Enum': 'enum',
-    'PathLike': 'os',
     'Any': 'typing',
     'ClassVar': 'typing',
     'Final': 'typing_extensions',  # Introduced in 3.8
@@ -50,6 +49,7 @@ STDLIB_IMPORTS: Final = {
     'overload': 'typing',
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10
     'TypeVar': 'typing',
+    'StrOrBytesPath': '_typeshed',
 }
 
 # These exist entirely for readability and brevity
@@ -61,7 +61,7 @@ TYPE_ALIASES: Final = {
     '_Vec4i': 'LVecBase4i | UnalignedLVecBase4i',
     '_Mat4d': 'LMatrix4d | UnalignedLMatrix4d',
     '_Mat4f': 'LMatrix4f | UnalignedLMatrix4f',
-    '_Filename': 'Filename | ConfigVariableFilename | str | bytes | PathLike',
+    '_Filename': 'Filename | ConfigVariableFilename | StrOrBytesPath',
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))
@@ -207,7 +207,7 @@ def make_param_type_replacement(cast_to: TypeIndex) -> str:
             cast_from.discard(b)
     cast_from_names = {get_type_name(i) for i in cast_from}
     if idb.interrogate_type_name(cast_to) == 'Filename':
-        cast_from_names |= {'str', 'bytes', 'PathLike'}
+        cast_from_names.add('StrOrBytesPath')
     for alias, alias_of in _type_alias_data:
         if cast_from_names >= alias_of:
             cast_from_names -= alias_of

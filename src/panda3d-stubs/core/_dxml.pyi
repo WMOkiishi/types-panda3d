@@ -1,9 +1,9 @@
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import ConfigVariableFilename, Filename, istream, ostream
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _TiXmlEncoding: TypeAlias = Literal[0, 1, 2]
 
 class TiXmlBase:

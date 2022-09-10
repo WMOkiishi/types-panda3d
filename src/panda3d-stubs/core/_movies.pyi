@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from os import PathLike
 from typing import Any, ClassVar, overload
 from typing_extensions import TypeAlias
 from panda3d.core import (
@@ -16,7 +16,7 @@ from panda3d.core import (
     istream,
 )
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class MovieAudio(TypedWritableReferenceCount, Namable):
     """A MovieAudio is actually any source that provides a sequence of audio

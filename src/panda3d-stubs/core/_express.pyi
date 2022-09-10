@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from os import PathLike
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
@@ -19,7 +19,7 @@ from panda3d.core import (
     ostream,
 )
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _ErrorUtilCode: TypeAlias = Literal[-80, -73, -72, -71, -70, -67, -66, -65, -64, -63, -62, -61, -60, -54, -53, -52, -51, -50, -42, -41, -40, -34, -33, -32, -31, -30, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7]
 _WindowsRegistry_RegLevel: TypeAlias = Literal[0, 1]
 _WindowsRegistry_Type: TypeAlias = Literal[0, 1, 2]

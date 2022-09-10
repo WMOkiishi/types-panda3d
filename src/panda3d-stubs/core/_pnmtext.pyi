@@ -1,4 +1,4 @@
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
@@ -14,7 +14,7 @@ from panda3d.core import (
 
 _FreetypeFont_WindingOrder: TypeAlias = Literal[0, 1, 2, 3]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _PNMTextMaker_Alignment: TypeAlias = Literal[0, 1, 2]
 
 class FreetypeFont(Namable):

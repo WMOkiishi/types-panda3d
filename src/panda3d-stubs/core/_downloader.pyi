@@ -1,4 +1,4 @@
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
@@ -17,7 +17,7 @@ from panda3d.core import (
     ostream,
 )
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _ISocketStream_ReadState: TypeAlias = Literal[0, 1, 2, 3]
 _HTTPEnum_HTTPVersion: TypeAlias = Literal[0, 1, 2, 3]
 _HTTPClient_VerifySSL: TypeAlias = Literal[0, 1, 2]
