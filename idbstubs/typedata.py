@@ -50,6 +50,7 @@ STDLIB_IMPORTS: Final = {
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10
     'TypeVar': 'typing',
     'StrOrBytesPath': '_typeshed',
+    'core': 'panda3d',
 }
 
 # These exist entirely for readability and brevity

@@ -3,8 +3,10 @@ from collections.abc import Sequence
 from itertools import combinations, zip_longest
 from typing import Final
 
-from . import special_cases
 from .reps import Alias, File, Function, Parameter, Signature, TypeVariable
+from .special_cases import (
+    ATTRIBUTE_NAME_SHADOWS, PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
+)
 from .typedata import (
     combine_types, get_param_type_replacement, process_dependency,
     subtype_relationship
@@ -186,8 +188,8 @@ def process_function(
             ignore_coercion=ignore_coercion,
         )
     default_return = DEFAULT_RETURNS.get(name)
-    return_overrides = special_cases.RETURN_TYPE_OVERRIDES.get(scoped_name, {})
-    param_overrides = special_cases.PARAM_TYPE_OVERRIDES.get(scoped_name, {})
+    return_overrides = RETURN_TYPE_OVERRIDES.get(scoped_name, {})
+    param_overrides = PARAM_TYPE_OVERRIDES.get(scoped_name, {})
     if isinstance(return_overrides, str):
         return_overrides = {i: return_overrides for i in range(len(new_sigs))}
     for i, sig in enumerate(new_sigs):
@@ -207,6 +209,14 @@ def process_function(
                     _logger.debug(f'Changed type of parameter {param}'
                                   f' in {function} to {param_override!r}')
                 param.type = param_override
+    shadowed_names = ATTRIBUTE_NAME_SHADOWS.get('.'.join(function.namespace))
+    if shadowed_names is not None:
+        for sig in new_sigs:
+            for param in sig.parameters:
+                if param.type in shadowed_names:
+                    param.type = 'core.' + param.type
+            if sig.return_type in shadowed_names:
+                sig.return_type = 'core.' + sig.return_type
     function.signatures = new_sigs
     return function
 

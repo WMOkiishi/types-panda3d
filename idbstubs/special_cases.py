@@ -1,3 +1,4 @@
+from collections.abc import Container
 from itertools import product
 from typing import Final
 
@@ -109,6 +110,15 @@ ITERABLE: Final = {
 # These classes are effectively generic
 GENERIC: Final = {
     'NodePath': '_N',
+}
+
+
+ATTRIBUTE_NAME_SHADOWS: Final[dict[str, Container[str]]] = {
+    'panda3d.core.StreamReader': ('istream',),
+    'panda3d.core.StreamWriter': ('ostream',),
+    'panda3d.core.StreamWrapper': ('iostream',),
+    'panda3d.core.IStreamWrapper': ('istream',),
+    'panda3d.core.OStreamWrapper': ('ostream',),
 }
 
 
