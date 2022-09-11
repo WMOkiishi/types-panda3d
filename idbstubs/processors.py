@@ -14,24 +14,7 @@ from .typedata import (
 from .util import flatten
 
 _logger: Final = logging.getLogger(__name__)
-
 _absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
-
-REQUIRED_SIGS: Final = {
-    '__eq__': Signature(
-        (Parameter.as_self(),
-         Parameter('other', 'object', named=False)),
-        'bool'),
-    '__ne__': Signature(
-        (Parameter.as_self(),
-         Parameter('other', 'object', named=False)),
-        'bool'),
-    '__setattr__': Signature(
-        (Parameter.as_self(),
-         Parameter('name', 'str', named=False),
-         Parameter('value', 'Any', named=False)),
-        'None'),
-}
 
 DEFAULT_RETURNS: Final = {
     '__int__': 'int',
@@ -178,18 +161,14 @@ def process_function(
         function: Function,
         *, infer_opt_params: bool = True,
         ignore_coercion: bool = False) -> Function:
-    name, scoped_name = function.name, function.scoped_name
-    if (required_sig := REQUIRED_SIGS.get(name)) is not None:
-        new_sigs = [required_sig]
-    else:
-        new_sigs = process_signatures(
-            function.signatures,
-            infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion,
-        )
-    default_return = DEFAULT_RETURNS.get(name)
-    return_overrides = RETURN_TYPE_OVERRIDES.get(scoped_name, {})
-    param_overrides = PARAM_TYPE_OVERRIDES.get(scoped_name, {})
+    new_sigs = process_signatures(
+        function.signatures,
+        infer_opt_params=infer_opt_params,
+        ignore_coercion=ignore_coercion,
+    )
+    default_return = DEFAULT_RETURNS.get(function.name)
+    return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
+    param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name, {})
     if isinstance(return_overrides, str):
         return_overrides = {i: return_overrides for i in range(len(new_sigs))}
     for i, sig in enumerate(new_sigs):
@@ -218,6 +197,35 @@ def process_function(
             if sig.return_type in shadowed_names:
                 sig.return_type = 'core.' + sig.return_type
     function.signatures = new_sigs
+    match function:
+        case Function(
+            name='__eq__' | '__ne__',
+            signatures=[
+                Signature(
+                    parameters=[
+                        Parameter(is_self=True),
+                        Parameter() as other_param,
+                    ]
+                )
+            ]
+        ):
+            other_param.type = 'object'
+            other_param.named = False
+        case Function(
+            name='__setattr__',
+            signatures=[
+                Signature(
+                    parameters=[
+                        Parameter(is_self=True),
+                        Parameter() as name_param,
+                        Parameter() as value_param,
+                    ]
+                ) as sig
+            ]
+        ):
+            name_param.type = 'str'
+            value_param.type = 'Any'
+            sig.return_type = 'None'
     return function
 
 
