@@ -226,6 +226,22 @@ def process_function(
             name_param.type = 'str'
             value_param.type = 'Any'
             sig.return_type = 'None'
+        case Function(
+            name='assign',
+            namespace=[*_, class_name],
+            signatures=[
+                Signature(
+                    return_type=return_type,
+                    parameters=[
+                        Parameter(is_self=True) as self_param,
+                        Parameter(type=param_type) as copy_param,
+                    ]
+                ) as sig
+            ]
+        ) if class_name == param_type == return_type:
+            self_param.type = '_Self'
+            copy_param.type = '_Self'
+            sig.return_type = '_Self'
     return function
 
 

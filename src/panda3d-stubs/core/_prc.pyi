@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d import core
 from panda3d.core import DSearchPath, Filename, iostream, istream, ostream
@@ -8,6 +8,7 @@ from panda3d.core import DSearchPath, Filename, iostream, istream, ostream
 _ConfigFlags_ValueType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 _Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _NotifySeverity: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
+_Self = TypeVar('_Self')
 
 class ConfigFlags:
     """This class is the base class of both ConfigVariable and ConfigVariableCore.
@@ -1761,7 +1762,7 @@ class StreamReader:
         ...
     @overload
     def __init__(self, _in: core.istream, owns_stream: bool) -> None: ...
-    def assign(self, copy: StreamReader) -> StreamReader: ...
+    def assign(self: _Self, copy: _Self) -> _Self: ...
     def get_istream(self) -> core.istream:
         """Returns the stream in use."""
         ...
@@ -1903,7 +1904,7 @@ class StreamWriter:
         ...
     @overload
     def __init__(self, out: core.ostream, owns_stream: bool) -> None: ...
-    def assign(self, copy: StreamWriter) -> StreamWriter: ...
+    def assign(self: _Self, copy: _Self) -> _Self: ...
     def get_ostream(self) -> core.ostream:
         """Returns the stream in use."""
         ...

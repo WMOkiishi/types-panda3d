@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
@@ -36,6 +36,7 @@ _Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _TextProperties_Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _TextProperties_Direction: TypeAlias = Literal[0, 1]
+_Self = TypeVar('_Self')
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 
 class TextGlyph(TypedReferenceCount):
@@ -767,7 +768,7 @@ class TextProperties:
     def __init__(self, copy: TextProperties) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def assign(self, copy: TextProperties) -> TextProperties: ...
+    def assign(self: _Self, copy: _Self) -> _Self: ...
     def clear(self) -> None:
         """Unsets all properties that have been specified so far, and resets the
         TextProperties structure to its initial empty state.
@@ -1365,7 +1366,7 @@ class TextAssembler:
     def __init__(self, copy: TextAssembler) -> None: ...
     @overload
     def __init__(self, encoder: TextEncoder) -> None: ...
-    def assign(self, copy: TextAssembler) -> TextAssembler: ...
+    def assign(self: _Self, copy: _Self) -> _Self: ...
     def clear(self) -> None:
         """Reinitializes the contents of the TextAssembler."""
         ...

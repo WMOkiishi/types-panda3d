@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Mapping, Sequence
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AnimInterface,
@@ -34,6 +34,7 @@ from panda3d.core import (
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
+_Self = TypeVar('_Self')
 _Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _PartBundle_BlendType: TypeAlias = Literal[0, 1, 2, 3]
 
@@ -788,7 +789,7 @@ class PartSubset:
     def __init__(self) -> None: ...
     @overload
     def __init__(self, copy: PartSubset) -> None: ...
-    def assign(self, copy: PartSubset) -> PartSubset: ...
+    def assign(self: _Self, copy: _Self) -> _Self: ...
     def add_include_joint(self, name: GlobPattern) -> None:
         """Adds the named joint to the list of joints that will be explicitly included
         in the subset.  Any joint at or below a named node will be included in the

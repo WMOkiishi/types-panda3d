@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     BoundingHexahedron,
@@ -34,6 +34,7 @@ from panda3d.core import (
 )
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
+_Self = TypeVar('_Self')
 _PNMImageHeader_ColorType: TypeAlias = Literal[0, 1, 2, 3, 4]
 _Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
@@ -273,7 +274,7 @@ class PNMImageHeader:
     def __init__(self) -> None: ...
     @overload
     def __init__(self, copy: PNMImageHeader) -> None: ...
-    def assign(self, copy: PNMImageHeader) -> PNMImageHeader: ...
+    def assign(self: _Self, copy: _Self) -> _Self: ...
     def get_color_type(self) -> _PNMImageHeader_ColorType:
         """Returns the image type of the image, as an enumerated value.  This is
         really just the number of channels cast to the enumerated type.
@@ -414,7 +415,6 @@ class PfmFile(PNMImageHeader):
     @overload
     def __init__(self, copy: PfmFile) -> None: ...
     def __imul__(self, multiplier: float) -> PfmFile: ...
-    def assign(self, copy: PfmFile) -> PfmFile: ...
     @overload
     def clear(self) -> None:
         """`(self)`:
@@ -1131,7 +1131,6 @@ class PNMImage(PNMImageHeader):
     def __imul__(self, other: PNMImage | _Vec4f) -> PNMImage: ...
     @overload
     def __imul__(self, multiplier: float) -> PNMImage: ...
-    def assign(self, copy: PNMImage) -> PNMImage: ...
     def clamp_val(self, input_value: int) -> int:
         """A handy function to clamp values to [0..get_maxval()]."""
         ...

@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     AudioSound,
@@ -27,6 +27,7 @@ from panda3d.core import (
     ostream,
 )
 
+_Self = TypeVar('_Self')
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
@@ -44,7 +45,7 @@ class PGFrameStyle:
     def __init__(self) -> None: ...
     @overload
     def __init__(self, copy: PGFrameStyle) -> None: ...
-    def assign(self, copy: PGFrameStyle) -> PGFrameStyle: ...
+    def assign(self: _Self, copy: _Self) -> _Self: ...
     def set_type(self, type: _PGFrameStyle_Type) -> None:
         """Sets the basic type of frame."""
         ...
