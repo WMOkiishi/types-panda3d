@@ -28,7 +28,7 @@ from .translation import (
 from .typedata import (
     get_direct_type_name, get_linear_superclasses, get_type_name
 )
-from .util import flatten
+from .util import flatten, is_dunder
 
 _logger: Final = logging.getLogger(__name__)
 _class_bodies: Final[dict[str, dict[str, StubRep]]] = {}
@@ -204,7 +204,10 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
         *(class_name_from_cpp_name(s) for s in scoped_name.split('::')[:-1])
     )
     first_wrapper = idb.interrogate_function_python_wrapper(f, 0)
-    not_static = idb.interrogate_wrapper_parameter_is_this(first_wrapper, 0)
+    not_static = (
+        is_method and is_dunder(name)
+        or idb.interrogate_wrapper_parameter_is_this(first_wrapper, 0)
+    )
     signatures: list[Signature] = []
     sigs_by_doc = defaultdict[str, list[str]](list)
     for w in get_python_wrappers(f):
