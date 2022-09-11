@@ -1017,7 +1017,7 @@ class AsyncTaskPause(AsyncTask):
     @overload
     def __init__(self, delay: float) -> None: ...
 
-class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
+class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
     """A special kind of task that serves as a list of tasks internally.  Each
     task on the list is executed in sequence, one per epoch.
     

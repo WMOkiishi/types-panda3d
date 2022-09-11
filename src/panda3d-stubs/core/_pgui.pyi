@@ -182,14 +182,14 @@ class PGItem(PandaNode):
         possible to position the mouse within the item; see set_frame().
         """
         ...
-    def set_state(self, state: int) -> None:
+    def set_state(self, state: int) -> None:  # type: ignore[override]
         """Sets the "state" of this particular PGItem.
         
         The PGItem node will render as if it were the subgraph assigned to the
         corresponding index via set_state_def().
         """
         ...
-    def get_state(self) -> int:
+    def get_state(self) -> int:  # type: ignore[override]
         """Returns the "state" of this particular PGItem.  See set_state()."""
         ...
     def set_active(self, active: bool) -> None:
@@ -1371,7 +1371,7 @@ class PGScrollFrame(PGVirtualFrame):
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGVirtualFrame(self) -> PGVirtualFrame: ...
-    def setup(self, width: float, height: float, left: float, right: float, bottom: float, top: float, slider_width: float, bevel: float) -> None:
+    def setup(self, width: float, height: float, left: float, right: float, bottom: float, top: float, slider_width: float, bevel: float) -> None:  # type: ignore[override]
         """Creates a PGScrollFrame with the indicated dimensions, and the indicated
         virtual frame.
         """

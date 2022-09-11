@@ -1281,12 +1281,12 @@ class EggVertex(EggObject, EggAttributes):
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes the vertex to the indicated output stream in Egg format."""
         ...
-    def sorts_less_than(self, other: EggVertex) -> bool:
+    def sorts_less_than(self, other: EggVertex) -> bool:  # type: ignore[override]
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
         ...
-    def compare_to(self, other: EggVertex) -> int:
+    def compare_to(self, other: EggVertex) -> int:  # type: ignore[override]
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         
@@ -1379,8 +1379,8 @@ class EggVertex(EggObject, EggAttributes):
     getExternalIndex = get_external_index
     setExternalIndex2 = set_external_index2
     getExternalIndex2 = get_external_index2
-    sortsLessThan = sorts_less_than
-    compareTo = compare_to
+    sortsLessThan = sorts_less_than  # type: ignore[assignment]
+    compareTo = compare_to  # type: ignore[assignment]
     getNumLocalCoord = get_num_local_coord
     getNumGlobalCoord = get_num_global_coord
     hasGref = has_gref
@@ -2157,7 +2157,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
     def upcast_to_EggTransform(self) -> EggTransform: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
-    def write(self, out: ostream, indent_level: int) -> None:
+    def write(self, out: ostream, indent_level: int) -> None:  # type: ignore[override]
         """Writes the group and all of its children to the indicated output stream in
         Egg format.
         """
@@ -3035,7 +3035,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
     def upcast_to_EggTransform(self) -> EggTransform: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
-    def write(self, out: ostream, indent_level: int) -> None:
+    def write(self, out: ostream, indent_level: int) -> None:  # type: ignore[override]
         """Writes the texture definition to the indicated output stream in Egg format."""
         ...
     def is_equivalent_to(self, other: EggTexture, eq: int) -> bool:
@@ -4560,7 +4560,7 @@ class EggData(EggGroupNode):
         for reading, or 0 if this information is not available.
         """
         ...
-    def recompute_vertex_normals(self, threshold: float) -> None:
+    def recompute_vertex_normals(self, threshold: float) -> None:  # type: ignore[override]
         """Recomputes all the vertex normals for polygon geometry at this group node
         and below so that they accurately reflect the vertex positions.  A shared
         edge between two polygons (even in different groups) is considered smooth
@@ -4575,7 +4575,7 @@ class EggData(EggGroupNode):
         to call remove_unused_vertices() after calling this.
         """
         ...
-    def recompute_polygon_normals(self) -> None:
+    def recompute_polygon_normals(self) -> None:  # type: ignore[override]
         """Recomputes all the polygon normals for polygon geometry at this group node
         and below so that they accurately reflect the vertex positions.  Normals
         are removed from the vertices and defined only on polygons, giving the
@@ -4604,8 +4604,8 @@ class EggData(EggGroupNode):
     getEggFilename = get_egg_filename
     setEggTimestamp = set_egg_timestamp
     getEggTimestamp = get_egg_timestamp
-    recomputeVertexNormals = recompute_vertex_normals
-    recomputePolygonNormals = recompute_polygon_normals
+    recomputeVertexNormals = recompute_vertex_normals  # type: ignore[assignment]
+    recomputePolygonNormals = recompute_polygon_normals  # type: ignore[assignment]
 
 class EggCoordinateSystem(EggNode):
     """The <CoordinateSystem> entry at the top of an egg file.  Don't confuse this

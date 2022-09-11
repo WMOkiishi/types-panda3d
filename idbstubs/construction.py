@@ -19,7 +19,7 @@ from .reps import (
     StubRep
 )
 from .special_cases import (
-    GENERIC, ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
+    GENERIC, IGNORE_ERRORS, ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
@@ -75,8 +75,9 @@ def with_alias(
     if name not in NO_MANGLING:
         alias_name = check_keyword(snake_to_camel(name, capitalize))
         if alias_name != name:
-            return (rep, Alias(alias_name, name, of_local=True))
-    return (rep,)
+            return rep, Alias(alias_name, name, of_local=True,
+                              namespace=rep.namespace)
+    return rep,
 
 
 def get_all_manifests() -> Iterator[Element]:
@@ -393,6 +394,10 @@ def make_class_rep(
             infer_opt_params=infer_opt_params,
             ignore_coercion=ignore_coercion
         )
+    # "type: ignore" comments
+    for rep in nested:
+        if (ignored_errors := IGNORE_ERRORS.get(rep.scoped_name)) is not None:
+            rep.comment = f'type: ignore[{ignored_errors}]'
     # Docstring
     if idb.interrogate_type_has_comment(t):
         doc = comment_to_docstring(idb.interrogate_type_comment(t))
@@ -441,6 +446,8 @@ def make_package_rep(
     modules: list[Module] = []
     for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
         for rep in flatten(nested_by_lib.values()):
+            if (ignored_errors := IGNORE_ERRORS.get(rep.scoped_name)) is not None:
+                rep.comment = f'type: ignore[{ignored_errors}]'
             if isinstance(rep, Class):
                 process_class(rep)
         nested_by_lib = cast(dict[str, Sequence[StubRep]], nested_by_lib)

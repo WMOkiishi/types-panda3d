@@ -1848,7 +1848,7 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
         get_page_data() will eventually return non-NULL.
         """
         ...
-    def alloc(self, size: int) -> VertexDataBlock:
+    def alloc(self, size: int) -> VertexDataBlock:  # type: ignore[override]
         """Allocates a new block.  Returns NULL if a block of the requested size
         cannot be allocated.
         
@@ -1919,7 +1919,7 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
         """Waits for all of the pending thread tasks to finish before returning."""
         ...
     def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream, indent_level: int) -> None: ...
+    def write(self, out: ostream, indent_level: int) -> None: ...  # type: ignore[override]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToSimpleAllocator = upcast_to_SimpleAllocator
@@ -6414,7 +6414,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
     getArrayHandle = get_array_handle
     getStride = get_stride
     getCurrentThread = get_current_thread
-    setColumn = set_column
+    setColumn = set_column  # type: ignore[assignment]
     hasColumn = has_column
     getArray = get_array
     getColumn = get_column

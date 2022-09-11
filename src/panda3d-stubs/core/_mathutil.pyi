@@ -909,7 +909,7 @@ class GeometricBoundingVolume(BoundingVolume):
     that actually enclose points in 3-d space, such as BSP's and bounding
     spheres.
     """
-    @overload
+    @overload  # type: ignore[override]
     def extend_by(self, vol: GeometricBoundingVolume) -> bool:
         """`(self, vol: GeometricBoundingVolume)`:
         Increases the size of the volume to include the given volume.
@@ -920,7 +920,7 @@ class GeometricBoundingVolume(BoundingVolume):
         ...
     @overload
     def extend_by(self, point: _Vec3f) -> bool: ...
-    @overload
+    @overload  # type: ignore[override]
     def contains(self, vol: GeometricBoundingVolume) -> int:
         """`(self, vol: GeometricBoundingVolume)`:
         Returns the appropriate set of IntersectionFlags to indicate the amount of
@@ -941,7 +941,7 @@ class GeometricBoundingVolume(BoundingVolume):
     def contains(self, a: _Vec3f, b: _Vec3f) -> int: ...
     def get_approx_center(self) -> LPoint3f: ...
     def xform(self, mat: _Mat4f) -> None: ...
-    extendBy = extend_by
+    extendBy = extend_by  # type: ignore[assignment]
     getApproxCenter = get_approx_center
 
 class FiniteBoundingVolume(GeometricBoundingVolume):
@@ -1145,8 +1145,8 @@ class LPlanef(LVecBase4f):
     def __init__(self, a: _Vec3f, b: _Vec3f, c: _Vec3f) -> None: ...
     @overload
     def __init__(self, a: float, b: float, c: float, d: float) -> None: ...
-    def __mul__(self, mat: LMatrix3f | _Mat4f) -> LPlanef: ...
-    def __imul__(self, mat: _Mat4f) -> LPlanef: ...
+    def __mul__(self, mat: LMatrix3f | _Mat4f) -> LPlanef: ...  # type: ignore[override]
+    def __imul__(self, mat: _Mat4f) -> LPlanef: ...  # type: ignore[misc, override]
     def __neg__(self) -> LPlanef: ...
     def xform(self, mat: _Mat4f) -> None:
         """Transforms the plane by the indicated matrix."""
@@ -1182,7 +1182,7 @@ class LPlanef(LVecBase4f):
         plane's normal was a zero-length vector, the same plane is returned.
         """
         ...
-    def project(self, point: _Vec3f) -> LPoint3f:
+    def project(self, point: _Vec3f) -> LPoint3f:  # type: ignore[override]
         """Returns the point within the plane nearest to the indicated point in space."""
         ...
     def flip(self) -> None:
@@ -1244,8 +1244,8 @@ class LPlaned(LVecBase4d):
     def __init__(self, a: _Vec3d, b: _Vec3d, c: _Vec3d) -> None: ...
     @overload
     def __init__(self, a: float, b: float, c: float, d: float) -> None: ...
-    def __mul__(self, mat: LMatrix3d | _Mat4d) -> LPlaned: ...
-    def __imul__(self, mat: _Mat4d) -> LPlaned: ...
+    def __mul__(self, mat: LMatrix3d | _Mat4d) -> LPlaned: ...  # type: ignore[override]
+    def __imul__(self, mat: _Mat4d) -> LPlaned: ...  # type: ignore[misc, override]
     def __neg__(self) -> LPlaned: ...
     def xform(self, mat: _Mat4d) -> None:
         """Transforms the plane by the indicated matrix."""
@@ -1281,7 +1281,7 @@ class LPlaned(LVecBase4d):
         plane's normal was a zero-length vector, the same plane is returned.
         """
         ...
-    def project(self, point: _Vec3d) -> LPoint3d:
+    def project(self, point: _Vec3d) -> LPoint3d:  # type: ignore[override]
         """Returns the point within the plane nearest to the indicated point in space."""
         ...
     def flip(self) -> None:
@@ -1976,20 +1976,20 @@ class Triangulator3(Triangulator):
     underlying Triangulator object.
     """
     @property
-    def vertices(self) -> Sequence[LPoint3d]: ...
+    def vertices(self) -> Sequence[LPoint3d]: ...  # type: ignore[override]
     @property
     def plane(self) -> LPlaned: ...
     @overload
     def __init__(self) -> None: ...
     @overload
     def __init__(self, __param0: Triangulator3) -> None: ...
-    @overload
+    @overload  # type: ignore[override]
     def add_vertex(self, point: _Vec3d) -> int:
         """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
         ...
     @overload
     def add_vertex(self, x: float, y: float, z: float) -> int: ...
-    def get_vertex(self, n: int) -> LPoint3d:
+    def get_vertex(self, n: int) -> LPoint3d:  # type: ignore[override]
         """Returns the nth vertex."""
         ...
     def get_plane(self) -> LPlaned:
@@ -1997,11 +1997,11 @@ class Triangulator3(Triangulator):
         triangulate().
         """
         ...
-    def get_vertices(self) -> tuple[LPoint3d, ...]: ...
-    addVertex = add_vertex
-    getVertex = get_vertex
+    def get_vertices(self) -> tuple[LPoint3d, ...]: ...  # type: ignore[override]
+    addVertex = add_vertex  # type: ignore[assignment]
+    getVertex = get_vertex  # type: ignore[assignment]
     getPlane = get_plane
-    getVertices = get_vertices
+    getVertices = get_vertices  # type: ignore[assignment]
 
 @overload
 def heads_up(mat: LMatrix3d | _Mat4d, fwd: _Vec3d, up: _Vec3d = ..., cs: _CoordinateSystem = ...) -> None: ...

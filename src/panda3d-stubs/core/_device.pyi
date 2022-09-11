@@ -594,7 +594,7 @@ class TrackerNode(DataNode):
     def get_orient(self) -> LOrientationf:
         """Returns the current orientation of the tracker, if it is available."""
         ...
-    def get_transform(self) -> LMatrix4f:
+    def get_transform(self) -> LMatrix4f:  # type: ignore[override]
         """Returns the current position and orientation of the tracker, as a combined
         matrix.
         """
@@ -632,7 +632,7 @@ class TrackerNode(DataNode):
     isValid = is_valid
     getPos = get_pos
     getOrient = get_orient
-    getTransform = get_transform
+    getTransform = get_transform  # type: ignore[assignment]
     getTime = get_time
     hasTime = has_time
     setTrackerCoordinateSystem = set_tracker_coordinate_system

@@ -883,7 +883,7 @@ class MouseWatcherGroup(MouseWatcherBase, ReferenceCount):
     upcastToReferenceCount = upcast_to_ReferenceCount
     getClassType = get_class_type
 
-class MouseWatcher(DataNode, MouseWatcherBase):
+class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     """This TFormer maintains a list of rectangular regions on the screen that are
     considered special mouse regions; typically these will be click buttons.
     When the mouse passes in or out of one of these regions, or when a button

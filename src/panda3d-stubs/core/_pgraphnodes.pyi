@@ -35,7 +35,7 @@ _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _SceneGraphAnalyzer_LodMode: TypeAlias = Literal[0, 1, 2, 3]
 
-class LightNode(Light, PandaNode):
+class LightNode(Light, PandaNode):  # type: ignore[misc]
     """A derivative of Light and of PandaNode.  All kinds of Light except
     Spotlight (which must inherit from LensNode instead) inherit from this
     class.
@@ -181,7 +181,7 @@ class ComputeNode(PandaNode):
     clearDispatches = clear_dispatches
     getDispatches = get_dispatches
 
-class LightLensNode(Light, Camera):
+class LightLensNode(Light, Camera):  # type: ignore[misc]
     """A derivative of Light and of Camera.  The name might be misleading: it does
     not directly derive from LensNode, but through the Camera class.  The
     Camera serves no purpose unless shadows are enabled.

@@ -2502,7 +2502,7 @@ class CopyOnWriteObject(CachedTypedWritableReferenceCount):
     cacheRef = cache_ref
     cacheUnref = cache_unref
 
-class DatagramBuffer(DatagramSink, DatagramGenerator):
+class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
     """This class can be used to write a series of datagrams into a memory buffer.
     It acts as both a datagram sink and generator; you can fill it up with
     datagrams and then read as many datagrams from it.

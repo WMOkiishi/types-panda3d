@@ -165,7 +165,7 @@ class OSocketStream(ostream, SSWriter):
     def upcast_to_SSWriter(self) -> SSWriter: ...
     def is_closed(self) -> bool: ...
     def close(self) -> None: ...
-    def flush(self) -> bool:
+    def flush(self) -> bool:  # type: ignore[override]
         """Sends the most recently queued data now.  This only has meaning if
         set_collect_tcp() has been set to true.
         """
@@ -174,7 +174,7 @@ class OSocketStream(ostream, SSWriter):
     upcastToSSWriter = upcast_to_SSWriter
     isClosed = is_closed
 
-class SocketStream(iostream, SSReader, SSWriter):
+class SocketStream(iostream, SSReader, SSWriter):  # type: ignore[misc]
     """A base class for iostreams that read and write to a (possibly non-blocking)
     socket.
     """
@@ -194,7 +194,7 @@ class SocketStream(iostream, SSReader, SSWriter):
     def get_tcp_header_size(self) -> int:
         """Returns the header size for datagrams.  See set_tcp_header_size()."""
         ...
-    def flush(self) -> bool:
+    def flush(self) -> bool:  # type: ignore[override]
         """Sends the most recently queued data now.  This only has meaning if
         set_collect_tcp() has been set to true.
         """
@@ -525,7 +525,7 @@ class HTTPDate:
     def __lt__(self, other: HTTPDate) -> bool: ...
     def __gt__(self, other: HTTPDate) -> bool: ...
     def __iadd__(self, seconds: int) -> HTTPDate: ...
-    def __isub__(self, seconds: int) -> HTTPDate: ...
+    def __isub__(self, seconds: int) -> HTTPDate: ...  # type: ignore[misc]
     def __add__(self, seconds: int) -> HTTPDate: ...
     @overload
     def __sub__(self, other: HTTPDate) -> int: ...

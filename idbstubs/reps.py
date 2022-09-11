@@ -11,6 +11,9 @@ from .util import flatten, is_dunder, names_within
 
 class StubRep(Protocol):
     name: str
+    comment: str
+    @property
+    def scoped_name(self) -> str: ...
     def sort(self) -> tuple[int, int]: ...
     def get_dependencies(self) -> Iterator[str]: ...
     def definition(self) -> Iterator[str]: ...
@@ -48,6 +51,13 @@ class Alias:
     alias_of: str
     is_type_alias: bool = field(default=False, kw_only=True)
     of_local: bool = field(default=False, kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
+
+    @property
+    def scoped_name(self) -> str:
+        return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
         if self.is_type_alias:
@@ -70,7 +80,10 @@ class Alias:
         )
 
     def definition(self) -> Iterator[str]:
-        yield str(self)
+        if self.comment:
+            yield f'{self}  # {self.comment}'
+        else:
+            yield str(self)
 
 
 @define
@@ -152,6 +165,7 @@ class Function:
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
@@ -181,13 +195,24 @@ class Function:
         is_method = self.is_method
         is_overloaded = self.is_overloaded
         doc_printed = False
+        comment_printed = False
         for signature in self.signatures:
             if is_overloaded:
-                yield '@overload'
+                if self.comment and not comment_printed:
+                    yield '@overload  # ' + self.comment
+                    comment_printed = True
+                else:
+                    yield '@overload'
             if is_method and signature.is_static:
                 yield '@staticmethod'
+            sig_def = f'def {self.name}{signature}:'
+            if doc_printed or not self.doc:
+                sig_def += ' ...'
+            if self.comment and not comment_printed:
+                sig_def += f'  # {self.comment}'
+                comment_printed = True
+            yield sig_def
             if self.doc and not doc_printed:
-                yield f'def {self.name}{signature}:'
                 if '\n' in self.doc:
                     for line in f'"""{self.doc}\n"""'.splitlines():
                         yield '    ' + line
@@ -195,8 +220,6 @@ class Function:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
                 doc_printed = True
-            else:
-                yield f'def {self.name}{signature}: ...'
 
 
 @define
@@ -207,6 +230,7 @@ class Element:
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
@@ -228,20 +252,26 @@ class Element:
                 function_def = f'def {self.name}(self) -> {self.type}:'
             else:
                 function_def = f'def {self.name}(self):'
+            if not self.doc:
+                function_def += ' ...'
+            if self.comment:
+                function_def += '  # ' + self.comment
+            yield function_def
             if self.doc:
-                yield function_def
                 if '\n' in self.doc:
                     for line in f'"""{self.doc}\n"""'.splitlines():
                         yield '    ' + line
                 else:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
-            else:
-                yield function_def + ' ...'
-        elif self.type:
-            yield f'{self.name}: {self.type}'
         else:
-            yield f'{self.name} = ...'
+            if self.type:
+                attribute_def = f'{self.name}: {self.type}'
+            else:
+                attribute_def = f'{self.name} = ...'
+            if self.comment:
+                attribute_def += '  # ' + self.comment
+            yield attribute_def
         # if self.doc:
         #     one_line_doc = self.doc.strip('"\n').replace('\n', ' ')
         #     yield f'{definition}  # {one_line_doc}'
@@ -256,6 +286,7 @@ class Class:
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
@@ -282,8 +313,13 @@ class Class:
             declaration += f"({', '.join(self.derivations)})"
         declaration += ':'
         if not (self.nested or self.doc):
-            yield declaration + ' ...'
+            if self.comment:
+                yield f'{declaration} ...  # {self.comment}'
+            else:
+                yield declaration + ' ...'
             return
+        if self.comment:
+            declaration += f'  # {self.comment}'
         yield declaration
         if self.doc:
             if '\n' in self.doc:

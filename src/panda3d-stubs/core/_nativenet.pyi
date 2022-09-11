@@ -321,7 +321,7 @@ class Socket_UDP(Socket_UDP_Incoming):
     def Send(self, data: str) -> bool:
         """Send data to connected address"""
         ...
-    def SendTo(self, data: str, address: Socket_Address) -> bool:
+    def SendTo(self, data: str, address: Socket_Address) -> bool:  # type: ignore[override]
         """Send data to specified address"""
         ...
     def SetToBroadCast(self) -> bool:

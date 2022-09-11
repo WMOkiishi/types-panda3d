@@ -1732,7 +1732,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     card_texture: Texture
     frame_line_width: float
     frame_corners: bool
-    transform: LMatrix4f
+    transform: LMatrix4f  # type: ignore[assignment]
     coordinate_system: _CoordinateSystem
     usage_hint: _GeomEnums_UsageHint
     flatten_flags: int
@@ -1937,10 +1937,10 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         get_lower_right_3d().
         """
         ...
-    def set_transform(self, transform: _Mat4f) -> None:
+    def set_transform(self, transform: _Mat4f) -> None:  # type: ignore[override]
         """Sets an additional transform that is applied to the entire text paragraph."""
         ...
-    def get_transform(self) -> LMatrix4f: ...
+    def get_transform(self) -> LMatrix4f: ...  # type: ignore[override]
     def set_coordinate_system(self, cs: _CoordinateSystem) -> None:
         """Specifies the coordinate system in which the text will be generated."""
         ...
@@ -2330,11 +2330,11 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     clearIndent = clear_indent
     setWordwrap = set_wordwrap
     clearWordwrap = clear_wordwrap
-    setTextColor = set_text_color
+    setTextColor = set_text_color  # type: ignore[assignment]
     clearTextColor = clear_text_color
-    setShadowColor = set_shadow_color
+    setShadowColor = set_shadow_color  # type: ignore[assignment]
     clearShadowColor = clear_shadow_color
-    setShadow = set_shadow
+    setShadow = set_shadow  # type: ignore[assignment]
     clearShadow = clear_shadow
     setBin = set_bin
     clearBin = clear_bin
