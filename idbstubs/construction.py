@@ -346,17 +346,17 @@ def make_class_rep(
     # Elements
     nested.append(
         Element('DtoolClassDict', 'ClassVar[dict[str, Any]]',
-                namespace=namespace)
+                namespace=this_namespace)
     )
     for n in range(idb.interrogate_type_number_of_elements(t)):
         e = idb.interrogate_type_get_element(t, n)
         if element_is_exposed(e) and not idb.interrogate_element_name(e) in NO_STUBS:
-            nested.append(make_element_rep(e, namespace))
+            nested.append(make_element_rep(e, this_namespace))
     if name.startswith('ParamValue_'):
         value = name[11:]
         if value in ('string', 'wstring'):
             value = 'str'
-        nested.append(Element('value', value, namespace=namespace))
+        nested.append(Element('value', value, namespace=this_namespace))
     # Methods
     for method in get_type_methods(t):
         method = process_function(
