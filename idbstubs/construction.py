@@ -358,12 +358,17 @@ def make_class_rep(
             value = 'str'
         nested.append(Element('value', value, namespace=this_namespace))
     # Methods
+    seen = {i.name for i in nested}
     for method in get_type_methods(t):
         method = process_function(
             method,
             infer_opt_params=infer_opt_params,
             ignore_coercion=ignore_coercion,
         )
+        if method.name in seen:
+            _logger.info(f'Discarding {method}; its name is already in use')
+            continue
+        seen.add(method.name)
         nested += with_alias(method)
     if (iterable_of := ITERABLE.get(name)) is not None:
         nested.append(Function(

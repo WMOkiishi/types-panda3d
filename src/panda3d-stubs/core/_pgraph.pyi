@@ -2810,7 +2810,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def get_class_type() -> TypeHandle: ...
     def get_parents(self) -> tuple[PandaNode, ...]: ...
     def get_children(self) -> tuple[PandaNode, ...]: ...
-    def get_stashed(self) -> tuple[PandaNode.Stashed, ...]: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
     combineWith = combine_with
@@ -2921,7 +2920,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     getClassType = get_class_type
     getParents = get_parents
     getChildren = get_children
-    getStashed = get_stashed
     UCParents = UC_parents
     UCChildren = UC_children
     UCTransform = UC_transform

@@ -685,18 +685,6 @@ class WindowProperties:
         user's config file.
         """
         ...
-    @overload
-    @staticmethod
-    def size(size: LVecBase2i) -> WindowProperties:
-        """Returns a WindowProperties structure with only the size specified.  The
-        size is the only property that matters to buffers.
-        
-        @deprecated in the Python API, use WindowProperties(size=(x, y)) instead.
-        """
-        ...
-    @overload
-    @staticmethod
-    def size(x_size: int, y_size: int) -> WindowProperties: ...
     def clear(self) -> None:
         """Unsets all properties that have been specified so far, and resets the
         WindowProperties structure to its initial empty state.
