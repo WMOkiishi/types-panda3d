@@ -72,7 +72,7 @@ _type_alias_data = [
 TYPE_VARIABLES: Final = {
     '_N': ('PandaNode',),
     '_M': ('PandaNode',),
-    'Self': (),
+    '_Self': (),
 }
 
 

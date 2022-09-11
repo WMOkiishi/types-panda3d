@@ -180,8 +180,8 @@ _returns_self = product(
 )
 for _name, _func in _returns_self:
     _func_name = '.'.join(('panda3d.core', _name, _func))
-    RETURN_TYPE_OVERRIDES[_func_name] = 'Self'
-    PARAM_TYPE_OVERRIDES.setdefault(_func_name, {})[(0, 0)] = 'Self'
+    RETURN_TYPE_OVERRIDES[_func_name] = '_Self'
+    PARAM_TYPE_OVERRIDES.setdefault(_func_name, {})[(0, 0)] = '_Self'
 
 _fixed_lengths = [
     ('LVecBase2f', 2), ('LVecBase2d', 2), ('LVecBase2i', 2),
