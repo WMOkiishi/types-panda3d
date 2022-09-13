@@ -120,8 +120,7 @@ class TransformState(NodeCachedReferenceCount):
     def mat(self) -> LMatrix4f: ...
     def __ne__(self, __other: object) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
-    @overload
-    def compare_to(self, other: TransformState) -> int:
+    def compare_to(self, other: TransformState, uniquify_matrix: bool = ...) -> int:
         """`(self, other: TransformState)`:
         Provides an arbitrary ordering among all unique TransformStates, so we can
         store the essentially different ones in a big set and throw away the rest.
@@ -141,8 +140,6 @@ class TransformState(NodeCachedReferenceCount):
         TransformStates are uniquified, which is less expensive.
         """
         ...
-    @overload
-    def compare_to(self, other: TransformState, uniquify_matrix: bool) -> int: ...
     def get_hash(self) -> int:
         """Returns a suitable hash value for phash_map."""
         ...
@@ -1089,7 +1086,7 @@ class TexMatrixAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @overload
     @staticmethod
-    def make() -> RenderAttrib:
+    def make(mat: _Mat4f = ...) -> RenderAttrib:
         """`()`:
         Constructs a TexMatrixAttrib that applies no stages at all.
         
@@ -1104,9 +1101,6 @@ class TexMatrixAttrib(RenderAttrib):
         named texture stage.
         """
         ...
-    @overload
-    @staticmethod
-    def make(mat: _Mat4f) -> RenderAttrib: ...
     @overload
     @staticmethod
     def make(stage: TextureStage, transform: TransformState) -> RenderAttrib: ...
@@ -1146,8 +1140,7 @@ class TexMatrixAttrib(RenderAttrib):
         TextureStages are in no particular order.
         """
         ...
-    @overload
-    def get_mat(self) -> LMatrix4f:
+    def get_mat(self, stage: TextureStage = ...) -> LMatrix4f:
         """`(self)`:
         Returns the transformation matrix associated with the default texture
         stage.
@@ -1158,8 +1151,6 @@ class TexMatrixAttrib(RenderAttrib):
         stage.
         """
         ...
-    @overload
-    def get_mat(self, stage: TextureStage) -> LMatrix4f: ...
     def get_transform(self, stage: TextureStage) -> TransformState:
         """Returns the transformation associated with the indicated texture stage, or
         identity matrix if nothing is associated with the indicated stage.
@@ -1300,8 +1291,7 @@ class RenderState(NodeCachedReferenceCount):
         with the same type, it is replaced (unless the override is lower).
         """
         ...
-    @overload
-    def set_attrib(self, attrib: RenderAttrib) -> RenderState:
+    def set_attrib(self, attrib: RenderAttrib, override: int = ...) -> RenderState:
         """`(self, attrib: RenderAttrib)`:
         Returns a new RenderState object that represents the same as the source
         state, with the new RenderAttrib added.  If there is already a RenderAttrib
@@ -1315,8 +1305,6 @@ class RenderState(NodeCachedReferenceCount):
         replaced unconditionally.
         """
         ...
-    @overload
-    def set_attrib(self, attrib: RenderAttrib, override: int) -> RenderState: ...
     @overload
     def remove_attrib(self, type: TypeHandle) -> RenderState:
         """Returns a new RenderState object that represents the same as the source
@@ -1867,10 +1855,7 @@ class RenderEffects(TypedWritableReferenceCount):
         ...
     @overload
     @staticmethod
-    def make(effect1: RenderEffect, effect2: RenderEffect) -> RenderEffects: ...
-    @overload
-    @staticmethod
-    def make(effect1: RenderEffect, effect2: RenderEffect, effect3: RenderEffect) -> RenderEffects: ...
+    def make(effect1: RenderEffect, effect2: RenderEffect, effect3: RenderEffect = ...) -> RenderEffects: ...
     @overload
     @staticmethod
     def make(effect1: RenderEffect, effect2: RenderEffect, effect3: RenderEffect, effect4: RenderEffect) -> RenderEffects: ...
@@ -3123,10 +3108,7 @@ class ShaderInput:
 
 class InternalNameCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: InternalNameCollection) -> None: ...
+    def __init__(self, copy: InternalNameCollection = ...) -> None: ...
     def __getitem__(self, index: int) -> InternalName:
         """Returns the nth InternalName in the collection.  This is the same as
         get_name(), but it may be a more convenient way to access it.
@@ -3202,10 +3184,7 @@ class InternalNameCollection:
 
 class MaterialCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: MaterialCollection) -> None: ...
+    def __init__(self, copy: MaterialCollection = ...) -> None: ...
     def __getitem__(self, index: int) -> Material:
         """Returns the nth Material in the collection.  This is the same as
         get_material(), but it may be a more convenient way to access it.
@@ -3285,10 +3264,7 @@ class MaterialCollection:
 
 class TextureStageCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: TextureStageCollection) -> None: ...
+    def __init__(self, copy: TextureStageCollection = ...) -> None: ...
     def __getitem__(self, index: int) -> TextureStage:
         """Returns the nth TextureStage in the collection.  This is the same as
         get_texture_stage(), but it may be a more convenient way to access it.
@@ -3416,7 +3392,7 @@ class NodePath(Generic[_N]):
     @property
     def python_tags(self): ...
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: NodePath = ...) -> None:
         """`(self)`:
         This constructs an empty NodePath with no nodes.
         
@@ -3437,13 +3413,11 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def __init__(self, copy: NodePath[_N]) -> None: ...
+    def __init__(self, node: NodePath[_N], current_thread: Thread = ...) -> None: ...
     @overload
-    def __init__(self, node: _N, current_thread: Thread = ...) -> None: ...
+    def __init__(self, top_node_name: _N, current_thread: Thread = ...) -> None: ...
     @overload
-    def __init__(self, top_node_name: str, current_thread: Thread = ...) -> None: ...
-    @overload
-    def __init__(self, parent: NodePath, child_node: _N, current_thread: Thread = ...) -> None: ...
+    def __init__(self, parent: NodePath, child_node: PandaNode, current_thread: Thread = ...) -> None: ...
     def __bool__(self) -> bool: ...
     def __copy__(self) -> NodePath: ...
     def __deepcopy__(self, memo): ...
@@ -4025,8 +3999,7 @@ class NodePath(Generic[_N]):
     def set_fluid_z(self, z: float) -> None: ...
     @overload
     def set_fluid_z(self, other: NodePath, z: float) -> None: ...
-    @overload
-    def get_pos(self) -> LPoint3f:
+    def get_pos(self, other: NodePath = ...) -> LPoint3f:
         """`(self)`:
         Retrieves the translation component of the transform.
         
@@ -4035,22 +4008,10 @@ class NodePath(Generic[_N]):
         node.
         """
         ...
-    @overload
-    def get_pos(self, other: NodePath) -> LPoint3f: ...
-    @overload
-    def get_x(self) -> float: ...
-    @overload
-    def get_x(self, other: NodePath) -> float: ...
-    @overload
-    def get_y(self) -> float: ...
-    @overload
-    def get_y(self, other: NodePath) -> float: ...
-    @overload
-    def get_z(self) -> float: ...
-    @overload
-    def get_z(self, other: NodePath) -> float: ...
-    @overload
-    def get_pos_delta(self) -> LVector3f:
+    def get_x(self, other: NodePath = ...) -> float: ...
+    def get_y(self, other: NodePath = ...) -> float: ...
+    def get_z(self, other: NodePath = ...) -> float: ...
+    def get_pos_delta(self, other: NodePath = ...) -> LVector3f:
         """`(self)`:
         Returns the delta vector from this node's position in the previous frame
         (according to set_prev_transform(), typically set via the use of
@@ -4070,8 +4031,6 @@ class NodePath(Generic[_N]):
         will represent the change from the previous frame's position.
         """
         ...
-    @overload
-    def get_pos_delta(self, other: NodePath) -> LVector3f: ...
     @overload
     def set_hpr(self, hpr: _Vec3f) -> None:
         """`(self, hpr: LVecBase3f)`; `(self, h: float, p: float, r: float)`:
@@ -4100,8 +4059,7 @@ class NodePath(Generic[_N]):
     def set_r(self, r: float) -> None: ...
     @overload
     def set_r(self, other: NodePath, r: float) -> None: ...
-    @overload
-    def get_hpr(self) -> LVecBase3f:
+    def get_hpr(self, other: NodePath = ...) -> LVecBase3f:
         """`(self)`:
         Retrieves the rotation component of the transform.
         
@@ -4110,20 +4068,9 @@ class NodePath(Generic[_N]):
         node.
         """
         ...
-    @overload
-    def get_hpr(self, other: NodePath) -> LVecBase3f: ...
-    @overload
-    def get_h(self) -> float: ...
-    @overload
-    def get_h(self, other: NodePath) -> float: ...
-    @overload
-    def get_p(self) -> float: ...
-    @overload
-    def get_p(self, other: NodePath) -> float: ...
-    @overload
-    def get_r(self) -> float: ...
-    @overload
-    def get_r(self, other: NodePath) -> float: ...
+    def get_h(self, other: NodePath = ...) -> float: ...
+    def get_p(self, other: NodePath = ...) -> float: ...
+    def get_r(self, other: NodePath = ...) -> float: ...
     @overload
     def set_quat(self, quat: _Vec4f) -> None:
         """`(self, quat: LQuaternionf)`:
@@ -4136,8 +4083,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_quat(self, other: NodePath, quat: _Vec4f) -> None: ...
-    @overload
-    def get_quat(self) -> LQuaternionf:
+    def get_quat(self, other: NodePath = ...) -> LQuaternionf:
         """`(self)`:
         Retrieves the rotation component of the transform.
         
@@ -4146,8 +4092,6 @@ class NodePath(Generic[_N]):
         node.
         """
         ...
-    @overload
-    def get_quat(self, other: NodePath) -> LQuaternionf: ...
     @overload
     def set_scale(self, scale: _Vec3f | float) -> None:
         """`(self, scale: LVecBase3f)`; `(self, scale: float)`:
@@ -4191,8 +4135,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_sz(self, other: NodePath, sz: float) -> None: ...
-    @overload
-    def get_scale(self) -> LVecBase3f:
+    def get_scale(self, other: NodePath = ...) -> LVecBase3f:
         """`(self)`:
         Retrieves the scale component of the transform.
         
@@ -4200,24 +4143,13 @@ class NodePath(Generic[_N]):
         Returns the relative scale of the bottom node as seen from the other node.
         """
         ...
-    @overload
-    def get_scale(self, other: NodePath) -> LVecBase3f: ...
-    @overload
-    def get_sx(self) -> float:
+    def get_sx(self, other: NodePath = ...) -> float:
         """Returns the relative scale of the referenced node as seen from the other
         node.
         """
         ...
-    @overload
-    def get_sx(self, other: NodePath) -> float: ...
-    @overload
-    def get_sy(self) -> float: ...
-    @overload
-    def get_sy(self, other: NodePath) -> float: ...
-    @overload
-    def get_sz(self) -> float: ...
-    @overload
-    def get_sz(self, other: NodePath) -> float: ...
+    def get_sy(self, other: NodePath = ...) -> float: ...
+    def get_sz(self, other: NodePath = ...) -> float: ...
     @overload
     def set_shear(self, shear: _Vec3f) -> None:
         """`(self, shear: LVecBase3f)`:
@@ -4250,8 +4182,7 @@ class NodePath(Generic[_N]):
     def set_shyz(self, shyz: float) -> None: ...
     @overload
     def set_shyz(self, other: NodePath, shyz: float) -> None: ...
-    @overload
-    def get_shear(self) -> LVecBase3f:
+    def get_shear(self, other: NodePath = ...) -> LVecBase3f:
         """`(self)`:
         Retrieves the shear component of the transform.
         
@@ -4259,24 +4190,13 @@ class NodePath(Generic[_N]):
         Returns the relative shear of the bottom node as seen from the other node.
         """
         ...
-    @overload
-    def get_shear(self, other: NodePath) -> LVecBase3f: ...
-    @overload
-    def get_shxy(self) -> float:
+    def get_shxy(self, other: NodePath = ...) -> float:
         """Returns the relative shear of the referenced node as seen from the other
         node.
         """
         ...
-    @overload
-    def get_shxy(self, other: NodePath) -> float: ...
-    @overload
-    def get_shxz(self) -> float: ...
-    @overload
-    def get_shxz(self, other: NodePath) -> float: ...
-    @overload
-    def get_shyz(self) -> float: ...
-    @overload
-    def get_shyz(self, other: NodePath) -> float: ...
+    def get_shxz(self, other: NodePath = ...) -> float: ...
+    def get_shyz(self, other: NodePath = ...) -> float: ...
     @overload
     def set_pos_hpr(self, pos: _Vec3f, hpr: _Vec3f) -> None:
         """`(self, pos: LVecBase3f, hpr: LVecBase3f)`; `(self, x: float, y: float, z: float, h: float, p: float, r: float)`:
@@ -4423,8 +4343,7 @@ class NodePath(Generic[_N]):
         referenced node, false otherwise.
         """
         ...
-    @overload
-    def get_mat(self) -> LMatrix4f:
+    def get_mat(self, other: NodePath = ...) -> LMatrix4f:
         """`(self)`:
         Returns the transform matrix that has been applied to the referenced node,
         or the identity matrix if no matrix has been applied.
@@ -4434,8 +4353,6 @@ class NodePath(Generic[_N]):
         relative to the other path's bottom node's coordinate space.
         """
         ...
-    @overload
-    def get_mat(self, other: NodePath) -> LMatrix4f: ...
     @overload
     def look_at(self, point: _Vec3f, up: _Vec3f = ...) -> None:
         """`(self, point: LPoint3f, up: LVector3f = ...)`:
@@ -4657,8 +4574,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_light_off(self, light: NodePath, priority: int = ...) -> None: ...
-    @overload
-    def clear_light(self) -> None:
+    def clear_light(self, light: NodePath = ...) -> None:
         """`(self)`:
         Completely removes any lighting operations that may have been set via
         set_light() or set_light_off() from this particular node.
@@ -4668,16 +4584,13 @@ class NodePath(Generic[_N]):
         NodePath.
         """
         ...
-    @overload
-    def clear_light(self, light: NodePath) -> None: ...
     def has_light(self, light: NodePath) -> bool:
         """Returns true if the indicated Light or PolylightNode has been specifically
         enabled on this particular node.  This means that someone called
         set_light() on this node with the indicated light.
         """
         ...
-    @overload
-    def has_light_off(self) -> bool:
+    def has_light_off(self, light: NodePath = ...) -> bool:
         """`(self)`:
         Returns true if all Lights have been specifically disabled on this
         particular node.  This means that someone called set_light_off() on this
@@ -4692,8 +4605,6 @@ class NodePath(Generic[_N]):
         at a lower level.
         """
         ...
-    @overload
-    def has_light_off(self, light: NodePath) -> bool: ...
     def set_clip_plane(self, clip_plane: NodePath, priority: int = ...) -> None:
         """Adds the indicated clipping plane to the list of planes that apply to
         geometry at this node and below.  The clipping plane itself, a PlaneNode,
@@ -4724,8 +4635,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_clip_plane_off(self, clip_plane: NodePath, priority: int = ...) -> None: ...
-    @overload
-    def clear_clip_plane(self) -> None:
+    def clear_clip_plane(self, clip_plane: NodePath = ...) -> None:
         """`(self)`:
         Completely removes any clip planes that may have been set via
         set_clip_plane() or set_clip_plane_off() from this particular node.
@@ -4734,16 +4644,13 @@ class NodePath(Generic[_N]):
         Removes any reference to the indicated clipping plane from the NodePath.
         """
         ...
-    @overload
-    def clear_clip_plane(self, clip_plane: NodePath) -> None: ...
     def has_clip_plane(self, clip_plane: NodePath) -> bool:
         """Returns true if the indicated clipping plane has been specifically applied
         to this particular node.  This means that someone called set_clip_plane()
         on this node with the indicated clip_plane.
         """
         ...
-    @overload
-    def has_clip_plane_off(self) -> bool:
+    def has_clip_plane_off(self, clip_plane: NodePath = ...) -> bool:
         """`(self)`:
         Returns true if all clipping planes have been specifically disabled on this
         particular node.  This means that someone called set_clip_plane_off() on
@@ -4755,8 +4662,6 @@ class NodePath(Generic[_N]):
         set_clip_plane_off() on this node with the indicated clip_plane.
         """
         ...
-    @overload
-    def has_clip_plane_off(self, clip_plane: NodePath) -> bool: ...
     @overload
     def set_scissor(self, a: _Vec3f, b: _Vec3f) -> None:
         """`(self, a: LPoint3f, b: LPoint3f)`:
@@ -4822,8 +4727,7 @@ class NodePath(Generic[_N]):
         geometry.
         """
         ...
-    @overload
-    def clear_occluder(self) -> None:
+    def clear_occluder(self, occluder: NodePath = ...) -> None:
         """`(self)`:
         Completely removes any occluders that may have been set via set_occluder()
         from this particular node.
@@ -4832,8 +4736,6 @@ class NodePath(Generic[_N]):
         Removes any reference to the indicated occluder from the NodePath.
         """
         ...
-    @overload
-    def clear_occluder(self, occluder: NodePath) -> None: ...
     def has_occluder(self, occluder: NodePath) -> bool:
         """Returns true if the indicated occluder has been specifically applied to
         this particular node.  This means that someone called set_occluder() on
@@ -4944,8 +4846,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_texture_off(self, stage: TextureStage, priority: int = ...) -> None: ...
-    @overload
-    def clear_texture(self) -> None:
+    def clear_texture(self, stage: TextureStage = ...) -> None:
         """`(self)`:
         Completely removes any texture adjustment that may have been set via
         set_texture() or set_texture_off() from this particular node.  This allows
@@ -4956,10 +4857,7 @@ class NodePath(Generic[_N]):
         Removes any reference to the indicated texture stage from the NodePath.
         """
         ...
-    @overload
-    def clear_texture(self, stage: TextureStage) -> None: ...
-    @overload
-    def has_texture(self) -> bool:
+    def has_texture(self, stage: TextureStage = ...) -> bool:
         """`(self)`:
         Returns true if a texture has been applied to this particular node via
         set_texture(), false otherwise.  This is not the same thing as asking
@@ -4973,10 +4871,7 @@ class NodePath(Generic[_N]):
         default stage_name, and someone called set_texture() on this node.
         """
         ...
-    @overload
-    def has_texture(self, stage: TextureStage) -> bool: ...
-    @overload
-    def has_texture_off(self) -> bool:
+    def has_texture_off(self, stage: TextureStage = ...) -> bool:
         """`(self)`:
         Returns true if texturing has been specifically disabled on this particular
         node via set_texture_off(), false otherwise.  This is not the same thing as
@@ -4990,10 +4885,7 @@ class NodePath(Generic[_N]):
         someone called set_texture_off() on this node to remove all stages.
         """
         ...
-    @overload
-    def has_texture_off(self, stage: TextureStage) -> bool: ...
-    @overload
-    def get_texture(self) -> Texture:
+    def get_texture(self, stage: TextureStage = ...) -> Texture:
         """`(self)`:
         Returns the base-level texture that has been set on this particular node,
         or NULL if no texture has been set.  This is not necessarily the texture
@@ -5007,8 +4899,6 @@ class NodePath(Generic[_N]):
         particular node, or NULL if no texture has been set for this stage.
         """
         ...
-    @overload
-    def get_texture(self, stage: TextureStage) -> Texture: ...
     def replace_texture(self, tex: Texture, new_tex: Texture) -> None:
         """Recursively searches the scene graph for references to the given texture,
         and replaces them with the new texture.
@@ -5016,8 +4906,7 @@ class NodePath(Generic[_N]):
         @since 1.10.4
         """
         ...
-    @overload
-    def get_texture_sampler(self) -> SamplerState:
+    def get_texture_sampler(self, stage: TextureStage = ...) -> SamplerState:
         """`(self)`:
         Returns the sampler state that has been given for the base-level texture
         that has been set on this particular node.  If no sampler state was given,
@@ -5035,8 +4924,6 @@ class NodePath(Generic[_N]):
         this particular node.
         """
         ...
-    @overload
-    def get_texture_sampler(self, stage: TextureStage) -> SamplerState: ...
     def set_shader(self, sha: Shader, priority: int = ...) -> None: ...
     def set_shader_off(self, priority: int = ...) -> None: ...
     @overload
@@ -5079,8 +4966,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_tex_transform(self, other: NodePath, stage: TextureStage, transform: TransformState) -> None: ...
-    @overload
-    def clear_tex_transform(self) -> None:
+    def clear_tex_transform(self, stage: TextureStage = ...) -> None:
         """`(self)`:
         Removes all texture matrices from the current node.
         
@@ -5088,8 +4974,6 @@ class NodePath(Generic[_N]):
         Removes the texture matrix on the current node for the given stage.
         """
         ...
-    @overload
-    def clear_tex_transform(self, stage: TextureStage) -> None: ...
     def has_tex_transform(self, stage: TextureStage) -> bool:
         """Returns true if there is an explicit texture matrix on the current node for
         the given stage.
@@ -5163,13 +5047,9 @@ class NodePath(Generic[_N]):
     @overload
     def set_tex_scale(self, other: NodePath, stage: TextureStage, scale: LVecBase2f | _Vec3f | float) -> None: ...
     @overload
-    def set_tex_scale(self, stage: TextureStage, su: float, sv: float) -> None: ...
+    def set_tex_scale(self, stage: TextureStage, su: float, sv: float, sw: float = ...) -> None: ...
     @overload
-    def set_tex_scale(self, other: NodePath, stage: TextureStage, su: float, sv: float) -> None: ...
-    @overload
-    def set_tex_scale(self, stage: TextureStage, su: float, sv: float, sw: float) -> None: ...
-    @overload
-    def set_tex_scale(self, other: NodePath, stage: TextureStage, su: float, sv: float, sw: float) -> None: ...
+    def set_tex_scale(self, other: NodePath, stage: TextureStage, su: float, sv: float, sw: float = ...) -> None: ...
     @overload
     def get_tex_offset(self, stage: TextureStage) -> LVecBase2f:
         """Returns the offset set for the UV's for the given stage on the current
@@ -5271,8 +5151,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_tex_gen(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: _Vec3f, priority: int = ...) -> None: ...
-    @overload
-    def clear_tex_gen(self) -> None:
+    def clear_tex_gen(self, stage: TextureStage = ...) -> None:
         """`(self)`:
         Removes the texture coordinate generation mode from all texture stages on
         this node.
@@ -5282,8 +5161,6 @@ class NodePath(Generic[_N]):
         stage.
         """
         ...
-    @overload
-    def clear_tex_gen(self, stage: TextureStage) -> None: ...
     def has_tex_gen(self, stage: TextureStage) -> bool:
         """Returns true if there is a mode for automatic texture coordinate generation
         on the current node for the given stage.
@@ -5306,8 +5183,7 @@ class NodePath(Generic[_N]):
         to select a particular lens to apply.  Otherwise lens_index is not used.
         """
         ...
-    @overload
-    def clear_tex_projector(self) -> None:
+    def clear_tex_projector(self, stage: TextureStage = ...) -> None:
         """`(self)`:
         Removes the TexProjectorEffect for all stages from this node.
         
@@ -5315,8 +5191,6 @@ class NodePath(Generic[_N]):
         Removes the TexProjectorEffect for the indicated stage from this node.
         """
         ...
-    @overload
-    def clear_tex_projector(self, stage: TextureStage) -> None: ...
     def has_tex_projector(self, stage: TextureStage) -> bool:
         """Returns true if this node has a TexProjectorEffect for the indicated stage,
         false otherwise.
@@ -5358,8 +5232,7 @@ class NodePath(Generic[_N]):
         given texture coordinate set (but see has_texcoord()).
         """
         ...
-    @overload
-    def find_all_vertex_columns(self) -> InternalNameCollection:
+    def find_all_vertex_columns(self, name: str = ...) -> InternalNameCollection:
         """`(self)`:
         Returns a list of all vertex array columns stored on some geometry found at
         this node level and below.
@@ -5370,10 +5243,7 @@ class NodePath(Generic[_N]):
         wildcard characters).
         """
         ...
-    @overload
-    def find_all_vertex_columns(self, name: str) -> InternalNameCollection: ...
-    @overload
-    def find_all_texcoords(self) -> InternalNameCollection:
+    def find_all_texcoords(self, name: str = ...) -> InternalNameCollection:
         """`(self)`:
         Returns a list of all texture coordinate sets used by any geometry at this
         node level and below.
@@ -5384,8 +5254,6 @@ class NodePath(Generic[_N]):
         wildcard characters).
         """
         ...
-    @overload
-    def find_all_texcoords(self, name: str) -> InternalNameCollection: ...
     @overload
     def find_texture(self, stage: TextureStage) -> Texture:
         """`(self, stage: TextureStage)`:
@@ -5402,7 +5270,7 @@ class NodePath(Generic[_N]):
     @overload
     def find_texture(self, name: str) -> Texture: ...
     @overload
-    def find_all_textures(self) -> TextureCollection:
+    def find_all_textures(self, stage: TextureStage = ...) -> TextureCollection:
         """`(self)`:
         Returns a list of a textures applied to geometry at this node and below.
         
@@ -5416,8 +5284,6 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def find_all_textures(self, stage: TextureStage) -> TextureCollection: ...
-    @overload
     def find_all_textures(self, name: str) -> TextureCollection: ...
     def find_texture_stage(self, name: str) -> TextureStage:
         """Returns the first TextureStage found applied to geometry at this node or
@@ -5425,8 +5291,7 @@ class NodePath(Generic[_N]):
         Returns the TextureStage if it is found, or NULL if it is not.
         """
         ...
-    @overload
-    def find_all_texture_stages(self) -> TextureStageCollection:
+    def find_all_texture_stages(self, name: str = ...) -> TextureStageCollection:
         """`(self)`:
         Returns a list of a TextureStages applied to geometry at this node and
         below.
@@ -5437,8 +5302,6 @@ class NodePath(Generic[_N]):
         characters).
         """
         ...
-    @overload
-    def find_all_texture_stages(self, name: str) -> TextureStageCollection: ...
     def unify_texture_stages(self, stage: TextureStage) -> None:
         """Searches through all TextureStages at this node and below.  Any
         TextureStages that share the same name as the indicated TextureStage object
@@ -5453,8 +5316,7 @@ class NodePath(Generic[_N]):
         material if it is found, or NULL if it is not.
         """
         ...
-    @overload
-    def find_all_materials(self) -> MaterialCollection:
+    def find_all_materials(self, name: str = ...) -> MaterialCollection:
         """`(self)`:
         Returns a list of a materials applied to geometry at this node and below.
         
@@ -5463,8 +5325,6 @@ class NodePath(Generic[_N]):
         that match the indicated name (which may contain wildcard characters).
         """
         ...
-    @overload
-    def find_all_materials(self, name: str) -> MaterialCollection: ...
     def set_material(self, tex: Material, priority: int = ...) -> None:
         """Sets the geometry at this level and below to render using the indicated
         material.
@@ -5924,8 +5784,7 @@ class NodePath(Generic[_N]):
         below zero, it is set to zero.
         """
         ...
-    @overload
-    def show(self) -> None:
+    def show(self, camera_mask: BitMask_uint32_t_32 = ...) -> None:
         """`(self)`:
         Undoes the effect of a previous hide() on this node: makes the referenced
         node (and the entire subgraph below this node) visible to all cameras.
@@ -5940,10 +5799,7 @@ class NodePath(Generic[_N]):
         node if a parent node has been hidden.  However, see show_through().
         """
         ...
-    @overload
-    def show(self, camera_mask: BitMask_uint32_t_32) -> None: ...
-    @overload
-    def show_through(self) -> None:
+    def show_through(self, camera_mask: BitMask_uint32_t_32 = ...) -> None:
         """`(self)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
@@ -5961,10 +5817,7 @@ class NodePath(Generic[_N]):
         if the no-parameter form of hide() was used.)
         """
         ...
-    @overload
-    def show_through(self, camera_mask: BitMask_uint32_t_32) -> None: ...
-    @overload
-    def hide(self) -> None:
+    def hide(self, camera_mask: BitMask_uint32_t_32 = ...) -> None:
         """`(self)`:
         Makes the referenced node (and the entire subgraph below this node)
         invisible to all cameras.  It remains part of the scene graph, its bounding
@@ -5982,8 +5835,6 @@ class NodePath(Generic[_N]):
         descendent nodes for which show_through() has been called.
         """
         ...
-    @overload
-    def hide(self, camera_mask: BitMask_uint32_t_32) -> None: ...
     def is_hidden(self, camera_mask: BitMask_uint32_t_32 = ...) -> bool:
         """Returns true if the referenced node is hidden from the indicated camera(s)
         either directly, or because some ancestor is hidden.
@@ -6675,9 +6526,7 @@ class NodePathCollection:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: NodePathCollection) -> None: ...
+    def __init__(self, __param0: NodePathCollection = ...) -> None: ...
     @overload
     def __init__(self, sequence) -> None: ...
     def __getitem__(self, index: int) -> NodePath: ...
@@ -7101,9 +6950,8 @@ class AuxBitplaneAttrib(RenderAttrib):
     def outputs(self) -> int: ...
     @property
     def class_slot(self) -> int: ...
-    @overload
     @staticmethod
-    def make() -> RenderAttrib:
+    def make(outputs: int = ...) -> RenderAttrib:
         """`()`:
         Constructs a default AuxBitplaneAttrib object.
         
@@ -7111,9 +6959,6 @@ class AuxBitplaneAttrib(RenderAttrib):
         Constructs a specified AuxBitplaneAttrib object.
         """
         ...
-    @overload
-    @staticmethod
-    def make(outputs: int) -> RenderAttrib: ...
     @staticmethod
     def make_default() -> RenderAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
@@ -7893,10 +7738,7 @@ class ClipPlaneAttrib(RenderAttrib):
     def make(op: _ClipPlaneAttrib_Operation, plane: PlaneNode) -> RenderAttrib: ...
     @overload
     @staticmethod
-    def make(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode) -> RenderAttrib: ...
-    @overload
-    @staticmethod
-    def make(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode) -> RenderAttrib: ...
+    def make(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode = ...) -> RenderAttrib: ...
     @overload
     @staticmethod
     def make(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode, plane4: PlaneNode) -> RenderAttrib: ...
@@ -8225,8 +8067,7 @@ class ColorBlendAttrib(RenderAttrib):
     def get_color(self) -> LVecBase4f:
         """Returns the constant color associated with the attrib."""
         ...
-    @overload
-    def involves_constant_color(self) -> bool:
+    def involves_constant_color(self, operand: _ColorBlendAttrib_Operand = ...) -> bool:
         """`(self)`:
         Returns true if the this attrib uses the constant color, false otherwise.
         
@@ -8235,10 +8076,7 @@ class ColorBlendAttrib(RenderAttrib):
         otherwise.
         """
         ...
-    @overload
-    def involves_constant_color(self, operand: _ColorBlendAttrib_Operand) -> bool: ...
-    @overload
-    def involves_color_scale(self) -> bool:
+    def involves_color_scale(self, operand: _ColorBlendAttrib_Operand = ...) -> bool:
         """`(self)`:
         Returns true if the this attrib uses the color scale attrib, false
         otherwise.
@@ -8248,8 +8086,6 @@ class ColorBlendAttrib(RenderAttrib):
         otherwise.
         """
         ...
-    @overload
-    def involves_color_scale(self, operand: _ColorBlendAttrib_Operand) -> bool: ...
     @staticmethod
     def get_class_slot() -> int: ...
     makeOff = make_off
@@ -8489,10 +8325,7 @@ class CullBinEnums:
     BT_back_to_front: Final[Literal[3]]
     BT_front_to_back: Final[Literal[4]]
     BT_fixed: Final[Literal[5]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: CullBinEnums) -> None: ...
+    def __init__(self, __param0: CullBinEnums = ...) -> None: ...
     BTInvalid = BT_invalid
     BTUnsorted = BT_unsorted
     BTStateSorted = BT_state_sorted
@@ -9378,10 +9211,7 @@ class CullTraverser(TypedReferenceCount):
     GeomNodes.  Each renderable Geom encountered is passed along with its
     associated RenderState to the CullHandler object.
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: CullTraverser) -> None: ...
+    def __init__(self, copy: CullTraverser = ...) -> None: ...
     def get_gsg(self) -> GraphicsStateGuardianBase:
         """Returns the GraphicsStateGuardian in effect."""
         ...
@@ -9891,10 +9721,7 @@ class LightAttrib(RenderAttrib):
     def make(op: _LightAttrib_Operation, light: Light) -> RenderAttrib: ...
     @overload
     @staticmethod
-    def make(op: _LightAttrib_Operation, light1: Light, light2: Light) -> RenderAttrib: ...
-    @overload
-    @staticmethod
-    def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light) -> RenderAttrib: ...
+    def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light = ...) -> RenderAttrib: ...
     @overload
     @staticmethod
     def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light, light4: Light) -> RenderAttrib: ...
@@ -10245,10 +10072,7 @@ class Loader(TypedReferenceCount, Namable):
     """
     class Results:
         DtoolClassDict: ClassVar[dict[str, Any]]
-        @overload
-        def __init__(self) -> None: ...
-        @overload
-        def __init__(self, copy: Loader.Results) -> None: ...
+        def __init__(self, copy: Loader.Results = ...) -> None: ...
         def assign(self, copy: Loader.Results) -> Loader.Results: ...
         def clear(self) -> None:
             """Removes all the files from the list."""
@@ -10679,10 +10503,7 @@ class ModelRoot(ModelNode):
     class ModelReference(ReferenceCount):
         """This class is used to unify references to the same model."""
         DtoolClassDict: ClassVar[dict[str, Any]]
-        @overload
-        def __init__(self) -> None: ...
-        @overload
-        def __init__(self, __param0: ModelRoot.ModelReference) -> None: ...
+        def __init__(self, __param0: ModelRoot.ModelReference = ...) -> None: ...
     fullpath: Filename
     timestamp: int
     reference: ModelRoot.ModelReference
@@ -10856,9 +10677,8 @@ class ModelPool:
         pool.  Returns the number of models released.
         """
         ...
-    @overload
     @staticmethod
-    def list_contents() -> None:
+    def list_contents(out: ostream = ...) -> None:
         """`()`:
         Lists the contents of the model pool to cout.
         
@@ -10866,9 +10686,6 @@ class ModelPool:
         Lists the contents of the model pool to the indicated output stream.
         """
         ...
-    @overload
-    @staticmethod
-    def list_contents(out: ostream) -> None: ...
     @staticmethod
     def write(out: ostream) -> None:
         """Lists the contents of the model pool to the indicated output stream.  Helps
@@ -10956,9 +10773,8 @@ class TextureAttrib(RenderAttrib):
     def off_stages(self) -> Sequence[TextureStage]: ...
     @property
     def class_slot(self) -> int: ...
-    @overload
     @staticmethod
-    def make() -> RenderAttrib:
+    def make(tex: Texture = ...) -> RenderAttrib:
         """`()`:
         The following methods define the new multitexture mode for TextureAttrib.
         Each TextureAttrib can add or remove individual texture stages from the
@@ -10970,9 +10786,6 @@ class TextureAttrib(RenderAttrib):
         texture onto geometry, using the default TextureStage.
         """
         ...
-    @overload
-    @staticmethod
-    def make(tex: Texture) -> RenderAttrib: ...
     @staticmethod
     def make_off() -> RenderAttrib:
         """Constructs a new TextureAttrib object suitable for rendering untextured
@@ -11176,8 +10989,7 @@ class TexGenAttrib(RenderAttrib):
         properties for render attributes of this type ought to be.
         """
         ...
-    @overload
-    def add_stage(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode) -> RenderAttrib:
+    def add_stage(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: _Vec3f = ...) -> RenderAttrib:
         """`(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode)`:
         Returns a new TexGenAttrib just like this one, with the indicated
         generation mode for the given stage.  If this stage already exists, its
@@ -11192,8 +11004,6 @@ class TexGenAttrib(RenderAttrib):
         is M_constant.
         """
         ...
-    @overload
-    def add_stage(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: _Vec3f) -> RenderAttrib: ...
     def remove_stage(self, stage: TextureStage) -> RenderAttrib:
         """Returns a new TexGenAttrib just like this one, with the indicated stage
         removed.

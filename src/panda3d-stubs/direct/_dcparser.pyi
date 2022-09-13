@@ -254,10 +254,7 @@ class DCField(DCPackerInterface, DCKeywordList):
 class DCPackData:
     """This is a block of data that receives the results of DCPacker."""
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: DCPackData) -> None: ...
+    def __init__(self, __param0: DCPackData = ...) -> None: ...
     def clear(self) -> None:
         """Empties the contents of the data (without necessarily freeing its allocated
         memory).
@@ -282,10 +279,7 @@ class DCPacker:
     examples of using this class.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: DCPacker) -> None: ...
+    def __init__(self, __param0: DCPacker = ...) -> None: ...
     def clear_data(self) -> None:
         """Empties the data in the pack buffer and unpack buffer.  This should be
         called between calls to begin_pack(), unless you want to concatenate all of
@@ -1147,10 +1141,7 @@ class DCFile:
     a .dc file.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: DCFile) -> None: ...
+    def __init__(self, __param0: DCFile = ...) -> None: ...
     def clear(self) -> None:
         """Removes all of the classes defined within the DCFile and prepares it for
         reading a new file.

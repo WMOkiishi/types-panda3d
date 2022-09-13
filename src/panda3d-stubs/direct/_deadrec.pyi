@@ -24,10 +24,7 @@ class SmoothMover:
     SM_on: Final[Literal[1]]
     PM_off: Final[Literal[0]]
     PM_on: Final[Literal[1]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: SmoothMover) -> None: ...
+    def __init__(self, __param0: SmoothMover = ...) -> None: ...
     @overload
     def set_pos(self, pos: _Vec3f) -> bool:
         """Specifies the position of the SmoothMover at a particular time in the past.
@@ -146,8 +143,7 @@ class SmoothMover:
         velocity is also reset to 0.
         """
         ...
-    @overload
-    def compute_smooth_position(self) -> bool:
+    def compute_smooth_position(self, timestamp: float = ...) -> bool:
         """`(self)`:
         Computes the smoothed position (and orientation) of the mover at the
         indicated point in time, based on the previous position reports.  After
@@ -168,8 +164,6 @@ class SmoothMover:
         the same.
         """
         ...
-    @overload
-    def compute_smooth_position(self, timestamp: float) -> bool: ...
     def get_latest_position(self) -> bool:
         """Updates the smooth_pos (and smooth_hpr, etc.) members to reflect the
         absolute latest position known for this avatar.  This may result in a pop

@@ -140,10 +140,7 @@ class CharacterSlider(MovingPartScalar):
     floating-point value that animates generally between 0 and 1, that controls
     the effects of one or more morphs within the character.
     """
-    @overload
-    def __init__(self, parent: PartGroup, name: str) -> None: ...
-    @overload
-    def __init__(self, parent: PartGroup, name: str, default_value: float) -> None: ...
+    def __init__(self, parent: PartGroup, name: str, default_value: float = ...) -> None: ...
 
 class CharacterVertexSlider(VertexSlider):
     """This is a specialization on VertexSlider that returns the slider value

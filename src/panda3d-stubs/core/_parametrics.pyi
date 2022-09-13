@@ -199,12 +199,8 @@ class ParametricCurveCollection(ReferenceCount):
     def timewarp_curves(self) -> Sequence[ParametricCurve]: ...
     @property
     def max_t(self) -> float: ...
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: ParametricCurveCollection) -> None: ...
-    @overload
-    def add_curve(self, curve: ParametricCurve) -> None:
+    def __init__(self, __param0: ParametricCurveCollection = ...) -> None: ...
+    def add_curve(self, curve: ParametricCurve, index: int = ...) -> None:
         """`(self, curve: ParametricCurve)`:
         Adds a new ParametricCurve to the collection.
         
@@ -213,8 +209,6 @@ class ParametricCurveCollection(ReferenceCount):
         @deprecated Use insert_curve(index, curve) instead.
         """
         ...
-    @overload
-    def add_curve(self, curve: ParametricCurve, index: int) -> None: ...
     def insert_curve(self, index: int, curve: ParametricCurve) -> None:
         """Adds a new ParametricCurve to the collection at the indicated index."""
         ...
@@ -435,10 +429,7 @@ class ParametricCurveCollection(ReferenceCount):
 
 class CurveFitter:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: CurveFitter) -> None: ...
+    def __init__(self, __param0: CurveFitter = ...) -> None: ...
     def reset(self) -> None:
         """Removes all the data points previously added to the CurveFitter, and
         initializes it for a new curve.
@@ -548,12 +539,9 @@ class HermiteCurve(PiecewiseCurve):
     The HermiteCurve class itself keeps its own list of the CV's that are used
     to define the curve (since the CubicCurveseg class doesn't retain these).
     """
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, pc: ParametricCurve = ...) -> None:
         """Constructs a Hermite from the indicated (possibly non-hermite) curve."""
         ...
-    @overload
-    def __init__(self, pc: ParametricCurve) -> None: ...
     def get_num_cvs(self) -> int:
         """Returns the number of CV's in the curve."""
         ...
@@ -760,14 +748,11 @@ class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
     functions.  This class then becomes vestigial.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, pc: ParametricCurve = ...) -> None:
         """Constructs a NURBS curve equivalent to the indicated (possibly non-NURBS)
         curve.
         """
         ...
-    @overload
-    def __init__(self, pc: ParametricCurve) -> None: ...
     def upcast_to_PiecewiseCurve(self) -> PiecewiseCurve: ...
     def upcast_to_NurbsCurveInterface(self) -> NurbsCurveInterface: ...
     @staticmethod
@@ -917,10 +902,7 @@ class NurbsCurveEvaluator(ReferenceCount):
     parallel implementation of NURBS curves, and will probably eventually
     replace the whole ParametricCurve class hierarchy.
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: NurbsCurveEvaluator) -> None: ...
+    def __init__(self, __param0: NurbsCurveEvaluator = ...) -> None: ...
     def set_order(self, order: int) -> None:
         """Sets the order of the curve.  This resets the knot vector to the default
         knot vector for the number of vertices.
@@ -959,8 +941,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         ...
     @overload
     def set_vertex(self, i: int, vertex: _Vec3f, weight: float = ...) -> None: ...
-    @overload
-    def get_vertex(self, i: int) -> LVecBase4f:
+    def get_vertex(self, i: int, rel_to: NodePath = ...) -> LVecBase4f:
         """`(self, i: int)`:
         Returns the nth control vertex of the curve, relative to its indicated
         coordinate space.
@@ -970,8 +951,6 @@ class NurbsCurveEvaluator(ReferenceCount):
         coordinate space.
         """
         ...
-    @overload
-    def get_vertex(self, i: int, rel_to: NodePath) -> LVecBase4f: ...
     def set_vertex_space(self, i: int, space: NodePath | str) -> None:
         """`(self, i: int, space: NodePath)`:
         Sets the coordinate space of the nth control vertex.  If this is not
@@ -1210,10 +1189,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
     v_order: int
     u_knots: Sequence[float]
     v_knots: Sequence[float]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: NurbsSurfaceEvaluator) -> None: ...
+    def __init__(self, __param0: NurbsSurfaceEvaluator = ...) -> None: ...
     def set_u_order(self, u_order: int) -> None:
         """Sets the order of the surface in the U direction.  This resets the knot
         vector to the default knot vector for the number of vertices.
@@ -1272,8 +1248,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         ...
     @overload
     def set_vertex(self, ui: int, vi: int, vertex: _Vec3f, weight: float = ...) -> None: ...
-    @overload
-    def get_vertex(self, ui: int, vi: int) -> LVecBase4f:
+    def get_vertex(self, ui: int, vi: int, rel_to: NodePath = ...) -> LVecBase4f:
         """`(self, ui: int, vi: int)`:
         Returns the nth control vertex of the surface, relative to its indicated
         coordinate space.
@@ -1283,8 +1258,6 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         coordinate space.
         """
         ...
-    @overload
-    def get_vertex(self, ui: int, vi: int, rel_to: NodePath) -> LVecBase4f: ...
     def set_vertex_space(self, ui: int, vi: int, space: NodePath | str) -> None:
         """`(self, ui: int, vi: int, space: NodePath)`:
         Sets the coordinate space of the nth control vertex.  If this is not

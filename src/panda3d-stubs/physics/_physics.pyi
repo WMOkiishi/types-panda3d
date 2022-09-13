@@ -41,8 +41,7 @@ class PhysicsObject(TypedReferenceCount):
     rotation: LRotationf
     @property
     def implicit_velocity(self) -> LVector3f: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: PhysicsObject = ...) -> None:
         """`(self)`:
         Default Constructor
         
@@ -50,8 +49,6 @@ class PhysicsObject(TypedReferenceCount):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: PhysicsObject) -> None: ...
     def assign(self: _Self, other: _Self) -> _Self: ...
     def set_active(self, flag: bool) -> None:
         """Process Flag assignment"""
@@ -233,10 +230,7 @@ class PhysicsObjectCollection:
     from functions that need to return multiple PhysicsObjects.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: PhysicsObjectCollection) -> None: ...
+    def __init__(self, copy: PhysicsObjectCollection = ...) -> None: ...
     def __getitem__(self, index: int) -> PhysicsObject: ...
     def __len__(self) -> int:
         """Returns the number of physics objects in the collection.  This is the same
@@ -826,7 +820,7 @@ class LinearNoiseForce(LinearRandomForce):
 class LinearSinkForce(LinearDistanceForce):
     """Attractor force.  Think black hole."""
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: LinearSinkForce = ...) -> None:
         """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...)`:
         Simple constructor
         
@@ -835,14 +829,12 @@ class LinearSinkForce(LinearDistanceForce):
         """
         ...
     @overload
-    def __init__(self, copy: LinearSinkForce) -> None: ...
-    @overload
     def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
 
 class LinearSourceForce(LinearDistanceForce):
     """Repellant force."""
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: LinearSourceForce = ...) -> None:
         """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...)`:
         Simple constructor
         
@@ -850,8 +842,6 @@ class LinearSourceForce(LinearDistanceForce):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: LinearSourceForce) -> None: ...
     @overload
     def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
 
@@ -921,12 +911,9 @@ class PhysicsManager:
     (particle systems, etc..) as you want, pick an integrator and go.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: PhysicsManager = ...) -> None:
         """Default Constructor.  NOTE: EulerIntegrator is the standard default."""
         ...
-    @overload
-    def __init__(self, __param0: PhysicsManager) -> None: ...
     def attach_linear_integrator(self, i: LinearIntegrator) -> None:
         """Hooks a linear integrator into the manager"""
         ...
@@ -975,8 +962,7 @@ class PhysicsManager:
     def remove_angular_force(self, f: AngularForce) -> None:
         """takes an angular force out of the physics list"""
         ...
-    @overload
-    def do_physics(self, dt: float) -> None:
+    def do_physics(self, dt: float, p: Physical = ...) -> None:
         """`(self, dt: float)`:
         This is the main high-level API call.  Performs integration on every
         attached Physical.
@@ -986,8 +972,6 @@ class PhysicsManager:
         physical.  Make sure its associated forces are active.
         """
         ...
-    @overload
-    def do_physics(self, dt: float, p: Physical) -> None: ...
     def init_random_seed(self) -> None:
         """One-time config function, sets up the random seed used by the physics and
         particle systems.  For synchronizing across distributed computers

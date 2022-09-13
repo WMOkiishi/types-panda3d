@@ -31,7 +31,7 @@ class EventParameter:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, value: float | str = ...) -> None:
         """`(self, ptr: TypedReferenceCount)`:
         Defines an EventParameter that stores a pointer to a TypedReferenceCount
         object.  Note that a TypedReferenceCount is not the same kind of pointer as
@@ -64,8 +64,6 @@ class EventParameter:
         Defines an EventParameter that stores a wstring value.
         """
         ...
-    @overload
-    def __init__(self, value: float | str) -> None: ...
     @overload
     def __init__(self, copy: EventParameter | float | int | str | None) -> None: ...
     @overload
@@ -182,12 +180,9 @@ class AsyncFuture(TypedReferenceCount):
     @since 1.10.0
     """
     done_event: str
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: AsyncFuture = ...) -> None:
         """Initializes the future in the pending state."""
         ...
-    @overload
-    def __init__(self, __param0: AsyncFuture) -> None: ...
     def __await__(self) -> Generator[Awaitable, None, None]: ...
     def __iter__(self) -> Generator[Awaitable, None, None]: ...
     def done(self) -> bool:
@@ -222,8 +217,7 @@ class AsyncFuture(TypedReferenceCount):
     @staticmethod
     def gather(args): ...
     def output(self, out: ostream) -> None: ...
-    @overload
-    def wait(self) -> None:
+    def wait(self, timeout: float = ...) -> None:
         """`(self)`:
         Waits until the future is done.
         
@@ -231,8 +225,6 @@ class AsyncFuture(TypedReferenceCount):
         Waits until the future is done, or until the timeout is reached.
         """
         ...
-    @overload
-    def wait(self, timeout: float) -> None: ...
     def set_result(self, __param0) -> None: ...
     setDoneEvent = set_done_event
     getDoneEvent = get_done_event
@@ -714,10 +706,7 @@ class AsyncTaskCollection:
     TODO: None of this is thread-safe yet.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: AsyncTaskCollection) -> None: ...
+    def __init__(self, copy: AsyncTaskCollection = ...) -> None: ...
     def __getitem__(self, index: int) -> AsyncTask:
         """Returns the nth AsyncTask in the collection.  This is the same as
         get_task(), but it may be a more convenient way to access it.
@@ -1119,10 +1108,7 @@ class ButtonEventList(ParamValueBase):
     """
     @property
     def events(self) -> Sequence[ButtonEvent]: ...
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: ButtonEventList) -> None: ...
+    def __init__(self, copy: ButtonEventList = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def add_event(self, event: ButtonEvent) -> None:
         """Adds a new event to the end of the list."""

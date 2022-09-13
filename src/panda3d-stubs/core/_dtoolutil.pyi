@@ -128,10 +128,7 @@ class TextEncoder:
     E_utf8: Final[Literal[1]]
     E_utf16be: Final[Literal[2]]
     E_unicode: Final[Literal[2]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: TextEncoder) -> None: ...
+    def __init__(self, copy: TextEncoder = ...) -> None: ...
     def set_encoding(self, encoding: _TextEncoder_Encoding) -> None:
         """Specifies how the string set via set_text() is to be interpreted.  The
         default, E_iso8859, means a standard string with one-byte characters (i.e.
@@ -159,10 +156,7 @@ class TextEncoder:
         TextEncoder objects.  See set_encoding().
         """
         ...
-    @overload
-    def set_text(self, text) -> None: ...
-    @overload
-    def set_text(self, text, encoding: _TextEncoder_Encoding) -> None: ...
+    def set_text(self, text, encoding: _TextEncoder_Encoding = ...) -> None: ...
     def clear_text(self) -> None:
         """Removes the text from the TextEncoder."""
         ...
@@ -177,8 +171,7 @@ class TextEncoder:
         (preserving accent marks correctly).
         """
         ...
-    @overload
-    def get_text(self):
+    def get_text(self, encoding: _TextEncoder_Encoding = ...):
         """`(self)`:
         Returns the current text, as encoded via the current encoding system.
         
@@ -186,8 +179,6 @@ class TextEncoder:
         Returns the current text, as encoded via the indicated encoding system.
         """
         ...
-    @overload
-    def get_text(self, encoding: _TextEncoder_Encoding): ...
     def append_text(self, text) -> None: ...
     def append_unicode_char(self, character: int) -> None:
         """Appends a single character to the end of the stored text.  This may be a
@@ -212,14 +203,11 @@ class TextEncoder:
         according to set_encoding().
         """
         ...
-    @overload
-    def get_encoded_char(self, index: int) -> str:
+    def get_encoded_char(self, index: int, encoding: _TextEncoder_Encoding = ...) -> str:
         """Returns the nth char of the stored text, as a one-, two-, or three-byte
         encoded string.
         """
         ...
-    @overload
-    def get_encoded_char(self, index: int, encoding: _TextEncoder_Encoding) -> str: ...
     def get_text_as_ascii(self) -> str:
         """Returns the text associated with the node, converted as nearly as possible
         to a fully-ASCII representation.  This means replacing accented letters
@@ -290,9 +278,8 @@ class TextEncoder:
         akin to ctype's tolower(), extended to Unicode.
         """
         ...
-    @overload
     @staticmethod
-    def upper(source: str) -> str:
+    def upper(source: str, encoding: _TextEncoder_Encoding = ...) -> str:
         """`(source: str)`:
         Converts the string to uppercase, assuming the string is encoded in the
         default encoding.
@@ -302,12 +289,8 @@ class TextEncoder:
         indicated encoding.
         """
         ...
-    @overload
     @staticmethod
-    def upper(source: str, encoding: _TextEncoder_Encoding) -> str: ...
-    @overload
-    @staticmethod
-    def lower(source: str) -> str:
+    def lower(source: str, encoding: _TextEncoder_Encoding = ...) -> str:
         """`(source: str)`:
         Converts the string to lowercase, assuming the string is encoded in the
         default encoding.
@@ -317,9 +300,6 @@ class TextEncoder:
         indicated encoding.
         """
         ...
-    @overload
-    @staticmethod
-    def lower(source: str, encoding: _TextEncoder_Encoding) -> str: ...
     def set_wtext(self, wtext: str) -> None:
         """Changes the text that is stored in the encoder.  Subsequent calls to
         get_wtext() will return this same string, while get_text() will return the
@@ -360,8 +340,7 @@ class TextEncoder:
         string, according to the given encoding system.
         """
         ...
-    @overload
-    def encode_wtext(self, wtext: str) -> bytes:
+    def encode_wtext(self, wtext: str, encoding: _TextEncoder_Encoding = ...) -> bytes:
         """`(self, wtext: str)`:
         Encodes a wide-text string into a single-char string, according to the
         current encoding.
@@ -371,12 +350,7 @@ class TextEncoder:
         given encoding.
         """
         ...
-    @overload
-    def encode_wtext(self, wtext: str, encoding: _TextEncoder_Encoding) -> bytes: ...
-    @overload
-    def decode_text(self, text: bytes) -> str: ...
-    @overload
-    def decode_text(self, text, encoding: _TextEncoder_Encoding) -> str: ...
+    def decode_text(self, text: bytes, encoding: _TextEncoder_Encoding = ...) -> str: ...
     setEncoding = set_encoding
     getEncoding = get_encoding
     setDefaultEncoding = set_default_encoding
@@ -558,10 +532,7 @@ class Filename:
     def c_str(self) -> str: ...
     def empty(self) -> bool: ...
     def length(self) -> int: ...
-    @overload
-    def substr(self, begin: int) -> str: ...
-    @overload
-    def substr(self, begin: int, end: int) -> str: ...
+    def substr(self, begin: int, end: int = ...) -> str: ...
     def get_fullpath(self) -> str:
         """Returns the entire filename: directory, basename, extension.  This is the
         same thing returned by the string typecast operator.
@@ -734,8 +705,7 @@ class Filename:
         not refer to a filename on a search path somewhere).
         """
         ...
-    @overload
-    def make_absolute(self) -> None:
+    def make_absolute(self, start_directory: _Filename = ...) -> None:
         """`(self)`:
         Converts the filename to a fully-qualified pathname from the root (if it is
         a relative pathname), and then standardizes it (see standardize()).
@@ -754,8 +724,6 @@ class Filename:
         be relative to.
         """
         ...
-    @overload
-    def make_absolute(self, start_directory: _Filename) -> None: ...
     def make_canonical(self) -> bool:
         """Converts this filename to a canonical name by replacing the directory part
         with the fully-qualified directory part.  This is done by changing to that
@@ -1389,10 +1357,7 @@ class DSearchPath:
     """
     class Results:
         DtoolClassDict: ClassVar[dict[str, Any]]
-        @overload
-        def __init__(self) -> None: ...
-        @overload
-        def __init__(self, copy: DSearchPath.Results) -> None: ...
+        def __init__(self, copy: DSearchPath.Results = ...) -> None: ...
         def __getitem__(self, n: int) -> Filename: ...
         def __len__(self) -> int:
             """Returns the num of filenames in the set.  This method is defined to make
@@ -1417,9 +1382,7 @@ class DSearchPath:
     @property
     def directories(self) -> Sequence[Filename]: ...
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: ConfigVariableSearchPath | DSearchPath) -> None: ...
+    def __init__(self, copy: ConfigVariableSearchPath | DSearchPath = ...) -> None: ...
     @overload
     def __init__(self, directory: _Filename) -> None: ...
     @overload

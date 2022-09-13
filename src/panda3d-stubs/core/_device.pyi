@@ -107,10 +107,7 @@ class InputDevice(TypedReferenceCount):
         DtoolClassDict: ClassVar[dict[str, Any]]
         level: int
         max_level: int
-        @overload
-        def __init__(self) -> None: ...
-        @overload
-        def __init__(self, __param0: InputDevice.BatteryData) -> None: ...
+        def __init__(self, __param0: InputDevice.BatteryData = ...) -> None: ...
     S_unknown: Final[Literal[0]]
     S_up: Final[Literal[1]]
     S_down: Final[Literal[2]]
@@ -483,10 +480,7 @@ class InputDeviceSet:
     same device cannot occur more than once.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: InputDeviceSet) -> None: ...
+    def __init__(self, copy: InputDeviceSet = ...) -> None: ...
     def __getitem__(self, index: int) -> InputDevice:
         """Returns the nth InputDevice in the collection."""
         ...
@@ -520,8 +514,7 @@ class InputDeviceManager:
     @since 1.10.0
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def get_devices(self) -> InputDeviceSet:
+    def get_devices(self, device_class: InputDevice.DeviceClass = ...) -> InputDeviceSet:
         """`(self)`:
         Description: Returns all currently connected devices.
         
@@ -529,8 +522,6 @@ class InputDeviceManager:
         Description: Returns all currently connected devices of the given device class.
         """
         ...
-    @overload
-    def get_devices(self, device_class: InputDevice.DeviceClass) -> InputDeviceSet: ...
     def add_device(self, device: InputDevice) -> None:
         """Called when a new device has been discovered.  This may also be used to
         register virtual devices.

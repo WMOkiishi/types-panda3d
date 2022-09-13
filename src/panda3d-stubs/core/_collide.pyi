@@ -778,27 +778,20 @@ class CollisionPolygon(CollisionPlane):
     def valid(self) -> bool: ...
     @property
     def concave(self) -> bool: ...
-    @overload
-    def __init__(self, a: _Vec3f, b: _Vec3f, c: _Vec3f) -> None: ...
-    @overload
-    def __init__(self, a: _Vec3f, b: _Vec3f, c: _Vec3f, d: _Vec3f) -> None: ...
+    def __init__(self, a: _Vec3f, b: _Vec3f, c: _Vec3f, d: _Vec3f = ...) -> None: ...
     def get_num_points(self) -> int:
         """Returns the number of vertices of the CollisionPolygon."""
         ...
     def get_point(self, n: int) -> LPoint3f:
         """Returns the nth vertex of the CollisionPolygon, expressed in 3-D space."""
         ...
-    @overload
     @staticmethod
-    def verify_points(a: _Vec3f, b: _Vec3f, c: _Vec3f) -> bool:
+    def verify_points(a: _Vec3f, b: _Vec3f, c: _Vec3f, d: _Vec3f = ...) -> bool:
         """Verifies that the indicated set of points will define a valid
         CollisionPolygon: that is, at least three non-collinear points, with no
         points repeated.
         """
         ...
-    @overload
-    @staticmethod
-    def verify_points(a: _Vec3f, b: _Vec3f, c: _Vec3f, d: _Vec3f) -> bool: ...
     def is_valid(self) -> bool:
         """Returns true if the CollisionPolygon is valid (that is, it has at least
         three vertices), or false otherwise.
@@ -829,15 +822,12 @@ class CollisionHandlerEvent(CollisionHandler):
     def again_patterns(self) -> Sequence[str]: ...
     @property
     def out_patterns(self) -> Sequence[str]: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: CollisionHandlerEvent = ...) -> None:
         """The default CollisionHandlerEvent will throw no events.  Its pattern
         strings must first be set via a call to add_in_pattern() and/or
         add_out_pattern().
         """
         ...
-    @overload
-    def __init__(self, __param0: CollisionHandlerEvent) -> None: ...
     def clear_in_patterns(self) -> None:
         """Removes all of the previously-added in patterns.  See add_in_pattern."""
         ...
@@ -1000,8 +990,7 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
     positions based on the effects of the collision.
     """
     center: NodePath
-    @overload
-    def add_collider(self, collider: NodePath, target: NodePath) -> None:
+    def add_collider(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface = ...) -> None:
         """`(self, collider: NodePath, target: NodePath)`:
         Adds a new collider to the list with a NodePath that will be updated with
         the collider's new position, or updates the existing collider with a new
@@ -1017,8 +1006,6 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
         directly controlled by a DriveInterface.
         """
         ...
-    @overload
-    def add_collider(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface) -> None: ...
     def remove_collider(self, collider: NodePath) -> bool:
         """Removes the collider from the list of colliders that this handler knows
         about.
@@ -1259,15 +1246,12 @@ class CollisionHandlerHighestEvent(CollisionHandlerEvent):
     moving object or the struck object, or both.  The first parameter of the
     event will be a pointer to the CollisionEntry that triggered it.
     """
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: CollisionHandlerHighestEvent = ...) -> None:
         """The default CollisionHandlerEvent will throw no events.  Its pattern
         strings must first be set via a call to add_in_pattern() and/or
         add_out_pattern().
         """
         ...
-    @overload
-    def __init__(self, __param0: CollisionHandlerHighestEvent) -> None: ...
 
 class CollisionHandlerQueue(CollisionHandler):
     """A special kind of CollisionHandler that does nothing except remember the
@@ -1277,10 +1261,7 @@ class CollisionHandlerQueue(CollisionHandler):
     """
     @property
     def entries(self) -> Sequence[CollisionEntry]: ...
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: CollisionHandlerQueue) -> None: ...
+    def __init__(self, __param0: CollisionHandlerQueue = ...) -> None: ...
     def sort_entries(self) -> None:
         """Sorts all the detected collisions front-to-back by
         from_intersection_point() so that those intersection points closest to the

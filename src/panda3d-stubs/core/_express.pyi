@@ -612,11 +612,9 @@ class Datagram(TypedObject):
     elements.
     """
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: Datagram = ...) -> None:
         """Constructs a datagram from an existing block of data."""
         ...
-    @overload
-    def __init__(self, copy: Datagram) -> None: ...
     @overload
     def __init__(self, data: bytes) -> None: ...
     def __bytes__(self) -> bytes: ...
@@ -888,9 +886,7 @@ class DatagramIterator:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: DatagramIterator) -> None: ...
+    def __init__(self, __param0: DatagramIterator = ...) -> None: ...
     @overload
     def __init__(self, datagram: Datagram, offset: int = ...) -> None: ...
     def get_bool(self) -> bool:
@@ -1142,10 +1138,7 @@ class TypedReferenceCount(TypedObject, ReferenceCount):
 class Ramfile:
     """An in-memory buffer specifically designed for downloading files to memory."""
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: Ramfile) -> None: ...
+    def __init__(self, __param0: Ramfile = ...) -> None: ...
     def seek(self, pos: int) -> None:
         """Moves the data pointer to the indicated byte position.  It is not an error
         to move the pointer past the end of data.
@@ -1194,10 +1187,7 @@ class HashVal:
     of a file or buffer.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: HashVal) -> None: ...
+    def __init__(self, copy: HashVal = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: HashVal) -> bool: ...
@@ -1335,10 +1325,7 @@ class MemoryUsagePointers:
     MemoryUsage object.  It doesn't even exist when compiled with NDEBUG.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: MemoryUsagePointers) -> None: ...
+    def __init__(self, __param0: MemoryUsagePointers = ...) -> None: ...
     def get_num_pointers(self) -> int:
         """Returns the number of pointers in the set."""
         ...
@@ -2167,8 +2154,7 @@ class OpenSSLWrapper:
         with certificates received from an untrusted source.
         """
         ...
-    @overload
-    def load_certificates_from_pem_ram(self, data: str) -> int:
+    def load_certificates_from_pem_ram(self, data: str, data_size: int = ...) -> int:
         """Reads a chain of trusted certificates from the indicated data buffer and
         adds them to the X509_STORE object.  The data buffer should be PEM-
         formatted.  Returns the number of certificates read on success, or 0 on
@@ -2178,10 +2164,7 @@ class OpenSSLWrapper:
         with certificates received from an untrusted source.
         """
         ...
-    @overload
-    def load_certificates_from_pem_ram(self, data: str, data_size: int) -> int: ...
-    @overload
-    def load_certificates_from_der_ram(self, data: str) -> int:
+    def load_certificates_from_der_ram(self, data: str, data_size: int = ...) -> int:
         """Reads a chain of trusted certificates from the indicated data buffer and
         adds them to the X509_STORE object.  The data buffer should be DER-
         formatted.  Returns the number of certificates read on success, or 0 on
@@ -2191,8 +2174,6 @@ class OpenSSLWrapper:
         with certificates received from an untrusted source.
         """
         ...
-    @overload
-    def load_certificates_from_der_ram(self, data: str, data_size: int) -> int: ...
     def notify_ssl_errors(self) -> None:
         """A convenience function that is itself a wrapper around the OpenSSL
         convenience function to output the recent OpenSSL errors.  This function
@@ -2220,9 +2201,7 @@ class SubfileInfo:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: SubfileInfo) -> None: ...
+    def __init__(self, copy: SubfileInfo = ...) -> None: ...
     @overload
     def __init__(self, file: FileReference, start: int, size: int) -> None: ...
     @overload
@@ -2386,8 +2365,7 @@ class VirtualFile(TypedReferenceCount):
         issues.
         """
         ...
-    @overload
-    def get_file_size(self) -> int:
+    def get_file_size(self, stream: istream = ...) -> int:
         """`(self)`:
         Returns the current size on disk (or wherever it is) of the file before it
         has been opened.
@@ -2398,8 +2376,6 @@ class VirtualFile(TypedReferenceCount):
         implementations may require this stream to determine the size.
         """
         ...
-    @overload
-    def get_file_size(self, stream: istream) -> int: ...
     def get_timestamp(self) -> int:
         """Returns a time_t value that represents the time the file was last modified,
         to within whatever precision the operating system records this information
@@ -2926,9 +2902,7 @@ class VirtualFileSystem:
 
 class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: VirtualFileMount) -> None: ...
+    def __init__(self, copy: VirtualFileMount = ...) -> None: ...
     @overload
     def __init__(self, ptr: VirtualFileMount) -> None: ...
     @overload
@@ -3029,8 +3003,7 @@ class Patchfile:
     def source_hash(self) -> HashVal: ...
     @property
     def result_hash(self) -> HashVal: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, buffer: Buffer = ...) -> None:
         """`(self)`:
         Create a patch file and initializes internal data
         
@@ -3038,8 +3011,6 @@ class Patchfile:
         Create patch file with buffer to patch
         """
         ...
-    @overload
-    def __init__(self, buffer: Buffer) -> None: ...
     def build(self, file_orig: _Filename, file_new: _Filename, patch_name: _Filename) -> bool:
         """This implementation uses the "greedy differencing algorithm" described in
         the masters thesis "Differential Compression: A Generalized Solution for
@@ -3167,10 +3138,7 @@ class ProfileTimer:
     def init(self, name: str, maxEntries: int = ...) -> None: ...
     def on(self) -> None: ...
     def mark(self, tag: str) -> None: ...
-    @overload
-    def off(self) -> None: ...
-    @overload
-    def off(self, tag: str) -> None: ...
+    def off(self, tag: str = ...) -> None: ...
     def getTotalTime(self) -> float:
         """Don't call any of the following during timing: (Because they are slow,
         not because anything will break).
@@ -3216,10 +3184,7 @@ class WindowsRegistry:
     T_none: Final[Literal[0]]
     T_int: Final[Literal[1]]
     T_string: Final[Literal[2]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: WindowsRegistry) -> None: ...
+    def __init__(self, __param0: WindowsRegistry = ...) -> None: ...
     @staticmethod
     def set_string_value(key: str, name: str, value: str, rl: _WindowsRegistry_RegLevel = ...) -> bool:
         """Sets the registry key to the indicated value as a string.  The supplied

@@ -100,7 +100,7 @@ class TiXmlDeclaration(TiXmlNode):
         because there can only be at most 3 and they are always the same.
     """
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: TiXmlDeclaration = ...) -> None:
         """`(self)`:
         Construct an empty declaration.
         
@@ -111,8 +111,6 @@ class TiXmlDeclaration(TiXmlNode):
         Constructor.
         """
         ...
-    @overload
-    def __init__(self, copy: TiXmlDeclaration) -> None: ...
     @overload
     def __init__(self, _version: str, _encoding: str, _standalone: str) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
@@ -183,7 +181,7 @@ class TiXmlNode(TiXmlBase):
         """One step up the DOM."""
         ...
     @overload
-    def FirstChild(self) -> TiXmlNode:
+    def FirstChild(self, _value: str = ...) -> TiXmlNode:
         """`(self)`; `(self)`:
         < The first child of this node. Will be null if there are no children.
         
@@ -196,11 +194,9 @@ class TiXmlNode(TiXmlBase):
         """
         ...
     @overload
-    def FirstChild(self, _value: str) -> TiXmlNode: ...
-    @overload
     def FirstChild(self, value: str) -> TiXmlNode: ...
     @overload
-    def LastChild(self) -> TiXmlNode:
+    def LastChild(self, _value: str = ...) -> TiXmlNode:
         """`(self)`; `(self)`:
         The last child of this node. Will be null if there are no children.
         
@@ -211,8 +207,6 @@ class TiXmlNode(TiXmlBase):
         < STL std::string form.
         """
         ...
-    @overload
-    def LastChild(self, _value: str) -> TiXmlNode: ...
     @overload
     def LastChild(self, value: str) -> TiXmlNode: ...
     @overload
@@ -269,7 +263,7 @@ class TiXmlNode(TiXmlBase):
         """Delete a child of this node."""
         ...
     @overload
-    def PreviousSibling(self) -> TiXmlNode:
+    def PreviousSibling(self, _prev: str = ...) -> TiXmlNode:
         """`(self)`; `(self, __param0: str)`:
         Navigate to a sibling node.
         
@@ -278,11 +272,9 @@ class TiXmlNode(TiXmlBase):
         """
         ...
     @overload
-    def PreviousSibling(self, _prev: str) -> TiXmlNode: ...
-    @overload
     def PreviousSibling(self, _value: str) -> TiXmlNode: ...
     @overload
-    def NextSibling(self) -> TiXmlNode:
+    def NextSibling(self, _next: str = ...) -> TiXmlNode:
         """`(self)`:
         Navigate to a sibling node.
         
@@ -294,11 +286,9 @@ class TiXmlNode(TiXmlBase):
         """
         ...
     @overload
-    def NextSibling(self, _next: str) -> TiXmlNode: ...
-    @overload
     def NextSibling(self, _value: str) -> TiXmlNode: ...
     @overload
-    def NextSiblingElement(self) -> TiXmlElement:
+    def NextSiblingElement(self, _next: str = ...) -> TiXmlElement:
         """`(self)`; `(self, __param0: str)`:
         Convenience function to get through elements.
                 Calls NextSibling and ToElement. Will skip all non-Element
@@ -309,11 +299,8 @@ class TiXmlNode(TiXmlBase):
         """
         ...
     @overload
-    def NextSiblingElement(self, _next: str) -> TiXmlElement: ...
-    @overload
     def NextSiblingElement(self, _value: str) -> TiXmlElement: ...
-    @overload
-    def FirstChildElement(self) -> TiXmlElement:
+    def FirstChildElement(self, _value: str = ...) -> TiXmlElement:
         """`(self)`; `(self, _value: str)`:
         Convenience function to get through elements.
         
@@ -321,8 +308,6 @@ class TiXmlNode(TiXmlBase):
         < STL std::string form.
         """
         ...
-    @overload
-    def FirstChildElement(self, _value: str) -> TiXmlElement: ...
     def Type(self) -> int:
         """Query the type (as an enumerated value, above) of this node.
                 The possible types are: DOCUMENT, ELEMENT, COMMENT,
@@ -398,7 +383,7 @@ class TiXmlDocument(TiXmlNode):
         The 'value' of a document node is the xml file name.
     """
     @overload
-    def __init__(self) -> None:
+    def __init__(self, documentName: str = ...) -> None:
         """`(self)`:
         Create an empty document, that has no name.
         
@@ -409,8 +394,6 @@ class TiXmlDocument(TiXmlNode):
         Constructor.
         """
         ...
-    @overload
-    def __init__(self, documentName: str) -> None: ...
     @overload
     def __init__(self, copy: TiXmlDocument) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
@@ -430,8 +413,7 @@ class TiXmlDocument(TiXmlNode):
         ...
     @overload
     def LoadFile(self, filename: str, encoding: _TiXmlEncoding = ...) -> bool: ...
-    @overload
-    def SaveFile(self) -> bool:
+    def SaveFile(self, filename: str = ...) -> bool:
         """`(self)`:
         Save a file using the current document value. Returns true if successful.
         
@@ -442,8 +424,6 @@ class TiXmlDocument(TiXmlNode):
         < STL std::string version.
         """
         ...
-    @overload
-    def SaveFile(self, filename: str) -> bool: ...
     def RootElement(self) -> TiXmlElement:
         """Get the root element -- the only top level element -- of the document.
                 In well formed XML, there should only be one. TinyXml is tolerant of
@@ -637,10 +617,7 @@ class TiXmlVisitor:
         @sa TiXmlNode::Accept()
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: TiXmlVisitor) -> None: ...
+    def __init__(self, __param0: TiXmlVisitor = ...) -> None: ...
     @overload
     def VisitEnter(self, __param0: TiXmlDocument) -> bool:
         """`(self, __param0: TiXmlDocument)`:
@@ -778,7 +755,7 @@ class TiXmlAttributeSet:
 class TiXmlComment(TiXmlNode):
     """An XML comment."""
     @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: TiXmlComment = ...) -> None:
         """`(self)`:
         Constructs an empty comment.
         
@@ -786,8 +763,6 @@ class TiXmlComment(TiXmlNode):
         Construct a comment from text.
         """
         ...
-    @overload
-    def __init__(self, __param0: TiXmlComment) -> None: ...
     @overload
     def __init__(self, _value: str) -> None: ...
     def assign(self: _Self, base: _Self) -> _Self: ...
@@ -827,10 +802,7 @@ class TiXmlUnknown(TiXmlNode):
     
         DTD tags get thrown into TiXmlUnknowns.
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: TiXmlUnknown) -> None: ...
+    def __init__(self, copy: TiXmlUnknown = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
 
 class TiXmlHandle:
@@ -927,7 +899,7 @@ class TiXmlHandle:
     def __init__(self, _node: TiXmlNode) -> None: ...
     def assign(self: _Self, ref: _Self) -> _Self: ...
     @overload
-    def FirstChild(self) -> TiXmlHandle:
+    def FirstChild(self, value: str = ...) -> TiXmlHandle:
         """`(self)`:
         Return a handle to the first child node.
         
@@ -936,11 +908,9 @@ class TiXmlHandle:
         """
         ...
     @overload
-    def FirstChild(self, value: str) -> TiXmlHandle: ...
-    @overload
     def FirstChild(self, _value: str) -> TiXmlHandle: ...
     @overload
-    def FirstChildElement(self) -> TiXmlHandle:
+    def FirstChildElement(self, value: str = ...) -> TiXmlHandle:
         """`(self)`:
         Return a handle to the first child element.
         
@@ -948,8 +918,6 @@ class TiXmlHandle:
         Return a handle to the first child element with the given name.
         """
         ...
-    @overload
-    def FirstChildElement(self, value: str) -> TiXmlHandle: ...
     @overload
     def FirstChildElement(self, _value: str) -> TiXmlHandle: ...
     @overload
@@ -1037,10 +1005,7 @@ class TiXmlPrinter(TiXmlVisitor):
         fprintf( stdout, "%s", printer.CStr() );
         @endverbatim
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: TiXmlPrinter) -> None: ...
+    def __init__(self, __param0: TiXmlPrinter = ...) -> None: ...
     def SetIndent(self, _indent: str) -> None:
         """Set the indent characters for printing. By default 4 spaces
                 but tab (\t) is also useful, or null/empty string for no indentation.

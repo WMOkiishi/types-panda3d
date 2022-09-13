@@ -181,8 +181,7 @@ class CInterval(TypedReferenceCount):
         later be resumed from this point by calling resume().
         """
         ...
-    @overload
-    def resume(self) -> None:
+    def resume(self, start_t: float = ...) -> None:
         """`(self)`:
         Restarts the interval from its current point after a previous call to
         pause().
@@ -192,8 +191,6 @@ class CInterval(TypedReferenceCount):
         pause().
         """
         ...
-    @overload
-    def resume(self, start_t: float) -> None: ...
     def resume_until(self, end_t: float) -> None:
         """Restarts the interval from the current point after a previous call to
         pause() (or a previous play-to-point-and-stop), to play until the indicated

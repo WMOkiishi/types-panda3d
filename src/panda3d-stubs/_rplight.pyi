@@ -185,15 +185,12 @@ class GPUCommandList:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_commands(self) -> int: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: GPUCommandList = ...) -> None:
         """@brief Constructs a new GPUCommandList
         @details This constructs a new GPUCommandList. By default, there are no commands
           in the list.
         """
         ...
-    @overload
-    def __init__(self, __param0: GPUCommandList) -> None: ...
     def add_command(self, cmd: GPUCommand) -> None:
         """@brief Pushes a GPUCommand to the command list.
         @details This adds a new GPUCommand to the list of commands to be processed.
@@ -234,14 +231,11 @@ class IESDataset:
       lineary interpolated onto a 2D LUT Texture.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: IESDataset = ...) -> None:
         """@brief Constructs a new empty dataset.
         @details This constructs a new IESDataset with no data set.
         """
         ...
-    @overload
-    def __init__(self, __param0: IESDataset) -> None: ...
     def set_vertical_angles(self, vertical_angles: PointerToArray_float) -> None:
         """@brief Sets the vertical angles of the dataset.
         @details This sets the list of vertical angles of the dataset.
@@ -655,8 +649,7 @@ class ShadowManager(ReferenceCount):
     def num_update_slots_left(self) -> int: ...
     @property
     def atlas(self) -> ShadowAtlas: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: ShadowManager = ...) -> None:
         """@brief Constructs a new shadow atlas
         @details This constructs a new shadow atlas. There are a set of properties
           which should be set before calling ShadowManager::init, see the set-Methods.
@@ -664,8 +657,6 @@ class ShadowManager(ReferenceCount):
           ShadowManager::update should get called on a per frame basis.
         """
         ...
-    @overload
-    def __init__(self, __param0: ShadowManager) -> None: ...
     def set_max_updates(self, max_updates: int) -> None:
         """@brief Sets the maximum amount of updates per frame.
         @details This controls the maximum amount of updated ShadowSources per frame.
@@ -811,16 +802,13 @@ class InternalLightManager:
     def num_lights(self) -> int: ...
     @property
     def num_shadow_sources(self) -> int: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: InternalLightManager = ...) -> None:
         """@brief Constructs the light manager
         @details This constructs the light manager, initializing the light and shadow
           storage. You should set a command list and shadow manager before calling
           InternalLightManager::update. s
         """
         ...
-    @overload
-    def __init__(self, __param0: InternalLightManager) -> None: ...
     def add_light(self, light: RPLight) -> None:
         """@brief Adds a new light.
         @details This adds a new light to the list of lights. This will throw an

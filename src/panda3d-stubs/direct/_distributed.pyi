@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar
 from panda3d.core import (
     Buffered_DatagramConnection,
     ConnectionWriter,
@@ -305,10 +305,7 @@ class CDistributedSmoothNodeBase:
     have been moved into C++ as a performance optimization.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: CDistributedSmoothNodeBase) -> None: ...
+    def __init__(self, __param0: CDistributedSmoothNodeBase = ...) -> None: ...
     def set_repository(self, repository: CConnectionRepository, is_ai: bool, ai_id: int) -> None:
         """Tells the C++ instance definition about the AI or Client repository, used
         for sending datagrams.

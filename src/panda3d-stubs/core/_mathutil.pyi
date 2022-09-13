@@ -970,7 +970,7 @@ class LParabolaf:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: LParabolaf = ...) -> None:
         """`(self)`:
         Constructs a meaningless degenerate parabola.
         
@@ -979,8 +979,6 @@ class LParabolaf:
         the acceleration, initial velocity, and start point.
         """
         ...
-    @overload
-    def __init__(self, copy: LParabolaf) -> None: ...
     @overload
     def __init__(self, a: _Vec3f, b: _Vec3f, c: _Vec3f) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
@@ -1046,7 +1044,7 @@ class LParabolad:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: LParabolad = ...) -> None:
         """`(self)`:
         Constructs a meaningless degenerate parabola.
         
@@ -1055,8 +1053,6 @@ class LParabolad:
         the acceleration, initial velocity, and start point.
         """
         ...
-    @overload
-    def __init__(self, copy: LParabolad) -> None: ...
     @overload
     def __init__(self, a: _Vec3d, b: _Vec3d, c: _Vec3d) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
@@ -1119,7 +1115,7 @@ class LPlanef(LVecBase4f):
     equation Ax + By + Cz + D = 0.
     """
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: _Vec4f = ...) -> None:
         """`(self)`:
         Creates a default plane.  This plane happens to intersect the origin,
         perpendicular to the Z axis.  It's not clear how useful a default plane is.
@@ -1137,8 +1133,6 @@ class LPlanef(LVecBase4f):
         Constructs a plane given the four terms of the plane equation.
         """
         ...
-    @overload
-    def __init__(self, copy: _Vec4f) -> None: ...
     @overload
     def __init__(self, normal: _Vec3f, point: _Vec3f) -> None: ...
     @overload
@@ -1218,7 +1212,7 @@ class LPlaned(LVecBase4d):
     equation Ax + By + Cz + D = 0.
     """
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: _Vec4d = ...) -> None:
         """`(self)`:
         Creates a default plane.  This plane happens to intersect the origin,
         perpendicular to the Z axis.  It's not clear how useful a default plane is.
@@ -1236,8 +1230,6 @@ class LPlaned(LVecBase4d):
         Constructs a plane given the four terms of the plane equation.
         """
         ...
-    @overload
-    def __init__(self, copy: _Vec4d) -> None: ...
     @overload
     def __init__(self, normal: _Vec3d, point: _Vec3d) -> None: ...
     @overload
@@ -1361,10 +1353,7 @@ class BoundingBox(FiniteBoundingVolume):
 
 class LFrustumf:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: LFrustumf) -> None: ...
+    def __init__(self, __param0: LFrustumf = ...) -> None: ...
     @overload
     def make_ortho_2D(self) -> None:
         """Sets up a two-dimensional orthographic frustum"""
@@ -1390,10 +1379,7 @@ class LFrustumf:
 
 class LFrustumd:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: LFrustumd) -> None: ...
+    def __init__(self, __param0: LFrustumd = ...) -> None: ...
     @overload
     def make_ortho_2D(self) -> None:
         """Sets up a two-dimensional orthographic frustum"""
@@ -1478,12 +1464,9 @@ class BoundingPlane(GeometricBoundingVolume):
     """
     @property
     def plane(self) -> LPlanef: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, plane: _Vec4f = ...) -> None:
         """Constructs an empty "plane" that has no intersections."""
         ...
-    @overload
-    def __init__(self, plane: _Vec4f) -> None: ...
     def get_plane(self) -> LPlanef: ...
     getPlane = get_plane
 
@@ -1668,7 +1651,7 @@ class PerlinNoise2(PerlinNoise):
     https://mrl.nyu.edu/~perlin/noise/ .
     """
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: PerlinNoise2 = ...) -> None:
         """`(self)`:
         Randomizes the tables to make a unique noise function.  Uses a default
         scale (noise frequency), table size, and seed.
@@ -1684,8 +1667,6 @@ class PerlinNoise2(PerlinNoise):
         seed is generated.
         """
         ...
-    @overload
-    def __init__(self, copy: PerlinNoise2) -> None: ...
     @overload
     def __init__(self, sx: float, sy: float, table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1713,7 +1694,7 @@ class PerlinNoise3(PerlinNoise):
     http://mrl.nyu.edu/~perlin/noise/ .
     """
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: PerlinNoise3 = ...) -> None:
         """`(self)`:
         Randomizes the tables to make a unique noise function.  Uses a default
         scale (noise frequency), table size, and seed.
@@ -1729,8 +1710,6 @@ class PerlinNoise3(PerlinNoise):
         seed is generated.
         """
         ...
-    @overload
-    def __init__(self, copy: PerlinNoise3) -> None: ...
     @overload
     def __init__(self, sx: float, sy: float, sz: float, table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1758,7 +1737,7 @@ class StackedPerlinNoise2:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: StackedPerlinNoise2 = ...) -> None:
         """`(self)`:
         Creates a StackedPerlinNoise2 object with no levels.  You should call
         add_level() to add each level by hand.
@@ -1774,8 +1753,6 @@ class StackedPerlinNoise2:
         times the previous object (so that it is less important, if amp_scale < 1).
         """
         ...
-    @overload
-    def __init__(self, copy: StackedPerlinNoise2) -> None: ...
     @overload
     def __init__(self, sx: float, sy: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1807,7 +1784,7 @@ class StackedPerlinNoise3:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: StackedPerlinNoise3 = ...) -> None:
         """`(self)`:
         Creates a StackedPerlinNoise3 object with no levels.  You should call
         add_level() to add each level by hand.
@@ -1823,8 +1800,6 @@ class StackedPerlinNoise3:
         times the previous object (so that it is less important, if amp_scale < 1).
         """
         ...
-    @overload
-    def __init__(self, copy: StackedPerlinNoise3) -> None: ...
     @overload
     def __init__(self, sx: float, sy: float, sz: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1864,10 +1839,7 @@ class Triangulator:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def vertices(self) -> Sequence[LPoint2d]: ...
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: Triangulator) -> None: ...
+    def __init__(self, __param0: Triangulator = ...) -> None: ...
     def clear(self) -> None:
         """Removes all vertices and polygon specifications from the Triangulator, and
         prepares it to start over.
@@ -1979,10 +1951,7 @@ class Triangulator3(Triangulator):
     def vertices(self) -> Sequence[LPoint3d]: ...  # type: ignore[override]
     @property
     def plane(self) -> LPlaned: ...
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: Triangulator3) -> None: ...
+    def __init__(self, __param0: Triangulator3 = ...) -> None: ...
     @overload  # type: ignore[override]
     def add_vertex(self, point: _Vec3d) -> int:
         """Adds a new vertex to the vertex pool.  Returns the vertex index number."""

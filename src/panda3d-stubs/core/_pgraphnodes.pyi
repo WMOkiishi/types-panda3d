@@ -392,8 +392,7 @@ class LODNode(PandaNode):
         chosen.
         """
         ...
-    @overload
-    def show_switch(self, index: int) -> None:
+    def show_switch(self, index: int, color: _Vec4f = ...) -> None:
         """This is provided as a debugging aid.  show_switch() will put the LODNode
         into a special mode where rather than computing and drawing the appropriate
         level of the LOD, a ring is drawn around the LODNode center indicating the
@@ -405,8 +404,6 @@ class LODNode(PandaNode):
         LODNode to its normal behavior.
         """
         ...
-    @overload
-    def show_switch(self, index: int, color: _Vec4f) -> None: ...
     def hide_switch(self, index: int) -> None:
         """Disables a previous call to show_switch()."""
         ...
@@ -846,10 +843,7 @@ class SceneGraphAnalyzer:
     LM_highest: Final[Literal[1]]
     LM_all: Final[Literal[2]]
     LM_none: Final[Literal[3]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: SceneGraphAnalyzer) -> None: ...
+    def __init__(self, __param0: SceneGraphAnalyzer = ...) -> None: ...
     def set_lod_mode(self, lod_mode: _SceneGraphAnalyzer_LodMode) -> None:
         """Specifies the mode in which LODNodes are analyzed."""
         ...

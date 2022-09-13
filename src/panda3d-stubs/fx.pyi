@@ -242,15 +242,12 @@ class ProjectionScreen(PandaNode):
         NonlinearImager) to know when they need to recompute themselves.
         """
         ...
-    @overload
-    def recompute_if_stale(self) -> bool:
+    def recompute_if_stale(self, this_np: NodePath = ...) -> bool:
         """Calls recompute() only if the relative transform between the
         ProjectionScreen and the projector has changed, or if any other relevant
         property has changed.  Returns true if recomputed, false otherwise.
         """
         ...
-    @overload
-    def recompute_if_stale(self, this_np: NodePath) -> bool: ...
     setProjector = set_projector
     getProjector = get_projector
     clearUndistLut = clear_undist_lut
@@ -322,10 +319,7 @@ class NonlinearImager:
     arbitrary lens, linear or otherwise.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: NonlinearImager) -> None: ...
+    def __init__(self, __param0: NonlinearImager = ...) -> None: ...
     @overload
     def add_screen(self, screen: ProjectionScreen) -> int:
         """`(self, screen: NodePath, name: str)`:

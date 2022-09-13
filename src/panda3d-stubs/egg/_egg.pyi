@@ -76,20 +76,14 @@ class EggUserData(TypedReferenceCount):
     However, this data will not be written out to the disk when the egg file is
     written; it is an in-memory object only.
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggUserData) -> None: ...
+    def __init__(self, copy: EggUserData = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
 
 class EggObject(TypedReferenceCount):
     """The highest-level base class in the egg directory.  (Almost) all things egg
     inherit from this.
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggObject) -> None: ...
+    def __init__(self, copy: EggObject = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def set_user_data(self, user_data: EggUserData) -> None:
         """Sets the user data associated with this object.  This may be any
@@ -108,8 +102,7 @@ class EggObject(TypedReferenceCount):
         constructor.
         """
         ...
-    @overload
-    def get_user_data(self) -> EggUserData:
+    def get_user_data(self, type: TypeHandle = ...) -> EggUserData:
         """`(self)`:
         Returns the user data pointer most recently stored on this object, or NULL
         if nothing was previously stored.
@@ -119,10 +112,7 @@ class EggObject(TypedReferenceCount):
         if it does not.
         """
         ...
-    @overload
-    def get_user_data(self, type: TypeHandle) -> EggUserData: ...
-    @overload
-    def has_user_data(self) -> bool:
+    def has_user_data(self, type: TypeHandle = ...) -> bool:
         """`(self)`:
         Returns true if a generic user data pointer has recently been set and not
         yet cleared, false otherwise.
@@ -132,10 +122,7 @@ class EggObject(TypedReferenceCount):
         false otherwise.
         """
         ...
-    @overload
-    def has_user_data(self, type: TypeHandle) -> bool: ...
-    @overload
-    def clear_user_data(self) -> None:
+    def clear_user_data(self, type: TypeHandle = ...) -> None:
         """`(self)`:
         Removes *all* user data pointers from the node.
         
@@ -143,8 +130,6 @@ class EggObject(TypedReferenceCount):
         Removes the user data pointer of the indicated type.
         """
         ...
-    @overload
-    def clear_user_data(self, type: TypeHandle) -> None: ...
     setUserData = set_user_data
     getUserData = get_user_data
     hasUserData = has_user_data
@@ -793,10 +778,7 @@ class EggAttributes:
     And making EggObject a virtual base class is just no fun.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggAttributes) -> None: ...
+    def __init__(self, copy: EggAttributes = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def has_normal(self) -> bool: ...
     def get_normal(self) -> LVector3d: ...
@@ -1006,14 +988,11 @@ class EggVertex(EggObject, EggAttributes):
     such as a normal.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: EggVertex = ...) -> None:
         """Copies all properties of the vertex except its vertex pool, index number,
         and group membership.
         """
         ...
-    @overload
-    def __init__(self, copy: EggVertex) -> None: ...
     def upcast_to_EggObject(self) -> EggObject: ...
     def upcast_to_EggAttributes(self) -> EggAttributes: ...
     def assign(self: _Self, copy: _Self) -> _Self:
@@ -1092,8 +1071,7 @@ class EggVertex(EggObject, EggAttributes):
         dimensional homogenous space, e.g.  by adding 1 as the fourth component.
         """
         ...
-    @overload
-    def has_uv(self) -> bool:
+    def has_uv(self, name: str = ...) -> bool:
         """`(self)`:
         Returns true if the vertex has an unnamed UV coordinate pair, false
         otherwise.
@@ -1107,10 +1085,7 @@ class EggVertex(EggObject, EggAttributes):
         UV coordinate pair is 2-d, false otherwise.
         """
         ...
-    @overload
-    def has_uv(self, name: str) -> bool: ...
-    @overload
-    def get_uv(self) -> LPoint2d:
+    def get_uv(self, name: str = ...) -> LPoint2d:
         """`(self)`:
         Returns the unnamed UV coordinate pair on the vertex.  It is an error to
         call this if has_uv() has returned false.
@@ -1124,8 +1099,6 @@ class EggVertex(EggObject, EggAttributes):
         this if has_uv(name) returned false.
         """
         ...
-    @overload
-    def get_uv(self, name: str) -> LPoint2d: ...
     @overload
     def set_uv(self, texCoord: LVecBase2d) -> None:
         """`(self, texCoord: LPoint2d)`:
@@ -1144,8 +1117,7 @@ class EggVertex(EggObject, EggAttributes):
         ...
     @overload
     def set_uv(self, name: str, texCoord: LVecBase2d) -> None: ...
-    @overload
-    def clear_uv(self) -> None:
+    def clear_uv(self, name: str = ...) -> None:
         """`(self)`:
         Removes all UV coordinate pairs from the vertex.
         
@@ -1154,8 +1126,6 @@ class EggVertex(EggObject, EggAttributes):
         morphs.
         """
         ...
-    @overload
-    def clear_uv(self, name: str) -> None: ...
     def has_uvw(self, name: str) -> bool:
         """Returns true if the vertex has the named UV coordinate triple, and the
         named UV coordinate triple is 3-d, false otherwise.
@@ -1191,8 +1161,7 @@ class EggVertex(EggObject, EggAttributes):
         morphs.
         """
         ...
-    @overload
-    def has_aux(self) -> bool:
+    def has_aux(self, name: str = ...) -> bool:
         """`(self)`:
         Returns true if the vertex has any auxiliary data, false otherwise.
         
@@ -1200,10 +1169,7 @@ class EggVertex(EggObject, EggAttributes):
         Returns true if the vertex has the named auxiliary data quadruple.
         """
         ...
-    @overload
-    def has_aux(self, name: str) -> bool: ...
-    @overload
-    def clear_aux(self) -> None:
+    def clear_aux(self, name: str = ...) -> None:
         """`(self)`:
         Removes all auxiliary data from the vertex.
         
@@ -1211,8 +1177,6 @@ class EggVertex(EggObject, EggAttributes):
         Removes the named auxiliary data from the vertex.
         """
         ...
-    @overload
-    def clear_aux(self, name: str) -> None: ...
     def get_aux(self, name: str) -> LVecBase4d:
         """Returns the named auxiliary data quadruple on the vertex.  It is an error
         to call this if has_aux(name) returned false.
@@ -1502,8 +1466,7 @@ class EggVertexPool(EggNode):
         in the vertex pool and returned from this method.
         """
         ...
-    @overload
-    def make_new_vertex(self) -> EggVertex:
+    def make_new_vertex(self, pos: LVecBase2d | _Vec3d | _Vec4d | float = ...) -> EggVertex:
         """`(self)`:
         Allocates and returns a new vertex from the pool.  This is one of three
         ways to add new vertices to a vertex pool.
@@ -1516,8 +1479,6 @@ class EggVertexPool(EggNode):
         is allocated.  It does not attempt to share vertices.
         """
         ...
-    @overload
-    def make_new_vertex(self, pos: LVecBase2d | _Vec3d | _Vec4d | float) -> EggVertex: ...
     def create_unique_vertex(self, copy: EggVertex) -> EggVertex:
         """Creates a new vertex in the pool that is a copy of the indicated one and
         returns it.  If there is already a vertex in the pool like the indicated
@@ -1614,10 +1575,7 @@ class EggRenderMode:
     VM_unspecified: Final[Literal[0]]
     VM_hidden: Final[Literal[1]]
     VM_normal: Final[Literal[2]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggRenderMode) -> None: ...
+    def __init__(self, copy: EggRenderMode = ...) -> None: ...
     def __eq__(self, __other: object) -> bool:
         """Comparison operators are handy."""
         ...
@@ -1839,10 +1797,7 @@ class EggTransform:
     CT_uniform_scale: Final[Literal[10]]
     CT_matrix3: Final[Literal[11]]
     CT_matrix4: Final[Literal[12]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggTransform) -> None: ...
+    def __init__(self, copy: EggTransform = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def clear_transform(self) -> None:
         """Resets the transform to empty, identity."""
@@ -4098,8 +4053,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         Please use the multitexture variant add_texture instead.
         """
         ...
-    @overload
-    def has_texture(self) -> bool:
+    def has_texture(self, texture: EggTexture = ...) -> bool:
         """`(self)`:
         Returns true if the primitive has any textures specified, false otherwise.
         
@@ -4111,10 +4065,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         otherwise.
         """
         ...
-    @overload
-    def has_texture(self, texture: EggTexture) -> bool: ...
-    @overload
-    def get_texture(self) -> EggTexture:
+    def get_texture(self, n: int = ...) -> EggTexture:
         """`(self)`:
         Returns the first texture on the primitive, if any, or NULL if there are no
         textures on the primitive.
@@ -4126,8 +4077,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         Returns the nth texture that has been applied to the primitive.
         """
         ...
-    @overload
-    def get_texture(self, n: int) -> EggTexture: ...
     def add_texture(self, texture: EggTexture) -> None:
         """Applies the indicated texture to the primitive.
         
@@ -4446,10 +4395,7 @@ class EggData(EggGroupNode):
     coordinate_system: _CoordinateSystem
     egg_filename: Filename
     egg_timestamp: int
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggData) -> None: ...
+    def __init__(self, copy: EggData = ...) -> None: ...
     @staticmethod
     def resolve_egg_filename(egg_filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
         """Looks for the indicated filename, first along the indicated searchpath, and
@@ -4763,10 +4709,7 @@ class EggMaterialCollection:
     the creation of unique materials and the assignment of unique MRef names.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggMaterialCollection) -> None: ...
+    def __init__(self, copy: EggMaterialCollection = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def clear(self) -> None:
         """Removes all materials from the collection."""
@@ -5387,10 +5330,7 @@ class EggTextureCollection:
     creation of unique textures and the assignment of unique TRef names.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: EggTextureCollection) -> None: ...
+    def __init__(self, copy: EggTextureCollection = ...) -> None: ...
     def __getitem__(self, n: int) -> EggTexture:
         """Returns the nth EggTexture in the collection."""
         ...

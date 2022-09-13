@@ -964,15 +964,13 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Returns the frame of the MouseWatcher.  See set_frame()."""
         ...
     @overload
-    def is_over_region(self) -> bool:
+    def is_over_region(self, pos: LVecBase2f = ...) -> bool:
         """Returns true if the mouse is over any rectangular region, false otherwise."""
         ...
     @overload
-    def is_over_region(self, pos: LVecBase2f) -> bool: ...
-    @overload
     def is_over_region(self, x: float, y: float) -> bool: ...
     @overload
-    def get_over_region(self) -> MouseWatcherRegion:
+    def get_over_region(self, pos: LVecBase2f = ...) -> MouseWatcherRegion:
         """`(self)`:
         Returns the smallest region the mouse is currently over, or NULL if it is
         over no region.
@@ -987,8 +985,6 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         over no region.
         """
         ...
-    @overload
-    def get_over_region(self, pos: LVecBase2f) -> MouseWatcherRegion: ...
     @overload
     def get_over_region(self, x: float, y: float) -> MouseWatcherRegion: ...
     def is_button_down(self, button: ButtonHandle) -> bool:
@@ -1390,14 +1386,11 @@ class MouseWatcherParameter:
         otherwise.
         """
         ...
-    @overload
-    def get_candidate_string_encoded(self) -> str:
+    def get_candidate_string_encoded(self, encoding: _TextEncoder_Encoding = ...) -> str:
         """Returns the candidate string associated with this event.  If
         has_candidate(), above, returns false, this returns the empty string.
         """
         ...
-    @overload
-    def get_candidate_string_encoded(self, encoding: _TextEncoder_Encoding) -> str: ...
     def get_highlight_start(self) -> int:
         """Returns the first highlighted character in the candidate string."""
         ...

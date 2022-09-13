@@ -1,4 +1,3 @@
-from typing import overload
 from typing_extensions import TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
@@ -41,12 +40,9 @@ class CMotionTrail(TypedReferenceCount):
     coordinate of the texture corresponds to time and the v coordinate
     corresponds to the "shape" of the motion trail.
     """
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: CMotionTrail = ...) -> None:
         """Constructor"""
         ...
-    @overload
-    def __init__(self, __param0: CMotionTrail) -> None: ...
     def reset(self) -> None:
         """Reset the frame sample history."""
         ...

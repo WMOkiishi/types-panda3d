@@ -166,8 +166,7 @@ class PNMTextGlyph:
         rendering this glyph.
         """
         ...
-    @overload
-    def place(self, dest_image: PNMImage, xp: int, yp: int, fg: _Vec4f) -> None:
+    def place(self, dest_image: PNMImage, xp: int, yp: int, fg: _Vec4f, interior: _Vec4f = ...) -> None:
         """`(self, dest_image: PNMImage, xp: int, yp: int, fg: LVecBase4f)`:
         Copies the glyph to the indicated destination image at the indicated
         origin.  It colors the glyph pixels the indicated foreground color, blends
@@ -179,8 +178,6 @@ class PNMTextGlyph:
         that determine_interior was called earlier.
         """
         ...
-    @overload
-    def place(self, dest_image: PNMImage, xp: int, yp: int, fg: _Vec4f, interior: _Vec4f) -> None: ...
     def get_left(self) -> int:
         """Returns the x coordinate of the leftmost pixel in the glyph."""
         ...

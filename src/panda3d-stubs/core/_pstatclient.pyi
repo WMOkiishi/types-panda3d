@@ -263,8 +263,7 @@ class PStatCollector:
         """
         ...
     def output(self, out: ostream) -> None: ...
-    @overload
-    def is_active(self) -> bool:
+    def is_active(self, thread: PStatThread = ...) -> bool:
         """`(self)`:
         Returns true if this particular collector is active on the default thread,
         and we are currently transmitting PStats data.
@@ -274,10 +273,7 @@ class PStatCollector:
         thread, and we are currently transmitting PStats data.
         """
         ...
-    @overload
-    def is_active(self, thread: PStatThread) -> bool: ...
-    @overload
-    def is_started(self) -> bool:
+    def is_started(self, thread: PStatThread = ...) -> bool:
         """`(self)`:
         Returns true if this particular collector has been started on the default
         thread, or false otherwise.
@@ -288,9 +284,7 @@ class PStatCollector:
         """
         ...
     @overload
-    def is_started(self, thread: PStatThread) -> bool: ...
-    @overload
-    def start(self) -> None:
+    def start(self, thread: PStatThread = ...) -> None:
         """`(self)`:
         Starts this particular timer ticking.  This should be called before the
         code you want to measure.
@@ -306,11 +300,9 @@ class PStatCollector:
         """
         ...
     @overload
-    def start(self, thread: PStatThread) -> None: ...
-    @overload
     def start(self, thread: PStatThread, as_of: float) -> None: ...
     @overload
-    def stop(self) -> None:
+    def stop(self, thread: PStatThread = ...) -> None:
         """`(self)`:
         Stops this timer.  This should be called after the code you want to
         measure.
@@ -326,11 +318,8 @@ class PStatCollector:
         """
         ...
     @overload
-    def stop(self, thread: PStatThread) -> None: ...
-    @overload
     def stop(self, thread: PStatThread, as_of: float) -> None: ...
-    @overload
-    def clear_level(self) -> None:
+    def clear_level(self, thread: PStatThread = ...) -> None:
         """`(self)`:
         Removes the level setting associated with this collector for the main
         thread.  The collector will no longer show up on any level graphs in the
@@ -342,8 +331,6 @@ class PStatCollector:
         thread.
         """
         ...
-    @overload
-    def clear_level(self, thread: PStatThread) -> None: ...
     @overload
     def set_level(self, level: float) -> None:
         """`(self, thread: PStatThread, level: float)`:
@@ -408,8 +395,7 @@ class PStatCollector:
         sub_level().
         """
         ...
-    @overload
-    def get_level(self) -> float:
+    def get_level(self, thread: PStatThread = ...) -> float:
         """`(self)`:
         Returns the current level value of the given collector in the main thread.
         This implicitly calls flush_level().
@@ -418,8 +404,6 @@ class PStatCollector:
         Returns the current level value of the given collector.
         """
         ...
-    @overload
-    def get_level(self, thread: PStatThread) -> float: ...
     def clear_thread_level(self) -> None:
         """Removes the level setting associated with this collector for the current
         thread.  The collector will no longer show up on any level graphs in the

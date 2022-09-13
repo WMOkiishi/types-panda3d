@@ -29,7 +29,7 @@ class Socket_Address:
         """Set to the broadcast address and a specified port"""
         ...
     @overload
-    def set_host(self, hostname: str) -> bool:
+    def set_host(self, hostname: str, port: int = ...) -> bool:
         """`(self, hostname: str)`:
         Initializes the address from a string specifying both the address and port,
         separated by a colon.  An IPv6 address must be enclosed in brackets.
@@ -40,8 +40,6 @@ class Socket_Address:
         returns false and the address may be undefined.
         """
         ...
-    @overload
-    def set_host(self, hostname: str, port: int) -> bool: ...
     @overload
     def set_host(self, ip4addr: int, port: int) -> bool: ...
     def clear(self) -> None:
@@ -95,8 +93,7 @@ class Socket_IP(TypedObject):
     |                       |                           | SocketTCP
     SocketTCP_Listen    SocketUDP_Incoming   SocketUDP_OutBound
     """
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, _in: int = ...) -> None:
         """`(self)`:
         Def Constructor
         
@@ -104,8 +101,6 @@ class Socket_IP(TypedObject):
         Assigns an existing socket to this class
         """
         ...
-    @overload
-    def __init__(self, _in: int) -> None: ...
     def Close(self) -> None:
         """Closes a socket if it is open (allocated)."""
         ...
@@ -157,10 +152,7 @@ class Socket_TCP(Socket_IP):
     by itself but it does hide some of the platform differences from machine to
     machine
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: int) -> None: ...
+    def __init__(self, __param0: int = ...) -> None: ...
     def SetNoDelay(self, flag: bool = ...) -> int:
         """Disable Nagle algorithm.  Don't delay send to coalesce packets"""
         ...
@@ -252,12 +244,9 @@ class Socket_UDP_Outgoing(Socket_IP):
 
 class Socket_fdset:
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: Socket_fdset = ...) -> None:
         """The constructor"""
         ...
-    @overload
-    def __init__(self, __param0: Socket_fdset) -> None: ...
     def setForSocket(self, incon: Socket_IP) -> None: ...
     def IsSetFor(self, incon: Socket_IP) -> bool:
         """check to see if a socket object has been marked for reading"""

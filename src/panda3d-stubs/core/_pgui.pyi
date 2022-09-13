@@ -41,10 +41,7 @@ class PGFrameStyle:
     T_groove: Final[Literal[4]]
     T_ridge: Final[Literal[5]]
     T_texture_border: Final[Literal[6]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: PGFrameStyle) -> None: ...
+    def __init__(self, copy: PGFrameStyle = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def set_type(self, type: _PGFrameStyle_Type) -> None:
         """Sets the basic type of frame."""
@@ -532,7 +529,7 @@ class PGButton(PGItem):
     @property
     def click_prefix(self) -> str: ...
     @overload
-    def setup(self, ready: NodePath) -> None:
+    def setup(self, ready: NodePath, depressed: NodePath = ...) -> None:
         """`(self, ready: NodePath)`; `(self, ready: NodePath, depressed: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath)`:
         Sets up the button using the indicated NodePath as arbitrary geometry.
         
@@ -546,11 +543,7 @@ class PGButton(PGItem):
     @overload
     def setup(self, label: str, bevel: float = ...) -> None: ...
     @overload
-    def setup(self, ready: NodePath, depressed: NodePath) -> None: ...
-    @overload
-    def setup(self, ready: NodePath, depressed: NodePath, rollover: NodePath) -> None: ...
-    @overload
-    def setup(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath) -> None: ...
+    def setup(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath = ...) -> None: ...
     def add_click_button(self, button: ButtonHandle) -> bool:
         """Adds the indicated button to the set of buttons that can effectively
         "click" the PGButton.  Normally, this is just MouseButton::one().  Returns
@@ -1043,10 +1036,7 @@ class PGMouseWatcherBackground(MouseWatcherRegion):
     and is never active, but just quietly listens for keypresses and sends them
     to all the PGItems with background focus.
     """
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: PGMouseWatcherBackground) -> None: ...
+    def __init__(self, __param0: PGMouseWatcherBackground = ...) -> None: ...
 
 class PGVirtualFrame(PGItem):
     """This represents a frame that is rendered as a window onto another (possibly

@@ -32,10 +32,7 @@ class ConfigFlags:
     F_closed: Final[Literal[8192]]
     F_dynamic: Final[Literal[16384]]
     F_dconfig: Final[Literal[32768]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: ConfigFlags) -> None: ...
+    def __init__(self, __param0: ConfigFlags = ...) -> None: ...
     VTUndefined = VT_undefined
     VTList = VT_list
     VTString = VT_string
@@ -609,10 +606,7 @@ class Notify:
     or respected according to the wishes of the user.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: Notify) -> None: ...
+    def __init__(self, __param0: Notify = ...) -> None: ...
     def set_ostream_ptr(self, ostream_ptr: ostream, delete_later: bool) -> None:
         """Changes the ostream that all subsequent Notify messages will be written to.
         If the previous ostream was set with delete_later = true, this will delete

@@ -13,9 +13,7 @@ from panda3d.core import (
 
 class PointerTo_Connection(PointerToBase_Connection):
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, ptr: Connection) -> None: ...
+    def __init__(self, ptr: Connection = ...) -> None: ...
     @overload
     def __init__(self, copy: Connection) -> None: ...
     @overload
@@ -42,7 +40,7 @@ class NetAddress:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: NetAddress = ...) -> None:
         """`(self)`:
         Constructs an unspecified address.
         
@@ -52,8 +50,6 @@ class NetAddress:
         NetAddress and use one of the set_*() functions to set up an address.
         """
         ...
-    @overload
-    def __init__(self, __param0: NetAddress) -> None: ...
     @overload
     def __init__(self, addr: Socket_Address) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -353,12 +349,9 @@ class NetDatagram(Datagram):
     from a network.  It's different only in that it knows which Connection
     and/or NetAddress it is to be sent to or was received from.
     """
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: Datagram = ...) -> None:
         """Constructs an empty datagram."""
         ...
-    @overload
-    def __init__(self, copy: Datagram) -> None: ...
     def assign(self, copy: Datagram) -> NetDatagram: ...
     def set_connection(self, connection: Connection) -> None:
         """Specifies the socket to which the datagram should be written."""

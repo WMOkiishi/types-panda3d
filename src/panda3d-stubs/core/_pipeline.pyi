@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import Namable, TypeHandle, TypedReferenceCount, ostream
 
@@ -339,10 +339,7 @@ class MutexDirect:
     getName = get_name
 
 class Mutex(MutexDirect):
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, name: str) -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
 
 class ConditionVarDirect:
     """A condition variable, usually used to communicate information about
@@ -357,8 +354,7 @@ class ConditionVarDirect:
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
         ...
-    @overload
-    def wait(self) -> None:
+    def wait(self, timeout: float = ...) -> None:
         """`(self)`:
         Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
@@ -385,8 +381,6 @@ class ConditionVarDirect:
         See wait() with no parameters for more.
         """
         ...
-    @overload
-    def wait(self, timeout: float) -> None: ...
     def notify(self) -> None:
         """Informs one of the other threads who are currently blocked on wait() that
         the relevant condition has changed.  If multiple threads are currently
@@ -433,8 +427,7 @@ class ConditionVarFullDirect:
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
         ...
-    @overload
-    def wait(self) -> None:
+    def wait(self, timeout: float = ...) -> None:
         """`(self)`:
         Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
@@ -461,8 +454,6 @@ class ConditionVarFullDirect:
         See wait() with no parameters for more.
         """
         ...
-    @overload
-    def wait(self, timeout: float) -> None: ...
     def notify(self) -> None:
         """Informs one of the other threads who are currently blocked on wait() that
         the relevant condition has changed.  If multiple threads are currently
@@ -513,8 +504,7 @@ class ReMutexDirect:
     operations.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def acquire(self) -> None:
+    def acquire(self, current_thread: Thread = ...) -> None:
         """`(self)`:
         Grabs the reMutex if it is available.  If it is not available, blocks until
         it becomes available, then grabs it.  In either case, the function does not
@@ -530,16 +520,11 @@ class ReMutexDirect:
         is already known, as an optimization.
         """
         ...
-    @overload
-    def acquire(self, current_thread: Thread) -> None: ...
-    @overload
-    def try_acquire(self) -> bool:
+    def try_acquire(self, current_thread: Thread = ...) -> bool:
         """Returns immediately, with a true value indicating the mutex has been
         acquired, and false indicating it has not.
         """
         ...
-    @overload
-    def try_acquire(self, current_thread: Thread) -> bool: ...
     def elevate_lock(self) -> None:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one
@@ -592,10 +577,7 @@ class ReMutexDirect:
     getName = get_name
 
 class ReMutex(ReMutexDirect):
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, name: str) -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
 
 class ExternalThread(Thread):
     """The special "external thread" class.  There is one instance of these in the
@@ -659,10 +641,7 @@ class LightMutexDirect:
     getName = get_name
 
 class LightMutex(LightMutexDirect):
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, name: str) -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
 
 class LightReMutexDirect:
     """This class implements a standard lightReMutex by making direct calls to the
@@ -670,8 +649,7 @@ class LightReMutexDirect:
     operations.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def acquire(self) -> None:
+    def acquire(self, current_thread: Thread = ...) -> None:
         """`(self)`:
         Grabs the lightReMutex if it is available.  If it is not available, blocks
         until it becomes available, then grabs it.  In either case, the function
@@ -688,8 +666,6 @@ class LightReMutexDirect:
         is already known, as an optimization.
         """
         ...
-    @overload
-    def acquire(self, current_thread: Thread) -> None: ...
     def elevate_lock(self) -> None:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one
@@ -741,10 +717,7 @@ class LightReMutexDirect:
     getName = get_name
 
 class LightReMutex(LightReMutexDirect):
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, name: str) -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
 
 class MainThread(Thread):
     """The special "main thread" class.  There is one instance of these in the

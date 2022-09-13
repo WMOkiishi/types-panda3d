@@ -224,13 +224,11 @@ class URLSpec:
     @property
     def ssl(self) -> bool: ...
     @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: URLSpec = ...) -> None:
         """Creates a URLSpec by appending a path to the end of the old URLSpec,
         inserting an intervening forward slash if necessary.
         """
         ...
-    @overload
-    def __init__(self, __param0: URLSpec) -> None: ...
     @overload
     def __init__(self, url: str, server_name_expected: bool = ...) -> None: ...
     @overload
@@ -484,10 +482,7 @@ class HTTPEnum:
     M_delete: Final[Literal[5]]
     M_trace: Final[Literal[6]]
     M_connect: Final[Literal[7]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: HTTPEnum) -> None: ...
+    def __init__(self, __param0: HTTPEnum = ...) -> None: ...
     HV09 = HV_09
     HV10 = HV_10
     HV11 = HV_11
@@ -509,13 +504,11 @@ class HTTPDate:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: HTTPDate = ...) -> None:
         """Decodes the string into a sensible date.  Returns 0 (!is_valid()) if the
         string cannot be correctly decoded.
         """
         ...
-    @overload
-    def __init__(self, copy: HTTPDate) -> None: ...
     @overload
     def __init__(self, format: str) -> None: ...
     @overload
@@ -570,7 +563,7 @@ class HTTPCookie:
     expires: HTTPDate
     secure: bool
     @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: HTTPCookie = ...) -> None:
         """`(self)`:
         Constructs an empty cookie.
         
@@ -585,8 +578,6 @@ class HTTPCookie:
         the HTTPClient.
         """
         ...
-    @overload
-    def __init__(self, __param0: HTTPCookie) -> None: ...
     @overload
     def __init__(self, format: str, url: URLSpec) -> None: ...
     @overload
@@ -689,10 +680,7 @@ class HTTPClient(ReferenceCount):
     VS_no_verify: Final[Literal[0]]
     VS_no_date_check: Final[Literal[1]]
     VS_normal: Final[Literal[2]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: HTTPClient) -> None: ...
+    def __init__(self, copy: HTTPClient = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     @staticmethod
     def init_random_seed() -> None:
@@ -1088,7 +1076,7 @@ class HTTPEntityTag:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: HTTPEntityTag = ...) -> None:
         """`(self, weak: bool, tag: str)`:
         This constructor accepts an explicit weak flag and a literal (not quoted)
         tag string.
@@ -1098,8 +1086,6 @@ class HTTPEntityTag:
         the tag is quoted, with an optional W/ prefix.)
         """
         ...
-    @overload
-    def __init__(self, copy: HTTPEntityTag) -> None: ...
     @overload
     def __init__(self, text: str) -> None: ...
     @overload
@@ -1170,9 +1156,7 @@ class DocumentSpec:
     CC_revalidate: Final[Literal[1]]
     CC_no_cache: Final[Literal[2]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: DocumentSpec) -> None: ...
+    def __init__(self, copy: DocumentSpec = ...) -> None: ...
     @overload
     def __init__(self, url: URLSpec | str) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -2083,12 +2067,8 @@ class Decompressor:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def progress(self) -> float: ...
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: Decompressor) -> None: ...
-    @overload
-    def initiate(self, source_file: _Filename) -> int:
+    def __init__(self, __param0: Decompressor = ...) -> None: ...
+    def initiate(self, source_file: _Filename, dest_file: _Filename = ...) -> int:
         """`(self, source_file: Filename)`:
         Begins a background decompression of the named file (whose filename must
         end in ".pz") to a new file without the .pz extension.  The source file is
@@ -2099,8 +2079,6 @@ class Decompressor:
         destination file.  The source file is removed after successful completion.
         """
         ...
-    @overload
-    def initiate(self, source_file: _Filename, dest_file: _Filename) -> int: ...
     def run(self) -> int:
         """Called each frame to do the next bit of work in the background task.
         Returns EU_ok if a chunk is completed but there is more to go, or
@@ -2139,7 +2117,7 @@ class DownloadDb:
     Status_decompressed: Final[Literal[2]]
     Status_extracted: Final[Literal[3]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: DownloadDb = ...) -> None:
         """`(self)`:
         Primarily used for testing.
         
@@ -2147,8 +2125,6 @@ class DownloadDb:
         Create a download db with these client and server dbs
         """
         ...
-    @overload
-    def __init__(self, __param0: DownloadDb) -> None: ...
     @overload
     def __init__(self, server_file: Ramfile | _Filename, client_file: _Filename) -> None: ...
     def output(self, out: ostream) -> None: ...
@@ -2432,9 +2408,7 @@ class Patcher:
     """Applies a patch synchronously"""
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: Patcher) -> None: ...
+    def __init__(self, __param0: Patcher = ...) -> None: ...
     @overload
     def __init__(self, buffer: Buffer) -> None: ...
     def initiate(self, patch: _Filename, infile: _Filename) -> int: ...

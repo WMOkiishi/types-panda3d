@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, overload
+from typing import Any, ClassVar
 from panda3d.core import TypedObject
 
 class BasicSkel:
@@ -9,10 +9,7 @@ class BasicSkel:
     to panda.  See also the manual, "Adding C++ Classes to Panda."
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: BasicSkel) -> None: ...
+    def __init__(self, __param0: BasicSkel = ...) -> None: ...
     def set_value(self, n: int) -> None:
         """These inline functions allow you to get and set _value."""
         ...

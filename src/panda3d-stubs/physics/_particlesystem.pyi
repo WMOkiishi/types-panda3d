@@ -102,8 +102,7 @@ class BaseParticleEmitter(ReferenceCount):
 
 class RingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: RingEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -111,8 +110,6 @@ class RingEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: RingEmitter) -> None: ...
     def set_radius(self, r: float) -> None: ...
     def set_angle(self, angle: float) -> None: ...
     def set_radius_spread(self, spread: float) -> None: ...
@@ -132,8 +129,7 @@ class RingEmitter(BaseParticleEmitter):
 
 class ArcEmitter(RingEmitter):
     """Describes a planar ring region in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: ArcEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -141,8 +137,6 @@ class ArcEmitter(RingEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: ArcEmitter) -> None: ...
     def set_start_angle(self, angle: float) -> None: ...
     def set_end_angle(self, angle: float) -> None: ...
     def set_arc(self, startAngle: float, endAngle: float) -> None: ...
@@ -279,8 +273,7 @@ class BaseParticleRenderer(ReferenceCount):
 
 class BoxEmitter(BaseParticleEmitter):
     """Describes a voluminous box region in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: BoxEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -288,8 +281,6 @@ class BoxEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: BoxEmitter) -> None: ...
     def set_min_bound(self, vmin: _Vec3f) -> None:
         """boundary assignment"""
         ...
@@ -366,9 +357,7 @@ class ColorInterpolationSegment(ReferenceCount):
 
 class ColorInterpolationManager(ReferenceCount):
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: ColorInterpolationManager) -> None: ...
+    def __init__(self, copy: ColorInterpolationManager = ...) -> None: ...
     @overload
     def __init__(self, c: _Vec4f) -> None: ...
     def add_constant(self, time_begin: float = ..., time_end: float = ..., color: _Vec4f = ..., is_modulated: bool = ...) -> int: ...
@@ -392,8 +381,7 @@ class ColorInterpolationManager(ReferenceCount):
 
 class DiscEmitter(BaseParticleEmitter):
     """Describes a planar disc region from which particles are generated"""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: DiscEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -401,8 +389,6 @@ class DiscEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: DiscEmitter) -> None: ...
     def set_radius(self, r: float) -> None: ...
     def set_outer_angle(self, o_angle: float) -> None: ...
     def set_inner_angle(self, i_angle: float) -> None: ...
@@ -478,12 +464,9 @@ class GeomParticleRenderer(BaseParticleRenderer):
 
 class LineEmitter(BaseParticleEmitter):
     """Describes a linear region in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: LineEmitter = ...) -> None:
         """constructor"""
         ...
-    @overload
-    def __init__(self, copy: LineEmitter) -> None: ...
     def set_endpoint1(self, point: _Vec3f) -> None:
         """endpoint assignment"""
         ...
@@ -503,9 +486,7 @@ class LineEmitter(BaseParticleEmitter):
 
 class LineParticleRenderer(BaseParticleRenderer):
     @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: LineParticleRenderer) -> None: ...
+    def __init__(self, copy: LineParticleRenderer = ...) -> None: ...
     @overload
     def __init__(self, head: _Vec4f, tail: _Vec4f, alpha_mode: _BaseParticleRenderer_ParticleRendererAlphaMode) -> None: ...
     def set_head_color(self, c: _Vec4f) -> None: ...
@@ -674,8 +655,7 @@ class ParticleSystem(Physical):
 
 class PointEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: PointEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -683,8 +663,6 @@ class PointEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: PointEmitter) -> None: ...
     def set_location(self, p: _Vec3f) -> None:
         """point setting"""
         ...
@@ -693,8 +671,7 @@ class PointEmitter(BaseParticleEmitter):
     getLocation = get_location
 
 class PointParticleFactory(BaseParticleFactory):
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: PointParticleFactory = ...) -> None:
         """`(self)`:
         default constructor
         
@@ -702,8 +679,6 @@ class PointParticleFactory(BaseParticleFactory):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: PointParticleFactory) -> None: ...
 
 class PointParticleRenderer(BaseParticleRenderer):
     PP_ONE_COLOR: Final[Literal[0]]
@@ -746,8 +721,7 @@ class PointParticleRenderer(BaseParticleRenderer):
 
 class RectangleEmitter(BaseParticleEmitter):
     """Describes a planar square region in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: RectangleEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -755,8 +729,6 @@ class RectangleEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: RectangleEmitter) -> None: ...
     def set_min_bound(self, vmin: LVecBase2f) -> None:
         """boundary set"""
         ...
@@ -779,7 +751,7 @@ class SparkleParticleRenderer(BaseParticleRenderer):
     SP_NO_SCALE: Final[Literal[0]]
     SP_SCALE: Final[Literal[1]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: SparkleParticleRenderer = ...) -> None:
         """`(self)`:
         Default Constructor
         
@@ -787,8 +759,6 @@ class SparkleParticleRenderer(BaseParticleRenderer):
         Copy Constructor
         """
         ...
-    @overload
-    def __init__(self, copy: SparkleParticleRenderer) -> None: ...
     @overload
     def __init__(self, center: _Vec4f, edge: _Vec4f, birth_radius: float, death_radius: float, life_scale: _SparkleParticleRenderer_SparkleParticleLifeScale, alpha_mode: _BaseParticleRenderer_ParticleRendererAlphaMode) -> None: ...
     def set_center_color(self, c: _Vec4f) -> None: ...
@@ -816,8 +786,7 @@ class SparkleParticleRenderer(BaseParticleRenderer):
 
 class SphereSurfaceEmitter(BaseParticleEmitter):
     """Describes a curved space in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: SphereSurfaceEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -825,8 +794,6 @@ class SphereSurfaceEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: SphereSurfaceEmitter) -> None: ...
     def set_radius(self, r: float) -> None: ...
     def get_radius(self) -> float: ...
     setRadius = set_radius
@@ -834,8 +801,7 @@ class SphereSurfaceEmitter(BaseParticleEmitter):
 
 class SphereVolumeEmitter(BaseParticleEmitter):
     """Describes a voluminous spherical region in which particles are generated."""
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: SphereVolumeEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -843,8 +809,6 @@ class SphereVolumeEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: SphereVolumeEmitter) -> None: ...
     def set_radius(self, r: float) -> None: ...
     def get_radius(self) -> float: ...
     setRadius = set_radius
@@ -1102,8 +1066,7 @@ class TangentRingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which tangent particles are generated,
     and particles fly off tangential to the ring.
     """
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: TangentRingEmitter = ...) -> None:
         """`(self)`:
         constructor
         
@@ -1111,8 +1074,6 @@ class TangentRingEmitter(BaseParticleEmitter):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: TangentRingEmitter) -> None: ...
     def set_radius(self, r: float) -> None: ...
     def set_radius_spread(self, spread: float) -> None: ...
     def get_radius(self) -> float: ...
@@ -1123,8 +1084,7 @@ class TangentRingEmitter(BaseParticleEmitter):
     getRadiusSpread = get_radius_spread
 
 class ZSpinParticleFactory(BaseParticleFactory):
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, copy: ZSpinParticleFactory = ...) -> None:
         """`(self)`:
         constructor
         
@@ -1132,8 +1092,6 @@ class ZSpinParticleFactory(BaseParticleFactory):
         copy constructor
         """
         ...
-    @overload
-    def __init__(self, copy: ZSpinParticleFactory) -> None: ...
     def set_initial_angle(self, angle: float) -> None: ...
     def set_final_angle(self, angle: float) -> None: ...
     def set_initial_angle_spread(self, spread: float) -> None: ...

@@ -575,14 +575,11 @@ class AnimControlCollection:
     delete it, unbinding its animation).
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: AnimControlCollection = ...) -> None:
         """Returns the AnimControl associated with the given name, or NULL if no such
         control has been associated.
         """
         ...
-    @overload
-    def __init__(self, __param0: AnimControlCollection) -> None: ...
     def store_anim(self, control: AnimControl, name: str) -> None:
         """Associates the given AnimControl with this collection under the given name.
         The AnimControl will remain associated until a new AnimControl is
@@ -656,8 +653,7 @@ class AnimControlCollection:
     def pose_all(self, frame: float) -> None:
         """Sets all animations to the indicated frame."""
         ...
-    @overload
-    def get_frame(self) -> int:
+    def get_frame(self, anim_name: str = ...) -> int:
         """`(self)`:
         Returns the current frame in the last-started animation.
         
@@ -666,10 +662,7 @@ class AnimControlCollection:
         not found.
         """
         ...
-    @overload
-    def get_frame(self, anim_name: str) -> int: ...
-    @overload
-    def get_num_frames(self) -> int:
+    def get_num_frames(self, anim_name: str = ...) -> int:
         """`(self)`:
         Returns the total number of frames in the last-started animation.
         
@@ -678,10 +671,7 @@ class AnimControlCollection:
         animation is not found.
         """
         ...
-    @overload
-    def get_num_frames(self, anim_name: str) -> int: ...
-    @overload
-    def is_playing(self) -> bool:
+    def is_playing(self, anim_name: str = ...) -> bool:
         """`(self)`:
         Returns true if the last-started animation is currently playing, false
         otherwise.
@@ -690,8 +680,6 @@ class AnimControlCollection:
         Returns true if the named animation is currently playing, false otherwise.
         """
         ...
-    @overload
-    def is_playing(self, anim_name: str) -> bool: ...
     def which_anim_playing(self) -> str:
         """Returns the name of the bound AnimControl currently playing, if any.  If
         more than one AnimControl is currently playing, returns all of the names
@@ -785,10 +773,7 @@ class PartSubset:
     will be included in the bind.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, copy: PartSubset) -> None: ...
+    def __init__(self, copy: PartSubset = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def add_include_joint(self, name: GlobPattern) -> None:
         """Adds the named joint to the list of joints that will be explicitly included
