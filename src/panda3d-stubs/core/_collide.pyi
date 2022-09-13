@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import TypeAlias
+from typing_extensions import Literal, TypeAlias
 from panda3d.core import (
     BitMask_uint32_t_32,
     BoundingVolume,
@@ -136,7 +136,7 @@ class CollisionBox(CollisionSolid):
         ...
     @overload
     def __init__(self, center: _Vec3f, x: float, y: float, z: float) -> None: ...
-    def get_num_points(self) -> int:
+    def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a rectangular solid."""
         ...
     def get_point_aabb(self, n: int) -> LPoint3f:
@@ -145,7 +145,7 @@ class CollisionBox(CollisionSolid):
     def get_point(self, n: int) -> LPoint3f:
         """Returns the nth vertex of the OBB."""
         ...
-    def get_num_planes(self) -> int:
+    def get_num_planes(self) -> Literal[6]:
         """Returns 6: the number of faces of a rectangular solid."""
         ...
     def set_plane(self, n: int) -> LPlanef:

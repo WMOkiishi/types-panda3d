@@ -3332,7 +3332,7 @@ class SparseArray:
         """Returns a SparseArray whose size bits, beginning at low_bit, are on."""
         ...
     @staticmethod
-    def has_max_num_bits() -> bool:
+    def has_max_num_bits() -> Literal[False]:
         """Returns true if there is a maximum number of bits that may be stored in
         this structure, false otherwise.  If this returns true, the number may be
         queried in get_max_num_bits().

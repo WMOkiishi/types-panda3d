@@ -5990,7 +5990,7 @@ class NodePath(Generic[_N]):
         """
         ...
     def get_tight_bounds(self, other: NodePath = ...): ...
-    def flatten_light(self) -> int:
+    def flatten_light(self) -> Literal[0]:
         """Lightly flattens out the hierarchy below this node by applying transforms,
         colors, and texture matrices from the nodes onto the vertices, but does not
         remove any nodes.
@@ -11091,7 +11091,7 @@ class OccluderNode(PandaNode):
         occluder.
         """
         ...
-    def get_num_vertices(self) -> int:
+    def get_num_vertices(self) -> Literal[4]:
         """Returns the number of vertices in the occluder polygon.  This should always
         return 4.
         """
