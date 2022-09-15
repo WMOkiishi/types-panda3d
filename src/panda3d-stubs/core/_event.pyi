@@ -243,20 +243,35 @@ class AsyncTask(AsyncFuture, Namable):
     priority: int
     done_event: str
     DS_done: Final[Literal[0]]
+    DSDone: Final[Literal[0]]
     DS_cont: Final[Literal[1]]
+    DSCont: Final[Literal[1]]
     DS_again: Final[Literal[2]]
+    DSAgain: Final[Literal[2]]
     DS_pickup: Final[Literal[3]]
+    DSPickup: Final[Literal[3]]
     DS_exit: Final[Literal[4]]
+    DSExit: Final[Literal[4]]
     DS_pause: Final[Literal[5]]
+    DSPause: Final[Literal[5]]
     DS_interrupt: Final[Literal[6]]
+    DSInterrupt: Final[Literal[6]]
     DS_await: Final[Literal[7]]
+    DSAwait: Final[Literal[7]]
     S_inactive: Final[Literal[0]]
+    SInactive: Final[Literal[0]]
     S_active: Final[Literal[1]]
+    SActive: Final[Literal[1]]
     S_servicing: Final[Literal[2]]
+    SServicing: Final[Literal[2]]
     S_servicing_removed: Final[Literal[3]]
+    SServicingRemoved: Final[Literal[3]]
     S_sleeping: Final[Literal[4]]
+    SSleeping: Final[Literal[4]]
     S_active_nested: Final[Literal[5]]
+    SActiveNested: Final[Literal[5]]
     S_awaiting: Final[Literal[6]]
+    SAwaiting: Final[Literal[6]]
     @property
     def state(self) -> _AsyncTask_State: ...
     @property
@@ -492,21 +507,6 @@ class AsyncTask(AsyncFuture, Namable):
     getMaxDt = get_max_dt
     getAverageDt = get_average_dt
     getClassType = get_class_type
-    DSDone = DS_done
-    DSCont = DS_cont
-    DSAgain = DS_again
-    DSPickup = DS_pickup
-    DSExit = DS_exit
-    DSPause = DS_pause
-    DSInterrupt = DS_interrupt
-    DSAwait = DS_await
-    SInactive = S_inactive
-    SActive = S_active
-    SServicing = S_servicing
-    SServicingRemoved = S_servicing_removed
-    SSleeping = S_sleeping
-    SActiveNested = S_active_nested
-    SAwaiting = S_awaiting
 
 class AsyncTaskManager(TypedReferenceCount, Namable):
     """A class to manage a loose queue of isolated tasks, which can be performed
@@ -1071,14 +1071,23 @@ class ButtonEvent:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_down: Final[Literal[0]]
+    TDown: Final[Literal[0]]
     T_resume_down: Final[Literal[1]]
+    TResumeDown: Final[Literal[1]]
     T_up: Final[Literal[2]]
+    TUp: Final[Literal[2]]
     T_repeat: Final[Literal[3]]
+    TRepeat: Final[Literal[3]]
     T_keystroke: Final[Literal[4]]
+    TKeystroke: Final[Literal[4]]
     T_candidate: Final[Literal[5]]
+    TCandidate: Final[Literal[5]]
     T_move: Final[Literal[6]]
+    TMove: Final[Literal[6]]
     T_raw_down: Final[Literal[7]]
+    TRawDown: Final[Literal[7]]
     T_raw_up: Final[Literal[8]]
+    TRawUp: Final[Literal[8]]
     @property
     def button(self) -> ButtonHandle: ...
     @property
@@ -1091,15 +1100,6 @@ class ButtonEvent:
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: ButtonEvent) -> bool: ...
     def __le__(self, other: ButtonEvent) -> bool: ...
-    TDown = T_down
-    TResumeDown = T_resume_down
-    TUp = T_up
-    TRepeat = T_repeat
-    TKeystroke = T_keystroke
-    TCandidate = T_candidate
-    TMove = T_move
-    TRawDown = T_raw_down
-    TRawUp = T_raw_up
 
 class ButtonEventList(ParamValueBase):
     """Records a set of button events that happened recently.  This class is

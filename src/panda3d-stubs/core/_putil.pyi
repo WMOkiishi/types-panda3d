@@ -799,32 +799,32 @@ class BamEnums:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     BE_bigendian: Final[Literal[0]]
+    BEBigendian: Final[Literal[0]]
     BE_littleendian: Final[Literal[1]]
+    BELittleendian: Final[Literal[1]]
     BE_native: Final[Literal[1]]
+    BENative: Final[Literal[1]]
     BOC_push: Final[Literal[0]]
+    BOCPush: Final[Literal[0]]
     BOC_pop: Final[Literal[1]]
+    BOCPop: Final[Literal[1]]
     BOC_adjunct: Final[Literal[2]]
+    BOCAdjunct: Final[Literal[2]]
     BOC_remove: Final[Literal[3]]
+    BOCRemove: Final[Literal[3]]
     BOC_file_data: Final[Literal[4]]
+    BOCFileData: Final[Literal[4]]
     BTM_unchanged: Final[Literal[0]]
+    BTMUnchanged: Final[Literal[0]]
     BTM_fullpath: Final[Literal[1]]
+    BTMFullpath: Final[Literal[1]]
     BTM_relative: Final[Literal[2]]
+    BTMRelative: Final[Literal[2]]
     BTM_basename: Final[Literal[3]]
+    BTMBasename: Final[Literal[3]]
     BTM_rawdata: Final[Literal[4]]
+    BTMRawdata: Final[Literal[4]]
     def __init__(self, __param0: BamEnums = ...) -> None: ...
-    BEBigendian = BE_bigendian
-    BELittleendian = BE_littleendian
-    BENative = BE_native
-    BOCPush = BOC_push
-    BOCPop = BOC_pop
-    BOCAdjunct = BOC_adjunct
-    BOCRemove = BOC_remove
-    BOCFileData = BOC_file_data
-    BTMUnchanged = BTM_unchanged
-    BTMFullpath = BTM_fullpath
-    BTMRelative = BTM_relative
-    BTMBasename = BTM_basename
-    BTMRawdata = BTM_rawdata
 
 class LoaderOptions:
     """Specifies parameters that may be passed to the loader."""
@@ -834,23 +834,41 @@ class LoaderOptions:
     texture_num_views: int
     auto_texture_scale: _AutoTextureScale
     LF_search: Final[Literal[1]]
+    LFSearch: Final[Literal[1]]
     LF_report_errors: Final[Literal[2]]
+    LFReportErrors: Final[Literal[2]]
     LF_convert_skeleton: Final[Literal[4]]
+    LFConvertSkeleton: Final[Literal[4]]
     LF_convert_channels: Final[Literal[8]]
+    LFConvertChannels: Final[Literal[8]]
     LF_convert_anim: Final[Literal[12]]
+    LFConvertAnim: Final[Literal[12]]
     LF_no_disk_cache: Final[Literal[16]]
+    LFNoDiskCache: Final[Literal[16]]
     LF_no_ram_cache: Final[Literal[32]]
+    LFNoRamCache: Final[Literal[32]]
     LF_no_cache: Final[Literal[48]]
+    LFNoCache: Final[Literal[48]]
     LF_cache_only: Final[Literal[64]]
+    LFCacheOnly: Final[Literal[64]]
     LF_allow_instance: Final[Literal[128]]
+    LFAllowInstance: Final[Literal[128]]
     TF_preload: Final[Literal[4]]
+    TFPreload: Final[Literal[4]]
     TF_preload_simple: Final[Literal[8]]
+    TFPreloadSimple: Final[Literal[8]]
     TF_allow_1d: Final[Literal[16]]
+    TFAllow1d: Final[Literal[16]]
     TF_generate_mipmaps: Final[Literal[32]]
+    TFGenerateMipmaps: Final[Literal[32]]
     TF_multiview: Final[Literal[64]]
+    TFMultiview: Final[Literal[64]]
     TF_integer: Final[Literal[128]]
+    TFInteger: Final[Literal[128]]
     TF_float: Final[Literal[256]]
+    TFFloat: Final[Literal[256]]
     TF_allow_compression: Final[Literal[512]]
+    TFAllowCompression: Final[Literal[512]]
     @overload
     def __init__(self, flags: int = ...) -> None: ...
     @overload
@@ -891,24 +909,6 @@ class LoaderOptions:
     getTextureNumViews = get_texture_num_views
     setAutoTextureScale = set_auto_texture_scale
     getAutoTextureScale = get_auto_texture_scale
-    LFSearch = LF_search
-    LFReportErrors = LF_report_errors
-    LFConvertSkeleton = LF_convert_skeleton
-    LFConvertChannels = LF_convert_channels
-    LFConvertAnim = LF_convert_anim
-    LFNoDiskCache = LF_no_disk_cache
-    LFNoRamCache = LF_no_ram_cache
-    LFNoCache = LF_no_cache
-    LFCacheOnly = LF_cache_only
-    LFAllowInstance = LF_allow_instance
-    TFPreload = TF_preload
-    TFPreloadSimple = TF_preload_simple
-    TFAllow1d = TF_allow_1d
-    TFGenerateMipmaps = TF_generate_mipmaps
-    TFMultiview = TF_multiview
-    TFInteger = TF_integer
-    TFFloat = TF_float
-    TFAllowCompression = TF_allow_compression
 
 class BamReader(BamEnums):
     """This is the fundamental interface for extracting binary objects from a Bam
@@ -2168,13 +2168,21 @@ class ClockObject(ReferenceCount):
     degrade_factor: float
     average_frame_rate_interval: float
     M_normal: Final[Literal[0]]
+    MNormal: Final[Literal[0]]
     M_non_real_time: Final[Literal[1]]
+    MNonRealTime: Final[Literal[1]]
     M_forced: Final[Literal[2]]
+    MForced: Final[Literal[2]]
     M_degrade: Final[Literal[3]]
+    MDegrade: Final[Literal[3]]
     M_slave: Final[Literal[4]]
+    MSlave: Final[Literal[4]]
     M_limited: Final[Literal[5]]
+    MLimited: Final[Literal[5]]
     M_integer: Final[Literal[6]]
+    MInteger: Final[Literal[6]]
     M_integer_limited: Final[Literal[7]]
+    MIntegerLimited: Final[Literal[7]]
     @property
     def long_time(self) -> float: ...
     @property
@@ -2443,14 +2451,6 @@ class ClockObject(ReferenceCount):
     syncFrameTime = sync_frame_time
     checkErrors = check_errors
     getGlobalClock = get_global_clock
-    MNormal = M_normal
-    MNonRealTime = M_non_real_time
-    MForced = M_forced
-    MDegrade = M_degrade
-    MSlave = M_slave
-    MLimited = M_limited
-    MInteger = M_integer
-    MIntegerLimited = M_integer_limited
 
 class CopyOnWriteObject(CachedTypedWritableReferenceCount):
     """This base class provides basic reference counting, but also can be used
@@ -3241,7 +3241,9 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     automatically.
     """
     R_node: Final[Literal[1]]
+    RNode: Final[Literal[1]]
     R_cache: Final[Literal[2]]
+    RCache: Final[Literal[2]]
     def get_node_ref_count(self) -> int:
         """Returns the current reference count."""
         ...
@@ -3275,8 +3277,6 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     nodeRef = node_ref
     nodeUnref = node_unref
     getReferencedBits = get_referenced_bits
-    RNode = R_node
-    RCache = R_cache
 
 class SparseArray:
     """This class records a set of integers, where each integer is either present
@@ -3745,14 +3745,23 @@ class UniqueIdAllocator:
     fractionUsed = fraction_used
 
 ATS_none: Final[Literal[0]]
+ATSNone: Final[Literal[0]]
 ATS_down: Final[Literal[1]]
+ATSDown: Final[Literal[1]]
 ATS_up: Final[Literal[2]]
+ATSUp: Final[Literal[2]]
 ATS_pad: Final[Literal[3]]
+ATSPad: Final[Literal[3]]
 ATS_unspecified: Final[Literal[4]]
+ATSUnspecified: Final[Literal[4]]
 CS_unspecified: Final[Literal[0]]
+CSUnspecified: Final[Literal[0]]
 CS_linear: Final[Literal[1]]
+CSLinear: Final[Literal[1]]
 CS_sRGB: Final[Literal[2]]
+CSSRGB: Final[Literal[2]]
 CS_scRGB: Final[Literal[3]]
+CSScRGB: Final[Literal[3]]
 def parse_color_space_string(str: str) -> _ColorSpace: ...
 def format_color_space(cs: _ColorSpace) -> str: ...
 def get_model_path() -> ConfigVariableSearchPath: ...
@@ -3814,11 +3823,6 @@ ConstPointerToArrayUshort = ConstPointerToArray_ushort
 PointerToArrayBaseUshort = PointerToArrayBase_ushort
 PointerToBaseReferenceCountedVectorUshort = PointerToBase_ReferenceCountedVector_ushort
 PointerToArrayUshort = PointerToArray_ushort
-ATSNone = ATS_none
-ATSDown = ATS_down
-ATSUp = ATS_up
-ATSPad = ATS_pad
-ATSUnspecified = ATS_unspecified
 BitMaskUint16T16 = BitMask_uint16_t_16
 BitMask16 = BitMask_uint16_t_16
 BitMaskUint32T32 = BitMask_uint32_t_32
@@ -3826,10 +3830,6 @@ BitMask32 = BitMask_uint32_t_32
 BitMaskUint64T64 = BitMask_uint64_t_64
 BitMask64 = BitMask_uint64_t_64
 CollideMask = BitMask_uint32_t_32
-CSUnspecified = CS_unspecified
-CSLinear = CS_linear
-CSSRGB = CS_sRGB
-CSScRGB = CS_scRGB
 DoubleBitMaskBitMaskNative = DoubleBitMask_BitMaskNative
 DoubleBitMaskNative = DoubleBitMask_BitMaskNative
 DoubleBitMaskDoubleBitMaskNative = DoubleBitMask_DoubleBitMaskNative

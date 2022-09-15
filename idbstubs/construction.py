@@ -67,7 +67,7 @@ def get_function_name(f: FunctionIndex, /) -> str:
 
 def with_alias(
         rep: SR, /,
-        capitalize: bool = False) -> tuple[SR] | tuple[SR, Alias]:
+        capitalize: bool = False) -> tuple[SR] | tuple[SR, SR | Alias]:
     """Return a tuple of the given `StubRep` and,
     if it would be unique, a camel-case alias.
     """
@@ -75,8 +75,11 @@ def with_alias(
     if name not in NO_MANGLING:
         alias_name = check_keyword(snake_to_camel(name, capitalize))
         if alias_name != name:
-            return rep, Alias(alias_name, name, of_local=True,
-                              namespace=rep.namespace)
+            if isinstance(rep, Attribute) and not rep.read_only:
+                return rep, evolve(rep, name=alias_name)
+            else:
+                return rep, Alias(alias_name, name, of_local=True,
+                                  namespace=rep.namespace)
     return rep,
 
 

@@ -414,10 +414,15 @@ class EggGroupNode(EggNode):
     iterators and begin()/end().
     """
     T_polygon: Final[Literal[1]]
+    TPolygon: Final[Literal[1]]
     T_convex: Final[Literal[2]]
+    TConvex: Final[Literal[2]]
     T_composite: Final[Literal[4]]
+    TComposite: Final[Literal[4]]
     T_recurse: Final[Literal[8]]
+    TRecurse: Final[Literal[8]]
     T_flat_shaded: Final[Literal[16]]
+    TFlatShaded: Final[Literal[16]]
     @property
     def children(self): ...
     @overload
@@ -704,11 +709,6 @@ class EggGroupNode(EggNode):
     jointHasPrimitives = joint_has_primitives
     hasNormals = has_normals
     isRight = is_right
-    TPolygon = T_polygon
-    TConvex = T_convex
-    TComposite = T_composite
-    TRecurse = T_recurse
-    TFlatShaded = T_flat_shaded
 
 class EggAnimData(EggNode):
     """A base class for EggSAnimData and EggXfmAnimData, which contain rows and
@@ -1557,24 +1557,43 @@ class EggRenderMode:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     AM_unspecified: Final[Literal[0]]
+    AMUnspecified: Final[Literal[0]]
     AM_off: Final[Literal[1]]
+    AMOff: Final[Literal[1]]
     AM_on: Final[Literal[2]]
+    AMOn: Final[Literal[2]]
     AM_blend: Final[Literal[3]]
+    AMBlend: Final[Literal[3]]
     AM_blend_no_occlude: Final[Literal[4]]
+    AMBlendNoOcclude: Final[Literal[4]]
     AM_ms: Final[Literal[5]]
+    AMMs: Final[Literal[5]]
     AM_ms_mask: Final[Literal[6]]
+    AMMsMask: Final[Literal[6]]
     AM_binary: Final[Literal[7]]
+    AMBinary: Final[Literal[7]]
     AM_dual: Final[Literal[8]]
+    AMDual: Final[Literal[8]]
     AM_premultiplied: Final[Literal[9]]
+    AMPremultiplied: Final[Literal[9]]
     DWM_unspecified: Final[Literal[0]]
+    DWMUnspecified: Final[Literal[0]]
     DWM_off: Final[Literal[1]]
+    DWMOff: Final[Literal[1]]
     DWM_on: Final[Literal[2]]
+    DWMOn: Final[Literal[2]]
     DTM_unspecified: Final[Literal[0]]
+    DTMUnspecified: Final[Literal[0]]
     DTM_off: Final[Literal[1]]
+    DTMOff: Final[Literal[1]]
     DTM_on: Final[Literal[2]]
+    DTMOn: Final[Literal[2]]
     VM_unspecified: Final[Literal[0]]
+    VMUnspecified: Final[Literal[0]]
     VM_hidden: Final[Literal[1]]
+    VMHidden: Final[Literal[1]]
     VM_normal: Final[Literal[2]]
+    VMNormal: Final[Literal[2]]
     def __init__(self, copy: EggRenderMode = ...) -> None: ...
     def __eq__(self, __other: object) -> bool:
         """Comparison operators are handy."""
@@ -1755,25 +1774,6 @@ class EggRenderMode:
     stringDepthTestMode = string_depth_test_mode
     stringVisibilityMode = string_visibility_mode
     getClassType = get_class_type
-    AMUnspecified = AM_unspecified
-    AMOff = AM_off
-    AMOn = AM_on
-    AMBlend = AM_blend
-    AMBlendNoOcclude = AM_blend_no_occlude
-    AMMs = AM_ms
-    AMMsMask = AM_ms_mask
-    AMBinary = AM_binary
-    AMDual = AM_dual
-    AMPremultiplied = AM_premultiplied
-    DWMUnspecified = DWM_unspecified
-    DWMOff = DWM_off
-    DWMOn = DWM_on
-    DTMUnspecified = DTM_unspecified
-    DTMOff = DTM_off
-    DTMOn = DTM_on
-    VMUnspecified = VM_unspecified
-    VMHidden = VM_hidden
-    VMNormal = VM_normal
 
 class EggTransform:
     """This represents the <Transform> entry of a group or texture node: a list of
@@ -1785,18 +1785,31 @@ class EggTransform:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     CT_invalid: Final[Literal[0]]
+    CTInvalid: Final[Literal[0]]
     CT_translate2d: Final[Literal[1]]
+    CTTranslate2d: Final[Literal[1]]
     CT_translate3d: Final[Literal[2]]
+    CTTranslate3d: Final[Literal[2]]
     CT_rotate2d: Final[Literal[3]]
+    CTRotate2d: Final[Literal[3]]
     CT_rotx: Final[Literal[4]]
+    CTRotx: Final[Literal[4]]
     CT_roty: Final[Literal[5]]
+    CTRoty: Final[Literal[5]]
     CT_rotz: Final[Literal[6]]
+    CTRotz: Final[Literal[6]]
     CT_rotate3d: Final[Literal[7]]
+    CTRotate3d: Final[Literal[7]]
     CT_scale2d: Final[Literal[8]]
+    CTScale2d: Final[Literal[8]]
     CT_scale3d: Final[Literal[9]]
+    CTScale3d: Final[Literal[9]]
     CT_uniform_scale: Final[Literal[10]]
+    CTUniformScale: Final[Literal[10]]
     CT_matrix3: Final[Literal[11]]
+    CTMatrix3: Final[Literal[11]]
     CT_matrix4: Final[Literal[12]]
+    CTMatrix4: Final[Literal[12]]
     def __init__(self, copy: EggTransform = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def clear_transform(self) -> None:
@@ -1970,19 +1983,6 @@ class EggTransform:
     getComponentVec3 = get_component_vec3
     getComponentMat3 = get_component_mat3
     getComponentMat4 = get_component_mat4
-    CTInvalid = CT_invalid
-    CTTranslate2d = CT_translate2d
-    CTTranslate3d = CT_translate3d
-    CTRotate2d = CT_rotate2d
-    CTRotx = CT_rotx
-    CTRoty = CT_roty
-    CTRotz = CT_rotz
-    CTRotate3d = CT_rotate3d
-    CTScale2d = CT_scale2d
-    CTScale3d = CT_scale3d
-    CTUniformScale = CT_uniform_scale
-    CTMatrix3 = CT_matrix3
-    CTMatrix4 = CT_matrix4
 
 class EggSwitchCondition(EggObject):
     """This corresponds to a <SwitchCondition> entry within a group.  It indicates
@@ -2039,69 +2039,133 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     scroll_w: float
     scroll_r: float
     GT_invalid: Final[Literal[-1]]
+    GTInvalid: Final[Literal[-1]]
     GT_group: Final[Literal[0]]
+    GTGroup: Final[Literal[0]]
     GT_instance: Final[Literal[1]]
+    GTInstance: Final[Literal[1]]
     GT_joint: Final[Literal[2]]
+    GTJoint: Final[Literal[2]]
     DC_unspecified: Final[Literal[0]]
+    DCUnspecified: Final[Literal[0]]
     DC_none: Final[Literal[16]]
+    DCNone: Final[Literal[16]]
     DC_local: Final[Literal[32]]
+    DCLocal: Final[Literal[32]]
     DC_net: Final[Literal[48]]
+    DCNet: Final[Literal[48]]
     DC_no_touch: Final[Literal[64]]
+    DCNoTouch: Final[Literal[64]]
     DC_default: Final[Literal[80]]
+    DCDefault: Final[Literal[80]]
     BT_none: Final[Literal[0]]
+    BTNone: Final[Literal[0]]
     BT_axis: Final[Literal[32]]
+    BTAxis: Final[Literal[32]]
     BT_point_camera_relative: Final[Literal[64]]
+    BTPointCameraRelative: Final[Literal[64]]
     BT_point_world_relative: Final[Literal[128]]
+    BTPointWorldRelative: Final[Literal[128]]
     CST_none: Final[Literal[0]]
+    CSTNone: Final[Literal[0]]
     CST_plane: Final[Literal[65536]]
+    CSTPlane: Final[Literal[65536]]
     CST_polygon: Final[Literal[131072]]
+    CSTPolygon: Final[Literal[131072]]
     CST_polyset: Final[Literal[196608]]
+    CSTPolyset: Final[Literal[196608]]
     CST_sphere: Final[Literal[262144]]
+    CSTSphere: Final[Literal[262144]]
     CST_tube: Final[Literal[327680]]
+    CSTTube: Final[Literal[327680]]
     CST_inv_sphere: Final[Literal[393216]]
+    CSTInvSphere: Final[Literal[393216]]
     CST_box: Final[Literal[458752]]
+    CSTBox: Final[Literal[458752]]
     CST_floor_mesh: Final[Literal[524288]]
+    CSTFloorMesh: Final[Literal[524288]]
     CF_none: Final[Literal[0]]
+    CFNone: Final[Literal[0]]
     CF_descend: Final[Literal[1048576]]
+    CFDescend: Final[Literal[1048576]]
     CF_event: Final[Literal[2097152]]
+    CFEvent: Final[Literal[2097152]]
     CF_keep: Final[Literal[4194304]]
+    CFKeep: Final[Literal[4194304]]
     CF_solid: Final[Literal[8388608]]
+    CFSolid: Final[Literal[8388608]]
     CF_center: Final[Literal[16777216]]
+    CFCenter: Final[Literal[16777216]]
     CF_turnstile: Final[Literal[33554432]]
+    CFTurnstile: Final[Literal[33554432]]
     CF_level: Final[Literal[67108864]]
+    CFLevel: Final[Literal[67108864]]
     CF_intangible: Final[Literal[134217728]]
+    CFIntangible: Final[Literal[134217728]]
     DT_none: Final[Literal[0]]
+    DTNone: Final[Literal[0]]
     DT_structured: Final[Literal[268435456]]
+    DTStructured: Final[Literal[268435456]]
     DT_sync: Final[Literal[536870912]]
+    DTSync: Final[Literal[536870912]]
     DT_nosync: Final[Literal[805306368]]
+    DTNosync: Final[Literal[805306368]]
     DT_default: Final[Literal[1073741824]]
+    DTDefault: Final[Literal[1073741824]]
     BM_unspecified: Final[Literal[0]]
+    BMUnspecified: Final[Literal[0]]
     BM_none: Final[Literal[1]]
+    BMNone: Final[Literal[1]]
     BM_add: Final[Literal[2]]
+    BMAdd: Final[Literal[2]]
     BM_subtract: Final[Literal[3]]
+    BMSubtract: Final[Literal[3]]
     BM_inv_subtract: Final[Literal[4]]
+    BMInvSubtract: Final[Literal[4]]
     BM_min: Final[Literal[5]]
+    BMMin: Final[Literal[5]]
     BM_max: Final[Literal[6]]
+    BMMax: Final[Literal[6]]
     BO_unspecified: Final[Literal[0]]
+    BOUnspecified: Final[Literal[0]]
     BO_zero: Final[Literal[1]]
+    BOZero: Final[Literal[1]]
     BO_one: Final[Literal[2]]
+    BOOne: Final[Literal[2]]
     BO_incoming_color: Final[Literal[3]]
+    BOIncomingColor: Final[Literal[3]]
     BO_one_minus_incoming_color: Final[Literal[4]]
+    BOOneMinusIncomingColor: Final[Literal[4]]
     BO_fbuffer_color: Final[Literal[5]]
+    BOFbufferColor: Final[Literal[5]]
     BO_one_minus_fbuffer_color: Final[Literal[6]]
+    BOOneMinusFbufferColor: Final[Literal[6]]
     BO_incoming_alpha: Final[Literal[7]]
+    BOIncomingAlpha: Final[Literal[7]]
     BO_one_minus_incoming_alpha: Final[Literal[8]]
+    BOOneMinusIncomingAlpha: Final[Literal[8]]
     BO_fbuffer_alpha: Final[Literal[9]]
+    BOFbufferAlpha: Final[Literal[9]]
     BO_one_minus_fbuffer_alpha: Final[Literal[10]]
+    BOOneMinusFbufferAlpha: Final[Literal[10]]
     BO_constant_color: Final[Literal[11]]
+    BOConstantColor: Final[Literal[11]]
     BO_one_minus_constant_color: Final[Literal[12]]
+    BOOneMinusConstantColor: Final[Literal[12]]
     BO_constant_alpha: Final[Literal[13]]
+    BOConstantAlpha: Final[Literal[13]]
     BO_one_minus_constant_alpha: Final[Literal[14]]
+    BOOneMinusConstantAlpha: Final[Literal[14]]
     BO_incoming_color_saturate: Final[Literal[15]]
+    BOIncomingColorSaturate: Final[Literal[15]]
     BO_color_scale: Final[Literal[16]]
+    BOColorScale: Final[Literal[16]]
     BO_one_minus_color_scale: Final[Literal[17]]
+    BOOneMinusColorScale: Final[Literal[17]]
     BO_alpha_scale: Final[Literal[18]]
+    BOAlphaScale: Final[Literal[18]]
     BO_one_minus_alpha_scale: Final[Literal[19]]
+    BOOneMinusAlphaScale: Final[Literal[19]]
     @property
     def object_types(self) -> Sequence[str]: ...
     @overload
@@ -2660,70 +2724,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     getClassType = get_class_type
     getObjectTypes = get_object_types
     getGroupRefs = get_group_refs
-    GTInvalid = GT_invalid
-    GTGroup = GT_group
-    GTInstance = GT_instance
-    GTJoint = GT_joint
-    DCUnspecified = DC_unspecified
-    DCNone = DC_none
-    DCLocal = DC_local
-    DCNet = DC_net
-    DCNoTouch = DC_no_touch
-    DCDefault = DC_default
-    BTNone = BT_none
-    BTAxis = BT_axis
-    BTPointCameraRelative = BT_point_camera_relative
-    BTPointWorldRelative = BT_point_world_relative
-    CSTNone = CST_none
-    CSTPlane = CST_plane
-    CSTPolygon = CST_polygon
-    CSTPolyset = CST_polyset
-    CSTSphere = CST_sphere
-    CSTTube = CST_tube
-    CSTInvSphere = CST_inv_sphere
-    CSTBox = CST_box
-    CSTFloorMesh = CST_floor_mesh
-    CFNone = CF_none
-    CFDescend = CF_descend
-    CFEvent = CF_event
-    CFKeep = CF_keep
-    CFSolid = CF_solid
-    CFCenter = CF_center
-    CFTurnstile = CF_turnstile
-    CFLevel = CF_level
-    CFIntangible = CF_intangible
-    DTNone = DT_none
-    DTStructured = DT_structured
-    DTSync = DT_sync
-    DTNosync = DT_nosync
-    DTDefault = DT_default
-    BMUnspecified = BM_unspecified
-    BMNone = BM_none
-    BMAdd = BM_add
-    BMSubtract = BM_subtract
-    BMInvSubtract = BM_inv_subtract
-    BMMin = BM_min
-    BMMax = BM_max
-    BOUnspecified = BO_unspecified
-    BOZero = BO_zero
-    BOOne = BO_one
-    BOIncomingColor = BO_incoming_color
-    BOOneMinusIncomingColor = BO_one_minus_incoming_color
-    BOFbufferColor = BO_fbuffer_color
-    BOOneMinusFbufferColor = BO_one_minus_fbuffer_color
-    BOIncomingAlpha = BO_incoming_alpha
-    BOOneMinusIncomingAlpha = BO_one_minus_incoming_alpha
-    BOFbufferAlpha = BO_fbuffer_alpha
-    BOOneMinusFbufferAlpha = BO_one_minus_fbuffer_alpha
-    BOConstantColor = BO_constant_color
-    BOOneMinusConstantColor = BO_one_minus_constant_color
-    BOConstantAlpha = BO_constant_alpha
-    BOOneMinusConstantAlpha = BO_one_minus_constant_alpha
-    BOIncomingColorSaturate = BO_incoming_color_saturate
-    BOColorScale = BO_color_scale
-    BOOneMinusColorScale = BO_one_minus_color_scale
-    BOAlphaScale = BO_alpha_scale
-    BOOneMinusAlphaScale = BO_one_minus_alpha_scale
 
 class EggBin(EggGroup):
     """A type of group node that holds related subnodes.  This is a special kind
@@ -2870,116 +2870,227 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     max_lod: float
     lod_bias: float
     E_basename: Final[Literal[1]]
+    EBasename: Final[Literal[1]]
     E_extension: Final[Literal[2]]
+    EExtension: Final[Literal[2]]
     E_dirname: Final[Literal[4]]
+    EDirname: Final[Literal[4]]
     E_complete_filename: Final[Literal[7]]
+    ECompleteFilename: Final[Literal[7]]
     E_transform: Final[Literal[8]]
+    ETransform: Final[Literal[8]]
     E_attributes: Final[Literal[16]]
+    EAttributes: Final[Literal[16]]
     E_tref_name: Final[Literal[32]]
+    ETrefName: Final[Literal[32]]
     TT_unspecified: Final[Literal[0]]
+    TTUnspecified: Final[Literal[0]]
     TT_1d_texture: Final[Literal[1]]
+    TT1dTexture: Final[Literal[1]]
     TT_2d_texture: Final[Literal[2]]
+    TT2dTexture: Final[Literal[2]]
     TT_3d_texture: Final[Literal[3]]
+    TT3dTexture: Final[Literal[3]]
     TT_cube_map: Final[Literal[4]]
+    TTCubeMap: Final[Literal[4]]
     F_unspecified: Final[Literal[0]]
+    FUnspecified: Final[Literal[0]]
     F_rgba: Final[Literal[1]]
+    FRgba: Final[Literal[1]]
     F_rgbm: Final[Literal[2]]
+    FRgbm: Final[Literal[2]]
     F_rgba12: Final[Literal[3]]
+    FRgba12: Final[Literal[3]]
     F_rgba8: Final[Literal[4]]
+    FRgba8: Final[Literal[4]]
     F_rgba4: Final[Literal[5]]
+    FRgba4: Final[Literal[5]]
     F_rgba5: Final[Literal[6]]
+    FRgba5: Final[Literal[6]]
     F_rgb: Final[Literal[7]]
+    FRgb: Final[Literal[7]]
     F_rgb12: Final[Literal[8]]
+    FRgb12: Final[Literal[8]]
     F_rgb8: Final[Literal[9]]
+    FRgb8: Final[Literal[9]]
     F_rgb5: Final[Literal[10]]
+    FRgb5: Final[Literal[10]]
     F_rgb332: Final[Literal[11]]
+    FRgb332: Final[Literal[11]]
     F_red: Final[Literal[12]]
+    FRed: Final[Literal[12]]
     F_green: Final[Literal[13]]
+    FGreen: Final[Literal[13]]
     F_blue: Final[Literal[14]]
+    FBlue: Final[Literal[14]]
     F_alpha: Final[Literal[15]]
+    FAlpha: Final[Literal[15]]
     F_luminance: Final[Literal[16]]
+    FLuminance: Final[Literal[16]]
     F_luminance_alpha: Final[Literal[17]]
+    FLuminanceAlpha: Final[Literal[17]]
     F_luminance_alphamask: Final[Literal[18]]
+    FLuminanceAlphamask: Final[Literal[18]]
     F_srgb: Final[Literal[19]]
+    FSrgb: Final[Literal[19]]
     F_srgb_alpha: Final[Literal[20]]
+    FSrgbAlpha: Final[Literal[20]]
     CM_default: Final[Literal[0]]
+    CMDefault: Final[Literal[0]]
     CM_off: Final[Literal[1]]
+    CMOff: Final[Literal[1]]
     CM_on: Final[Literal[2]]
+    CMOn: Final[Literal[2]]
     CM_fxt1: Final[Literal[3]]
+    CMFxt1: Final[Literal[3]]
     CM_dxt1: Final[Literal[4]]
+    CMDxt1: Final[Literal[4]]
     CM_dxt2: Final[Literal[5]]
+    CMDxt2: Final[Literal[5]]
     CM_dxt3: Final[Literal[6]]
+    CMDxt3: Final[Literal[6]]
     CM_dxt4: Final[Literal[7]]
+    CMDxt4: Final[Literal[7]]
     CM_dxt5: Final[Literal[8]]
+    CMDxt5: Final[Literal[8]]
     WM_unspecified: Final[Literal[0]]
+    WMUnspecified: Final[Literal[0]]
     WM_clamp: Final[Literal[1]]
+    WMClamp: Final[Literal[1]]
     WM_repeat: Final[Literal[2]]
+    WMRepeat: Final[Literal[2]]
     WM_mirror: Final[Literal[3]]
+    WMMirror: Final[Literal[3]]
     WM_mirror_once: Final[Literal[4]]
+    WMMirrorOnce: Final[Literal[4]]
     WM_border_color: Final[Literal[5]]
+    WMBorderColor: Final[Literal[5]]
     FT_unspecified: Final[Literal[0]]
+    FTUnspecified: Final[Literal[0]]
     FT_nearest: Final[Literal[1]]
+    FTNearest: Final[Literal[1]]
     FT_linear: Final[Literal[2]]
+    FTLinear: Final[Literal[2]]
     FT_nearest_mipmap_nearest: Final[Literal[3]]
+    FTNearestMipmapNearest: Final[Literal[3]]
     FT_linear_mipmap_nearest: Final[Literal[4]]
+    FTLinearMipmapNearest: Final[Literal[4]]
     FT_nearest_mipmap_linear: Final[Literal[5]]
+    FTNearestMipmapLinear: Final[Literal[5]]
     FT_linear_mipmap_linear: Final[Literal[6]]
+    FTLinearMipmapLinear: Final[Literal[6]]
     ET_unspecified: Final[Literal[0]]
+    ETUnspecified: Final[Literal[0]]
     ET_modulate: Final[Literal[1]]
+    ETModulate: Final[Literal[1]]
     ET_decal: Final[Literal[2]]
+    ETDecal: Final[Literal[2]]
     ET_blend: Final[Literal[3]]
+    ETBlend: Final[Literal[3]]
     ET_replace: Final[Literal[4]]
+    ETReplace: Final[Literal[4]]
     ET_add: Final[Literal[5]]
+    ETAdd: Final[Literal[5]]
     ET_blend_color_scale: Final[Literal[6]]
+    ETBlendColorScale: Final[Literal[6]]
     ET_modulate_glow: Final[Literal[7]]
+    ETModulateGlow: Final[Literal[7]]
     ET_modulate_gloss: Final[Literal[8]]
+    ETModulateGloss: Final[Literal[8]]
     ET_normal: Final[Literal[9]]
+    ETNormal: Final[Literal[9]]
     ET_normal_height: Final[Literal[10]]
+    ETNormalHeight: Final[Literal[10]]
     ET_glow: Final[Literal[11]]
+    ETGlow: Final[Literal[11]]
     ET_gloss: Final[Literal[12]]
+    ETGloss: Final[Literal[12]]
     ET_height: Final[Literal[13]]
+    ETHeight: Final[Literal[13]]
     ET_selector: Final[Literal[14]]
+    ETSelector: Final[Literal[14]]
     ET_normal_gloss: Final[Literal[15]]
+    ETNormalGloss: Final[Literal[15]]
     ET_emission: Final[Literal[16]]
+    ETEmission: Final[Literal[16]]
     CM_unspecified: Final[Literal[0]]
+    CMUnspecified: Final[Literal[0]]
     CM_replace: Final[Literal[1]]
+    CMReplace: Final[Literal[1]]
     CM_modulate: Final[Literal[2]]
+    CMModulate: Final[Literal[2]]
     CM_add: Final[Literal[3]]
+    CMAdd: Final[Literal[3]]
     CM_add_signed: Final[Literal[4]]
+    CMAddSigned: Final[Literal[4]]
     CM_interpolate: Final[Literal[5]]
+    CMInterpolate: Final[Literal[5]]
     CM_subtract: Final[Literal[6]]
+    CMSubtract: Final[Literal[6]]
     CM_dot3_rgb: Final[Literal[7]]
+    CMDot3Rgb: Final[Literal[7]]
     CM_dot3_rgba: Final[Literal[8]]
+    CMDot3Rgba: Final[Literal[8]]
     CC_rgb: Final[Literal[0]]
+    CCRgb: Final[Literal[0]]
     CC_alpha: Final[Literal[1]]
+    CCAlpha: Final[Literal[1]]
     CC_num_channels: Final[Literal[2]]
+    CCNumChannels: Final[Literal[2]]
     CI_num_indices: Final[Literal[3]]
+    CINumIndices: Final[Literal[3]]
     CS_unspecified: Final[Literal[0]]
+    CSUnspecified: Final[Literal[0]]
     CS_texture: Final[Literal[1]]
+    CSTexture: Final[Literal[1]]
     CS_constant: Final[Literal[2]]
+    CSConstant: Final[Literal[2]]
     CS_primary_color: Final[Literal[3]]
+    CSPrimaryColor: Final[Literal[3]]
     CS_previous: Final[Literal[4]]
+    CSPrevious: Final[Literal[4]]
     CS_constant_color_scale: Final[Literal[5]]
+    CSConstantColorScale: Final[Literal[5]]
     CS_last_saved_result: Final[Literal[6]]
+    CSLastSavedResult: Final[Literal[6]]
     CO_unspecified: Final[Literal[0]]
+    COUnspecified: Final[Literal[0]]
     CO_src_color: Final[Literal[1]]
+    COSrcColor: Final[Literal[1]]
     CO_one_minus_src_color: Final[Literal[2]]
+    COOneMinusSrcColor: Final[Literal[2]]
     CO_src_alpha: Final[Literal[3]]
+    COSrcAlpha: Final[Literal[3]]
     CO_one_minus_src_alpha: Final[Literal[4]]
+    COOneMinusSrcAlpha: Final[Literal[4]]
     TG_unspecified: Final[Literal[0]]
+    TGUnspecified: Final[Literal[0]]
     TG_eye_sphere_map: Final[Literal[1]]
+    TGEyeSphereMap: Final[Literal[1]]
     TG_world_cube_map: Final[Literal[2]]
+    TGWorldCubeMap: Final[Literal[2]]
     TG_eye_cube_map: Final[Literal[3]]
+    TGEyeCubeMap: Final[Literal[3]]
     TG_world_normal: Final[Literal[4]]
+    TGWorldNormal: Final[Literal[4]]
     TG_eye_normal: Final[Literal[5]]
+    TGEyeNormal: Final[Literal[5]]
     TG_world_position: Final[Literal[6]]
+    TGWorldPosition: Final[Literal[6]]
     TG_eye_position: Final[Literal[7]]
+    TGEyePosition: Final[Literal[7]]
     TG_point_sprite: Final[Literal[8]]
+    TGPointSprite: Final[Literal[8]]
     QL_unspecified: Final[Literal[0]]
+    QLUnspecified: Final[Literal[0]]
     QL_default: Final[Literal[1]]
+    QLDefault: Final[Literal[1]]
     QL_fastest: Final[Literal[2]]
+    QLFastest: Final[Literal[2]]
     QL_normal: Final[Literal[3]]
+    QLNormal: Final[Literal[3]]
     QL_best: Final[Literal[4]]
+    QLBest: Final[Literal[4]]
     @property
     def multitexture_sort(self) -> int: ...
     @overload
@@ -3639,117 +3750,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     stringTexGen = string_tex_gen
     stringQualityLevel = string_quality_level
     getClassType = get_class_type
-    EBasename = E_basename
-    EExtension = E_extension
-    EDirname = E_dirname
-    ECompleteFilename = E_complete_filename
-    ETransform = E_transform
-    EAttributes = E_attributes
-    ETrefName = E_tref_name
-    TTUnspecified = TT_unspecified
-    TT1dTexture = TT_1d_texture
-    TT2dTexture = TT_2d_texture
-    TT3dTexture = TT_3d_texture
-    TTCubeMap = TT_cube_map
-    FUnspecified = F_unspecified
-    FRgba = F_rgba
-    FRgbm = F_rgbm
-    FRgba12 = F_rgba12
-    FRgba8 = F_rgba8
-    FRgba4 = F_rgba4
-    FRgba5 = F_rgba5
-    FRgb = F_rgb
-    FRgb12 = F_rgb12
-    FRgb8 = F_rgb8
-    FRgb5 = F_rgb5
-    FRgb332 = F_rgb332
-    FRed = F_red
-    FGreen = F_green
-    FBlue = F_blue
-    FAlpha = F_alpha
-    FLuminance = F_luminance
-    FLuminanceAlpha = F_luminance_alpha
-    FLuminanceAlphamask = F_luminance_alphamask
-    FSrgb = F_srgb
-    FSrgbAlpha = F_srgb_alpha
-    CMDefault = CM_default
-    CMOff = CM_off
-    CMOn = CM_on
-    CMFxt1 = CM_fxt1
-    CMDxt1 = CM_dxt1
-    CMDxt2 = CM_dxt2
-    CMDxt3 = CM_dxt3
-    CMDxt4 = CM_dxt4
-    CMDxt5 = CM_dxt5
-    WMUnspecified = WM_unspecified
-    WMClamp = WM_clamp
-    WMRepeat = WM_repeat
-    WMMirror = WM_mirror
-    WMMirrorOnce = WM_mirror_once
-    WMBorderColor = WM_border_color
-    FTUnspecified = FT_unspecified
-    FTNearest = FT_nearest
-    FTLinear = FT_linear
-    FTNearestMipmapNearest = FT_nearest_mipmap_nearest
-    FTLinearMipmapNearest = FT_linear_mipmap_nearest
-    FTNearestMipmapLinear = FT_nearest_mipmap_linear
-    FTLinearMipmapLinear = FT_linear_mipmap_linear
-    ETUnspecified = ET_unspecified
-    ETModulate = ET_modulate
-    ETDecal = ET_decal
-    ETBlend = ET_blend
-    ETReplace = ET_replace
-    ETAdd = ET_add
-    ETBlendColorScale = ET_blend_color_scale
-    ETModulateGlow = ET_modulate_glow
-    ETModulateGloss = ET_modulate_gloss
-    ETNormal = ET_normal
-    ETNormalHeight = ET_normal_height
-    ETGlow = ET_glow
-    ETGloss = ET_gloss
-    ETHeight = ET_height
-    ETSelector = ET_selector
-    ETNormalGloss = ET_normal_gloss
-    ETEmission = ET_emission
-    CMUnspecified = CM_unspecified
-    CMReplace = CM_replace
-    CMModulate = CM_modulate
-    CMAdd = CM_add
-    CMAddSigned = CM_add_signed
-    CMInterpolate = CM_interpolate
-    CMSubtract = CM_subtract
-    CMDot3Rgb = CM_dot3_rgb
-    CMDot3Rgba = CM_dot3_rgba
-    CCRgb = CC_rgb
-    CCAlpha = CC_alpha
-    CCNumChannels = CC_num_channels
-    CINumIndices = CI_num_indices
-    CSUnspecified = CS_unspecified
-    CSTexture = CS_texture
-    CSConstant = CS_constant
-    CSPrimaryColor = CS_primary_color
-    CSPrevious = CS_previous
-    CSConstantColorScale = CS_constant_color_scale
-    CSLastSavedResult = CS_last_saved_result
-    COUnspecified = CO_unspecified
-    COSrcColor = CO_src_color
-    COOneMinusSrcColor = CO_one_minus_src_color
-    COSrcAlpha = CO_src_alpha
-    COOneMinusSrcAlpha = CO_one_minus_src_alpha
-    TGUnspecified = TG_unspecified
-    TGEyeSphereMap = TG_eye_sphere_map
-    TGWorldCubeMap = TG_world_cube_map
-    TGEyeCubeMap = TG_eye_cube_map
-    TGWorldNormal = TG_world_normal
-    TGEyeNormal = TG_eye_normal
-    TGWorldPosition = TG_world_position
-    TGEyePosition = TG_eye_position
-    TGPointSprite = TG_point_sprite
-    QLUnspecified = QL_unspecified
-    QLDefault = QL_default
-    QLFastest = QL_fastest
-    QLNormal = QL_normal
-    QLBest = QL_best
 
 class EggMaterial(EggNode):
     base: LVecBase4f
@@ -3763,7 +3763,9 @@ class EggMaterial(EggNode):
     ior: float
     local: bool
     E_attributes: Final[Literal[1]]
+    EAttributes: Final[Literal[1]]
     E_mref_name: Final[Literal[2]]
+    EMrefName: Final[Literal[2]]
     @overload
     def __init__(self, copy: EggMaterial) -> None: ...
     @overload
@@ -3921,8 +3923,6 @@ class EggMaterial(EggNode):
     clearLocal = clear_local
     hasLocal = has_local
     getLocal = get_local
-    EAttributes = E_attributes
-    EMrefName = E_mref_name
 
 class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     """A base class for any of a number of kinds of geometry primitives: polygons,
@@ -3939,9 +3939,13 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     bface_flag: bool
     vertices: Sequence[EggVertex]
     S_unknown: Final[Literal[0]]
+    SUnknown: Final[Literal[0]]
     S_overall: Final[Literal[1]]
+    SOverall: Final[Literal[1]]
     S_per_face: Final[Literal[2]]
+    SPerFace: Final[Literal[2]]
     S_per_vertex: Final[Literal[3]]
+    SPerVertex: Final[Literal[3]]
     @property
     def sort_name(self) -> str: ...
     @property
@@ -4332,10 +4336,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     getClassType = get_class_type
     getTextures = get_textures
     getVertices = get_vertices
-    SUnknown = S_unknown
-    SOverall = S_overall
-    SPerFace = S_per_face
-    SPerVertex = S_per_vertex
 
 class EggCompositePrimitive(EggPrimitive):
     """The base class for primitives such as triangle strips and triangle fans,
@@ -4570,9 +4570,13 @@ class EggCoordinateSystem(EggNode):
 class EggCurve(EggPrimitive):
     """A parametric curve of some kind.  See EggNurbsCurve."""
     CT_none: Final[Literal[0]]
+    CTNone: Final[Literal[0]]
     CT_xyz: Final[Literal[1]]
+    CTXyz: Final[Literal[1]]
     CT_hpr: Final[Literal[2]]
+    CTHpr: Final[Literal[2]]
     CT_t: Final[Literal[3]]
+    CTT: Final[Literal[3]]
     def set_subdiv(self, subdiv: int) -> None:
         """Sets the number of subdivisions that will be requested across the curve.
         (This doesn't necessary guarantee that this number of subdivisions will be
@@ -4605,10 +4609,6 @@ class EggCurve(EggPrimitive):
     setCurveType = set_curve_type
     getCurveType = get_curve_type
     stringCurveType = string_curve_type
-    CTNone = CT_none
-    CTXyz = CT_xyz
-    CTHpr = CT_hpr
-    CTT = CT_t
 
 class EggExternalReference(EggFilenameNode):
     """Defines a reference to another egg file which should be inserted at this
@@ -5217,17 +5217,29 @@ class EggPolysetMaker(EggBinMaker):
     specialization of this class.
     """
     BN_none: Final[Literal[0]]
+    BNNone: Final[Literal[0]]
     BN_polyset: Final[Literal[1]]
+    BNPolyset: Final[Literal[1]]
     P_has_texture: Final[Literal[1]]
+    PHasTexture: Final[Literal[1]]
     P_texture: Final[Literal[2]]
+    PTexture: Final[Literal[2]]
     P_has_material: Final[Literal[4]]
+    PHasMaterial: Final[Literal[4]]
     P_material: Final[Literal[8]]
+    PMaterial: Final[Literal[8]]
     P_has_poly_color: Final[Literal[16]]
+    PHasPolyColor: Final[Literal[16]]
     P_poly_color: Final[Literal[32]]
+    PPolyColor: Final[Literal[32]]
     P_has_poly_normal: Final[Literal[64]]
+    PHasPolyNormal: Final[Literal[64]]
     P_has_vertex_normal: Final[Literal[128]]
+    PHasVertexNormal: Final[Literal[128]]
     P_has_vertex_color: Final[Literal[256]]
+    PHasVertexColor: Final[Literal[256]]
     P_bface: Final[Literal[512]]
+    PBface: Final[Literal[512]]
     def __init__(self) -> None: ...
     def set_properties(self, properties: int) -> None:
         """Sets the set of properties that determines which polygons are allowed to be
@@ -5237,18 +5249,6 @@ class EggPolysetMaker(EggBinMaker):
         """
         ...
     setProperties = set_properties
-    BNNone = BN_none
-    BNPolyset = BN_polyset
-    PHasTexture = P_has_texture
-    PTexture = P_texture
-    PHasMaterial = P_has_material
-    PMaterial = P_material
-    PHasPolyColor = P_has_poly_color
-    PPolyColor = P_poly_color
-    PHasPolyNormal = P_has_poly_normal
-    PHasVertexNormal = P_has_vertex_normal
-    PHasVertexColor = P_has_vertex_color
-    PBface = P_bface
 
 class EggPoolUniquifier(EggNameUniquifier):
     """This is a specialization of EggNameUniquifier to generate unique names for
@@ -5296,8 +5296,11 @@ class EggTable(EggGroupNode):
     another <Table> or <Bundle>, establishing a hierarchy of tables.
     """
     TT_invalid: Final[Literal[0]]
+    TTInvalid: Final[Literal[0]]
     TT_table: Final[Literal[1]]
+    TTTable: Final[Literal[1]]
     TT_bundle: Final[Literal[2]]
+    TTBundle: Final[Literal[2]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload
@@ -5320,9 +5323,6 @@ class EggTable(EggGroupNode):
     getTableType = get_table_type
     hasTransform = has_transform
     stringTableType = string_table_type
-    TTInvalid = TT_invalid
-    TTTable = TT_table
-    TTBundle = TT_bundle
 
 class EggTextureCollection:
     """This is a collection of textures by TRef name.  It can extract the textures

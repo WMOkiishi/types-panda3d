@@ -132,12 +132,19 @@ class TiXmlNode(TiXmlBase):
         can be queried, and it can be cast to its more defined type.
     """
     TINYXML_DOCUMENT: Final[Literal[0]]
+    TINYXMLDOCUMENT: Final[Literal[0]]
     TINYXML_ELEMENT: Final[Literal[1]]
+    TINYXMLELEMENT: Final[Literal[1]]
     TINYXML_COMMENT: Final[Literal[2]]
+    TINYXMLCOMMENT: Final[Literal[2]]
     TINYXML_UNKNOWN: Final[Literal[3]]
+    TINYXMLUNKNOWN: Final[Literal[3]]
     TINYXML_TEXT: Final[Literal[4]]
+    TINYXMLTEXT: Final[Literal[4]]
     TINYXML_DECLARATION: Final[Literal[5]]
+    TINYXMLDECLARATION: Final[Literal[5]]
     TINYXML_TYPECOUNT: Final[Literal[6]]
+    TINYXMLTYPECOUNT: Final[Literal[6]]
     def Value(self) -> str:
         """The meaning of 'value' changes for the specific type of
                 TiXmlNode.
@@ -369,13 +376,6 @@ class TiXmlNode(TiXmlBase):
                 @endverbatim
         """
         ...
-    TINYXMLDOCUMENT = TINYXML_DOCUMENT
-    TINYXMLELEMENT = TINYXML_ELEMENT
-    TINYXMLCOMMENT = TINYXML_COMMENT
-    TINYXMLUNKNOWN = TINYXML_UNKNOWN
-    TINYXMLTEXT = TINYXML_TEXT
-    TINYXMLDECLARATION = TINYXML_DECLARATION
-    TINYXMLTYPECOUNT = TINYXML_TYPECOUNT
 
 class TiXmlDocument(TiXmlNode):
     """Always the top level node. A document binds together all the
@@ -1039,8 +1039,11 @@ class TiXmlPrinter(TiXmlVisitor):
         ...
 
 TIXML_ENCODING_UNKNOWN: Final[Literal[0]]
+TIXMLENCODINGUNKNOWN: Final[Literal[0]]
 TIXML_ENCODING_UTF8: Final[Literal[1]]
+TIXMLENCODINGUTF8: Final[Literal[1]]
 TIXML_ENCODING_LEGACY: Final[Literal[2]]
+TIXMLENCODINGLEGACY: Final[Literal[2]]
 def read_xml_stream(_in: istream) -> TiXmlDocument:
     """Reads an XML document from the indicated stream.
     @returns the document, or NULL on error.
@@ -1061,6 +1064,3 @@ getTIXMLMAJORVERSION = get_TIXML_MAJOR_VERSION
 getTIXMLMINORVERSION = get_TIXML_MINOR_VERSION
 getTIXMLPATCHVERSION = get_TIXML_PATCH_VERSION
 getTIXMLDEFAULTENCODING = get_TIXML_DEFAULT_ENCODING
-TIXMLENCODINGUNKNOWN = TIXML_ENCODING_UNKNOWN
-TIXMLENCODINGUTF8 = TIXML_ENCODING_UTF8
-TIXMLENCODINGLEGACY = TIXML_ENCODING_LEGACY

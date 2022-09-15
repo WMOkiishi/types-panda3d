@@ -849,26 +849,47 @@ class RenderAttrib(TypedWritableReferenceCount):
     if you wish to change its properties; instead, create a new one.
     """
     M_none: Final[Literal[0]]
+    MNone: Final[Literal[0]]
     M_never: Final[Literal[1]]
+    MNever: Final[Literal[1]]
     M_less: Final[Literal[2]]
+    MLess: Final[Literal[2]]
     M_equal: Final[Literal[3]]
+    MEqual: Final[Literal[3]]
     M_less_equal: Final[Literal[4]]
+    MLessEqual: Final[Literal[4]]
     M_greater: Final[Literal[5]]
+    MGreater: Final[Literal[5]]
     M_not_equal: Final[Literal[6]]
+    MNotEqual: Final[Literal[6]]
     M_greater_equal: Final[Literal[7]]
+    MGreaterEqual: Final[Literal[7]]
     M_always: Final[Literal[8]]
+    MAlways: Final[Literal[8]]
     M_off: Final[Literal[0]]
+    MOff: Final[Literal[0]]
     M_eye_sphere_map: Final[Literal[1]]
+    MEyeSphereMap: Final[Literal[1]]
     M_world_cube_map: Final[Literal[2]]
+    MWorldCubeMap: Final[Literal[2]]
     M_eye_cube_map: Final[Literal[3]]
+    MEyeCubeMap: Final[Literal[3]]
     M_world_normal: Final[Literal[4]]
+    MWorldNormal: Final[Literal[4]]
     M_eye_normal: Final[Literal[5]]
+    MEyeNormal: Final[Literal[5]]
     M_world_position: Final[Literal[6]]
+    MWorldPosition: Final[Literal[6]]
     M_unused: Final[Literal[7]]
+    MUnused: Final[Literal[7]]
     M_eye_position: Final[Literal[8]]
+    MEyePosition: Final[Literal[8]]
     M_point_sprite: Final[Literal[9]]
+    MPointSprite: Final[Literal[9]]
     M_unused2: Final[Literal[10]]
+    MUnused2: Final[Literal[10]]
     M_constant: Final[Literal[11]]
+    MConstant: Final[Literal[11]]
     @property
     def slot(self) -> int: ...
     def compose(self, other: RenderAttrib) -> RenderAttrib:
@@ -970,36 +991,21 @@ class RenderAttrib(TypedWritableReferenceCount):
     garbageCollect = garbage_collect
     validateAttribs = validate_attribs
     getSlot = get_slot
-    MNone = M_none
-    MNever = M_never
-    MLess = M_less
-    MEqual = M_equal
-    MLessEqual = M_less_equal
-    MGreater = M_greater
-    MNotEqual = M_not_equal
-    MGreaterEqual = M_greater_equal
-    MAlways = M_always
-    MOff = M_off
-    MEyeSphereMap = M_eye_sphere_map
-    MWorldCubeMap = M_world_cube_map
-    MEyeCubeMap = M_eye_cube_map
-    MWorldNormal = M_world_normal
-    MEyeNormal = M_eye_normal
-    MWorldPosition = M_world_position
-    MUnused = M_unused
-    MEyePosition = M_eye_position
-    MPointSprite = M_point_sprite
-    MUnused2 = M_unused2
-    MConstant = M_constant
 
 class RenderModeAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
     M_unchanged: Final[Literal[0]]
+    MUnchanged: Final[Literal[0]]
     M_filled: Final[Literal[1]]
+    MFilled: Final[Literal[1]]
     M_wireframe: Final[Literal[2]]
+    MWireframe: Final[Literal[2]]
     M_point: Final[Literal[3]]
+    MPoint: Final[Literal[3]]
     M_filled_flat: Final[Literal[4]]
+    MFilledFlat: Final[Literal[4]]
     M_filled_wireframe: Final[Literal[5]]
+    MFilledWireframe: Final[Literal[5]]
     @property
     def mode(self) -> _RenderModeAttrib_Mode: ...
     @property
@@ -1073,12 +1079,6 @@ class RenderModeAttrib(RenderAttrib):
     getWireframeColor = get_wireframe_color
     getGeomRendering = get_geom_rendering
     getClassSlot = get_class_slot
-    MUnchanged = M_unchanged
-    MFilled = M_filled
-    MWireframe = M_wireframe
-    MPoint = M_point
-    MFilledFlat = M_filled_flat
-    MFilledWireframe = M_filled_wireframe
 
 class TexMatrixAttrib(RenderAttrib):
     """Applies a transform matrix to UV's before they are rendered."""
@@ -1649,14 +1649,23 @@ class AntialiasAttrib(RenderAttrib):
     backend renderer.
     """
     M_point: Final[Literal[1]]
+    MPoint: Final[Literal[1]]
     M_line: Final[Literal[2]]
+    MLine: Final[Literal[2]]
     M_polygon: Final[Literal[4]]
+    MPolygon: Final[Literal[4]]
     M_multisample: Final[Literal[8]]
+    MMultisample: Final[Literal[8]]
     M_auto: Final[Literal[31]]
+    MAuto: Final[Literal[31]]
     M_type_mask: Final[Literal[31]]
+    MTypeMask: Final[Literal[31]]
     M_faster: Final[Literal[32]]
+    MFaster: Final[Literal[32]]
     M_better: Final[Literal[64]]
+    MBetter: Final[Literal[64]]
     M_dont_care: Final[Literal[96]]
+    MDontCare: Final[Literal[96]]
     @property
     def mode(self) -> int: ...
     @property
@@ -1722,15 +1731,6 @@ class AntialiasAttrib(RenderAttrib):
     getModeType = get_mode_type
     getModeQuality = get_mode_quality
     getClassSlot = get_class_slot
-    MPoint = M_point
-    MLine = M_line
-    MPolygon = M_polygon
-    MMultisample = M_multisample
-    MAuto = M_auto
-    MTypeMask = M_type_mask
-    MFaster = M_faster
-    MBetter = M_better
-    MDontCare = M_dont_care
 
 class RenderEffect(TypedWritableReferenceCount):
     """This is the base class for a number of special render effects that may be
@@ -1938,16 +1938,27 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     into_collide_mask: BitMask_uint32_t_32
     final: bool
     UC_parents: Final[Literal[1]]
+    UCParents: Final[Literal[1]]
     UC_children: Final[Literal[2]]
+    UCChildren: Final[Literal[2]]
     UC_transform: Final[Literal[4]]
+    UCTransform: Final[Literal[4]]
     UC_state: Final[Literal[8]]
+    UCState: Final[Literal[8]]
     UC_draw_mask: Final[Literal[16]]
+    UCDrawMask: Final[Literal[16]]
     FB_transform: Final[Literal[1]]
+    FBTransform: Final[Literal[1]]
     FB_state: Final[Literal[2]]
+    FBState: Final[Literal[2]]
     FB_effects: Final[Literal[4]]
+    FBEffects: Final[Literal[4]]
     FB_tag: Final[Literal[16]]
+    FBTag: Final[Literal[16]]
     FB_draw_mask: Final[Literal[32]]
+    FBDrawMask: Final[Literal[32]]
     FB_cull_callback: Final[Literal[64]]
+    FBCullCallback: Final[Literal[64]]
     @property
     def prev_transform(self) -> TransformState: ...
     @property
@@ -2906,17 +2917,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     getClassType = get_class_type
     getParents = get_parents
     getChildren = get_children
-    UCParents = UC_parents
-    UCChildren = UC_children
-    UCTransform = UC_transform
-    UCState = UC_state
-    UCDrawMask = UC_draw_mask
-    FBTransform = FB_transform
-    FBState = FB_state
-    FBEffects = FB_effects
-    FBTag = FB_tag
-    FBDrawMask = FB_draw_mask
-    FBCullCallback = FB_cull_callback
 
 class TransparencyAttrib(RenderAttrib):
     """This controls the enabling of transparency.  Simply setting an alpha
@@ -2927,11 +2927,17 @@ class TransparencyAttrib(RenderAttrib):
     (and it has alpha components less than 1).
     """
     M_alpha: Final[Literal[1]]
+    MAlpha: Final[Literal[1]]
     M_premultiplied_alpha: Final[Literal[2]]
+    MPremultipliedAlpha: Final[Literal[2]]
     M_multisample: Final[Literal[3]]
+    MMultisample: Final[Literal[3]]
     M_multisample_mask: Final[Literal[4]]
+    MMultisampleMask: Final[Literal[4]]
     M_binary: Final[Literal[5]]
+    MBinary: Final[Literal[5]]
     M_dual: Final[Literal[6]]
+    MDual: Final[Literal[6]]
     @property
     def mode(self) -> _TransparencyAttrib_Mode: ...
     @property
@@ -2954,12 +2960,6 @@ class TransparencyAttrib(RenderAttrib):
     makeDefault = make_default
     getMode = get_mode
     getClassSlot = get_class_slot
-    MAlpha = M_alpha
-    MPremultipliedAlpha = M_premultiplied_alpha
-    MMultisample = M_multisample
-    MMultisampleMask = M_multisample_mask
-    MBinary = M_binary
-    MDual = M_dual
 
 class LogicOpAttrib(RenderAttrib):
     """If enabled, specifies that a custom logical operation be performed instead
@@ -2969,22 +2969,39 @@ class LogicOpAttrib(RenderAttrib):
     @since 1.10.0
     """
     O_none: Final[Literal[0]]
+    ONone: Final[Literal[0]]
     O_clear: Final[Literal[1]]
+    OClear: Final[Literal[1]]
     O_and: Final[Literal[2]]
+    OAnd: Final[Literal[2]]
     O_and_reverse: Final[Literal[3]]
+    OAndReverse: Final[Literal[3]]
     O_copy: Final[Literal[4]]
+    OCopy: Final[Literal[4]]
     O_and_inverted: Final[Literal[5]]
+    OAndInverted: Final[Literal[5]]
     O_noop: Final[Literal[6]]
+    ONoop: Final[Literal[6]]
     O_xor: Final[Literal[7]]
+    OXor: Final[Literal[7]]
     O_or: Final[Literal[8]]
+    OOr: Final[Literal[8]]
     O_nor: Final[Literal[9]]
+    ONor: Final[Literal[9]]
     O_equivalent: Final[Literal[10]]
+    OEquivalent: Final[Literal[10]]
     O_invert: Final[Literal[11]]
+    OInvert: Final[Literal[11]]
     O_or_reverse: Final[Literal[12]]
+    OOrReverse: Final[Literal[12]]
     O_copy_inverted: Final[Literal[13]]
+    OCopyInverted: Final[Literal[13]]
     O_or_inverted: Final[Literal[14]]
+    OOrInverted: Final[Literal[14]]
     O_nand: Final[Literal[15]]
+    ONand: Final[Literal[15]]
     O_set: Final[Literal[16]]
+    OSet: Final[Literal[16]]
     @property
     def operation(self) -> _LogicOpAttrib_Operation: ...
     @property
@@ -3014,23 +3031,6 @@ class LogicOpAttrib(RenderAttrib):
     makeDefault = make_default
     getOperation = get_operation
     getClassSlot = get_class_slot
-    ONone = O_none
-    OClear = O_clear
-    OAnd = O_and
-    OAndReverse = O_and_reverse
-    OCopy = O_copy
-    OAndInverted = O_and_inverted
-    ONoop = O_noop
-    OXor = O_xor
-    OOr = O_or
-    ONor = O_nor
-    OEquivalent = O_equivalent
-    OInvert = O_invert
-    OOrReverse = O_or_reverse
-    OCopyInverted = O_copy_inverted
-    OOrInverted = O_or_inverted
-    ONand = O_nand
-    OSet = O_set
 
 class ShaderInput:
     """This is a small container class that can hold any one of the value types
@@ -3038,17 +3038,29 @@ class ShaderInput:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     A_read: Final[Literal[1]]
+    ARead: Final[Literal[1]]
     A_write: Final[Literal[2]]
+    AWrite: Final[Literal[2]]
     A_layered: Final[Literal[4]]
+    ALayered: Final[Literal[4]]
     M_invalid: Final[Literal[0]]
+    MInvalid: Final[Literal[0]]
     M_texture: Final[Literal[1]]
+    MTexture: Final[Literal[1]]
     M_nodepath: Final[Literal[2]]
+    MNodepath: Final[Literal[2]]
     M_vector: Final[Literal[3]]
+    MVector: Final[Literal[3]]
     M_numeric: Final[Literal[4]]
+    MNumeric: Final[Literal[4]]
     M_texture_sampler: Final[Literal[5]]
+    MTextureSampler: Final[Literal[5]]
     M_param: Final[Literal[6]]
+    MParam: Final[Literal[6]]
     M_texture_image: Final[Literal[7]]
+    MTextureImage: Final[Literal[7]]
     M_buffer: Final[Literal[8]]
+    MBuffer: Final[Literal[8]]
     @overload
     def __init__(self, __param0: ShaderInput) -> None: ...
     @overload
@@ -3093,18 +3105,6 @@ class ShaderInput:
     getNodepath = get_nodepath
     getTexture = get_texture
     getSampler = get_sampler
-    ARead = A_read
-    AWrite = A_write
-    ALayered = A_layered
-    MInvalid = M_invalid
-    MTexture = M_texture
-    MNodepath = M_nodepath
-    MVector = M_vector
-    MNumeric = M_numeric
-    MTextureSampler = M_texture_sampler
-    MParam = M_param
-    MTextureImage = M_texture_image
-    MBuffer = M_buffer
 
 class InternalNameCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3368,9 +3368,13 @@ class NodePath(Generic[_N]):
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     ET_ok: Final[Literal[0]]
+    ETOk: Final[Literal[0]]
     ET_not_found: Final[Literal[1]]
+    ETNotFound: Final[Literal[1]]
     ET_removed: Final[Literal[2]]
+    ETRemoved: Final[Literal[2]]
     ET_fail: Final[Literal[3]]
+    ETFail: Final[Literal[3]]
     @property
     def nodes(self) -> Sequence[PandaNode]: ...
     @property
@@ -6514,10 +6518,6 @@ class NodePath(Generic[_N]):
     getClassType = get_class_type
     getNodes = get_nodes
     getAncestors = get_ancestors
-    ETOk = ET_ok
-    ETNotFound = ET_not_found
-    ETRemoved = ET_removed
-    ETFail = ET_fail
 
 class NodePathCollection:
     """This is a set of zero or more NodePaths.  It's handy for returning from
@@ -6944,8 +6944,11 @@ class AuxBitplaneAttrib(RenderAttrib):
     Otherwise, it has no effect.
     """
     ABO_glow: Final[Literal[1]]
+    ABOGlow: Final[Literal[1]]
     ABO_aux_normal: Final[Literal[2]]
+    ABOAuxNormal: Final[Literal[2]]
     ABO_aux_glow: Final[Literal[4]]
+    ABOAuxGlow: Final[Literal[4]]
     @property
     def outputs(self) -> int: ...
     @property
@@ -6973,9 +6976,6 @@ class AuxBitplaneAttrib(RenderAttrib):
     makeDefault = make_default
     getOutputs = get_outputs
     getClassSlot = get_class_slot
-    ABOGlow = ABO_glow
-    ABOAuxNormal = ABO_aux_normal
-    ABOAuxGlow = ABO_aux_glow
 
 class AuxSceneData(TypedReferenceCount):
     """This is a base class for a generic data structure that can be attached per-
@@ -7647,7 +7647,9 @@ class PlaneNode(PandaNode):
     priority: int
     clip_effect: int
     CE_visible: Final[Literal[1]]
+    CEVisible: Final[Literal[1]]
     CE_collision: Final[Literal[2]]
+    CECollision: Final[Literal[2]]
     def __init__(self, name: str, plane: _Vec4f = ...) -> None: ...
     def set_plane(self, plane: _Vec4f) -> None:
         """Sets the particular plane represented by the PlaneNode."""
@@ -7700,8 +7702,6 @@ class PlaneNode(PandaNode):
     getPriority = get_priority
     setClipEffect = set_clip_effect
     getClipEffect = get_clip_effect
-    CEVisible = CE_visible
-    CECollision = CE_collision
 
 class ClipPlaneAttrib(RenderAttrib):
     """This functions similarly to a LightAttrib.  It indicates the set of
@@ -7710,8 +7710,11 @@ class ClipPlaneAttrib(RenderAttrib):
     of clipping planes in effect.
     """
     O_set: Final[Literal[0]]
+    OSet: Final[Literal[0]]
     O_add: Final[Literal[1]]
+    OAdd: Final[Literal[1]]
     O_remove: Final[Literal[2]]
+    ORemove: Final[Literal[2]]
     @property
     def class_slot(self) -> int: ...
     @overload
@@ -7893,15 +7896,15 @@ class ClipPlaneAttrib(RenderAttrib):
     getClassSlot = get_class_slot
     getOnPlanes = get_on_planes
     getOffPlanes = get_off_planes
-    OSet = O_set
-    OAdd = O_add
-    ORemove = O_remove
 
 class ColorAttrib(RenderAttrib):
     """Indicates what color should be applied to renderable geometry."""
     T_vertex: Final[Literal[0]]
+    TVertex: Final[Literal[0]]
     T_flat: Final[Literal[1]]
+    TFlat: Final[Literal[1]]
     T_off: Final[Literal[2]]
+    TOff: Final[Literal[2]]
     @property
     def color_type(self) -> _ColorAttrib_Type: ...
     @property
@@ -7957,42 +7960,67 @@ class ColorAttrib(RenderAttrib):
     getColorType = get_color_type
     getColor = get_color
     getClassSlot = get_class_slot
-    TVertex = T_vertex
-    TFlat = T_flat
-    TOff = T_off
 
 class ColorBlendAttrib(RenderAttrib):
     """This specifies how colors are blended into the frame buffer, for special
     effects.  This overrides transparency if transparency is also specified.
     """
     M_add: Final[Literal[1]]
+    MAdd: Final[Literal[1]]
     M_subtract: Final[Literal[2]]
+    MSubtract: Final[Literal[2]]
     M_inv_subtract: Final[Literal[3]]
+    MInvSubtract: Final[Literal[3]]
     M_min: Final[Literal[4]]
+    MMin: Final[Literal[4]]
     M_max: Final[Literal[5]]
+    MMax: Final[Literal[5]]
     O_zero: Final[Literal[0]]
+    OZero: Final[Literal[0]]
     O_one: Final[Literal[1]]
+    OOne: Final[Literal[1]]
     O_incoming_color: Final[Literal[2]]
+    OIncomingColor: Final[Literal[2]]
     O_one_minus_incoming_color: Final[Literal[3]]
+    OOneMinusIncomingColor: Final[Literal[3]]
     O_fbuffer_color: Final[Literal[4]]
+    OFbufferColor: Final[Literal[4]]
     O_one_minus_fbuffer_color: Final[Literal[5]]
+    OOneMinusFbufferColor: Final[Literal[5]]
     O_incoming_alpha: Final[Literal[6]]
+    OIncomingAlpha: Final[Literal[6]]
     O_one_minus_incoming_alpha: Final[Literal[7]]
+    OOneMinusIncomingAlpha: Final[Literal[7]]
     O_fbuffer_alpha: Final[Literal[8]]
+    OFbufferAlpha: Final[Literal[8]]
     O_one_minus_fbuffer_alpha: Final[Literal[9]]
+    OOneMinusFbufferAlpha: Final[Literal[9]]
     O_constant_color: Final[Literal[10]]
+    OConstantColor: Final[Literal[10]]
     O_one_minus_constant_color: Final[Literal[11]]
+    OOneMinusConstantColor: Final[Literal[11]]
     O_constant_alpha: Final[Literal[12]]
+    OConstantAlpha: Final[Literal[12]]
     O_one_minus_constant_alpha: Final[Literal[13]]
+    OOneMinusConstantAlpha: Final[Literal[13]]
     O_incoming_color_saturate: Final[Literal[14]]
+    OIncomingColorSaturate: Final[Literal[14]]
     O_incoming1_color: Final[Literal[15]]
+    OIncoming1Color: Final[Literal[15]]
     O_one_minus_incoming1_color: Final[Literal[16]]
+    OOneMinusIncoming1Color: Final[Literal[16]]
     O_incoming1_alpha: Final[Literal[17]]
+    OIncoming1Alpha: Final[Literal[17]]
     O_one_minus_incoming1_alpha: Final[Literal[18]]
+    OOneMinusIncoming1Alpha: Final[Literal[18]]
     O_color_scale: Final[Literal[19]]
+    OColorScale: Final[Literal[19]]
     O_one_minus_color_scale: Final[Literal[20]]
+    OOneMinusColorScale: Final[Literal[20]]
     O_alpha_scale: Final[Literal[21]]
+    OAlphaScale: Final[Literal[21]]
     O_one_minus_alpha_scale: Final[Literal[22]]
+    OOneMinusAlphaScale: Final[Literal[22]]
     @property
     def rgb_mode(self) -> _ColorBlendAttrib_Mode: ...
     @property
@@ -8100,34 +8128,6 @@ class ColorBlendAttrib(RenderAttrib):
     involvesConstantColor = involves_constant_color
     involvesColorScale = involves_color_scale
     getClassSlot = get_class_slot
-    MAdd = M_add
-    MSubtract = M_subtract
-    MInvSubtract = M_inv_subtract
-    MMin = M_min
-    MMax = M_max
-    OZero = O_zero
-    OOne = O_one
-    OIncomingColor = O_incoming_color
-    OOneMinusIncomingColor = O_one_minus_incoming_color
-    OFbufferColor = O_fbuffer_color
-    OOneMinusFbufferColor = O_one_minus_fbuffer_color
-    OIncomingAlpha = O_incoming_alpha
-    OOneMinusIncomingAlpha = O_one_minus_incoming_alpha
-    OFbufferAlpha = O_fbuffer_alpha
-    OOneMinusFbufferAlpha = O_one_minus_fbuffer_alpha
-    OConstantColor = O_constant_color
-    OOneMinusConstantColor = O_one_minus_constant_color
-    OConstantAlpha = O_constant_alpha
-    OOneMinusConstantAlpha = O_one_minus_constant_alpha
-    OIncomingColorSaturate = O_incoming_color_saturate
-    OIncoming1Color = O_incoming1_color
-    OOneMinusIncoming1Color = O_one_minus_incoming1_color
-    OIncoming1Alpha = O_incoming1_alpha
-    OOneMinusIncoming1Alpha = O_one_minus_incoming1_alpha
-    OColorScale = O_color_scale
-    OOneMinusColorScale = O_one_minus_color_scale
-    OAlphaScale = O_alpha_scale
-    OOneMinusAlphaScale = O_one_minus_alpha_scale
 
 class ColorScaleAttrib(RenderAttrib):
     """Applies a scale to colors in the scene graph and on vertices."""
@@ -8213,12 +8213,19 @@ class ColorWriteAttrib(RenderAttrib):
     buffer without affecting the color buffer.
     """
     C_off: Final[Literal[0]]
+    COff: Final[Literal[0]]
     C_red: Final[Literal[1]]
+    CRed: Final[Literal[1]]
     C_green: Final[Literal[2]]
+    CGreen: Final[Literal[2]]
     C_blue: Final[Literal[4]]
+    CBlue: Final[Literal[4]]
     C_rgb: Final[Literal[7]]
+    CRgb: Final[Literal[7]]
     C_alpha: Final[Literal[8]]
+    CAlpha: Final[Literal[8]]
     C_all: Final[Literal[15]]
+    CAll: Final[Literal[15]]
     @property
     def channels(self) -> int: ...
     @property
@@ -8241,13 +8248,6 @@ class ColorWriteAttrib(RenderAttrib):
     makeDefault = make_default
     getChannels = get_channels
     getClassSlot = get_class_slot
-    COff = C_off
-    CRed = C_red
-    CGreen = C_green
-    CBlue = C_blue
-    CRgb = C_rgb
-    CAlpha = C_alpha
-    CAll = C_all
 
 class CompassEffect(RenderEffect):
     """A CompassEffect causes a node to inherit its rotation (or pos or scale, if
@@ -8273,15 +8273,25 @@ class CompassEffect(RenderEffect):
     node.
     """
     P_x: Final[Literal[1]]
+    PX: Final[Literal[1]]
     P_y: Final[Literal[2]]
+    PY: Final[Literal[2]]
     P_z: Final[Literal[4]]
+    PZ: Final[Literal[4]]
     P_pos: Final[Literal[7]]
+    PPos: Final[Literal[7]]
     P_rot: Final[Literal[8]]
+    PRot: Final[Literal[8]]
     P_sx: Final[Literal[16]]
+    PSx: Final[Literal[16]]
     P_sy: Final[Literal[32]]
+    PSy: Final[Literal[32]]
     P_sz: Final[Literal[64]]
+    PSz: Final[Literal[64]]
     P_scale: Final[Literal[112]]
+    PScale: Final[Literal[112]]
     P_all: Final[Literal[127]]
+    PAll: Final[Literal[127]]
     @staticmethod
     def make(reference: NodePath, properties: int = ...) -> RenderEffect:
         """Constructs a new CompassEffect object.  If the reference is an empty
@@ -8303,16 +8313,6 @@ class CompassEffect(RenderEffect):
         ...
     getReference = get_reference
     getProperties = get_properties
-    PX = P_x
-    PY = P_y
-    PZ = P_z
-    PPos = P_pos
-    PRot = P_rot
-    PSx = P_sx
-    PSy = P_sy
-    PSz = P_sz
-    PScale = P_scale
-    PAll = P_all
 
 class CullBinEnums:
     """Provides scoping for the enumerated type shared by CullBin and
@@ -8320,18 +8320,18 @@ class CullBinEnums:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     BT_invalid: Final[Literal[0]]
+    BTInvalid: Final[Literal[0]]
     BT_unsorted: Final[Literal[1]]
+    BTUnsorted: Final[Literal[1]]
     BT_state_sorted: Final[Literal[2]]
+    BTStateSorted: Final[Literal[2]]
     BT_back_to_front: Final[Literal[3]]
+    BTBackToFront: Final[Literal[3]]
     BT_front_to_back: Final[Literal[4]]
+    BTFrontToBack: Final[Literal[4]]
     BT_fixed: Final[Literal[5]]
+    BTFixed: Final[Literal[5]]
     def __init__(self, __param0: CullBinEnums = ...) -> None: ...
-    BTInvalid = BT_invalid
-    BTUnsorted = BT_unsorted
-    BTStateSorted = BT_state_sorted
-    BTBackToFront = BT_back_to_front
-    BTFrontToBack = BT_front_to_back
-    BTFixed = BT_fixed
 
 class GeomNode(PandaNode):
     """A node that holds Geom objects, renderable pieces of geometry.  This is the
@@ -8724,9 +8724,13 @@ class CullBinManager(CullBinEnums):
 class CullFaceAttrib(RenderAttrib):
     """Indicates which faces should be culled based on their vertex ordering."""
     M_cull_none: Final[Literal[0]]
+    MCullNone: Final[Literal[0]]
     M_cull_clockwise: Final[Literal[1]]
+    MCullClockwise: Final[Literal[1]]
     M_cull_counter_clockwise: Final[Literal[2]]
+    MCullCounterClockwise: Final[Literal[2]]
     M_cull_unchanged: Final[Literal[3]]
+    MCullUnchanged: Final[Literal[3]]
     @property
     def mode(self) -> _CullFaceAttrib_Mode: ...
     @property
@@ -8786,10 +8790,6 @@ class CullFaceAttrib(RenderAttrib):
     getReverse = get_reverse
     getEffectiveMode = get_effective_mode
     getClassSlot = get_class_slot
-    MCullNone = M_cull_none
-    MCullClockwise = M_cull_clockwise
-    MCullCounterClockwise = M_cull_counter_clockwise
-    MCullUnchanged = M_cull_unchanged
 
 class WorkingNodePath:
     """This is a class designed to support low-overhead traversals of the complete
@@ -9037,8 +9037,11 @@ class Fog(PandaNode):
     linear_opaque_point: LPoint3f
     exp_density: float
     M_linear: Final[Literal[0]]
+    MLinear: Final[Literal[0]]
     M_exponential: Final[Literal[1]]
+    MExponential: Final[Literal[1]]
     M_exponential_squared: Final[Literal[2]]
+    MExponentialSquared: Final[Literal[2]]
     def get_mode(self) -> _Fog_Mode: ...
     def set_mode(self, mode: _Fog_Mode) -> None:
         """Specifies the computation that is used to determine the fog effect.  If
@@ -9161,9 +9164,6 @@ class Fog(PandaNode):
     setLinearFallback = set_linear_fallback
     getExpDensity = get_exp_density
     setExpDensity = set_exp_density
-    MLinear = M_linear
-    MExponential = M_exponential
-    MExponentialSquared = M_exponential_squared
 
 class FogAttrib(RenderAttrib):
     """Applies a Fog to the geometry at and below this node."""
@@ -9378,8 +9378,11 @@ class GeomDrawCallbackData(CallbackData):
 class RescaleNormalAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
     M_rescale: Final[Literal[1]]
+    MRescale: Final[Literal[1]]
     M_normalize: Final[Literal[2]]
+    MNormalize: Final[Literal[2]]
     M_auto: Final[Literal[3]]
+    MAuto: Final[Literal[3]]
     @property
     def mode(self) -> _RescaleNormalAttrib_Mode: ...
     @property
@@ -9406,9 +9409,6 @@ class RescaleNormalAttrib(RenderAttrib):
     makeDefault = make_default
     getMode = get_mode
     getClassSlot = get_class_slot
-    MRescale = M_rescale
-    MNormalize = M_normalize
-    MAuto = M_auto
 
 class CullResult(ReferenceCount):
     """This stores the result of a BinCullHandler traversal: an ordered collection
@@ -9565,6 +9565,7 @@ class DepthTestAttrib(RenderAttrib):
 class DepthWriteAttrib(RenderAttrib):
     """Enables or disables writing to the depth buffer."""
     M_on: Final[Literal[1]]
+    MOn: Final[Literal[1]]
     @property
     def mode(self) -> _DepthWriteAttrib_Mode: ...
     @property
@@ -9587,7 +9588,6 @@ class DepthWriteAttrib(RenderAttrib):
     makeDefault = make_default
     getMode = get_mode
     getClassSlot = get_class_slot
-    MOn = M_on
 
 class Light:
     """The abstract interface to all kinds of lights.  The actual light objects
@@ -9689,8 +9689,11 @@ class LightAttrib(RenderAttrib):
     remove lights from the total set of "on" lights.
     """
     O_set: Final[Literal[0]]
+    OSet: Final[Literal[0]]
     O_add: Final[Literal[1]]
+    OAdd: Final[Literal[1]]
     O_remove: Final[Literal[2]]
+    ORemove: Final[Literal[2]]
     @property
     def on_lights(self) -> Sequence[NodePath]: ...
     @property
@@ -9902,9 +9905,6 @@ class LightAttrib(RenderAttrib):
     getClassSlot = get_class_slot
     getOnLights = get_on_lights
     getOffLights = get_off_lights
-    OSet = O_set
-    OAdd = O_add
-    ORemove = O_remove
 
 class LightRampAttrib(RenderAttrib):
     """A Light Ramp is any unary operator that takes a rendered pixel as input,
@@ -9913,12 +9913,19 @@ class LightRampAttrib(RenderAttrib):
     the constructors for an explanation of each kind of ramp.
     """
     LRT_default: Final[Literal[0]]
+    LRTDefault: Final[Literal[0]]
     LRT_identity: Final[Literal[1]]
+    LRTIdentity: Final[Literal[1]]
     LRT_single_threshold: Final[Literal[2]]
+    LRTSingleThreshold: Final[Literal[2]]
     LRT_double_threshold: Final[Literal[3]]
+    LRTDoubleThreshold: Final[Literal[3]]
     LRT_hdr0: Final[Literal[4]]
+    LRTHdr0: Final[Literal[4]]
     LRT_hdr1: Final[Literal[5]]
+    LRTHdr1: Final[Literal[5]]
     LRT_hdr2: Final[Literal[6]]
+    LRTHdr2: Final[Literal[6]]
     @property
     def mode(self) -> _LightRampAttrib_LightRampMode: ...
     @property
@@ -10051,13 +10058,6 @@ class LightRampAttrib(RenderAttrib):
     getLevel = get_level
     getThreshold = get_threshold
     getClassSlot = get_class_slot
-    LRTDefault = LRT_default
-    LRTIdentity = LRT_identity
-    LRTSingleThreshold = LRT_single_threshold
-    LRTDoubleThreshold = LRT_double_threshold
-    LRTHdr0 = LRT_hdr0
-    LRTHdr1 = LRT_hdr1
-    LRTHdr2 = LRT_hdr2
 
 class Loader(TypedReferenceCount, Namable):
     """A convenient class for loading models from disk, in bam or egg format (or
@@ -10434,10 +10434,15 @@ class ModelNode(PandaNode):
     file.
     """
     PT_none: Final[Literal[0]]
+    PTNone: Final[Literal[0]]
     PT_local: Final[Literal[1]]
+    PTLocal: Final[Literal[1]]
     PT_net: Final[Literal[2]]
+    PTNet: Final[Literal[2]]
     PT_drop_node: Final[Literal[3]]
+    PTDropNode: Final[Literal[3]]
     PT_no_touch: Final[Literal[4]]
+    PTNoTouch: Final[Literal[4]]
     def set_preserve_transform(self, preserve_transform: _ModelNode_PreserveTransform) -> None:
         """Sets the preserve_transform flag.  This restricts the ability of a flatten
         operation to affect the transform stored on this node, and/or the node
@@ -10488,11 +10493,6 @@ class ModelNode(PandaNode):
     setPreserveAttributes = set_preserve_attributes
     getPreserveAttributes = get_preserve_attributes
     setTransformLimit = set_transform_limit
-    PTNone = PT_none
-    PTLocal = PT_local
-    PTNet = PT_net
-    PTDropNode = PT_drop_node
-    PTNoTouch = PT_no_touch
 
 class ModelRoot(ModelNode):
     """A node of this type is created automatically at the root of each model file
@@ -11360,7 +11360,9 @@ class PolylightEffect(RenderEffect):
     is a cheap way to get lighting effects specially for night scenes
     """
     CT_proximal: Final[Literal[0]]
+    CTProximal: Final[Literal[0]]
     CT_all: Final[Literal[1]]
+    CTAll: Final[Literal[1]]
     @overload
     @staticmethod
     def make() -> RenderEffect:
@@ -11419,8 +11421,6 @@ class PolylightEffect(RenderEffect):
     getContrib = get_contrib
     getEffectCenter = get_effect_center
     hasLight = has_light
-    CTProximal = CT_proximal
-    CTAll = CT_all
 
 class ShaderAttrib(RenderAttrib):
     F_disable_alpha_write: Final[Literal[0]]
@@ -11789,28 +11789,51 @@ class SceneGraphReducer:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     TT_transform: Final[Literal[1]]
+    TTTransform: Final[Literal[1]]
     TT_color: Final[Literal[2]]
+    TTColor: Final[Literal[2]]
     TT_color_scale: Final[Literal[4]]
+    TTColorScale: Final[Literal[4]]
     TT_tex_matrix: Final[Literal[8]]
+    TTTexMatrix: Final[Literal[8]]
     TT_clip_plane: Final[Literal[16]]
+    TTClipPlane: Final[Literal[16]]
     TT_cull_face: Final[Literal[32]]
+    TTCullFace: Final[Literal[32]]
     TT_apply_texture_color: Final[Literal[64]]
+    TTApplyTextureColor: Final[Literal[64]]
     TT_other: Final[Literal[128]]
+    TTOther: Final[Literal[128]]
     CS_geom_node: Final[Literal[1]]
+    CSGeomNode: Final[Literal[1]]
     CS_within_radius: Final[Literal[2]]
+    CSWithinRadius: Final[Literal[2]]
     CS_other: Final[Literal[4]]
+    CSOther: Final[Literal[4]]
     CS_recurse: Final[Literal[8]]
+    CSRecurse: Final[Literal[8]]
     CVD_name: Final[Literal[1]]
+    CVDName: Final[Literal[1]]
     CVD_model: Final[Literal[2]]
+    CVDModel: Final[Literal[2]]
     CVD_transform: Final[Literal[4]]
+    CVDTransform: Final[Literal[4]]
     CVD_avoid_dynamic: Final[Literal[8]]
+    CVDAvoidDynamic: Final[Literal[8]]
     CVD_one_node_only: Final[Literal[16]]
+    CVDOneNodeOnly: Final[Literal[16]]
     CVD_format: Final[Literal[32]]
+    CVDFormat: Final[Literal[32]]
     CVD_usage_hint: Final[Literal[64]]
+    CVDUsageHint: Final[Literal[64]]
     CVD_animation_type: Final[Literal[128]]
+    CVDAnimationType: Final[Literal[128]]
     MN_composite_only: Final[Literal[1]]
+    MNCompositeOnly: Final[Literal[1]]
     MN_avoid_animated: Final[Literal[2]]
+    MNAvoidAnimated: Final[Literal[2]]
     MN_avoid_dynamic: Final[Literal[4]]
+    MNAvoidDynamic: Final[Literal[4]]
     @overload
     def __init__(self, gsg: GraphicsStateGuardianBase = ...) -> None: ...
     @overload
@@ -11981,29 +12004,6 @@ class SceneGraphReducer:
     makeNonindexed = make_nonindexed
     removeUnusedVertices = remove_unused_vertices
     checkLiveFlatten = check_live_flatten
-    TTTransform = TT_transform
-    TTColor = TT_color
-    TTColorScale = TT_color_scale
-    TTTexMatrix = TT_tex_matrix
-    TTClipPlane = TT_clip_plane
-    TTCullFace = TT_cull_face
-    TTApplyTextureColor = TT_apply_texture_color
-    TTOther = TT_other
-    CSGeomNode = CS_geom_node
-    CSWithinRadius = CS_within_radius
-    CSOther = CS_other
-    CSRecurse = CS_recurse
-    CVDName = CVD_name
-    CVDModel = CVD_model
-    CVDTransform = CVD_transform
-    CVDAvoidDynamic = CVD_avoid_dynamic
-    CVDOneNodeOnly = CVD_one_node_only
-    CVDFormat = CVD_format
-    CVDUsageHint = CVD_usage_hint
-    CVDAnimationType = CVD_animation_type
-    MNCompositeOnly = MN_composite_only
-    MNAvoidAnimated = MN_avoid_animated
-    MNAvoidDynamic = MN_avoid_dynamic
 
 class ParamNodePath(ParamValueBase):
     """A class object for storing a NodePath as a parameter."""
@@ -12227,7 +12227,9 @@ class ShadeModelAttrib(RenderAttrib):
     is in effect.
     """
     M_flat: Final[Literal[0]]
+    MFlat: Final[Literal[0]]
     M_smooth: Final[Literal[1]]
+    MSmooth: Final[Literal[1]]
     @property
     def mode(self) -> _ShadeModelAttrib_Mode: ...
     @property
@@ -12252,8 +12254,6 @@ class ShadeModelAttrib(RenderAttrib):
     makeDefault = make_default
     getMode = get_mode
     getClassSlot = get_class_slot
-    MFlat = M_flat
-    MSmooth = M_smooth
 
 class StencilAttrib(RenderAttrib):
     """A StencilAttrib is a collection of all stencil render states.  The render
@@ -12262,35 +12262,65 @@ class StencilAttrib(RenderAttrib):
     the function GraphicsStateGuardian:: get_supports_two_sided_stencil.
     """
     SRS_front_comparison_function: Final[Literal[0]]
+    SRSFrontComparisonFunction: Final[Literal[0]]
     SRS_front_stencil_fail_operation: Final[Literal[1]]
+    SRSFrontStencilFailOperation: Final[Literal[1]]
     SRS_front_stencil_pass_z_fail_operation: Final[Literal[2]]
+    SRSFrontStencilPassZFailOperation: Final[Literal[2]]
     SRS_front_stencil_pass_z_pass_operation: Final[Literal[3]]
+    SRSFrontStencilPassZPassOperation: Final[Literal[3]]
     SRS_reference: Final[Literal[4]]
+    SRSReference: Final[Literal[4]]
     SRS_read_mask: Final[Literal[5]]
+    SRSReadMask: Final[Literal[5]]
     SRS_write_mask: Final[Literal[6]]
+    SRSWriteMask: Final[Literal[6]]
     SRS_back_comparison_function: Final[Literal[7]]
+    SRSBackComparisonFunction: Final[Literal[7]]
     SRS_back_stencil_fail_operation: Final[Literal[8]]
+    SRSBackStencilFailOperation: Final[Literal[8]]
     SRS_back_stencil_pass_z_fail_operation: Final[Literal[9]]
+    SRSBackStencilPassZFailOperation: Final[Literal[9]]
     SRS_back_stencil_pass_z_pass_operation: Final[Literal[10]]
+    SRSBackStencilPassZPassOperation: Final[Literal[10]]
     SRS_clear: Final[Literal[11]]
+    SRSClear: Final[Literal[11]]
     SRS_clear_value: Final[Literal[12]]
+    SRSClearValue: Final[Literal[12]]
     SRS_total: Final[Literal[13]]
+    SRSTotal: Final[Literal[13]]
     SCF_never: Final[Literal[1]]
+    SCFNever: Final[Literal[1]]
     SCF_less_than: Final[Literal[2]]
+    SCFLessThan: Final[Literal[2]]
     SCF_equal: Final[Literal[3]]
+    SCFEqual: Final[Literal[3]]
     SCF_less_than_or_equal: Final[Literal[4]]
+    SCFLessThanOrEqual: Final[Literal[4]]
     SCF_greater_than: Final[Literal[5]]
+    SCFGreaterThan: Final[Literal[5]]
     SCF_not_equal: Final[Literal[6]]
+    SCFNotEqual: Final[Literal[6]]
     SCF_greater_than_or_equal: Final[Literal[7]]
+    SCFGreaterThanOrEqual: Final[Literal[7]]
     SCF_always: Final[Literal[8]]
+    SCFAlways: Final[Literal[8]]
     SO_keep: Final[Literal[0]]
+    SOKeep: Final[Literal[0]]
     SO_zero: Final[Literal[1]]
+    SOZero: Final[Literal[1]]
     SO_replace: Final[Literal[2]]
+    SOReplace: Final[Literal[2]]
     SO_increment: Final[Literal[3]]
+    SOIncrement: Final[Literal[3]]
     SO_decrement: Final[Literal[4]]
+    SODecrement: Final[Literal[4]]
     SO_invert: Final[Literal[5]]
+    SOInvert: Final[Literal[5]]
     SO_increment_saturate: Final[Literal[6]]
+    SOIncrementSaturate: Final[Literal[6]]
     SO_decrement_saturate: Final[Literal[7]]
+    SODecrementSaturate: Final[Literal[7]]
     @property
     def class_slot(self) -> int: ...
     @staticmethod
@@ -12331,36 +12361,6 @@ class StencilAttrib(RenderAttrib):
     make2SidedWithClear = make_2_sided_with_clear
     getRenderState = get_render_state
     getClassSlot = get_class_slot
-    SRSFrontComparisonFunction = SRS_front_comparison_function
-    SRSFrontStencilFailOperation = SRS_front_stencil_fail_operation
-    SRSFrontStencilPassZFailOperation = SRS_front_stencil_pass_z_fail_operation
-    SRSFrontStencilPassZPassOperation = SRS_front_stencil_pass_z_pass_operation
-    SRSReference = SRS_reference
-    SRSReadMask = SRS_read_mask
-    SRSWriteMask = SRS_write_mask
-    SRSBackComparisonFunction = SRS_back_comparison_function
-    SRSBackStencilFailOperation = SRS_back_stencil_fail_operation
-    SRSBackStencilPassZFailOperation = SRS_back_stencil_pass_z_fail_operation
-    SRSBackStencilPassZPassOperation = SRS_back_stencil_pass_z_pass_operation
-    SRSClear = SRS_clear
-    SRSClearValue = SRS_clear_value
-    SRSTotal = SRS_total
-    SCFNever = SCF_never
-    SCFLessThan = SCF_less_than
-    SCFEqual = SCF_equal
-    SCFLessThanOrEqual = SCF_less_than_or_equal
-    SCFGreaterThan = SCF_greater_than
-    SCFNotEqual = SCF_not_equal
-    SCFGreaterThanOrEqual = SCF_greater_than_or_equal
-    SCFAlways = SCF_always
-    SOKeep = SO_keep
-    SOZero = SO_zero
-    SOReplace = SO_replace
-    SOIncrement = SO_increment
-    SODecrement = SO_decrement
-    SOInvert = SO_invert
-    SOIncrementSaturate = SO_increment_saturate
-    SODecrementSaturate = SO_decrement_saturate
 
 class ShaderPool:
     """This is the preferred interface for loading shaders for the TextNode

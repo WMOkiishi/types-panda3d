@@ -17,38 +17,38 @@ class ConfigFlags:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     VT_undefined: Final[Literal[0]]
+    VTUndefined: Final[Literal[0]]
     VT_list: Final[Literal[1]]
+    VTList: Final[Literal[1]]
     VT_string: Final[Literal[2]]
+    VTString: Final[Literal[2]]
     VT_filename: Final[Literal[3]]
+    VTFilename: Final[Literal[3]]
     VT_bool: Final[Literal[4]]
+    VTBool: Final[Literal[4]]
     VT_int: Final[Literal[5]]
+    VTInt: Final[Literal[5]]
     VT_double: Final[Literal[6]]
+    VTDouble: Final[Literal[6]]
     VT_enum: Final[Literal[7]]
+    VTEnum: Final[Literal[7]]
     VT_search_path: Final[Literal[8]]
+    VTSearchPath: Final[Literal[8]]
     VT_int64: Final[Literal[9]]
+    VTInt64: Final[Literal[9]]
     VT_color: Final[Literal[10]]
+    VTColor: Final[Literal[10]]
     F_trust_level_mask: Final[Literal[4095]]
+    FTrustLevelMask: Final[Literal[4095]]
     F_open: Final[Literal[4096]]
+    FOpen: Final[Literal[4096]]
     F_closed: Final[Literal[8192]]
+    FClosed: Final[Literal[8192]]
     F_dynamic: Final[Literal[16384]]
+    FDynamic: Final[Literal[16384]]
     F_dconfig: Final[Literal[32768]]
+    FDconfig: Final[Literal[32768]]
     def __init__(self, __param0: ConfigFlags = ...) -> None: ...
-    VTUndefined = VT_undefined
-    VTList = VT_list
-    VTString = VT_string
-    VTFilename = VT_filename
-    VTBool = VT_bool
-    VTInt = VT_int
-    VTDouble = VT_double
-    VTEnum = VT_enum
-    VTSearchPath = VT_search_path
-    VTInt64 = VT_int64
-    VTColor = VT_color
-    FTrustLevelMask = F_trust_level_mask
-    FOpen = F_open
-    FClosed = F_closed
-    FDynamic = F_dynamic
-    FDconfig = F_dconfig
 
 class ConfigPage:
     """A page of ConfigDeclarations that may be loaded or unloaded.  Typically
@@ -2093,16 +2093,16 @@ class StreamWrapper(IStreamWrapper, OStreamWrapper):  # type: ignore[misc]
     getIostream = get_iostream
 
 NS_unspecified: Final[Literal[0]]
+NSUnspecified: Final[Literal[0]]
 NS_spam: Final[Literal[1]]
+NSSpam: Final[Literal[1]]
 NS_debug: Final[Literal[2]]
+NSDebug: Final[Literal[2]]
 NS_info: Final[Literal[3]]
+NSInfo: Final[Literal[3]]
 NS_warning: Final[Literal[4]]
+NSWarning: Final[Literal[4]]
 NS_error: Final[Literal[5]]
+NSError: Final[Literal[5]]
 NS_fatal: Final[Literal[6]]
-NSUnspecified = NS_unspecified
-NSSpam = NS_spam
-NSDebug = NS_debug
-NSInfo = NS_info
-NSWarning = NS_warning
-NSError = NS_error
-NSFatal = NS_fatal
+NSFatal: Final[Literal[6]]

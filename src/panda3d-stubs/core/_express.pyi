@@ -2580,6 +2580,7 @@ class VirtualFileSystem:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     MF_read_only: Final[Literal[2]]
+    MFReadOnly: Final[Literal[2]]
     @property
     def mounts(self) -> Sequence[PointerTo_VirtualFileMount]: ...
     def __init__(self) -> None: ...
@@ -2898,7 +2899,6 @@ class VirtualFileSystem:
     openReadAppendFile = open_read_append_file
     closeReadWriteFile = close_read_write_file
     getMounts = get_mounts
-    MFReadOnly = MF_read_only
 
 class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
     @overload
@@ -3180,10 +3180,15 @@ class WindowsRegistry:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     rl_machine: Final[Literal[0]]
+    RlMachine: Final[Literal[0]]
     rl_user: Final[Literal[1]]
+    RlUser: Final[Literal[1]]
     T_none: Final[Literal[0]]
+    TNone: Final[Literal[0]]
     T_int: Final[Literal[1]]
+    TInt: Final[Literal[1]]
     T_string: Final[Literal[2]]
+    TString: Final[Literal[2]]
     def __init__(self, __param0: WindowsRegistry = ...) -> None: ...
     @staticmethod
     def set_string_value(key: str, name: str, value: str, rl: _WindowsRegistry_RegLevel = ...) -> bool:
@@ -3225,49 +3230,81 @@ class WindowsRegistry:
     getKeyType = get_key_type
     getStringValue = get_string_value
     getIntValue = get_int_value
-    RlMachine = rl_machine
-    RlUser = rl_user
-    TNone = T_none
-    TInt = T_int
-    TString = T_string
 
 EU_http_redirect: Final[Literal[7]]
+EUHttpRedirect: Final[Literal[7]]
 EU_eof: Final[Literal[6]]
+EUEof: Final[Literal[6]]
 EU_network_no_data: Final[Literal[5]]
+EUNetworkNoData: Final[Literal[5]]
 EU_write_ram: Final[Literal[4]]
+EUWriteRam: Final[Literal[4]]
 EU_write: Final[Literal[3]]
+EUWrite: Final[Literal[3]]
 EU_ok: Final[Literal[2]]
+EUOk: Final[Literal[2]]
 EU_success: Final[Literal[1]]
+EUSuccess: Final[Literal[1]]
 EU_error_abort: Final[Literal[-1]]
+EUErrorAbort: Final[Literal[-1]]
 EU_error_file_empty: Final[Literal[-2]]
+EUErrorFileEmpty: Final[Literal[-2]]
 EU_error_file_invalid: Final[Literal[-3]]
+EUErrorFileInvalid: Final[Literal[-3]]
 EU_error_invalid_checksum: Final[Literal[-4]]
+EUErrorInvalidChecksum: Final[Literal[-4]]
 EU_error_network_dead: Final[Literal[-30]]
+EUErrorNetworkDead: Final[Literal[-30]]
 EU_error_network_unreachable: Final[Literal[-31]]
+EUErrorNetworkUnreachable: Final[Literal[-31]]
 EU_error_network_disconnected: Final[Literal[-32]]
+EUErrorNetworkDisconnected: Final[Literal[-32]]
 EU_error_network_timeout: Final[Literal[-33]]
+EUErrorNetworkTimeout: Final[Literal[-33]]
 EU_error_network_no_data: Final[Literal[-34]]
+EUErrorNetworkNoData: Final[Literal[-34]]
 EU_error_network_disconnected_locally: Final[Literal[-40]]
+EUErrorNetworkDisconnectedLocally: Final[Literal[-40]]
 EU_error_network_buffer_overflow: Final[Literal[-41]]
+EUErrorNetworkBufferOverflow: Final[Literal[-41]]
 EU_error_network_disk_quota_exceeded: Final[Literal[-42]]
+EUErrorNetworkDiskQuotaExceeded: Final[Literal[-42]]
 EU_error_network_remote_host_disconnected: Final[Literal[-50]]
+EUErrorNetworkRemoteHostDisconnected: Final[Literal[-50]]
 EU_error_network_remote_host_down: Final[Literal[-51]]
+EUErrorNetworkRemoteHostDown: Final[Literal[-51]]
 EU_error_network_remote_host_unreachable: Final[Literal[-52]]
+EUErrorNetworkRemoteHostUnreachable: Final[Literal[-52]]
 EU_error_network_remote_host_not_found: Final[Literal[-53]]
+EUErrorNetworkRemoteHostNotFound: Final[Literal[-53]]
 EU_error_network_remote_host_no_response: Final[Literal[-54]]
+EUErrorNetworkRemoteHostNoResponse: Final[Literal[-54]]
 EU_error_write_out_of_files: Final[Literal[-60]]
+EUErrorWriteOutOfFiles: Final[Literal[-60]]
 EU_error_write_out_of_memory: Final[Literal[-61]]
+EUErrorWriteOutOfMemory: Final[Literal[-61]]
 EU_error_write_sharing_violation: Final[Literal[-62]]
+EUErrorWriteSharingViolation: Final[Literal[-62]]
 EU_error_write_disk_full: Final[Literal[-63]]
+EUErrorWriteDiskFull: Final[Literal[-63]]
 EU_error_write_disk_not_found: Final[Literal[-64]]
+EUErrorWriteDiskNotFound: Final[Literal[-64]]
 EU_error_write_disk_sector_not_found: Final[Literal[-65]]
+EUErrorWriteDiskSectorNotFound: Final[Literal[-65]]
 EU_error_write_disk_fault: Final[Literal[-66]]
+EUErrorWriteDiskFault: Final[Literal[-66]]
 EU_error_write_file_rename: Final[Literal[-67]]
+EUErrorWriteFileRename: Final[Literal[-67]]
 EU_error_http_server_timeout: Final[Literal[-70]]
+EUErrorHttpServerTimeout: Final[Literal[-70]]
 EU_error_http_gateway_timeout: Final[Literal[-71]]
+EUErrorHttpGatewayTimeout: Final[Literal[-71]]
 EU_error_http_service_unavailable: Final[Literal[-72]]
+EUErrorHttpServiceUnavailable: Final[Literal[-72]]
 EU_error_http_proxy_authentication: Final[Literal[-73]]
+EUErrorHttpProxyAuthentication: Final[Literal[-73]]
 EU_error_zlib: Final[Literal[-80]]
+EUErrorZlib: Final[Literal[-80]]
 def compress_string(source: str, compression_level: int) -> str: ...
 def decompress_string(source: str) -> str: ...
 def compress_file(source: _Filename, dest: _Filename, compression_level: int) -> bool: ...
@@ -3336,43 +3373,6 @@ PointerToArrayInt = PointerToArray_int
 PTA_uchar = PointerToArray_unsigned_char
 PTAUchar = PTA_uchar
 PointerToArrayUnsignedChar = PointerToArray_unsigned_char
-EUHttpRedirect = EU_http_redirect
-EUEof = EU_eof
-EUNetworkNoData = EU_network_no_data
-EUWriteRam = EU_write_ram
-EUWrite = EU_write
-EUOk = EU_ok
-EUSuccess = EU_success
-EUErrorAbort = EU_error_abort
-EUErrorFileEmpty = EU_error_file_empty
-EUErrorFileInvalid = EU_error_file_invalid
-EUErrorInvalidChecksum = EU_error_invalid_checksum
-EUErrorNetworkDead = EU_error_network_dead
-EUErrorNetworkUnreachable = EU_error_network_unreachable
-EUErrorNetworkDisconnected = EU_error_network_disconnected
-EUErrorNetworkTimeout = EU_error_network_timeout
-EUErrorNetworkNoData = EU_error_network_no_data
-EUErrorNetworkDisconnectedLocally = EU_error_network_disconnected_locally
-EUErrorNetworkBufferOverflow = EU_error_network_buffer_overflow
-EUErrorNetworkDiskQuotaExceeded = EU_error_network_disk_quota_exceeded
-EUErrorNetworkRemoteHostDisconnected = EU_error_network_remote_host_disconnected
-EUErrorNetworkRemoteHostDown = EU_error_network_remote_host_down
-EUErrorNetworkRemoteHostUnreachable = EU_error_network_remote_host_unreachable
-EUErrorNetworkRemoteHostNotFound = EU_error_network_remote_host_not_found
-EUErrorNetworkRemoteHostNoResponse = EU_error_network_remote_host_no_response
-EUErrorWriteOutOfFiles = EU_error_write_out_of_files
-EUErrorWriteOutOfMemory = EU_error_write_out_of_memory
-EUErrorWriteSharingViolation = EU_error_write_sharing_violation
-EUErrorWriteDiskFull = EU_error_write_disk_full
-EUErrorWriteDiskNotFound = EU_error_write_disk_not_found
-EUErrorWriteDiskSectorNotFound = EU_error_write_disk_sector_not_found
-EUErrorWriteDiskFault = EU_error_write_disk_fault
-EUErrorWriteFileRename = EU_error_write_file_rename
-EUErrorHttpServerTimeout = EU_error_http_server_timeout
-EUErrorHttpGatewayTimeout = EU_error_http_gateway_timeout
-EUErrorHttpServiceUnavailable = EU_error_http_service_unavailable
-EUErrorHttpProxyAuthentication = EU_error_http_proxy_authentication
-EUErrorZlib = EU_error_zlib
 PointerToVirtualFileMount = PointerTo_VirtualFileMount
 PointerToBaseVirtualFileMount = PointerToBase_VirtualFileMount
 PTA_stdfloat = PointerToArray_float

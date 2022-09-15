@@ -1417,15 +1417,25 @@ class RopeNode(PandaNode):
     thickness: float
     matrix: LMatrix4f
     RM_thread: Final[Literal[0]]
+    RMThread: Final[Literal[0]]
     RM_tape: Final[Literal[1]]
+    RMTape: Final[Literal[1]]
     RM_billboard: Final[Literal[2]]
+    RMBillboard: Final[Literal[2]]
     RM_tube: Final[Literal[3]]
+    RMTube: Final[Literal[3]]
     UV_none: Final[Literal[0]]
+    UVNone: Final[Literal[0]]
     UV_parametric: Final[Literal[1]]
+    UVParametric: Final[Literal[1]]
     UV_distance: Final[Literal[2]]
+    UVDistance: Final[Literal[2]]
     UV_distance2: Final[Literal[3]]
+    UVDistance2: Final[Literal[3]]
     NM_none: Final[Literal[0]]
+    NMNone: Final[Literal[0]]
     NM_vertex: Final[Literal[1]]
+    NMVertex: Final[Literal[1]]
     @property
     def vertex_color_dimension(self) -> int: ...
     @property
@@ -1625,16 +1635,6 @@ class RopeNode(PandaNode):
     hasMatrix = has_matrix
     getMatrix = get_matrix
     resetBound = reset_bound
-    RMThread = RM_thread
-    RMTape = RM_tape
-    RMBillboard = RM_billboard
-    RMTube = RM_tube
-    UVNone = UV_none
-    UVParametric = UV_parametric
-    UVDistance = UV_distance
-    UVDistance2 = UV_distance2
-    NMNone = NM_none
-    NMVertex = NM_vertex
 
 class SheetNode(PandaNode):
     """This class draws a visible representation of the NURBS surface stored in

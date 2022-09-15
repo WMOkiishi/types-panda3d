@@ -35,30 +35,30 @@ from ._tform import *
 from typing_extensions import Literal
 
 END_PUBLISH: Literal['__end_publish']
+ENDPUBLISH: Literal['__end_publish']
 TINYXML_INCLUDED: Literal['']
+TINYXMLINCLUDED: Literal['']
 TIXML_SAFE: Literal['']
+TIXMLSAFE: Literal['']
 TIXML_SNPRINTF: Literal['_snprintf_s']
+TIXMLSNPRINTF: Literal['_snprintf_s']
 TIXML_SSCANF: Literal['sscanf_s']
+TIXMLSSCANF: Literal['sscanf_s']
 TIXML_STRING: Literal['std::string']
+TIXMLSTRING: Literal['std::string']
 HC_CUT: Literal[1]
+HCCUT: Literal[1]
 HC_FREE: Literal[2]
+HCFREE: Literal[2]
 HC_G1: Literal[3]
+HCG1: Literal[3]
 HC_SMOOTH: Literal[4]
+HCSMOOTH: Literal[4]
 PCT_HPR: Literal[2]
+PCTHPR: Literal[2]
 PCT_NONE: Literal[0]
+PCTNONE: Literal[0]
 PCT_T: Literal[3]
+PCTT: Literal[3]
 PCT_XYZ: Literal[1]
-ENDPUBLISH = END_PUBLISH
-TINYXMLINCLUDED = TINYXML_INCLUDED
-TIXMLSAFE = TIXML_SAFE
-TIXMLSNPRINTF = TIXML_SNPRINTF
-TIXMLSSCANF = TIXML_SSCANF
-TIXMLSTRING = TIXML_STRING
-HCCUT = HC_CUT
-HCFREE = HC_FREE
-HCG1 = HC_G1
-HCSMOOTH = HC_SMOOTH
-PCTHPR = PCT_HPR
-PCTNONE = PCT_NONE
-PCTT = PCT_T
-PCTXYZ = PCT_XYZ
+PCTXYZ: Literal[1]

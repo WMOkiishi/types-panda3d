@@ -87,23 +87,41 @@ class GraphicsPipe(TypedReferenceCount):
     windows from same device.
     """
     OT_window: Final[Literal[1]]
+    OTWindow: Final[Literal[1]]
     OT_fullscreen_window: Final[Literal[2]]
+    OTFullscreenWindow: Final[Literal[2]]
     OT_buffer: Final[Literal[4]]
+    OTBuffer: Final[Literal[4]]
     OT_texture_buffer: Final[Literal[8]]
+    OTTextureBuffer: Final[Literal[8]]
     BF_refuse_parasite: Final[Literal[1]]
+    BFRefuseParasite: Final[Literal[1]]
     BF_require_parasite: Final[Literal[2]]
+    BFRequireParasite: Final[Literal[2]]
     BF_refuse_window: Final[Literal[4]]
+    BFRefuseWindow: Final[Literal[4]]
     BF_require_window: Final[Literal[8]]
+    BFRequireWindow: Final[Literal[8]]
     BF_require_callback_window: Final[Literal[16]]
+    BFRequireCallbackWindow: Final[Literal[16]]
     BF_can_bind_color: Final[Literal[64]]
+    BFCanBindColor: Final[Literal[64]]
     BF_can_bind_every: Final[Literal[128]]
+    BFCanBindEvery: Final[Literal[128]]
     BF_resizeable: Final[Literal[256]]
+    BFResizeable: Final[Literal[256]]
     BF_size_track_host: Final[Literal[512]]
+    BFSizeTrackHost: Final[Literal[512]]
     BF_rtt_cumulative: Final[Literal[1024]]
+    BFRttCumulative: Final[Literal[1024]]
     BF_fb_props_optional: Final[Literal[2048]]
+    BFFbPropsOptional: Final[Literal[2048]]
     BF_size_square: Final[Literal[4096]]
+    BFSizeSquare: Final[Literal[4096]]
     BF_size_power_2: Final[Literal[8192]]
+    BFSizePower2: Final[Literal[8192]]
     BF_can_bind_layered: Final[Literal[16384]]
+    BFCanBindLayered: Final[Literal[16384]]
     @property
     def display_width(self) -> int: ...
     @property
@@ -187,33 +205,20 @@ class GraphicsPipe(TypedReferenceCount):
     getDisplayInformation = get_display_information
     lookupCpuData = lookup_cpu_data
     getInterfaceName = get_interface_name
-    OTWindow = OT_window
-    OTFullscreenWindow = OT_fullscreen_window
-    OTBuffer = OT_buffer
-    OTTextureBuffer = OT_texture_buffer
-    BFRefuseParasite = BF_refuse_parasite
-    BFRequireParasite = BF_require_parasite
-    BFRefuseWindow = BF_refuse_window
-    BFRequireWindow = BF_require_window
-    BFRequireCallbackWindow = BF_require_callback_window
-    BFCanBindColor = BF_can_bind_color
-    BFCanBindEvery = BF_can_bind_every
-    BFResizeable = BF_resizeable
-    BFSizeTrackHost = BF_size_track_host
-    BFRttCumulative = BF_rtt_cumulative
-    BFFbPropsOptional = BF_fb_props_optional
-    BFSizeSquare = BF_size_square
-    BFSizePower2 = BF_size_power_2
-    BFCanBindLayered = BF_can_bind_layered
 
 class DisplayInformation:
     """This class contains various display information."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     DS_unknown: Final[Literal[0]]
+    DSUnknown: Final[Literal[0]]
     DS_success: Final[Literal[1]]
+    DSSuccess: Final[Literal[1]]
     DS_direct_3d_create_error: Final[Literal[2]]
+    DSDirect3dCreateError: Final[Literal[2]]
     DS_create_window_error: Final[Literal[3]]
+    DSCreateWindowError: Final[Literal[3]]
     DS_create_device_error: Final[Literal[4]]
+    DSCreateDeviceError: Final[Literal[4]]
     def __init__(self, __param0: DisplayInformation = ...) -> None: ...
     def get_display_state(self) -> int: ...
     def get_maximum_window_width(self) -> int: ...
@@ -340,11 +345,6 @@ class DisplayInformation:
     getOsVersionBuild = get_os_version_build
     getOsPlatformId = get_os_platform_id
     getDisplayModes = get_display_modes
-    DSUnknown = DS_unknown
-    DSSuccess = DS_success
-    DSDirect3dCreateError = DS_direct_3d_create_error
-    DSCreateWindowError = DS_create_window_error
-    DSCreateDeviceError = DS_create_device_error
 
 class DrawableRegion:
     """This is a base class for GraphicsWindow (actually, GraphicsOutput) and
@@ -359,22 +359,39 @@ class DrawableRegion:
     clear_stencil: int
     pixel_zoom: float
     RTP_stencil: Final[Literal[0]]
+    RTPStencil: Final[Literal[0]]
     RTP_depth_stencil: Final[Literal[1]]
+    RTPDepthStencil: Final[Literal[1]]
     RTP_color: Final[Literal[2]]
+    RTPColor: Final[Literal[2]]
     RTP_aux_rgba_0: Final[Literal[3]]
+    RTPAuxRgba0: Final[Literal[3]]
     RTP_aux_rgba_1: Final[Literal[4]]
+    RTPAuxRgba1: Final[Literal[4]]
     RTP_aux_rgba_2: Final[Literal[5]]
+    RTPAuxRgba2: Final[Literal[5]]
     RTP_aux_rgba_3: Final[Literal[6]]
+    RTPAuxRgba3: Final[Literal[6]]
     RTP_aux_hrgba_0: Final[Literal[7]]
+    RTPAuxHrgba0: Final[Literal[7]]
     RTP_aux_hrgba_1: Final[Literal[8]]
+    RTPAuxHrgba1: Final[Literal[8]]
     RTP_aux_hrgba_2: Final[Literal[9]]
+    RTPAuxHrgba2: Final[Literal[9]]
     RTP_aux_hrgba_3: Final[Literal[10]]
+    RTPAuxHrgba3: Final[Literal[10]]
     RTP_aux_float_0: Final[Literal[11]]
+    RTPAuxFloat0: Final[Literal[11]]
     RTP_aux_float_1: Final[Literal[12]]
+    RTPAuxFloat1: Final[Literal[12]]
     RTP_aux_float_2: Final[Literal[13]]
+    RTPAuxFloat2: Final[Literal[13]]
     RTP_aux_float_3: Final[Literal[14]]
+    RTPAuxFloat3: Final[Literal[14]]
     RTP_depth: Final[Literal[15]]
+    RTPDepth: Final[Literal[15]]
     RTP_COUNT: Final[Literal[16]]
+    RTPCOUNT: Final[Literal[16]]
     @property
     def pixel_factor(self) -> float: ...
     def set_clear_color_active(self, clear_color_active: bool) -> None:
@@ -541,23 +558,6 @@ class DrawableRegion:
     getPixelFactor = get_pixel_factor
     supportsPixelZoom = supports_pixel_zoom
     getRenderbufferType = get_renderbuffer_type
-    RTPStencil = RTP_stencil
-    RTPDepthStencil = RTP_depth_stencil
-    RTPColor = RTP_color
-    RTPAuxRgba0 = RTP_aux_rgba_0
-    RTPAuxRgba1 = RTP_aux_rgba_1
-    RTPAuxRgba2 = RTP_aux_rgba_2
-    RTPAuxRgba3 = RTP_aux_rgba_3
-    RTPAuxHrgba0 = RTP_aux_hrgba_0
-    RTPAuxHrgba1 = RTP_aux_hrgba_1
-    RTPAuxHrgba2 = RTP_aux_hrgba_2
-    RTPAuxHrgba3 = RTP_aux_hrgba_3
-    RTPAuxFloat0 = RTP_aux_float_0
-    RTPAuxFloat1 = RTP_aux_float_1
-    RTPAuxFloat2 = RTP_aux_float_2
-    RTPAuxFloat3 = RTP_aux_float_3
-    RTPDepth = RTP_depth
-    RTPCOUNT = RTP_COUNT
 
 class WindowHandle(TypedReferenceCount):
     """This object represents a window on the desktop, not necessarily a Panda
@@ -643,11 +643,17 @@ class WindowProperties:
     z_order: _WindowProperties_ZOrder
     parent_window: WindowHandle
     Z_bottom: Final[Literal[0]]
+    ZBottom: Final[Literal[0]]
     Z_normal: Final[Literal[1]]
+    ZNormal: Final[Literal[1]]
     Z_top: Final[Literal[2]]
+    ZTop: Final[Literal[2]]
     M_absolute: Final[Literal[0]]
+    MAbsolute: Final[Literal[0]]
     M_relative: Final[Literal[1]]
+    MRelative: Final[Literal[1]]
     M_confined: Final[Literal[2]]
+    MConfined: Final[Literal[2]]
     @property
     def config_properties(self) -> WindowProperties: ...
     def __init__(self, args, kwds) -> None: ...
@@ -1068,12 +1074,6 @@ class WindowProperties:
     hasParentWindow = has_parent_window
     clearParentWindow = clear_parent_window
     addProperties = add_properties
-    ZBottom = Z_bottom
-    ZNormal = Z_normal
-    ZTop = Z_top
-    MAbsolute = M_absolute
-    MRelative = M_relative
-    MConfined = M_confined
 
 class DisplayRegion(TypedReferenceCount, DrawableRegion):
     """A rectangular subregion within a window for rendering into.  Typically,
@@ -1564,15 +1564,25 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     sort: int
     child_sort: int
     RTM_none: Final[Literal[0]]
+    RTMNone: Final[Literal[0]]
     RTM_bind_or_copy: Final[Literal[1]]
+    RTMBindOrCopy: Final[Literal[1]]
     RTM_copy_texture: Final[Literal[2]]
+    RTMCopyTexture: Final[Literal[2]]
     RTM_copy_ram: Final[Literal[3]]
+    RTMCopyRam: Final[Literal[3]]
     RTM_triggered_copy_texture: Final[Literal[4]]
+    RTMTriggeredCopyTexture: Final[Literal[4]]
     RTM_triggered_copy_ram: Final[Literal[5]]
+    RTMTriggeredCopyRam: Final[Literal[5]]
     RTM_bind_layered: Final[Literal[6]]
+    RTMBindLayered: Final[Literal[6]]
     FM_render: Final[Literal[0]]
+    FMRender: Final[Literal[0]]
     FM_parasite: Final[Literal[1]]
+    FMParasite: Final[Literal[1]]
     FM_refresh: Final[Literal[2]]
+    FMRefresh: Final[Literal[2]]
     @property
     def gsg(self) -> GraphicsStateGuardian: ...
     @property
@@ -2315,16 +2325,6 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     getClassType = get_class_type
     getDisplayRegions = get_display_regions
     getActiveDisplayRegions = get_active_display_regions
-    RTMNone = RTM_none
-    RTMBindOrCopy = RTM_bind_or_copy
-    RTMCopyTexture = RTM_copy_texture
-    RTMCopyRam = RTM_copy_ram
-    RTMTriggeredCopyTexture = RTM_triggered_copy_texture
-    RTMTriggeredCopyRam = RTM_triggered_copy_ram
-    RTMBindLayered = RTM_bind_layered
-    FMRender = FM_render
-    FMParasite = FM_parasite
-    FMRefresh = FM_refresh
 
 class GraphicsStateGuardian(GraphicsStateGuardianBase):
     """Encapsulates all the communication with a particular instance of a given
@@ -2345,13 +2345,21 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     flash_texture: Texture
     scene: SceneSetup
     SM_00: Final[Literal[0]]
+    SM00: Final[Literal[0]]
     SM_11: Final[Literal[1]]
+    SM11: Final[Literal[1]]
     SM_20: Final[Literal[2]]
+    SM20: Final[Literal[2]]
     SM_2X: Final[Literal[3]]
+    SM2X: Final[Literal[3]]
     SM_30: Final[Literal[4]]
+    SM30: Final[Literal[4]]
     SM_40: Final[Literal[5]]
+    SM40: Final[Literal[5]]
     SM_50: Final[Literal[6]]
+    SM50: Final[Literal[6]]
     SM_51: Final[Literal[7]]
+    SM51: Final[Literal[7]]
     @property
     def valid(self) -> bool: ...
     @property
@@ -2977,14 +2985,6 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     getScene = get_scene
     beginScene = begin_scene
     endScene = end_scene
-    SM00 = SM_00
-    SM11 = SM_11
-    SM20 = SM_20
-    SM2X = SM_2X
-    SM30 = SM_30
-    SM40 = SM_40
-    SM50 = SM_50
-    SM51 = SM_51
 
 class GraphicsEngine(ReferenceCount):
     """This class is the main interface to controlling the render process.  There
@@ -3715,8 +3715,11 @@ class TouchInfo:
     """Stores information for a single touch event."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     TIF_move: Final[Literal[1]]
+    TIFMove: Final[Literal[1]]
     TIF_down: Final[Literal[2]]
+    TIFDown: Final[Literal[2]]
     TIF_up: Final[Literal[4]]
+    TIFUp: Final[Literal[4]]
     def __init__(self, __param0: TouchInfo) -> None: ...
     def get_x(self) -> int: ...
     def get_y(self) -> int: ...
@@ -3726,9 +3729,6 @@ class TouchInfo:
     getY = get_y
     getId = get_id
     getFlags = get_flags
-    TIFMove = TIF_move
-    TIFDown = TIF_down
-    TIFUp = TIF_up
 
 class GraphicsWindowProcCallbackData(CallbackData):
     """This specialization on CallbackData is passed when the callback is
@@ -4037,9 +4037,13 @@ class CallbackGraphicsWindow(GraphicsWindow):
         getRenderFlag = get_render_flag
         getClassType = get_class_type
     RCT_begin_frame: Final[Literal[0]]
+    RCTBeginFrame: Final[Literal[0]]
     RCT_end_frame: Final[Literal[1]]
+    RCTEndFrame: Final[Literal[1]]
     RCT_begin_flip: Final[Literal[2]]
+    RCTBeginFlip: Final[Literal[2]]
     RCT_end_flip: Final[Literal[3]]
+    RCTEndFlip: Final[Literal[3]]
     def set_events_callback(self, object: CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this window is polled
         for window events, including mouse and keyboard events, as well as window
@@ -4109,10 +4113,6 @@ class CallbackGraphicsWindow(GraphicsWindow):
     clearRenderCallback = clear_render_callback
     getRenderCallback = get_render_callback
     createInputDevice = create_input_device
-    RCTBeginFrame = RCT_begin_frame
-    RCTEndFrame = RCT_end_frame
-    RCTBeginFlip = RCT_begin_flip
-    RCTEndFlip = RCT_end_flip
 
 class DisplayMode:
     DtoolClassDict: ClassVar[dict[str, Any]]

@@ -137,9 +137,13 @@ class ISocketStream(istream, SSReader):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     RS_initial: Final[Literal[0]]
+    RSInitial: Final[Literal[0]]
     RS_reading: Final[Literal[1]]
+    RSReading: Final[Literal[1]]
     RS_complete: Final[Literal[2]]
+    RSComplete: Final[Literal[2]]
     RS_error: Final[Literal[3]]
+    RSError: Final[Literal[3]]
     def upcast_to_istream(self) -> istream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
     def is_closed(self) -> bool: ...
@@ -149,10 +153,6 @@ class ISocketStream(istream, SSReader):
     upcastToSSReader = upcast_to_SSReader
     isClosed = is_closed
     getReadState = get_read_state
-    RSInitial = RS_initial
-    RSReading = RS_reading
-    RSComplete = RS_complete
-    RSError = RS_error
 
 class OSocketStream(ostream, SSWriter):
     """A base class for ostreams that write to a (possibly non-blocking) socket.
@@ -471,30 +471,30 @@ class HTTPEnum:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     HV_09: Final[Literal[0]]
+    HV09: Final[Literal[0]]
     HV_10: Final[Literal[1]]
+    HV10: Final[Literal[1]]
     HV_11: Final[Literal[2]]
+    HV11: Final[Literal[2]]
     HV_other: Final[Literal[3]]
+    HVOther: Final[Literal[3]]
     M_options: Final[Literal[0]]
+    MOptions: Final[Literal[0]]
     M_get: Final[Literal[1]]
+    MGet: Final[Literal[1]]
     M_head: Final[Literal[2]]
+    MHead: Final[Literal[2]]
     M_post: Final[Literal[3]]
+    MPost: Final[Literal[3]]
     M_put: Final[Literal[4]]
+    MPut: Final[Literal[4]]
     M_delete: Final[Literal[5]]
+    MDelete: Final[Literal[5]]
     M_trace: Final[Literal[6]]
+    MTrace: Final[Literal[6]]
     M_connect: Final[Literal[7]]
+    MConnect: Final[Literal[7]]
     def __init__(self, __param0: HTTPEnum = ...) -> None: ...
-    HV09 = HV_09
-    HV10 = HV_10
-    HV11 = HV_11
-    HVOther = HV_other
-    MOptions = M_options
-    MGet = M_get
-    MHead = M_head
-    MPost = M_post
-    MPut = M_put
-    MDelete = M_delete
-    MTrace = M_trace
-    MConnect = M_connect
 
 class HTTPDate:
     """A container for an HTTP-legal time/date indication.  This can accept a
@@ -678,8 +678,11 @@ class HTTPClient(ReferenceCount):
     HTTPClient::get_global_ptr().
     """
     VS_no_verify: Final[Literal[0]]
+    VSNoVerify: Final[Literal[0]]
     VS_no_date_check: Final[Literal[1]]
+    VSNoDateCheck: Final[Literal[1]]
     VS_normal: Final[Literal[2]]
+    VSNormal: Final[Literal[2]]
     def __init__(self, copy: HTTPClient = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     @staticmethod
@@ -1065,9 +1068,6 @@ class HTTPClient(ReferenceCount):
     base64Encode = base64_encode
     base64Decode = base64_decode
     getGlobalPtr = get_global_ptr
-    VSNoVerify = VS_no_verify
-    VSNoDateCheck = VS_no_date_check
-    VSNormal = VS_normal
 
 class HTTPEntityTag:
     """A container for an "entity tag" from an HTTP server.  This is used to
@@ -1149,12 +1149,19 @@ class DocumentSpec:
     request_mode: _DocumentSpec_RequestMode
     cache_control: _DocumentSpec_CacheControl
     RM_any: Final[Literal[0]]
+    RMAny: Final[Literal[0]]
     RM_equal: Final[Literal[1]]
+    RMEqual: Final[Literal[1]]
     RM_newer: Final[Literal[2]]
+    RMNewer: Final[Literal[2]]
     RM_equal_or_newer: Final[Literal[3]]
+    RMEqualOrNewer: Final[Literal[3]]
     CC_allow_cache: Final[Literal[0]]
+    CCAllowCache: Final[Literal[0]]
     CC_revalidate: Final[Literal[1]]
+    CCRevalidate: Final[Literal[1]]
     CC_no_cache: Final[Literal[2]]
+    CCNoCache: Final[Literal[2]]
     @overload
     def __init__(self, copy: DocumentSpec = ...) -> None: ...
     @overload
@@ -1285,13 +1292,6 @@ class DocumentSpec:
     getRequestMode = get_request_mode
     setCacheControl = set_cache_control
     getCacheControl = get_cache_control
-    RMAny = RM_any
-    RMEqual = RM_equal
-    RMNewer = RM_newer
-    RMEqualOrNewer = RM_equal_or_newer
-    CCAllowCache = CC_allow_cache
-    CCRevalidate = CC_revalidate
-    CCNoCache = CC_no_cache
 
 class HTTPChannel(TypedReferenceCount):
     """A single channel of communication from an HTTPClient.  This is similar to
@@ -1305,25 +1305,45 @@ class HTTPChannel(TypedReferenceCount):
     retrieved.
     """
     SC_incomplete: Final[Literal[0]]
+    SCIncomplete: Final[Literal[0]]
     SC_internal_error: Final[Literal[1]]
+    SCInternalError: Final[Literal[1]]
     SC_no_connection: Final[Literal[2]]
+    SCNoConnection: Final[Literal[2]]
     SC_timeout: Final[Literal[3]]
+    SCTimeout: Final[Literal[3]]
     SC_lost_connection: Final[Literal[4]]
+    SCLostConnection: Final[Literal[4]]
     SC_non_http_response: Final[Literal[5]]
+    SCNonHttpResponse: Final[Literal[5]]
     SC_invalid_http: Final[Literal[6]]
+    SCInvalidHttp: Final[Literal[6]]
     SC_socks_invalid_version: Final[Literal[7]]
+    SCSocksInvalidVersion: Final[Literal[7]]
     SC_socks_no_acceptable_login_method: Final[Literal[8]]
+    SCSocksNoAcceptableLoginMethod: Final[Literal[8]]
     SC_socks_refused: Final[Literal[9]]
+    SCSocksRefused: Final[Literal[9]]
     SC_socks_no_connection: Final[Literal[10]]
+    SCSocksNoConnection: Final[Literal[10]]
     SC_ssl_internal_failure: Final[Literal[11]]
+    SCSslInternalFailure: Final[Literal[11]]
     SC_ssl_no_handshake: Final[Literal[12]]
+    SCSslNoHandshake: Final[Literal[12]]
     SC_http_error_watermark: Final[Literal[13]]
+    SCHttpErrorWatermark: Final[Literal[13]]
     SC_ssl_invalid_server_certificate: Final[Literal[14]]
+    SCSslInvalidServerCertificate: Final[Literal[14]]
     SC_ssl_self_signed_server_certificate: Final[Literal[15]]
+    SCSslSelfSignedServerCertificate: Final[Literal[15]]
     SC_ssl_unexpected_server: Final[Literal[16]]
+    SCSslUnexpectedServer: Final[Literal[16]]
     SC_download_open_error: Final[Literal[17]]
+    SCDownloadOpenError: Final[Literal[17]]
     SC_download_write_error: Final[Literal[18]]
+    SCDownloadWriteError: Final[Literal[18]]
     SC_download_invalid_range: Final[Literal[19]]
+    SCDownloadInvalidRange: Final[Literal[19]]
     def __init__(self, __param0: HTTPChannel) -> None: ...
     def get_client(self) -> HTTPClient:
         """Returns the HTTPClient object that owns this channel."""
@@ -2039,26 +2059,6 @@ class HTTPChannel(TypedReferenceCount):
     getBytesRequested = get_bytes_requested
     isDownloadComplete = is_download_complete
     getRedirectSteps = get_redirect_steps
-    SCIncomplete = SC_incomplete
-    SCInternalError = SC_internal_error
-    SCNoConnection = SC_no_connection
-    SCTimeout = SC_timeout
-    SCLostConnection = SC_lost_connection
-    SCNonHttpResponse = SC_non_http_response
-    SCInvalidHttp = SC_invalid_http
-    SCSocksInvalidVersion = SC_socks_invalid_version
-    SCSocksNoAcceptableLoginMethod = SC_socks_no_acceptable_login_method
-    SCSocksRefused = SC_socks_refused
-    SCSocksNoConnection = SC_socks_no_connection
-    SCSslInternalFailure = SC_ssl_internal_failure
-    SCSslNoHandshake = SC_ssl_no_handshake
-    SCHttpErrorWatermark = SC_http_error_watermark
-    SCSslInvalidServerCertificate = SC_ssl_invalid_server_certificate
-    SCSslSelfSignedServerCertificate = SC_ssl_self_signed_server_certificate
-    SCSslUnexpectedServer = SC_ssl_unexpected_server
-    SCDownloadOpenError = SC_download_open_error
-    SCDownloadWriteError = SC_download_write_error
-    SCDownloadInvalidRange = SC_download_invalid_range
 
 class Decompressor:
     """This manages run-time decompression of a zlib-compressed stream, as a
@@ -2113,9 +2113,13 @@ class DownloadDb:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     Status_incomplete: Final[Literal[0]]
+    StatusIncomplete: Final[Literal[0]]
     Status_complete: Final[Literal[1]]
+    StatusComplete: Final[Literal[1]]
     Status_decompressed: Final[Literal[2]]
+    StatusDecompressed: Final[Literal[2]]
     Status_extracted: Final[Literal[3]]
+    StatusExtracted: Final[Literal[3]]
     @overload
     def __init__(self, __param0: DownloadDb = ...) -> None:
         """`(self)`:
@@ -2261,10 +2265,6 @@ class DownloadDb:
     setNumVersions = set_num_versions
     getVersion = get_version
     getHash = get_hash
-    StatusIncomplete = Status_incomplete
-    StatusComplete = Status_complete
-    StatusDecompressed = Status_decompressed
-    StatusExtracted = Status_extracted
 
 class Extractor:
     """This class automatically extracts the contents of a Multifile to the

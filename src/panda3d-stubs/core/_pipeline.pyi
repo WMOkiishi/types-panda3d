@@ -770,10 +770,10 @@ class PythonThread(Thread):
     def join(self): ...
 
 TP_low: Final[Literal[0]]
+TPLow: Final[Literal[0]]
 TP_normal: Final[Literal[1]]
+TPNormal: Final[Literal[1]]
 TP_high: Final[Literal[2]]
+TPHigh: Final[Literal[2]]
 TP_urgent: Final[Literal[3]]
-TPLow = TP_low
-TPNormal = TP_normal
-TPHigh = TP_high
-TPUrgent = TP_urgent
+TPUrgent: Final[Literal[3]]

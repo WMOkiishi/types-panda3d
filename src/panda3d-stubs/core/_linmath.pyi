@@ -5907,11 +5907,17 @@ class ConfigVariableColor(ConfigVariable):
     getDefaultValue = get_default_value
 
 CS_default: Final[Literal[0]]
+CSDefault: Final[Literal[0]]
 CS_zup_right: Final[Literal[1]]
+CSZupRight: Final[Literal[1]]
 CS_yup_right: Final[Literal[2]]
+CSYupRight: Final[Literal[2]]
 CS_zup_left: Final[Literal[3]]
+CSZupLeft: Final[Literal[3]]
 CS_yup_left: Final[Literal[4]]
+CSYupLeft: Final[Literal[4]]
 CS_invalid: Final[Literal[5]]
+CSInvalid: Final[Literal[5]]
 @overload
 def __mul__(v: LPoint3d, m: LMatrix3d) -> LPoint3d: ...
 @overload
@@ -6040,12 +6046,6 @@ composeMatrix = compose_matrix
 decomposeMatrix = decompose_matrix
 decomposeMatrixOldHpr = decompose_matrix_old_hpr
 oldToNewHpr = old_to_new_hpr
-CSDefault = CS_default
-CSZupRight = CS_zup_right
-CSYupRight = CS_yup_right
-CSZupLeft = CS_zup_left
-CSYupLeft = CS_yup_left
-CSInvalid = CS_invalid
 LVertexf = LPoint3f
 LNormalf = LVector3f
 LTexCoordf = LPoint2f

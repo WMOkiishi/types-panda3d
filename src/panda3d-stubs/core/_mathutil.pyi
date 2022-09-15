@@ -845,15 +845,25 @@ class BoundingVolume(TypedReferenceCount):
     of any sort.
     """
     IF_no_intersection: Final[Literal[0]]
+    IFNoIntersection: Final[Literal[0]]
     IF_possible: Final[Literal[1]]
+    IFPossible: Final[Literal[1]]
     IF_some: Final[Literal[2]]
+    IFSome: Final[Literal[2]]
     IF_all: Final[Literal[4]]
+    IFAll: Final[Literal[4]]
     IF_dont_understand: Final[Literal[8]]
+    IFDontUnderstand: Final[Literal[8]]
     BT_default: Final[Literal[0]]
+    BTDefault: Final[Literal[0]]
     BT_best: Final[Literal[1]]
+    BTBest: Final[Literal[1]]
     BT_sphere: Final[Literal[2]]
+    BTSphere: Final[Literal[2]]
     BT_box: Final[Literal[3]]
+    BTBox: Final[Literal[3]]
     BT_fastest: Final[Literal[4]]
+    BTFastest: Final[Literal[4]]
     def make_copy(self) -> BoundingVolume: ...
     def is_empty(self) -> bool:
         """Any kind of volume might be empty.  This is a degenerate volume that
@@ -893,16 +903,6 @@ class BoundingVolume(TypedReferenceCount):
     isInfinite = is_infinite
     setInfinite = set_infinite
     extendBy = extend_by
-    IFNoIntersection = IF_no_intersection
-    IFPossible = IF_possible
-    IFSome = IF_some
-    IFAll = IF_all
-    IFDontUnderstand = IF_dont_understand
-    BTDefault = BT_default
-    BTBest = BT_best
-    BTSphere = BT_sphere
-    BTBox = BT_box
-    BTFastest = BT_fastest
 
 class GeometricBoundingVolume(BoundingVolume):
     """This is another abstract class, for a general class of bounding volumes

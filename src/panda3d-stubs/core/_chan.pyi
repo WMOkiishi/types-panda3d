@@ -166,8 +166,11 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     HMF_ok_part_extra: Final[Literal[1]]
+    HMFOkPartExtra: Final[Literal[1]]
     HMF_ok_anim_extra: Final[Literal[2]]
+    HMFOkAnimExtra: Final[Literal[2]]
     HMF_ok_wrong_root_name: Final[Literal[4]]
+    HMFOkWrongRootName: Final[Literal[4]]
     @property
     def children(self) -> Sequence[PartGroup]: ...
     def __init__(self, parent: PartGroup, name: str) -> None:
@@ -296,9 +299,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     writeWithValue = write_with_value
     getClassType = get_class_type
     getChildren = get_children
-    HMFOkPartExtra = HMF_ok_part_extra
-    HMFOkAnimExtra = HMF_ok_anim_extra
-    HMFOkWrongRootName = HMF_ok_wrong_root_name
 
 class AnimControl(TypedReferenceCount, AnimInterface, Namable):
     """Controls the timing of a character animation.  An AnimControl object is
@@ -839,9 +839,13 @@ class PartBundle(PartGroup):
     frame_blend_flag: bool
     root_xform: LMatrix4f
     BT_linear: Final[Literal[0]]
+    BTLinear: Final[Literal[0]]
     BT_normalized_linear: Final[Literal[1]]
+    BTNormalizedLinear: Final[Literal[1]]
     BT_componentwise: Final[Literal[2]]
+    BTComponentwise: Final[Literal[2]]
     BT_componentwise_quat: Final[Literal[3]]
+    BTComponentwiseQuat: Final[Literal[3]]
     @property
     def nodes(self) -> Sequence[PartBundleNode]: ...
     def __init__(self, name: str = ...) -> None:
@@ -1104,10 +1108,6 @@ class PartBundle(PartGroup):
     releaseJoint = release_joint
     forceUpdate = force_update
     getNodes = get_nodes
-    BTLinear = BT_linear
-    BTNormalizedLinear = BT_normalized_linear
-    BTComponentwise = BT_componentwise
-    BTComponentwiseQuat = BT_componentwise_quat
 
 class PartBundleNode(PandaNode):
     """This is a node that contains a pointer to an PartBundle.  Like

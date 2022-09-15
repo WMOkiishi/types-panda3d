@@ -204,27 +204,49 @@ class AudioSound(TypedReferenceCount):
 
 class AudioManager(TypedReferenceCount):
     SPEAKERMODE_raw: Final[Literal[0]]
+    SPEAKERMODERaw: Final[Literal[0]]
     SPEAKERMODE_mono: Final[Literal[1]]
+    SPEAKERMODEMono: Final[Literal[1]]
     SPEAKERMODE_stereo: Final[Literal[2]]
+    SPEAKERMODEStereo: Final[Literal[2]]
     SPEAKERMODE_quad: Final[Literal[3]]
+    SPEAKERMODEQuad: Final[Literal[3]]
     SPEAKERMODE_surround: Final[Literal[4]]
+    SPEAKERMODESurround: Final[Literal[4]]
     SPEAKERMODE_5point1: Final[Literal[5]]
+    SPEAKERMODE5point1: Final[Literal[5]]
     SPEAKERMODE_7point1: Final[Literal[6]]
+    SPEAKERMODE7point1: Final[Literal[6]]
     SPEAKERMODE_max: Final[Literal[7]]
+    SPEAKERMODEMax: Final[Literal[7]]
     SPEAKERMODE_COUNT: Final[Literal[8]]
+    SPEAKERMODECOUNT: Final[Literal[8]]
     SPK_none: Final[Literal[0]]
+    SPKNone: Final[Literal[0]]
     SPK_frontleft: Final[Literal[1]]
+    SPKFrontleft: Final[Literal[1]]
     SPK_frontright: Final[Literal[2]]
+    SPKFrontright: Final[Literal[2]]
     SPK_center: Final[Literal[3]]
+    SPKCenter: Final[Literal[3]]
     SPK_sub: Final[Literal[4]]
+    SPKSub: Final[Literal[4]]
     SPK_backleft: Final[Literal[5]]
+    SPKBackleft: Final[Literal[5]]
     SPK_backright: Final[Literal[6]]
+    SPKBackright: Final[Literal[6]]
     SPK_sideleft: Final[Literal[7]]
+    SPKSideleft: Final[Literal[7]]
     SPK_sideright: Final[Literal[8]]
+    SPKSideright: Final[Literal[8]]
     SPK_COUNT: Final[Literal[9]]
+    SPKCOUNT: Final[Literal[9]]
     SM_heuristic: Final[Literal[0]]
+    SMHeuristic: Final[Literal[0]]
     SM_sample: Final[Literal[1]]
+    SMSample: Final[Literal[1]]
     SM_stream: Final[Literal[2]]
+    SMStream: Final[Literal[2]]
     @property
     def dls_pathname(self) -> Filename: ...
     def get_speaker_setup(self) -> int: ...
@@ -366,28 +388,6 @@ class AudioManager(TypedReferenceCount):
     audio3dGetDropOffFactor = audio_3d_get_drop_off_factor
     getDlsPathname = get_dls_pathname
     setSpeakerConfiguration = set_speaker_configuration
-    SPEAKERMODERaw = SPEAKERMODE_raw
-    SPEAKERMODEMono = SPEAKERMODE_mono
-    SPEAKERMODEStereo = SPEAKERMODE_stereo
-    SPEAKERMODEQuad = SPEAKERMODE_quad
-    SPEAKERMODESurround = SPEAKERMODE_surround
-    SPEAKERMODE5point1 = SPEAKERMODE_5point1
-    SPEAKERMODE7point1 = SPEAKERMODE_7point1
-    SPEAKERMODEMax = SPEAKERMODE_max
-    SPEAKERMODECOUNT = SPEAKERMODE_COUNT
-    SPKNone = SPK_none
-    SPKFrontleft = SPK_frontleft
-    SPKFrontright = SPK_frontright
-    SPKCenter = SPK_center
-    SPKSub = SPK_sub
-    SPKBackleft = SPK_backleft
-    SPKBackright = SPK_backright
-    SPKSideleft = SPK_sideleft
-    SPKSideright = SPK_sideright
-    SPKCOUNT = SPK_COUNT
-    SMHeuristic = SM_heuristic
-    SMSample = SM_sample
-    SMStream = SM_stream
 
 class AudioLoadRequest(AsyncTask):
     """A class object that manages a single asynchronous audio load request.  This

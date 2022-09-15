@@ -42,17 +42,29 @@ class CInterval(TypedReferenceCount):
     manager: CIntervalManager
     play_rate: float
     ET_initialize: Final[Literal[0]]
+    ETInitialize: Final[Literal[0]]
     ET_instant: Final[Literal[1]]
+    ETInstant: Final[Literal[1]]
     ET_step: Final[Literal[2]]
+    ETStep: Final[Literal[2]]
     ET_finalize: Final[Literal[3]]
+    ETFinalize: Final[Literal[3]]
     ET_reverse_initialize: Final[Literal[4]]
+    ETReverseInitialize: Final[Literal[4]]
     ET_reverse_instant: Final[Literal[5]]
+    ETReverseInstant: Final[Literal[5]]
     ET_reverse_finalize: Final[Literal[6]]
+    ETReverseFinalize: Final[Literal[6]]
     ET_interrupt: Final[Literal[7]]
+    ETInterrupt: Final[Literal[7]]
     S_initial: Final[Literal[0]]
+    SInitial: Final[Literal[0]]
     S_started: Final[Literal[1]]
+    SStarted: Final[Literal[1]]
     S_paused: Final[Literal[2]]
+    SPaused: Final[Literal[2]]
     S_final: Final[Literal[3]]
+    SFinal: Final[Literal[3]]
     @property
     def name(self) -> str: ...
     @property
@@ -349,18 +361,6 @@ class CInterval(TypedReferenceCount):
     setupResume = setup_resume
     setupResumeUntil = setup_resume_until
     stepPlay = step_play
-    ETInitialize = ET_initialize
-    ETInstant = ET_instant
-    ETStep = ET_step
-    ETFinalize = ET_finalize
-    ETReverseInitialize = ET_reverse_initialize
-    ETReverseInstant = ET_reverse_instant
-    ETReverseFinalize = ET_reverse_finalize
-    ETInterrupt = ET_interrupt
-    SInitial = S_initial
-    SStarted = S_started
-    SPaused = S_paused
-    SFinal = S_final
 
 class CIntervalManager:
     """This object holds a number of currently-playing intervals and is
@@ -604,10 +604,15 @@ class CLerpInterval(CInterval):
     more numeric values over time.
     """
     BT_no_blend: Final[Literal[0]]
+    BTNoBlend: Final[Literal[0]]
     BT_ease_in: Final[Literal[1]]
+    BTEaseIn: Final[Literal[1]]
     BT_ease_out: Final[Literal[2]]
+    BTEaseOut: Final[Literal[2]]
     BT_ease_in_out: Final[Literal[3]]
+    BTEaseInOut: Final[Literal[3]]
     BT_invalid: Final[Literal[4]]
+    BTInvalid: Final[Literal[4]]
     def __init__(self, __param0: CLerpInterval) -> None: ...
     def get_blend_type(self) -> _CLerpInterval_BlendType:
         """Returns the blend type specified for the interval.  This controls how the
@@ -622,11 +627,6 @@ class CLerpInterval(CInterval):
         ...
     getBlendType = get_blend_type
     stringBlendType = string_blend_type
-    BTNoBlend = BT_no_blend
-    BTEaseIn = BT_ease_in
-    BTEaseOut = BT_ease_out
-    BTEaseInOut = BT_ease_in_out
-    BTInvalid = BT_invalid
 
 class CLerpAnimEffectInterval(CLerpInterval):
     """This interval lerps between different amounts of control effects for
@@ -922,12 +922,19 @@ class CMetaInterval(CInterval):
     not.
     """
     RS_previous_end: Final[Literal[0]]
+    RSPreviousEnd: Final[Literal[0]]
     RS_previous_begin: Final[Literal[1]]
+    RSPreviousBegin: Final[Literal[1]]
     RS_level_begin: Final[Literal[2]]
+    RSLevelBegin: Final[Literal[2]]
     DT_c_interval: Final[Literal[0]]
+    DTCInterval: Final[Literal[0]]
     DT_ext_index: Final[Literal[1]]
+    DTExtIndex: Final[Literal[1]]
     DT_push_level: Final[Literal[2]]
+    DTPushLevel: Final[Literal[2]]
     DT_pop_level: Final[Literal[3]]
+    DTPopLevel: Final[Literal[3]]
     @overload
     def __init__(self, __param0: CMetaInterval) -> None: ...
     @overload
@@ -1085,13 +1092,6 @@ class CMetaInterval(CInterval):
     getEventT = get_event_t
     getEventType = get_event_type
     popEvent = pop_event
-    RSPreviousEnd = RS_previous_end
-    RSPreviousBegin = RS_previous_begin
-    RSLevelBegin = RS_level_begin
-    DTCInterval = DT_c_interval
-    DTExtIndex = DT_ext_index
-    DTPushLevel = DT_push_level
-    DTPopLevel = DT_pop_level
 
 class HideInterval(CInterval):
     """An interval that calls NodePath::hide()."""

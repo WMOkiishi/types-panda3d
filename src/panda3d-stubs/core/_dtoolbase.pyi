@@ -55,10 +55,15 @@ class TypeHandle:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     MC_singleton: Final[Literal[0]]
+    MCSingleton: Final[Literal[0]]
     MC_array: Final[Literal[1]]
+    MCArray: Final[Literal[1]]
     MC_deleted_chain_active: Final[Literal[2]]
+    MCDeletedChainActive: Final[Literal[2]]
     MC_deleted_chain_inactive: Final[Literal[3]]
+    MCDeletedChainInactive: Final[Literal[3]]
     MC_limit: Final[Literal[4]]
+    MCLimit: Final[Literal[4]]
     @property
     def index(self) -> int: ...
     @property
@@ -188,11 +193,6 @@ class TypeHandle:
     incMemoryUsage = inc_memory_usage
     decMemoryUsage = dec_memory_usage
     getIndex = get_index
-    MCSingleton = MC_singleton
-    MCArray = MC_array
-    MCDeletedChainActive = MC_deleted_chain_active
-    MCDeletedChainInactive = MC_deleted_chain_inactive
-    MCLimit = MC_limit
 
 class TypeRegistry:
     """The TypeRegistry class maintains all the assigned TypeHandles in a given

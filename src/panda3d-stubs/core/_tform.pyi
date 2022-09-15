@@ -691,9 +691,13 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     keyboard: bool
     suppress_flags: int
     SF_mouse_button: Final[Literal[1]]
+    SFMouseButton: Final[Literal[1]]
     SF_other_button: Final[Literal[2]]
+    SFOtherButton: Final[Literal[2]]
     SF_any_button: Final[Literal[3]]
+    SFAnyButton: Final[Literal[3]]
     SF_mouse_position: Final[Literal[4]]
+    SFMousePosition: Final[Literal[4]]
     @property
     def area(self) -> float: ...
     @overload
@@ -776,10 +780,6 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     setSuppressFlags = set_suppress_flags
     getSuppressFlags = get_suppress_flags
     getClassType = get_class_type
-    SFMouseButton = SF_mouse_button
-    SFOtherButton = SF_other_button
-    SFAnyButton = SF_any_button
-    SFMousePosition = SF_mouse_position
 
 class MouseWatcherBase:
     """This represents a collection of MouseWatcherRegions that may be managed as
@@ -1449,10 +1449,15 @@ class Trackball(MouseInterfaceNode):
     cameras) in the world.
     """
     CM_default: Final[Literal[0]]
+    CMDefault: Final[Literal[0]]
     CM_truck: Final[Literal[1]]
+    CMTruck: Final[Literal[1]]
     CM_pan: Final[Literal[2]]
+    CMPan: Final[Literal[2]]
     CM_dolly: Final[Literal[3]]
+    CMDolly: Final[Literal[3]]
     CM_roll: Final[Literal[4]]
+    CMRoll: Final[Literal[4]]
     @overload
     def __init__(self, __param0: Trackball) -> None: ...
     @overload
@@ -1606,11 +1611,6 @@ class Trackball(MouseInterfaceNode):
     setMat = set_mat
     getMat = get_mat
     getTransMat = get_trans_mat
-    CMDefault = CM_default
-    CMTruck = CM_truck
-    CMPan = CM_pan
-    CMDolly = CM_dolly
-    CMRoll = CM_roll
 
 class Transform2SG(DataNode):
     """input: Transform (matrix)

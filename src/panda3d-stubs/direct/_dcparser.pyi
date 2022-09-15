@@ -1447,68 +1447,68 @@ class DCTypedef(DCDeclaration):
     isImplicitTypedef = is_implicit_typedef
 
 ST_int8: Final[Literal[0]]
+STInt8: Final[Literal[0]]
 ST_int16: Final[Literal[1]]
+STInt16: Final[Literal[1]]
 ST_int32: Final[Literal[2]]
+STInt32: Final[Literal[2]]
 ST_int64: Final[Literal[3]]
+STInt64: Final[Literal[3]]
 ST_uint8: Final[Literal[4]]
+STUint8: Final[Literal[4]]
 ST_uint16: Final[Literal[5]]
+STUint16: Final[Literal[5]]
 ST_uint32: Final[Literal[6]]
+STUint32: Final[Literal[6]]
 ST_uint64: Final[Literal[7]]
+STUint64: Final[Literal[7]]
 ST_float64: Final[Literal[8]]
+STFloat64: Final[Literal[8]]
 ST_string: Final[Literal[9]]
+STString: Final[Literal[9]]
 ST_blob: Final[Literal[10]]
+STBlob: Final[Literal[10]]
 ST_blob32: Final[Literal[11]]
+STBlob32: Final[Literal[11]]
 ST_int16array: Final[Literal[12]]
+STInt16array: Final[Literal[12]]
 ST_int32array: Final[Literal[13]]
+STInt32array: Final[Literal[13]]
 ST_uint16array: Final[Literal[14]]
+STUint16array: Final[Literal[14]]
 ST_uint32array: Final[Literal[15]]
+STUint32array: Final[Literal[15]]
 ST_int8array: Final[Literal[16]]
+STInt8array: Final[Literal[16]]
 ST_uint8array: Final[Literal[17]]
+STUint8array: Final[Literal[17]]
 ST_uint32uint8array: Final[Literal[18]]
+STUint32uint8array: Final[Literal[18]]
 ST_char: Final[Literal[19]]
+STChar: Final[Literal[19]]
 ST_invalid: Final[Literal[20]]
+STInvalid: Final[Literal[20]]
 PT_invalid: Final[Literal[0]]
+PTInvalid: Final[Literal[0]]
 PT_double: Final[Literal[1]]
+PTDouble: Final[Literal[1]]
 PT_int: Final[Literal[2]]
+PTInt: Final[Literal[2]]
 PT_uint: Final[Literal[3]]
+PTUint: Final[Literal[3]]
 PT_int64: Final[Literal[4]]
+PTInt64: Final[Literal[4]]
 PT_uint64: Final[Literal[5]]
+PTUint64: Final[Literal[5]]
 PT_string: Final[Literal[6]]
+PTString: Final[Literal[6]]
 PT_blob: Final[Literal[7]]
+PTBlob: Final[Literal[7]]
 PT_array: Final[Literal[8]]
+PTArray: Final[Literal[8]]
 PT_field: Final[Literal[9]]
+PTField: Final[Literal[9]]
 PT_class: Final[Literal[10]]
+PTClass: Final[Literal[10]]
 PT_switch: Final[Literal[11]]
-STInt8 = ST_int8
-STInt16 = ST_int16
-STInt32 = ST_int32
-STInt64 = ST_int64
-STUint8 = ST_uint8
-STUint16 = ST_uint16
-STUint32 = ST_uint32
-STUint64 = ST_uint64
-STFloat64 = ST_float64
-STString = ST_string
-STBlob = ST_blob
-STBlob32 = ST_blob32
-STInt16array = ST_int16array
-STInt32array = ST_int32array
-STUint16array = ST_uint16array
-STUint32array = ST_uint32array
-STInt8array = ST_int8array
-STUint8array = ST_uint8array
-STUint32uint8array = ST_uint32uint8array
-STChar = ST_char
-STInvalid = ST_invalid
-PTInvalid = PT_invalid
-PTDouble = PT_double
-PTInt = PT_int
-PTUint = PT_uint
-PTInt64 = PT_int64
-PTUint64 = PT_uint64
-PTString = PT_string
-PTBlob = PT_blob
-PTArray = PT_array
-PTField = PT_field
-PTClass = PT_class
-PTSwitch = PT_switch
+PTSwitch: Final[Literal[11]]

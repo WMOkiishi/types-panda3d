@@ -243,10 +243,15 @@ class PNMImageHeader:
     DtoolClassDict: ClassVar[dict[str, Any]]
     comment: str
     CT_invalid: Final[Literal[0]]
+    CTInvalid: Final[Literal[0]]
     CT_grayscale: Final[Literal[1]]
+    CTGrayscale: Final[Literal[1]]
     CT_two_channel: Final[Literal[2]]
+    CTTwoChannel: Final[Literal[2]]
     CT_color: Final[Literal[3]]
+    CTColor: Final[Literal[3]]
     CT_four_channel: Final[Literal[4]]
+    CTFourChannel: Final[Literal[4]]
     @property
     def num_channels(self) -> int: ...
     @property
@@ -375,11 +380,6 @@ class PNMImageHeader:
     getType = get_type
     setType = set_type
     readHeader = read_header
-    CTInvalid = CT_invalid
-    CTGrayscale = CT_grayscale
-    CTTwoChannel = CT_two_channel
-    CTColor = CT_color
-    CTFourChannel = CT_four_channel
 
 class PfmFile(PNMImageHeader):
     """Defines a pfm file, a 2-d table of floating-point numbers, either
@@ -963,9 +963,13 @@ class PNMBrush(ReferenceCount):
     tiled through the interior.
     """
     BE_set: Final[Literal[0]]
+    BESet: Final[Literal[0]]
     BE_blend: Final[Literal[1]]
+    BEBlend: Final[Literal[1]]
     BE_darken: Final[Literal[2]]
+    BEDarken: Final[Literal[2]]
     BE_lighten: Final[Literal[3]]
+    BELighten: Final[Literal[3]]
     @staticmethod
     def make_transparent() -> PNMBrush:
         """Returns a new brush that does not paint anything.  Can be used as either a
@@ -997,10 +1001,6 @@ class PNMBrush(ReferenceCount):
     makePixel = make_pixel
     makeSpot = make_spot
     makeImage = make_image
-    BESet = BE_set
-    BEBlend = BE_blend
-    BEDarken = BE_darken
-    BELighten = BE_lighten
 
 class PNMImage(PNMImageHeader):
     """The name of this class derives from the fact that we originally implemented

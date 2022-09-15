@@ -35,12 +35,19 @@ _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 class PGFrameStyle:
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_none: Final[Literal[0]]
+    TNone: Final[Literal[0]]
     T_flat: Final[Literal[1]]
+    TFlat: Final[Literal[1]]
     T_bevel_out: Final[Literal[2]]
+    TBevelOut: Final[Literal[2]]
     T_bevel_in: Final[Literal[3]]
+    TBevelIn: Final[Literal[3]]
     T_groove: Final[Literal[4]]
+    TGroove: Final[Literal[4]]
     T_ridge: Final[Literal[5]]
+    TRidge: Final[Literal[5]]
     T_texture_border: Final[Literal[6]]
+    TTextureBorder: Final[Literal[6]]
     def __init__(self, copy: PGFrameStyle = ...) -> None: ...
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def set_type(self, type: _PGFrameStyle_Type) -> None:
@@ -137,13 +144,6 @@ class PGFrameStyle:
     setVisibleScale = set_visible_scale
     getVisibleScale = get_visible_scale
     getInternalFrame = get_internal_frame
-    TNone = T_none
-    TFlat = T_flat
-    TBevelOut = T_bevel_out
-    TBevelIn = T_bevel_in
-    TGroove = T_groove
-    TRidge = T_ridge
-    TTextureBorder = T_texture_border
 
 class PGItem(PandaNode):
     """This is the base class for all the various kinds of gui widget objects.
@@ -523,9 +523,13 @@ class PGButton(PGItem):
     events sensibly.
     """
     S_ready: Final[Literal[0]]
+    SReady: Final[Literal[0]]
     S_depressed: Final[Literal[1]]
+    SDepressed: Final[Literal[1]]
     S_rollover: Final[Literal[2]]
+    SRollover: Final[Literal[2]]
     S_inactive: Final[Literal[3]]
+    SInactive: Final[Literal[3]]
     @property
     def click_prefix(self) -> str: ...
     @overload
@@ -585,10 +589,6 @@ class PGButton(PGItem):
     isButtonDown = is_button_down
     getClickPrefix = get_click_prefix
     getClickEvent = get_click_event
-    SReady = S_ready
-    SDepressed = S_depressed
-    SRollover = S_rollover
-    SInactive = S_inactive
 
 class PGTop(PandaNode):
     """The "top" node of the new Panda GUI system.  This node must be parented to
@@ -652,8 +652,11 @@ class PGEntry(PGItem):
     TextNode.
     """
     S_focus: Final[Literal[0]]
+    SFocus: Final[Literal[0]]
     S_no_focus: Final[Literal[1]]
+    SNoFocus: Final[Literal[1]]
     S_inactive: Final[Literal[2]]
+    SInactive: Final[Literal[2]]
     def setup(self, width: float, num_lines: int) -> None:
         """Sets up the entry for normal use.  The width is the maximum width of
         characters that will be typed, and num_lines is the integer number of lines
@@ -1011,9 +1014,6 @@ class PGEntry(PGItem):
     getWtext = get_wtext
     setAcceptEnabled = set_accept_enabled
     isWtext = is_wtext
-    SFocus = S_focus
-    SNoFocus = S_no_focus
-    SInactive = S_inactive
 
 class PGMouseWatcherParameter(TypedWritableReferenceCount, MouseWatcherParameter):
     """This specialization on MouseWatcherParameter allows us to tag on additional

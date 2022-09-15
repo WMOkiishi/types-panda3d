@@ -153,17 +153,29 @@ class OdeJointFeedback:
 
 class OdeJoint(TypedObject):
     JT_none: Final[Literal[0]]
+    JTNone: Final[Literal[0]]
     JT_ball: Final[Literal[1]]
+    JTBall: Final[Literal[1]]
     JT_hinge: Final[Literal[2]]
+    JTHinge: Final[Literal[2]]
     JT_slider: Final[Literal[3]]
+    JTSlider: Final[Literal[3]]
     JT_contact: Final[Literal[4]]
+    JTContact: Final[Literal[4]]
     JT_universal: Final[Literal[5]]
+    JTUniversal: Final[Literal[5]]
     JT_hinge2: Final[Literal[6]]
+    JTHinge2: Final[Literal[6]]
     JT_fixed: Final[Literal[7]]
+    JTFixed: Final[Literal[7]]
     JT_null: Final[Literal[8]]
+    JTNull: Final[Literal[8]]
     JT_a_motor: Final[Literal[9]]
+    JTAMotor: Final[Literal[9]]
     JT_l_motor: Final[Literal[10]]
+    JTLMotor: Final[Literal[10]]
     JT_plane2d: Final[Literal[11]]
+    JTPlane2d: Final[Literal[11]]
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def destroy(self) -> None: ...
@@ -233,18 +245,6 @@ class OdeJoint(TypedObject):
     convertToAMotor = convert_to_a_motor
     convertToLMotor = convert_to_l_motor
     convertToPlane2d = convert_to_plane2d
-    JTNone = JT_none
-    JTBall = JT_ball
-    JTHinge = JT_hinge
-    JTSlider = JT_slider
-    JTContact = JT_contact
-    JTUniversal = JT_universal
-    JTHinge2 = JT_hinge2
-    JTFixed = JT_fixed
-    JTNull = JT_null
-    JTAMotor = JT_a_motor
-    JTLMotor = JT_l_motor
-    JTPlane2d = JT_plane2d
 
 class OdeAMotorJoint(OdeJoint):
     def __init__(self, world: OdeWorld, joint_group: OdeJointGroup = ...) -> None: ...
@@ -662,15 +662,25 @@ class OdeSpace(TypedObject):
 
 class OdeGeom(TypedObject):
     GC_sphere: Final[Literal[0]]
+    GCSphere: Final[Literal[0]]
     GC_box: Final[Literal[1]]
+    GCBox: Final[Literal[1]]
     GC_capped_cylinder: Final[Literal[2]]
+    GCCappedCylinder: Final[Literal[2]]
     GC_cylinder: Final[Literal[3]]
+    GCCylinder: Final[Literal[3]]
     GC_plane: Final[Literal[4]]
+    GCPlane: Final[Literal[4]]
     GC_ray: Final[Literal[5]]
+    GCRay: Final[Literal[5]]
     GC_tri_mesh: Final[Literal[8]]
+    GCTriMesh: Final[Literal[8]]
     GC_simple_space: Final[Literal[10]]
+    GCSimpleSpace: Final[Literal[10]]
     GC_hash_space: Final[Literal[11]]
+    GCHashSpace: Final[Literal[11]]
     GC_quad_tree_space: Final[Literal[12]]
+    GCQuadTreeSpace: Final[Literal[12]]
     def __bool__(self) -> bool: ...
     def destroy(self) -> None: ...
     def is_empty(self) -> bool:
@@ -787,16 +797,6 @@ class OdeGeom(TypedObject):
     convertToSimpleSpace = convert_to_simple_space
     convertToHashSpace = convert_to_hash_space
     convertToQuadTreeSpace = convert_to_quad_tree_space
-    GCSphere = GC_sphere
-    GCBox = GC_box
-    GCCappedCylinder = GC_capped_cylinder
-    GCCylinder = GC_cylinder
-    GCPlane = GC_plane
-    GCRay = GC_ray
-    GCTriMesh = GC_tri_mesh
-    GCSimpleSpace = GC_simple_space
-    GCHashSpace = GC_hash_space
-    GCQuadTreeSpace = GC_quad_tree_space
 
 class OdeBoxGeom(OdeGeom):
     @overload
@@ -908,18 +908,31 @@ class OdeCollisionEntry(TypedReferenceCount):
 
 class OdeSurfaceParameters(TypedObject):
     MF_contact_mu2: Final[Literal[1]]
+    MFContactMu2: Final[Literal[1]]
     MF_contactFDir1: Final[Literal[2]]
+    MFContactFDir1: Final[Literal[2]]
     MF_contactBounce: Final[Literal[4]]
+    MFContactBounce: Final[Literal[4]]
     MF_contactSoftERP: Final[Literal[8]]
+    MFContactSoftERP: Final[Literal[8]]
     MF_contactSoftCFM: Final[Literal[16]]
+    MFContactSoftCFM: Final[Literal[16]]
     MF_contactMotion1: Final[Literal[32]]
+    MFContactMotion1: Final[Literal[32]]
     MF_contactMotion2: Final[Literal[64]]
+    MFContactMotion2: Final[Literal[64]]
     MF_contactSlip1: Final[Literal[128]]
+    MFContactSlip1: Final[Literal[128]]
     MF_contactSlip2: Final[Literal[256]]
+    MFContactSlip2: Final[Literal[256]]
     MF_contactApprox0: Final[Literal[0]]
+    MFContactApprox0: Final[Literal[0]]
     MF_contactApprox1_1: Final[Literal[4096]]
+    MFContactApprox11: Final[Literal[4096]]
     MF_contactApprox1_2: Final[Literal[8192]]
+    MFContactApprox12: Final[Literal[8192]]
     MF_contactApprox1: Final[Literal[12288]]
+    MFContactApprox1: Final[Literal[12288]]
     def __init__(self, mode: int = ..., mu: float = ...) -> None: ...
     def set_mode(self, mode: int) -> None: ...
     def set_mu(self, mu: float) -> None: ...
@@ -965,19 +978,6 @@ class OdeSurfaceParameters(TypedObject):
     getMotion2 = get_motion2
     getSlip1 = get_slip1
     getSlip2 = get_slip2
-    MFContactMu2 = MF_contact_mu2
-    MFContactFDir1 = MF_contactFDir1
-    MFContactBounce = MF_contactBounce
-    MFContactSoftERP = MF_contactSoftERP
-    MFContactSoftCFM = MF_contactSoftCFM
-    MFContactMotion1 = MF_contactMotion1
-    MFContactMotion2 = MF_contactMotion2
-    MFContactSlip1 = MF_contactSlip1
-    MFContactSlip2 = MF_contactSlip2
-    MFContactApprox0 = MF_contactApprox0
-    MFContactApprox11 = MF_contactApprox1_1
-    MFContactApprox12 = MF_contactApprox1_2
-    MFContactApprox1 = MF_contactApprox1
 
 class OdeContact(TypedReferenceCount):
     def __init__(self) -> None: ...
@@ -1371,14 +1371,14 @@ class OdeSphereGeom(OdeGeom):
 
 class OdeTriMeshData(TypedReferenceCount):
     DT_face_normals: Final[Literal[0]]
+    DTFaceNormals: Final[Literal[0]]
     DT_last_transformation: Final[Literal[1]]
+    DTLastTransformation: Final[Literal[1]]
     def __init__(self, model: NodePath, use_normals: bool = ...) -> None: ...
     def destroy(self) -> None: ...
     def write(self, out: ostream = ..., indent: int = ...) -> None: ...
     def write_faces(self, out: ostream) -> None: ...
     writeFaces = write_faces
-    DTFaceNormals = DT_face_normals
-    DTLastTransformation = DT_last_transformation
 
 class OdeTriMeshGeom(OdeGeom):
     @overload

@@ -40,10 +40,15 @@ class GPUCommand:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     CMD_invalid: Final[Literal[0]]
+    CMDInvalid: Final[Literal[0]]
     CMD_store_light: Final[Literal[1]]
+    CMDStoreLight: Final[Literal[1]]
     CMD_remove_light: Final[Literal[2]]
+    CMDRemoveLight: Final[Literal[2]]
     CMD_store_source: Final[Literal[3]]
+    CMDStoreSource: Final[Literal[3]]
     CMD_remove_sources: Final[Literal[4]]
+    CMDRemoveSources: Final[Literal[4]]
     @overload
     def __init__(self, __param0: GPUCommand) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
@@ -171,11 +176,6 @@ class GPUCommand:
     pushMat4 = push_mat4
     getUsesIntegerPacking = get_uses_integer_packing
     writeTo = write_to
-    CMDInvalid = CMD_invalid
-    CMDStoreLight = CMD_store_light
-    CMDRemoveLight = CMD_remove_light
-    CMDStoreSource = CMD_store_source
-    CMDRemoveSources = CMD_remove_sources
 
 class GPUCommandList:
     """@brief Class to store a list of commands.
@@ -288,8 +288,11 @@ class RPLight(ReferenceCount):
     ies_profile: int
     near_plane: float
     LT_empty: Final[Literal[0]]
+    LTEmpty: Final[Literal[0]]
     LT_point_light: Final[Literal[1]]
+    LTPointLight: Final[Literal[1]]
     LT_spot_light: Final[Literal[2]]
+    LTSpotLight: Final[Literal[2]]
     @property
     def light_type(self) -> _RPLight_LightType: ...
     def invalidate_shadows(self) -> None:
@@ -513,9 +516,6 @@ class RPLight(ReferenceCount):
     clearIesProfile = clear_ies_profile
     setNearPlane = set_near_plane
     getNearPlane = get_near_plane
-    LTEmpty = LT_empty
-    LTPointLight = LT_point_light
-    LTSpotLight = LT_spot_light
 
 class ShadowAtlas:
     """@brief Class which manages distributing shadow maps in an atlas.

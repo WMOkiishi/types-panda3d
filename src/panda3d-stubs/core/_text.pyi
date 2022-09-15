@@ -111,12 +111,19 @@ class TextFont(TypedReferenceCount, Namable):
     line_height: float
     space_advance: float
     RM_texture: Final[Literal[0]]
+    RMTexture: Final[Literal[0]]
     RM_wireframe: Final[Literal[1]]
+    RMWireframe: Final[Literal[1]]
     RM_polygon: Final[Literal[2]]
+    RMPolygon: Final[Literal[2]]
     RM_extruded: Final[Literal[3]]
+    RMExtruded: Final[Literal[3]]
     RM_solid: Final[Literal[4]]
+    RMSolid: Final[Literal[4]]
     RM_distance_field: Final[Literal[5]]
+    RMDistanceField: Final[Literal[5]]
     RM_invalid: Final[Literal[6]]
+    RMInvalid: Final[Literal[6]]
     @property
     def valid(self) -> bool: ...
     def __bool__(self) -> bool: ...
@@ -165,13 +172,6 @@ class TextFont(TypedReferenceCount, Namable):
     getGlyph = get_glyph
     getKerning = get_kerning
     getClassType = get_class_type
-    RMTexture = RM_texture
-    RMWireframe = RM_wireframe
-    RMPolygon = RM_polygon
-    RMExtruded = RM_extruded
-    RMSolid = RM_solid
-    RMDistanceField = RM_distance_field
-    RMInvalid = RM_invalid
 
 class DynamicTextGlyph(TextGlyph):
     """A specialization on TextGlyph that is generated and stored by a
@@ -755,13 +755,21 @@ class TextProperties:
     text_scale: float
     direction: _TextProperties_Direction
     A_left: Final[Literal[0]]
+    ALeft: Final[Literal[0]]
     A_right: Final[Literal[1]]
+    ARight: Final[Literal[1]]
     A_center: Final[Literal[2]]
+    ACenter: Final[Literal[2]]
     A_boxed_left: Final[Literal[3]]
+    ABoxedLeft: Final[Literal[3]]
     A_boxed_right: Final[Literal[4]]
+    ABoxedRight: Final[Literal[4]]
     A_boxed_center: Final[Literal[5]]
+    ABoxedCenter: Final[Literal[5]]
     D_ltr: Final[Literal[0]]
+    DLtr: Final[Literal[0]]
     D_rtl: Final[Literal[1]]
+    DRtl: Final[Literal[1]]
     def __init__(self, copy: TextProperties = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -1155,14 +1163,6 @@ class TextProperties:
     getDirection = get_direction
     addProperties = add_properties
     getClassType = get_class_type
-    ALeft = A_left
-    ARight = A_right
-    ACenter = A_center
-    ABoxedLeft = A_boxed_left
-    ABoxedRight = A_boxed_right
-    ABoxedCenter = A_boxed_center
-    DLtr = D_ltr
-    DRtl = D_rtl
 
 class TextGraphic:
     """This defines a special model that has been constructed for the purposes of
@@ -1749,10 +1749,15 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     glyph_shift: float
     text_scale: float
     FF_none: Final[Literal[0]]
+    FFNone: Final[Literal[0]]
     FF_light: Final[Literal[1]]
+    FFLight: Final[Literal[1]]
     FF_medium: Final[Literal[2]]
+    FFMedium: Final[Literal[2]]
     FF_strong: Final[Literal[4]]
+    FFStrong: Final[Literal[4]]
     FF_dynamic_merge: Final[Literal[8]]
+    FFDynamicMerge: Final[Literal[8]]
     def __init__(self, name: str, copy: TextProperties = ...) -> None:
         """It's sort of a copy constructor: it copies the indicated TextProperties,
         without copying a complete TextNode.
@@ -2354,8 +2359,3 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     forceUpdate = force_update
     getInternalGeom = get_internal_geom
     getClassType = get_class_type
-    FFNone = FF_none
-    FFLight = FF_light
-    FFMedium = FF_medium
-    FFStrong = FF_strong
-    FFDynamicMerge = FF_dynamic_merge

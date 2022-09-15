@@ -840,9 +840,13 @@ class SceneGraphAnalyzer:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     LM_lowest: Final[Literal[0]]
+    LMLowest: Final[Literal[0]]
     LM_highest: Final[Literal[1]]
+    LMHighest: Final[Literal[1]]
     LM_all: Final[Literal[2]]
+    LMAll: Final[Literal[2]]
     LM_none: Final[Literal[3]]
+    LMNone: Final[Literal[3]]
     def __init__(self, __param0: SceneGraphAnalyzer = ...) -> None: ...
     def set_lod_mode(self, lod_mode: _SceneGraphAnalyzer_LodMode) -> None:
         """Specifies the mode in which LODNodes are analyzed."""
@@ -921,12 +925,8 @@ class SceneGraphAnalyzer:
     getNumLongNormals = get_num_long_normals
     getNumShortNormals = get_num_short_normals
     getTotalNormalLength = get_total_normal_length
-    LMLowest = LM_lowest
-    LMHighest = LM_highest
-    LMAll = LM_all
-    LMNone = LM_none
 
 LNT_pop: Final[Literal[0]]
+LNTPop: Final[Literal[0]]
 LNT_fade: Final[Literal[1]]
-LNTPop = LNT_pop
-LNTFade = LNT_fade
+LNTFade: Final[Literal[1]]

@@ -35,8 +35,11 @@ _SpriteAnim_SourceType: TypeAlias = Literal[0, 1]
 
 class BaseParticleEmitter(ReferenceCount):
     ET_EXPLICIT: Final[Literal[0]]
+    ETEXPLICIT: Final[Literal[0]]
     ET_RADIATE: Final[Literal[1]]
+    ETRADIATE: Final[Literal[1]]
     ET_CUSTOM: Final[Literal[2]]
+    ETCUSTOM: Final[Literal[2]]
     def make_copy(self) -> BaseParticleEmitter: ...
     def generate(self, pos: _Vec3f, vel: _Vec3f) -> None:
         """parent generation function"""
@@ -96,9 +99,6 @@ class BaseParticleEmitter(ReferenceCount):
     getOffsetForce = get_offset_force
     getExplicitLaunchVector = get_explicit_launch_vector
     getRadiateOrigin = get_radiate_origin
-    ETEXPLICIT = ET_EXPLICIT
-    ETRADIATE = ET_RADIATE
-    ETCUSTOM = ET_CUSTOM
 
 class RingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
@@ -208,14 +208,23 @@ class BaseParticleFactory(ReferenceCount):
 class BaseParticleRenderer(ReferenceCount):
     """Pure virtual particle renderer base class"""
     PR_ALPHA_NONE: Final[Literal[0]]
+    PRALPHANONE: Final[Literal[0]]
     PR_ALPHA_OUT: Final[Literal[1]]
+    PRALPHAOUT: Final[Literal[1]]
     PR_ALPHA_IN: Final[Literal[2]]
+    PRALPHAIN: Final[Literal[2]]
     PR_ALPHA_IN_OUT: Final[Literal[3]]
+    PRALPHAINOUT: Final[Literal[3]]
     PR_ALPHA_USER: Final[Literal[4]]
+    PRALPHAUSER: Final[Literal[4]]
     PR_NOT_INITIALIZED_YET: Final[Literal[5]]
+    PRNOTINITIALIZEDYET: Final[Literal[5]]
     PP_NO_BLEND: Final[Literal[0]]
+    PPNOBLEND: Final[Literal[0]]
     PP_BLEND_LINEAR: Final[Literal[1]]
+    PPBLENDLINEAR: Final[Literal[1]]
     PP_BLEND_CUBIC: Final[Literal[2]]
+    PPBLENDCUBIC: Final[Literal[2]]
     def get_render_node(self) -> GeomNode:
         """Query the geomnode pointer"""
         ...
@@ -261,15 +270,6 @@ class BaseParticleRenderer(ReferenceCount):
     setColorBlendMode = set_color_blend_mode
     setIgnoreScale = set_ignore_scale
     getIgnoreScale = get_ignore_scale
-    PRALPHANONE = PR_ALPHA_NONE
-    PRALPHAOUT = PR_ALPHA_OUT
-    PRALPHAIN = PR_ALPHA_IN
-    PRALPHAINOUT = PR_ALPHA_IN_OUT
-    PRALPHAUSER = PR_ALPHA_USER
-    PRNOTINITIALIZEDYET = PR_NOT_INITIALIZED_YET
-    PPNOBLEND = PP_NO_BLEND
-    PPBLENDLINEAR = PP_BLEND_LINEAR
-    PPBLENDCUBIC = PP_BLEND_CUBIC
 
 class BoxEmitter(BaseParticleEmitter):
     """Describes a voluminous box region in which particles are generated."""
@@ -682,8 +682,11 @@ class PointParticleFactory(BaseParticleFactory):
 
 class PointParticleRenderer(BaseParticleRenderer):
     PP_ONE_COLOR: Final[Literal[0]]
+    PPONECOLOR: Final[Literal[0]]
     PP_BLEND_LIFE: Final[Literal[1]]
+    PPBLENDLIFE: Final[Literal[1]]
     PP_BLEND_VEL: Final[Literal[2]]
+    PPBLENDVEL: Final[Literal[2]]
     @overload
     def __init__(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: _Vec4f = ..., ec: _Vec4f = ...) -> None:
         """`(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: LVecBase4f = ..., ec: LVecBase4f = ...)`:
@@ -715,9 +718,6 @@ class PointParticleRenderer(BaseParticleRenderer):
     getEndColor = get_end_color
     getBlendType = get_blend_type
     getBlendMethod = get_blend_method
-    PPONECOLOR = PP_ONE_COLOR
-    PPBLENDLIFE = PP_BLEND_LIFE
-    PPBLENDVEL = PP_BLEND_VEL
 
 class RectangleEmitter(BaseParticleEmitter):
     """Describes a planar square region in which particles are generated."""
@@ -749,7 +749,9 @@ class RectangleEmitter(BaseParticleEmitter):
 class SparkleParticleRenderer(BaseParticleRenderer):
     """pretty sparkly things."""
     SP_NO_SCALE: Final[Literal[0]]
+    SPNOSCALE: Final[Literal[0]]
     SP_SCALE: Final[Literal[1]]
+    SPSCALE: Final[Literal[1]]
     @overload
     def __init__(self, copy: SparkleParticleRenderer = ...) -> None:
         """`(self)`:
@@ -781,8 +783,6 @@ class SparkleParticleRenderer(BaseParticleRenderer):
     getBirthRadius = get_birth_radius
     getDeathRadius = get_death_radius
     getLifeScale = get_life_scale
-    SPNOSCALE = SP_NO_SCALE
-    SPSCALE = SP_SCALE
 
 class SphereSurfaceEmitter(BaseParticleEmitter):
     """Describes a curved space in which particles are generated."""
@@ -819,7 +819,9 @@ class SpriteAnim(ReferenceCount):
     and their respective UVs and source types.
     """
     ST_texture: Final[Literal[0]]
+    STTexture: Final[Literal[0]]
     ST_from_node: Final[Literal[1]]
+    STFromNode: Final[Literal[1]]
     def __init__(self, __param0: SpriteAnim) -> None: ...
     @overload
     def set_source_info(self, tex: str) -> None: ...
@@ -836,8 +838,6 @@ class SpriteAnim(ReferenceCount):
     getModelSource = get_model_source
     getNodeSource = get_node_source
     getNumFrames = get_num_frames
-    STTexture = ST_texture
-    STFromNode = ST_from_node
 
 class SpriteParticleRenderer(BaseParticleRenderer):
     """Renders a particle system with high-speed nasty trick sprites."""

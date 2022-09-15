@@ -298,9 +298,13 @@ class GeoMipTerrain(TypedObject):
     https://flipcode.com/articles/article_geomipmaps.pdf
     """
     AFM_off: Final[Literal[0]]
+    AFMOff: Final[Literal[0]]
     AFM_light: Final[Literal[1]]
+    AFMLight: Final[Literal[1]]
     AFM_medium: Final[Literal[2]]
+    AFMMedium: Final[Literal[2]]
     AFM_strong: Final[Literal[3]]
+    AFMStrong: Final[Literal[3]]
     def __init__(self, name: str) -> None: ...
     def heightfield(self) -> PNMImage:
         """Returns a reference to the heightfield (a PNMImage) contained inside
@@ -580,10 +584,6 @@ class GeoMipTerrain(TypedObject):
     getNear = get_near
     getFlattenMode = get_flatten_mode
     makeSlopeImage = make_slope_image
-    AFMOff = AFM_off
-    AFMLight = AFM_light
-    AFMMedium = AFM_medium
-    AFMStrong = AFM_strong
 
 class HeightfieldTesselator(Namable):
     @overload
@@ -1482,18 +1482,31 @@ class PfmVizzer:
     """This class aids in the visualization and manipulation of PfmFile objects."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     CT_texcoord2: Final[Literal[0]]
+    CTTexcoord2: Final[Literal[0]]
     CT_texcoord3: Final[Literal[1]]
+    CTTexcoord3: Final[Literal[1]]
     CT_vertex1: Final[Literal[2]]
+    CTVertex1: Final[Literal[2]]
     CT_vertex2: Final[Literal[3]]
+    CTVertex2: Final[Literal[3]]
     CT_vertex3: Final[Literal[4]]
+    CTVertex3: Final[Literal[4]]
     CT_normal3: Final[Literal[5]]
+    CTNormal3: Final[Literal[5]]
     CT_blend1: Final[Literal[6]]
+    CTBlend1: Final[Literal[6]]
     CT_aux_vertex1: Final[Literal[7]]
+    CTAuxVertex1: Final[Literal[7]]
     CT_aux_vertex2: Final[Literal[8]]
+    CTAuxVertex2: Final[Literal[8]]
     CT_aux_vertex3: Final[Literal[9]]
+    CTAuxVertex3: Final[Literal[9]]
     MF_front: Final[Literal[1]]
+    MFFront: Final[Literal[1]]
     MF_back: Final[Literal[2]]
+    MFBack: Final[Literal[2]]
     MF_both: Final[Literal[3]]
+    MFBoth: Final[Literal[3]]
     @overload
     def __init__(self, pfm: PfmFile) -> None:
         """The PfmVizzer constructor receives a reference to a PfmFile which it will
@@ -1721,16 +1734,3 @@ class PfmVizzer:
     calcMaxUDisplacement = calc_max_u_displacement
     calcMaxVDisplacement = calc_max_v_displacement
     makeDisplacement = make_displacement
-    CTTexcoord2 = CT_texcoord2
-    CTTexcoord3 = CT_texcoord3
-    CTVertex1 = CT_vertex1
-    CTVertex2 = CT_vertex2
-    CTVertex3 = CT_vertex3
-    CTNormal3 = CT_normal3
-    CTBlend1 = CT_blend1
-    CTAuxVertex1 = CT_aux_vertex1
-    CTAuxVertex2 = CT_aux_vertex2
-    CTAuxVertex3 = CT_aux_vertex3
-    MFFront = MF_front
-    MFBack = MF_back
-    MFBoth = MF_both

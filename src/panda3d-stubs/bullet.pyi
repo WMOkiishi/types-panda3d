@@ -497,9 +497,13 @@ class BulletConstraint(TypedReferenceCount):
     breaking_threshold: float
     enabled: bool
     CP_erp: Final[Literal[1]]
+    CPErp: Final[Literal[1]]
     CP_stop_erp: Final[Literal[2]]
+    CPStopErp: Final[Literal[2]]
     CP_cfm: Final[Literal[3]]
+    CPCfm: Final[Literal[3]]
     CP_stop_cfm: Final[Literal[4]]
+    CPStopCfm: Final[Literal[4]]
     @property
     def rigid_body_a(self) -> BulletRigidBodyNode: ...
     @property
@@ -539,10 +543,6 @@ class BulletConstraint(TypedReferenceCount):
     isEnabled = is_enabled
     setParam = set_param
     getParam = get_param
-    CPErp = CP_erp
-    CPStopErp = CP_stop_erp
-    CPCfm = CP_cfm
-    CPStopCfm = CP_stop_cfm
 
 class BulletRigidBodyNode(BulletBodyNode):
     mass: float
@@ -1155,17 +1155,29 @@ class BulletSoftBodyConfig:
     drift_solver_iterations: int
     cluster_solver_iterations: int
     CF_rigid_vs_soft_mask: Final[Literal[15]]
+    CFRigidVsSoftMask: Final[Literal[15]]
     CF_sdf_rigid_soft: Final[Literal[1]]
+    CFSdfRigidSoft: Final[Literal[1]]
     CF_cluster_rigid_soft: Final[Literal[2]]
+    CFClusterRigidSoft: Final[Literal[2]]
     CF_soft_vs_soft_mask: Final[Literal[48]]
+    CFSoftVsSoftMask: Final[Literal[48]]
     CF_vertex_face_soft_soft: Final[Literal[16]]
+    CFVertexFaceSoftSoft: Final[Literal[16]]
     CF_cluster_soft_soft: Final[Literal[32]]
+    CFClusterSoftSoft: Final[Literal[32]]
     CF_cluster_self: Final[Literal[64]]
+    CFClusterSelf: Final[Literal[64]]
     AM_vertex_point: Final[Literal[0]]
+    AMVertexPoint: Final[Literal[0]]
     AM_vertex_two_sided: Final[Literal[1]]
+    AMVertexTwoSided: Final[Literal[1]]
     AM_vertex_one_sided: Final[Literal[2]]
+    AMVertexOneSided: Final[Literal[2]]
     AM_face_two_sided: Final[Literal[3]]
+    AMFaceTwoSided: Final[Literal[3]]
     AM_face_one_sided: Final[Literal[4]]
+    AMFaceOneSided: Final[Literal[4]]
     def __init__(self, __param0: BulletSoftBodyConfig) -> None: ...
     def clear_all_collision_flags(self) -> None: ...
     def set_collision_flag(self, flag: _BulletSoftBodyConfig_CollisionFlag, value: bool) -> None: ...
@@ -1369,18 +1381,6 @@ class BulletSoftBodyConfig:
     getVelocitiesSolverIterations = get_velocities_solver_iterations
     getDriftSolverIterations = get_drift_solver_iterations
     getClusterSolverIterations = get_cluster_solver_iterations
-    CFRigidVsSoftMask = CF_rigid_vs_soft_mask
-    CFSdfRigidSoft = CF_sdf_rigid_soft
-    CFClusterRigidSoft = CF_cluster_rigid_soft
-    CFSoftVsSoftMask = CF_soft_vs_soft_mask
-    CFVertexFaceSoftSoft = CF_vertex_face_soft_soft
-    CFClusterSoftSoft = CF_cluster_soft_soft
-    CFClusterSelf = CF_cluster_self
-    AMVertexPoint = AM_vertex_point
-    AMVertexTwoSided = AM_vertex_two_sided
-    AMVertexOneSided = AM_vertex_one_sided
-    AMFaceTwoSided = AM_face_two_sided
-    AMFaceOneSided = AM_face_one_sided
 
 class BulletSoftBodyWorldInfo:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -1819,10 +1819,15 @@ class BulletWorld(TypedReferenceCount):
     debug_node: BulletDebugNode
     force_update_all_aabbs: bool
     BA_sweep_and_prune: Final[Literal[0]]
+    BASweepAndPrune: Final[Literal[0]]
     BA_dynamic_aabb_tree: Final[Literal[1]]
+    BADynamicAabbTree: Final[Literal[1]]
     FA_mask: Final[Literal[0]]
+    FAMask: Final[Literal[0]]
     FA_groups_mask: Final[Literal[1]]
+    FAGroupsMask: Final[Literal[1]]
     FA_callback: Final[Literal[2]]
+    FACallback: Final[Literal[2]]
     @property
     def world_info(self) -> BulletSoftBodyWorldInfo: ...
     @property
@@ -2032,11 +2037,6 @@ class BulletWorld(TypedReferenceCount):
     getVehicles = get_vehicles
     getConstraints = get_constraints
     getManifolds = get_manifolds
-    BASweepAndPrune = BA_sweep_and_prune
-    BADynamicAabbTree = BA_dynamic_aabb_tree
-    FAMask = FA_mask
-    FAGroupsMask = FA_groups_mask
-    FACallback = FA_callback
 
 class BulletPersistentManifold:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -2734,14 +2734,14 @@ class BulletTriangleMeshShape(BulletShape):
     isDynamic = is_dynamic
 
 X_up: Final[Literal[0]]
+XUp: Final[Literal[0]]
 Y_up: Final[Literal[1]]
+YUp: Final[Literal[1]]
 Z_up: Final[Literal[2]]
+ZUp: Final[Literal[2]]
 def get_default_up_axis() -> _BulletUpAxis: ...
 def get_bullet_version() -> int:
     """Returns the version of the linked Bullet library."""
     ...
 getDefaultUpAxis = get_default_up_axis
 getBulletVersion = get_bullet_version
-XUp = X_up
-YUp = Y_up
-ZUp = Z_up

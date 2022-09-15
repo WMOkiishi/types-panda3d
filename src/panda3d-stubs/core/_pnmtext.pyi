@@ -25,9 +25,13 @@ class FreetypeFont(Namable):
     """
     winding_order: _FreetypeFont_WindingOrder
     WO_default: Final[Literal[0]]
+    WODefault: Final[Literal[0]]
     WO_left: Final[Literal[1]]
+    WOLeft: Final[Literal[1]]
     WO_right: Final[Literal[2]]
+    WORight: Final[Literal[2]]
     WO_invalid: Final[Literal[3]]
+    WOInvalid: Final[Literal[3]]
     def set_point_size(self, point_size: float) -> bool:
         """Sets the point size of the font.  This controls the apparent size of the
         font onscreen.  By convention, a 10 point font is about 1 screen unit high.
@@ -149,10 +153,6 @@ class FreetypeFont(Namable):
     getPointsPerInch = get_points_per_inch
     setWindingOrder = set_winding_order
     getWindingOrder = get_winding_order
-    WODefault = WO_default
-    WOLeft = WO_left
-    WORight = WO_right
-    WOInvalid = WO_invalid
 
 class PNMTextGlyph:
     """A single glyph in a PNMTextMaker."""
@@ -224,8 +224,11 @@ class PNMTextMaker(FreetypeFont):
     rendered onscreen via the Panda render traversal.
     """
     A_left: Final[Literal[0]]
+    ALeft: Final[Literal[0]]
     A_right: Final[Literal[1]]
+    ARight: Final[Literal[1]]
     A_center: Final[Literal[2]]
+    ACenter: Final[Literal[2]]
     @overload
     def __init__(self, copy: FreetypeFont) -> None:
         """`(self, font_filename: Filename, face_index: int)`:
@@ -319,6 +322,3 @@ class PNMTextMaker(FreetypeFont):
     generateInto = generate_into
     calcWidth = calc_width
     getGlyph = get_glyph
-    ALeft = A_left
-    ARight = A_right
-    ACenter = A_center

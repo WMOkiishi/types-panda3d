@@ -25,11 +25,11 @@ class ios_base:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     beg: Final[Literal[0]]
+    Beg: Final[Literal[0]]
     cur: Final[Literal[1]]
+    Cur: Final[Literal[1]]
     end: Final[Literal[2]]
-    Beg = beg
-    Cur = cur
-    End = end
+    End: Final[Literal[2]]
 
 class fstream(iostream):
     def __init__(self) -> None: ...
@@ -125,9 +125,13 @@ class TextEncoder:
     default_encoding: _TextEncoder_Encoding
     text = ...
     E_iso8859: Final[Literal[0]]
+    EIso8859: Final[Literal[0]]
     E_utf8: Final[Literal[1]]
+    EUtf8: Final[Literal[1]]
     E_utf16be: Final[Literal[2]]
+    EUtf16be: Final[Literal[2]]
     E_unicode: Final[Literal[2]]
+    EUnicode: Final[Literal[2]]
     def __init__(self, copy: TextEncoder = ...) -> None: ...
     def set_encoding(self, encoding: _TextEncoder_Encoding) -> None:
         """Specifies how the string set via set_text() is to be interpreted.  The
@@ -385,10 +389,6 @@ class TextEncoder:
     encodeWchar = encode_wchar
     encodeWtext = encode_wtext
     decodeText = decode_text
-    EIso8859 = E_iso8859
-    EUtf8 = E_utf8
-    EUtf16be = E_utf16be
-    EUnicode = E_unicode
 
 class Filename:
     """The name of a file, such as a texture file or an Egg file.  Stores the full
@@ -403,8 +403,11 @@ class Filename:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_general: Final[Literal[0]]
+    TGeneral: Final[Literal[0]]
     T_dso: Final[Literal[1]]
+    TDso: Final[Literal[1]]
     T_executable: Final[Literal[2]]
+    TExecutable: Final[Literal[2]]
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -1114,9 +1117,6 @@ class Filename:
     setFilesystemEncoding = set_filesystem_encoding
     getFilesystemEncoding = get_filesystem_encoding
     getClassType = get_class_type
-    TGeneral = T_general
-    TDso = T_dso
-    TExecutable = T_executable
 
 class PandaSystem:
     """This class is used as a namespace to group several global properties of

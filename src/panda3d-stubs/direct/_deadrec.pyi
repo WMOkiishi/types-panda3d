@@ -21,9 +21,13 @@ class SmoothMover:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     SM_off: Final[Literal[0]]
+    SMOff: Final[Literal[0]]
     SM_on: Final[Literal[1]]
+    SMOn: Final[Literal[1]]
     PM_off: Final[Literal[0]]
+    PMOff: Final[Literal[0]]
     PM_on: Final[Literal[1]]
+    PMOn: Final[Literal[1]]
     def __init__(self, __param0: SmoothMover = ...) -> None: ...
     @overload
     def set_pos(self, pos: _Vec3f) -> bool:
@@ -415,7 +419,3 @@ class SmoothMover:
     getDirectionalVelocity = get_directional_velocity
     setDefaultToStandingStill = set_default_to_standing_still
     getDefaultToStandingStill = get_default_to_standing_still
-    SMOff = SM_off
-    SMOn = SM_on
-    PMOff = PM_off
-    PMOn = PM_on
