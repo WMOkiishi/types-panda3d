@@ -234,7 +234,7 @@ class Function:
 
 
 @define
-class Element:
+class Attribute:
     name: str
     type: str
     read_only: bool = field(default=False, kw_only=True)

@@ -15,7 +15,7 @@ from .idbutil import (
 )
 from .processors import process_function
 from .reps import (
-    Alias, Class, Element, Function, Module, Package, Parameter, Signature,
+    Alias, Attribute, Class, Function, Module, Package, Parameter, Signature,
     StubRep
 )
 from .special_cases import (
@@ -80,7 +80,7 @@ def with_alias(
     return rep,
 
 
-def get_all_manifests() -> Iterator[Element]:
+def get_all_manifests() -> Iterator[Attribute]:
     """Yield representations of all manifests known to interrogate."""
     for n in range(idb.interrogate_number_of_manifests()):
         m = idb.interrogate_get_manifest(n)
@@ -89,7 +89,7 @@ def get_all_manifests() -> Iterator[Element]:
         else:
             value = idb.interrogate_manifest_definition(m)
         name = idb.interrogate_manifest_name(m)
-        yield Element(name, f'Literal[{value!r}]', namespace=('panda3d', 'core'))
+        yield Attribute(name, f'Literal[{value!r}]', namespace=('panda3d', 'core'))
 
 
 def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
@@ -151,7 +151,7 @@ def make_typedef_rep(t: TypeIndex, /) -> Alias:
 
 def make_element_rep(
         e: ElementIndex, /,
-        namespace: Sequence[str] = ()) -> Element:
+        namespace: Sequence[str] = ()) -> Attribute:
     """Return a representation of an element known to interrogate."""
     name = idb.interrogate_element_name(e)
     type_name = get_type_name(idb.interrogate_element_type(e))
@@ -164,7 +164,7 @@ def make_element_rep(
         doc = comment_to_docstring(idb.interrogate_element_comment(e))
     else:
         doc = ''
-    return Element(check_keyword(name), type_name, read_only=read_only,
+    return Attribute(check_keyword(name), type_name, read_only=read_only,
                    namespace=namespace, doc=doc)
 
 
@@ -302,16 +302,16 @@ def make_enum_alias_rep(t: TypeIndex, /) -> Alias:
 
 def make_enum_value_reps(
         t: TypeIndex, /,
-        namespace: Sequence[str] = ()) -> list[Element]:
+        namespace: Sequence[str] = ()) -> list[Attribute]:
     """Return variable representations for an enum type known to interrogate."""
-    value_reps: list[Element] = []
+    value_reps: list[Attribute] = []
     for n in range(idb.interrogate_type_number_of_enum_values(t)):
         if idb.interrogate_type_enum_value_scoped_name(t, n) in NOT_EXPOSED:
             continue
         value = idb.interrogate_type_enum_value(t, n)
         value_name = idb.interrogate_type_enum_value_name(t, n)
         type_string = f'Final[Literal[{value}]]'
-        value_reps.append(Element(value_name, type_string, namespace=namespace))
+        value_reps.append(Attribute(value_name, type_string, namespace=namespace))
     return value_reps
 
 
@@ -320,7 +320,7 @@ def make_scoped_enum_rep(t: TypeIndex, /, namespace: Sequence[str] = ()) -> Clas
     name = get_direct_type_name(t)
     this_namespace = (*namespace, name)
     value_elements = [
-        Element(
+        Attribute(
             idb.interrogate_type_enum_value_name(t, n),
             'int', namespace=this_namespace
         )
@@ -349,7 +349,7 @@ def make_class_rep(
         derivations.append(f'Generic[{type_vars}]')
     # Elements
     nested.append(
-        Element('DtoolClassDict', 'ClassVar[dict[str, Any]]',
+        Attribute('DtoolClassDict', 'ClassVar[dict[str, Any]]',
                 namespace=this_namespace)
     )
     for n in range(idb.interrogate_type_number_of_elements(t)):
@@ -360,7 +360,7 @@ def make_class_rep(
         value = name[11:]
         if value in ('string', 'wstring'):
             value = 'str'
-        nested.append(Element('value', value, namespace=this_namespace))
+        nested.append(Attribute('value', value, namespace=this_namespace))
     # Methods
     seen = {i.name for i in nested}
     for method in get_type_methods(t):
@@ -477,8 +477,8 @@ def process_class(class_: Class) -> None:
                 ) if doc_1 and doc_1 != doc_2:
                     continue
                 case (
-                    Element(doc=doc_1, read_only=True),
-                    Element(doc=doc_2, read_only=True)
+                    Attribute(doc=doc_1, read_only=True),
+                    Attribute(doc=doc_2, read_only=True)
                 ) if doc_1 and doc_1 != doc_2:
                     continue
                 case a, b if a == b:
