@@ -5490,7 +5490,7 @@ class LQuaternionf(LVecBase4f):
     pureImaginary = pure_imaginary
     angleRad = angle_rad
     angleDeg = angle_deg
-    almostEqual = almost_equal  # type: ignore[assignment]
+    almostEqual = almost_equal
     isSameDirection = is_same_direction
     almostSameDirection = almost_same_direction
     extractToMatrix = extract_to_matrix
@@ -5725,7 +5725,7 @@ class LQuaterniond(LVecBase4d):
     pureImaginary = pure_imaginary
     angleRad = angle_rad
     angleDeg = angle_deg
-    almostEqual = almost_equal  # type: ignore[assignment]
+    almostEqual = almost_equal
     isSameDirection = is_same_direction
     almostSameDirection = almost_same_direction
     extractToMatrix = extract_to_matrix
