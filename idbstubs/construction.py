@@ -92,7 +92,7 @@ def get_all_manifests() -> Iterator[Attribute]:
         else:
             value = idb.interrogate_manifest_definition(m)
         name = idb.interrogate_manifest_name(m)
-        yield Attribute(name, f'Literal[{value!r}]', namespace=('panda3d', 'core'))
+        yield Attribute(name, f'Final[{type(value).__name__}]', namespace=('panda3d', 'core'))
 
 
 def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
