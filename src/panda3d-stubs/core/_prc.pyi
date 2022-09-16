@@ -6,7 +6,7 @@ from panda3d import core
 from panda3d.core import DSearchPath, Filename, iostream, istream, ostream
 
 _ConfigFlags_ValueType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _NotifySeverity: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _Self = TypeVar('_Self')
 

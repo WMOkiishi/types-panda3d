@@ -1,9 +1,9 @@
 from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
-from panda3d.core import ConfigVariableFilename, Filename, istream, ostream
+from panda3d.core import ConfigVariableFilename, istream, ostream
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _TiXmlEncoding: TypeAlias = Literal[0, 1, 2]
 _Self = TypeVar('_Self')
 

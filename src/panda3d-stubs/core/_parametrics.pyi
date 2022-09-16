@@ -6,7 +6,6 @@ from typing_extensions import Final, Literal, TypeAlias
 from panda3d.core import (
     ConfigVariableColor,
     ConfigVariableFilename,
-    Filename,
     LMatrix3f,
     LMatrix4f,
     LPoint3f,
@@ -23,7 +22,7 @@ from panda3d.core import (
 )
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor

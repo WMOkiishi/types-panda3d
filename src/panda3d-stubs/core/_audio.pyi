@@ -14,7 +14,7 @@ from panda3d.core import (
 
 _AudioSound_SoundStatus: TypeAlias = Literal[0, 1, 2]
 _AudioManager_SpeakerModeCategory: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class FilterProperties(TypedReferenceCount):

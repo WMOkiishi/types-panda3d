@@ -62,7 +62,7 @@ TYPE_ALIASES: Final = {
     '_Vec4i': 'LVecBase4i | UnalignedLVecBase4i',
     '_Mat4d': 'LMatrix4d | UnalignedLMatrix4d',
     '_Mat4f': 'LMatrix4f | UnalignedLMatrix4f',
-    '_Filename': 'Filename | ConfigVariableFilename | StrOrBytesPath',
+    '_Filename': 'StrOrBytesPath | ConfigVariableFilename',
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))
@@ -208,6 +208,7 @@ def make_param_type_replacement(cast_to: TypeIndex) -> str:
             cast_from.discard(b)
     cast_from_names = {get_type_name(i) for i in cast_from}
     if idb.interrogate_type_name(cast_to) == 'Filename':
+        cast_from_names.remove('Filename')
         cast_from_names.add('StrOrBytesPath')
     for alias, alias_of in _type_alias_data:
         if cast_from_names >= alias_of:
@@ -276,6 +277,8 @@ def inherits_from(a: str, b: str, /) -> bool:
     if b == 'object' or a in ('Never', 'NoReturn'):
         return True
     if (a, b) in (('bool', 'int'), ('int', 'float')):
+        return True
+    if a == 'Filename' and b == 'StrOrBytesPath':
         return True
     return b in _inheritance.get(a, set())
 

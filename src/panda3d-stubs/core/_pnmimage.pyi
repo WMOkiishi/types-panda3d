@@ -6,7 +6,6 @@ from panda3d.core import (
     BoundingHexahedron,
     ConfigVariableColor,
     ConfigVariableFilename,
-    Filename,
     LMatrix3d,
     LMatrix3f,
     LMatrix4d,
@@ -36,7 +35,7 @@ from panda3d.core import (
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _Self = TypeVar('_Self')
 _PNMImageHeader_ColorType: TypeAlias = Literal[0, 1, 2, 3, 4]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow

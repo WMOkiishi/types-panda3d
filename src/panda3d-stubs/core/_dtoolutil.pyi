@@ -7,7 +7,7 @@ from panda3d.core import ConfigVariableFilename, ConfigVariableSearchPath, TypeH
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int
 _TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 2]
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Filename_Type: TypeAlias = Literal[0, 1, 2]
 _Self = TypeVar('_Self')
 
@@ -419,7 +419,7 @@ class Filename:
         """
         ...
     @overload
-    def __init__(self, path: Filename | StrOrBytesPath) -> None: ...
+    def __init__(self, path: StrOrBytesPath) -> None: ...
     @overload
     def __init__(self, dirname: _Filename, basename: _Filename) -> None: ...
     def __getitem__(self, n: int) -> str: ...

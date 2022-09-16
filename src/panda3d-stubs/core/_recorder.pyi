@@ -12,7 +12,7 @@ from panda3d.core import (
     TypedReferenceCount,
 )
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 
 class RecorderBase:
     """This is the base class to a number of objects that record particular kinds

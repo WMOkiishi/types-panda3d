@@ -5,7 +5,6 @@ from panda3d.core import (
     Buffer,
     ConfigVariableFilename,
     Datagram,
-    Filename,
     HashVal,
     Ramfile,
     ReferenceCount,
@@ -17,7 +16,7 @@ from panda3d.core import (
     ostream,
 )
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _ISocketStream_ReadState: TypeAlias = Literal[0, 1, 2, 3]
 _Self = TypeVar('_Self')
 _HTTPEnum_HTTPVersion: TypeAlias = Literal[0, 1, 2, 3]
