@@ -12,6 +12,7 @@ def main() -> int:
         'panda3d',
         '--allowlist',
         str(allowlist),
+        '--ignore-unused-allowlist',
     ]
     try:
         print(' '.join(cmd), file=sys.stderr)

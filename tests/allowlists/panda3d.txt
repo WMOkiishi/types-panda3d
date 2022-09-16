@@ -42,3 +42,12 @@ panda3d.core.AsyncTaskCollection.__iter__
 panda3d\.core\.L(RGB)?Color[df]?\.__iter__
 panda3d\.core\.LVecBase[2-4][dfi]?\.__iter__
 panda3d\.core\.VBase[2-4][DF]?\.__iter__
+
+# These differ by OS, but the stubs don't yet reflect that.
+panda3d.core.GraphicsWindowProcCallbackData.get_hwnd
+panda3d.core.GraphicsWindowProcCallbackData.get_lparam
+panda3d.core.GraphicsWindowProcCallbackData.get_msg
+panda3d.core.GraphicsWindowProcCallbackData.get_wparam
+panda3d.core.LinuxJoystickDevice
+panda3d.core.WindowsRegistry
+panda3d\.lib[a-z_]+
