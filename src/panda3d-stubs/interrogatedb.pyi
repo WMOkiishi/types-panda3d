@@ -1,4 +1,4 @@
-from typing import Literal, TypeAlias
+from typing_extensions import Literal, TypeAlias
 
 _AtomicToken: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 _ManifestIndex: TypeAlias = int
