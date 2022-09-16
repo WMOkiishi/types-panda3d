@@ -160,7 +160,10 @@ class TextEncoder:
         TextEncoder objects.  See set_encoding().
         """
         ...
-    def set_text(self, text, encoding: _TextEncoder_Encoding = ...) -> None: ...
+    @overload
+    def set_text(self, text) -> None: ...
+    @overload
+    def set_text(self, text, encoding: _TextEncoder_Encoding) -> None: ...
     def clear_text(self) -> None:
         """Removes the text from the TextEncoder."""
         ...
@@ -175,7 +178,8 @@ class TextEncoder:
         (preserving accent marks correctly).
         """
         ...
-    def get_text(self, encoding: _TextEncoder_Encoding = ...):
+    @overload
+    def get_text(self):
         """`(self)`:
         Returns the current text, as encoded via the current encoding system.
         
@@ -183,6 +187,8 @@ class TextEncoder:
         Returns the current text, as encoded via the indicated encoding system.
         """
         ...
+    @overload
+    def get_text(self, encoding: _TextEncoder_Encoding): ...
     def append_text(self, text) -> None: ...
     def append_unicode_char(self, character: int) -> None:
         """Appends a single character to the end of the stored text.  This may be a
@@ -344,7 +350,8 @@ class TextEncoder:
         string, according to the given encoding system.
         """
         ...
-    def encode_wtext(self, wtext: str, encoding: _TextEncoder_Encoding = ...) -> bytes:
+    @overload
+    def encode_wtext(self, wtext: str) -> bytes:
         """`(self, wtext: str)`:
         Encodes a wide-text string into a single-char string, according to the
         current encoding.
@@ -354,7 +361,12 @@ class TextEncoder:
         given encoding.
         """
         ...
-    def decode_text(self, text: bytes, encoding: _TextEncoder_Encoding = ...) -> str: ...
+    @overload
+    def encode_wtext(self, wtext: str, encoding: _TextEncoder_Encoding) -> bytes: ...
+    @overload
+    def decode_text(self, text: bytes) -> str: ...
+    @overload
+    def decode_text(self, text: bytes, encoding: _TextEncoder_Encoding) -> str: ...
     setEncoding = set_encoding
     getEncoding = get_encoding
     setDefaultEncoding = set_default_encoding

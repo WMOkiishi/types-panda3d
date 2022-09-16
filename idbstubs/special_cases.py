@@ -134,7 +134,7 @@ PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
     'panda3d.core.PythonTask.__init__': {(0, 1): 'Callable'},
     'panda3d.core.PythonTask.set_function': {(0, 1): 'Callable'},
     'panda3d.core.PythonTask.set_upon_death': {(0, 1): 'Callable'},
-    'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes'},
+    'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
 }
 
 RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {

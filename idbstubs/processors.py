@@ -33,6 +33,8 @@ def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
     t, u = p.type, q.type
     if (t and not u) or (u and not t):
         return None
+    if not t and not u and not p.is_self:
+        return None
     t_subtypes_u, u_subtypes_t = subtype_relationship(t, u)
 
     # Make sure assigning an argument by name will still work
@@ -64,6 +66,9 @@ def merge_signatures(a: Signature, b: Signature, /) -> Signature | None:
     """
     if abs(a.min_arity() - b.min_arity()) > 1 or abs(a.max_arity() - b.max_arity()) > 1:
         # If the min or max arity differs by more than 1, the signatures can't be merged
+        return None
+    if not (a.return_type and b.return_type):
+        # Don't merge signatures if we're not sure what the return types are
         return None
     # Signatures with differing return types can only be merged if their parameters are identical
     w1_locked = w2_locked = a.return_type != b.return_type
