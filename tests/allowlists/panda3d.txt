@@ -1,0 +1,44 @@
+# These exist in every module, but I don't know what they're for.
+panda3d\.\w+\.Dtool_BorrowThisReference
+panda3d\.\w+\.Dtool_PyNativeInterface
+
+# Don't worry about the fake submodules.
+panda3d\.\w+\._\w+
+
+# For some reason, Mypy checks the arguments for __init__ differently than
+# other methods.
+panda3d\..+\.__init__
+
+# These exist, and should probably have stubs, but don't yet.
+panda3d\..+\.__copy__
+panda3d\..+\.__deepcopy__
+
+# These exist, but we don't really care.
+panda3d.core.NodePath.__reduce_persist__
+panda3d.core.TypedWritable.__reduce_persist__
+
+# These exist, but stubtest insists they don't.
+panda3d.bullet.BulletPersistentManifold.__get_manifold_point
+panda3d.bullet.BulletWorld.__get_manifold
+
+# Stubtest doesn't understand these at runtime.
+panda3d.core.ExecutionEnvironment.args
+panda3d.core.MicrophoneAudio.options
+panda3d.vision.WebcamVideo.options
+
+# This is the name of both a staticmethod and instance attribute.
+# We skip writing the staticmethod in the stubs (it's deprecated anyway).
+panda3d.core.WindowProperties.size
+
+# Stubtest thinks these have a "mod" parameter, but they don't.
+panda3d\.core\.L(RGB)?Color[df]?\.__pow__
+panda3d\.core\.LQuaternion[df]?\.__pow__
+panda3d\.core\.LVecBase[2-4][dfi]?\.__pow__
+panda3d\.core\.Quat[DF]?\.__pow__
+panda3d\.core\.VBase[2-4][DF]?\.__pow__
+
+# These __iter__ methods don't actually exist.
+panda3d.core.AsyncTaskCollection.__iter__
+panda3d\.core\.L(RGB)?Color[df]?\.__iter__
+panda3d\.core\.LVecBase[2-4][dfi]?\.__iter__
+panda3d\.core\.VBase[2-4][DF]?\.__iter__
