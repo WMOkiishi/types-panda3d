@@ -1,2 +1,2 @@
-attrs
-panda3d >= 1.10.12
+attrs==22.1.0
+panda3d==1.10.12
