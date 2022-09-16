@@ -3,7 +3,6 @@ from os import PathLike
 from pathlib import Path
 from typing import Final
 
-from .checks import check_module
 from .construction import get_all_manifests, make_package_rep, with_alias
 from .idbutil import load_interrogate_database
 from .processors import process_dependencies
@@ -35,7 +34,6 @@ def main(
             if module.name == 'core':
                 init_nested += flatten(with_alias(m) for m in get_all_manifests())
             module.nested['__init__'] = init_nested
-        check_module(module)
         write_module_stubs(module, output_dir)
     (Path(output_dir) / f'{package.name}-stubs' / '__init__.pyi').write_text('')
 
