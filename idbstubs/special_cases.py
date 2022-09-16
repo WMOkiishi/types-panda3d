@@ -122,7 +122,13 @@ ATTRIBUTE_NAME_SHADOWS: Final[dict[str, Container[str]]] = {
 }
 
 
-ATTR_TYPE_OVERRIDES: Final = {}
+ATTR_TYPE_OVERRIDES: Final = {
+    'BamReader::file_version': 'tuple[int, int]',
+    'EggGroupNode::children': 'list[EggNode]',
+    'PythonCallbackObject::function': 'Callable',
+    'StringStream::data': 'bytes',
+    'TextEncoder::text': 'str',
+}
 
 
 PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
@@ -137,12 +143,16 @@ PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
     'panda3d.core.PythonTask.__init__': {(0, 1): 'Callable'},
     'panda3d.core.PythonTask.set_function': {(0, 1): 'Callable'},
     'panda3d.core.PythonTask.set_upon_death': {(0, 1): 'Callable'},
+    'panda3d.core.StringStream.set_data': {(0, 1): 'bytes'},
     'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
+    'panda3d.core.TextEncoder.set_text': {(0, 1): 'str', (1, 1): 'bytes'},
 }
 
 RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.core.AsyncFuture.__await__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.__iter__': 'Generator[Awaitable, None, None]',
+    'panda3d.core.AsyncFuture.gather': 'AsyncFuture',
+    'panda3d.core.BamReader.get_file_version': 'tuple[int, int]',
     'panda3d.core.BoundingBox.get_num_planes': 'Literal[6]',
     'panda3d.core.BoundingBox.get_num_points': 'Literal[8]',
     'panda3d.core.BoundingHexahedron.get_num_planes': 'Literal[6]',
@@ -159,9 +169,13 @@ RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.core.NodePath.attach_new_node': {0: 'NodePath[_M]'},
     'panda3d.core.NodePath.flatten_light': 'Literal[0]',
     'panda3d.core.NodePath.get_python_tags': 'dict[Any, Any] | None',
+    'panda3d.core.NodePath.get_tag_keys': 'tuple[str, ...] | None',
+    'panda3d.core.NodePath.get_tight_bounds': 'tuple[LPoint3f, LPoint3f] | None',
     'panda3d.core.NodePath.node': '_N',
+    'panda3d.core.NodePathCollection.get_tight_bounds': 'tuple[LPoint3f, LPoint3f] | None',
     'panda3d.core.OccluderNode.get_num_vertices': 'Literal[4]',
     'panda3d.core.PandaNode.get_python_tags': 'dict[Any, Any]',
+    'panda3d.core.PandaNode.get_tag_keys': 'tuple[str, ...]',
     'panda3d.core.PythonCallbackObject.get_function': 'Callable',
     'panda3d.core.PythonTask.get_args': 'tuple[Any, ...]',
     'panda3d.core.PythonTask.get_function': 'Callable',
@@ -174,14 +188,22 @@ RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.core.RenderState.get_states': 'list[RenderState]',
     'panda3d.core.RenderState.get_unused_states': 'list[RenderState]',
     'panda3d.core.SparseArray.has_max_num_bits': 'Literal[False]',
+    'panda3d.core.StreamReader.extract_bytes': 'bytes',
+    'panda3d.core.StreamReader.readline': 'bytes',
+    'panda3d.core.StreamReader.readlines': 'list[bytes]',
     'panda3d.core.TextEncoder.decode_text': 'str',
     'panda3d.core.TextEncoder.encode_wchar': 'bytes',
     'panda3d.core.TextEncoder.encode_wtext': 'bytes',
+    'panda3d.core.TextEncoder.get_text': {0: 'str', 1: 'bytes'},
     'panda3d.core.TransformState.get_composition_cache': 'list[tuple[Any, Any] | tuple[None, None]]',
     'panda3d.core.TransformState.get_invert_composition_cache': 'list[tuple[Any, Any] | tuple[None, None]]',
     'panda3d.core.TransformState.get_states': 'list[TransformState]',
     'panda3d.core.TransformState.get_unused_states': 'list[TransformState]',
+    'panda3d.core.VirtualFile.extract_bytes': 'bytes',
     'panda3d.core.VirtualFile.read_file': 'bytes',
+    'panda3d.egg.EggGroupNode.get_children': 'list[EggNode]',
+    'panda3d.ode.OdeGeom.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
+    'panda3d.ode.OdeSpace.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
 }
 _returns_self = product(
     ('LVecBase2f', 'LVecBase2d', 'LVecBase2i',

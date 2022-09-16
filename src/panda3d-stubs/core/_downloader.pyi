@@ -2420,7 +2420,7 @@ class StringStream(iostream):
     buffer, which can be retrieved and/or set as a string in Python 2 or a
     bytes object in Python 3.
     """
-    data = ...
+    data: bytes
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -2434,7 +2434,7 @@ class StringStream(iostream):
     def get_data(self) -> bytes:
         """Returns the contents of the data stream as a string."""
         ...
-    def set_data(self, data) -> None: ...
+    def set_data(self, data: bytes) -> None: ...
     clearData = clear_data
     getDataSize = get_data_size
     getData = get_data

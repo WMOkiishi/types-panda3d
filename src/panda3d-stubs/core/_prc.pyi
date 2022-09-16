@@ -1840,12 +1840,12 @@ class StreamReader:
     def skip_bytes(self, size: int) -> None:
         """Skips over the indicated number of bytes in the stream."""
         ...
-    def extract_bytes(self, size: int):
+    def extract_bytes(self, size: int) -> bytes:
         """Extracts the indicated number of bytes in the stream and returns them as a
         string.  Returns empty string at end-of-file.
         """
         ...
-    def readline(self):
+    def readline(self) -> bytes:
         """Assumes the stream represents a text file, and extracts one line up to and
         including the trailing newline character.  Returns empty string when the
         end of file is reached.
@@ -1854,7 +1854,7 @@ class StreamReader:
         Python's File.readline() function.
         """
         ...
-    def readlines(self): ...
+    def readlines(self) -> list[bytes]: ...
     getIstream = get_istream
     getBool = get_bool
     getInt8 = get_int8
