@@ -1,7 +1,7 @@
 __all__ = ['Loader']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterable, Sequence
-from os import PathLike
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, Self, TypeAlias
 
@@ -27,7 +27,7 @@ from panda3d.core import (
 from ..directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _FilterType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _TextFont_RenderMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor

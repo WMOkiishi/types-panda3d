@@ -1,6 +1,6 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Container, Iterable, Mapping, Sequence
 from modulefinder import ModuleFinder
-from os import PathLike
 from typing import TypeVar
 from typing_extensions import TypeAlias
 
@@ -8,7 +8,7 @@ from panda3d.core import Filename
 
 _File = TypeVar('_File', bound=_OpenFile)
 
-_OpenFile: TypeAlias = str | bytes | PathLike | int
+_OpenFile: TypeAlias = StrOrBytesPath | int
 
 python: str
 isDebugBuild: bool
@@ -59,7 +59,7 @@ class Freezer:
         def __init__(
             self,
             moduleName: str,
-            filename: Filename | str | bytes | PathLike | None = None,
+            filename: Filename | StrOrBytesPath | None = None,
             implicit: bool = False,
             guess: bool = False,
             exclude: bool = False,
@@ -101,7 +101,7 @@ class Freezer:
         moduleName: str,
         implicit: bool = False,
         newName: str | None = None,
-        filename: Filename | str | bytes | PathLike | None = None,
+        filename: Filename | StrOrBytesPath | None = None,
         guess: bool = False,
         fromSource=None,
         text: str | None = None,

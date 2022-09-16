@@ -1,15 +1,10 @@
-from typing import ClassVar, TypeVar
-from typing_extensions import Protocol
+from _typeshed import SupportsWrite
+from typing import ClassVar
 
 from panda3d.core import NodePath
 from panda3d.physics import BaseForce, ForceNode
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
-
-_T_contra = TypeVar("_T_contra", contravariant=True)
-
-class _SupportsWrite(Protocol[_T_contra]):
-    def write(self, s: _T_contra, /) -> object: ...
 
 class ForceGroup(DirectObject):
     notify: ClassVar[Notifier]
@@ -31,7 +26,7 @@ class ForceGroup(DirectObject):
     def __getitem__(self, index: int) -> BaseForce: ...
     def __len__(self) -> int: ...
     def as_list(self) -> list[BaseForce]: ...
-    def print_params(self, file: _SupportsWrite[str] = ..., targ: str = 'self') -> None: ...
+    def print_params(self, file: SupportsWrite[str] = ..., targ: str = 'self') -> None: ...
     isEnabled = is_enabled
     getNode = get_node
     getNodePath = get_node_path

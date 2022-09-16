@@ -1,17 +1,12 @@
 __all__ = ['PEFile']
 
-import array
+from _typeshed import StrOrBytesPath, WriteableBuffer
 import builtins
-import ctypes
-import mmap
-import pickle
 from collections.abc import Generator, Iterator
-from os import PathLike
-from typing import Any, ClassVar, NamedTuple, overload
+from typing import ClassVar, NamedTuple, overload
 from typing_extensions import Literal, TypeAlias
 
-_OpenFile: TypeAlias = str | bytes | PathLike | int
-_WriteableBuffer: TypeAlias = bytearray | memoryview | array.array[Any] | mmap.mmap | ctypes._CData | pickle.PickleBuffer
+_OpenFile: TypeAlias = StrOrBytesPath | int
 
 class _Icon(NamedTuple):
     width: int
@@ -133,7 +128,7 @@ class ResourceTable:
     def items(self) -> list[tuple[int | str, ResourceTable | None]]: ...
     def count_resources(self) -> int: ...
     def get_nested_tables(self) -> Generator[ResourceTable, None, None]: ...
-    def pack_header(self, data: _WriteableBuffer, offs: int) -> None: ...
+    def pack_header(self, data: WriteableBuffer, offs: int) -> None: ...
     def unpack_from(self, mem, addr: int = 0, offs: int = 0) -> None: ...
 
 class PEFile:

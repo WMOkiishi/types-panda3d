@@ -1,7 +1,7 @@
 __all__ = ['ConnectionRepository', 'GCTrigger']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterable, Sequence, Mapping
-from os import PathLike
 from typing import Any, ClassVar
 from typing_extensions import Literal
 
@@ -36,7 +36,7 @@ class ConnectionRepository(DoInterestManager, DoCollectionManager, CConnectionRe
         dcname: str,
         value: Mapping[str, Iterable[Any]] | None = None,
     ) -> Any: ...
-    def readDCFile(self, dcFileNames: str | Iterable[str | bytes | PathLike] | None = None) -> None: ...
+    def readDCFile(self, dcFileNames: str | Iterable[StrOrBytesPath] | None = None) -> None: ...
     def importModule(self, dcImports, moduleName: str, importSymbols: Sequence[str]) -> None: ...
     def getServerAddress(self) -> str: ...
     def connect(

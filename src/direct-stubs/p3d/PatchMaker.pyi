@@ -1,13 +1,13 @@
 __all__ = ['PatchMaker']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import MutableSequence
-from os import PathLike
 from typing_extensions import Self, TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename, TiXmlDocument, TiXmlElement
 from .FileSpec import FileSpec
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _Key: TypeAlias = tuple[str | None, str | None, str | None, str | None, FileSpec | None]
 _Plan: TypeAlias = list[tuple[PatchMaker.PatchFile, PatchMaker.PackageVersion]]
 

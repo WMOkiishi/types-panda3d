@@ -1,5 +1,5 @@
-from typing import ClassVar, TypeVar
-from typing_extensions import Protocol
+from _typeshed import SupportsWrite
+from typing import ClassVar
 
 from panda3d.core import NodePath, PandaNode
 from panda3d.physics import (
@@ -11,11 +11,6 @@ from panda3d.physics import (
     PointParticleRenderer,
 )
 from ..directnotify.Notifier import Notifier
-
-_T_contra = TypeVar("_T_contra", contravariant=True)
-
-class _SupportsWrite(Protocol[_T_contra]):
-    def write(self, s: _T_contra, /) -> object: ...
 
 class Particles(ParticleSystem):
     notify: ClassVar[Notifier]
@@ -47,7 +42,7 @@ class Particles(ParticleSystem):
     def get_factory(self) -> PointParticleFactory | None: ...
     def get_emitter(self) -> ArcEmitter | None: ...
     def get_renderer(self) -> PointParticleRenderer | None: ...
-    def print_params(self, file: _SupportsWrite[str] = ..., targ: str = 'self') -> None: ...
+    def print_params(self, file: SupportsWrite[str] = ..., targ: str = 'self') -> None: ...
     def get_pool_size_ranges(self): ...
     def accelerate(self, time: float, stepCount: int = 1, stepTime: float = 0) -> None: ...
     isEnabled = is_enabled

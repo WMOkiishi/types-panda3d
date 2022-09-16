@@ -1,3 +1,4 @@
+from _typeshed import SupportsWrite
 from collections.abc import (
     Callable,
     Collection,
@@ -9,7 +10,7 @@ from collections.abc import (
     Sequence,
 )
 from typing import Any, ClassVar, Generic, TypeVar, overload
-from typing_extensions import Never, Protocol, Self, TypeAlias
+from typing_extensions import Never, Self, TypeAlias
 
 from panda3d.core import PStatCollector
 
@@ -19,13 +20,9 @@ _S = TypeVar('_S')
 _KT = TypeVar('_KT')
 _VT = TypeVar('_VT')
 _C = TypeVar('_C', bound=_Callback)
-_T_contra = TypeVar('_T_contra', contravariant=True)
 
 _Callback: TypeAlias = Callable[[], object]
 _RNG: TypeAlias = Callable[[], float]
-
-class _SupportsWrite(Protocol[_T_contra]):
-    def write(self, s: _T_contra, /) -> object: ...
 
 class Functor(Generic[_T]):
     def __init__(self, function: Callable[..., _T], *args: Any, **kargs: Any) -> None: ...
@@ -52,7 +49,7 @@ class Queue(Generic[_T]):
     def isEmpty(self) -> bool: ...
     def __len__(self) -> int: ...
 
-def indent(stream: _SupportsWrite[str], numIndents: int, str: str) -> None: ...
+def indent(stream: SupportsWrite[str], numIndents: int, str: str) -> None: ...
 def doc(obj: object) -> None: ...
 def adjust(command = None, dim = 1, parent = None, **kw): ...
 def difference(a: Collection[_T], b: Collection[_T]) -> list[_T]: ...

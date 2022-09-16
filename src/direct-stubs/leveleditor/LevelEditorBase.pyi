@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterable
-from os import PathLike
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import BitMask_uint32_t_32, NodePath
@@ -12,7 +12,7 @@ from .FileMgr import FileMgr
 _Unused: TypeAlias = object
 
 class LevelEditorBase(DirectObject):
-    currentFile: str | bytes | PathLike | None
+    currentFile: StrOrBytesPath | None
     fNeedToSave: bool
     actionEvents: list[tuple[str, Callable[..., None]]]
     curveEditor: CurveEditor
@@ -20,7 +20,7 @@ class LevelEditorBase(DirectObject):
     actionMgr: ActionMgr
     fMoveCamera: bool
     NPParent: NodePath
-    settingsFile: str | bytes | PathLike | None
+    settingsFile: StrOrBytesPath | None
     BASE_MODE: BitMask_uint32_t_32
     CREATE_CURVE_MODE: BitMask_uint32_t_32
     EDIT_CURVE_MODE: BitMask_uint32_t_32
@@ -64,8 +64,8 @@ class LevelEditorBase(DirectObject):
     def reset(self) -> None: ...
     def resetOrthoCam(self, view) -> None: ...
     def save(self) -> None: ...
-    def saveAs(self, fileName: str | bytes | PathLike) -> None: ...
-    def load(self, fileName: str | bytes | PathLike) -> None: ...
+    def saveAs(self, fileName: StrOrBytesPath) -> None: ...
+    def load(self, fileName: StrOrBytesPath) -> None: ...
     def saveSettings(self) -> None: ...
     def loadSettings(self) -> None: ...
     def convertMaya(self, modelname, callBack, obj=None, isAnim: bool = False) -> None: ...

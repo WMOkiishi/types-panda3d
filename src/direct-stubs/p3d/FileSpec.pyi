@@ -1,12 +1,13 @@
 __all__ = ['FileSpec']
 
-from os import PathLike, stat_result
+from _typeshed import StrOrBytesPath
+from os import stat_result
 from typing_extensions import TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename, TiXmlElement
 from ..directnotify.Notifier import Notifier
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class FileSpec:
     actualFile: FileSpec | None

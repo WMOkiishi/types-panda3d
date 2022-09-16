@@ -1,7 +1,7 @@
 __all__ = ['ArgumentError', 'OutsideOfPackageError', 'Packager', 'PackageError']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Container, Iterable, Sequence
-from os import PathLike
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
@@ -27,7 +27,7 @@ class PackageError(Exception): ...
 class OutsideOfPackageError(PackageError): ...
 class ArgumentError(PackageError): ...
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _Unused: TypeAlias = object
 
 class Packager:

@@ -1,11 +1,11 @@
 __all__ = ['Audio3DManager']
 
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing_extensions import TypeAlias, Literal
 
 from panda3d.core import AudioManager, AudioSound, ConfigVariableFilename, Filename, LVecBase3f, NodePath
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class Audio3DManager:
     audio_manager: AudioManager

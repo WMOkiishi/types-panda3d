@@ -1,5 +1,5 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Iterable
-from os import PathLike
 from typing import Any, TypeVar
 from typing_extensions import Literal, TypeAlias
 
@@ -44,7 +44,7 @@ class ClientRepositoryBase(ConnectionRepository):
     deferInterval: float
     def __init__(
         self,
-        dcFileNames: str | Iterable[str | bytes | PathLike] | None = None,
+        dcFileNames: str | Iterable[StrOrBytesPath] | None = None,
         dcSuffix: str = '',
         connectMethod: int | None = None,
         threadedNet: bool | None = None,

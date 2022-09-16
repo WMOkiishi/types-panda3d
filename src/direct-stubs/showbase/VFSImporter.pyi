@@ -1,13 +1,13 @@
 __all__ = ['register', 'reloadSharedPackage', 'reloadSharedPackages', 'sharedPackages']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Iterable
-from os import PathLike
 from types import ModuleType
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename, VirtualFile, VirtualFileSystem
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 sharedPackages: dict[str, Literal[True]]
 vfs: Final[VirtualFileSystem]

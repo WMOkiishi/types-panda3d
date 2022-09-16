@@ -1,7 +1,7 @@
 __all__ = ['PackageMerger', 'PackageMergerError']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Container
-from os import PathLike
 from typing import ClassVar
 from typing_extensions import TypeAlias
 
@@ -10,7 +10,7 @@ from ..directnotify.Notifier import Notifier
 from .FileSpec import FileSpec
 from .SeqValue import SeqValue
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class PackageMergerError(Exception): ...
 

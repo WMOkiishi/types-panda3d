@@ -1,4 +1,4 @@
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing import ClassVar, overload
 from typing_extensions import TypeAlias
 
@@ -6,7 +6,7 @@ from panda3d.core import ConfigVariableFilename, Filename, NodePath
 from ..directnotify.Notifier import Notifier
 from .ForceGroup import ForceGroup
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class ParticleEffect(NodePath):
     notify: ClassVar[Notifier]

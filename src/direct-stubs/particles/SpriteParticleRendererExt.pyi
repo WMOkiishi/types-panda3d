@@ -1,10 +1,10 @@
-from os import PathLike
+from _typeshed import StrOrBytesPath
 from typing_extensions import TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename
 from panda3d.physics import SpriteParticleRenderer
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class SpriteParticleRendererExt(SpriteParticleRenderer):
     sourceTextureName: str
