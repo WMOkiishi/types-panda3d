@@ -122,6 +122,9 @@ ATTRIBUTE_NAME_SHADOWS: Final[dict[str, Container[str]]] = {
 }
 
 
+ATTR_TYPE_OVERRIDES: Final = {}
+
+
 PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
     'panda3d.core.Filename.__init__': {(1, 1): 'StrOrBytesPath'},
     'panda3d.core.NodePath.__init__': {

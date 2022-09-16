@@ -19,7 +19,8 @@ from .reps import (
     StubRep
 )
 from .special_cases import (
-    GENERIC, IGNORE_ERRORS, ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
+    ATTR_TYPE_OVERRIDES, GENERIC, IGNORE_ERRORS, ITERABLE, NO_MANGLING,
+    NO_STUBS, NOT_EXPOSED
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
@@ -157,7 +158,9 @@ def make_element_rep(
         namespace: Sequence[str] = ()) -> Attribute:
     """Return a representation of an element known to interrogate."""
     name = idb.interrogate_element_name(e)
-    type_name = get_type_name(idb.interrogate_element_type(e))
+    type_name = ATTR_TYPE_OVERRIDES.get(idb.interrogate_element_scoped_name(e))
+    if type_name is None:
+        type_name = get_type_name(idb.interrogate_element_type(e))
     if idb.interrogate_element_is_sequence(e):
         type_name = f'Sequence[{type_name}]' if type_name else 'Sequence'
     elif idb.interrogate_element_is_mapping(e):
@@ -168,7 +171,7 @@ def make_element_rep(
     else:
         doc = ''
     return Attribute(check_keyword(name), type_name, read_only=read_only,
-                   namespace=namespace, doc=doc)
+                     namespace=namespace, doc=doc)
 
 
 def make_signature_rep(
