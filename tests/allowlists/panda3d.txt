@@ -50,4 +50,4 @@ panda3d.core.GraphicsWindowProcCallbackData.get_msg
 panda3d.core.GraphicsWindowProcCallbackData.get_wparam
 panda3d.core.LinuxJoystickDevice
 panda3d.core.WindowsRegistry
-panda3d\.lib[a-z_]+
+panda3d\.lib(p3)?[A-Za-z_]*
