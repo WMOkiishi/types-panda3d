@@ -1,10 +1,10 @@
-from typing import TypeVar, overload
+from typing import TypeVar, Union, overload
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import LVecBase2f
 
 _AnyReal = TypeVar('_AnyReal', int, float)
-_Vec2f: TypeAlias = LVecBase2f | tuple[float, float]
+_Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 
 class CartesianGridBase:
     def isValidZone(self, zoneId: int) -> bool: ...

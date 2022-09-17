@@ -1,6 +1,6 @@
 from collections.abc import Container, Iterable, Sequence
 from types import CodeType
-from typing import Any, ClassVar, NoReturn
+from typing import Any, ClassVar, NoReturn, Union
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import (
@@ -32,9 +32,9 @@ _NamedMovement: TypeAlias = tuple[
     float, float, float, float,
     bool,
 ]
-_Vec2f: TypeAlias = LVecBase2f | tuple[float, float]
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow | tuple[float, float, float]
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | tuple[float, float, float, float]
+_Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
+_Vec3f: TypeAlias = Union[LVecBase3f, LMatrix3f.Row, LMatrix3f.CRow, tuple[float, float, float]]
+_Vec4f: TypeAlias = Union[LVecBase4f, UnalignedLVecBase4f, LMatrix4f.Row, LMatrix4f.CRow, tuple[float, float, float, float]]
 
 class ClusterClient(DirectObject):
     notify: ClassVar[Notifier]

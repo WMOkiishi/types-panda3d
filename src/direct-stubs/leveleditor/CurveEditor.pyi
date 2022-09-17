@@ -1,3 +1,4 @@
+from typing import Union
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import LVecBase3f, LVecBase4f
@@ -5,7 +6,7 @@ from ..showbase.DirectObject import DirectObject
 from ..showutil.Rope import Rope
 from ..task.Task import Task
 
-_Vert: TypeAlias = LVecBase3f | LVecBase4f | tuple[float, float, float] | tuple[float, float, float, float]
+_Vert: TypeAlias = Union[LVecBase3f, LVecBase4f, tuple[float, float, float], tuple[float, float, float, float]]
 
 class CurveEditor(DirectObject):
     editor = ...

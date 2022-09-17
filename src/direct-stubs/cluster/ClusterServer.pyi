@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Union
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import (
@@ -27,7 +27,7 @@ _NamedMovement: TypeAlias = tuple[
     float, float, float, float,
     bool,
 ]
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow | tuple[float, float, float]
+_Vec3f: TypeAlias = Union[LVecBase3f, LMatrix3f.Row, LMatrix3f.CRow, tuple[float, float, float]]
 
 class ClusterServer(DirectObject):
     notify: ClassVar[Notifier]

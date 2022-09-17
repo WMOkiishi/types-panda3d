@@ -1,13 +1,13 @@
 __all__ = ['OnscreenImage']
 
-from typing import Any
+from typing import Any, Union
 from typing_extensions import Self, TypeAlias
 
 from panda3d.core import LVecBase3f, LVecBase4f, NodePath, TransformState
 from ..showbase.DirectObject import DirectObject
 
-_Color: TypeAlias = LVecBase4f | tuple[float, float, float, float]
-_Point: TypeAlias = LVecBase3f | tuple[float, float, float]
+_Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]
+_Point: TypeAlias = Union[LVecBase3f, tuple[float, float, float]]
 
 class OnscreenImage(DirectObject, NodePath):
     def __init__(

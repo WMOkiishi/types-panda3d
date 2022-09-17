@@ -1,14 +1,14 @@
 __all__ = ['DirectFrame']
 
 from collections.abc import Sequence
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Union
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import NodePath, Texture
 from .DirectGuiBase import DirectGuiWidget
 
 _Geom: TypeAlias = NodePath | str
-_Image: TypeAlias = NodePath | Texture | tuple[str, str] | str
+_Image: TypeAlias = Union[NodePath, Texture, tuple[str, str], str]
 
 class DirectFrame(DirectGuiWidget):
     DefDynGroups: ClassVar[tuple[Literal['text'], Literal['geom'], Literal['image']]]

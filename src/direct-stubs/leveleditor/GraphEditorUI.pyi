@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import Any, SupportsFloat
+from typing import Any, Union, SupportsFloat
 from typing_extensions import TypeAlias
 
 from panda3d.core import LVecBase2f
@@ -7,7 +7,7 @@ from panda3d.core import LVecBase2f
 wx = Any
 PyEmbeddedImage = wx.lib.embeddedimage.PyEmbeddedImage
 
-_Vec2f: TypeAlias = LVecBase2f | tuple[float, float]
+_Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 
 property: PyEmbeddedImage
 ZoomIn: PyEmbeddedImage
