@@ -1,4 +1,4 @@
-__all__ = []
+__all__: list[str] = []
 
 from collections.abc import Mapping, Sequence
 from typing import Any

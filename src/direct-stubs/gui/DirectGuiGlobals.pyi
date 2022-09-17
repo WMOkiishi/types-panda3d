@@ -1,4 +1,4 @@
-__all__ = []
+__all__: list[str] = []
 
 from typing_extensions import Final, Literal
 

@@ -1,4 +1,4 @@
-__all__ = []
+__all__: list[str] = []
 
 from panda3d.core import (
     ClockObject,

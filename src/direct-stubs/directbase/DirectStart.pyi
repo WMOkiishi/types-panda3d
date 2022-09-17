@@ -1,4 +1,4 @@
-__all__ = []
+__all__: list[str] = []
 
 from ..showbase.ShowBase import ShowBase
 
