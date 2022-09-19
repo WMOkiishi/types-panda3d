@@ -1,11 +1,14 @@
 from collections.abc import Callable
 from typing import ClassVar
-from typing_extensions import Final, Literal
+from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import LVector3f
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectTracker
+
+_Unused: TypeAlias = object
+_TaskCont: TypeAlias = Literal[1]
 
 NULL_AXIS: Final[Literal[-1]]
 FAST_X: Final[Literal[0]]
@@ -24,5 +27,5 @@ class DirectFastrak(DirectObject):
     def enable(self) -> None: ...
     def disable(self) -> None: ...
     def destroy(self) -> None: ...
-    def updateTask(self, state: object) -> Literal[1]: ...
+    def updateTask(self, state: _Unused) -> _TaskCont: ...
     def fastrakUpdate(self) -> None: ...
