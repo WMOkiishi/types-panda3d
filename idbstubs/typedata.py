@@ -29,7 +29,7 @@ _implicit_cast_param_names = frozenset(
 )
 
 BUILTIN_NAMES: Final = frozenset(dir(builtins))
-STDLIB_IMPORTS: Final = {
+KNOWN_IMPORTS: Final = {
     'array': 'array',
     'Awaitable': 'collections.abc',
     'Callable': 'collections.abc',
@@ -239,7 +239,7 @@ def get_alias_def(name: str) -> str | None:
 
 @cache
 def get_module(name: str) -> str | None:
-    return STDLIB_IMPORTS.get(name) or _modules.get(name)
+    return KNOWN_IMPORTS.get(name) or _modules.get(name)
 
 
 def get_linear_superclasses(name: str, /) -> tuple[str, ...]:
