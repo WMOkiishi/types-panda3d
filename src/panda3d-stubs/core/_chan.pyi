@@ -34,7 +34,7 @@ _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _Self = TypeVar('_Self')
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _PartBundle_BlendType: TypeAlias = Literal[0, 1, 2, 3]
 
 class AnimGroup(TypedWritableReferenceCount, Namable):
@@ -827,7 +827,7 @@ class BindAnimRequest(ModelLoadRequest):
     @overload
     def __init__(self, __param0: BindAnimRequest) -> None: ...
     @overload
-    def __init__(self, name: str, filename: _Filename, options: LoaderOptions, loader: Loader, control: AnimControl, hierarchy_match_flags: int, subset: PartSubset) -> None: ...
+    def __init__(self, name: str, filename: _Filepath, options: LoaderOptions, loader: Loader, control: AnimControl, hierarchy_match_flags: int, subset: PartSubset) -> None: ...
 
 class PartBundle(PartGroup):
     """This is the root of a MovingPart hierarchy.  It defines the hierarchy of
@@ -1006,7 +1006,7 @@ class PartBundle(PartGroup):
         goes to zero).
         """
         ...
-    def load_bind_anim(self, loader: Loader, filename: _Filename, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool) -> AnimControl:
+    def load_bind_anim(self, loader: Loader, filename: _Filepath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool) -> AnimControl:
         """Binds an animation to the bundle.  The animation is loaded from the disk
         via the indicated Loader object.  In other respects, this behaves similarly
         to bind_anim(), with the addition of asynchronous support.

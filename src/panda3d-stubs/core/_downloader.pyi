@@ -16,7 +16,7 @@ from panda3d.core import (
     ostream,
 )
 
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _ISocketStream_ReadState: TypeAlias = Literal[0, 1, 2, 3]
 _Self = TypeVar('_Self')
 _HTTPEnum_HTTPVersion: TypeAlias = Literal[0, 1, 2, 3]
@@ -231,7 +231,7 @@ class URLSpec:
     @overload
     def __init__(self, url: str, server_name_expected: bool = ...) -> None: ...
     @overload
-    def __init__(self, url: URLSpec, path: _Filename) -> None: ...
+    def __init__(self, url: URLSpec, path: _Filepath) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -826,7 +826,7 @@ class HTTPClient(ReferenceCount):
         also removes expired cookies.
         """
         ...
-    def set_client_certificate_filename(self, filename: _Filename) -> None:
+    def set_client_certificate_filename(self, filename: _Filepath) -> None:
         """Sets the filename of the pem-formatted file that will be read for the
         client public and private keys if an SSL server requests a certificate.
         Either this or set_client_certificate_pem() may be used to specify a client
@@ -854,7 +854,7 @@ class HTTPClient(ReferenceCount):
         determine ahead of time if the certificate can be loaded correctly.
         """
         ...
-    def add_preapproved_server_certificate_filename(self, url: URLSpec, filename: _Filename) -> bool:
+    def add_preapproved_server_certificate_filename(self, url: URLSpec, filename: _Filepath) -> bool:
         """Adds the certificate defined in the indicated PEM filename as a "pre-
         approved" certificate for the indicated server, defined by the hostname and
         port (only) from the given URL.
@@ -932,7 +932,7 @@ class HTTPClient(ReferenceCount):
         HV_other if the version is unknown.
         """
         ...
-    def load_certificates(self, filename: _Filename) -> bool:
+    def load_certificates(self, filename: _Filepath) -> bool:
         """Reads the certificate(s) (delimited by -----BEGIN CERTIFICATE----- and
         -----END CERTIFICATE-----) from the indicated file and makes them known as
         trusted public keys for validating future connections.  Returns true on
@@ -1864,7 +1864,7 @@ class HTTPChannel(TypedReferenceCount):
         issues.
         """
         ...
-    def download_to_file(self, filename: _Filename, subdocument_resumes: bool = ...) -> bool:
+    def download_to_file(self, filename: _Filepath, subdocument_resumes: bool = ...) -> bool:
         """Specifies the name of a file to download the resulting document to.  This
         should be called immediately after get_document() or begin_get_document()
         or related functions.
@@ -2067,7 +2067,7 @@ class Decompressor:
     @property
     def progress(self) -> float: ...
     def __init__(self, __param0: Decompressor = ...) -> None: ...
-    def initiate(self, source_file: _Filename, dest_file: _Filename = ...) -> int:
+    def initiate(self, source_file: _Filepath, dest_file: _Filepath = ...) -> int:
         """`(self, source_file: Filename)`:
         Begins a background decompression of the named file (whose filename must
         end in ".pz") to a new file without the .pz extension.  The source file is
@@ -2085,7 +2085,7 @@ class Decompressor:
         """
         ...
     @overload
-    def decompress(self, source_file: _Filename) -> bool:
+    def decompress(self, source_file: _Filepath) -> bool:
         """`(self, source_file: Filename)`:
         Performs a foreground decompression of the named file; does not return
         until the decompression is complete.
@@ -2129,14 +2129,14 @@ class DownloadDb:
         """
         ...
     @overload
-    def __init__(self, server_file: Ramfile | _Filename, client_file: _Filename) -> None: ...
+    def __init__(self, server_file: Ramfile | _Filepath, client_file: _Filepath) -> None: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
     def write_version_map(self, out: ostream) -> None: ...
-    def write_client_db(self, file: _Filename) -> bool:
+    def write_client_db(self, file: _Filepath) -> bool:
         """Write a database file"""
         ...
-    def write_server_db(self, file: _Filename) -> bool: ...
+    def write_server_db(self, file: _Filepath) -> bool: ...
     def get_client_num_multifiles(self) -> int: ...
     def get_server_num_multifiles(self) -> int: ...
     def get_client_multifile_name(self, index: int) -> str: ...
@@ -2186,39 +2186,39 @@ class DownloadDb:
         ...
     def server_add_multifile(self, mfname: str, phase: float, size: int, status: int) -> None: ...
     def server_add_file(self, mfname: str, fname: str) -> None: ...
-    def add_version(self, name: _Filename, hash: HashVal, version: int) -> None:
+    def add_version(self, name: _Filepath, hash: HashVal, version: int) -> None:
         """Appends a new version of the file onto the end of the list, or changes the
         hash associated with a version previously added.
         
         Note: version numbers start at 1
         """
         ...
-    def insert_new_version(self, name: _Filename, hash: HashVal) -> None:
+    def insert_new_version(self, name: _Filepath, hash: HashVal) -> None:
         """Inserts a new version 1 copy of the file, sliding all the other versions up
         by one.
         """
         ...
-    def has_version(self, name: _Filename) -> bool:
+    def has_version(self, name: _Filepath) -> bool:
         """Returns true if the indicated file has version information, false
         otherwise.  Some files recorded in the database may not bother to track
         versions.
         """
         ...
-    def get_num_versions(self, name: _Filename) -> int:
+    def get_num_versions(self, name: _Filepath) -> int:
         """Returns the number of versions stored for the indicated file."""
         ...
-    def set_num_versions(self, name: _Filename, num_versions: int) -> None:
+    def set_num_versions(self, name: _Filepath, num_versions: int) -> None:
         """Reduces the number of versions of a particular file stored in the ddb by
         throwing away all versions higher than the indicated index.
         """
         ...
-    def get_version(self, name: _Filename, hash: HashVal) -> int:
+    def get_version(self, name: _Filepath, hash: HashVal) -> int:
         """Returns the version number of this particular file, determined by looking
         up the hash generated from the file.  Returns -1 if the version number
         cannot be determined.
         """
         ...
-    def get_hash(self, name: _Filename, version: int) -> HashVal:
+    def get_hash(self, name: _Filepath, version: int) -> HashVal:
         """Returns the MD5 hash associated with the indicated version of the indicated
         file.
         """
@@ -2280,12 +2280,12 @@ class Extractor:
     @property
     def progress(self) -> float: ...
     def __init__(self) -> None: ...
-    def set_multifile(self, multifile_name: _Filename) -> bool:
+    def set_multifile(self, multifile_name: _Filepath) -> bool:
         """Specifies the filename of the Multifile that the Extractor will read.
         Returns true on success, false if the mulifile name is invalid.
         """
         ...
-    def set_extract_dir(self, extract_dir: _Filename) -> None:
+    def set_extract_dir(self, extract_dir: _Filepath) -> None:
         """Specifies the directory into which all extracted subfiles will be written.
         Relative paths of subfiles within the Multifile will be written as relative
         paths to this directory.
@@ -2296,7 +2296,7 @@ class Extractor:
         to accept a new list of subfiles to extract.
         """
         ...
-    def request_subfile(self, subfile_name: _Filename) -> bool:
+    def request_subfile(self, subfile_name: _Filepath) -> bool:
         """Requests a particular subfile to be extracted when step() or run() is
         called.  Returns true if the subfile exists, false otherwise.
         """
@@ -2352,7 +2352,7 @@ class MultiplexStream(ostream):
     def add_standard_output(self) -> None:
         """Adds the standard output channel."""
         ...
-    def add_file(self, file: _Filename) -> bool:
+    def add_file(self, file: _Filepath) -> bool:
         """Adds the given file to the multiplex output.  The file is opened in append
         mode with line buffering.  Returns false if the file cannot be opened.
         """
@@ -2410,7 +2410,7 @@ class Patcher:
     def __init__(self, __param0: Patcher = ...) -> None: ...
     @overload
     def __init__(self, buffer: Buffer) -> None: ...
-    def initiate(self, patch: _Filename, infile: _Filename) -> int: ...
+    def initiate(self, patch: _Filepath, infile: _Filepath) -> int: ...
     def run(self) -> int: ...
     def get_progress(self) -> float: ...
     getProgress = get_progress
@@ -2440,7 +2440,7 @@ class StringStream(iostream):
     getData = get_data
     setData = set_data
 
-def check_crc(name: _Filename) -> int: ...
-def check_adler(name: _Filename) -> int: ...
+def check_crc(name: _Filepath) -> int: ...
+def check_adler(name: _Filepath) -> int: ...
 checkCrc = check_crc
 checkAdler = check_adler

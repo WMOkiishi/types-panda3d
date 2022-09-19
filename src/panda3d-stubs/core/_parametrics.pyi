@@ -22,7 +22,7 @@ from panda3d.core import (
 )
 
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
@@ -133,7 +133,7 @@ class ParametricCurve(PandaNode):
         """
         ...
     @overload
-    def write_egg(self, filename: _Filename, cs: _CoordinateSystem = ...) -> bool:
+    def write_egg(self, filename: _Filepath, cs: _CoordinateSystem = ...) -> bool:
         """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
         Writes an egg description of the nurbs curve to the specified output file.
         Returns true if the file is successfully written.
@@ -144,7 +144,7 @@ class ParametricCurve(PandaNode):
         """
         ...
     @overload
-    def write_egg(self, out: ostream, filename: _Filename, cs: _CoordinateSystem) -> bool: ...
+    def write_egg(self, out: ostream, filename: _Filepath, cs: _CoordinateSystem) -> bool: ...
     isValid = is_valid
     getMaxT = get_max_t
     setCurveType = set_curve_type
@@ -385,7 +385,7 @@ class ParametricCurveCollection(ReferenceCount):
         """
         ...
     @overload
-    def write_egg(self, filename: _Filename, cs: _CoordinateSystem = ...) -> bool:
+    def write_egg(self, filename: _Filepath, cs: _CoordinateSystem = ...) -> bool:
         """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
         Writes an egg description of all the nurbs curves in the collection to the
         specified output file.  Returns true if the file is successfully written.
@@ -396,7 +396,7 @@ class ParametricCurveCollection(ReferenceCount):
         """
         ...
     @overload
-    def write_egg(self, out: ostream, filename: _Filename, cs: _CoordinateSystem) -> bool: ...
+    def write_egg(self, out: ostream, filename: _Filepath, cs: _CoordinateSystem) -> bool: ...
     def get_curves(self) -> tuple[ParametricCurve, ...]: ...
     def get_timewarp_curves(self) -> tuple[ParametricCurve, ...]: ...
     addCurve = add_curve

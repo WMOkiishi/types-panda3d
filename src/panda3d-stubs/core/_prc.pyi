@@ -6,7 +6,7 @@ from panda3d import core
 from panda3d.core import DSearchPath, Filename, iostream, istream, ostream
 
 _ConfigFlags_ValueType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _NotifySeverity: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _Self = TypeVar('_Self')
 
@@ -1183,16 +1183,16 @@ class ConfigVariableFilename(ConfigVariable):
     @overload
     def __init__(self, name: str) -> None: ...
     @overload
-    def __init__(self, name: str, default_value: _Filename, description: str = ..., flags: int = ...) -> None: ...
+    def __init__(self, name: str, default_value: _Filepath, description: str = ..., flags: int = ...) -> None: ...
     def __getitem__(self, n: int) -> str: ...
     def __eq__(self, __other: object) -> bool:
         """Comparison operators are handy."""
         ...
     def __ne__(self, __other: object) -> bool: ...
-    def __lt__(self, other: _Filename) -> bool: ...
-    def __le__(self, other: _Filename) -> bool: ...
+    def __lt__(self, other: _Filepath) -> bool: ...
+    def __le__(self, other: _Filepath) -> bool: ...
     def operator_typecast(self) -> Filename: ...
-    def assign(self, value: _Filename) -> ConfigVariableFilename: ...
+    def assign(self, value: _Filepath) -> ConfigVariableFilename: ...
     def c_str(self) -> str:
         """These methods help the ConfigVariableFilename act like a Filename object."""
         ...
@@ -1227,7 +1227,7 @@ class ConfigVariableFilename(ConfigVariable):
         there is one, or the empty string if there is not.
         """
         ...
-    def set_value(self, value: _Filename) -> None:
+    def set_value(self, value: _Filepath) -> None:
         """Reassigns the variable's local value."""
         ...
     def get_value(self) -> Filename:
@@ -1239,7 +1239,7 @@ class ConfigVariableFilename(ConfigVariable):
     def get_word(self, n: int) -> Filename:
         """Returns the variable's nth value."""
         ...
-    def set_word(self, n: int, value: _Filename) -> None:
+    def set_word(self, n: int, value: _Filepath) -> None:
         """Reassigns the variable's nth value.  This makes a local copy of the
         variable's overall value.
         """
@@ -1416,10 +1416,10 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         it to its original form.
         """
         ...
-    def append_directory(self, directory: _Filename) -> None:
+    def append_directory(self, directory: _Filepath) -> None:
         """Adds a new directory to the end of the search list."""
         ...
-    def prepend_directory(self, directory: _Filename) -> None:
+    def prepend_directory(self, directory: _Filepath) -> None:
         """Adds a new directory to the front of the search list."""
         ...
     @overload
@@ -1444,14 +1444,14 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     def get_directory(self, n: int) -> Filename:
         """Returns the nth directory on the search list."""
         ...
-    def find_file(self, filename: _Filename) -> Filename:
+    def find_file(self, filename: _Filepath) -> Filename:
         """Searches all the directories in the search list for the indicated file, in
         order.  Returns the full matching pathname of the first match if found, or
         the empty string if not found.
         """
         ...
     @overload
-    def find_all_files(self, filename: _Filename) -> DSearchPath.Results:
+    def find_all_files(self, filename: _Filepath) -> DSearchPath.Results:
         """`(self, filename: Filename)`:
         This variant of find_all_files() returns the new Results object, instead of
         filling on in on the parameter list.  This is a little more convenient to
@@ -1467,7 +1467,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         """
         ...
     @overload
-    def find_all_files(self, filename: _Filename, results: DSearchPath.Results) -> int: ...
+    def find_all_files(self, filename: _Filepath, results: DSearchPath.Results) -> int: ...
     def get_directories(self) -> tuple[Filename, ...]: ...
     operatorTypecastDSearchPath = operator_typecast_DSearchPath
     getValue = get_value

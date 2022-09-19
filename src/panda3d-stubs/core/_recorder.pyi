@@ -12,7 +12,7 @@ from panda3d.core import (
     TypedReferenceCount,
 )
 
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 
 class RecorderBase:
     """This is the base class to a number of objects that record particular kinds
@@ -75,12 +75,12 @@ class RecorderController(TypedReferenceCount):
     bam file so that the session can be recreated later.
     """
     def __init__(self) -> None: ...
-    def begin_record(self, filename: _Filename) -> bool:
+    def begin_record(self, filename: _Filepath) -> bool:
         """Begins recording data to the indicated filename.  All of the recorders in
         use should already have been added.
         """
         ...
-    def begin_playback(self, filename: _Filename) -> bool:
+    def begin_playback(self, filename: _Filepath) -> bool:
         """Begins playing back data from the indicated filename.  All of the recorders
         in use should already have been added, although this may define additional
         recorders if they are present in the file (these new recorders will not be

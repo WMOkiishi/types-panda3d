@@ -16,7 +16,7 @@ from panda3d.core import (
     istream,
 )
 
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 
 class MovieAudio(TypedWritableReferenceCount, Namable):
     """A MovieAudio is actually any source that provides a sequence of audio
@@ -45,7 +45,7 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
         """Open this audio, returning a MovieAudioCursor"""
         ...
     @staticmethod
-    def get(name: _Filename) -> MovieAudio:
+    def get(name: _Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file.  Just calls
         MovieTypeRegistry::make_audio().
         """
@@ -68,13 +68,13 @@ class FlacAudio(MovieAudio):
     @since 1.10.0
     """
     @overload
-    def __init__(self, name: _Filename) -> None:
+    def __init__(self, name: _Filepath) -> None:
         """xxx"""
         ...
     @overload
     def __init__(self, __param0: FlacAudio) -> None: ...
     @staticmethod
-    def make(name: _Filename) -> MovieAudio:
+    def make(name: _Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
 
@@ -263,7 +263,7 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
         """
         ...
     @staticmethod
-    def get(name: _Filename) -> MovieVideo:
+    def get(name: _Filepath) -> MovieVideo:
         """Obtains a MovieVideo that references a file.  Just calls
         MovieTypeRegistry::make_video().
         """
@@ -509,13 +509,13 @@ class OpusAudio(MovieAudio):
     @since 1.10.0
     """
     @overload
-    def __init__(self, name: _Filename) -> None:
+    def __init__(self, name: _Filepath) -> None:
         """xxx"""
         ...
     @overload
     def __init__(self, __param0: OpusAudio) -> None: ...
     @staticmethod
-    def make(name: _Filename) -> MovieAudio:
+    def make(name: _Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
 
@@ -584,13 +584,13 @@ class VorbisAudio(MovieAudio):
     Vorbis audio files.
     """
     @overload
-    def __init__(self, name: _Filename) -> None:
+    def __init__(self, name: _Filepath) -> None:
         """xxx"""
         ...
     @overload
     def __init__(self, __param0: VorbisAudio) -> None: ...
     @staticmethod
-    def make(name: _Filename) -> MovieAudio:
+    def make(name: _Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
 
@@ -612,13 +612,13 @@ class WavAudio(MovieAudio):
     A-law and mu-law.
     """
     @overload
-    def __init__(self, name: _Filename) -> None:
+    def __init__(self, name: _Filepath) -> None:
         """xxx"""
         ...
     @overload
     def __init__(self, __param0: WavAudio) -> None: ...
     @staticmethod
-    def make(name: _Filename) -> MovieAudio:
+    def make(name: _Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
         ...
 

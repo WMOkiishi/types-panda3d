@@ -62,7 +62,7 @@ TYPE_ALIASES: Final = {
     '_Vec4i': 'LVecBase4i | UnalignedLVecBase4i',
     '_Mat4d': 'LMatrix4d | UnalignedLMatrix4d',
     '_Mat4f': 'LMatrix4f | UnalignedLMatrix4f',
-    '_Filename': 'StrOrBytesPath | ConfigVariableFilename',
+    '_Filepath': 'StrOrBytesPath | ConfigVariableFilename',
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))

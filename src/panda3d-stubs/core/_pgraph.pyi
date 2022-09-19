@@ -67,7 +67,7 @@ _N = TypeVar('_N', bound=PandaNode)
 _NodePath_ErrorType: TypeAlias = Literal[0, 1, 2, 3]
 _M = TypeVar('_M', bound=PandaNode)
 _RenderAttrib_TexGenMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
 _ClipPlaneAttrib_Operation: TypeAlias = Literal[0, 1, 2]
 _ColorAttrib_Type: TypeAlias = Literal[0, 1, 2]
@@ -6130,7 +6130,7 @@ class NodePath(Generic[_N]):
     def get_name(self) -> str:
         """Returns the name of the referenced node."""
         ...
-    def write_bam_file(self, filename: _Filename) -> bool:
+    def write_bam_file(self, filename: _Filepath) -> bool:
         """Writes the contents of this node and below out to a bam file with the
         indicated filename.  This file may then be read in again, as is, at some
         later point.  Returns true if successful, false on some kind of error.
@@ -7042,7 +7042,7 @@ class BamFile(BamEnums):
     def writer(self) -> BamWriter: ...
     def __init__(self) -> None: ...
     @overload
-    def open_read(self, bam_filename: _Filename, report_errors: bool = ...) -> bool:
+    def open_read(self, bam_filename: _Filepath, report_errors: bool = ...) -> bool:
         """`(self, bam_filename: Filename, report_errors: bool = ...)`:
         Attempts to open the indicated filename for reading.  Returns true if
         successful, false on error.
@@ -7093,7 +7093,7 @@ class BamFile(BamEnums):
         """
         ...
     @overload
-    def open_write(self, bam_filename: _Filename, report_errors: bool = ...) -> bool:
+    def open_write(self, bam_filename: _Filepath, report_errors: bool = ...) -> bool:
         """`(self, bam_filename: Filename, report_errors: bool = ...)`:
         Attempts to open the indicated file for writing.  If another file by the
         same name already exists, it will be silently removed.  Returns true if
@@ -10125,14 +10125,14 @@ class Loader(TypedReferenceCount, Namable):
         @deprecated use task.cancel() to cancel the request instead.
         """
         ...
-    def load_sync(self, filename: _Filename, options: LoaderOptions = ...) -> PandaNode:
+    def load_sync(self, filename: _Filepath, options: LoaderOptions = ...) -> PandaNode:
         """Loads the file immediately, waiting for it to complete.
         
         If search is true, the file is searched for along the model path;
         otherwise, only the exact filename is loaded.
         """
         ...
-    def make_async_request(self, filename: _Filename, options: LoaderOptions = ...) -> AsyncTask:
+    def make_async_request(self, filename: _Filepath, options: LoaderOptions = ...) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to load_async() to start
         an asynchronous model load.
         """
@@ -10150,10 +10150,10 @@ class Loader(TypedReferenceCount, Namable):
         retrieve it via request->get_model().
         """
         ...
-    def save_sync(self, filename: _Filename, options: LoaderOptions, node: PandaNode) -> bool:
+    def save_sync(self, filename: _Filepath, options: LoaderOptions, node: PandaNode) -> bool:
         """Saves the file immediately, waiting for it to complete."""
         ...
-    def make_async_save_request(self, filename: _Filename, options: LoaderOptions, node: PandaNode) -> AsyncTask:
+    def make_async_save_request(self, filename: _Filepath, options: LoaderOptions, node: PandaNode) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to save_async() to start
         an asynchronous model save.
         """
@@ -10389,7 +10389,7 @@ class ModelLoadRequest(AsyncTask):
         """
         ...
     @overload
-    def __init__(self, name: str, filename: _Filename, options: LoaderOptions, loader: Loader) -> None: ...
+    def __init__(self, name: str, filename: _Filepath, options: LoaderOptions, loader: Loader) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelLoadRequest."""
         ...
@@ -10512,7 +10512,7 @@ class ModelRoot(ModelNode):
     @overload
     def __init__(self, name: str) -> None: ...
     @overload
-    def __init__(self, fullpath: _Filename, timestamp: int) -> None: ...
+    def __init__(self, fullpath: _Filepath, timestamp: int) -> None: ...
     def get_model_ref_count(self) -> int:
         """Returns the number of copies that exist of this particular ModelRoot node.
         Each time ModelRoot::copy_subgraph() or make_copy() is called (or some
@@ -10527,7 +10527,7 @@ class ModelRoot(ModelNode):
         index the ModelRoot into the ModelPool.
         """
         ...
-    def set_fullpath(self, fullpath: _Filename) -> None:
+    def set_fullpath(self, fullpath: _Filepath) -> None:
         """Sets the full pathname of the model represented by this node, as found on
         disk.  This is mainly useful for reference purposes, but is also used to
         index the ModelRoot into the ModelPool.
@@ -10590,13 +10590,13 @@ class ModelPool:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_model(filename: _Filename) -> bool:
+    def has_model(filename: _Filepath) -> bool:
         """Returns true if the model has ever been loaded, false otherwise.  Note that
         this does not guarantee that the model is still up-to-date.
         """
         ...
     @staticmethod
-    def verify_model(filename: _Filename) -> bool:
+    def verify_model(filename: _Filepath) -> bool:
         """Loads the given filename up as a model, if it has not already been loaded,
         and returns true to indicate success, or false to indicate failure.  If
         this returns true, it is probable that a subsequent call to load_model()
@@ -10609,7 +10609,7 @@ class ModelPool:
         """
         ...
     @staticmethod
-    def get_model(filename: _Filename, verify: bool) -> ModelRoot:
+    def get_model(filename: _Filepath, verify: bool) -> ModelRoot:
         """Returns the model that has already been previously loaded, or NULL
         otherwise.  If verify is true, it will check if the file is still up-to-
         date (and hasn't been modified in the meantime), and if not, will still
@@ -10617,7 +10617,7 @@ class ModelPool:
         """
         ...
     @staticmethod
-    def load_model(filename: _Filename, options: LoaderOptions = ...) -> ModelRoot:
+    def load_model(filename: _Filepath, options: LoaderOptions = ...) -> ModelRoot:
         """Loads the given filename up as a model, if it has not already been loaded,
         and returns the new model.  If a model with the same filename was
         previously loaded, returns that one instead (unless cache-check-timestamps
@@ -10641,10 +10641,10 @@ class ModelPool:
         ...
     @overload
     @staticmethod
-    def add_model(filename: _Filename, model: ModelRoot) -> None: ...
+    def add_model(filename: _Filepath, model: ModelRoot) -> None: ...
     @overload
     @staticmethod
-    def release_model(filename: _Filename) -> None:
+    def release_model(filename: _Filepath) -> None:
         """`(filename: Filename)`:
         Removes the indicated model from the pool, indicating it will never be
         loaded again; the model may then be freed.  If this function is never
@@ -10722,7 +10722,7 @@ class ModelSaveRequest(AsyncTask):
         """
         ...
     @overload
-    def __init__(self, name: str, filename: _Filename, options: LoaderOptions, node: PandaNode, loader: Loader) -> None: ...
+    def __init__(self, name: str, filename: _Filepath, options: LoaderOptions, node: PandaNode, loader: Loader) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelSaveRequest."""
         ...
@@ -12369,11 +12369,11 @@ class ShaderPool:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_shader(filename: _Filename) -> bool:
+    def has_shader(filename: _Filepath) -> bool:
         """Returns true if the shader has ever been loaded, false otherwise."""
         ...
     @staticmethod
-    def verify_shader(filename: _Filename) -> bool:
+    def verify_shader(filename: _Filepath) -> bool:
         """Loads the given filename up into a shader, if it has not already been
         loaded, and returns true to indicate success, or false to indicate failure.
         If this returns true, it is guaranteed that a subsequent call to
@@ -12381,7 +12381,7 @@ class ShaderPool:
         """
         ...
     @staticmethod
-    def load_shader(filename: _Filename) -> Shader:
+    def load_shader(filename: _Filepath) -> Shader:
         """Loads the given filename up into a shader, if it has not already been
         loaded, and returns the new shader.  If a shader with the same filename was
         previously loaded, returns that one instead.  If the shader file cannot be
@@ -12389,14 +12389,14 @@ class ShaderPool:
         """
         ...
     @staticmethod
-    def add_shader(filename: _Filename, shader: Shader) -> None:
+    def add_shader(filename: _Filepath, shader: Shader) -> None:
         """Adds the indicated already-loaded shader to the pool.  The shader will
         always replace any previously-loaded shader in the pool that had the same
         filename.
         """
         ...
     @staticmethod
-    def release_shader(filename: _Filename) -> None:
+    def release_shader(filename: _Filepath) -> None:
         """Removes the indicated shader from the pool, indicating it will never be
         loaded again; the shader may then be freed.  If this function is never
         called, a reference count will be maintained on every shader every loaded,

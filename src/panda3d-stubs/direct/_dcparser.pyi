@@ -5,7 +5,7 @@ from panda3d.core import ConfigVariableFilename, Datagram, DatagramIterator, ist
 
 _DCPackType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 _DCSubatomicType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 
 class DCPackerInterface:
     """This defines the internal interface for packing values into a DCField.  The
@@ -1153,7 +1153,7 @@ class DCFile:
         """
         ...
     @overload
-    def read(self, filename: _Filename) -> bool:
+    def read(self, filename: _Filepath) -> bool:
         """`(self, filename: Filename)`:
         Opens and reads the indicated .dc file by name.  The distributed classes
         defined in the file will be appended to the set of distributed classes
@@ -1176,7 +1176,7 @@ class DCFile:
     @overload
     def read(self, _in: istream, filename: str = ...) -> bool: ...
     @overload
-    def write(self, filename: _Filename, brief: bool) -> bool:
+    def write(self, filename: _Filepath, brief: bool) -> bool:
         """`(self, filename: Filename, brief: bool)`:
         Opens the indicated filename for output and writes a parseable description
         of all the known distributed classes to the file.

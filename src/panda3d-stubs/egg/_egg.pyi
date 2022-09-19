@@ -34,7 +34,7 @@ from panda3d.core import (
 
 _Self = TypeVar('_Self')
 _Mat4d: TypeAlias = LMatrix4d | UnalignedLMatrix4d
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
@@ -485,7 +485,7 @@ class EggGroupNode(EggNode):
         automatically search the model_path for missing files.
         """
         ...
-    def force_filenames(self, directory: _Filename) -> None:
+    def force_filenames(self, directory: _Filepath) -> None:
         """Similar to resolve_filenames, but each non-absolute filename encountered is
         arbitrarily taken to be in the indicated directory, whether or not the so-
         named filename exists.
@@ -2815,7 +2815,7 @@ class EggFilenameNode(EggNode):
     def get_filename(self) -> Filename:
         """Returns a nonmodifiable reference to the filename."""
         ...
-    def set_filename(self, filename: _Filename) -> None: ...
+    def set_filename(self, filename: _Filepath) -> None: ...
     def get_fullpath(self) -> Filename:
         """Returns the full pathname to the file, if it is known; otherwise, returns
         the same thing as get_filename().
@@ -2827,7 +2827,7 @@ class EggFilenameNode(EggNode):
         and then immediately converted to a scene graph.
         """
         ...
-    def set_fullpath(self, fullpath: _Filename) -> None:
+    def set_fullpath(self, fullpath: _Filepath) -> None:
         """Records the full pathname to the file, for the benefit of get_fullpath()."""
         ...
     getDefaultExtension = get_default_extension
@@ -3096,7 +3096,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     @overload
     def __init__(self, copy: EggTexture) -> None: ...
     @overload
-    def __init__(self, tref_name: str, filename: _Filename) -> None: ...
+    def __init__(self, tref_name: str, filename: _Filepath) -> None: ...
     def upcast_to_EggFilenameNode(self) -> EggFilenameNode: ...
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
     def upcast_to_EggTransform(self) -> EggTransform: ...
@@ -3378,7 +3378,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         if no alpha_scale value has been specified.
         """
         ...
-    def set_alpha_filename(self, filename: _Filename) -> None:
+    def set_alpha_filename(self, filename: _Filepath) -> None:
         """Specifies a separate file that will be loaded in with the 1- or 3-component
         texture and applied as the alpha channel.  This is useful when loading
         textures from file formats that do not support alpha, for instance jpg.
@@ -3396,7 +3396,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         set_alpha_filename().
         """
         ...
-    def set_alpha_fullpath(self, fullpath: _Filename) -> None:
+    def set_alpha_fullpath(self, fullpath: _Filepath) -> None:
         """Records the full pathname to the file, for the benefit of
         get_alpha_fullpath().
         """
@@ -4397,7 +4397,7 @@ class EggData(EggGroupNode):
     egg_timestamp: int
     def __init__(self, copy: EggData = ...) -> None: ...
     @staticmethod
-    def resolve_egg_filename(egg_filename: _Filename, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
+    def resolve_egg_filename(egg_filename: _Filepath, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
         """Looks for the indicated filename, first along the indicated searchpath, and
         then along the model_path.  If found, updates the filename to the full path
         and returns true; otherwise, returns false.
@@ -4423,7 +4423,7 @@ class EggData(EggGroupNode):
         """
         ...
     @overload
-    def read(self, filename: _Filename, display_name: str = ...) -> bool: ...
+    def read(self, filename: _Filepath, display_name: str = ...) -> bool: ...
     def merge(self, other: EggData) -> None:
         """Appends the other egg structure to the end of this one.  The other egg
         structure is invalidated.
@@ -4455,7 +4455,7 @@ class EggData(EggGroupNode):
         """
         ...
     @overload
-    def write_egg(self, filename: _Filename) -> bool:
+    def write_egg(self, filename: _Filepath) -> bool:
         """The main interface for writing complete egg files."""
         ...
     @overload
@@ -4488,7 +4488,7 @@ class EggData(EggGroupNode):
     def get_coordinate_system(self) -> _CoordinateSystem:
         """Returns the coordinate system in which the egg file is defined."""
         ...
-    def set_egg_filename(self, egg_filename: _Filename) -> None:
+    def set_egg_filename(self, egg_filename: _Filepath) -> None:
         """Sets the filename--especially the directory part--in which the egg file is
         considered to reside.  This is also implicitly set by read().
         """
@@ -5435,7 +5435,7 @@ class EggTextureCollection:
         matches.
         """
         ...
-    def find_filename(self, filename: _Filename) -> EggTexture:
+    def find_filename(self, filename: _Filepath) -> EggTexture:
         """Returns the texture with the indicated filename, or NULL if no texture
         matches.
         """

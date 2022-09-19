@@ -13,7 +13,7 @@ from panda3d.core import (
 
 _FreetypeFont_WindingOrder: TypeAlias = Literal[0, 1, 2, 3]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _PNMTextMaker_Alignment: TypeAlias = Literal[0, 1, 2]
 
 class FreetypeFont(Namable):
@@ -241,7 +241,7 @@ class PNMTextMaker(FreetypeFont):
         """
         ...
     @overload
-    def __init__(self, font_filename: _Filename, face_index: int) -> None: ...
+    def __init__(self, font_filename: _Filepath, face_index: int) -> None: ...
     @overload
     def __init__(self, font_data: str, data_length: int, face_index: int) -> None: ...
     def is_valid(self) -> bool:

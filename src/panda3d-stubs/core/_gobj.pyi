@@ -85,7 +85,7 @@ _Texture_ComponentType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _Texture_CompressionMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 _Texture_QualityLevel: TypeAlias = Literal[0, 1, 2, 3]
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Shader_ShaderLanguage: TypeAlias = Literal[0, 1, 2, 3, 4]
 _Shader_ShaderType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
@@ -7160,7 +7160,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """
         ...
     @overload
-    def read(self, fullpath: _Filename, options: LoaderOptions = ...) -> bool:
+    def read(self, fullpath: _Filepath, options: LoaderOptions = ...) -> bool:
         """`(self, fullpath: Filename, alpha_fullpath: Filename, primary_file_num_channels: int, alpha_file_channel: int, options: LoaderOptions = ...)`:
         Combine a 3-component image with a grayscale image to get a 4-component
         image.
@@ -7232,13 +7232,13 @@ class Texture(TypedWritableReferenceCount, Namable):
         """
         ...
     @overload
-    def read(self, fullpath: _Filename, alpha_fullpath: _Filename, primary_file_num_channels: int, alpha_file_channel: int, options: LoaderOptions = ...) -> bool: ...
+    def read(self, fullpath: _Filepath, alpha_fullpath: _Filepath, primary_file_num_channels: int, alpha_file_channel: int, options: LoaderOptions = ...) -> bool: ...
     @overload
-    def read(self, fullpath: _Filename, z: int, n: int, read_pages: bool, read_mipmaps: bool, options: LoaderOptions = ...) -> bool: ...
+    def read(self, fullpath: _Filepath, z: int, n: int, read_pages: bool, read_mipmaps: bool, options: LoaderOptions = ...) -> bool: ...
     @overload
-    def read(self, fullpath: _Filename, alpha_fullpath: _Filename, primary_file_num_channels: int, alpha_file_channel: int, z: int, n: int, read_pages: bool, read_mipmaps: bool, record: BamCacheRecord = ..., options: LoaderOptions = ...) -> bool: ...
+    def read(self, fullpath: _Filepath, alpha_fullpath: _Filepath, primary_file_num_channels: int, alpha_file_channel: int, z: int, n: int, read_pages: bool, read_mipmaps: bool, record: BamCacheRecord = ..., options: LoaderOptions = ...) -> bool: ...
     @overload
-    def write(self, fullpath: _Filename) -> bool:
+    def write(self, fullpath: _Filepath) -> bool:
         """`(self, fullpath: Filename)`:
         Writes the texture to the named filename.
         
@@ -7291,7 +7291,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     @overload
     def write(self, out: ostream, indent_level: int) -> None: ...
     @overload
-    def write(self, fullpath: _Filename, z: int, n: int, write_pages: bool, write_mipmaps: bool) -> bool: ...
+    def write(self, fullpath: _Filepath, z: int, n: int, write_pages: bool, write_mipmaps: bool) -> bool: ...
     def read_txo(self, _in: istream, filename: str = ...) -> bool:
         """Reads the texture from a Panda texture object.  This defines the complete
         Texture specification, including the image data as well as all texture
@@ -7406,7 +7406,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         was requested.  Also see get_fullpath().
         """
         ...
-    def set_filename(self, filename: _Filename) -> None:
+    def set_filename(self, filename: _Filepath) -> None:
         """Sets the name of the file that contains the image's contents.  Normally,
         this is set automatically when the image is loaded, for instance via
         Texture::read().
@@ -7430,7 +7430,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         file.  See also get_filename(), and get_alpha_fullpath().
         """
         ...
-    def set_alpha_filename(self, alpha_filename: _Filename) -> None:
+    def set_alpha_filename(self, alpha_filename: _Filepath) -> None:
         """Sets the name of the file that contains the image's alpha channel contents.
         Normally, this is set automatically when the image is loaded, for instance
         via Texture::read().
@@ -7457,7 +7457,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         as it was found along the texture search path.
         """
         ...
-    def set_fullpath(self, fullpath: _Filename) -> None:
+    def set_fullpath(self, fullpath: _Filepath) -> None:
         """Sets the full pathname to the file that contains the image's contents, as
         found along the search path.  Normally, this is set automatically when the
         image is loaded, for instance via Texture::read().
@@ -7476,7 +7476,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         alpha part of the image file as it was found along the texture search path.
         """
         ...
-    def set_alpha_fullpath(self, alpha_fullpath: _Filename) -> None:
+    def set_alpha_fullpath(self, alpha_fullpath: _Filepath) -> None:
         """Sets the full pathname to the file that contains the image's alpha channel
         contents, as found along the search path.  Normally, this is set
         automatically when the image is loaded, for instance via Texture::read().
@@ -8816,7 +8816,7 @@ class Shader(TypedWritableReferenceCount):
     def __init__(self, __param0: Shader) -> None: ...
     @overload
     @staticmethod
-    def load(file: _Filename, lang: _Shader_ShaderLanguage = ...) -> Shader:
+    def load(file: _Filepath, lang: _Shader_ShaderLanguage = ...) -> Shader:
         """`(file: Filename, lang: _Shader_ShaderLanguage = ...)`:
         Loads the shader with the given filename.
         
@@ -8826,7 +8826,7 @@ class Shader(TypedWritableReferenceCount):
         ...
     @overload
     @staticmethod
-    def load(lang: _Shader_ShaderLanguage, vertex: _Filename, fragment: _Filename, geometry: _Filename = ..., tess_control: _Filename = ..., tess_evaluation: _Filename = ...) -> Shader: ...
+    def load(lang: _Shader_ShaderLanguage, vertex: _Filepath, fragment: _Filepath, geometry: _Filepath = ..., tess_control: _Filepath = ..., tess_evaluation: _Filepath = ...) -> Shader: ...
     @overload
     @staticmethod
     def make(body: str, lang: _Shader_ShaderLanguage = ...) -> Shader:
@@ -8841,7 +8841,7 @@ class Shader(TypedWritableReferenceCount):
     @staticmethod
     def make(lang: _Shader_ShaderLanguage, vertex: str, fragment: str, geometry: str = ..., tess_control: str = ..., tess_evaluation: str = ...) -> Shader: ...
     @staticmethod
-    def load_compute(lang: _Shader_ShaderLanguage, fn: _Filename) -> Shader:
+    def load_compute(lang: _Shader_ShaderLanguage, fn: _Filepath) -> Shader:
         """Loads a compute shader."""
         ...
     @staticmethod
@@ -8851,7 +8851,7 @@ class Shader(TypedWritableReferenceCount):
     def get_filename(self, type: _Shader_ShaderType = ...) -> Filename:
         """Return the Shader's filename for the given shader type."""
         ...
-    def set_filename(self, type: _Shader_ShaderType, filename: _Filename) -> None:
+    def set_filename(self, type: _Shader_ShaderType, filename: _Filepath) -> None:
         """Sets the Shader's filename for the given shader type.  Useful for
         associating a shader created with Shader.make with a name for diagnostics.
         """
@@ -11140,11 +11140,11 @@ class TexturePool:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_texture(filename: _Filename) -> bool:
+    def has_texture(filename: _Filepath) -> bool:
         """Returns true if the texture has ever been loaded, false otherwise."""
         ...
     @staticmethod
-    def verify_texture(filename: _Filename) -> bool:
+    def verify_texture(filename: _Filepath) -> bool:
         """Loads the given filename up into a texture, if it has not already been
         loaded, and returns true to indicate success, or false to indicate failure.
         If this returns true, it is guaranteed that a subsequent call to
@@ -11154,17 +11154,17 @@ class TexturePool:
         ...
     @overload
     @staticmethod
-    def get_texture(filename: _Filename, primary_file_num_channels: int = ..., read_mipmaps: bool = ...) -> Texture:
+    def get_texture(filename: _Filepath, primary_file_num_channels: int = ..., read_mipmaps: bool = ...) -> Texture:
         """Returns the texture that has already been previously loaded, or NULL
         otherwise.
         """
         ...
     @overload
     @staticmethod
-    def get_texture(filename: _Filename, alpha_filename: _Filename, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ...) -> Texture: ...
+    def get_texture(filename: _Filepath, alpha_filename: _Filepath, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ...) -> Texture: ...
     @overload
     @staticmethod
-    def load_texture(filename: _Filename, primary_file_num_channels: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_texture(filename: _Filepath, primary_file_num_channels: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
         """`(filename: Filename, alpha_filename: Filename, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...)`:
         Loads the given filename up into a texture, if it has not already been
         loaded, and returns the new texture.  If a texture with the same filename
@@ -11188,9 +11188,9 @@ class TexturePool:
         ...
     @overload
     @staticmethod
-    def load_texture(filename: _Filename, alpha_filename: _Filename, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture: ...
+    def load_texture(filename: _Filepath, alpha_filename: _Filepath, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture: ...
     @staticmethod
-    def load_3d_texture(filename_pattern: _Filename, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_3d_texture(filename_pattern: _Filepath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
         """Loads a 3-D texture that is specified with a series of n pages, all
         numbered in sequence, and beginning with index 0.  The filename should
         include a sequence of one or more hash characters ("#") which will be
@@ -11202,7 +11202,7 @@ class TexturePool:
         """
         ...
     @staticmethod
-    def load_2d_texture_array(filename_pattern: _Filename, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_2d_texture_array(filename_pattern: _Filepath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
         """Loads a 2-D texture array that is specified with a series of n pages, all
         numbered in sequence, and beginning with index 0.  The filename should
         include a sequence of one or more hash characters ("#") which will be
@@ -11214,7 +11214,7 @@ class TexturePool:
         """
         ...
     @staticmethod
-    def load_cube_map(filename_pattern: _Filename, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_cube_map(filename_pattern: _Filepath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
         """Loads a cube map texture that is specified with a series of 6 pages,
         numbered 0 through 5.  The filename should include a sequence of one or
         more hash characters ("#") which will be filled in with the index number of
@@ -11301,7 +11301,7 @@ class TexturePool:
         """
         ...
     @staticmethod
-    def set_fake_texture_image(filename: _Filename) -> None:
+    def set_fake_texture_image(filename: _Filepath) -> None:
         """Sets a bogus filename that will be loaded in lieu of any textures requested
         from this point on.
         """

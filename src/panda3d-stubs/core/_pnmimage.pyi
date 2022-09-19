@@ -35,7 +35,7 @@ from panda3d.core import (
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _Self = TypeVar('_Self')
 _PNMImageHeader_ColorType: TypeAlias = Literal[0, 1, 2, 3, 4]
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
@@ -342,7 +342,7 @@ class PNMImageHeader:
         """
         ...
     @overload
-    def read_header(self, filename: _Filename, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
+    def read_header(self, filename: _Filepath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ..., report_unknown_type: bool = ...)`:
         Opens up the image file and tries to read its header information to
         determine its size, number of channels, etc.  If successful, updates the
@@ -403,7 +403,7 @@ class PfmFile(PNMImageHeader):
     @overload
     def clear(self, x_size: int, y_size: int, num_channels: int) -> None: ...
     @overload
-    def read(self, fullpath: _Filename) -> bool:
+    def read(self, fullpath: _Filepath) -> bool:
         """`(self, fullpath: Filename)`:
         Reads the PFM data from the indicated file, returning true on success,
         false on failure.
@@ -420,9 +420,9 @@ class PfmFile(PNMImageHeader):
         """
         ...
     @overload
-    def read(self, _in: istream, fullpath: _Filename = ...) -> bool: ...
+    def read(self, _in: istream, fullpath: _Filepath = ...) -> bool: ...
     @overload
-    def write(self, fullpath: _Filename) -> bool:
+    def write(self, fullpath: _Filepath) -> bool:
         """`(self, fullpath: Filename)`:
         Writes the PFM data to the indicated file, returning true on success, false
         on failure.
@@ -437,7 +437,7 @@ class PfmFile(PNMImageHeader):
         """
         ...
     @overload
-    def write(self, out: ostream, fullpath: _Filename = ...) -> bool: ...
+    def write(self, out: ostream, fullpath: _Filepath = ...) -> bool: ...
     def load(self, pnmimage: PNMImage) -> bool:
         """Fills the PfmFile with the data from the indicated PNMImage, converted to
         floating-point values.
@@ -1082,7 +1082,7 @@ class PNMImage(PNMImageHeader):
     @overload
     def __init__(self, copy: PNMImage = ...) -> None: ...
     @overload
-    def __init__(self, filename: _Filename, type: PNMFileType = ...) -> None: ...
+    def __init__(self, filename: _Filepath, type: PNMFileType = ...) -> None: ...
     @overload
     def __init__(self, x_size: int, y_size: int, num_channels: int = ..., maxval: int = ..., type: PNMFileType = ..., color_space: _ColorSpace = ...) -> None: ...
     def __getitem__(self, y: int) -> PNMImage.CRow | PNMImage.Row: ...
@@ -1233,7 +1233,7 @@ class PNMImage(PNMImageHeader):
         """Returns the color space in which the image is encoded."""
         ...
     @overload
-    def read(self, filename: _Filename, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
+    def read(self, filename: _Filepath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ..., report_unknown_type: bool = ...)`:
         Reads the indicated image filename.  If type is non-NULL, it is a
         suggestion for the type of file it is.  Returns true if successful, false
@@ -1255,7 +1255,7 @@ class PNMImage(PNMImageHeader):
     @overload
     def read(self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool: ...
     @overload
-    def write(self, filename: _Filename, type: PNMFileType = ...) -> bool:
+    def write(self, filename: _Filepath, type: PNMFileType = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ...)`:
         Writes the image to the indicated filename.  If type is non-NULL, it is a
         suggestion for the type of image file to write.

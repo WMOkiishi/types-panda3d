@@ -4,7 +4,7 @@ from typing import Any, ClassVar
 from typing_extensions import TypeAlias
 from panda3d.core import ConfigVariableFilename, MovieVideo, NodePath, Texture, ostream
 
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 
 class ARToolKit:
     """ARToolKit is a software library for building Augmented Reality (AR)
@@ -21,7 +21,7 @@ class ARToolKit:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ARToolKit) -> None: ...
     @staticmethod
-    def make(camera: NodePath, paramfile: _Filename, markersize: float) -> ARToolKit:
+    def make(camera: NodePath, paramfile: _Filepath, markersize: float) -> ARToolKit:
         """Create a new ARToolKit instance.
         
         Camera must be the nodepath of a panda camera object.  The panda camera's
@@ -38,7 +38,7 @@ class ARToolKit:
         default, but you can tweak it here.
         """
         ...
-    def attach_pattern(self, pattern: _Filename, path: NodePath) -> None:
+    def attach_pattern(self, pattern: _Filepath, path: NodePath) -> None:
         """Associates the specified glyph with the specified NodePath.  Each time you
         call analyze, ARToolKit will update the NodePath's transform.  If the node
         is not visible, its scale will be set to zero.

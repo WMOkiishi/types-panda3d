@@ -44,7 +44,7 @@ from panda3d.core import (
 )
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Self = TypeVar('_Self')
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]
 _BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
@@ -496,7 +496,7 @@ class BamCacheRecord(TypedWritableReferenceCount):
         """Empties the list of files that contribute to the data in this record."""
         ...
     @overload
-    def add_dependent_file(self, pathname: _Filename) -> None:
+    def add_dependent_file(self, pathname: _Filepath) -> None:
         """`(self, pathname: Filename)`:
         Adds the indicated file to the list of files that will be loaded to
         generate the data in this record.  This should be called once for the
@@ -672,7 +672,7 @@ class BamCache:
         This also returns false if get_active() is false.
         """
         ...
-    def set_root(self, root: _Filename) -> None:
+    def set_root(self, root: _Filepath) -> None:
         """Changes the current root pathname of the cache.  This specifies where the
         cache files are stored on disk.  This should name a directory that is on a
         disk local to the machine (not on a network-mounted disk), for instance,
@@ -720,7 +720,7 @@ class BamCache:
         it discovers that it does not have write access to the cache.
         """
         ...
-    def lookup(self, source_filename: _Filename, cache_extension: str) -> BamCacheRecord:
+    def lookup(self, source_filename: _Filepath, cache_extension: str) -> BamCacheRecord:
         """Looks up a file in the cache.
         
         If the file is cacheable, then regardless of whether the file is found in
@@ -2510,9 +2510,9 @@ class DatagramInputFile(DatagramGenerator):
         """
         ...
     @overload
-    def open(self, filename: _Filename) -> bool: ...
+    def open(self, filename: _Filepath) -> bool: ...
     @overload
-    def open(self, _in: istream, filename: _Filename = ...) -> bool: ...
+    def open(self, _in: istream, filename: _Filepath = ...) -> bool: ...
     def get_stream(self) -> istream:
         """Returns the istream represented by the input file."""
         ...
@@ -2547,9 +2547,9 @@ class DatagramOutputFile(DatagramSink):
         """
         ...
     @overload
-    def open(self, filename: _Filename) -> bool: ...
+    def open(self, filename: _Filepath) -> bool: ...
     @overload
-    def open(self, out: ostream, filename: _Filename = ...) -> bool: ...
+    def open(self, out: ostream, filename: _Filepath = ...) -> bool: ...
     def close(self) -> None:
         """Closes the file.  This is also implicitly done when the DatagramOutputFile
         destructs.
@@ -3766,7 +3766,7 @@ def parse_color_space_string(str: str) -> _ColorSpace: ...
 def format_color_space(cs: _ColorSpace) -> str: ...
 def get_model_path() -> ConfigVariableSearchPath: ...
 def get_plugin_path() -> ConfigVariableSearchPath: ...
-def load_prc_file(filename: _Filename) -> ConfigPage:
+def load_prc_file(filename: _Filepath) -> ConfigPage:
     """A convenience function for loading explicit prc files from a disk file or
     from within a multifile (via the virtual file system).  Save the return
     value and pass it to unload_prc_file() if you ever want to unload this file

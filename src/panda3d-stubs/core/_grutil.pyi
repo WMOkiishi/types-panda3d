@@ -46,7 +46,7 @@ from panda3d.core import (
 
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 _PfmVizzer_ColumnType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 _PfmVizzer_MeshFace: TypeAlias = Literal[1, 2, 3]
@@ -318,7 +318,7 @@ class GeoMipTerrain(TypedObject):
         """
         ...
     @overload
-    def set_heightfield(self, filename: _Filename, type: PNMFileType = ...) -> bool: ...
+    def set_heightfield(self, filename: _Filepath, type: PNMFileType = ...) -> bool: ...
     def color_map(self) -> PNMImage:
         """Returns a reference to the color map (a PNMImage) contained inside
         GeoMipTerrain.  You can use the reference to alter the color map.
@@ -334,7 +334,7 @@ class GeoMipTerrain(TypedObject):
     @overload
     def set_color_map(self, path: str) -> bool: ...
     @overload
-    def set_color_map(self, filename: _Filename, type: PNMFileType = ...) -> bool: ...
+    def set_color_map(self, filename: _Filepath, type: PNMFileType = ...) -> bool: ...
     def has_color_map(self) -> bool:
         """Returns whether a color map has been set."""
         ...
@@ -594,7 +594,7 @@ class HeightfieldTesselator(Namable):
         HeightfieldTesselator.  You can use the reference to alter the heightfield.
         """
         ...
-    def set_heightfield(self, filename: _Filename, type: PNMFileType = ...) -> bool:
+    def set_heightfield(self, filename: _Filepath, type: PNMFileType = ...) -> bool:
         """Loads the specified greyscale image file into the heightfield."""
         ...
     def set_poly_count(self, n: int) -> None:

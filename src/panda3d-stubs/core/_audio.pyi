@@ -14,7 +14,7 @@ from panda3d.core import (
 
 _AudioSound_SoundStatus: TypeAlias = Literal[0, 1, 2]
 _AudioManager_SpeakerModeCategory: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class FilterProperties(TypedReferenceCount):
@@ -265,13 +265,13 @@ class AudioManager(TypedReferenceCount):
         """
         ...
     @overload
-    def get_sound(self, file_name: _Filename, positional: bool = ..., mode: int = ...) -> AudioSound:
+    def get_sound(self, file_name: _Filepath, positional: bool = ..., mode: int = ...) -> AudioSound:
         """Get a sound:"""
         ...
     @overload
     def get_sound(self, source: MovieAudio, positional: bool = ..., mode: int = ...) -> AudioSound: ...
     def get_null_sound(self) -> AudioSound: ...
-    def uncache_sound(self, file_name: _Filename) -> None:
+    def uncache_sound(self, file_name: _Filepath) -> None:
         """Tell the AudioManager there is no need to keep this one cached.  This
         doesn't break any connection between AudioSounds that have already given
         by get_sound() from this manager.  It's only affecting whether the
