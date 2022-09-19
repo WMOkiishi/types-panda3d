@@ -1,21 +1,10 @@
-from _typeshed import StrOrBytesPath
 from typing import overload
 from typing_extensions import Final, Literal, TypeAlias
-from panda3d.core import (
-    AsyncTask,
-    ConfigVariableFilename,
-    Filename,
-    LMatrix3f,
-    LVecBase3f,
-    MovieAudio,
-    TypedReferenceCount,
-    ostream,
-)
+from panda3d._typing import Filepath, Vec3f
+from panda3d.core import AsyncTask, Filename, MovieAudio, TypedReferenceCount, ostream
 
 _AudioSound_SoundStatus: TypeAlias = Literal[0, 1, 2]
 _AudioManager_SpeakerModeCategory: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
-_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class FilterProperties(TypedReferenceCount):
     def __init__(self, __param0: FilterProperties = ...) -> None: ...
@@ -265,13 +254,13 @@ class AudioManager(TypedReferenceCount):
         """
         ...
     @overload
-    def get_sound(self, file_name: _Filepath, positional: bool = ..., mode: int = ...) -> AudioSound:
+    def get_sound(self, file_name: Filepath, positional: bool = ..., mode: int = ...) -> AudioSound:
         """Get a sound:"""
         ...
     @overload
     def get_sound(self, source: MovieAudio, positional: bool = ..., mode: int = ...) -> AudioSound: ...
     def get_null_sound(self) -> AudioSound: ...
-    def uncache_sound(self, file_name: _Filepath) -> None:
+    def uncache_sound(self, file_name: Filepath) -> None:
         """Tell the AudioManager there is no need to keep this one cached.  This
         doesn't break any connection between AudioSounds that have already given
         by get_sound() from this manager.  It's only affecting whether the
@@ -357,7 +346,7 @@ class AudioManager(TypedReferenceCount):
     def get_dls_pathname() -> Filename: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
-    def set_speaker_configuration(self, speaker1: _Vec3f, speaker2: _Vec3f = ..., speaker3: _Vec3f = ..., speaker4: _Vec3f = ..., speaker5: _Vec3f = ..., speaker6: _Vec3f = ..., speaker7: _Vec3f = ..., speaker8: _Vec3f = ..., speaker9: _Vec3f = ...) -> None:
+    def set_speaker_configuration(self, speaker1: Vec3f, speaker2: Vec3f = ..., speaker3: Vec3f = ..., speaker4: Vec3f = ..., speaker5: Vec3f = ..., speaker6: Vec3f = ..., speaker7: Vec3f = ..., speaker8: Vec3f = ..., speaker9: Vec3f = ...) -> None:
         """set_speaker_configuration is a Miles only method."""
         ...
     getSpeakerSetup = get_speaker_setup

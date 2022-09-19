@@ -436,10 +436,13 @@ class Module:
 @define
 class Package:
     name: str
-    modules: Iterable[Module] = field(default=(), converter=tuple)
+    modules: list[Module] = Factory(list)
 
     def __str__(self) -> str:
         return f'Package {self.name!r}'
 
     def __iter__(self) -> Iterator[Module]:
         return iter(self.modules)
+
+    def add_module(self, module: Module) -> None:
+        self.modules.append(module)

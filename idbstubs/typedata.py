@@ -55,19 +55,21 @@ KNOWN_IMPORTS: Final = {
 
 # These exist entirely for readability and brevity
 TYPE_ALIASES: Final = {
-    '_Vec3d': 'LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow',
-    '_Vec3f': 'LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow',
-    '_Vec4d': 'LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow',
-    '_Vec4f': 'LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor',
-    '_Vec4i': 'LVecBase4i | UnalignedLVecBase4i',
-    '_Mat4d': 'LMatrix4d | UnalignedLMatrix4d',
-    '_Mat4f': 'LMatrix4f | UnalignedLMatrix4f',
-    '_Filepath': 'StrOrBytesPath | ConfigVariableFilename',
+    'Vec3d': 'LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow',
+    'Vec3f': 'LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow',
+    'Vec4d': 'LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow',
+    'Vec4f': 'LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor',
+    'Vec4i': 'LVecBase4i | UnalignedLVecBase4i',
+    'Mat4d': 'LMatrix4d | UnalignedLMatrix4d',
+    'Mat4f': 'LMatrix4f | UnalignedLMatrix4f',
+    'Filepath': 'StrOrBytesPath | ConfigVariableFilename',
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))
     for k, v in TYPE_ALIASES.items()
 ]
+for _alias_name in TYPE_ALIASES:
+    KNOWN_IMPORTS[_alias_name] = 'panda3d._typing'
 
 TYPE_VARIABLES: Final = {
     '_N': ('PandaNode',),
@@ -234,7 +236,7 @@ def get_param_type_replacement(type_name: str) -> str | None:
 
 @cache
 def get_alias_def(name: str) -> str | None:
-    return _enum_definitions.get(name) or TYPE_ALIASES.get(name)
+    return _enum_definitions.get(name)
 
 
 @cache

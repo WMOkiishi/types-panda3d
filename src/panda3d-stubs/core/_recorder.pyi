@@ -1,18 +1,6 @@
-from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
-from typing_extensions import TypeAlias
-from panda3d.core import (
-    ConfigVariableFilename,
-    DataNode,
-    Datagram,
-    Filename,
-    ReferenceCount,
-    SocketStream,
-    TypeHandle,
-    TypedReferenceCount,
-)
-
-_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+from panda3d._typing import Filepath
+from panda3d.core import DataNode, Datagram, Filename, ReferenceCount, SocketStream, TypeHandle, TypedReferenceCount
 
 class RecorderBase:
     """This is the base class to a number of objects that record particular kinds
@@ -75,12 +63,12 @@ class RecorderController(TypedReferenceCount):
     bam file so that the session can be recreated later.
     """
     def __init__(self) -> None: ...
-    def begin_record(self, filename: _Filepath) -> bool:
+    def begin_record(self, filename: Filepath) -> bool:
         """Begins recording data to the indicated filename.  All of the recorders in
         use should already have been added.
         """
         ...
-    def begin_playback(self, filename: _Filepath) -> bool:
+    def begin_playback(self, filename: Filepath) -> bool:
         """Begins playing back data from the indicated filename.  All of the recorders
         in use should already have been added, although this may define additional
         recorders if they are present in the file (these new recorders will not be

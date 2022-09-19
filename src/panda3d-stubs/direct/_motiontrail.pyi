@@ -1,16 +1,5 @@
-from typing_extensions import TypeAlias
-from panda3d.core import (
-    ConfigVariableColor,
-    GeomNode,
-    LMatrix4f,
-    LVecBase4f,
-    TypedReferenceCount,
-    UnalignedLMatrix4f,
-    UnalignedLVecBase4f,
-)
-
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
-_Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
+from panda3d._typing import Mat4f, Vec4f
+from panda3d.core import GeomNode, TypedReferenceCount
 
 class CMotionTrail(TypedReferenceCount):
     """The method used in creating the motion trail is based on taking samples of
@@ -55,7 +44,7 @@ class CMotionTrail(TypedReferenceCount):
     def set_geom_node(self, geom_node: GeomNode) -> None:
         """Set the GeomNode."""
         ...
-    def add_vertex(self, vertex: _Vec4f, start_color: _Vec4f, end_color: _Vec4f, v: float) -> None:
+    def add_vertex(self, vertex: Vec4f, start_color: Vec4f, end_color: Vec4f, v: float) -> None:
         """Add a vertex."""
         ...
     def set_parameters(self, sampling_time: float, time_window: float, use_texture: bool, calculate_relative_matrix: bool, use_nurbs: bool, resolution_distance: float) -> None:
@@ -81,7 +70,7 @@ class CMotionTrail(TypedReferenceCount):
     def check_for_update(self, current_time: float) -> int:
         """Check if a sample can be submitted."""
         ...
-    def update_motion_trail(self, current_time: float, transform: _Mat4f) -> None:
+    def update_motion_trail(self, current_time: float, transform: Mat4f) -> None:
         """See class header comments."""
         ...
     resetVertexList = reset_vertex_list

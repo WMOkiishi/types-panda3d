@@ -1,9 +1,7 @@
 from typing import overload
-from typing_extensions import TypeAlias
+from panda3d._typing import Mat4f, Vec3f
 from panda3d.core import (
-    LMatrix3f,
     LMatrix4f,
-    LVecBase3f,
     MovingPartMatrix,
     MovingPartScalar,
     NodePathCollection,
@@ -14,20 +12,16 @@ from panda3d.core import (
     PartGroup,
     RenderEffect,
     TransformState,
-    UnalignedLMatrix4f,
     VertexSlider,
     VertexTransform,
     ostream,
 )
 
-_Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-
 class CharacterJoint(MovingPartMatrix):
     """This represents one joint of the character's animation, containing an
     animating transform matrix.
     """
-    def __init__(self, character: Character, root: PartBundle, parent: PartGroup, name: str, default_value: _Mat4f) -> None: ...
+    def __init__(self, character: Character, root: PartBundle, parent: PartGroup, name: str, default_value: Mat4f) -> None: ...
     def add_net_transform(self, node: PandaNode) -> bool:
         """Adds the indicated node to the list of nodes that will be updated each
         frame with the joint's net transform from the root.  Returns true if the
@@ -110,9 +104,9 @@ class CharacterJoint(MovingPartMatrix):
         """
         ...
     @overload
-    def get_transform(self, transform: _Mat4f) -> None: ...
+    def get_transform(self, transform: Mat4f) -> None: ...
     def get_transform_state(self) -> TransformState: ...
-    def get_net_transform(self, transform: _Mat4f) -> None:
+    def get_net_transform(self, transform: Mat4f) -> None:
         """Copies the joint's current net transform (composed from the root of the
         character joint hierarchy) into the indicated matrix.
         """
@@ -219,7 +213,7 @@ class Character(PartBundleNode):
         ...
     @overload
     def merge_bundles(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle) -> None: ...
-    def set_lod_animation(self, center: _Vec3f, far_distance: float, near_distance: float, delay_factor: float) -> None:
+    def set_lod_animation(self, center: Vec3f, far_distance: float, near_distance: float, delay_factor: float) -> None:
         """Activates a special mode in which the character animates less frequently as
         it gets further from the camera.  This is intended as a simple optimization
         to minimize the effort of computing animation for lots of characters that

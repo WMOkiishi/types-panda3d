@@ -1,22 +1,17 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import TypeAlias
+from panda3d._typing import Vec4f
 from panda3d.core import (
-    ConfigVariableColor,
     DisplayRegion,
     GeomNode,
     GraphicsEngine,
     GraphicsOutput,
-    LMatrix4f,
     LVecBase4f,
     Lens,
     NodePath,
     PandaNode,
     PfmFile,
-    UnalignedLVecBase4f,
     UpdateSeq,
 )
-
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 
 class CylindricalLens(Lens):
     """A cylindrical lens.  This is the kind of lens generally used for extremely
@@ -190,7 +185,7 @@ class ProjectionScreen(PandaNode):
         set_vignette_on().
         """
         ...
-    def set_vignette_color(self, vignette_color: _Vec4f) -> None:
+    def set_vignette_color(self, vignette_color: Vec4f) -> None:
         """Specifies the color the screen will be painted at the portions outside of
         the lens' frustum; i.e.  where the lens can't see it or illuminate it.
         This color is only used if the vignette_on flag is true; see
@@ -202,7 +197,7 @@ class ProjectionScreen(PandaNode):
         lens' frustum.  See set_vignette_color().
         """
         ...
-    def set_frame_color(self, frame_color: _Vec4f) -> None:
+    def set_frame_color(self, frame_color: Vec4f) -> None:
         """Specifies the color the screen will be painted at the portions outside of
         the lens' frustum; i.e.  where the lens can't see it or illuminate it.
         This color is only used if the vignette_on flag is true; see

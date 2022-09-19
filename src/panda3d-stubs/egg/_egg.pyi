@@ -1,19 +1,16 @@
-from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+from panda3d._typing import Filepath, Mat4d, Vec3d, Vec4d, Vec4f
 from panda3d.core import (
     BamCacheRecord,
     BitMask_uint32_t_32,
-    ConfigVariableColor,
-    ConfigVariableFilename,
     ConfigVariableSearchPath,
     DSearchPath,
     Filename,
     GlobPattern,
     LMatrix3d,
     LMatrix4d,
-    LMatrix4f,
     LPoint2d,
     LPoint3d,
     LPoint4d,
@@ -25,20 +22,12 @@ from panda3d.core import (
     Namable,
     TypeHandle,
     TypedReferenceCount,
-    UnalignedLMatrix4d,
-    UnalignedLVecBase4d,
-    UnalignedLVecBase4f,
     istream,
     ostream,
 )
 
 _Self = TypeVar('_Self')
-_Mat4d: TypeAlias = LMatrix4d | UnalignedLMatrix4d
-_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
-_Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
-_Vec4d: TypeAlias = LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow
 _EggRenderMode_AlphaMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 _EggRenderMode_DepthWriteMode: TypeAlias = Literal[0, 1, 2]
 _EggRenderMode_DepthTestMode: TypeAlias = Literal[0, 1, 2]
@@ -258,12 +247,12 @@ class EggNode(EggNamedObject):
         same get_node_to_vertex() matrix.
         """
         ...
-    def transform(self, mat: _Mat4d) -> None:
+    def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation to the node and all of its
         descendants.
         """
         ...
-    def transform_vertices_only(self, mat: _Mat4d) -> None:
+    def transform_vertices_only(self, mat: Mat4d) -> None:
         """Applies the indicated transformation only to vertices that appear in global
         space within vertex pools at this node and below.  Joints and other
         transforms are not affected, nor are local vertices.
@@ -485,7 +474,7 @@ class EggGroupNode(EggNode):
         automatically search the model_path for missing files.
         """
         ...
-    def force_filenames(self, directory: _Filepath) -> None:
+    def force_filenames(self, directory: Filepath) -> None:
         """Similar to resolve_filenames, but each non-absolute filename encountered is
         arbitrarily taken to be in the indicated directory, whether or not the so-
         named filename exists.
@@ -782,7 +771,7 @@ class EggAttributes:
     def assign(self: _Self, copy: _Self) -> _Self: ...
     def has_normal(self) -> bool: ...
     def get_normal(self) -> LVector3d: ...
-    def set_normal(self, normal: _Vec3d) -> None: ...
+    def set_normal(self, normal: Vec3d) -> None: ...
     def clear_normal(self) -> None: ...
     def matches_normal(self, other: EggAttributes) -> bool:
         """Returns true if this normal matches that of the other EggAttributes object,
@@ -800,7 +789,7 @@ class EggAttributes:
         set, returns white.
         """
         ...
-    def set_color(self, Color: _Vec4f) -> None: ...
+    def set_color(self, Color: Vec4f) -> None: ...
     def clear_color(self) -> None: ...
     def matches_color(self, other: EggAttributes) -> bool:
         """Returns true if this color matches that of the other EggAttributes object,
@@ -825,7 +814,7 @@ class EggAttributes:
         imposes an arbitrary ordering useful to identify unique vertices.
         """
         ...
-    def transform(self, mat: _Mat4d) -> None:
+    def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to the attributes."""
         ...
     @staticmethod
@@ -854,7 +843,7 @@ class EggVertexUV(EggNamedObject):
     @overload
     def __init__(self, copy: EggVertexUV) -> None: ...
     @overload
-    def __init__(self, name: str, uvw: _Vec3d) -> None: ...
+    def __init__(self, name: str, uvw: Vec3d) -> None: ...
     @overload
     def __init__(self, name: str, uv: LVecBase2d) -> None: ...
     @staticmethod
@@ -889,7 +878,7 @@ class EggVertexUV(EggNamedObject):
         texture coordinate, which is the usual case.
         """
         ...
-    def set_uvw(self, texCoord: _Vec3d) -> None:
+    def set_uvw(self, texCoord: Vec3d) -> None:
         """Sets the texture coordinate triple.  This makes the texture coordinate a
         3-d texture coordinate.
         """
@@ -898,8 +887,8 @@ class EggVertexUV(EggNamedObject):
     def has_tangent4(self) -> bool: ...
     def get_tangent(self) -> LVector3d: ...
     def get_tangent4(self) -> LVecBase4d: ...
-    def set_tangent(self, tangent: _Vec3d) -> None: ...
-    def set_tangent4(self, tangent: _Vec4d) -> None:
+    def set_tangent(self, tangent: Vec3d) -> None: ...
+    def set_tangent4(self, tangent: Vec4d) -> None:
         """Sets the tangent vector, along with a fourth parameter that is multiplied
         with the result of cross(normal, tangent) when computing the binormal.
         """
@@ -907,7 +896,7 @@ class EggVertexUV(EggNamedObject):
     def clear_tangent(self) -> None: ...
     def has_binormal(self) -> bool: ...
     def get_binormal(self) -> LVector3d: ...
-    def set_binormal(self, binormal: _Vec3d) -> None: ...
+    def set_binormal(self, binormal: Vec3d) -> None: ...
     def clear_binormal(self) -> None: ...
     @staticmethod
     def make_average(first: EggVertexUV, second: EggVertexUV) -> EggVertexUV:
@@ -915,7 +904,7 @@ class EggVertexUV(EggNamedObject):
         given objects.  It is an error if they don't have the same name.
         """
         ...
-    def transform(self, mat: _Mat4d) -> None:
+    def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to the UV's tangent and/or
         binormal.  This does nothing if there is no tangent or binormal.
         """
@@ -957,12 +946,12 @@ class EggVertexAux(EggNamedObject):
     @overload
     def __init__(self, copy: EggVertexAux) -> None: ...
     @overload
-    def __init__(self, name: str, aux: _Vec4d) -> None: ...
+    def __init__(self, name: str, aux: Vec4d) -> None: ...
     def set_name(self, name: str) -> None: ...
     def get_aux(self) -> LVecBase4d:
         """Returns the auxiliary data quadruple."""
         ...
-    def set_aux(self, aux: _Vec4d) -> None:
+    def set_aux(self, aux: Vec4d) -> None:
         """Sets the auxiliary data quadruple."""
         ...
     @staticmethod
@@ -1015,7 +1004,7 @@ class EggVertex(EggObject, EggAttributes):
         later filled in, this vertex will be replaced with real data.
         """
         ...
-    def set_pos(self, pos: LVecBase2d | _Vec3d | _Vec4d | float) -> None:
+    def set_pos(self, pos: LVecBase2d | Vec3d | Vec4d | float) -> None:
         """`(self, pos: LPoint2d)`:
         Sets the vertex position.  This variant sets the vertex to a two-
         dimensional value.
@@ -1033,7 +1022,7 @@ class EggVertex(EggObject, EggAttributes):
         dimensional value.
         """
         ...
-    def set_pos4(self, pos: _Vec4d) -> None:
+    def set_pos4(self, pos: Vec4d) -> None:
         """This special flavor of set_pos() sets the vertex as a four-component value,
         but does not change the set number of dimensions.  It's handy for
         retrieving the vertex position via get_pos4, manipulating it, then storing
@@ -1136,7 +1125,7 @@ class EggVertex(EggObject, EggAttributes):
         call this if has_uvw(name) returned false.
         """
         ...
-    def set_uvw(self, name: str, texCoord: _Vec3d) -> None:
+    def set_uvw(self, name: str, texCoord: Vec3d) -> None:
         """Sets the indicated UV coordinate triple on the vertex.  This replaces any
         UV coordinate pair or triple with the same name already on the vertex, but
         preserves UV morphs.
@@ -1182,7 +1171,7 @@ class EggVertex(EggObject, EggAttributes):
         to call this if has_aux(name) returned false.
         """
         ...
-    def set_aux(self, name: str, aux: _Vec4d) -> None:
+    def set_aux(self, name: str, aux: Vec4d) -> None:
         """Sets the indicated auxiliary data quadruple on the vertex.  This replaces
         any auxiliary data with the same name already on the vertex.
         """
@@ -1276,7 +1265,7 @@ class EggVertex(EggObject, EggAttributes):
         interpreted in the global coordinate system.
         """
         ...
-    def transform(self, mat: _Mat4d) -> None:
+    def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to the vertex."""
         ...
     def has_gref(self, group: EggGroup) -> bool:
@@ -1466,7 +1455,7 @@ class EggVertexPool(EggNode):
         in the vertex pool and returned from this method.
         """
         ...
-    def make_new_vertex(self, pos: LVecBase2d | _Vec3d | _Vec4d | float = ...) -> EggVertex:
+    def make_new_vertex(self, pos: LVecBase2d | Vec3d | Vec4d | float = ...) -> EggVertex:
         """`(self)`:
         Allocates and returns a new vertex from the pool.  This is one of three
         ways to add new vertices to a vertex pool.
@@ -1508,7 +1497,7 @@ class EggVertexPool(EggNode):
         primitive, in ascending order.
         """
         ...
-    def transform(self, mat: _Mat4d) -> None:
+    def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to all the vertices.  However,
         vertices that are attached to primitives that believe their vertices are in
         a local coordinate system are transformed only by the scale and rotation
@@ -1818,7 +1807,7 @@ class EggTransform:
     def add_translate2d(self, translate: LVecBase2d) -> None:
         """Appends a 2-d translation operation to the current transform."""
         ...
-    def add_translate3d(self, translate: _Vec3d) -> None:
+    def add_translate3d(self, translate: Vec3d) -> None:
         """Appends a 3-d translation operation to the current transform."""
         ...
     def add_rotate2d(self, angle: float) -> None:
@@ -1842,7 +1831,7 @@ class EggTransform:
         """
         ...
     @overload
-    def add_rotate3d(self, quat: _Vec4d) -> None:
+    def add_rotate3d(self, quat: Vec4d) -> None:
         """`(self, quat: LQuaterniond)`:
         Appends an arbitrary 3-d rotation to the current transform, expressed as a
         quaternion.  This is converted to axis-angle notation for the egg file.
@@ -1853,11 +1842,11 @@ class EggTransform:
         """
         ...
     @overload
-    def add_rotate3d(self, angle: float, axis: _Vec3d) -> None: ...
+    def add_rotate3d(self, angle: float, axis: Vec3d) -> None: ...
     def add_scale2d(self, scale: LVecBase2d) -> None:
         """Appends a possibly non-uniform scale to the current transform."""
         ...
-    def add_scale3d(self, scale: _Vec3d) -> None:
+    def add_scale3d(self, scale: Vec3d) -> None:
         """Appends a possibly non-uniform scale to the current transform."""
         ...
     def add_uniform_scale(self, scale: float) -> None:
@@ -1866,7 +1855,7 @@ class EggTransform:
     def add_matrix3(self, mat: LMatrix3d) -> None:
         """Appends an arbitrary 3x3 matrix to the current transform."""
         ...
-    def add_matrix4(self, mat: _Mat4d) -> None:
+    def add_matrix4(self, mat: Mat4d) -> None:
         """Appends an arbitrary 4x4 matrix to the current transform."""
         ...
     def has_transform(self) -> bool:
@@ -1898,7 +1887,7 @@ class EggTransform:
         matrix), and EggGroups always have a 3-d matrix.
         """
         ...
-    def set_transform3d(self, mat: _Mat4d) -> None:
+    def set_transform3d(self, mat: Mat4d) -> None:
         """Sets the overall transform as a 4x4 matrix.  This completely replaces
         whatever componentwise transform may have been defined.
         """
@@ -1993,14 +1982,14 @@ class EggSwitchCondition(EggObject):
     """
     def make_copy(self) -> EggSwitchCondition: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
-    def transform(self, mat: _Mat4d) -> None: ...
+    def transform(self, mat: Mat4d) -> None: ...
     makeCopy = make_copy
 
 class EggSwitchConditionDistance(EggSwitchCondition):
     """A SwitchCondition that switches the levels-of-detail based on distance from
     the camera's eyepoint.
     """
-    def __init__(self, switch_in: float, switch_out: float, center: _Vec3d, fade: float = ...) -> None: ...
+    def __init__(self, switch_in: float, switch_out: float, center: Vec3d, fade: float = ...) -> None: ...
 
 class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     """The main glue of the egg hierarchy, this corresponds to the <Group>,
@@ -2298,7 +2287,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         ...
     def set_billboard_type(self, type: _EggGroup_BillboardType) -> None: ...
     def get_billboard_type(self) -> _EggGroup_BillboardType: ...
-    def set_billboard_center(self, billboard_center: _Vec3d) -> None:
+    def set_billboard_center(self, billboard_center: Vec3d) -> None:
         """Sets the point around which the billboard will rotate, if this node
         contains a billboard specification.
         
@@ -2395,7 +2384,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def get_blend_operand_a(self) -> _EggGroup_BlendOperand: ...
     def set_blend_operand_b(self, blend_operand_b: _EggGroup_BlendOperand) -> None: ...
     def get_blend_operand_b(self) -> _EggGroup_BlendOperand: ...
-    def set_blend_color(self, blend_color: _Vec4f) -> None: ...
+    def set_blend_color(self, blend_color: Vec4f) -> None: ...
     def clear_blend_color(self) -> None:
         """Removes the blend color specification."""
         ...
@@ -2815,7 +2804,7 @@ class EggFilenameNode(EggNode):
     def get_filename(self) -> Filename:
         """Returns a nonmodifiable reference to the filename."""
         ...
-    def set_filename(self, filename: _Filepath) -> None: ...
+    def set_filename(self, filename: Filepath) -> None: ...
     def get_fullpath(self) -> Filename:
         """Returns the full pathname to the file, if it is known; otherwise, returns
         the same thing as get_filename().
@@ -2827,7 +2816,7 @@ class EggFilenameNode(EggNode):
         and then immediately converted to a scene graph.
         """
         ...
-    def set_fullpath(self, fullpath: _Filepath) -> None:
+    def set_fullpath(self, fullpath: Filepath) -> None:
         """Records the full pathname to the file, for the benefit of get_fullpath()."""
         ...
     getDefaultExtension = get_default_extension
@@ -3096,7 +3085,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     @overload
     def __init__(self, copy: EggTexture) -> None: ...
     @overload
-    def __init__(self, tref_name: str, filename: _Filepath) -> None: ...
+    def __init__(self, tref_name: str, filename: Filepath) -> None: ...
     def upcast_to_EggFilenameNode(self) -> EggFilenameNode: ...
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
     def upcast_to_EggTransform(self) -> EggTransform: ...
@@ -3288,7 +3277,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         texture, or 0 if no priority value has been specified.
         """
         ...
-    def set_color(self, color: _Vec4f) -> None: ...
+    def set_color(self, color: Vec4f) -> None: ...
     def clear_color(self) -> None: ...
     def has_color(self) -> bool:
         """Returns true if a blend color has been specified for the texture."""
@@ -3298,7 +3287,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         otherwise.
         """
         ...
-    def set_border_color(self, border_color: _Vec4f) -> None: ...
+    def set_border_color(self, border_color: Vec4f) -> None: ...
     def clear_border_color(self) -> None: ...
     def has_border_color(self) -> bool:
         """Returns true if a border color has been specified for the texture."""
@@ -3378,7 +3367,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         if no alpha_scale value has been specified.
         """
         ...
-    def set_alpha_filename(self, filename: _Filepath) -> None:
+    def set_alpha_filename(self, filename: Filepath) -> None:
         """Specifies a separate file that will be loaded in with the 1- or 3-component
         texture and applied as the alpha channel.  This is useful when loading
         textures from file formats that do not support alpha, for instance jpg.
@@ -3396,7 +3385,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         set_alpha_filename().
         """
         ...
-    def set_alpha_fullpath(self, fullpath: _Filepath) -> None:
+    def set_alpha_fullpath(self, fullpath: Filepath) -> None:
         """Records the full pathname to the file, for the benefit of
         get_alpha_fullpath().
         """
@@ -3789,7 +3778,7 @@ class EggMaterial(EggNode):
         according to the indicated Equivalence factor.  See is_equivalent_to().
         """
         ...
-    def set_base(self, base: _Vec4f) -> None:
+    def set_base(self, base: Vec4f) -> None:
         """@since 1.10.0"""
         ...
     def clear_base(self) -> None:
@@ -3805,7 +3794,7 @@ class EggMaterial(EggNode):
         @since 1.10.0
         """
         ...
-    def set_diff(self, diff: _Vec4f) -> None: ...
+    def set_diff(self, diff: Vec4f) -> None: ...
     def clear_diff(self) -> None: ...
     def has_diff(self) -> bool: ...
     def get_diff(self) -> LVecBase4f:
@@ -3813,7 +3802,7 @@ class EggMaterial(EggNode):
         simply returns the default diff color.
         """
         ...
-    def set_amb(self, amb: _Vec4f) -> None: ...
+    def set_amb(self, amb: Vec4f) -> None: ...
     def clear_amb(self) -> None: ...
     def has_amb(self) -> bool: ...
     def get_amb(self) -> LVecBase4f:
@@ -3821,7 +3810,7 @@ class EggMaterial(EggNode):
         returns the default amb color.
         """
         ...
-    def set_emit(self, emit: _Vec4f) -> None: ...
+    def set_emit(self, emit: Vec4f) -> None: ...
     def clear_emit(self) -> None: ...
     def has_emit(self) -> bool: ...
     def get_emit(self) -> LVecBase4f:
@@ -3829,7 +3818,7 @@ class EggMaterial(EggNode):
         simply returns the default emit color.
         """
         ...
-    def set_spec(self, spec: _Vec4f) -> None: ...
+    def set_spec(self, spec: Vec4f) -> None: ...
     def clear_spec(self) -> None: ...
     def has_spec(self) -> bool: ...
     def get_spec(self) -> LVecBase4f:
@@ -4397,7 +4386,7 @@ class EggData(EggGroupNode):
     egg_timestamp: int
     def __init__(self, copy: EggData = ...) -> None: ...
     @staticmethod
-    def resolve_egg_filename(egg_filename: _Filepath, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
+    def resolve_egg_filename(egg_filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
         """Looks for the indicated filename, first along the indicated searchpath, and
         then along the model_path.  If found, updates the filename to the full path
         and returns true; otherwise, returns false.
@@ -4423,7 +4412,7 @@ class EggData(EggGroupNode):
         """
         ...
     @overload
-    def read(self, filename: _Filepath, display_name: str = ...) -> bool: ...
+    def read(self, filename: Filepath, display_name: str = ...) -> bool: ...
     def merge(self, other: EggData) -> None:
         """Appends the other egg structure to the end of this one.  The other egg
         structure is invalidated.
@@ -4455,7 +4444,7 @@ class EggData(EggGroupNode):
         """
         ...
     @overload
-    def write_egg(self, filename: _Filepath) -> bool:
+    def write_egg(self, filename: Filepath) -> bool:
         """The main interface for writing complete egg files."""
         ...
     @overload
@@ -4488,7 +4477,7 @@ class EggData(EggGroupNode):
     def get_coordinate_system(self) -> _CoordinateSystem:
         """Returns the coordinate system in which the egg file is defined."""
         ...
-    def set_egg_filename(self, egg_filename: _Filepath) -> None:
+    def set_egg_filename(self, egg_filename: Filepath) -> None:
         """Sets the filename--especially the directory part--in which the egg file is
         considered to reside.  This is also implicitly set by read().
         """
@@ -4805,7 +4794,7 @@ class EggPolygon(EggPrimitive):
     def __init__(self, name: str = ...) -> None: ...
     @overload
     def __init__(self, copy: EggPolygon) -> None: ...
-    def calculate_normal(self, result: _Vec3d, cs: _CoordinateSystem = ...) -> bool:
+    def calculate_normal(self, result: Vec3d, cs: _CoordinateSystem = ...) -> bool:
         """Calculates the true polygon normal--the vector pointing out of the front of
         the polygon--based on the vertices.  This does not return or change the
         polygon's normal as set via set_normal().
@@ -5435,7 +5424,7 @@ class EggTextureCollection:
         matches.
         """
         ...
-    def find_filename(self, filename: _Filepath) -> EggTexture:
+    def find_filename(self, filename: Filepath) -> EggTexture:
         """Returns the texture with the indicated filename, or NULL if no texture
         matches.
         """
@@ -5537,7 +5526,7 @@ class EggXfmSAnim(EggGroupNode):
         table of matrices.
         """
         ...
-    def get_value(self, row: int, mat: _Mat4d) -> None:
+    def get_value(self, row: int, mat: Mat4d) -> None:
         """Returns the value of the aggregate row of the table as a matrix.  This is a
         convenience function that treats the table of tables as if it were a single
         table of matrices.  It is an error to call this if any SAnimData children
@@ -5545,7 +5534,7 @@ class EggXfmSAnim(EggGroupNode):
         of "ijkabchprxyz").
         """
         ...
-    def set_value(self, row: int, mat: _Mat4d) -> bool:
+    def set_value(self, row: int, mat: Mat4d) -> bool:
         """Replaces the indicated row of the table with the given matrix.
         
         This function can only be called if all the constraints of add_data(),
@@ -5561,7 +5550,7 @@ class EggXfmSAnim(EggGroupNode):
         children.
         """
         ...
-    def add_data(self, mat: _Mat4d) -> bool:
+    def add_data(self, mat: Mat4d) -> bool:
         """Adds a new matrix to the table, by adding a new row to each of the
         subtables.
         
@@ -5598,7 +5587,7 @@ class EggXfmSAnim(EggGroupNode):
     @overload
     def add_component_data(self, component_name: str, value: float) -> None: ...
     @staticmethod
-    def compose_with_order(mat: _Mat4d, scale: _Vec3d, shear: _Vec3d, hpr: _Vec3d, trans: _Vec3d, order: str, cs: _CoordinateSystem) -> None:
+    def compose_with_order(mat: Mat4d, scale: Vec3d, shear: Vec3d, hpr: Vec3d, trans: Vec3d, order: str, cs: _CoordinateSystem) -> None:
         """Composes a matrix out of the nine individual components, respecting the
         order string.  The components will be applied in the order indicated by the
         string.
@@ -5668,7 +5657,7 @@ class EggXfmAnimData(EggAnimData):
         """
         ...
     @overload
-    def get_value(self, row: int, mat: _Mat4d) -> None:
+    def get_value(self, row: int, mat: Mat4d) -> None:
         """`(self, row: int, mat: LMatrix4d)`:
         Returns the value of the aggregate row of the table as a matrix.  This is a
         convenience function that treats the 2-d table as if it were a single table

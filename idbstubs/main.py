@@ -3,7 +3,10 @@ from os import PathLike
 from pathlib import Path
 from typing import Final
 
-from .construction import get_all_manifests, make_package_rep, with_alias
+from .construction import (
+    get_all_manifests, make_package_rep,
+    make_typing_module, with_alias
+)
 from .idbutil import load_interrogate_database
 from .processors import process_dependencies
 from .reps import Module, StubRep
@@ -25,8 +28,9 @@ def main(
     package = make_package_rep(
         package_name,
         infer_opt_params=infer_optional,
-        ignore_coercion=ignore_coercion
+        ignore_coercion=ignore_coercion,
     )
+    package.add_module(make_typing_module())
     for module in package:
         _logger.info(f'Writing stubs for {module}')
         if len(module.nested) > 1:

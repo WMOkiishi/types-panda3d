@@ -1,28 +1,22 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     CollisionHandlerPusher,
-    ConfigVariableColor,
-    LMatrix3f,
     LMatrix4f,
     LOrientationf,
     LPoint3f,
     LRotationf,
-    LVecBase3f,
-    LVecBase4f,
     LVector3f,
     NodePath,
     PandaNode,
     ReferenceCount,
     TypedReferenceCount,
-    UnalignedLVecBase4f,
     ostream,
 )
 
 _Self = TypeVar('_Self')
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _LinearDistanceForce_FalloffType: TypeAlias = Literal[0, 1, 2]
 
 class PhysicsObject(TypedReferenceCount):
@@ -63,7 +57,7 @@ class PhysicsObject(TypedReferenceCount):
         """Get the mass in slugs (or kilograms)."""
         ...
     @overload
-    def set_position(self, pos: _Vec3f) -> None:
+    def set_position(self, pos: Vec3f) -> None:
         """`(self, pos: LPoint3f)`:
         Vector position assignment.  This is also used as the center of mass.
         
@@ -76,12 +70,12 @@ class PhysicsObject(TypedReferenceCount):
     def get_position(self) -> LPoint3f:
         """Position Query"""
         ...
-    def reset_position(self, pos: _Vec3f) -> None:
+    def reset_position(self, pos: Vec3f) -> None:
         """use this to place an object in a completely new position, that has nothing
         to do with its last position.
         """
         ...
-    def set_last_position(self, pos: _Vec3f) -> None:
+    def set_last_position(self, pos: Vec3f) -> None:
         """Last position assignment"""
         ...
     def get_last_position(self) -> LPoint3f:
@@ -90,7 +84,7 @@ class PhysicsObject(TypedReferenceCount):
         """
         ...
     @overload
-    def set_velocity(self, vel: _Vec3f) -> None:
+    def set_velocity(self, vel: Vec3f) -> None:
         """`(self, vel: LVector3f)`:
         Vector velocity assignment
         
@@ -106,19 +100,19 @@ class PhysicsObject(TypedReferenceCount):
     def get_implicit_velocity(self) -> LVector3f:
         """Velocity Query over the last dt"""
         ...
-    def add_torque(self, torque: _Vec4f) -> None:
+    def add_torque(self, torque: Vec4f) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
         """
         ...
-    def add_impulse(self, impulse: _Vec3f) -> None:
+    def add_impulse(self, impulse: Vec3f) -> None:
         """Adds an impulse force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the velocity, add a vector to it and set that value to
         be the new velocity.
         """
         ...
-    def add_impact(self, offset_from_center_of_mass: _Vec3f, impulse: _Vec3f) -> None:
+    def add_impact(self, offset_from_center_of_mass: Vec3f, impulse: Vec3f) -> None:
         """Adds an impulse and/or torque (i.e.  an instantanious change in velocity)
         based on how well the offset and impulse align with the center of mass (aka
         position). If you wanted to immitate this function you could work out the
@@ -126,19 +120,19 @@ class PhysicsObject(TypedReferenceCount):
         offset and force are in global (or parent) coordinates.
         """
         ...
-    def add_local_torque(self, torque: _Vec4f) -> None:
+    def add_local_torque(self, torque: Vec4f) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
         """
         ...
-    def add_local_impulse(self, impulse: _Vec3f) -> None:
+    def add_local_impulse(self, impulse: Vec3f) -> None:
         """Adds an impulse force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the velocity, add a vector to it and set that value to
         be the new velocity.
         """
         ...
-    def add_local_impact(self, offset_from_center_of_mass: _Vec3f, impulse: _Vec3f) -> None:
+    def add_local_impact(self, offset_from_center_of_mass: Vec3f, impulse: Vec3f) -> None:
         """Adds an impulse and/or torque (i.e.  an instantanious change in velocity)
         based on how well the offset and impulse align with the center of mass (aka
         position). If you wanted to immitate this function you could work out the
@@ -167,7 +161,7 @@ class PhysicsObject(TypedReferenceCount):
     def reset_orientation(self, orientation: LOrientationf) -> None:
         """set the orientation while clearing the rotation velocity."""
         ...
-    def set_rotation(self, rotation: _Vec4f) -> None:
+    def set_rotation(self, rotation: Vec4f) -> None:
         """set rotation as a quaternion delta per second."""
         ...
     def get_rotation(self) -> LRotationf:
@@ -528,7 +522,7 @@ class ActorNode(PhysicalNode):
     @overload
     def __init__(self, copy: ActorNode) -> None: ...
     def get_physics_object(self) -> PhysicsObject: ...
-    def set_contact_vector(self, contact_vector: _Vec3f) -> None: ...
+    def set_contact_vector(self, contact_vector: Vec3f) -> None: ...
     def get_contact_vector(self) -> LVector3f: ...
     def update_transform(self) -> None:
         """this sets the transform generated by the contained Physical, moving the
@@ -589,10 +583,10 @@ class AngularVectorForce(AngularForce):
         """
         ...
     @overload
-    def __init__(self, quat: _Vec4f) -> None: ...
+    def __init__(self, quat: Vec4f) -> None: ...
     @overload
     def __init__(self, h: float, p: float, r: float) -> None: ...
-    def set_quat(self, quat: _Vec4f) -> None: ...
+    def set_quat(self, quat: Vec4f) -> None: ...
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     def get_local_quat(self) -> LRotationf: ...
     setQuat = set_quat
@@ -668,7 +662,7 @@ class LinearControlForce(LinearForce):
         """piecewise encapsulating wrapper"""
         ...
     @overload
-    def set_vector(self, v: _Vec3f) -> None:
+    def set_vector(self, v: Vec3f) -> None:
         """`(self, v: LVector3f)`:
         encapsulating wrapper
         
@@ -730,7 +724,7 @@ class LinearDistanceForce(LinearForce):
     def set_falloff_type(self, ft: _LinearDistanceForce_FalloffType) -> None:
         """falloff_type encapsulating wrap"""
         ...
-    def set_force_center(self, p: _Vec3f) -> None:
+    def set_force_center(self, p: Vec3f) -> None:
         """set the force center"""
         ...
     def get_radius(self) -> float:
@@ -829,7 +823,7 @@ class LinearSinkForce(LinearDistanceForce):
         """
         ...
     @overload
-    def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
+    def __init__(self, p: Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
 
 class LinearSourceForce(LinearDistanceForce):
     """Repellant force."""
@@ -843,7 +837,7 @@ class LinearSourceForce(LinearDistanceForce):
         """
         ...
     @overload
-    def __init__(self, p: _Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
+    def __init__(self, p: Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
 
 class LinearUserDefinedForce(LinearForce):
     """A programmable force that takes an evaluator function."""
@@ -870,9 +864,9 @@ class LinearVectorForce(LinearForce):
     @overload
     def __init__(self, copy: LinearVectorForce) -> None: ...
     @overload
-    def __init__(self, vec: _Vec3f, a: float = ..., mass: bool = ...) -> None: ...
+    def __init__(self, vec: Vec3f, a: float = ..., mass: bool = ...) -> None: ...
     @overload
-    def set_vector(self, v: _Vec3f) -> None:
+    def set_vector(self, v: Vec3f) -> None:
         """`(self, v: LVector3f)`:
         encapsulating wrapper
         

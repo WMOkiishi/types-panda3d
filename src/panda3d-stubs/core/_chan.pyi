@@ -1,19 +1,14 @@
-from _typeshed import StrOrBytesPath
 from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
 from panda3d.core import (
     AnimInterface,
     BitArray,
-    ConfigVariableColor,
-    ConfigVariableFilename,
     ConstPointerToArray_float,
     CopyOnWriteObject,
     GlobPattern,
-    LMatrix3f,
     LMatrix4f,
-    LVecBase3f,
-    LVecBase4f,
     Loader,
     LoaderOptions,
     ModelLoadRequest,
@@ -25,16 +20,10 @@ from panda3d.core import (
     TypeHandle,
     TypedReferenceCount,
     TypedWritableReferenceCount,
-    UnalignedLMatrix4f,
-    UnalignedLVecBase4f,
     ostream,
 )
 
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _Self = TypeVar('_Self')
-_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _PartBundle_BlendType: TypeAlias = Literal[0, 1, 2, 3]
 
 class AnimGroup(TypedWritableReferenceCount, Namable):
@@ -227,7 +216,7 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         you may also call it directly.
         """
         ...
-    def apply_freeze_matrix(self, pos: _Vec3f, hpr: _Vec3f, scale: _Vec3f) -> bool:
+    def apply_freeze_matrix(self, pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> bool:
         """Freezes this particular joint so that it will always hold the specified
         transform.  Returns true if this is a joint that can be so frozen, false
         otherwise.
@@ -404,15 +393,15 @@ class AnimChannelBase(AnimGroup):
     getType = get_type
 
 class AnimChannel_ACMatrixSwitchType(AnimChannelBase):
-    def get_value(self, frame: int, value: _Mat4f) -> None: ...
-    def get_value_no_scale_shear(self, frame: int, value: _Mat4f) -> None:
+    def get_value(self, frame: int, value: Mat4f) -> None: ...
+    def get_value_no_scale_shear(self, frame: int, value: Mat4f) -> None:
         """These transform-component methods only have meaning for matrix types."""
         ...
-    def get_scale(self, frame: int, scale: _Vec3f) -> None: ...
-    def get_hpr(self, frame: int, hpr: _Vec3f) -> None: ...
-    def get_quat(self, frame: int, quat: _Vec4f) -> None: ...
-    def get_pos(self, frame: int, pos: _Vec3f) -> None: ...
-    def get_shear(self, frame: int, shear: _Vec3f) -> None: ...
+    def get_scale(self, frame: int, scale: Vec3f) -> None: ...
+    def get_hpr(self, frame: int, hpr: Vec3f) -> None: ...
+    def get_quat(self, frame: int, quat: Vec4f) -> None: ...
+    def get_pos(self, frame: int, pos: Vec3f) -> None: ...
+    def get_shear(self, frame: int, shear: Vec3f) -> None: ...
     def get_value_type(self) -> TypeHandle: ...
     getValue = get_value
     getValueNoScaleShear = get_value_no_scale_shear
@@ -424,11 +413,11 @@ class AnimChannel_ACMatrixSwitchType(AnimChannelBase):
     getValueType = get_value_type
 
 class AnimChannel_ACScalarSwitchType(AnimChannelBase):
-    def get_scale(self, frame: int, scale: _Vec3f) -> None: ...
-    def get_hpr(self, frame: int, hpr: _Vec3f) -> None: ...
-    def get_quat(self, frame: int, quat: _Vec4f) -> None: ...
-    def get_pos(self, frame: int, pos: _Vec3f) -> None: ...
-    def get_shear(self, frame: int, shear: _Vec3f) -> None: ...
+    def get_scale(self, frame: int, scale: Vec3f) -> None: ...
+    def get_hpr(self, frame: int, hpr: Vec3f) -> None: ...
+    def get_quat(self, frame: int, quat: Vec4f) -> None: ...
+    def get_pos(self, frame: int, pos: Vec3f) -> None: ...
+    def get_shear(self, frame: int, shear: Vec3f) -> None: ...
     def get_value_type(self) -> TypeHandle: ...
     getScale = get_scale
     getHpr = get_hpr
@@ -447,7 +436,7 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     transform will be copied to the joint each frame.
     """
     value_node: PandaNode
-    def set_value(self, value: TransformState | _Mat4f) -> None:
+    def set_value(self, value: Mat4f | TransformState) -> None:
         """`(self, value: LMatrix4f)`:
         Explicitly sets the matrix value.
         
@@ -827,7 +816,7 @@ class BindAnimRequest(ModelLoadRequest):
     @overload
     def __init__(self, __param0: BindAnimRequest) -> None: ...
     @overload
-    def __init__(self, name: str, filename: _Filepath, options: LoaderOptions, loader: Loader, control: AnimControl, hierarchy_match_flags: int, subset: PartSubset) -> None: ...
+    def __init__(self, name: str, filename: Filepath, options: LoaderOptions, loader: Loader, control: AnimControl, hierarchy_match_flags: int, subset: PartSubset) -> None: ...
 
 class PartBundle(PartGroup):
     """This is the root of a MovingPart hierarchy.  It defines the hierarchy of
@@ -929,12 +918,12 @@ class PartBundle(PartGroup):
         is ready.  See set_frame_blend_flag().
         """
         ...
-    def set_root_xform(self, root_xform: _Mat4f) -> None:
+    def set_root_xform(self, root_xform: Mat4f) -> None:
         """Specifies the transform matrix which is implicitly applied at the root of
         the animated hierarchy.
         """
         ...
-    def xform(self, mat: _Mat4f) -> None:
+    def xform(self, mat: Mat4f) -> None:
         """Applies the indicated transform to the root of the animated hierarchy."""
         ...
     def get_root_xform(self) -> LMatrix4f:
@@ -1006,7 +995,7 @@ class PartBundle(PartGroup):
         goes to zero).
         """
         ...
-    def load_bind_anim(self, loader: Loader, filename: _Filepath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool) -> AnimControl:
+    def load_bind_anim(self, loader: Loader, filename: Filepath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool) -> AnimControl:
         """Binds an animation to the bundle.  The animation is loaded from the disk
         via the indicated Loader object.  In other respects, this behaves similarly
         to bind_anim(), with the addition of asynchronous support.
@@ -1046,7 +1035,7 @@ class PartBundle(PartGroup):
     @overload
     def freeze_joint(self, joint_name: str, transform: TransformState) -> bool: ...
     @overload
-    def freeze_joint(self, joint_name: str, pos: _Vec3f, hpr: _Vec3f, scale: _Vec3f) -> bool: ...
+    def freeze_joint(self, joint_name: str, pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> bool: ...
     def control_joint(self, joint_name: str, node: PandaNode) -> bool:
         """Specifies that the joint with the indicated name should be animated with
         the transform on the indicated node.  It will henceforth always follow the

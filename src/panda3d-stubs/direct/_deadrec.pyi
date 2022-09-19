@@ -1,8 +1,8 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
-from panda3d.core import LMatrix3f, LPoint3f, LVecBase3f, NodePath, ostream
+from panda3d._typing import Vec3f
+from panda3d.core import LPoint3f, LVecBase3f, NodePath, ostream
 
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 _SmoothMover_SmoothMode: TypeAlias = Literal[0, 1]
 _SmoothMover_PredictionMode: TypeAlias = Literal[0, 1]
 
@@ -30,7 +30,7 @@ class SmoothMover:
     PMOn: Final[Literal[1]]
     def __init__(self, __param0: SmoothMover = ...) -> None: ...
     @overload
-    def set_pos(self, pos: _Vec3f) -> bool:
+    def set_pos(self, pos: Vec3f) -> bool:
         """Specifies the position of the SmoothMover at a particular time in the past.
         When mark_position() is called, this will be recorded (along with hpr and
         timestamp) in a position report, which will then be used along with all
@@ -53,7 +53,7 @@ class SmoothMover:
         """Sets the Z position only.  See set_pos()."""
         ...
     @overload
-    def set_hpr(self, hpr: _Vec3f) -> bool:
+    def set_hpr(self, hpr: Vec3f) -> bool:
         """Specifies the orientation of the SmoothMover at a particular time in the
         past.  When mark_position() is called, this will be recorded (along with
         hpr and timestamp) in a position report, which will then be used along with
@@ -76,7 +76,7 @@ class SmoothMover:
         """Sets the roll only.  See set_hpr()."""
         ...
     @overload
-    def set_pos_hpr(self, pos: _Vec3f, hpr: _Vec3f) -> bool:
+    def set_pos_hpr(self, pos: Vec3f, hpr: Vec3f) -> bool:
         """`(self, pos: LVecBase3f, hpr: LVecBase3f)`:
         Specifies the position and orientation of the SmoothMover at a particular
         time in the past.  When mark_position() is called, this will be recorded

@@ -1,26 +1,19 @@
-from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+from panda3d._typing import Filepath, Vec3d, Vec3f, Vec4f
 from panda3d.core import (
     AudioSound,
     BitMask_uint32_t_32,
     ClockObject,
-    ConfigVariableColor,
-    ConfigVariableFilename,
     CullTraverser,
     DisplayRegion,
     GeomNode,
     GraphicsOutput,
     GraphicsStateGuardianBase,
     InternalName,
-    LMatrix3d,
-    LMatrix3f,
-    LMatrix4f,
     LPoint3f,
     LVecBase2d,
     LVecBase2f,
-    LVecBase3d,
-    LVecBase3f,
     LVecBase4f,
     LVector3f,
     Lens,
@@ -40,14 +33,9 @@ from panda3d.core import (
     TransformState,
     TypeHandle,
     TypedObject,
-    UnalignedLVecBase4f,
     VertexTransform,
 )
 
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
-_Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 _PfmVizzer_ColumnType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 _PfmVizzer_MeshFace: TypeAlias = Literal[1, 2, 3]
 
@@ -78,11 +66,11 @@ class CardMaker(Namable):
     @overload
     def set_uv_range(self, ll: LVecBase2f, ur: LVecBase2f) -> None: ...
     @overload
-    def set_uv_range(self, x: _Vec4f, y: _Vec4f, z: _Vec4f) -> None: ...
+    def set_uv_range(self, x: Vec4f, y: Vec4f, z: Vec4f) -> None: ...
     @overload
     def set_uv_range(self, ll: LVecBase2f, lr: LVecBase2f, ur: LVecBase2f, ul: LVecBase2f) -> None: ...
     @overload
-    def set_uv_range(self, ll: _Vec3f, lr: _Vec3f, ur: _Vec3f, ul: _Vec3f) -> None: ...
+    def set_uv_range(self, ll: Vec3f, lr: Vec3f, ur: Vec3f, ul: Vec3f) -> None: ...
     def set_uv_range_cube(self, face: int) -> None:
         """Sets the range of UV's that will be applied to the vertices appropriately
         for a cube-map face.
@@ -100,11 +88,11 @@ class CardMaker(Namable):
         """
         ...
     @overload
-    def set_frame(self, frame: _Vec4f) -> None:
+    def set_frame(self, frame: Vec4f) -> None:
         """Sets the size of the card."""
         ...
     @overload
-    def set_frame(self, ll: _Vec3f, lr: _Vec3f, ur: _Vec3f, ul: _Vec3f) -> None: ...
+    def set_frame(self, ll: Vec3f, lr: Vec3f, ur: Vec3f, ul: Vec3f) -> None: ...
     @overload
     def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
     def set_frame_fullscreen_quad(self) -> None:
@@ -113,7 +101,7 @@ class CardMaker(Namable):
         """
         ...
     @overload
-    def set_color(self, color: _Vec4f) -> None:
+    def set_color(self, color: Vec4f) -> None:
         """Sets the color of the card."""
         ...
     @overload
@@ -126,7 +114,7 @@ class CardMaker(Namable):
         perpendicular to the card's face.
         """
         ...
-    def set_source_geometry(self, node: PandaNode, frame: _Vec4f) -> None:
+    def set_source_geometry(self, node: PandaNode, frame: Vec4f) -> None:
         """Sets a node that will be copied (and scaled and translated) to generate the
         frame, instead of generating a new polygon.  The node may contain arbitrary
         geometry that describes a flat polygon contained within the indicated left,
@@ -318,7 +306,7 @@ class GeoMipTerrain(TypedObject):
         """
         ...
     @overload
-    def set_heightfield(self, filename: _Filepath, type: PNMFileType = ...) -> bool: ...
+    def set_heightfield(self, filename: Filepath, type: PNMFileType = ...) -> bool: ...
     def color_map(self) -> PNMImage:
         """Returns a reference to the color map (a PNMImage) contained inside
         GeoMipTerrain.  You can use the reference to alter the color map.
@@ -334,7 +322,7 @@ class GeoMipTerrain(TypedObject):
     @overload
     def set_color_map(self, path: str) -> bool: ...
     @overload
-    def set_color_map(self, filename: _Filepath, type: PNMFileType = ...) -> bool: ...
+    def set_color_map(self, filename: Filepath, type: PNMFileType = ...) -> bool: ...
     def has_color_map(self) -> bool:
         """Returns whether a color map has been set."""
         ...
@@ -399,7 +387,7 @@ class GeoMipTerrain(TypedObject):
         """
         ...
     @overload
-    def set_focal_point(self, fp: LVecBase2d | LVecBase2f | _Vec3d | _Vec3f) -> None:
+    def set_focal_point(self, fp: LVecBase2d | LVecBase2f | Vec3d | Vec3f) -> None:
         """`(self, fp: LPoint2d)`:
         The focal point is the point at which the terrain will have the highest
         quality (lowest level of detail). Parts farther away from the focal point
@@ -594,7 +582,7 @@ class HeightfieldTesselator(Namable):
         HeightfieldTesselator.  You can use the reference to alter the heightfield.
         """
         ...
-    def set_heightfield(self, filename: _Filepath, type: PNMFileType = ...) -> bool:
+    def set_heightfield(self, filename: Filepath, type: PNMFileType = ...) -> bool:
         """Loads the specified greyscale image file into the heightfield."""
         ...
     def set_poly_count(self, n: int) -> None:
@@ -670,7 +658,7 @@ class LineSegs(Namable):
         """Removes any lines in progress and resets to the initial empty state."""
         ...
     @overload
-    def set_color(self, color: _Vec4f) -> None:
+    def set_color(self, color: Vec4f) -> None:
         """Establishes the color that will be assigned to all vertices created by
         future calls to move_to() and draw_to().
         """
@@ -683,7 +671,7 @@ class LineSegs(Namable):
         """
         ...
     @overload
-    def move_to(self, v: _Vec3f) -> None:
+    def move_to(self, v: Vec3f) -> None:
         """Moves the pen to the given point without drawing a line.  When followed by
         draw_to(), this marks the first point of a line segment; when followed by
         move_to() or create(), this creates a single point.
@@ -692,7 +680,7 @@ class LineSegs(Namable):
     @overload
     def move_to(self, x: float, y: float, z: float) -> None: ...
     @overload
-    def draw_to(self, v: _Vec3f) -> None:
+    def draw_to(self, v: Vec3f) -> None:
         """Draws a line segment from the pen's last position (the last call to move_to
         or draw_to) to the indicated point.  move_to() and draw_to() only update
         tables; the actual drawing is performed when create() is called.
@@ -747,7 +735,7 @@ class LineSegs(Namable):
         """
         ...
     @overload
-    def set_vertex(self, n: int, vert: _Vec3f) -> None:
+    def set_vertex(self, n: int, vert: Vec3f) -> None:
         """Moves the nth point or vertex of the line segment sequence generated by the
         last call to create().  The first move_to() generates vertex 0; subsequent
         move_to() and draw_to() calls generate consecutively higher vertex numbers.
@@ -759,7 +747,7 @@ class LineSegs(Namable):
         """Returns the color of the nth point or vertex."""
         ...
     @overload
-    def set_vertex_color(self, vertex: int, c: _Vec4f) -> None:
+    def set_vertex_color(self, vertex: int, c: Vec4f) -> None:
         """Changes the vertex color of the nth point or vertex.  See set_vertex()."""
         ...
     @overload
@@ -813,58 +801,58 @@ class MeshDrawer(TypedObject):
         required to generate bill boards that face it.
         """
         ...
-    def tri(self, v1: _Vec3f, c1: _Vec4f, uv1: LVecBase2f, v2: _Vec3f, c2: _Vec4f, uv2: LVecBase2f, v3: _Vec3f, c3: _Vec4f, uv3: LVecBase2f) -> None:
+    def tri(self, v1: Vec3f, c1: Vec4f, uv1: LVecBase2f, v2: Vec3f, c2: Vec4f, uv2: LVecBase2f, v3: Vec3f, c3: Vec4f, uv3: LVecBase2f) -> None:
         """Draws a triangle with the given parameters."""
         ...
-    def particle(self, pos: _Vec3f, frame: _Vec4f, size: float, color: _Vec4f, rotation: float) -> None:
+    def particle(self, pos: Vec3f, frame: Vec4f, size: float, color: Vec4f, rotation: float) -> None:
         """Draws a particle that is sort of like a bill board but has an extra
         rotation component.  Frame contains u,v,u-size,v-size quadruple.
         """
         ...
-    def blended_particle(self, pos: _Vec3f, frame1: _Vec4f, frame2: _Vec4f, blend: float, size: float, color: _Vec4f, rotation: float) -> None:
+    def blended_particle(self, pos: Vec3f, frame1: Vec4f, frame2: Vec4f, blend: float, size: float, color: Vec4f, rotation: float) -> None:
         """Works just like particle but accepts 2 frames and a blend (from 0 to 1)
         component between them Frame contains u,v,u-size,v-size quadruple.
         """
         ...
-    def billboard(self, pos: _Vec3f, frame: _Vec4f, size: float, color: _Vec4f) -> None:
+    def billboard(self, pos: Vec3f, frame: Vec4f, size: float, color: Vec4f) -> None:
         """Draws a billboard - particle with no rotation.  Billboards always face the
         camera.  Frame contains u,v,u-size,v-size quadruple.
         """
         ...
-    def segment(self, start: _Vec3f, stop: _Vec3f, frame: _Vec4f, thickness: float, color: _Vec4f) -> None:
+    def segment(self, start: Vec3f, stop: Vec3f, frame: Vec4f, thickness: float, color: Vec4f) -> None:
         """Draws a segment a line with a thickness.  That has billboarding effect.
         Frame contains u,v,u-size,v-size quadruple.
         """
         ...
-    def cross_segment(self, start: _Vec3f, stop: _Vec3f, frame: _Vec4f, thickness: float, color: _Vec4f) -> None:
+    def cross_segment(self, start: Vec3f, stop: Vec3f, frame: Vec4f, thickness: float, color: Vec4f) -> None:
         """Draws a segment a line with a thickness.  This segment does not use the
         bill boarding behavior and instead draws 2 planes in a cross.  Stars at
         start and ends at stop.  Frame contains u,v,u-size,v-size quadruple.
         """
         ...
-    def uneven_segment(self, start: _Vec3f, stop: _Vec3f, frame: _Vec4f, thickness_start: float, color_start: _Vec4f, thickness_stop: float, color_stop: _Vec4f) -> None:
+    def uneven_segment(self, start: Vec3f, stop: Vec3f, frame: Vec4f, thickness_start: float, color_start: Vec4f, thickness_stop: float, color_stop: Vec4f) -> None:
         """Draws a segment a line with different thickness and color on both sides.
         Stars at start and ends at stop.  Frame contains u,v,u-size,v-size
         quadruple.
         """
         ...
-    def link_segment(self, pos: _Vec3f, frame: _Vec4f, thickness: float, color: _Vec4f) -> None:
+    def link_segment(self, pos: Vec3f, frame: Vec4f, thickness: float, color: Vec4f) -> None:
         """Stars or continues linked segment.  Control position, frame, thickness and
         color with parameters.  Frame contains u,v,u-size,v-size quadruple.
         """
         ...
-    def link_segment_end(self, frame: _Vec4f, color: _Vec4f) -> None:
+    def link_segment_end(self, frame: Vec4f, color: Vec4f) -> None:
         """Finish drawing linked segments, needs at least two calls to link_segment
         before it can end the linked segment.  Frame contains u,v,u-size,v-size
         quadruple.
         """
         ...
-    def explosion(self, pos: _Vec3f, frame: _Vec4f, size: float, color: _Vec4f, seed: int, number: int, distance: float) -> None:
+    def explosion(self, pos: Vec3f, frame: Vec4f, size: float, color: Vec4f, seed: int, number: int, distance: float) -> None:
         """Draws number of particles in a sphere like emitter.  Frame contains
         u,v,u-size,v-size quadruple.
         """
         ...
-    def stream(self, start: _Vec3f, stop: _Vec3f, frame: _Vec4f, size: float, color: _Vec4f, number: int, offset: float) -> None:
+    def stream(self, start: Vec3f, stop: Vec3f, frame: Vec4f, size: float, color: Vec4f, number: int, offset: float) -> None:
         """Draws a number of particles in a big line with a shift dictated by the
         offset.  Frame contains u,v,u-size,v-size quadruple.
         """
@@ -904,27 +892,27 @@ class MeshDrawer2D(TypedObject):
     def get_root(self) -> NodePath:
         """Returns the root NodePath."""
         ...
-    def quad_raw(self, v1: _Vec3f, c1: _Vec4f, uv1: LVecBase2f, v2: _Vec3f, c2: _Vec4f, uv2: LVecBase2f, v3: _Vec3f, c3: _Vec4f, uv3: LVecBase2f, v4: _Vec3f, c4: _Vec4f, uv4: LVecBase2f) -> None:
+    def quad_raw(self, v1: Vec3f, c1: Vec4f, uv1: LVecBase2f, v2: Vec3f, c2: Vec4f, uv2: LVecBase2f, v3: Vec3f, c3: Vec4f, uv3: LVecBase2f, v4: Vec3f, c4: Vec4f, uv4: LVecBase2f) -> None:
         """Draws a 2D rectangle.  Ignores the clipping rectangle."""
         ...
-    def rectangle_raw(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: _Vec4f) -> None: ...
+    def rectangle_raw(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None: ...
     def set_clip(self, x: float, y: float, w: float, h: float) -> None:
         """Sets the clipping rectangle."""
         ...
-    def rectangle(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: _Vec4f) -> None:
+    def rectangle(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
         """Draws a 2D rectangle which can be clipped."""
         ...
-    def rectangle_border(self, x: float, y: float, w: float, h: float, r: float, t: float, l: float, b: float, tr: float, tt: float, tl: float, tb: float, u: float, v: float, us: float, vs: float, color: _Vec4f) -> None:
+    def rectangle_border(self, x: float, y: float, w: float, h: float, r: float, t: float, l: float, b: float, tr: float, tt: float, tl: float, tb: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
         """Draws a 2d rectangle, with borders and corders, taken from the surrounding
         texture
         """
         ...
-    def rectangle_border_tiled(self, x: float, y: float, w: float, h: float, r: float, t: float, l: float, b: float, tr: float, tt: float, tl: float, tb: float, u: float, v: float, us: float, vs: float, color: _Vec4f) -> None:
+    def rectangle_border_tiled(self, x: float, y: float, w: float, h: float, r: float, t: float, l: float, b: float, tr: float, tt: float, tl: float, tb: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
         """Draws a 2d rectangle, with borders and corders, taken from the surrounding
         texture
         """
         ...
-    def rectangle_tiled(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: _Vec4f) -> None:
+    def rectangle_tiled(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
         """Draws a tiled rectangle, size of tiles is in us and vs"""
         ...
     def begin(self) -> None:

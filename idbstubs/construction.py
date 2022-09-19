@@ -27,7 +27,7 @@ from .translation import (
     method_name_from_cpp_name, snake_to_camel
 )
 from .typedata import (
-    get_direct_type_name, get_linear_superclasses, get_type_name
+    TYPE_ALIASES, get_direct_type_name, get_linear_superclasses, get_type_name
 )
 from .util import flatten, is_dunder
 
@@ -501,3 +501,11 @@ def process_class(class_: Class) -> None:
         else:
             _removed_attributes[class_.scoped_name].add(rep.name)
     class_.nested = new_nested
+
+
+def make_typing_module() -> Module:
+    aliases = [
+        Alias(name, definition, is_type_alias=True)
+        for name, definition in TYPE_ALIASES.items()
+    ]
+    return Module('_typing', {'typing': aliases}, namespace=('panda3d',))

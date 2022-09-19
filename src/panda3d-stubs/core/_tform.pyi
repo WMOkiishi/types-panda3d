@@ -1,15 +1,14 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+from panda3d._typing import Mat4f, Vec3f, Vec4f
 from panda3d.core import (
     ButtonHandle,
-    ConfigVariableColor,
     DataNode,
     DisplayRegion,
     EventHandler,
     EventParameter,
     GeomNode,
-    LMatrix3f,
     LMatrix4f,
     LPoint2f,
     LPoint3f,
@@ -24,14 +23,9 @@ from panda3d.core import (
     ReferenceCount,
     TypeHandle,
     TypedWritableReferenceCount,
-    UnalignedLMatrix4f,
-    UnalignedLVecBase4f,
     ostream,
 )
 
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 2]
 _Trackball_ControlMode: TypeAlias = Literal[0, 1, 2, 3, 4]
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
@@ -512,7 +506,7 @@ class DriveInterface(MouseInterfaceNode):
     def get_y(self) -> float: ...
     def get_z(self) -> float: ...
     @overload
-    def set_pos(self, vec: _Vec3f) -> None:
+    def set_pos(self, vec: Vec3f) -> None:
         """Directly sets the driver's position."""
         ...
     @overload
@@ -527,7 +521,7 @@ class DriveInterface(MouseInterfaceNode):
     def get_p(self) -> float: ...
     def get_r(self) -> float: ...
     @overload
-    def set_hpr(self, hpr: _Vec3f) -> None:
+    def set_hpr(self, hpr: Vec3f) -> None:
         """Directly sets the driver's orientation."""
         ...
     @overload
@@ -575,7 +569,7 @@ class DriveInterface(MouseInterfaceNode):
         set_stop_this_frame().
         """
         ...
-    def set_mat(self, mat: _Mat4f) -> None:
+    def set_mat(self, mat: Mat4f) -> None:
         """Stores the indicated transform in the DriveInterface."""
         ...
     def get_mat(self) -> LMatrix4f:
@@ -703,13 +697,13 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     @overload
     def __init__(self, __param0: MouseWatcherRegion) -> None: ...
     @overload
-    def __init__(self, name: str, frame: _Vec4f) -> None: ...
+    def __init__(self, name: str, frame: Vec4f) -> None: ...
     @overload
     def __init__(self, name: str, left: float, right: float, bottom: float, top: float) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     @overload
-    def set_frame(self, frame: _Vec4f) -> None: ...
+    def set_frame(self, frame: Vec4f) -> None: ...
     @overload
     def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
     def get_frame(self) -> LVecBase4f: ...
@@ -839,7 +833,7 @@ class MouseWatcherBase:
         scene graph for the window.
         """
         ...
-    def set_color(self, color: _Vec4f) -> None:
+    def set_color(self, color: Vec4f) -> None:
         """Specifies the color used to draw the region rectangles for the regions
         visualized by show_regions().
         """
@@ -941,7 +935,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """
         ...
     @overload
-    def set_frame(self, frame: _Vec4f) -> None:
+    def set_frame(self, frame: Vec4f) -> None:
         """`(self, frame: LVecBase4f)`:
         Sets the frame of the MouseWatcher.  This determines the coordinate space
         in which the MouseWatcherRegions should be expected to live.  Normally,
@@ -1483,7 +1477,7 @@ class Trackball(MouseInterfaceNode):
     def get_y(self) -> float: ...
     def get_z(self) -> float: ...
     @overload
-    def set_pos(self, vec: _Vec3f) -> None:
+    def set_pos(self, vec: Vec3f) -> None:
         """Directly set the offset from the rotational origin."""
         ...
     @overload
@@ -1498,7 +1492,7 @@ class Trackball(MouseInterfaceNode):
     def get_p(self) -> float: ...
     def get_r(self) -> float: ...
     @overload
-    def set_hpr(self, hpr: _Vec3f) -> None:
+    def set_hpr(self, hpr: Vec3f) -> None:
         """Directly set the mover's orientation."""
         ...
     @overload
@@ -1517,7 +1511,7 @@ class Trackball(MouseInterfaceNode):
     def get_origin(self) -> LPoint3f:
         """Returns the current center of rotation."""
         ...
-    def set_origin(self, origin: _Vec3f) -> None:
+    def set_origin(self, origin: Vec3f) -> None:
         """Directly sets the center of rotation."""
         ...
     def set_control_mode(self, control_mode: _Trackball_ControlMode) -> None:
@@ -1565,7 +1559,7 @@ class Trackball(MouseInterfaceNode):
         set_coordinate_system().
         """
         ...
-    def set_mat(self, mat: _Mat4f) -> None:
+    def set_mat(self, mat: Mat4f) -> None:
         """Stores the indicated transform in the trackball.  This is a transform in
         global space, regardless of the rel_to node.
         """
