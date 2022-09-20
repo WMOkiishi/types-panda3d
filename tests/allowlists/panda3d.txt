@@ -2,8 +2,9 @@
 panda3d\.\w+\.Dtool_BorrowThisReference
 panda3d\.\w+\.Dtool_PyNativeInterface
 
-# Don't worry about the fake submodules.
+# Don't worry about the fake modules.
 panda3d\.\w+\._\w+
+panda3d._typing
 
 # For some reason, Mypy checks the arguments for __init__ differently than
 # other methods.
