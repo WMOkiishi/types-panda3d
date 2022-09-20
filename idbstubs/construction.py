@@ -34,20 +34,10 @@ from .util import flatten, is_dunder
 _logger: Final = logging.getLogger(__name__)
 _class_bodies: Final[dict[str, dict[str, StubRep]]] = {}
 
-# This is a bit of a hack for the checks to reference
-_removed_attributes: Final = defaultdict[str, set[str]](set)
-
 # Don't replace `size` with `__len__` for these
 SIZE_NOT_LEN: Final = ('EggGroupNode', 'WindowProperties')
 
 SR = TypeVar('SR', bound=StubRep)
-
-
-def get_removed_attributes(class_: str, /) -> set[str]:
-    """Return a set of the names of attributes removed from the stubs for the
-    class with the given (scoped) name.
-    """
-    return _removed_attributes[class_]
 
 
 def get_function_name(f: FunctionIndex, /) -> str:
@@ -498,8 +488,6 @@ def process_class(class_: Class) -> None:
             name_to_check = rep.name
         if name_to_check in nested_names:
             new_nested.append(rep)
-        else:
-            _removed_attributes[class_.scoped_name].add(rep.name)
     class_.nested = new_nested
 
 
