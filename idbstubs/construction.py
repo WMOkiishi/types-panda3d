@@ -166,20 +166,24 @@ def make_element_rep(
 
 def make_signature_rep(
         w: FunctionWrapperIndex, /,
-        is_constructor: bool = False) -> Signature:
+        *, is_constructor: bool = False,
+        ensure_self_param: bool = False) -> Signature:
     """Return a representation of the signature
     of a function wrapper known to interrogate.
     """
+    ensure_self_param = ensure_self_param or is_constructor
     if is_constructor:
         return_type = 'None'
-        params = [Parameter.as_self()]
     else:
         return_type_index = idb.interrogate_wrapper_return_type(w)
         return_type = get_type_name(return_type_index)
-        params: list[Parameter] = []
+    params: list[Parameter] = []
+    if ensure_self_param:
+        params.append(Parameter.as_self())
     for n in range(idb.interrogate_wrapper_number_of_parameters(w)):
         if idb.interrogate_wrapper_parameter_is_this(w, n):
-            params.append(Parameter.as_self())
+            if not ensure_self_param:
+                params.append(Parameter.as_self())
             continue
         params.append(Parameter(
             check_keyword(idb.interrogate_wrapper_parameter_name(w, n)),
@@ -210,12 +214,8 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
     for w in get_python_wrappers(f):
         if not wrapper_is_exposed(w):
             continue
-        signature = make_signature_rep(w, is_constructor)
-        if not_static and (
-            not signature.parameters
-            or not signature.parameters[0].is_self
-        ):
-            signature.parameters = [Parameter.as_self(), *signature.parameters]
+        signature = make_signature_rep(w, is_constructor=is_constructor,
+                                       ensure_self_param=not_static)
         signatures.append(signature)
         if idb.interrogate_wrapper_has_comment(w):
             sig_doc = comment_to_docstring(idb.interrogate_wrapper_comment(w))
@@ -229,8 +229,14 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
             f"{'; '.join(p)}:\n{d}"
             for d, p in sigs_by_doc.items()
         )
-    return Function(name, signatures, is_method=is_method,
-                    namespace=namespace, doc=doc)
+    return Function(
+        name,
+        signatures,
+        is_method=is_method,
+        is_static=not not_static,
+        namespace=namespace,
+        doc=doc,
+    )
 
 
 def make_type_reps(

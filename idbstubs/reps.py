@@ -136,10 +136,6 @@ class Signature:
         else:
             return f'({param_string})'
 
-    @property
-    def is_static(self) -> bool:
-        return not (self.parameters and self.parameters[0].is_self)
-
     def copy(self, **changes: Any) -> 'Signature':
         if 'parameters' not in changes:
             changes['parameters'] = tuple((evolve(p) for p in self.parameters))
@@ -173,6 +169,7 @@ class Function:
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
     is_method: bool = field(default=False, kw_only=True)
+    is_static: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
@@ -182,10 +179,16 @@ class Function:
     def scoped_name(self) -> str:
         return '.'.join((*self.namespace, self.name))
 
-    @property
-    def is_overloaded(self) -> bool:
-        """Whether the function should be decorated with @typing.overload."""
-        return len(self.signatures) > 1
+    def decorators(self) -> list[str]:
+        """Return a list of the names of the decorators that should be
+        applied to this function's signatures.
+        """
+        decorators: list[str] = []
+        if len(self.signatures) > 1:
+            decorators.append('overload')
+        if self.is_method and self.is_static:
+            decorators.append('staticmethod')
+        return decorators
 
     def __str__(self) -> str:
         kind = 'Method' if self.is_method else 'Function'
@@ -199,23 +202,20 @@ class Function:
     def get_dependencies(self) -> Iterator[str]:
         return chain(
             flatten(s.get_dependencies() for s in self.signatures),
-            ('overload',) if self.is_overloaded else (),
+            self.decorators(),
         )
 
     def definition(self) -> Iterator[str]:
-        is_method = self.is_method
-        is_overloaded = self.is_overloaded
+        decorators = self.decorators()
         doc_printed = False
         comment_printed = False
         for signature in self.signatures:
-            if is_overloaded:
+            for decorator in decorators:
                 if self.comment and not comment_printed:
-                    yield '@overload  # ' + self.comment
+                    yield f'@{decorator}  # {self.comment}'
                     comment_printed = True
                 else:
-                    yield '@overload'
-            if is_method and signature.is_static:
-                yield '@staticmethod'
+                    yield '@' + decorator
             sig_def = f'def {self.name}{signature}:'
             if doc_printed or not self.doc:
                 sig_def += ' ...'
