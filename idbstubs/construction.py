@@ -13,7 +13,9 @@ from .idbutil import (
     get_global_functions, get_global_getters, get_python_wrappers,
     type_is_exposed, unwrap_type, wrapper_is_exposed
 )
-from .processors import process_function
+from .processors import (
+    VECTOR_NAME_REGEX, process_function, process_vector_class
+)
 from .reps import (
     Alias, Attribute, Class, Function, Module, Package, Parameter, Signature,
     StubRep
@@ -462,6 +464,8 @@ def process_class(class_: Class) -> None:
     class_body = _class_bodies.get(class_.name)
     if class_body is None:
         return
+    if VECTOR_NAME_REGEX.match(class_.name):
+        process_vector_class(class_)
     nested_names = set(class_body.keys())
     for base_class in get_linear_superclasses(class_.name):
         base_class_body = _class_bodies.get(base_class)

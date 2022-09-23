@@ -1,5 +1,4 @@
 from collections.abc import Container
-from itertools import product
 from typing import Final
 
 # Don't write or check for stubs for anything with these names
@@ -38,36 +37,6 @@ NOT_EXPOSED: Final = frozenset((
     'Notify::get_assert_handler',
     'Texture::get_ram_mipmap_pointer',
     'TiXmlBase::GetUserData',
-    'LVecBase2i::operator /',
-    'LVecBase2i::operator /=',
-    'LVecBase3i::operator /',
-    'LVecBase3i::operator /=',
-    'LVecBase4i::operator /',
-    'LVecBase4i::operator /=',
-    'LVector2i::operator /',
-    'LVector2i::operator /=',
-    'LVector3i::operator /',
-    'LVector3i::operator /=',
-    'LVector4i::operator /',
-    'LVector4i::operator /=',
-    'LPoint2i::operator /',
-    'LPoint2i::operator /=',
-    'LPoint3i::operator /',
-    'LPoint3i::operator /=',
-    'LPoint4i::operator /',
-    'LPoint4i::operator /=',
-    'LVecBase2f::get_data',
-    'LVecBase2d::get_data',
-    'LVecBase2i::get_data',
-    'LVecBase3f::get_data',
-    'LVecBase3d::get_data',
-    'LVecBase3i::get_data',
-    'LVecBase4f::get_data',
-    'LVecBase4d::get_data',
-    'LVecBase4i::get_data',
-    'UnalignedLVecBase4f::get_data',
-    'UnalignedLVecBase4d::get_data',
-    'UnalignedLVecBase4i::get_data',
     'LMatrix3f::get_data',
     'LMatrix3d::get_data',
     'LMatrix4f::get_data',
@@ -205,28 +174,12 @@ RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.ode.OdeGeom.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
     'panda3d.ode.OdeSpace.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
 }
-_returns_self = product(
-    ('LVecBase2f', 'LVecBase2d', 'LVecBase2i',
-     'LVecBase3f', 'LVecBase3d', 'LVecBase3i',
-     'LVecBase4f', 'LVecBase4d', 'LVecBase4i'),
-    ('__floordiv__', '__ifloordiv__', '__pow__', '__ipow__',
-     '__iadd__', '__isub__', '__imul__', '__itruediv__',
-     '__round__', '__floor__', '__ceil__')
-)
-for _name, _func in _returns_self:
-    _func_name = '.'.join(('panda3d.core', _name, _func))
-    RETURN_TYPE_OVERRIDES[_func_name] = '_Self'
-    PARAM_TYPE_OVERRIDES.setdefault(_func_name, {})[(0, 0)] = '_Self'
 
 _fixed_lengths = [
-    ('LVecBase2f', 2), ('LVecBase2d', 2), ('LVecBase2i', 2),
-    ('LVecBase3f', 3), ('LVecBase3d', 3), ('LVecBase3i', 3),
-    ('LVecBase4f', 4), ('LVecBase4d', 4), ('LVecBase4i', 4),
     ('LMatrix3f', 3), ('LMatrix3f.Row', 3), ('LMatrix3f.CRow', 3),
     ('LMatrix3d', 3), ('LMatrix3d.Row', 3), ('LMatrix3d.CRow', 3),
     ('LMatrix4f', 4), ('LMatrix4f.Row', 4), ('LMatrix4f.CRow', 4),
     ('LMatrix4d', 4), ('LMatrix4d.Row', 4), ('LMatrix4d.CRow', 4),
-    ('UnalignedLVecBase4f', 4), ('UnalignedLVecBase4d', 4), ('UnalignedLVecBase4i', 4),
     ('pixel', 3), ('PNMImageHeader.PixelSpec', 4),
 ]
 for _name, _len in _fixed_lengths:

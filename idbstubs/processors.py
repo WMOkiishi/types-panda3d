@@ -1,9 +1,12 @@
 import logging
+import re
 from collections.abc import Sequence
 from itertools import combinations, zip_longest
 from typing import Final
 
-from .reps import Alias, File, Function, Parameter, Signature, TypeVariable
+from .reps import (
+    Alias, Class, File, Function, Parameter, Signature, TypeVariable
+)
 from .special_cases import (
     ATTRIBUTE_NAME_SHADOWS, PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
 )
@@ -16,6 +19,9 @@ from .util import flatten
 _logger: Final = logging.getLogger(__name__)
 _absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
 
+VECTOR_NAME_REGEX: Final = re.compile(
+    '((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
+)
 DEFAULT_RETURNS: Final = {
     '__int__': 'int',
     '__str__': 'str',
@@ -23,6 +29,11 @@ DEFAULT_RETURNS: Final = {
     'get_data': 'bytes',
     'get_subdata': 'bytes',
 }
+RETURN_SELF: Final = [
+    '__floordiv__', '__ifloordiv__', '__pow__', '__ipow__',
+     '__iadd__', '__isub__', '__imul__', '__itruediv__',
+     '__round__', '__floor__', '__ceil__',
+]
 
 
 def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
@@ -279,3 +290,32 @@ def process_dependencies(file: File) -> None:
         )
         if not processed:
             _logger.warning(f'Unknown type {name!r} in {current_dir!r}')
+
+
+def process_vector_class(vector: Class) -> None:
+    """Process a representation of a Panda3D vector class whose name
+    matches `VECTOR_NAME_REGEX`, applying various special cases.
+    """
+    name_match = VECTOR_NAME_REGEX.match(vector.name)
+    assert name_match is not None
+    kind, dimension, suffix = name_match[1], name_match[2], name_match[3]
+    class_body = dict(vector.body)
+    if kind.endswith('VecBase'):
+        class_body.pop('get_data', None)
+        class_body.pop('getData', None)
+    if suffix == 'i' and not kind.startswith('Unaligned'):
+        class_body.pop('__truediv__', None)
+        class_body.pop('__itruediv__', None)
+    for name in RETURN_SELF:
+        match class_body.get(name):
+            case Function(signatures=[
+                Signature(parameters=[
+                    Parameter() as self_param, *_
+                ]) as sig
+            ]):
+                self_param.type = '_Self'
+                sig.return_type = '_Self'
+    match class_body.get('__len__'):
+        case Function(signatures=[Signature() as sig]):
+            sig.return_type = f'Literal[{dimension}]'
+    vector.body = class_body
