@@ -11,8 +11,8 @@ class MiniTask(Generic[_P, _T]):
     done: ClassVar[Literal[0]]
     cont: ClassVar[Literal[1]]
     name: str
+    __call__: Callable[_P, _T]
     def __init__(self, callback: Callable[_P, _T]) -> None: ...
-    def __call__(self, *args: _P.args, **kwargs: _P.kwargs) -> _T: ...
 
 class MiniTaskManager:
     def __init__(self) -> None: ...
