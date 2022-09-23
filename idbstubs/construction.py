@@ -264,7 +264,7 @@ def make_type_reps(
         if class_.name == 'BitMaskNative':
             return ()
         if not idb.interrogate_type_is_nested(t):
-            _class_bodies[class_.name] = {i.name: i for i in class_.nested}
+            _class_bodies[class_.name] = dict(class_.body)
     return with_alias(class_, True)
 
 
@@ -321,13 +321,12 @@ def make_scoped_enum_rep(t: TypeIndex, /, namespace: Sequence[str] = ()) -> Clas
     """Return a representation of a scoped enum known to interrogate."""
     name = get_direct_type_name(t)
     this_namespace = (*namespace, name)
-    value_elements = [
-        Attribute(
-            idb.interrogate_type_enum_value_name(t, n),
-            'int', namespace=this_namespace
+    value_elements: dict[str, Attribute] = {}
+    for n in range(idb.interrogate_type_number_of_enum_values(t)):
+        value_name = idb.interrogate_type_enum_value_name(t, n)
+        value_elements[value_name] = Attribute(
+            value_name, 'int', namespace=this_namespace
         )
-        for n in range(idb.interrogate_type_number_of_enum_values(t))
-    ]
     is_final = idb.interrogate_type_is_final(t)
     return Class(name, ['Enum'], value_elements,
                  is_final=is_final, namespace=namespace)
@@ -340,7 +339,7 @@ def make_class_rep(
         ignore_coercion: bool = False) -> Class:
     """Return a representation of a class known to interrogate."""
     name = get_direct_type_name(t)
-    nested: list[StubRep] = []
+    class_body: dict[str, StubRep] = {}
     this_namespace = (*namespace, name)
     derivations = [
         get_type_name(j)
@@ -350,38 +349,36 @@ def make_class_rep(
     if (type_vars := GENERIC.get(name)) is not None:
         derivations.append(f'Generic[{type_vars}]')
     # Elements
-    nested.append(
-        Attribute('DtoolClassDict', 'ClassVar[dict[str, Any]]',
-                namespace=this_namespace)
+    class_body['DtoolClassDict'] = Attribute(
+        'DtoolClassDict', 'ClassVar[dict[str, Any]]', namespace=this_namespace
     )
     for n in range(idb.interrogate_type_number_of_elements(t)):
         e = idb.interrogate_type_get_element(t, n)
         if element_is_exposed(e) and not idb.interrogate_element_name(e) in NO_STUBS:
-            nested.append(make_element_rep(e, this_namespace))
+            element = make_element_rep(e, this_namespace)
+            class_body[element.name] = element
     if name.startswith('ParamValue_'):
         value = name[11:]
         if value in ('string', 'wstring'):
             value = 'str'
-        nested.append(Attribute('value', value, namespace=this_namespace))
+        class_body['value'] = Attribute('value', value, namespace=this_namespace)
     # Methods
-    seen = {i.name for i in nested}
     for method in get_type_methods(t):
         method = process_function(
             method,
             infer_opt_params=infer_opt_params,
             ignore_coercion=ignore_coercion,
         )
-        if method.name in seen:
+        if method.name in class_body:
             _logger.info(f'Discarding {method}; its name is already in use')
             continue
-        seen.add(method.name)
-        nested += with_alias(method)
+        class_body |= {rep.name: rep for rep in with_alias(method)}
     if (iterable_of := ITERABLE.get(name)) is not None:
-        nested.append(Function(
+        class_body['__iter__'] = Function(
             '__iter__',
             [Signature([Parameter.as_self()], f'Iterator[{iterable_of}]')],
             is_method=True, namespace=this_namespace,
-        ))
+        )
     # Nested types
     for n in range(idb.interrogate_type_number_of_nested_types(t)):
         s = idb.interrogate_type_get_nested_type(t, n)
@@ -391,13 +388,14 @@ def make_class_rep(
             continue
         if not type_is_exposed(s):
             continue
-        nested += make_type_reps(
+        type_reps = make_type_reps(
             s, this_namespace,
             infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion
+            ignore_coercion=ignore_coercion,
         )
+        class_body |= {rep.name: rep for rep in type_reps}
     # "type: ignore" comments
-    for rep in nested:
+    for rep in class_body.values():
         if (ignored_errors := IGNORE_ERRORS.get(rep.scoped_name)) is not None:
             rep.comment = f'type: ignore[{ignored_errors}]'
     # Docstring
@@ -406,7 +404,7 @@ def make_class_rep(
     else:
         doc = ''
     return Class(
-        name, derivations, nested,
+        name, derivations, class_body,
         is_final=idb.interrogate_type_is_final(t),
         namespace=namespace,
         doc=doc,
@@ -486,15 +484,15 @@ def process_class(class_: Class) -> None:
                 case a, b if a == b:
                     del class_body[name]
                     nested_names.remove(name)
-    new_nested: list[StubRep] = []
-    for rep in class_.nested:
+    new_nested: dict[str, StubRep] = {}
+    for rep in class_.body.values():
         if isinstance(rep, Alias) and rep.of_local:
             name_to_check = rep.alias_of
         else:
             name_to_check = rep.name
         if name_to_check in nested_names:
-            new_nested.append(rep)
-    class_.nested = new_nested
+            new_nested[rep.name] = rep
+    class_.body = new_nested
 
 
 def make_typing_module() -> Module:

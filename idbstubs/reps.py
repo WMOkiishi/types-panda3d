@@ -1,5 +1,5 @@
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from itertools import chain
 from pathlib import Path
 from typing import Any, Protocol
@@ -292,7 +292,7 @@ class Attribute:
 class Class:
     name: str
     derivations: Sequence[str] = field(default=(), converter=tuple)
-    nested: Sequence[StubRep] = Factory(list)
+    body: Mapping[str, StubRep] = Factory(dict)
     is_final: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
@@ -313,7 +313,7 @@ class Class:
         return chain(
             ('final',) if self.is_final else (),
             flatten(names_within(d) for d in self.derivations),
-            flatten(i.get_dependencies() for i in self.nested),
+            flatten(i.get_dependencies() for i in self.body.values()),
         )
 
     def definition(self) -> Iterator[str]:
@@ -323,7 +323,7 @@ class Class:
         if self.derivations:
             declaration += f"({', '.join(self.derivations)})"
         declaration += ':'
-        if not (self.nested or self.doc):
+        if not (self.body or self.doc):
             if self.comment:
                 yield f'{declaration} ...  # {self.comment}'
             else:
@@ -338,7 +338,7 @@ class Class:
                     yield '    ' + line
             else:
                 yield f'    """{self.doc}"""'
-        sorted_nested = sorted(self.nested, key=lambda i: i.sort())
+        sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
         for line in flatten(i.definition() for i in sorted_nested):
             yield '    ' + line
 
