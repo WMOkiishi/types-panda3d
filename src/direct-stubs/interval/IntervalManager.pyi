@@ -1,11 +1,13 @@
 __all__ = ['IntervalManager', 'ivalMgr']
 
+from typing_extensions import TypeAlias
+
 from panda3d.core import EventQueue
 from panda3d.direct import CInterval, CIntervalManager
 from ..showbase.EventManager import EventManager
 from .Interval import Interval
 
-_Interval = Interval | CInterval
+_Interval: TypeAlias = Interval | CInterval
 
 class IntervalManager(CIntervalManager):
     eventQueue: EventQueue

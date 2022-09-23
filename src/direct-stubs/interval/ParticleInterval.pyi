@@ -17,8 +17,8 @@ class ParticleInterval(Interval):
         parent: NodePath,
         worldRelative: bool = True,
         renderParent: NodePath | None = None,
-        duration: float = 0,
-        softStopT: float = 0,
+        duration: float = ...,
+        softStopT: float = ...,
         cleanup: bool = False,
         name: str | None = None,
     ) -> None: ...

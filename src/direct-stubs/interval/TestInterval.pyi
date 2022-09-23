@@ -11,7 +11,7 @@ class TestInterval(Interval):
     def __init__(
         self,
         particleEffect: ParticleEffect,
-        duration: float = 0,
+        duration: float = ...,
         parent: NodePath | None = None,
         renderParent: NodePath | None = None,
         name: str | None = None,

@@ -2,7 +2,7 @@ __all__ = ['AnimControlInterval']
 
 from typing import ClassVar
 
-from panda3d.core import AnimControlCollection
+from panda3d.core import AnimControl, AnimControlCollection
 from .Interval import Interval
 
 class AnimControlInterval(Interval):
@@ -17,17 +17,18 @@ class AnimControlInterval(Interval):
     reverse: bool
     numFrames: int
     implicitDuration: bool
+    currT: float
     def __init__(
         self,
-        controls,
-        loop = 0,
-        contstrainedLoop = 0,
+        controls: AnimControl | AnimControlCollection,
+        loop: bool = False,
+        contstrainedLoop: bool = False,
         duration: float | None = None,
-        startTime = None,
-        endTime = None,
+        startTime: int | None = None,
+        endTime: int | None = None,
         startFrame: int | None = None,
         endFrame: int | None = None,
-        playRate: float = 1,
+        playRate: float = ...,
         name: str | None = None
     ) -> None: ...
-    def getCurrentFrame(self): ...
+    def getCurrentFrame(self) -> float | None: ...

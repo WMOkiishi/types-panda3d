@@ -37,11 +37,11 @@ class FunctionInterval(Interval):
         *,
         name: str | None = None,
         openEnded: bool = True,
-        extraArgs = ...,
+        extraArgs: Iterable[Any] = ...,
         **kw: Any,
     ) -> None: ...
     @staticmethod
-    def makeUniqueName(func, suffix: str = '') -> str: ...
+    def makeUniqueName(func: object, suffix: str = ...) -> str: ...
 
 class EventInterval(FunctionInterval):
     def __init__(self, event: str, sentArgs: list[Any] = ...) -> None: ...
@@ -63,7 +63,13 @@ class WrtParentInterval(FunctionInterval):
 class PosInterval(FunctionInterval):
     posIntervalNum: ClassVar[int]
     def __init__(
-            self, nodePath: NodePath, pos: _Vec3f, duration: float = 0, name: str | None = None, other: NodePath | None = None) -> None: ...
+        self,
+        nodePath: NodePath,
+        pos: _Vec3f,
+        duration: float = ...,
+        name: str | None = None,
+        other: NodePath | None = None,
+    ) -> None: ...
 
 class HprInterval(FunctionInterval):
     hprIntervalNum: ClassVar[int]
@@ -71,7 +77,7 @@ class HprInterval(FunctionInterval):
         self,
         nodePath: NodePath,
         hpr: _Vec3f,
-        duration: float = 0,
+        duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
     ) -> None: ...
@@ -82,7 +88,7 @@ class ScaleInterval(FunctionInterval):
         self,
         nodePath: NodePath,
         scale: _Vec3f | float,
-        duration: float = 0,
+        duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
     ) -> None: ...
@@ -94,7 +100,7 @@ class PosHprInterval(FunctionInterval):
         nodePath: NodePath,
         pos: _Vec3f,
         hpr: _Vec3f,
-        duration: float = 0,
+        duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
     ) -> None: ...
@@ -106,7 +112,7 @@ class HprScaleInterval(FunctionInterval):
         nodePath: NodePath,
         hpr: _Vec3f,
         scale: _Vec3f | float,
-        duration: float = 0,
+        duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
     ) -> None: ...
@@ -119,7 +125,7 @@ class PosHprScaleInterval(FunctionInterval):
         pos: _Vec3f,
         hpr: _Vec3f,
         scale: _Vec3f | float,
-        duration: float = 0,
+        duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
     ) -> None: ...

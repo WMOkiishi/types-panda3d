@@ -20,10 +20,10 @@ class IndirectInterval(Interval):
     def __init__(
         self,
         interval: Interval,
-        startT: float = 0,
+        startT: float = ...,
         endT: float | None = None,
-        playRate: float = 1,
+        playRate: float = ...,
         duration: float | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
         name: str | None = None,
     ) -> None: ...

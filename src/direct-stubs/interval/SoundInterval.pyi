@@ -19,13 +19,13 @@ class SoundInterval(Interval):
         self,
         sound: AudioSound,
         loop: bool = False,
-        duration: float = 0,
+        duration: float = ...,
         name: str | None = None,
-        volume: float = 1,
-        startTime: float = 0,
+        volume: float = ...,
+        startTime: float = ...,
         node: NodePath | None = None,
         seamlessLoop: bool = True,
         listenerNode: NodePath | None = None,
         cutOff: float | None = None,
     ) -> None: ...
-    def loop(self, startT: float = 0, endT: float = -1, playRate: float = 1, stagger: bool = False) -> None: ...
+    def loop(self, startT: float = ..., endT: float = ..., playRate: float = ..., stagger: bool = False) -> None: ...
