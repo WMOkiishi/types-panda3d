@@ -21,6 +21,7 @@ from panda3d.core import (
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 
+_Unused: TypeAlias = object
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow
 
 class FilterManager(DirectObject):
@@ -40,33 +41,33 @@ class FilterManager(DirectObject):
     nextsort: int
     basex: int
     basey: int
-    def __init__(self, win: GraphicsOutput, cam: NodePath[Camera], forcex: int = 0, forcey: int = 0) -> None: ...
+    def __init__(self, win: GraphicsOutput, cam: NodePath[Camera], forcex: int = ..., forcey: int = ...) -> None: ...
     def get_clears(self, region: DrawableRegion) -> list[tuple[bool, LVecBase4f]]: ...
     def set_clears(self, region: DrawableRegion, clears: Sequence[tuple[bool, _Vec4f]]) -> None: ...
     def set_stacked_clears(
         self,
         region: DrawableRegion,
         clears0: Sequence[tuple[bool, _Vec4f]],
-        clears2: Sequence[tuple[bool, _Vec4f]],
+        clears1: Sequence[tuple[bool, _Vec4f]],
     ) -> list[Any]: ...
     def is_fullscreen(self) -> bool: ...
-    def get_scale_sized(self, mul: float, div: float, align: float) -> tuple[int, int]: ...
+    def get_scaled_size(self, mul: float, div: float, align: float) -> tuple[int, int]: ...
     def render_scene_into(
         self,
         depthtex: Texture | None = None,
         colortex: Texture | None = None,
         auxtex: Texture | None = None,
-        auxbits: int = 0,
+        auxbits: int = ...,
         textures: Mapping[str, Texture] | None = None,
         fbprops: FrameBufferProperties | None = None,
         clamping: bool | None = None,
     ) -> NodePath | None: ...
     def render_quad_into(
         self,
-        name: str = 'filter-stage',
-        mul: float = 1,
-        div: float = 1,
-        align: float = 1,
+        name: str = ...,
+        mul: float = ...,
+        div: float = ...,
+        align: float = ...,
         depthtex: Texture | None = None,
         colortex: Texture | None = None,
         auxtex0: Texture | None = None,
@@ -82,16 +83,16 @@ class FilterManager(DirectObject):
         depthbits: bool = True,
         fbprops: FrameBufferProperties | None = None,
     ) -> GraphicsOutput: ...
-    def windows_event(self, win: object) -> None: ...
+    def window_event(self, win: _Unused) -> None: ...
     def resize_buffers(self) -> None: ...
     def cleanup(self) -> None: ...
     getClears = get_clears
     setClears = set_clears
     setStackedClears = set_stacked_clears
     isFullscreen = is_fullscreen
-    getScaleSized = get_scale_sized
+    getScaledSize = get_scaled_size
     renderSceneInto = render_scene_into
     renderQuadInto = render_quad_into
     createBuffer = create_buffer
-    windowEvent = windows_event
+    windowEvent = window_event
     resizeBuffers = resize_buffers
