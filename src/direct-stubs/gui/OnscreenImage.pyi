@@ -1,35 +1,37 @@
 __all__ = ['OnscreenImage']
 
-from typing import Any, Union
-from typing_extensions import Self, TypeAlias
+from typing import Any, TypeVar, Union
 
 from panda3d.core import LVecBase3f, LVecBase4f, NodePath, TransformState
+from typing_extensions import TypeAlias
+
 from ..showbase.DirectObject import DirectObject
 
+_Self = TypeVar('_Self')
 _Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]
 _Point: TypeAlias = Union[LVecBase3f, tuple[float, float, float]]
+_Unused: TypeAlias = object
 
 class OnscreenImage(DirectObject, NodePath):
     def __init__(
         self,
-        image = None,
+        image: NodePath | str | None = None,
         pos: _Point | None = None,
         hpr: _Point | None = None,
         scale: _Point | float | None = None,
         color: _Color | None = None,
         parent: NodePath | None = None,
-        sort: int = 0,
+        sort: int = ...,
     ) -> None: ...
     def setImage(
         self,
         image: NodePath | str | None,
         parent: NodePath = ...,
         transform: TransformState | None = None,
-        sort: int = 0,
-        color: _Color | None = None,
+        sort: int = ...,
     ) -> None: ...
-    def getImage(self) -> Self: ...
-    def configure(self, option: object = None, **kw: Any) -> None: ...
+    def getImage(self: _Self) -> _Self: ...
+    def configure(self, option: _Unused = None, **kw: Any) -> None: ...
     def __setitem__(self, key: str, value: Any) -> None: ...
     def __getitem__(self, option: str) -> Any: ...
     cget = __getitem__
