@@ -1,5 +1,6 @@
 from collections.abc import Callable, Generator, Hashable, Mapping
-from typing import Any, ClassVar, TypeAlias, TypeVar, overload
+from typing import Any, ClassVar, TypeVar, overload
+from typing_extensions import TypeAlias
 
 from ..directnotify.Notifier import Notifier
 from .Job import Job

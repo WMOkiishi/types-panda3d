@@ -1,8 +1,8 @@
 __all__ = ['MetaInterval', 'Parallel', 'ParallelEndTogether', 'Sequence', 'Track']
 
 from collections.abc import Iterable
-from typing import ClassVar, SupportsIndex, TypeVar
-from typing_extensions import Final, Literal, TypeAlias, TypeGuard
+from typing import ClassVar, TypeVar
+from typing_extensions import Final, Literal, SupportsIndex, TypeAlias, TypeGuard
 
 from panda3d.core import PStatCollector, ostream
 from panda3d.direct import CInterval, CMetaInterval

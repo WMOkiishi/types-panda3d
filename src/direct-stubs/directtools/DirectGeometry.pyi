@@ -1,5 +1,6 @@
 from collections.abc import Iterable, Sequence
-from typing import TypeAlias, overload
+from typing import overload
+from typing_extensions import TypeAlias
 
 from panda3d.core import (
     GeomNode,
