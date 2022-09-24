@@ -1,5 +1,5 @@
-from typing import Any, ClassVar, overload
-from panda3d.core import TypeHandle, TypedObject
+from typing import Any, ClassVar
+from panda3d.core import TypedObject
 
 class BasicSkel:
     """This is the most basic of the skeleton classes.  It stores an integer, and
@@ -9,10 +9,7 @@ class BasicSkel:
     to panda.  See also the manual, "Adding C++ Classes to Panda."
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: BasicSkel) -> None: ...
+    def __init__(self, __param0: BasicSkel = ...) -> None: ...
     def set_value(self, n: int) -> None:
         """These inline functions allow you to get and set _value."""
         ...
@@ -41,7 +38,6 @@ class TypedSkel(TypedObject):
     The skeleton classes are intended to help you learn how to add C++ classes
     to panda.  See also the manual, "Adding C++ Classes to Panda."
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def set_value(self, n: int) -> None:
         """These inline functions allow you to get and set _value."""
@@ -59,10 +55,7 @@ class TypedSkel(TypedObject):
         get_value, except that this isn't an inline function.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setValue = set_value
     getValue = get_value
     setValueAlt = set_value_alt
     getValueAlt = get_value_alt
-    getClassType = get_class_type

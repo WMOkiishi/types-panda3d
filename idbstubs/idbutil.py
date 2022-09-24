@@ -106,14 +106,14 @@ def type_is_exposed(t: TypeIndex, /) -> bool:
     if name.startswith(('PointerTo< ', 'ConstPointerTo< ')):
         return True
     if idb.interrogate_type_is_unpublished(t):
-        _logger.debug(f"Type '{name}' ({t}) is unpublished")
+        _logger.debug(f'Type {name!r} ({t}) is unpublished')
         return False
     if idb.interrogate_type_is_nested(t):
         if not idb.interrogate_type_is_fully_defined(t):
-            _logger.info(f"Nested type '{name}' ({t}) is not fully defined")
+            _logger.info(f'Nested type {name!r} ({t}) is not fully defined')
             return False
     elif not idb.interrogate_type_is_global(t):
-        _logger.info(f"Type '{name}' ({t}) is neither global nor nested")
+        _logger.info(f'Type {name!r} ({t}) is neither global nor nested')
         return False
     return True
 
@@ -130,7 +130,7 @@ def load_interrogate_database(
         directory = Path(pandac.origin).parent.joinpath('input')
     else:
         directory = Path(directory)
-    _logger.info('Requesting all database files from %s', directory)
+    _logger.info(f'Requesting all database files from {directory}')
     idb.interrogate_add_search_directory(str(directory))
     for db in directory.glob('*.in'):
         idb.interrogate_request_database(db.name)

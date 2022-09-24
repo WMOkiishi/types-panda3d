@@ -1,10 +1,7 @@
 from collections.abc import Sequence
-from os import PathLike
 from typing import Any, ClassVar
-from typing_extensions import TypeAlias
-from panda3d.core import ConfigVariableFilename, Filename, MovieVideo, NodePath, Texture, TypeHandle, ostream
-
-_Filename: TypeAlias = Filename | ConfigVariableFilename | str | bytes | PathLike
+from panda3d._typing import Filepath
+from panda3d.core import MovieVideo, NodePath, Texture, ostream
 
 class ARToolKit:
     """ARToolKit is a software library for building Augmented Reality (AR)
@@ -21,7 +18,7 @@ class ARToolKit:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ARToolKit) -> None: ...
     @staticmethod
-    def make(camera: NodePath, paramfile: _Filename, markersize: float) -> ARToolKit:
+    def make(camera: NodePath, paramfile: Filepath, markersize: float) -> ARToolKit:
         """Create a new ARToolKit instance.
         
         Camera must be the nodepath of a panda camera object.  The panda camera's
@@ -38,7 +35,7 @@ class ARToolKit:
         default, but you can tweak it here.
         """
         ...
-    def attach_pattern(self, pattern: _Filename, path: NodePath) -> None:
+    def attach_pattern(self, pattern: Filepath, path: NodePath) -> None:
         """Associates the specified glyph with the specified NodePath.  Each time you
         call analyze, ARToolKit will update the NodePath's transform.  If the node
         is not visible, its scale will be set to zero.
@@ -63,7 +60,6 @@ class WebcamVideo(MovieVideo):
     """Allows you to open a webcam or other video capture device as a video
     stream.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def options(self) -> Sequence[WebcamVideo]: ...
     @staticmethod
@@ -96,8 +92,6 @@ class WebcamVideo(MovieVideo):
         FPS to the output stream.
         """
         ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_options(self) -> tuple[WebcamVideo, ...]: ...
     getNumOptions = get_num_options
     getOption = get_option
@@ -105,5 +99,4 @@ class WebcamVideo(MovieVideo):
     getSizeY = get_size_y
     getFps = get_fps
     getPixelFormat = get_pixel_format
-    getClassType = get_class_type
     getOptions = get_options

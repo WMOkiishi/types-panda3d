@@ -18,8 +18,9 @@ def cli() -> None:
                         help='the file to write the log to')
     parser.add_argument('-v', '--verbosity', action='count', default=0,
                         help='increase verbosity (up to 4)')
-    parser.add_argument('--infer_optional', action='store_true',
-                        help='infer when a function parameter is optional')
+    parser.add_argument('--dont_infer_optional', action='store_true',
+                        help="don't merge function overloads by making"
+                             " a parameter optional")
     parser.add_argument('--ignore_coercion', action='store_true',
                         help='ignore automatic coercion for parameter types')
     args = parser.parse_args()
@@ -28,7 +29,7 @@ def cli() -> None:
     output_dir = cast(str, args.output)
     database_dir = cast(str | None, args.database)
     log_path = cast(str, args.log)
-    infer_optional = cast(bool, args.infer_optional)
+    infer_optional = not cast(bool, args.dont_infer_optional)
     ignore_coercion = cast(bool, args.ignore_coercion)
     log_level = 10 * (5 - cast(int, args.verbosity))
 

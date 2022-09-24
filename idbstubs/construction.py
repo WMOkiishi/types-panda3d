@@ -4,8 +4,8 @@ from collections.abc import Iterable, Iterator, Sequence
 from itertools import chain
 from typing import Final, TypeVar, cast
 
-import attrs
 import panda3d.interrogatedb as idb
+from attrs import evolve
 
 from .idbutil import (
     ElementIndex, FunctionIndex, FunctionWrapperIndex, MakeSeqIndex, TypeIndex,
@@ -13,22 +13,28 @@ from .idbutil import (
     get_global_functions, get_global_getters, get_python_wrappers,
     type_is_exposed, unwrap_type, wrapper_is_exposed
 )
-from .processors import process_function
+from .processors import (
+    VECTOR_NAME_REGEX, process_function, process_vector_class
+)
 from .reps import (
-    Alias, Class, Element, Function, Module, Package, Parameter, Signature,
+    Alias, Attribute, Class, Function, Module, Package, Parameter, Signature,
     StubRep
 )
 from .special_cases import (
-    GENERIC, ITERABLE, NO_MANGLING, NO_STUBS, NOT_EXPOSED
+    ATTR_TYPE_OVERRIDES, GENERIC, IGNORE_ERRORS, ITERABLE, NO_MANGLING,
+    NO_STUBS, NOT_EXPOSED
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
     method_name_from_cpp_name, snake_to_camel
 )
-from .typedata import get_direct_type_name, get_type_name
-from .util import flatten
+from .typedata import (
+    TYPE_ALIASES, get_direct_type_name, get_linear_superclasses, get_type_name
+)
+from .util import flatten, is_dunder
 
 _logger: Final = logging.getLogger(__name__)
+_class_bodies: Final[dict[str, dict[str, StubRep]]] = {}
 
 # Don't replace `size` with `__len__` for these
 SIZE_NOT_LEN: Final = ('EggGroupNode', 'WindowProperties')
@@ -41,7 +47,7 @@ def get_function_name(f: FunctionIndex, /) -> str:
     if idb.interrogate_function_is_operator_typecast(f):
         if idb.interrogate_function_number_of_python_wrappers(f) != 1:
             scoped_name = idb.interrogate_function_scoped_name(f)
-            _logger.warning(f"Typecast '{scoped_name}' has multiple wrappers")
+            _logger.warning(f'Typecast {scoped_name!r} has multiple wrappers')
         w = idb.interrogate_function_python_wrapper(f, 0)
         return_type = unwrap_type(idb.interrogate_wrapper_return_type(w))
         if idb.interrogate_type_is_atomic(return_type):
@@ -54,7 +60,7 @@ def get_function_name(f: FunctionIndex, /) -> str:
 
 def with_alias(
         rep: SR, /,
-        capitalize: bool = False) -> tuple[SR] | tuple[SR, Alias]:
+        capitalize: bool = False) -> tuple[SR] | tuple[SR, SR | Alias]:
     """Return a tuple of the given `StubRep` and,
     if it would be unique, a camel-case alias.
     """
@@ -62,11 +68,15 @@ def with_alias(
     if name not in NO_MANGLING:
         alias_name = check_keyword(snake_to_camel(name, capitalize))
         if alias_name != name:
-            return (rep, Alias(alias_name, name, of_local=True))
-    return (rep,)
+            if isinstance(rep, Attribute) and not rep.read_only:
+                return rep, evolve(rep, name=alias_name)
+            else:
+                return rep, Alias(alias_name, name, of_local=True,
+                                  namespace=rep.namespace)
+    return rep,
 
 
-def get_all_manifests() -> Iterator[Element]:
+def get_all_manifests() -> Iterator[Attribute]:
     """Yield representations of all manifests known to interrogate."""
     for n in range(idb.interrogate_number_of_manifests()):
         m = idb.interrogate_get_manifest(n)
@@ -75,7 +85,7 @@ def get_all_manifests() -> Iterator[Element]:
         else:
             value = idb.interrogate_manifest_definition(m)
         name = idb.interrogate_manifest_name(m)
-        yield Element(name, f'Literal[{value!r}]', namespace=('panda3d', 'core'))
+        yield Attribute(name, f'Final[{type(value).__name__}]', namespace=('panda3d', 'core'))
 
 
 def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
@@ -91,7 +101,22 @@ def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
         method = make_function_rep(f)
         if method.name in NO_STUBS:
             continue
-        if method.name == '__len__':
+        elif method.name == '__getitem__':
+            # Sometimes, the signatures for '__setitem__' are mixed in
+            # with those for '__getitem__'. I'm not entirely sure why.
+            getitem_sigs: list[Signature] = []
+            setitem_sigs: list[Signature] = []
+            for sig in method.signatures:
+                if len(sig.parameters) <= 2:
+                    getitem_sigs.append(sig)
+                else:
+                    setitem_sigs.append(sig)
+            if getitem_sigs:
+                yield evolve(method, signatures=getitem_sigs)
+            if setitem_sigs:
+                yield evolve(method, name='__setitem__', signatures=setitem_sigs)
+            continue
+        elif method.name == '__len__':
             if idb.interrogate_type_name(t) in SIZE_NOT_LEN:
                 method.name = 'size'
         elif method.name == '__lt__':
@@ -102,7 +127,7 @@ def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
             seen_le = True
         yield method
     if lt_function is not None and seen_eq and not seen_le:
-        yield attrs.evolve(lt_function, name='__le__')
+        yield evolve(lt_function, name='__le__')
     for n in range(idb.interrogate_type_number_of_make_seqs(t)):
         yield make_make_seq_rep(idb.interrogate_type_get_make_seq(t, n))
 
@@ -122,10 +147,12 @@ def make_typedef_rep(t: TypeIndex, /) -> Alias:
 
 def make_element_rep(
         e: ElementIndex, /,
-        namespace: Sequence[str] = ()) -> Element:
+        namespace: Sequence[str] = ()) -> Attribute:
     """Return a representation of an element known to interrogate."""
     name = idb.interrogate_element_name(e)
-    type_name = get_type_name(idb.interrogate_element_type(e))
+    type_name = ATTR_TYPE_OVERRIDES.get(idb.interrogate_element_scoped_name(e))
+    if type_name is None:
+        type_name = get_type_name(idb.interrogate_element_type(e))
     if idb.interrogate_element_is_sequence(e):
         type_name = f'Sequence[{type_name}]' if type_name else 'Sequence'
     elif idb.interrogate_element_is_mapping(e):
@@ -135,26 +162,30 @@ def make_element_rep(
         doc = comment_to_docstring(idb.interrogate_element_comment(e))
     else:
         doc = ''
-    return Element(check_keyword(name), type_name, read_only=read_only,
-                   namespace=namespace, doc=doc)
+    return Attribute(check_keyword(name), type_name, read_only=read_only,
+                     namespace=namespace, doc=doc)
 
 
 def make_signature_rep(
         w: FunctionWrapperIndex, /,
-        is_constructor: bool = False) -> Signature:
+        *, is_constructor: bool = False,
+        ensure_self_param: bool = False) -> Signature:
     """Return a representation of the signature
     of a function wrapper known to interrogate.
     """
+    ensure_self_param = ensure_self_param or is_constructor
     if is_constructor:
         return_type = 'None'
-        params = [Parameter.as_self()]
     else:
         return_type_index = idb.interrogate_wrapper_return_type(w)
         return_type = get_type_name(return_type_index)
-        params: list[Parameter] = []
+    params: list[Parameter] = []
+    if ensure_self_param:
+        params.append(Parameter.as_self())
     for n in range(idb.interrogate_wrapper_number_of_parameters(w)):
         if idb.interrogate_wrapper_parameter_is_this(w, n):
-            params.append(Parameter.as_self())
+            if not ensure_self_param:
+                params.append(Parameter.as_self())
             continue
         params.append(Parameter(
             check_keyword(idb.interrogate_wrapper_parameter_name(w, n)),
@@ -176,18 +207,17 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
         *(class_name_from_cpp_name(s) for s in scoped_name.split('::')[:-1])
     )
     first_wrapper = idb.interrogate_function_python_wrapper(f, 0)
-    not_static = idb.interrogate_wrapper_parameter_is_this(first_wrapper, 0)
+    not_static = (
+        is_method and is_dunder(name)
+        or idb.interrogate_wrapper_parameter_is_this(first_wrapper, 0)
+    )
     signatures: list[Signature] = []
     sigs_by_doc = defaultdict[str, list[str]](list)
     for w in get_python_wrappers(f):
         if not wrapper_is_exposed(w):
             continue
-        signature = make_signature_rep(w, is_constructor)
-        if not_static and (
-            not signature.parameters
-            or not signature.parameters[0].is_self
-        ):
-            signature.parameters = [Parameter.as_self(), *signature.parameters]
+        signature = make_signature_rep(w, is_constructor=is_constructor,
+                                       ensure_self_param=not_static)
         signatures.append(signature)
         if idb.interrogate_wrapper_has_comment(w):
             sig_doc = comment_to_docstring(idb.interrogate_wrapper_comment(w))
@@ -201,8 +231,14 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
             f"{'; '.join(p)}:\n{d}"
             for d, p in sigs_by_doc.items()
         )
-    return Function(name, signatures, is_method=is_method,
-                    namespace=namespace, doc=doc)
+    return Function(
+        name,
+        signatures,
+        is_method=is_method,
+        is_static=not not_static,
+        namespace=namespace,
+        doc=doc,
+    )
 
 
 def make_type_reps(
@@ -229,6 +265,8 @@ def make_type_reps(
         )
         if class_.name == 'BitMaskNative':
             return ()
+        if not idb.interrogate_type_is_nested(t):
+            _class_bodies[class_.name] = dict(class_.body)
     return with_alias(class_, True)
 
 
@@ -268,17 +306,16 @@ def make_enum_alias_rep(t: TypeIndex, /) -> Alias:
 
 def make_enum_value_reps(
         t: TypeIndex, /,
-        namespace: Sequence[str] = ()) -> list[Element]:
+        namespace: Sequence[str] = ()) -> list[Attribute]:
     """Return variable representations for an enum type known to interrogate."""
-    is_nested = idb.interrogate_type_is_nested(t)
-    value_reps: list[Element] = []
+    value_reps: list[Attribute] = []
     for n in range(idb.interrogate_type_number_of_enum_values(t)):
         if idb.interrogate_type_enum_value_scoped_name(t, n) in NOT_EXPOSED:
             continue
         value = idb.interrogate_type_enum_value(t, n)
         value_name = idb.interrogate_type_enum_value_name(t, n)
-        type = f'ClassVar[Literal[{value}]]' if is_nested else f'Literal[{value}]'
-        value_reps.append(Element(value_name, type, namespace=namespace))
+        type_string = f'Final[Literal[{value}]]'
+        value_reps.append(Attribute(value_name, type_string, namespace=namespace))
     return value_reps
 
 
@@ -286,13 +323,12 @@ def make_scoped_enum_rep(t: TypeIndex, /, namespace: Sequence[str] = ()) -> Clas
     """Return a representation of a scoped enum known to interrogate."""
     name = get_direct_type_name(t)
     this_namespace = (*namespace, name)
-    value_elements = [
-        Element(
-            idb.interrogate_type_enum_value_name(t, n),
-            'int', namespace=this_namespace
+    value_elements: dict[str, Attribute] = {}
+    for n in range(idb.interrogate_type_number_of_enum_values(t)):
+        value_name = idb.interrogate_type_enum_value_name(t, n)
+        value_elements[value_name] = Attribute(
+            value_name, 'int', namespace=this_namespace
         )
-        for n in range(idb.interrogate_type_number_of_enum_values(t))
-    ]
     is_final = idb.interrogate_type_is_final(t)
     return Class(name, ['Enum'], value_elements,
                  is_final=is_final, namespace=namespace)
@@ -305,7 +341,7 @@ def make_class_rep(
         ignore_coercion: bool = False) -> Class:
     """Return a representation of a class known to interrogate."""
     name = get_direct_type_name(t)
-    nested: list[StubRep] = []
+    class_body: dict[str, StubRep] = {}
     this_namespace = (*namespace, name)
     derivations = [
         get_type_name(j)
@@ -315,19 +351,19 @@ def make_class_rep(
     if (type_vars := GENERIC.get(name)) is not None:
         derivations.append(f'Generic[{type_vars}]')
     # Elements
-    nested.append(
-        Element('DtoolClassDict', 'ClassVar[dict[str, Any]]',
-                namespace=namespace)
+    class_body['DtoolClassDict'] = Attribute(
+        'DtoolClassDict', 'ClassVar[dict[str, Any]]', namespace=this_namespace
     )
     for n in range(idb.interrogate_type_number_of_elements(t)):
         e = idb.interrogate_type_get_element(t, n)
         if element_is_exposed(e) and not idb.interrogate_element_name(e) in NO_STUBS:
-            nested.append(make_element_rep(e, namespace))
+            element = make_element_rep(e, this_namespace)
+            class_body[element.name] = element
     if name.startswith('ParamValue_'):
         value = name[11:]
         if value in ('string', 'wstring'):
             value = 'str'
-        nested.append(Element('value', value, namespace=namespace))
+        class_body['value'] = Attribute('value', value, namespace=this_namespace)
     # Methods
     for method in get_type_methods(t):
         method = process_function(
@@ -335,13 +371,16 @@ def make_class_rep(
             infer_opt_params=infer_opt_params,
             ignore_coercion=ignore_coercion,
         )
-        nested += with_alias(method)
+        if method.name in class_body:
+            _logger.info(f'Discarding {method}; its name is already in use')
+            continue
+        class_body |= {rep.name: rep for rep in with_alias(method)}
     if (iterable_of := ITERABLE.get(name)) is not None:
-        nested.append(Function(
+        class_body['__iter__'] = Function(
             '__iter__',
             [Signature([Parameter.as_self()], f'Iterator[{iterable_of}]')],
             is_method=True, namespace=this_namespace,
-        ))
+        )
     # Nested types
     for n in range(idb.interrogate_type_number_of_nested_types(t)):
         s = idb.interrogate_type_get_nested_type(t, n)
@@ -351,18 +390,23 @@ def make_class_rep(
             continue
         if not type_is_exposed(s):
             continue
-        nested += make_type_reps(
+        type_reps = make_type_reps(
             s, this_namespace,
             infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion
+            ignore_coercion=ignore_coercion,
         )
+        class_body |= {rep.name: rep for rep in type_reps}
+    # "type: ignore" comments
+    for rep in class_body.values():
+        if (ignored_errors := IGNORE_ERRORS.get(rep.scoped_name)) is not None:
+            rep.comment = f'type: ignore[{ignored_errors}]'
     # Docstring
     if idb.interrogate_type_has_comment(t):
         doc = comment_to_docstring(idb.interrogate_type_comment(t))
     else:
         doc = ''
     return Class(
-        name, derivations, nested,
+        name, derivations, class_body,
         is_final=idb.interrogate_type_is_final(t),
         namespace=namespace,
         doc=doc,
@@ -384,7 +428,7 @@ def make_package_rep(
             ignore_coercion=ignore_coercion,
         )
         mod_name = idb.interrogate_function_module_name(f)
-        lib_name = '_' + idb.interrogate_function_library_name(f)
+        lib_name = '_' + idb.interrogate_function_library_name(f).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += with_alias(function)
 
     # Gather global types
@@ -393,7 +437,7 @@ def make_package_rep(
         if idb.interrogate_type_is_nested(t):
             continue
         mod_name = idb.interrogate_type_module_name(t)
-        lib_name = '_' + idb.interrogate_type_library_name(t)
+        lib_name = '_' + idb.interrogate_type_library_name(t).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(
             t, mod_name.split('.'),
             infer_opt_params=infer_opt_params,
@@ -403,9 +447,61 @@ def make_package_rep(
     # Make package
     modules: list[Module] = []
     for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
+        for rep in flatten(nested_by_lib.values()):
+            if (ignored_errors := IGNORE_ERRORS.get(rep.scoped_name)) is not None:
+                rep.comment = f'type: ignore[{ignored_errors}]'
+            if isinstance(rep, Class):
+                process_class(rep)
         nested_by_lib = cast(dict[str, Sequence[StubRep]], nested_by_lib)
         modules.append(Module(
             mod_name.removeprefix(package_name + '.'),
             nested_by_lib, namespace=(package_name,)
         ))
     return Package(package_name, modules)
+
+
+def process_class(class_: Class) -> None:
+    class_body = _class_bodies.get(class_.name)
+    if class_body is None:
+        return
+    if VECTOR_NAME_REGEX.match(class_.name):
+        process_vector_class(class_)
+    nested_names = set(class_body.keys())
+    for base_class in get_linear_superclasses(class_.name):
+        base_class_body = _class_bodies.get(base_class)
+        if base_class_body is None:
+            continue
+        for name in nested_names & base_class_body.keys():
+            match class_body[name], base_class_body[name]:
+                case Class() | Alias(of_local=True), _:
+                    continue
+                case (
+                    Function(doc=doc_1),
+                    Function(doc=doc_2)
+                ) if doc_1 and doc_1 != doc_2:
+                    continue
+                case (
+                    Attribute(doc=doc_1, read_only=True),
+                    Attribute(doc=doc_2, read_only=True)
+                ) if doc_1 and doc_1 != doc_2:
+                    continue
+                case a, b if a == b:
+                    del class_body[name]
+                    nested_names.remove(name)
+    new_nested: dict[str, StubRep] = {}
+    for rep in class_.body.values():
+        if isinstance(rep, Alias) and rep.of_local:
+            name_to_check = rep.alias_of
+        else:
+            name_to_check = rep.name
+        if name_to_check in nested_names:
+            new_nested[rep.name] = rep
+    class_.body = new_nested
+
+
+def make_typing_module() -> Module:
+    aliases = [
+        Alias(name, definition, is_type_alias=True)
+        for name, definition in TYPE_ALIASES.items()
+    ]
+    return Module('_typing', {'typing': aliases}, namespace=('panda3d',))

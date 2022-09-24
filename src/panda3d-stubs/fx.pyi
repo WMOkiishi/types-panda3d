@@ -1,23 +1,17 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import TypeAlias
+from panda3d._typing import Vec4f
 from panda3d.core import (
-    ConfigVariableColor,
     DisplayRegion,
     GeomNode,
     GraphicsEngine,
     GraphicsOutput,
-    LMatrix4f,
     LVecBase4f,
     Lens,
     NodePath,
     PandaNode,
     PfmFile,
-    TypeHandle,
-    UnalignedLVecBase4f,
     UpdateSeq,
 )
-
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 
 class CylindricalLens(Lens):
     """A cylindrical lens.  This is the kind of lens generally used for extremely
@@ -31,22 +25,14 @@ class CylindricalLens(Lens):
     two relatively nearby points on the film, but it becomes increasingly
     evident as you compare points widely spaced on the film.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class FisheyeLens(Lens):
     """A fisheye lens.  This nonlinear lens introduces a spherical distortion to
     the image, which is minimal at small angles from the lens, and increases at
     larger angles from the lens.  The field of view may extend to 360 degrees.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class ProjectionScreen(PandaNode):
     """A ProjectionScreen implements a simple system for projective texturing.
@@ -66,7 +52,6 @@ class ProjectionScreen(PandaNode):
     nonlinear, that might be defined using the Lens interface, including
     fisheye and cylindrical lenses.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def set_projector(self, projector: NodePath) -> None:
         """Specifies the LensNode that is to serve as the projector for this screen.
@@ -200,7 +185,7 @@ class ProjectionScreen(PandaNode):
         set_vignette_on().
         """
         ...
-    def set_vignette_color(self, vignette_color: _Vec4f) -> None:
+    def set_vignette_color(self, vignette_color: Vec4f) -> None:
         """Specifies the color the screen will be painted at the portions outside of
         the lens' frustum; i.e.  where the lens can't see it or illuminate it.
         This color is only used if the vignette_on flag is true; see
@@ -212,7 +197,7 @@ class ProjectionScreen(PandaNode):
         lens' frustum.  See set_vignette_color().
         """
         ...
-    def set_frame_color(self, frame_color: _Vec4f) -> None:
+    def set_frame_color(self, frame_color: Vec4f) -> None:
         """Specifies the color the screen will be painted at the portions outside of
         the lens' frustum; i.e.  where the lens can't see it or illuminate it.
         This color is only used if the vignette_on flag is true; see
@@ -252,17 +237,12 @@ class ProjectionScreen(PandaNode):
         NonlinearImager) to know when they need to recompute themselves.
         """
         ...
-    @overload
-    def recompute_if_stale(self) -> bool:
+    def recompute_if_stale(self, this_np: NodePath = ...) -> bool:
         """Calls recompute() only if the relative transform between the
         ProjectionScreen and the projector has changed, or if any other relevant
         property has changed.  Returns true if recomputed, false otherwise.
         """
         ...
-    @overload
-    def recompute_if_stale(self, this_np: NodePath) -> bool: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     setProjector = set_projector
     getProjector = get_projector
     clearUndistLut = clear_undist_lut
@@ -288,7 +268,6 @@ class ProjectionScreen(PandaNode):
     getAutoRecompute = get_auto_recompute
     getLastScreen = get_last_screen
     recomputeIfStale = recompute_if_stale
-    getClassType = get_class_type
 
 class NonlinearImager:
     """This class object combines the rendered output of a 3-d from one or more
@@ -335,10 +314,7 @@ class NonlinearImager:
     arbitrary lens, linear or otherwise.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, __param0: NonlinearImager) -> None: ...
+    def __init__(self, __param0: NonlinearImager = ...) -> None: ...
     @overload
     def add_screen(self, screen: ProjectionScreen) -> int:
         """`(self, screen: NodePath, name: str)`:
@@ -531,11 +507,7 @@ class OSphereLens(Lens):
     A OSphereLens is similar to a Cylindrical lens and PSphereLens, except that
     it is orthographic in the vertical direction.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type
 
 class PSphereLens(Lens):
     """A PSphereLens is a special nonlinear lens that doesn't correspond to any
@@ -549,8 +521,4 @@ class PSphereLens(Lens):
     call a sphere mapping: the x coordinate is proportional to azimuth, while
     the y coordinate is proportional to altitude.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
-    getClassType = get_class_type

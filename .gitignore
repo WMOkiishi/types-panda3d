@@ -6,3 +6,4 @@ venv/*
 *.code-workspace
 dist/*
 *.egg-info/
+.tox/*

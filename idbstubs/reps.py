@@ -1,5 +1,5 @@
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from itertools import chain
 from pathlib import Path
 from typing import Any, Protocol
@@ -11,6 +11,10 @@ from .util import flatten, is_dunder, names_within
 
 class StubRep(Protocol):
     name: str
+    comment: str
+    namespace: Sequence[str]
+    @property
+    def scoped_name(self) -> str: ...
     def sort(self) -> tuple[int, int]: ...
     def get_dependencies(self) -> Iterator[str]: ...
     def definition(self) -> Iterator[str]: ...
@@ -20,6 +24,13 @@ class StubRep(Protocol):
 class TypeVariable:
     name: str
     bounds: Sequence[str] = field(default=(), converter=tuple)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
+
+    @property
+    def scoped_name(self) -> str:
+        return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
         if not self.bounds:
@@ -39,7 +50,10 @@ class TypeVariable:
         yield from flatten(names_within(i) for i in self.bounds)
 
     def definition(self) -> Iterator[str]:
-        yield str(self)
+        if self.comment:
+            yield f'{self}  # {self.comment}'
+        else:
+            yield str(self)
 
 
 @define
@@ -48,6 +62,13 @@ class Alias:
     alias_of: str
     is_type_alias: bool = field(default=False, kw_only=True)
     of_local: bool = field(default=False, kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
+
+    @property
+    def scoped_name(self) -> str:
+        return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
         if self.is_type_alias:
@@ -70,7 +91,10 @@ class Alias:
         )
 
     def definition(self) -> Iterator[str]:
-        yield str(self)
+        if self.comment:
+            yield f'{self}  # {self.comment}'
+        else:
+            yield str(self)
 
 
 @define
@@ -112,10 +136,6 @@ class Signature:
         else:
             return f'({param_string})'
 
-    @property
-    def is_static(self) -> bool:
-        return not (self.parameters and self.parameters[0].is_self)
-
     def copy(self, **changes: Any) -> 'Signature':
         if 'parameters' not in changes:
             changes['parameters'] = tuple((evolve(p) for p in self.parameters))
@@ -149,17 +169,26 @@ class Function:
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
     is_method: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-    doc: str = field(default='', kw_only=True)
+    is_static: bool = field(default=False, kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    doc: str = field(default='', kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
         return '.'.join((*self.namespace, self.name))
 
-    @property
-    def is_overloaded(self) -> bool:
-        """Whether the function should be decorated with @typing.overload."""
-        return len(self.signatures) > 1
+    def decorators(self) -> list[str]:
+        """Return a list of the names of the decorators that should be
+        applied to this function's signatures.
+        """
+        decorators: list[str] = []
+        if len(self.signatures) > 1:
+            decorators.append('overload')
+        if self.is_method and self.is_static:
+            decorators.append('staticmethod')
+        return decorators
 
     def __str__(self) -> str:
         kind = 'Method' if self.is_method else 'Function'
@@ -173,20 +202,28 @@ class Function:
     def get_dependencies(self) -> Iterator[str]:
         return chain(
             flatten(s.get_dependencies() for s in self.signatures),
-            ('overload',) if self.is_overloaded else (),
+            self.decorators(),
         )
 
     def definition(self) -> Iterator[str]:
-        is_method = self.is_method
-        is_overloaded = self.is_overloaded
+        decorators = self.decorators()
         doc_printed = False
+        comment_printed = False
         for signature in self.signatures:
-            if is_overloaded:
-                yield '@overload'
-            if is_method and signature.is_static:
-                yield '@staticmethod'
+            for decorator in decorators:
+                if self.comment and not comment_printed:
+                    yield f'@{decorator}  # {self.comment}'
+                    comment_printed = True
+                else:
+                    yield '@' + decorator
+            sig_def = f'def {self.name}{signature}:'
+            if doc_printed or not self.doc:
+                sig_def += ' ...'
+            if self.comment and not comment_printed:
+                sig_def += f'  # {self.comment}'
+                comment_printed = True
+            yield sig_def
             if self.doc and not doc_printed:
-                yield f'def {self.name}{signature}:'
                 if '\n' in self.doc:
                     for line in f'"""{self.doc}\n"""'.splitlines():
                         yield '    ' + line
@@ -194,17 +231,17 @@ class Function:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
                 doc_printed = True
-            else:
-                yield f'def {self.name}{signature}: ...'
 
 
 @define
-class Element:
+class Attribute:
     name: str
     type: str
     read_only: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-    doc: str = field(default='', kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    doc: str = field(default='', kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
@@ -226,20 +263,26 @@ class Element:
                 function_def = f'def {self.name}(self) -> {self.type}:'
             else:
                 function_def = f'def {self.name}(self):'
+            if not self.doc:
+                function_def += ' ...'
+            if self.comment:
+                function_def += '  # ' + self.comment
+            yield function_def
             if self.doc:
-                yield function_def
                 if '\n' in self.doc:
                     for line in f'"""{self.doc}\n"""'.splitlines():
                         yield '    ' + line
                 else:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
-            else:
-                yield function_def + ' ...'
-        elif self.type:
-            yield f'{self.name}: {self.type}'
         else:
-            yield f'{self.name} = ...'
+            if self.type:
+                attribute_def = f'{self.name}: {self.type}'
+            else:
+                attribute_def = f'{self.name} = ...'
+            if self.comment:
+                attribute_def += '  # ' + self.comment
+            yield attribute_def
         # if self.doc:
         #     one_line_doc = self.doc.strip('"\n').replace('\n', ' ')
         #     yield f'{definition}  # {one_line_doc}'
@@ -249,10 +292,12 @@ class Element:
 class Class:
     name: str
     derivations: Sequence[str] = field(default=(), converter=tuple)
-    nested: Sequence[StubRep] = Factory(list)
+    body: Mapping[str, StubRep] = Factory(dict)
     is_final: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-    doc: str = field(default='', kw_only=True)
+    namespace: Sequence[str] = field(
+        default=(), converter=tuple, kw_only=True, eq=False)
+    doc: str = field(default='', kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
 
     @property
     def scoped_name(self) -> str:
@@ -268,7 +313,7 @@ class Class:
         return chain(
             ('final',) if self.is_final else (),
             flatten(names_within(d) for d in self.derivations),
-            flatten(i.get_dependencies() for i in self.nested),
+            flatten(i.get_dependencies() for i in self.body.values()),
         )
 
     def definition(self) -> Iterator[str]:
@@ -278,9 +323,14 @@ class Class:
         if self.derivations:
             declaration += f"({', '.join(self.derivations)})"
         declaration += ':'
-        if not (self.nested or self.doc):
-            yield declaration + ' ...'
+        if not (self.body or self.doc):
+            if self.comment:
+                yield f'{declaration} ...  # {self.comment}'
+            else:
+                yield declaration + ' ...'
             return
+        if self.comment:
+            declaration += f'  # {self.comment}'
         yield declaration
         if self.doc:
             if '\n' in self.doc:
@@ -288,7 +338,7 @@ class Class:
                     yield '    ' + line
             else:
                 yield f'    """{self.doc}"""'
-        sorted_nested = sorted(self.nested, key=lambda i: i.sort())
+        sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
         for line in flatten(i.definition() for i in sorted_nested):
             yield '    ' + line
 
@@ -386,10 +436,13 @@ class Module:
 @define
 class Package:
     name: str
-    modules: Iterable[Module] = field(default=(), converter=tuple)
+    modules: list[Module] = Factory(list)
 
     def __str__(self) -> str:
         return f'Package {self.name!r}'
 
     def __iter__(self) -> Iterator[Module]:
         return iter(self.modules)
+
+    def add_module(self, module: Module) -> None:
+        self.modules.append(module)

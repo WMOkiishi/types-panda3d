@@ -1,16 +1,13 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Final, Literal, TypeAlias
+from panda3d._typing import Mat4f, Vec3f, Vec4f, Vec4i
 from panda3d.core import (
     BitMask_uint32_t_32,
     Camera,
-    ConfigVariableColor,
     GraphicsOutput,
     LMatrix3f,
-    LMatrix4f,
     LVecBase3f,
     LVecBase3i,
-    LVecBase4f,
-    LVecBase4i,
     NodePath,
     PointerToArray_LVecBase2f,
     PointerToArray_UnalignedLMatrix4f,
@@ -19,17 +16,10 @@ from panda3d.core import (
     ReferenceCount,
     Shader,
     Texture,
-    UnalignedLMatrix4f,
-    UnalignedLVecBase4f,
-    UnalignedLVecBase4i,
     ostream,
 )
 
 _GPUCommand_CommandType: TypeAlias = Literal[0, 1, 2, 3, 4]
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
-_Vec4i: TypeAlias = LVecBase4i | UnalignedLVecBase4i
-_Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 _RPLight_LightType: TypeAlias = Literal[0, 1, 2]
 
 class GPUCommand:
@@ -39,11 +29,16 @@ class GPUCommand:
       "packet". It stores a limited amount of floating point components.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    CMD_invalid: ClassVar[Literal[0]]
-    CMD_store_light: ClassVar[Literal[1]]
-    CMD_remove_light: ClassVar[Literal[2]]
-    CMD_store_source: ClassVar[Literal[3]]
-    CMD_remove_sources: ClassVar[Literal[4]]
+    CMD_invalid: Final[Literal[0]]
+    CMDInvalid: Final[Literal[0]]
+    CMD_store_light: Final[Literal[1]]
+    CMDStoreLight: Final[Literal[1]]
+    CMD_remove_light: Final[Literal[2]]
+    CMDRemoveLight: Final[Literal[2]]
+    CMD_store_source: Final[Literal[3]]
+    CMDStoreSource: Final[Literal[3]]
+    CMD_remove_sources: Final[Literal[4]]
+    CMDRemoveSources: Final[Literal[4]]
     @overload
     def __init__(self, __param0: GPUCommand) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
@@ -75,7 +70,7 @@ class GPUCommand:
         @param v The float to append.
         """
         ...
-    def push_vec3(self, v: LVecBase3i | _Vec3f) -> None:
+    def push_vec3(self, v: LVecBase3i | Vec3f) -> None:
         """`(self, v: LVecBase3f)`:
         @brief Appends a 3-component floating point vector to the GPUCommand.
         @details This appends a 3-component floating point vector to the command.
@@ -93,7 +88,7 @@ class GPUCommand:
         @param v Int-Vector to append.
         """
         ...
-    def push_vec4(self, v: _Vec4f | _Vec4i) -> None:
+    def push_vec4(self, v: Vec4f | Vec4i) -> None:
         """`(self, v: LVecBase4f)`:
         @brief Appends a 4-component floating point vector to the GPUCommand.
         @details This appends a 4-component floating point vector to the command.
@@ -120,7 +115,7 @@ class GPUCommand:
         @param v Matrix to append
         """
         ...
-    def push_mat4(self, v: _Mat4f) -> None:
+    def push_mat4(self, v: Mat4f) -> None:
         """@brief Appends a floating point 4x4 matrix to the GPUCommand.
         @details This appends a floating point 4x4 matrix to the GPUCommand, by
           pushing all components in row-order to the command. This occupies a space of
@@ -171,11 +166,6 @@ class GPUCommand:
     pushMat4 = push_mat4
     getUsesIntegerPacking = get_uses_integer_packing
     writeTo = write_to
-    CMDInvalid = CMD_invalid
-    CMDStoreLight = CMD_store_light
-    CMDRemoveLight = CMD_remove_light
-    CMDStoreSource = CMD_store_source
-    CMDRemoveSources = CMD_remove_sources
 
 class GPUCommandList:
     """@brief Class to store a list of commands.
@@ -185,15 +175,12 @@ class GPUCommandList:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_commands(self) -> int: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: GPUCommandList = ...) -> None:
         """@brief Constructs a new GPUCommandList
         @details This constructs a new GPUCommandList. By default, there are no commands
           in the list.
         """
         ...
-    @overload
-    def __init__(self, __param0: GPUCommandList) -> None: ...
     def add_command(self, cmd: GPUCommand) -> None:
         """@brief Pushes a GPUCommand to the command list.
         @details This adds a new GPUCommand to the list of commands to be processed.
@@ -234,14 +221,11 @@ class IESDataset:
       lineary interpolated onto a 2D LUT Texture.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: IESDataset = ...) -> None:
         """@brief Constructs a new empty dataset.
         @details This constructs a new IESDataset with no data set.
         """
         ...
-    @overload
-    def __init__(self, __param0: IESDataset) -> None: ...
     def set_vertical_angles(self, vertical_angles: PointerToArray_float) -> None:
         """@brief Sets the vertical angles of the dataset.
         @details This sets the list of vertical angles of the dataset.
@@ -286,7 +270,6 @@ class RPLight(ReferenceCount):
       stores common properties, and provides methods to modify these.
       It also defines some interface functions which subclasses have to implement.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     pos: LVecBase3f
     color: LVecBase3f
     energy: float
@@ -294,9 +277,12 @@ class RPLight(ReferenceCount):
     shadow_map_resolution: int
     ies_profile: int
     near_plane: float
-    LT_empty: ClassVar[Literal[0]]
-    LT_point_light: ClassVar[Literal[1]]
-    LT_spot_light: ClassVar[Literal[2]]
+    LT_empty: Final[Literal[0]]
+    LTEmpty: Final[Literal[0]]
+    LT_point_light: Final[Literal[1]]
+    LTPointLight: Final[Literal[1]]
+    LT_spot_light: Final[Literal[2]]
+    LTSpotLight: Final[Literal[2]]
     @property
     def light_type(self) -> _RPLight_LightType: ...
     def invalidate_shadows(self) -> None:
@@ -310,7 +296,7 @@ class RPLight(ReferenceCount):
         """
         ...
     @overload
-    def set_pos(self, pos: _Vec3f) -> None:
+    def set_pos(self, pos: Vec3f) -> None:
         """`(self, pos: LVecBase3f)`:
         @brief Sets the position of the light
         @details This sets the position of the light in world space. It will cause
@@ -337,7 +323,7 @@ class RPLight(ReferenceCount):
         """
         ...
     @overload
-    def set_color(self, color: _Vec3f) -> None:
+    def set_color(self, color: Vec3f) -> None:
         """`(self, color: LVecBase3f)`:
         @brief Sets the lights color
         @details This sets the lights color. The color should not include the brightness
@@ -520,9 +506,6 @@ class RPLight(ReferenceCount):
     clearIesProfile = clear_ies_profile
     setNearPlane = set_near_plane
     getNearPlane = get_near_plane
-    LTEmpty = LT_empty
-    LTPointLight = LT_point_light
-    LTSpotLight = LT_spot_light
 
 class ShadowAtlas:
     """@brief Class which manages distributing shadow maps in an atlas.
@@ -651,14 +634,12 @@ class TagStateManager:
     getMask = get_mask
 
 class ShadowManager(ReferenceCount):
-    DtoolClassDict: ClassVar[dict[str, Any]]
     atlas_size: int
     @property
     def num_update_slots_left(self) -> int: ...
     @property
     def atlas(self) -> ShadowAtlas: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: ShadowManager = ...) -> None:
         """@brief Constructs a new shadow atlas
         @details This constructs a new shadow atlas. There are a set of properties
           which should be set before calling ShadowManager::init, see the set-Methods.
@@ -666,8 +647,6 @@ class ShadowManager(ReferenceCount):
           ShadowManager::update should get called on a per frame basis.
         """
         ...
-    @overload
-    def __init__(self, __param0: ShadowManager) -> None: ...
     def set_max_updates(self, max_updates: int) -> None:
         """@brief Sets the maximum amount of updates per frame.
         @details This controls the maximum amount of updated ShadowSources per frame.
@@ -813,16 +792,13 @@ class InternalLightManager:
     def num_lights(self) -> int: ...
     @property
     def num_shadow_sources(self) -> int: ...
-    @overload
-    def __init__(self) -> None:
+    def __init__(self, __param0: InternalLightManager = ...) -> None:
         """@brief Constructs the light manager
         @details This constructs the light manager, initializing the light and shadow
           storage. You should set a command list and shadow manager before calling
           InternalLightManager::update. s
         """
         ...
-    @overload
-    def __init__(self, __param0: InternalLightManager) -> None: ...
     def add_light(self, light: RPLight) -> None:
         """@brief Adds a new light.
         @details This adds a new light to the list of lights. This will throw an
@@ -873,7 +849,7 @@ class InternalLightManager:
           If the InternalLightManager was not initialized yet, an assertion is thrown.
         """
         ...
-    def set_camera_pos(self, pos: _Vec3f) -> None:
+    def set_camera_pos(self, pos: Vec3f) -> None:
         """@brief Sets the camera position
         @details This sets the camera position, which will be used to determine which
           shadow sources have to get updated
@@ -980,7 +956,6 @@ class RPPointLight(RPLight):
       radius. Checkout the RenderPipeline documentation for more information
       about this type of light.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
     inner_radius: float
     def __init__(self) -> None:
@@ -1158,7 +1133,7 @@ class PSSMCameraRig:
         @param bias Border bias
         """
         ...
-    def update(self, cam_node: NodePath, light_vector: _Vec3f) -> None:
+    def update(self, cam_node: NodePath, light_vector: Vec3f) -> None:
         """@brief Updates the PSSM camera rig
         @details This updates the rig with an updated camera position, and a given
           light vector. This should be called on a per-frame basis. It will reposition
@@ -1254,7 +1229,6 @@ class RPSpotLight(RPLight):
       direction and FoV. Checkout the RenderPipeline documentation for more
       information about this type of light.
     """
-    DtoolClassDict: ClassVar[dict[str, Any]]
     radius: float
     fov: float
     direction: LVecBase3f
@@ -1269,12 +1243,12 @@ class RPSpotLight(RPLight):
     def set_fov(self, fov: float) -> None: ...
     def get_fov(self) -> float: ...
     @overload
-    def set_direction(self, direction: _Vec3f) -> None: ...
+    def set_direction(self, direction: Vec3f) -> None: ...
     @overload
     def set_direction(self, dx: float, dy: float, dz: float) -> None: ...
     def get_direction(self) -> LVecBase3f: ...
     @overload
-    def look_at(self, point: _Vec3f) -> None: ...
+    def look_at(self, point: Vec3f) -> None: ...
     @overload
     def look_at(self, x: float, y: float, z: float) -> None: ...
     setRadius = set_radius

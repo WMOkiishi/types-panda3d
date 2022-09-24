@@ -1,10 +1,15 @@
 import logging
+import re
 from collections.abc import Sequence
 from itertools import combinations, zip_longest
 from typing import Final
 
-from . import special_cases
-from .reps import Alias, File, Function, Parameter, Signature, TypeVariable
+from .reps import (
+    Alias, Class, File, Function, Parameter, Signature, TypeVariable
+)
+from .special_cases import (
+    ATTRIBUTE_NAME_SHADOWS, PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
+)
 from .typedata import (
     combine_types, get_param_type_replacement, process_dependency,
     subtype_relationship
@@ -12,25 +17,11 @@ from .typedata import (
 from .util import flatten
 
 _logger: Final = logging.getLogger(__name__)
-
 _absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
 
-REQUIRED_SIGS: Final = {
-    '__eq__': Signature(
-        (Parameter.as_self(),
-         Parameter('other', 'object', named=False)),
-        'bool'),
-    '__ne__': Signature(
-        (Parameter.as_self(),
-         Parameter('other', 'object', named=False)),
-        'bool'),
-    '__setattr__': Signature(
-        (Parameter.as_self(),
-         Parameter('name', 'str', named=False),
-         Parameter('value', 'Any', named=False)),
-        'None'),
-}
-
+VECTOR_NAME_REGEX: Final = re.compile(
+    '((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
+)
 DEFAULT_RETURNS: Final = {
     '__int__': 'int',
     '__str__': 'str',
@@ -38,6 +29,11 @@ DEFAULT_RETURNS: Final = {
     'get_data': 'bytes',
     'get_subdata': 'bytes',
 }
+RETURN_SELF: Final = [
+    '__floordiv__', '__ifloordiv__', '__pow__', '__ipow__',
+     '__iadd__', '__isub__', '__imul__', '__itruediv__',
+     '__round__', '__floor__', '__ceil__',
+]
 
 
 def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
@@ -47,6 +43,8 @@ def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
         return None
     t, u = p.type, q.type
     if (t and not u) or (u and not t):
+        return None
+    if not t and not u and not p.is_self:
         return None
     t_subtypes_u, u_subtypes_t = subtype_relationship(t, u)
 
@@ -79,6 +77,9 @@ def merge_signatures(a: Signature, b: Signature, /) -> Signature | None:
     """
     if abs(a.min_arity() - b.min_arity()) > 1 or abs(a.max_arity() - b.max_arity()) > 1:
         # If the min or max arity differs by more than 1, the signatures can't be merged
+        return None
+    if not (a.return_type and b.return_type):
+        # Don't merge signatures if we're not sure what the return types are
         return None
     # Signatures with differing return types can only be merged if their parameters are identical
     w1_locked = w2_locked = a.return_type != b.return_type
@@ -176,18 +177,14 @@ def process_function(
         function: Function,
         *, infer_opt_params: bool = True,
         ignore_coercion: bool = False) -> Function:
-    name, scoped_name = function.name, function.scoped_name
-    if (required_sig := REQUIRED_SIGS.get(name)) is not None:
-        new_sigs = [required_sig]
-    else:
-        new_sigs = process_signatures(
-            function.signatures,
-            infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion,
-        )
-    default_return = DEFAULT_RETURNS.get(name)
-    return_overrides = special_cases.RETURN_TYPE_OVERRIDES.get(scoped_name, {})
-    param_overrides = special_cases.PARAM_TYPE_OVERRIDES.get(scoped_name, {})
+    new_sigs = process_signatures(
+        function.signatures,
+        infer_opt_params=infer_opt_params,
+        ignore_coercion=ignore_coercion,
+    )
+    default_return = DEFAULT_RETURNS.get(function.name)
+    return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
+    param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name, {})
     if isinstance(return_overrides, str):
         return_overrides = {i: return_overrides for i in range(len(new_sigs))}
     for i, sig in enumerate(new_sigs):
@@ -197,17 +194,70 @@ def process_function(
             return_override = return_overrides.get(i, default_return)
         if return_override is not None:
             if sig.return_type:
-                _logger.debug(f"Changed return type of {function} from"
-                              f" {sig.return_type} to {return_override}")
+                _logger.debug(f'Changed return type of {function} from'
+                              f' {sig.return_type!r} to {return_override!r}')
             sig.return_type = return_override
         for j, param in enumerate(sig.parameters):
             param_override = param_overrides.get((i, j))
             if param_override is not None:
                 if param.type:
-                    _logger.debug(f"Changed type of parameter '{param}'"
-                                  f" in {function} to {param_override}")
+                    _logger.debug(f'Changed type of parameter {param}'
+                                  f' in {function} to {param_override!r}')
                 param.type = param_override
+    shadowed_names = ATTRIBUTE_NAME_SHADOWS.get('.'.join(function.namespace))
+    if shadowed_names is not None:
+        for sig in new_sigs:
+            for param in sig.parameters:
+                if param.type in shadowed_names:
+                    param.type = 'core.' + param.type
+            if sig.return_type in shadowed_names:
+                sig.return_type = 'core.' + sig.return_type
     function.signatures = new_sigs
+    match function:
+        case Function(
+            name='__eq__' | '__ne__',
+            signatures=[
+                Signature(
+                    parameters=[
+                        Parameter(is_self=True),
+                        Parameter() as other_param,
+                    ]
+                )
+            ]
+        ):
+            other_param.type = 'object'
+            other_param.named = False
+        case Function(
+            name='__setattr__',
+            signatures=[
+                Signature(
+                    parameters=[
+                        Parameter(is_self=True),
+                        Parameter() as name_param,
+                        Parameter() as value_param,
+                    ]
+                ) as sig
+            ]
+        ):
+            name_param.type = 'str'
+            value_param.type = 'Any'
+            sig.return_type = 'None'
+        case Function(
+            name='assign',
+            namespace=[*_, class_name],
+            signatures=[
+                Signature(
+                    return_type=return_type,
+                    parameters=[
+                        Parameter(is_self=True) as self_param,
+                        Parameter(type=param_type) as copy_param,
+                    ]
+                ) as sig
+            ]
+        ) if class_name == param_type == return_type:
+            self_param.type = '_Self'
+            copy_param.type = '_Self'
+            sig.return_type = '_Self'
     return function
 
 
@@ -230,7 +280,8 @@ def process_dependencies(file: File) -> None:
         def import_from(module: str) -> None:
             if not module.startswith(current_dir):
                 if (end := module.find('._')) > 0:
-                    module = module[:end]
+                    if module[end:] != '._typing':
+                        module = module[:end]
                 file.imports[module].append(name)
 
         processed = process_dependency(
@@ -238,4 +289,33 @@ def process_dependencies(file: File) -> None:
             if_type_var=as_type_var
         )
         if not processed:
-            _logger.warning(f"Unknown type '{name}' in '{current_dir}'")
+            _logger.warning(f'Unknown type {name!r} in {current_dir!r}')
+
+
+def process_vector_class(vector: Class) -> None:
+    """Process a representation of a Panda3D vector class whose name
+    matches `VECTOR_NAME_REGEX`, applying various special cases.
+    """
+    name_match = VECTOR_NAME_REGEX.match(vector.name)
+    assert name_match is not None
+    kind, dimension, suffix = name_match[1], name_match[2], name_match[3]
+    class_body = dict(vector.body)
+    if kind.endswith('VecBase'):
+        class_body.pop('get_data', None)
+        class_body.pop('getData', None)
+    if suffix == 'i' and not kind.startswith('Unaligned'):
+        class_body.pop('__truediv__', None)
+        class_body.pop('__itruediv__', None)
+    for name in RETURN_SELF:
+        match class_body.get(name):
+            case Function(signatures=[
+                Signature(parameters=[
+                    Parameter() as self_param, *_
+                ]) as sig
+            ]):
+                self_param.type = '_Self'
+                sig.return_type = '_Self'
+    match class_body.get('__len__'):
+        case Function(signatures=[Signature() as sig]):
+            sig.return_type = f'Literal[{dimension}]'
+    vector.body = class_body
