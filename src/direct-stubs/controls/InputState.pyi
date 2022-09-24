@@ -1,13 +1,13 @@
 from abc import ABCMeta, abstractmethod
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 
 class InputStateToken(metaclass=ABCMeta):
     Inval: ClassVar[str]
-    def __init__(self, inputState) -> None: ...
+    def __init__(self, inputState: InputState) -> None: ...
     @abstractmethod
     def release(self) -> None: ...
     def is_valid(self) -> bool: ...
@@ -29,11 +29,11 @@ class InputStateTokenGroup:
 
 class InputState(DirectObject):
     notify: ClassVar[Notifier]
-    WASD: ClassVar[Literal['WASD']]
-    QE: ClassVar[Literal['QE']]
-    ArrowKeys: ClassVar[Literal['ArrowKeys']]
-    Keyboard: ClassVar[Literal['Keyboard']]
-    Mouse: ClassVar[Literal['Mouse']]
+    WASD: Final[Literal['WASD']]
+    QE: Final[Literal['QE']]
+    ArrowKeys: Final[Literal['ArrowKeys']]
+    Keyboard: Final[Literal['Keyboard']]
+    Mouse: Final[Literal['Mouse']]
     def __init__(self) -> None: ...
     def delete(self) -> None: ...
     def is_set(self, name: str, inputSource: str | None = None) -> bool: ...
@@ -55,7 +55,7 @@ class InputState(DirectObject):
         startState: bool = False,
         inputSource: str | None = None,
     ) -> InputStateTokenGroup: ...
-    def force(self, name, value: bool, inputSource: str) -> InputStateForceToken: ...
+    def force(self, name: str, value: bool, inputSource: str) -> InputStateForceToken: ...
     def debug_print(self, message: str) -> None: ...
     isSet = is_set
     getEventName = get_event_name
