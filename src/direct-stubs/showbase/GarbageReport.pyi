@@ -1,6 +1,6 @@
 __all__ = ['FakeObject', 'GarbageLogger', 'GarbageReport', '_createGarbage']
 
-from collections.abc import Generator
+from collections.abc import Callable, Generator
 from typing import Any, ClassVar
 
 from ..directnotify.Notifier import Notifier
@@ -13,7 +13,7 @@ class FakeObject: ...
 class FakeDelObject:
     def __del__(self) -> None: ...
 
-def _createGarbage(num: int = 1) -> None: ...
+def _createGarbage(num: int = ...) -> None: ...
 
 class GarbageReport(Job):
     notify: ClassVar[Notifier]
@@ -35,9 +35,9 @@ class GarbageReport(Job):
         fullReport: bool = False,
         findCycles: bool = True,
         threaded: bool = False,
-        doneCallback = None,
+        doneCallback: Callable[[GarbageReport], object] | None = None,
         autoDestroy: bool = False,
-        priority = None,
+        priority: int | None = None,
         safeMode: bool = False,
         delOnly: bool = False,
         collect: bool = True,
@@ -45,7 +45,7 @@ class GarbageReport(Job):
     def run(self) -> Generator[Any | None, None, None]: ...
     def getNumCycles(self) -> int: ...
     def getDesc2numDict(self) -> dict: ...
-    def getGarbage(self): ...
+    def getGarbage(self) -> list[object]: ...
     def getReport(self) -> str: ...
 
 class GarbageLogger(GarbageReport): ...

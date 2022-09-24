@@ -11,7 +11,7 @@ def setupMirror(
     width: float,
     height: float,
     rootCamera: NodePath | None = None,
-    bufferSize: int = 256,
+    bufferSize: int = ...,
     clearColor: _Vec4f | None = None,
 ) -> NodePath: ...
 def showFrustum(np: NodePath) -> None: ...

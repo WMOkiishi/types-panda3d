@@ -1,11 +1,15 @@
 __all__ = ['install']
 
+from collections.abc import Callable
+from types import TracebackType
+from typing import Any
+
 from ..directnotify.Notifier import Notifier
 
 notify: Notifier
 reentry: int
 sReentry: int
-oldExcepthook = ...
+oldExcepthook: Callable[[type[BaseException], BaseException, TracebackType | None], Any] | None
 wantStackDumpLog: bool
 wantStackDumpUpload: bool
 variableDumpReasons: list

@@ -2,8 +2,8 @@ __all__ = ['Loader']
 
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterable, Sequence
-from typing import Any, ClassVar, overload
-from typing_extensions import Literal, Self, TypeAlias
+from typing import Any, ClassVar, TypeVar, overload
+from typing_extensions import Literal, TypeAlias
 
 from panda3d import core
 from panda3d.core import (
@@ -26,8 +26,10 @@ from panda3d.core import (
 )
 from ..directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
+from .ShowBase import ShowBase
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
+_Self = TypeVar('_Self')
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _FilterType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _TextFont_RenderMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
@@ -38,13 +40,13 @@ class _ResultAwaiter:
     requestList: Sequence[AsyncTask]
     index: int
     def __init__(self, requestList: Sequence[AsyncTask]) -> None: ...
-    def __await__(self) -> Self: ...
-    def __anext__(self) -> Self: ...
-    def __iter__(self) -> Self: ...
+    def __await__(self: _Self) -> _Self: ...
+    def __anext__(self: _Self) -> _Self: ...
+    def __iter__(self: _Self) -> _Self: ...
     def __next__(self) -> AsyncTask: ...
 
 class _Callback:
-    objects: list
+    objects: list[Any]
     gotList: bool
     callback: Callable[..., object]
     extraArgs: Iterable[Any]
@@ -58,7 +60,7 @@ class _Callback:
         callback: Callable[..., object],
         extraArgs: Iterable[Any],
     ) -> None: ...
-    def gotObject(self, index: int, object) -> None: ...
+    def gotObject(self, index: int, object: Any) -> None: ...
     def cancel(self) -> None: ...
     def cancelled(self) -> bool: ...
     def done(self) -> bool: ...
@@ -70,10 +72,10 @@ class _Callback:
 class Loader(DirectObject):
     notify: ClassVar[Notifier]
     loaderIndex: ClassVar[int]
-    base = ...
+    base: ShowBase
     loader: core.Loader
     hook: str
-    def __init__(self, base) -> None: ...
+    def __init__(self, base: ShowBase) -> None: ...
     def destroy(self) -> None: ...
     @overload
     def load_model(
@@ -109,7 +111,21 @@ class Loader(DirectObject):
         noCache: bool | None = None,
         allowInstance: bool = False,
         okMissing: bool | None = None,
-        callback: Callable[..., object] = ...,
+        *,
+        callback: Callable[..., object],
+        extraArgs: Iterable[Any] = ...,
+        priority: float | None = None,
+        blocking: Literal[False] | None = None,
+    ) -> _Callback: ...
+    @overload
+    def load_model(
+        self,
+        modelPath: str | list[str] | set[str] | tuple[str, ...],
+        loaderOptions: LoaderOptions | None,
+        noCache: bool | None,
+        allowInstance: bool,
+        okMissing: bool | None,
+        callback: Callable[..., object],
         extraArgs: Iterable[Any] = ...,
         priority: float | None = None,
         blocking: Literal[False] | None = None,
@@ -148,7 +164,19 @@ class Loader(DirectObject):
         modelPath: str | list[str] | set[str] | tuple[str, ...],
         node: NodePath | PandaNode,
         loaderOptions: LoaderOptions | None = None,
-        callback: Callable[..., object] = ...,
+        *,
+        callback: Callable[..., object],
+        extraArgs: Iterable[Any] = ...,
+        priority: int | None = None,
+        blocking: Literal[False] | None = None,
+    ) -> _Callback: ...
+    @overload
+    def save_model(
+        self,
+        modelPath: str | list[str] | set[str] | tuple[str, ...],
+        node: NodePath | PandaNode,
+        loaderOptions: LoaderOptions | None,
+        callback: Callable[..., object],
         extraArgs: Iterable[Any] = ...,
         priority: int | None = None,
         blocking: Literal[False] | None = None,
@@ -168,7 +196,7 @@ class Loader(DirectObject):
         anisotropicDegree: int | None = None,
         color: _Vec4f | None = None,
         outlineWidth: float | None = None,
-        outlineFeather: float = 0.1,
+        outlineFeather: float = ...,
         outlineColor: _Vec4f = ...,
         renderMode: _TextFont_RenderMode | None = None,
         okMissing: bool = False,
@@ -195,7 +223,7 @@ class Loader(DirectObject):
         anisotropicDegree: int | None = None,
         loaderOptions: LoaderOptions | None = None,
         multiview: bool | None = None,
-        numViews: int = 2,
+        numViews: int = ...,
     ) -> Texture: ...
     def load2DTextureArray(
         self,
@@ -207,7 +235,7 @@ class Loader(DirectObject):
         anisotropicDegree: int | None = None,
         loaderOptions: LoaderOptions | None = None,
         multiview: bool | None = None,
-        numViews: int = 2,
+        numViews: int = ...,
     ) -> Texture: ...
     def load_cube_map(
         self,
@@ -219,7 +247,6 @@ class Loader(DirectObject):
         anisotropicDegree: int | None = None,
         loaderOptions: LoaderOptions | None = None,
         multiview: bool | None = None,
-        numViews: int = 2,
     ) -> Texture: ...
     def unload_texture(self, texture: Texture) -> None: ...
     def load_sfx(
@@ -244,7 +271,7 @@ class Loader(DirectObject):
         callback: Callable[..., object] | None = None,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback: ...
-    def unloadSfx(self, sfx: AudioSound) -> None: ...
+    def unload_sfx(self, sfx: AudioSound) -> None: ...
     def load_shader(self, shaderPath: _Filename, okMissing: bool = False) -> Shader: ...
     def unload_shader(self, shaderPath: _Filename | None) -> None: ...
     def async_flatten_strong(
@@ -263,6 +290,9 @@ class Loader(DirectObject):
     loadCubeMap = load_cube_map
     unloadTexture = unload_texture
     loadSfx = load_sfx
+    loadMusic = load_music
+    loadSound = load_sound
+    unloadSfx = unload_sfx
     loadShader = load_shader
     unloadShader = unload_shader
     asyncFlattenStrong = async_flatten_strong

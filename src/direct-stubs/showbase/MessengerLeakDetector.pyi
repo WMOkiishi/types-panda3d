@@ -5,8 +5,7 @@ from ..directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
 from .Job import Job
 
-class MessengerLeakObject(DirectObject):
-    def __init__(self) -> None: ...
+class MessengerLeakObject(DirectObject): ...
 
 class MessengerLeakDetector(Job):
     notify: ClassVar[Notifier]

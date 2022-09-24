@@ -16,10 +16,10 @@ class DistancePhasedNode(PhasedObject, DirectObject, NodePath):
     def __init__(
         self,
         name: str,
-        phaseParamMap: Mapping[str, float],
+        phaseParamMap: Mapping[str, float] = ...,
         autoCleanup: bool = True,
-        enterPrefix: str = 'enter',
-        exitPrefix: str = 'exit',
+        enterPrefix: str = ...,
+        exitPrefix: str = ...,
         phaseCollideMask: BitMask_uint32_t_32 = ...,
         fromCollideNode: CollisionNode | None = None,
     ) -> None: ...
@@ -27,7 +27,7 @@ class DistancePhasedNode(PhasedObject, DirectObject, NodePath):
     def setPhaseCollideMask(self, mask: BitMask_uint32_t_32) -> None: ...
     def reset(self) -> None: ...
 
-class BufferedDistancePhaseNode(DistancePhasedNode):
+class BufferedDistancePhasedNode(DistancePhasedNode):
     bufferParamMap: Mapping[str, tuple[float, int]]
     bufferParamList: list[tuple[str, tuple[float, int]]]
     def __init__(
@@ -35,8 +35,8 @@ class BufferedDistancePhaseNode(DistancePhasedNode):
         name: str,
         bufferParamMap: Mapping[str, tuple[float, int]],
         autoCleanup: bool = True,
-        enterPrefix: str = 'enter',
-        exitPrefix: str = 'exit',
+        enterPrefix: str = ...,
+        exitPrefix: str = ...,
         phaseCollideMask: BitMask_uint32_t_32 = ...,
         fromCollideNode: CollisionNode | None = None,
     ) -> None: ...

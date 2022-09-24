@@ -14,7 +14,6 @@ _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
 _Interval: TypeAlias = Interval | CInterval
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 
-
 class Transitions:
     IrisModelName: ClassVar[str]
     FadeModelName: ClassVar[str]
@@ -31,51 +30,51 @@ class Transitions:
     irisTaskName: str
     fadeTaskName: str
     letterboxTaskName: str
-    def __init__(self, loader: object, model: NodePath | None = None, scale: float = 3, pos: LVecBase3f = ...) -> None: ...
+    def __init__(self, loader: object, model: NodePath | None = None, scale: float = ..., pos: LVecBase3f = ...) -> None: ...
     def __del__(self) -> None: ...
-    def setFadeModel(self, model: NodePath | None, scale: float = 1) -> None: ...
+    def setFadeModel(self, model: NodePath | None, scale: float = ...) -> None: ...
     def loadFade(self) -> None: ...
     def getFadeInIval(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> MetaInterval.Sequence: ...
     def getFadeOutIval(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> MetaInterval.Sequence: ...
     def fadeIn(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> AsyncFuture: ...
     def fadeOut(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> AsyncFuture: ...
-    def fadeOutActive(self): ...
-    def fadeScreen(self, alpha: float = 0.5) -> None: ...
+    def fadeOutActive(self) -> bool: ...
+    def fadeScreen(self, alpha: float = ...) -> None: ...
     def fadeScreenColor(self, color: _Vec4f) -> None: ...
     def noFade(self) -> None: ...
     def setFadeColor(self, r: float, g: float, b: float) -> None: ...
     def loadIris(self) -> None: ...
     def irisIn(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> AsyncFuture: ...
     def irisOut(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> AsyncFuture: ...
     def noIris(self) -> None: ...
     def noTransitions(self) -> None: ...
@@ -83,13 +82,13 @@ class Transitions:
     def noLetterbox(self) -> None: ...
     def letterboxOn(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> AsyncFuture: ...
     def letterboxOff(
         self,
-        t: float = 0.5,
+        t: float = ...,
         finishIval: _Interval | None = None,
-        blendType: _BlendType = 'noBlend',
+        blendType: _BlendType = ...,
     ) -> AsyncFuture: ...

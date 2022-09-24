@@ -1,8 +1,9 @@
 __all__ = ['ShowBase', 'WindowControls']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Callable
 from types import ModuleType
-from typing import ClassVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import (
@@ -14,7 +15,9 @@ from panda3d.core import (
     ClockObject,
     CollisionTraverser,
     ConfigVariableColor,
+    ConfigVariableFilename,
     DataGraphTraverser,
+    DisplayRegion,
     DriveInterface,
     FrameBufferProperties,
     FrameRateMeter,
@@ -38,6 +41,7 @@ from panda3d.core import (
     PGTop,
     RecorderController,
     SceneGraphAnalyzerMeter,
+    Texture,
     Trackball,
     Transform2SG,
     UnalignedLVecBase4f,
@@ -46,6 +50,7 @@ from panda3d.core import (
 from panda3d.physics import ParticleSystemManager, PhysicsManager
 from ..directnotify.Notifier import Notifier
 from ..directtools.DirectSession import DirectSession
+from ..p3d.AppRunner import AppRunner
 from ..showutil.TexMemWatcher import TexMemWatcher
 from ..task.Task import Task, TaskManager
 from .BufferViewer import BufferViewer
@@ -58,6 +63,7 @@ from .Messenger import Messenger
 from .PythonUtil import Stack
 from .Transitions import Transitions
 
+_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _WindowType: TypeAlias = Literal['onscreen', 'offscreen', 'none']
 
@@ -69,8 +75,8 @@ class ShowBase(DirectObject):
     __dev__: bool
     mainDir: str
     main_dir: str
-    appRunner = ...
-    app_runner = ...
+    appRunner: AppRunner | None
+    app_runner: AppRunner | None
     debugRunningMultiplier: int
     nextWindowIndex: int
     sfxActive: bool
@@ -122,9 +128,9 @@ class ShowBase(DirectObject):
     camLens: Lens | None
     camFrustumVis: NodePath[GeomNode] | None
     direct: DirectSession | None
-    wxApp = ...
+    wxApp: Any
     wxAppCreated: bool
-    tkRoot = ...
+    tkRoot: Any
     tkRootCreated: bool
     clusterSyncFlag: bool
     hidden: NodePath[PandaNode]
@@ -209,7 +215,7 @@ class ShowBase(DirectObject):
     def getExitErrorCode(self) -> Literal[0]: ...
     def printEnvDebugInfo(self) -> None: ...
     def destroy(self) -> None: ...
-    def make_default_pipe(self, printPipeTypes: bool | None) -> None: ...
+    def make_default_pipe(self, printPipeTypes: bool | None = None) -> None: ...
     def make_module_pipe(self, moduleName: str) -> GraphicsPipe: ...
     def make_all_pipes(self) -> None: ...
     def open_window(
@@ -231,13 +237,49 @@ class ShowBase(DirectObject):
         callbackWindowDict: dict[str, Callable[[], object]] | None = None,
         requireWindow: bool | None = None,
     ) -> GraphicsWindow: ...
-    def close_window(self, win, keepCamera: bool = False, removeWindow: bool = True) -> None: ...
-    def open_default_window(self, *args, **kw) -> bool: ...
-    def open_main_window(self, *args, **kw) -> bool: ...
+    def close_window(self, win: GraphicsOutput, keepCamera: bool = False, removeWindow: bool = True) -> None: ...
+    def open_default_window(
+        self,
+        props: WindowProperties | None = None,
+        fbprops: FrameBufferProperties | None = None,
+        pipe: GraphicsPipe | None = None,
+        gsg: GraphicsOutput | None = None,
+        host: GraphicsOutput | None = None,
+        type: _WindowType | None = None,
+        name: str | None = None,
+        size: LVecBase2i | tuple[int, int] | None = None,
+        aspectRatio: float | None = None,
+        makeCamera: bool = True,
+        keepCamera: bool = False,
+        scene: NodePath | None = None,
+        stereo: bool | None = None,
+        unexposedDraw: bool | None = None,
+        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
+        requireWindow: bool | None = None,
+    ) -> bool: ...
+    def open_main_window(
+        self,
+        props: WindowProperties | None = None,
+        fbprops: FrameBufferProperties | None = None,
+        pipe: GraphicsPipe | None = None,
+        gsg: GraphicsOutput | None = None,
+        host: GraphicsOutput | None = None,
+        type: _WindowType | None = None,
+        name: str | None = None,
+        size: LVecBase2i | tuple[int, int] | None = None,
+        aspectRatio: float | None = None,
+        makeCamera: bool = True,
+        keepCamera: bool = False,
+        scene: NodePath | None = None,
+        stereo: bool | None = None,
+        unexposedDraw: bool | None = None,
+        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
+        requireWindow: bool | None = None,
+    ) -> bool: ...
     def set_sleep(self, amount: float) -> None: ...
     def set_frame_rate_meter(self, flag: bool) -> None: ...
     def set_scene_graph_analyzer_meter(self, flag: bool) -> None: ...
-    def setup_window_controls(self, winCtr: WindowControls | None = None) -> None: ...
+    def setup_window_controls(self, winCtrl: WindowControls | None = None) -> None: ...
     def setup_render(self) -> None: ...
     def setup_render2d(self) -> None: ...
     def setup_render2dp(self) -> None: ...
@@ -247,7 +289,7 @@ class ShowBase(DirectObject):
     def make_camera(
         self,
         win: GraphicsOutput,
-        sort: int = 0,
+        sort: int = ...,
         scene: NodePath | None = None,
         displayRegion: _Vec4f | tuple[float, float, float, float] = ...,
         stereo: bool | None = None,
@@ -255,8 +297,8 @@ class ShowBase(DirectObject):
         clearDepth: bool = False,
         clearColor: _Vec4f | None = None,
         lens: Lens | None = None,
-        camName: str = 'cam',
-        mask=None,
+        camName: str = ...,
+        mask: BitMask_uint32_t_32 | int | None = None,
         useCamera: NodePath[Camera] | None = None,
     ) -> NodePath[Camera]: ...
     def make_camera2d(
@@ -278,8 +320,8 @@ class ShowBase(DirectObject):
         cameraName: str | None = None,
     ) -> NodePath[Camera]: ...
     def setup_data_graph(self) -> None: ...
-    def setup_mouse(self, win, fMultiWin: bool = False) -> NodePath[ButtonThrower]: ...
-    def setup_mouse_cb(self, win) -> tuple[list[NodePath[ButtonThrower]], list[MouseWatcher]]: ...
+    def setup_mouse(self, win: GraphicsWindow, fMultiWin: bool = False) -> NodePath[ButtonThrower]: ...
+    def setup_mouse_cb(self, win: GraphicsWindow) -> tuple[list[NodePath[ButtonThrower]], list[MouseWatcher]]: ...
     def enable_software_mouse_pointer(self) -> None: ...
     def getAlt(self) -> bool: ...
     def getShift(self) -> bool: ...
@@ -302,15 +344,15 @@ class ShowBase(DirectObject):
     def enable_sound_effects(self, bEnableSoundEffects: bool) -> None: ...
     def disable_all_audio(self) -> None: ...
     def enable_all_audio(self) -> None: ...
-    def loadSfx(self, name): ...
-    def loadMusic(self, name): ...
+    def loadSfx(self, name: _Filename) -> Any: ...
+    def loadMusic(self, name: _Filename) -> Any: ...
     def playSfx(
         self,
         sfx: AudioSound,
         looping: bool = False,
         interrupt: bool = True,
         volume: float | None = None,
-        time: float = 0,
+        time: float = ...,
         node: NodePath | None = None,
         listener: NodePath | None = None,
         cutoff: float | None = None,
@@ -321,16 +363,23 @@ class ShowBase(DirectObject):
         looping: bool = False,
         interrupt: bool = True,
         volume: float | None = None,
-        time: float = 0,
+        time: float = ...,
     ) -> None: ...
     def init_shadow_trav(self) -> None: ...
-    def restart(self, clusterSync: bool = False, cluster=None) -> None: ...
+    def restart(self, clusterSync: bool = False, cluster: Any = None) -> None: ...
     def shutdown(self) -> None: ...
     def get_background_color(self, win: GraphicsEngine | None = None) -> LVecBase4f: ...
     @overload
-    def set_background_color(self, r: LVecBase3f | LVecBase4f, *, a: float = 0, win: GraphicsEngine | None = None) -> None: ...
+    def set_background_color(
+        self,
+        r: LVecBase3f | LVecBase4f,
+        g: None = None,
+        b: None = None,
+        a: float = ...,
+        win: GraphicsEngine | None = None,
+    ) -> None: ...
     @overload
-    def set_background_color(self, r: float, g: float, b: float, a: float = 0, win: GraphicsEngine | None = None) -> None: ...
+    def set_background_color(self, r: float, g: float, b: float, a: float = ..., win: GraphicsEngine | None = None) -> None: ...
     def toggle_backface(self) -> None: ...
     def backface_culling_on(self) -> None: ...
     def backface_culling_off(self) -> None: ...
@@ -356,39 +405,40 @@ class ShowBase(DirectObject):
     def remove_camera_frustum(self) -> None: ...
     def screenshot(
         self,
-        namePrefix: str = 'screenshot',
+        namePrefix: str = ...,
         defaultFilename: bool = True,
-        source=None,
-        imageComment: str = '',
+        source: GraphicsEngine | None = None,
+        imageComment: str = ...,
     ) -> str | None: ...
     def save_cube_map(
         self,
-        namePrefix: str = 'cube_map_#.png',
+        namePrefix: str = ...,
         defaultFilename: bool = False,
-        source=None,
+        source: GraphicsEngine | None = None,
         camera: NodePath[ModelNode] | None = None,
-        size: int = 128,
+        size: int = ...,
         cameraMask: BitMask_uint32_t_32 = ...,
         sourceLens: Lens | None = None,
     ) -> str | None: ...
     def save_sphere_map(
         self,
-        namePrefix: str = 'spheremap.png',
+        namePrefix: str = ...,
         defaultFilename: bool = False,
-        source=None,
+        source: GraphicsEngine | None = None,
         camera: NodePath[ModelNode] | None = None,
-        size: int = 256,
-        numVertices: int = 1000,
+        size: int = ...,
+        cameraMask: BitMask_uint32_t_32 = ...,
+        numVertices: int = ...,
         sourceLens: Lens | None = None,
     ) -> str | None: ...
     def movie(
         self,
-        namePrefix: str = 'movie',
-        duration: float = 1,
-        fps: int = 30,
-        format: str = 'png',
-        sd: int = 4,
-        source=None,
+        namePrefix: str = ...,
+        duration: float = ...,
+        fps: int = ...,
+        format: str = ...,
+        sd: int = ...,
+        source: GraphicsWindow | DisplayRegion | Texture | None = None,
     ) -> Task: ...
     def windowEvent(self, win: GraphicsEngine) -> None: ...
     def adjustWindowAspectRatio(self, aspectRatio: float) -> None: ...
@@ -479,7 +529,7 @@ class WindowControls:
     mouseWatcher: MouseWatcher | None
     mouseKeyboard: NodePath | None
     closeCommand: Callable[[], object]
-    grid = ...
+    grid: Any
     def __init__(
         self,
         win: GraphicsEngine,
@@ -489,5 +539,5 @@ class WindowControls:
         mouseWatcher: MouseWatcher | None = None,
         mouseKeyboard: NodePath | None = None,
         closeCmd: Callable[[], object] = ...,
-        grid=None,
+        grid: Any = None,
     ) -> None: ...

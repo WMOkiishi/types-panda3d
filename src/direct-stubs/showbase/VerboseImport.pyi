@@ -10,5 +10,5 @@ def newimport(
     globals: Mapping[str, Any] | None = None,
     locals: Mapping[str, Any] | None = None,
     fromlist: Sequence[str] = (),
-    level: int = 0,
+    level: int = ...,
 ) -> Any: ...
