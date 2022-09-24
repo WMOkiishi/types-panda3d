@@ -5,7 +5,7 @@ from collections.abc import Generator, Iterator, Sequence
 from typing import ClassVar, IO, NamedTuple, overload
 from typing_extensions import Literal, TypeAlias
 
-from .icon import Icon
+from ..p3d.DeploymentTools import Icon
 
 _OpenFile: TypeAlias = StrOrBytesPath | int
 

@@ -1,7 +1,13 @@
-from collections.abc import Callable
+from _typeshed import StrOrBytesPath
+from collections.abc import Callable, Iterable
 from typing import ClassVar, overload
-from typing_extensions import Final
-from setuptools import Command
+from typing_extensions import Final, TypeAlias
+
+from setuptools import Command  # type: ignore[import]
+
+from ..p3d.DeploymentTools import Icon
+
+_OpenFile: TypeAlias = StrOrBytesPath | int
 
 def egg2bam(_build_cmd: object, srcpath: str, dstpath: str) -> str: ...
 macosx_binary_magics: Final[tuple[bytes, ...]]
@@ -17,19 +23,19 @@ class build_apps(Command):
     user_options: ClassVar[list[tuple[str, str | None, str]]]
     default_file_handlers: ClassVar[dict[str, Callable]]
     build_base: str
-    gui_apps: dict
-    console_apps: dict
-    macos_main_app = ...
-    rename_paths: dict
-    include_patterns: list
-    exclude_patterns: list
-    include_modules: dict
-    exclude_modules: dict
-    icons: dict
+    gui_apps: dict[str, str]
+    console_apps: dict[str, str]
+    macos_main_app: str | None
+    rename_paths: dict[str, str]
+    include_patterns: list[str]
+    exclude_patterns: list[str]
+    include_modules: dict[str, list[str]]
+    exclude_modules: dict[str, list[str]]
+    icons: dict[str, list[str] | tuple[str, ...]]
     platforms: list[str]
     plugins: list[str]
     embed_prc_data: bool
-    extra_prc_files: list
+    extra_prc_files: list[str]
     extra_prc_data: str
     default_prc_dir: str | None
     log_filename: str | None
@@ -39,20 +45,21 @@ class build_apps(Command):
     use_optimized_wheels: bool
     optimized_wheel_index: str
     pypi_extra_indexes: list[str]
-    file_handlers: dict
-    excule_dependencies: list[str]
+    file_handlers: dict[str, Callable]
+    exclude_dependencies: list[str]
     package_data_dirs: dict
+    icon_object: dict[str, Icon]
     def initialize_options(self) -> None: ...
     def finalize_options(self) -> None: ...
     def run(self) -> None: ...
     def download_wheels(self, platform: str) -> list[str]: ...
-    def update_pe_resources(self, appname, runtime) -> None: ...
-    def bundle_macos_app(self, bulddir: str) -> None: ...
+    def update_pe_resources(self, appname: str, runtime: _OpenFile) -> None: ...
+    def bundle_macos_app(self, builddir: str) -> None: ...
     def build_runtimes(self, platform: str, use_wheels: bool) -> None: ...
-    def add_dependency(self, name: str, target_dir: str, search_path, referenced_by: object) -> None: ...
+    def add_dependency(self, name: str, target_dir: str, search_path: Iterable[str], referenced_by: object) -> None: ...
     def copy(self, source_path: str, target_path: str) -> None: ...
-    def copy_with_dependencies(self, source_path: str, target_path: str, search_path) -> None: ...
-    def copy_dependencies(self, target_path, target_dir, search_path, referenced_by: object) -> None: ...
+    def copy_with_dependencies(self, source_path: str, target_path: str, search_path: Iterable[str]) -> None: ...
+    def copy_dependencies(self, target_path: str, target_dir: str, search_path: Iterable[str], referenced_by: object) -> None: ...
     @overload
     def expand_path(self, path: str, platform: str) -> str: ...
     @overload
@@ -62,7 +69,7 @@ class bdist_apps(Command):
     DEFAULT_INSTALLERS: ClassVar[dict[str, list[str]]]
     description: ClassVar[str]
     user_options: ClassVar[list[tuple[str, str | None, str]]]
-    installers: dict
+    installers: dict[str, list[str]]
     dist_dir: str
     skip_build: bool
     def initialize_options(self) -> None: ...

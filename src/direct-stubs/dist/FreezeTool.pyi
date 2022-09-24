@@ -1,17 +1,17 @@
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, SupportsRead
 from collections.abc import Container, Iterable, Mapping, Sequence
-from modulefinder import ModuleFinder
-from typing import TypeVar
-from typing_extensions import TypeAlias
+from modulefinder import Module, ModuleFinder
+from typing import Any, TypeVar
+from typing_extensions import Final, TypeAlias
 
-from panda3d.core import Filename
+from panda3d.core import Filename, Multifile
 
 _File = TypeVar('_File', bound=_OpenFile)
-
 _OpenFile: TypeAlias = StrOrBytesPath | int
+_Unused: TypeAlias = object
 
-python: str
-isDebugBuild: bool
+python: Final[str]
+isDebugBuild: Final[bool]
 startupModules: list[str]
 builtinInitFuncs: dict[str, str | None]
 hiddenImports: dict[str, list[str]]
@@ -34,9 +34,9 @@ class CompilationEnvironment:
     dllext: str
     arch: str
     def __init__(self, platform: str) -> None: ...
-    def determineStandardStartup(self) -> None: ...
-    def compileExe(self, filename, basename, extraLink: Iterable[str] = ...) -> None: ...
-    def compileDll(self, filename, basename, extraLink: Iterable[str] = ...) -> None: ...
+    def determineStandardSetup(self) -> None: ...
+    def compileExe(self, filename: object, basename: object, extraLink: Iterable[str] = ...) -> None: ...
+    def compileDll(self, filename: object, basename: object, extraLink: Iterable[str] = ...) -> None: ...
 
 frozenMainCode: str
 frozenDllMainCode: str
@@ -54,23 +54,23 @@ class Freezer:
         exclude: bool
         forbid: bool
         allowChildren: bool
-        fromSource = ...
+        fromSource: Any
         text: str | None
         def __init__(
             self,
             moduleName: str,
-            filename: Filename | StrOrBytesPath | None = None,
+            filename: StrOrBytesPath | None = None,
             implicit: bool = False,
             guess: bool = False,
             exclude: bool = False,
             forbid: bool = False,
             allowChildren: bool = False,
-            fromSource=None,
+            fromSource: Any = None,
             text: str | None = None,
         ) -> None: ...
     platform: str
     cenv: CompilationEnvironment | None
-    path = ...
+    path: list[str] | None
     sourceExtension: str
     objectExtension: str
     keepTemporaryFiles: bool
@@ -87,13 +87,19 @@ class Freezer:
     def __init__(
         self,
         previous: Freezer | None = None,
-        debugLevel: object = 0,
+        debugLevel: _Unused = ...,
         platform: str | None = None,
-        path=None,
+        path: list[str] | None = None,
     ) -> None: ...
-    def exludeFrom(self, freezer: Freezer) -> None: ...
-    def excludeModule(self, moduleName: str, forbid: bool = False, allowChildren: bool = False, fromSource=None) -> None: ...
-    def handleCustomPath(self, moudleName: str) -> None: ...
+    def excludeFrom(self, freezer: Freezer) -> None: ...
+    def excludeModule(
+        self,
+        moduleName: str,
+        forbid: bool = False,
+        allowChildren: bool = False,
+        fromSource: Any = None,
+    ) -> None: ...
+    def handleCustomPath(self, moduleName: str) -> None: ...
     def getModulePath(self, moduleName: str) -> list[str] | None: ...
     def getModuleStar(self, moduleName: str) -> list[str] | None: ...
     def addModule(
@@ -101,9 +107,9 @@ class Freezer:
         moduleName: str,
         implicit: bool = False,
         newName: str | None = None,
-        filename: Filename | StrOrBytesPath | None = None,
+        filename: StrOrBytesPath | None = None,
         guess: bool = False,
-        fromSource=None,
+        fromSource: Any = None,
         text: str | None = None,
     ) -> None: ...
     def done(self, addStartupModules: bool = False) -> None: ...
@@ -111,21 +117,21 @@ class Freezer:
     def mangleName(self, moduleName: str) -> str: ...
     def getAllModuleNames(self) -> list[str]: ...
     def getModuleDefs(self) -> list[tuple[str, Freezer.ModuleDef]]: ...
-    def addToMultifile(self, multifile, compressionLevel: int = 0) -> None: ...
-    def writeMultifile(self, mfname: str) -> None: ...
-    def writeCode(self, filename: _OpenFile | None, initCode: str = '') -> None: ...
+    def addToMultifile(self, multifile: Multifile, compressionLevel: int = ...) -> None: ...
+    def writeMultifile(self, mfname: StrOrBytesPath) -> None: ...
+    def writeCode(self, filename: _OpenFile | None, initCode: str = ...) -> None: ...
     def generateCode(self, basename: str, compileToExe: bool = False) -> str: ...
     def generateRuntimeFromStub(
         self,
         target: _File,
-        stub_file,
+        stub_file: SupportsRead[bytes],
         use_console: bool,
         fields: Mapping[str, str | None] = ...,
         log_append: bool = False,
         log_filename_strftime: bool = False,
     ) -> _File: ...
-    def makeModuleDef(self, mangledName, code: bytes) -> str: ...
-    def makeModuleListEntry(self, mangledName: str, code: bytes, moduleName: str, module) -> str: ...
+    def makeModuleDef(self, mangledName: str, code: bytes) -> str: ...
+    def makeModuleListEntry(self, mangledName: str, code: bytes, moduleName: str, module: object) -> str: ...
     def makeForbiddenModuleListEntry(self, moduleName: str) -> str: ...
 
 class PandaModuleFinder(ModuleFinder):
@@ -138,3 +144,4 @@ class PandaModuleFinder(ModuleFinder):
         *,
         suffixes: Iterable[tuple[str, str, int]] = ...,
     ) -> None: ...
+    def find_module(self, name: str, path: str | None = None, parent: Module | None = None): ...
