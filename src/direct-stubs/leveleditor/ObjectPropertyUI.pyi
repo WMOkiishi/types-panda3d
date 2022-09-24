@@ -5,9 +5,9 @@ from typing_extensions import TypeAlias
 from ..wxwidgets.WxSlider import WxSlider
 
 wx: Any
-CubeColourDialog = wx.lib.agw.cubecolourdialog.CubeColourDialog
-PyEmbeddedImage = wx.lib.embeddedimage.PyEmbeddedImage
-ScrolledPanel = wx.lib.scrolledpanel.ScrolledPanel
+CubeColourDialog: TypeAlias = wx.lib.agw.cubecolourdialog.CubeColourDialog
+PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
+ScrolledPanel: TypeAlias = wx.lib.scrolledpanel.ScrolledPanel
 
 _Unused: TypeAlias = object
 

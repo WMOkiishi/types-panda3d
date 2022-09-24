@@ -1,9 +1,8 @@
 from typing import Any
-
 from typing_extensions import TypeAlias
 
 wx: Any
-ScrolledPanel = wx.lib.scrolledpanel.ScrolledPanel
+ScrolledPanel: TypeAlias = wx.lib.scrolledpanel.ScrolledPanel
 
 _Unused: TypeAlias = object
 

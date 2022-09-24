@@ -2,11 +2,13 @@ __all__ = ['PatchMaker']
 
 from _typeshed import StrOrBytesPath
 from collections.abc import MutableSequence
-from typing_extensions import Self, TypeAlias
+from typing import TypeVar
+from typing_extensions import TypeAlias
 
 from panda3d.core import ConfigVariableFilename, Filename, TiXmlDocument, TiXmlElement
 from .FileSpec import FileSpec
 
+_Self = TypeVar('_Self')
 _Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _Key: TypeAlias = tuple[str | None, str | None, str | None, str | None, FileSpec | None]
 _Plan: TypeAlias = list[tuple[PatchMaker.PatchFile, PatchMaker.PackageVersion]]
@@ -35,13 +37,13 @@ class PatchMaker:
         ) -> None: ...
         def cleanup(self) -> None: ...
         def getPatchChain(
-            self,
-            startPv: Self,
-            alreadyVisited: MutableSequence[Self] = ...,
+            self: _Self,
+            startPv: _Self,
+            alreadyVisited: MutableSequence[_Self] = ...,
         ) -> list[PatchMaker.PatchFile] | None: ...
         def getRecreateFilePlan(
-            self,
-            alreadyVisited: MutableSequence[Self] = ...,
+            self: _Self,
+            alreadyVisited: MutableSequence[_Self] = ...,
         ) -> tuple[Filename, PatchMaker.PackageVersion, _Plan] | tuple[None, None, None]: ...
         def getFile(self) -> Filename | None: ...
         def applyPatch(self, origFile: _Filename, patchFilename: _Filename) -> Filename | None: ...

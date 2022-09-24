@@ -1,11 +1,11 @@
 from collections.abc import Sequence
-from typing import Any, Union, SupportsFloat
+from typing import Any, SupportsFloat, Union
 from typing_extensions import TypeAlias
 
 from panda3d.core import LVecBase2f
 
-wx = Any
-PyEmbeddedImage = wx.lib.embeddedimage.PyEmbeddedImage
+wx: Any
+PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
 
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 

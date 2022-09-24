@@ -1,3 +1,4 @@
+import sys
 from typing import Any, ClassVar
 
 from panda3d.core import ConfigVariableBool, GraphicsWindow, InputDevice
@@ -24,4 +25,7 @@ class OpenGLPandaWindow(wxgl.GLCanvas):
     def onPaint(self, event) -> None: ...
     def onIdle(self, event) -> None: ...
 
-WxPandaWindow: type[OpenGLPandaWindow] | type[EmbeddedPandaWindow]
+if sys.platform == 'darwin' or sys.platform == 'linux':
+    WxPandaWindow = OpenGLPandaWindow
+else:
+    WxPandaWindow = EmbeddedPandaWindow

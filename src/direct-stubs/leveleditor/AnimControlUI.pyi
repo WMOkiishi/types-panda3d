@@ -1,7 +1,8 @@
 from typing import Any
+from typing_extensions import TypeAlias
 
 wx: Any
-PyEmbeddedImage = wx.lib.embeddedimage.PyEmbeddedImage
+PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
 
 FirstFrame: PyEmbeddedImage
 PreFrame: PyEmbeddedImage

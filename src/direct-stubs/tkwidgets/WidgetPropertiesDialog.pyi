@@ -2,8 +2,11 @@ __all__ = ['WidgetPropertiesDialog']
 
 from collections.abc import Iterable
 from tkinter import Misc, Toplevel
-from typing import Any
-from typing_extensions import Self, TypeAlias
+from typing import Any, TypeVar
+
+from typing_extensions import TypeAlias
+
+_Self = TypeVar('_Self')
 
 Pmw: Any
 
@@ -22,7 +25,7 @@ class WidgetPropertiesDialog(Toplevel):
         parent: Misc | None = None,
         title: str = 'Widget Properties',
     ) -> None: ...
-    def body(self, master: Misc | None) -> Pmw.EntryField | Self: ...
+    def body(self: _Self, master: Misc | None) -> Pmw.EntryField | _Self: ...
     def modified(self, widget, entry, property: str, type, fNone: bool) -> None: ...
     def buttonbox(self) -> None: ...
     def realOrNone(self, val: str): ...
