@@ -4,16 +4,20 @@ from pathlib import Path
 
 
 def main() -> int:
-    allowlist = Path('allowlists', 'panda3d.txt')
+    allowlists = [Path('allowlists', 'panda3d.txt')]
+    if sys.platform != 'win32':
+        allowlists.append(Path('allowlists', 'panda3d-unix.txt'))
     cmd = [
         sys.executable,
         '-m',
         'mypy.stubtest',
         'panda3d',
-        '--allowlist',
-        str(allowlist),
-        '--ignore-unused-allowlist',
     ]
+    for allowlist in allowlists:
+        cmd += [
+            '--allowlist',
+            str(allowlist),
+        ]
     try:
         print(' '.join(cmd), file=sys.stderr)
         subprocess.run(cmd, check=True)
