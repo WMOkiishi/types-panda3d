@@ -63,6 +63,8 @@ class PhysicsWalker(DirectObject):
         self,
         collisionTraverser: CollisionTraverser,
         avatarNodePath: NodePath[ActorNode],
+        wallBitmask: BitMask_uint32_t_32,
+        floorBitmask: BitMask_uint32_t_32,
         avatarRadius: float = ...,
         floorOffset: float = ...,
         reach: float = ...,

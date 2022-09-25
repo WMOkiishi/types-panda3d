@@ -34,9 +34,11 @@ class DevWalker(DirectObject):
         self,
         collisionTraverser: CollisionTraverser,
         avatarNodePath: NodePath,
-        avatarRadius: float = ...,
-        floorOffset: float = ...,
-        reach: float = ...,
+        wallCollideMask: _Unused,
+        floorCollideMask: _Unused,
+        avatarRadius: _Unused = ...,
+        floorOffset: _Unused = ...,
+        reach: _Unused = ...,
     ) -> None: ...
     def setAirborneHeightFunc(self, getAirborneHeight: _Unused) -> None: ...
     def deleteCollisions(self) -> None: ...

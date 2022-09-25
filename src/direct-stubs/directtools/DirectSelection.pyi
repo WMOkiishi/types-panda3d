@@ -161,7 +161,7 @@ class SelectionRay(SelectionQueue):
 class SelectionSegment(SelectionQueue):
     colliders: list[CollisionSolid]
     numColliders: int
-    def __init__(self, parentNP: NodePath | None, numSegments: int = ...) -> None: ...
+    def __init__(self, parentNP: NodePath | None = None, numSegments: int = ...) -> None: ...
     def pickGeom(
         self,
         targetNodePath: NodePath | None = None,

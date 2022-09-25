@@ -210,6 +210,7 @@ class LerpPosQuatInterval(LerpNodePathInterval):
         bakeInStart: bool = True,
         fluid: bool = False,
         name: str | None = None,
+        hpr: _Vec3f | None = None,
     ) -> None: ...
     def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
 
@@ -225,6 +226,7 @@ class LerpHprScaleInterval(LerpNodePathInterval):
         self,
         nodePath: NodePath,
         duration: float,
+        hpr: _Vec3f,
         scale: _Vec3f | float,
         startHpr: _Vec3f | None = None,
         startQuat: _Vec4f | None = None,
@@ -318,6 +320,7 @@ class LerpPosQuatScaleInterval(LerpNodePathInterval):
         bakeInStart: bool = True,
         fluid: bool = False,
         name: str | None = None,
+        hpr: _Vec3f | None = None,
     ) -> None: ...
     def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
 
@@ -384,6 +387,7 @@ class LerpPosQuatScaleShearInterval(LerpNodePathInterval):
         bakeInStart: bool = True,
         fluid: bool = False,
         name: str | None = None,
+        hpr: _Vec3f | None = None,
     ) -> None: ...
     def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
 
@@ -397,8 +401,8 @@ class LerpColorInterval(LerpNodePathInterval):
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
-        fluid: bool = False,
         name: str | None = None,
+        override: int | None = None,
     ) -> None: ...
 
 class LerpColorScaleInterval(LerpNodePathInterval):
@@ -411,8 +415,8 @@ class LerpColorScaleInterval(LerpNodePathInterval):
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
-        fluid: bool = False,
         name: str | None = None,
+        override: int | None = None,
     ) -> None: ...
 
 class LerpTexOffsetInterval(LerpNodePathInterval):
@@ -424,9 +428,10 @@ class LerpTexOffsetInterval(LerpNodePathInterval):
         startTexOffset: LVecBase2f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
+        textureStage=None,
         bakeInStart: bool = True,
-        fluid: bool = False,
         name: str | None = None,
+        override: int | None = None,
     ) -> None: ...
 
 class LerpTexRotateInterval(LerpNodePathInterval):
@@ -438,9 +443,10 @@ class LerpTexRotateInterval(LerpNodePathInterval):
         startTexRotate: float | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
+        textureStage=None,
         bakeInStart: bool = True,
-        fluid: bool = False,
         name: str | None = None,
+        override: int | None = None,
     ) -> None: ...
 
 class LerpTexScaleInterval(LerpNodePathInterval):
@@ -452,9 +458,10 @@ class LerpTexScaleInterval(LerpNodePathInterval):
         startTexScale: LVecBase2f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
+        textureStage=None,
         bakeInStart: bool = True,
-        fluid: bool = False,
         name: str | None = None,
+        override: int | None = None,
     ) -> None: ...
 
 class LerpFunctionNoStateInterval(Interval):

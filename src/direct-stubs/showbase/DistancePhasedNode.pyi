@@ -33,7 +33,7 @@ class BufferedDistancePhasedNode(DistancePhasedNode):
     def __init__(
         self,
         name: str,
-        bufferParamMap: Mapping[str, tuple[float, int]],
+        bufferParamMap: Mapping[str, tuple[float, int]] = ...,
         autoCleanup: bool = True,
         enterPrefix: str = ...,
         exitPrefix: str = ...,
