@@ -57,6 +57,7 @@ class ParticleEffect(NodePath):
     getParticlesList = get_particles_list
     getParticlesNamed = get_particles_named
     getParticlesDict = get_particles_dict
+    getForceGroupList = get_force_group_list
     getForceGroupNamed = get_force_group_named
     getForceGroupDict = get_force_group_dict
     saveConfig = save_config

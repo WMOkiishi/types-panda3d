@@ -8,6 +8,9 @@ from .Job import Job
 _T = TypeVar('_T')
 _Callback: TypeAlias = Callable[[], object]
 
+intTypes: tuple[type[int]]
+deadEndTypes: tuple[type, ...]
+
 class NoDictKey: ...
 
 class Indirection:

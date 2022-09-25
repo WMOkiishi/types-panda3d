@@ -48,7 +48,7 @@ class InputState(DirectObject):
         startState: bool = False,
         inputSource: str | None = None,
     ) -> InputStateWatchToken: ...
-    def watchWithModifiers(
+    def watch_with_modifiers(
         self,
         name: str,
         event: str,
@@ -61,3 +61,4 @@ class InputState(DirectObject):
     getEventName = get_event_name
     releaseInputs = release_inputs
     debugPrint = debug_print
+    watchWithModifiers = watch_with_modifiers

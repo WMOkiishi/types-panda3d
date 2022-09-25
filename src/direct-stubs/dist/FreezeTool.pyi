@@ -10,6 +10,8 @@ _File = TypeVar('_File', bound=_OpenFile)
 _OpenFile: TypeAlias = StrOrBytesPath | int
 _Unused: TypeAlias = object
 
+p3extend_frozen: Any | None
+
 python: Final[str]
 isDebugBuild: Final[bool]
 startupModules: list[str]
