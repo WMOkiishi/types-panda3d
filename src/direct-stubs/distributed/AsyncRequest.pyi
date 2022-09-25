@@ -37,7 +37,7 @@ class AsyncRequest(DirectObject):
     def askForObjectFields(
         self,
         dclassName: str,
-        fieldName: str,
+        fieldNames: str,
         doId: int,
         key=None,
         context: int | None = None,
@@ -60,7 +60,7 @@ class AsyncRequest(DirectObject):
         values=None,
         context: int | None = None,
     ) -> None: ...
-    def createdObjectId(self, name: str, className: str, values=None, context: int | None = None) -> None: ...
+    def createObjectId(self, name: str, className: str, values=None, context: int | None = None) -> None: ...
     def finish(self) -> None: ...
     def timeout(self, task: PythonTask) -> Literal[1]: ...
 

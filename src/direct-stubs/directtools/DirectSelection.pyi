@@ -149,7 +149,7 @@ class SelectionRay(SelectionQueue):
         dir: _Vec3f = ...,
         skipFlags: int = ...,
     ) -> CollisionEntry: ...
-    def pickBitMask3d(
+    def pickBitMask3D(
         self,
         bitMask: BitMask_uint32_t_32 = ...,
         targetNodePath: NodePath | None = None,

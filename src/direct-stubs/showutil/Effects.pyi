@@ -33,7 +33,7 @@ def createScaleYBounce(
 def createScaleZBounce(
     nodeObj: NodePath,
     numBounces: int,
-    startValues: Sequence[float],
+    startValue: Sequence[float],
     totalTime: float,
     amplitude: float,
 ) -> MetaInterval.Sequence: ...

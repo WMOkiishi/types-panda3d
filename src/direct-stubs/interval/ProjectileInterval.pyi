@@ -14,7 +14,7 @@ class ProjectileInterval(Interval):
     node: NodePath
     collNode: CollisionNode | None
     implicitStartPos: bool
-    trajectoryArgs = tuple[Any, ...]
+    trajectoryArgs: tuple[Any, ...]
     startPos: _Vec3f
     zAcc: float
     endPos: _Vec3f | None

@@ -22,7 +22,7 @@ class AnimControlInterval(Interval):
         self,
         controls: AnimControl | AnimControlCollection,
         loop: bool = False,
-        contstrainedLoop: bool = False,
+        constrainedLoop: bool = False,
         duration: float | None = None,
         startTime: int | None = None,
         endTime: int | None = None,
