@@ -11,6 +11,7 @@ _OpenFile: TypeAlias = StrOrBytesPath | int
 _Unused: TypeAlias = object
 
 p3extend_frozen: Any | None
+def pytest_imports() -> list[str]: ...
 
 python: Final[str]
 isDebugBuild: Final[bool]
