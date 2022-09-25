@@ -1,7 +1,7 @@
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
-from panda3d.core import CollisionTraverser, ConfigVariableBool, LVector3f, NodePath, PythonTask
+from panda3d.core import CollisionTraverser, ConfigVariableBool, ConfigVariableDouble, LVector3f, NodePath, PythonTask
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 
@@ -10,7 +10,7 @@ _Unused: TypeAlias = object
 class DevWalker(DirectObject):
     notify: ClassVar[Notifier]
     wantDebugIndicator: ClassVar[ConfigVariableBool]
-    runMultiplier: ClassVar[ConfigVariableBool]
+    runMultiplier: ClassVar[ConfigVariableDouble]
     slideName: ClassVar[str]
     speed: float
     rotationSpeed: float

@@ -16,14 +16,14 @@ class DirectGrid(NodePath, DirectObject):
     snapPos: LPoint3f
     fXyzSnap: bool
     fHprSnap: bool
-    gridSize: int
-    gridSpacing: int
+    gridSize: float
+    gridSpacing: float
     snapAngle: float
     fEnabled: bool
     def __init__(
         self,
-        gridSize: int = ...,
-        gridSpacing: int = ...,
+        gridSize: float = ...,
+        gridSpacing: float = ...,
         planeColor: tuple[float, float, float] | tuple[float, float, float, float] = ...,
         parent: NodePath | None = None,
     ) -> None: ...

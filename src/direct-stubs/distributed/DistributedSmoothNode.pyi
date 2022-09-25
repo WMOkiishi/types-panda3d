@@ -15,7 +15,7 @@ PredictionLag: float
 GlobalSmoothing: bool
 GlobalPrediction: bool
 def globalActivateSmoothing(smoothing: bool, prediction: bool) -> None: ...
-activateSmoothing: bool
+def activateSmoothing(smoothing: bool, prediction: bool) -> None: ...
 
 class DistributedSmoothNode(DistributedNode, DistributedSmoothNodeBase):
     DistributedSmoothNode_initialized: Literal[1]

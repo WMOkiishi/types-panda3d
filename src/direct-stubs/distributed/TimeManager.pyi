@@ -9,7 +9,7 @@ class TimeManager(DistributedObject):
     maxUncertainty: ClassVar[float]
     maxAttempts: ClassVar[int]
     extraSkew: ClassVar[int]
-    reportFrameRateInterval: ClassVar[bool]
+    reportFrameRateInterval: ClassVar[float]
     thisContext: int
     nextContext: int
     attemptCount: int
