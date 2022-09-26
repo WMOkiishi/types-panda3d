@@ -1,0 +1,8 @@
+# These differ by OS, but the stubs don't yet reflect that.
+panda3d.core.GraphicsWindowProcCallbackData.get_hwnd
+panda3d.core.GraphicsWindowProcCallbackData.get_lparam
+panda3d.core.GraphicsWindowProcCallbackData.get_msg
+panda3d.core.GraphicsWindowProcCallbackData.get_wparam
+panda3d.core.LinuxJoystickDevice
+panda3d.core.WindowsRegistry
+panda3d\.lib(p3)?[A-Za-z_]*
