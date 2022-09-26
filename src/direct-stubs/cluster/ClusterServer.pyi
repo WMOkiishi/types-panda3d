@@ -1,6 +1,8 @@
 from typing import Any, ClassVar, Union
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3f
 from panda3d.core import (
     Camera,
@@ -14,8 +16,6 @@ from panda3d.core import (
     QueuedConnectionListener,
     QueuedConnectionReader,
 )
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 from .ClusterMsgs import ClusterMsgHandler
 
 _NamedMovement: TypeAlias = tuple[

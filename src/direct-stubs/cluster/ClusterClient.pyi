@@ -3,6 +3,9 @@ from types import CodeType
 from typing import Any, ClassVar, NoReturn, Union
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.distributed.PyDatagramIterator import PyDatagramIterator
+from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     Connection,
@@ -15,9 +18,6 @@ from panda3d.core import (
     QueuedConnectionManager,
     QueuedConnectionReader,
 )
-from ..directnotify.Notifier import Notifier
-from ..distributed.PyDatagramIterator import PyDatagramIterator
-from ..showbase.DirectObject import DirectObject
 from .ClusterMsgs import ClusterMsgHandler
 
 _NamedMovement: TypeAlias = tuple[

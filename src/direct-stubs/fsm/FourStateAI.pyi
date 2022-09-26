@@ -5,8 +5,8 @@ from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 from _typeshed import SupportsGetItem
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import AsyncTask
-from ..directnotify.Notifier import Notifier
 from .ClassicFSM import ClassicFSM
 from .State import State
 

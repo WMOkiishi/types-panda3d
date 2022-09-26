@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from typing import Any
 from typing_extensions import Final, Literal, TypedDict
 
-from ..showbase.Messenger import Messenger
+from direct.showbase.Messenger import Messenger
 from .ClientRepository import ClientRepository
 
 MESSAGE_TYPES: Final[tuple[

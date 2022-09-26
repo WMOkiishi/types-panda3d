@@ -1,5 +1,5 @@
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath, Texture
-from ..showbase.DirectObject import DirectObject
 
 class TexViewer(DirectObject):
     tex: Texture

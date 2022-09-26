@@ -4,8 +4,8 @@ from collections.abc import MutableMapping
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias, TypeGuard
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import CardMaker, GeomNode, GraphicsEngine, GraphicsOutput, NodePath, PythonTask, Texture
-from ..directnotify.Notifier import Notifier
 
 _Layout: TypeAlias = Literal['vline', 'hline', 'vgrid', 'hgrid', 'cycle']
 _Position: TypeAlias = Literal['llcorner', 'lrcorner', 'ulcorner', 'urcorner']

@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 
-from ..distributed.DistributedObject import DistributedObject
+from direct.distributed.DistributedObject import DistributedObject
 
 class DistributedLargeBlobSender(DistributedObject):
     complete: bool

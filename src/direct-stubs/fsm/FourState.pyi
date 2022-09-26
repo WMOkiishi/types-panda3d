@@ -4,7 +4,7 @@ from collections.abc import Sequence
 from typing import ClassVar
 from typing_extensions import Literal, Protocol, TypeAlias
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 from .ClassicFSM import ClassicFSM
 from .State import State
 

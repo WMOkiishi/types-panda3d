@@ -1,6 +1,9 @@
 from typing import Union
 from typing_extensions import Final, Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.distributed.PyDatagram import PyDatagram
+from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     Datagram,
@@ -9,9 +12,6 @@ from panda3d.core import (
     NetDatagram,
     QueuedConnectionReader,
 )
-from ..directnotify.Notifier import Notifier
-from ..distributed.PyDatagram import PyDatagram
-from ..distributed.PyDatagramIterator import PyDatagramIterator
 
 _NamedMovement: TypeAlias = tuple[
     str,

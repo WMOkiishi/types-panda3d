@@ -2,8 +2,8 @@ from tkinter import Button, Label, Scale
 from typing import Any, SupportsFloat
 from typing_extensions import Final
 
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath
-from ..showbase.DirectObject import DirectObject
 
 Pmw: Any
 

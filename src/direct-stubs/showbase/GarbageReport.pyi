@@ -3,7 +3,7 @@ __all__ = ['FakeObject', 'GarbageLogger', 'GarbageReport', '_createGarbage']
 from collections.abc import Callable, Generator
 from typing import Any, ClassVar
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 from .Job import Job
 
 GarbageCycleCountAnnounceEvent: str

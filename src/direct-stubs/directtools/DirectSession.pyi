@@ -2,15 +2,15 @@ from collections.abc import Iterable
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.directdevices.DirectDeviceManager import DirectDeviceManager
+from direct.directdevices.DirectFastrak import DirectFastrak
+from direct.directdevices.DirectJoybox import DirectJoybox
+from direct.directdevices.DirectRadamec import DirectRadamec
+from direct.gui.OnscreenText import OnscreenText
+from direct.showbase.DirectObject import DirectObject
+from direct.task.Task import Task
+from direct.tkpanels.DirectSessionPanel import DirectSessionPanel
 from panda3d.core import Camera, DisplayRegion, Lens, LVecBase3f, NodePath, TextFont, TransformState
-from ..directdevices.DirectDeviceManager import DirectDeviceManager
-from ..directdevices.DirectFastrak import DirectFastrak
-from ..directdevices.DirectJoybox import DirectJoybox
-from ..directdevices.DirectRadamec import DirectRadamec
-from ..gui.OnscreenText import OnscreenText
-from ..showbase.DirectObject import DirectObject
-from ..task.Task import Task
-from ..tkpanels.DirectSessionPanel import DirectSessionPanel
 from .DirectCameraControl import DirectCameraControl
 from .DirectGrid import DirectGrid
 from .DirectLights import DirectLights

@@ -4,8 +4,8 @@ from collections.abc import Iterable
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from .State import State
 
 class ClassicFSM(DirectObject):

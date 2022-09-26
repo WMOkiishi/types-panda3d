@@ -5,9 +5,9 @@ from tarfile import TarInfo
 from typing import AnyStr, ClassVar
 from typing_extensions import Final, Literal
 
+from direct.directnotify.Notifier import Notifier
 from panda3d._typing import Filepath
 from panda3d.core import Filename, HTTPClient, PNMImage
-from ..directnotify.Notifier import Notifier
 from .HostInfo import HostInfo
 
 P3DEMBED_MAGIC: Final[Literal[0xFF3D3D00]]

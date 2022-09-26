@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import (
     BitArray,
     BitMask_uint16_t_16,
@@ -19,7 +20,6 @@ from panda3d.core import (
     TextNode,
     Texture,
 )
-from ..showbase.DirectObject import DirectObject
 
 _BitMask: TypeAlias = BitArray | BitMask_uint16_t_16 | BitMask_uint32_t_32 | BitMask_uint64_t_64
 _Unused: TypeAlias = object

@@ -2,9 +2,9 @@ from collections.abc import Callable
 from typing import ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 
+from direct.gui.OnscreenText import OnscreenText
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ButtonRegistry, NodePath
-from ..gui.OnscreenText import OnscreenText
-from ..showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectAnalogs, DirectButtons
 
 _Unused: TypeAlias = object

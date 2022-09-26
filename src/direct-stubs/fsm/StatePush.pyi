@@ -3,7 +3,7 @@ __all__ = ['EnterExit', 'EventArgument', 'EventPulse', 'FunctionCall', 'Pulse', 
 from collections.abc import Callable
 from typing import Any, Generic, TypeVar
 
-from ..showbase.DirectObject import DirectObject
+from direct.showbase.DirectObject import DirectObject
 
 _Self = TypeVar('_Self')
 _T = TypeVar('_T')

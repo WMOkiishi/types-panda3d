@@ -1,8 +1,8 @@
 from typing import ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectAnalogs
 
 _Unused: TypeAlias = object

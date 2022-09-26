@@ -3,9 +3,9 @@ __all__ = ['Viewport', 'ViewportManager']
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal
 
+from direct.directtools.DirectGrid import DirectGrid
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ButtonThrower, Camera, CollisionNode, LPoint3f, Lens, NodePath
-from ..directtools.DirectGrid import DirectGrid
-from ..showbase.DirectObject import DirectObject
 from .WxPandaWindow import WxPandaWindow
 
 HORIZONTAL: Final[Any]

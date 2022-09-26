@@ -1,5 +1,5 @@
-from ..distributed.ClientRepository import ClientRepository
-from ..distributed.DistributedObjectAI import DistributedObjectAI
+from direct.distributed.ClientRepository import ClientRepository
+from direct.distributed.DistributedObjectAI import DistributedObjectAI
 
 class DistributedLargeBlobSenderAI(DistributedObjectAI):
     targetAvId: int

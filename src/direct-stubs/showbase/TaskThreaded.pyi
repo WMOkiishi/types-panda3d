@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 from collections.abc import Callable
 from typing import ClassVar
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 class TaskThreaded:
     notify: ClassVar[Notifier]

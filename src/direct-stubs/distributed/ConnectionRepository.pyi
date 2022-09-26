@@ -5,9 +5,9 @@ from collections.abc import Callable, Iterable, Sequence, Mapping
 from typing import Any, ClassVar
 from typing_extensions import Literal
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import Datagram, DatagramIterator, HTTPChannel, HTTPClient, PythonTask, RecorderController
 from panda3d.direct import CConnectionRepository
-from ..directnotify.Notifier import Notifier
 from .DoCollectionManager import DoCollectionManager
 from .DoInterestManager import DoInterestManager
 

@@ -15,6 +15,10 @@ from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, NoReturn, overload
 from typing_extensions import Final, Literal, Protocol, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.fsm.StatePush import StateVar
+from direct.showbase.ProfileSession import ProfileSession
+from direct.tkpanels.TaskManagerPanel import TaskManagerPanel
 from panda3d.core import (
     AsyncFuture,
     AsyncTask,
@@ -27,10 +31,6 @@ from panda3d.core import (
     PythonTask,
 )
 from panda3d.core import AsyncTaskPause as pause
-from ..directnotify.Notifier import Notifier
-from ..fsm.StatePush import StateVar
-from ..showbase.ProfileSession import ProfileSession
-from ..tkpanels.TaskManagerPanel import TaskManagerPanel
 
 _Unused: TypeAlias = object
 

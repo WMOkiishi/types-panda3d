@@ -1,9 +1,9 @@
 from typing import ClassVar
 
+from direct.directnotify.Notifier import Notifier
 from panda3d._typing import Filepath
 from panda3d.core import NodePath
 from panda3d.physics import BaseForce
-from ..directnotify.Notifier import Notifier
 from .ForceGroup import ForceGroup
 from .Particles import Particles
 

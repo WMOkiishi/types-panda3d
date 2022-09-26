@@ -4,9 +4,9 @@ from collections.abc import Iterable
 from typing import ClassVar, TypeVar
 from typing_extensions import Final, Literal, SupportsIndex, TypeAlias, TypeGuard
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import PStatCollector, ostream
 from panda3d.direct import CInterval, CMetaInterval
-from ..directnotify.Notifier import Notifier
 from .Interval import Interval
 
 _Self = TypeVar('_Self')

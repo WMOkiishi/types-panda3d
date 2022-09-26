@@ -3,9 +3,9 @@ __all__ = ['ActorInterval', 'LerpAnimInterval']
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.actor.Actor import Actor
 from panda3d.core import AnimControl
 from panda3d.direct import CLerpAnimEffectInterval
-from ..actor.Actor import Actor
 from .Interval import Interval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']

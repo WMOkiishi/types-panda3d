@@ -1,8 +1,8 @@
 from typing import ClassVar
 from typing_extensions import TypeAlias
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.ProfileSession import ProfileSession
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.ProfileSession import ProfileSession
 
 _Unused: TypeAlias = object
 

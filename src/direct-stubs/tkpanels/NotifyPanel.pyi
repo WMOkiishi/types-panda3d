@@ -3,8 +3,8 @@ __all__ = ['NotifyPanel']
 from tkinter import IntVar, Radiobutton, Toplevel
 from typing import Any
 
-from ..directnotify.DirectNotify import DirectNotify
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.DirectNotify import DirectNotify
+from direct.directnotify.Notifier import Notifier
 
 Pmw: Any
 

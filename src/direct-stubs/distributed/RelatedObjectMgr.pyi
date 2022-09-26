@@ -2,8 +2,8 @@ from collections.abc import Callable, Sequence
 from typing import ClassVar
 from typing_extensions import TypeAlias
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from .ClientRepositoryBase import ClientRepositoryBase
 from .DistributedObjectBase import DistributedObjectBase
 

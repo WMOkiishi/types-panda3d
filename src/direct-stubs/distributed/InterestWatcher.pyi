@@ -1,7 +1,7 @@
 from typing import ClassVar
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 
 class InterestWatcher(DirectObject):
     notify: ClassVar[Notifier]

@@ -1,7 +1,7 @@
 from typing import ClassVar
 
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import GeomNode, LPoint3f, LVector3f, NodePath, PandaNode, ParametricCurve
-from ..showbase.DirectObject import DirectObject
 
 class Mopath(DirectObject):
     nameIndex: ClassVar[int]

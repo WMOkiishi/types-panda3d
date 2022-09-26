@@ -1,7 +1,7 @@
 from collections.abc import Mapping
 from typing import ClassVar
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 class PhasedObject:
     notify: ClassVar[Notifier]

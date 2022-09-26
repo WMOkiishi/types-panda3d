@@ -4,7 +4,7 @@ from typing import Any
 from typing_extensions import Final, Literal
 
 from panda3d.core import NodePath
-from ..showbase.DirectObject import DirectObject
+from direct.showbase.DirectObject import DirectObject
 from .Tree import TreeItem
 
 Pmw: Any

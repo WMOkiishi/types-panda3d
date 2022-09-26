@@ -2,9 +2,9 @@ from collections.abc import Callable
 from typing import ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import LVector3f
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 from .DirectDeviceManager import DirectTracker
 
 _Unused: TypeAlias = object

@@ -4,7 +4,7 @@ from collections.abc import MutableSequence, Sequence
 from typing import ClassVar, SupportsInt, TypeVar
 from typing_extensions import SupportsIndex
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 _T = TypeVar('_T')
 

@@ -1,8 +1,8 @@
 from collections.abc import Callable, Sequence
 from typing_extensions import TypeAlias
 
+from direct.interval import MetaInterval
 from panda3d.core import LVecBase3f, NodePath
-from ..interval import MetaInterval
 
 _Unused: TypeAlias = object
 

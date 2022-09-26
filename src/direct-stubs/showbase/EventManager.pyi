@@ -3,10 +3,10 @@ __all__ = ['EventManager']
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.task.Task import Task
 from panda3d.core import (Event, EventHandler, EventParameter, EventQueue,
                           TypedReferenceCount, TypedWritableReferenceCount)
-from ..directnotify.Notifier import Notifier
-from ..task.Task import Task
 
 _EventParameterValue: TypeAlias = int | float | str | TypedReferenceCount | TypedWritableReferenceCount | None
 

@@ -1,8 +1,8 @@
 from typing import Any, ClassVar
 from typing_extensions import Literal, Protocol, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import ConfigVariableBool
-from ..directnotify.Notifier import Notifier
 from .InputState import InputStateForceToken
 
 _Unused: TypeAlias = object

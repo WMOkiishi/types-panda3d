@@ -4,12 +4,12 @@ from tkinter import Checkbutton, Entry, Frame, IntVar, Menu, Menubutton, Misc, R
 from typing import Any, SupportsInt
 from typing_extensions import Literal, TypeAlias
 
-from ..particles.ParticleEffect import ParticleEffect
-from ..tkwidgets.AppShell import AppShell
-from ..tkwidgets.Dial import AngleDial
-from ..tkwidgets.Floater import Floater
-from ..tkwidgets.Slider import Slider
-from ..tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
+from direct.particles.ParticleEffect import ParticleEffect
+from direct.tkwidgets.AppShell import AppShell
+from direct.tkwidgets.Dial import AngleDial
+from direct.tkwidgets.Floater import Floater
+from direct.tkwidgets.Slider import Slider
+from direct.tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
 
 Pmw: Any
 

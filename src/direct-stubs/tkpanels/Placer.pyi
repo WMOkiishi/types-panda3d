@@ -5,10 +5,10 @@ from tkinter import Button, StringVar
 from typing import Any
 from typing_extensions import Literal, TypeAlias
 
+from direct.tkwidgets.AppShell import AppShell
+from direct.tkwidgets.Dial import AngleDial
+from direct.tkwidgets.Floater import Floater
 from panda3d.core import LVecBase3f, LVector3f, NodePath
-from ..tkwidgets.AppShell import AppShell
-from ..tkwidgets.Dial import AngleDial
-from ..tkwidgets.Floater import Floater
 
 _Unused: TypeAlias = object
 

@@ -2,6 +2,9 @@ from collections.abc import Callable
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
+from direct.task.Task import Task
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     GeomNode,
@@ -17,9 +20,6 @@ from panda3d.core import (
     Texture,
 )
 from panda3d.direct import CMotionTrail
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
-from ..task.Task import Task
 
 _VertexFunction: TypeAlias = Callable[[MotionTrailVertex, int, Any], LVector4f]
 

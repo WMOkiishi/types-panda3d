@@ -2,9 +2,9 @@ from collections.abc import Callable
 from typing import ClassVar, TypeVar
 from typing_extensions import Literal, Protocol
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ConfigVariableBool, DatagramIterator
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 
 _Self = TypeVar('_Self')
 

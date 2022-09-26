@@ -2,8 +2,8 @@ from collections.abc import Callable, Iterable
 from pstats import Stats
 from typing import Any, ClassVar, TypeVar
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import TrueClock
-from ..directnotify.Notifier import Notifier
 
 _Self = TypeVar('_Self')
 

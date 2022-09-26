@@ -1,8 +1,8 @@
 from typing import Any
 from typing_extensions import Final, Literal
 
+from direct.task.Task import Task
 from panda3d.core import Camera, GraphicsOutput, NodePath, Texture
-from ..task.Task import Task
 from .FilterManager import FilterManager
 
 CARTOON_BODY: Final[str]

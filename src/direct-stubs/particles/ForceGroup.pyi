@@ -1,10 +1,10 @@
 from _typeshed import SupportsWrite
 from typing import ClassVar
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath
 from panda3d.physics import BaseForce, ForceNode
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 from .ParticleEffect import ParticleEffect
 
 class ForceGroup(DirectObject):

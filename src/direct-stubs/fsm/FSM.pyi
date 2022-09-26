@@ -4,9 +4,9 @@ from collections.abc import Callable, Collection, Mapping, Sequence
 from typing import Any, ClassVar
 from typing_extensions import TypeVarTuple, Unpack
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
-from ..stdpy.threading import RLock
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
+from direct.stdpy.threading import RLock
 
 _T = TypeVarTuple('_T')  # type: ignore[misc]
 

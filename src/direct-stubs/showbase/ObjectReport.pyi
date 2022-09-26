@@ -1,7 +1,7 @@
 from collections.abc import Iterable
 from typing import ClassVar, NoReturn
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
 from .ObjectPool import Diff, ObjectPool
 

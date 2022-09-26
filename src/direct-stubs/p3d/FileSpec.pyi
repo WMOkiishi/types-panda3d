@@ -2,9 +2,9 @@ __all__ = ['FileSpec']
 
 from os import stat_result
 
+from direct.directnotify.Notifier import Notifier
 from panda3d._typing import Filepath
 from panda3d.core import Filename, TiXmlElement
-from ..directnotify.Notifier import Notifier
 
 class FileSpec:
     actualFile: FileSpec | None

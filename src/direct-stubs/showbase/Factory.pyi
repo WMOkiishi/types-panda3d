@@ -3,7 +3,7 @@ __all__ = ['Factory']
 from typing import Any, ClassVar
 from typing_extensions import TypeAlias
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 _Unused: TypeAlias = object
 

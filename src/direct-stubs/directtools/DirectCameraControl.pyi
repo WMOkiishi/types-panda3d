@@ -2,11 +2,11 @@ from collections.abc import Sequence
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.interval.MetaInterval import MetaInterval
+from direct.showbase.DirectObject import DirectObject
+from direct.task.Task import Task
 from panda3d.core import AsyncTask, CollisionEntry, LPoint3f, LVector3f, NodePath, PandaNode
-from ..directnotify.Notifier import Notifier
-from ..interval.MetaInterval import MetaInterval
-from ..showbase.DirectObject import DirectObject
-from ..task.Task import Task
 
 CAM_MOVE_DURATION: Final[float]
 COA_MARKER_SF: Final[float]

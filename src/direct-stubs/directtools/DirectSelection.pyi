@@ -1,6 +1,7 @@
 from collections.abc import Callable, Sequence
 from typing_extensions import Final, Literal
 
+from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     BitMask_uint32_t_32,
@@ -16,7 +17,6 @@ from panda3d.core import (
     NodePath,
     TransformState,
 )
-from ..showbase.DirectObject import DirectObject
 from .DirectGeometry import LineNodePath
 
 COA_ORIGIN: Final[Literal[0]]

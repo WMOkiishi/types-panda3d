@@ -4,9 +4,9 @@ from tkinter import Toplevel
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import PStatCollector, PythonTask
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 
 _EventType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _State: TypeAlias = Literal[0, 1, 2, 3]

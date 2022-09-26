@@ -1,9 +1,9 @@
 from typing import ClassVar
 from typing_extensions import Final, Self
 
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import AnalogNode, ButtonNode, ClientBase, DialNode, NodePath, TrackerNode
 from panda3d.vrpn import VrpnClient
-from ..showbase.DirectObject import DirectObject
 
 ANALOG_MIN: Final[float]
 ANALOG_MAX: Final[float]

@@ -2,7 +2,7 @@ __all__ = ['BulletinBoard']
 
 from typing import Any, ClassVar, TypeVar, overload
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 _T = TypeVar('_T')
 

@@ -3,13 +3,13 @@ __all__ = ['Transitions']
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.gui.DirectFrame import DirectFrame
+from direct.interval import MetaInterval
+from direct.interval.Interval import Interval
+from direct.interval.LerpInterval import LerpColorInterval, LerpColorScaleInterval
 from panda3d._typing import Vec4f
 from panda3d.core import AsyncFuture, LVecBase3f, LVecBase4f, NodePath
 from panda3d.direct import CInterval
-from ..gui.DirectFrame import DirectFrame
-from ..interval import MetaInterval
-from ..interval.Interval import Interval
-from ..interval.LerpInterval import LerpColorInterval, LerpColorScaleInterval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
 _Interval: TypeAlias = Interval | CInterval

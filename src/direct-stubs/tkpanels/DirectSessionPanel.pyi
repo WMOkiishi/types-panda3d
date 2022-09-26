@@ -4,15 +4,15 @@ from collections.abc import Callable, MutableMapping
 from tkinter import BooleanVar, Button, Checkbutton, Menubutton, Misc, Toplevel
 from typing import Any
 
+from direct.directtools.DirectLights import DirectLight
+from direct.tkwidgets.AppShell import AppShell
+from direct.tkwidgets.Dial import AngleDial
+from direct.tkwidgets.Floater import Floater
+from direct.tkwidgets.MemoryExplorer import MemoryExplorer
+from direct.tkwidgets.SceneGraphExplorer import SceneGraphExplorer
+from direct.tkwidgets.Slider import Slider
+from direct.tkwidgets.VectorWidgets import ColorEntry
 from panda3d.core import NodePath
-from ..directtools.DirectLights import DirectLight
-from ..tkwidgets.AppShell import AppShell
-from ..tkwidgets.Dial import AngleDial
-from ..tkwidgets.Floater import Floater
-from ..tkwidgets.MemoryExplorer import MemoryExplorer
-from ..tkwidgets.SceneGraphExplorer import SceneGraphExplorer
-from ..tkwidgets.Slider import Slider
-from ..tkwidgets.VectorWidgets import ColorEntry
 from .TaskManagerPanel import TaskManagerWidget
 
 Pmw: Any

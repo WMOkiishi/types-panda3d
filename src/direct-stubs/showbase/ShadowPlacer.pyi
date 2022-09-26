@@ -2,8 +2,8 @@ __all__ = ['ShadowPlacer']
 
 from typing import ClassVar
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import BitMask_uint32_t_32, CollisionHandlerFloor, CollisionNode, CollisionRay, CollisionTraverser, NodePath
-from ..directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
 
 class ShadowPlacer(DirectObject):

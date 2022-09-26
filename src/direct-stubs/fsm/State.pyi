@@ -5,8 +5,8 @@ from collections.abc import Callable, Iterable
 from typing import ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from .ClassicFSM import ClassicFSM
 
 _ANY: TypeAlias = Literal['ANY']

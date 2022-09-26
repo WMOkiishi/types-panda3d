@@ -4,6 +4,8 @@ from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar
 from typing_extensions import TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec4f
 from panda3d.core import (
     Camera,
@@ -17,8 +19,6 @@ from panda3d.core import (
     RenderState,
     Texture,
 )
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 
 _Unused: TypeAlias = object
 

@@ -4,9 +4,9 @@ from collections.abc import Callable
 from typing import Any, ClassVar
 from typing_extensions import TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.stdpy.threading import Lock
 from panda3d.core import AsyncFuture
-from ..directnotify.Notifier import Notifier
-from ..stdpy.threading import Lock
 from .DirectObject import DirectObject
 
 # Ideally, this should just be Sequence[Any], but the code here and in DirectObject

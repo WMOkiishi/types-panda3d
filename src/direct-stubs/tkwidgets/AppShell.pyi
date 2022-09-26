@@ -13,7 +13,7 @@ from tkinter import (
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
-from ..showbase.DirectObject import DirectObject
+from direct.showbase.DirectObject import DirectObject
 from .Dial import Dial
 from .EntryScale import EntryScale
 from .Floater import Floater

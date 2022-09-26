@@ -1,6 +1,6 @@
+from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3f
 from panda3d.core import LPoint3f, NodePath
-from ..showbase.DirectObject import DirectObject
 from .DirectGeometry import LineNodePath
 
 class DirectGrid(NodePath, DirectObject):

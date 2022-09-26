@@ -1,8 +1,8 @@
 from collections.abc import Callable
 from typing import Any, TypeVar
 
+from direct.showbase.PythonUtil import Functor
 from panda3d.core import LMatrix4f
-from ..showbase.PythonUtil import Functor
 
 _T = TypeVar('_T')
 

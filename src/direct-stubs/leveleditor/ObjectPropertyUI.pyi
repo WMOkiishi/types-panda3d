@@ -2,7 +2,7 @@ from collections.abc import Callable, Iterable
 from typing import Any
 from typing_extensions import TypeAlias
 
-from ..wxwidgets.WxSlider import WxSlider
+from direct.wxwidgets.WxSlider import WxSlider
 
 wx: Any
 CubeColourDialog: TypeAlias = wx.lib.agw.cubecolourdialog.CubeColourDialog

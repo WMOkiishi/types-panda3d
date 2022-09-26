@@ -2,6 +2,7 @@ __all__: list[str] = []
 
 from typing import TypeVar
 
+from direct.tkpanels.Inspector import InspectorWindow
 from panda3d.core import (
     ClockObject,
     ConfigPageManager,
@@ -13,7 +14,6 @@ from panda3d.core import (
     VirtualFileSystem,
 )
 from panda3d.core import ostream as ostream_type
-from ..tkpanels.Inspector import InspectorWindow
 from .ShowBase import ShowBase
 
 _T = TypeVar('_T')

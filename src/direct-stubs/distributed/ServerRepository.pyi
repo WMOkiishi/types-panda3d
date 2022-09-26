@@ -3,6 +3,7 @@ from collections.abc import Collection, Iterable, Sequence
 from typing import Any, ClassVar
 from typing_extensions import Literal
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import (
     Connection,
     ConnectionWriter,
@@ -15,7 +16,6 @@ from panda3d.core import (
     UniqueIdAllocator,
 )
 from panda3d.direct import DCClass, DCFile
-from ..directnotify.Notifier import Notifier
 from .DistributedObjectBase import DistributedObjectBase
 
 class ServerRepository:

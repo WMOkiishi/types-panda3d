@@ -1,9 +1,9 @@
 from typing import ClassVar
 from typing_extensions import Literal
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ClockObject
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 
 NetworkTimeBits: Literal[16]
 NetworkTimePrecision: float

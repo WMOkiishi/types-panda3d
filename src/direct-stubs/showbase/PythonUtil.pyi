@@ -13,7 +13,7 @@ from typing import Any, ClassVar, Generic, TypeVar, overload
 
 from typing_extensions import Never, TypeAlias
 
-from ..tkwidgets.Valuator import ValuatorGroupPanel
+from direct.tkwidgets.Valuator import ValuatorGroupPanel
 from panda3d.core import PStatCollector
 
 _AnyReal = TypeVar('_AnyReal', int, float)

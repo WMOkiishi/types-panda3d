@@ -5,7 +5,7 @@ from typing_extensions import Final, TypeAlias
 
 from setuptools import Command  # type: ignore[import]
 
-from ..p3d.DeploymentTools import Icon
+from direct.p3d.DeploymentTools import Icon
 
 _OpenFile: TypeAlias = StrOrBytesPath | int
 

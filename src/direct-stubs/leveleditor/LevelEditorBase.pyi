@@ -2,9 +2,9 @@ from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterable
 from typing_extensions import Literal, TypeAlias
 
+from direct.gui.OnscreenText import OnscreenText
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import BitMask_uint32_t_32, NodePath
-from ..gui.OnscreenText import OnscreenText
-from ..showbase.DirectObject import DirectObject
 from .ActionMgr import ActionMgr
 from .CurveEditor import CurveEditor
 from .FileMgr import FileMgr

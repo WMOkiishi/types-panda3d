@@ -1,9 +1,9 @@
 from typing import ClassVar
 from typing_extensions import Protocol
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d.direct import DCClass
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 from .ClientRepository import ClientRepository
 from .GridParent import GridParent
 

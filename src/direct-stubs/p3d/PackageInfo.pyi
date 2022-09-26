@@ -4,8 +4,8 @@ from collections.abc import Generator
 from typing import ClassVar
 from typing_extensions import Literal
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import Filename, HTTPClient, PStatCollector, TiXmlElement
-from ..directnotify.Notifier import Notifier
 from .AppRunner import AppRunner
 from .FileSpec import FileSpec
 from .HostInfo import HostInfo

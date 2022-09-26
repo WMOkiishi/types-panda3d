@@ -1,7 +1,7 @@
 from typing import ClassVar
 from typing_extensions import Final, Literal
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 class FrameProfiler:
     notify: ClassVar[Notifier]

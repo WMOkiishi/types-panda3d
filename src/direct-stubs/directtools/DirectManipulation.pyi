@@ -2,9 +2,9 @@ from collections.abc import Iterable, Sequence
 from typing import Any
 from typing_extensions import Literal, TypeAlias
 
+from direct.showbase.DirectObject import DirectObject
+from direct.task.Task import Task
 from panda3d.core import LPoint3f, LVecBase3f, LVector3f, NodePath
-from ..showbase.DirectObject import DirectObject
-from ..task.Task import Task
 from .DirectGeometry import LineNodePath
 
 _Unused: TypeAlias = object

@@ -1,8 +1,8 @@
 from typing import Any, SupportsFloat
 from typing_extensions import Final, Literal, TypeAlias
 
-from ..wxwidgets.WxPandaShell import WxPandaShell
-from ..wxwidgets.WxSlider import WxSlider
+from direct.wxwidgets.WxPandaShell import WxPandaShell
+from direct.wxwidgets.WxSlider import WxSlider
 from .AnimControlUI import AnimControlUI
 from .CurveAnimUI import CurveAnimUI
 from .GraphEditorUI import GraphEditorUI

@@ -3,7 +3,7 @@ __all__ = ['Pool']
 from collections.abc import Callable
 from typing import Any, ClassVar, Generic, TypeVar
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 _T = TypeVar('_T')
 

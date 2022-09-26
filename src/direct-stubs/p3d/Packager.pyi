@@ -4,6 +4,9 @@ from collections.abc import Container, Iterable, Sequence
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.dist.FreezeTool import Freezer
+from direct.showbase.Loader import Loader
 from panda3d._typing import Filepath
 from panda3d.core import (
     DSearchPath,
@@ -16,9 +19,6 @@ from panda3d.core import (
     TiXmlElement,
     TiXmlNode,
 )
-from ..directnotify.Notifier import Notifier
-from ..dist.FreezeTool import Freezer
-from ..showbase.Loader import Loader
 from .FileSpec import FileSpec
 from .SeqValue import SeqValue
 

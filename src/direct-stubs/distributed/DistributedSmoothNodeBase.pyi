@@ -1,7 +1,7 @@
 from typing import ClassVar
 from typing_extensions import Literal
 
-from ..showbase.PythonUtil import Enum
+from direct.showbase.PythonUtil import Enum
 
 class DummyTaskClass:
     def setDelay(self, blah: object) -> None: ...

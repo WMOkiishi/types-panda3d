@@ -1,7 +1,7 @@
 from typing_extensions import SupportsIndex
 
+from direct.actor.Actor import Actor
 from panda3d.core import NodePath
-from ..actor.Actor import Actor
 
 class ObjectHandler:
     editor = ...

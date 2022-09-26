@@ -5,7 +5,7 @@ from typing import Any, TypeVar, Union
 from panda3d.core import LVecBase3f, LVecBase4f, NodePath, TransformState
 from typing_extensions import TypeAlias
 
-from ..showbase.DirectObject import DirectObject
+from direct.showbase.DirectObject import DirectObject
 
 _Self = TypeVar('_Self')
 _Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]

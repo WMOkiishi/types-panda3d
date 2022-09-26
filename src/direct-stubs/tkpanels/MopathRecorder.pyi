@@ -5,16 +5,16 @@ from tkinter import Button, Checkbutton, Entry, Frame, Label, Misc, Radiobutton,
 from typing import Any, ClassVar, SupportsFloat, SupportsInt, TypeVar
 from typing_extensions import Final, Literal, TypeAlias
 
+from direct.directtools.DirectGeometry import LineNodePath
+from direct.directtools.DirectSelection import SelectionRay
+from direct.showbase.DirectObject import DirectObject
+from direct.tkwidgets.AppShell import AppShell
+from direct.tkwidgets.Dial import AngleDial
+from direct.tkwidgets.EntryScale import EntryScale
+from direct.tkwidgets.Floater import Floater
+from direct.tkwidgets.Slider import Slider
+from direct.tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
 from panda3d.core import CurveFitter, GeomNode, LPoint3f, LVecBase3f, NodePath
-from ..directtools.DirectGeometry import LineNodePath
-from ..directtools.DirectSelection import SelectionRay
-from ..showbase.DirectObject import DirectObject
-from ..tkwidgets.AppShell import AppShell
-from ..tkwidgets.Dial import AngleDial
-from ..tkwidgets.EntryScale import EntryScale
-from ..tkwidgets.Floater import Floater
-from ..tkwidgets.Slider import Slider
-from ..tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
 
 Pmw: Any
 

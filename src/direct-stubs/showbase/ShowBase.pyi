@@ -5,6 +5,11 @@ from types import ModuleType
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.directtools.DirectSession import DirectSession
+from direct.p3d.AppRunner import AppRunner
+from direct.showutil.TexMemWatcher import TexMemWatcher
+from direct.task.Task import Task, TaskManager
 from panda3d._typing import Filepath, Vec4f
 from panda3d.core import (
     AudioManager,
@@ -44,11 +49,6 @@ from panda3d.core import (
     WindowProperties,
 )
 from panda3d.physics import ParticleSystemManager, PhysicsManager
-from ..directnotify.Notifier import Notifier
-from ..directtools.DirectSession import DirectSession
-from ..p3d.AppRunner import AppRunner
-from ..showutil.TexMemWatcher import TexMemWatcher
-from ..task.Task import Task, TaskManager
 from .BufferViewer import BufferViewer
 from .BulletinBoard import BulletinBoard
 from .DirectObject import DirectObject

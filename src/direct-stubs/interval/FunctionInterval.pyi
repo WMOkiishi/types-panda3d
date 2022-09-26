@@ -18,10 +18,10 @@ __all__ = [
 from collections.abc import Callable, Iterable
 from typing import Any, ClassVar
 
+from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3f
 from panda3d.core import NodePath
 from panda3d.direct import WaitInterval
-from ..showbase.DirectObject import DirectObject
 from .Interval import Interval
 
 class FunctionInterval(Interval):

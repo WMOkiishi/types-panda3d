@@ -6,7 +6,7 @@ from types import CodeType
 from typing import Any, ClassVar, SupportsFloat
 from typing_extensions import Final, Literal
 
-from ..tkwidgets.AppShell import AppShell
+from direct.tkwidgets.AppShell import AppShell
 
 Pmw: Any
 

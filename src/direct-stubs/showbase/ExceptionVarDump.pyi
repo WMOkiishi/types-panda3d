@@ -4,7 +4,7 @@ from collections.abc import Callable
 from types import TracebackType
 from typing import Any
 
-from ..directnotify.Notifier import Notifier
+from direct.directnotify.Notifier import Notifier
 
 notify: Notifier
 reentry: int

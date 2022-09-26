@@ -1,8 +1,8 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal
 
-from ..showbase.ShowBase import ShowBase
-from ..task.Task import Task
+from direct.showbase.ShowBase import ShowBase
+from direct.task.Task import Task
 from .WxAppShell import WxAppShell
 from .ViewPort import Viewport
 

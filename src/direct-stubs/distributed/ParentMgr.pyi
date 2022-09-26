@@ -1,7 +1,7 @@
 from typing import Any, ClassVar
 
+from direct.directnotify.Notifier import Notifier
 from panda3d.core import NodePath
-from ..directnotify.Notifier import Notifier
 
 class ParentMgr:
     notify: ClassVar[Notifier]

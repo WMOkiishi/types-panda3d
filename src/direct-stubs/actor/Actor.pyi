@@ -5,6 +5,10 @@ from typing import ClassVar, SupportsFloat
 from typing_extensions import Literal, TypeAlias
 from _typeshed import StrOrBytesPath
 
+from direct.directnotify.Notifier import Notifier
+from direct.interval.ActorInterval import ActorInterval
+from direct.showbase.DirectObject import DirectObject
+from direct.tkpanels.AnimPanel import AnimPanel
 from panda3d._typing import Vec3f
 from panda3d.core import (
     AnimBundle,
@@ -26,10 +30,6 @@ from panda3d.core import (
     PartSubset,
     TransformState,
 )
-from ..directnotify.Notifier import Notifier
-from ..interval.ActorInterval import ActorInterval
-from ..showbase.DirectObject import DirectObject
-from ..tkpanels.AnimPanel import AnimPanel
 
 _BlendType: TypeAlias = Literal[0, 1, 2, 3]
 _Filename: TypeAlias = Filename | StrOrBytesPath

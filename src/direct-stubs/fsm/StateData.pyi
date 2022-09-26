@@ -2,8 +2,8 @@ __all__ = ['StateData']
 
 from typing import Any, ClassVar
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import  DirectObject
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import  DirectObject
 
 class StateData(DirectObject):
     notify: ClassVar[Notifier]

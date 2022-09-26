@@ -4,6 +4,7 @@ from collections.abc import Callable, Iterable, Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
 from panda3d import core
 from panda3d._typing import Filepath, Vec4f
 from panda3d.core import (
@@ -19,7 +20,6 @@ from panda3d.core import (
     TextFont,
     Texture,
 )
-from ..directnotify.Notifier import Notifier
 from .DirectObject import DirectObject
 from .ShowBase import ShowBase
 

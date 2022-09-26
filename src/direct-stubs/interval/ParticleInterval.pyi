@@ -2,8 +2,8 @@ __all__ = ['ParticleInterval']
 
 from typing import ClassVar
 
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import NodePath
-from ..particles.ParticleEffect import ParticleEffect
 from .Interval import Interval
 
 class ParticleInterval(Interval):

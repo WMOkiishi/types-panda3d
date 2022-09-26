@@ -3,10 +3,10 @@ __all__ = ['PackageInstaller']
 from typing import ClassVar
 from typing_extensions import Literal
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
+from direct.stdpy.threading import Lock, RLock
 from panda3d.core import PythonTask
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
-from ..stdpy.threading import Lock, RLock
 from .AppRunner import AppRunner
 from .HostInfo import HostInfo
 from .PackageInfo import PackageInfo

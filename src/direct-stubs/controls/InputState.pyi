@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 from typing import ClassVar
 from typing_extensions import Final, Literal
 
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 
 class InputStateToken(metaclass=ABCMeta):
     Inval: ClassVar[str]

@@ -2,6 +2,8 @@ from collections.abc import Callable
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from direct.directnotify.Notifier import Notifier
+from direct.showbase.DirectObject import DirectObject
 from panda3d.core import (
     BitMask_uint32_t_32,
     CollisionHandlerFloor,
@@ -14,8 +16,6 @@ from panda3d.core import (
     LVector3f,
     NodePath,
 )
-from ..directnotify.Notifier import Notifier
-from ..showbase.DirectObject import DirectObject
 
 _Unused: TypeAlias = object
 

@@ -2,9 +2,9 @@ from tkinter import Button, Checkbutton, IntVar, Misc, Toplevel
 from typing import Any
 from typing_extensions import Literal
 
-from ..showbase.DirectObject import DirectObject
-from ..task.Task import TaskManager
-from ..tkwidgets.AppShell import AppShell
+from direct.showbase.DirectObject import DirectObject
+from direct.task.Task import TaskManager
+from direct.tkwidgets.AppShell import AppShell
 
 Pmw: Any
 

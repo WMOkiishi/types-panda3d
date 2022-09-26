@@ -1,7 +1,7 @@
 __all__ = ['DWBPackageInstaller']
 
+from direct.gui.DirectWaitBar import DirectWaitBar
 from panda3d.core import NodePath
-from ..gui.DirectWaitBar import DirectWaitBar
 from .AppRunner import AppRunner
 from .PackageInstaller import PackageInstaller
 

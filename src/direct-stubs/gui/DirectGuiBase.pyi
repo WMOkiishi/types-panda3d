@@ -6,7 +6,7 @@ from typing import Any, ClassVar, TypeVar, overload
 from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGItem, PStatCollector
 from typing_extensions import Final, Literal, ParamSpec, TypeAlias
 
-from ..showbase.DirectObject import DirectObject
+from direct.showbase.DirectObject import DirectObject
 
 _Self = TypeVar('_Self')
 _T = TypeVar('_T')
