@@ -17,14 +17,12 @@ __all__ = [
 
 from collections.abc import Callable, Iterable
 from typing import Any, ClassVar
-from typing_extensions import TypeAlias
 
-from panda3d.core import LMatrix3f, LVecBase3f, NodePath
+from panda3d._typing import Vec3f
+from panda3d.core import NodePath
 from panda3d.direct import WaitInterval
 from ..showbase.DirectObject import DirectObject
 from .Interval import Interval
-
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class FunctionInterval(Interval):
     functionIntervalNum: ClassVar[int]
@@ -65,7 +63,7 @@ class PosInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        pos: _Vec3f,
+        pos: Vec3f,
         duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
@@ -76,7 +74,7 @@ class HprInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        hpr: _Vec3f,
+        hpr: Vec3f,
         duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
@@ -87,7 +85,7 @@ class ScaleInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        scale: _Vec3f | float,
+        scale: Vec3f | float,
         duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
@@ -98,8 +96,8 @@ class PosHprInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        pos: _Vec3f,
-        hpr: _Vec3f,
+        pos: Vec3f,
+        hpr: Vec3f,
         duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
@@ -110,8 +108,8 @@ class HprScaleInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        hpr: _Vec3f,
-        scale: _Vec3f | float,
+        hpr: Vec3f,
+        scale: Vec3f | float,
         duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,
@@ -122,9 +120,9 @@ class PosHprScaleInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        pos: _Vec3f,
-        hpr: _Vec3f,
-        scale: _Vec3f | float,
+        pos: Vec3f,
+        hpr: Vec3f,
+        scale: Vec3f | float,
         duration: float = ...,
         name: str | None = None,
         other: NodePath | None = None,

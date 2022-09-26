@@ -1,11 +1,11 @@
 __all__ = ['ShowBase', 'WindowControls']
 
-from _typeshed import StrOrBytesPath
 from collections.abc import Callable
 from types import ModuleType
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
+from panda3d._typing import Filepath, Vec4f
 from panda3d.core import (
     AudioManager,
     AudioSound,
@@ -14,8 +14,6 @@ from panda3d.core import (
     Camera,
     ClockObject,
     CollisionTraverser,
-    ConfigVariableColor,
-    ConfigVariableFilename,
     DataGraphTraverser,
     DisplayRegion,
     DriveInterface,
@@ -29,7 +27,6 @@ from panda3d.core import (
     InputDevice,
     InputDeviceManager,
     Lens,
-    LMatrix4f,
     LVecBase2i,
     LVecBase3f,
     LVecBase4f,
@@ -44,7 +41,6 @@ from panda3d.core import (
     Texture,
     Trackball,
     Transform2SG,
-    UnalignedLVecBase4f,
     WindowProperties,
 )
 from panda3d.physics import ParticleSystemManager, PhysicsManager
@@ -63,8 +59,6 @@ from .Messenger import Messenger
 from .PythonUtil import Stack
 from .Transitions import Transitions
 
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _WindowType: TypeAlias = Literal['onscreen', 'offscreen', 'none']
 
 def exitfunc() -> None: ...
@@ -291,11 +285,11 @@ class ShowBase(DirectObject):
         win: GraphicsOutput,
         sort: int = ...,
         scene: NodePath | None = None,
-        displayRegion: _Vec4f | tuple[float, float, float, float] = ...,
+        displayRegion: Vec4f | tuple[float, float, float, float] = ...,
         stereo: bool | None = None,
         aspectRatio: float | None = None,
         clearDepth: bool = False,
-        clearColor: _Vec4f | None = None,
+        clearColor: Vec4f | None = None,
         lens: Lens | None = None,
         camName: str = ...,
         mask: BitMask_uint32_t_32 | int | None = None,
@@ -305,8 +299,8 @@ class ShowBase(DirectObject):
         self,
         win: GraphicsOutput,
         sort: int = 10,
-        displayRegion: _Vec4f | tuple[float, float, float, float] = ...,
-        coords: _Vec4f | tuple[float, float, float, float] = ...,
+        displayRegion: Vec4f | tuple[float, float, float, float] = ...,
+        coords: Vec4f | tuple[float, float, float, float] = ...,
         lens: Lens | None = None,
         cameraName: str | None = None,
     ) -> NodePath[Camera]: ...
@@ -314,8 +308,8 @@ class ShowBase(DirectObject):
         self,
         win: GraphicsOutput,
         sort: int = 10,
-        displayRegion: _Vec4f | tuple[float, float, float, float] = ...,
-        coords: _Vec4f | tuple[float, float, float, float] = ...,
+        displayRegion: Vec4f | tuple[float, float, float, float] = ...,
+        coords: Vec4f | tuple[float, float, float, float] = ...,
         lens: Lens | None = None,
         cameraName: str | None = None,
     ) -> NodePath[Camera]: ...
@@ -344,8 +338,8 @@ class ShowBase(DirectObject):
     def enable_sound_effects(self, bEnableSoundEffects: bool) -> None: ...
     def disable_all_audio(self) -> None: ...
     def enable_all_audio(self) -> None: ...
-    def loadSfx(self, name: _Filename) -> Any: ...
-    def loadMusic(self, name: _Filename) -> Any: ...
+    def loadSfx(self, name: Filepath) -> Any: ...
+    def loadMusic(self, name: Filepath) -> Any: ...
     def playSfx(
         self,
         sfx: AudioSound,

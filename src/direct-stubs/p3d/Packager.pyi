@@ -1,12 +1,11 @@
 __all__ = ['ArgumentError', 'OutsideOfPackageError', 'Packager', 'PackagerError']
 
-from _typeshed import StrOrBytesPath
 from collections.abc import Container, Iterable, Sequence
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from panda3d._typing import Filepath
 from panda3d.core import (
-    ConfigVariableFilename,
     DSearchPath,
     Filename,
     GlobPattern,
@@ -27,7 +26,6 @@ class PackagerError(Exception): ...
 class OutsideOfPackageError(PackagerError): ...
 class ArgumentError(PackagerError): ...
 
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 _Unused: TypeAlias = object
 
 class Packager:
@@ -86,9 +84,9 @@ class Packager:
             version: str,
             solo: bool,
             perPlatform: bool,
-            installDir: _Filename,
-            descFilename: _Filename,
-            importDescFilename: _Filename | None,
+            installDir: Filepath,
+            descFilename: Filepath,
+            importDescFilename: Filepath | None,
         ) -> None: ...
         def loadXml(self, xpackage: TiXmlElement) -> None: ...
         def makeXml(self) -> TiXmlElement: ...
@@ -144,7 +142,7 @@ class Packager:
         packageSeq: SeqValue
         patchVersion: str | None
         patches: list[TiXmlNode]
-        oldCompressedBasename: _Filename
+        oldCompressedBasename: Filepath
         moduleNames: dict[str, Freezer.ModuleDef]
         text: str | None
         deleteTemp: bool
@@ -182,7 +180,7 @@ class Packager:
         def addEggFile(self, file: Packager.PackFile) -> None: ...
         def addBamFile(self, file: Packager.PackFile) -> None: ...
         def addNode(self, node: PandaNode, filename: _Unused, newName: str) -> None: ...
-        def addFoundTexture(self, filename: _Filename) -> str: ...
+        def addFoundTexture(self, filename: Filepath) -> str: ...
         def addDcFile(self, file: Packager.PackFile) -> None: ...
         def addDcImports(self, file: Packager.PackFile) -> None: ...
         def addPrcFile(self, file: Packager.PackFile) -> None: ...
@@ -191,8 +189,8 @@ class Packager:
     notify: ClassVar[Notifier]
     platform: str
     arch: str | None
-    installDir: _Filename | None
-    systemRoot: _Filename | None
+    installDir: Filepath | None
+    systemRoot: Filepath | None
     ignoreSetHost: bool
     verbosePrint: bool
     p3dSuffix: str
@@ -292,13 +290,13 @@ class Packager:
         self,
         moduleNames: Sequence[str],
         newName: str | None = None,
-        filename: _Filename | None = None,
+        filename: Filepath | None = None,
         required: bool = False,
     ) -> None: ...
     do_module = addModule
     def do_excludeModule(self, *args: str) -> None: ...
-    def do_main(self, filename: _Filename | None) -> None: ...
-    def do_mainModule(self, moduleName: str, newName: str | None = None, filename: _Filename | None = None) -> None: ...
+    def do_main(self, filename: Filepath | None) -> None: ...
+    def do_mainModule(self, moduleName: str, newName: str | None = None, filename: Filepath | None = None) -> None: ...
     def do_sign(self, certificate, chain=None, pkey=None, password=None) -> None: ...
     def do_setupPanda3D(self, p3dpythonName: str | None = None, p3dpythonwName: str | None = None) -> None: ...
     def do_freeze(self, filename: str, compileToExe: bool = False) -> None: ...
@@ -306,16 +304,16 @@ class Packager:
         self,
         bundleName: str,
         plist: str,
-        executable: _Filename | None = None,
-        resources: Sequence[_Filename] | None = None,
+        executable: Filepath | None = None,
+        resources: Sequence[Filepath] | None = None,
         dependencyDir: str | None = None,
     ) -> None: ...
     def addFiles(
         self,
-        filenames: Sequence[_Filename],
+        filenames: Sequence[Filepath],
         text: str | None = None,
         newName: str | None = None,
-        newDir: _Filename | None = None,
+        newDir: Filepath | None = None,
         extract: bool | None = None,
         executable: bool | None = None,
         deleteTemp: bool = False,
@@ -324,7 +322,7 @@ class Packager:
         required: bool = False,
     ) -> None: ...
     do_file = addFiles
-    def do_exclude(self, filename: _Filename) -> None: ...
+    def do_exclude(self, filename: Filepath) -> None: ...
     def do_includeExtensions(
         self,
         executableExtensions: Iterable[str] | None = None,
@@ -335,7 +333,7 @@ class Packager:
         unprocessedExtensions: Iterable[str] | None = None,
         suppressWarningForExtensions: Iterable[str] | None = None,
     ) -> None: ...
-    def do_dir(self, dirname: _Filename, newDir: str | None = None, unprocessed: bool | None = None) -> None: ...
+    def do_dir(self, dirname: Filepath, newDir: str | None = None, unprocessed: bool | None = None) -> None: ...
     def readContentsFile(self) -> None: ...
     def writeContentsFile(self) -> None: ...
 

@@ -1,22 +1,19 @@
 __all__ = ['PackageMerger', 'PackageMergerError']
 
-from _typeshed import StrOrBytesPath
 from collections.abc import Container
 from typing import ClassVar
-from typing_extensions import TypeAlias
 
-from panda3d.core import ConfigVariableFilename, Filename, TiXmlDocument, TiXmlElement, TiXmlNode
+from panda3d._typing import Filepath
+from panda3d.core import TiXmlDocument, TiXmlElement, TiXmlNode
 from ..directnotify.Notifier import Notifier
 from .FileSpec import FileSpec
 from .SeqValue import SeqValue
-
-_Filename: TypeAlias = Filename | ConfigVariableFilename | StrOrBytesPath
 
 class PackageMergerError(Exception): ...
 
 class PackageMerger:
     class PackageEntry:
-        sourceDir: _Filename
+        sourceDir: Filepath
         packageName: str
         platform: str
         version: str
@@ -26,19 +23,19 @@ class PackageMerger:
         packageSeq: SeqValue
         packageSetVer: SeqValue
         importDescFile = ...
-        def __init__(self, xpackage: TiXmlElement, sourceDir: _Filename) -> None: ...
+        def __init__(self, xpackage: TiXmlElement, sourceDir: Filepath) -> None: ...
         def getKey(self) -> tuple[str, str, str]: ...
         def isNewer(self, other: PackageMerger.PackageEntry) -> bool: ...
         def loadXml(self, xpackage: TiXmlElement) -> None: ...
         def makeXml(self) -> TiXmlElement: ...
         def validatePackageContents(self) -> None: ...
     notify: ClassVar[Notifier]
-    installDir: _Filename
+    installDir: Filepath
     xhost: TiXmlNode | None
     contents: dict[tuple[str, str, str], PackageMerger.PackageEntry]
     maxAge: int | None
     contentsSeq: SeqValue
     contentsDoc: TiXmlDocument
-    def __init__(self, installDir: _Filename) -> None: ...
-    def merge(self, sourceDir: _Filename, packageNames: Container[str] | None = None) -> None: ...
+    def __init__(self, installDir: Filepath) -> None: ...
+    def merge(self, sourceDir: Filepath, packageNames: Container[str] | None = None) -> None: ...
     def close(self) -> None: ...

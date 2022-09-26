@@ -12,21 +12,21 @@ __all__ = [
     'walk',
 ]
 
-from _typeshed import ReadableBuffer, StrOrBytesPath
+from _typeshed import ReadableBuffer
 from collections.abc import Generator, Iterable, Mapping
 from io import IOBase
 from posixpath import join as join
 from typing import Any, TypeVar
 from typing_extensions import TypeAlias
 
-from panda3d.core import ConfigVariableFilename, VirtualFile, istream, ostream
+from panda3d._typing import Filepath
+from panda3d.core import VirtualFile, istream, ostream
 
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Unused: TypeAlias = object
-_F = TypeVar('_F', bound=_Filename)
+_F = TypeVar('_F', bound=Filepath)
 
 def open(
-    file: _Filename | VirtualFile | istream | ostream,
+    file: Filepath | VirtualFile | istream | ostream,
     mode: str = ...,
     buffering: int = ...,
     encoding: str | None = None,

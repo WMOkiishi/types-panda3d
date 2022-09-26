@@ -1,12 +1,10 @@
 from collections.abc import Sequence
-from typing_extensions import TypeAlias
 
-from panda3d.core import LMatrix3f, LVecBase2f, LVecBase3f, NodePath, PerspectiveLens, RenderState
+from panda3d._typing import Vec3f
+from panda3d.core import LVecBase2f, NodePath, PerspectiveLens, RenderState
 from ..fsm.FSM import FSM
 from ..interval import MetaInterval
 from .DistributedObject import DistributedObject
-
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
 
 class Fixture(NodePath, FSM):
     id: int
@@ -14,7 +12,7 @@ class Fixture(NodePath, FSM):
     scaleIval: MetaInterval.Sequence | None
     recordingInProgress: bool
     dirty: bool
-    def __init__(self, id: int, parent: NodePath, pos: _Vec3f, hpr: _Vec3f, fov: LVecBase2f | float) -> None: ...
+    def __init__(self, id: int, parent: NodePath, pos: Vec3f, hpr: Vec3f, fov: LVecBase2f | float) -> None: ...
     def pack(self) -> str: ...
     def setId(self, id: int) -> None: ...
     def setFov(self, fov: LVecBase2f | float) -> None: ...

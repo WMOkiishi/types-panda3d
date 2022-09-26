@@ -2,20 +2,10 @@ __all__ = ['ThreeUpShow']
 
 from typing_extensions import TypeAlias
 
-from panda3d.core import (
-    Camera,
-    ConfigVariableColor,
-    GraphicsOutput,
-    Lens,
-    LMatrix4f,
-    LVecBase4f,
-    NodePath,
-    UnalignedLVecBase4f,
-)
+from panda3d.core import Camera, GraphicsOutput, NodePath
 from .ShowBase import ShowBase
 
 _Unused: TypeAlias = object
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 
 class ThreeUpShow(ShowBase):
     def __init__(self) -> None: ...

@@ -1,10 +1,7 @@
 __all__ = ['setupMirror', 'showFrustum']
 
-from typing_extensions import TypeAlias
-
-from panda3d.core import ConfigVariableColor, LMatrix4f, LVecBase4f, NodePath, UnalignedLVecBase4f
-
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
+from panda3d._typing import Vec4f
+from panda3d.core import NodePath
 
 def setupMirror(
     name: str,
@@ -12,6 +9,6 @@ def setupMirror(
     height: float,
     rootCamera: NodePath | None = None,
     bufferSize: int = ...,
-    clearColor: _Vec4f | None = None,
+    clearColor: Vec4f | None = None,
 ) -> NodePath: ...
 def showFrustum(np: NodePath) -> None: ...

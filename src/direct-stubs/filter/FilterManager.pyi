@@ -4,6 +4,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar
 from typing_extensions import TypeAlias
 
+from panda3d._typing import Vec4f
 from panda3d.core import (
     Camera,
     DisplayRegion,
@@ -11,18 +12,15 @@ from panda3d.core import (
     FrameBufferProperties,
     GraphicsEngine,
     GraphicsOutput,
-    LMatrix4f,
     LVecBase4f,
     NodePath,
     RenderState,
     Texture,
-    UnalignedLVecBase4f,
 )
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 
 _Unused: TypeAlias = object
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow
 
 class FilterManager(DirectObject):
     notify: ClassVar[Notifier | None]
@@ -43,12 +41,12 @@ class FilterManager(DirectObject):
     basey: int
     def __init__(self, win: GraphicsOutput, cam: NodePath[Camera], forcex: int = ..., forcey: int = ...) -> None: ...
     def get_clears(self, region: DrawableRegion) -> list[tuple[bool, LVecBase4f]]: ...
-    def set_clears(self, region: DrawableRegion, clears: Sequence[tuple[bool, _Vec4f]]) -> None: ...
+    def set_clears(self, region: DrawableRegion, clears: Sequence[tuple[bool, Vec4f]]) -> None: ...
     def set_stacked_clears(
         self,
         region: DrawableRegion,
-        clears0: Sequence[tuple[bool, _Vec4f]],
-        clears1: Sequence[tuple[bool, _Vec4f]],
+        clears0: Sequence[tuple[bool, Vec4f]],
+        clears1: Sequence[tuple[bool, Vec4f]],
     ) -> list[Any]: ...
     def is_fullscreen(self) -> bool: ...
     def get_scaled_size(self, mul: float, div: float, align: float) -> tuple[int, int]: ...

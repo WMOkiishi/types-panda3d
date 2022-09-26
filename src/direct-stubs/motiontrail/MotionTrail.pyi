@@ -2,8 +2,8 @@ from collections.abc import Callable
 from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
+from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
-    ConfigVariableColor,
     GeomNode,
     GeomTriangles,
     GeomVertexData,
@@ -12,20 +12,15 @@ from panda3d.core import (
     LMatrix3f,
     LMatrix4f,
     LVecBase2f,
-    LVecBase3f,
-    LVecBase4f,
     LVector4f,
     NodePath,
     Texture,
-    UnalignedLVecBase4f,
 )
 from panda3d.direct import CMotionTrail
 from ..directnotify.Notifier import Notifier
 from ..showbase.DirectObject import DirectObject
 from ..task.Task import Task
 
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 _VertexFunction: TypeAlias = Callable[[MotionTrailVertex, int, Any], LVector4f]
 
 def remove_task() -> None: ...
@@ -103,14 +98,14 @@ class MotionTrail(NodePath, DirectObject):
     def begin_geometry(self) -> None: ...
     def add_geometry_quad(
         self,
-        v0: _Vec3f,
-        v1: _Vec3f,
-        v2: _Vec3f,
-        v3: _Vec3f,
-        c0: _Vec4f,
-        c1: _Vec4f,
-        c2: _Vec4f,
-        c3: _Vec4f,
+        v0: Vec3f,
+        v1: Vec3f,
+        v2: Vec3f,
+        v3: Vec3f,
+        c0: Vec4f,
+        c1: Vec4f,
+        c2: Vec4f,
+        c3: Vec4f,
         t0: LVecBase2f,
         t1: LVecBase2f,
         t2: LVecBase2f,

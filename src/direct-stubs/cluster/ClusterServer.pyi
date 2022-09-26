@@ -1,13 +1,12 @@
 from typing import Any, ClassVar, Union
 from typing_extensions import Literal, TypeAlias
 
+from panda3d._typing import Vec3f
 from panda3d.core import (
     Camera,
     Connection,
     ConnectionWriter,
     DatagramIterator,
-    LMatrix3f,
-    LVecBase3f,
     LVector3f,
     Lens,
     NodePath,
@@ -29,7 +28,7 @@ _NamedMovement: TypeAlias = tuple[
 ]
 _TaskCont: TypeAlias = Literal[1]
 _Unused: TypeAlias = object
-_Vec3f: TypeAlias = Union[LVecBase3f, LMatrix3f.Row, LMatrix3f.CRow, tuple[float, float, float]]
+_Vec3f: TypeAlias = Union[Vec3f, tuple[float, float, float]]
 
 class ClusterServer(DirectObject):
     notify: ClassVar[Notifier]

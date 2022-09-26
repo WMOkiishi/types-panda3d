@@ -1,14 +1,13 @@
 __all__ = ['register', 'reloadSharedPackage', 'reloadSharedPackages', 'sharedPackages']
 
-from _typeshed import StrOrBytesPath
 from collections.abc import Iterable
 from types import ModuleType
 from typing import Any
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d.core import ConfigVariableFilename, Filename, VirtualFile, VirtualFileSystem
+from panda3d._typing import Filepath
+from panda3d.core import Filename, VirtualFile, VirtualFileSystem
 
-_Filename: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 _Unused: TypeAlias = object
 
 sharedPackages: dict[str, Literal[True]]
@@ -35,7 +34,7 @@ class VFSLoader:
         packagePath: Filename | None = None,
     ) -> None: ...
     def load_module(self, fullname: str, loadingShared: bool = False) -> ModuleType: ...
-    def getdata(self, path: _Filename) -> bytes: ...
+    def getdata(self, path: Filepath) -> bytes: ...
     def is_package(self, fullname: _Unused) -> bool: ...
     def get_code(self, fullname: _Unused) -> Any | None: ...
     def get_source(self, fullname: _Unused) -> str | None: ...

@@ -3,7 +3,8 @@ __all__ = ['Transitions']
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
-from panda3d.core import AsyncFuture, ConfigVariableColor, LMatrix4f, LVecBase3f, LVecBase4f, NodePath, UnalignedLVecBase4f
+from panda3d._typing import Vec4f
+from panda3d.core import AsyncFuture, LVecBase3f, LVecBase4f, NodePath
 from panda3d.direct import CInterval
 from ..gui.DirectFrame import DirectFrame
 from ..interval import MetaInterval
@@ -12,7 +13,6 @@ from ..interval.LerpInterval import LerpColorInterval, LerpColorScaleInterval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
 _Interval: TypeAlias = Interval | CInterval
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
 
 class Transitions:
     IrisModelName: ClassVar[str]
@@ -60,7 +60,7 @@ class Transitions:
     ) -> AsyncFuture: ...
     def fadeOutActive(self) -> bool: ...
     def fadeScreen(self, alpha: float = ...) -> None: ...
-    def fadeScreenColor(self, color: _Vec4f) -> None: ...
+    def fadeScreenColor(self, color: Vec4f) -> None: ...
     def noFade(self) -> None: ...
     def setFadeColor(self, r: float, g: float, b: float) -> None: ...
     def loadIris(self) -> None: ...

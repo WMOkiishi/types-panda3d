@@ -28,25 +28,14 @@ from collections.abc import Callable
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
-from panda3d.core import (
-    ConfigVariableColor,
-    LMatrix3f,
-    LMatrix4f,
-    LQuaternionf,
-    LVecBase2f,
-    LVecBase3f,
-    LVecBase4f,
-    NodePath,
-    UnalignedLVecBase4f,
-)
+from panda3d._typing import Vec3f, Vec4f
+from panda3d.core import ConfigVariableColor, LQuaternionf, LVecBase2f, NodePath
 from panda3d.direct import CLerpNodePathInterval
 from .Interval import Interval
 
 _T = TypeVar('_T')
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
 _EventType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
-_Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-_Vec4f: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow
 
 class LerpNodePathInterval(CLerpNodePathInterval):
     lerpNodePathNum: ClassVar[int]
@@ -65,15 +54,15 @@ class LerpNodePathInterval(CLerpNodePathInterval):
 
 class LerpPosInterval(LerpNodePathInterval):
     paramSetup: bool
-    endPos: _Vec3f
-    startPos: _Vec3f | None
+    endPos: Vec3f
+    startPos: Vec3f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        pos: _Vec3f,
-        startPos: _Vec3f | None = None,
+        pos: Vec3f,
+        startPos: Vec3f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -84,17 +73,17 @@ class LerpPosInterval(LerpNodePathInterval):
 
 class LerpHprInterval(LerpNodePathInterval):
     paramSetup: bool
-    endHpr: _Vec3f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
+    endHpr: Vec3f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        hpr: _Vec3f,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
+        hpr: Vec3f,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -105,37 +94,37 @@ class LerpHprInterval(LerpNodePathInterval):
 
 class LerpQuatInterval(LerpNodePathInterval):
     paramSetup: bool
-    endQuat: _Vec4f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
+    endQuat: Vec4f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
         quat: LQuaternionf | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
         fluid: bool = False,
         name: str | None = None,
-        hpr: _Vec3f | None = None,
+        hpr: Vec3f | None = None,
     ) -> None: ...
     def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
 
 class LerpScaleInterval(LerpNodePathInterval):
     paramSetup: bool
-    endScale: _Vec3f | float
-    startScale: _Vec3f | float | None
+    endScale: Vec3f | float
+    startScale: Vec3f | float | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        scale: _Vec3f | float,
-        startScale: _Vec3f | float | None = None,
+        scale: Vec3f | float,
+        startScale: Vec3f | float | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -146,15 +135,15 @@ class LerpScaleInterval(LerpNodePathInterval):
 
 class LerpShearInterval(LerpNodePathInterval):
     paramSetup: bool
-    endShear: _Vec3f
-    startShear: _Vec3f | None
+    endShear: Vec3f
+    startShear: Vec3f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        shear: _Vec3f,
-        startShear: _Vec3f | None = None,
+        shear: Vec3f,
+        startShear: Vec3f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -165,21 +154,21 @@ class LerpShearInterval(LerpNodePathInterval):
 
 class LerpPosHprInterval(LerpNodePathInterval):
     paramSetup: bool
-    endPos: _Vec3f
-    startPos: _Vec3f | None
-    endHpr: _Vec3f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
+    endPos: Vec3f
+    startPos: Vec3f | None
+    endHpr: Vec3f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        pos: _Vec3f,
-        hpr: _Vec3f,
-        startPos: _Vec3f | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
+        pos: Vec3f,
+        hpr: Vec3f,
+        startPos: Vec3f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -190,47 +179,47 @@ class LerpPosHprInterval(LerpNodePathInterval):
 
 class LerpPosQuatInterval(LerpNodePathInterval):
     paramSetup: bool
-    endPos: _Vec3f
-    startPos: _Vec3f | None
-    endQuat: _Vec4f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
+    endPos: Vec3f
+    startPos: Vec3f | None
+    endQuat: Vec4f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        pos: _Vec3f,
+        pos: Vec3f,
         quat: LQuaternionf | None = None,
-        startPos: _Vec3f | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
+        startPos: Vec3f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
         fluid: bool = False,
         name: str | None = None,
-        hpr: _Vec3f | None = None,
+        hpr: Vec3f | None = None,
     ) -> None: ...
     def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
 
 class LerpHprScaleInterval(LerpNodePathInterval):
     paramSetup: bool
-    endHpr: _Vec3f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
-    endScale: _Vec3f | float
-    startScale: _Vec3f | float | None
+    endHpr: Vec3f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
+    endScale: Vec3f | float
+    startScale: Vec3f | float | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        hpr: _Vec3f,
-        scale: _Vec3f | float,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
-        startScale: _Vec3f | float | None = None,
+        hpr: Vec3f,
+        scale: Vec3f | float,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
+        startScale: Vec3f | float | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -241,22 +230,22 @@ class LerpHprScaleInterval(LerpNodePathInterval):
 
 class LerpQuatScaleInterval(LerpNodePathInterval):
     paramSetup: bool
-    endQuat: _Vec4f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
-    endScale: _Vec3f | float
-    startScale: _Vec3f | float | None
+    endQuat: Vec4f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
+    endScale: Vec3f | float
+    startScale: Vec3f | float | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
         quat: LQuaternionf | None = None,
-        scale: _Vec3f | float | None = None,
-        hpr: _Vec3f | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
-        startScale: _Vec3f | float | None = None,
+        scale: Vec3f | float | None = None,
+        hpr: Vec3f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
+        startScale: Vec3f | float | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -267,25 +256,25 @@ class LerpQuatScaleInterval(LerpNodePathInterval):
 
 class LerpPosHprScaleInterval(LerpNodePathInterval):
     paramSetup: bool
-    endPos: _Vec3f
-    startPos: _Vec3f | None
-    endHpr: _Vec3f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
-    endScale: _Vec3f | float
-    startScale: _Vec3f | float | None
+    endPos: Vec3f
+    startPos: Vec3f | None
+    endHpr: Vec3f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
+    endScale: Vec3f | float
+    startScale: Vec3f | float | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        pos: _Vec3f,
-        hpr: _Vec3f,
-        scale: _Vec3f | float,
-        startPos: _Vec3f | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
-        startScale: _Vec3f | float | None = None,
+        pos: Vec3f,
+        hpr: Vec3f,
+        scale: Vec3f | float,
+        startPos: Vec3f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
+        startScale: Vec3f | float | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -296,59 +285,59 @@ class LerpPosHprScaleInterval(LerpNodePathInterval):
 
 class LerpPosQuatScaleInterval(LerpNodePathInterval):
     paramSetup: bool
-    endPos: _Vec3f
-    startPos: _Vec3f | None
-    endQuat: _Vec4f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
-    endScale: _Vec3f | float
-    startScale: _Vec3f | float | None
+    endPos: Vec3f
+    startPos: Vec3f | None
+    endQuat: Vec4f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
+    endScale: Vec3f | float
+    startScale: Vec3f | float | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        pos: _Vec3f,
+        pos: Vec3f,
         quat: LQuaternionf | None = None,
-        scale: _Vec3f | float | None = None,
-        startPos: _Vec3f | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
-        startScale: _Vec3f | float | None = None,
+        scale: Vec3f | float | None = None,
+        startPos: Vec3f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
+        startScale: Vec3f | float | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
         fluid: bool = False,
         name: str | None = None,
-        hpr: _Vec3f | None = None,
+        hpr: Vec3f | None = None,
     ) -> None: ...
     def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
 
 class LerpPosHprScaleShearInterval(LerpNodePathInterval):
     paramSetup: bool
-    endPos: _Vec3f
-    startPos: _Vec3f | None
-    endHpr: _Vec3f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
-    endScale: _Vec3f | float
-    startScale: _Vec3f | float | None
-    endShear: _Vec3f
-    startShear: _Vec3f | None
+    endPos: Vec3f
+    startPos: Vec3f | None
+    endHpr: Vec3f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
+    endScale: Vec3f | float
+    startScale: Vec3f | float | None
+    endShear: Vec3f
+    startShear: Vec3f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        pos: _Vec3f,
-        hpr: _Vec3f,
-        scale: _Vec3f | float,
-        shear: _Vec3f,
-        startPos: _Vec3f | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
-        startScale: _Vec3f | float | None = None,
-        startShear: _Vec3f | None = None,
+        pos: Vec3f,
+        hpr: Vec3f,
+        scale: Vec3f | float,
+        shear: Vec3f,
+        startPos: Vec3f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
+        startScale: Vec3f | float | None = None,
+        startShear: Vec3f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -359,35 +348,35 @@ class LerpPosHprScaleShearInterval(LerpNodePathInterval):
 
 class LerpPosQuatScaleShearInterval(LerpNodePathInterval):
     paramSetup: bool
-    endPos: _Vec3f
-    startPos: _Vec3f | None
-    endQuat: _Vec4f
-    startHpr: _Vec3f | None
-    startQuat: _Vec4f | None
-    endScale: _Vec3f | float
-    startScale: _Vec3f | float | None
-    endShear: _Vec3f
-    startShear: _Vec3f | None
+    endPos: Vec3f
+    startPos: Vec3f | None
+    endQuat: Vec4f
+    startHpr: Vec3f | None
+    startQuat: Vec4f | None
+    endScale: Vec3f | float
+    startScale: Vec3f | float | None
+    endShear: Vec3f
+    startShear: Vec3f | None
     inPython: bool
     def __init__(
         self,
         nodePath: NodePath,
         duration: float,
-        pos: _Vec3f,
+        pos: Vec3f,
         quat: LQuaternionf | None = None,
-        scale: _Vec3f | float | None = None,
-        shear: _Vec3f | None = None,
-        startPos: _Vec3f | None = None,
-        startHpr: _Vec3f | None = None,
-        startQuat: _Vec4f | None = None,
-        startScale: _Vec3f | float | None = None,
-        startShear: _Vec3f | None = None,
+        scale: Vec3f | float | None = None,
+        shear: Vec3f | None = None,
+        startPos: Vec3f | None = None,
+        startHpr: Vec3f | None = None,
+        startQuat: Vec4f | None = None,
+        startScale: Vec3f | float | None = None,
+        startShear: Vec3f | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
         fluid: bool = False,
         name: str | None = None,
-        hpr: _Vec3f | None = None,
+        hpr: Vec3f | None = None,
     ) -> None: ...
     def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
 
@@ -396,8 +385,8 @@ class LerpColorInterval(LerpNodePathInterval):
         self,
         nodePath: NodePath,
         duration: float,
-        color: _Vec4f | ConfigVariableColor,
-        startColor: _Vec4f | ConfigVariableColor | None = None,
+        color: Vec4f | ConfigVariableColor,
+        startColor: Vec4f | ConfigVariableColor | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
@@ -410,8 +399,8 @@ class LerpColorScaleInterval(LerpNodePathInterval):
         self,
         nodePath: NodePath,
         duration: float,
-        colorScale: _Vec4f | ConfigVariableColor,
-        startColorScale: _Vec4f | ConfigVariableColor | None = None,
+        colorScale: Vec4f | ConfigVariableColor,
+        startColorScale: Vec4f | ConfigVariableColor | None = None,
         other: NodePath | None = None,
         blendType: _BlendType = ...,
         bakeInStart: bool = True,
