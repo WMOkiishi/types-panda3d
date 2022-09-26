@@ -4,8 +4,6 @@ from typing_extensions import TypeAlias
 wx: Any
 ScrolledPanel: TypeAlias = wx.lib.scrolledpanel.ScrolledPanel
 
-_Unused: TypeAlias = object
-
 class EditHotKeyDialog(wx.Dialog):
     currKey: str
     panel: wx.Panel

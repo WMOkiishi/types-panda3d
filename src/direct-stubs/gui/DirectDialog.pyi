@@ -10,13 +10,11 @@ __all__ = [
 ]
 
 from typing import Any, ClassVar
-from typing_extensions import TypeAlias
 
+from direct._typing import Unused
 from panda3d.core import NodePath
 from .DirectButton import DirectButton
 from .DirectFrame import DirectFrame
-
-_Unused: TypeAlias = object
 
 def findDialog(uniqueName: str) -> DirectDialog: ...
 def cleanupDialog(uniqueName: str) -> None: ...
@@ -30,7 +28,7 @@ class DirectDialog(DirectFrame):
     def configureDialog(self) -> None: ...
     def show(self) -> None: ...  # type: ignore[override]
     def hide(self) -> None: ...  # type: ignore[override]
-    def buttonCommand(self, value: Any, event: _Unused = None) -> None: ...
+    def buttonCommand(self, value: Any, event: Unused = None) -> None: ...
     def setMessage(self, message: str) -> None: ...
     def cleanup(self) -> None: ...
 

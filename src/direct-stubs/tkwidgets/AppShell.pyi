@@ -13,6 +13,7 @@ from tkinter import (
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
+from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from .Dial import Dial
 from .EntryScale import EntryScale
@@ -23,7 +24,6 @@ from .VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
 Pmw: Any
 
 _W = TypeVar('_W', bound=Widget)
-_Unused: TypeAlias = object
 _TkAnchor: TypeAlias = Literal['nw', 'n', 'ne', 'w', 'center', 'e', 'sw', 's', 'se']
 _TkFill: TypeAlias = Literal['none', 'x', 'y', 'both']
 _TkRelief: TypeAlias = Literal['raised', 'sunken', 'flat', 'ridge', 'solid', 'groove']
@@ -255,7 +255,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         command=None,
         items=...,
         state: _TkState = ...,
-        history: _Unused = ...,
+        history: Unused = ...,
         labelpos=...,
         label_anchor: _TkAnchor = ...,
         label_width: int = 16,

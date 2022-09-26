@@ -4,11 +4,11 @@ from modulefinder import Module, ModuleFinder
 from typing import Any, TypeVar
 from typing_extensions import Final, TypeAlias
 
+from direct._typing import Unused
 from panda3d.core import Filename, Multifile
 
 _File = TypeVar('_File', bound=_OpenFile)
 _OpenFile: TypeAlias = StrOrBytesPath | int
-_Unused: TypeAlias = object
 
 p3extend_frozen: Any | None
 def pytest_imports() -> list[str]: ...
@@ -90,7 +90,7 @@ class Freezer:
     def __init__(
         self,
         previous: Freezer | None = None,
-        debugLevel: _Unused = ...,
+        debugLevel: Unused = ...,
         platform: str | None = None,
         path: list[str] | None = None,
     ) -> None: ...

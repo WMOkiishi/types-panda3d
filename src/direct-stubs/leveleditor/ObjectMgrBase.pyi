@@ -1,11 +1,10 @@
 from collections.abc import Iterable
 from typing import SupportsInt, TypeVar
 
+from direct._typing import Unused
 from panda3d.core import NodePath, PandaNode
-from typing_extensions import TypeAlias
 
 _N = TypeVar('_N', bound=PandaNode)
-_Unused: TypeAlias = object
 
 class PythonNodePath(NodePath[_N]):
     def __init__(self, node: _N) -> None: ...
@@ -32,7 +31,7 @@ class ObjectMgrBase:
         uid=None,
         parent=None,
         fSelectObject: bool = True,
-        nodePath: _Unused = None,
+        nodePath: Unused = None,
     ) -> NodePath: ...
     def addNewCurve(
         self,

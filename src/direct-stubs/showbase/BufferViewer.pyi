@@ -4,13 +4,13 @@ from collections.abc import MutableMapping
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias, TypeGuard
 
+from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import CardMaker, GeomNode, GraphicsEngine, GraphicsOutput, NodePath, PythonTask, Texture
 
 _Layout: TypeAlias = Literal['vline', 'hline', 'vgrid', 'hgrid', 'cycle']
 _Position: TypeAlias = Literal['llcorner', 'lrcorner', 'ulcorner', 'urcorner']
 _Texture: TypeAlias = Texture | GraphicsOutput | Literal['all']
-_Unused: TypeAlias = object
 
 class BufferViewer:
     notify: ClassVar[Notifier]
@@ -52,4 +52,4 @@ class BufferViewer:
         set: MutableMapping[Texture, int],
     ) -> None: ...
     def makeFrame(self, sizex: float, sizey: float) -> NodePath[GeomNode]: ...
-    def maintainReadout(self, task: _Unused) -> Literal[0, 1]: ...
+    def maintainReadout(self, task: Unused) -> Literal[0, 1]: ...

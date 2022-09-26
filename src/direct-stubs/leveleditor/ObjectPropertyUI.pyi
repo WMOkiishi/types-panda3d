@@ -2,6 +2,7 @@ from collections.abc import Callable, Iterable
 from typing import Any
 from typing_extensions import TypeAlias
 
+from direct._typing import Unused
 from direct.wxwidgets.WxSlider import WxSlider
 
 wx: Any
@@ -9,14 +10,12 @@ CubeColourDialog: TypeAlias = wx.lib.agw.cubecolourdialog.CubeColourDialog
 PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
 ScrolledPanel: TypeAlias = wx.lib.scrolledpanel.ScrolledPanel
 
-_Unused: TypeAlias = object
-
 Key: PyEmbeddedImage
 
 class AnimFileDrop(wx.FileDropTarget):
     editor = ...
     def __init__(self, editor) -> None: ...
-    def OnDropFiles(self, x: _Unused, y: _Unused, filenames: Iterable[str]) -> None: ...
+    def OnDropFiles(self, x: Unused, y: Unused, filenames: Iterable[str]) -> None: ...
 
 class ObjectPropUI(wx.Panel):
     parent = ...

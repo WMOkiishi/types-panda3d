@@ -1,12 +1,11 @@
-from collections.abc import Callable, Generator, Hashable, Mapping
+from collections.abc import Generator, Hashable, Mapping
 from typing import Any, ClassVar, TypeVar, overload
-from typing_extensions import TypeAlias
 
+from direct._typing import SimpleCallback
 from direct.directnotify.Notifier import Notifier
 from .Job import Job
 
 _T = TypeVar('_T')
-_Callback: TypeAlias = Callable[[], object]
 
 intTypes: tuple[type[int]]
 deadEndTypes: tuple[type, ...]
@@ -64,7 +63,7 @@ class FPTObjsOfType(Job):
         name: str,
         leakDetector: ContainerLeakDetector,
         otn: str,
-        doneCallback: _Callback | None = None,
+        doneCallback: SimpleCallback | None = None,
     ) -> None: ...
     def run(self) -> Generator[Any | None, None, None]: ...
 
@@ -75,7 +74,7 @@ class FPTObjsNamed(Job):
         name: str,
         leakDetector: ContainerLeakDetector,
         on: str,
-        doneCallback: _Callback | None = None,
+        doneCallback: SimpleCallback | None = None,
     ) -> None: ...
     def run(self) -> Generator[Any | None, None, None]: ...
 
@@ -100,5 +99,5 @@ class ContainerLeakDetector(Job):
     def getContainerNameById(self, id: int) -> str: ...
     def removeContainerById(self, id: int) -> None: ...
     def run(self) -> Generator[Any, None, None]: ...
-    def getPathsToContainers(self, name: str, ot: str, doneCallback: _Callback | None = None) -> FPTObjsOfType: ...
-    def getPathsToContainersNamed(self, name: str, on: str, doneCallback: _Callback | None = None) -> FPTObjsNamed: ...
+    def getPathsToContainers(self, name: str, ot: str, doneCallback: SimpleCallback | None = None) -> FPTObjsOfType: ...
+    def getPathsToContainersNamed(self, name: str, on: str, doneCallback: SimpleCallback | None = None) -> FPTObjsNamed: ...

@@ -1,9 +1,9 @@
-from typing import TypeVar, Union, overload
+from typing import Union, overload
 from typing_extensions import Literal, TypeAlias
 
+from direct._typing import AnyReal
 from panda3d.core import LVecBase2f
 
-_AnyReal = TypeVar('_AnyReal', int, float)
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 
 class CartesianGridBase:
@@ -12,7 +12,7 @@ class CartesianGridBase:
     def getZoneFromXYZ(self, pos: _Vec2f, wantRowAndCol: Literal[False] = False) -> int: ...
     @overload
     def getZoneFromXYZ(self, pos: _Vec2f, wantRowAndCol: Literal[True]) -> tuple[int, float, float]: ...
-    def getGridSizeFromSphereRadius(self, sphereRadius: _AnyReal, cellWidth: _AnyReal, gridRadius: _AnyReal) -> _AnyReal: ...
+    def getGridSizeFromSphereRadius(self, sphereRadius: AnyReal, cellWidth: AnyReal, gridRadius: AnyReal) -> AnyReal: ...
     def getGridSizeFromSphere(
         self,
         sphereRadius: float,

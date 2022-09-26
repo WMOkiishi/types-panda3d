@@ -3,6 +3,7 @@ __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, ClassVar, TypeVar, overload
 
+from direct._typing import Unused
 from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGItem, PStatCollector
 from typing_extensions import Final, Literal, ParamSpec, TypeAlias
 
@@ -14,7 +15,6 @@ _P = ParamSpec('_P')
 
 _Args: TypeAlias = tuple[Any, ...] | list[Any] | set[Any]
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
-_Unused: TypeAlias = object
 
 guiObjectCollector: Final[PStatCollector]
 
@@ -97,7 +97,7 @@ class DirectGuiWidget(DirectGuiBase, NodePath[PGItem]):
     def editStart(self, event: MouseWatcherParameter) -> None: ...
     def guiScaleTask(self, state: Any) -> Literal[1]: ...
     def guiDragTask(self, state: Any) -> Literal[1]: ...
-    def editStop(self, event: _Unused) -> None: ...
+    def editStop(self, event: Unused) -> None: ...
     def setState(self) -> None: ...  # type: ignore[override]
     def resetFrameSize(self) -> None: ...
     def setFrameSize(self, fClearFrame: bool = False) -> None: ...

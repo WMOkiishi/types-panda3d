@@ -1,3 +1,4 @@
+direct._typing
 direct\.\w+\.\w+\.Dtool_PyNativeInterface
 
 # Constants from panda3d.core

@@ -2,8 +2,8 @@ __all__ = ['FilterManager']
 
 from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar
-from typing_extensions import TypeAlias
 
+from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec4f
@@ -19,8 +19,6 @@ from panda3d.core import (
     RenderState,
     Texture,
 )
-
-_Unused: TypeAlias = object
 
 class FilterManager(DirectObject):
     notify: ClassVar[Notifier | None]
@@ -81,7 +79,7 @@ class FilterManager(DirectObject):
         depthbits: bool = True,
         fbprops: FrameBufferProperties | None = None,
     ) -> GraphicsOutput: ...
-    def window_event(self, win: _Unused) -> None: ...
+    def window_event(self, win: Unused) -> None: ...
     def resize_buffers(self) -> None: ...
     def cleanup(self) -> None: ...
     getClears = get_clears

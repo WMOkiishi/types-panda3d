@@ -1,11 +1,10 @@
 __all__ = ['Audio3DManager']
 
-from typing_extensions import TypeAlias, Literal
+from typing_extensions import Literal
 
+from direct._typing import Unused
 from panda3d._typing import Filepath
 from panda3d.core import AudioManager, AudioSound, LVecBase3f, NodePath
-
-_Unused: TypeAlias = object
 
 class Audio3DManager:
     audio_manager: AudioManager
@@ -43,7 +42,7 @@ class Audio3DManager:
     def get_sounds_on_object(self, object: NodePath) -> list[AudioSound]: ...
     def attach_listener(self, object: NodePath) -> Literal[1]: ...
     def detach_listener(self) -> Literal[1]: ...
-    def update(self, task: _Unused = None) -> Literal[1]: ...
+    def update(self, task: Unused = None) -> Literal[1]: ...
     def disable(self) -> None: ...
     loadSfx = load_sfx
     setDistanceFactor = set_distance_factor

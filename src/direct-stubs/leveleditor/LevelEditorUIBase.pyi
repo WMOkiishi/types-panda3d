@@ -1,6 +1,7 @@
 from typing import Any, SupportsFloat
-from typing_extensions import Final, Literal, TypeAlias
+from typing_extensions import Final, Literal
 
+from direct._typing import Unused
 from direct.wxwidgets.WxPandaShell import WxPandaShell
 from direct.wxwidgets.WxSlider import WxSlider
 from .AnimControlUI import AnimControlUI
@@ -8,8 +9,6 @@ from .CurveAnimUI import CurveAnimUI
 from .GraphEditorUI import GraphEditorUI
 
 wx: Any
-
-_Unused: TypeAlias = object
 
 class PandaTextDropTarget(wx.TextDropTarget):
     editor = ...
@@ -86,7 +85,7 @@ class LevelEditorUIBase(WxPandaShell):
     def onDestroy(self, evt) -> None: ...
     def updateGrids(self, newSize, newSpacing) -> None: ...
     def onHotKeys(self, evt) -> None: ...
-    def buildContextMenu(self, nodePath: _Unused): ...
+    def buildContextMenu(self, nodePath: Unused): ...
     def replaceObject(self, evt, all: bool = False) -> None: ...
 
 class GridSizeUI(wx.Dialog):

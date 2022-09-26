@@ -1,10 +1,10 @@
 from typing import SupportsFloat
 from typing_extensions import Literal, SupportsIndex, TypeAlias
 
+from direct._typing import Unused
 from panda3d.core import Geom, GeomNode, LVecBase4f, NodePath
 
 _RealNumber: TypeAlias = SupportsFloat | SupportsIndex
-_Unused: TypeAlias = object
 
 GEO_ID: int
 
@@ -24,7 +24,7 @@ def addCircle(
     radius: float,
     color: LVecBase4f | tuple[float, float, float, float] = ...,
     centerColor: LVecBase4f | tuple[float, float, float, float] | None = None,
-    layer: _Unused = ...,
+    layer: Unused = ...,
 ) -> Geom: ...
 def addCircleGeom(
     rootNode: NodePath,
@@ -32,21 +32,21 @@ def addCircleGeom(
     radius: float,
     color: LVecBase4f | tuple[float, float, float, float] = ...,
     centerColor: LVecBase4f | tuple[float, float, float, float] | None = None,
-    layer: _Unused = ...,
+    layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addSquare(
     attachNode: GeomNode,
     sizeX: float,
     sizeY: float,
     color: LVecBase4f | tuple[float, float, float, float] = ...,
-    layer: _Unused = ...,
+    layer: Unused = ...,
 ) -> Geom: ...
 def addSquareGeom(
     rootNode: NodePath,
     sizeX: float,
     sizeY: float,
     color: LVecBase4f | tuple[float, float, float, float] = ...,
-    layer: _Unused = ...,
+    layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addBox(
     attachNode: GeomNode,
@@ -69,12 +69,12 @@ def addArrow(
     sizeX: float,
     sizeY: float,
     color: LVecBase4f | tuple[float, float, float, float] = ...,
-    layer: _Unused = ...,
+    layer: Unused = ...,
 ) -> Geom: ...
 def addArrowGeom(
     rootNode: NodePath,
     sizeX: float,
     sizeY: float,
     color: LVecBase4f | tuple[float, float, float, float] = ...,
-    layer: _Unused = ...,
+    layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
