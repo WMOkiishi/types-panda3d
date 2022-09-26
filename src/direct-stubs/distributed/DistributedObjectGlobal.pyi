@@ -1,0 +1,3 @@
+from .DistributedObject import DistributedObject
+
+class DistributedObjectGlobal(DistributedObject): ...

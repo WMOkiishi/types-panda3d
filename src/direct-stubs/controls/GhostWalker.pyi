@@ -1,0 +1,3 @@
+from .NonPhysicsWalker import NonPhysicsWalker
+
+class GhostWalker(NonPhysicsWalker): ...

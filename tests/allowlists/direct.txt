@@ -1,0 +1,87 @@
+direct\.\w+\.\w+\.Dtool_PyNativeInterface
+
+# Constants from panda3d.core
+direct\.\w+\.\w+\.END_?PUBLISH
+direct\.\w+\.\w+\.(ATS|CS|ES|EU|HC|LNT|NS|PCT|PT|ST|TIXML|TINYXML|TP)[A-Z_].*
+
+# Constants from math
+direct\.\w+\.\w+\.(e|inf|nan|pi|tau)
+
+# Constants from other direct modules
+direct\.\w+\.\w+\.(CLIENT|CONTROL|STATESERVER|DBSS|DBSERVER|CLIENTAGENT)_[A-Z_]+
+direct\.\w+\.\w+\.[A-Z_]+_CMU
+direct\.(?!cluster\.ClusterConfig).+\.ClientConfigs
+direct\.(?!cluster\.ClusterMsgs).+\.(SERVER_STARTUP_STRING|CLUSTER_[A-Z_]+)
+direct\.(?!controls\.ControlManager).+\.CollisionHandlerRayStart
+direct\.(?!directevices\.DirectDeviceManager).+\.ANALOG_(MIN|MAX|DEADBAND|CENTER)
+direct\.(?!directtools\.DirectGlobals).+\.(UNPICKABLE|ZERO_VEC|ORIGIN|UNIT_VEC|ZERO_POINT|MANIPULATION_MOVE_DELAY|Q_EPSILON)
+direct\.(?!directtools\.DirectGlobals).+\.(NEG_)?[XYZ]_AXIS
+direct\.(?!directtools\.DirectGlobals).+\.(DIRECT|SKIP|EDIT_TYPE|LE)_[A-Z_]+
+direct\.(?!directtools\.DirectSelection).+\.COA_(ORIGIN|CENTER)
+direct\.(?!distributed\.MsgTypes).+\.(CLIENT_LOGIN_[23]_[A-Z_]+|QUIET_ZONE_IGNORED_LIST|MsgName2Id|MsgId2Names)
+direct\.(?!distributed\.ClockDelta).+\.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
+direct\.(?!gui\.OnscreenText).+\.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)
+direct\.(?!showbase\.PythonUtil).+\.(rad(90|180|270|360)|GoldenRatio)
+
+# Undocumented modules
+direct.fsm.SampleFSM
+direct.gui.DirectGuiTest
+direct.interval.IntervalTest
+direct.interval.ProjectileIntervalTest
+direct.particles.ParticleFloorTest
+direct.particles.ParticleTest
+direct.task.TaskTester
+
+# Modules that error on import
+direct.directdevices.DirectJoybox
+direct.showbase.ProfileSession
+direct.showbase.TkGlobal
+
+# This one only fails for Python 3.10
+(direct.directscripts.gendocs)?
+
+# Variables not meant to be exported
+direct.distributed.DistributedSmoothNode.cont
+direct.distributed.NetMessenger.i
+direct\.filter\.CommonFilters\.(BLOOM_[IXY]|BLUR_[XY]|COPY|DOWN_4)
+direct.particles.ForceGroup.physicsMgr
+direct.particles.GlobalForceGroup.physicsMgr
+
+# Functions that technically don't match
+direct\.distributed\.StagedObject\.StagedObject\.go(Off|On)Stage
+direct\.interval\.(MetaInterval|IntervalGlobal)\.MetaInterval\.__(repr|str)__
+direct\.interval\.(SoundInterval|IntervalGlobal)\.SoundInterval\.finish
+direct.showbase.ContainerLeakDetector.ObjectRef.goesThrough
+direct.showbase.ContainerLeakDetector.ObjectRef.goesThroughGen
+direct.showbase.PythonUtil.Singleton.__call__
+direct.showbase.ShowBase.ShowBase.set_background_color
+direct.stdpy.file.join
+
+# Things that don't technically exist
+direct.showbase.PythonUtil.ScratchPad.__getattr__
+direct\.stdpy\.threading2?\.local\.__getattr__
+
+# This might not exist, depending on whether a script from directbase has been run
+(direct.showbase.ShowBaseGlobal.base)?
+
+# Things that actually do exist
+direct\.interval\.IntervalGlobal\.WaitInterval\.__(deep)?copy__
+direct\.task\.Task\.(Task|pause)\.__(deep)?copy__
+
+# I'm not sure what's going on here
+(direct.directscripts.gendocs.__warningregistry__)?
+(direct.dist.FreezeTool.__warningregistry__)?
+
+# This is an issue with an attribute overriding a method added by extensions_native
+direct.distributed.DistributedCamera.Fixture.id
+
+# We're not checking these modules at all yet
+#direct\.directbase\.\w+
+#direct.p3d.Packager.metaclass_def.__new__
+#direct\.leveleditor\.(AnimControl|CurveAnim|(Graph|Layer)Editor|HotKey|Object(Palette|Property)|Proto(Objs|Palette)|SceneGraph)UI(Base)?
+#direct\.leveleditor\.(CurveEditor|MayaConverter|PaletteTreeCtrl|testData)
+#direct\.leveleditor\.LevelEditor\w*
+#direct\.tkpanels\.(?!NotifyPanel)\w+
+#direct\.tkpanels\.NotifyPanel\.Pmw
+#direct\.tkwidgets\.\w+
+#direct\.wxwidgets\.\w+

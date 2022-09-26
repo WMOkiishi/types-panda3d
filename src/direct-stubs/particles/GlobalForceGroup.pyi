@@ -1,0 +1,3 @@
+from .ForceGroup import ForceGroup
+
+class GlobalForceGroup(ForceGroup): ...

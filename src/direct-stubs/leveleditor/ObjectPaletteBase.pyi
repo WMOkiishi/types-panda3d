@@ -1,0 +1,56 @@
+from typing import Any
+
+class ObjectGen:
+    name: str
+    def __init__(self, name: str = '') -> None: ...
+
+class ObjectBase(ObjectGen):
+    createFunction = ...
+    model = ...
+    models: list
+    anims: list
+    animNames: list
+    animDict: dict
+    properties: dict[str, Any]
+    movable: bool
+    actor: bool
+    named: bool
+    updateModelFunction = ...
+    orderedProperties: list
+    propertiesMask: dict
+    def __init__(
+        self,
+        name: str = '',
+        createFunction=None,
+        model=None,
+        models: list = ...,
+        anims: list = ...,
+        animNames: list = ...,
+        animDict: dict = ...,
+        properties: dict[str, Any] = ...,
+        movable: bool = True,
+        actor: bool = False,
+        named: bool = False,
+        updateModelFunction=None,
+        orderedProperties: list = ...,
+        propertiesMask: dict = ...,
+    ) -> None: ...
+
+class ObjectCurve(ObjectBase): ...
+
+class ObjectPaletteBase:
+    rootName: str
+    data: dict[str, Any]
+    dataStruct: dict
+    dataKeys: list
+    def __init__(self) -> None: ...
+    def insertItem(self, item, parentName: str | None) -> None: ...
+    def add(self, item, parentName: str | None = None) -> None: ...
+    def addHidden(self, item) -> None: ...
+    def deleteStruct(self, name: str, deleteItems) -> Any | None: ...
+    def delete(self, name: str) -> None: ...
+    def findItem(self, name: str) -> Any | None: ...
+    def findChildren(self, name: str) -> list: ...
+    def rename(self, oldName: str, newName: str) -> bool: ...
+    def populateSystemObjs(self) -> None: ...
+    def populate(self) -> None: ...
