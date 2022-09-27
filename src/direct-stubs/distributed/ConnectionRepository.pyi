@@ -1,7 +1,7 @@
 __all__ = ['ConnectionRepository', 'GCTrigger']
 
 from _typeshed import StrOrBytesPath
-from collections.abc import Callable, Iterable, Sequence, Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from typing import Any, ClassVar
 from typing_extensions import Literal
 

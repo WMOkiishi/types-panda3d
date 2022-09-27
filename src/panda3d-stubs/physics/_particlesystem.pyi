@@ -13,8 +13,8 @@ from panda3d.core import (
     PandaNode,
     ReferenceCount,
     Texture,
-    TypeHandle,
     TypedReferenceCount,
+    TypeHandle,
     ostream,
 )
 from panda3d.physics import Physical

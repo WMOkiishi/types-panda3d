@@ -2,16 +2,7 @@ from collections.abc import Iterable, Sequence
 from typing import overload
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import (
-    GeomNode,
-    LineSegs,
-    LPoint3f,
-    LQuaternionf,
-    LVecBase3f,
-    LVecBase4f,
-    LVector3f,
-    NodePath,
-)
+from panda3d.core import GeomNode, LineSegs, LPoint3f, LQuaternionf, LVecBase3f, LVecBase4f, LVector3f, NodePath
 
 class LineNodePath(NodePath[GeomNode]):
     lineNode: GeomNode

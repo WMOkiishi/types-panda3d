@@ -5,9 +5,9 @@ from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import Datagram, DatagramIterator, NodePath, RecorderController
 from panda3d.direct import DCClass
+from .ConnectionRepository import ConnectionRepository
 from .CRCache import CRCache
 from .CRDataCache import CRDataCache
-from .ConnectionRepository import ConnectionRepository
 from .DistributedObject import DistributedObject
 from .ParentMgr import ParentMgr
 from .RelatedObjectMgr import RelatedObjectMgr

@@ -10,11 +10,11 @@ from panda3d.core import (
     Connection,
     ConnectionWriter,
     DatagramIterator,
-    LVector3f,
     Lens,
+    LVector3f,
     NodePath,
-    QueuedConnectionManager,
     QueuedConnectionListener,
+    QueuedConnectionManager,
     QueuedConnectionReader,
 )
 from .ClusterMsgs import ClusterMsgHandler

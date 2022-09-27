@@ -1,10 +1,10 @@
 __all__ = ['BlackOnWhite', 'NameConfirm', 'OnscreenText', 'Plain', 'ScreenPrompt', 'ScreenTitle']
 
 from typing import Any, Union, overload
+from typing_extensions import Final, Literal, TypeAlias
 
 from direct._typing import Unused
 from panda3d.core import LVecBase4f, NodePath, TextFont, TextNode
-from typing_extensions import Final, Literal, TypeAlias
 
 _Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]

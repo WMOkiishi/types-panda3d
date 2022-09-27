@@ -2,8 +2,8 @@ __all__ = ['DistributedActor']
 
 from typing_extensions import Literal
 
-from direct.distributed.DistributedNode import DistributedNode
 from direct.distributed.ClientRepository import ClientRepository
+from direct.distributed.DistributedNode import DistributedNode
 from .Actor import Actor
 
 class DistributedActor(DistributedNode, Actor):

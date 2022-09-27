@@ -2,12 +2,11 @@ __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, ClassVar, TypeVar, overload
-
-from direct._typing import Unused
-from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGItem, PStatCollector
 from typing_extensions import Final, Literal, ParamSpec, TypeAlias
 
+from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
+from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGItem, PStatCollector
 
 _Self = TypeVar('_Self')
 _T = TypeVar('_T')

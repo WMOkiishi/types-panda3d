@@ -22,8 +22,8 @@ from panda3d.core import (
     PandaNode,
     PointerEventList,
     ReferenceCount,
-    TypeHandle,
     TypedWritableReferenceCount,
+    TypeHandle,
     ostream,
 )
 

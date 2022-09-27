@@ -3,7 +3,7 @@ __all__ = ['HostInfo']
 from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
-from panda3d.core import Filename, HTTPClient, HashVal, TiXmlHandle
+from panda3d.core import Filename, HashVal, HTTPClient, TiXmlHandle
 from .AppRunner import AppRunner
 from .FileSpec import FileSpec
 from .PackageInfo import PackageInfo

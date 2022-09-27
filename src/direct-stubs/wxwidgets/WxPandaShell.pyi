@@ -3,8 +3,8 @@ from typing_extensions import Final, Literal
 
 from direct.showbase.ShowBase import ShowBase
 from direct.task.Task import Task
-from .WxAppShell import WxAppShell
 from .ViewPort import Viewport
+from .WxAppShell import WxAppShell
 
 wx: Any
 

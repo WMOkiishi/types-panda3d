@@ -1,12 +1,11 @@
 __all__ = ['OnscreenGeom']
 
 from typing import Any, TypeVar, Union
-
-from direct._typing import Unused
-from panda3d.core import LVecBase3f, LVecBase4f, NodePath, TransformState
 from typing_extensions import TypeAlias
 
+from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
+from panda3d.core import LVecBase3f, LVecBase4f, NodePath, TransformState
 
 _Self = TypeVar('_Self')
 _Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]

@@ -3,8 +3,8 @@ __all__ = ['SceneGraphExplorer', 'SceneGraphExplorerItem', 'explore']
 from typing import Any
 from typing_extensions import Final, Literal
 
-from panda3d.core import NodePath
 from direct.showbase.DirectObject import DirectObject
+from panda3d.core import NodePath
 from .Tree import TreeItem
 
 Pmw: Any

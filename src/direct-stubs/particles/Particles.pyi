@@ -3,14 +3,7 @@ from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import NodePath
-from panda3d.physics import (
-    ArcEmitter,
-    BaseForce,
-    ParticleSystem,
-    PhysicalNode,
-    PointParticleFactory,
-    PointParticleRenderer,
-)
+from panda3d.physics import ArcEmitter, BaseForce, ParticleSystem, PhysicalNode, PointParticleFactory, PointParticleRenderer
 
 class Particles(ParticleSystem):
     notify: ClassVar[Notifier]

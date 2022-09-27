@@ -21,8 +21,8 @@ from panda3d.core import (
     LVecBase4f,
     LVector3d,
     Namable,
-    TypeHandle,
     TypedReferenceCount,
+    TypeHandle,
     istream,
     ostream,
 )

@@ -3,9 +3,8 @@ from collections.abc import Callable, Iterable
 from typing import ClassVar, overload
 from typing_extensions import Final, TypeAlias
 
-from setuptools import Command  # type: ignore[import]
-
 from direct.p3d.DeploymentTools import Icon
+from setuptools import Command  # type: ignore[import]
 
 _OpenFile: TypeAlias = StrOrBytesPath | int
 

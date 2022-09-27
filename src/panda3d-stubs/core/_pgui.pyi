@@ -20,8 +20,8 @@ from panda3d.core import (
     TextProperties,
     Texture,
     TransformState,
-    TypeHandle,
     TypedWritableReferenceCount,
+    TypeHandle,
     ostream,
 )
 

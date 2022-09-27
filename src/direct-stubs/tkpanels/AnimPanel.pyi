@@ -1,7 +1,7 @@
 __all__ = ['ActorControl', 'AnimPanel']
 
 from collections.abc import Callable
-from tkinter import Frame, Label, IntVar, Scale
+from tkinter import Frame, IntVar, Label, Scale
 from types import CodeType
 from typing import Any, ClassVar, SupportsFloat
 from typing_extensions import Final, Literal

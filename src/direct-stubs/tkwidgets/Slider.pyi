@@ -2,8 +2,7 @@ __all__ = ['Slider', 'SliderWidget', 'rgbPanel']
 
 from typing import Any
 
-from .Valuator import Valuator
-from .Valuator import rgbPanel as rgbPanel
+from .Valuator import Valuator, rgbPanel as rgbPanel
 
 Pmw: Any
 

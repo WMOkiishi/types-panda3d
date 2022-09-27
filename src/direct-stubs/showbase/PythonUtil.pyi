@@ -1,16 +1,6 @@
 from _typeshed import SupportsWrite
-from collections.abc import (
-    Callable,
-    Collection,
-    Container,
-    Generator,
-    Iterable,
-    Mapping,
-    MutableSequence,
-    Sequence,
-)
+from collections.abc import Callable, Collection, Container, Generator, Iterable, Mapping, MutableSequence, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
-
 from typing_extensions import Never, TypeAlias
 
 from direct._typing import AnyReal, SimpleCallback

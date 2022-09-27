@@ -10,10 +10,10 @@ from panda3d.core import (
     Namable,
     ParamValueBase,
     PointerData,
-    TypeHandle,
     TypedObject,
     TypedReferenceCount,
     TypedWritableReferenceCount,
+    TypeHandle,
     ostream,
 )
 

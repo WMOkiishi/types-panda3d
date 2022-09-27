@@ -3,7 +3,6 @@ __all__ = ['WidgetPropertiesDialog']
 from collections.abc import Iterable
 from tkinter import Misc, Toplevel
 from typing import Any, TypeVar
-
 from typing_extensions import TypeAlias
 
 _Self = TypeVar('_Self')

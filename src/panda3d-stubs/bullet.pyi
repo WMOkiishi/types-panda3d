@@ -28,11 +28,11 @@ from panda3d.core import (
     NodePathCollection,
     NurbsCurveEvaluator,
     NurbsSurfaceEvaluator,
-    PNMImage,
     PandaNode,
-    PointerToArray_LVecBase3f,
+    PNMImage,
     PointerToArray_float,
     PointerToArray_int,
+    PointerToArray_LVecBase3f,
     Texture,
     TransformState,
     TypedObject,
@@ -2270,13 +2270,13 @@ class BulletHeightfieldShape(BulletShape):
     def __init__(self, copy: BulletHeightfieldShape) -> None:
         """`(self, image: PNMImage, max_height: float, up: _BulletUpAxis = ...)`:
         @brief Creates a collision shape suited for terrains from a rectangular image.
-        @details Stores the image's brightness values in a vector Bullet can use, 
+        @details Stores the image's brightness values in a vector Bullet can use,
           while rotating it 90 degrees to the right.
 
         `(self, tex: Texture, max_height: float, up: _BulletUpAxis = ...)`:
         @brief Creates a collision shape suited for terrains from a rectangular texture.
         @details Alternative constructor intended for use with ShaderTerrainMesh. This will
-          do bilinear sampling at the corners of all texels. Also works with textures 
+          do bilinear sampling at the corners of all texels. Also works with textures
           that are non-power-of-two and/or rectangular.
         """
         ...

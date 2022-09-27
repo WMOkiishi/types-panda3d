@@ -18,9 +18,9 @@ from panda3d.core import (
     PointerToArray_float,
     ReferenceCount,
     TransformState,
-    TypeHandle,
     TypedReferenceCount,
     TypedWritableReferenceCount,
+    TypeHandle,
     ostream,
 )
 

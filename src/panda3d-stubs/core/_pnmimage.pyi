@@ -15,8 +15,8 @@ from panda3d.core import (
     LVecBase4f,
     ReferenceCount,
     StackedPerlinNoise2,
-    TypeHandle,
     TypedWritable,
+    TypeHandle,
     istream,
     ostream,
 )

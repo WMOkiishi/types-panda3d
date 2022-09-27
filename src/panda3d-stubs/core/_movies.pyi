@@ -9,9 +9,9 @@ from panda3d.core import (
     Namable,
     SubfileInfo,
     Texture,
-    TypeHandle,
     TypedReferenceCount,
     TypedWritableReferenceCount,
+    TypeHandle,
     istream,
 )
 

@@ -13,13 +13,13 @@ __all__ = [
 
 from _typeshed import SupportsRead, SupportsReadline, SupportsWrite
 from pickle import (
+    DEFAULT_PROTOCOL as DEFAULT_PROTOCOL,
     HIGHEST_PROTOCOL as HIGHEST_PROTOCOL,
     PickleError as PickleError,
-    PicklingError as PicklingError,
-    UnpicklingError as UnpicklingError,
-    DEFAULT_PROTOCOL as DEFAULT_PROTOCOL,
     Pickler as BasePickler,
+    PicklingError as PicklingError,
     Unpickler as BaseUnpickler,
+    UnpicklingError as UnpicklingError,
 )
 from typing import Any, TypeVar
 from typing_extensions import Protocol

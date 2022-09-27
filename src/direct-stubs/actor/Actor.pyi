@@ -1,9 +1,9 @@
 __all__ = ['Actor']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Mapping
 from typing import ClassVar, SupportsFloat
 from typing_extensions import Literal, TypeAlias
-from _typeshed import StrOrBytesPath
 
 from direct.directnotify.Notifier import Notifier
 from direct.interval.ActorInterval import ActorInterval
@@ -19,9 +19,9 @@ from panda3d.core import (
     Filename,
     GeomNode,
     LMatrix4f,
-    LODNode,
     Loader,
     LoaderOptions,
+    LODNode,
     ModelNode,
     NodePath,
     PandaNode,

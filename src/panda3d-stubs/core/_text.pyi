@@ -18,8 +18,8 @@ from panda3d.core import (
     RenderState,
     TextEncoder,
     Texture,
-    TypeHandle,
     TypedReferenceCount,
+    TypeHandle,
     ostream,
 )
 

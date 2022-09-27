@@ -25,13 +25,13 @@ from panda3d.core import (
     AsyncTask,
     AsyncTaskManager,
     AsyncTaskPause,
+    AsyncTaskPause as pause,
     AsyncTaskSequence,
     ClockObject,
     ConfigVariableBool,
     GlobPattern,
     PythonTask,
 )
-from panda3d.core import AsyncTaskPause as pause
 
 def print_exc_plus() -> None: ...
 

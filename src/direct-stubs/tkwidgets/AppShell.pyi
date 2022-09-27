@@ -1,15 +1,7 @@
 __all__ = ['AppShell']
 
 from collections.abc import MutableMapping
-from tkinter import (
-    Button,
-    Checkbutton,
-    Entry,
-    IntVar,
-    Radiobutton,
-    Toplevel,
-    Widget, Frame,
-)
+from tkinter import Button, Checkbutton, Entry, Frame, IntVar, Radiobutton, Toplevel, Widget
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
