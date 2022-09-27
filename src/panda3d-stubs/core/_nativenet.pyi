@@ -33,7 +33,7 @@ class Socket_Address:
         """`(self, hostname: str)`:
         Initializes the address from a string specifying both the address and port,
         separated by a colon.  An IPv6 address must be enclosed in brackets.
-        
+
         `(self, hostname: str, port: int)`:
         This function will take a port and string-based TCP address and initialize
         the address with this information.  Returns true on success; on failure, it
@@ -87,7 +87,7 @@ class Socket_Address:
 class Socket_IP(TypedObject):
     """Base functionality for a INET domain Socket This call should be the
     starting point for all other unix domain sockets.
-    
+
     SocketIP |
     ------------------------------------------------------------------- |
     |                       |                           | SocketTCP
@@ -96,7 +96,7 @@ class Socket_IP(TypedObject):
     def __init__(self, _in: int = ...) -> None:
         """`(self)`:
         Def Constructor
-        
+
         `(self, _in: int)`:
         Assigns an existing socket to this class
         """
@@ -136,7 +136,7 @@ class Socket_IP(TypedObject):
     def GetSocket(self) -> int:
         """`(self)`:
         Gets the base socket type
-        
+
         `(self)`:
         Get The RAW file id of the socket
         """

@@ -22,7 +22,7 @@ class CInterval(TypedReferenceCount):
     """The base class for timeline components.  A CInterval represents a single
     action, event, or collection of nested intervals that will be performed at
     some specific time or over a period of time.
-    
+
     This is essentially similar to the Python "Interval" class, but it is
     implemented in C++ (hence the name). Intervals that may be implemented in
     C++ will inherit from this class; Intervals that must be implemented in
@@ -169,7 +169,7 @@ class CInterval(TypedReferenceCount):
     def start(self, start_t: float = ..., end_t: float = ..., play_rate: float = ...) -> None:
         """Starts the interval playing by registering it with the current
         CIntervalManager.  The interval will play to the end and stop.
-        
+
         If end_t is less than zero, it indicates the end of the interval.
         """
         ...
@@ -177,7 +177,7 @@ class CInterval(TypedReferenceCount):
         """Starts the interval playing by registering it with the current
         CIntervalManager.  The interval will play until it is interrupted with
         finish() or pause(), looping back to start_t when it reaches end_t.
-        
+
         If end_t is less than zero, it indicates the end of the interval.
         """
         ...
@@ -190,7 +190,7 @@ class CInterval(TypedReferenceCount):
         """`(self)`:
         Restarts the interval from its current point after a previous call to
         pause().
-        
+
         `(self, start_t: float)`:
         Restarts the interval from the indicated point after a previous call to
         pause().
@@ -281,7 +281,7 @@ class CInterval(TypedReferenceCount):
         time.  But the interval should remain in its current state in anticipation
         of being eventually restarted when the calls to priv_step() eventually
         resume.
-        
+
         The purpose of this function is to allow self-running intervals like sound
         intervals to stop the actual sound playback during the pause.
         """
@@ -294,9 +294,9 @@ class CInterval(TypedReferenceCount):
         factor specified by play_rate.  start_t must always be less than end_t
         (except for the exception for end_t == -1, below), but if play_rate is
         negative the interval will be played backwards.
-        
+
         Specify end_t of -1 to play the entire interval from start_t.
-        
+
         Call step_play() repeatedly to execute the interval.
         """
         ...
@@ -314,7 +314,7 @@ class CInterval(TypedReferenceCount):
     def step_play(self) -> bool:
         """Should be called once per frame to execute the automatic timed playback
         begun with setup_play().
-        
+
         Returns true if the interval should continue, false if it is done and
         should stop.
         """
@@ -358,12 +358,12 @@ class CInterval(TypedReferenceCount):
 class CIntervalManager:
     """This object holds a number of currently-playing intervals and is
     responsible for advancing them each frame as needed.
-    
+
     There is normally only one IntervalManager object in the world, and it is
     the responsibility of the scripting language to call step() on this object
     once each frame, and to then process the events indicated by
     get_next_event().
-    
+
     It is also possible to create multiple IntervalManager objects for special
     needs.
     """
@@ -373,7 +373,7 @@ class CIntervalManager:
         """Specifies a custom event queue to be used for throwing done events from
         intervals as they finish.  If this is not specified, the global event queue
         is used.
-        
+
         The caller maintains ownership of the EventQueue object; it is the caller's
         responsibility to ensure that the supplied EventQueue does not destruct
         during the lifetime of the CIntervalManager.
@@ -390,7 +390,7 @@ class CIntervalManager:
         intervals, but not unique across all intervals ever added to the manager.
         The maximum index value will never exceed the maximum number of intervals
         added at any given time.
-        
+
         If the external flag is true, the interval is understood to also be stored
         in the scripting language data structures.  In this case, it will be
         available for information returned by get_next_event() and
@@ -417,7 +417,7 @@ class CIntervalManager:
         with auto_pause or auto_finish set to true.  These are intervals that
         someone fired up but won't necessarily expect to clean up; they can be
         interrupted at will when necessary.
-        
+
         Returns the number of intervals affected.
         """
         ...
@@ -435,7 +435,7 @@ class CIntervalManager:
         """This should be called every frame to do the processing for all the active
         intervals.  It will call step_play() for each interval that has been added
         and that has not yet been removed.
-        
+
         After each call to step(), the scripting language should call
         get_next_event() and get_next_removal() repeatedly to process all the high-
         level (e.g.  Python-interval-based) events and to manage the high-level
@@ -447,11 +447,11 @@ class CIntervalManager:
         It returns the index number of the next interval that has events requiring
         servicing by the scripting language, or -1 if no more intervals have any
         events pending.
-        
+
         If this function returns something other than -1, it is the scripting
         language's responsibility to query the indicated interval for its next
         event via get_event_index(), and eventually pop_event().
-        
+
         Then get_next_event() should be called again until it returns -1.
         """
         ...
@@ -459,7 +459,7 @@ class CIntervalManager:
         """This should be called by the scripting language after each call to step().
         It returns the index number of an interval that was recently removed, or -1
         if no intervals were removed.
-        
+
         If this returns something other than -1, the scripting language should
         clean up its own data structures accordingly, and then call
         get_next_removal() again.
@@ -498,7 +498,7 @@ class CConstrainHprInterval(CConstraintInterval):
     def __init__(self, __param0: CConstrainHprInterval) -> None:
         """Constructs a constraint interval that will constrain the orientation of one
         node to the orientation of another, possibly with an added rotation.
-        
+
         If wrt is true, the node's orientation will be transformed into the target
         node's parent's  space before being copied.  If wrt is false, the target
         node's local orientation will be copied unaltered.
@@ -523,7 +523,7 @@ class CConstrainPosHprInterval(CConstraintInterval):
     def __init__(self, __param0: CConstrainPosHprInterval) -> None:
         """Constructs a constraint interval that will constrain the position and
         orientation of one node to the position and orientation of another.
-        
+
         If wrt is true, the node's position and orientation will be transformed
         into the target node's parent's space before being copied.  If wrt is
         false, the target node's local position and orientation will be copied
@@ -549,7 +549,7 @@ class CConstrainPosInterval(CConstraintInterval):
     def __init__(self, __param0: CConstrainPosInterval) -> None:
         """Constructs a constraint interval that will constrain the position of one
         node to the position of another.
-        
+
         If wrt is true, the node's position will be transformed into the target
         node's parent's  space before being copied.  If wrt is false, the target
         node's local position will be copied unaltered.
@@ -575,7 +575,7 @@ class CConstrainTransformInterval(CConstraintInterval):
         """Constructs a constraint interval that will constrain the transform of one
         node to the transform of another.  To clarify, the transform of node will
         be copied to target.
-        
+
         If wrt is true, the node's transform will be transformed into the target
         node's parent's  space before being copied.  If wrt is false, the node's
         local transform will be copied unaltered.
@@ -625,7 +625,7 @@ class CLerpAnimEffectInterval(CLerpInterval):
     """This interval lerps between different amounts of control effects for
     various AnimControls that might be playing on an actor.  It's used to
     change the blending amount between multiple animations.
-    
+
     The idea is to start all the animations playing first, then use a
     CLerpAnimEffectInterval to adjust the degree to which each animation
     affects the actor.
@@ -638,7 +638,7 @@ class CLerpAnimEffectInterval(CLerpInterval):
         """Adds another AnimControl to the list of AnimControls affected by the lerp.
         This control will be lerped from begin_effect to end_effect over the period
         of the lerp.
-        
+
         The AnimControl name parameter is only used when formatting the interval
         for output.
         """
@@ -653,13 +653,13 @@ class CLerpNodePathInterval(CLerpInterval):
     def __init__(self, __param0: CLerpNodePathInterval) -> None:
         """Constructs a lerp interval that will lerp some properties on the indicated
         node, possibly relative to the indicated other node (if other is nonempty).
-        
+
         You must call set_end_pos(), etc.  for the various properties you wish to
         lerp before the first call to priv_initialize().  If you want to set a
         starting value for any of the properties, you may call set_start_pos(),
         etc.; otherwise, the starting value is taken from the actual node's value
         at the time the lerp is performed.
-        
+
         The starting values may be explicitly specified or omitted.  The value of
         bake_in_start determines the behavior if the starting values are omitted.
         If bake_in_start is true, the values are obtained the first time the lerp
@@ -669,7 +669,7 @@ class CLerpNodePathInterval(CLerpInterval):
         run.  This "smart" behavior allows code to manipulate the object event
         while it is being lerped, and the lerp continues to apply in a sensible
         way.
-        
+
         If fluid is true, the prev_transform is not adjusted by the lerp;
         otherwise, it is reset.
         """
@@ -712,17 +712,17 @@ class CLerpNodePathInterval(CLerpInterval):
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
-        
+
         This special function is overloaded to accept a quaternion, even though the
         function name is set_end_hpr().  The quaternion will be implicitly
         converted to a HPR trio, and the lerp will be performed in HPR space,
         componentwise.
-        
+
         `(self, hpr: LVecBase3f)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
-        
+
         This replaces a previous call to set_end_quat().  If neither set_end_hpr()
         nor set_end_quat() is called, the node's rotation will not be affected by
         the lerp.
@@ -735,7 +735,7 @@ class CLerpNodePathInterval(CLerpInterval):
         if either set_end_quat() or set_end_hpr() is also called.  This parameter
         is optional; if unspecified, the value will be taken from the node's actual
         rotation at the time the lerp is performed.
-        
+
         The given quaternion needs to be normalized.
         """
         ...
@@ -745,22 +745,22 @@ class CLerpNodePathInterval(CLerpInterval):
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
-        
+
         This replaces a previous call to set_end_hpr().  If neither set_end_quat()
         nor set_end_hpr() is called, the node's rotation will not be affected by
         the lerp.
-        
+
         The given quaternion needs to be normalized.
-        
+
         `(self, hpr: LVecBase3f)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
-        
+
         This replaces a previous call to set_end_hpr().  If neither set_end_quat()
         nor set_end_hpr() is called, the node's rotation will not be affected by
         the lerp.
-        
+
         This special function is overloaded to accept a HPR trio, even though the
         function name is set_end_quat().  The HPR will be implicitly converted to a
         quaternion, and the lerp will be performed in quaternion space, as a
@@ -954,14 +954,14 @@ class CMetaInterval(CInterval):
         nested level, a RelativeStart time of RS_level_begin refers to the start of
         the level, and the first interval added within the level is always relative
         to the start of the level.
-        
+
         The return value is the index of the def entry created by this push.
         """
         ...
     def add_c_interval(self, c_interval: CInterval, rel_time: float = ..., rel_to: _CMetaInterval_RelativeStart = ...) -> int:
         """Adds a new CInterval to the list.  The interval will be played when the
         indicated time (relative to the given point) has been reached.
-        
+
         The return value is the index of the def entry representing the new
         interval.
         """
@@ -970,15 +970,15 @@ class CMetaInterval(CInterval):
         """Adds a new external interval to the list.  This represents some object in
         the external scripting language that has properties similar to a CInterval
         (for instance, a Python Interval object).
-        
+
         The CMetaInterval object cannot play this external interval directly, but
         it records a placeholder for it and will ask the scripting language to play
         it when it is time, via is_event_ready() and related methods.
-        
+
         The ext_index number itself is simply a handle that the scripting language
         makes up and associates with its interval object somehow.  The
         CMetaInterval object does not attempt to interpret this value.
-        
+
         The return value is the index of the def entry representing the new
         interval.
         """
@@ -986,7 +986,7 @@ class CMetaInterval(CInterval):
     def pop_level(self, duration: float = ...) -> int:
         """Finishes a level marked by a previous call to push_level(), and returns to
         the previous level.
-        
+
         If the duration is not negative, it represents a phony duration to assign
         to the level, for the purposes of sequencing later intervals.  Otherwise,
         the level's duration is computed based on the intervals within the level.
@@ -996,7 +996,7 @@ class CMetaInterval(CInterval):
         """Adjusts the start time of the child interval with the given name, if found.
         This may be either a C++ interval added via add_c_interval(), or an
         external interval added via add_ext_index(); the name must match exactly.
-        
+
         If the interval is found, its start time is adjusted, and all subsequent
         intervals are adjusting accordingly, and true is returned.  If a matching
         interval is not found, nothing is changed and false is returned.

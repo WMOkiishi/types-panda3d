@@ -30,21 +30,21 @@ class InputDevice(TypedReferenceCount):
     """This is a structure representing a single input device.  Input devices may
     have zero or more buttons, pointers, or axes associated with them, and
     optionally a motion tracker.
-    
+
     These devices are brought under a common interface because there is such a
     large range of devices out there that may support any number of these types
     of axes, we couldn't even begin to cover them with type-specific
     subclasses.
-    
+
     Use the various has_() and get_num_() methods to determine information about
     the device capabilities. For instance, has_keyboard() will give an
     indication that you can receive keystroke events from this device, and
     get_num_buttons() will tell you that the device may send button events.
-    
+
     There is the DeviceType enumeration, however, which will (if known) contain
     identification of the general category of devices this fits in, such as
     keyboard, mouse, gamepad, or flight stick.
-    
+
     @since 1.10.0
     """
     class DeviceClass(Enum):
@@ -172,7 +172,7 @@ class InputDevice(TypedReferenceCount):
         number.  When the given button index changes state, a corresponding
         ButtonEvent will be generated with the given ButtonHandle.  Pass
         ButtonHandle::none() to turn off any association.
-        
+
         It is not necessary to call this if you simply want to query the state of
         the various buttons by index number; this is only necessary in order to
         generate ButtonEvents when the buttons change state.
@@ -181,7 +181,7 @@ class InputDevice(TypedReferenceCount):
     def map_axis(self, index: int, axis: InputDevice.Axis) -> None:
         """Associates the indicated Axis with the axis of the indicated index
         number.  Pass Axis::none to turn off any association.
-        
+
         It is not necessary to call this if you simply want to query the state of
         the various axes by index number.
         """
@@ -255,7 +255,7 @@ class InputDevice(TypedReferenceCount):
 class ClientBase(TypedReferenceCount):
     """An abstract base class for a family of client device interfaces--including
     trackers, buttons, dials, and other analog inputs.
-    
+
     This provides a common interface to connect to such devices and extract
     their data; it is used by TrackerNode etc.  to put these devices in the
     data graph.
@@ -305,10 +305,10 @@ class AnalogNode(DataNode):
     named analog device, if it exists, and provides hooks to the user to read
     the state of any of the sequentially numbered controls associated with that
     device.
-    
+
     Each control can return a value ranging from -1 to 1, reflecting the
     current position of the control within its total range of motion.
-    
+
     The user may choose up to two analog controls to place on the data graph as
     the two channels of an xy datagram, similarly to the way a mouse places its
     position data.  In this way, an AnalogNode may be used in place of a mouse.
@@ -377,7 +377,7 @@ class ButtonNode(DataNode):
     ClientBase.  This creates a node that connects to the named button device,
     if it exists, and provides hooks to the user to read the state of any of
     the sequentially numbered buttons associated with that device.
-    
+
     It also can associate an arbitrary ButtonHandle with each button; when
     buttons are associated with ButtonHandles, this node will put appropriate
     up and down events on the data graph for each button state change.
@@ -405,7 +405,7 @@ class ButtonNode(DataNode):
         index number.  When the given button index changes state, a corresponding
         ButtonEvent will be generated with the given ButtonHandle.  Pass
         ButtonHandle::none() to turn off any association.
-        
+
         It is not necessary to call this if you simply want to query the state of
         the various buttons by index number; this is only necessary in order to
         generate ButtonEvents when the buttons change state.
@@ -439,7 +439,7 @@ class DialNode(DataNode):
     a ClientBase.  This creates a node that connects to the named dial device,
     if it exists, and provides hooks to the user to read the state of any of
     the sequentially numbered dial controls associated with that device.
-    
+
     A dial is a rotating device that does not have stops--it can keep rotating
     any number of times.  Therefore it does not have a specific position at any
     given time, unlike an AnalogDevice.
@@ -510,14 +510,14 @@ class InputDeviceSet:
 class InputDeviceManager:
     """This class keeps track of all the devices on a system, and sends out events
     when a device has been hot-plugged.
-    
+
     @since 1.10.0
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_devices(self, device_class: InputDevice.DeviceClass = ...) -> InputDeviceSet:
         """`(self)`:
         Description: Returns all currently connected devices.
-        
+
         `(self, device_class: InputDevice.DeviceClass)`:
         Description: Returns all currently connected devices of the given device class.
         """
@@ -525,14 +525,14 @@ class InputDeviceManager:
     def add_device(self, device: InputDevice) -> None:
         """Called when a new device has been discovered.  This may also be used to
         register virtual devices.
-        
+
         This causes a connect-device event to be thrown.
         """
         ...
     def remove_device(self, device: InputDevice) -> None:
         """Called when a device has been removed, or when a device should otherwise no
         longer be tracked.
-        
+
         This causes a disconnect-device event to be thrown.
         """
         ...
@@ -553,7 +553,7 @@ class InputDeviceManager:
 class InputDeviceNode(DataNode):
     """Reads the controller data sent from the InputDeviceManager, and transmits
     it down the data graph.
-    
+
     This is intended to only be accessed from the app thread.
     """
     device: InputDevice

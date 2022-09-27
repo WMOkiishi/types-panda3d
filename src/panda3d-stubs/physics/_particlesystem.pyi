@@ -99,7 +99,7 @@ class RingEmitter(BaseParticleEmitter):
     def __init__(self, copy: RingEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: RingEmitter)`:
         copy constructor
         """
@@ -126,7 +126,7 @@ class ArcEmitter(RingEmitter):
     def __init__(self, copy: ArcEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: ArcEmitter)`:
         copy constructor
         """
@@ -240,7 +240,7 @@ class BaseParticleRenderer(ReferenceCount):
         """Sets the "ignore scale" flag.  When this is true, particles will be drawn
         as if they had no scale, regardless of whatever scale might be inherited
         from above the render node in the scene graph.
-        
+
         This flag is mainly useful to support legacy code that was written for a
         very early version of Panda, whose sprite particle renderer had a bug that
         incorrectly ignored the inherited scale.
@@ -270,7 +270,7 @@ class BoxEmitter(BaseParticleEmitter):
     def __init__(self, copy: BoxEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: BoxEmitter)`:
         copy constructor
         """
@@ -378,7 +378,7 @@ class DiscEmitter(BaseParticleEmitter):
     def __init__(self, copy: DiscEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: DiscEmitter)`:
         copy constructor
         """
@@ -506,7 +506,7 @@ class ParticleSystem(Physical):
     def __init__(self, pool_size: int = ...) -> None:
         """`(self, copy: ParticleSystem)`:
         Copy Constructor.
-        
+
         `(self, pool_size: int = ...)`:
         Default Constructor.
         """
@@ -580,7 +580,7 @@ class ParticleSystem(Physical):
     def soft_start(self, br: float = ...) -> None:
         """`(self, br: float = ...)`:
         Causes system to use birth rate set by set_birth_rate()
-        
+
         `(self, br: float, first_birth_delay: float)`:
         Causes system to use birth rate set by set_birth_rate(), with the system's
         first birth being delayed by the value of first_birth_delay. Note that a
@@ -652,7 +652,7 @@ class PointEmitter(BaseParticleEmitter):
     def __init__(self, copy: PointEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: PointEmitter)`:
         copy constructor
         """
@@ -668,7 +668,7 @@ class PointParticleFactory(BaseParticleFactory):
     def __init__(self, copy: PointParticleFactory = ...) -> None:
         """`(self)`:
         default constructor
-        
+
         `(self, copy: PointParticleFactory)`:
         copy constructor
         """
@@ -685,7 +685,7 @@ class PointParticleRenderer(BaseParticleRenderer):
     def __init__(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: Vec4f = ..., ec: Vec4f = ...) -> None:
         """`(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: LVecBase4f = ..., ec: LVecBase4f = ...)`:
         special constructor
-        
+
         `(self, copy: PointParticleRenderer)`:
         Copy constructor
         """
@@ -718,7 +718,7 @@ class RectangleEmitter(BaseParticleEmitter):
     def __init__(self, copy: RectangleEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: RectangleEmitter)`:
         copy constructor
         """
@@ -750,7 +750,7 @@ class SparkleParticleRenderer(BaseParticleRenderer):
     def __init__(self, copy: SparkleParticleRenderer = ...) -> None:
         """`(self)`:
         Default Constructor
-        
+
         `(self, copy: SparkleParticleRenderer)`:
         Copy Constructor
         """
@@ -783,7 +783,7 @@ class SphereSurfaceEmitter(BaseParticleEmitter):
     def __init__(self, copy: SphereSurfaceEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: SphereSurfaceEmitter)`:
         copy constructor
         """
@@ -798,7 +798,7 @@ class SphereVolumeEmitter(BaseParticleEmitter):
     def __init__(self, copy: SphereVolumeEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: SphereVolumeEmitter)`:
         copy constructor
         """
@@ -839,7 +839,7 @@ class SpriteParticleRenderer(BaseParticleRenderer):
     def __init__(self, tex: Texture = ...) -> None:
         """`(self, copy: SpriteParticleRenderer)`:
         copy constructor
-        
+
         `(self, tex: Texture = ...)`:
         constructor
         """
@@ -852,32 +852,32 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         Sets the properties on this renderer from the geometry referenced by the
         indicated NodePath.  This should be a reference to a GeomNode or a
         SequenceNode; it extracts out the texture and UV range from the node.
-        
+
         This will remove all previously added textures and animations.  It will
         also resize the renderer to match this new geometry.
-        
+
         If node_path refers to a GeomNode(or has one beneath it) the texture, its
         size, and UV data will be extracted from that.
-        
+
         If node_path references a SequenceNode(or has one beneath it) with multiple
         GeomNodes beneath it, the size data will correspond only to the first
         GeomNode found with a valid texture, while the texture and UV information
         will be stored for each individual node.
-        
+
         If size_from_texels is true, the particle size is based on the number of
         texels in the source image; otherwise, it is based on the size of the first
         polygon found in the node.
-        
+
         model and node are the two items used to construct node_path.  If the
         source type is important, use set_from_node(NodePath,string,string,bool)
         instead.
-        
+
         `(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ...)`:
         If the source type is important, use this one.
-        
+
         model and node should lead to node_path like this: node_path =
         loader.loadModel(model).find(node)
-        
+
         This will remove all previously add textures and resize the renderer to
         match the new geometry.
         """
@@ -889,20 +889,20 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         """`(self, node_path: NodePath, size_from_texels: bool = ..., resize: bool = ...)`:
         This will allow the renderer to randomly choose from more than one texture
         or sequence at particle birth.
-        
+
         If resize is true, or if there are no textures currently on the renderer,
         it will force the renderer to use the size information from this node from
         now on.  (Default is false)
-        
+
         `(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ..., resize: bool = ...)`:
         This will allow the renderer to randomly choose from more than one texture
         or sequence at particle birth.
-        
+
         If the source type is important, use this one.
-        
+
         model and node should lead to node_path like this: node_path =
         loader.loadModel(model).find(node)
-        
+
         If resize is true, or if there are no textures currently on the renderer,
         it will force the renderer to use the size information from this node from
         now on.  (Default is false)
@@ -914,7 +914,7 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         """Sets the renderer up to render the entire texture image.  The scale of each
         particle is based on the size of the texture in each dimension, modified by
         texels_per_unit.
-        
+
         Used to set the size of the particles.  Will clear all previously loaded
         textures and animations.
         """
@@ -981,7 +981,7 @@ class SpriteParticleRenderer(BaseParticleRenderer):
     def get_ur_uv(self) -> LPoint2f:
         """`(self)`:
         Returns the UV coordinate of the lower-left corner; see set_ur_uv().
-        
+
         `(self, anim: int, frame: int)`:
         Returns the UV coordinate of the upper-right corner; see set_ur_uv().
         """
@@ -1063,7 +1063,7 @@ class TangentRingEmitter(BaseParticleEmitter):
     def __init__(self, copy: TangentRingEmitter = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: TangentRingEmitter)`:
         copy constructor
         """
@@ -1081,7 +1081,7 @@ class ZSpinParticleFactory(BaseParticleFactory):
     def __init__(self, copy: ZSpinParticleFactory = ...) -> None:
         """`(self)`:
         constructor
-        
+
         `(self, copy: ZSpinParticleFactory)`:
         copy constructor
         """
@@ -1141,7 +1141,7 @@ class ParticleSystemManager:
         one you want to use.  Rendering is the expensive operation, and particles
         REALLY should at least be updated every frame, so nth_frame stepping
         applies only to rendering.
-        
+
         `(self, dt: float, ps: ParticleSystem, do_render: bool = ...)`:
         does an update and an optional render for a specific ps.  Since rendering
         is the expensive operation, multiple updates could be applied before

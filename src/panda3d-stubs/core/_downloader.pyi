@@ -73,10 +73,10 @@ class SSWriter:
         cuts down on overhead from the TCP/IP protocol, especially if many small
         packets need to be sent on the same connection, but it introduces
         additional latency (since packets must be held before they can be sent).
-        
+
         See set_collect_tcp_interval() to specify the interval of time for which to
         hold packets before sending them.
-        
+
         If you enable this mode, you may also need to periodically call
         consider_flush() to flush the queue if no packets have been sent recently.
         """
@@ -205,7 +205,7 @@ class SocketStream(iostream, SSReader, SSWriter):  # type: ignore[misc]
 
 class URLSpec:
     """A container for a URL, e.g.  "http://server:port/path".
-    
+
     The URLSpec object is similar to a Filename in that it contains logic to
     identify the various parts of a URL and return (or modify) them separately.
     """
@@ -365,7 +365,7 @@ class URLSpec:
     def set_port(self, port: int | str) -> None:
         """`(self, port: str)`:
         Replaces the port part of the URL specification.
-        
+
         `(self, port: int)`:
         Replaces the port part of the URL specification, given a numeric port
         number.
@@ -563,12 +563,12 @@ class HTTPCookie:
     def __init__(self, __param0: HTTPCookie = ...) -> None:
         """`(self)`:
         Constructs an empty cookie.
-        
+
         `(self, format: str, url: URLSpec)`:
         Constructs a cookie according to the indicated string, presumably the tag
         of a Set-Cookie header.  There is no way to detect a formatting error in
         the string with this constructor.
-        
+
         `(self, name: str, path: str, domain: str)`:
         Constructs a cookie with the indicated name, path, and domain values, but
         no other data.  This is most useful for looking up an existing cookie in
@@ -668,7 +668,7 @@ class HTTPClient(ReferenceCount):
     cookies, passwords, and certificates; however, a given HTTPClient is
     capable of making multiple simultaneous requests to the same or different
     servers.
-    
+
     It is up to the programmer whether one HTTPClient should be used to
     retrieve all documents, or a separate one should be created each time.
     There is a default, global HTTPClient available in
@@ -690,7 +690,7 @@ class HTTPClient(ReferenceCount):
         operations or otherwise use encryption, since the Windows algorithm for
         getting a random seed takes 2-3 seconds at startup, but can take 30 seconds
         or more after you have opened a 3-D graphics window and started rendering.
-        
+
         There is no harm in calling this method multiple times, or in not calling
         it at all.
         """
@@ -772,7 +772,7 @@ class HTTPClient(ReferenceCount):
         and/or realm, when demanded by the server.  Either or both of the server or
         realm may be empty; if so, they match anything.  Also, the server may be
         set to the special string `"*proxy"`, which will match any proxy server.
-        
+
         If the username is set to the empty string, this clears the password for
         the particular server/realm pair.
         """
@@ -846,7 +846,7 @@ class HTTPClient(ReferenceCount):
     def load_client_certificate(self) -> bool:
         """Attempts to load the certificate named by set_client_certificate_filename()
         immediately, and returns true if successful, false otherwise.
-        
+
         Normally this need not be explicitly called, since it will be called
         automatically if the server requests a certificate, but it may be useful to
         determine ahead of time if the certificate can be loaded correctly.
@@ -856,11 +856,11 @@ class HTTPClient(ReferenceCount):
         """Adds the certificate defined in the indicated PEM filename as a "pre-
         approved" certificate for the indicated server, defined by the hostname and
         port (only) from the given URL.
-        
+
         If the server offers this particular certificate on a secure connection, it
         will be accepted without question.  This is particularly useful for
         communicating with a server using a known self-signed certificate.
-        
+
         See also the similar add_preapproved_server_certificate_pem(), and the
         weaker add_preapproved_server_certificate_name().
         """
@@ -869,11 +869,11 @@ class HTTPClient(ReferenceCount):
         """Adds the certificate defined in the indicated data string, formatted as a
         PEM block, as a "pre-approved" certificate for the indicated server,
         defined by the hostname and port (only) from the given URL.
-        
+
         If the server offers this particular certificate on a secure connection, it
         will be accepted without question.  This is particularly useful for
         communicating with a server using a known self-signed certificate.
-        
+
         See also the similar add_preapproved_server_certificate_filename(), and the
         weaker add_preapproved_server_certificate_name().
         """
@@ -882,19 +882,19 @@ class HTTPClient(ReferenceCount):
         """Adds the certificate *name* only, as a "pre-approved" certificate name for
         the indicated server, defined by the hostname and port (only) from the
         given URL.
-        
+
         This is a weaker function than
         add_preapproved_server_certificate_filename().  This checks only the
         subject name of the certificate, without checking for a particular
         certificate by key.  This means that a variety of server certificates may
         match the indicated name.
-        
+
         Because this is a weaker verification, it only applies to server
         certificates that are signed by a recognized certificate authority.  Thus,
         it cannot be used to pre-approve self-signed certificates, but it can be
         used to accept a server certificate offered by a different hostname than
         the one in the cert itself.
-        
+
         The certificate name should be formatted in the form
         type0=value0/type1=value1/type2=...
         """
@@ -940,7 +940,7 @@ class HTTPClient(ReferenceCount):
     def set_verify_ssl(self, verify_ssl: _HTTPClient_VerifySSL) -> None:
         """Specifies whether the client will insist on verifying the identity of the
         servers it connects to via SSL (that is, https).
-        
+
         The parameter value is an enumerated type which indicates the level of
         security to which the client will insist upon.
         """
@@ -969,11 +969,11 @@ class HTTPClient(ReferenceCount):
         documents using the same connection, for greater network efficiency than
         calling HTTPClient::get_document() repeatedly (which would force a new
         connection for each document).
-        
+
         Also, HTTPChannel has some additional, less common interface methods than
         the basic interface methods that exist on HTTPClient; if you wish to call
         any of these methods you must first obtain an HTTPChannel.
-        
+
         Pass true for persistent_connection to gain this network efficiency.  If,
         on the other hand, your intention is to use the channel to retrieve only
         one document, then pass false to inform the server that we will be dropping
@@ -1077,7 +1077,7 @@ class HTTPEntityTag:
         """`(self, weak: bool, tag: str)`:
         This constructor accepts an explicit weak flag and a literal (not quoted)
         tag string.
-        
+
         `(self, text: str)`:
         This constructor accepts a string as formatted from an HTTP server (e.g.
         the tag is quoted, with an optional W/ prefix.)
@@ -1135,7 +1135,7 @@ class DocumentSpec:
     """A descriptor that refers to a particular version of a document.  This
     includes the URL of the document and its identity tag and last-modified
     dates.
-    
+
     The DocumentSpec may also be used to request a newer document than a
     particular one if available, for instance to refresh a cached document.
     """
@@ -1188,7 +1188,7 @@ class DocumentSpec:
     def get_tag(self) -> HTTPEntityTag:
         """Returns the identity tag associated with the DocumentSpec, if there is one.
         It is an error to call this if has_tag() returns false.
-        
+
         The identity tag is set by the HTTP server to uniquely refer to a
         particular version of a document.
         """
@@ -1218,29 +1218,29 @@ class DocumentSpec:
         HTTPChannel).  This specifies whether the document request will ask the
         server for a newer version than the indicated version, or the exact
         version, neither, or either.
-        
+
         The possible values are:
-        
+
         RM_any: ignore date and tag (if specified), and retrieve any document that
         matches the URL.  For a subrange request, if the document matches the
         version indicated exactly, retrieve the subrange only; otherwise, retrieve
         the entire document.
-        
+
         RM_equal: request only the precise version of the document that matches the
         particular date and/or tag exactly, if specified; fail if this version is
         not available.
-        
+
         RM_newer: request any document that is newer than the version indicated by
         the particular date and/or tag; fail if only that version (or older
         versions) are available.
-        
+
         RM_newer_or_equal: request any document that matches the version indicated
         by the particular date and/or tag, or is a newer version; fail if only
         older versions are available.
-        
+
         In any of the above, you may specify either or both of the last-modified
         date and the identity tag, whichever is known to the client.
-        
+
         The default mode is RM_any.
         """
         ...
@@ -1251,16 +1251,16 @@ class DocumentSpec:
         """Specifies what kind of cached value is acceptable for this document.
         Warning: some HTTP proxies may not respect this setting and may return a
         cached result anyway.
-        
+
         CC_allow_cache: the normal HTTP behavior; the server may return a cached
         value if it believes it is valid.
-        
+
         CC_revalidate: a proxy is forced to contact the origin server and verify
         that is cached value is in fact still valid before it returns it.
-        
+
         CC_no_cache: a proxy must not return its cached value at all, but is forced
         to go all the way back to the origin server for the official document.
-        
+
         The default mode is CC_allow_cache.
         """
         ...
@@ -1295,7 +1295,7 @@ class HTTPChannel(TypedReferenceCount):
     the concept of a 'connection', except that HTTP is technically
     connectionless; in fact, a channel may represent one unbroken connection or
     it may transparently close and reopen a new connection with each request.
-    
+
     A channel is conceptually a single thread of I/O. One document at a time
     may be requested using a channel; a new document may (in general) not be
     requested from the same HTTPChannel until the first document has been fully
@@ -1366,7 +1366,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the DocumentSpec associated with the most recent document.  This
         includes its actual URL (following redirects) along with the identity tag
         and last-modified date, if supplied by the server.
-        
+
         This structure may be saved and used to retrieve the same version of the
         document later, or to conditionally retrieve a newer version if it is
         available.
@@ -1386,7 +1386,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the HTML return code from the document retrieval request.  This
         will be in the 200 range if the document is successfully retrieved, or some
         other value in the case of an error.
-        
+
         Some proxy errors during an https-over-proxy request would return the same
         status code as a different error that occurred on the host server.  To
         differentiate these cases, status codes that are returned by the proxy
@@ -1443,7 +1443,7 @@ class HTTPChannel(TypedReferenceCount):
         server open and reuse that connection for multiple documents, or whether it
         should close the connection and open a new one for each request.  Set this
         true to keep the connections around when possible, false to recycle them.
-        
+
         It makes most sense to set this false when the HTTPChannel will be used
         only once to retrieve a single document, true when you will be using the
         same HTTPChannel object to retrieve multiple documents.
@@ -1483,13 +1483,13 @@ class HTTPChannel(TypedReferenceCount):
         whether to hand the client a cached version of the document or to contact
         the server for a fresh version.  The proxy may also modify the headers and
         transfer encoding on the way.
-        
+
         If this is set to true, then instead of asking for URL's from the proxy, we
         will ask the proxy to open a connection to the server (for instance, on
         port 80); if the proxy honors this request, then we contact the server
         directly through this connection to retrieve the document.  If the proxy
         does not honor the connect request, then the retrieve operation fails.
-        
+
         SSL connections (e.g.  https), and connections through a Socks proxy, are
         always tunneled, regardless of the setting of this flag.
         """
@@ -1503,7 +1503,7 @@ class HTTPChannel(TypedReferenceCount):
     def set_connect_timeout(self, timeout_seconds: float) -> None:
         """Sets the maximum length of time, in seconds, that the channel will wait
         before giving up on establishing a TCP connection.
-        
+
         At present, this is used only for the nonblocking interfaces (e.g.
         begin_get_document(), begin_connect_to()), but it is used whether
         set_blocking_connect() is true or false.
@@ -1519,7 +1519,7 @@ class HTTPChannel(TypedReferenceCount):
         calls like begin_get_document(), begin_connect_to(), etc.  If false, a
         socket connect will not block for nonblocking I/O calls, but will block for
         blocking I/O calls (get_document(), connect_to(), etc.).
-        
+
         Setting this true is useful when you want to use non-blocking I/O once you
         have established the connection, but you don't want to bother with polling
         for the initial connection.  It's also useful when you don't particularly
@@ -1537,10 +1537,10 @@ class HTTPChannel(TypedReferenceCount):
     def set_http_timeout(self, timeout_seconds: float) -> None:
         """Sets the maximum length of time, in seconds, that the channel will wait for
         the HTTP server to finish sending its response to our request.
-        
+
         The timer starts counting after the TCP connection has been established
         (see set_connect_timeout(), above) and the request has been sent.
-        
+
         At present, this is used only for the nonblocking interfaces (e.g.
         begin_get_document(), begin_connect_to()), but it is used whether
         set_blocking_connect() is true or false.
@@ -1554,7 +1554,7 @@ class HTTPChannel(TypedReferenceCount):
     def set_skip_body_size(self, skip_body_size: int) -> None:
         """Specifies the maximum number of bytes in a received (but unwanted) body
         that will be skipped past, in order to reset to a new request.
-        
+
         That is, if this HTTPChannel requests a file via get_document(), but does
         not call download_to_ram(), download_to_file(), or open_read_body(), and
         instead immediately requests a new file, then the HTTPChannel has a choice
@@ -1587,13 +1587,13 @@ class HTTPChannel(TypedReferenceCount):
         """Specifies whether nonblocking downloads (via download_to_file() or
         download_to_ram()) will be limited so as not to use all available
         bandwidth.
-        
+
         If this is true, when a download has been started on this channel it will
         be invoked no more frequently than get_max_updates_per_second(), and the
         total bandwidth used by the download will be no more than
         get_max_bytes_per_second().  If this is false, downloads will proceed as
         fast as the server can send the data.
-        
+
         This only has effect on the nonblocking I/O methods like
         begin_get_document(), etc.  The blocking methods like get_document() always
         use as much CPU and bandwidth as they can get.
@@ -1646,7 +1646,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the size of the file, if it is known.  Returns the value set by
         set_expected_file_size() if the file size is not known, or 0 if this value
         was not set.
-        
+
         If the file is dynamically generated, the size may not be available until a
         read has started (e.g.  open_read_body() has been called); and even then it
         may increase as more of the file is read due to the nature of HTTP/1.1
@@ -1702,7 +1702,7 @@ class HTTPChannel(TypedReferenceCount):
         connection, and resets to begin anew.  You shouldn't ever need to call
         this, since the channel should be able to reset itself cleanly between
         requests, but it is provided in case you are an especially nervous type.
-        
+
         Don't call this after every request unless you set
         set_persistent_connection() to false, since calling reset() rudely closes
         the connection regardless of whether we have told the server we intend to
@@ -1714,7 +1714,7 @@ class HTTPChannel(TypedReferenceCount):
         connection attempt.  If the subsequent connection attempt also fails, the
         returned status code will be the better of the previous code and the
         current code.
-        
+
         This can be called to daisy-chain subsequent attempts to download the same
         document from different servers.  After all servers have been attempted,
         the final status code will reflect the attempt that most nearly succeeded.
@@ -1730,7 +1730,7 @@ class HTTPChannel(TypedReferenceCount):
         to the server with the next request.  This is passed along with no
         interpretation by the HTTPChannel code.  You may call this repeatedly to
         append multiple headers.
-        
+
         This is persistent for one request only; it must be set again for each new
         request.
         """
@@ -1775,7 +1775,7 @@ class HTTPChannel(TypedReferenceCount):
         """Establish a direct connection to the server and port indicated by the URL,
         but do not issue any HTTP requests.  If successful, the connection may then
         be taken to use for whatever purposes you like by calling get_connection().
-        
+
         This establishes a blocking I/O socket.  Also see begin_connect_to().
         """
         ...
@@ -1790,7 +1790,7 @@ class HTTPChannel(TypedReferenceCount):
         necessarily been established; you must then call run() from time to time
         until the return value of run() is false.  Then you may check is_valid()
         and get_status_code() to determine the status of your request.
-        
+
         If a previous request had been pending, that request is discarded.
         """
         ...
@@ -1810,7 +1810,7 @@ class HTTPChannel(TypedReferenceCount):
     def begin_post_form(self, url: DocumentSpec, body: str) -> None:
         """Posts form data to a particular URL and retrieves the response, all using
         non-blocking I/O.  See begin_get_document() and post_form().
-        
+
         It is important to note that you *must* call run() repeatedly after calling
         this method until run() returns false, and you may not call any other
         document posting or retrieving methods using the HTTPChannel object in the
@@ -1822,7 +1822,7 @@ class HTTPChannel(TypedReferenceCount):
         checks for data coming in on the socket and writes data out to the socket
         when possible, and does whatever processing is required towards completing
         the current task.
-        
+
         The return value is true if the task is still pending (and run() will need
         to be called again in the future), or false if the current task is
         complete.
@@ -1834,10 +1834,10 @@ class HTTPChannel(TypedReferenceCount):
         beyond what is necessary to establish the connection.  When run() has
         finished, you may call is_connection_ready() to determine if the connection
         was successfully established.
-        
+
         If successful, the connection may then be taken to use for whatever
         purposes you like by calling get_connection().
-        
+
         This establishes a nonblocking I/O socket.  Also see connect_to().
         """
         ...
@@ -1845,12 +1845,12 @@ class HTTPChannel(TypedReferenceCount):
         """Returns a newly-allocated istream suitable for reading the body of the
         document.  This may only be called immediately after a call to
         get_document() or post_form(), or after a call to run() has returned false.
-        
+
         Note that, in nonblocking mode, the returned stream may report an early
         EOF, even before the actual end of file.  When this happens, you should
         call stream->is_closed() to determine whether you should attempt to read
         some more later.
-        
+
         The user is responsible for passing the returned istream to
         close_read_body() later.
         """
@@ -1866,18 +1866,18 @@ class HTTPChannel(TypedReferenceCount):
         """Specifies the name of a file to download the resulting document to.  This
         should be called immediately after get_document() or begin_get_document()
         or related functions.
-        
+
         In the case of the blocking I/O methods like get_document(), this function
         will download the entire document to the file and return true if it was
         successfully downloaded, false otherwise.
-        
+
         In the case of non-blocking I/O methods like begin_get_document(), this
         function simply indicates an intention to download to the indicated file.
         It returns true if the file can be opened for writing, false otherwise, but
         the contents will not be completely downloaded until run() has returned
         false.  At this time, it is possible that a communications error will have
         left a partial file, so is_download_complete() may be called to test this.
-        
+
         If subdocument_resumes is true and the document in question was previously
         requested as a subdocument (i.e.  get_subdocument() with a first_byte value
         greater than zero), this will automatically seek to the appropriate byte
@@ -1891,11 +1891,11 @@ class HTTPChannel(TypedReferenceCount):
         """Specifies a Ramfile object to download the resulting document to.  This
         should be called immediately after get_document() or begin_get_document()
         or related functions.
-        
+
         In the case of the blocking I/O methods like get_document(), this function
         will download the entire document to the Ramfile and return true if it was
         successfully downloaded, false otherwise.
-        
+
         In the case of non-blocking I/O methods like begin_get_document(), this
         function simply indicates an intention to download to the indicated
         Ramfile.  It returns true if the file can be opened for writing, false
@@ -1903,7 +1903,7 @@ class HTTPChannel(TypedReferenceCount):
         has returned false.  At this time, it is possible that a communications
         error will have left a partial file, so is_download_complete() may be
         called to test this.
-        
+
         If subdocument_resumes is true and the document in question was previously
         requested as a subdocument (i.e.  get_subdocument() with a first_byte value
         greater than zero), this will automatically seek to the appropriate byte
@@ -1915,18 +1915,18 @@ class HTTPChannel(TypedReferenceCount):
         """Specifies the name of an ostream to download the resulting document to.
         This should be called immediately after get_document() or
         begin_get_document() or related functions.
-        
+
         In the case of the blocking I/O methods like get_document(), this function
         will download the entire document to the file and return true if it was
         successfully downloaded, false otherwise.
-        
+
         In the case of non-blocking I/O methods like begin_get_document(), this
         function simply indicates an intention to download to the indicated file.
         It returns true if the file can be opened for writing, false otherwise, but
         the contents will not be completely downloaded until run() has returned
         false.  At this time, it is possible that a communications error will have
         left a partial file, so is_download_complete() may be called to test this.
-        
+
         If subdocument_resumes is true and the document in question was previously
         requested as a subdocument (i.e.  get_subdocument() with a first_byte value
         greater than zero), this will automatically seek to the appropriate byte
@@ -1940,7 +1940,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the connection that was established via a previous call to
         connect_to() or begin_connect_to(), or NULL if the connection attempt
         failed or if those methods have not recently been called.
-        
+
         This stream has been allocated from the free store.  It is the user's
         responsibility to delete this pointer when finished with it.
         """
@@ -1959,10 +1959,10 @@ class HTTPChannel(TypedReferenceCount):
         this returns the number of bytes "requested" from the server so far: that
         is, the theoretical maximum value for get_bytes_downloaded(), if the server
         has been keeping up with our demand.
-        
+
         If this number is less than get_bytes_downloaded(), then the server has not
         been supplying bytes fast enough to meet our own download throttle rate.
-        
+
         When download throttling is not in effect, or when the blocking I/O methods
         (like get_document(), etc.) are used, this returns 0.
         """
@@ -1971,7 +1971,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns true when a download_to() or download_to_ram() has executed and the
         file has been fully downloaded.  If this still returns false after
         processing has completed, there was an error in transmission.
-        
+
         Note that simply testing is_download_complete() does not prove that the
         requested document was successfully retrieved--you might have just
         downloaded the "404 not found" stub (for instance) that a server would
@@ -2070,7 +2070,7 @@ class Decompressor:
         Begins a background decompression of the named file (whose filename must
         end in ".pz") to a new file without the .pz extension.  The source file is
         removed after successful completion.
-        
+
         `(self, source_file: Filename, dest_file: Filename)`:
         Begins a background decompression from the named source file to the named
         destination file.  The source file is removed after successful completion.
@@ -2087,7 +2087,7 @@ class Decompressor:
         """`(self, source_file: Filename)`:
         Performs a foreground decompression of the named file; does not return
         until the decompression is complete.
-        
+
         `(self, source_and_dest_file: Ramfile)`:
         Does an in-memory decompression of the indicated Ramfile.  The decompressed
         contents are written back into the same Ramfile on completion.
@@ -2103,7 +2103,7 @@ class Decompressor:
 class DownloadDb:
     """A listing of files within multifiles for management of client-side
     synchronization with a server-provided set of files.
-    
+
     This class manages one copy of the database for the client, representing
     the files on the client system, and another copy for the server,
     representing the files the server has available.
@@ -2121,7 +2121,7 @@ class DownloadDb:
     def __init__(self, __param0: DownloadDb = ...) -> None:
         """`(self)`:
         Primarily used for testing.
-        
+
         `(self, server_file: Filename, client_file: Filename)`; `(self, server_file: Ramfile, client_file: Filename)`:
         Create a download db with these client and server dbs
         """
@@ -2187,7 +2187,7 @@ class DownloadDb:
     def add_version(self, name: Filepath, hash: HashVal, version: int) -> None:
         """Appends a new version of the file onto the end of the list, or changes the
         hash associated with a version previously added.
-        
+
         Note: version numbers start at 1
         """
         ...
@@ -2266,7 +2266,7 @@ class DownloadDb:
 class Extractor:
     """This class automatically extracts the contents of a Multifile to the
     current directory (or to a specified directory) in the background.
-    
+
     It is designed to limit its use of system resources and run unobtrusively
     in the background.  After specifying the files you wish to extract via
     repeated calls to request_subfile(), begin the process by calling run()
@@ -2308,11 +2308,11 @@ class Extractor:
         """After all of the requests have been made via request_file() or
         request_all_subfiles(), call step() repeatedly until it stops returning
         EU_ok.
-        
+
         step() extracts the next small unit of data from the Multifile.  Returns
         EU_ok if progress is continuing, EU_error_abort if there is a problem, or
         EU_success when the last piece has been extracted.
-        
+
         Also see run().
         """
         ...
@@ -2322,7 +2322,7 @@ class Extractor:
     def run(self) -> bool:
         """A convenience function to extract the Multifile all at once, when you don't
         care about doing it in the background.
-        
+
         First, call request_file() or request_all_files() to specify the files you
         would like to extract, then call run() to do the extraction.  Also see
         step() for when you would like the extraction to happen as a background
@@ -2359,7 +2359,7 @@ class MultiplexStream(ostream):
         """Adds the system debug output the the multiplex output.  This may map to a
         syslog or some such os-specific output system.  It may do nothing on a
         particular system.
-        
+
         Presently, this maps only to OutputDebugString() on Windows.
         """
         ...
@@ -2390,7 +2390,7 @@ class VirtualFileMountHTTP(VirtualFileMount):
     def reload_vfs_mount_url() -> None:
         """Reads all of the vfs-mount-url lines in the Config.prc file and replaces
         the mount settings to match them.
-        
+
         This will mount any url's mentioned in the config file, and unmount and
         unmount any url's no longer mentioned in the config file.  Normally, it is
         called automatically at startup, and need not be called again, unless you

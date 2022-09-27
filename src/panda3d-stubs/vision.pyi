@@ -12,7 +12,7 @@ class ARToolKit:
     University of Canterbury, New Zealand, and ARToolworks, Inc, Seattle.  It
     is available under a GPL license.  It is also possible to negotiate other
     licenses with the copyright holders.
-    
+
     This class is a wrapper around the ARToolKit library.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -20,7 +20,7 @@ class ARToolKit:
     @staticmethod
     def make(camera: NodePath, paramfile: Filepath, markersize: float) -> ARToolKit:
         """Create a new ARToolKit instance.
-        
+
         Camera must be the nodepath of a panda camera object.  The panda camera's
         field of view is initialized to match the field of view of the physical
         webcam.  Each time you call analyze, all marker nodepaths will be moved

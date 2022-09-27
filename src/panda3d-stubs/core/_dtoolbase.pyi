@@ -9,7 +9,7 @@ class NeverFreeMemory:
     """This class is used to allocate bytes of memory from a pool that is never
     intended to be freed.  It is particularly useful to support DeletedChain,
     which allocates memory in just such a fashion.
-    
+
     When it is known that memory will not be freed, it is preferable to use
     this instead of the standard malloc() (or global_operator_new()) call,
     since this will help reduce fragmentation problems in the dynamic heap.
@@ -47,7 +47,7 @@ class TypeHandle:
     through a static member function named get_class_type().  Most of the time,
     it is also desirable to inherit from TypedObject, which provides some
     virtual functions to return the TypeHandle for a particular instance.
-    
+
     At its essence, a TypeHandle is simply a unique identifier that is assigned
     by the TypeRegistry.  The TypeRegistry stores a tree of TypeHandles, so
     that ancestry of a particular type may be queried, and the type name may be
@@ -93,7 +93,7 @@ class TypeHandle:
         ...
     def get_name(self, object: TypedObject = ...) -> str:
         """Returns the name of the type.
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -102,7 +102,7 @@ class TypeHandle:
     def is_derived_from(self, parent: TypeHandle, object: TypedObject = ...) -> bool:
         """Returns true if this type is derived from the indicated type, false
         otherwise.
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -114,7 +114,7 @@ class TypeHandle:
         this class does not inherit from any other classes, 1 if normal, single
         inheritance is in effect, or greater than one if multiple inheritance is in
         effect.
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -128,7 +128,7 @@ class TypeHandle:
     def get_num_child_classes(self, object: TypedObject = ...) -> int:
         """Returns the number of child classes that this type is known to have.  This
         may then be used to index into get_child_class().
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -143,11 +143,11 @@ class TypeHandle:
         """Returns the parent class that is in a direct line of inheritance to the
         indicated ancestor class.  This is useful in the presence of multiple
         inheritance to try to determine what properties an unknown type may have.
-        
+
         The return value is TypeHandle::none() if the type does not inherit from
         the ancestor.  If ancestor is the same as this type, the return value is
         this type.
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -244,7 +244,7 @@ class TypeRegistry:
         ...
     def get_name(self, type: TypeHandle, object: TypedObject) -> str:
         """Returns the name of the indicated type.
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -253,11 +253,11 @@ class TypeRegistry:
     def is_derived_from(self, child: TypeHandle, base: TypeHandle, child_object: TypedObject) -> bool:
         """Returns true if the first type is derived from the second type, false
         otherwise.
-        
+
         The "child_object" pointer is an optional pointer to the TypedObject class
         that owns the child TypeHandle.  It is only used in case the TypeHandle is
         inadvertently undefined.
-        
+
         This function definition follows the definitions for look_up() and
         freshen_derivations() just to maximize the chance the the compiler will be
         able to inline the above functions.  Yeah, a compiler shouldn't care, but
@@ -284,7 +284,7 @@ class TypeRegistry:
         will be 0 if this class does not inherit from any other classes, 1 if
         normal, single inheritance is in effect, or greater than one if multiple
         inheritance is in effect.
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -298,7 +298,7 @@ class TypeRegistry:
     def get_num_child_classes(self, child: TypeHandle, child_object: TypedObject) -> int:
         """Returns the number of child classes that the indicated type is known to
         have.  This may then be used to index into get_child_class().
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -314,7 +314,7 @@ class TypeRegistry:
         inheritance to the indicated ancestor class.  This is useful in the
         presence of multiple inheritance to try to determine what properties an
         unknown type may have.
-        
+
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
@@ -367,7 +367,7 @@ class TypedObject:
     Each derived class should define get_type(), which should return the
     specific type of the derived class.  Inheriting from this automatically
     provides support for is_of_type() and is_exact_type().
-    
+
     All classes that inherit directly or indirectly from TypedObject should
     redefine get_type() and force_init_type(), as shown below.  Some classes
     that do not inherit from TypedObject may still declare TypeHandles for
@@ -376,16 +376,16 @@ class TypedObject:
     identification system will be limited.  Classes that do not inherit from
     TypedObject need not define the virtual functions get_type() and
     force_init_type() (or any other virtual functions).
-    
+
     There is a specific layout for defining the overrides from this class.
     Keeping the definitions formatted just like these examples will allow
     someone in the future to use a sed (or similar) script to make global
     changes, if necessary.  Avoid rearranging the braces or the order of the
     functions unless you're ready to change them in every file all at once.
-    
+
     What follows are some examples that can be used in new classes that you
     create.
-    
+
     @par In the class definition (.h file):
     @code
     public:
@@ -405,16 +405,16 @@ class TypedObject:
         return get_class_type();
       }
       virtual TypeHandle force_init_type() {init_type(); return get_class_type();}
-    
+
     private:
       static TypeHandle _type_handle;
     @endcode
-    
+
     @par In the class .cxx file:
     @code
     TypeHandle <<<ThisClassStringName>>>::_type_handle;
     @endcode
-    
+
     @par In the class config_<<<PackageName>>>.cxx file:
     @code
     ConfigureFn(config_<<<PackageName>>>) {

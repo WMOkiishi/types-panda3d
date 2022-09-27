@@ -84,14 +84,14 @@ _StencilAttrib_StencilRenderState: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8
 class TransformState(NodeCachedReferenceCount):
     """Indicates a coordinate-system transform on vertices.  TransformStates are
     the primary means for storing transformations on the scene graph.
-    
+
     Transforms may be specified in one of two ways: componentwise, with a pos-
     hpr-scale, or with an arbitrary transform matrix.  If you specify a
     transform componentwise, it will remember its original components.
-    
+
     TransformState objects are managed very much like RenderState objects.
     They are immutable and reference-counted automatically.
-    
+
     You should not attempt to create or modify a TransformState object
     directly.  Instead, call one of the make() functions to create one for you.
     And instead of modifying a TransformState object, create a new one.
@@ -116,17 +116,17 @@ class TransformState(NodeCachedReferenceCount):
         """`(self, other: TransformState)`:
         Provides an arbitrary ordering among all unique TransformStates, so we can
         store the essentially different ones in a big set and throw away the rest.
-        
+
         Note that if this returns 0, it doesn't necessarily imply that operator ==
         returns true; it uses a very slightly different comparison threshold.
-        
+
         `(self, other: TransformState, uniquify_matrix: bool)`:
         Provides an arbitrary ordering among all unique TransformStates, so we can
         store the essentially different ones in a big set and throw away the rest.
-        
+
         Note that if this returns 0, it doesn't necessarily imply that operator ==
         returns true; it uses a very slightly different comparison threshold.
-        
+
         If uniquify_matrix is true, then matrix-defined TransformStates are also
         uniqified.  If uniquify_matrix is false, then only component-defined
         TransformStates are uniquified, which is less expensive.
@@ -250,11 +250,11 @@ class TransformState(NodeCachedReferenceCount):
         scale components.  Most transforms we use in everyday life can be so
         described, but some kinds of transforms (for instance, those involving a
         skew) cannot.
-        
+
         This is not related to whether the transform was originally described
         componentwise.  Even a transform that was constructed with a 4x4 may return
         true here if the matrix is a simple affine matrix with no skew.
-        
+
         If this returns true, you may safely call get_hpr() and get_scale() to
         retrieve the components.  (You may always safely call get_pos() whether
         this returns true or false.)
@@ -346,7 +346,7 @@ class TransformState(NodeCachedReferenceCount):
         constructor (or if the quaternion was computed implicitly); it will be non-
         normalized if a non-normalized quaternion was given to the constructor.
         See also get_norm_quat().
-        
+
         It is an error to call this if has_components() returned false.
         """
         ...
@@ -456,7 +456,7 @@ class TransformState(NodeCachedReferenceCount):
     def compose(self, other: TransformState) -> TransformState:
         """Returns a new TransformState object that represents the composition of this
         state with the other state.
-        
+
         The result of this operation is cached, and will be retained as long as
         both this TransformState object and the other TransformState object
         continue to exist.  Should one of them destruct, the cached entry will be
@@ -466,7 +466,7 @@ class TransformState(NodeCachedReferenceCount):
     def invert_compose(self, other: TransformState) -> TransformState:
         """Returns a new TransformState object that represents the composition of this
         state's inverse with the other state.
-        
+
         This is similar to compose(), but is particularly useful for computing the
         relative state of a node as viewed from some other node.
         """
@@ -523,7 +523,7 @@ class TransformState(NodeCachedReferenceCount):
         TransformState.  You may use this as an upper bound when walking through
         all of the composition cache results via get_composition_cache_source() or
         result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -532,7 +532,7 @@ class TransformState(NodeCachedReferenceCount):
         """Returns the source TransformState of the nth element in the composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.  See get_composition_cache_result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -541,10 +541,10 @@ class TransformState(NodeCachedReferenceCount):
         """Returns the result TransformState of the nth element in the composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.
-        
+
         In general, a->compose(a->get_composition_cache_source(n)) ==
         a->get_composition_cache_result(n).
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -554,7 +554,7 @@ class TransformState(NodeCachedReferenceCount):
         TransformState.  You may use this as an upper bound when walking through
         all of the composition cache results via
         get_invert_composition_cache_source() or result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -563,7 +563,7 @@ class TransformState(NodeCachedReferenceCount):
         """Returns the source TransformState of the nth element in the invert
         composition cache.  Returns NULL if there doesn't happen to be an entry in
         the nth element.  See get_invert_composition_cache_result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -572,10 +572,10 @@ class TransformState(NodeCachedReferenceCount):
         """Returns the result TransformState of the nth element in the invert
         composition cache.  Returns NULL if there doesn't happen to be an entry in
         the nth element.
-        
+
         In general, a->invert_compose(a->get_invert_composition_cache_source(n)) ==
         a->get_invert_composition_cache_result(n).
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -605,13 +605,13 @@ class TransformState(NodeCachedReferenceCount):
     def get_num_unused_states() -> int:
         """Returns the total number of TransformState objects that have been allocated
         but have no references outside of the internal TransformState cache.
-        
+
         A nonzero return value is not necessarily indicative of leaked references;
         it is normal for two TransformState objects, both of which have references
         held outside the cache, to have the result of their composition stored
         within the cache.  This result will be retained within the cache until one
         of the base TransformStates is released.
-        
+
         Use list_cycles() to get an idea of the number of actual "leaked"
         TransformState objects.
         """
@@ -621,14 +621,14 @@ class TransformState(NodeCachedReferenceCount):
         """Empties the cache of composed TransformStates.  This makes every
         TransformState forget what results when it is composed with other
         TransformStates.
-        
+
         This will eliminate any TransformState objects that have been allocated but
         have no references outside of the internal TransformState map.  It will not
         eliminate TransformState objects that are still in use.
-        
+
         Nowadays, this method should not be necessary, as reference-count cycles in
         the composition cache should be automatically detected and broken.
-        
+
         The return value is the number of TransformStates freed by this operation.
         """
         ...
@@ -644,12 +644,12 @@ class TransformState(NodeCachedReferenceCount):
     def list_cycles(out: ostream) -> None:
         """Detects all of the reference-count cycles in the cache and reports them to
         standard output.
-        
+
         These cycles may be inadvertently created when state compositions cycle
         back to a starting point.  Nowadays, these cycles should be automatically
         detected and broken, so this method should never list any cycles unless
         there is a bug in that detection logic.
-        
+
         The cycles listed here are not leaks in the strictest sense of the word,
         since they can be reclaimed by a call to clear_cache(); but they will not
         be reclaimed automatically.
@@ -825,7 +825,7 @@ class RenderAttrib(TypedWritableReferenceCount):
     """This is the base class for a number of render attributes (other than
     transform) that may be set on scene graph nodes to control the appearance
     of geometry.  This includes TextureAttrib, ColorAttrib, etc.
-    
+
     RenderAttrib represents render attributes that always propagate down to the
     leaves without regard to the particular node they are assigned to.  A
     RenderAttrib will have the same effect on a leaf node whether it is
@@ -833,7 +833,7 @@ class RenderAttrib(TypedWritableReferenceCount):
     different from RenderEffect, which represents a particular render property
     that is applied immediately to the node on which it is encountered, like
     billboarding or decaling.
-    
+
     You should not attempt to create or modify a RenderAttrib directly;
     instead, use the make() method of the appropriate kind of attrib you want.
     This will allocate and return a new RenderAttrib of the appropriate type,
@@ -898,7 +898,7 @@ class RenderAttrib(TypedWritableReferenceCount):
         same as the other attrib; !a compose b produces b.  Some kinds of
         attributes, like a TextureTransform, for instance, might produce a new
         result: !a compose b produces c.
-        
+
         This is similar to compose() except that the source attrib is inverted
         first.  This is used to compute the relative attribute for one node as
         viewed from some other node, which is especially useful for transform-type
@@ -908,16 +908,16 @@ class RenderAttrib(TypedWritableReferenceCount):
     def lower_attrib_can_override(self) -> bool:
         """Intended to be overridden by derived RenderAttrib types to specify how two
         consecutive RenderAttrib objects of the same type interact.
-        
+
         This should return false if a RenderAttrib on a higher node will compose
         into a RenderAttrib on a lower node that has a higher override value, or
         true if the lower RenderAttrib will completely replace the state.
-        
+
         The default behavior is false: normally, a RenderAttrib in the graph cannot
         completely override a RenderAttrib above it, regardless of its override
         value--instead, the two attribs are composed.  But for some kinds of
         RenderAttribs, it is useful to allow this kind of override.
-        
+
         This method only handles the one special case of a lower RenderAttrib with
         a higher override value.  If the higher RenderAttrib has a higher override
         value, it always completely overrides.  And if both RenderAttribs have the
@@ -927,7 +927,7 @@ class RenderAttrib(TypedWritableReferenceCount):
     def compare_to(self, other: RenderAttrib) -> int:
         """Provides an arbitrary ordering among all unique RenderAttribs, so we can
         store the essentially different ones in a big set and throw away the rest.
-        
+
         This method is not needed outside of the RenderAttrib class because all
         equivalent RenderAttrib objects are guaranteed to share the same pointer;
         thus, a pointer comparison is always sufficient.
@@ -1013,17 +1013,17 @@ class RenderModeAttrib(RenderAttrib):
         """Constructs a new RenderModeAttrib object that specifies whether to draw
         polygons in the normal, filled mode, or wireframe mode, or in some other
         yet-to-be-defined mode.
-        
+
         The thickness parameter specifies the thickness to be used for wireframe
         lines, as well as for ordinary linestrip lines; it also specifies the
         diameter of points.  (Thick lines are presently only supported in OpenGL;
         but thick points are supported on either platform.)
-        
+
         If perspective is true, the point thickness represented is actually a width
         in 3-d units, and the points should scale according to perspective.  When
         it is false, the point thickness is actually a width in pixels, and points
         are a uniform screen size regardless of distance from the camera.
-        
+
         In M_filled_wireframe mode, you should also specify the wireframe_color,
         indicating the flat color to assign to the overlayed wireframe.
         """
@@ -1081,13 +1081,13 @@ class TexMatrixAttrib(RenderAttrib):
     def make(mat: Mat4f = ...) -> RenderAttrib:
         """`()`:
         Constructs a TexMatrixAttrib that applies no stages at all.
-        
+
         `(mat: LMatrix4f)`:
         Constructs a TexMatrixAttrib that applies the indicated matrix to the
         default texture stage.  This interface is deprecated.
-        
+
         @deprecated Use the constructor that takes a TextureStage instead.
-        
+
         `(stage: TextureStage, transform: TransformState)`:
         Constructs a TexMatrixAttrib that applies the indicated transform to the
         named texture stage.
@@ -1136,7 +1136,7 @@ class TexMatrixAttrib(RenderAttrib):
         """`(self)`:
         Returns the transformation matrix associated with the default texture
         stage.
-        
+
         `(self, stage: TextureStage)`:
         Returns the transformation matrix associated with the indicated texture
         stage, or identity matrix if nothing is associated with the indicated
@@ -1177,7 +1177,7 @@ class TexMatrixAttrib(RenderAttrib):
 class RenderState(NodeCachedReferenceCount):
     """This represents a unique collection of RenderAttrib objects that correspond
     to a particular renderable state.
-    
+
     You should not attempt to create or modify a RenderState object directly.
     Instead, call one of the make() functions to create one for you.  And
     instead of modifying a RenderState object, create a new one.
@@ -1187,7 +1187,7 @@ class RenderState(NodeCachedReferenceCount):
     def compare_to(self, other: RenderState) -> int:
         """Provides an arbitrary ordering among all unique RenderStates, so we can
         store the essentially different ones in a big set and throw away the rest.
-        
+
         This method is not needed outside of the RenderState class because all
         equivalent RenderState objects are guaranteed to share the same pointer;
         thus, a pointer comparison is always sufficient.
@@ -1233,16 +1233,16 @@ class RenderState(NodeCachedReferenceCount):
     def make(attrib: RenderAttrib, override: int = ...) -> RenderState:
         """`(attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, attrib4: RenderAttrib, attrib5: RenderAttrib, override: int = ...)`:
         Returns a RenderState with five attributes set.
-        
+
         `(attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, attrib4: RenderAttrib, override: int = ...)`:
         Returns a RenderState with four attributes set.
-        
+
         `(attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, override: int = ...)`:
         Returns a RenderState with three attributes set.
-        
+
         `(attrib1: RenderAttrib, attrib2: RenderAttrib, override: int = ...)`:
         Returns a RenderState with two attributes set.
-        
+
         `(attrib: RenderAttrib, override: int = ...)`:
         Returns a RenderState with one attribute set.
         """
@@ -1262,7 +1262,7 @@ class RenderState(NodeCachedReferenceCount):
     def compose(self, other: RenderState) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state with the other state.
-        
+
         The result of this operation is cached, and will be retained as long as
         both this RenderState object and the other RenderState object continue to
         exist.  Should one of them destruct, the cached entry will be removed, and
@@ -1272,7 +1272,7 @@ class RenderState(NodeCachedReferenceCount):
     def invert_compose(self, other: RenderState) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state's inverse with the other state.
-        
+
         This is similar to compose(), but is particularly useful for computing the
         relative state of a node as viewed from some other node.
         """
@@ -1289,7 +1289,7 @@ class RenderState(NodeCachedReferenceCount):
         state, with the new RenderAttrib added.  If there is already a RenderAttrib
         with the same type, it is replaced unconditionally.  The override is not
         changed.
-        
+
         `(self, attrib: RenderAttrib, override: int)`:
         Returns a new RenderState object that represents the same as the source
         state, with the new RenderAttrib added.  If there is already a RenderAttrib
@@ -1325,7 +1325,7 @@ class RenderState(NodeCachedReferenceCount):
         """`(self, type: TypeHandle)`:
         Looks for a RenderAttrib of the indicated type in the state, and returns it
         if it is found, or NULL if it is not.
-        
+
         `(self, slot: int)`:
         Returns the RenderAttrib with the indicated slot index, or NULL if there is
         no such RenderAttrib in the state.
@@ -1384,7 +1384,7 @@ class RenderState(NodeCachedReferenceCount):
         """Returns the number of slots in the composition cache for this RenderState.
         You may use this as an upper bound when walking through all of the
         composition cache results via get_composition_cache_source() or result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -1393,7 +1393,7 @@ class RenderState(NodeCachedReferenceCount):
         """Returns the source RenderState of the nth element in the composition cache.
         Returns NULL if there doesn't happen to be an entry in the nth element.
         See get_composition_cache_result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -1401,10 +1401,10 @@ class RenderState(NodeCachedReferenceCount):
     def get_composition_cache_result(self, n: int) -> RenderState:
         """Returns the result RenderState of the nth element in the composition cache.
         Returns NULL if there doesn't happen to be an entry in the nth element.
-        
+
         In general, a->compose(a->get_composition_cache_source(n)) ==
         a->get_composition_cache_result(n).
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -1414,7 +1414,7 @@ class RenderState(NodeCachedReferenceCount):
         You may use this as an upper bound when walking through all of the
         composition cache results via get_invert_composition_cache_source() or
         result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -1423,7 +1423,7 @@ class RenderState(NodeCachedReferenceCount):
         """Returns the source RenderState of the nth element in the invert composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.  See get_invert_composition_cache_result().
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -1432,10 +1432,10 @@ class RenderState(NodeCachedReferenceCount):
         """Returns the result RenderState of the nth element in the invert composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.
-        
+
         In general, a->invert_compose(a->get_invert_composition_cache_source(n)) ==
         a->get_invert_composition_cache_result(n).
-        
+
         This has no practical value other than for examining the cache for
         performance analysis.
         """
@@ -1462,13 +1462,13 @@ class RenderState(NodeCachedReferenceCount):
     def get_num_unused_states() -> int:
         """Returns the total number of RenderState objects that have been allocated
         but have no references outside of the internal RenderState cache.
-        
+
         A nonzero return value is not necessarily indicative of leaked references;
         it is normal for two RenderState objects, both of which have references
         held outside the cache, to have to result of their composition stored
         within the cache.  This result will be retained within the cache until one
         of the base RenderStates is released.
-        
+
         Use list_cycles() to get an idea of the number of actual "leaked"
         RenderState objects.
         """
@@ -1477,14 +1477,14 @@ class RenderState(NodeCachedReferenceCount):
     def clear_cache() -> int:
         """Empties the cache of composed RenderStates.  This makes every RenderState
         forget what results when it is composed with other RenderStates.
-        
+
         This will eliminate any RenderState objects that have been allocated but
         have no references outside of the internal RenderState map.  It will not
         eliminate RenderState objects that are still in use.
-        
+
         Nowadays, this method should not be necessary, as reference-count cycles in
         the composition cache should be automatically detected and broken.
-        
+
         The return value is the number of RenderStates freed by this operation.
         """
         ...
@@ -1500,7 +1500,7 @@ class RenderState(NodeCachedReferenceCount):
         garbage-collect-states is true to ensure that RenderStates get cleaned up
         appropriately.  It does no harm to call it even if this variable is not
         true, but there is probably no advantage in that case.
-        
+
         This automatically calls RenderAttrib::garbage_collect() as well.
         """
         ...
@@ -1508,12 +1508,12 @@ class RenderState(NodeCachedReferenceCount):
     def list_cycles(out: ostream) -> None:
         """Detects all of the reference-count cycles in the cache and reports them to
         standard output.
-        
+
         These cycles may be inadvertently created when state compositions cycle
         back to a starting point.  Nowadays, these cycles should be automatically
         detected and broken, so this method should never list any cycles unless
         there is a bug in that detection logic.
-        
+
         The cycles listed here are not leaks in the strictest sense of the word,
         since they can be reclaimed by a call to clear_cache(); but they will not
         be reclaimed automatically.
@@ -1669,26 +1669,26 @@ class AntialiasAttrib(RenderAttrib):
     @staticmethod
     def make(mode: int) -> RenderAttrib:
         """Constructs a new AntialiasAttrib object.
-        
+
         The mode should be either M_none, M_auto, or a union of any or all of
         M_point, M_line, M_polygon, and M_multisample.  Also, in addition to the
         above choices, it may include either of M_better of M_faster to specify a
         performance/quality tradeoff hint.
-        
+
         If M_none is specified, no antialiasing is performed.
-        
+
         If M_multisample is specified, it means to use the special framebuffer
         multisample bits for antialiasing, if it is available.  If so, the M_point,
         M_line, and M_polygon modes are ignored.  This advanced antialiasing mode
         is only available on certain graphics hardware.  If it is not available,
         the M_multisample bit is ignored (and the other modes may be used instead,
         if specified).
-        
+
         M_point, M_line, and/or M_polygon specify per-primitive smoothing.  When
         enabled, M_point and M_line may force transparency on.  M_polygon requires
         a frame buffer that includes an alpha channel, and it works best if the
         primitives are sorted front-to-back.
-        
+
         If M_auto is specified, M_multisample is selected if it is available,
         otherwise M_polygon is selected, unless drawing lines or points, in which
         case M_line or M_point is selected (these two generally produce better
@@ -1728,13 +1728,13 @@ class RenderEffect(TypedWritableReferenceCount):
     """This is the base class for a number of special render effects that may be
     set on scene graph nodes to change the way they render.  This includes
     BillboardEffect, DecalEffect, etc.
-    
+
     RenderEffect represents render properties that must be applied as soon as
     they are encountered in the scene graph, rather than propagating down to
     the leaves.  This is different from RenderAttrib, which represents
     properties like color and texture that don't do anything until they
     propagate down to a GeomNode.
-    
+
     You should not attempt to create or modify a RenderEffect directly;
     instead, use the make() method of the appropriate kind of effect you want.
     This will allocate and return a new RenderEffect of the appropriate type,
@@ -1744,7 +1744,7 @@ class RenderEffect(TypedWritableReferenceCount):
     def compare_to(self, other: RenderEffect) -> int:
         """Provides an arbitrary ordering among all unique RenderEffects, so we can
         store the essentially different ones in a big set and throw away the rest.
-        
+
         This method is not needed outside of the RenderEffect class because all
         equivalent RenderEffect objects are guaranteed to share the same pointer;
         thus, a pointer comparison is always sufficient.
@@ -1780,7 +1780,7 @@ class RenderEffect(TypedWritableReferenceCount):
 class RenderEffects(TypedWritableReferenceCount):
     """This represents a unique collection of RenderEffect objects that correspond
     to a particular renderable state.
-    
+
     You should not attempt to create or modify a RenderEffects object directly.
     Instead, call one of the make() functions to create one for you.  And
     instead of modifying a RenderEffects object, create a new one.
@@ -1793,7 +1793,7 @@ class RenderEffects(TypedWritableReferenceCount):
     def __getitem__(self, type: TypeHandle) -> RenderEffect:
         """`(self, type: TypeHandle)`:
         Returns the effect in the state with the given type.
-        
+
         `(self, n: int)`:
         Returns the nth effect in the state.
         """
@@ -1813,7 +1813,7 @@ class RenderEffects(TypedWritableReferenceCount):
         """`(self, type: TypeHandle)`:
         Looks for a RenderEffect of the indicated type in the state, and returns it
         if it is found, or NULL if it is not.
-        
+
         `(self, n: int)`:
         Returns the nth effect in the state.
         """
@@ -1834,13 +1834,13 @@ class RenderEffects(TypedWritableReferenceCount):
     def make(effect: RenderEffect) -> RenderEffects:
         """`(effect: RenderEffect)`:
         Returns a RenderEffects with one effect set.
-        
+
         `(effect1: RenderEffect, effect2: RenderEffect)`:
         Returns a RenderEffects with two effects set.
-        
+
         `(effect1: RenderEffect, effect2: RenderEffect, effect3: RenderEffect)`:
         Returns a RenderEffects with three effects set.
-        
+
         `(effect1: RenderEffect, effect2: RenderEffect, effect3: RenderEffect, effect4: RenderEffect)`:
         Returns a RenderEffects with four effects set.
         """
@@ -1990,9 +1990,9 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Collapses this PandaNode with the other PandaNode, if possible, and returns
         a pointer to the combined PandaNode, or NULL if the two PandaNodes cannot
         safely be combined.
-        
+
         The return value may be this, other, or a new PandaNode altogether.
-        
+
         This function is called from GraphReducer::flatten(), and need not deal
         with children; its job is just to decide whether to collapse the two
         PandaNodes and what the collapsed PandaNode should look like.
@@ -2058,7 +2058,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Adds a new child to the node.  The child is added in the relative position
         indicated by sort; if all children have the same sort index, the child is
         added at the end.
-        
+
         If the same child is added to a node more than once, the previous instance
         is first removed.
         """
@@ -2069,7 +2069,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         Removes the indicated child from the node.  Returns true if the child was
         removed, false if it was not already a child of the node.  This will also
         successfully remove the child if it had been stashed.
-        
+
         `(self, child_index: int, current_thread: Thread = ...)`:
         Removes the nth child from the node.
         """
@@ -2091,18 +2091,18 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         child node no longer contributes to the bounding volume of the PandaNode,
         and is not visited in normal traversals.  It is invisible and uncollidable.
         The child may later be restored by calling unstash_child().
-        
+
         This function returns true if the child node was successfully stashed, or
         false if it was not a child of the node in the first place (e.g.  it was
         previously stashed).
-        
+
         `(self, child_index: int, current_thread: Thread = ...)`:
         Stashes the indicated child node.  This removes the child from the list of
         active children and puts it on a special list of stashed children.  This
         child node no longer contributes to the bounding volume of the PandaNode,
         and is not visited in normal traversals.  It is invisible and uncollidable.
         The child may later be restored by calling unstash_child().
-        
+
         This can only be called from the top pipeline stage (i.e.  from App).
         """
         ...
@@ -2116,18 +2116,18 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         of active children.  This child node once again contributes to the bounding
         volume of the PandaNode, and will be visited in normal traversals.  It is
         visible and collidable.
-        
+
         This function returns true if the child node was successfully stashed, or
         false if it was not a child of the node in the first place (e.g.  it was
         previously stashed).
-        
+
         `(self, stashed_index: int, current_thread: Thread = ...)`:
         Returns the indicated stashed node to normal child status.  This removes
         the child from the list of stashed children and puts it on the normal list
         of active children.  This child node once again contributes to the bounding
         volume of the PandaNode, and will be visited in normal traversals.  It is
         visible and collidable.
-        
+
         This can only be called from the top pipeline stage (i.e.  from App).
         """
         ...
@@ -2146,13 +2146,13 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         the node.  When you intend to visit multiple children, using this is
         slightly faster than calling get_stashed() directly on the PandaNode, since
         this object avoids reopening the PipelineCycler each time.
-        
+
         This object also protects you from self-modifying loops (e.g.  adding or
         removing children during traversal), since a virtual copy of the children
         is made ahead of time.  The virtual copy is fast--it is a form of copy-on-
         write, so the list is not actually copied unless it is modified during the
         traversal.
-        
+
         `(self, n: int, current_thread: Thread = ...)`:
         Returns the nth stashed child of this node.  See get_num_stashed().  Also
         see get_stashed(), if your intention is to iterate through the complete
@@ -2175,10 +2175,10 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Adds a new child to the node, directly as a stashed child.  The child is
         not added in the normal sense, but will be revealed if unstash_child() is
         called on it later.
-        
+
         If the same child is added to a node more than once, the previous instance
         is first removed.
-        
+
         This can only be called from the top pipeline stage (i.e.  from App).
         """
         ...
@@ -2187,13 +2187,13 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         ...
     def remove_all_children(self, current_thread: Thread = ...) -> None:
         """Removes all the children from the node at once, including stashed children.
-        
+
         This can only be called from the top pipeline stage (i.e.  from App).
         """
         ...
     def steal_children(self, other: PandaNode, current_thread: Thread = ...) -> None:
         """Moves all the children from the other node onto this node.
-        
+
         Any NodePaths to child nodes of the other node are truncated, rather than
         moved to the new parent.
         """
@@ -2337,7 +2337,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Associates a user-defined value with a user-defined key which is stored on
         the node.  This value has no meaning to Panda; but it is stored
         indefinitely on the node until it is requested again.
-        
+
         Each unique key stores a different string value.  There is no effective
         limit on the number of different keys that may be stored or on the length
         of any one key's value.
@@ -2383,7 +2383,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         stream.  Writes one instance of the separator following each key (but does
         not write a terminal separator).  The value associated with each key is not
         written.
-        
+
         This is mainly for the benefit of the realtime user, to see the list of all
         of the associated tag keys.
         """
@@ -2407,14 +2407,14 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Inserts this node into the scene graph in place of the other one, and
         removes the other node.  All scene graph attributes (TransformState,
         RenderState, etc.) are copied to this node.
-        
+
         All children are moved to this node, and removed from the old node.  The
         new node is left in the same place in the old node's parent's list of
         children.
-        
+
         Even NodePaths that reference the old node are updated in-place to
         reference the new node instead.
-        
+
         This method is intended to be used to replace a node of a given type in the
         scene graph with a node of a different type.
         """
@@ -2425,10 +2425,10 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         one of these bits has been set, if the property changes, an assertion
         failure will be raised, which is designed to assist the developer in
         identifying the troublesome code that modified the property unexpectedly.
-        
+
         The input parameter is the union of bits that are to be set.  To clear
         these bits later, use clear_unexpected_change().
-        
+
         Since this is a developer debugging tool only, this function does nothing
         in a production (NDEBUG) build.
         """
@@ -2438,7 +2438,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         node, or zero if none of them are set.  More specifically, this returns the
         particular set of bits (masked by the input parameter) that have been set
         on this node.  See set_unexpected_change().
-        
+
         Since this is a developer debugging tool only, this function always returns
         zero in a production (NDEBUG) build.
         """
@@ -2447,9 +2447,9 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Sets one or more of the PandaNode::UnexpectedChange bits off, indicating
         that the corresponding property may once again change on this node.  See
         set_unexpected_change().
-        
+
         The input parameter is the union of bits that are to be cleared.
-        
+
         Since this is a developer debugging tool only, this function does nothing
         in a production (NDEBUG) build.
         """
@@ -2475,37 +2475,37 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         all of its children are invisible to all cameras, regardless of the setting
         of any draw masks.  Setting the hidden flag to false restores the previous
         visibility as established by the draw masks.
-        
+
         This actually works by twiddling the reserved _overall_bit in the node's
         draw mask, which has special meaning.
         """
         ...
     def adjust_draw_mask(self, show_mask: BitMask_uint32_t_32, hide_mask: BitMask_uint32_t_32, clear_mask: BitMask_uint32_t_32) -> None:
         """Adjusts the hide/show bits of this particular node.
-        
+
         These three parameters can be used to adjust the _draw_control_mask and
         _draw_show_mask independently, which work together to provide per-camera
         visibility for the node and its descendents.
-        
+
         _draw_control_mask indicates the bits in _draw_show_mask that are
         significant.  Each different bit corresponds to a different camera (and
         these bits are assigned via Camera::set_camera_mask()).
-        
+
         Where _draw_control_mask has a 1 bit, a 1 bit in _draw_show_mask indicates
         the node is visible to that camera, and a 0 bit indicates the node is
         hidden to that camera.  Where _draw_control_mask is 0, the node is hidden
         only if a parent node is hidden.
-        
+
         The meaning of the three parameters is as follows:
-        
+
         * Wherever show_mask is 1, _draw_show_mask and _draw_control_mask will be
         set 1.  Thus, show_mask indicates the set of cameras to which the node
         should be shown.
-        
+
         * Wherever hide_mask is 1, _draw_show_mask will be set 0 and
         _draw_control_mask will be set 1.  Thus, hide_mask indicates the set of
         cameras from which the node should be hidden.
-        
+
         * Wherever clear_mask is 1, _draw_control_mask will be set 0.  Thus,
         clear_mask indicates the set of cameras from which the hidden state should
         be inherited from a parent.
@@ -2524,7 +2524,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def get_net_draw_control_mask(self) -> BitMask_uint32_t_32:
         """Returns the set of bits in get_net_draw_show_mask() that have been
         explicitly set via adjust_draw_mask(), rather than implicitly inherited.
-        
+
         A 1 bit in any position of this mask indicates that (a) this node has
         renderable children, and (b) some child of this node has made an explicit
         hide() or show_through() call for the corresponding bit.
@@ -2535,7 +2535,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         at this level and below.  If any bit in this mask is 0, there is no reason
         to traverse below this node for a camera with the corresponding
         camera_mask.
-        
+
         The bits in this mask that do not correspond to a 1 bit in the
         net_draw_control_mask are meaningless (and will be set to 1).  For bits
         that *do* correspond to a 1 bit in the net_draw_control_mask, a 1 bit
@@ -2545,11 +2545,11 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         ...
     def set_into_collide_mask(self, mask: BitMask_uint32_t_32) -> None:
         """Sets the "into" CollideMask.
-        
+
         This specifies the set of bits that must be shared with a CollisionNode's
         "from" CollideMask in order for the CollisionNode to detect a collision
         with this particular node.
-        
+
         The actual CollideMask that will be set is masked by the return value from
         get_legal_collide_mask(). Thus, the into_collide_mask cannot be set to
         anything other than nonzero except for those types of nodes that can be
@@ -2563,7 +2563,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Returns the subset of CollideMask bits that may be set for this particular
         type of PandaNode.  For most nodes, this is 0; it doesn't make sense to set
         a CollideMask for most kinds of nodes.
-        
+
         For nodes that can be collided with, such as GeomNode and CollisionNode,
         this returns all bits on.
         """
@@ -2584,7 +2584,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         GSG.  It is not strictly necessary to call this, since the GSG will
         initialize itself when the scene is rendered, but this may take some of the
         overhead away from that process.
-        
+
         In particular, this will ensure that textures and vertex buffers within the
         scene are loaded into graphics memory.
         """
@@ -2611,11 +2611,11 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Specifies the desired type of bounding volume that will be created for this
         node.  This is normally BoundingVolume::BT_default, which means to set the
         type according to the config variable "bounds-type".
-        
+
         If this is BT_sphere or BT_box, a BoundingSphere or BoundingBox is
         explicitly created.  If it is BT_best, the appropriate type to best enclose
         the node's children is created.
-        
+
         This affects the bounding volume returned by get_bounds(), which is not
         exactly the same bounding volume modified by set_bounds(), because a new
         bounding volume has to be created that includes this node and all of its
@@ -2631,7 +2631,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         computed according to the contents of the node itself, for nodes like
         GeomNodes and TextNodes that contain substance (but the bounding volume
         will still be automatically expanded to include its children).
-        
+
         Call clear_bounds() if you would like to return the bounding volume to its
         default behavior later.
         """
@@ -2651,13 +2651,13 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         Returns the external bounding volume of this node: a bounding volume that
         contains the user bounding volume, the internal bounding volume, and all of
         the children's bounding volumes.
-        
+
         `(self, seq: UpdateSeq, current_thread: Thread = ...)`:
         This flavor of get_bounds() return the external bounding volume, and also
         fills in seq with the bounding volume's current sequence number.  When this
         sequence number changes, it indicates that the bounding volume might have
         changed, e.g.  because some nested child's bounding volume has changed.
-        
+
         Although this might occasionally increment without changing the bounding
         volume, the bounding volume will never change without incrementing this
         counter, so as long as this counter remains unchanged you can be confident
@@ -2669,7 +2669,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def get_nested_vertices(self, current_thread: Thread = ...) -> int:
         """Returns the total number of vertices that will be rendered by this node and
         all of its descendents.
-        
+
         This is not necessarily an accurate count of vertices that will actually be
         rendered, since this will include all vertices of all LOD's, and it will
         also include hidden nodes.  It may also omit or only approximate certain
@@ -2685,7 +2685,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def get_internal_vertices(self, current_thread: Thread = ...) -> int:
         """Returns the total number of vertices that will be rendered by this
         particular node alone, not accounting for its children.
-        
+
         This may not include all vertices for certain dynamic effects.
         """
         ...
@@ -2694,10 +2694,10 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         bounding volume (or any of the other things stored in CData, like
         net_collide_mask), may have changed for this node, and that it must be
         recomputed.
-        
+
         With no parameters, this means to iterate through all stages including and
         upstream of the current pipeline stage.
-        
+
         This method is intended for internal use; usually it is not necessary for a
         user to call this directly.  It will be called automatically by derived
         classes when appropriate.
@@ -2707,10 +2707,10 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Should be called by a derived class to mark the internal bounding volume
         stale, so that compute_internal_bounds() will be called when the bounding
         volume is next requested.
-        
+
         With no parameters, this means to iterate through all stages including and
         upstream of the current pipeline stage.
-        
+
         It is normally not necessary to call this method directly; each node should
         be responsible for calling it when its internals have changed.
         """
@@ -2726,7 +2726,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         volume need be tested below it; a positive intersection with this node's
         bounding volume is deemed to be a positive intersection with all geometry
         inside.
-        
+
         This is useful to quickly force a larger bounding volume around a node when
         the GeomNodes themselves are inaccurate for some reason, without forcing a
         recompute of every nested bounding volume.  It's also helpful when the
@@ -2743,7 +2743,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def is_geom_node(self) -> bool:
         """A simple downcast check.  Returns true if this kind of node happens to
         inherit from GeomNode, false otherwise.
-        
+
         This is provided as a a faster alternative to calling
         is_of_type(GeomNode::get_class_type()), since this test is so important to
         rendering.
@@ -2752,7 +2752,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def is_lod_node(self) -> bool:
         """A simple downcast check.  Returns true if this kind of node happens to
         inherit from LODNode, false otherwise.
-        
+
         This is provided as a a faster alternative to calling
         is_of_type(LODNode::get_class_type()).
         """
@@ -2760,7 +2760,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def is_collision_node(self) -> bool:
         """A simple downcast check.  Returns true if this kind of node happens to
         inherit from CollisionNode, false otherwise.
-        
+
         This is provided as a a faster alternative to calling
         is_of_type(CollisionNode::get_class_type()).
         """
@@ -2788,7 +2788,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Reads the bytes created by a previous call to encode_to_bam_stream(), and
         extracts and returns the single object on those bytes.  Returns NULL on
         error.
-        
+
         This method is intended to replace decode_raw_from_bam_stream() when you
         know the stream in question returns an object of type PandaNode, allowing
         for easier reference count management.  Note that the caller is still
@@ -2957,7 +2957,7 @@ class LogicOpAttrib(RenderAttrib):
     """If enabled, specifies that a custom logical operation be performed instead
     of any color blending.  Setting it to a value other than M_none will cause
     color blending to be disabled and the given logic operation to be performed.
-    
+
     @since 1.10.0
     """
     O_none: Final[Literal[0]]
@@ -3345,11 +3345,11 @@ class TextureStageCollection:
 class NodePath(Generic[_N]):
     """NodePath is the fundamental system for disambiguating instances, and also
     provides a higher-level interface for manipulating the scene graph.
-    
+
     A NodePath is a list of connected nodes from the root of the graph to any
     sub-node.  Each NodePath therefore uniquely describes one instance of a
     node.
-    
+
     NodePaths themselves are lightweight objects that may easily be copied and
     passed by value.  Their data is stored as a series of NodePathComponents
     that are stored on the nodes.  Holding a NodePath will keep a reference
@@ -3391,18 +3391,18 @@ class NodePath(Generic[_N]):
     def __init__(self, copy: NodePath = ...) -> None:
         """`(self)`:
         This constructs an empty NodePath with no nodes.
-        
+
         `(self, parent: NodePath, child_node: PandaNode, current_thread: Thread = ...)`:
         Constructs a NodePath with the indicated parent NodePath and child node;
         the child node must be a stashed or unstashed child of the parent.
-        
+
         `(self, node: PandaNode, current_thread: Thread = ...)`:
         This constructs a NodePath for the indicated node.  If the node does not
         have any parents, this creates a singleton NodePath; otherwise, it
         automatically finds the path from the node to the root.  If the node has
         multiple paths to the root, one path is chosen arbitrarily and a warning
         message is printed (but see also NodePath::any_path(), below).
-        
+
         `(self, top_node_name: str, current_thread: Thread = ...)`:
         This constructs a new NodePath with a single node.  An ordinary, unattached
         PandaNode is created with the indicated name.
@@ -3455,12 +3455,12 @@ class NodePath(Generic[_N]):
         traversal does not attempt to detect cycles, so an arbitrary cap is set on
         the depth of the traversal as a poor man's cycle detection, in the event
         that a cycle has inadvertently been introduced into the scene graph.
-        
+
         There may be other reasons you'd want to truncate a search before the
         bottom of the scene graph has been reached.  In any event, this function
         sets the limit on the number of levels that a traversal will continue, and
         hence the maximum length of a path that may be returned by a traversal.
-        
+
         This is a static method, and so changing this parameter affects all of the
         NodePaths in the universe.
         """
@@ -3484,11 +3484,11 @@ class NodePath(Generic[_N]):
         """Returns the nth node of the path, where 0 is the referenced (bottom) node
         and get_num_nodes() - 1 is the top node.  This requires iterating through
         the path.
-        
+
         Also see node(), which is a convenience function to return the same thing
         as get_node(0) (since the bottom node is the most important node in the
         NodePath, and is the one most frequently referenced).
-        
+
         Note that this function returns the same thing as
         get_ancestor(index).node().
         """
@@ -3496,7 +3496,7 @@ class NodePath(Generic[_N]):
     def get_ancestor(self, index: int, current_thread: Thread = ...) -> NodePath:
         """Returns the nth ancestor of the path, where 0 is the NodePath itself and
         get_num_nodes() - 1 is get_top(). This requires iterating through the path.
-        
+
         Also see get_node(), which returns the same thing as a PandaNode pointer,
         not a NodePath.
         """
@@ -3523,7 +3523,7 @@ class NodePath(Generic[_N]):
         """Returns an integer that is guaranteed to be the same for all NodePaths that
         represent the same node instance, and different for all NodePaths that
         represent a different node instance.
-        
+
         The same key will be returned for a particular instance as long as at least
         one NodePath exists that represents that instance; if all NodePaths for a
         particular instance destruct and a new one is later created, it may have a
@@ -3537,7 +3537,7 @@ class NodePath(Generic[_N]):
         lower-level code that computes a hash for each NodePath.  It modifies the
         hash value passed in by a unique adjustment for each NodePath, and returns
         the modified hash.
-        
+
         This is similar to the unique integer returned by get_key(), but it is not
         guaranteed to remain unique beyond the lifetime of this particular
         NodePath.  Once this NodePath destructs, a different NodePath may be
@@ -3602,7 +3602,7 @@ class NodePath(Generic[_N]):
         """Searches for a node below the referenced node that matches the indicated
         string.  Returns the shortest match found, if any, or an empty NodePath if
         no match can be found.
-        
+
         The referenced node itself is not considered in the search.
         """
         ...
@@ -3614,7 +3614,7 @@ class NodePath(Generic[_N]):
     def find_all_matches(self, path: str) -> NodePathCollection:
         """Returns the complete set of all NodePaths that begin with this NodePath and
         can be extended by path.  The shortest paths will be listed first.
-        
+
         The referenced node itself is not considered in the search.
         """
         ...
@@ -3626,10 +3626,10 @@ class NodePath(Generic[_N]):
     def reparent_to(self, other: NodePath, sort: int = ..., current_thread: Thread = ...) -> None:
         """Removes the referenced node of the NodePath from its current parent and
         attaches it to the referenced node of the indicated NodePath.
-        
+
         If the destination NodePath is empty, this is the same thing as
         detach_node().
-        
+
         If the referenced node is already a child of the indicated NodePath (via
         some other instance), this operation fails and leaves the NodePath
         detached.
@@ -3652,18 +3652,18 @@ class NodePath(Generic[_N]):
         of the indicated other NodePath.  Any other parent-child relations of the
         node are unchanged; in particular, the node is not removed from its
         existing parent, if any.
-        
+
         If the node already had an existing parent, this method will create a new
         instance of the node within the scene graph.
-        
+
         This does not change the NodePath itself, but does return a new NodePath
         that reflects the new instance node.
-        
+
         If the destination NodePath is empty, this creates a new instance which is
         not yet parented to any node.  A new instance of this sort cannot easily be
         differentiated from other similar instances, but it is nevertheless a
         different instance and it will return a different get_id() value.
-        
+
         If the referenced node is already a child of the indicated NodePath,
         returns that already-existing instance, unstashing it first if necessary.
         """
@@ -3686,14 +3686,14 @@ class NodePath(Generic[_N]):
         Attaches a new node, with or without existing parents, to the scene graph
         below the referenced node of this NodePath.  This is the preferred way to
         add nodes to the graph.
-        
+
         If the node was already a child of the parent, this returns a NodePath to
         the existing child.
-        
+
         This does *not* automatically extend the current NodePath to reflect the
         attachment; however, a NodePath that does reflect this extension is
         returned.
-        
+
         `(self, name: str, sort: int = ..., current_thread: Thread = ...)`:
         Creates an ordinary PandaNode and attaches it below the current NodePath,
         returning a new NodePath that references it.
@@ -3704,11 +3704,11 @@ class NodePath(Generic[_N]):
     def remove_node(self, current_thread: Thread = ...) -> None:
         """Disconnects the referenced node from the scene graph.  This will also
         delete the node if there are no other pointers to it.
-        
+
         Normally, this should be called only when you are really done with the
         node.  If you want to remove a node from the scene graph but keep it around
         for later, you should probably use detach_node() instead.
-        
+
         In practice, the only difference between remove_node() and detach_node() is
         that remove_node() also resets the NodePath to empty, which will cause the
         node to be deleted immediately if there are no other references.  On the
@@ -3721,10 +3721,10 @@ class NodePath(Generic[_N]):
         """Disconnects the referenced node from its parent, but does not immediately
         delete it.  The NodePath retains a pointer to the node, and becomes a
         singleton NodePath.
-        
+
         This should be called to detach a node from the scene graph, with the
         option of reattaching it later to the same parent or to a different parent.
-        
+
         In practice, the only difference between remove_node() and detach_node() is
         that remove_node() also resets the NodePath to empty, which will cause the
         node to be deleted immediately if there are no other references.  On the
@@ -3755,7 +3755,7 @@ class NodePath(Generic[_N]):
         """`(self, other: NodePath, current_thread: Thread = ...)`:
         Returns the state changes that must be made to transition to the render
         state of this node from the render state of the other node.
-        
+
         `(self, current_thread: Thread = ...)`:
         Returns the complete state object set on this node.
         """
@@ -3768,7 +3768,7 @@ class NodePath(Generic[_N]):
         Sets the state object on this node, relative to the other node.  This
         computes a new state object that will have the indicated value when seen
         from the other node.
-        
+
         `(self, state: RenderState, current_thread: Thread = ...)`:
         Changes the complete state object on this node.
         """
@@ -3837,7 +3837,7 @@ class NodePath(Generic[_N]):
         """`(self, other: NodePath, current_thread: Thread = ...)`:
         Returns the relative transform to this node from the other node; i.e.  the
         transformation of this node as seen from the other node.
-        
+
         `(self, current_thread: Thread = ...)`:
         Returns the complete transform object set on this node.
         """
@@ -3850,7 +3850,7 @@ class NodePath(Generic[_N]):
         Sets the transform object on this node to identity, relative to the other
         node.  This effectively places this node at the same position as the other
         node.
-        
+
         `(self, current_thread: Thread = ...)`:
         Sets the transform object on this node to identity.
         """
@@ -3863,7 +3863,7 @@ class NodePath(Generic[_N]):
         Sets the transform object on this node, relative to the other node.  This
         computes a new transform object that will have the indicated value when
         seen from the other node.
-        
+
         `(self, transform: TransformState, current_thread: Thread = ...)`:
         Changes the complete transform object on this node.
         """
@@ -3879,7 +3879,7 @@ class NodePath(Generic[_N]):
         Returns the relative "previous" transform to this node from the other node;
         i.e.  the position of this node in the previous frame, as seen by the other
         node in the previous frame.
-        
+
         `(self, current_thread: Thread = ...)`:
         Returns the transform that has been set as this node's "previous" position.
         See set_prev_transform().
@@ -3893,7 +3893,7 @@ class NodePath(Generic[_N]):
         Sets the "previous" transform object on this node, relative to the other
         node.  This computes a new transform object that will have the indicated
         value when seen from the other node.
-        
+
         `(self, transform: TransformState, current_thread: Thread = ...)`:
         Sets the transform that represents this node's "previous" position, one
         frame ago, for the purposes of detecting motion for accurate collision
@@ -3915,11 +3915,11 @@ class NodePath(Generic[_N]):
         collision system will see the node as having suddenly appeared in the new
         position, without passing any points in between.  See Also:
         NodePath::set_fluid_pos
-        
+
         `(self, other: NodePath, pos: LVecBase3f)`; `(self, other: NodePath, x: float, y: float, z: float)`:
         Sets the translation component of the transform, relative to the other
         node.
-        
+
         `(self, x: float, y: float, z: float)`:
         Sets the translation component of the transform, leaving rotation and scale
         untouched.  This also resets the node's "previous" position, so that the
@@ -3966,11 +3966,11 @@ class NodePath(Generic[_N]):
         Sets the translation component, without changing the "previous" position,
         so that the collision system will see the node as moving fluidly from its
         previous position to its new position.  See Also: NodePath::set_pos
-        
+
         `(self, other: NodePath, pos: LVecBase3f)`:
         Sets the translation component of the transform, relative to the other
         node.
-        
+
         `(self, other: NodePath, x: float, y: float, z: float)`; `(self, x: float, y: float, z: float)`:
         Sets the translation component, without changing the "previous" position,
         so that the collision system will see the node as moving fluidly from its
@@ -3998,7 +3998,7 @@ class NodePath(Generic[_N]):
     def get_pos(self, other: NodePath = ...) -> LPoint3f:
         """`(self)`:
         Retrieves the translation component of the transform.
-        
+
         `(self, other: NodePath)`:
         Returns the relative position of the referenced node as seen from the other
         node.
@@ -4016,7 +4016,7 @@ class NodePath(Generic[_N]):
         via set_pos(), the delta will be zero; if it was adjusted via
         set_fluid_pos(), the delta will represent the change from the previous
         frame's position.
-        
+
         `(self, other: NodePath)`:
         Returns the delta vector from this node's position in the previous frame
         (according to set_prev_transform(), typically set via the use of
@@ -4032,7 +4032,7 @@ class NodePath(Generic[_N]):
         """`(self, hpr: LVecBase3f)`; `(self, h: float, p: float, r: float)`:
         Sets the rotation component of the transform, leaving translation and scale
         untouched.
-        
+
         `(self, other: NodePath, hpr: LVecBase3f)`; `(self, other: NodePath, h: float, p: float, r: float)`:
         Sets the rotation component of the transform, relative to the other node.
         """
@@ -4058,7 +4058,7 @@ class NodePath(Generic[_N]):
     def get_hpr(self, other: NodePath = ...) -> LVecBase3f:
         """`(self)`:
         Retrieves the rotation component of the transform.
-        
+
         `(self, other: NodePath)`:
         Returns the relative orientation of the bottom node as seen from the other
         node.
@@ -4072,7 +4072,7 @@ class NodePath(Generic[_N]):
         """`(self, quat: LQuaternionf)`:
         Sets the rotation component of the transform, leaving translation and scale
         untouched.
-        
+
         `(self, other: NodePath, quat: LQuaternionf)`:
         Sets the rotation component of the transform, relative to the other node.
         """
@@ -4082,7 +4082,7 @@ class NodePath(Generic[_N]):
     def get_quat(self, other: NodePath = ...) -> LQuaternionf:
         """`(self)`:
         Retrieves the rotation component of the transform.
-        
+
         `(self, other: NodePath)`:
         Returns the relative orientation of the bottom node as seen from the other
         node.
@@ -4093,7 +4093,7 @@ class NodePath(Generic[_N]):
         """`(self, scale: LVecBase3f)`; `(self, scale: float)`:
         Sets the scale component of the transform, leaving translation and rotation
         untouched.
-        
+
         `(self, other: NodePath, scale: LVecBase3f)`; `(self, other: NodePath, scale: float)`; `(self, other: NodePath, sx: float, sy: float, sz: float)`:
         Sets the scale component of the transform, relative to the other node.
         """
@@ -4134,7 +4134,7 @@ class NodePath(Generic[_N]):
     def get_scale(self, other: NodePath = ...) -> LVecBase3f:
         """`(self)`:
         Retrieves the scale component of the transform.
-        
+
         `(self, other: NodePath)`:
         Returns the relative scale of the bottom node as seen from the other node.
         """
@@ -4151,10 +4151,10 @@ class NodePath(Generic[_N]):
         """`(self, shear: LVecBase3f)`:
         Sets the shear component of the transform, leaving translation and rotation
         untouched.
-        
+
         `(self, other: NodePath, shear: LVecBase3f)`; `(self, other: NodePath, shxy: float, shxz: float, shyz: float)`:
         Sets the shear component of the transform, relative to the other node.
-        
+
         `(self, shxy: float, shxz: float, shyz: float)`:
         Sets the shear component of the transform, leaving translation, rotation,
         and scale untouched.
@@ -4181,7 +4181,7 @@ class NodePath(Generic[_N]):
     def get_shear(self, other: NodePath = ...) -> LVecBase3f:
         """`(self)`:
         Retrieves the shear component of the transform.
-        
+
         `(self, other: NodePath)`:
         Returns the relative shear of the bottom node as seen from the other node.
         """
@@ -4198,7 +4198,7 @@ class NodePath(Generic[_N]):
         """`(self, pos: LVecBase3f, hpr: LVecBase3f)`; `(self, x: float, y: float, z: float, h: float, p: float, r: float)`:
         Sets the translation and rotation component of the transform, leaving scale
         untouched.
-        
+
         `(self, other: NodePath, pos: LVecBase3f, hpr: LVecBase3f)`; `(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float)`:
         Sets the translation and rotation component of the transform, relative to
         the other node.
@@ -4215,7 +4215,7 @@ class NodePath(Generic[_N]):
         """`(self, pos: LVecBase3f, quat: LQuaternionf)`:
         Sets the translation and rotation component of the transform, leaving scale
         untouched.
-        
+
         `(self, other: NodePath, pos: LVecBase3f, quat: LQuaternionf)`:
         Sets the translation and rotation component of the transform, relative to
         the other node.
@@ -4228,7 +4228,7 @@ class NodePath(Generic[_N]):
         """`(self, hpr: LVecBase3f, scale: LVecBase3f)`; `(self, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.
-        
+
         `(self, other: NodePath, hpr: LVecBase3f, scale: LVecBase3f)`; `(self, other: NodePath, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.  This, or set_pos_hpr_scale, is the preferred way to
@@ -4246,7 +4246,7 @@ class NodePath(Generic[_N]):
         """`(self, quat: LQuaternionf, scale: LVecBase3f)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.
-        
+
         `(self, other: NodePath, quat: LQuaternionf, scale: LVecBase3f)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.  This, or set_pos_quat_scale, is the preferred way
@@ -4260,15 +4260,15 @@ class NodePath(Generic[_N]):
         """`(self, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f)`:
         Replaces the translation, rotation, and scale components, implicitly
         setting shear to 0.
-        
+
         `(self, other: NodePath, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f)`:
         Completely replaces the transform with new translation, rotation, and scale
         components, relative to the other node, implicitly setting shear to 0.
-        
+
         `(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
         Completely replaces the transform with new translation, rotation, and scale
         components, relative to the other node.
-        
+
         `(self, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
         Completely replaces the transform with new translation, rotation, and scale
         components.
@@ -4285,7 +4285,7 @@ class NodePath(Generic[_N]):
         """`(self, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f)`:
         Replaces the translation, rotation, and scale components, implicitly
         setting shear to 0.
-        
+
         `(self, other: NodePath, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f)`:
         Completely replaces the transform with new translation, rotation, and scale
         components, relative to the other node, implicitly setting shear to 0.
@@ -4298,7 +4298,7 @@ class NodePath(Generic[_N]):
         """`(self, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f, shear: LVecBase3f)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components.
-        
+
         `(self, other: NodePath, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f, shear: LVecBase3f)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components, relative to the other node.
@@ -4311,7 +4311,7 @@ class NodePath(Generic[_N]):
         """`(self, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f, shear: LVecBase3f)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components.
-        
+
         `(self, other: NodePath, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f, shear: LVecBase3f)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components, relative to the other node.
@@ -4323,7 +4323,7 @@ class NodePath(Generic[_N]):
     def set_mat(self, mat: Mat4f) -> None:
         """`(self, mat: LMatrix4f)`:
         Directly sets an arbitrary 4x4 transform matrix.
-        
+
         `(self, other: NodePath, mat: LMatrix4f)`:
         Converts the indicated matrix from the other's coordinate space to the
         local coordinate space, and applies it to the node.
@@ -4343,7 +4343,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Returns the transform matrix that has been applied to the referenced node,
         or the identity matrix if no matrix has been applied.
-        
+
         `(self, other: NodePath)`:
         Returns the matrix that describes the coordinate space of the bottom node,
         relative to the other path's bottom node's coordinate space.
@@ -4354,15 +4354,15 @@ class NodePath(Generic[_N]):
         """`(self, point: LPoint3f, up: LVector3f = ...)`:
         Sets the hpr on this NodePath so that it rotates to face the indicated
         point in space.
-        
+
         `(self, other: NodePath, point: LPoint3f = ..., up: LVector3f = ...)`:
         Sets the transform on this NodePath so that it rotates to face the
         indicated point in space, which is relative to the other NodePath.
-        
+
         `(self, other: NodePath, x: float, y: float, z: float)`:
         Sets the hpr on this NodePath so that it rotates to face the indicated
         point in space, which is relative to the other NodePath.
-        
+
         `(self, x: float, y: float, z: float)`:
         Sets the transform on this NodePath so that it rotates to face the
         indicated point in space.  This will overwrite any previously existing
@@ -4451,7 +4451,7 @@ class NodePath(Generic[_N]):
         """`(self, scale: LVecBase4f, priority: int = ...)`:
         Sets the color scale component of the transform, leaving translation and
         rotation untouched.
-        
+
         `(self, sx: float, sy: float, sz: float, sa: float, priority: int = ...)`:
         Sets the color scale component of the transform
         """
@@ -4463,7 +4463,7 @@ class NodePath(Generic[_N]):
         """`(self, scale: LVecBase4f, priority: int = ...)`:
         multiplies the color scale component of the transform, with previous color
         scale leaving translation and rotation untouched.
-        
+
         `(self, sx: float, sy: float, sz: float, sa: float, priority: int = ...)`:
         Sets the color scale component of the transform
         """
@@ -4476,7 +4476,7 @@ class NodePath(Generic[_N]):
         set_color_scale() operation on this node; rather, this actively disables
         any set_color_scale() that might be inherited from a parent node.  This
         also disables set_alpha_scale() at the same time.
-        
+
         It is legal to specify a new color scale on the same node with a subsequent
         call to set_color_scale() or set_alpha_scale(); this new scale will apply
         to lower geometry.
@@ -4554,16 +4554,16 @@ class NodePath(Generic[_N]):
         indicated Light.  This is different from not specifying the Light; rather,
         this specifically contradicts set_light() at a higher node level (or, with
         a priority, overrides a set_light() at a lower level).
-        
+
         This interface does not support PolylightNodes, which cannot be turned off
         at a lower level.
-        
+
         `(self, priority: int = ...)`:
         Sets the geometry at this level and below to render using no lights at all.
         This is different from not specifying a light; rather, this specifically
         contradicts set_light() at a higher node level (or, with a priority,
         overrides a set_light() at a lower level).
-        
+
         If no lights are in effect on a particular piece of geometry, that geometry
         is rendered with lighting disabled.
         """
@@ -4574,7 +4574,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Completely removes any lighting operations that may have been set via
         set_light() or set_light_off() from this particular node.
-        
+
         `(self, light: NodePath)`:
         Removes any reference to the indicated Light or PolylightNode from the
         NodePath.
@@ -4591,12 +4591,12 @@ class NodePath(Generic[_N]):
         Returns true if all Lights have been specifically disabled on this
         particular node.  This means that someone called set_light_off() on this
         node with no parameters.
-        
+
         `(self, light: NodePath)`:
         Returns true if the indicated Light has been specifically disabled on this
         particular node.  This means that someone called set_light_off() on this
         node with the indicated light.
-        
+
         This interface does not support PolylightNodes, which cannot be turned off
         at a lower level.
         """
@@ -4617,13 +4617,13 @@ class NodePath(Generic[_N]):
         PlaneNode; rather, this specifically contradicts set_clip_plane() at a
         higher node level (or, with a priority, overrides a set_clip_plane() at a
         lower level).
-        
+
         `(self, priority: int = ...)`:
         Sets the geometry at this level and below to render using no clip_planes at
         all.  This is different from not specifying a clip_plane; rather, this
         specifically contradicts set_clip_plane() at a higher node level (or, with
         a priority, overrides a set_clip_plane() at a lower level).
-        
+
         If no clip_planes are in effect on a particular piece of geometry, that
         geometry is rendered without being clipped (other than by the viewing
         frustum).
@@ -4635,7 +4635,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Completely removes any clip planes that may have been set via
         set_clip_plane() or set_clip_plane_off() from this particular node.
-        
+
         `(self, clip_plane: NodePath)`:
         Removes any reference to the indicated clipping plane from the NodePath.
         """
@@ -4651,7 +4651,7 @@ class NodePath(Generic[_N]):
         Returns true if all clipping planes have been specifically disabled on this
         particular node.  This means that someone called set_clip_plane_off() on
         this node with no parameters.
-        
+
         `(self, clip_plane: NodePath)`:
         Returns true if the indicated clipping plane has been specifically disabled
         on this particular node.  This means that someone called
@@ -4665,27 +4665,27 @@ class NodePath(Generic[_N]):
         The two points are understood to be relative to this node.  When these
         points are projected into screen space, they define the diagonally-opposite
         points that determine the scissor region.
-        
+
         `(self, a: LPoint3f, b: LPoint3f, c: LPoint3f, d: LPoint3f)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The four points are understood to be relative to this node.  When these
         points are projected into screen space, they define the bounding volume of
         the scissor region (the scissor region is the smallest onscreen rectangle
         that encloses all four points).
-        
+
         `(self, other: NodePath, a: LPoint3f, b: LPoint3f)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The two points are understood to be relative to the indicated other node.
         When these points are projected into screen space, they define the
         diagonally-opposite points that determine the scissor region.
-        
+
         `(self, other: NodePath, a: LPoint3f, b: LPoint3f, c: LPoint3f, d: LPoint3f)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The four points are understood to be relative to the indicated other node.
         When these points are projected into screen space, they define the bounding
         volume of the scissor region (the scissor region is the smallest onscreen
         rectangle that encloses all four points).
-        
+
         `(self, left: float, right: float, bottom: float, top: float)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The four coordinates are understood to define a rectangle in screen space.
@@ -4727,7 +4727,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Completely removes any occluders that may have been set via set_occluder()
         from this particular node.
-        
+
         `(self, occluder: NodePath)`:
         Removes any reference to the indicated occluder from the NodePath.
         """
@@ -4743,7 +4743,7 @@ class NodePath(Generic[_N]):
         It is the user's responsibility to ensure that such a bin already exists,
         either via the cull-bin Configrc variable, or by explicitly creating a
         GeomBin of the appropriate type at runtime.
-        
+
         There are two default bins created when Panda is started: "default" and
         "fixed".  Normally, all geometry is assigned to "default" unless specified
         otherwise.  This bin renders opaque geometry in state-sorted order,
@@ -4751,7 +4751,7 @@ class NodePath(Generic[_N]):
         assigned to "fixed", this will be rendered following all the geometry in
         "default", in the order specified by draw_order for each piece of geometry
         so assigned.
-        
+
         The draw_order parameter is meaningful only for GeomBinFixed type bins,
         e.g.  "fixed".  Other kinds of bins ignore it.
         """
@@ -4783,34 +4783,34 @@ class NodePath(Generic[_N]):
         """`(self, tex: Texture, sampler: SamplerState, priority: int = ...)`:
         Adds the indicated texture to the list of textures that will be rendered on
         the default texture stage.
-        
+
         The given sampler state will override the sampling settings on the texture
         itself.  Note that this method makes a copy of the sampler settings that
         you give; further changes to this object will not be reflected.
-        
+
         This is the convenience single-texture variant of this method; it is now
         superceded by set_texture() that accepts a stage and texture.  You may use
         this method if you just want to adjust the default stage.
-        
+
         `(self, tex: Texture, priority: int = ...)`:
         Adds the indicated texture to the list of textures that will be rendered on
         the default texture stage.
-        
+
         This is the convenience single-texture variant of this method; it is now
         superceded by set_texture() that accepts a stage and texture.  You may use
         this method if you just want to adjust the default stage.
-        
+
         `(self, stage: TextureStage, tex: Texture, sampler: SamplerState, priority: int = ...)`:
         Adds the indicated texture to the list of textures that will be rendered on
         the indicated multitexture stage.  If there are multiple texture stages
         specified (possibly on multiple different nodes at different levels), they
         will all be applied to geometry together, according to the stage
         specification set up in the TextureStage object.
-        
+
         The given sampler state will override the sampling settings on the texture
         itself.  Note that this method makes a copy of the sampler settings that
         you give; further changes to this object will not be reflected.
-        
+
         `(self, stage: TextureStage, tex: Texture, priority: int = ...)`:
         Adds the indicated texture to the list of textures that will be rendered on
         the indicated multitexture stage.  If there are multiple texture stages
@@ -4832,7 +4832,7 @@ class NodePath(Generic[_N]):
         the indicated stage.  This is different from not specifying a texture;
         rather, this specifically contradicts set_texture() at a higher node level
         (or, with a priority, overrides a set_texture() at a lower level).
-        
+
         `(self, priority: int = ...)`:
         Sets the geometry at this level and below to render using no texture, on
         any stage.  This is different from not specifying a texture; rather, this
@@ -4848,7 +4848,7 @@ class NodePath(Generic[_N]):
         set_texture() or set_texture_off() from this particular node.  This allows
         whatever textures might be otherwise affecting the geometry to show
         instead.
-        
+
         `(self, stage: TextureStage)`:
         Removes any reference to the indicated texture stage from the NodePath.
         """
@@ -4859,7 +4859,7 @@ class NodePath(Generic[_N]):
         set_texture(), false otherwise.  This is not the same thing as asking
         whether the geometry at this node will be rendered with texturing, as there
         may be a texture in effect from a higher or lower level.
-        
+
         `(self, stage: TextureStage)`:
         Returns true if texturing has been specifically enabled on this particular
         node for the indicated stage.  This means that someone called set_texture()
@@ -4873,7 +4873,7 @@ class NodePath(Generic[_N]):
         node via set_texture_off(), false otherwise.  This is not the same thing as
         asking whether the geometry at this node will be rendered untextured, as
         there may be a texture in effect from a higher or lower level.
-        
+
         `(self, stage: TextureStage)`:
         Returns true if texturing has been specifically disabled on this particular
         node for the indicated stage.  This means that someone called
@@ -4887,9 +4887,9 @@ class NodePath(Generic[_N]):
         or NULL if no texture has been set.  This is not necessarily the texture
         that will be applied to the geometry at or below this level, as another
         texture at a higher or lower level may override.
-        
+
         See also find_texture().
-        
+
         `(self, stage: TextureStage)`:
         Returns the texture that has been set on the indicated stage for this
         particular node, or NULL if no texture has been set for this stage.
@@ -4898,7 +4898,7 @@ class NodePath(Generic[_N]):
     def replace_texture(self, tex: Texture, new_tex: Texture) -> None:
         """Recursively searches the scene graph for references to the given texture,
         and replaces them with the new texture.
-        
+
         @since 1.10.4
         """
         ...
@@ -4907,15 +4907,15 @@ class NodePath(Generic[_N]):
         Returns the sampler state that has been given for the base-level texture
         that has been set on this particular node.  If no sampler state was given,
         this returns the texture's default sampler settings.
-        
+
         It is an error to call this if there is no base-level texture applied to
         this particular node.
-        
+
         `(self, stage: TextureStage)`:
         Returns the sampler state that has been given for the indicated texture
         stage that has been set on this particular node.  If no sampler state was
         given, this returns the texture's default sampler settings.
-        
+
         It is an error to call this if there is no texture set for this stage on
         this particular node.
         """
@@ -4965,7 +4965,7 @@ class NodePath(Generic[_N]):
     def clear_tex_transform(self, stage: TextureStage = ...) -> None:
         """`(self)`:
         Removes all texture matrices from the current node.
-        
+
         `(self, stage: TextureStage)`:
         Removes the texture matrix on the current node for the given stage.
         """
@@ -4980,7 +4980,7 @@ class NodePath(Generic[_N]):
         """`(self, other: NodePath, stage: TextureStage)`:
         Returns the texture matrix on the current node for the given stage,
         relative to the other node.
-        
+
         `(self, stage: TextureStage)`:
         Returns the texture matrix on the current node for the given stage, or
         identity transform if there is no explicit transform set for the given
@@ -4993,7 +4993,7 @@ class NodePath(Generic[_N]):
     def set_tex_offset(self, stage: TextureStage, uv: LVecBase2f) -> None:
         """Sets a texture matrix on the current node to apply the indicated offset to
         UV's for the given stage.
-        
+
         This call is appropriate for ordinary 2-d texture coordinates.
         """
         ...
@@ -5007,7 +5007,7 @@ class NodePath(Generic[_N]):
     def set_tex_rotate(self, stage: TextureStage, r: float) -> None:
         """Sets a texture matrix on the current node to apply the indicated rotation,
         clockwise in degrees, to UV's for the given stage.
-        
+
         This call is appropriate for ordinary 2-d texture coordinates.
         """
         ...
@@ -5018,25 +5018,25 @@ class NodePath(Generic[_N]):
         """`(self, other: NodePath, stage: TextureStage, scale: LVecBase2f)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float)`; `(self, stage: TextureStage, scale: LVecBase2f)`; `(self, stage: TextureStage, su: float, sv: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UV's for the given stage.
-        
+
         This call is appropriate for ordinary 2-d texture coordinates.
-        
+
         `(self, other: NodePath, stage: TextureStage, scale: LVecBase3f)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float, sw: float)`; `(self, stage: TextureStage, scale: LVecBase3f)`; `(self, stage: TextureStage, su: float, sv: float, sw: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UVW's for the given stage.
-        
+
         This call is appropriate for 3-d texture coordinates.
-        
+
         `(self, other: NodePath, stage: TextureStage, scale: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UV's for the given stage.
-        
+
         This call is appropriate for 2-d or 3-d texture coordinates.
-        
+
         `(self, stage: TextureStage, scale: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UVW's for the given stage.
-        
+
         This call is appropriate for 2-d or 3-d texture coordinates.
         """
         ...
@@ -5050,7 +5050,7 @@ class NodePath(Generic[_N]):
     def get_tex_offset(self, stage: TextureStage) -> LVecBase2f:
         """Returns the offset set for the UV's for the given stage on the current
         node.
-        
+
         This call is appropriate for ordinary 2-d texture coordinates.
         """
         ...
@@ -5060,7 +5060,7 @@ class NodePath(Generic[_N]):
     def get_tex_rotate(self, stage: TextureStage) -> float:
         """Returns the rotation set for the UV's for the given stage on the current
         node.
-        
+
         This call is appropriate for ordinary 2-d texture coordinates.
         """
         ...
@@ -5069,7 +5069,7 @@ class NodePath(Generic[_N]):
     @overload
     def get_tex_scale(self, stage: TextureStage) -> LVecBase2f:
         """Returns the scale set for the UV's for the given stage on the current node.
-        
+
         This call is appropriate for ordinary 2-d texture coordinates.
         """
         ...
@@ -5079,7 +5079,7 @@ class NodePath(Generic[_N]):
     def set_tex_pos(self, stage: TextureStage, uvw: Vec3f) -> None:
         """Sets a texture matrix on the current node to apply the indicated offset to
         UVW's for the given stage.
-        
+
         This call is appropriate for 3-d texture coordinates.
         """
         ...
@@ -5093,7 +5093,7 @@ class NodePath(Generic[_N]):
     def set_tex_hpr(self, stage: TextureStage, hpr: Vec3f) -> None:
         """Sets a texture matrix on the current node to apply the indicated rotation,
         as a 3-D HPR, to UVW's for the given stage.
-        
+
         This call is appropriate for 3-d texture coordinates.
         """
         ...
@@ -5107,7 +5107,7 @@ class NodePath(Generic[_N]):
     def get_tex_pos(self, stage: TextureStage) -> LVecBase3f:
         """Returns the offset set for the UVW's for the given stage on the current
         node.
-        
+
         This call is appropriate for 3-d texture coordinates.
         """
         ...
@@ -5117,7 +5117,7 @@ class NodePath(Generic[_N]):
     def get_tex_hpr(self, stage: TextureStage) -> LVecBase3f:
         """Returns the 3-D HPR set for the UVW's for the given stage on the current
         node.
-        
+
         This call is appropriate for 3-d texture coordinates.
         """
         ...
@@ -5127,7 +5127,7 @@ class NodePath(Generic[_N]):
     def get_tex_scale_3d(self, stage: TextureStage) -> LVecBase3f:
         """Returns the scale set for the UVW's for the given stage on the current
         node.
-        
+
         This call is appropriate for 3-d texture coordinates.
         """
         ...
@@ -5139,7 +5139,7 @@ class NodePath(Generic[_N]):
         Enables automatic texture coordinate generation for the indicated texture
         stage.  This version of this method is useful when setting M_constant,
         which requires a constant texture coordinate value.
-        
+
         `(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, priority: int = ...)`:
         Enables automatic texture coordinate generation for the indicated texture
         stage.
@@ -5151,7 +5151,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Removes the texture coordinate generation mode from all texture stages on
         this node.
-        
+
         `(self, stage: TextureStage)`:
         Disables automatic texture coordinate generation for the indicated texture
         stage.
@@ -5174,7 +5174,7 @@ class NodePath(Generic[_N]):
         bind this node's texture transform to particular node's position in space,
         allowing a LerpInterval (for instance) to adjust this node's texture
         coordinates.
-        
+
         If to is a LensNode, then the fourth parameter, lens_index, can be provided
         to select a particular lens to apply.  Otherwise lens_index is not used.
         """
@@ -5182,7 +5182,7 @@ class NodePath(Generic[_N]):
     def clear_tex_projector(self, stage: TextureStage = ...) -> None:
         """`(self)`:
         Removes the TexProjectorEffect for all stages from this node.
-        
+
         `(self, stage: TextureStage)`:
         Removes the TexProjectorEffect for the indicated stage from this node.
         """
@@ -5223,7 +5223,7 @@ class NodePath(Generic[_N]):
         """Returns true if there are at least some vertices at this node and below
         that contain a reference to the indicated vertex data column name, false
         otherwise.
-        
+
         This is particularly useful for testing whether a particular model has a
         given texture coordinate set (but see has_texcoord()).
         """
@@ -5232,7 +5232,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Returns a list of all vertex array columns stored on some geometry found at
         this node level and below.
-        
+
         `(self, name: str)`:
         Returns a list of all vertex array columns stored on some geometry found at
         this node level and below that match the indicated name (which may contain
@@ -5243,7 +5243,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Returns a list of all texture coordinate sets used by any geometry at this
         node level and below.
-        
+
         `(self, name: str)`:
         Returns a list of all texture coordinate sets used by any geometry at this
         node level and below that match the indicated name (which may contain
@@ -5256,7 +5256,7 @@ class NodePath(Generic[_N]):
         Returns the first texture found applied to geometry at this node or below
         that is assigned to the indicated texture stage.  Returns the texture if it
         is found, or NULL if it is not.
-        
+
         `(self, name: str)`:
         Returns the first texture found applied to geometry at this node or below
         that matches the indicated name (which may contain wildcards).  Returns the
@@ -5269,11 +5269,11 @@ class NodePath(Generic[_N]):
     def find_all_textures(self, stage: TextureStage = ...) -> TextureCollection:
         """`(self)`:
         Returns a list of a textures applied to geometry at this node and below.
-        
+
         `(self, stage: TextureStage)`:
         Returns a list of a textures on geometry at this node and below that are
         assigned to the indicated texture stage.
-        
+
         `(self, name: str)`:
         Returns a list of a textures applied to geometry at this node and below
         that match the indicated name (which may contain wildcard characters).
@@ -5291,7 +5291,7 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Returns a list of a TextureStages applied to geometry at this node and
         below.
-        
+
         `(self, name: str)`:
         Returns a list of a TextureStages applied to geometry at this node and
         below that match the indicated name (which may contain wildcard
@@ -5315,7 +5315,7 @@ class NodePath(Generic[_N]):
     def find_all_materials(self, name: str = ...) -> MaterialCollection:
         """`(self)`:
         Returns a list of a materials applied to geometry at this node and below.
-        
+
         `(self, name: str)`:
         Returns a list of a materials applied to geometry at this node and below
         that match the indicated name (which may contain wildcard characters).
@@ -5324,7 +5324,7 @@ class NodePath(Generic[_N]):
     def set_material(self, tex: Material, priority: int = ...) -> None:
         """Sets the geometry at this level and below to render using the indicated
         material.
-        
+
         Previously, this operation made a copy of the material structure, but
         nowadays it assigns the pointer directly.
         """
@@ -5351,14 +5351,14 @@ class NodePath(Generic[_N]):
         no material has been set.  This is not necessarily the material that will
         be applied to the geometry at or below this level, as another material at a
         higher or lower level may override.
-        
+
         See also find_material().
         """
         ...
     def replace_material(self, mat: Material, new_mat: Material) -> None:
         """Recursively searches the scene graph for references to the given material,
         and replaces them with the new material.
-        
+
         @since 1.10.0
         """
         ...
@@ -5421,7 +5421,7 @@ class NodePath(Generic[_N]):
         """Sets up the point geometry at this level and below to render as thick
         points (that is, billboarded quads).  The thickness is in pixels, unless
         set_render_mode_perspective is also true, in which case it is in 3-D units.
-        
+
         If you want the quads to be individually textured, you should also set a
         TexGenAttrib::M_point_sprite on the node.
         """
@@ -5432,7 +5432,7 @@ class NodePath(Generic[_N]):
         set_render_mode_thickness(), is the width of each point in 3-D units,
         unless it is overridden on a per-vertex basis.  This does not affect
         geometry other than points.
-        
+
         If you want the quads to be individually textured, you should also set a
         TexGenAttrib::M_point_sprite on the node.
         """
@@ -5595,7 +5595,7 @@ class NodePath(Generic[_N]):
         Puts a billboard transition on the node such that it will rotate in two
         dimensions around the up axis, towards a specified "camera" instead of to
         the viewing camera.
-        
+
         `(self, offset: float = ...)`:
         Puts a billboard transition on the node such that it will rotate in two
         dimensions around the up axis.
@@ -5609,7 +5609,7 @@ class NodePath(Generic[_N]):
         Puts a billboard transition on the node such that it will rotate in three
         dimensions about the origin, keeping its up vector oriented to the top of
         the camera, towards a specified "camera" instead of to the viewing camera.
-        
+
         `(self, offset: float = ..., fixed_depth: bool = ...)`:
         Puts a billboard transition on the node such that it will rotate in three
         dimensions about the origin, keeping its up vector oriented to the top of
@@ -5624,7 +5624,7 @@ class NodePath(Generic[_N]):
         Puts a billboard transition on the node such that it will rotate in three
         dimensions about the origin, keeping its up vector oriented to the sky,
         towards a specified "camera" instead of to the viewing camera.
-        
+
         `(self, offset: float = ...)`:
         Puts a billboard transition on the node such that it will rotate in three
         dimensions about the origin, keeping its up vector oriented to the sky.
@@ -5683,7 +5683,7 @@ class NodePath(Generic[_N]):
         """Specifically sets or disables a logical operation on this particular node.
         If no other nodes override, this will cause geometry to be rendered without
         color blending but instead using the given logical operator.
-        
+
         @since 1.10.0
         """
         ...
@@ -5691,7 +5691,7 @@ class NodePath(Generic[_N]):
         """Completely removes any logical operation that may have been set on this
         node via set_logic_op(). The geometry at this level and below will
         subsequently be rendered using standard color blending.
-        
+
         @since 1.10.0
         """
         ...
@@ -5700,7 +5700,7 @@ class NodePath(Generic[_N]):
         particular node via set_logic_op().  If this returns true, then
         get_logic_op() may be called to determine whether a logical operation has
         been explicitly disabled for this node or set to particular operation.
-        
+
         @since 1.10.0
         """
         ...
@@ -5711,7 +5711,7 @@ class NodePath(Generic[_N]):
         has_logic_op().  This does not necessarily imply that the geometry will
         or will not be rendered with the given logical operation, as there may be
         other nodes that override.
-        
+
         @since 1.10.0
         """
         ...
@@ -5756,7 +5756,7 @@ class NodePath(Generic[_N]):
         same thing as clear_audio_volume(), which undoes any previous
         set_audio_volume() operation on this node; rather, this actively disables
         any set_audio_volume() that might be inherited from a parent node.
-        
+
         It is legal to specify a new volume on the same node with a subsequent call
         to set_audio_volume(); this new scale will apply to lower nodes.
         """
@@ -5784,13 +5784,13 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Undoes the effect of a previous hide() on this node: makes the referenced
         node (and the entire subgraph below this node) visible to all cameras.
-        
+
         This will not reveal the node if a parent node has been hidden.
-        
+
         `(self, camera_mask: BitMask_uint32_t_32)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
-        
+
         This undoes the effect of a previous hide() call.  It will not reveal the
         node if a parent node has been hidden.  However, see show_through().
         """
@@ -5799,14 +5799,14 @@ class NodePath(Generic[_N]):
         """`(self)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
-        
+
         Unlike show(), this will reveal the node even if a parent node has been
         hidden, thus "showing through" a parent's hide().
-        
+
         `(self, camera_mask: BitMask_uint32_t_32)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
-        
+
         Unlike show(), this will reveal the node even if a parent node has been
         hidden via the one-parameter hide() method, thus "showing through" a
         parent's hide().  (However, it will not show through a parent's hide() call
@@ -5819,13 +5819,13 @@ class NodePath(Generic[_N]):
         invisible to all cameras.  It remains part of the scene graph, its bounding
         volume still contributes to its parent's bounding volume, and it will still
         be involved in collision tests.
-        
+
         To undo this, call show().
-        
+
         `(self, camera_mask: BitMask_uint32_t_32)`:
         Makes the referenced node invisible just to the cameras whose camera_mask
         shares the indicated bits.
-        
+
         This will also hide any nodes below this node in the scene graph, including
         those nodes for which show() has been called, but it will not hide
         descendent nodes for which show_through() has been called.
@@ -5848,7 +5848,7 @@ class NodePath(Generic[_N]):
         and is not tested for collisions; furthermore, no normal scene graph
         traversal will visit the node.  The node's bounding volume no longer
         contributes to its parent's bounding volume.
-        
+
         A stashed node cannot be located by a normal find() operation (although a
         special find string can still retrieve it).
         """
@@ -5876,7 +5876,7 @@ class NodePath(Generic[_N]):
     def get_collide_mask(self) -> BitMask_uint32_t_32:
         """Returns the union of all of the into_collide_masks for nodes at this level
         and below.  This is the same thing as node()->get_net_collide_mask().
-        
+
         If you want to return what the into_collide_mask of this node itself is,
         without regard to its children, use node()->get_into_collide_mask().
         """
@@ -5886,7 +5886,7 @@ class NodePath(Generic[_N]):
         all nodes at this level and below.  If node_type is not TypeHandle::none(),
         then only nodes matching (or inheriting from) the indicated PandaNode
         subclass are modified.
-        
+
         The default is to change all bits, but if bits_to_change is not all bits
         on, then only the bits that are set in bits_to_change are modified,
         allowing this call to change only a subset of the bits in the subgraph.
@@ -5895,7 +5895,7 @@ class NodePath(Generic[_N]):
     def compare_to(self, other: NodePath | WeakNodePath) -> int:
         """Returns a number less than zero if this NodePath sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
-        
+
         Two NodePaths are considered equivalent if they consist of exactly the same
         list of nodes in the same order.  Otherwise, they are different; different
         NodePaths will be ranked in a consistent but undefined ordering; the
@@ -5913,7 +5913,7 @@ class NodePath(Generic[_N]):
         adjusts any GeomVertexFormats for optimal rendering on the indicated GSG.
         If this step is not done prior to rendering, the formats will be optimized
         at render time instead, for a small cost.
-        
+
         It is not normally necessary to do this on a model loaded directly from
         disk, since the loader will do this by default.
         """
@@ -5924,7 +5924,7 @@ class NodePath(Generic[_N]):
         indicated GSG.  It is not strictly necessary to call this, since the GSG
         will initialize itself when the scene is rendered, but this may take some
         of the overhead away from that process.
-        
+
         In particular, this will ensure that textures and vertex buffers within the
         scene are loaded into graphics memory.
         """
@@ -5955,7 +5955,7 @@ class NodePath(Generic[_N]):
     def force_recompute_bounds(self) -> None:
         """Forces the recomputing of all the bounding volumes at every node in the
         subgraph beginning at this node and below.
-        
+
         This should not normally need to be called, since the bounding volumes are
         supposed to be recomputed automatically when necessary.  It may be useful
         when debugging, to verify that the bounding volumes have not become
@@ -5974,13 +5974,13 @@ class NodePath(Generic[_N]):
         bottom node and below.  This is a tight bounding box; it will generally be
         tighter than the bounding volume returned by get_bounds() (but it is more
         expensive to compute).
-        
+
         The bounding box is computed relative to the parent node's coordinate
         system by default.  You can optionally specify a different NodePath to
         compute the bounds relative to.  Note that the box is always axis-aligned
         against the given NodePath's coordinate system, so you might get a
         differently sized box depending on which node you pass.
-        
+
         The return value is true if any points are within the bounding volume, or
         false if none are.
         """
@@ -5990,17 +5990,17 @@ class NodePath(Generic[_N]):
         """Lightly flattens out the hierarchy below this node by applying transforms,
         colors, and texture matrices from the nodes onto the vertices, but does not
         remove any nodes.
-        
+
         This can result in improved rendering performance because there will be
         fewer transforms in the resulting scene graph, but the number of nodes will
         remain the same.
-        
+
         In particular, any NodePaths that reference nodes within this hierarchy
         will not be damaged.  However, since this operation will remove transforms
         from the scene graph, it may be dangerous to apply to nodes where you
         expect to dynamically modify the transform, or where you expect the
         geometry to remain in a particular local coordinate system.
-        
+
         The return value is always 0, since flatten_light does not remove any
         nodes.
         """
@@ -6010,10 +6010,10 @@ class NodePath(Generic[_N]):
         transforms, colors, and texture matrices from the nodes onto the vertices,
         and then removes unneeded grouping nodes--nodes that have exactly one
         child, for instance, but have no special properties in themselves.
-        
+
         This results in improved performance over flatten_light() because the
         number of nodes in the scene graph is reduced.
-        
+
         The return value is the number of nodes removed.
         """
         ...
@@ -6023,7 +6023,7 @@ class NodePath(Generic[_N]):
         combine sibling nodes together when possible, in addition to removing
         unnecessary parent-child nodes.  This can result in substantially fewer
         nodes, but any nicely-grouped hierachical bounding volumes may be lost.
-        
+
         It is generally a good idea to apply this kind of flattening only to nodes
         that will be culled largely as a single unit, like a car.  Applying this to
         an entire scene may result in overall poorer performance because of less-
@@ -6035,12 +6035,12 @@ class NodePath(Generic[_N]):
         colors to the vertices.  This is primarily useful to simplify a low-LOD
         model.  The texture colors are replaced by flat colors that approximate the
         original textures.
-        
+
         Only the bottommost texture on each Geom is used (if there is more than
         one), and it is applied as if it were M_modulate, and WM_repeat, regardless
         of its actual settings.  If the texture has a simple_ram_image, this may be
         used if the main image isn't resident.
-        
+
         After this call, there will be no texturing specified at this level and
         below.  Of course, there might still be texturing inherited from above.
         """
@@ -6050,7 +6050,7 @@ class NodePath(Generic[_N]):
         for ModelNodes, and calls model_node->set_preserve_transform(PT_drop_node)
         on each one.  This allows a subsequent call to flatten_strong() to
         eliminate all of the ModelNodes.
-        
+
         Returns the number of ModelNodes found.
         """
         ...
@@ -6058,7 +6058,7 @@ class NodePath(Generic[_N]):
         """Associates a user-defined value with a user-defined key which is stored on
         the node.  This value has no meaning to Panda; but it is stored
         indefinitely on the node until it is requested again.
-        
+
         Each unique key stores a different string value.  There is no effective
         limit on the number of different keys that may be stored or on the length
         of any one key's value.
@@ -6137,26 +6137,26 @@ class NodePath(Generic[_N]):
         Converts the NodePath object into a single stream of data using a
         BamWriter, and returns that data as a string string.  Returns empty string
         on failure.  This is similar to write_bam_stream().
-        
+
         This method is used by __reduce__ to handle streaming of NodePaths to a
         pickle file.
-        
+
         `(self, data: bytes, writer: BamWriter = ...)`:
         Converts the NodePath object into a single stream of data using a
         BamWriter, and stores that data in the indicated string.  Returns true on
         success, false on failure.
-        
+
         If the BamWriter is NULL, this behaves the same way as
         NodePath::write_bam_stream() and PandaNode::encode_to_bam_stream(), in the
         sense that it only writes this node and all nodes below it.
-        
+
         However, if the BamWriter is not NULL, it behaves very differently.  In
         this case, it encodes the *entire graph* of all nodes connected to the
         NodePath, including all parent nodes and siblings.  This is necessary for
         correct streaming of related NodePaths and restoration of instances, etc.,
         but it does mean you must detach() a node before writing it if you want to
         limit the nodes that get written.
-        
+
         This method is used by __reduce__ to handle streaming of NodePaths to a
         pickle file.  The BamWriter case is used by the direct.stdpy.pickle module,
         while the saner, non-BamWriter case is used when the standard pickle module
@@ -6626,7 +6626,7 @@ class NodePathCollection:
     def get_collide_mask(self) -> BitMask_uint32_t_32:
         """Returns the union of all of the into_collide_masks for nodes at this level
         and below.  This is the same thing as node()->get_net_collide_mask().
-        
+
         If you want to return what the into_collide_mask of this node itself is,
         without regard to its children, use node()->get_into_collide_mask().
         """
@@ -6634,7 +6634,7 @@ class NodePathCollection:
     def set_collide_mask(self, new_mask: BitMask_uint32_t_32, bits_to_change: BitMask_uint32_t_32 = ..., node_type: TypeHandle = ...) -> None:
         """Recursively applies the indicated CollideMask to the into_collide_masks for
         all nodes at this level and below.
-        
+
         The default is to change all bits, but if bits_to_change is not all bits
         on, then only the bits that are set in bits_to_change are modified,
         allowing this call to change only a subset of the bits in the subgraph.
@@ -6645,7 +6645,7 @@ class NodePathCollection:
         NodePath's bottom nodes and below This is a tight bounding box; it will
         generally be tighter than the bounding volume returned by get_bounds() (but
         it is more expensive to compute).
-        
+
         The return value is true if any points are within the bounding volume, or
         false if none are.
         """
@@ -6656,12 +6656,12 @@ class NodePathCollection:
         """`(self, tex: Texture, priority: int = ...)`:
         Adds the indicated texture to the list of textures that will be rendered on
         the default texture stage.
-        
+
         This is the deprecated single-texture variant of this method; it is now
         superceded by set_texture() that accepts a stage and texture.  However,
         this method may be used in the presence of multitexture if you just want to
         adjust the default stage.
-        
+
         `(self, stage: TextureStage, tex: Texture, priority: int = ...)`:
         Adds the indicated texture to the list of textures that will be rendered on
         the indicated multitexture stage.  If there are multiple texture stages
@@ -6679,7 +6679,7 @@ class NodePathCollection:
         the indicated stage.  This is different from not specifying a texture;
         rather, this specifically contradicts set_texture() at a higher node level
         (or, with a priority, overrides a set_texture() at a lower level).
-        
+
         `(self, priority: int = ...)`:
         Sets the geometry at this level and below to render using no texture, on
         any stage.  This is different from not specifying a texture; rather, this
@@ -6755,7 +6755,7 @@ class NodePathCollection:
 class AttribNodeRegistry:
     """This global object records NodePaths that are referenced by scene graph
     attribs, such as ClipPlaneAttribs and LightAttribs.
-    
+
     Its primary purpose is to unify attribs that are loaded in from bam files.
     Attrib nodes are identified by name and type; when a bam file that contains
     references to some attrib nodes is loaded, those nodes are first looked up
@@ -6768,12 +6768,12 @@ class AttribNodeRegistry:
         """Adds the indicated NodePath to the registry.  The name and type of the node
         are noted at the time of this call; if the name changes later, it will not
         update the registry index.
-        
+
         The NodePath must reference some kind of an attribute node, such as a
         LightNode or a PlaneNode.  When bam files that reference an attribute node
         of the same type and the same name are loaded, they will quietly be
         redirected to reference this NodePath.
-        
+
         If there is already a node matching the indicated name and type, it will be
         replaced.
         """
@@ -6784,10 +6784,10 @@ class AttribNodeRegistry:
         Removes the indicated NodePath from the registry.  The name of the node
         must not have changed since the matching call to add_node(), or it will not
         be successfully removed.
-        
+
         Returns true if the NodePath is found and removed, false if it is not found
         (for instance, because the name has changed).
-        
+
         `(self, n: int)`:
         Removes the nth node from the registry.
         """
@@ -6822,7 +6822,7 @@ class AttribNodeRegistry:
         (assuming its name hasn't changed since it was recorded in the registry),
         or -1 if the NodePath cannot be found (for instance, because its name has
         changed).
-        
+
         `(self, type: TypeHandle, name: str)`:
         Returns the index number of the node with the indicated type and name in
         the registry, or -1 if there is no such node in the registry.
@@ -6914,24 +6914,24 @@ class AuxBitplaneAttrib(RenderAttrib):
     bitplanes above and beyond the standard depth and color.  This attrib
     controls what gets rendered into those additional bitplanes.  It can also
     affect what goes into the alpha channel of the primary color buffer.
-    
+
     ABO_glow: copy the glow map into the alpha channel of the primary frame
     buffer.  If there is no glow map, set it to zero.  Caveat: it is not
     possible to write glow or depth values to the framebuffer alpha channel at
     the same time as using alpha blending or alpha testing.  Any attempt to use
     transparency, blending, or alpha testing will cause this flag to be
     overridden.
-    
+
     ABO_aux_normal: put the camera-space normal into the into the R,G
     components of the first auxiliary bitplane.
-    
+
     ABO_aux_modelz: put the clip-space Z coordinate of the center of the model
     (after perspective divide) into the B channel of the first auxiliary
     bitplane.
-    
+
     ABO_aux_glow: put a copy of the glow map into the alpha channel of the
     first auxiliary bitplane.  If there is no glow map, set it to zero.
-    
+
     AuxBitplaneAttrib is relevant only when shader generation is enabled.
     Otherwise, it has no effect.
     """
@@ -6949,7 +6949,7 @@ class AuxBitplaneAttrib(RenderAttrib):
     def make(outputs: int = ...) -> RenderAttrib:
         """`()`:
         Constructs a default AuxBitplaneAttrib object.
-        
+
         `(outputs: int)`:
         Constructs a specified AuxBitplaneAttrib object.
         """
@@ -6973,7 +6973,7 @@ class AuxSceneData(TypedReferenceCount):
     """This is a base class for a generic data structure that can be attached per-
     instance to the camera, to store per-instance data that must be preserved
     over multiple frames.
-    
+
     In particular, this is used to implement the FadeLODNode, which must
     remember during traversal at what point it is in the fade, separately for
     each instance and for each camera.
@@ -7016,7 +7016,7 @@ class BamFile(BamEnums):
     """The principle public interface to reading and writing Bam disk files.  See
     also BamReader and BamWriter, the more general implementation of this
     class.
-    
+
     Bam files are most often used to store scene graphs or subgraphs, and by
     convention they are given filenames ending in the extension ".bam" when
     they are used for this purpose.  However, a Bam file may store any
@@ -7038,7 +7038,7 @@ class BamFile(BamEnums):
         """`(self, bam_filename: Filename, report_errors: bool = ...)`:
         Attempts to open the indicated filename for reading.  Returns true if
         successful, false on error.
-        
+
         `(self, _in: istream, bam_filename: str = ..., report_errors: bool = ...)`:
         Attempts to open the indicated stream for reading.  The filename is just
         for information purposes only.  Returns true if successful, false on error.
@@ -7050,7 +7050,7 @@ class BamFile(BamEnums):
         """Reads and returns the next object from the Bam file, or NULL if the end of
         the file has been reached, or if there is an error condition.  Use is_eof()
         to differentiate these two cases.
-        
+
         The pointers returned by this method will not be valid for use until
         resolve() is subsequently called.
         """
@@ -7074,12 +7074,12 @@ class BamFile(BamEnums):
         PandaNode that is the root of a scene graph.  (Bam files that store other
         kinds of things are usually given the extension "boo", for "binary other
         objects", to differentiate them from the normal scene graph type file.)
-        
+
         This is a convenience method for when you believe you are reading a scene
         graph bam file.  It reads the one PandaNode and returns it.  It also calls
         resolve() to fully resolve the object, since we expect this will be the
         only object in the file.
-        
+
         If the bam file contains something other than a PandaNode, an error is
         printed and NULL is returned.
         """
@@ -7090,7 +7090,7 @@ class BamFile(BamEnums):
         Attempts to open the indicated file for writing.  If another file by the
         same name already exists, it will be silently removed.  Returns true if
         successful, false otherwise.
-        
+
         `(self, out: ostream, bam_filename: str = ..., report_errors: bool = ...)`:
         Attempts to open the indicated stream for writing.  The filename is just
         for information purposes only.  Returns true if successful, false on error.
@@ -7265,7 +7265,7 @@ class LensNode(PandaNode):
         """`(self, lens: Lens)`:
         Sets up the LensNode using a copy of the indicated Lens.  If the original
         Lens is changed or destroyed, this LensNode is not affected.
-        
+
         `(self, index: int, lens: Lens)`:
         Copies the indicated lens into the specified slot.
         """
@@ -7278,7 +7278,7 @@ class LensNode(PandaNode):
         Sets up the LensNode using this particular Lens pointer.  If the lens is
         subsequently modified, the LensNode properties immediately reflect the
         change.
-        
+
         `(self, index: int, lens: Lens)`:
         Sets the indicated lens.  Although a LensNode normally holds only one lens,
         it may optionally include multiple lenses, each with a different index
@@ -7341,7 +7341,7 @@ class WeakNodePath:
     """This class is a wrapper around a NodePath that, unlike the actual NodePath
     class, doesn't hold a reference count to the node.  Thus the node may be
     detached from the scene graph and destructed at any time.
-    
+
     You can call is_valid() or was_deleted() at any time to determine whether
     the node is still around; if it is, get_node_path() will return the
     associated NodePath.
@@ -7387,17 +7387,17 @@ class WeakNodePath:
         """`(self, other: NodePath)`:
         Returns a number less than zero if this NodePath sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
-        
+
         Two NodePaths are considered equivalent if they consist of exactly the same
         list of nodes in the same order.  Otherwise, they are different; different
         NodePaths will be ranked in a consistent but undefined ordering; the
         ordering is useful only for placing the NodePaths in a sorted container
         like an STL set.
-        
+
         `(self, other: WeakNodePath)`:
         Returns a number less than zero if this WeakNodePath sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
-        
+
         Two WeakNodePaths are considered equivalent if they consist of exactly the
         same list of nodes in the same order.  Otherwise, they are different;
         different WeakNodePaths will be ranked in a consistent but undefined
@@ -7448,7 +7448,7 @@ class Camera(LensNode):
         """Sets the scene that will be rendered by the camera.  This is normally the
         root node of a scene graph, typically a node called 'render', although it
         could represent the root of any subgraph.
-        
+
         Note that the use of this method is now deprecated.  In the absence of an
         explicit scene set on the camera, the camera will render whatever scene it
         is parented into.  This is the preferred way to specify the scene, since it
@@ -7467,7 +7467,7 @@ class Camera(LensNode):
     def set_camera_mask(self, mask: BitMask_uint32_t_32) -> None:
         """Changes the set of bits that represent the subset of the scene graph the
         camera will render.
-        
+
         During the cull traversal, a node is not visited if none of its draw mask
         bits intersect with the camera's camera mask bits.  These masks can be used
         to selectively hide and show different parts of the scene graph from
@@ -7549,7 +7549,7 @@ class Camera(LensNode):
         set_tag_state_key(), if the value of that tag matches tag_state, then the
         indicated state is applied to this node--but only when it is rendered by
         this camera.
-        
+
         This can be used to apply special effects to nodes when they are rendered
         by certain cameras.  It is particularly useful for multipass rendering, in
         which specialty cameras might be needed to render the scene with a
@@ -7663,11 +7663,11 @@ class PlaneNode(PandaNode):
         """Changes the relative importance of this PlaneNode (when it is used as a
         clip plane) relative to the other clip planes that are applied
         simultaneously.
-        
+
         The priority number is used to decide which of the requested clip planes
         are to be activated when more clip planes are requested than the hardware
         will support.  The highest-priority n planes are selected for rendering.
-        
+
         This is similar to TextureStage::set_priority().
         """
         ...
@@ -7714,17 +7714,17 @@ class ClipPlaneAttrib(RenderAttrib):
     def make() -> RenderAttrib:
         """`()`:
         The following is the new, more general interface to the ClipPlaneAttrib.
-        
+
         `(op: _ClipPlaneAttrib_Operation, plane: PlaneNode)`:
         Constructs a new ClipPlaneAttrib object that enables (or disables,
         according to op) the indicated plane(s).
-        
+
         @deprecated Use add_on_plane() or add_off_plane() instead.
-        
+
         `(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode)`; `(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode)`; `(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode, plane4: PlaneNode)`:
         Constructs a new ClipPlaneAttrib object that turns on (or off, according to
         op) the indicate plane(s).
-        
+
         @deprecated Use add_on_plane() or add_off_plane() instead.
         """
         ...
@@ -7749,7 +7749,7 @@ class ClipPlaneAttrib(RenderAttrib):
         If this is O_add, the planes here are added to the set of planes that
         were already on, and if O_remove, the planes here are removed from the set
         of planes that were on.
-        
+
         @deprecated ClipPlaneAttribs nowadays have a separate list of on_planes and
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
@@ -7757,7 +7757,7 @@ class ClipPlaneAttrib(RenderAttrib):
         ...
     def get_num_planes(self) -> int:
         """Returns the number of planes listed in the attribute.
-        
+
         @deprecated ClipPlaneAttribs nowadays have a separate list of on_planes and
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
@@ -7765,7 +7765,7 @@ class ClipPlaneAttrib(RenderAttrib):
         ...
     def get_plane(self, n: int) -> PlaneNode:
         """Returns the nth plane listed in the attribute.
-        
+
         @deprecated ClipPlaneAttribs nowadays have a separate list of on_planes and
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
@@ -7774,7 +7774,7 @@ class ClipPlaneAttrib(RenderAttrib):
     def has_plane(self, plane: PlaneNode) -> bool:
         """Returns true if the indicated plane is listed in the attrib, false
         otherwise.
-        
+
         @deprecated ClipPlaneAttribs nowadays have a separate list of on_planes and
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
@@ -7783,14 +7783,14 @@ class ClipPlaneAttrib(RenderAttrib):
     def add_plane(self, plane: PlaneNode) -> RenderAttrib:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes.
-        
+
         @deprecated Use add_on_plane() or add_off_plane() instead.
         """
         ...
     def remove_plane(self, plane: PlaneNode) -> RenderAttrib:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes.
-        
+
         @deprecated Use remove_on_plane() or remove_off_plane() instead.
         """
         ...
@@ -7929,12 +7929,12 @@ class ColorAttrib(RenderAttrib):
         ...
     def get_color_type(self) -> _ColorAttrib_Type:
         """Returns the type of color specified by this ColorAttrib.  The options are:
-        
+
         T_vertex - use the vertex color specified in the geometry itself.
-        
+
         T_flat - use the color specified in this ColorAttrib for all geometry.  You
         can get this color via get_color().
-        
+
         T_off - use the color white.
         """
         ...
@@ -8040,14 +8040,14 @@ class ColorBlendAttrib(RenderAttrib):
     def make(mode: _ColorBlendAttrib_Mode) -> RenderAttrib:
         """`(mode: _ColorBlendAttrib_Mode)`:
         Constructs a new ColorBlendAttrib object.
-        
+
         @deprecated Use the three- or four-parameter constructor instead.
-        
+
         `(rgb_mode: _ColorBlendAttrib_Mode, rgb_a: _ColorBlendAttrib_Operand, rgb_b: _ColorBlendAttrib_Operand, alpha_mode: _ColorBlendAttrib_Mode, alpha_a: _ColorBlendAttrib_Operand, alpha_b: _ColorBlendAttrib_Operand, color: LVecBase4f = ...)`:
         Constructs a new ColorBlendAttrib object that enables special-effect
         blending.  This supercedes transparency.  This form is used to specify
         separate blending parameters for the RGB and alpha channels.
-        
+
         `(mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: LVecBase4f = ...)`:
         Constructs a new ColorBlendAttrib object that enables special-effect
         blending.  This supercedes transparency.  The given mode and operands are
@@ -8090,7 +8090,7 @@ class ColorBlendAttrib(RenderAttrib):
     def involves_constant_color(self, operand: _ColorBlendAttrib_Operand = ...) -> bool:
         """`(self)`:
         Returns true if the this attrib uses the constant color, false otherwise.
-        
+
         `(self, operand: _ColorBlendAttrib_Operand)`:
         Returns true if the indicated operand uses the constant color, false
         otherwise.
@@ -8100,7 +8100,7 @@ class ColorBlendAttrib(RenderAttrib):
         """`(self)`:
         Returns true if the this attrib uses the color scale attrib, false
         otherwise.
-        
+
         `(self, operand: _ColorBlendAttrib_Operand)`:
         Returns true if the indicated operand uses the color scale attrib, false
         otherwise.
@@ -8245,19 +8245,19 @@ class CompassEffect(RenderEffect):
     """A CompassEffect causes a node to inherit its rotation (or pos or scale, if
     specified) from some other reference node in the graph, or more often from
     the root.
-    
+
     In its purest form, a CompassEffect is used to keep the node's rotation
     fixed relative to the top of the scene graph, despite other transforms that
     may exist above the node.  Hence the name: the node behaves like a magnetic
     compass, always pointing in the same direction.
-    
+
     As an couple of generalizing extensions, the CompassEffect may also be set
     up to always orient its node according to some other reference node than
     the root of the scene graph.  Furthermore, it may optionally adjust any of
     pos, rotation, or scale, instead of necessarily rotation; and it may adjust
     individual pos and scale components.  (Rotation may not be adjusted on an
     individual component basis; that's just asking for trouble.)
-    
+
     Be careful when using the pos and scale modes.  In these modes, it's
     possible for the CompassEffect to move its node far from its normal
     bounding volume, causing culling to fail.  If this is an issue, you may
@@ -8357,7 +8357,7 @@ class GeomNode(PandaNode):
         first, and returns the new copy--this provides a "copy on write" that
         ensures that the Geom that is returned is unique to this GeomNode and is
         not shared with any other GeomNodes.
-        
+
         Note that if this method is called in a downstream stage (for instance,
         during cull or draw), then it will propagate the new list of Geoms upstream
         all the way to pipeline stage 0, which may step on changes that were made
@@ -8376,7 +8376,7 @@ class GeomNode(PandaNode):
         just the RenderState directly associated with the Geom; the actual state in
         which the Geom is rendered will also be affected by RenderStates that
         appear on the scene graph in nodes above this GeomNode.
-        
+
         Note that if this method is called in a downstream stage (for instance,
         during cull or draw), then it will propagate the new list of Geoms upstream
         all the way to pipeline stage 0, which may step on changes that were made
@@ -8397,7 +8397,7 @@ class GeomNode(PandaNode):
     def set_geom(self, n: int, geom: Geom) -> None:
         """Replaces the nth Geom of the node with a new pointer.  There must already
         be a Geom in this slot.
-        
+
         Note that if this method is called in a downstream stage (for instance,
         during cull or draw), then it will propagate the new list of Geoms upstream
         all the way to pipeline stage 0, which may step on changes that were made
@@ -8422,7 +8422,7 @@ class GeomNode(PandaNode):
         indexed triangles.  Normally there is no reason to do this, but it can be
         useful as an early preprocessing step, to allow a later call to unify() to
         proceed more quickly.
-        
+
         See also SceneGraphReducer::decompose(), which is the normal way this is
         called.
         """
@@ -8435,12 +8435,12 @@ class GeomNode(PandaNode):
         possible.  This may result in composite primitives, such as triangle strips
         and triangle fans, being decomposed into triangles.  See also
         Geom::unify().
-        
+
         max_indices represents the maximum number of indices that will be put in
         any one GeomPrimitive.  If preserve_order is true, then the primitives will
         not be reordered during the operation, even if this results in a suboptimal
         result.
-        
+
         In order for this to be successful, the primitives must reference the same
         GeomVertexData, have the same fundamental primitive type, and have
         compatible shade models.
@@ -8493,7 +8493,7 @@ class CullBinAttrib(RenderAttrib):
     def make(bin_name: str, draw_order: int) -> RenderAttrib:
         """Constructs a new CullBinAttrib assigning geometry into the named bin.  If
         the bin name is the empty string, the default bin is used.
-        
+
         The draw_order specifies further ordering information which is relevant
         only to certain kinds of bins (in particular CullBinFixed type bins).
         """
@@ -8566,7 +8566,7 @@ class CullBinManager(CullBinEnums):
         """`(self, bin_index: int)`:
         Returns the type of the bin with the indicated bin_index (where bin_index
         was retrieved by get_bin() or find_bin()).
-        
+
         `(self, name: str)`:
         Returns the type of the bin with the indicated name.
         """
@@ -8578,13 +8578,13 @@ class CullBinManager(CullBinEnums):
         """`(self, bin_index: int, type: _CullBinEnums_BinType)`:
         Changes the type of the bin with the indicated bin_index (where bin_index
         was retrieved by get_bin() or find_bin()).
-        
+
         The change might be effective immediately, or it might take place next
         frame, depending on the bin type.
-        
+
         `(self, name: str, type: _CullBinEnums_BinType)`:
         Changes the type of the bin with the indicated name.
-        
+
         The change might be effective immediately, or it might take place next
         frame, depending on the bin type.
         """
@@ -8596,13 +8596,13 @@ class CullBinManager(CullBinEnums):
         """`(self, bin_index: int)`:
         Returns the sort order of the bin with the indicated bin_index (where
         bin_index was retrieved by get_bin() or find_bin()).
-        
+
         The bins are rendered in increasing order by their sort order; this number
         may be changed from time to time to reorder the bins.
-        
+
         `(self, name: str)`:
         Returns the sort order of the bin with the indicated name.
-        
+
         The bins are rendered in increasing order by their sort order; this number
         may be changed from time to time to reorder the bins.
         """
@@ -8614,13 +8614,13 @@ class CullBinManager(CullBinEnums):
         """`(self, bin_index: int, sort: int)`:
         Changes the sort order of the bin with the indicated bin_index (where
         bin_index was retrieved by get_bin() or find_bin()).
-        
+
         The bins are rendered in increasing order by their sort order; this number
         may be changed from time to time to reorder the bins.
-        
+
         `(self, name: str, sort: int)`:
         Changes the sort order of the bin with the indicated name.
-        
+
         The bins are rendered in increasing order by their sort order; this number
         may be changed from time to time to reorder the bins.
         """
@@ -8632,12 +8632,12 @@ class CullBinManager(CullBinEnums):
         """`(self, bin_index: int)`:
         Returns the active flag of the bin with the indicated bin_index (where
         bin_index was retrieved by get_bin() or find_bin()).
-        
+
         When a bin is marked inactive, all geometry assigned to it is not rendered.
-        
+
         `(self, name: str)`:
         Returns the active flag of the bin with the indicated name.
-        
+
         When a bin is marked inactive, all geometry assigned to it is not rendered.
         """
         ...
@@ -8648,12 +8648,12 @@ class CullBinManager(CullBinEnums):
         """`(self, bin_index: int, active: bool)`:
         Changes the active flag of the bin with the indicated bin_index (where
         bin_index was retrieved by get_bin() or find_bin()).
-        
+
         When a bin is marked inactive, all geometry assigned to it is not rendered.
-        
+
         `(self, name: str, active: bool)`:
         Changes the active flag of the bin with the indicated name.
-        
+
         When a bin is marked inactive, all geometry assigned to it is not rendered.
         """
         ...
@@ -8663,14 +8663,14 @@ class CullBinManager(CullBinEnums):
         """Returns true if the bin with the given bin_index is configured to flash at
         a predetermined color (where bin_index was retrieved by get_bin() or
         find_bin()).
-        
+
         This method is not available in release builds.
         """
         ...
     def get_bin_flash_color(self, bin_index: int) -> LVecBase4f:
         """Returns the color that this bin has been configured to flash to, if
         configured.
-        
+
         This method is not available in release builds.
         """
         ...
@@ -8678,13 +8678,13 @@ class CullBinManager(CullBinEnums):
         """When set to true, the given bin_index is configured to flash at a
         predetermined color (where bin_index was retrieved by get_bin() or
         find_bin()).
-        
+
         This method is not available in release builds.
         """
         ...
     def set_bin_flash_color(self, bin_index: int, color: Vec4f) -> None:
         """Changes the flash color for the given bin index.
-        
+
         This method is not available in release builds.
         """
         ...
@@ -8736,7 +8736,7 @@ class CullFaceAttrib(RenderAttrib):
         """Constructs a new CullFaceAttrib object that specifies how to cull geometry.
         By Panda convention, vertices are ordered counterclockwise when seen from
         the front, so the M_cull_clockwise will cull backfacing polygons.
-        
+
         M_cull_unchanged is an identity attrib; if this is applied to vertices
         without any other intervening attrib, it is the same as applying the
         default attrib.
@@ -8787,15 +8787,15 @@ class WorkingNodePath:
     """This is a class designed to support low-overhead traversals of the complete
     scene graph, with a memory of the complete path through the graph at any
     given point.
-    
+
     You could just use a regular NodePath to do this, but since the NodePath
     requires storing NodePathComponents on each node as it is constructed, and
     then removing them when it destructs, there is considerable overhead in
     that approach.
-    
+
     The WorkingNodePath eliminates this overhead (but does not guarantee
     consistency if the scene graph changes while the path is held).
-    
+
     At any given point, you may ask the WorkingNodePath for its actual
     NodePath, and it will construct and return a new NodePath representing the
     complete generated chain.
@@ -8809,7 +8809,7 @@ class WorkingNodePath:
 class CullTraverserData:
     """This collects together the pieces of data that are accumulated for each
     node while walking the scene graph during the cull traversal.
-    
+
     Having this as a separate object simplifies the parameter list to
     CullTraverser::r_traverse(), as well as to other functions like
     PandaNode::cull_callback().  It also makes it easier to add cull
@@ -9013,7 +9013,7 @@ class Fog(PandaNode):
     object is now a PandaNode, which means it can be used similarly to a Light
     to define effects relative to a particular coordinate system within the
     scene graph.
-    
+
     In exponential mode, the fog effects are always camera-relative, and it
     does not matter where the Fog node is parented.  However, in linear mode,
     the onset and opaque distances are defined as offsets along the local
@@ -9041,7 +9041,7 @@ class Fog(PandaNode):
         point to the opaque point (or for the distances specified in
         set_linear_range), and the fog object should be parented into the scene
         graph, or to the camera.
-        
+
         If this is anything else, the onset point and opaque point are not used,
         and the fog effect is based on the value specified to set_exp_density(),
         and it doesn't matter to which node the fog object is parented, or if it is
@@ -9055,7 +9055,7 @@ class Fog(PandaNode):
     def set_color(self, color: Vec4f) -> None:
         """`(self, color: LVecBase4f)`:
         Sets the color of the fog.  The alpha component is not used.
-        
+
         `(self, r: float, g: float, b: float)`:
         Sets the color of the fog.
         """
@@ -9065,11 +9065,11 @@ class Fog(PandaNode):
     def set_linear_range(self, onset: float, opaque: float) -> None:
         """Specifies the effects of the fog in linear distance units.  This is only
         used if the mode is M_linear.
-        
+
         This specifies a fog that begins at distance onset units from the origin,
         and becomes totally opaque at distance opaque units from the origin, along
         the forward axis (usually Y).
-        
+
         This function also implicitly sets the mode the M_linear, if it is not
         already set.
         """
@@ -9104,26 +9104,26 @@ class Fog(PandaNode):
         """Fog effects are traditionally defined in camera-relative space, but the
         Panda Fog node has a special mode in which it can define a linear fog
         effect in an arbitrary coordinate space.
-        
+
         This is done by specifying 3-d onset and opaque points, and parenting the
         Fog object somewhere within the scene graph.  In this mode, the fog will be
         rendered as if it extended along the vector from the onset point to the
         opaque point, in 3-d space.
-        
+
         However, the underlying fog effect supported by hardware is generally only
         one-dimensional, and must be rendered based on linear distance from the
         camera plane.  Thus, this in-the-world effect is most effective when the
         fog vector from onset point to opaque point is most nearly parallel to the
         camera's eye vector.
-        
+
         As the angle between the fog vector and the eye vector increases, the
         accuracy of the effect diminishes, up to a complete breakdown of the effect
         at a 90 degree angle.
-        
+
         This function exists to define the workaround to this problem.  The linear
         fallback parameters given here specify how the fog should be rendered when
         the parameters are exceeded in this way.
-        
+
         The angle parameter is the minimum angle, in degrees, of the fog vector to
         the eye vector, at which the fallback effect should be employed.  The onset
         and opaque parameters specify the camera-relative onset and opaque
@@ -9139,7 +9139,7 @@ class Fog(PandaNode):
     def set_exp_density(self, exp_density: float) -> None:
         """Sets the density of the fog for exponential calculations.  This is only
         used if the mode is not M_linear.
-        
+
         If the mode is currently set to M_linear, this function implicitly sets it
         to M_exponential.
         """
@@ -9246,7 +9246,7 @@ class CullTraverser(TypedReferenceCount):
     def get_world_transform(self) -> TransformState:
         """Returns the position of the starting node relative to the camera.  This is
         the inverse of the camera transform.
-        
+
         Note that this value is always the position of the starting node, not the
         current node, even if it is sampled during a traversal.  To get the
         transform of the current node use
@@ -9271,7 +9271,7 @@ class CullTraverser(TypedReferenceCount):
     def get_view_frustum(self) -> GeometricBoundingVolume:
         """Returns the bounding volume that corresponds to the view frustum, or NULL
         if the view frustum is not in use or has not been set.
-        
+
         Note that the view frustum returned here is always in the coordinate space
         of the starting node, not the current node, even if it is sampled during a
         traversal.  To get the view frustum in the current node's coordinate space,
@@ -9292,7 +9292,7 @@ class CullTraverser(TypedReferenceCount):
         Traverses from the next node with the given data, which has been
         constructed with the node but has not yet been converted into the node's
         space.
-        
+
         `(self, root: NodePath)`:
         Begins the traversal from the indicated node.
         """
@@ -9406,7 +9406,7 @@ class CullResult(ReferenceCount):
     """This stores the result of a BinCullHandler traversal: an ordered collection
     of CullBins, each of which holds a number of Geoms and RenderStates to be
     rendered in some defined order.
-    
+
     This is also used to keep the results of last frame's cull traversal around
     to make next frame's traversal of the same scene a little easier.
     """
@@ -9431,7 +9431,7 @@ class CullResult(ReferenceCount):
         cull.  This will be a hierarchy of nodes, one node for each bin, each of
         which will in term be a parent of a number of GeomNodes, representing the
         geometry drawn in each bin.
-        
+
         This is useful mainly for high-level debugging and abstraction tools; it
         should not be mistaken for the low-level cull result itself.  For the low-
         level cull result, use draw() to efficiently draw the culled scene.
@@ -9454,24 +9454,24 @@ class DepthOffsetAttrib(RenderAttrib):
     """This is a special kind of attribute that instructs the graphics driver to
     apply an offset or bias to the generated depth values for rendered
     polygons, before they are written to the depth buffer.
-    
+
     This can be used to shift polygons forward slightly, to resolve depth
     conflicts.  The cull traverser may optionally use this, for instance, to
     implement decals.  However, driver support for this feature seems to be
     spotty, so use with caution.
-    
+
     The bias is always an integer number, and each integer increment represents
     the smallest possible increment in Z that is sufficient to completely
     resolve two coplanar polygons.  Positive numbers are closer towards the
     camera.
-    
+
     Nested DepthOffsetAttrib values accumulate; that is, a DepthOffsetAttrib
     with a value of 1 beneath another DepthOffsetAttrib with a value of 2
     presents a net offset of 3.  (A DepthOffsetAttrib will not, however,
     combine with any other DepthOffsetAttribs with a lower override parameter.)
     The net value should probably not exceed 16 or drop below 0 for maximum
     portability.
-    
+
     Also, and only tangentially related, the DepthOffsetAttrib can be used to
     constrain the Z output value to a subset of the usual [0, 1] range (or
     reversing its direction) by specifying a new min_value and max_value.
@@ -9490,7 +9490,7 @@ class DepthOffsetAttrib(RenderAttrib):
         """`(offset: int = ...)`:
         Constructs a new DepthOffsetAttrib object that indicates the relative
         amount of bias to write to the depth buffer for subsequent geometry.
-        
+
         `(offset: int, min_value: float, max_value: float)`:
         Constructs a new DepthOffsetAttrib object that indicates the bias, and also
         specifies a minimum and maximum (or, more precisely, nearest and farthest)
@@ -9605,24 +9605,24 @@ class Light:
     def has_color_temperature(self) -> bool:
         """Returns true if the color was specified as a temperature in kelvins, and
         get_color_temperature is defined.
-        
+
         @since 1.10.0
         """
         ...
     def get_color_temperature(self) -> float:
         """Returns the basic color temperature of the light, assuming
         has_color_temperature() returns true.
-        
+
         @since 1.10.0
         """
         ...
     def set_color_temperature(self, temperature: float) -> None:
         """Sets the color temperature of the light in kelvins.  This will recalculate
         the light's color.
-        
+
         The default value is 6500 K, corresponding to a perfectly white light
         assuming a D65 white point.
-        
+
         @since 1.10.0
         """
         ...
@@ -9646,11 +9646,11 @@ class Light:
     def set_priority(self, priority: int) -> None:
         """Changes the relative importance of this light relative to the other lights
         that are applied simultaneously.
-        
+
         The priority number is used to decide which of the requested lights are to
         be selected for rendering when more lights are requested than the hardware
         will support.  The highest-priority n lights are selected for rendering.
-        
+
         This is similar to TextureStage::set_priority().
         """
         ...
@@ -9697,17 +9697,17 @@ class LightAttrib(RenderAttrib):
     def make() -> RenderAttrib:
         """`()`:
         The following is the new, more general interface to the LightAttrib.
-        
+
         `(op: _LightAttrib_Operation, light: Light)`:
         Constructs a new LightAttrib object that turns on (or off, according to op)
         the indicated light(s).
-        
+
         @deprecated Use add_on_light() or add_off_light() instead.
-        
+
         `(op: _LightAttrib_Operation, light1: Light, light2: Light)`; `(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light)`; `(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light, light4: Light)`:
         Constructs a new LightAttrib object that turns on (or off, according to op)
         the indicate light(s).
-        
+
         @deprecated Use add_on_light() or add_off_light() instead.
         """
         ...
@@ -9732,7 +9732,7 @@ class LightAttrib(RenderAttrib):
         this is O_add, the lights here are added to the set of lights that were
         already on, and if O_remove, the lights here are removed from the set of
         lights that were on.
-        
+
         @deprecated LightAttribs nowadays have a separate list of on_lights and
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
@@ -9740,7 +9740,7 @@ class LightAttrib(RenderAttrib):
         ...
     def get_num_lights(self) -> int:
         """Returns the number of lights listed in the attribute.
-        
+
         @deprecated LightAttribs nowadays have a separate list of on_lights and
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
@@ -9748,7 +9748,7 @@ class LightAttrib(RenderAttrib):
         ...
     def get_light(self, n: int) -> Light:
         """Returns the nth light listed in the attribute.
-        
+
         @deprecated LightAttribs nowadays have a separate list of on_lights and
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
@@ -9757,7 +9757,7 @@ class LightAttrib(RenderAttrib):
     def has_light(self, light: Light) -> bool:
         """Returns true if the indicated light is listed in the attrib, false
         otherwise.
-        
+
         @deprecated LightAttribs nowadays have a separate list of on_lights and
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
@@ -9766,14 +9766,14 @@ class LightAttrib(RenderAttrib):
     def add_light(self, light: Light) -> RenderAttrib:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights.
-        
+
         @deprecated Use add_on_light() or add_off_light() instead.
         """
         ...
     def remove_light(self, light: Light) -> RenderAttrib:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights.
-        
+
         @deprecated Use remove_on_light() or remove_off_light() instead.
         """
         ...
@@ -9939,7 +9939,7 @@ class LightRampAttrib(RenderAttrib):
     def make_single_threshold(thresh0: float, lev0: float) -> RenderAttrib:
         """Constructs a new LightRampAttrib object.  This causes the luminance of the
         diffuse lighting contribution to be quantized using a single threshold:
-        
+
         @code
         if (original_luminance > threshold0) {
           luminance = level0;
@@ -9953,7 +9953,7 @@ class LightRampAttrib(RenderAttrib):
     def make_double_threshold(thresh0: float, lev0: float, thresh1: float, lev1: float) -> RenderAttrib:
         """Constructs a new LightRampAttrib object.  This causes the luminance of the
         diffuse lighting contribution to be quantized using two thresholds:
-        
+
         @code
         if (original_luminance > threshold1) {
           luminance = level1;
@@ -9969,18 +9969,18 @@ class LightRampAttrib(RenderAttrib):
     def make_hdr0() -> RenderAttrib:
         """Constructs a new LightRampAttrib object.  This causes an HDR tone mapping
         operation to be applied.
-        
+
         Normally, brightness values greater than 1 cannot be distinguished from
         each other, causing very brightly lit objects to wash out white and all
         detail to be erased.  HDR tone mapping remaps brightness values in the
         range 0-infinity into the range (0,1), making it possible to distinguish
         detail in scenes whose brightness exceeds 1.
-        
+
         However, the monitor has finite contrast.  Normally, all of that contrast
         is used to represent brightnesses in the range 0-1.  The HDR0 tone mapping
         operator 'steals' one quarter of that contrast to represent brightnesses in
         the range 1-infinity.
-        
+
         @code
         FINAL_RGB = (RGB^3 + RGB^2 + RGB) / (RGB^3 + RGB^2 + RGB + 1)
         @endcode
@@ -9990,18 +9990,18 @@ class LightRampAttrib(RenderAttrib):
     def make_hdr1() -> RenderAttrib:
         """Constructs a new LightRampAttrib object.  This causes an HDR tone mapping
         operation to be applied.
-        
+
         Normally, brightness values greater than 1 cannot be distinguished from
         each other, causing very brightly lit objects to wash out white and all
         detail to be erased.  HDR tone mapping remaps brightness values in the
         range 0-infinity into the range (0,1), making it possible to distinguish
         detail in scenes whose brightness exceeds 1.
-        
+
         However, the monitor has finite contrast.  Normally, all of that contrast
         is used to represent brightnesses in the range 0-1.  The HDR1 tone mapping
         operator 'steals' one third of that contrast to represent brightnesses in
         the range 1-infinity.
-        
+
         @code
         FINAL_RGB = (RGB^2 + RGB) / (RGB^2 + RGB + 1)
         @endcode
@@ -10011,18 +10011,18 @@ class LightRampAttrib(RenderAttrib):
     def make_hdr2() -> RenderAttrib:
         """Constructs a new LightRampAttrib object.  This causes an HDR tone mapping
         operation to be applied.
-        
+
         Normally, brightness values greater than 1 cannot be distinguished from
         each other, causing very brightly lit objects to wash out white and all
         detail to be erased.  HDR tone mapping remaps brightness values in the
         range 0-infinity into the range (0,1), making it possible to distinguish
         detail in scenes whose brightness exceeds 1.
-        
+
         However, the monitor has finite contrast.  Normally, all of that contrast
         is used to represent brightnesses in the range 0-1.  The HDR2 tone mapping
         operator 'steals' one half of that contrast to represent brightnesses in
         the range 1-infinity.
-        
+
         @code
         FINAL_RGB = (RGB) / (RGB + 1)
         @endcode
@@ -10055,7 +10055,7 @@ class Loader(TypedReferenceCount, Namable):
     """A convenient class for loading models from disk, in bam or egg format (or
     any of a number of other formats implemented by a LoaderFileType, such as
     ptloader).
-    
+
     This class supports synchronous as well as asynchronous loading.  In
     asynchronous loading, the model is loaded in the background by a thread,
     and an event will be generated when the model is available.  If threading
@@ -10119,7 +10119,7 @@ class Loader(TypedReferenceCount, Namable):
         ...
     def load_sync(self, filename: Filepath, options: LoaderOptions = ...) -> PandaNode:
         """Loads the file immediately, waiting for it to complete.
-        
+
         If search is true, the file is searched for along the model path;
         otherwise, only the exact filename is loaded.
         """
@@ -10135,7 +10135,7 @@ class Loader(TypedReferenceCount, Namable):
         filename you wish to load, and then add that object to the Loader with
         load_async.  This function will return immediately, and the model will be
         loaded in the background.
-        
+
         To determine when the model has completely loaded, you may poll
         request->is_ready() from time to time, or set the done_event on the request
         object and listen for that event.  When the model is ready, you may
@@ -10156,7 +10156,7 @@ class Loader(TypedReferenceCount, Namable):
         filename you wish to load, and then add that object to the Loader with
         save_async.  This function will return immediately, and the model will be
         loaded in the background.
-        
+
         To determine when the model has completely loaded, you may poll
         request->is_ready() from time to time, or set the done_event on the request
         object and listen for that event.  When the request is ready, you may
@@ -10421,7 +10421,7 @@ class ModelNode(PandaNode):
     unit, like a car or a room, for instance.  It doesn't affect rendering or
     any other operations; it's primarily useful as a high-level model
     indication.
-    
+
     ModelNodes are created in response to a <Model> { 1 } flag within an egg
     file.
     """
@@ -10440,21 +10440,21 @@ class ModelNode(PandaNode):
         operation to affect the transform stored on this node, and/or the node
         itself.  In the order from weakest to strongest restrictions, the possible
         flags are:
-        
+
         PT_drop_node - This node should be removed at the next flatten call.
-        
+
         PT_none - The transform may be adjusted at will.  The node itself will not
         be removed.  This is the default.
-        
+
         PT_net - Preserve the net transform from the root, but it's acceptable to
         modify the local transform stored on this particular node if necessary, so
         long as the net transform is not changed.  This eliminates the need to drop
         an extra transform on the node above.
-        
+
         PT_local - The local (and net) transform should not be changed in any way.
         If necessary, an extra transform will be left on the node above to
         guarantee this.  This is a stronger restriction than PT_net.
-        
+
         PT_no_touch - The local transform will not be changed, the node will not be
         removed, and furthermore any flatten operation will not continue below this
         node--this node and all descendents are protected from the effects of
@@ -10469,7 +10469,7 @@ class ModelNode(PandaNode):
     def set_preserve_attributes(self, attrib_mask: int) -> None:
         """Sets the preserve_attributes flag.  This restricts the ability of a flatten
         operation to affect the render attributes stored on this node.
-        
+
         The value should be the union of bits from SceneGraphReducer::AttribTypes
         that represent the attributes that should *not* be changed.
         """
@@ -10523,7 +10523,7 @@ class ModelRoot(ModelNode):
         """Sets the full pathname of the model represented by this node, as found on
         disk.  This is mainly useful for reference purposes, but is also used to
         index the ModelRoot into the ModelPool.
-        
+
         This is normally set automatically when a model is loaded, and should not
         be set directly by the user.  If you change this on a loaded model, then
         ModelPool::release_model() may fail.
@@ -10570,11 +10570,11 @@ class ModelPool:
     the default behavior is thus to make instances: use with caution.  Use the
     copy_subgraph() method on Node (or use NodePath::copy_to) to make
     modifiable copies of the node.
-    
+
     Unlike TexturePool, this class does not automatically resolve the model
     filenames before loading, so a relative path and an absolute path to the
     same model will appear to be different filenames.
-    
+
     However, see the Loader class, which is now the preferred interface for
     loading models.  The Loader class can resolve filenames, supports threaded
     loading, and can automatically consult the ModelPool, according to the
@@ -10593,7 +10593,7 @@ class ModelPool:
         and returns true to indicate success, or false to indicate failure.  If
         this returns true, it is probable that a subsequent call to load_model()
         with the same model name will return a valid PandaNode.
-        
+
         However, even if this returns true, it is still possible for a subsequent
         call to load_model() to fail.  This can happen if cache-check-timestamps is
         true, and the on-disk file is subsequently modified to replace it with an
@@ -10623,9 +10623,9 @@ class ModelPool:
         """`(filename: Filename, model: ModelRoot)`:
         Adds the indicated already-loaded model to the pool.  The model will
         replace any previously-loaded model in the pool that had the same filename.
-        
+
         @deprecated Use the one-parameter add_model(model) instead.
-        
+
         `(model: ModelRoot)`:
         Adds the indicated already-loaded model to the pool.  The model will
         replace any previously-loaded model in the pool that had the same filename.
@@ -10642,15 +10642,15 @@ class ModelPool:
         loaded again; the model may then be freed.  If this function is never
         called, a reference count will be maintained on every model every loaded,
         and models will never be freed.
-        
+
         @deprecated Use release_model(model) instead.
-        
+
         `(model: ModelRoot)`:
         Removes the indicated model from the pool, indicating it will never be
         loaded again; the model may then be freed.  If this function (and
         garbage_collect()) is never called, a reference count will be maintained on
         every model every loaded, and models will never be freed.
-        
+
         The model's get_fullpath() value should not have been changed during its
         lifetime, or this function may fail to locate it in the pool.
         """
@@ -10673,7 +10673,7 @@ class ModelPool:
     def list_contents(out: ostream = ...) -> None:
         """`()`:
         Lists the contents of the model pool to cout.
-        
+
         `(out: ostream)`:
         Lists the contents of the model pool to the indicated output stream.
         """
@@ -10772,7 +10772,7 @@ class TextureAttrib(RenderAttrib):
         Each TextureAttrib can add or remove individual texture stages from the
         complete set of textures that are to be applied; this is similar to the
         mechanism of LightAttrib.
-        
+
         `(tex: Texture)`:
         Constructs a new TextureAttrib object suitable for rendering the indicated
         texture onto geometry, using the default TextureStage.
@@ -10793,7 +10793,7 @@ class TextureAttrib(RenderAttrib):
     def is_off(self) -> bool:
         """Returns true if the TextureAttrib is an 'off' TextureAttrib, indicating
         that it should disable texturing.
-        
+
         If multitexture is in effect, a TextureAttrib may not be strictly "on" or
         "off"; therefore, to get a more precise answer to this question, you should
         consider using has_all_off() or get_num_off_stages() or has_off_stage()
@@ -10914,7 +10914,7 @@ class TextureAttrib(RenderAttrib):
     def replace_texture(self, tex: Texture, new_tex: Texture) -> RenderAttrib:
         """Returns a new TextureAttrib, just like this one, but with all references to
         the given texture replaced with the new texture.
-        
+
         @since 1.10.4
         """
         ...
@@ -10967,7 +10967,7 @@ class TexGenAttrib(RenderAttrib):
     def make() -> RenderAttrib:
         """`()`:
         Constructs a TexGenAttrib that generates no stages at all.
-        
+
         `(stage: TextureStage, mode: _RenderAttrib_TexGenMode)`:
         Constructs a TexGenAttrib that generates just the indicated stage.
         """
@@ -10986,12 +10986,12 @@ class TexGenAttrib(RenderAttrib):
         Returns a new TexGenAttrib just like this one, with the indicated
         generation mode for the given stage.  If this stage already exists, its
         mode is replaced.
-        
+
         `(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: LPoint3f)`:
         Returns a new TexGenAttrib just like this one, with the indicated
         generation mode for the given stage.  If this stage already exists, its
         mode is replaced.
-        
+
         This variant also accepts constant_value, which is only meaningful if mode
         is M_constant.
         """
@@ -11189,7 +11189,7 @@ class PolylightNode(PandaNode):
     def set_color(self, color: Vec4f) -> None:
         """`(self, color: LVecBase4f)`:
         Set the light's color...
-        
+
         `(self, r: float, g: float, b: float)`:
         Set the light's color... 3 floats between 0 and 1
         """
@@ -11303,7 +11303,7 @@ class PolylightNode(PandaNode):
         """Returns a number less than zero if this PolylightNode sorts before the
         other one, greater than zero if it sorts after, or zero if they are
         equivalent.
-        
+
         Two PolylightNodes are considered equivalent if they consist of exactly the
         same properties Otherwise, they are different; different PolylightNodes
         will be ranked in a consistent but undefined ordering; the ordering is
@@ -11520,7 +11520,7 @@ class ShaderAttrib(RenderAttrib):
     def get_shader_input_texture(self, id: InternalName, sampler: SamplerState = ...) -> Texture:
         """Returns the ShaderInput as a texture.  Assertion fails if there is none, or
         if it is not a texture.
-        
+
         If sampler is not NULL, the sampler state to use for this texture is
         assigned to it.
         """
@@ -11595,17 +11595,17 @@ class TexProjectorEffect(RenderEffect):
     """This effect automatically applies a computed texture matrix to the
     specified texture stage, according to the relative position of two
     specified nodes.
-    
+
     The relative transform from the "from" node to the "to" node is applied
     directly to the texture matrix each frame.  If the "to" node happens to be
     a LensNode, its lens projection matrix is applied as well.
-    
+
     This can be used to apply a number of special effects.  Fundamentally, it
     may simply be used to provide a separate PandaNode that may be adjusted
     (e.g.  via a LerpInterval) in order to easily apply a linear transformation
     to an object's texture coordinates (rather than having to explicitly call
     NodePath.set_tex_transform() each frame).
-    
+
     In a more sophisticated case, the TexProjectorEffect is particularly useful
     in conjunction with a TexGenAttrib that specifies a mode of
     M_world_position (which copies the world position of each vertex to the
@@ -11623,10 +11623,10 @@ class TexProjectorEffect(RenderEffect):
         """Returns a new TexProjectorEffect just like this one, with the indicated
         projection for the given stage.  If this stage already exists, its
         projection definition is replaced.
-        
+
         The relative transform between the "from" and the "to" nodes is
         automatically applied to the texture transform each frame.
-        
+
         Furthermore, if the "to" node is a LensNode, its projection matrix is also
         applied to the texture transform.  In this case, the lens_index may be used
         to select the particular lens that should be used.
@@ -11658,7 +11658,7 @@ class TexProjectorEffect(RenderEffect):
         """Returns the "to" node associated with the TexProjectorEffect on the
         indicated stage.  The relative transform between the "from" and the "to"
         nodes is automatically applied to the texture transform each frame.
-        
+
         Furthermore, if the "to" node is a LensNode, its projection matrix is also
         applied to the texture transform.
         """
@@ -11697,13 +11697,13 @@ class ScissorEffect(RenderEffect):
         understood to be relative to the indicated node, or the current node if the
         indicated NodePath is empty, and determine four points surrounding the
         scissor region.
-        
+
         `(a: LPoint3f, b: LPoint3f, node: NodePath = ...)`:
         Constructs a new node-relative ScissorEffect.  The two points are
         understood to be relative to the indicated node, or the current node if the
         NodePath is empty, and determine the diagonally opposite corners of the
         scissor region.
-        
+
         `(clip: bool = ...)`:
         Constructs a new node-relative ScissorEffect, with no points.  This empty
         ScissorEffect does nothing.  You must then call add_point a number of times
@@ -11721,7 +11721,7 @@ class ScissorEffect(RenderEffect):
         valid to call this on a "node" type ScissorEffect.  The full set of points,
         projected into screen space, defines the bounding volume of the rectangular
         scissor region.
-        
+
         Each point may be relative to a different node, if desired.
         """
         ...
@@ -11774,7 +11774,7 @@ class ScissorEffect(RenderEffect):
 class SceneGraphReducer:
     """An interface for simplifying ("flattening") scene graphs by eliminating
     unneeded nodes and collapsing out unneeded state changes and transforms.
-    
+
     This class is designed so that it may be inherited from and specialized, if
     needed, to fine-tune the flattening behavior, but normally the default
     behavior is sufficient.
@@ -11853,7 +11853,7 @@ class SceneGraphReducer:
         """Specifies the radius that is used in conjunction with CS_within_radius to
         decide whether a subgraph's siblings should be combined into a single node
         or not.
-        
+
         If the CS_within_radius bit is included in the combine_siblings_bits
         parameter passed to flatten, than any nodes whose bounding volume is
         smaller than the indicated radius will be combined together (as if CS_other
@@ -11871,23 +11871,23 @@ class SceneGraphReducer:
         This has a performance optimization benefit in itself, but is especially
         useful to pave the way for a call to flatten() and greatly improve the
         effectiveness of the flattening operation.
-        
+
         Multiply instanced geometry is duplicated before the attribs are applied.
-        
+
         Of course, this operation does make certain dynamic operations impossible.
         """
         ...
     def flatten(self, root: PandaNode, combine_siblings_bits: int) -> int:
         """Simplifies the graph by removing unnecessary nodes and nodes.
-        
+
         In general, a node (and its parent node) is a candidate for removal if the
         node has no siblings and the node has no special properties.
-        
+
         If combine_siblings_bits is nonzero, some sibling nodes (according to the
         bits set in combine_siblings_bits) may also be collapsed into a single
         node.  This will further reduce scene graph complexity, sometimes
         substantially, at the cost of reduced spatial separation.
-        
+
         Returns the number of nodes removed from the graph.
         """
         ...
@@ -11908,25 +11908,25 @@ class SceneGraphReducer:
         GeomVertexFormat for any GeomVertexData objects that are found, so that all
         eligible vdatas (according to collect_bits; see collect_vertex_data) will
         share the same vertex format.
-        
+
         This will add unused columns where necessary to match formats.  It can
         result in suboptimal performance if used needlessly.
-        
+
         There is usually no reason to call this explicitly, since
         collect_vertex_data() will do this anyway if it has not been done already.
         However, calling it ahead of time can make that future call to
         collect_vertex_data() run a little bit faster.
-        
+
         The return value is the number of vertex datas modified.
         """
         ...
     def decompose(self, root: PandaNode) -> None:
         """Calls decompose() on every GeomNode at this level and below.
-        
+
         There is usually no reason to call this explicitly, since unify() will do
         this anyway if it needs to be done.  However, calling it ahead of time can
         make that future call to unify() run a little bit faster.
-        
+
         This operation has no effect if the config variable preserve-triangle-
         strips has been set true.
         """
@@ -11937,7 +11937,7 @@ class SceneGraphReducer:
         larger blocks).  This is intended to reduce rendering overhead incurred by
         switching vertex buffers.  It can also make a subsequent call to unify()
         much more effective than it would have been otherwise.
-        
+
         The set of bits passed in collect_bits indicates which properties are used
         to differentiate GeomVertexData blocks.  If it is 0, then more blocks will
         be combined together than if it is nonzero.
@@ -11969,7 +11969,7 @@ class SceneGraphReducer:
         GSG to premunge every Geom found to optimize it for eventual rendering on
         the indicated GSG.  If there is no GSG indicated for the SceneGraphReducer,
         this is a no-op.
-        
+
         This operation will also apply to stashed children.
         """
         ...
@@ -11978,7 +11978,7 @@ class SceneGraphReducer:
         live scene graph.  (Calling flatten on a node that is part of a live scene
         graph, for instance, a node somewhere under render, can cause problems in a
         multithreaded environment.)
-        
+
         If allow_live_flatten is true, or in a release build, this always returns
         true.
         """
@@ -12029,7 +12029,7 @@ class PortalNode(PandaNode):
         Default constructor, just an empty node, no geo This is used to read portal
         from model.  You can also use this from python to create an empty portal.
         Then you can set the vertices yourself, with addVertex.
-        
+
         `(self, name: str, pos: LPoint3f, scale: float = ...)`:
         Create a default rectangle as portal.  Use this to create an arbitrary
         portal and setup from Python
@@ -12071,7 +12071,7 @@ class PortalNode(PandaNode):
         this is false; when this is set true, the PortalSolids in this node will
         test for portals with actual renderable geometry, in addition to whatever
         PortalSolids may be indicated by the from_portal_mask.
-        
+
         Setting this to true causes this to test *all* GeomNodes for portals.  It
         is an all-or-none thing; there is no way to portal with only some
         GeomNodes, as GeomNodes have no into_portal_mask.
@@ -12161,10 +12161,10 @@ class ScissorAttrib(RenderAttrib):
     without otherwise affecting the viewport or lens properties.  Geometry that
     falls outside the scissor region is not rendered.  It is akin to the OpenGL
     glScissor() function.
-    
+
     The ScissorAttrib always specifies its region relative to its enclosing
     DisplayRegion, in screen space, and performs no culling.
-    
+
     See ScissorEffect if you wish to define a region relative to 2-D or 3-D
     coordinates in the scene graph, with culling.
     """

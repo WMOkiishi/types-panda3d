@@ -131,7 +131,7 @@ class AnimInterface:
     def play(self) -> None:
         """`(self)`:
         Runs the entire animation from beginning to end and stops.
-        
+
         `(self, _from: float, to: float)`:
         Runs the animation from the frame "from" to and including the frame "to",
         at which point the animation is stopped.  Both "from" and "to" frame
@@ -149,7 +149,7 @@ class AnimInterface:
         Starts the entire animation looping.  If restart is true, the animation is
         restarted from the beginning; otherwise, it continues from the current
         frame.
-        
+
         `(self, restart: bool, _from: float, to: float)`:
         Loops the animation from the frame "from" to and including the frame "to",
         indefinitely.  If restart is true, the animation is restarted from the
@@ -164,7 +164,7 @@ class AnimInterface:
         Starts the entire animation bouncing back and forth between its first frame
         and last frame.  If restart is true, the animation is restarted from the
         beginning; otherwise, it continues from the current frame.
-        
+
         `(self, restart: bool, _from: float, to: float)`:
         Loops the animation from the frame "from" to and including the frame "to",
         and then back in the opposite direction, indefinitely.
@@ -211,7 +211,7 @@ class AnimInterface:
     def get_next_frame(self) -> int:
         """Returns the current integer frame number + 1, constrained to the range 0 <=
         f < get_num_frames().
-        
+
         If the play mode is PM_play, this will clamp to the same value as
         get_frame() at the end of the animation.  If the play mode is any other
         value, this will wrap around to frame 0 at the end of the animation.
@@ -221,29 +221,29 @@ class AnimInterface:
         """Returns the fractional part of the current frame.  Normally, this is in the
         range 0.0 <= f < 1.0, but in the one special case of an animation playing
         to its end frame and stopping, it might exactly equal 1.0.
-        
+
         It will always be true that get_full_frame() + get_frac() ==
         get_full_fframe().
         """
         ...
     def get_full_frame(self) -> int:
         """Returns the current integer frame number.
-        
+
         Unlike the value returned by get_frame(), this frame number may extend
         beyond the range of get_num_frames() if the frame range passed to play(),
         loop(), etc.  did.
-        
+
         Unlike the value returned by get_full_fframe(), this return value will
         never exceed the value passed to to_frame in the play() method.
         """
         ...
     def get_full_fframe(self) -> float:
         """Returns the current floating-point frame number.
-        
+
         Unlike the value returned by get_frame(), this frame number may extend
         beyond the range of get_num_frames() if the frame range passed to play(),
         loop(), etc.  did.
-        
+
         Unlike the value returned by get_full_frame(), this return value may equal
         (to_frame + 1.0), when the animation has played to its natural end.
         However, in this case the return value of get_full_frame() will be
@@ -275,7 +275,7 @@ class UpdateSeq:
     """This is a sequence number that increments monotonically.  It can be used to
     track cache updates, or serve as a kind of timestamp for any changing
     properties.
-    
+
     A special class is used instead of simply an int, so we can elegantly
     handle such things as wraparound and special cases.  There are two special
     cases.  Firstly, a sequence number is 'initial' when it is first created.
@@ -336,7 +336,7 @@ class UpdateSeq:
 
 class TypedWritable(TypedObject):
     """Base class for objects that can be written to and read from Bam files.
-    
+
     See also TypedObject for detailed instructions.
     """
     def fillin(self, scan: DatagramIterator, manager: BamReader) -> None:
@@ -365,17 +365,17 @@ class TypedWritable(TypedObject):
         Converts the TypedWritable object into a single stream of data using a
         BamWriter, and returns that data as a bytes object.  Returns an empty bytes
         object on failure.
-        
+
         This is a convenience method particularly useful for cases when you are
         only serializing a single object.  If you have many objects to process, it
         is more efficient to use the same BamWriter to serialize all of them
         together.
-        
+
         `(self, data: bytes, writer: BamWriter = ...)`:
         Converts the TypedWritable object into a single stream of data using a
         BamWriter, and stores that data in the indicated string.  Returns true on
         success, false on failure.
-        
+
         This is a convenience method particularly useful for cases when you are
         only serializing a single object.  If you have many objects to process, it
         is more efficient to use the same BamWriter to serialize all of them
@@ -394,7 +394,7 @@ class TypedWritableReferenceCount(TypedWritable, ReferenceCount):
     class instead of multiply inheriting from the two classes each time they
     are needed, so that we can sensibly pass around pointers to things which
     are both TypedWritables and ReferenceCounters.
-    
+
     See also TypedObject for detailed instructions.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -405,7 +405,7 @@ class TypedWritableReferenceCount(TypedWritable, ReferenceCount):
         """Reads the bytes created by a previous call to encode_to_bam_stream(), and
         extracts and returns the single object on those bytes.  Returns NULL on
         error.
-        
+
         This method is intended to replace decode_raw_from_bam_stream() when you
         know the stream in question returns an object of type
         TypedWritableReferenceCount, allowing for easier reference count
@@ -486,7 +486,7 @@ class BamCacheRecord(TypedWritableReferenceCount):
         Adds the indicated file to the list of files that will be loaded to
         generate the data in this record.  This should be called once for the
         primary source file, and again for each secondary source file, if any.
-        
+
         `(self, file: VirtualFile)`:
         Variant of add_dependent_file that takes an already opened VirtualFile.
         """
@@ -513,22 +513,22 @@ class BamCacheRecord(TypedWritableReferenceCount):
         """`(self, ptr: TypedWritable)`:
         This variant on set_data() is provided to easily pass objects deriving from
         TypedWritable.
-        
+
         `(self, ptr: TypedWritable, ref_ptr: ReferenceCount)`:
         Stores a new data object on the record.  You should pass the same pointer
         twice, to both parameters; this allows the C++ typecasting to automatically
         convert the pointer into both a TypedWritable and a ReferenceCount pointer,
         so that the BamCacheRecord object can reliably manage the reference counts.
-        
+
         You may pass 0 or NULL as the second parameter.  If you do this, the
         BamCacheRecord will not manage the object's reference count; it will be up
         to you to ensure the object is not deleted during the lifetime of the
         BamCacheRecord object.
-        
+
         `(self, ptr: TypedWritable, dummy: int)`:
         This variant on set_data() is provided just to allow Python code to pass a
         0 as the second parameter.
-        
+
         `(self, ptr: TypedWritableReferenceCount)`:
         This variant on set_data() is provided to easily pass objects deriving from
         TypedWritableReferenceCount.
@@ -561,7 +561,7 @@ class BamCache:
     """This class maintains a cache of Bam and/or Txo objects generated from model
     files and texture images (as well as possibly other kinds of loadable
     objects that can be stored in bam file format).
-    
+
     This class also maintains a persistent index that lists all of the cached
     objects (see BamCacheIndex). We go through some considerable effort to make
     sure this index gets saved correctly to disk, even in the presence of
@@ -584,7 +584,7 @@ class BamCache:
         """Changes the state of the active flag.  "active" means that the cache should
         be consulted automatically on loads, "not active" means that objects should
         be loaded directly without consulting the cache.
-        
+
         This represents the global flag.  Also see the individual cache_models,
         cache_textures, cache_compressed_textures flags.
         """
@@ -594,7 +594,7 @@ class BamCache:
         "active" means that the cache should be consulted automatically on loads,
         "not active" means that objects should be loaded directly without
         consulting the cache.
-        
+
         This represents the global flag.  Also see the individual cache_models,
         cache_textures, cache_compressed_textures flags.
         """
@@ -607,7 +607,7 @@ class BamCache:
     def get_cache_models(self) -> bool:
         """Returns whether model files (e.g.  egg files and bam files) will be stored
         in the cache, as bam files.
-        
+
         This also returns false if get_active() is false.
         """
         ...
@@ -619,7 +619,7 @@ class BamCache:
     def get_cache_textures(self) -> bool:
         """Returns whether texture files (e.g.  egg files and bam files) will be
         stored in the cache, as txo files.
-        
+
         This also returns false if get_active() is false.
         """
         ...
@@ -628,7 +628,7 @@ class BamCache:
         compressed txo files.  The compressed data may either be generated in-CPU,
         via the squish library, or it may be extracted from the GSG after the
         texture has been loaded.
-        
+
         This may be set in conjunction with set_cache_textures(), or independently
         of it.  If set_cache_textures() is true and this is false, all textures
         will be cached in their uncompressed form.  If set_cache_textures() is
@@ -640,7 +640,7 @@ class BamCache:
     def get_cache_compressed_textures(self) -> bool:
         """Returns whether compressed texture files will be stored in the cache, as
         compressed txo files.  See set_cache_compressed_textures().
-        
+
         This also returns false if get_active() is false.
         """
         ...
@@ -653,7 +653,7 @@ class BamCache:
     def get_cache_compiled_shaders(self) -> bool:
         """Returns whether compiled shader programs will be stored in the cache, as
         binary .txo files.  See set_cache_compiled_shaders().
-        
+
         This also returns false if get_active() is false.
         """
         ...
@@ -662,7 +662,7 @@ class BamCache:
         cache files are stored on disk.  This should name a directory that is on a
         disk local to the machine (not on a network-mounted disk), for instance,
         /tmp/panda-cache or /c/panda-cache.
-        
+
         If the directory does not already exist, it will be created as a result of
         this call.
         """
@@ -680,7 +680,7 @@ class BamCache:
         """Specifies the maximum size, in kilobytes, which the cache is allowed to
         grow to.  If a newly cached file would exceed this size, an older file is
         removed from the cache.
-        
+
         Note that in the case of multiple different processes simultaneously
         operating on the same cache directory, the actual cache size may slightly
         exceed this value from time to time due to latency in checking between the
@@ -707,11 +707,11 @@ class BamCache:
         ...
     def lookup(self, source_filename: Filepath, cache_extension: str) -> BamCacheRecord:
         """Looks up a file in the cache.
-        
+
         If the file is cacheable, then regardless of whether the file is found in
         the cache or not, this returns a BamCacheRecord.  On the other hand, if the
         file cannot be cached, returns NULL.
-        
+
         If record->has_data() returns true, then the file was found in the cache,
         and you may call record->extract_data() to get the object.  If
         record->has_data() returns false, then the file was not found in the cache
@@ -898,25 +898,25 @@ class LoaderOptions:
 class BamReader(BamEnums):
     """This is the fundamental interface for extracting binary objects from a Bam
     file, as generated by a BamWriter.
-    
+
     A Bam file can be thought of as a linear collection of objects.  Each
     object is an instance of a class that inherits, directly or indirectly,
     from TypedWritable.  The objects may include pointers to other objects
     within the Bam file; the BamReader automatically manages these (with help
     from code within each class) and restores the pointers correctly.
-    
+
     This is the abstract interface and does not specifically deal with disk
     files, but rather with a DatagramGenerator of some kind, which is simply a
     linear source of Datagrams.  It is probably from a disk file, but it might
     conceivably be streamed directly from a network or some such nonsense.
-    
+
     Bam files are most often used to store scene graphs or subgraphs, and by
     convention they are given filenames ending in the extension ".bam" when
     they are used for this purpose.  However, a Bam file may store any
     arbitrary list of TypedWritable objects; in this more general usage, they
     are given filenames ending in ".boo" to differentiate them from the more
     common scene graph files.
-    
+
     See also BamFile, which defines a higher-level interface to read and write
     Bam files on disk.
     """
@@ -946,7 +946,7 @@ class BamReader(BamEnums):
     def init(self) -> bool:
         """Initializes the BamReader prior to reading any objects from its source.
         This includes reading the Bam header.
-        
+
         This returns true if the BamReader successfully initialized, false
         otherwise.
         """
@@ -970,18 +970,18 @@ class BamReader(BamEnums):
         new object of the appropriate type is created and returned; otherwise, NULL
         is returned.  NULL is also returned when the end of the file is reached.
         is_eof() may be called to differentiate between these two cases.
-        
+
         This may be called repeatedly to extract out all the objects in the Bam
         file, but typically (especially for scene graph files, indicated with the
         .bam extension), only one object is retrieved directly from the Bam file:
         the root of the scene graph.  The remaining objects will all be retrieved
         recursively by the first object.
-        
+
         Note that the object returned may not yet be complete.  In particular, some
         of its pointers may not be filled in; you must call resolve() to fill in
         all the available pointers before you can safely use any objects returned
         by read_object().
-        
+
         This flavor of read_object() requires the caller to know what type of
         object it has received in order to properly manage the reference counts.
         """
@@ -996,10 +996,10 @@ class BamReader(BamEnums):
         all the known pointers so far.  It is usually called at the end of the
         processing, after all objects have been read, which is generally the best
         time to call it.
-        
+
         This must be called at least once after reading a particular object via
         get_object() in order to validate that object.
-        
+
         The return value is true if all objects have been resolved, or false if
         some objects are still outstanding (in which case you will need to call
         resolve() again later).
@@ -1009,7 +1009,7 @@ class BamReader(BamEnums):
         """Indicates that an object recently read from the bam stream should be
         replaced with a new object.  Any future occurrences of the original object
         in the stream will henceforth return the new object instead.
-        
+
         The return value is true if the replacement was successfully made, or false
         if the object was not read from the stream (or if change_pointer had
         already been called on it).
@@ -1069,26 +1069,26 @@ class BamReader(BamEnums):
 class BamWriter(BamEnums):
     """This is the fundamental interface for writing binary objects to a Bam file,
     to be extracted later by a BamReader.
-    
+
     A Bam file can be thought of as a linear collection of objects.  Each
     object is an instance of a class that inherits, directly or indirectly,
     from TypedWritable.  The objects may include pointers to other objects; the
     BamWriter automatically manages these (with help from code within each
     class) and writes all referenced objects to the file in such a way that the
     pointers may be correctly restored later.
-    
+
     This is the abstract interface and does not specifically deal with disk
     files, but rather with a DatagramSink of some kind, which simply accepts a
     linear stream of Datagrams.  It is probably written to a disk file, but it
     might conceivably be streamed directly to a network or some such nonsense.
-    
+
     Bam files are most often used to store scene graphs or subgraphs, and by
     convention they are given filenames ending in the extension ".bam" when
     they are used for this purpose.  However, a Bam file may store any
     arbitrary list of TypedWritable objects; in this more general usage, they
     are given filenames ending in ".boo" to differentiate them from the more
     common scene graph files.
-    
+
     See also BamFile, which defines a higher-level interface to read and write
     Bam files on disk.
     """
@@ -1119,7 +1119,7 @@ class BamWriter(BamEnums):
     def init(self) -> bool:
         """Initializes the BamWriter prior to writing any objects to its output
         stream.  This includes writing out the Bam header.
-        
+
         This returns true if the BamWriter successfully initialized, false
         otherwise.
         """
@@ -1134,17 +1134,17 @@ class BamWriter(BamEnums):
         """Writes a single object to the Bam file, so that the
         BamReader::read_object() can later correctly restore the object and all its
         pointers.
-        
+
         This implicitly also writes any additional objects this object references
         (if they haven't already been written), so that pointers may be fully
         resolved.
-        
+
         This may be called repeatedly to write a sequence of objects to the Bam
         file, but typically (especially for scene graph files, indicated with the
         .bam extension), only one object is written directly from the Bam file: the
         root of the scene graph.  The remaining objects will all be written
         recursively by the first object.
-        
+
         Returns true if the object is successfully written, false otherwise.
         """
         ...
@@ -1589,7 +1589,7 @@ class BitMask_uint64_t_64:
 
 class BitArray:
     """A dynamic array with an unlimited number of bits.
-    
+
     This is similar to a BitMask, except it appears to contain an infinite
     number of bits.  You can use it very much as you would use a BitMask.
     """
@@ -1644,7 +1644,7 @@ class BitArray:
         """Returns the current number of possibly different bits in this array.  There
         are actually an infinite number of bits, but every bit higher than this bit
         will have the same value, either 0 or 1 (see get_highest_bits()).
-        
+
         This number may grow and/or shrink automatically as needed.
         """
         ...
@@ -1738,7 +1738,7 @@ class BitArray:
         """Returns the index of the next bit in the array, above low_bit, whose value
         is different that the value of low_bit.  Returns low_bit again if all bits
         higher than low_bit have the same value.
-        
+
         This can be used to quickly iterate through all of the bits in the array.
         """
         ...
@@ -1764,7 +1764,7 @@ class BitArray:
     def has_bits_in_common(self, other: BitArray | SparseArray) -> bool:
         """Returns true if this BitArray has any "one" bits in common with the other
         one, false otherwise.
-        
+
         This is equivalent to (array & other) != 0, but may be faster.
         """
         ...
@@ -1856,11 +1856,11 @@ class ButtonHandle:
         ordering of static initializers.  If the constructor tried to initialize
         its value, it  might happen after the value had already been set
         previously by another static initializer!
-        
+
         `(self, index: int)`:
         Constructs a ButtonHandle with the corresponding index number, which may
         have been returned by an earlier call to ButtonHandle::get_index().
-        
+
         `(self, name: str)`:
         Constructs a ButtonHandle with the corresponding name, which is looked up
         in the ButtonRegistry.  This exists for the purpose of being able to
@@ -1905,7 +1905,7 @@ class ButtonHandle:
     def get_alias(self) -> ButtonHandle:
         """Returns the alias (alternate name) associated with the button, if any, or
         ButtonHandle::none() if the button has no alias.
-        
+
         Each button is allowed to have one alias, and multiple different buttons
         can refer to the same alias.  The alias should be the more general name for
         the button, for instance, shift is an alias for lshift, but not vice-versa.
@@ -1915,7 +1915,7 @@ class ButtonHandle:
         """Returns true if this ButtonHandle is the same as the other one, or if the
         other one is an alias for this one.  (Does not return true if this button
         is an alias for the other one, however.)
-        
+
         This is a more general comparison than operator ==.
         """
         ...
@@ -1993,7 +1993,7 @@ class ButtonMap(TypedReferenceCount):
         Returns the button that the given button is mapped to, or
         ButtonHandle::none() if this map does not specify a mapped button for the
         given raw button.
-        
+
         `(self, i: int)`:
         Returns the nth mapped button, meaning the button that the nth raw button
         is mapped to.
@@ -2009,10 +2009,10 @@ class ButtonMap(TypedReferenceCount):
         If the button map specifies a special name for the button (eg.  if the
         operating system or keyboard device has a localized name describing the
         key), returns it, or the empty string otherwise.
-        
+
         Note that this is not the same as get_mapped_button().get_name(), which
         returns the name of the Panda event associated with the button.
-        
+
         `(self, i: int)`:
         Returns the label associated with the nth mapped button, meaning the button
         that the nth raw button is mapped to.
@@ -2047,7 +2047,7 @@ class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
     counts the number of references to the object just within its cache alone.
     When get_ref_count() == get_cache_ref_count(), the object is not referenced
     outside the cache.
-    
+
     The cache refs must be explicitly maintained; there is no PointerTo<> class
     to maintain the cache reference counts automatically.  The cache reference
     count is automatically included in the overall reference count: calling
@@ -2066,7 +2066,7 @@ class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
     def cache_unref(self) -> bool:
         """Explicitly decrements the cache reference count and the normal reference
         count simultaneously.
-        
+
         The return value is true if the new reference count is nonzero, false if it
         is zero.
         """
@@ -2085,7 +2085,7 @@ class CallbackData(TypedObject):
     """This is a generic data block that is passed along to a CallbackObject when
     a callback is made.  It contains data specific to the particular callback
     type in question.
-    
+
     This is actually an abstract base class and contains no data.
     Specializations of this class will contain the actual data relevant to each
     callback type.
@@ -2130,14 +2130,14 @@ class ClockObject(ReferenceCount):
     normal mode, get_frame_time() returns the time as of the last time tick()
     was called.  This is the "discrete" time, and is usually used to get the
     time as of, for instance, the beginning of the current frame.
-    
+
     In other modes, as set by set_mode() or the clock-mode config variable,
     get_frame_time() may return other values to simulate different timing
     effects, for instance to perform non-real-time animation.  See set_mode().
-    
+
     In all modes, get_real_time() always returns the elapsed real time in
     seconds since the ClockObject was constructed, or since it was last reset.
-    
+
     You can create your own ClockObject whenever you want to have your own
     local timer.  There is also a default, global ClockObject intended to
     represent global time for the application; this is normally set up to tick
@@ -2183,37 +2183,37 @@ class ClockObject(ReferenceCount):
         In this mode, each call to tick() will set the value returned by
         get_frame_time() to the current real time; thus, the clock simply reports
         time advancing.
-        
+
         Other possible modes:
-        
+
         M_non_real_time - the clock ignores real time completely; at each call to
         tick(), it pretends that exactly dt seconds have elapsed since the last
         call to tick().  You may set the value of dt with set_dt() or
         set_frame_rate().
-        
+
         M_limited - the clock will run as fast as it can, as in M_normal, but will
         not run faster than the rate specified by set_frame_rate().  If the
         application would run faster than this rate, the clock will slow down the
         application.
-        
+
         M_integer - the clock will run as fast as it can, but the rate will be
         constrained to be an integer multiple or divisor of the rate specified by
         set_frame_rate().  The clock will slow down the application a bit to
         guarantee this.
-        
+
         M_integer_limited - a combination of M_limited and M_integer; the clock
         will not run faster than set_frame_rate(), and if it runs slower, it will
         run at a integer divisor of that rate.
-        
+
         M_forced - the clock forces the application to run at the rate specified by
         set_frame_rate().  If the application would run faster than this rate, the
         clock will slow down the application; if the application would run slower
         than this rate, the clock slows down time so that the application believes
         it is running at the given rate.
-        
+
         M_degrade - the clock runs at real time, but the application is slowed down
         by a set factor of its frame rate, specified by set_degrade_factor().
-        
+
         M_slave - the clock does not advance, but relies on the user to call
         set_frame_time() and/or set_frame_count() each frame.
         """
@@ -2224,7 +2224,7 @@ class ClockObject(ReferenceCount):
     def get_frame_time(self, current_thread: Thread = ...) -> float:
         """Returns the time in seconds as of the last time tick() was called
         (typically, this will be as of the start of the current frame).
-        
+
         This is generally the kind of time you want to ask for in most rendering
         and animation contexts, since it's important that all of the animation for
         a given frame remains in sync with each other.
@@ -2234,7 +2234,7 @@ class ClockObject(ReferenceCount):
         """Returns the actual number of seconds elapsed since the ClockObject was
         created, or since it was last reset.  This is useful for doing real timing
         measurements, e.g.  for performance statistics.
-        
+
         This returns the most precise timer we have for short time intervals, but
         it may tend to drift over the long haul.  If more accurate timekeeping is
         needed over a long period of time, use get_long_time() instead.
@@ -2243,7 +2243,7 @@ class ClockObject(ReferenceCount):
     def get_long_time(self) -> float:
         """Returns the actual number of seconds elapsed since the ClockObject was
         created, or since it was last reset.
-        
+
         This is similar to get_real_time(), except that it uses the most accurate
         counter we have over a long period of time, and so it is less likely to
         drift.  However, it may not be very precise for measuring short intervals.
@@ -2294,7 +2294,7 @@ class ClockObject(ReferenceCount):
         """In non-real-time mode, sets the number of seconds that should appear to
         elapse between frames.  In forced mode or limited mode, sets our target dt.
         In normal mode, this has no effect.
-        
+
         Also see set_frame_rate(), which is a different way to specify the same
         quantity.
         """
@@ -2303,7 +2303,7 @@ class ClockObject(ReferenceCount):
         """In non-real-time mode, sets the number of frames per second that we should
         appear to be running.  In forced mode or limited mode, sets our target
         frame rate.  In normal mode, this has no effect.
-        
+
         Also see set_dt(), which is a different way to specify the same quantity.
         """
         ...
@@ -2317,10 +2317,10 @@ class ClockObject(ReferenceCount):
         zero, no limit is imposed; otherwise, this is the maximum value that will
         ever be returned by get_dt(), regardless of how much time has actually
         elapsed between frames.
-        
+
         This limit is only imposed in real-time mode; in non-real-time mode, the dt
         is fixed anyway and max_dt is ignored.
-        
+
         This is generally used to guarantee reasonable behavior even in the
         presence of a very slow or chuggy frame rame.
         """
@@ -2329,7 +2329,7 @@ class ClockObject(ReferenceCount):
         """In degrade mode, returns the ratio by which the performance is degraded.  A
         value of 2.0 causes the clock to be slowed down by a factor of two
         (reducing performance to 1/2 what would be otherwise).
-        
+
         This has no effect if mode is not M_degrade.
         """
         ...
@@ -2337,7 +2337,7 @@ class ClockObject(ReferenceCount):
         """In degrade mode, sets the ratio by which the performance is degraded.  A
         value of 2.0 causes the clock to be slowed down by a factor of two
         (reducing performance to 1/2 what would be otherwise).
-        
+
         This has no effect if mode is not M_degrade.
         """
         ...
@@ -2347,7 +2347,7 @@ class ClockObject(ReferenceCount):
         compute the frame rate.  Changing this does not necessarily immediately
         change the result of get_average_frame_rate(), until this interval of time
         has elapsed again.
-        
+
         Setting this to zero disables the computation of get_average_frame_rate().
         """
         ...
@@ -2374,7 +2374,7 @@ class ClockObject(ReferenceCount):
         an estimate of the chugginess of the frame rate; if it is large, there is a
         large variation in the frame rate; if is small, all of the frames are
         consistent in length.
-        
+
         A large value might also represent just a recent change in frame rate, for
         instance, because the camera has just rotated from looking at a simple
         scene to looking at a more complex scene.
@@ -2392,7 +2392,7 @@ class ClockObject(ReferenceCount):
         except that it does not advance the frame counter and does not affect dt.
         This is intended to be used in the middle of a particularly long frame to
         compensate for the time that has already elapsed.
-        
+
         In non-real-time mode, this function has no effect (because in this mode
         all frames take the same length of time).
         """
@@ -2455,7 +2455,7 @@ class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
     """This class can be used to write a series of datagrams into a memory buffer.
     It acts as both a datagram sink and generator; you can fill it up with
     datagrams and then read as many datagrams from it.
-    
+
     This uses the same format as DatagramInputFile and DatagramOutputFile,
     meaning that Datagram sizes are always stored little-endian.
     """
@@ -2464,7 +2464,7 @@ class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
     def __init__(self, data: bytes = ...) -> None:
         """`(self)`:
         Initializes an empty datagram buffer.
-        
+
         `(self, data: bytes)`:
         Initializes the buffer with the given data.
         """
@@ -2487,7 +2487,7 @@ class DatagramInputFile(DatagramGenerator):
         """`(self, file: FileReference)`; `(self, filename: Filename)`:
         Opens the indicated filename for reading.  Returns true on success, false
         on failure.
-        
+
         `(self, _in: istream, filename: Filename = ...)`:
         Starts reading from the indicated stream.  Returns true on success, false
         on failure.  The DatagramInputFile does not take ownership of the stream;
@@ -2520,11 +2520,11 @@ class DatagramOutputFile(DatagramSink):
         """`(self, file: FileReference)`:
         Opens the indicated filename for writing.  Returns true if successful,
         false on failure.
-        
+
         `(self, filename: Filename)`:
         Opens the indicated filename for writing.  Returns true on success, false
         on failure.
-        
+
         `(self, out: ostream, filename: Filename = ...)`:
         Starts writing to the indicated stream.  Returns true on success, false on
         failure.  The DatagramOutputFile does not take ownership of the stream; you
@@ -2985,7 +2985,7 @@ class ModifierButtons:
         """Sets the list of buttons to watch to be the same as that of the other
         ModifierButtons object.  This makes the lists pointer equivalent (until one
         or the other is later modified).
-        
+
         This will preserve the state of any button that was on the original list
         and is also on the new lists.  Any other buttons will get reset to the
         default state of "up".
@@ -3014,7 +3014,7 @@ class ModifierButtons:
         """Removes the indicated button from the set of buttons being monitored.
         Returns true if the button was removed, false if it was not being monitored
         in the first place.
-        
+
         Unlike the other methods, you cannot remove a button by removing its alias;
         you have to remove exactly the button itself.
         """
@@ -3052,7 +3052,7 @@ class ModifierButtons:
         """`(self, button: ButtonHandle)`:
         Returns true if the indicated button is known to be down, or false if it is
         known to be up or if it is not in the set of buttons being tracked.
-        
+
         `(self, index: int)`:
         Returns true if the indicated button is known to be down, or false if it is
         known to be up.
@@ -3202,7 +3202,7 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     """This class further specializes CachedTypedWritableReferenceCount to also
     add a node_ref_count, for the purposes of counting the number of times the
     object is referenced by a "node", presumably a PandaNode.
-    
+
     This essentially combines the functionality of NodeReferenceCount and
     CachedTypedWritableReferenceCount, so that a derivative of this object
     actually has three counters: the standard reference count, the "cache"
@@ -3211,14 +3211,14 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     CachedTypedWritableReferenceCount and simply duplicate the functionality of
     NodeReferenceCount, to avoid all of the problems associated with multiple
     inheritance.
-    
+
     The intended design is to use this as a base class for RenderState and
     TransformState, both of which are held by PandaNodes, and also have caches
     which are independently maintained.  By keeping track of how many nodes
     hold a pointer to a particular object, we can classify each object into
     node-referenced, cache-referenced, or other, which is primarily useful for
     PStats reporting.
-    
+
     As with CachedTypedWritableReferenceCount's cache_ref() and cache_unref(),
     the new methods node_ref() and node_unref() automatically increment and
     decrement the primary reference count as well.  In this case, however,
@@ -3234,7 +3234,7 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
         ...
     def node_ref(self) -> None:
         """Explicitly increments the reference count.
-        
+
         This function is const, even though it changes the object, because
         generally fiddling with an object's reference count isn't considered part
         of fiddling with the object.  An object might be const in other ways, but
@@ -3244,7 +3244,7 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     def node_unref(self) -> bool:
         """Explicitly decrements the node reference count and the normal reference
         count simultaneously.
-        
+
         The return value is true if the new reference count is nonzero, false if it
         is zero.
         """
@@ -3253,7 +3253,7 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
         """Returns the union of the values defined in the Referenced enum that
         represents the various things that appear to be holding a pointer to this
         object.
-        
+
         If R_node is included, at least one node is holding a pointer; if R_cache
         is included, at least one cache element is.
         """
@@ -3266,17 +3266,17 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
 class SparseArray:
     """This class records a set of integers, where each integer is either present
     or not present in the set.
-    
+
     It is similar in principle and in interface to a BitArray (which can be
     thought of as a set of integers, one integer corresponding to each
     different bit position), but the SparseArray is implemented as a list of
     min/max subrange lists, rather than as a bitmask.
-    
+
     This makes it particularly efficient for storing sets which consist of
     large sections of consecutively included or consecutively excluded
     elements, with arbitrarily large integers, but particularly inefficient for
     doing boolean operations such as & or |.
-    
+
     Also, unlike BitArray, the SparseArray can store negative integers.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3321,7 +3321,7 @@ class SparseArray:
         """Returns true if there is a maximum number of bits that may be stored in
         this structure, false otherwise.  If this returns true, the number may be
         queried in get_max_num_bits().
-        
+
         This method always returns false.  The SparseArray has no maximum number of
         bits.  This method is defined so generic programming algorithms can use
         BitMask or SparseArray interchangeably.
@@ -3332,7 +3332,7 @@ class SparseArray:
         """If get_max_num_bits() returned true, this method may be called to return
         the maximum number of bits that may be stored in this structure.  It is an
         error to call this if get_max_num_bits() return false.
-        
+
         It is always an error to call this method.  The SparseArray has no maximum
         number of bits.  This method is defined so generic programming algorithms
         can use BitMask or SparseArray interchangeably.
@@ -3342,7 +3342,7 @@ class SparseArray:
         """Returns the current number of possibly different bits in this array.  There
         are actually an infinite number of bits, but every bit higher than this bit
         will have the same value, either 0 or 1 (see get_highest_bits()).
-        
+
         This number may grow and/or shrink automatically as needed.
         """
         ...
@@ -3425,7 +3425,7 @@ class SparseArray:
         """Returns the index of the next bit in the array, above low_bit, whose value
         is different that the value of low_bit.  Returns low_bit again if all bits
         higher than low_bit have the same value.
-        
+
         This can be used to quickly iterate through all of the bits in the array.
         """
         ...
@@ -3437,7 +3437,7 @@ class SparseArray:
     def has_bits_in_common(self, other: BitArray | SparseArray) -> bool:
         """Returns true if this SparseArray has any "one" bits in common with the
         other one, false otherwise.
-        
+
         This is equivalent to (array & other) != 0, but may be faster.
         """
         ...
@@ -3464,19 +3464,19 @@ class SparseArray:
         """Returns the number of separate subranges stored in the SparseArray.  You
         can use this limit to iterate through the subranges, calling
         get_subrange_begin() and get_subrange_end() for each one.
-        
+
         Also see is_inverse().
         """
         ...
     def get_subrange_begin(self, n: int) -> int:
         """Returns the first numeric element in the nth subrange.
-        
+
         Also see is_inverse().
         """
         ...
     def get_subrange_end(self, n: int) -> int:
         """Returns the last numeric element, plus one, in the nth subrange.
-        
+
         Also see is_inverse().
         """
         ...
@@ -3662,7 +3662,7 @@ class WritableConfigurable(TypedWritable):
     """Defined as a fix to allow creating Configurable and Writable objects.
     Otherwise the compiler gets confused since both TypedWritable and
     Configurable inherit from TypedObject.
-    
+
     An object that has data or parameters that are set less frequently (at
     least occasionally) than every frame.  We can cache the configuration info
     by by using the "dirty" flag.
@@ -3672,14 +3672,14 @@ class UniqueIdAllocator:
     """Manage a set of ID values from min to max inclusive.  The ID numbers that
     are freed will be allocated (reused) in the same order.  I.e.  the oldest
     ID numbers will be allocated.
-    
+
     This implementation will use 4 bytes per id number, plus a few bytes of
     management data.  e.g.  10,000 ID numbers will use 40KB.
-    
+
     Also be advised that ID -1 and -2 are used internally by the allocator.  If
     allocate returns IndexEnd (-1) then the allocator is out of free ID
     numbers.
-    
+
     There are other implementations that can better leverage runs of used or
     unused IDs or use bit arrays for the IDs.  But, it takes extra work to
     track the age of freed IDs, which is required for what we wanted.  If you
@@ -3702,7 +3702,7 @@ class UniqueIdAllocator:
         """This may be called to mark a particular id as having already been allocated
         (for instance, by a prior pass).  The specified id is removed from the
         available pool.
-        
+
         Because of the limitations of this algorithm, this is most efficient when
         it is called before the first call to allocate(), and when all the calls to
         initial_reserve_id() are made in descending order by id.  However, this is
@@ -3756,10 +3756,10 @@ def load_prc_file(filename: Filepath) -> ConfigPage:
     from within a multifile (via the virtual file system).  Save the return
     value and pass it to unload_prc_file() if you ever want to unload this file
     later.
-    
+
     The filename is first searched along the default prc search path, and then
     also along the model path, for convenience.
-    
+
     This function is defined in putil instead of in dtool with the read of the
     prc stuff, so that it can take advantage of the virtual file system (which
     is defined in express), and the model path (which is in putil).
@@ -3768,7 +3768,7 @@ def load_prc_file(filename: Filepath) -> ConfigPage:
 def load_prc_file_data(name: str, data: str) -> ConfigPage:
     """Another convenience function to load a prc file from an explicit string,
     which represents the contents of the prc file.
-    
+
     The first parameter is an arbitrary name to assign to this in-memory prc
     file.  Supply a filename if the data was read from a file, or use any other
     name that is meaningful to you.  The name is only used when the set of
@@ -3779,14 +3779,14 @@ def unload_prc_file(page: ConfigPage) -> bool: ...
 def hash_prc_variables(hash: HashVal) -> None: ...
 def py_decode_TypedWritable_from_bam_stream(this_class, data: bytes):
     """This wrapper is defined as a global function to suit pickle's needs.
-    
+
     This hooks into the native pickle and cPickle modules, but it cannot
     properly handle self-referential BAM objects.
     """
     ...
 def py_decode_TypedWritable_from_bam_stream_persist(unpickler, this_class, data: bytes):
     """This wrapper is defined as a global function to suit pickle's needs.
-    
+
     This is similar to py_decode_TypedWritable_from_bam_stream, but it provides
     additional support for the missing persistent-state object needed to
     properly support self-referential BAM objects written to the pickle stream.

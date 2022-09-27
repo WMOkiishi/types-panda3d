@@ -19,7 +19,7 @@ class CylindricalLens(Lens):
     vertical direction, but it is non-linear in the horizontal dimension: a
     point on the film corresponds to a point in space in linear proportion to
     its angle to the camera, not to its straight-line distance from the center.
-    
+
     This allows up to 360 degree lenses in the horizontal dimension, with
     relatively little distortion.  The distortion is not very apparent between
     two relatively nearby points on the film, but it becomes increasingly
@@ -41,10 +41,10 @@ class ProjectionScreen(PandaNode):
     all the UV's (for a particular texture stage) on its subordinate geometry
     according to the relative position and lens parameters of the indicated
     LensNode.
-    
+
     All this does is recompute UV's; the caller is responsible for applying the
     appropriate texture(s) to the geometry.
-    
+
     This does not take advantage of any hardware-assisted projective texturing;
     all of the UV's are computed in the CPU.  (Use NodePath::project_texture()
     to enable hardware-assisted projective texturing.)  However, the
@@ -58,7 +58,7 @@ class ProjectionScreen(PandaNode):
         The relative position of the LensNode to the ProjectionScreen, as well as
         the properties of the lens associated with the LensNode, determines the
         UV's that will be assigned to the geometry within the ProjectionScreen.
-        
+
         The NodePath must refer to a LensNode (or a Camera).
         """
         ...
@@ -75,7 +75,7 @@ class ProjectionScreen(PandaNode):
         lens effect by passing each ray through an indirection table: the point
         (u,v) in the indicated lookup table stores the actual (u,v) that the lens
         produces.
-        
+
         This does not affect the operation of generate_screen().
         """
         ...
@@ -92,16 +92,16 @@ class ProjectionScreen(PandaNode):
         projector.  This generates and returns a new GeomNode but does not
         automatically parent it to the ProjectionScreen node; see
         regenerate_screen().
-        
+
         The specified projector need not be the same as the projector given to the
         ProjectionScreen with set_projector() (although this is often what you
         want).
-        
+
         num_x_verts and num_y_verts specify the number of vertices to make in the
         grid across the horizontal and vertical dimension of the projector,
         respectively; distance represents the approximate distance of the screen
         from the lens center.
-        
+
         The fill_ratio parameter specifies the fraction of the image to cover.  If
         it is 1.0, the entire image is shown full-size; if it is 0.9, 10% of the
         image around the edges is not part of the grid (and the grid is drawn
@@ -120,12 +120,12 @@ class ProjectionScreen(PandaNode):
         """Generates a deep copy of the hierarchy at the ProjectionScreen node and
         below, with vertices flattened into two dimensions as if they were seen by
         the indicated camera node.
-        
+
         This is useful for rendering an image as seen through a non-linear lens.
         The resulting mesh will have vertices in the range [-1, 1] in both x and y,
         and may be then rendered with an ordinary orthographic lens, to generate
         the effect of seeing the image through the specified non-linear lens.
-        
+
         The returned node has no parent; it is up to the caller to parent it
         somewhere or store it so that it does not get dereferenced and deleted.
         """
@@ -147,7 +147,7 @@ class ProjectionScreen(PandaNode):
         they copy it to texture.  (This is arguably a problem with the OpenGL spec,
         which seems to be unclear about the proper ordering of pixels in this
         operation.)
-        
+
         In any case, set this true to compensate for this effect by inverting the
         UV's of the projection screen.  The default is taken from the Configrc
         variable project-invert-uvs.
@@ -175,7 +175,7 @@ class ProjectionScreen(PandaNode):
         screen two distinct colors, usually white and black, for the parts of the
         screen in front of and outside the lens' frustum, respectively.  When this
         is not enabled, the screen color will be left alone.
-        
+
         This effect generally looks terrible, but it does at least make the
         boundaries of the lens clear.
         """
@@ -224,7 +224,7 @@ class ProjectionScreen(PandaNode):
     def recompute(self) -> None:
         """Recomputes all the UV's for geometry below the ProjectionScreen node, as if
         the texture were projected from the associated projector.
-        
+
         This function is normally called automatically whenever the relevant
         properties change, so it should not normally need to be called directly by
         the user.  However, it does no harm to call this if there is any doubt.
@@ -273,30 +273,30 @@ class NonlinearImager:
     """This class object combines the rendered output of a 3-d from one or more
     linear (e.g.  perspective) cameras, as seen through a single, possibly
     nonlinear camera.
-    
+
     This can be used to generate real-time imagery of a 3-d scene using a
     nonlinear camera, for instance a fisheye camera, even though the underlying
     graphics engine may only support linear cameras.  It can also pre-distort
     imagery to compensate for off-axis projectors, and/or curved screens of any
     complexity.
-    
-    
-    
+
+
+
     A NonlinearImager may be visualized as a dark room into which a number of
     projection screens have been placed, of arbitrary size and shape and at any
     arbitrary position and orientation to each other.  Onto each of these
     screens is projected the view as seen by a normal perspective camera that
     exists in the world (that is, under render).
-    
+
     There also exist in the room one or more (possibly nonlinear) cameras,
     called viewers, that observe these screens.  The image of the projection
     screens seen by each viewer is finally displayed on the viewer's associated
     DisplayRegion.  By placing the viewer(s) appropriately relative to the
     screens, and by choosing suitable lens properties for the viewer(s), you
     can achieve a wide variety of distortion effects.
-    
-    
-    
+
+
+
     There are several different LensNode (Camera) objects involved at each
     stage in the process.  To help keep them all straight, different words are
     used to refer to each different kind of Camera used within this object.
@@ -308,7 +308,7 @@ class NonlinearImager:
     interface.  Finally, the cameras that view the whole configuration of
     screens are called viewers; each of these is associated with a
     DisplayRegion, and they are set via set_viewer_camera().
-    
+
     Of all these lenses, only the source cameras must use linear (that is,
     perspective or orthographic) lenses.  The projectors and viewers may be any
     arbitrary lens, linear or otherwise.
@@ -322,20 +322,20 @@ class NonlinearImager:
         by the NonlinearImager.  Each ProjectionScreen represents a view into the
         world.  It must be based on a linear camera (or whatever kind of camera is
         respected by the graphics engine).
-        
+
         Each ProjectionScreen object should already have some screen geometry
         created.
-        
+
         As each frame is rendered, an offscreen image will be rendered from the
         source camera associated with each ProjectionScreen, and the resulting
         image will be applied to the screen geometry.
-        
+
         The return value is the index number of the new screen.
-        
+
         `(self, screen: ProjectionScreen)`:
         This version of this method is deprecated and will soon be removed.  Use
         the version that takes two parameters instead.
-        
+
         @deprecated Use the version that takes two parameters instead.
         """
         ...
@@ -368,7 +368,7 @@ class NonlinearImager:
         """Sets the width and height of the texture used to render the scene for the
         indicated screen.  This must be less than or equal to the window size, and
         it should be a power of two.
-        
+
         In general, the larger the texture, the greater the detail of the rendered
         scene.
         """
@@ -376,7 +376,7 @@ class NonlinearImager:
     def set_source_camera(self, index: int, source_camera: NodePath) -> None:
         """Specifies the camera that will be used to render the image for this
         particular screen.
-        
+
         The parameter must be a NodePath whose node is a Camera.  The camera itself
         indicates the scene that is to be rendered.
         """
@@ -394,13 +394,13 @@ class NonlinearImager:
         The camera associated with the DisplayRegion at the time add_viewer() is
         called is used as the initial viewer camera; it may have a nonlinear lens,
         like a fisheye or cylindrical lens.
-        
+
         This sets up a special scene graph for this DisplayRegion alone and sets up
         the DisplayRegion with a specialty camera.  If future changes to the camera
         are desired, you should use the set_viewer_camera() interface.
-        
+
         All viewers must share the same GraphicsEngine.
-        
+
         The return value is the index of the new viewer.
         """
         ...
@@ -420,11 +420,11 @@ class NonlinearImager:
         relative position of the LensNode to the NonlinearImager, as well as the
         properties of the lens associated with the LensNode, determines the UV's
         that will be assigned to the geometry within the NonlinearImager.
-        
+
         It is not necessary to call this except to change the camera after a viewer
         has been added, since the default is to use whatever camera is associated
         with the DisplayRegion at the time the viewer is added.
-        
+
         The NodePath must refer to a LensNode (or a Camera).
         """
         ...
@@ -436,7 +436,7 @@ class NonlinearImager:
     def get_viewer_scene(self, index: int) -> NodePath:
         """Returns a pointer to the root node of the internal scene graph for the nth
         viewer, which is used to render all of the screen meshes for this viewer.
-        
+
         This is the scene graph in which the screen meshes within the dark room
         have been flattened into the appropriate transformation according to the
         viewer's lens properties (and position relative to the screens).  It is
@@ -454,7 +454,7 @@ class NonlinearImager:
         in which all of the ProjectionScreens and the viewer cameras reside.  It's
         a standalone scene with a few projection screens arranged artfully around
         one or more viewers; it's so named because it's a little virtual theater.
-        
+
         Normally this scene is not rendered directly; it only exists as an abstract
         concept, and to define the relation between the ProjectionScreens and the
         viewers.  But it may be rendered to help visualize the NonlinearImager's
@@ -503,7 +503,7 @@ class OSphereLens(Lens):
     real physical lenses.  It's primarily useful for generating 360-degree
     wraparound images while avoiding the distortion associated with fisheye
     images.
-    
+
     A OSphereLens is similar to a Cylindrical lens and PSphereLens, except that
     it is orthographic in the vertical direction.
     """
@@ -514,7 +514,7 @@ class PSphereLens(Lens):
     real physical lenses.  It's primarily useful for generating 360-degree
     wraparound images while avoiding the distortion associated with fisheye
     images.
-    
+
     A PSphereLens is similar to a cylindrical lens, except it is also curved in
     the vertical direction.  This allows it to extend to both poles in the
     vertical direction.  The mapping is similar to what many modeling packages

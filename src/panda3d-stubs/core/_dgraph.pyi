@@ -34,7 +34,7 @@ class DataNode(PandaNode):
     itself primarily intended as an abstract class; it defines no inputs and no
     outputs.  Most kinds of data nodes will derive from this to specify the
     inputs and outputs in the constructor.
-    
+
     DataNode does not attempt to cycle its data with a PipelineCycler.  The
     data graph is intended to be used only within a single thread.
     """

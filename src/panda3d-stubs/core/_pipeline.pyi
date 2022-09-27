@@ -7,7 +7,7 @@ _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]
 class Thread(TypedReferenceCount, Namable):
     """A thread; that is, a lightweight process.  This is an abstract base class;
     to use it, you must subclass from it and redefine thread_main().
-    
+
     The thread itself will keep a reference count on the Thread object while it
     is running; when the thread returns from its root function, the Thread
     object will automatically be destructed if no other pointers are
@@ -50,16 +50,16 @@ class Thread(TypedReferenceCount, Namable):
         """Returns a new Panda Thread object associated with the current thread (which
         has been created externally). This can be used to bind a unique Panda
         Thread object with an external thread, such as a new Python thread.
-        
+
         It is particularly useful to bind a Panda Thread object to an external
         thread for the purposes of PStats monitoring.  Without this call, each
         external thread will be assigned the same global ExternalThread object,
         which means they will all appear in the same PStats graph.
-        
+
         It is the caller's responsibility to save the returned Thread pointer for
         the lifetime of the external thread.  It is an error for the Thread pointer
         to destruct while the external thread is still in the system.
-        
+
         It is also an error to call this method from the main thread, or twice
         within a given thread, unless it is given the same name each time (in which
         case the same pointer will be returned each time).
@@ -97,7 +97,7 @@ class Thread(TypedReferenceCount, Namable):
     def set_pipeline_stage(self, pipeline_stage: int) -> None:
         """Specifies the Pipeline stage number associated with this thread.  The
         default stage is 0 if no stage is specified otherwise.
-        
+
         This must be a value in the range [0 .. pipeline->get_num_stages() - 1].
         It specifies the values that this thread observes for all pipelined data.
         Typically, an application thread will leave this at 0, but a render thread
@@ -129,7 +129,7 @@ class Thread(TypedReferenceCount, Namable):
         """Returns a pointer to the currently-executing Thread object.  If this is
         called from the main thread, this will return the same value as
         get_main_thread().
-        
+
         This will always return some valid Thread pointer.  It will never return
         NULL, even if the current thread was spawned outside of Panda's threading
         system, although all non-Panda threads will return the exact same Thread
@@ -201,20 +201,20 @@ class Thread(TypedReferenceCount, Namable):
         ...
     def start(self, priority: _ThreadPriority, joinable: bool) -> bool:
         """Starts the thread executing.  It is only valid to call this once.
-        
+
         The thread will begin executing its thread_main() function, and will
         terminate when thread_main() returns.
-        
+
         priority is intended as a hint to the relative importance of this thread.
         This may be ignored by the thread implementation.
-        
+
         joinable should be set true if you intend to call join() to wait for the
         thread to terminate, or false if you don't care and you will never call
         join(). Note that the reference count on the Thread object is incremented
         while the thread itself is running, so if you just want to fire and forget
         a thread, you may pass joinable = false, and never store the Thread object.
         It will automatically destruct itself when it finishes.
-        
+
         The return value is true if the thread is successfully started, false
         otherwise.
         """
@@ -287,10 +287,10 @@ class MutexDirect:
         """Grabs the mutex if it is available.  If it is not available, blocks until
         it becomes available, then grabs it.  In either case, the function does not
         return until the mutex is held; you should then call unlock().
-        
+
         This method is considered const so that you can lock and unlock const
         mutexes, mainly to allow thread-safe access to otherwise const data.
-        
+
         Also see MutexHolder.
         """
         ...
@@ -302,7 +302,7 @@ class MutexDirect:
     def release(self) -> None:
         """Releases the mutex.  It is an error to call this if the mutex was not
         already locked.
-        
+
         This method is considered const so that you can lock and unlock const
         mutexes, mainly to allow thread-safe access to otherwise const data.
         """
@@ -346,7 +346,7 @@ class ConditionVarDirect:
     changing state to a thread that is waiting for something to happen.  A
     condition variable can be used to "wake up" a thread when some arbitrary
     condition has changed.
-    
+
     A condition variable is associated with a single mutex, and several
     condition variables may share the same mutex.
     """
@@ -358,26 +358,26 @@ class ConditionVarDirect:
         """`(self)`:
         Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
-        
+
         wait() will release the lock, then go to sleep until some other thread
         calls notify() on this condition variable.  At that time at least one
         thread waiting on the same ConditionVarDirect will grab the lock again, and
         then return from wait().
-        
+
         It is possible that wait() will return even if no one has called notify().
         It is the responsibility of the calling process to verify the condition on
         return from wait, and possibly loop back to wait again if necessary.
-        
+
         Note the semantics of a condition variable: the mutex must be held before
         wait() is called, and it will still be held when wait() returns.  However,
         it will be temporarily released during the wait() call itself.
-        
+
         `(self, timeout: float)`:
         Waits on the condition, with a timeout.  The function will return when the
         condition variable is notified, or the timeout occurs.  There is no way to
         directly tell which happened, and it is possible that neither in fact
         happened (spurious wakeups are possible).
-        
+
         See wait() with no parameters for more.
         """
         ...
@@ -387,10 +387,10 @@ class ConditionVarDirect:
         waiting, at least one of them will be woken up, although there is no way to
         predict which one.  It is possible that more than one thread will be woken
         up.
-        
+
         The caller must be holding the mutex associated with the condition variable
         before making this call, which will not release the mutex.
-        
+
         If no threads are waiting, this is a no-op: the notify event is lost.
         """
         ...
@@ -419,7 +419,7 @@ class ConditionVarFullDirect:
     changing state to a thread that is waiting for something to happen.  A
     condition variable can be used to "wake up" a thread when some arbitrary
     condition has changed.
-    
+
     A condition variable is associated with a single mutex, and several
     condition variables may share the same mutex.
     """
@@ -431,26 +431,26 @@ class ConditionVarFullDirect:
         """`(self)`:
         Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
-        
+
         wait() will release the lock, then go to sleep until some other thread
         calls notify() on this condition variable.  At that time at least one
         thread waiting on the same ConditionVarFullDirect will grab the lock again,
         and then return from wait().
-        
+
         It is possible that wait() will return even if no one has called notify().
         It is the responsibility of the calling process to verify the condition on
         return from wait, and possibly loop back to wait again if necessary.
-        
+
         Note the semantics of a condition variable: the mutex must be held before
         wait() is called, and it will still be held when wait() returns.  However,
         it will be temporarily released during the wait() call itself.
-        
+
         `(self, timeout: float)`:
         Waits on the condition, with a timeout.  The function will return when the
         condition variable is notified, or the timeout occurs.  There is no way to
         directly tell which happened, and it is possible that neither in fact
         happened (spurious wakeups are possible).
-        
+
         See wait() with no parameters for more.
         """
         ...
@@ -460,20 +460,20 @@ class ConditionVarFullDirect:
         waiting, at least one of them will be woken up, although there is no way to
         predict which one.  It is possible that more than one thread will be woken
         up.
-        
+
         The caller must be holding the mutex associated with the condition variable
         before making this call, which will not release the mutex.
-        
+
         If no threads are waiting, this is a no-op: the notify is lost.
         """
         ...
     def notify_all(self) -> None:
         """Informs all of the other threads who are currently blocked on wait() that
         the relevant condition has changed.
-        
+
         The caller must be holding the mutex associated with the condition variable
         before making this call, which will not release the mutex.
-        
+
         If no threads are waiting, this is a no-op: the notify event is lost.
         """
         ...
@@ -509,12 +509,12 @@ class ReMutexDirect:
         Grabs the reMutex if it is available.  If it is not available, blocks until
         it becomes available, then grabs it.  In either case, the function does not
         return until the reMutex is held; you should then call unlock().
-        
+
         This method is considered const so that you can lock and unlock const
         reMutexes, mainly to allow thread-safe access to otherwise const data.
-        
+
         Also see ReMutexHolder.
-        
+
         `(self, current_thread: Thread)`:
         This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
@@ -529,7 +529,7 @@ class ReMutexDirect:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one
         additional time to release the lock.
-        
+
         This method really performs the same function as acquire(), but it offers a
         potential (slight) performance benefit when the calling thread knows that
         it already holds the lock.  It is an error to call this when the calling
@@ -539,7 +539,7 @@ class ReMutexDirect:
     def release(self) -> None:
         """Releases the reMutex.  It is an error to call this if the reMutex was not
         already locked.
-        
+
         This method is considered const so that you can lock and unlock const
         reMutexes, mainly to allow thread-safe access to otherwise const data.
         """
@@ -595,17 +595,17 @@ class LightMutexDirect:
         until it becomes available, then grabs it.  In either case, the function
         does not return until the lightMutex is held; you should then call
         unlock().
-        
+
         This method is considered const so that you can lock and unlock const
         lightMutexes, mainly to allow thread-safe access to otherwise const data.
-        
+
         Also see LightMutexHolder.
         """
         ...
     def release(self) -> None:
         """Releases the lightMutex.  It is an error to call this if the lightMutex was
         not already locked.
-        
+
         This method is considered const so that you can lock and unlock const
         lightMutexes, mainly to allow thread-safe access to otherwise const data.
         """
@@ -655,12 +655,12 @@ class LightReMutexDirect:
         until it becomes available, then grabs it.  In either case, the function
         does not return until the lightReMutex is held; you should then call
         unlock().
-        
+
         This method is considered const so that you can lock and unlock const
         lightReMutexes, mainly to allow thread-safe access to otherwise const data.
-        
+
         Also see LightReMutexHolder.
-        
+
         `(self, current_thread: Thread)`:
         This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
@@ -670,7 +670,7 @@ class LightReMutexDirect:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one
         additional time to release the lock.
-        
+
         This method really performs the same function as acquire(), but it offers a
         potential (slight) performance benefit when the calling thread knows that
         it already holds the lock.  It is an error to call this when the calling
@@ -680,7 +680,7 @@ class LightReMutexDirect:
     def release(self) -> None:
         """Releases the lightReMutex.  It is an error to call this if the lightReMutex
         was not already locked.
-        
+
         This method is considered const so that you can lock and unlock const
         lightReMutexes, mainly to allow thread-safe access to otherwise const data.
         """
@@ -726,7 +726,7 @@ class MainThread(Thread):
 
 class Semaphore:
     """A classic semaphore synchronization primitive.
-    
+
     A semaphore manages an internal counter which is decremented by each
     acquire() call and incremented by each release() call.  The counter can
     never go below zero; when acquire() finds that it is zero, it blocks,
@@ -747,7 +747,7 @@ class Semaphore:
     def release(self) -> int:
         """Increments the semaphore's internal count.  This may wake up another thread
         blocked on acquire().
-        
+
         Returns the count of the semaphore upon release.
         """
         ...

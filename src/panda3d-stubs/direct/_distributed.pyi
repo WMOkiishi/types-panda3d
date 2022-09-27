@@ -19,7 +19,7 @@ class CConnectionRepository:
     (but does not open it directly).  It manages reading and writing datagrams
     on the connection and monitoring for unexpected disconnects as well as
     handling intentional disconnects.
-    
+
     Certain server messages, like field updates, are handled entirely within
     the C++ layer, while server messages that are not understood by the C++
     layer are returned up to the Python layer for processing.
@@ -59,7 +59,7 @@ class CConnectionRepository:
         types can be handled by the C++ code in in this module.  When false, all
         datagrams, regardless of message type, are passed up to Python for
         processing.
-        
+
         The CMU distributed-object implementation requires this to be set false.
         """
         ...

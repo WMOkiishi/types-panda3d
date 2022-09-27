@@ -9,7 +9,7 @@ _DCSubatomicType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 
 class DCPackerInterface:
     """This defines the internal interface for packing values into a DCField.  The
     various different DC objects inherit from this.
-    
+
     Normally these methods are called only by the DCPacker object; the user
     wouldn't normally call these directly.
     """
@@ -21,7 +21,7 @@ class DCPackerInterface:
         """Returns the index number to be passed to a future call to DCPacker::seek()
         to seek directly to the named field without having to look up the field
         name in a table later, or -1 if the named field cannot be found.
-        
+
         If the named field is nested within a switch or some similar dynamic
         structure that reveals different fields based on the contents of the data,
         this mechanism cannot be used to pre-fetch the field index number--you must
@@ -37,12 +37,12 @@ class DCPackerInterface:
         Returns true if the other interface is bitwise the same as this one--that
         is, a uint32 only matches a uint32, etc.  Names of components, and range
         limits, are not compared.
-        
+
         `(self, description: str, dcfile: DCFile = ...)`:
         Returns true if this interface is bitwise the same as the interface
         described with the indicated formatted string, e.g.  "(uint8, uint8,
         int16)", or false otherwise.
-        
+
         If DCFile is not NULL, it specifies the DCFile that was previously loaded,
         from which some predefined structs and typedefs may be referenced in the
         description string.
@@ -189,14 +189,14 @@ class DCField(DCPackerInterface, DCKeywordList):
     def pack_args(self, packer: DCPacker, sequence) -> bool:
         """Packs the Python arguments from the indicated tuple into the packer.
         Returns true on success, false on failure.
-        
+
         It is assumed that the packer is currently positioned on this field.
         """
         ...
     def unpack_args(self, packer: DCPacker):
         """Unpacks the values from the packer, beginning at the current point in the
         unpack_buffer, into a Python tuple and returns the tuple.
-        
+
         It is assumed that the packer is currently positioned on this field.
         """
         ...
@@ -273,7 +273,7 @@ class DCPackData:
 class DCPacker:
     """This class can be used for packing a series of numeric and string data into
     a binary stream, according to the DC specification.
-    
+
     See also direct/src/doc/dcPacker.txt for a more complete description and
     examples of using this class.
     """
@@ -288,7 +288,7 @@ class DCPacker:
     def begin_pack(self, root: DCPackerInterface) -> None:
         """Begins a packing session.  The parameter is the DC object that describes
         the packing format; it may be a DCParameter or DCField.
-        
+
         Unless you call clear_data() between sessions, multiple packing sessions
         will be concatenated together into the same buffer.  If you wish to add
         bytes to the buffer between packing sessions, use append_data() or
@@ -297,7 +297,7 @@ class DCPacker:
         ...
     def end_pack(self) -> bool:
         """Finishes a packing session.
-        
+
         The return value is true on success, or false if there has been some error
         during packing.
         """
@@ -310,7 +310,7 @@ class DCPacker:
     def begin_unpack(self, root: DCPackerInterface) -> None:
         """Begins an unpacking session.  You must have previously called
         set_unpack_data() to specify a buffer to unpack.
-        
+
         If there was data left in the buffer after a previous begin_unpack() ..
         end_unpack() session, the new session will resume from the current point.
         This method may be used, therefore, to unpack a sequence of objects from
@@ -319,7 +319,7 @@ class DCPacker:
         ...
     def end_unpack(self) -> bool:
         """Finishes the unpacking session.
-        
+
         The return value is true on success, or false if there has been some error
         during unpacking (or if all fields have not been unpacked).
         """
@@ -327,10 +327,10 @@ class DCPacker:
     def begin_repack(self, root: DCPackerInterface) -> None:
         """Begins a repacking session.  You must have previously called
         set_unpack_data() to specify a buffer to unpack.
-        
+
         Unlike begin_pack() or begin_unpack() you may not concatenate the results
         of multiple begin_repack() sessions in one buffer.
-        
+
         Also, unlike in packing or unpacking modes, you may not walk through the
         fields from beginning to end, or even pack two consecutive fields at once.
         Instead, you must call seek() for each field you wish to modify and pack
@@ -339,7 +339,7 @@ class DCPacker:
         ...
     def end_repack(self) -> bool:
         """Finishes the repacking session.
-        
+
         The return value is true on success, or false if there has been some error
         during repacking (or if all fields have not been repacked).
         """
@@ -350,16 +350,16 @@ class DCPacker:
         Seeks to the field indentified by seek_index, which was returned by an
         earlier call to DCField::find_seek_index() to get the index of some nested
         field.  Also see the version of seek() that accepts a field name.
-        
+
         Returns true if successful, false if the field is not known (or if the
         packer is in an invalid mode).
-        
+
         `(self, field_name: str)`:
         Sets the current unpack (or repack) position to the named field.  In unpack
         mode, the next call to unpack_*() or push() will begin to read the named
         field.  In repack mode, the next call to pack_*() or push() will modify the
         named field.
-        
+
         Returns true if successful, false if the field is not known (or if the
         packer is in an invalid mode).
         """
@@ -376,10 +376,10 @@ class DCPacker:
     def get_num_nested_fields(self) -> int:
         """Returns the number of nested fields associated with the current field, if
         has_nested_fields() returned true.
-        
+
         The return value may be -1 to indicate that a variable number of nested
         fields are accepted by this field type (e.g.  a variable-length array).
-        
+
         Note that this method is unreliable to determine how many fields you must
         traverse before you can call pop(), since particularly in the presence of a
         DCSwitch, it may change during traversal.  Use more_nested_fields()
@@ -407,7 +407,7 @@ class DCPacker:
         """Returns a pointer to the last DCSwitch instance that we have passed by and
         selected one case of during the pack/unpack process.  Each time we
         encounter a new DCSwitch and select a case, this will change state.
-        
+
         This may be used to detect when a DCSwitch has been selected.  At the
         moment this changes state, get_current_parent() will contain the particular
         SwitchCase that was selected by the switch.
@@ -429,18 +429,18 @@ class DCPacker:
         ...
     def push(self) -> None:
         """Marks the beginning of a nested series of fields.
-        
+
         This must be called before filling the elements of an array or the
         individual fields in a structure field.  It must also be balanced by a
         matching pop().
-        
+
         It is necessary to use push() / pop() only if has_nested_fields() returns
         true.
         """
         ...
     def pop(self) -> None:
         """Marks the end of a nested series of fields.
-        
+
         This must be called to match a previous push() only after all the expected
         number of nested fields have been packed.  It is an error to call it too
         early, or too late.
@@ -554,7 +554,7 @@ class DCPacker:
         """Returns true if there has been an packing error since the most recent call
         to begin(); in particular, this may be called after end() has returned
         false to determine the nature of the failure.
-        
+
         A return value of true indicates there was a push/pop mismatch, or the
         push/pop structure did not match the data structure, or there were the
         wrong number of elements in a nested push/pop structure, or on unpack that
@@ -565,7 +565,7 @@ class DCPacker:
         """Returns true if there has been an range validation error since the most
         recent call to begin(); in particular, this may be called after end() has
         returned false to determine the nature of the failure.
-        
+
         A return value of true indicates a value that was packed or unpacked did
         not fit within the specified legal range for a parameter, or within the
         limits of the field size.
@@ -757,7 +757,7 @@ class DCParameter(DCField):
     """Represents the type specification for a single parameter within a field
     specification.  This may be a simple type, or it may be a class or an array
     reference.
-    
+
     This may also be a typedef reference to another type, which has the same
     properties as the referenced type, but a different name.
     """
@@ -808,17 +808,17 @@ class DCAtomicField(DCField):
         the field.  This is only valid if has_element_default() returns true, in
         which case this string represents the bytes that should be assigned to the
         field as a default value.
-        
+
         If the element is an array-type element, the returned value will include
         the two-byte length preceding the array data.
-        
+
         @deprecated use get_element() instead.
         """
         ...
     def has_element_default(self, n: int) -> bool:
         """Returns true if the nth element of the field has a default value specified,
         false otherwise.
-        
+
         @deprecated use get_element() instead.
         """
         ...
@@ -826,7 +826,7 @@ class DCAtomicField(DCField):
         """Returns the name of the nth element of the field.  This name is strictly
         for documentary purposes; it does not generally affect operation.  If a
         name is not specified, this will be the empty string.
-        
+
         @deprecated use get_element()->get_name() instead.
         """
         ...
@@ -840,7 +840,7 @@ class DCAtomicField(DCField):
         implements an implicit fixed-point system; floating-point values are to be
         multiplied by this value before encoding into a packet, and divided by this
         number after decoding.
-        
+
         This method is deprecated; use get_element()->get_divisor() instead.
         """
         ...
@@ -932,7 +932,7 @@ class DCClass(DCDeclaration):
         ...
     def get_inherited_field(self, n: int) -> DCField:
         """Returns the nth field field in the class and all of its ancestors.
-        
+
         This *used* to be the same thing as get_field_by_index(), back when the
         fields were numbered sequentially within a class's inheritance hierarchy.
         Now that fields have a globally unique index number, this is no longer
@@ -961,7 +961,7 @@ class DCClass(DCDeclaration):
         """Starts the PStats timer going on the "generate" task, that is, marks the
         beginning of the process of generating a new object, for the purposes of
         timing this process.
-        
+
         This should balance with a corresponding call to stop_generate().
         """
         ...
@@ -1033,7 +1033,7 @@ class DCClass(DCDeclaration):
     def direct_update(self, distobj, field_name: str, datagram: Datagram) -> None:
         """`(self, distobj, field_name: str, datagram: Datagram)`:
         Processes an update for a named field from a packed datagram.
-        
+
         `(self, distobj, field_name: str, value_blob: bytes)`:
         Processes an update for a named field from a packed value blob.
         """
@@ -1047,15 +1047,15 @@ class DCClass(DCDeclaration):
         appropriate get*() function, then packs that value into the packer.  This
         field is presumably either a required field or a specified optional field,
         and we are building up a datagram for the generate-with-required message.
-        
+
         Returns true on success, false on failure.
-        
+
         `(self, datagram: Datagram, distobj, field: DCField)`:
         Looks up the current value of the indicated field by calling the
         appropriate get*() function, then packs that value into the datagram.  This
         field is presumably either a required field or a specified optional field,
         and we are building up a datagram for the generate-with-required message.
-        
+
         Returns true on success, false on failure.
         """
         ...
@@ -1082,10 +1082,10 @@ class DCClass(DCDeclaration):
         """Generates a datagram containing the message necessary to generate a new
         distributed object from the client.  This requires querying the object for
         the initial value of its required fields.
-        
+
         optional_fields is a list of fieldNames to generate in addition to the
         normal required fields.
-        
+
         This method is only called by the CMU implementation.
         """
         ...
@@ -1157,17 +1157,17 @@ class DCFile:
         Opens and reads the indicated .dc file by name.  The distributed classes
         defined in the file will be appended to the set of distributed classes
         already recorded, if any.
-        
+
         Returns true if the file is successfully read, false if there was an error
         (in which case the file might have been partially read).
-        
+
         `(self, _in: istream, filename: str = ...)`:
         Parses the already-opened input stream for distributed class descriptions.
         The filename parameter is optional and is only used when reporting errors.
-        
+
         The distributed classes defined in the file will be appended to the set of
         distributed classes already recorded, if any.
-        
+
         Returns true if the file is successfully read, false if there was an error
         (in which case the file might have been partially read).
         """
@@ -1179,13 +1179,13 @@ class DCFile:
         """`(self, filename: Filename, brief: bool)`:
         Opens the indicated filename for output and writes a parseable description
         of all the known distributed classes to the file.
-        
+
         Returns true if the description is successfully written, false otherwise.
-        
+
         `(self, out: ostream, brief: bool)`:
         Writes a parseable description of all the known distributed classes to the
         stream.
-        
+
         Returns true if the description is successfully written, false otherwise.
         """
         ...
@@ -1210,7 +1210,7 @@ class DCFile:
     def get_field_by_index(self, index_number: int) -> DCField:
         """Returns a pointer to the one DCField that has the indicated index number,
         of all the DCFields across all classes in the file.
-        
+
         This method is only valid if dc-multiple-inheritance is set true in the
         Config.prc file.  Without this setting, different DCFields may share the
         same index number, so this global lookup is not possible.
@@ -1329,7 +1329,7 @@ class DCSimpleParameter(DCParameter):
     def get_modulus(self) -> float:
         """Returns the modulus associated with this type, if any.  It is an error to
         call this if has_modulus() returned false.
-        
+
         If present, this is the modulus that is used to constrain the numeric value
         of the field before it is packed (and range-checked).
         """

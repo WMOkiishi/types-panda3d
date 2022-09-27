@@ -206,7 +206,7 @@ class PNMImageHeader:
             """`(self, pixel: PNMImageHeader.PixelSpec)`:
             Returns the number of occurrences in the image of the indicated pixel
             color.
-            
+
             `(self, n: int)`:
             Returns the number of occurrences in the image of the nth unique pixel
             color in the histogram.
@@ -258,7 +258,7 @@ class PNMImageHeader:
         blue components; true if it is a grayscale image and has only a gray
         component.  (The gray color is actually stored in the blue channel, and the
         red and green channels are ignored.)
-        
+
         `(self, color_type: _PNMImageHeader_ColorType)`:
         This static variant of is_grayscale() returns true if the indicated image
         type represents a grayscale image, false otherwise.
@@ -269,7 +269,7 @@ class PNMImageHeader:
         Returns true if the image includes an alpha channel, false otherwise.
         Unlike is_grayscale(), if this returns false it is an error to call any of
         the functions accessing the alpha channel.
-        
+
         `(self, color_type: _PNMImageHeader_ColorType)`:
         This static variant of has_alpha() returns true if the indicated image type
         includes an alpha channel, false otherwise.
@@ -328,17 +328,17 @@ class PNMImageHeader:
         Opens up the image file and tries to read its header information to
         determine its size, number of channels, etc.  If successful, updates the
         header information and returns true; otherwise, returns false.
-        
+
         `(self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...)`:
         Reads the image header information only from the indicated stream.
-        
+
         The filename is advisory only, and may be used to suggest a type if it has
         a known extension.
-        
+
         If type is non-NULL, it is a suggestion for the type of file it is (and a
         non-NULL type will override any magic number test or filename extension
         lookup).
-        
+
         Returns true if successful, false on error.
         """
         ...
@@ -374,7 +374,7 @@ class PfmFile(PNMImageHeader):
     def clear(self) -> None:
         """`(self)`:
         Eliminates all data in the file.
-        
+
         `(self, x_size: int, y_size: int, num_channels: int)`:
         Resets to an empty table with a specific size.  The case of num_channels ==
         0 is allowed only in the case that x_size and y_size are also == 0; and
@@ -388,14 +388,14 @@ class PfmFile(PNMImageHeader):
         """`(self, fullpath: Filename)`:
         Reads the PFM data from the indicated file, returning true on success,
         false on failure.
-        
+
         This can also handle reading a standard image file supported by PNMImage;
         it will be quietly converted to a floating-point type.
-        
+
         `(self, _in: istream, fullpath: Filename = ...)`:
         Reads the PFM data from the indicated stream, returning true on success,
         false on failure.
-        
+
         This can also handle reading a standard image file supported by PNMImage;
         it will be quietly converted to a floating-point type.
         """
@@ -407,11 +407,11 @@ class PfmFile(PNMImageHeader):
         """`(self, fullpath: Filename)`:
         Writes the PFM data to the indicated file, returning true on success, false
         on failure.
-        
+
         If the type implied by the filename extension supports floating-point, the
         data will be written directly; otherwise, the floating-point data will be
         quietly converted to the appropriate integer type.
-        
+
         `(self, out: ostream, fullpath: Filename = ...)`:
         Writes the PFM data to the indicated stream, returning true on success,
         false on failure.
@@ -433,12 +433,12 @@ class PfmFile(PNMImageHeader):
         Stores 1 or 0 values into the indicated PNMImage, according to has_point()
         for each pixel.  Each valid point gets a 1 value; each nonexistent point
         gets a 0 value.
-        
+
         `(self, pnmimage: PNMImage, min_point: LVecBase4f, max_point: LVecBase4f)`:
         Stores 1 or 0 values into the indicated PNMImage, according to has_point()
         for each pixel.  Each valid point gets a 1 value; each nonexistent point
         gets a 0 value.
-        
+
         This flavor of store_mask also checks whether the valid points are within
         the specified min/max range.  Any valid points without the condition
         min_point[c] <= value[c] <= max_point[c], for any c, are stored with a 0 in
@@ -591,7 +591,7 @@ class PfmFile(PNMImageHeader):
     def set_zero_special(self, zero_special: bool) -> None:
         """Sets the zero_special flag.  When this flag is true, values of (0, 0, 0) in
         the pfm file are treated as a special case, and are not processed.
-        
+
         This is a special case of set_no_data_value().
         """
         ...
@@ -599,7 +599,7 @@ class PfmFile(PNMImageHeader):
         """Sets the no_data_chan4 flag.  When this flag is true, and the pfm file has
         4 channels, then a negative value in the fourth channel indicates no data.
         When it is false, all points are valid.
-        
+
         This is a special case of set_no_data_value().
         """
         ...
@@ -607,7 +607,7 @@ class PfmFile(PNMImageHeader):
         """Sets the no_data_nan flag.  When num_channels is nonzero, then a NaN value
         in any of the first num_channels channels indicates no data for that point.
         If num_channels is zero, then all points are valid.
-        
+
         This is a special case of set_no_data_value().
         """
         ...
@@ -686,15 +686,15 @@ class PfmFile(PNMImageHeader):
         """Applies the distortion indicated in the supplied dist map to the current
         map.  The dist map is understood to be a mapping of points in the range
         0..1 in the first two dimensions.
-        
+
         The operation can be expressed symbolically as:
-        
+
         this(u, v) = this(dist(u, v))
-        
+
         If scale_factor is not 1, it should be a value > 1, and it specifies the
         factor to upscale the working table while processing, to reduce artifacts
         from integer truncation.
-        
+
         By convention, the y axis is inverted in the distortion map relative to the
         coordinates here.  A y value of 0 in the distortion map corresponds with a
         v value of 1 in this file.
@@ -704,15 +704,15 @@ class PfmFile(PNMImageHeader):
         """Applies the distortion indicated in the supplied dist map to the current
         map.  The dist map is understood to be a mapping of points in the range
         0..1 in the first two dimensions.
-        
+
         The operation can be expressed symbolically as:
-        
+
         this(u, v) = dist(this(u, v))
-        
+
         If scale_factor is not 1, it should be a value > 1, and it specifies the
         factor to upscale the working table while processing, to reduce artifacts
         from integer truncation.
-        
+
         By convention, the y axis in inverted in the distortion map relative to the
         coordinates here.  A y value of 0 in the distortion map corresponds with a
         v value of 1 in this file.
@@ -734,7 +734,7 @@ class PfmFile(PNMImageHeader):
         """Wherever there is missing data in the other PfmFile, set this the
         corresponding point in this PfmFile to missing as well, so that this
         PfmFile has only points where both files have points.
-        
+
         The point is set to "missing" by setting it the no_data_value.
         """
         ...
@@ -768,21 +768,21 @@ class PfmFile(PNMImageHeader):
     def calc_tight_bounds(self, min_point: Vec3f, max_point: Vec3f) -> bool:
         """Calculates the minimum and maximum vertices of all points within the table.
         Assumes the table contains 3-D points.
-        
+
         The return value is true if any points in the table, or false if none are.
         """
         ...
     def compute_planar_bounds(self, center: LVecBase2d | LVecBase2f, point_dist: float, sample_radius: float, points_only: bool) -> BoundingHexahedron:
         """Computes the minmax bounding volume of the points in 3-D space, assuming
         the points represent a mostly-planar surface.
-        
+
         This algorithm works by sampling the (square) sample_radius pixels at the
         four point_dist corners around the center (cx - pd, cx + pd) and so on, to
         approximate the plane of the surface.  Then all of the points are projected
         into that plane and the bounding volume of the entire mesh within that
         plane is determined.  If points_only is true, the bounding volume of only
         those four points is determined.
-        
+
         center, point_dist and sample_radius are in UV space, i.e.  in the range
         0..1.
         """
@@ -790,7 +790,7 @@ class PfmFile(PNMImageHeader):
     def compute_sample_point(self, result: Vec3f, x: float, y: float, sample_radius: float) -> None:
         """Computes the average of all the point within sample_radius (manhattan
         distance) and the indicated point.
-        
+
         The point coordinates are given in UV space, in the range 0..1.
         """
         ...
@@ -822,14 +822,14 @@ class PfmFile(PNMImageHeader):
         """index_image is a WxH 1-channel image, while pixel_values is an Nx1
         image with any number of channels.  Typically pixel_values will be
         a 256x1 image.
-        
+
         Fills the PfmFile with a new image the same width and height as
         index_image, with the same number of channels as pixel_values.
-        
+
         Each pixel of the new image is computed with the formula:
-        
+
         new_image(x, y) = pixel_values(index_image(x, y)[channel], 0)
-        
+
         At present, no interpolation is performed; the nearest value in
         pixel_values is discovered.  This may change in the future.
         """
@@ -851,7 +851,7 @@ class PfmFile(PNMImageHeader):
         """`(self, gray_exponent: float)`; `(self, gray_exponent: float, alpha_exponent: float)`; `(self, c0_exponent: float, c1_exponent: float, c2_exponent: float, c3_exponent: float)`:
         Adjusts each channel of the image by raising the corresponding component
         value to the indicated exponent, such that L' = L ^ exponent.
-        
+
         `(self, c0_exponent: float, c1_exponent: float, c2_exponent: float)`:
         Adjusts each channel of the image by raising the corresponding component
         value to the indicated exponent, such that L' = L ^ exponent.  For a
@@ -933,10 +933,10 @@ class PfmFile(PNMImageHeader):
 class PNMBrush(ReferenceCount):
     """This class is used to control the shape and color of the drawing operations
     performed by a PNMPainter object.
-    
+
     Normally, you don't create a PNMBrush directly; instead, use one of the
     static PNMBrush::make_*() methods provided here.
-    
+
     A PNMBrush is used to draw the border of a polygon or rectangle, as well as
     for filling its interior.  When it is used to draw a border, the brush is
     "smeared" over the border; when it is used to fill the interior, it is
@@ -972,7 +972,7 @@ class PNMBrush(ReferenceCount):
     def make_image(image: PNMImage, xc: float, yc: float, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
         """Returns a new brush that paints with the indicated image.  xc and yc
         indicate the pixel in the center of the brush.
-        
+
         The brush makes a copy of the image; it is safe to deallocate or modify the
         image after making this call.
         """
@@ -989,25 +989,25 @@ class PNMImage(PNMImageHeader):
     number of public-domain image file converters.  Nowadays we are no longer
     derived directly from the pnm library, mainly to allow support of C++
     iostreams instead of the C stdio FILE interface.
-    
+
     Conceptually, a PNMImage is a two-dimensional array of xels, which are the
     PNM-defined generic pixel type.  Each xel may have a red, green, and blue
     component, or (if the image is grayscale) a gray component.  The image may
     be read in, the individual xels manipulated, and written out again, or a
     black image may be constructed from scratch.
-    
+
     A PNMImage has a color space and a maxval, the combination of which defines
     how a floating-point linear color value is encoded as an integer value in
     memory.  The functions ending in _val operate on encoded colors, whereas
     the regular ones work with linear floating-point values.  All operations
     are color space correct unless otherwise specified.
-    
+
     The image is of size XSize() by YSize() xels, numbered from top to bottom,
     left to right, beginning at zero.
-    
+
     Files can be specified by filename, or by an iostream pointer.  The
     filename "-" refers to stdin or stdout.
-    
+
     This class is not inherently thread-safe; use it from a single thread or
     protect access using a mutex.
     """
@@ -1110,7 +1110,7 @@ class PNMImage(PNMImageHeader):
         """`(self)`:
         Frees all memory allocated for the image, and clears all its parameters
         (size, color, type, etc).
-        
+
         `(self, x_size: int, y_size: int, num_channels: int = ..., maxval: int = ..., type: PNMFileType = ..., color_space: _ColorSpace = ...)`:
         This flavor of clear() reinitializes the image to an empty (black) image
         with the given dimensions.
@@ -1125,7 +1125,7 @@ class PNMImage(PNMImageHeader):
     def copy_channel(self, copy: PNMImage, src_channel: int, dest_channel: int) -> None:
         """`(self, copy: PNMImage, src_channel: int, dest_channel: int)`:
         Copies a channel from one image into another.  Images must be the same size
-        
+
         `(self, copy: PNMImage, xto: int, yto: int, cto: int, xfrom: int = ..., yfrom: int = ..., cfrom: int = ..., x_size: int = ..., y_size: int = ...)`:
         Copies just a single channel from the source image into a single channel of
         this image, leaving the remaining channels alone.
@@ -1137,7 +1137,7 @@ class PNMImage(PNMImageHeader):
         """Copies some subset of the bits of the specified channel from one image into
         some subset of the bits of the specified channel in another image.  Images
         must be the same size.
-        
+
         If right_shift is negative, it means a left shift.
         """
         ...
@@ -1157,7 +1157,7 @@ class PNMImage(PNMImageHeader):
         """`(self, gray: float = ...)`:
         Sets the entire image (except the alpha channel) to the given grayscale
         level.
-        
+
         `(self, red: float, green: float, blue: float)`:
         Sets the entire image (except the alpha channel) to the given color.
         """
@@ -1169,7 +1169,7 @@ class PNMImage(PNMImageHeader):
         """`(self, gray: int = ...)`:
         Sets the entire image (except the alpha channel) to the given grayscale
         level.
-        
+
         `(self, red: int, green: int, blue: int)`:
         Sets the entire image (except the alpha channel) to the given color.
         """
@@ -1186,7 +1186,7 @@ class PNMImage(PNMImageHeader):
         """Specifies the size to we'd like to scale the image upon reading it.  This
         will affect the next call to read().  This is usually used to reduce the
         image size, e.g.  for a thumbnail.
-        
+
         If the file type reader supports it (e.g.  JPEG), then this will scale the
         image during the read operation, consequently reducing memory and CPU
         utilization.  If the file type reader does not support it, this will load
@@ -1219,17 +1219,17 @@ class PNMImage(PNMImageHeader):
         Reads the indicated image filename.  If type is non-NULL, it is a
         suggestion for the type of file it is.  Returns true if successful, false
         on error.
-        
+
         `(self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...)`:
         Reads the image data from the indicated stream.
-        
+
         The filename is advisory only, and may be used to suggest a type if it has
         a known extension.
-        
+
         If type is non-NULL, it is a suggestion for the type of file it is (and a
         non-NULL type will override any magic number test or filename extension
         lookup).
-        
+
         Returns true if successful, false on error.
         """
         ...
@@ -1240,13 +1240,13 @@ class PNMImage(PNMImageHeader):
         """`(self, filename: Filename, type: PNMFileType = ...)`:
         Writes the image to the indicated filename.  If type is non-NULL, it is a
         suggestion for the type of image file to write.
-        
+
         `(self, data: ostream, filename: str = ..., type: PNMFileType = ...)`:
         Writes the image to the indicated ostream.
-        
+
         The filename is advisory only, and may be used suggest a type if it has a
         known extension.
-        
+
         If type is non-NULL, it is a suggestion for the type of image file to
         write.
         """
@@ -1278,13 +1278,13 @@ class PNMImage(PNMImageHeader):
         """Converts the colors in the image to the indicated color space.  This may be
         a lossy operation, in particular when going from sRGB to linear.  The alpha
         channel remains untouched.
-        
+
         Note that, because functions like get_xel() and set_xel() work on
         linearized floating-point values, this conversion won't affect those values
         (aside from some minor discrepancies due to storage precision).  It does
         affect the values used by get_xel_val() and set_xel_val(), though, since
         those operate on encoded colors.
-        
+
         Some color spaces, particularly scRGB, may enforce the use of a particular
         maxval setting.
         """
@@ -1302,7 +1302,7 @@ class PNMImage(PNMImageHeader):
         """`(self)`:
         Converts the image from RGB to grayscale.  Any alpha channel, if present,
         is left undisturbed.
-        
+
         `(self, rc: float, gc: float, bc: float)`:
         Converts the image from RGB to grayscale.  Any alpha channel, if present,
         is left undisturbed.  The optional rc, gc, bc values represent the relative
@@ -1320,7 +1320,7 @@ class PNMImage(PNMImageHeader):
         """Converts an image in-place to its "premultiplied" form, where, for every
         pixel in the image, the red, green, and blue components are multiplied by
         that pixel's alpha value.
-        
+
         This does not modify any alpha values.
         """
         ...
@@ -1328,7 +1328,7 @@ class PNMImage(PNMImageHeader):
         """Converts an image in-place to its "straight alpha" form (presumably from a
         "premultiplied" form), where, for every pixel in the image, the red, green,
         and blue components are divided by that pixel's alpha value.
-        
+
         This does not modify any alpha values.
         """
         ...
@@ -1357,7 +1357,7 @@ class PNMImage(PNMImageHeader):
         Changes the RGB color at the indicated pixel.  Each component is in the
         range 0..maxval, encoded in the configured color space.  See set_xel if you
         instead have a linearized and normalized floating-point value.
-        
+
         `(self, x: int, y: int, gray: int)`:
         Changes all three color components at the indicated pixel to the same
         value.  The value is in the range component is in the range 0..maxval,
@@ -1435,7 +1435,7 @@ class PNMImage(PNMImageHeader):
         """Sets the alpha component color only at the indicated pixel.  It is an error
         to call this unless has_alpha() is true.  The value given should be in the
         range 0..maxval.
-        
+
         This value is always linearly encoded, even if the image is set to the sRGB
         color space.
         """
@@ -1492,7 +1492,7 @@ class PNMImage(PNMImageHeader):
         """`(self, x: int, y: int, value: LVecBase3f)`; `(self, x: int, y: int, r: float, g: float, b: float)`:
         Changes the RGB color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
-        
+
         `(self, x: int, y: int, gray: float)`:
         Changes all three color components at the indicated pixel to the same
         value.  The value is a linearized float in the range 0..1.
@@ -1579,12 +1579,12 @@ class PNMImage(PNMImageHeader):
         Returns the linear brightness of the given xel, as a linearized float in
         the range 0..1.  This flavor of get_bright() returns the correct grayscale
         brightness level for both full-color and grayscale images.
-        
+
         `(self, x: int, y: int, rc: float, gc: float, bc: float)`:
         This flavor of get_bright() works correctly only for color images.  It
         returns a single brightness value for the RGB color at the indicated pixel,
         based on the supplied weights for each component.
-        
+
         `(self, x: int, y: int, rc: float, gc: float, bc: float, ac: float)`:
         This flavor of get_bright() works correctly only for four-channel images.
         It returns a single brightness value for the RGBA color at the indicated
@@ -1615,10 +1615,10 @@ class PNMImage(PNMImageHeader):
         """Behaves like copy_sub_image(), except the alpha channel of the copy is used
         to blend the copy into the destination image, instead of overwriting pixels
         unconditionally.
-        
+
         If pixel_scale is not 1.0, it specifies an amount to scale each *alpha*
         value of the source image before applying it to the target image.
-        
+
         If pixel_scale is 1.0 and the copy has no alpha channel, this degenerates
         into copy_sub_image().
         """
@@ -1639,7 +1639,7 @@ class PNMImage(PNMImageHeader):
         """Behaves like copy_sub_image(), but the resulting color will be the darker
         of the source and destination colors at each pixel (and at each R, G, B, A
         component value).
-        
+
         If pixel_scale is not 1.0, it specifies an amount to scale each pixel value
         of the source image before applying it to the target image.  The scale is
         applied with the center at 1.0: scaling the pixel value smaller brings it
@@ -1650,7 +1650,7 @@ class PNMImage(PNMImageHeader):
         """Behaves like copy_sub_image(), but the resulting color will be the lighter
         of the source and destination colors at each pixel (and at each R, G, B, A
         component value).
-        
+
         If pixel_scale is not 1.0, it specifies an amount to scale each pixel value
         of the source image before applying it to the target image.
         """
@@ -1658,15 +1658,15 @@ class PNMImage(PNMImageHeader):
     def threshold(self, select_image: PNMImage, channel: int, threshold: float, lt: PNMImage, ge: PNMImage) -> None:
         """Selectively copies each pixel from either one source or another source,
         depending on the pixel value of the indicated channel of select_image.
-        
+
         For each pixel (x, y):
-        
+
         s = select_image.get_channel(x, y, channel). Set this image's (x, y) to:
-        
+
         lt.get_xel(x, y) if s < threshold, or
-        
+
         ge.get_xel(x, y) if s >= threshold
-        
+
         Any of select_image, lt, or ge may be the same PNMImge object as this
         image, or the same as each other; or they may all be different.  All images
         must be the same size.  As a special case, lt and ge may both be 1x1 images
@@ -1679,14 +1679,14 @@ class PNMImage(PNMImageHeader):
         image, up to the specified radius value (which also becomes the new
         maxval).  radius may range from 0 to maxmaxval; smaller values will compute
         faster.  A dark pixel is defined as one whose pixel value is < threshold.
-        
+
         If shrink_from_border is true, then the mask image is considered to be
         surrounded by a border of dark pixels; otherwise, the border isn't
         considered.
-        
+
         This can be used, in conjunction with threshold, to shrink a mask image
         inwards by a certain number of pixels.
-        
+
         The mask image may be the same image as this one, in which case it is
         destructively modified by this process.
         """
@@ -1697,10 +1697,10 @@ class PNMImage(PNMImageHeader):
         mask image, up to the specified radius value (which also becomes the new
         maxval).  radius may range from 0 to maxmaxval; smaller values will compute
         faster.  A white pixel is defined as one whose pixel value is >= threshold.
-        
+
         This can be used, in conjunction with threshold, to grow a mask image
         outwards by a certain number of pixels.
-        
+
         The mask image may be the same image as this one, in which case it is
         destructively modified by this process.
         """
@@ -1708,14 +1708,14 @@ class PNMImage(PNMImageHeader):
     def indirect_1d_lookup(self, index_image: PNMImage, channel: int, pixel_values: PNMImage) -> None:
         """index_image is a WxH grayscale image, while pixel_values is an Nx1 color
         (or grayscale) image.  Typically pixel_values will be a 256x1 image.
-        
+
         Fills the PNMImage with a new image the same width and height as
         index_image, with the same number of channels as pixel_values.
-        
+
         Each pixel of the new image is computed with the formula:
-        
+
         new_image(x, y) = pixel_values(index_image(x, y)[channel], 0)
-        
+
         At present, no interpolation is performed; the nearest value in
         pixel_values is discovered.  This may change in the future.
         """
@@ -1730,7 +1730,7 @@ class PNMImage(PNMImageHeader):
     def render_spot(self, fg: Vec4f, bg: Vec4f, min_radius: float, max_radius: float) -> None:
         """Renders a solid-color circle, with a fuzzy edge, into the center of the
         PNMImage.  If the PNMImage is non-square, this actually renders an ellipse.
-        
+
         The min_radius and max_radius are in the scale 0..1, where 1.0 means the
         full width of the image.  If min_radius == max_radius, the edge is sharp
         (but still antialiased); otherwise, the pixels between min_radius and
@@ -1740,7 +1740,7 @@ class PNMImage(PNMImageHeader):
     def expand_border(self, left: int, right: int, bottom: int, top: int, color: Vec4f) -> None:
         """Expands the image by the indicated number of pixels on each edge.  The new
         pixels are set to the indicated color.
-        
+
         If any of the values is negative, this actually crops the image.
         """
         ...
@@ -1789,9 +1789,9 @@ class PNMImage(PNMImageHeader):
         """Reduces the number of unique colors in the image to (at most) the given
         count.  Fewer colors than requested may be left in the image after this
         operation, but never more.
-        
+
         At present, this is only supported on images without an alpha channel.
-        
+
         @since 1.10.5
         """
         ...
@@ -1800,7 +1800,7 @@ class PNMImage(PNMImageHeader):
         """`(self, perlin: StackedPerlinNoise2)`:
         Variant of perlin_noise_fill that uses an existing StackedPerlinNoise2
         object.
-        
+
         `(self, sx: float, sy: float, table_size: int = ..., seed: int = ...)`:
         Fills the image with a grayscale perlin noise pattern based on the
         indicated parameters.  Uses set_xel to set the grayscale values.  The sx
@@ -1832,7 +1832,7 @@ class PNMImage(PNMImageHeader):
         """`(self, gray_exponent: float)`; `(self, gray_exponent: float, alpha_exponent: float)`:
         Adjusts each channel of the image by raising the corresponding component
         value to the indicated exponent, such that L' = L ^ exponent.
-        
+
         `(self, red_exponent: float, green_exponent: float, blue_exponent: float)`; `(self, red_exponent: float, green_exponent: float, blue_exponent: float, alpha_exponent: float)`:
         Adjusts each channel of the image by raising the corresponding component
         value to the indicated exponent, such that L' = L ^ exponent.  For a
@@ -1953,7 +1953,7 @@ class PNMImage(PNMImageHeader):
 class PNMPainter:
     """This class provides a number of convenient methods for painting drawings
     directly into a PNMImage.
-    
+
     It stores a pointer to the PNMImage you pass it, but it does not take
     ownership of the object; you are responsible for ensuring that the PNMImage
     does not destruct during the lifetime of the PNMPainter object.
@@ -1966,7 +1966,7 @@ class PNMPainter:
         """The constructor stores a pointer to the PNMImage you pass it, but it does
         not take ownership of the object; you are responsible for ensuring that the
         PNMImage does not destruct during the lifetime of the PNMPainter object.
-        
+
         The xo, yo coordinates specify an optional offset for fill coordinates.  If
         you are painting with a pattern fill, these specify the virtual coordinates
         of the upper-left corner of the image, which can allow you to adjust the
@@ -1979,7 +1979,7 @@ class PNMPainter:
         """Specifies a PNMBrush that will be used for drawing lines and edges.  If the
         brush is a bitmap brush, its image will be smeared pixelwise along the
         line.
-        
+
         Unlike the PNMImage passed to the constructor, the PNMPainter will take
         ownership of the pen.  It is not necessary to keep a separate pointer to
         it.
@@ -1992,7 +1992,7 @@ class PNMPainter:
         """Specifies a PNMBrush that will be used for filling in the interiors of
         objects.  If the brush is a bitmap brush, its image will be tiled
         throughout the space.
-        
+
         Unlike the PNMImage passed to the constructor, the PNMPainter will take
         ownership of the fill brush.  It is not necessary to keep a separate
         pointer to it.
@@ -2010,7 +2010,7 @@ class PNMPainter:
     def draw_rectangle(self, xa: float, ya: float, xb: float, yb: float) -> None:
         """Draws a filled rectangule on the PNMImage, using the current pen for the
         outline, and the current fill brush for the interior.
-        
+
         The two coordinates specify any two diagonally opposite corners.
         """
         ...

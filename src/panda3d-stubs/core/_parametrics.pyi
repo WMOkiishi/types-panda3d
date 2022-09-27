@@ -41,10 +41,10 @@ class ParametricCurve(PandaNode):
         """Sets the flag indicating the use to which the curve is intended to be put.
         This flag is optional and only serves to provide a hint to the egg reader
         and writer code; it has no effect on the curve's behavior.
-        
+
         Setting the curve type also sets the num_dimensions to 3 or 1 according to
         the type.
-        
+
         THis flag may have one of the values PCT_XYZ, PCT_HPR, or PCT_T.
         """
         ...
@@ -72,7 +72,7 @@ class ParametricCurve(PandaNode):
     def calc_length(self) -> float:
         """`(self)`:
         Approximates the length of the entire curve to within a few decimal places.
-        
+
         `(self, _from: float, to: float)`:
         Approximates the length of the curve segment from parametric time 'from' to
         time 'to'.
@@ -83,11 +83,11 @@ class ParametricCurve(PandaNode):
     def find_length(self, start_t: float, length_offset: float) -> float:
         """Returns the parametric value corresponding to the indicated distance along
         the curve from the starting parametric value.
-        
+
         This is the inverse of calc_length(): rather than determining the length
         along the curve between two parametric points, it determines the position
         in parametric time of a point n units along the curve.
-        
+
         The search distance must not be negative.
         """
         ...
@@ -118,7 +118,7 @@ class ParametricCurve(PandaNode):
     def stitch(self, a: ParametricCurve, b: ParametricCurve) -> bool:
         """Regenerates this curve as one long curve: the first curve connected end-to-
         end with the second one.  Either a or b may be the same as 'this'.
-        
+
         Returns true if successful, false on failure or if the curve type does not
         support stitching.
         """
@@ -128,7 +128,7 @@ class ParametricCurve(PandaNode):
         """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
         Writes an egg description of the nurbs curve to the specified output file.
         Returns true if the file is successfully written.
-        
+
         `(self, out: ostream, filename: Filename, cs: _CoordinateSystem)`:
         Writes an egg description of the nurbs curve to the specified output
         stream.  Returns true if the file is successfully written.
@@ -157,11 +157,11 @@ class CubicCurveseg(ParametricCurve):
     """A CubicCurveseg is any curve that can be completely described by four
     4-valued basis vectors, one for each dimension in three-space, and one for
     the homogeneous coordinate.  This includes Beziers, Hermites, and NURBS.
-    
+
     This class encapsulates a single curve segment of the cubic curve.
     Normally, when we think of Bezier and Hermite curves, we think of a
     piecewise collection of such segments.
-    
+
     Although this class includes methods such as hermite_basis() and
     nurbs_basis(), to generate a Hermite and NURBS curve segment, respectively,
     only the final basis vectors are stored: the product of the basis matrix of
@@ -193,7 +193,7 @@ class ParametricCurveCollection(ReferenceCount):
     def add_curve(self, curve: ParametricCurve, index: int = ...) -> None:
         """`(self, curve: ParametricCurve)`:
         Adds a new ParametricCurve to the collection.
-        
+
         `(self, curve: ParametricCurve, index: int)`:
         Adds a new ParametricCurve to the collection at the indicated index.
         @deprecated Use insert_curve(index, curve) instead.
@@ -212,7 +212,7 @@ class ParametricCurveCollection(ReferenceCount):
         """`(self, curve: ParametricCurve)`:
         Removes the indicated ParametricCurve from the collection.  Returns true if
         the curve was removed, false if it was not a member of the collection.
-        
+
         `(self, index: int)`:
         Removes the indicated ParametricCurve from the collection, by its index
         number.
@@ -275,10 +275,10 @@ class ParametricCurveCollection(ReferenceCount):
         that maps distance along the curve to parametric time, so that the distance
         between any two points in parametric time is proportional to the
         approximate distance of those same two points along the XYZ curve.
-        
+
         segments_per_unit represents the number of segments to take per each unit
         of parametric time of the original XYZ curve.
-        
+
         The new timewarp curve (and thus, the apparent range of the collection)
         will range from 0 to max_t.
         """
@@ -304,17 +304,17 @@ class ParametricCurveCollection(ReferenceCount):
         indicated by the first HPR curve in the collection, after t has been
         modified by all the timewarp curves in the collection applied in sequence,
         from back to front.
-        
+
         Returns true if the point is valid (i.e.  t is within the bounds indicated
         by all the timewarp curves and within the bounds of the curves themselves),
         or false otherwise.
-        
+
         `(self, t: float, xyz: LVecBase3f, hpr: LVecBase3f)`:
         Computes the position and rotation represented by the first XYZ and HPR
         curves in the collection at the given point t, after t has been modified by
         all the timewarp curves in the collection applied in sequence, from back to
         front.
-        
+
         Returns true if the point is valid (i.e.  t is within the bounds indicated
         by all the timewarp curves and within the bounds of the curves themselves),
         or false otherwise.
@@ -361,7 +361,7 @@ class ParametricCurveCollection(ReferenceCount):
         """Regenerates this curve as one long curve: the first curve connected end-to-
         end with the second one.  Either a or b may be the same as 'this'.  This
         will lose any timewarps on the input curves.
-        
+
         Returns true if successful, false on failure.
         """
         ...
@@ -380,7 +380,7 @@ class ParametricCurveCollection(ReferenceCount):
         """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
         Writes an egg description of all the nurbs curves in the collection to the
         specified output file.  Returns true if the file is successfully written.
-        
+
         `(self, out: ostream, filename: Filename, cs: _CoordinateSystem)`:
         Writes an egg description of all the nurbs curves in the collection to the
         specified output stream.  Returns true if the file is successfully written.
@@ -523,7 +523,7 @@ class PiecewiseCurve(ParametricCurve):
 class HermiteCurve(PiecewiseCurve):
     """A parametric curve defined by a sequence of control vertices, each with an
     in and out tangent.
-    
+
     This class is actually implemented as a PiecewiseCurve made up of several
     CubicCurvesegs, each of which is created using the hermite_basis() method.
     The HermiteCurve class itself keeps its own list of the CV's that are used
@@ -543,7 +543,7 @@ class HermiteCurve(PiecewiseCurve):
         consistent.  If the new parametric point is beyond the end of the existing
         curve, the curve is extended to meet it and the new CV's position, in
         tangent, and out tangent are set to zero.
-        
+
         The index number of the new CV is returned.
         """
         ...
@@ -566,10 +566,10 @@ class HermiteCurve(PiecewiseCurve):
     def set_cv_type(self, n: int, type: int) -> bool:
         """Changes the given CV's continuity type.  Legal values are HC_CUT, HC_FREE,
         HC_G1, or HC_SMOOTH.
-        
+
         Other than HC_CUT, these have no effect on the actual curve; it remains up
         to user software to impose the constraints these imply.
-        
+
         HC_CUT implies a disconnection of the curve; HC_FREE imposes no constraints
         on the tangents; HC_G1 forces the tangents to be collinear, and HC_SMOOTH
         forces the tangents to be identical.  Setting type type to HC_G1 or
@@ -658,7 +658,7 @@ class HermiteCurve(PiecewiseCurve):
 class NurbsCurveInterface:
     """This abstract class defines the interface only for a Nurbs-style curve,
     with knots and coordinates in homogeneous space.
-    
+
     The NurbsCurve class inherits both from this and from ParametricCurve.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -722,15 +722,15 @@ class NurbsCurveInterface:
 
 class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
     """A Nonuniform Rational B-Spline.
-    
+
     This class is actually implemented as a PiecewiseCurve made up of several
     CubicCurvesegs, each of which is created using the nurbs_basis() method.
     The list of CV's and knots is kept here, within the NurbsCurve class.
-    
+
     This class is the original Panda-native implementation of a NURBS curve.
     It is typedeffed as "NurbsCurve" and performs all NURBS curve functions if
     we do not have the NURBS++ library available.
-    
+
     However, if we *do* have the NURBS++ library, another class exists, the
     NurbsPPCurve, which is a wrapper around that library and provides some
     additional functionality.  In that case, the other class is typedeffed to
@@ -755,7 +755,7 @@ class NurbsCurveResult(ReferenceCount):
     """The result of a NurbsCurveEvaluator.  This object represents a curve in a
     particular coordinate space.  It can return the point and/or tangent to the
     curve at any point.
-    
+
     This is not related to NurbsCurve, CubicCurveseg or any of the
     ParametricCurve-derived objects in this module.  It is a completely
     parallel implementation of NURBS curves, and will probably eventually
@@ -801,7 +801,7 @@ class NurbsCurveResult(ReferenceCount):
         """Evaluates the point on the curve corresponding to the indicated value in
         parametric time within the indicated curve segment.  t should be in the
         range [0, 1].
-        
+
         The curve is internally represented as a number of connected (or possibly
         unconnected) piecewise continuous segments.  The exact number of segments
         for a particular curve depends on the knot vector, and is returned by
@@ -838,7 +838,7 @@ class NurbsCurveResult(ReferenceCount):
         """Determines the set of subdivisions necessary to approximate the curve with
         a set of linear segments, no point of which is farther than tolerance units
         from the actual curve.
-        
+
         After this call, you may walk through the resulting set of samples with
         get_num_samples(), get_sample_t(), and get_sample_point().
         """
@@ -856,7 +856,7 @@ class NurbsCurveResult(ReferenceCount):
     def get_sample_point(self, n: int) -> LPoint3f:
         """Returns the point on the curve of the nth sample point generated by the
         previous call to adaptive_sample().
-        
+
         For tangents, or extended points, you should use get_sample_t() and pass it
         into eval_tangent() or eval_extended_point().
         """
@@ -886,7 +886,7 @@ class NurbsCurveEvaluator(ReferenceCount):
     """This class is an abstraction for evaluating NURBS curves.  It accepts an
     array of vertices, each of which may be in a different coordinate space (as
     defined by a NodePath), as well as an optional knot vector.
-    
+
     This is not related to NurbsCurve, CubicCurveseg or any of the
     ParametricCurve-derived objects in this module.  It is a completely
     parallel implementation of NURBS curves, and will probably eventually
@@ -896,7 +896,7 @@ class NurbsCurveEvaluator(ReferenceCount):
     def set_order(self, order: int) -> None:
         """Sets the order of the curve.  This resets the knot vector to the default
         knot vector for the number of vertices.
-        
+
         The order must be 1, 2, 3, or 4, and the value is one more than the degree
         of the curve.
         """
@@ -921,7 +921,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         Sets the nth control vertex of the curve.  This flavor sets the vertex as a
         3-d coordinate and a weight; the 3-d coordinate values are implicitly
         scaled up by the weight factor.
-        
+
         `(self, i: int, vertex: LVecBase4f)`:
         Sets the nth control vertex of the curve, as a vertex in 4-d homogeneous
         space.  In this form, the first three components of the vertex should
@@ -935,7 +935,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         """`(self, i: int)`:
         Returns the nth control vertex of the curve, relative to its indicated
         coordinate space.
-        
+
         `(self, i: int, rel_to: NodePath)`:
         Returns the nth control vertex of the curve, relative to the given
         coordinate space.
@@ -946,16 +946,16 @@ class NurbsCurveEvaluator(ReferenceCount):
         Sets the coordinate space of the nth control vertex.  If this is not
         specified, or is set to an empty NodePath, the nth control vertex is deemed
         to be in the coordinate space passed to evaluate().
-        
+
         This specifies the space as a fixed NodePath, which is always the same
         NodePath.  Also see setting the space as a path string, which can specify a
         different NodePath for different instances of the curve.
-        
+
         `(self, i: int, space: str)`:
         Sets the coordinate space of the nth control vertex.  If this is not
         specified, or is set to an empty string, the nth control vertex is deemed
         to be in the coordinate space passed to evaluate().
-        
+
         This specifies the space as a string, which describes the path to find the
         node relative to the rel_to NodePath when the curve is evaluated.
         """
@@ -970,12 +970,12 @@ class NurbsCurveEvaluator(ReferenceCount):
         surface or curve in a sparse n-dimensional space, typically used for
         associating additional properties (like color or joint membership) with
         each vertex of a surface.
-        
+
         The value d is an arbitrary integer value and specifies the dimension of
         question for this particular vertex.  Any number of dimensions may be
         specified, and they need not be consecutive.  If a value for a given
         dimension is not specified, is it implicitly 0.0.
-        
+
         The value is implicitly scaled by the homogenous weight value--that is, the
         fourth component of the value passed to set_vertex().  This means the
         ordinary vertex must be set first, before the extended vertices can be set.
@@ -1024,7 +1024,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         Returns a NurbsCurveResult object that represents the result of applying
         the knots to all of the current values of the vertices, transformed into
         the indicated coordinate space.
-        
+
         `(self, rel_to: NodePath, mat: LMatrix4f)`:
         Returns a NurbsCurveResult object that represents the result of applying
         the knots to all of the current values of the vertices, transformed into
@@ -1113,7 +1113,7 @@ class NurbsSurfaceResult(ReferenceCount):
         """Evaluates the point on the surface corresponding to the indicated value in
         parametric time within the indicated surface segment.  u and v should be in
         the range [0, 1].
-        
+
         The surface is internally represented as a number of connected (or possibly
         unconnected) piecewise continuous segments.  The exact number of segments
         for a particular surface depends on the knot vector, and is returned by
@@ -1183,7 +1183,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
     def set_u_order(self, u_order: int) -> None:
         """Sets the order of the surface in the U direction.  This resets the knot
         vector to the default knot vector for the number of vertices.
-        
+
         The order must be 1, 2, 3, or 4, and the value is one more than the degree
         of the surface.
         """
@@ -1196,7 +1196,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
     def set_v_order(self, v_order: int) -> None:
         """Sets the order of the surface in the V direction.  This resets the knot
         vector to the default knot vector for the number of vertices.
-        
+
         The order must be 1, 2, 3, or 4, and the value is one more than the degree
         of the surface.
         """
@@ -1228,7 +1228,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         Sets the nth control vertex of the surface.  This flavor sets the vertex as
         a 3-d coordinate and a weight; the 3-d coordinate values are implicitly
         scaled up by the weight factor.
-        
+
         `(self, ui: int, vi: int, vertex: LVecBase4f)`:
         Sets the nth control vertex of the surface, as a vertex in 4-d homogeneous
         space.  In this form, the first three components of the vertex should
@@ -1242,7 +1242,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         """`(self, ui: int, vi: int)`:
         Returns the nth control vertex of the surface, relative to its indicated
         coordinate space.
-        
+
         `(self, ui: int, vi: int, rel_to: NodePath)`:
         Returns the nth control vertex of the surface, relative to the given
         coordinate space.
@@ -1253,16 +1253,16 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         Sets the coordinate space of the nth control vertex.  If this is not
         specified, or is set to an empty NodePath, the nth control vertex is deemed
         to be in the coordinate space passed to evaluate().
-        
+
         This specifies the space as a fixed NodePath, which is always the same
         NodePath.  Also see setting the space as a path string, which can specify a
         different NodePath for different instances of the surface.
-        
+
         `(self, ui: int, vi: int, space: str)`:
         Sets the coordinate space of the nth control vertex.  If this is not
         specified, or is set to an empty string, the nth control vertex is deemed
         to be in the coordinate space passed to evaluate().
-        
+
         This specifies the space as a string, which describes the path to find the
         node relative to the rel_to NodePath when the surface is evaluated.
         """
@@ -1277,12 +1277,12 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         surface or surface in a sparse n-dimensional space, typically used for
         associating additional properties (like color or joint membership) with
         each vertex of a surface.
-        
+
         The value d is an arbitrary integer value and specifies the dimension of
         question for this particular vertex.  Any number of dimensions may be
         specified, and they need not be consecutive.  If a value for a given
         dimension is not specified, is it implicitly 0.0.
-        
+
         The value is implicitly scaled by the homogenous weight value--that is, the
         fourth component of the value passed to set_vertex().  This means the
         ordinary vertex must be set first, before the extended vertices can be set.
@@ -1387,7 +1387,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
 class RopeNode(PandaNode):
     """This class draws a visible representation of the NURBS curve stored in its
     NurbsCurveEvaluator.  It automatically recomputes the curve every frame.
-    
+
     This is not related to NurbsCurve, CubicCurveseg or any of the
     ParametricCurve-derived objects in this module.  It is a completely
     parallel implementation of NURBS curves, and will probably eventually
@@ -1509,7 +1509,7 @@ class RopeNode(PandaNode):
     def get_vertex_color_dimension() -> int:
         """Returns the numeric extended dimension in which the color components should
         be found.  See NurbsCurveEvaluator::set_extended_vertex().
-        
+
         The color components will be expected at (n, n + 1, n + 2, n + 3).
         """
         ...
@@ -1526,7 +1526,7 @@ class RopeNode(PandaNode):
     def set_num_slices(self, num_slices: int) -> None:
         """Specifies the number of radial subdivisions to make if RenderMode is
         RM_tube.  It is ignored in the other render modes.
-        
+
         Increasing this number increases the roundness of a cross-section of the
         tube.  The minimum value for a dimensional tube is 3; setting it to 2 will
         get you a thin piece of tape (which is similar to RM_billboard, except it
@@ -1543,7 +1543,7 @@ class RopeNode(PandaNode):
         thickness is assumed to be stored as the dimension
         get_vertex_thickness_dimension(), of the extended vertex values.  Use
         NurbsCurveEvaluator::set_extended_vertex() to set these values.
-        
+
         In this mode, the overall thickness is also applied as a scale to the
         vertex thickness.  Not all render modes support vertex thickness.
         """
@@ -1560,7 +1560,7 @@ class RopeNode(PandaNode):
     def set_thickness(self, thickness: float) -> None:
         """Specifies the thickness of the rope, in pixels or in spatial units,
         depending on the render mode.  See set_render_mode().
-        
+
         The thickness may also be specified on a per-vertex basis.  See
         set_use_vertex_thickness().
         """
@@ -1630,7 +1630,7 @@ class SheetNode(PandaNode):
     """This class draws a visible representation of the NURBS surface stored in
     its NurbsSurfaceEvaluator.  It automatically recomputes the surface every
     frame.
-    
+
     This is not related to NurbsSurface, CubicSurfaceseg or any of the
     ParametricSurface-derived objects in this module.  It is a completely
     parallel implementation of NURBS surfaces, and will probably eventually

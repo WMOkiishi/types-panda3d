@@ -211,7 +211,7 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         """Freezes this particular joint so that it will always hold the specified
         transform.  Returns true if this is a joint that can be so frozen, false
         otherwise.
-        
+
         This is normally only called internally by PartBundle::freeze_joint(), but
         you may also call it directly.
         """
@@ -220,7 +220,7 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         """Freezes this particular joint so that it will always hold the specified
         transform.  Returns true if this is a joint that can be so frozen, false
         otherwise.
-        
+
         This is normally only called internally by PartBundle::freeze_joint(), but
         you may also call it directly.
         """
@@ -229,7 +229,7 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         """Freezes this particular joint so that it will always hold the specified
         transform.  Returns true if this is a joint that can be so frozen, false
         otherwise.
-        
+
         This is normally only called internally by PartBundle::freeze_joint(), but
         you may also call it directly.
         """
@@ -238,7 +238,7 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         """Specifies a node to influence this particular joint so that it will always
         hold the node's transform.  Returns true if this is a joint that can be so
         controlled, false otherwise.
-        
+
         This is normally only called internally by PartBundle::control_joint(), but
         you may also call it directly.
         """
@@ -246,7 +246,7 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     def clear_forced_channel(self) -> bool:
         """Undoes the effect of a previous call to apply_freeze() or apply_control().
         Returns true if the joint was modified, false otherwise.
-        
+
         This is normally only called internally by PartBundle::release_joint(), but
         you may also call it directly.
         """
@@ -336,7 +336,7 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
         """Returns the particular channel index associated with this AnimControl.
         This channel index is the slot on which each AnimGroup is bound to its
         associated PartGroup, for each joint in the animation.
-        
+
         It will be true that
         get_part()->find_child("n")->get_bound(get_channel_index()) ==
         get_anim()->find_child("n"), for each joint "n".
@@ -355,7 +355,7 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
         this node represents the root node of the model file that corresponds to
         this AnimControl's animation file, though nothing in this code makes this
         assumption or indeed does anything with this node.
-        
+
         The purpose of this is simply to allow the AnimControl to keep a reference
         count on the ModelRoot node that generated it, so that the model will not
         disappear from the model pool until it is no longer referenced.
@@ -429,7 +429,7 @@ class AnimChannel_ACScalarSwitchType(AnimChannelBase):
 class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     """An animation channel that accepts a matrix each frame from some dynamic
     input provided by code.
-    
+
     This object operates in two modes: in explicit mode, the programmer should
     call set_value() each frame to indicate the new value; in implicit mode,
     the programmer should call set_value_node() to indicate the node whose
@@ -439,7 +439,7 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     def set_value(self, value: Mat4f | TransformState) -> None:
         """`(self, value: LMatrix4f)`:
         Explicitly sets the matrix value.
-        
+
         `(self, value: TransformState)`:
         Explicitly sets the matrix value, using the indicated TransformState object
         as a convenience.
@@ -508,7 +508,7 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
 class AnimChannelScalarDynamic(AnimChannel_ACScalarSwitchType):
     """An animation channel that accepts a scalar each frame from some dynamic
     input provided by code.
-    
+
     This object operates in two modes: in explicit mode, the programmer should
     call set_value() each frame to indicate the new value; in implicit mode,
     the programmer should call set_value_node() to indicate the node whose X
@@ -620,7 +620,7 @@ class AnimControlCollection:
     def play_all(self) -> None:
         """`(self)`:
         These functions operate on all anims at once.
-        
+
         `(self, _from: float, to: float)`:
         Starts all animations playing.
         """
@@ -644,7 +644,7 @@ class AnimControlCollection:
     def get_frame(self, anim_name: str = ...) -> int:
         """`(self)`:
         Returns the current frame in the last-started animation.
-        
+
         `(self, anim_name: str)`:
         Returns the current frame in the named animation, or 0 if the animation is
         not found.
@@ -653,7 +653,7 @@ class AnimControlCollection:
     def get_num_frames(self, anim_name: str = ...) -> int:
         """`(self)`:
         Returns the total number of frames in the last-started animation.
-        
+
         `(self, anim_name: str)`:
         Returns the total number of frames in the named animation, or 0 if the
         animation is not found.
@@ -663,7 +663,7 @@ class AnimControlCollection:
         """`(self)`:
         Returns true if the last-started animation is currently playing, false
         otherwise.
-        
+
         `(self, anim_name: str)`:
         Returns true if the named animation is currently playing, false otherwise.
         """
@@ -700,7 +700,7 @@ class AnimPreloadTable(CopyOnWriteObject):
     """This table records data about a list of animations for a particular model,
     such as number of frames and frame rate.  It's used for implementating
     asynchronous binding.
-    
+
     This table is normally built by an offline tool, such as egg-optchar.
     """
     def __init__(self) -> None: ...
@@ -767,7 +767,7 @@ class PartSubset:
         """Adds the named joint to the list of joints that will be explicitly included
         in the subset.  Any joint at or below a named node will be included in the
         subset (unless a lower node is also listed in the exclude list).
-        
+
         Since the name is a GlobPattern, it may of course include filename globbing
         characters like * and ?.
         """
@@ -777,7 +777,7 @@ class PartSubset:
         exlcluded from the subset.  Any joint at or below a named node will not be
         included in the subset (unless a lower node is also listed in the include
         list).
-        
+
         Since the name is a GlobPattern, it may of course include filename globbing
         characters like * and ?.
         """
@@ -865,7 +865,7 @@ class PartBundle(PartGroup):
         """Defines the algorithm that is used when blending multiple frames or
         multiple animations together, when either anim_blend_flag or
         frame_blend_flag is set to true.
-        
+
         See partBundle.h for a description of the meaning of each of the BlendType
         values.
         """
@@ -883,7 +883,7 @@ class PartBundle(PartGroup):
         explicitly set the control_effect when starting an animation; starting the
         animation will implicitly remove the control_effect from the previous
         animation and set it on the current one.
-        
+
         However, if this flag is set true, the control_effect must be explicitly
         set via set_control_effect() whenever an animation is to affect the
         character.
@@ -899,15 +899,15 @@ class PartBundle(PartGroup):
         sequential frames of an active animation, showing a smooth intra-frame
         motion, or whether it holds each frame until the next frame is ready,
         showing precisely the specified animation.
-        
+
         When this value is false, the character holds each frame until the next is
         ready.  When this is true, the character will interpolate between two
         consecutive frames of animation for each frame the animation is onscreen,
         according to the amount of time elapsed between the frames.
-        
+
         The default value of this flag is determined by the interpolate-frames
         Config.prc variable.
-        
+
         Use set_blend_type() to change the algorithm that the character uses to
         interpolate matrix positions.
         """
@@ -950,7 +950,7 @@ class PartBundle(PartGroup):
         the AnimControls).  The character will no longer be affected by any
         animation, and will return to its default pose (unless restore-initial-pose
         is false).
-        
+
         The AnimControls which are no longer associated will not be using any CPU
         cycles, but they may still be in the "playing" state; if they are later
         reassociated with the PartBundle they will resume at their current frame as
@@ -962,7 +962,7 @@ class PartBundle(PartGroup):
         AnimControl (and its associated animation).  Normally, this will only be
         zero or one.  Zero indicates the animation does not affect the character,
         and one means it does.
-        
+
         If the _anim_blend_flag is not false (see set_anim_blend_flag()), it is
         possible to have multiple AnimControls in effect simultaneously.  In this
         case, the effect is a weight that indicates the relative importance of each
@@ -981,14 +981,14 @@ class PartBundle(PartGroup):
         """Binds the animation to the bundle, if possible, and returns a new
         AnimControl that can be used to start and stop the animation.  If the anim
         hierarchy does not match the part hierarchy, returns NULL.
-        
+
         If hierarchy_match_flags is 0, only an exact match is accepted; otherwise,
         it may contain a union of PartGroup::HierarchyMatchFlags values indicating
         conditions that will be tolerated (but warnings will still be issued).
-        
+
         If subset is specified, it restricts the binding only to the named subtree
         of joints.
-        
+
         The AnimControl is not stored within the PartBundle; it is the user's
         responsibility to maintain the pointer.  The animation will automatically
         unbind itself when the AnimControl destructs (i.e.  its reference count
@@ -999,17 +999,17 @@ class PartBundle(PartGroup):
         """Binds an animation to the bundle.  The animation is loaded from the disk
         via the indicated Loader object.  In other respects, this behaves similarly
         to bind_anim(), with the addition of asynchronous support.
-        
+
         If allow_aysnc is true, the load will be asynchronous if possible.  This
         requires that the animation basename can be found in the PartBundle's
         preload table (see get_anim_preload()).
-        
+
         In an asynchronous load, the animation file will be loaded and bound in a
         sub-thread.  This means that the animation will not necessarily be
         available at the time this method returns.  You may still use the returned
         AnimControl immediately, though, but no visible effect will occur until the
         animation eventually becomes available.
-        
+
         You can test AnimControl::is_pending() to see if the animation has been
         loaded yet, or wait for it to finish with AnimControl::wait_pending() or
         even PartBundle::wait_pending().  You can also set an event to be triggered
@@ -1027,7 +1027,7 @@ class PartBundle(PartGroup):
         """Specifies that the joint with the indicated name should be frozen with the
         specified transform.  It will henceforth always hold this fixed transform,
         regardless of any animations that may subsequently be bound to the joint.
-        
+
         Returns true if the joint is successfully frozen, or false if the named
         child is not a joint (or slider) or does not exist.
         """
@@ -1041,7 +1041,7 @@ class PartBundle(PartGroup):
         the transform on the indicated node.  It will henceforth always follow the
         node's transform, regardless of any animations that may subsequently be
         bound to the joint.
-        
+
         Returns true if the joint is successfully controlled, or false if the named
         child is not a joint (or slider) or does not exist.
         """
@@ -1050,7 +1050,7 @@ class PartBundle(PartGroup):
         """Releases the named joint from the effects of a previous call to
         freeze_joint() or control_joint(). It will henceforth once again follow
         whatever transforms are dictated by the animation.
-        
+
         Returns true if the joint is released, or false if the named child was not
         previously controlled or frozen, or it does not exist.
         """
@@ -1058,7 +1058,7 @@ class PartBundle(PartGroup):
     def update(self) -> bool:
         """Updates all the parts in the bundle to reflect the data for the current
         frame (as set in each of the AnimControls).
-        
+
         Returns true if any part has changed as a result of this, or false
         otherwise.
         """
@@ -1101,7 +1101,7 @@ class PartBundleNode(PandaNode):
     """This is a node that contains a pointer to an PartBundle.  Like
     AnimBundleNode, it exists to make it easy to store PartBundles in the scene
     graph.
-    
+
     (Unlike AnimBundleNode, however, PartBundleNode has an additional function:
     it is also the base class of the Character node type, which adds additional
     functionality.)
@@ -1138,7 +1138,7 @@ class PartBundleHandle(ReferenceCount):
     PartBundleNode, so that scene graph flatten operations can safely combine
     or duplicate PartBundles as necessary without affecting high-level bundle
     operations.
-    
+
     The high-level Actor class defined in direct/src/actor, for instance, will
     store a list of PartBundleHandles instead of on actual PartBundles, so that
     it will be immune to changes from these flatten operations.
@@ -1161,7 +1161,7 @@ class MovingPartBase(PartGroup):
     """This is the base class for a single animatable piece that may be bound to
     one channel (or more, if blending is in effect).  It corresponds to, for
     instance, a single joint or slider of a character.
-    
+
     MovingPartBase does not have a particular value type.  See the derived
     template class, MovingPart, for this.
     """
@@ -1176,7 +1176,7 @@ class MovingPartBase(PartGroup):
         """Returns the nth bound channel on this PartGroup.  n can be determined by
         iterating from 0 to one less than get_max_bound(); or n might be
         AnimControl::get_channel_index().
-        
+
         This will return NULL if there is no channel bound on the indicated index.
         It is an error to call this if n is less than zero or greater than or equal
         to get_max_bound().

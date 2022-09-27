@@ -117,7 +117,7 @@ class LVecBase2f:
         """`(self, other: LVecBase2f)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LVecBase2f, threshold: float)`:
         Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
@@ -137,7 +137,7 @@ class LVecBase2f:
         """`(self, other: LVecBase2f)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase2f, threshold: float)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -302,7 +302,7 @@ class LVecBase2d:
         """`(self, other: LVecBase2d)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LVecBase2d, threshold: float)`:
         Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
@@ -322,7 +322,7 @@ class LVecBase2d:
         """`(self, other: LVecBase2d)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase2d, threshold: float)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -481,7 +481,7 @@ class LVecBase2i:
         """`(self, other: LVecBase2i)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase2i, threshold: int)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -546,7 +546,7 @@ class LVector2f(LVecBase2f):
     def __init__(self, copy: LVecBase2f = ...) -> None:
         """`(self, copy: LVecBase2f)`:
         Constructs a new LVector2 from a LVecBase2
-        
+
         `(self, fill_value: float)`:
         Constructs a new LVector2 with all components set to the fill value.
         """
@@ -609,7 +609,7 @@ class LVector2d(LVecBase2d):
     def __init__(self, copy: LVecBase2d = ...) -> None:
         """`(self, copy: LVecBase2d)`:
         Constructs a new LVector2 from a LVecBase2
-        
+
         `(self, fill_value: float)`:
         Constructs a new LVector2 with all components set to the fill value.
         """
@@ -672,7 +672,7 @@ class LVector2i(LVecBase2i):
     def __init__(self, copy: LVecBase2i = ...) -> None:
         """`(self, copy: LVecBase2i)`:
         Constructs a new LVector2 from a LVecBase2
-        
+
         `(self, fill_value: int)`:
         Constructs a new LVector2 with all components set to the fill value.
         """
@@ -712,10 +712,10 @@ class LPoint2f(LVecBase2f):
     def __init__(self, copy: LVecBase2f = ...) -> None:
         """`(self, copy: LVecBase2f)`:
         Constructs a new LPoint2 from a LVecBase2
-        
+
         `(self, fill_value: float)`:
         Constructs a new LPoint2 all components set to the fill value.
-        
+
         `(self, x: float, y: float)`:
         Constructs a new LPoint2 with the given components
         """
@@ -768,10 +768,10 @@ class LPoint2d(LVecBase2d):
     def __init__(self, copy: LVecBase2d = ...) -> None:
         """`(self, copy: LVecBase2d)`:
         Constructs a new LPoint2 from a LVecBase2
-        
+
         `(self, fill_value: float)`:
         Constructs a new LPoint2 all components set to the fill value.
-        
+
         `(self, x: float, y: float)`:
         Constructs a new LPoint2 with the given components
         """
@@ -824,10 +824,10 @@ class LPoint2i(LVecBase2i):
     def __init__(self, copy: LVecBase2i = ...) -> None:
         """`(self, copy: LVecBase2i)`:
         Constructs a new LPoint2 from a LVecBase2
-        
+
         `(self, fill_value: int)`:
         Constructs a new LPoint2 all components set to the fill value.
-        
+
         `(self, x: int, y: int)`:
         Constructs a new LPoint2 with the given components
         """
@@ -1004,7 +1004,7 @@ class LVecBase3f:
         same.  Another example is -90 and 270. Each element will be in the range
         -180.0 to 179.99999. The original usage of this function is for human
         readable output.
-        
+
         It doesn't work so well for asserting that foo_hpr is roughly equal to
         bar_hpr.  Try using LQuaternionf::is_same_direction() for that.  See Also:
         get_standardized_rotation, LQuaternion::is_same_direction
@@ -1014,7 +1014,7 @@ class LVecBase3f:
         """`(self, other: LVecBase3f)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LVecBase3f, threshold: float)`:
         Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
@@ -1035,7 +1035,7 @@ class LVecBase3f:
         """`(self, other: LVecBase3f)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase3f, threshold: float)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -1244,7 +1244,7 @@ class LVecBase3d:
         same.  Another example is -90 and 270. Each element will be in the range
         -180.0 to 179.99999. The original usage of this function is for human
         readable output.
-        
+
         It doesn't work so well for asserting that foo_hpr is roughly equal to
         bar_hpr.  Try using LQuaternionf::is_same_direction() for that.  See Also:
         get_standardized_rotation, LQuaternion::is_same_direction
@@ -1254,7 +1254,7 @@ class LVecBase3d:
         """`(self, other: LVecBase3d)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LVecBase3d, threshold: float)`:
         Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
@@ -1275,7 +1275,7 @@ class LVecBase3d:
         """`(self, other: LVecBase3d)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase3d, threshold: float)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -1476,7 +1476,7 @@ class LVecBase3i:
         """`(self, other: LVecBase3i)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase3i, threshold: int)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -1631,7 +1631,7 @@ class LVector3f(LVecBase3f):
         """returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
         direction of the ref vector.
-        
+
         Vectors (except the ref vector) should be initially normalized.
         """
         ...
@@ -1639,7 +1639,7 @@ class LVector3f(LVecBase3f):
         """Returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
         direction of the ref vector.
-        
+
         Vectors (except the ref vector) should be initially normalized.
         """
         ...
@@ -1780,7 +1780,7 @@ class LVector3d(LVecBase3d):
         """returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
         direction of the ref vector.
-        
+
         Vectors (except the ref vector) should be initially normalized.
         """
         ...
@@ -1788,7 +1788,7 @@ class LVector3d(LVecBase3d):
         """Returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
         direction of the ref vector.
-        
+
         Vectors (except the ref vector) should be initially normalized.
         """
         ...
@@ -2234,7 +2234,7 @@ class LVecBase4f:
     def __init__(self, point: Vec3f = ...) -> None:
         """`(self, point: LPoint3f)`:
         Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0.
-        
+
         `(self, vector: LVector3f)`:
         Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
         """
@@ -2362,7 +2362,7 @@ class LVecBase4f:
         """`(self, other: LVecBase4f)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LVecBase4f, threshold: float)`:
         Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
@@ -2382,7 +2382,7 @@ class LVecBase4f:
         """`(self, other: LVecBase4f)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase4f, threshold: float)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -2455,7 +2455,7 @@ class UnalignedLVecBase4f:
     """This is an "unaligned" LVecBase4.  It has no functionality other than to
     store numbers, and it will pack them in as tightly as possible, avoiding
     any SSE2 alignment requirements shared by the primary LVecBase4 class.
-    
+
     Use it only when you need to pack numbers tightly without respect to
     alignment, and then copy it to a proper LVecBase4 to get actual use from
     it.
@@ -2503,7 +2503,7 @@ class LVecBase4d:
     def __init__(self, point: Vec3d = ...) -> None:
         """`(self, point: LPoint3d)`:
         Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0.
-        
+
         `(self, vector: LVector3d)`:
         Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
         """
@@ -2631,7 +2631,7 @@ class LVecBase4d:
         """`(self, other: LVecBase4d)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LVecBase4d, threshold: float)`:
         Sorts vectors lexicographically, componentwise.  Returns a number less than
         0 if this vector sorts before the other one, greater than zero if it sorts
@@ -2651,7 +2651,7 @@ class LVecBase4d:
         """`(self, other: LVecBase4d)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase4d, threshold: float)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -2724,7 +2724,7 @@ class UnalignedLVecBase4d:
     """This is an "unaligned" LVecBase4.  It has no functionality other than to
     store numbers, and it will pack them in as tightly as possible, avoiding
     any SSE2 alignment requirements shared by the primary LVecBase4 class.
-    
+
     Use it only when you need to pack numbers tightly without respect to
     alignment, and then copy it to a proper LVecBase4 to get actual use from
     it.
@@ -2772,7 +2772,7 @@ class LVecBase4i:
     def __init__(self, point: LVecBase3i = ...) -> None:
         """`(self, point: LPoint3i)`:
         Constructs an LVecBase4 from an LPoint3.  The w coordinate is set to 1.0.
-        
+
         `(self, vector: LVector3i)`:
         Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
         """
@@ -2894,7 +2894,7 @@ class LVecBase4i:
         """`(self, other: LVecBase4i)`:
         Returns true if two vectors are memberwise equal within a default tolerance
         based on the numeric type.
-        
+
         `(self, other: LVecBase4i, threshold: int)`:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
@@ -2967,7 +2967,7 @@ class UnalignedLVecBase4i:
     """This is an "unaligned" LVecBase4.  It has no functionality other than to
     store numbers, and it will pack them in as tightly as possible, avoiding
     any SSE2 alignment requirements shared by the primary LVecBase4 class.
-    
+
     Use it only when you need to pack numbers tightly without respect to
     alignment, and then copy it to a proper LVecBase4 to get actual use from
     it.
@@ -3474,7 +3474,7 @@ class LMatrix3f:
         """`(self, row: int, v: LVecBase2f)`:
         Replaces the indicated row of the matrix from a two-component vector,
         ignoring the last column.
-        
+
         `(self, row: int, v: LVecBase3f)`:
         Replaces the indicated row of the matrix from a three-component vector.
         """
@@ -3483,7 +3483,7 @@ class LMatrix3f:
         """`(self, col: int, v: LVecBase2f)`:
         Replaces the indicated column of the matrix from a two-component vector,
         ignoring the last row.
-        
+
         `(self, col: int, v: LVecBase3f)`:
         Replaces the indicated column of the matrix from a three-component vector.
         """
@@ -3492,7 +3492,7 @@ class LMatrix3f:
     def get_row(self, row: int) -> LVecBase3f:
         """`(self, result_vec: LVecBase3f, row: int)`:
         Stores the indicated row of the matrix as a three-component vector.
-        
+
         `(self, row: int)`:
         Returns the indicated row of the matrix as a three-component vector.
         """
@@ -3535,7 +3535,7 @@ class LMatrix3f:
         """`(self, other: LMatrix3f)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LMatrix3f, threshold: float)`:
         Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
@@ -3561,11 +3561,11 @@ class LMatrix3f:
         """`(self, v: LVecBase2f)`:
         The matrix transforms a 2-component vector (without translation component)
         and returns the result.  This assumes the matrix is an affine transform.
-        
+
         `(self, v: LVecBase3f)`:
         The matrix transforms a 3-component vector and returns the result.  This
         assumes the matrix is an orthonormal transform.
-        
+
         In practice, this is the same computation as xform().
         """
         ...
@@ -3588,11 +3588,11 @@ class LMatrix3f:
         """`(self, v: LVecBase2f)`:
         The matrix transforms a 2-component vector (without translation component).
         This assumes the matrix is an affine transform.
-        
+
         `(self, v: LVecBase3f)`:
         The matrix transforms a 3-component vector.  This assumes the matrix is an
         orthonormal transform.
-        
+
         In practice, this is the same computation as xform().
         """
         ...
@@ -3614,10 +3614,10 @@ class LMatrix3f:
         """Computes the inverse of the other matrix, and stores the result in this
         matrix.  This is a fully general operation and makes no assumptions about
         the type of transform represented by the matrix.
-        
+
         The other matrix must be a different object than this matrix.  However, if
         you need to invert a matrix in place, see invert_in_place.
-        
+
         The return value is true if the matrix was successfully inverted, false if
         there was a singularity.
         """
@@ -3635,7 +3635,7 @@ class LMatrix3f:
     @staticmethod
     def ident_mat() -> LMatrix3f:
         """Returns an identity matrix.
-        
+
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
@@ -3648,7 +3648,7 @@ class LMatrix3f:
         """`(self, angle: float)`:
         Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise.
-        
+
         `(self, angle: float, axis: LVecBase3f, cs: _CoordinateSystem = ...)`:
         Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
@@ -3660,7 +3660,7 @@ class LMatrix3f:
         """`(self, scale: LVecBase2f)`:
         Fills mat with a matrix that applies the indicated scale in each of the two
         axes.
-        
+
         `(self, scale: LVecBase3f)`:
         Fills mat with a matrix that applies the indicated scale in each of the
         three axes.
@@ -3680,7 +3680,7 @@ class LMatrix3f:
         """`(angle: float)`:
         Returns a matrix that rotates by the given angle in degrees
         counterclockwise.
-        
+
         `(angle: float, axis: LVecBase3f, cs: _CoordinateSystem = ...)`:
         Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
@@ -3694,7 +3694,7 @@ class LMatrix3f:
     def scale_mat(scale: LVecBase2f | Vec3f) -> LMatrix3f:
         """`(scale: LVecBase2f)`; `(sx: float, sy: float)`:
         Returns a matrix that applies the indicated scale in each of the two axes.
-        
+
         `(scale: LVecBase3f)`; `(sx: float, sy: float, sz: float)`:
         Returns a matrix that applies the indicated scale in each of the three
         axes.
@@ -3752,7 +3752,7 @@ class LMatrix3f:
         """`(self, other: LMatrix3f)`:
         Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        
+
         `(self, other: LMatrix3f, threshold: float)`:
         Returns true if two matrices are memberwise equal within a specified
         tolerance.
@@ -3874,7 +3874,7 @@ class LMatrix4f:
         """`(self, upper3: LMatrix3f)`:
         Construct a 4x4 matrix given a 3x3 rotation matrix and an optional
         translation component.
-        
+
         `(self, __param0: LVecBase4f, __param1: LVecBase4f, __param2: LVecBase4f, __param3: LVecBase4f)`:
         Constructs the matrix from four individual rows.
         """
@@ -3932,7 +3932,7 @@ class LMatrix4f:
         """`(self, row: int, v: LVecBase3f)`:
         Replaces the indicated row of the matrix with the indicated 3-component
         vector, ignoring the last column.
-        
+
         `(self, row: int, v: LVecBase4f)`:
         Replaces the indicated row of the matrix.
         """
@@ -3941,7 +3941,7 @@ class LMatrix4f:
         """`(self, col: int, v: LVecBase3f)`:
         Replaces the indicated column of the matrix with the indicated 3-component
         vector, ignoring the last row.
-        
+
         `(self, col: int, v: LVecBase4f)`:
         Replaces the indicated column of the matrix.
         """
@@ -3950,7 +3950,7 @@ class LMatrix4f:
     def get_row(self, row: int) -> LVecBase4f:
         """`(self, result_vec: LVecBase4f, row: int)`:
         Stores the indicated row of the matrix as a 4-component vector.
-        
+
         `(self, row: int)`:
         Retrieves the indicated row of the matrix as a 4-component vector.
         """
@@ -3965,7 +3965,7 @@ class LMatrix4f:
         """`(self, result_vec: LVecBase3f, row: int)`:
         Stores the row column of the matrix as a 3-component vector, ignoring the
         last column.
-        
+
         `(self, row: int)`:
         Retrieves the row column of the matrix as a 3-component vector, ignoring
         the last column.
@@ -4001,7 +4001,7 @@ class LMatrix4f:
         """`(self, other: LMatrix4f)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LMatrix4f, threshold: float)`:
         Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
@@ -4075,10 +4075,10 @@ class LMatrix4f:
         """Computes the inverse of the other matrix, and stores the result in this
         matrix.  This is a fully general operation and makes no assumptions about
         the type of transform represented by the matrix.
-        
+
         The other matrix must be a different object than this matrix.  However, if
         you need to invert a matrix in place, see invert_in_place.
-        
+
         The return value is true if the matrix was successfully inverted, false if
         the was a singularity.
         """
@@ -4099,7 +4099,7 @@ class LMatrix4f:
     @staticmethod
     def ident_mat() -> LMatrix4f:
         """Returns an identity matrix.
-        
+
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
@@ -4166,7 +4166,7 @@ class LMatrix4f:
         """`(scale: LVecBase3f)`; `(sx: float, sy: float, sz: float)`:
         Returns a matrix that applies the indicated scale in each of the three
         axes.
-        
+
         `(scale: float)`:
         Returns a matrix that applies the indicated uniform scale.
         """
@@ -4214,7 +4214,7 @@ class LMatrix4f:
         """`(self, other: LMatrix4f)`:
         Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        
+
         `(self, other: LMatrix4f, threshold: float)`:
         Returns true if two matrices are memberwise equal within a specified
         tolerance.  This is faster than the equivalence operator as this doesn't
@@ -4313,7 +4313,7 @@ class UnalignedLMatrix4f:
     """This is an "unaligned" LMatrix4.  It has no functionality other than to
     store numbers, and it will pack them in as tightly as possible, avoiding
     any SSE2 alignment requirements shared by the primary LMatrix4 class.
-    
+
     Use it only when you need to pack numbers tightly without respect to
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
@@ -4419,7 +4419,7 @@ class LMatrix3d:
         """`(self, row: int, v: LVecBase2d)`:
         Replaces the indicated row of the matrix from a two-component vector,
         ignoring the last column.
-        
+
         `(self, row: int, v: LVecBase3d)`:
         Replaces the indicated row of the matrix from a three-component vector.
         """
@@ -4428,7 +4428,7 @@ class LMatrix3d:
         """`(self, col: int, v: LVecBase2d)`:
         Replaces the indicated column of the matrix from a two-component vector,
         ignoring the last row.
-        
+
         `(self, col: int, v: LVecBase3d)`:
         Replaces the indicated column of the matrix from a three-component vector.
         """
@@ -4437,7 +4437,7 @@ class LMatrix3d:
     def get_row(self, row: int) -> LVecBase3d:
         """`(self, result_vec: LVecBase3d, row: int)`:
         Stores the indicated row of the matrix as a three-component vector.
-        
+
         `(self, row: int)`:
         Returns the indicated row of the matrix as a three-component vector.
         """
@@ -4480,7 +4480,7 @@ class LMatrix3d:
         """`(self, other: LMatrix3d)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LMatrix3d, threshold: float)`:
         Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
@@ -4506,11 +4506,11 @@ class LMatrix3d:
         """`(self, v: LVecBase2d)`:
         The matrix transforms a 2-component vector (without translation component)
         and returns the result.  This assumes the matrix is an affine transform.
-        
+
         `(self, v: LVecBase3d)`:
         The matrix transforms a 3-component vector and returns the result.  This
         assumes the matrix is an orthonormal transform.
-        
+
         In practice, this is the same computation as xform().
         """
         ...
@@ -4533,11 +4533,11 @@ class LMatrix3d:
         """`(self, v: LVecBase2d)`:
         The matrix transforms a 2-component vector (without translation component).
         This assumes the matrix is an affine transform.
-        
+
         `(self, v: LVecBase3d)`:
         The matrix transforms a 3-component vector.  This assumes the matrix is an
         orthonormal transform.
-        
+
         In practice, this is the same computation as xform().
         """
         ...
@@ -4559,10 +4559,10 @@ class LMatrix3d:
         """Computes the inverse of the other matrix, and stores the result in this
         matrix.  This is a fully general operation and makes no assumptions about
         the type of transform represented by the matrix.
-        
+
         The other matrix must be a different object than this matrix.  However, if
         you need to invert a matrix in place, see invert_in_place.
-        
+
         The return value is true if the matrix was successfully inverted, false if
         there was a singularity.
         """
@@ -4580,7 +4580,7 @@ class LMatrix3d:
     @staticmethod
     def ident_mat() -> LMatrix3d:
         """Returns an identity matrix.
-        
+
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
@@ -4593,7 +4593,7 @@ class LMatrix3d:
         """`(self, angle: float)`:
         Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise.
-        
+
         `(self, angle: float, axis: LVecBase3d, cs: _CoordinateSystem = ...)`:
         Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
@@ -4605,7 +4605,7 @@ class LMatrix3d:
         """`(self, scale: LVecBase2d)`:
         Fills mat with a matrix that applies the indicated scale in each of the two
         axes.
-        
+
         `(self, scale: LVecBase3d)`:
         Fills mat with a matrix that applies the indicated scale in each of the
         three axes.
@@ -4625,7 +4625,7 @@ class LMatrix3d:
         """`(angle: float)`:
         Returns a matrix that rotates by the given angle in degrees
         counterclockwise.
-        
+
         `(angle: float, axis: LVecBase3d, cs: _CoordinateSystem = ...)`:
         Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
@@ -4639,7 +4639,7 @@ class LMatrix3d:
     def scale_mat(scale: LVecBase2d | Vec3d) -> LMatrix3d:
         """`(scale: LVecBase2d)`; `(sx: float, sy: float)`:
         Returns a matrix that applies the indicated scale in each of the two axes.
-        
+
         `(scale: LVecBase3d)`; `(sx: float, sy: float, sz: float)`:
         Returns a matrix that applies the indicated scale in each of the three
         axes.
@@ -4697,7 +4697,7 @@ class LMatrix3d:
         """`(self, other: LMatrix3d)`:
         Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        
+
         `(self, other: LMatrix3d, threshold: float)`:
         Returns true if two matrices are memberwise equal within a specified
         tolerance.
@@ -4819,7 +4819,7 @@ class LMatrix4d:
         """`(self, upper3: LMatrix3d)`:
         Construct a 4x4 matrix given a 3x3 rotation matrix and an optional
         translation component.
-        
+
         `(self, __param0: LVecBase4d, __param1: LVecBase4d, __param2: LVecBase4d, __param3: LVecBase4d)`:
         Constructs the matrix from four individual rows.
         """
@@ -4877,7 +4877,7 @@ class LMatrix4d:
         """`(self, row: int, v: LVecBase3d)`:
         Replaces the indicated row of the matrix with the indicated 3-component
         vector, ignoring the last column.
-        
+
         `(self, row: int, v: LVecBase4d)`:
         Replaces the indicated row of the matrix.
         """
@@ -4886,7 +4886,7 @@ class LMatrix4d:
         """`(self, col: int, v: LVecBase3d)`:
         Replaces the indicated column of the matrix with the indicated 3-component
         vector, ignoring the last row.
-        
+
         `(self, col: int, v: LVecBase4d)`:
         Replaces the indicated column of the matrix.
         """
@@ -4895,7 +4895,7 @@ class LMatrix4d:
     def get_row(self, row: int) -> LVecBase4d:
         """`(self, result_vec: LVecBase4d, row: int)`:
         Stores the indicated row of the matrix as a 4-component vector.
-        
+
         `(self, row: int)`:
         Retrieves the indicated row of the matrix as a 4-component vector.
         """
@@ -4910,7 +4910,7 @@ class LMatrix4d:
         """`(self, result_vec: LVecBase3d, row: int)`:
         Stores the row column of the matrix as a 3-component vector, ignoring the
         last column.
-        
+
         `(self, row: int)`:
         Retrieves the row column of the matrix as a 3-component vector, ignoring
         the last column.
@@ -4946,7 +4946,7 @@ class LMatrix4d:
         """`(self, other: LMatrix4d)`:
         This flavor of compare_to uses a default threshold value based on the
         numeric type.
-        
+
         `(self, other: LMatrix4d, threshold: float)`:
         Sorts matrices lexicographically, componentwise.  Returns a number less
         than 0 if this matrix sorts before the other one, greater than zero if it
@@ -5020,10 +5020,10 @@ class LMatrix4d:
         """Computes the inverse of the other matrix, and stores the result in this
         matrix.  This is a fully general operation and makes no assumptions about
         the type of transform represented by the matrix.
-        
+
         The other matrix must be a different object than this matrix.  However, if
         you need to invert a matrix in place, see invert_in_place.
-        
+
         The return value is true if the matrix was successfully inverted, false if
         the was a singularity.
         """
@@ -5044,7 +5044,7 @@ class LMatrix4d:
     @staticmethod
     def ident_mat() -> LMatrix4d:
         """Returns an identity matrix.
-        
+
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
@@ -5111,7 +5111,7 @@ class LMatrix4d:
         """`(scale: LVecBase3d)`; `(sx: float, sy: float, sz: float)`:
         Returns a matrix that applies the indicated scale in each of the three
         axes.
-        
+
         `(scale: float)`:
         Returns a matrix that applies the indicated uniform scale.
         """
@@ -5159,7 +5159,7 @@ class LMatrix4d:
         """`(self, other: LMatrix4d)`:
         Returns true if two matrices are memberwise equal within a default
         tolerance based on the numeric type.
-        
+
         `(self, other: LMatrix4d, threshold: float)`:
         Returns true if two matrices are memberwise equal within a specified
         tolerance.  This is faster than the equivalence operator as this doesn't
@@ -5258,7 +5258,7 @@ class UnalignedLMatrix4d:
     """This is an "unaligned" LMatrix4.  It has no functionality other than to
     store numbers, and it will pack them in as tightly as possible, avoiding
     any SSE2 alignment requirements shared by the primary LMatrix4 class.
-    
+
     Use it only when you need to pack numbers tightly without respect to
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
@@ -5316,7 +5316,7 @@ class LQuaternionf(LVecBase4f):
     def xform(self, v: Vec3f) -> LVecBase3f:
         """`(self, v: LVecBase3f)`:
         Transforms a 3-d vector by the indicated rotation
-        
+
         `(self, v: LVecBase4f)`:
         Transforms a 4-d vector by the indicated rotation
         """
@@ -5340,7 +5340,7 @@ class LQuaternionf(LVecBase4f):
         """`(self, other: LQuaternionf)`:
         Returns true if two quaternions are memberwise equal within a default
         tolerance based on the numeric type.
-        
+
         `(self, other: LQuaternionf, threshold: float)`:
         Returns true if two quaternions are memberwise equal within a specified
         tolerance.
@@ -5390,7 +5390,7 @@ class LQuaternionf(LVecBase4f):
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
         radians counterclockwise about the axis.
-        
+
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
@@ -5399,7 +5399,7 @@ class LQuaternionf(LVecBase4f):
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
         degrees counterclockwise about the axis.
-        
+
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
@@ -5437,10 +5437,10 @@ class LQuaternionf(LVecBase4f):
         """Computes the conjugate of the other quat, and stores the result in this
         quat.  This is a fully general operation and makes no assumptions about the
         type of transform represented by the quat.
-        
+
         The other quat must be a different object than this quat.  However, if you
         need to get a conjugate of a quat in place, see conjugate_in_place.
-        
+
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
@@ -5454,10 +5454,10 @@ class LQuaternionf(LVecBase4f):
         """Computes the inverse of the other quat, and stores the result in this quat.
         This is a fully general operation and makes no assumptions about the type
         of transform represented by the quat.
-        
+
         The other quat must be a different object than this quat.  However, if you
         need to invert a quat in place, see invert_in_place.
-        
+
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
@@ -5551,7 +5551,7 @@ class LQuaterniond(LVecBase4d):
     def xform(self, v: Vec3d) -> LVecBase3d:
         """`(self, v: LVecBase3d)`:
         Transforms a 3-d vector by the indicated rotation
-        
+
         `(self, v: LVecBase4d)`:
         Transforms a 4-d vector by the indicated rotation
         """
@@ -5575,7 +5575,7 @@ class LQuaterniond(LVecBase4d):
         """`(self, other: LQuaterniond)`:
         Returns true if two quaternions are memberwise equal within a default
         tolerance based on the numeric type.
-        
+
         `(self, other: LQuaterniond, threshold: float)`:
         Returns true if two quaternions are memberwise equal within a specified
         tolerance.
@@ -5625,7 +5625,7 @@ class LQuaterniond(LVecBase4d):
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
         radians counterclockwise about the axis.
-        
+
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
@@ -5634,7 +5634,7 @@ class LQuaterniond(LVecBase4d):
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
         degrees counterclockwise about the axis.
-        
+
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
@@ -5672,10 +5672,10 @@ class LQuaterniond(LVecBase4d):
         """Computes the conjugate of the other quat, and stores the result in this
         quat.  This is a fully general operation and makes no assumptions about the
         type of transform represented by the quat.
-        
+
         The other quat must be a different object than this quat.  However, if you
         need to get a conjugate of a quat in place, see conjugate_in_place.
-        
+
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
@@ -5689,10 +5689,10 @@ class LQuaterniond(LVecBase4d):
         """Computes the inverse of the other quat, and stores the result in this quat.
         This is a fully general operation and makes no assumptions about the type
         of transform represented by the quat.
-        
+
         The other quat must be a different object than this quat.  However, if you
         need to invert a quat in place, see invert_in_place.
-        
+
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
@@ -5757,13 +5757,13 @@ class LRotationf(LQuaternionf):
     def __init__(self, c: LQuaternionf = ...) -> None:
         """`(self, m: LMatrix3f)`:
         lmatrix3
-        
+
         `(self, m: LMatrix4f)`:
         lmatrix4
-        
+
         `(self, axis: LVector3f, angle: float)`:
         axis + angle (in degrees)
-        
+
         `(self, h: float, p: float, r: float)`:
         Sets the rotation from the given Euler angles.
         """
@@ -5792,13 +5792,13 @@ class LRotationd(LQuaterniond):
     def __init__(self, c: LQuaterniond = ...) -> None:
         """`(self, m: LMatrix3d)`:
         lmatrix3
-        
+
         `(self, m: LMatrix4d)`:
         lmatrix4
-        
+
         `(self, axis: LVector3d, angle: float)`:
         axis + angle (in degrees)
-        
+
         `(self, h: float, p: float, r: float)`:
         Sets the rotation from the given Euler angles.
         """
@@ -5827,10 +5827,10 @@ class LOrientationf(LQuaternionf):
     def __init__(self, c: Vec4f = ...) -> None:
         """`(self, m: LMatrix3f)`:
         matrix3
-        
+
         `(self, m: LMatrix4f)`:
         matrix4
-        
+
         `(self, point_at: LVector3f, twist: float)`:
         vector + twist
         """
@@ -5849,10 +5849,10 @@ class LOrientationd(LQuaterniond):
     def __init__(self, c: Vec4d = ...) -> None:
         """`(self, m: LMatrix3d)`:
         matrix3
-        
+
         `(self, m: LMatrix4d)`:
         matrix4
-        
+
         `(self, point_at: LVector3d, twist: float)`:
         vector + twist
         """
@@ -5868,12 +5868,12 @@ class LOrientationd(LQuaterniond):
 class ConfigVariableColor(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a set of
     floating-point types representing a color value.
-    
+
     It interprets the color differently depending on how many words were
     specified: if only one, it is interpreted as a shade of gray with alpha 1.
     If two values were specified, a grayscale and alpha pair.  If three, a set
     of R, G, B values with alpha 1, and if four, a complete RGBA color.
-    
+
     This isn't defined in dtool because it relies on the LColor class, which is
     defined in linmath.
     """

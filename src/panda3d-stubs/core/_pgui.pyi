@@ -142,11 +142,11 @@ class PGFrameStyle:
 
 class PGItem(PandaNode):
     """This is the base class for all the various kinds of gui widget objects.
-    
+
     It is a Node which corresponds to a rectangular region on the screen, and
     it may have any number of "state" subgraphs, one of which is rendered at
     any given time according to its current state.
-    
+
     The PGItem node must be parented to the scene graph somewhere beneath a
     PGTop node in order for this behavior to work.
     """
@@ -176,7 +176,7 @@ class PGItem(PandaNode):
         ...
     def set_state(self, state: int) -> None:  # type: ignore[override]
         """Sets the "state" of this particular PGItem.
-        
+
         The PGItem node will render as if it were the subgraph assigned to the
         corresponding index via set_state_def().
         """
@@ -200,7 +200,7 @@ class PGItem(PandaNode):
         """Sets whether the PGItem currently has keyboard focus.  This simply means
         that the item may respond to keyboard events as well as to mouse events;
         precisely what this means is up to the individual item.
-        
+
         Only one PGItem in the world is allowed to have focus at any given time.
         Setting the focus on any other item automatically disables the focus from
         the previous item.
@@ -237,7 +237,7 @@ class PGItem(PandaNode):
         """Returns one more than the highest-numbered state def that was ever assigned
         to the PGItem.  The complete set of state defs assigned may then be
         retrieved by indexing from 0 to (get_num_state_defs() - 1).
-        
+
         This is only an upper limit on the actual number of state defs, since there
         may be holes in the list.
         """
@@ -283,7 +283,7 @@ class PGItem(PandaNode):
     def set_id(self, id: str) -> None:
         """Set the unique ID assigned to this PGItem.  It is the user's responsibility
         to ensure that this ID is unique.
-        
+
         Normally, this should not need to be called, as the PGItem will assign
         itself an ID when it is created, but this function allows the user to
         decide to redefine the ID to be something possibly more meaningful.
@@ -319,7 +319,7 @@ class PGItem(PandaNode):
         """Returns the prefix that is used to define the focus_in event for all
         PGItems.  The focus_in event is the concatenation of this string followed
         by get_id().
-        
+
         Unlike most item events, this event is thrown with no parameters.
         """
         ...
@@ -328,7 +328,7 @@ class PGItem(PandaNode):
         """Returns the prefix that is used to define the focus_out event for all
         PGItems.  The focus_out event is the concatenation of this string followed
         by get_id().
-        
+
         Unlike most item events, this event is thrown with no parameters.
         """
         ...
@@ -531,7 +531,7 @@ class PGButton(PGItem):
     def setup(self, ready: NodePath, depressed: NodePath = ...) -> None:
         """`(self, ready: NodePath)`; `(self, ready: NodePath, depressed: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath)`:
         Sets up the button using the indicated NodePath as arbitrary geometry.
-        
+
         `(self, label: str, bevel: float = ...)`:
         Sets up the button as a default text button using the indicated label
         string.  The TextNode defined by PGItem::get_text_node() will be used to
@@ -590,7 +590,7 @@ class PGTop(PandaNode):
     the 2-d scene graph, and all PG objects should be parented to this node or
     somewhere below it.  PG objects not parented within this hierarchy will not
     be clickable.
-    
+
     This node begins the special traversal of the PG objects that registers
     each node within the MouseWatcher and forces everything to render in a
     depth-first, left-to-right order, appropriate for 2-d objects.
@@ -614,11 +614,11 @@ class PGTop(PandaNode):
         """Specifies the sort index that is assigned during the traversal to the first
         PGItem that is discovered during traversal.  Subsequent PGItems will be
         assigned consecutively higher sort indexes.
-        
+
         This number is used by the MouseWatcher system to rank the clickable mouse
         regions in the same order in which the items are rendered, so that items on
         top will receive mouse priority.
-        
+
         Normally, it makes the most sense to leave this initial value at its
         default value of 0, unless you need the PGItems to have a particular sort
         value with respect to some other objects in the scene (particularly with a
@@ -639,7 +639,7 @@ class PGTop(PandaNode):
 class PGEntry(PGItem):
     """This is a particular kind of PGItem that handles simple one-line or short
     multi-line text entries, of the sort where the user can type any string.
-    
+
     A PGEntry does all of its internal manipulation on a wide string, so it can
     store the full Unicode character set.  The interface can support either the
     wide string getters and setters, or the normal 8-bit string getters and
@@ -666,7 +666,7 @@ class PGEntry(PGItem):
         """Changes the text currently displayed within the entry.  This uses the
         Unicode encoding currently specified for the "focus" TextNode; therefore,
         the TextNode must exist before calling set_text().
-        
+
         The return value is true if all the text is accepted, or false if some was
         truncated (see set_max_width(), etc.).
         """
@@ -674,7 +674,7 @@ class PGEntry(PGItem):
     def get_plain_text(self) -> str:
         """Returns the text currently displayed within the entry, without any embedded
         properties characters.
-        
+
         This uses the Unicode encoding currently specified for the "focus"
         TextNode; therefore, the TextNode must exist before calling get_text().
         """
@@ -690,7 +690,7 @@ class PGEntry(PGItem):
         number of visible characters, not counting implicit newlines due to
         wordwrapping, or formatted characters for text properties changes.  If
         there is an embedded TextGraphic object, it counts as one character.
-        
+
         This is also the length of the string returned by get_plain_text().
         """
         ...
@@ -726,7 +726,7 @@ class PGEntry(PGItem):
         """Sets the maximum number of characters that may be typed into the entry.
         This is a limit on the number of characters, as opposed to the width of the
         entry; see also set_max_width().
-        
+
         If this is 0, there is no limit.
         """
         ...
@@ -739,9 +739,9 @@ class PGEntry(PGItem):
         """Sets the maximum width of all characters that may be typed into the entry.
         This is a limit on the width of the formatted text, not a fixed limit on
         the number of characters; also set_max_chars().
-        
+
         If this is 0, there is no limit.
-        
+
         If _num_lines is more than 1, rather than being a fixed width on the whole
         entry, this becomes instead the wordwrap width (and the width limit on the
         entry is essentially _max_width * _num_lines).
@@ -766,7 +766,7 @@ class PGEntry(PGItem):
     def set_blink_rate(self, blink_rate: float) -> None:
         """Sets the number of times per second the cursor will blink while the entry
         has keyboard focus.
-        
+
         If this is 0, the cursor does not blink, but is held steady.
         """
         ...
@@ -799,7 +799,7 @@ class PGEntry(PGItem):
         """Specifies whether obscure mode should be enabled.  In obscure mode, a
         string of asterisks is displayed instead of the literal text, e.g.  for
         entering passwords.
-        
+
         In obscure mode, the width of the text is computed based on the width of
         the string of asterisks, not on the width of the actual text.  This has
         implications on the maximum length of text that may be entered if max_width
@@ -812,7 +812,7 @@ class PGEntry(PGItem):
     def set_overflow_mode(self, flag: bool) -> None:
         """Specifies whether overflow mode should be enabled.  In overflow mode, text
         can overflow the boundaries of the Entry element horizontally.
-        
+
         Overflow mode only works when the number of lines is 1.
         """
         ...
@@ -827,7 +827,7 @@ class PGEntry(PGItem):
         keys the user has just entered; it should not be considered typed yet, but
         it is important for the user to be able to see what he is considering
         entering.
-        
+
         This particular method sets the properties for the subset of the current
         candidate string that the user can actively scroll through.
         """
@@ -843,7 +843,7 @@ class PGEntry(PGItem):
         keys the user has just entered; it should not be considered typed yet, but
         it is important for the user to be able to see what he is considering
         entering.
-        
+
         This particular method sets the properties for the subset of the current
         candidate string that the user is not actively scrolling through.
         """
@@ -934,7 +934,7 @@ class PGEntry(PGItem):
         ...
     def set_wtext(self, wtext: str) -> bool:
         """Changes the text currently displayed within the entry.
-        
+
         The return value is true if all the text is accepted, or false if some was
         truncated (see set_max_width(), etc.).
         """
@@ -1037,18 +1037,18 @@ class PGVirtualFrame(PGItem):
     """This represents a frame that is rendered as a window onto another (possibly
     much larger) canvas.  You can only see the portion of the canvas that is
     below the window at any given time.
-    
+
     This works simply by automatically defining a scissor effect to be applied
     to a special child node, called the canvas_node, of the PGVirtualFrame
     node.  Every object that is parented to the canvas_node will be clipped by
     the scissor effect.  Also, you can modify the canvas_transform through
     convenience methods here, which actually modifies the transform on the
     canvas_node.
-    
+
     The net effect is that the virtual canvas is arbitrarily large, and we can
     peek at it through the scissor region, and scroll through different parts
     of it by modifying the canvas_transform.
-    
+
     See PGScrollFrame for a specialization of this class that handles the
     traditional scrolling canvas, with scroll bars.
     """
@@ -1109,7 +1109,7 @@ class PGVirtualFrame(PGItem):
 class PGSliderBar(PGItem):
     """This is a particular kind of PGItem that draws a little bar with a slider
     that moves from left to right indicating a value between the ranges.
-    
+
     This is used as an implementation for both DirectSlider and for
     DirectScrollBar.
     """
@@ -1120,7 +1120,7 @@ class PGSliderBar(PGItem):
         """Creates PGSliderBar that represents a vertical or horizontal scroll bar (if
         vertical is true or false, respectively), with additional buttons for
         scrolling, and a range of 0 .. 1.
-        
+
         length here is the measurement along the scroll bar, and width is the
         measurement across the scroll bar, whether it is vertical or horizontal (so
         for a horizontal scroll bar, the length is actually the x dimension, and
@@ -1130,7 +1130,7 @@ class PGSliderBar(PGItem):
     def setup_slider(self, vertical: bool, length: float, width: float, bevel: float) -> None:
         """Creates PGSliderBar that represents a slider that the user can use to
         control an analog quantity.
-        
+
         This is functionally the same as a scroll bar, but it has a distinctive
         look.
         """
@@ -1138,14 +1138,14 @@ class PGSliderBar(PGItem):
     def set_axis(self, axis: Vec3f) -> None:
         """Specifies the axis of the slider bar's motion.  This should be only one of
         four vectors: (1, 0, 0), (0, 0, 1), (-1, 0, 0), or (0, 0, -1).
-        
+
         This specifies the vector in which the thumb moves when it is moving from
         the minimum to the maximum value.
-        
+
         The axis must be parallel to one of the screen axes, and it must be
         normalized.  Hence, it may only be one of the above four possibilities;
         anything else is an error and will result in indeterminate behavior.
-        
+
         Normally, you should not try to set the axis directly.
         """
         ...
@@ -1222,7 +1222,7 @@ class PGSliderBar(PGItem):
         """Sets the PGButton object that will serve as the thumb for this slider.
         This button visually represents the position of the slider, and can be
         dragged left and right by the user.
-        
+
         It is the responsibility of the caller to ensure that the button object is
         parented to the PGSliderBar node.
         """
@@ -1241,7 +1241,7 @@ class PGSliderBar(PGItem):
         """Sets the PGButton object that will serve as the left scroll button for this
         slider.  This button is optional; if present, the user can click on it to
         move scroll_size units at a time to the left.
-        
+
         It is the responsibility of the caller to ensure that the button object is
         parented to the PGSliderBar node.
         """
@@ -1260,7 +1260,7 @@ class PGSliderBar(PGItem):
         """Sets the PGButton object that will serve as the right scroll button for
         this slider.  This button is optional; if present, the user can click on it
         to move scroll_size units at a time to the right.
-        
+
         It is the responsibility of the caller to ensure that the button object is
         parented to the PGSliderBar node.
         """
@@ -1347,7 +1347,7 @@ class PGScrollFrame(PGVirtualFrame):
     through a window at the larger frame beneath.  All children of this frame
     node are scrolled and clipped as if they were children of the larger,
     virtual frame.
-    
+
     This is implemented as a specialization of PGVirtualFrame, which handles
     the meat of the virtual canvas.  This class adds automatic support for
     scroll bars, and restricts the virtual transform to translate only (no
@@ -1402,7 +1402,7 @@ class PGScrollFrame(PGVirtualFrame):
         automatically hidden if they are not needed (that is, if the virtual frame
         would fit within the clip frame without them), and they are automatically
         shown when they are needed.
-        
+
         Setting this flag true forces the manage_pieces flag to also be set true.
         """
         ...

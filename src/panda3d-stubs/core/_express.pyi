@@ -55,7 +55,7 @@ class PointerToVoid:
     class within the ReferenceCount object, to implement weak reference
     pointers--we need to have something to clean up when the ReferenceCount
     object destructs.
-    
+
     This is the base class for PointerToBase<T>.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -290,7 +290,7 @@ class MemoryUsage:
     """This class is used strictly for debugging purposes, specifically for
     tracking memory leaks of reference-counted objects: it keeps a record of
     every such object currently allocated.
-    
+
     When compiled with NDEBUG set, this entire class does nothing and compiles
     to a stub.
     """
@@ -372,10 +372,10 @@ class MemoryUsage:
         Panda didn't seem to be responsible for.  This includes a few bytes for
         very low-level objects (like ConfigVariables) that cannot use Panda memory
         tracking because they are so very low-level.
-        
+
         This also includes all of the memory that might have been allocated by a
         high-level interpreter, like Python.
-        
+
         This number is only available if Panda is able to hook into the actual heap
         callback.
         """
@@ -413,14 +413,14 @@ class MemoryUsage:
         """Fills the indicated MemoryUsagePointers with the set of all currently
         active pointers (that is, pointers allocated since the last call to
         freeze(), and not yet freed) that have a zero reference count.
-        
+
         Generally, an undeleted pointer with a zero reference count means its
         reference count has never been incremented beyond zero (since once it has
         been incremented, the only way it can return to zero would free the
         pointer).  This may include objects that are allocated statically or on the
         stack, which are never intended to be deleted.  Or, it might represent a
         programmer or compiler error.
-        
+
         This function has the side-effect of incrementing each of their reference
         counts by one, thus preventing them from ever being freed--but since they
         hadn't been freed anyway, probably no additional harm is done.
@@ -492,7 +492,7 @@ class ReferenceCount:
         ref() and unref() directly, which can result in missed reference counts.
         Instead, let a PointerTo object manage the reference counting
         automatically.
-        
+
         This function is const, even though it changes the object, because
         generally fiddling with an object's reference count isn't considered part
         of fiddling with the object.  An object might be const in other ways, but
@@ -504,16 +504,16 @@ class ReferenceCount:
         be implicitly deleted by unref() simply because the reference count drops
         to zero.  (Having a member function delete itself is problematic.) However,
         see the helper function unref_delete().
-        
+
         User code should avoid using ref() and unref() directly, which can result
         in missed reference counts.  Instead, let a PointerTo object manage the
         reference counting automatically.
-        
+
         This function is const, even though it changes the object, because
         generally fiddling with an object's reference count isn't considered part
         of fiddling with the object.  An object might be const in other ways, but
         we still need to accurately count the number of references to it.
-        
+
         The return value is true if the new reference count is nonzero, false if it
         is zero.
         """
@@ -544,7 +544,7 @@ class PStatCollectorForwardBase(ReferenceCount):
     """This class serves as a cheap forward reference to a PStatCollector, which
     is defined in the pstatclient module (and is not directly accessible here
     in the express module).
-    
+
     This is subclassed as PStatCollectorForward, which defines the actual
     functionality.
     """
@@ -555,11 +555,11 @@ class NodeReferenceCount(ReferenceCount):
     """This class specializes ReferenceCount to add an additional counter, called
     node_ref_count, for the purposes of counting the number of times the object
     is referenced by a "node", whatever that may mean in context.
-    
+
     The new methods node_ref() and node_unref() automatically increment and
     decrement the primary reference count as well.  There also exists a
     NodePointerTo<> class to maintain the node_ref counters automatically.
-    
+
     See also CachedTypedWritableReferenceCount, which is similar in principle,
     as well as NodeCachedReferenceCount, which combines both of these.
     """
@@ -574,7 +574,7 @@ class NodeReferenceCount(ReferenceCount):
     def node_unref(self) -> bool:
         """Explicitly decrements the node reference count and the normal reference
         count simultaneously.
-        
+
         The return value is true if the new reference count is nonzero, false if it
         is zero.
         """
@@ -599,13 +599,13 @@ class NodeReferenceCount(ReferenceCount):
 class Datagram(TypedObject):
     """An ordered list of data elements, formatted in memory for transmission over
     a socket or writing to a data file.
-    
+
     Data elements should be added one at a time, in order, to the Datagram.
     The nature and contents of the data elements are totally up to the user.
     When a Datagram has been transmitted and received, its data elements may be
     extracted using a DatagramIterator; it is up to the caller to know the
     correct type of each data element in order.
-    
+
     A Datagram is itself headerless; it is simply a collection of data
     elements.
     """
@@ -828,7 +828,7 @@ class DatagramGenerator:
         file information in the SubfileInfo object so that its data may be read
         later.  For non-file-based datagram generators, this may mean creating a
         temporary file and copying the contents of the datagram to disk.
-        
+
         Returns true on success, false on failure or if this method is
         unimplemented.
         """
@@ -858,7 +858,7 @@ class DatagramGenerator:
     def get_file_pos(self) -> int:
         """Returns the current file position within the data stream, if any, or 0 if
         the file position is not meaningful or cannot be determined.
-        
+
         For DatagramGenerators that return a meaningful file position, this will be
         pointing to the first byte following the datagram returned after a call to
         get_datagram().
@@ -878,7 +878,7 @@ class DatagramIterator:
     """A class to retrieve the individual data elements previously stored in a
     Datagram.  Elements may be retrieved one at a time; it is up to the caller
     to know the correct type and order of each element.
-    
+
     Note that it is the responsibility of the caller to ensure that the datagram
     object is not destructed while this DatagramIterator is in use.
     """
@@ -1057,16 +1057,16 @@ class DatagramSink:
         Copies the file data from the entire indicated file (via the vfs) as the
         next datagram.  This is intended to support potentially very large
         datagrams.
-        
+
         Returns true on success, false on failure or if this method is
         unimplemented.  On true, fills "result" with the information that
         references the copied file, if possible.
-        
+
         `(self, result: SubfileInfo, source: SubfileInfo)`:
         Copies the file data from the range of the indicated file (outside of the
         vfs) as the next datagram.  This is intended to support potentially very
         large datagrams.
-        
+
         Returns true on success, false on failure or if this method is
         unimplemented.  On true, fills "result" with the information that
         references the copied file, if possible.
@@ -1089,7 +1089,7 @@ class DatagramSink:
     def get_file_pos(self) -> int:
         """Returns the current file position within the data stream, if any, or 0 if
         the file position is not meaningful or cannot be determined.
-        
+
         For DatagramSinks that return a meaningful file position, this will be
         pointing to the first byte following the datagram returned after a call to
         put_datagram().
@@ -1121,7 +1121,7 @@ class TypedReferenceCount(TypedObject, ReferenceCount):
     class instead of multiply inheriting from the two classes each time they
     are needed, so that we can sensibly pass around pointers to things which
     are both TypedObjects and ReferenceCounters.
-    
+
     See also TypedObject for detailed instructions.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -1151,7 +1151,7 @@ class Ramfile:
         """Extracts and returns the indicated number of characters from the current
         data pointer, and advances the data pointer.  If the data pointer exceeds
         the end of the buffer, returns empty string.
-        
+
         The interface here is intentionally designed to be similar to that for
         Python's file.read() function.
         """
@@ -1160,7 +1160,7 @@ class Ramfile:
         """Assumes the stream represents a text file, and extracts one line up to and
         including the trailing newline character.  Returns empty string when the
         end of file is reached.
-        
+
         The interface here is intentionally designed to be similar to that for
         Python's file.readline() function.
         """
@@ -1310,7 +1310,7 @@ class HashVal:
 class MemoryUsagePointers:
     """This is a list of pointers returned by a MemoryUsage object in response to
     some query.
-    
+
     Warning: once pointers are stored in a MemoryUsagePointers object, they are
     reference-counted, and will not be freed until the MemoryUsagePointers
     object is freed (or clear() is called on the object).  However, they may
@@ -1318,7 +1318,7 @@ class MemoryUsagePointers:
     structure.  This is because we don't store enough information in this
     structure to correctly free the pointers that have been added.  Since this
     is intended primarily as a debugging tool, this is not a major issue.
-    
+
     This class is just a user interface to talk about pointers stored in a
     MemoryUsage object.  It doesn't even exist when compiled with NDEBUG.
     """
@@ -1370,7 +1370,7 @@ class ISubStream(istream):
     first character read from this stream will be the "start" character from
     the source istream; just before the file pointer reaches the "end"
     character, eof is returned.
-    
+
     The source stream must be one that we can randomly seek within.  The
     resulting ISubStream will also support arbitrary seeks.
     """
@@ -1383,7 +1383,7 @@ class ISubStream(istream):
         character being the character at position "start" within the source, for
         end - start total characters.  The character at "end" within the source
         will never be read; this will appear to be EOF.
-        
+
         If end is zero, it indicates that the ISubStream will continue until the
         end of the source stream.
         """
@@ -1399,7 +1399,7 @@ class OSubStream(ostream):
     first character written to this stream will be the "start" character in the
     dest istream; no characters may be written to character "end" or later
     (unless end is zero).
-    
+
     The dest stream must be one that we can randomly seek within.  The
     resulting OSubStream will also support arbitrary seeks.
     """
@@ -1412,7 +1412,7 @@ class OSubStream(ostream):
         character being the character at position "start" within the dest, for end
         - start total characters.  The character at "end" within the dest will
         never be read; this will appear to be EOF.
-        
+
         If end is zero, it indicates that the OSubStream will continue until the
         end of the dest stream.
         """
@@ -1433,7 +1433,7 @@ class SubStream(iostream):
         """Starts the SubStream reading and writing from the indicated nested stream,
         within the indicated range.  "end" is the first character outside of the
         range.
-        
+
         If end is zero, it indicates that the SubStream will continue until the end
         of the nested stream.
         """
@@ -1455,14 +1455,14 @@ class Multifile(ReferenceCount):
         Opens the named Multifile on disk for reading.  The Multifile index is read
         in, and the list of subfiles becomes available; individual subfiles may
         then be extracted or read, but the list of subfiles may not be modified.
-        
+
         Also see the version of open_read() which accepts an istream.  Returns true
         on success, false on failure.
-        
+
         `(self, multifile_stream: IStreamWrapper, owns_pointer: bool = ..., offset: int = ...)`:
         Opens an anonymous Multifile for reading using an istream.  There must be
         seek functionality via seekg() and tellg() on the istream.
-        
+
         If owns_pointer is true, then the Multifile assumes ownership of the stream
         pointer and will delete it when the multifile is closed, including if this
         function returns false.
@@ -1477,14 +1477,14 @@ class Multifile(ReferenceCount):
         file by that name, it is truncated.  The Multifile is then prepared for
         accepting a brand new set of subfiles, which will be written to the
         indicated filename.  Individual subfiles may not be extracted or read.
-        
+
         Also see the version of open_write() which accepts an ostream.  Returns
         true on success, false on failure.
-        
+
         `(self, multifile_stream: ostream, owns_pointer: bool = ...)`:
         Opens an anonymous Multifile for writing using an ostream.  There must be
         seek functionality via seekp() and tellp() on the pstream.
-        
+
         If owns_pointer is true, then the Multifile assumes ownership of the stream
         pointer and will delete it when the multifile is closed, including if this
         function returns false.
@@ -1499,15 +1499,15 @@ class Multifile(ReferenceCount):
         already exists a file by that name, its index is read.  Subfiles may be
         added or removed, and the resulting changes will be written to the named
         file.
-        
+
         Also see the version of open_read_write() which accepts an iostream.
         Returns true on success, false on failure.
-        
+
         `(self, multifile_stream: iostream, owns_pointer: bool = ...)`:
         Opens an anonymous Multifile for reading and writing using an iostream.
         There must be seek functionality via seekg()/seekp() and tellg()/tellp() on
         the iostream.
-        
+
         If owns_pointer is true, then the Multifile assumes ownership of the stream
         pointer and will delete it when the multifile is closed, including if this
         function returns false.
@@ -1562,11 +1562,11 @@ class Multifile(ReferenceCount):
         """Sets the flag indicating whether timestamps should be recorded within the
         Multifile or not.  The default is true, indicating the Multifile will
         record timestamps for the overall file and also for each subfile.
-        
+
         If this is false, the Multifile will not record timestamps internally.  In
         this case, the return value from get_timestamp() or get_subfile_timestamp()
         will be estimations.
-        
+
         You may want to set this false to minimize the bitwise difference between
         independently-generated Multifiles.
         """
@@ -1578,17 +1578,17 @@ class Multifile(ReferenceCount):
         ...
     def set_scale_factor(self, scale_factor: int) -> None:
         """Changes the internal scale factor for this Multifile.
-        
+
         This is normally 1, but it may be set to any arbitrary value (greater than
         zero) to support Multifile archives that exceed 4GB, if necessary.
         (Individual subfiles may still not exceed 4GB.)
-        
+
         All addresses within the file are rounded up to the next multiple of
         _scale_factor, and zeros are written to the file to fill the resulting
         gaps.  Then the address is divided by _scale_factor and written out as a
         32-bit integer.  Thus, setting a scale factor of 2 supports up to 8GB
         files, 3 supports 12GB files, etc.
-        
+
         Calling this function on an already-existing Multifile will have no
         immediate effect until a future call to repack() or close() (or until the
         Multifile is destructed).
@@ -1603,7 +1603,7 @@ class Multifile(ReferenceCount):
         """Sets the flag indicating whether subsequently-added subfiles should be
         encrypted before writing them to the multifile.  If true, subfiles will be
         encrypted; if false (the default), they will be written without encryption.
-        
+
         When true, subfiles will be encrypted with the password specified by
         set_encryption_password().  It is possible to apply a different password to
         different files, but the resulting file can't be mounted via VFS.
@@ -1618,7 +1618,7 @@ class Multifile(ReferenceCount):
         """Specifies the password that will be used to encrypt subfiles subsequently
         added to the multifile, if the encryption flag is also set true (see
         set_encryption_flag()).
-        
+
         It is possible to apply a different password to different files, but the
         resulting file can't be mounted via VFS.  Changing this value may cause an
         implicit call to flush().
@@ -1634,10 +1634,10 @@ class Multifile(ReferenceCount):
         add_subfile().  The default is whatever is specified by the encryption-
         algorithm config variable.  The complete set of available algorithms is
         defined by the current version of OpenSSL.
-        
+
         If an invalid algorithm is specified, there is no immediate error return
         code, but flush() will fail and the file will be invalid.
-        
+
         It is possible to apply a different encryption algorithm to different
         files, and unlike the password, this does not interfere with mounting the
         multifile via VFS.  Changing this value may cause an implicit call to
@@ -1653,11 +1653,11 @@ class Multifile(ReferenceCount):
         """Specifies the length of the key, in bits, that should be used to encrypt
         the stream in future calls to add_subfile().  The default is whatever is
         specified by the encryption-key-length config variable.
-        
+
         If an invalid key_length for the chosen algorithm is specified, there is no
         immediate error return code, but flush() will fail and the file will be
         invalid.
-        
+
         It is possible to apply a different key length to different files, and
         unlike the password, this does not interfere with mounting the multifile
         via VFS. Changing this value may cause an implicit call to flush().
@@ -1675,10 +1675,10 @@ class Multifile(ReferenceCount):
         exhaustively.  This should be a multiple of 1,000 and should not exceed
         about 65 million; the value 0 indicates just one application of the hashing
         algorithm.
-        
+
         The default is whatever is specified by the multifile-encryption-iteration-
         count config variable.
-        
+
         It is possible to apply a different iteration count to different files, and
         unlike the password, this does not interfere with mounting the multifile
         via VFS.  Changing this value causes an implicit call to flush().
@@ -1694,26 +1694,26 @@ class Multifile(ReferenceCount):
         filename will be read and added to the Multifile at the next call to
         flush().  If there already exists a subfile with the indicated name, it is
         replaced without examining its contents (but see also update_subfile).
-        
+
         Either Filename:::set_binary() or set_text() must have been called
         previously to specify the nature of the source file.  If set_text() was
         called, the text flag will be set on the subfile.
-        
+
         Returns the subfile name on success (it might have been modified slightly),
         or empty string on failure.
-        
+
         `(self, subfile_name: str, subfile_data: istream, compression_level: int)`:
         Adds a file from a stream as a subfile to the Multifile.  The indicated
         istream will be read and its contents added to the Multifile at the next
         call to flush(). The file will be added as a binary subfile.
-        
+
         Note that the istream must remain untouched and unused by any other code
         until flush() is called.  At that time, the Multifile will read the entire
         contents of the istream from the current file position to the end of the
         file.  Subsequently, the Multifile will *not* close or delete the istream.
         It is the caller's responsibility to ensure that the istream pointer does
         not destruct during the lifetime of the Multifile.
-        
+
         Returns the subfile name on success (it might have been modified slightly),
         or empty string on failure.
         """
@@ -1725,7 +1725,7 @@ class Multifile(ReferenceCount):
         same name, its contents are compared byte-for-byte to the disk file, and it
         is replaced only if it is different; otherwise, the multifile is left
         unchanged.
-        
+
         Either Filename:::set_binary() or set_text() must have been called
         previously to specify the nature of the source file.  If set_text() was
         called, the text flag will be set on the subfile.
@@ -1739,32 +1739,32 @@ class Multifile(ReferenceCount):
         Multifile is read later, the signature will still be present only if the
         Multifile is unchanged; any subsequent changes to the Multifile will
         automatically invalidate and remove the signature.
-        
+
         The chain filename may be empty if the certificate does not require an
         authenticating certificate chain (e.g.  because it is self-signed).
-        
+
         The specified private key must match the certificate, and the Multifile
         must be open in read-write mode.  The private key is only used for
         generating the signature; it is not written to the Multifile and cannot be
         retrieved from the Multifile later.  (However, the certificate *can* be
         retrieved from the Multifile later, to identify the entity that created the
         signature.)
-        
+
         This implicitly causes a repack() operation if one is needed.  Returns true
         on success, false on failure.
-        
+
         This flavor of add_signature() reads the certificate and private key from a
         PEM-formatted file, for instance as generated by the openssl command.  If
         the private key file is password-encrypted, the third parameter will be
         used as the password to decrypt it.
-        
+
         `(self, composite: Filename, password: str = ...)`:
         Adds a new signature to the Multifile.  This signature associates the
         indicated certificate with the current contents of the Multifile.  When the
         Multifile is read later, the signature will still be present only if the
         Multifile is unchanged; any subsequent changes to the Multifile will
         automatically invalidate and remove the signature.
-        
+
         This flavor of add_signature() reads the certificate, private key, and
         certificate chain from the same PEM-formatted file.  It takes the first
         private key found as the intended key, and then uses the first certificate
@@ -1777,7 +1777,7 @@ class Multifile(ReferenceCount):
     def get_num_signatures(self) -> int:
         """Returns the number of matching signatures found on the Multifile.  These
         signatures may be iterated via get_signature() and related methods.
-        
+
         A signature on this list is guaranteed to match the Multifile contents,
         proving that the Multifile has been unmodified since the signature was
         applied.  However, this does not guarantee that the certificate itself is
@@ -1799,14 +1799,14 @@ class Multifile(ReferenceCount):
         This attempts to extract out the most meaningful part of the subject name.
         It returns the emailAddress, if it is defined; otherwise, it returns the
         commonName.
-        
+
         See the comments in get_num_signatures().
         """
         ...
     def get_signature_public_key(self, n: int) -> str:
         """Returns the public key used for the nth signature found on the Multifile.
         This is encoded in DER form and returned as a string of hex digits.
-        
+
         This can be used, in conjunction with the subject name (see
         get_signature_subject_name()), to uniquely identify a particular
         certificate and its subsequent reissues.  See the comments in
@@ -1836,13 +1836,13 @@ class Multifile(ReferenceCount):
         this point, all of the recently-added subfiles are read and their contents
         are added to the end of the Multifile, and the recently-removed subfiles
         are marked gone from the Multifile.
-        
+
         This may result in a suboptimal index.  To guarantee that the index is
         written at the beginning of the file, call repack() instead of flush().
-        
+
         It is not necessary to call flush() explicitly unless you are concerned
         about reading the recently-added subfiles immediately.
-        
+
         Returns true on success, false on failure.
         """
         ...
@@ -1851,11 +1851,11 @@ class Multifile(ReferenceCount):
         its index will appear at the beginning of the file with all of the subfiles
         listed in alphabetical order.  This is considered optimal for reading, and
         is the standard configuration; but it is not essential to do this.
-        
+
         It is only valid to call this if the Multifile was opened using
         open_read_write() and an explicit filename, rather than an iostream.  Also,
         we must have write permission to the directory containing the Multifile.
-        
+
         Returns true on success, false on failure.
         """
         ...
@@ -1882,17 +1882,17 @@ class Multifile(ReferenceCount):
         Removes the nth subfile from the Multifile.  This will cause all subsequent
         index numbers to decrease by one.  The file will not actually be removed
         from the disk until the next call to flush().
-        
+
         Note that this does not actually remove the data from the indicated
         subfile; it simply removes it from the index.  The Multifile will not be
         reduced in size after this operation, until the next call to repack().
-        
+
         `(self, subfile_name: str)`:
         Removes the named subfile from the Multifile, if it exists; returns true if
         successfully removed, or false if it did not exist in the first place.  The
         file will not actually be removed from the disk until the next call to
         flush().
-        
+
         Note that this does not actually remove the data from the indicated
         subfile; it simply removes it from the index.  The Multifile will not be
         reduced in size after this operation, until the next call to repack().
@@ -1937,7 +1937,7 @@ class Multifile(ReferenceCount):
     def get_index_end(self) -> int:
         """Returns the first byte that is guaranteed to follow any index byte already
         written to disk in the Multifile.
-        
+
         This number is largely meaningless in many cases, but if needs_repack() is
         false, and the file is flushed, this will indicate the number of bytes in
         the header + index.  Everything at this byte position and later will be
@@ -1971,14 +1971,14 @@ class Multifile(ReferenceCount):
         a reference to the already-opened pfstream of the Multifile itself, byte 0
         appears to be the beginning of the subfile and EOF appears to be the end of
         the subfile.
-        
+
         The returned istream will have been allocated via new; you should pass the
         pointer to close_read_subfile() when you are finished with it to delete it
         and release its resources.
-        
+
         Any future calls to repack() or close() (or the Multifile destructor) will
         invalidate all currently open subfile pointers.
-        
+
         The return value will be NULL if the stream cannot be opened for some
         reason.
         """
@@ -2001,7 +2001,7 @@ class Multifile(ReferenceCount):
         """Performs a byte-for-byte comparison of the indicated file on disk with the
         nth subfile.  Returns true if the files are equivalent, or false if they
         are different (or the file is missing).
-        
+
         If Filename::set_binary() or set_text() has already been called, it
         specifies the nature of the source file.  If this is different from the
         text flag of the subfile, the comparison will always return false.  If this
@@ -2024,10 +2024,10 @@ class Multifile(ReferenceCount):
         character; and if it includes embedded newline characters, each one must be
         followed by a hash mark.  If these conditions are not initially true, the
         string will be modified as necessary to make it so.
-        
+
         This is primarily useful as a simple hack to allow p3d applications to be
         run directly from the command line on Unix-like systems.
-        
+
         The return value is true if successful, or false on failure (for instance,
         because the header prefix violates the above rules).
         """
@@ -2145,9 +2145,9 @@ class OpenSSLWrapper:
         """Reads the PEM-formatted certificate(s) (delimited by -----BEGIN
         CERTIFICATE----- and -----END CERTIFICATE-----) from the indicated file and
         adds them to the global store object, retrieved via get_x509_store().
-        
+
         Returns the number of certificates read on success, or 0 on failure.
-        
+
         You should call this only with trusted, locally-stored certificates; not
         with certificates received from an untrusted source.
         """
@@ -2157,7 +2157,7 @@ class OpenSSLWrapper:
         adds them to the X509_STORE object.  The data buffer should be PEM-
         formatted.  Returns the number of certificates read on success, or 0 on
         failure.
-        
+
         You should call this only with trusted, locally-stored certificates; not
         with certificates received from an untrusted source.
         """
@@ -2167,7 +2167,7 @@ class OpenSSLWrapper:
         adds them to the X509_STORE object.  The data buffer should be DER-
         formatted.  Returns the number of certificates read on success, or 0 on
         failure.
-        
+
         You should call this only with trusted, locally-stored certificates; not
         with certificates received from an untrusted source.
         """
@@ -2272,7 +2272,7 @@ class VirtualFile(TypedReferenceCount):
         an ordinary file, it will quietly replace any already-existing file in the
         new filename (but not a directory).  If the original file is a directory,
         the new filename must not already exist.
-        
+
         If the file is a directory, the new filename must be within the same mount
         point.  If the file is an ordinary file, the new filename may be anywhere;
         but if it is not within the same mount point then the rename operation is
@@ -2367,7 +2367,7 @@ class VirtualFile(TypedReferenceCount):
         """`(self)`:
         Returns the current size on disk (or wherever it is) of the file before it
         has been opened.
-        
+
         `(self, stream: istream)`:
         Returns the current size on disk (or wherever it is) of the already-open
         file.  Pass in the stream that was returned by open_read_file(); some
@@ -2379,7 +2379,7 @@ class VirtualFile(TypedReferenceCount):
         to within whatever precision the operating system records this information
         (on a Windows95 system, for instance, this may only be accurate to within 2
         seconds).
-        
+
         If the timestamp cannot be determined, either because it is not supported
         by the operating system or because there is some error (such as file not
         found), returns 0.
@@ -2507,11 +2507,11 @@ class TemporaryFile(FileReference):
 class IDecompressStream(istream):
     """An input stream object that uses zlib to decompress (inflate) the input
     from another source stream on-the-fly.
-    
+
     Attach an IDecompressStream to an existing istream that provides compressed
     data, and read the corresponding uncompressed data from the
     IDecompressStream.
-    
+
     Seeking is not supported.
     """
     @overload
@@ -2528,11 +2528,11 @@ class IDecompressStream(istream):
 class OCompressStream(ostream):
     """An input stream object that uses zlib to compress (deflate) data to another
     destination stream on-the-fly.
-    
+
     Attach an OCompressStream to an existing ostream that will accept
     compressed data, and write your uncompressed source data to the
     OCompressStream.
-    
+
     Seeking is not supported.
     """
     @overload
@@ -2572,7 +2572,7 @@ class VirtualFileSystem:
     """A hierarchy of directories and files that appears to be one continuous file
     system, even though the files may originate from several different sources
     that may not be related to the actual OS's file system.
-    
+
     For instance, a VirtualFileSystem can transparently mount one or more
     Multifiles as their own subdirectory hierarchies.
     """
@@ -2589,24 +2589,24 @@ class VirtualFileSystem:
         the named file is a directory, mounts the directory.  If the named file is
         a Multifile, mounts it as a Multifile.  Returns true on success, false on
         failure.
-        
+
         A given system directory may be mounted to multiple different mount point,
         and the same mount point may share multiple system directories.  In the
         case of ambiguities (that is, two different files with exactly the same
         full pathname), the most-recently mounted system wins.
-        
+
         The filename specified as the first parameter must refer to a real,
         physical filename on disk; it cannot be a virtual file already appearing
         within the vfs filespace.  However, it is possible to mount such a file;
         see mount_loop() for this.
-        
+
         Note that a mounted VirtualFileSystem directory is fully case-sensitive,
         unlike the native Windows file system, so you must refer to files within
         the virtual file system with exactly the right case.
-        
+
         `(self, multifile: Multifile, mount_point: Filename, flags: int)`:
         Mounts the indicated Multifile at the given mount point.
-        
+
         `(self, mount: VirtualFileMount, mount_point: Filename, flags: int)`:
         Adds the given VirtualFileMount object to the mount list.  This is a lower-
         level function than the other flavors of mount(); it requires you to create
@@ -2621,11 +2621,11 @@ class VirtualFileSystem:
         """This is similar to mount(), but it receives the name of a Multifile that
         already appears within the virtual file system.  It can be used to mount a
         Multifile that is itself hosted within a virtually-mounted Multifile.
-        
+
         This interface can also be used to mount physical files (that appear within
         the virtual filespace), but it cannot be used to mount directories.  Use
         mount() if you need to mount a directory.
-        
+
         Note that there is additional overhead, in the form of additional buffer
         copies of the data, for recursively mounting a multifile like this.
         """
@@ -2635,11 +2635,11 @@ class VirtualFileSystem:
         """`(self, physical_filename: Filename)`:
         Unmounts all appearances of the indicated directory name or multifile name
         from the file system.  Returns the number of appearances unmounted.
-        
+
         `(self, multifile: Multifile)`:
         Unmounts all appearances of the indicated Multifile from the file system.
         Returns the number of appearances unmounted.
-        
+
         `(self, mount: VirtualFileMount)`:
         Unmounts the indicated VirtualFileMount object from the file system.
         Returns the number of appearances unmounted.
@@ -2691,7 +2691,7 @@ class VirtualFileSystem:
         """Looks up the file by the indicated name in the file system.  Returns a
         VirtualFile pointer representing the file if it is found, or NULL if it is
         not.
-        
+
         If status_only is true, the file will be checked for existence and length
         and so on, but the returned file's contents cannot be read.  This is an
         optimization which is especially important for certain mount types, for
@@ -2723,7 +2723,7 @@ class VirtualFileSystem:
         original file is an ordinary file, it will quietly replace any already-
         existing file in the new filename (but not a directory).  If the original
         file is a directory, the new filename must not already exist.
-        
+
         If the file is a directory, the new filename must be within the same mount
         point.  If the file is an ordinary file, the new filename may be anywhere;
         but if it is not within the same mount point then the rename operation is
@@ -2745,7 +2745,7 @@ class VirtualFileSystem:
         """Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
         found, if any.  Returns the number of matches found.
-        
+
         It is the responsibility of the the caller to clear the results list first;
         otherwise, the newly-found files will be appended to the list.
         """
@@ -2786,7 +2786,7 @@ class VirtualFileSystem:
         """Returns the default global VirtualFileSystem.  You may create your own
         personal VirtualFileSystem objects and use them for whatever you like, but
         Panda will attempt to load models and stuff from this default object.
-        
+
         Initially, the global VirtualFileSystem is set up to mount the OS
         filesystem to root; i.e.  it is equivalent to the OS filesystem.  This may
         be subsequently adjusted by the user.
@@ -2795,7 +2795,7 @@ class VirtualFileSystem:
     def read_file(self, filename: Filepath, auto_unwrap: bool):
         """Convenience function; returns the entire contents of the indicated file as
         a string.
-        
+
         If auto_unwrap is true, an explicitly-named .pz/.gz file is automatically
         decompressed and the decompressed contents are returned.  This is different
         than vfs-implicit-pz, which will automatically decompress a file if the
@@ -2805,7 +2805,7 @@ class VirtualFileSystem:
     def open_read_file(self, filename: Filepath, auto_unwrap: bool) -> istream:
         """Convenience function; returns a newly allocated istream if the file exists
         and can be read, or NULL otherwise.  Does not return an invalid istream.
-        
+
         If auto_unwrap is true, an explicitly-named .pz file is automatically
         decompressed and the decompressed contents are returned.  This is different
         than vfs-implicit-pz, which will automatically decompress a file if the
@@ -2824,7 +2824,7 @@ class VirtualFileSystem:
     def open_write_file(self, filename: Filepath, auto_wrap: bool, truncate: bool) -> ostream:
         """Convenience function; returns a newly allocated ostream if the file exists
         and can be written, or NULL otherwise.  Does not return an invalid ostream.
-        
+
         If auto_wrap is true, an explicitly-named .pz file is automatically
         compressed while writing.  If truncate is true, the file is truncated to
         zero length before writing.
@@ -2925,7 +2925,7 @@ class TrueClock:
     """An interface to whatever real-time clock we might have available in the
     current environment.  There is only one TrueClock in existence, and it
     constructs itself.
-    
+
     The TrueClock returns elapsed real time in seconds since some undefined
     epoch.  Since it is not defined at what time precisely the clock indicates
     zero, this value can only be meaningfully used to measure elapsed time, by
@@ -3004,7 +3004,7 @@ class Patchfile:
     def __init__(self, buffer: Buffer = ...) -> None:
         """`(self)`:
         Create a patch file and initializes internal data
-        
+
         `(self, buffer: Buffer)`:
         Create patch file with buffer to patch
         """
@@ -3028,7 +3028,7 @@ class Patchfile:
         """`(self, patch_file: Filename, file: Filename)`:
         Set up to apply the patch to the file (original file and patch are
         destroyed in the process).
-        
+
         `(self, patch_file: Filename, orig_file: Filename, target_file: Filename)`:
         Set up to apply the patch to the file.  In this form, neither the original
         file nor the patch file are destroyed.
@@ -3052,13 +3052,13 @@ class Patchfile:
         """`(self, patch_file: Filename, file: Filename)`:
         Patches the entire file in one call returns true on success and false on
         error
-        
+
         This version will delete the patch file and overwrite the original file.
-        
+
         `(self, patch_file: Filename, orig_file: Filename, target_file: Filename)`:
         Patches the entire file in one call returns true on success and false on
         error
-        
+
         This version will not delete any files.
         """
         ...
@@ -3074,7 +3074,7 @@ class Patchfile:
         patching Panda Multifiles, if detected, and attempt to patch them on a
         subfile-by-subfile basis.  If this flag is false, the Patchfile will always
         patch the file on a full-file basis.
-        
+
         This has effect only when building patches; it is not used for applying
         patches.
         """
@@ -3109,7 +3109,7 @@ class Patchfile:
 
 class ProfileTimer:
     """ProfileTimer
-    
+
         HowTo:
           Create a ProfileTimer and hold onto it.
           Call init() whenever you like (the timer doesn't
@@ -3121,7 +3121,7 @@ class ProfileTimer:
             don't want to time.
           When your timing is finished, call printTo() to see the
             results (e.g. myTimer.printTo(cerr)).
-    
+
         Notes:
           You should be able to time things down to the millisecond
           well enough, but if you call on() and off() within micro-
@@ -3158,7 +3158,7 @@ class WeakPointerToVoid(PointerToVoid):
         otherwise.  If this returns true, it means that the pointer can not yet be
         reused, but it does not guarantee that it can be safely accessed.  See the
         lock() method for a safe way to access the underlying pointer.
-        
+
         This will always return true for a null pointer, unlike is_valid_pointer().
         """
         ...

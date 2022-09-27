@@ -10,7 +10,7 @@ class SmoothMover:
     """This class handles smoothing of sampled motion points over time, e.g.  for
     smoothing the apparent movement of remote avatars, whose positions are sent
     via occasional telemetry updates.
-    
+
     It can operate in any of three modes: off, in which it does not smooth any
     motion but provides the last position it was told; smoothing only, in which
     it smooths motion information but never tries to anticipate where the
@@ -36,7 +36,7 @@ class SmoothMover:
         timestamp) in a position report, which will then be used along with all
         other position reports to determine the smooth position at any particular
         instant.
-        
+
         The return value is true if any parameter has changed since the last call
         to set_pos(), or false if they are the same.
         """
@@ -59,7 +59,7 @@ class SmoothMover:
         hpr and timestamp) in a position report, which will then be used along with
         all other position reports to determine the smooth position at any
         particular instant.
-        
+
         The return value is true if any parameter has changed since the last call
         to set_hpr(), or false if they are the same.
         """
@@ -83,17 +83,17 @@ class SmoothMover:
         (along with timestamp) in a position report, which will then be used along
         with all other position reports to determine the smooth position at any
         particular instant.
-        
+
         The return value is true if any parameter has changed since the last call
         to set_pos_hpr(), or false if they are the same.
-        
+
         `(self, x: float, y: float, z: float, h: float, p: float, r: float)`:
         Specifies the position of the SmoothMover at a particular time in the past.
         When mark_position() is called, this will be recorded (along with
         timestamp) in a position report, which will then be used along with all
         other position reports to determine the smooth position at any particular
         instant.
-        
+
         The return value is true if any parameter has changed since the last call
         to set_pos_hpr(), or false if they are the same.
         """
@@ -135,7 +135,7 @@ class SmoothMover:
         """Stores the position, orientation, and timestamp (if relevant) indicated by
         previous calls to set_pos(), set_hpr(), and set_timestamp() in a new
         position report.
-        
+
         When compute_smooth_position() is called, it uses these stored position
         reports to base its computation of the known position.
         """
@@ -153,16 +153,16 @@ class SmoothMover:
         indicated point in time, based on the previous position reports.  After
         this call has been made, get_smooth_pos() etc.  may be called to retrieve
         the smoothed position.
-        
+
         With no parameter, the function uses ClockObject::get_frame_time() as the
         default time.
-        
+
         `(self, timestamp: float)`:
         Computes the smoothed position (and orientation) of the mover at the
         indicated point in time, based on the previous position reports.  After
         this call has been made, get_smooth_pos() etc.  may be called to retrieve
         the smoothed position.
-        
+
         The return value is true if the value has changed (or might have changed)
         since the last call to compute_smooth_position(), or false if it remains
         the same.
@@ -172,7 +172,7 @@ class SmoothMover:
         """Updates the smooth_pos (and smooth_hpr, etc.) members to reflect the
         absolute latest position known for this avatar.  This may result in a pop
         to the most recent position.
-        
+
         Returns true if the latest position is known, false otherwise.
         """
         ...
@@ -296,7 +296,7 @@ class SmoothMover:
         position an additional amount, on top of that specified by set_delay(),
         based on the measured average latency for timestamp messages received by
         the client.
-        
+
         In this way, if the other client has significant clock skew with respect to
         our clock, it will be evident as a large positive or negative average
         latency for timestamps.  By subtracting out this average latency, we

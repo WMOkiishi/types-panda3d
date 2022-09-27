@@ -26,7 +26,7 @@ class CharacterJoint(MovingPartMatrix):
         """Adds the indicated node to the list of nodes that will be updated each
         frame with the joint's net transform from the root.  Returns true if the
         node is successfully added, false if it had already been added.
-        
+
         A CharacterJointEffect for this joint's Character will automatically be
         added to the specified node.
         """
@@ -35,7 +35,7 @@ class CharacterJoint(MovingPartMatrix):
         """Removes the indicated node from the list of nodes that will be updated each
         frame with the joint's net transform from the root.  Returns true if the
         node is successfully removed, false if it was not on the list.
-        
+
         If the node has a CharacterJointEffect that matches this joint's Character,
         it will be cleared.
         """
@@ -60,11 +60,11 @@ class CharacterJoint(MovingPartMatrix):
         """Adds the indicated node to the list of nodes that will be updated each
         frame with the joint's local transform from its parent.  Returns true if
         the node is successfully added, false if it had already been added.
-        
+
         The Character pointer should be the Character object that owns this joint;
         this will be used to create a CharacterJointEffect for this node.  If it is
         NULL, no such effect will be created.
-        
+
         A CharacterJointEffect for this joint's Character will automatically be
         added to the specified node.
         """
@@ -73,7 +73,7 @@ class CharacterJoint(MovingPartMatrix):
         """Removes the indicated node from the list of nodes that will be updated each
         frame with the joint's local transform from its parent.  Returns true if
         the node is successfully removed, false if it was not on the list.
-        
+
         If the node has a CharacterJointEffect that matches this joint's Character,
         it will be cleared.
         """
@@ -98,7 +98,7 @@ class CharacterJoint(MovingPartMatrix):
     def get_transform(self) -> LMatrix4f:
         """`(self)`:
         Returns the transform matrix of the joint
-        
+
         `(self, transform: LMatrix4f)`:
         Copies the joint's current transform into the indicated matrix.
         """
@@ -158,7 +158,7 @@ class JointVertexTransform(VertexTransform):
     The geometry itself should be parented to the scene graph at the level of
     the character's root joint; that is, it should not be parented under a node
     directly animated by any joints.
-    
+
     Multiple combinations of these with different weights are used to implement
     soft-skinned vertices for an animated character.
     """
@@ -188,25 +188,25 @@ class Character(PartBundleNode):
         PartBundles within this node.  At the end of this call, the old_bundle
         pointer within this node will be replaced with the new_bundle pointer, and
         all geometry within this node will be updated to reference new_bundle.
-        
+
         @deprecated Use the newer version of this method, below.
-        
+
         `(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle)`:
         Merges old_bundle_handle->get_bundle() with new_bundle.  old_bundle_handle
         must be one of the PartBundleHandle within this node.  At the end of this
         call, the bundle pointer within the old_bundle_handle will be replaced with
         that within the new_bundle_handle pointer, and all geometry within this
         node will be updated to reference new_bundle.
-        
+
         Normally, this is called when the two bundles have the same, or nearly the
         same, hierarchies.  In this case, new_bundle will simply be assigned over
         the old_bundle position.  However, if any joints are present in one bundle
         or the other, new_bundle will be modified to contain the union of all
         joints.
-        
+
         The geometry below this node is also updated to reference new_bundle,
         instead of the original old_bundle.
-        
+
         This method is intended to unify two different models that share a common
         skeleton, for instance, different LOD's of the same model.
         """
@@ -218,7 +218,7 @@ class Character(PartBundleNode):
         it gets further from the camera.  This is intended as a simple optimization
         to minimize the effort of computing animation for lots of characters that
         may not necessarily be very important to animate every frame.
-        
+
         If the character is closer to the camera than near_distance, then it is
         animated its normal rate, every frame.  If the character is exactly
         far_distance away, it is animated only every delay_factor seconds (which
@@ -227,11 +227,11 @@ class Character(PartBundleNode):
         according to its distance between the two.  The interpolation function
         continues beyond far_distance, so that the character is animated
         increasingly less frequently as it gets farther away.
-        
+
         The distance calculations are made from center, which is a fixed point
         relative to the character node, to the camera's lod center or cull center
         node (or to the camera node itself).
-        
+
         If multiple cameras are viewing the character in any given frame, the
         closest one counts.
         """
@@ -270,7 +270,7 @@ class Character(PartBundleNode):
         update().  This can be used by show code to force an update of the
         character's position to the current frame, regardless of whether the
         character is currently onscreen and animating.
-        
+
         @deprecated Call update() instead.
         """
         ...
@@ -310,7 +310,7 @@ class CharacterJointEffect(RenderEffect):
     """This effect will be added automatically to a node by
     CharacterJoint::add_net_transform() and
     CharacterJoint::add_local_transform().
-    
+
     The effect binds the node back to the character, so that querying the
     relative transform of the affected node will automatically force the
     indicated character to be updated first.

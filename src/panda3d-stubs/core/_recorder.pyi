@@ -6,18 +6,18 @@ class RecorderBase:
     """This is the base class to a number of objects that record particular kinds
     of user input (like a MouseRecorder) to use in conjunction with a
     RecorderController to record the user's inputs for a session.
-    
+
     Note that RecorderBase does not actually inherit from TypedObject, even
     though it defines get_type().  The assumption is that the classes that
     derive from RecorderBase might also inherit independently from TypedObject.
-    
+
     It also does not inherit from TypedWritable, but it defines a method called
     write_recorder() which is very similar to a TypedWritable's
     write_datagram(). Classes that derive from RecorderBase and also inherit
     from TypedWritable may choose to remap write_recorder() to do exactly the
     same thing as write_datagram(), or they may choose to write something
     slightly different.
-    
+
     Most types of recorders should derive from Recorder, as it derives from
     ReferenceCount, except for MouseRecorder, which would otherwise doubly
     inherit from ReferenceCount.
@@ -133,7 +133,7 @@ class RecorderController(TypedReferenceCount):
         ...
     def add_recorder(self, name: str, recorder: RecorderBase) -> None:
         """Adds the named recorder to the set of recorders that are in use.
-        
+
         If the controller is in recording mode, the named recorder will begin
         recording its status to the session file.  If the controller is in playback
         mode and the name and type matches a recorder in the session file, the
@@ -143,7 +143,7 @@ class RecorderController(TypedReferenceCount):
     def has_recorder(self, name: str) -> bool:
         """Returns true if the named recorder has been added to the table by a
         previous call to add_recorder(), false otherwise.
-        
+
         If the controller is in playback mode, this will also return false for a
         recorder that was found in the session file but was never explicitly added
         via add_recorder(); see get_recorder().
@@ -152,7 +152,7 @@ class RecorderController(TypedReferenceCount):
     def get_recorder(self, name: str) -> RecorderBase:
         """Returns the recorder with the indicated name, or NULL if there is no such
         recorder.
-        
+
         If the controller is in playback mode, this may return the recorder
         matching the indicated name as read from the session file, even if it was
         never added to the table by the user.  In this case, has_recorder() may
@@ -162,7 +162,7 @@ class RecorderController(TypedReferenceCount):
     def remove_recorder(self, name: str) -> bool:
         """Removes the named recorder from the table.  Returns true if successful,
         false if there was no such recorder.
-        
+
         If the controller is in recording mode, the named recorder will stop
         recording.  If the controller is in playback mode, the named recorder will
         disassociate itself from the session file (but if the session file still
@@ -172,12 +172,12 @@ class RecorderController(TypedReferenceCount):
         ...
     def set_frame_tie(self, frame_tie: bool) -> None:
         """Sets the frame_tie flag.
-        
+
         When this is true, sessions are played back frame-for-frame, based on the
         frame count of the recorded session.  This gives the most accurate
         playback, but the playback rate will vary according to the frame rate of
         the playback machine.
-        
+
         When this is false, sessions are played back at real time, based on the
         clock of the recorded session.  This may introduce playback discrepencies
         if the frames do not fall at exactly the same times as they did in the
@@ -222,7 +222,7 @@ class SocketStreamRecorder(RecorderBase, ReferenceCount):
     """Records any data received from the indicated socket stream.  On playback,
     it will act as if the incoming data is coming over the wire again even if
     an actual connection is not available.
-    
+
     Outbound data will not be recorded, but will be sent straight through to
     the socket if it is connected, or silently ignored if it is not.
     """

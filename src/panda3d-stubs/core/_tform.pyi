@@ -33,7 +33,7 @@ _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 class ButtonThrower(DataNode):
     """Throws Panda Events for button down/up events generated within the data
     graph.
-    
+
     This is a DataNode which is intended to be parented to the data graph below
     a device which is generating a sequence of button events, like a
     MouseAndKeyboard device.  It simply takes each button it finds and throws a
@@ -64,10 +64,10 @@ class ButtonThrower(DataNode):
         key, this same event name is used for *all* button events, and the name of
         the button pressed (possibly with modifier prefixes) will be sent as a
         parameter.
-        
+
         If this string is empty, no event is generated.  It is possible to generate
         both generic events and specific events for the same button.
-        
+
         See also set_keystroke_event().
         """
         ...
@@ -92,10 +92,10 @@ class ButtonThrower(DataNode):
         each key, this same event name is used for *all* button events, and the
         name of the button pressed (possibly with modifier prefixes) will be sent
         as a parameter.
-        
+
         If this string is empty, no event is generated.  It is possible to generate
         both generic events and specific events for the same button.
-        
+
         See also set_keystroke_event().
         """
         ...
@@ -110,16 +110,16 @@ class ButtonThrower(DataNode):
         semantic meaning of the sequence of keys that have been pressed.  For
         instance, pressing shift and 4 together will generate the button event
         "shift-4", but it will generate the keystroke "$".
-        
+
         If a key is held down, keyrepeat will cause the same keystroke event to be
         generated repeatedly.  This is different from the corresponding down event,
         which will only be generated once, followed by a number of button repeat
         events.
-        
+
         This event is generated with a single wstring parameter, which is a one-
         character string that contains the keystroke generated.  If this event
         string is empty, no event is generated.
-        
+
         See also set_button_down_event().
         """
         ...
@@ -133,12 +133,12 @@ class ButtonThrower(DataNode):
         string event received.  Events of this nature are received only when the
         user is entering data using a Microsoft Input Method Editor, typically used
         for Asian languages such as Japanese or Korean.
-        
+
         If you are designing a typing user interface, you should track this event
         to support the use of the IME.  In response to this event, you should
         display the candidate string in the entry box, with the appropriate
         sections highlighted, so the user can scroll through the available choices.
-        
+
         This event is generated with four parameters, in order: the candidate
         string, the character at which to start the highlight, the character at
         which to end the highlight, and the current cursor position.
@@ -248,7 +248,7 @@ class ButtonThrower(DataNode):
         attached to the key events, but if one or more buttons have been added to
         this set, then the event name will be prepended with the names of the
         modifier buttons.
-        
+
         It is recommended that you change this setting by first calling
         get_modifier_buttons(), making adjustments, and passing the new value to
         set_modifier_buttons().  This way the current state of the modifier buttons
@@ -271,7 +271,7 @@ class ButtonThrower(DataNode):
     def add_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool:
         """Adds a new button to the set of buttons that the ButtonThrower explicitly
         processes.
-        
+
         If set_throw_buttons_active is false (which is the default), the
         ButtonThrower will process all buttons.  Otherwise, the ButtonThrower will
         only process events for the button(s) explicitly named by this function;
@@ -279,7 +279,7 @@ class ButtonThrower(DataNode):
         downstream to the child node(s) in the data graph.  A button that *is* on
         the list will be processed by the ButtonThrower and not passed on to the
         child node(s).
-        
+
         The return value is true if the button is added, or false if it was already
         in the set.
         """
@@ -287,7 +287,7 @@ class ButtonThrower(DataNode):
     def remove_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool:
         """Removes the indicated button from the set of buttons that the ButtonThrower
         explicitly processes.  See add_throw_button().
-        
+
         The return value is true if the button is removed, or false if it was not
         on the set.
         """
@@ -300,7 +300,7 @@ class ButtonThrower(DataNode):
         ButtonThrower.  That is to say, returns true if this button was ever passed
         as the second parameter add_throw_button(), regardless of what the first
         parameter was.
-        
+
         `(self, mods: ModifierButtons, button: ButtonHandle)`:
         Returns true if the indicated button is on the set of buttons that will be
         processed by the ButtonThrower, false otherwise.  See add_throw_button().
@@ -352,7 +352,7 @@ class ButtonThrower(DataNode):
 class MouseInterfaceNode(DataNode):
     """This is the base class for some classes that monitor the mouse and keyboard
     input and perform some action due to their state.
-    
+
     It collects together some common interface; in particular, the
     require_button() and related methods.
     """
@@ -632,7 +632,7 @@ class DriveInterface(MouseInterfaceNode):
 class MouseSubregion(MouseInterfaceNode):
     """The MouseSubregion object scales the mouse inputs from within a rectangular
     region of the screen, as if they were the full-screen inputs.
-    
+
     If you choose your MouseSubregion coordinates to exactly match a
     DisplayRegion within your window, you end up with a virtual mouse within
     your DisplayRegion.
@@ -747,7 +747,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
         """Sets which events are suppressed when the mouse is over the region.  This
         is the union of zero or more various SF_* values.  Normally, this is 0,
         indicating that no events are suppressed.
-        
+
         If you set this to a non-zero value, for instance SF_mouse_position, then
         the mouse position will not be sent along the data graph when the mouse is
         over this particular region.
@@ -882,15 +882,15 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     considered special mouse regions; typically these will be click buttons.
     When the mouse passes in or out of one of these regions, or when a button
     is clicked while the mouse is in one of these regions, an event is thrown.
-    
+
     Mouse events may also be suppressed from the rest of the datagraph in these
     special regions.
-    
+
     This class can also implement a software mouse pointer by automatically
     generating a transform to apply to a piece of geometry placed under the 2-d
     scene graph.  It will move the geometry around according to the mouse's
     known position.
-    
+
     Finally, this class can keep a record of the mouse trail.  This is useful
     if you want to know, not just where the mouse is, but the exact sequence of
     movements it took to get there.  This information is mainly useful for
@@ -941,12 +941,12 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         in which the MouseWatcherRegions should be expected to live.  Normally,
         this is left at -1, 1, -1, 1, which is the default setting, and matches the
         mouse coordinate range.
-        
+
         Whatever values you specify here indicate the shape of the full screen, and
         the MouseWatcherRegions will be given in coordinate space matching it.  For
         instance, if you specify (0, 1, 0, 1), then a MouseWatcherRegion with the
         frame (0, 1, 0, .5) will cover the lower half of the screen.
-        
+
         `(self, left: float, right: float, bottom: float, top: float)`:
         Sets the frame of the MouseWatcher.  See the next flavor of this method for
         a more verbose explanation.
@@ -968,12 +968,12 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """`(self)`:
         Returns the smallest region the mouse is currently over, or NULL if it is
         over no region.
-        
+
         `(self, pos: LPoint2f)`:
         Returns the preferred region the mouse is over.  In the case of overlapping
         regions, the region with the largest sort order is preferred; if two
         regions have the same sort order, then the smaller region is preferred.
-        
+
         `(self, x: float, y: float)`:
         Returns the smallest region the indicated point is over, or NULL if it is
         over no region.
@@ -990,10 +990,10 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Sets the pattern string that indicates how the event names are generated
         when a button is depressed.  This is a string that may contain any of the
         following:
-        
+
         %r  - the name of the region the mouse is over %b  - the name of the button
         pressed.
-        
+
         The event name will be based on the in_pattern string specified here, with
         all occurrences of the above strings replaced with the corresponding
         values.
@@ -1018,10 +1018,10 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Sets the pattern string that indicates how the event names are generated
         when a button is continuously held and generates keyrepeat "down" events.
         This is a string that may contain any of the following:
-        
+
         %r  - the name of the region the mouse is over %b  - the name of the button
         pressed.
-        
+
         The event name will be based on the in_pattern string specified here, with
         all occurrences of the above strings replaced with the corresponding
         values.
@@ -1135,7 +1135,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         will observe the mouse and keyboard events only when the mouse is within
         the indicated region, and the observed range will be from -1 .. 1 across
         the region.
-        
+
         Do not delete the DisplayRegion while it is owned by the MouseWatcher.
         """
         ...
@@ -1159,12 +1159,12 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     def add_group(self, group: MouseWatcherGroup) -> bool:
         """Adds the indicated group of regions to the set of regions the MouseWatcher
         will monitor each frame.
-        
+
         Since the MouseWatcher itself inherits from MouseWatcherBase, this
         operation is normally not necessary--you can simply add the Regions you
         care about one at a time.  Adding a complete group is useful when you may
         want to explicitly remove the regions as a group later.
-        
+
         Returns true if the group was successfully added, or false if it was
         already on the list.
         """
@@ -1179,7 +1179,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Atomically removes old_group from the MouseWatcher, and replaces it with
         new_group.  Presumably old_group and new_group might have some regions in
         common; these are handled properly.
-        
+
         If old_group is not already present, simply adds new_group and returns
         false.  Otherwise, removes old_group and adds new_group, and then returns
         true.
@@ -1199,7 +1199,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         buttons are automatically released.  This is intended to help protect
         against people who inadvertently (or intentionally) leave a keyboard key
         stuck down and then wander away from the keyboard.
-        
+
         Also, when this timeout expires, the event specified by
         set_inactivity_timeout_event() will be generated.
         """
@@ -1231,7 +1231,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Obtain the mouse trail log.  This is a PointerEventList.  Does not make a
         copy, therefore, this PointerEventList will be updated each time
         process_events gets called.
-        
+
         To use trail logging, you need to enable the generation of pointer events
         in the GraphicsWindowInputDevice and set the trail log duration in the
         MouseWatcher.  Otherwise, the trail log will be empty.
@@ -1254,7 +1254,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         should reparent this GeomNode to Render2D, and then forget about it.  The
         MouseWatcher will continually update the trail node.  There is only one
         trail node, it does not create a new one each time you call get_trail_node.
-        
+
         This is not a particularly beautiful way to render a mouse trail.  It is
         intended more for debugging purposes than for finished applications.  Even
         so, It is suggested that you might want to apply a line thickness and
@@ -1437,7 +1437,7 @@ class Trackball(MouseInterfaceNode):
     """Trackball acts like Performer in trackball mode.  It can either spin around
     a piece of geometry directly, or it can spin around a camera with the
     inverse transform to make it appear that the whole world is spinning.
-    
+
     The Trackball object actually just places a transform in the data graph;
     parent a Transform2SG node under it to actually transform objects (or
     cameras) in the world.
@@ -1608,7 +1608,7 @@ class Trackball(MouseInterfaceNode):
 
 class Transform2SG(DataNode):
     """input: Transform (matrix)
-    
+
     output: none, but applies the matrix as the transform transition for a
     given arc of the scene graph.
     """

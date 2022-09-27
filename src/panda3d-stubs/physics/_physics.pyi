@@ -38,7 +38,7 @@ class PhysicsObject(TypedReferenceCount):
     def __init__(self, copy: PhysicsObject = ...) -> None:
         """`(self)`:
         Default Constructor
-        
+
         `(self, copy: PhysicsObject)`:
         copy constructor
         """
@@ -60,7 +60,7 @@ class PhysicsObject(TypedReferenceCount):
     def set_position(self, pos: Vec3f) -> None:
         """`(self, pos: LPoint3f)`:
         Vector position assignment.  This is also used as the center of mass.
-        
+
         `(self, x: float, y: float, z: float)`:
         Piecewise position assignment
         """
@@ -87,7 +87,7 @@ class PhysicsObject(TypedReferenceCount):
     def set_velocity(self, vel: Vec3f) -> None:
         """`(self, vel: LVector3f)`:
         Vector velocity assignment
-        
+
         `(self, x: float, y: float, z: float)`:
         Piecewise velocity assignment
         """
@@ -367,14 +367,14 @@ class Physical(TypedReferenceCount):
         """`(self, copy: Physical)`:
         copy constructor (note- does deep copy of pn's) but does NOT attach itself
         to its template's physicsmanager.
-        
+
         `(self, total_objects: int = ..., pre_alloc: bool = ...)`:
         Default Constructor The idea here is that most physicals will NOT be
         collections of sets (i.e.  particle systems and whatever else).  Because of
         this, the default constructor, unless otherwise specified, will
         automatically allocate and initialize one PhysicalObject.  This makes it
         easier for high-level work.
-        
+
         pre-alloc is ONLY for multiple-object physicals, and if true, fills the
         physics_object vector with dead nodes, pre-allocating for the speed end of
         the speed-vs-overhead deal.
@@ -514,7 +514,7 @@ class ActorNode(PhysicalNode):
     def __init__(self, name: str = ...) -> None:
         """`(self, copy: ActorNode)`:
         Copy Constructor.
-        
+
         `(self, name: str = ...)`:
         Constructor
         """
@@ -577,7 +577,7 @@ class AngularVectorForce(AngularForce):
     def __init__(self, copy: AngularVectorForce) -> None:
         """`(self, copy: AngularVectorForce)`:
         copy constructor
-        
+
         `(self, quat: LRotationf)`; `(self, h: float, p: float, r: float)`:
         constructor
         """
@@ -645,7 +645,7 @@ class LinearControlForce(LinearForce):
     def __init__(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...) -> None:
         """`(self, copy: LinearControlForce)`:
         Copy Constructor
-        
+
         `(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...)`:
         Vector Constructor
         """
@@ -665,7 +665,7 @@ class LinearControlForce(LinearForce):
     def set_vector(self, v: Vec3f) -> None:
         """`(self, v: LVector3f)`:
         encapsulating wrapper
-        
+
         `(self, x: float, y: float, z: float)`:
         piecewise encapsulating wrapper
         """
@@ -690,7 +690,7 @@ class LinearCylinderVortexForce(LinearForce):
     def __init__(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...) -> None:
         """`(self, copy: LinearCylinderVortexForce)`:
         copy Constructor
-        
+
         `(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...)`:
         Simple Constructor
         """
@@ -766,7 +766,7 @@ class LinearFrictionForce(LinearForce):
     def __init__(self, coef: float = ..., a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearFrictionForce)`:
         copy constructor
-        
+
         `(self, coef: float = ..., a: float = ..., m: bool = ...)`:
         Constructor
         """
@@ -789,7 +789,7 @@ class LinearJitterForce(LinearRandomForce):
     def __init__(self, a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearJitterForce)`:
         copy constructor
-        
+
         `(self, a: float = ..., m: bool = ...)`:
         constructor
         """
@@ -803,7 +803,7 @@ class LinearNoiseForce(LinearRandomForce):
     def __init__(self, a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearNoiseForce)`:
         copy constructor
-        
+
         `(self, a: float = ..., m: bool = ...)`:
         constructor
         """
@@ -817,7 +817,7 @@ class LinearSinkForce(LinearDistanceForce):
     def __init__(self, copy: LinearSinkForce = ...) -> None:
         """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...)`:
         Simple constructor
-        
+
         `(self, copy: LinearSinkForce)`:
         copy constructor
         """
@@ -831,7 +831,7 @@ class LinearSourceForce(LinearDistanceForce):
     def __init__(self, copy: LinearSourceForce = ...) -> None:
         """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...)`:
         Simple constructor
-        
+
         `(self, copy: LinearSourceForce)`:
         copy constructor
         """
@@ -853,10 +853,10 @@ class LinearVectorForce(LinearForce):
     def __init__(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...) -> None:
         """`(self, vec: LVector3f, a: float = ..., mass: bool = ...)`:
         Vector Constructor
-        
+
         `(self, copy: LinearVectorForce)`:
         Copy Constructor
-        
+
         `(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...)`:
         Default/Piecewise constructor
         """
@@ -869,7 +869,7 @@ class LinearVectorForce(LinearForce):
     def set_vector(self, v: Vec3f) -> None:
         """`(self, v: LVector3f)`:
         encapsulating wrapper
-        
+
         `(self, x: float, y: float, z: float)`:
         piecewise encapsulating wrapper
         """
@@ -960,7 +960,7 @@ class PhysicsManager:
         """`(self, dt: float)`:
         This is the main high-level API call.  Performs integration on every
         attached Physical.
-        
+
         `(self, dt: float, p: Physical)`:
         This is the main high-level API call.  Performs integration on a single
         physical.  Make sure its associated forces are active.

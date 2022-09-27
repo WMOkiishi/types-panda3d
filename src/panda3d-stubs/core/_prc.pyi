@@ -116,11 +116,11 @@ class ConfigPage:
         ...
     def get_page_seq(self) -> int:
         """Returns the sequence number of the page.
-        
+
         Sequence numbers for a particular class (implicit vs.  explicit) of pages
         are assigned as each page is loaded; each page is given a higher sequence
         number than all the pages loaded before it.
-        
+
         The implicit_load pages, which are discovered in the file system
         automatically, have a different set of sequence numbers than the explicit
         pages.
@@ -151,7 +151,7 @@ class ConfigPage:
         """Reads the contents of a complete prc file, as returned by the indicated
         istream, into the current page file.  Returns true on success, or false on
         some I/O error.
-        
+
         This is a low-level interface.  Normally you do not need to call it
         directly.  See the global functions load_prc_file() and unload_prc_file(),
         defined in panda/src/putil, for a higher-level interface.
@@ -370,7 +370,7 @@ class ConfigDeclaration(ConfigFlags):
 class ConfigVariableCore(ConfigFlags):
     """The internal definition of a ConfigVariable.  This object is shared between
     all instances of a ConfigVariable that use the same variable name.
-    
+
     You cannot create a ConfigVariableCore instance directly; instead, use the
     make() method, which may return a shared instance.  Once created, these
     objects are never destructed.
@@ -424,7 +424,7 @@ class ConfigVariableCore(ConfigFlags):
         cannot be modified from its compiled-in default value), or false for the
         normal case, in which the variable can be modified by any prc file at or
         above its trust level (see get_trust_level()).
-        
+
         This value only has effect in a release build (specifically, when
         PRC_RESPECT_TRUST_LEVEL is defined true in Config.pp).
         """
@@ -435,7 +435,7 @@ class ConfigVariableCore(ConfigFlags):
         "mistrust level", since the larger the value, the more suspicious we are of
         prc files.  This value is not used if is_closed() returns true, which
         indicates no file may be trusted.
-        
+
         This value only has effect in a release build (specifically, when
         PRC_RESPECT_TRUST_LEVEL is defined true in Config.pp).
         """
@@ -481,17 +481,17 @@ class ConfigVariableCore(ConfigFlags):
     def make_local_value(self) -> ConfigDeclaration:
         """Creates a new local value for this variable, if there is not already one
         specified.  This will shadow any values defined in the various .prc files.
-        
+
         If there is already a local value defined for this variable, simply returns
         that one.
-        
+
         Use clear_local_value() to remove the local value definition.
         """
         ...
     def clear_local_value(self) -> bool:
         """Removes the local value defined for this variable, and allows its value to
         be once again retrieved from the .prc files.
-        
+
         Returns true if the value was successfully removed, false if it did not
         exist in the first place.
         """
@@ -542,7 +542,7 @@ class ConfigVariableCore(ConfigFlags):
         variable.  This is similar, but not identical to, get_declaration().  The
         difference is that this will list *only* true references in a prc file, and
         will not list default values or locally-assigned values.
-        
+
         This is also similar to get_reference(), except that it only lists the
         trusted declarations, omitting the untrusted ones.
         """
@@ -599,7 +599,7 @@ class Notify:
     pointer to an ostream, initially cerr, which can be reset at will to point
     to different output devices, according to the needs of the application.
     All output generated within Panda should vector through the Notify ostream.
-    
+
     This also includes a collection of Categories and Severities, which may be
     independently enabled or disabled, so that error messages may be squelched
     or respected according to the wishes of the user.
@@ -627,14 +627,14 @@ class Notify:
     def has_assert_failed(self) -> bool:
         """Returns true if an assertion test has failed (and not been ignored) since
         the last call to clear_assert_failed().
-        
+
         When an assertion test fails, the assert handler may decide either to
         abort, return, or ignore the assertion.  Naturally, if it decides to abort,
         this flag is irrelevant.  If it chooses to ignore the assertion, the flag
         is not set.  However, if the assert handler chooses to return out of the
         function (the normal case), it will also set this flag to indicate that an
         assertion failure has occurred.
-        
+
         This will also be the behavior in the absence of a user-defined assert
         handler.
         """
@@ -662,12 +662,12 @@ class Notify:
         ending in the basename of this Category, e.g.  display:glxdisplay.  This is
         a shorthand way to define a Category when a pointer to its parent is not
         handy.
-        
+
         `(self, basename: str, parent_category: NotifyCategory)`:
         Finds or creates a new Category given the basename of the category and its
         parent in the category hierarchy.  The parent pointer may be NULL to
         indicate this is a top-level Category.
-        
+
         `(self, basename: str, parent_fullname: str)`:
         Finds or creates a new Category given the basename of the category and the
         fullname of its parent.  This is another way to create a category when you
@@ -747,7 +747,7 @@ class ConfigPageManager(ConfigFlags):
     def reload_implicit_pages(self) -> None:
         """Searches the PRC_DIR and/or PRC_PATH directories for *.prc files and loads
         them in as pages.
-        
+
         This may be called after startup, to force the system to re-read all of the
         implicit prc files.
         """
@@ -868,19 +868,19 @@ class ConfigVariableManager:
     def make_variable_template(self, pattern: str, type: _ConfigFlags_ValueType, default_value: str, description: str = ..., flags: int = ...) -> ConfigVariableCore:
         """Defines a variable "template" to match against dynamically-defined
         variables that may or may not be created in the future.
-        
+
         The template consists of a glob pattern, e.g.  `notify-level-*`, which will
         be tested against any config variable passed to a future call to
         make_variable().  If the pattern matches, the returned ConfigVariableCore
         is copied to define the new variable, instead of creating a default, empty
         one.
-        
+
         This is useful to pre-specify default values for a family of variables that
         all have similar properties, and all may not be created at the same time.
         It is especially useful to avoid cluttering up the list of available
         variables with user-declared variables that have not been defined yet by
         the application (e.g. `egg-object-type-*`).
-        
+
         This method basically pre-defines all variables that match the specified
         glob pattern.
         """
@@ -906,7 +906,7 @@ class ConfigVariableManager:
         somewhere, one per line, very concisely.  This lists the dominant value in
         the prc file; it does not list shadowed values, and it does not list
         locally-set values.
-        
+
         This is mainly intended for generating a hash of the input config file
         state.
         """
@@ -949,7 +949,7 @@ class ConfigVariableBase(ConfigFlags):
     (and hence for all of the ConfigVariableBool, ConfigVaribleString, etc.
     classes).  It collects together the common interface for all generic
     ConfigVariables.
-    
+
     Mostly, this class serves as a thin wrapper around ConfigVariableCore
     and/or ConfigDeclaration, more or less duplicating the interface presented
     there.
@@ -989,7 +989,7 @@ class ConfigVariableBase(ConfigFlags):
         cannot be modified from its compiled-in default value), or false for the
         normal case, in which the variable can be modified by any prc file at or
         above its trust level (see get_trust_level()).
-        
+
         This value only has effect in a release build (specifically, when
         PRC_RESPECT_TRUST_LEVEL is defined true in Config.pp).
         """
@@ -1000,7 +1000,7 @@ class ConfigVariableBase(ConfigFlags):
         "mistrust level", since the larger the value, the more suspicious we are of
         prc files.  This value is not used if is_closed() returns true, which
         indicates no file may be trusted.
-        
+
         This value only has effect in a release build (specifically, when
         PRC_RESPECT_TRUST_LEVEL is defined true in Config.pp).
         """
@@ -1014,7 +1014,7 @@ class ConfigVariableBase(ConfigFlags):
     def clear_local_value(self) -> bool:
         """Removes the local value defined for this variable, and allows its value to
         be once again retrieved from the .prc files.
-        
+
         Returns true if the value was successfully removed, false if it did not
         exist in the first place.
         """
@@ -1047,7 +1047,7 @@ class ConfigVariable(ConfigVariableBase):
     the typed ConfigVariables, and contains all of the code common to
     ConfigVariables of all types (except ConfigVariableList, which is a bit of
     a special case).
-    
+
     Mostly, this class serves as a thin wrapper around ConfigVariableCore
     and/or ConfigDeclaration, more or less duplicating the interface presented
     there.
@@ -1345,11 +1345,11 @@ class ConfigVariableList(ConfigVariableBase):
     """This class is similar to ConfigVariable, but it reports its value as a list
     of strings.  In this special case, all of the declarations of the variable
     are returned as the elements of this list, in order.
-    
+
     Note that this is different from a normal ConfigVariableString, which just
     returns its topmost value, which can optionally be treated as a number of
     discrete words by dividing it at the spaces.
-    
+
     A ConfigVariableList cannot be modified locally.
     """
     @overload
@@ -1380,12 +1380,12 @@ class ConfigVariableList(ConfigVariableBase):
 class ConfigVariableSearchPath(ConfigVariableBase):
     """This is similar to a ConfigVariableList, but it returns its list as a
     DSearchPath, as a list of directories.
-    
+
     You may locally append directories to the end of the search path with the
     methods here, or prepend them to the beginning.  Use these methods to make
     adjustments to the path; do not attempt to directly modify the const
     DSearchPath object returned by get_value().
-    
+
     Unlike other ConfigVariable types, local changes (made by calling
     append_directory() and prepend_directory()) are specific to this particular
     instance of the ConfigVariableSearchPath.  A separate instance of the same
@@ -1455,12 +1455,12 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         This variant of find_all_files() returns the new Results object, instead of
         filling on in on the parameter list.  This is a little more convenient to
         call from Python.
-        
+
         `(self, filename: Filename, results: DSearchPath.Results)`:
         Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
         found, if any.  Returns the number of matches found.
-        
+
         It is the responsibility of the the caller to clear the results list first;
         otherwise, the newly-found files will be appended to the list.
         """
@@ -1643,11 +1643,11 @@ class NotifyCategory(ConfigFlags):
 class IDecryptStream(istream):
     """An input stream object that uses OpenSSL to decrypt the input from another
     source stream on-the-fly.
-    
+
     Attach an IDecryptStream to an existing istream that provides encrypted
     data, as generated by an OEncryptStream, and read the corresponding
     unencrypted data from the IDecryptStream.
-    
+
     Seeking is not supported.
     """
     @property
@@ -1682,10 +1682,10 @@ class IDecryptStream(istream):
 class OEncryptStream(ostream):
     """An input stream object that uses OpenSSL to encrypt data to another
     destination stream on-the-fly.
-    
+
     Attach an OEncryptStream to an existing ostream that will accept encrypted
     data, and write your unencrypted source data to the OEncryptStream.
-    
+
     Seeking is not supported.
     """
     algorithm: str
@@ -1706,7 +1706,7 @@ class OEncryptStream(ostream):
         open().  The default is whatever is specified by the encryption-algorithm
         config variable.  The complete set of available algorithms is defined by
         the current version of OpenSSL.
-        
+
         If an invalid algorithm is specified, there is no immediate error return
         code, but open() will fail.
         """
@@ -1715,7 +1715,7 @@ class OEncryptStream(ostream):
         """Specifies the length of the key, in bits, that should be used to encrypt
         the stream in future calls to open().  The default is whatever is specified
         by the encryption-key-length config variable.
-        
+
         If an invalid key_length for the chosen algorithm is specified, there is no
         immediate error return code, but open() will fail.
         """
@@ -1727,7 +1727,7 @@ class OEncryptStream(ostream):
         exhaustively.  This should be a multiple of 1,000 and should not exceed
         about 65 million; the value 0 indicates just one application of the hashing
         algorithm.
-        
+
         The default is whatever is specified by the encryption-iteration-count
         config variable.
         """
@@ -1747,7 +1747,7 @@ class StreamReader:
     def __init__(self, copy: StreamReader) -> None:
         """`(self, copy: StreamReader)`:
         The copy constructor does not copy ownership of the stream.
-        
+
         `(self, _in: istream, owns_stream: bool)`:
         If owns_stream is true, the stream pointer will be deleted when the
         StreamReader destructs.
@@ -1848,7 +1848,7 @@ class StreamReader:
         """Assumes the stream represents a text file, and extracts one line up to and
         including the trailing newline character.  Returns empty string when the
         end of file is reached.
-        
+
         The interface here is intentionally designed to be similar to that for
         Python's File.readline() function.
         """
@@ -2027,12 +2027,12 @@ class StreamWrapperBase:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self) -> None:
         """Acquires the internal lock.
-        
+
         User code should call this to take temporary possession of the stream and
         perform direct I/O operations on it, for instance to make several
         sequential atomic reads.  You may not call any of the StreamWrapper methods
         while the lock is held, other than release().
-        
+
         Use with extreme caution!  This is a very low-level, non-recursive lock.
         You must call acquire() only once, and you must later call release()
         exactly once.  Failing to do so may result in a hard deadlock with no

@@ -1897,7 +1897,7 @@ class BulletWorld(TypedReferenceCount):
         """Performas a test for all bodies which are currently in contact with the
         given body.  The test returns a BulletContactResult object which may
         contain zero, one or more contacts.
-        
+
         If the optional parameter use_filter is set to TRUE this test will consider
         filter settings.  Otherwise all objects in contact are reported, no matter
         if they would collide or not.
@@ -2271,7 +2271,7 @@ class BulletHeightfieldShape(BulletShape):
         @brief Creates a collision shape suited for terrains from a rectangular image.
         @details Stores the image's brightness values in a vector Bullet can use, 
           while rotating it 90 degrees to the right.
-        
+
         `(self, tex: Texture, max_height: float, up: _BulletUpAxis = ...)`:
         @brief Creates a collision shape suited for terrains from a rectangular texture.
         @details Alternative constructor intended for use with ShaderTerrainMesh. This will
@@ -2351,15 +2351,15 @@ class BulletHingeConstraint(BulletConstraint):
         where on each body the rotation axis should be.  This axis is specified
         using axis_a and axis_b.  Remember, everything is specified in the bodies
         own coordinate system!
-        
+
         `(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, ts_a: TransformState, ts_b: TransformState, use_frame_a: bool = ...)`:
         Constructs a hinge constraint which connects two rigid bodies.
-        
+
         `(self, node_a: BulletRigidBodyNode, pivot_a: LPoint3f, axis_a: LVector3f, use_frame_a: bool = ...)`:
         Creates a hinge constraint in the same way as the other constructor, but
         uses the world as second body so that node_a is fixed to some point in mid-
         air for example.
-        
+
         `(self, node_a: BulletRigidBodyNode, ts_a: TransformState, use_frame_a: bool = ...)`:
         Creates a hinge constraint which connects one rigid body with some fixe
         dpoint in the world.
@@ -2392,7 +2392,7 @@ class BulletHingeConstraint(BulletConstraint):
         """Applies an impulse to the constraint so that the angle changes at
         target_velocity where max_impulse is the maximum impulse that is used for
         achieving the specified velocity.
-        
+
         Note that the target_velocity is in radians/second, not degrees.
         """
         ...
@@ -2647,7 +2647,7 @@ class BulletTriangleMesh(TypedWritableReferenceCount):
     def __init__(self) -> None: ...
     def add_triangle(self, p0: Vec3f, p1: Vec3f, p2: Vec3f, remove_duplicate_vertices: bool = ...) -> None:
         """Adds a triangle with the indicated coordinates.
-        
+
         If remove_duplicate_vertices is true, it will make sure that it does not
         add duplicate vertices if they already exist in the triangle mesh, within
         the tolerance specified by set_welding_distance().  This comes at a
@@ -2657,7 +2657,7 @@ class BulletTriangleMesh(TypedWritableReferenceCount):
     def add_array(self, points: PointerToArray_LVecBase3f, indices: PointerToArray_int, remove_duplicate_vertices: bool = ...) -> None:
         """Adds triangle information from an array of points and indices referring to
         these points.  This is more efficient than adding triangles one at a time.
-        
+
         If remove_duplicate_vertices is true, it will make sure that it does not
         add duplicate vertices if they already exist in the triangle mesh, within
         the tolerance specified by set_welding_distance().  This comes at a
@@ -2668,7 +2668,7 @@ class BulletTriangleMesh(TypedWritableReferenceCount):
         """Adds the geometry from the indicated Geom from the triangle mesh.  This is
         a one-time copy operation, and future updates to the Geom will not be
         reflected.
-        
+
         If remove_duplicate_vertices is true, it will make sure that it does not
         add duplicate vertices if they already exist in the triangle mesh, within
         the tolerance specified by set_welding_distance().  This comes at a
@@ -2678,7 +2678,7 @@ class BulletTriangleMesh(TypedWritableReferenceCount):
     def set_welding_distance(self, distance: float) -> None:
         """Sets the square of the distance at which vertices will be merged
         together when adding geometry with remove_duplicate_vertices set to true.
-        
+
         The default is 0, meaning vertices will only be merged if they have the
         exact same position.
         """

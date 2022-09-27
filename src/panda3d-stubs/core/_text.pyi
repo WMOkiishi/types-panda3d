@@ -49,7 +49,7 @@ class TextGlyph(TypedReferenceCount):
     def has_quad(self) -> bool:
         """Returns true if this glyph contains the definition for a simple quad,
         rather than a more complex piece of geometry.
-        
+
         You may still call get_geom() even if this returns true, which will
         synthesize a Geom for this quad.
         """
@@ -58,7 +58,7 @@ class TextGlyph(TypedReferenceCount):
         """Assuming that this glyph is representable as a textured quad, returns its
         dimensions and UV range.  Returns false if it is not representable as a
         quad, or if it is whitespace.
-        
+
         The order of the components is left, bottom, right, top.
         """
         ...
@@ -79,7 +79,7 @@ class TextGlyph(TypedReferenceCount):
     def get_geom(self, usage_hint: _GeomEnums_UsageHint) -> Geom:
         """Returns a Geom that renders the particular glyph.  It will be generated if
         necessary.
-        
+
         This method will always return a copy of the Geom, so the caller is free to
         modify it.
         """
@@ -95,7 +95,7 @@ class TextGlyph(TypedReferenceCount):
 class TextFont(TypedReferenceCount, Namable):
     """An encapsulation of a font; i.e.  a set of glyphs that may be assembled
     together by a TextNode to represent a string of text.
-    
+
     This is just an abstract interface; see StaticTextFont or DynamicTextFont
     for an actual implementation.
     """
@@ -285,7 +285,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load
         (usually 0).
-        
+
         `(self, font_data: str, data_length: int, face_index: int)`:
         This constructor accepts a table of data representing the font file, loaded
         from some source other than a filename on disk.
@@ -308,7 +308,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
     def set_point_size(self, point_size: float) -> bool:
         """Sets the point size of the font.  This controls the apparent size of the
         font onscreen.  By convention, a 10 point font is about 1 screen unit high.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -320,10 +320,10 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Set the resolution of the texture map, and hence the clarity of the
         resulting font.  This sets the number of pixels in the texture map that are
         used for each onscreen unit.
-        
+
         Setting this number larger results in an easier to read font, but at the
         cost of more texture memory.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -338,7 +338,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         than 1.0 to improve the font's antialiasing (since FreeType doesn't really
         do a swell job of antialiasing by itself).  There is some performance
         implication for setting this different than 1.0, but it is probably small.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -351,7 +351,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         There are two unrelated ways to achieve antialiasing: with Freetype's
         native antialias mode, and with the use of a scale_factor greater than one.
         By default, both modes are enabled.
-        
+
         At low resolutions, some fonts may do better with one mode or the other.
         In general, Freetype's native antialiasing will produce less blurry
         results, but may introduce more artifacts.
@@ -367,7 +367,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         approximated by a fixed-pixel-size font.  This returns 0 in the normal
         case, in which a scalable font is used, or the fixed-pixel-size font has
         exactly the requested pixel size.
-        
+
         If this returns non-zero, it is the pixel size of the font that we are
         using to approximate our desired size.
         """
@@ -474,7 +474,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         allows text created with the font to be colored individually.  Normally,
         you would not change this unless you really need a particular color effect
         to appear in the font itself.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -491,10 +491,10 @@ class DynamicTextFont(TextFont, FreetypeFont):
         that it should not generally be (0, 0, 0, 0), which would tend to bleed
         into the foreground color, unless you have also specified a outline color
         of (0, 0, 0, 1)) .
-        
+
         Normally, you would not change this unless you really need a particular
         color effect to appear in the font itself.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -509,12 +509,12 @@ class DynamicTextFont(TextFont, FreetypeFont):
         achieved via a Gaussian post-process as each letter is generated; there is
         some runtime cost for this effect, but it is minimal as each letter is
         normally generated only once and then cached.
-        
+
         The color is the desired color of the outline, width is the number of
         points beyond the letter that the outline extends (a typical font is 10
         points high), and feather is a number in the range 0.0 .. 1.0 that controls
         the softness of the outline.  Set the width to 0.0 to disable the outline.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -561,7 +561,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
     def clear(self) -> None:
         """Drops all the glyphs out of the cache and frees any association with any
         previously-generated pages.
-        
+
         Calling this frequently can result in wasted texture memory, as any
         previously rendered text will still keep a pointer to the old, previously-
         generated pages.  As long as the previously rendered text remains around,
@@ -702,7 +702,7 @@ class StaticTextFont(TextFont):
     def __init__(self, font_def: PandaNode, cs: _CoordinateSystem = ...) -> None:
         """The constructor expects the root node to a model generated via egg-mkfont,
         which consists of a set of models, one per each character in the font.
-        
+
         If a CoordinateSystem value is specified, it informs the font of the
         coordinate system in which this model was generated.  "up" in this
         coordinate system will be the direction of the top of the letters.
@@ -713,12 +713,12 @@ class TextProperties:
     """This defines the set of visual properties that may be assigned to the
     individual characters of the text.  (Properties which affect the overall
     block of text can only be specified on the TextNode directly).
-    
+
     Typically, there is just one set of properties on a given block of text,
     which is set directly on the TextNode (TextNode inherits from
     TextProperties). That makes all of the text within a particular block have
     the same appearance.
-    
+
     This separate class exists in order to implement multiple different kinds
     of text appearing within one block.  The text string itself may reference a
     TextProperties structure by name using the \1 and \2 tokens embedded within
@@ -804,13 +804,13 @@ class TextProperties:
         """Sets the small_caps flag.  When this is set, lowercase letters are
         generated as scaled-down versions of their uppercase equivalents.  This is
         particularly useful to set for fonts that do not have lowercase letters.
-        
+
         It is also a good idea to set this for a (dynamic) font that has already
         implemented lowercase letters as scaled-down versions of their uppercase
         equivalents, since without this flag the texture memory may needlessly
         duplicate equivalent glyphs for upper and lowercase letters.  Setting this
         flag causes the texture memory to share the mixed-case letters.
-        
+
         The amount by which the lowercase letters are scaled is specified by
         set_small_caps_scale().
         """
@@ -948,7 +948,7 @@ class TextProperties:
         """Names the CullBin that the text geometry should be assigned to.  If this is
         set, then a CullBinAttrib will be created to explicitly place each
         component in the named bin.
-        
+
         The draw_order value will also be passed to each CullBinAttrib as
         appropriate; this is particularly useful if this names a CullBinFixed, e.g.
         "fixed".
@@ -973,10 +973,10 @@ class TextProperties:
         """Sets the drawing order of text created by the TextNode.  This is actually
         the draw order of the card and frame.  The shadow is drawn at
         _draw_order+1, and the text at _draw_order+2.
-        
+
         This affects the sorting order assigned to the nodes as they are created,
         and also is passed to whatever bin may be assigned via set_bin().
-        
+
         The return value is the first unused draw_order number, e.g.  _draw_order +
         3.
         """
@@ -1001,7 +1001,7 @@ class TextProperties:
         placed, in addition to any scales inherited from the node or from
         set_text_scale(). This can be used (possibly in conjunction with
         set_glyph_shift()) to implement superscripting or subscripting.
-        
+
         The glyph scale is cumulative when applied to nested TextProperties.  It is
         intended primarily for implementing superscripts, not for scaling the text
         in general.  See also set_text_scale(), which is intended primarily for
@@ -1029,7 +1029,7 @@ class TextProperties:
     def set_text_scale(self, text_scale: float) -> None:
         """Specifies the factor by which to scale the text, in addition to any
         scalings imposed by the node, as well as in addition to the glyph scale.
-        
+
         The text scale is not cumulative when applied to nested TextProperties.
         See also set_glyph_scale(), which is cumulative.
         """
@@ -1042,14 +1042,14 @@ class TextProperties:
     def set_direction(self, direction: _TextProperties_Direction) -> None:
         """Specifies the text direction.  If none is specified, it will be guessed
         based on the contents of the string.
-        
+
         @since 1.10.0
         """
         ...
     def clear_direction(self) -> None:
         """Clears the text direction setting.  If no text direction is specified, it
         will be guessed based on the contents of the string.
-        
+
         @since 1.10.0
         """
         ...
@@ -1058,7 +1058,7 @@ class TextProperties:
         ...
     def get_direction(self) -> _TextProperties_Direction:
         """Returns the direction of the text as specified by set_direction().
-        
+
         @since 1.10.0
         """
         ...
@@ -1159,12 +1159,12 @@ class TextProperties:
 class TextGraphic:
     """This defines a special model that has been constructed for the purposes of
     embedding an arbitrary graphic image within a text paragraph.
-    
+
     It can be any arbitrary model, though it should be built along the same
     scale as the text, and it should probably be at least mostly two-
     dimensional.  Typically, this means it should be constructed in the X-Z
     plane, and it should have a maximum vertical (Z) height of 1.0.
-    
+
     The frame specifies an arbitrary bounding volume in the form (left, right,
     bottom, top).  This indicates the amount of space that will be reserved
     within the paragraph.  The actual model is not actually required to fit
@@ -1195,7 +1195,7 @@ class TextGraphic:
         """Returns the frame specified for the graphic.  This is the amount of space
         that will be reserved for the graphic when it is embedded in a text
         paragraph, in the form (left, right, bottom, top).
-        
+
         The actual graphic, as rendered by the NodePath specified via set_model(),
         should more or less fit within this rectangle.  It is not required to fit
         completely within it, but if it does not, it may visually overlap with
@@ -1231,18 +1231,18 @@ class TextGraphic:
 class TextPropertiesManager:
     """This defines all of the TextProperties structures that might be referenced
     by name from an embedded text string.
-    
+
     A text string, as rendered by a TextNode, can contain embedded references
     to one of the TextProperties defined here, by enclosing the name between \1
     (ASCII 0x01) characters; this causes a "push" to the named state.  All text
     following the closing \1 character will then be rendered in the new state.
     The next \2 (ASCII 0x02) character will then restore the previous state for
     subsequent text.
-    
+
     For instance, "x\1up\1n\2 + y" indicates that the character "x" will be
     rendered in the normal state, the character "n" will be rendered in the
     "up" state, and then " + y" will be rendered in the normal state again.
-    
+
     This can also be used to define arbitrary models that can serve as embedded
     graphic images in a text paragraph.  This works similarly; the convention
     is to create a TextGraphic that describes the graphic image, and then
@@ -1255,7 +1255,7 @@ class TextPropertiesManager:
         name is subsequently encountered in text embedded between \1 characters in
         a TextNode string, the following text will be rendered with these
         properties.
-        
+
         If there was already a TextProperties structure associated with this name,
         it is quietly replaced with the new definition.
         """
@@ -1265,7 +1265,7 @@ class TextPropertiesManager:
         was not previously a TextProperties associated with this name, a warning is
         printed and then a default TextProperties structure is associated with the
         name, and returned.
-        
+
         Call has_properties() instead to check whether a particular name has been
         defined.
         """
@@ -1288,13 +1288,13 @@ class TextPropertiesManager:
         the model's actual computed bounding volume, as derived from
         NodePath::calc_tight_bounds().  Create a TextGraphic object first if you
         want to have explicit control of the frame.
-        
+
         `(self, name: str, graphic: TextGraphic)`:
         Defines the TextGraphic associated with the indicated name.  When the name
         is subsequently encountered in text embedded between \5 characters in a
         TextNode string, the specified graphic will be embedded in the text at that
         point.
-        
+
         If there was already a TextGraphic structure associated with this name, it
         is quietly replaced with the new definition.
         """
@@ -1306,7 +1306,7 @@ class TextPropertiesManager:
         not previously a TextGraphic associated with this name, a warning is
         printed and then a default TextGraphic structure is associated with the
         name, and returned.
-        
+
         Call has_graphic() instead to check whether a particular name has been
         defined.
         """
@@ -1372,7 +1372,7 @@ class TextAssembler:
     def set_max_rows(self, max_rows: int) -> None:
         """If max_rows is greater than zero, no more than max_rows will be accepted.
         Text beyond that will be truncated.
-        
+
         Setting this will not truncate text immediately.  You must follow this up
         with a call to set_wtext() to truncate the existing text.
         """
@@ -1406,11 +1406,11 @@ class TextAssembler:
         """`(self)`:
         Returns the default TextProperties that are applied to the text in the
         absence of any nested property change sequences.
-        
+
         `(self, n: int)`:
         Returns the TextProperties in effect for the object at the indicated
         position in the pre-wordwrapped string.
-        
+
         `(self, r: int, c: int)`:
         Returns the TextProperties in effect for the object at the indicated
         position in the indicated row.
@@ -1422,7 +1422,7 @@ class TextAssembler:
         """Accepts a new text string and associated properties structure, and
         precomputes the wordwrapping layout appropriately.  After this call,
         get_wordwrapped_wtext() and get_num_rows() can be called.
-        
+
         The return value is true if all the text is accepted, or false if some was
         truncated (see set_max_rows()).
         """
@@ -1431,12 +1431,12 @@ class TextAssembler:
         """Replaces the 'count' characters from 'start' of the current text with the
         indicated replacement text.  If the replacement text does not have count
         characters, the length of the string will be changed accordingly.
-        
+
         The substring may include nested formatting characters, but they must be
         self-contained and self-closed.  The formatting characters are not
         literally saved in the internal string; they are parsed at the time of the
         set_wsubstr() call.
-        
+
         The return value is true if all the text is accepted, or false if some was
         truncated (see set_max_rows()).
         """
@@ -1445,7 +1445,7 @@ class TextAssembler:
         """Returns a wstring that represents the contents of the text, without any
         embedded properties characters.  If there is an embedded graphic object, a
         zero value is inserted in that position.
-        
+
         This string has the same length as get_num_characters(), and the characters
         in this string correspond one-to-one with the characters returned by
         get_character(n).
@@ -1456,7 +1456,7 @@ class TextAssembler:
         inserted according to the wordwrapping.  The string will contain no
         embedded properties characters.  If there is an embedded graphic object, a
         zero value is inserted in that position.
-        
+
         This string has the same number of newline characters as get_num_rows(),
         and the characters in this string correspond one-to-one with the characters
         returned by get_character(r, c).
@@ -1464,7 +1464,7 @@ class TextAssembler:
         ...
     def get_wtext(self) -> str:
         """Returns a wstring that represents the contents of the text.
-        
+
         The string will contain embedded properties characters, which may not
         exactly match the embedded properties characters of the original string,
         but it will encode the same way.
@@ -1473,11 +1473,11 @@ class TextAssembler:
     def get_wordwrapped_wtext(self) -> str:
         """Returns a wstring that represents the contents of the text, with newlines
         inserted according to the wordwrapping.
-        
+
         The string will contain embedded properties characters, which may not
         exactly match the embedded properties characters of the original string,
         but it will encode the same way.
-        
+
         Embedded properties characters will be closed before every newline, then
         reopened (if necessary) on the subsequent character following the newline.
         This means it will be safe to divide the text up at the newline characters
@@ -1487,7 +1487,7 @@ class TextAssembler:
     def calc_r(self, n: int) -> int:
         """Computes the row index of the nth character or graphic object in the text
         and returns it.
-        
+
         If the nth character is not a normal printable character with a position in
         the wordwrapped string, returns -1 (for instance, a soft-hyphen character,
         or a newline character, may not have a corresponding position).
@@ -1496,7 +1496,7 @@ class TextAssembler:
     def calc_c(self, n: int) -> int:
         """Computes the column index of the nth character or graphic object in the
         text and returns it.
-        
+
         If the nth character is not a normal printable character with a position in
         the wordwrapped string, returns -1 (for instance, a soft-hyphen character,
         or a newline character, may not have a corresponding position).
@@ -1505,7 +1505,7 @@ class TextAssembler:
     def calc_index(self, r: int, c: int) -> int:
         """Computes the character index of the character at the rth row and cth column
         position.  This is the inverse of calc_r_c().
-        
+
         It is legal for c to exceed the index number of the last column by 1, and
         it is legal for r to exceed the index number of the last row by 1, if c is
         0.
@@ -1520,7 +1520,7 @@ class TextAssembler:
         Returns the character at the indicated position in the pre-wordwrapped
         string.  If the object at this position is a graphic object instead of a
         character, returns 0.
-        
+
         `(self, r: int, c: int)`:
         Returns the character at the indicated position in the indicated row.  If
         the object at this position is a graphic object instead of a character,
@@ -1535,7 +1535,7 @@ class TextAssembler:
         Returns the graphic object at the indicated position in the pre-wordwrapped
         string.  If the object at this position is a character instead of a graphic
         object, returns NULL.
-        
+
         `(self, r: int, c: int)`:
         Returns the graphic object at the indicated position in the indicated row.
         If the object at this position is a character instead of a graphic object,
@@ -1549,7 +1549,7 @@ class TextAssembler:
         """`(self, n: int)`:
         Returns the width of the character or object at the indicated position in
         the pre-wordwrapped string.
-        
+
         `(self, r: int, c: int)`:
         Returns the width of the character or object at the indicated position in
         the indicated row.
@@ -1568,7 +1568,7 @@ class TextAssembler:
     def get_xpos(self, r: int, c: int) -> float:
         """Returns the x position of the origin of the character or graphic object at
         the indicated position in the indicated row.
-        
+
         It is legal for c to exceed the index number of the last column by 1, and
         it is legal for r to exceed the index number of the last row by 1, if c is
         0.
@@ -1577,7 +1577,7 @@ class TextAssembler:
     def get_ypos(self, r: int, c: int) -> float:
         """Returns the y position of the origin of all of the characters or graphic
         objects in the indicated row.
-        
+
         It is legal for r to exceed the index number of the last row by 1.  The
         value of c is presently ignored.
         """
@@ -1604,12 +1604,12 @@ class TextAssembler:
     def calc_width(graphic: TextGraphic, properties: TextProperties) -> float:
         """`(graphic: TextGraphic, properties: TextProperties)`:
         Returns the width of a single TextGraphic image.
-        
+
         `(character: int, properties: TextProperties)`:
         Returns the width of a single character, according to its associated font.
         This also correctly calculates the width of cheesy ligatures and accented
         characters, which may not exist in the font as such.
-        
+
         This does not take kerning into account, however.
         """
         ...
@@ -1623,7 +1623,7 @@ class TextAssembler:
         automatically using cheesy accent marks, this is not a reliable indicator
         of whether a suitable glyph can be rendered for the character.  For that,
         use has_character() instead.
-        
+
         This returns true for whitespace and Unicode whitespace characters (if they
         exist in the font), but returns false for characters that would render with
         the "invalid glyph".  It also returns false for characters that would be
@@ -1635,7 +1635,7 @@ class TextAssembler:
         """Returns true if the named character exists in the font or can be
         synthesized by Panda, false otherwise.  (Panda can synthesize some accented
         characters by combining similar-looking glyphs from the font.)
-        
+
         This returns true for whitespace and Unicode whitespace characters (if they
         exist in the font), but returns false for characters that would render with
         the "invalid glyph".
@@ -1645,12 +1645,12 @@ class TextAssembler:
     def is_whitespace(character: int, properties: TextProperties) -> bool:
         """Returns true if the indicated character represents whitespace in the font,
         or false if anything visible will be rendered for it.
-        
+
         This returns true for whitespace and Unicode whitespace characters (if they
         exist in the font), and returns false for any other characters, including
         characters that do not exist in the font (these would be rendered with the
         "invalid glyph", which is visible).
-        
+
         Note that this function can be reliably used to identify Unicode whitespace
         characters only if the font has all of the whitespace characters defined.
         It will return false for any character not in the font, even if it is an
@@ -1697,13 +1697,13 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     given a string of text and a TextFont object, it creates a piece of
     geometry that may be placed in the 3-d or 2-d world to represent the
     indicated text.
-    
+
     The TextNode may be used in one of two ways.  Naively, it may simply be
     parented directly into the scene graph and rendered as if it were a
     GeomNode; in this mode, the actual polygon geometry that renders the text
     is not directly visible or accessible, but remains hidden within the
     TextNode.
-    
+
     The second way TextNode may be used is as a text generator.  To use it in
     this way, do not parent the TextNode to the scene graph; instead, set the
     properties of the text and call generate() to return an ordinary node,
@@ -1847,7 +1847,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         was set via set_frame_as_margin(), the result returned by this function
         reflects the size of the current text; if the frame was set via
         set_frame_actual(), this returns the values actually set.
-        
+
         If the text has no frame at all, this returns the dimensions of the text
         itself, as if the frame were set with a margin of 0, 0, 0, 0.
         """
@@ -1912,7 +1912,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         set via set_card_as_margin(), the result returned by this function reflects
         the size of the current text; if the card was set via set_card_actual(),
         this returns the values actually set.
-        
+
         If the text has no card at all, this returns the dimensions of the text
         itself, as if the card were set with a margin of 0, 0, 0, 0.
         """
@@ -1951,31 +1951,31 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         returned by generate()) each time the text is changed.  In general, more
         flattening means a more optimal result, but it will take more time to
         generate.
-        
+
         The choice may be any of these three:
-        
+
         FF_none - No flatten operation is called.  The letters are left as
         independent Geoms.
-        
+
         FF_light - A flatten_light() operation is called.  The attributes are
         applied to the vertices, but no nodes are removed.
-        
+
         FF_medium - A flatten_medium() operation is called.  The attributes are
         applied to the vertices, and a few trivial nodes are removed.
-        
+
         FF_strong - A flatten_strong() operation is called.  The attributes are
         applied to the vertices, and the resulting nodes are aggressively combined
         into as few nodes as possible.
-        
+
         In addition to the above choices, you may optionally include the following
         flag:
-        
+
         FF_dynamic_merge - Copy the geoms into a single GeomVertexData as we go,
         instead of relying on the flatten operation at the end.  This pre-flattens
         the text considerably, and may obviate the need for flatten altogether; it
         also tends to improve performance considerably even if you do call flatten.
         However, it is not as fast as not calling flatten at all.
-        
+
         The default is taken from the text-flatten and text-dynamic-merge config
         variables.
         """
@@ -1995,13 +1995,13 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         """Sets the small_caps flag.  When this is set, lowercase letters are
         generated as scaled-down versions of their uppercase equivalents.  This is
         particularly useful to set for fonts that do not have lowercase letters.
-        
+
         It is also a good idea to set this for a (dynamic) font that has already
         implemented lowercase letters as scaled-down versions of their uppercase
         equivalents, since without this flag the texture memory may needlessly
         duplicate equivalent glyphs for upper and lowercase letters.  Setting this
         flag causes the texture memory to share the mixed-case letters.
-        
+
         The amount by which the lowercase letters are scaled is specified by
         set_small_caps_scale().
         """
@@ -2063,7 +2063,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         """Names the GeomBin that the TextNode geometry should be assigned to.  If
         this is set, then a GeomBinTransition will be created to explicitly place
         each component in the named bin.
-        
+
         The draw_order value will also be passed to each GeomBinTransition as
         appropriate; this is particularly useful if this names a GeomBinFixed, e.g.
         "fixed".
@@ -2078,10 +2078,10 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         """Sets the drawing order of text created by the TextMaker.  This is actually
         the draw order of the card and frame.  The shadow is drawn at
         _draw_order+1, and the text at _draw_order+2.
-        
+
         This affects the sorting order assigned to the arcs as they are created,
         and also is passed to whatever bin may be assigned via set_bin().
-        
+
         The return value is the first unused draw_order number, e.g.  _draw_order +
         3.
         """
@@ -2110,7 +2110,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def get_wordwrapped_text(self) -> str:
         """Returns a string that represents the contents of the text, as it has been
         formatted by wordwrap rules.
-        
+
         In earlier versions, this did not contain any embedded special characters
         like \1 or \3; now it does.
         """
@@ -2120,12 +2120,12 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         """`(self, line: str)`:
         Returns the width of a line of text of arbitrary characters.  The line
         should not include the newline character.
-        
+
         `(self, line: str)`:
         Returns the width of a line of text of arbitrary characters.  The line
         should not include the newline character or any embedded control characters
         like \1 or \3.
-        
+
         `(self, character: int)`:
         Returns the width of a single character of the font, or 0.0 if the
         character is not known.  This may be a wide character (greater than 255).
@@ -2139,7 +2139,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         automatically using cheesy accent marks, this is not a reliable indicator
         of whether a suitable glyph can be rendered for the character.  For that,
         use has_character() instead.
-        
+
         This returns true for whitespace and Unicode whitespace characters (if they
         exist in the font), but returns false for characters that would render with
         the "invalid glyph".  It also returns false for characters that would be
@@ -2150,7 +2150,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         """Returns true if the named character exists in the font or can be
         synthesized by Panda, false otherwise.  (Panda can synthesize some accented
         characters by combining similar-looking glyphs from the font.)
-        
+
         This returns true for whitespace and Unicode whitespace characters (if they
         exist in the font), but returns false for characters that would render with
         the "invalid glyph".
@@ -2159,12 +2159,12 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def is_whitespace(self, character: int) -> bool:
         """Returns true if the indicated character represents whitespace in the font,
         or false if anything visible will be rendered for it.
-        
+
         This returns true for whitespace and Unicode whitespace characters (if they
         exist in the font), and returns false for any other characters, including
         characters that do not exist in the font (these would be rendered with the
         "invalid glyph", which is visible).
-        
+
         Note that this function can be reliably used to identify Unicode whitespace
         characters only if the font has all of the whitespace characters defined.
         It will return false for any character not in the font, even if it is an
@@ -2174,7 +2174,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def get_wordwrapped_wtext(self) -> str:
         """Returns a wstring that represents the contents of the text, as it has been
         formatted by wordwrap rules.
-        
+
         In earlier versions, this did not contain any embedded special characters
         like \1 or \3; now it does.
         """
@@ -2244,7 +2244,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def get_internal_geom(self) -> PandaNode:
         """Returns the actual node that is used internally to render the text, if the
         TextNode is parented within the scene graph.
-        
+
         In general, you should not call this method.  Call generate() instead if
         you want to get a handle to geometry that represents the text.  This method
         is provided as a debugging aid only.

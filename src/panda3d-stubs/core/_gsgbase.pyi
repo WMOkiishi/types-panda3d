@@ -11,7 +11,7 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
     contains all the function prototypes to support the double-dispatch of GSG
     to geoms, transitions, etc.  It lives in a separate class in its own
     package so we can avoid circular build dependency problems.
-    
+
     GraphicsStateGuardians are not actually writable to bam files, of course,
     but they may be passed as event parameters, so they inherit from
     TypedWritableReferenceCount instead of TypedReferenceCount for that
@@ -35,7 +35,7 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
         created in an application; in a single-window application, it will be the
         only GSG. This GSG is used to determine default optimization choices for
         loaded geometry.
-        
+
         The return value may be NULL if a GSG has not been created.
         """
         ...

@@ -18,7 +18,7 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     """A MovieAudio is actually any source that provides a sequence of audio
     samples.  That could include an AVI file, a microphone, or an internet TV
     station.
-    
+
     The difference between a MovieAudio and a MovieAudioCursor is like the
     difference between a filename and a file handle.  The MovieAudio just
     indicates a particular movie.  The MovieAudioCursor is what allows access.
@@ -60,7 +60,7 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
 
 class FlacAudio(MovieAudio):
     """Reads FLAC audio files.  Ogg-encapsulated FLAC files are not supported.
-    
+
     @since 1.10.0
     """
     @overload
@@ -79,7 +79,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
     samples.  That could include an AVI file, a microphone, or an internet TV
     station.  A MovieAudioCursor is a handle that lets you read data
     sequentially from a MovieAudio.
-    
+
     Thread safety: each individual MovieAudioCursor must be owned and accessed
     by a single thread.  It is OK for two different threads to open the same
     file at the same time, as long as they use separate MovieAudioCursor
@@ -106,17 +106,17 @@ class MovieAudioCursor(TypedWritableReferenceCount):
     def length(self) -> float:
         """Returns the length of the movie.  Attempting to read audio samples beyond
         the specified length will produce silent samples.
-        
+
         Some kinds of Movie, such as internet TV station, might not have a
         predictable length.  In that case, the length will be set to a very large
         number: 1.0E10.
-        
+
         Some AVI files have incorrect length values encoded into them - they may be
         a second or two long or short.  When playing such an AVI using the Movie
         class, you may see a slightly truncated video, or a slightly elongated
         video (padded with black frames).  There are utilities out there to fix the
         length values in AVI files.
-        
+
         An audio consumer needs to check the length, the ready status, and the
         aborted flag.
         """
@@ -149,12 +149,12 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         primarily relevant for sources like microphones which produce samples at a
         fixed rate.  If you try to read more samples than are ready, the result
         will be silent samples.
-        
+
         Some audio streams do not have a limit on how fast they can produce
         samples.  Such streams will always return 0x40000000 as the ready-count.
         This may well exceed the length of the audio stream.  You therefore need to
         check length separately.
-        
+
         If the aborted flag is set, that means the ready count is no longer being
         replenished.  For example, a MovieAudioCursor might be reading from an
         internet radio station, and it might buffer data to avoid underruns.  If it
@@ -162,23 +162,23 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         indicate that the buffer is no longer being replenished.  But it is still
         ok to read the samples that are in the buffer, at least until they run out.
         Once those are gone, there will be no more.
-        
+
         An audio consumer needs to check the length, the ready status, and the
         aborted flag.
         """
         ...
     def seek(self, offset: float) -> None:
         """Skips to the specified offset within the file.
-        
+
         If the movie reports that it cannot seek, then this method can still
         advance by reading samples and discarding them.  However, to move backward,
         can_seek must be true.
-        
+
         If the movie reports that it can_seek, it doesn't mean that it can do so
         quickly.  It may have to rewind the movie and then fast forward to the
         desired location.  Only if can_seek_fast returns true can seek operations
         be done in constant time.
-        
+
         Seeking may not be precise, because AVI files often have inaccurate
         indices.  After seeking, tell will indicate that the cursor is at the
         target location.  However, in truth, the data you read may come from a
@@ -191,14 +191,14 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         Read audio samples from the stream and returns them as a string.  The
         samples are stored little-endian in the string.  N is the number of samples
         you wish to read.  Multiple-channel audio will be interleaved.
-        
+
         This is not particularly efficient, but it may be a convenient way to
         manipulate samples in python.
-        
+
         `(self, n: int, dg: Datagram)`:
         Read audio samples from the stream into a Datagram.  N is the number of
         samples you wish to read.  Multiple-channel audio will be interleaved.
-        
+
         This is not particularly efficient, but it may be a convenient way to
         manipulate samples in python.
         """
@@ -215,7 +215,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
 
 class FlacAudioCursor(MovieAudioCursor):
     """Implements decoding of FLAC audio files.
-    
+
     @see FlacAudio
     @since 1.10.0
     """
@@ -232,7 +232,7 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
     """A MovieVideo is actually any source that provides a sequence of video
     frames.  That could include an AVI file, a digital camera, or an internet
     TV station.
-    
+
     The difference between a MovieVideo and a MovieVideoCursor is like the
     difference between a filename and a file handle.  The MovieVideo just
     indicates a particular movie.  The MovieVideoCursor is what allows access.
@@ -296,7 +296,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
     frames.  That could include an AVI file, a digital camera, or an internet
     TV station.  A MovieVideoCursor is a handle that lets you read data
     sequentially from a MovieVideo.
-    
+
     Thread safety: each individual MovieVideoCursor must be owned and accessed
     by a single thread.  It is OK for two different threads to open the same
     file at the same time, as long as they use separate MovieVideoCursor
@@ -309,7 +309,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
             """Used to sort different buffers to ensure they correspond to the same source
             frame, particularly important when synchronizing the different pages of a
             multi-page texture.
-            
+
             Returns 0 if the two buffers are of the same frame, <0 if this one comes
             earlier than the other one, and >0 if the other one comes earlier.
             """
@@ -340,20 +340,20 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         ...
     def length(self) -> float:
         """Returns the length of the movie.
-        
+
         Some kinds of Movie, such as internet TV station, might not have a
         predictable length.  In that case, the length will be set to a very large
         number: 1.0E10. If the internet TV station goes offline, the video or audio
         stream will set its abort flag.  Reaching the end of the movie (ie, the
         specified length) normally does not cause the abort flag to be set.
-        
+
         The video and audio streams produced by get_video and get_audio are always
         of unlimited duration - you can always read another video frame or another
         audio sample.  This is true even if the specified length is reached, or an
         abort is flagged.  If either stream runs out of data, it will synthesize
         blank video frames and silent audio samples as necessary to satisfy read
         requests.
-        
+
         Some AVI files have incorrect length values encoded into them - usually,
         they're a second or two long or short.  When playing such an AVI using the
         Movie class, you may see a slightly truncated video, or a slightly
@@ -392,7 +392,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         produce nothing, reading too late will cause frames to be dropped.  In this
         case, the ready flag can be used to determine whether or not a frame is
         ready for reading.
-        
+
         When streaming, you should still pay attention to last_start, but the value
         of next_start is only a guess.
         """
@@ -406,15 +406,15 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         """Updates the cursor to the indicated time.  If loop_count >= 1, the time is
         clamped to the movie's length * loop_count.  If loop_count <= 0, the time
         is understood to be modulo the movie's length.
-        
+
         Returns true if a new frame is now available, false otherwise.  If this
         returns true, you should immediately follow this with exactly *one* call to
         fetch_buffer().
-        
+
         If the movie reports that it can_seek, you may also specify a time value
         less than the previous value you passed to set_time().  Otherwise, you may
         only specify a time value greater than or equal to the previous value.
-        
+
         If the movie reports that it can_seek, it doesn't mean that it can do so
         quickly.  It may have to rewind the movie and then fast forward to the
         desired location.  Only if can_seek_fast returns true can it seek rapidly.
@@ -424,7 +424,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         """Gets the current video frame (as specified by set_time()) from the movie
         and returns it in a pre-allocated buffer.  You may simply let the buffer
         dereference and delete itself when you are done with it.
-        
+
         This may return NULL (even if set_time() returned true) if the frame is not
         available for some reason.
         """
@@ -501,7 +501,7 @@ class MicrophoneAudio(MovieAudio):
 class OpusAudio(MovieAudio):
     """Interfaces with the libopusfile library to implement decoding of Opus
     audio files.
-    
+
     @since 1.10.0
     """
     @overload
@@ -518,7 +518,7 @@ class OpusAudio(MovieAudio):
 class OpusAudioCursor(MovieAudioCursor):
     """Interfaces with the libopusfile library to implement decoding of Opus
     audio files.
-    
+
     @see OpusAudio
     @since 1.10.0
     """
@@ -551,7 +551,7 @@ class UserDataAudio(MovieAudio):
         """`(self, src: DatagramIterator, len: int = ...)`:
         Appends audio samples to the buffer from a datagram.  This is intended to
         make it easy to send streaming raw audio over a network.
-        
+
         `(self, str: str)`:
         Appends audio samples to the buffer from a string.  The samples must be
         stored little-endian in the string.  This is not particularly efficient,

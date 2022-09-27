@@ -57,7 +57,7 @@ class CardMaker(Namable):
         set_has_uvs() is true (as it is by default), the vertices will be generated
         with the indicated range of UV's, which will be useful if a texture is
         applied.
-        
+
         `(self, tex: Texture)`:
         Sets the range of UV's that will be applied to the vertices appropriately
         to show the non-pad region of the texture.
@@ -119,7 +119,7 @@ class CardMaker(Namable):
         frame, instead of generating a new polygon.  The node may contain arbitrary
         geometry that describes a flat polygon contained within the indicated left,
         right, bottom, top frame.
-        
+
         When generate() is called, the geometry in this node will be scaled and
         translated appropriately to give it the size and aspect ratio specified by
         set_frame().
@@ -148,7 +148,7 @@ class FisheyeMaker(Namable):
     scene through a fisheye lens.  The texture coordinates of the rose are
     defined so that each 2-D vertex has a 3-D UVW that reflects the
     corresponding position in 3-D space of that particular vertex.
-    
+
     This class is particularly suited for converting cube maps to sphere maps.
     """
     @overload
@@ -176,7 +176,7 @@ class FisheyeMaker(Namable):
         the circular rose, with the indicated "radius" (the sides of the square
         will be 2 * square_radius).  The texture coordinates of the square will
         uniformly map to the back pole of the cube map.
-        
+
         This is mainly useful to provide a good uniform background color for a
         sphere map so that it does not have a sharp circular edge that might
         produce artifacts due to numerical imprecision when mapping.
@@ -202,7 +202,7 @@ class FrameRateMeter(TextNode):
     """This is a special TextNode that automatically updates itself with the
     current frame rate.  It can be placed anywhere in the world where you'd
     like to see the frame rate.
-    
+
     It also has a special mode in which it may be attached directly to a
     channel or window.  If this is done, it creates a DisplayRegion for itself
     and renders itself in the upper-right-hand corner.
@@ -342,7 +342,7 @@ class GeoMipTerrain(TypedObject):
         accurate number.  Linear blending is used for non-integral coordinates.
         Terrain scale is NOT taken into account!  To get accurate normals, please
         multiply this with the terrain Z scale!
-        
+
         trueElev = terr.get_elevation(x,y) * terr.get_sz();
         """
         ...
@@ -354,11 +354,11 @@ class GeoMipTerrain(TypedObject):
         provides an accurate number.  Terrain scale is NOT taken into account!  To
         get accurate normals, please divide it by the terrain scale and normalize
         it again, like this:
-        
+
         LVector3 normal (terr.get_normal(x, y)); normal.set(normal.get_x() /
         root.get_sx(), normal.get_y() / root.get_sy(), normal.get_z() /
         root.get_sz()); normal.normalize();
-        
+
         `(self, mx: int, my: int, x: int, y: int)`:
         Fetches the terrain normal at (x,y), where the input coordinate is
         specified in pixels.  This ignores the current LOD level and instead
@@ -393,7 +393,7 @@ class GeoMipTerrain(TypedObject):
         quality (lowest level of detail). Parts farther away from the focal point
         will have a lower quality (higher level of detail). The focal point is
         not taken in respect if bruteforce is set true.
-        
+
         `(self, x: float, y: float)`:
         Sets the focal point.  GeoMipTerrain generates high-resolution terrain
         around the focal point, and progressively lower and lower resolution
@@ -705,16 +705,16 @@ class LineSegs(Namable):
         line segments and points described via calls to move_to() and draw_to().
         The lines and points are created with the color and thickness established
         by calls to set_color() and set_thickness().
-        
+
         If dynamic is true, the line segments will be created with the dynamic Geom
         setting, optimizing them for runtime vertex animation.
-        
+
         `(self, dynamic: bool = ...)`:
         Creates a new GeomNode that will render the series of line segments and
         points described via calls to move_to() and draw_to().  The lines and
         points are created with the color and thickness established by calls to
         set_color() and set_thickness().
-        
+
         If dynamic is true, the line segments will be created with the dynamic Geom
         setting, optimizing them for runtime vertex animation.
         """
@@ -951,7 +951,7 @@ class MovieTexture(Texture):
     def __init__(self, video: MovieVideo) -> None:
         """`(self, video: MovieVideo)`:
         Creates a texture playing the specified movie.
-        
+
         `(self, name: str)`:
         Creates a blank movie texture.  Movies must be added using do_read_one or
         do_load_one.
@@ -1062,7 +1062,7 @@ class MultitexReducer:
     represent the combined images from one or more individual textures,
     reproducing certain kinds of multitexture effects without depending on
     multitexture support in the hardware.
-    
+
     This also flattens out texture matrices and removes extra texture
     coordinates from the Geoms.  It is thus not a complete substitute for true
     multitexturing, because it does not lend itself well to dynamic animation
@@ -1079,17 +1079,17 @@ class MultitexReducer:
         GeomNodes discovered in the hierarchy with multitexture will be added to
         internal structures in the MultitexReducer so that a future call to
         flatten() will operate on all of these at once.
-        
+
         This version of this method does not accumulate state from the parents of
         the indicated node; thus, only multitexture effects that have been applied
         at node and below will be considered.
-        
+
         `(self, node: NodePath, state_from: NodePath)`:
         Starts scanning the hierarchy beginning at the indicated node.  Any
         GeomNodes discovered in the hierarchy with multitexture will be added to
         internal structures in the MultitexReducer so that a future call to
         flatten() will operate on all of these at once.
-        
+
         The second parameter represents the NodePath from which to accumulate the
         state that is considered for the multitexture.  Pass an empty NodePath to
         accumulate all the state from the root of the graph, or you may specify
@@ -1140,7 +1140,7 @@ class ShaderTerrainMesh(PandaNode):
       it possible to use very large heightfields (8192+) with very reasonable
       performance. The terrain provides options to control the LOD using a
       target triangle width, see ShaderTerrainMesh::set_target_triangle_width().
-    
+
       Because the Terrain is rendered entirely on the GPU, it needs a special
       vertex shader. There is a default vertex shader available, which you can
       use in your own shaders. IMPORTANT: If you don't set an appropriate shader
@@ -1163,9 +1163,9 @@ class ShaderTerrainMesh(PandaNode):
         @details This sets the heightfield texture. It should be 16bit
           single channel, and have a power-of-two resolution greater than 32.
           Common sizes are 2048x2048 or 4096x4096.
-        
+
           You should call generate() after setting the heightfield.
-        
+
         @param filename Heightfield texture
         """
         ...
@@ -1173,7 +1173,7 @@ class ShaderTerrainMesh(PandaNode):
         """@brief Returns the heightfield
         @details This returns the terrain heightfield, previously set with
           set_heightfield()
-        
+
         @return Path to the heightfield
         """
         ...
@@ -1183,15 +1183,15 @@ class ShaderTerrainMesh(PandaNode):
           smallest unit in LOD. If the chunk size is too small, the terrain will
           perform bad, since there will be way too many chunks. If the chunk size
           is too big, you will not get proper LOD, and might also get bad performance.
-        
+
           For terrains of the size 4096x4096 or 8192x8192, a chunk size of 32 seems
           to produce good results. For smaller resolutions, you should try out a
           size of 16 or even 8 for very small terrains.
-        
+
           The amount of chunks generated for the last level equals to
           (heightfield_size / chunk_size) ** 2. The chunk size has to be a power
           of two.
-        
+
         @param chunk_size Size of the chunks, has to be a power of two
         """
         ...
@@ -1207,12 +1207,12 @@ class ShaderTerrainMesh(PandaNode):
           GeomTriangles. This is required when the terrain is used with tesselation
           shaders, since patches are required for tesselation, whereas triangles
           are required for regular rendering.
-        
+
           If this option is set to true while not using a tesselation shader, the
           terrain will not get rendered, or even produce errors. The same applies
           when this is option is not set, but the terrain is used with tesselation
           shaders.
-        
+
         @param generate_patches [description]
         """
         ...
@@ -1220,7 +1220,7 @@ class ShaderTerrainMesh(PandaNode):
         """@brief Returns whether to generate patches
         @details This returns whether patches are generated, previously set with
           set_generate_patches()
-        
+
         @return Whether to generate patches
         """
         ...
@@ -1229,7 +1229,7 @@ class ShaderTerrainMesh(PandaNode):
         @details This flag controls whether the terrain should be updated. If this value
           is set to false, no updating of the terrain will happen. This can be useful
           to debug the culling algorithm used by the terrain.
-        
+
         @param update_enabled Whether to update the terrain
         """
         ...
@@ -1237,7 +1237,7 @@ class ShaderTerrainMesh(PandaNode):
         """@brief Returns whether the terrain is getting updated
         @details This returns whether the terrain is getting updates, previously set with
           set_update_enabled()
-        
+
         @return Whether to update the terrain
         """
         ...
@@ -1248,7 +1248,7 @@ class ShaderTerrainMesh(PandaNode):
           in a way that each triangle edge roughly is 10 pixels wide.
           Of course this will not always accurately match, however you can use this
           setting to control the LOD algorithm of the terrain.
-        
+
         @param target_triangle_width Desired triangle width in pixels
         """
         ...
@@ -1256,7 +1256,7 @@ class ShaderTerrainMesh(PandaNode):
         """@brief Returns the target triangle width
         @details This returns the target triangle width, previously set with
           ShaderTerrainMesh::set_target_triangle_width()
-        
+
         @return Target triangle width
         """
         ...
@@ -1267,10 +1267,10 @@ class ShaderTerrainMesh(PandaNode):
         @details This transforms a texture coordinatefrom uv-space (0 to 1) to world
           space. This takes the terrains transform into account, and also samples the
           heightmap. This method should be called after generate().
-        
+
         @param coord Coordinate in uv-space from 0, 0 to 1, 1
         @return World-Space point
-        
+
         `(self, u: float, v: float)`:
         @see ShaderTerrainMesh::uv_to_world(LTexCoord)
         """
@@ -1282,10 +1282,10 @@ class ShaderTerrainMesh(PandaNode):
         @details This generates the terrain mesh, initializing all chunks of the
           internal used quadtree. At this point, a heightfield and a chunk size should
           have been set, otherwise an error is thrown.
-        
+
           If anything goes wrong, like a missing heightfield, then an error is printed
           and false is returned.
-        
+
         @return true if the terrain was initialized, false if an error occured
         """
         ...
@@ -1305,7 +1305,7 @@ class SceneGraphAnalyzerMeter(TextNode):
     """This is a special TextNode that automatically updates itself with output
     from a SceneGraphAnalyzer instance.  It can be placed anywhere in the world
     where you'd like to see the output from SceneGraphAnalyzer.
-    
+
     It also has a special mode in which it may be attached directly to a
     channel or window.  If this is done, it creates a DisplayRegion for itself
     and renders itself in the upper-right-hand corner.
@@ -1370,19 +1370,19 @@ class RigidBodyCombiner(PandaNode):
     """This is a special node that combines multiple independently-moving rigid
     nodes into one Geom internally (or as few Geoms as possible), for the
     purposes of improving rendering performance.
-    
+
     To use it, parent a number of moving objects to this node and call
     collect().  A child node is identified as "moving" if (a) it has a non-
     identity transform initially, or (b) it is a ModelNode with the
     preserve_transform flag set.  Any other nodes will be considered static,
     and later transforms applied to them will not be identified.
-    
+
     You should call collect() only at startup or if you change the set of
     children; it is a relatively expensive call.
-    
+
     Once you call collect(), you may change the transforms on the child nodes
     freely without having to call collect() again.
-    
+
     RenderEffects such as Billboards are not supported below this node.
     """
     @property
@@ -1392,12 +1392,12 @@ class RigidBodyCombiner(PandaNode):
         all of the RenderAttribs and Geoms below this node, flattening them into
         just one Geom (or as few as possible, if there are multiple different
         states).
-        
+
         Nodes that have transforms on them at the time of collect(), or any
         ModelNodes with the preserve_transform flag, will be identified as "moving"
         nodes, and their transforms will be monitored as they change in future
         frames and each new transform directly applied to the vertices.
-        
+
         This call must be made after adding any nodes to or removing any nodes from
         the subgraph rooted at this node.  It should not be made too often, as it
         is a relatively expensive call.  If you need to hide children of this node,
@@ -1410,7 +1410,7 @@ class RigidBodyCombiner(PandaNode):
         object.  This is the node that is actually sent to the graphics card for
         rendering; it contains the collection of the children of this node into as
         few Geoms as possible.
-        
+
         This node is filled up by the last call to collect().
         """
         ...
@@ -1421,10 +1421,10 @@ class PipeOcclusionCullTraverser(CullTraverser):
     perform occlusion culling.  As such, it's likely to be inefficient (since
     it interferes with the pipe's normal mode of rendering), and is mainly
     useful to test other, CPU-based occlusion algorithms.
-    
+
     This cannot be used in a multithreaded pipeline environment where cull and
     draw are operating simultaneously.
-    
+
     It can't be defined in the cull subdirectory, because it needs access to
     GraphicsPipe and DisplayRegion and other classes in display.  So we put it
     in grutil instead, for lack of any better ideas.
@@ -1519,7 +1519,7 @@ class PfmVizzer:
         """Converts each (u, v, depth) point of the Pfm file to an (x, y, z) point, by
         reversing project().  If the original file is only a 1-d file, assumes that
         it is a depth map with implicit (u, v) coordinates.
-        
+
         This method is only valid for a linear lens (e.g.  a PerspectiveLens or
         OrthographicLens).  Non-linear lenses don't necessarily compute a sensible
         depth coordinate.
@@ -1531,7 +1531,7 @@ class PfmVizzer:
         and the 2-d index value in the vertex position.  When it is false, meshes
         are generated normally, with the 3-d depth value in the vertex position and
         the 2-d index value in the texture coordinates.
-        
+
         This may be used in lieu of the lower-level add_vis_column().
         """
         ...
@@ -1543,17 +1543,17 @@ class PfmVizzer:
         vertex column that will be created for the "flat" texture coordinates, i.e.
         the original 0..1 values that correspond to the 2-D index position of each
         point in the original pfm file.
-        
+
         These are the same values that will be assigned to the default texture
         coordinates if the vis_inverse flag is *not* true.
-        
+
         This may be used in lieu of the lower-level add_vis_column().
         """
         ...
     def clear_flat_texcoord_name(self) -> None:
         """Resets the flat_texcoord_name to empty, so that additional texture
         coordinates are not created.
-        
+
         This may be used in lieu of the lower-level add_vis_column().
         """
         ...
@@ -1564,7 +1564,7 @@ class PfmVizzer:
         """Sets the vis_2d flag.  When this flag is true, only the first two (x, y)
         value of each depth point is considered meaningful; the z component is
         ignored.  This is only relevant for generating visualizations.
-        
+
         This may be used in lieu of the lower-level add_vis_column().
         """
         ...
@@ -1584,7 +1584,7 @@ class PfmVizzer:
         """Specifies a blending map--a grayscale image--that will be applied to the
         vertex color during generate_vis_mesh() and generate_vis_points().  The
         image size must exactly match the mesh size of the PfmVizzer.
-        
+
         Ownership of the pointer is not kept by the PfmVizzer; it is your
         responsibility to ensure it does not destruct during the lifetime of the
         PfmVizzer (or at least not before your subsequent call to
@@ -1627,7 +1627,7 @@ class PfmVizzer:
         will be generated at the next call to generate_vis_points() or
         generate_vis_mesh().  This advanced interface supercedes the higher-level
         set_vis_inverse(), set_flat_texcoord_name(), and set_vis_2d().
-        
+
         If you use this advanced interface, you must specify explicitly the
         complete list of data columns to be created in the resulting
         GeomVertexData, by calling add_vis_column() each time.  For each column,
@@ -1669,16 +1669,16 @@ class PfmVizzer:
         with horizontal shift in the red channel and vertical shift in the green
         channel, where a fully bright (or fully black) pixel indicates a shift of
         max_u or max_v pixels.
-        
+
         Use calc_max_u_displacement() and calc_max_v_displacement() to compute
         suitable values for max_u and max_v.
-        
+
         This generates an integer 16-bit displacement image.  It is a good idea,
         though not necessarily essential, to check "Preserve RGB" in the interpret
         footage section for each displacement image.  Set for_32bit true if this is
         meant to be used in a 32-bit project file, and false if it is meant to be
         used in a 16-bit project file.
-        
+
         `(self, result: PfmFile, max_u: float, max_v: float, for_32bit: bool)`:
         Assuming the underlying PfmFile is a 2-d distortion mesh, with the U and V
         in the first two components and the third component unused, this computes
@@ -1687,10 +1687,10 @@ class PfmVizzer:
         with horizontal shift in the red channel and vertical shift in the green
         channel, where a fully bright (or fully black) pixel indicates a shift of
         max_u or max_v pixels.
-        
+
         Use calc_max_u_displacement() and calc_max_v_displacement() to compute
         suitable values for max_u and max_v.
-        
+
         This generates a 32-bit floating-point displacement image.  It is essential
         to check "Preserve RGB" in the interpret footage section for each
         displacement image.  Set for_32bit true if this is meant to be used in a

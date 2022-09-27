@@ -24,7 +24,7 @@ class FreetypeFont(Namable):
     def set_point_size(self, point_size: float) -> bool:
         """Sets the point size of the font.  This controls the apparent size of the
         font onscreen.  By convention, a 10 point font is about 1 screen unit high.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -36,10 +36,10 @@ class FreetypeFont(Namable):
         """Set the resolution of the texture map, and hence the clarity of the
         resulting font.  This sets the number of pixels in the texture map that are
         used for each onscreen unit.
-        
+
         Setting this number larger results in an easier to read font, but at the
         cost of more texture memory.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -63,7 +63,7 @@ class FreetypeFont(Namable):
         than 1.0 to improve the font's antialiasing (since FreeType doesn't really
         do a swell job of antialiasing by itself).  There is some performance
         implication for setting this different than 1.0.
-        
+
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
@@ -76,7 +76,7 @@ class FreetypeFont(Namable):
         There are two unrelated ways to achieve antialiasing: with Freetype's
         native antialias mode, and with the use of a scale_factor greater than one.
         By default, both modes are enabled.
-        
+
         At low resolutions, some fonts may do better with one mode or the other.
         In general, Freetype's native antialiasing will produce less blurry
         results, but may introduce more artifacts.
@@ -92,7 +92,7 @@ class FreetypeFont(Namable):
         approximated by a fixed-pixel-size font.  This returns 0 in the normal
         case, in which a scalable font is used, or the fixed-pixel-size font has
         exactly the requested pixel size.
-        
+
         If this returns non-zero, it is the pixel size of the font that we are
         using to approximate our desired size.
         """
@@ -161,7 +161,7 @@ class PNMTextGlyph:
         origin.  It colors the glyph pixels the indicated foreground color, blends
         antialiased pixels with the appropriate amount of the foreground color and
         the existing background color, and leaves other pixels alone.
-        
+
         `(self, dest_image: PNMImage, xp: int, yp: int, fg: LVecBase4f, interior: LVecBase4f)`:
         This flavor of place() also fills in the interior color.  This requires
         that determine_interior was called earlier.
@@ -224,7 +224,7 @@ class PNMTextMaker(FreetypeFont):
         The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load
         (usually 0).
-        
+
         `(self, font_data: str, data_length: int, face_index: int)`:
         This constructor works as above, but it takes the font data from an in-
         memory buffer instead of from a named file.
@@ -246,7 +246,7 @@ class PNMTextMaker(FreetypeFont):
         identified as a preprocess as each glyph is loaded.  If this flag is true,
         you may specify an interior color along with a fg and bg color when you
         place text; if the flag is false, the interior color is ignored.
-        
+
         It is generally best to set_native_antialias(0) when using this feature.
         Also, this works best when the pixel size is not very small.
         """

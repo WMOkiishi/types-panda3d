@@ -226,7 +226,9 @@ class Function:
             if self.doc and not doc_printed:
                 if '\n' in self.doc:
                     for line in f'"""{self.doc}\n"""'.splitlines():
-                        yield '    ' + line
+                        if line:
+                            line = '    ' + line
+                        yield line
                 else:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
@@ -271,7 +273,9 @@ class Attribute:
             if self.doc:
                 if '\n' in self.doc:
                     for line in f'"""{self.doc}\n"""'.splitlines():
-                        yield '    ' + line
+                        if line:
+                            line = '    ' + line
+                        yield line
                 else:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
@@ -335,12 +339,16 @@ class Class:
         if self.doc:
             if '\n' in self.doc:
                 for line in f'"""{self.doc}\n"""'.splitlines():
-                    yield '    ' + line
+                    if line:
+                        line = '    ' + line
+                    yield line
             else:
                 yield f'    """{self.doc}"""'
         sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
         for line in flatten(i.definition() for i in sorted_nested):
-            yield '    ' + line
+            if line:
+                line = '    ' + line
+            yield line
 
 
 @define

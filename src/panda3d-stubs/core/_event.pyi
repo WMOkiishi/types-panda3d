@@ -36,30 +36,30 @@ class EventParameter:
         Defines an EventParameter that stores a pointer to a TypedReferenceCount
         object.  Note that a TypedReferenceCount is not the same kind of pointer as
         a TypedWritableReferenceCount, hence we require both constructors.
-        
+
         This accepts a const pointer, even though it stores (and eventually
         returns) a non-const pointer.  This is just the simplest way to allow both
         const and non-const pointers to be stored, but it does lose the constness.
         Be careful.
-        
+
         `(self, ptr: TypedWritableReferenceCount)`:
         Defines an EventParameter that stores a pointer to any kind of
         TypedWritableReferenceCount object.  This is the most general constructor.
-        
+
         This accepts a const pointer, even though it stores (and eventually
         returns) a non-const pointer.  This is just the simplest way to allow both
         const and non-const pointers to be stored, but it does lose the constness.
         Be careful.
-        
+
         `(self, value: float)`:
         Defines an EventParameter that stores a floating-point value.
-        
+
         `(self, value: int)`:
         Defines an EventParameter that stores an integer value.
-        
+
         `(self, value: str)`:
         Defines an EventParameter that stores a string value.
-        
+
         `(self, value: str)`:
         Defines an EventParameter that stores a wstring value.
         """
@@ -149,34 +149,34 @@ class AsyncFuture(TypedReferenceCount):
     """This class represents a thread-safe handle to a promised future result of
     an asynchronous operation, providing methods to query its status and result
     as well as register callbacks for this future's completion.
-    
+
     An AsyncFuture can be awaited from within a coroutine or task.  It keeps
     track of tasks waiting for this future and automatically reactivates them
     upon this future's completion.
-    
+
     A task itself is also a subclass of AsyncFuture.  Other subclasses are
     not generally necessary, except to override the function of `cancel()`.
-    
+
     Until the future is done, it is "owned" by the resolver thread, though it's
     still legal for other threads to query its state.  When the resolver thread
     resolves this future using `set_result()`, or any thread calls `cancel()`,
     it instantly enters the "done" state, after which the result becomes a
     read-only field that all threads can access.
-    
+
     When the future returns true for done(), a thread can use cancelled() to
     determine whether the future was cancelled or get_result() to access the
     result of the operation.  Not all operations define a meaningful result
     value, so some will always return nullptr.
-    
+
     In Python, the `cancelled()`, `wait()` and `get_result()` methods are
     wrapped up into a single `result()` method which waits for the future to
     complete before either returning the result or throwing an exception if the
     future was cancelled.
     However, it is preferable to use the `await` keyword when running from a
     coroutine, which only suspends the current task and not the entire thread.
-    
+
     This API aims to mirror and be compatible with Python's Future class.
-    
+
     @since 1.10.0
     """
     done_event: str
@@ -198,7 +198,7 @@ class AsyncFuture(TypedReferenceCount):
         """Cancels the future.  Returns true if it was cancelled, or false if the
         future was already done.  Either way, done() will return true after this
         call returns.
-        
+
         In the case of a task, this is equivalent to remove().
         """
         ...
@@ -220,7 +220,7 @@ class AsyncFuture(TypedReferenceCount):
     def wait(self, timeout: float = ...) -> None:
         """`(self)`:
         Waits until the future is done.
-        
+
         `(self, timeout: float)`:
         Waits until the future is done, or until the timeout is reached.
         """
@@ -320,10 +320,10 @@ class AsyncTask(AsyncFuture, Namable):
         delayed after it has been added to the AsyncTaskManager.  At least the
         specified amount of time (and possibly more) will elapse before the task
         begins.
-        
+
         You may specify a delay of 0.0 to guarantee that the task will run in the
         next epoch following the one in which it is added.
-        
+
         Setting this value after the task has already been added will not affect
         the task's wake time; it will only affect the task if it is re-added to the
         queue in the future, for instance if the task returns DS_again.  However,
@@ -349,7 +349,7 @@ class AsyncTask(AsyncFuture, Namable):
         this returns the time at which the task is expected to awaken.  It has no
         meaning if the task has not yet been added to a queue, or if there was no
         delay in effect at the time the task was added.
-        
+
         If the task's status is not S_sleeping, this returns 0.0.
         """
         ...
@@ -359,35 +359,35 @@ class AsyncTask(AsyncFuture, Namable):
         returned DS_again.  The task will sleep for its current delay seconds
         before running again.  This method may therefore be used to make the task
         wake up sooner or later than it would have otherwise.
-        
+
         If the task is not already sleeping, this method has no effect.
         """
         ...
     def get_start_time(self) -> float:
         """Returns the time at which the task was started, according to the task
         manager's clock.
-        
+
         It is only valid to call this if the task's status is not S_inactive.
         """
         ...
     def get_elapsed_time(self) -> float:
         """Returns the amount of time that has elapsed since the task was started,
         according to the task manager's clock.
-        
+
         It is only valid to call this if the task's status is not S_inactive.
         """
         ...
     def get_start_frame(self) -> int:
         """Returns the frame number at which the task was started, according to the
         task manager's clock.
-        
+
         It is only valid to call this if the task's status is not S_inactive.
         """
         ...
     def get_elapsed_frames(self) -> int:
         """Returns the number of frames that have elapsed since the task was started,
         according to the task manager's clock.
-        
+
         It is only valid to call this if the task's status is not S_inactive.
         """
         ...
@@ -419,11 +419,11 @@ class AsyncTask(AsyncFuture, Namable):
         """Specifies a sort value for this task.  Within a given AsyncTaskManager, all
         of the tasks with a given sort value are guaranteed to be completed before
         any tasks with a higher sort value are begun.
-        
+
         To put it another way, two tasks might execute in parallel with each other
         only if they both have the same sort value.  Tasks with a lower sort value
         are executed first.
-        
+
         This is different from the priority, which makes no such exclusion
         guarantees.
         """
@@ -435,11 +435,11 @@ class AsyncTask(AsyncFuture, Namable):
         """Specifies a priority value for this task.  In general, tasks with a higher
         priority value are executed before tasks with a lower priority value (but
         only for tasks with the same sort value).
-        
+
         Unlike the sort value, tasks with different priorities may execute at the
         same time, if the AsyncTaskManager has more than one thread servicing
         tasks.
-        
+
         Also see AsyncTaskChain::set_timeslice_priority(), which changes the
         meaning of this value.  In the default mode, when the timeslice_priority
         flag is false, all tasks always run once per epoch, regardless of their
@@ -512,12 +512,12 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
     """A class to manage a loose queue of isolated tasks, which can be performed
     either synchronously (in the foreground thread) or asynchronously (by a
     background thread).
-    
+
     The AsyncTaskManager is actually a collection of AsyncTaskChains, each of
     which maintains a list of tasks.  Each chain can be either foreground or
     background (it may run only in the main thread, or it may be serviced by
     one or more background threads). See AsyncTaskChain for more information.
-    
+
     If you do not require background processing, it is perfectly acceptable to
     create only one AsyncTaskChain, which runs in the main thread.  This is a
     common configuration.
@@ -544,7 +544,7 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         """Replaces the clock pointer used within the AsyncTaskManager.  This is used
         to control when tasks with a set_delay() specified will be scheduled.  It
         can also be ticked automatically each epoch, if set_tick_clock() is true.
-        
+
         The default is the global clock pointer.
         """
         ...
@@ -573,7 +573,7 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
     def remove_task_chain(self, name: str) -> bool:
         """Removes the AsyncTaskChain of the indicated name.  If the chain still has
         tasks, this will block until all tasks are finished.
-        
+
         Returns true if successful, or false if the chain did not exist.
         """
         ...
@@ -590,7 +590,7 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
     def find_task(self, name: str) -> AsyncTask:
         """Returns the first task found with the indicated name, or NULL if there is
         no task with the indicated name.
-        
+
         If there are multiple tasks with the same name, returns one of them
         arbitrarily.
         """
@@ -608,7 +608,7 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         """`(self, task: AsyncTask)`:
         Removes the indicated task from the active queue.  Returns true if the task
         is successfully removed, or false if it wasn't there.
-        
+
         `(self, tasks: AsyncTaskCollection)`:
         Removes all of the tasks in the AsyncTaskCollection.  Returns the number of
         tasks removed.
@@ -702,7 +702,7 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
 class AsyncTaskCollection:
     """A list of tasks, for instance as returned by some of the AsyncTaskManager
     query functions.  This also serves to define an AsyncTaskSequence.
-    
+
     TODO: None of this is thread-safe yet.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -729,7 +729,7 @@ class AsyncTaskCollection:
         """`(self, task: AsyncTask)`:
         Removes the indicated AsyncTask from the collection.  Returns true if the
         task was removed, false if it was not a member of the collection.
-        
+
         `(self, index: int)`:
         Removes the nth AsyncTask from the collection.
         """
@@ -799,12 +799,12 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
     maintains a separate list of tasks, and will execute them with its own set
     of threads.  Each chain may thereby operate independently of the other
     chains.
-    
+
     The AsyncTaskChain will spawn a specified number of threads (possibly 0) to
     serve the tasks.  If there are no threads, you must call poll() from time
     to time to serve the tasks in the main thread.  Normally this is done by
     calling AsyncTaskManager::poll().
-    
+
     Each task will run exactly once each epoch.  Beyond that, the tasks' sort
     and priority values control the order in which they are run: tasks are run
     in increasing order by sort value, and within the same sort value, they are
@@ -866,13 +866,13 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         """Sets the frame_sync flag.  When this flag is true, this task chain will be
         forced to sync with the TaskManager's clock.  It will run no faster than
         one epoch per clock frame.
-        
+
         When this flag is false, the default, the task chain will finish all of its
         tasks and then immediately start from the first task again, regardless of
         the clock frame.  When it is true, the task chain will finish all of its
         tasks and then wait for the clock to tick to the next frame before resuming
         the first task.
-        
+
         This only makes sense for threaded task chains.  Non-threaded task chains
         are automatically synchronous.
         """
@@ -883,7 +883,7 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
     def set_timeslice_priority(self, timeslice_priority: bool) -> None:
         """Sets the timeslice_priority flag.  This changes the interpretation of
         priority, and the number of times per epoch each task will run.
-        
+
         When this flag is true, some tasks might not run in any given epoch.
         Instead, tasks with priority higher than 1 will be given precedence, in
         proportion to the amount of time they have already used.  This gives
@@ -892,7 +892,7 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         priority 100 will get five times as much processing time as a task with
         priority 20.  For these purposes, priority values less than 1 are deemed to
         be equal to 1.
-        
+
         When this flag is false (the default), all tasks are run exactly once each
         epoch, round-robin style.  Priority is only used to determine which task
         runs first within tasks of the same sort value.
@@ -954,7 +954,7 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         """Runs through all the tasks in the task list, once, if the task chain is
         running in single-threaded mode (no threads available).  This method does
         nothing in threaded mode, so it may safely be called in either case.
-        
+
         Normally, you would not call this function directly; instead, call
         AsyncTaskManager::poll(), which polls all of the task chains in sequence.
         """
@@ -1009,7 +1009,7 @@ class AsyncTaskPause(AsyncTask):
 class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
     """A special kind of task that serves as a list of tasks internally.  Each
     task on the list is executed in sequence, one per epoch.
-    
+
     This is similar to a Sequence interval, though it has some slightly
     different abilities.  For instance, although you can't start at any
     arbitrary point in the sequence, you can construct a task sequence whose
@@ -1050,22 +1050,22 @@ class ButtonEvent:
     """Records a button event of some kind.  This is either a keyboard or mouse
     button (or some other kind of button) changing state from up to down, or
     vice-versa, or it is a single "keystroke".
-    
+
     A keystroke is different than a button event in that (a) it does not
     necessarily correspond to a physical button on a keyboard, but might be the
     result of a combination of buttons (e.g.  "A" is the result of shift +
     "a"); and (b) it does not manage separate "up" and "down" events, but is
     itself an instantaneous event.
-    
+
     Normal up/down button events can be used to track the state of a particular
     button on the keyboard, while keystroke events are best used to monitor
     what a user is attempting to type.
-    
+
     Button up/down events are defined across all the physical keys on the
     keyboard (and other buttons for which there is a corresponding ButtonHandle
     object), while keystroke events are defined across the entire Unicode
     character set.
-    
+
     This API should not be considered stable and may change in a future version
     of Panda3D.
     """
@@ -1144,7 +1144,7 @@ class Event(TypedReferenceCount):
     """A named event, possibly with parameters.  Anyone in any thread may throw an
     event at any time; there will be one process responsible for reading and
     dispacting on the events (but not necessarily immediately).
-    
+
     This function use to inherit from Namable, but that makes it too expensive
     to get its name the Python code.  Now it just copies the Namable interface
     in.
@@ -1186,7 +1186,7 @@ class EventHandler(TypedObject):
     """A class to monitor events from the C++ side of things.  It maintains a set
     of "hooks", function pointers assigned to event names, and calls the
     appropriate hooks when the matching event is detected.
-    
+
     This class is not necessary when the hooks are detected and processed
     entirely by the scripting language, e.g.  via Scheme hooks or the messenger
     in Python.
@@ -1295,10 +1295,10 @@ class PointerEventList(ParamValueBase):
     def add_event(self, data: PointerData, seq: int, time: float) -> None:
         """`(self, data: PointerData, seq: int, time: float)`:
         Adds a new event from the given PointerData object.
-        
+
         `(self, in_win: bool, xpos: int, ypos: int, xdelta: float, ydelta: float, seq: int, time: float)`:
         Adds a new event to the end of the list based on the given mouse movement.
-        
+
         `(self, in_win: bool, xpos: int, ypos: int, seq: int, time: float)`:
         Adds a new event to the end of the list.  Automatically calculates the dx,
         dy, length, direction, and rotation for all but the first event.
@@ -1321,7 +1321,7 @@ class PointerEventList(ParamValueBase):
     def match_pattern(self, pattern: str, rot: float, seglen: float) -> float:
         """This function is not implemented yet.  It is a work in progress.  The
         intent is as follows:
-        
+
         Returns a nonzero value if the mouse movements match the specified pattern.
         The higher the value, the better the match.  The pattern is a sequence of
         compass directions (ie, "E", "NE", etc) separated by spaces.  If rot is

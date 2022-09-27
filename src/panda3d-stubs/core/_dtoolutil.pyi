@@ -117,7 +117,7 @@ class TextEncoder:
     e.g.  UTF-8 to UTF-16.  You may use it as a static class object, passing
     the encoding each time, or you may create an instance and use that object,
     which will record the current encoding and retain the current string.
-    
+
     This class is also a base class of TextNode, which inherits this
     functionality.
     """
@@ -138,7 +138,7 @@ class TextEncoder:
         default, E_iso8859, means a standard string with one-byte characters (i.e.
         ASCII).  Other encodings are possible to take advantage of character sets
         with more than 256 characters.
-        
+
         This affects only future calls to set_text(); it does not change text that
         was set previously.
         """
@@ -182,7 +182,7 @@ class TextEncoder:
     def get_text(self) -> str:
         """`(self)`:
         Returns the current text, as encoded via the current encoding system.
-        
+
         `(self, encoding: _TextEncoder_Encoding)`:
         Returns the current text, as encoded via the indicated encoding system.
         """
@@ -222,7 +222,7 @@ class TextEncoder:
         """Returns the text associated with the node, converted as nearly as possible
         to a fully-ASCII representation.  This means replacing accented letters
         with their unaccented ASCII equivalents.
-        
+
         It is possible that some characters in the string cannot be converted to
         ASCII.  (The string may involve symbols like the copyright symbol, for
         instance, or it might involve letters in some other alphabet such as Greek
@@ -293,7 +293,7 @@ class TextEncoder:
         """`(source: str)`:
         Converts the string to uppercase, assuming the string is encoded in the
         default encoding.
-        
+
         `(source: str, encoding: _TextEncoder_Encoding)`:
         Converts the string to uppercase, assuming the string is encoded in the
         indicated encoding.
@@ -304,7 +304,7 @@ class TextEncoder:
         """`(source: str)`:
         Converts the string to lowercase, assuming the string is encoded in the
         default encoding.
-        
+
         `(source: str, encoding: _TextEncoder_Encoding)`:
         Converts the string to lowercase, assuming the string is encoded in the
         indicated encoding.
@@ -328,7 +328,7 @@ class TextEncoder:
         """Returns the text associated with the node, converted as nearly as possible
         to a fully-ASCII representation.  This means replacing accented letters
         with their unaccented ASCII equivalents.
-        
+
         It is possible that some characters in the string cannot be converted to
         ASCII.  (The string may involve symbols like the copyright symbol, for
         instance, or it might involve letters in some other alphabet such as Greek
@@ -355,7 +355,7 @@ class TextEncoder:
         """`(self, wtext: str)`:
         Encodes a wide-text string into a single-char string, according to the
         current encoding.
-        
+
         `(self, wtext: str, encoding: _TextEncoder_Encoding)`:
         Encodes a wide-text string into a single-char string, according to the
         given encoding.
@@ -406,7 +406,7 @@ class Filename:
     """The name of a file, such as a texture file or an Egg file.  Stores the full
     pathname, and includes functions for extracting out the directory prefix
     part and the file extension and stuff.
-    
+
     A Filename is also aware of the mapping between the Unix-like filename
     convention we use internally, and the local OS's specific filename
     convention, and it knows how to perform basic OS-specific I/O, like testing
@@ -424,7 +424,7 @@ class Filename:
     def __init__(self) -> None:
         """`(self)`:
         Creates an empty Filename.
-        
+
         `(self, dirname: Filename, basename: Filename)`:
         This constructor composes the filename out of a directory part and a
         basename part.  It will insert an intervening '/' if necessary.
@@ -447,7 +447,7 @@ class Filename:
     def __bool__(self) -> bool:
         """Returns true if the Filename is valid (not empty), or false if it is an
         empty string.
-        
+
         This implements the Python equivalent to operator bool.  Defining an actual
         operator bool method for C++ use would work too, but it seems to cause too
         many ambiguities for the C++ compiler, so we use this Python-only approach
@@ -480,11 +480,11 @@ class Filename:
         forward slashes, and no drive letter) based on the supplied filename string
         that describes a filename in the local system conventions (for instance, on
         Windows, it may use backslashes or begin with a drive letter and a colon).
-        
+
         Use this function to create a Filename from an externally-given filename
         string.  Use to_os_specific() again later to reconvert it back to the local
         operating system's conventions.
-        
+
         This function will do the right thing even if the filename is partially
         local conventions and partially Panda conventions; e.g.  some backslashes
         and some forward slashes.
@@ -508,7 +508,7 @@ class Filename:
         """Generates a temporary filename within the indicated directory, using the
         indicated prefix.  If the directory is empty, a system-defined directory is
         chosen instead.
-        
+
         The generated filename did not exist when the Filename checked, but since
         it does not specifically create the file, it is possible that another
         process could simultaneously create a file by the same name.
@@ -661,7 +661,7 @@ class Filename:
         these characters will be filled in with the corresponding number (or more)
         of digits representing the sequence number.  Sequence numbers always begin
         counting at 0.
-        
+
         When this is true, methods like has_hash() and get_hash_to_end() and
         get_filename_index() may be called.  Methods like is_exists() will
         implicitly test for existance of filename sequence 0.
@@ -685,7 +685,7 @@ class Filename:
         actually includes a sequence of hash marks, then this returns a new
         Filename with the sequence of hash marks replaced by the indicated index
         number.
-        
+
         If the pattern flag is not set for this Filename or it does not contain a
         sequence of hash marks, this quietly returns the original filename.
         """
@@ -724,14 +724,14 @@ class Filename:
         """`(self)`:
         Converts the filename to a fully-qualified pathname from the root (if it is
         a relative pathname), and then standardizes it (see standardize()).
-        
+
         This is sometimes a little problematic, since it may convert the file to
         its 'true' absolute pathname, which could be an ugly NFS-named file,
         irrespective of symbolic links (e.g.
         /.automount/dimbo/root/usr2/fit/people/drose instead of /fit/people/drose);
         besides being ugly, filenames like this may not be consistent across
         multiple different platforms.
-        
+
         `(self, start_directory: Filename)`:
         Converts the filename to a fully-qualified filename from the root (if it is
         a relative filename), and then standardizes it (see standardize()).  This
@@ -743,7 +743,7 @@ class Filename:
         """Converts this filename to a canonical name by replacing the directory part
         with the fully-qualified directory part.  This is done by changing to that
         directory and calling getcwd().
-        
+
         This has the effect of (a) converting relative paths to absolute paths (but
         see make_absolute() if this is the only effect you want), and (b) always
         resolving a given directory name to the same string, even if different
@@ -752,7 +752,7 @@ class Filename:
         hosts/dimbo/usr2/fit/people/drose.  This can be troubling, but sometimes
         this is exactly what you want, particularly if you're about to call
         make_relative_to() between two filenames.
-        
+
         The return value is true if successful, or false on failure (usually
         because the directory name does not exist or cannot be chdir'ed into).
         """
@@ -763,10 +763,10 @@ class Filename:
         actual case of the file as it exists on the disk.  The return value is true
         if the file exists and the conversion can be made, or false if there is
         some error.
-        
+
         On a case-sensitive operating system, this method does nothing and always
         returns true.
-        
+
         An empty filename is considered to exist in this case.
         """
         ...
@@ -776,7 +776,7 @@ class Filename:
         local operating system (slashes in the appropriate direction, starting with
         the root at C:\, for instance).  Returns the string representing the
         converted filename, but does not change the Filename itself.
-        
+
         See also from_os_specific().
         """
         ...
@@ -789,7 +789,7 @@ class Filename:
         Windows can usually understand a forward-slash-delimited filename, this
         means it does the same thing as to_os_specific(), but it uses forward
         slashes instead of backslashes.
-        
+
         This method has a pretty limited use; it should generally be used for
         writing file references to a file that might be read on any operating
         system.
@@ -798,7 +798,7 @@ class Filename:
     def to_os_short_name(self) -> str:
         """This works like to_os_generic(), but it returns the "short name" version of
         the filename, if it exists, or the original filename otherwise.
-        
+
         On Windows platforms, this returns the 8.3 filename version of the given
         filename, if the file exists, and the same thing as to_os_specific()
         otherwise.  On non-Windows platforms, this always returns the same thing as
@@ -839,7 +839,7 @@ class Filename:
         """Returns a number less than zero if the file named by this object is older
         than the given file, zero if they have the same timestamp, or greater than
         zero if this one is newer.
-        
+
         If this_missing_is_old is true, it indicates that a missing file will be
         treated as if it were older than any other file; otherwise, a missing file
         will be treated as if it were newer than any other file.  Similarly for
@@ -851,7 +851,7 @@ class Filename:
         to within whatever precision the operating system records this information
         (on a Windows95 system, for instance, this may only be accurate to within 2
         seconds).
-        
+
         If the timestamp cannot be determined, either because it is not supported
         by the operating system or because there is some error (such as file not
         found), returns 0.
@@ -877,16 +877,16 @@ class Filename:
         with a slash, to make it a relative filename, relative to the fully-
         specified directory indicated (which must also begin with, and may or may
         not end with, a slash--a terminating slash is ignored).
-        
+
         This only performs a string comparsion, so it may be wise to call
         make_canonical() on both filenames before calling make_relative_to().
-        
+
         If allow_backups is false, the filename will only be adjusted to be made
         relative if it is already somewhere within or below the indicated
         directory.  If allow_backups is true, it will be adjusted in all cases,
         even if this requires putting a series of .. characters before the filename
         --unless it would have to back all the way up to the root.
-        
+
         Returns true if the file was adjusted, false if it was not.
         """
         ...
@@ -896,7 +896,7 @@ class Filename:
         look on the indicated search path for a directory under which the file can
         be found.  When found, adjust the Filename to be relative to the indicated
         directory name.
-        
+
         Returns the index of the directory on the searchpath at which the file was
         found, or -1 if it was not found.
         """
@@ -909,7 +909,7 @@ class Filename:
         set_text()/set_binary() flags to open the file appropriately as indicated;
         it is an error to call open_read() without first calling one of set_text()
         or set_binary().
-        
+
         `(self, stream: ifstream)`:
         Opens the indicated ifstream for reading the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
@@ -925,17 +925,17 @@ class Filename:
         set_text()/set_binary() flags to open the file appropriately as indicated;
         it is an error to call open_read() without first calling one of set_text()
         or set_binary().
-        
+
         If truncate is true, the file is truncated to zero length upon opening it,
         if it already exists.  Otherwise, the file is kept at its original length.
-        
+
         `(self, stream: ofstream, truncate: bool = ...)`:
         Opens the indicated ifstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
         it is an error to call open_read() without first calling one of set_text()
         or set_binary().
-        
+
         If truncate is true, the file is truncated to zero length upon opening it,
         if it already exists.  Otherwise, the file is kept at its original length.
         """
@@ -947,7 +947,7 @@ class Filename:
         set_text()/set_binary() flags to open the file appropriately as indicated;
         it is an error to call open_read() without first calling one of set_text()
         or set_binary().
-        
+
         `(self, stream: ofstream)`:
         Opens the indicated ofstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
@@ -971,7 +971,7 @@ class Filename:
         false otherwise.  This requires the setting of the set_text()/set_binary()
         flags to open the file appropriately as indicated; it is an error to call
         open_read() without first calling one of set_text() or set_binary().
-        
+
         `(self, stream: fstream)`:
         Opens the indicated ifstream for reading and writing the file, if possible;
         writes are appended to the end of the file.  Returns true if successful,
@@ -1014,7 +1014,7 @@ class Filename:
         filename, except for the basename itself.  This assumes that the Filename
         contains the name of a file, not a directory name; it ensures that the
         directory containing the file exists.
-        
+
         However, if the filename ends in a slash, it assumes the Filename
         represents the name of a directory, and creates all the paths.
         """
@@ -1171,17 +1171,17 @@ class PandaSystem:
     def get_package_version_string() -> str:
         """Returns the version of the Panda3D distributable package that provides this
         build of Panda.
-        
+
         When the currently-executing version of Panda was loaded from a
         distributable package, such as via the browser plugin, then this string
         will be nonempty and will contain the corresponding version string.  You
         can build applications that use this particular version of Panda by
         requesting it in the pdef file, using "panda3d", this version string, and
         the download host provided by get_package_host_url().
-        
+
         If this string is empty, then the currently-executing Panda was built
         independently, and is not part of a distributable package.
-        
+
         This string is set explicitly at compilation time.  Normally, it should be
         set to a nonempty string only when building a Panda3D package for
         distribution.
@@ -1193,9 +1193,9 @@ class PandaSystem:
         distributable package currently running.  This can be used, along with the
         get_package_version_string(), to uniquely identify the running version of
         Panda among distributable Panda versions.
-        
+
         See get_package_version_string() for more information.
-        
+
         This string is set explicitly at compilation time.  Normally, it should be
         set to a nonempty string only when building a Panda3D package for
         distribution.
@@ -1206,7 +1206,7 @@ class PandaSystem:
         """Returns the current version of Panda's Core API, expressed as a string of
         dot-delimited integers.  There are usually four integers in this version,
         but this is not guaranteed.
-        
+
         The Core API is used during the runtime (plugin) environment only.  This
         may be the empty string if the current version of Panda is not built to
         provide a particular Core API, which will be the normal case in a
@@ -1242,7 +1242,7 @@ class PandaSystem:
         using a specific version of the panda source tree.  If this is true, there
         will not be a "c" at the end of the version string returned by
         get_version_string().
-        
+
         Note that we must take the distributor's word for it here.
         """
         ...
@@ -1304,7 +1304,7 @@ class PandaSystem:
         This provides a standard way to query each subsystem's advertised
         capabilities.  The set of tags and values are per-system and
         implementation-defined.
-        
+
         The return value is the empty string if the indicated system is undefined
         or if does not define the indicated tag.
         """
@@ -1323,7 +1323,7 @@ class PandaSystem:
         (against future allocations).  Any memory above that may be released to the
         system, reducing the memory size of this process.  There is no guarantee
         that any memory may be released.
-        
+
         Returns true if any memory was actually released, false otherwise.
         """
         ...
@@ -1443,12 +1443,12 @@ class DSearchPath:
         This variant of find_all_files() returns the new Results object, instead of
         filling on in on the parameter list.  This is a little more convenient to
         call from Python.
-        
+
         `(self, filename: Filename, results: DSearchPath.Results)`:
         Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
         found, if any.  Returns the number of matches found.
-        
+
         It is the responsibility of the the caller to clear the results list first;
         otherwise, the newly-found files will be appended to the list.
         """
@@ -1525,7 +1525,7 @@ class ExecutionEnvironment:
         """Reads the string, looking for environment variable names marked by a $.
         Expands all such variable names.  A repeated dollar sign ($$) is mapped to
         a single dollar sign.
-        
+
         Returns the expanded string.
         """
         ...
@@ -1584,7 +1584,7 @@ class GlobPattern:
     """This class can be used to test for string matches against standard Unix-
     shell filename globbing conventions.  It serves as a portable standin for
     the Posix fnmatch() call.
-    
+
     A GlobPattern is given a pattern string, which can contain operators like
     *, ?, and [].  Then it can be tested against any number of candidate
     strings; for each candidate, it will indicate whether the string matches
@@ -1665,7 +1665,7 @@ class LineStream(ostream):
     """This is a special ostream that writes to a memory buffer, like ostrstream.
     However, its contents can be continuously extracted as a sequence of lines
     of text.
-    
+
     Unlike ostrstream, which can only be extracted from once (and then the
     buffer freezes and it can no longer be written to), the LineStream is not
     otherwise affected when a line of text is extracted.  More text can still

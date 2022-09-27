@@ -67,16 +67,16 @@ class CallbackNode(PandaNode):
         """Sets the CallbackObject that will be notified when this node is visited
         during the cull traversal.  This callback will be made during the cull
         thread.
-        
+
         The cull traversal is responsible for determining which nodes are visible
         and within the view frustum, and for accumulating state and transform, and
         generally building up the list of CullableObjects that are to be eventually
         passed to the draw traversal for rendering.
-        
+
         At the time the cull traversal callback is made, the node has been
         determined to be visible and it has passed the bounding-volume test, so it
         lies within the view frustum.
-        
+
         The callback is passed an instance of a NodeCullCallbackData, which
         contains pointers to the CullTraverser and CullTraverserData--enough data
         to examine the current node and its place within the scene graph.  The
@@ -96,16 +96,16 @@ class CallbackNode(PandaNode):
         """Sets the CallbackObject that will be notified when this node is visited
         during the draw traversal.  This callback will be made during the draw
         thread.
-        
+
         The draw traversal is responsible for actually issuing the commands to the
         graphics engine to draw primitives.  Its job is to walk through the list of
         CullableObjects build up by the cull traversal, as quickly as possible,
         issuing the appropriate commands to draw each one.
-        
+
         At the time the draw traversal callback is made, the graphics state has
         been loaded with the correct modelview transform and render state, and the
         primitives (if any) in this node are ready to be drawn.
-        
+
         The callback is passed an instance of a GeomDrawCallbackData, which
         contains pointers to the current state and transform, as well as the
         current GSG.  There is a Geom pointer as well, but it will always be NULL
@@ -202,7 +202,7 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
         This is the variant without buffer size, meaning that the current buffer
         size will be kept (512x512 is the default). Note that enabling shadows will
         require the shader generator to be enabled on the scene.
-        
+
         `(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...)`:
         Sets the flag indicating whether this light should cast shadows or not.
         The xsize and ysize parameters specify the size of the shadow buffer that
@@ -265,7 +265,7 @@ class DirectionalLight(LightLensNode):
     def get_point(self) -> LPoint3f:
         """Returns the point in space at which the light is located.  This is local to
         the coordinate space in which the light is assigned.
-        
+
         This actually has no bearing on the visual effect of the light, since the
         light is rendered as if it were infinitely far away.  This is only used to
         create a visible representation of the light.
@@ -313,7 +313,7 @@ class LODNode(PandaNode):
     def add_switch(self, _in: float, out: float) -> None:
         """Adds a switch range to the LODNode.  This implies that the corresponding
         child node has been parented to the node.
-        
+
         The sense of in vs.  out distances is as if the object were coming towards
         you from far away: it switches "in" at the far distance, and switches "out"
         at the close distance.  Thus, "in" should be larger than "out".
@@ -393,7 +393,7 @@ class LODNode(PandaNode):
         level of the LOD, a ring is drawn around the LODNode center indicating the
         switch distances from the camera for the indicated level, and the geometry
         of the indicated level is drawn in wireframe.
-        
+
         Multiple different levels can be visualized this way at once.  Call
         hide_switch() or hide_all_switches() to undo this mode and restore the
         LODNode to its normal behavior.
@@ -566,7 +566,7 @@ class PointLight(LightLensNode):
 class RectangleLight(LightLensNode):
     """This is a type of area light that is an axis aligned rectangle, pointing
     along the Y axis in the positive direction.
-    
+
     @since 1.10.0
     """
     max_distance: float
@@ -625,20 +625,20 @@ class ShaderGenerator(TypedReferenceCount):
     fixed function pipeline supports features like normal mapping, gloss
     mapping, cartoon lighting, and so forth.  It works by automatically
     generating a shader from a given RenderState.
-    
+
     Currently, there is one ShaderGenerator object per GraphicsStateGuardian.
     It is our intent that in time, people will write classes that derive from
     ShaderGenerator but which yield slightly different results.
-    
+
     The ShaderGenerator owes its existence to the 'Bamboo Team' at Carnegie
     Mellon's Entertainment Technology Center.  This is a group of students who,
     as a semester project, decided that next-gen graphics should be accessible
     to everyone, even if they don't know shader programming.  The group
     consisted of:
-    
+
     Aaron Lo, Programmer Heegun Lee, Programmer Erin Fernandez, Artist/Tester
     Joe Grubb, Artist/Tester Ivan Ortega, Technical Artist/Tester
-    
+
     Thanks to them!
     """
     @overload
@@ -654,7 +654,7 @@ class ShaderGenerator(TypedReferenceCount):
         """This is the routine that implements the next-gen fixed function pipeline by
         synthesizing a shader.  It also takes care of setting up any buffers needed
         to produce the requested effects.
-        
+
         Currently supports:
         - flat colors
         - vertex colors
@@ -673,7 +673,7 @@ class ShaderGenerator(TypedReferenceCount):
         - 1D/2D/3D textures, cube textures, 2D tex arrays
         - linear/exp/exp2 fog
         - animation
-        
+
         Potential optimizations
         - omit attenuation calculations if attenuation off
         """
@@ -681,18 +681,18 @@ class ShaderGenerator(TypedReferenceCount):
     def rehash_generated_shaders(self) -> None:
         """Rehashes all the states with generated shaders, removing the ones that are
         no longer fresh.
-        
+
         Call this if certain state has changed in such a way as to require a rerun
         of the shader generator.  This should be rare because in most cases, the
         shader generator will automatically regenerate shaders as necessary.
-        
+
         @since 1.10.0
         """
         ...
     def clear_generated_shaders(self) -> None:
         """Removes all previously generated shaders, requiring all shaders to be
         regenerated.  Does not clear cache of compiled shaders.
-        
+
         @since 1.10.0
         """
         ...
@@ -703,7 +703,7 @@ class ShaderGenerator(TypedReferenceCount):
 class SphereLight(PointLight):
     """A sphere light is like a point light, except that it represents a sphere
     with a radius, rather than being an infinitely thin point in space.
-    
+
     @since 1.10.0
     """
     radius: float
@@ -719,10 +719,10 @@ class SphereLight(PointLight):
 class Spotlight(LightLensNode):
     """A light originating from a single point in space, and shining in a
     particular direction, with a cone-shaped falloff.
-    
+
     The Spotlight frustum is defined using a Lens, so it can have any of the
     properties that a camera lens can have.
-    
+
     Note that the class is named Spotlight instead of SpotLight, because
     "spotlight" is a single English word, instead of two words.
     """
@@ -771,7 +771,7 @@ class Spotlight(LightLensNode):
         geometry (for instance, via NodePath::project_texture()) instead of
         actually enabling the light itself, as a cheesy way to make a high-
         resolution spot appear on the geometry.
-        
+
         pixel_width specifies the height and width of the new texture in pixels,
         full_radius is a value in the range 0..1 that indicates the relative size
         of the fully bright center spot, and fg and bg are the colors of the

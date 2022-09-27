@@ -43,7 +43,7 @@ class NetAddress:
     def __init__(self, __param0: NetAddress = ...) -> None:
         """`(self)`:
         Constructs an unspecified address.
-        
+
         `(self, addr: Socket_Address)`:
         Constructs an address from a given Socket_Address.  Normally, this
         constructor should not be used by user code; instead, create a default
@@ -142,10 +142,10 @@ class Connection(ReferenceCount):
         cuts down on overhead from the TCP/IP protocol, especially if many small
         packets need to be sent on the same connection, but it introduces
         additional latency (since packets must be held before they can be sent).
-        
+
         See set_collect_tcp_interval() to specify the interval of time for which to
         hold packets before sending them.
-        
+
         If you enable this mode, you may also need to periodically call
         consider_flush() to flush the queue if no packets have been sent recently.
         """
@@ -234,13 +234,13 @@ class ConnectionReader:
     """This is an abstract base class for a family of classes that listen for
     activity on a socket and respond to it, for instance by reading a datagram
     and serving it (or queueing it up for later service).
-    
+
     A ConnectionReader may define an arbitrary number of threads (at least one)
     to process datagrams coming in from an arbitrary number of sockets that it
     is monitoring.  The number of threads is specified at construction time and
     cannot be changed, but the set of sockets that is to be monitored may be
     constantly modified at will.
-    
+
     This is an abstract class because it doesn't define how to process each
     received datagram.  See QueuedConnectionReader.  Also note that
     ConnectionListener derives from this class, extending it to accept
@@ -253,10 +253,10 @@ class ConnectionReader:
         In the case of a ConnectionListener, this adds a new rendezvous socket; any
         activity on any of the monitored sockets will cause a connection to be
         accepted.
-        
+
         The return value is true if the connection was added, false if it was
         already there.
-        
+
         add_connection() is thread-safe, and may be called at will by any thread.
         """
         ...
@@ -264,7 +264,7 @@ class ConnectionReader:
         """Removes a socket from the list of sockets being monitored.  Returns true if
         the socket was correctly removed, false if it was not on the list in the
         first place.
-        
+
         remove_connection() is thread-safe, and may be called at will by any
         thread.
         """
@@ -282,7 +282,7 @@ class ConnectionReader:
         noise.  This function does nothing unless this is a polling-type
         ConnectionReader, i.e.  it was created with zero threads (and is_polling()
         will return true).
-        
+
         It is not necessary to call this explicitly for a QueuedConnectionReader.
         """
         ...
@@ -301,7 +301,7 @@ class ConnectionReader:
         """Sets the ConnectionReader into raw mode (or turns off raw mode).  In raw
         mode, datagram headers are not expected; instead, all the data available on
         the pipe is treated as a single datagram.
-        
+
         This is similar to set_tcp_header_size(0), except that it also turns off
         headers for UDP packets.
         """
@@ -339,7 +339,7 @@ class ConnectionListener(ConnectionReader):
     """This is a special kind of ConnectionReader that waits for activity on a
     rendezvous port and accepts a TCP connection (instead of attempting to read
     a datagram from the rendezvous port).
-    
+
     It is itself an abstract class, as it doesn't define what to do with the
     established connection.  See QueuedConnectionListener.
     """
@@ -379,7 +379,7 @@ class ConnectionManager:
     ConnectionManager is used to establish and destroy TCP and UDP connections.
     Communication on these connections, once established, is handled via
     ConnectionReader, ConnectionWriter, and ConnectionListener.
-    
+
     You may use this class directly if you don't care about tracking which
     connections have been unexpectedly closed; otherwise, you should use
     QueuedConnectionManager to get reports about these events (or derive your
@@ -422,24 +422,24 @@ class ConnectionManager:
         number is greater than zero, the UDP connection will be opened for
         listening on the indicated port; otherwise, it will be useful only for
         sending.
-        
+
         This variant accepts both a hostname and port to listen on a particular
         interface; if the hostname is empty, all interfaces will be available,
         both IPv4 and IPv6.
-        
+
         If for_broadcast is true, this UDP connection will be configured to send
         and/or receive messages on the broadcast address (255.255.255.255);
         otherwise, these messages may be automatically filtered by the OS.
-        
+
         Use a ConnectionReader and ConnectionWriter to handle the actual
         communication.
-        
+
         `(self, port: int = ...)`:
         Opens a socket for sending and/or receiving UDP packets.  If the port
         number is greater than zero, the UDP connection will be opened for
         listening on the indicated port; otherwise, it will be useful only for
         sending.
-        
+
         Use a ConnectionReader and ConnectionWriter to handle the actual
         communication.
         """
@@ -452,32 +452,32 @@ class ConnectionManager:
         Creates a socket to be used as a rendezvous socket for a server to listen
         for TCP connections.  The socket returned by this call should only be added
         to a ConnectionListener (not to a generic ConnectionReader).
-        
+
         This variant of this method accepts a NetAddress, which allows you to
         specify a specific interface to listen to.
-        
+
         backlog is the maximum length of the queue of pending connections.
-        
+
         `(self, hostname: str, port: int, backlog: int)`:
         Creates a socket to be used as a rendezvous socket for a server to listen
         for TCP connections.  The socket returned by this call should only be added
         to a ConnectionListener (not to a generic ConnectionReader).
-        
+
         This variant of this method accepts a "hostname", which is usually just an
         IP address in dotted notation, and a port number.  It will listen on the
         interface indicated by the IP address.  If the IP address is empty string,
         it will listen on all interfaces.
-        
+
         backlog is the maximum length of the queue of pending connections.
-        
+
         `(self, port: int, backlog: int)`:
         Creates a socket to be used as a rendezvous socket for a server to listen
         for TCP connections.  The socket returned by this call should only be added
         to a ConnectionListener (not to a generic ConnectionReader).
-        
+
         This variant of this method accepts a single port, and will listen to that
         port on all available interfaces, both IPv4 and IPv6.
-        
+
         backlog is the maximum length of the queue of pending connections.
         """
         ...
@@ -491,7 +491,7 @@ class ConnectionManager:
         Attempts to establish a TCP client connection to a server at the indicated
         address.  If the connection is not established within timeout_ms
         milliseconds, a null connection is returned.
-        
+
         `(self, hostname: str, port: int, timeout_ms: int)`:
         This is a shorthand version of the function to directly establish
         communications to a named host and port.
@@ -502,11 +502,11 @@ class ConnectionManager:
     def close_connection(self, connection: Connection) -> bool:
         """Terminates a UDP or TCP socket previously opened.  This also removes it
         from any associated ConnectionReader or ConnectionListeners.
-        
+
         The socket itself may not be immediately closed--it will not be closed
         until all outstanding pointers to it are cleared, including any pointers
         remaining in NetDatagrams recently received from the socket.
-        
+
         The return value is true if the connection was marked to be closed, or
         false if close_connection() had already been called (or the connection did
         not belong to this ConnectionManager).  In neither case can you infer
@@ -520,10 +520,10 @@ class ConnectionManager:
         ConnectionListeners, whichever comes first.  The return value is true if
         there is data available (but you have to iterate through all readers to
         find it), or false if the timeout occurred without any data.
-        
+
         If the timeout value is negative, this will block forever or until data is
         available.
-        
+
         This only works if all ConnectionReaders and ConnectionListeners are non-
         threaded.  If any threaded ConnectionReaders are part of the
         ConnectionManager, the timeout value is implicitly treated as 0.
@@ -567,7 +567,7 @@ class ConnectionManager:
 class ConnectionWriter:
     """This class handles threaded delivery of datagrams to various TCP or UDP
     sockets.
-    
+
     A ConnectionWriter may define an arbitrary number of threads (0 or more) to
     write its datagrams to sockets.  The number of threads is specified at
     construction time and cannot be changed.
@@ -576,7 +576,7 @@ class ConnectionWriter:
     def __init__(self, manager: ConnectionManager, num_threads: int, thread_name: str = ...) -> None:
         """Creates a new ConnectionWriter with the indicated number of threads to
         handle output.
-        
+
         If num_threads is 0, all datagrams will be sent immediately instead of
         queueing for later transmission by a thread.
         """
@@ -602,24 +602,24 @@ class ConnectionWriter:
         the function allows the specification of a destination host address, and so
         is appropriate for UDP packets.  Use the other send() method for sending
         TCP packets.
-        
+
         Returns true if successful, false if there was an error.  In the normal,
         threaded case, this function only returns false if the send queue is
         filled; it's impossible to detect a transmission error at this point.
-        
+
         If block is true, this will not return false if the send queue is filled;
         instead, it will wait until there is space available.
-        
+
         `(self, datagram: Datagram, connection: Connection, block: bool = ...)`:
         Enqueues a datagram for transmittal on the indicated socket.  Since the
         host address is not specified with this form, this function should only be
         used for sending TCP packets.  Use the other send() method for sending UDP
         packets.
-        
+
         Returns true if successful, false if there was an error.  In the normal,
         threaded case, this function only returns false if the send queue is
         filled; it's impossible to detect a transmission error at this point.
-        
+
         If block is true, this will not return false if the send queue is filled;
         instead, it will wait until there is space available.
         """
@@ -646,7 +646,7 @@ class ConnectionWriter:
         """Sets the ConnectionWriter into raw mode (or turns off raw mode).  In raw
         mode, datagrams are not sent along with their headers; the bytes in the
         datagram are simply sent down the pipe.
-        
+
         Setting the ConnectionWriter to raw mode must be done with care.  This can
         only be done when the matching ConnectionReader is also set to raw mode, or
         when the ConnectionWriter is communicating to a process that does not
@@ -793,17 +793,17 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
         This flavor of get_new_connection() simply returns a new connection,
         assuming the user doesn't care about the rendezvous socket that originated
         it or the address it came from.
-        
+
         `(self, rendezvous: PointerTo_Connection, address: NetAddress, new_connection: PointerTo_Connection)`:
         If a previous call to new_connection_available() returned true, this
         function will return information about the newly established connection.
-        
+
         The rendezvous parameter is the particular rendezvous socket this new
         connection originally communicated with; it is provided in case the
         ConnectionListener was monitorind more than one and you care which one it
         was.  The address parameter is the net address of the new client, and
         new_connection is the socket of the newly established connection.
-        
+
         The return value is true if a connection was successfully returned, or
         false if there was, in fact, no new connection.  (This may happen if there
         are multiple threads accessing the QueuedConnectionListener).
@@ -833,7 +833,7 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
     """This flavor of ConnectionManager will queue up all of the reset-connection
     messages from the ConnectionReaders and ConnectionWriters and report them
     to the client on demand.
-    
+
     When a reset connection has been discovered via
     reset_connection_available()/get_reset_connection(), it is still the
     responsibility of the client to call close_connection() on that connection
@@ -847,7 +847,7 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
         """Returns true if one of the readers/writers/listeners reported a connection
         reset recently.  If so, the particular connection that has been reset can
         be extracted via get_reset_connection().
-        
+
         Only connections which were externally reset are certain to appear in this
         list.  Those which were explicitly closed via a call to close_connection()
         may or may not be reported.  Furthermore, it is the responsibility of the
@@ -859,14 +859,14 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
     def get_reset_connection(self, connection: Connection | PointerTo_Connection | None) -> bool:
         """If a previous call to reset_connection_available() returned true, this
         function will return information about the newly reset connection.
-        
+
         Only connections which were externally reset are certain to appear in this
         list.  Those which were explicitly closed via a call to close_connection()
         may or may not be reported.  Furthermore, it is the responsibility of the
         caller to subsequently call close_connection() with any connection reported
         reset by this call.  (There is no harm in calling close_connection() more
         than once on a given socket.)
-        
+
         The return value is true if a connection was successfully returned, or
         false if there was, in fact, no reset connection.  (This may happen if
         there are multiple threads accessing the QueuedConnectionManager).
@@ -911,11 +911,11 @@ class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
         except that it only fills a Datagram object, not a NetDatagram object.
         This means that the Datagram cannot be queried for its source Connection
         and/or NetAddress, but it is useful in all other respects.
-        
+
         `(self, result: NetDatagram)`:
         If a previous call to data_available() returned true, this function will
         return the datagram that has become available.
-        
+
         The return value is true if a datagram was successfully returned, or false
         if there was, in fact, no datagram available.  (This may happen if there
         are multiple threads accessing the QueuedConnectionReader).
@@ -945,7 +945,7 @@ class RecentConnectionReader(ConnectionReader):
     particularly for reading telemetry-type data from UDP sockets where you
     don't care about getting every last socket, and in fact if the sockets are
     coming too fast you'd prefer to skip some of them.
-    
+
     This class will always create one thread for itself.
     """
     def __init__(self, manager: ConnectionManager) -> None: ...
@@ -960,11 +960,11 @@ class RecentConnectionReader(ConnectionReader):
         except that it only fills a Datagram object, not a NetDatagram object.
         This means that the Datagram cannot be queried for its source Connection
         and/or NetAddress, but it is useful in all other respects.
-        
+
         `(self, result: NetDatagram)`:
         If a previous call to data_available() returned true, this function will
         return the datagram that has become available.
-        
+
         The return value is true if a datagram was successfully returned, or false
         if there was, in fact, no datagram available.  (This may happen if there
         are multiple threads accessing the RecentConnectionReader).

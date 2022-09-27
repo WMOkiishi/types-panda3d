@@ -29,7 +29,7 @@ from panda3d.core import (
 class CollisionSolid(CopyOnWriteObject):
     """The abstract base class for all things that can collide with other things
     in the world, and all the things they can collide with (except geometry).
-    
+
     This class and its derivatives really work very similarly to the way
     BoundingVolume and all of its derivatives work.  There's a different
     subclass for each basic shape of solid, and double-dispatch function calls
@@ -120,7 +120,7 @@ class CollisionBox(CollisionSolid):
     def __init__(self, min: Vec3f, max: Vec3f) -> None:
         """`(self, min: LPoint3f, max: LPoint3f)`:
         Create the Box by Specifying the Diagonal Points
-        
+
         `(self, center: LPoint3f, x: float, y: float, z: float)`:
         Create the Box by giving a Center and distances of each of the sides of
         box from the Center.
@@ -169,7 +169,7 @@ class CollisionBox(CollisionSolid):
 class CollisionCapsule(CollisionSolid):
     """This implements a solid consisting of a cylinder with hemispherical endcaps,
     also known as a capsule or a spherocylinder.
-    
+
     This shape was previously erroneously called CollisionTube.
     """
     point_a: LPoint3f
@@ -277,7 +277,7 @@ class CollisionNode(PandaNode):
         """Sets a particular collider_sort value on this node.  This controls the
         order in which colliders (that is, "from nodes") are grouped together for
         the collision traversal.
-        
+
         If there are 32 or fewer colliders added to any particular
         CollisionTraverser, then this value has no meaning.  It is only useful if
         there are many colliders, which may force the CollisionTraverser to make
@@ -313,7 +313,7 @@ class CollisionTraverser(Namable):
     """This class manages the traversal through the scene graph to detect
     collisions.  It holds ownership of a number of collider objects, each of
     which is a CollisionNode and an associated CollisionHandler.
-    
+
     When traverse() is called, it begins at the indicated root and detects all
     collisions with any of its collider objects against nodes at or below the
     indicated root, calling the appropriate CollisionHandler for each detected
@@ -346,7 +346,7 @@ class CollisionTraverser(Namable):
         collisions into other objects, along with the handler that will serve each
         detected collision.  Each CollisionNode may be served by only one handler
         at a time, but a given handler may serve many CollisionNodes.
-        
+
         The handler that serves a particular node may be changed from time to time
         by calling add_collider() again on the same node.
         """
@@ -397,11 +397,11 @@ class CollisionTraverser(Namable):
         object.  A particular CollisionRecorder object can only record one
         traverser at a time; if this object has already been assigned to another
         traverser, that assignment is broken.
-        
+
         This is intended to be used in a debugging mode to try to determine what
         work is being performed by the collision traversal.  Usually, attaching a
         recorder will impose significant runtime overhead.
-        
+
         This does not transfer ownership of the CollisionRecorder pointer;
         maintenance of that remains the caller's responsibility.  If the
         CollisionRecorder is destructed, it will cleanly remove itself from the
@@ -463,7 +463,7 @@ class CollisionEntry(TypedWritableReferenceCount):
     """Defines a single collision event.  One of these is created for each
     collision detected by a CollisionTraverser, to be dealt with by the
     CollisionHandler.
-    
+
     A CollisionEntry provides slots for a number of data values (such as
     intersection point and normal) that might or might not be known for each
     collision.  It is up to the handler to determine what information is known
@@ -513,7 +513,7 @@ class CollisionEntry(TypedWritableReferenceCount):
         """Returns the node that contains the CollisionSolid that was collided into.
         This returns a PandaNode pointer instead of something more specific,
         because it might be either a CollisionNode or a GeomNode.
-        
+
         Also see get_into_node_path().
         """
         ...
@@ -555,14 +555,14 @@ class CollisionEntry(TypedWritableReferenceCount):
     def set_surface_point(self, point: Vec3f) -> None:
         """Stores the point, on the surface of the "into" object, at which a collision
         is detected.
-        
+
         This point is specified in the coordinate space of the "into" object.
         """
         ...
     def set_surface_normal(self, normal: Vec3f) -> None:
         """Stores the surface normal of the "into" object at the point of the
         intersection.
-        
+
         This normal is specified in the coordinate space of the "into" object.
         """
         ...
@@ -571,7 +571,7 @@ class CollisionEntry(TypedWritableReferenceCount):
         represents the depth to which the "from" object has penetrated.  This can
         also be described as the intersection point on the surface of the "from"
         object (which is inside the "into" object).
-        
+
         This point is specified in the coordinate space of the "into" object.
         """
         ...
@@ -596,13 +596,13 @@ class CollisionEntry(TypedWritableReferenceCount):
     def set_contact_pos(self, pos: Vec3f) -> None:
         """Stores the position of the "from" object at the instant at which the
         collision is first detected.
-        
+
         This position is specified in the coordinate space of the "into" object.
         """
         ...
     def set_contact_normal(self, normal: Vec3f) -> None:
         """Stores the surface normal of the "into" object at the contact pos.
-        
+
         This normal is specified in the coordinate space of the "into" object.
         """
         ...
@@ -623,7 +623,7 @@ class CollisionEntry(TypedWritableReferenceCount):
         collision is detected.  This can be thought of as the first point of
         intersection.  However the contact point is the actual first point of
         intersection.
-        
+
         The point will be converted into whichever coordinate space the caller
         specifies.
         """
@@ -631,7 +631,7 @@ class CollisionEntry(TypedWritableReferenceCount):
     def get_surface_normal(self, space: NodePath) -> LVector3f:
         """Returns the surface normal of the "into" object at the point at which a
         collision is detected.
-        
+
         The normal will be converted into whichever coordinate space the caller
         specifies.
         """
@@ -642,7 +642,7 @@ class CollisionEntry(TypedWritableReferenceCount):
         also be described as the intersection point on the surface of the "from"
         object (which is inside the "into" object).  It can be thought of as the
         deepest point of intersection.
-        
+
         The point will be converted into whichever coordinate space the caller
         specifies.
         """
@@ -650,7 +650,7 @@ class CollisionEntry(TypedWritableReferenceCount):
     def get_all(self, space: NodePath, surface_point: Vec3f, surface_normal: Vec3f, interior_point: Vec3f) -> bool:
         """Simultaneously transforms the surface point, surface normal, and interior
         point of the collision into the indicated coordinate space.
-        
+
         Returns true if all three properties are available, or false if any one of
         them is not.
         """
@@ -658,14 +658,14 @@ class CollisionEntry(TypedWritableReferenceCount):
     def get_contact_pos(self, space: NodePath) -> LPoint3f:
         """Returns the position of the "from" object at the instant that a collision
         is first detected.
-        
+
         The position will be converted into whichever coordinate space the caller
         specifies.
         """
         ...
     def get_contact_normal(self, space: NodePath) -> LVector3f:
         """Returns the surface normal of the "into" object at the contact position.
-        
+
         The normal will be converted into whichever coordinate space the caller
         specifies.
         """
@@ -673,7 +673,7 @@ class CollisionEntry(TypedWritableReferenceCount):
     def get_all_contact_info(self, space: NodePath, contact_pos: Vec3f, contact_normal: Vec3f) -> bool:
         """Simultaneously transforms the contact position and contact normal of the
         collision into the indicated coordinate space.
-        
+
         Returns true if all three properties are available, or false if any one of
         them is not.
         """
@@ -827,26 +827,26 @@ class CollisionHandlerEvent(CollisionHandler):
         """Adds a pattern string to the list of events that will be generated in
         response to a collision.  The pattern string describes how the event name
         will be composed.  It is a string that may contain any of the following:
-        
+
         %fn  - the name of the "from" object's node %in  - the name of the "into"
         object's node %fs  - 't' if "from" is tangible, 'i' if intangible %is  -
         't' if "into" is tangible, 'i' if intangible %ig  - 'c' if the collision is
         into a CollisionNode, 'g' if it is a geom.
-        
+
         %(tag)fh - generate event only if "from" node has the indicated net tag.
         %(tag)fx - generate event only if "from" node does not have the indicated
         net tag.  %(tag)ih - generate event only if "into" node has the indicated
         net tag.  %(tag)ix - generate event only if "into" node does not have the
         indicated net tag.  %(tag)ft - the indicated net tag value of the "from"
         node.  %(tag)it - the indicated net tag value of the "into" node.
-        
+
         Parentheses in the above are literal and should be included in the actual
         pattern.
-        
+
         The event name will be based on the in_pattern string specified here, with
         all occurrences of the above strings replaced with the corresponding
         values.
-        
+
         In general, the in_pattern event is thrown on the first detection of a
         collision between two particular nodes.  In subsequent passes, as long as a
         collision between those two nodes continues to be detected each frame, the
@@ -857,7 +857,7 @@ class CollisionHandlerEvent(CollisionHandler):
     def set_in_pattern(self, in_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
-        
+
         @deprecated Use add_in_pattern() instead.
         """
         ...
@@ -877,7 +877,7 @@ class CollisionHandlerEvent(CollisionHandler):
         when a collision between two particular nodes is *still* detected.  This
         event is thrown each consecutive time a collision between two particular
         nodes is detected, starting with the second time.
-        
+
         In general, the in_pattern event is thrown on the first detection of a
         collision between two particular nodes.  In subsequent passes, as long as a
         collision between those two nodes continues to be detected each frame, the
@@ -888,7 +888,7 @@ class CollisionHandlerEvent(CollisionHandler):
     def set_again_pattern(self, again_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
-        
+
         @deprecated Use add_again_pattern() instead.
         """
         ...
@@ -906,7 +906,7 @@ class CollisionHandlerEvent(CollisionHandler):
     def add_out_pattern(self, out_pattern: str) -> None:
         """Adds the pattern string that indicates how the event names are generated
         when a collision between two particular nodes is *no longer* detected.
-        
+
         In general, the in_pattern event is thrown on the first detection of a
         collision between two particular nodes.  In subsequent passes, as long as a
         collision between those two nodes continues to be detected each frame, the
@@ -917,7 +917,7 @@ class CollisionHandlerEvent(CollisionHandler):
     def set_out_pattern(self, out_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
-        
+
         @deprecated Use add_out_pattern() instead.
         """
         ...
@@ -933,7 +933,7 @@ class CollisionHandlerEvent(CollisionHandler):
         """Empties the list of elements that all colliders are known to be colliding
         with.  No "out" events will be thrown; if the same collision is detected
         next frame, a new "in" event will be thrown for each collision.
-        
+
         This can be called each frame to defeat the persistent "in" event
         mechanism, which prevents the same "in" event from being thrown repeatedly.
         However, also see add_again_pattern(), which can be used to set the event
@@ -987,12 +987,12 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
         Adds a new collider to the list with a NodePath that will be updated with
         the collider's new position, or updates the existing collider with a new
         NodePath object.
-        
+
         `(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface)`:
         Adds a new collider to the list with a NodePath that will be updated with
         the collider's new position, or updates the existing collider with a new
         NodePath object.
-        
+
         The indicated DriveInterface will also be updated with the target's new
         transform each frame.  This method should be used when the target is
         directly controlled by a DriveInterface.
@@ -1151,7 +1151,7 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
         ...
     def get_airborne_height(self) -> float:
         """Return the height of the object from the ground.
-        
+
         The object might not necessarily be at rest.  Use is_on_ground() if you
         want to know whether the object is on the ground and at rest.
         """
@@ -1178,13 +1178,13 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
         ...
     def get_velocity(self) -> float:
         """Gets the current vertical velocity.
-        
+
         Generally, negative values mean the object is in free fall; while postive
         values mean the object has vertical thrust.
-        
+
         A zero value does not necessarily mean the object on the ground, it may
         also be weightless and/or at the apex of its jump.
-        
+
         See Also: is_on_ground() and get_gravity()
         """
         ...
@@ -1341,9 +1341,9 @@ class CollisionRay(CollisionSolid):
         CollisionRay so that it begins at the LensNode's near plane and extends to
         infinity, making it suitable for picking objects from the screen given a
         camera and a mouse location.
-        
+
         Returns true if the point was acceptable, false otherwise.
-        
+
         `(self, camera: LensNode, px: float, py: float)`:
         Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionRay so that it begins at the LensNode's near plane and extends to
@@ -1379,7 +1379,7 @@ class CollisionParabola(CollisionSolid):
     """This defines a parabolic arc, or subset of an arc, similar to the path of a
     projectile or falling object.  It is finite, having a specific beginning
     and end, but it is infinitely thin.
-    
+
     Think of it as a wire bending from point t1 to point t2 along the path of a
     pre-defined parabola.
     """
@@ -1390,7 +1390,7 @@ class CollisionParabola(CollisionSolid):
     def __init__(self) -> None:
         """`(self)`:
         Creates an invalid parabola.
-        
+
         `(self, parabola: LParabolaf, t1: float, t2: float)`:
         Creates a parabola with the endpoints between t1 and t2 in the parametric
         space of the parabola.
@@ -1426,7 +1426,7 @@ class CollisionParabola(CollisionSolid):
 class CollisionSegment(CollisionSolid):
     """A finite line segment, with two specific endpoints but no thickness.  It's
     similar to a CollisionRay, except it does not continue to infinity.
-    
+
     It does have an ordering, from point A to point B. If more than a single
     point of the segment is intersecting a solid, the reported intersection
     point is generally the closest on the segment to point A.
@@ -1461,9 +1461,9 @@ class CollisionSegment(CollisionSolid):
         CollisionSegment so that it begins at the LensNode's near plane and extends
         to the far plane, making it suitable for picking objects from the screen
         given a camera and a mouse location.
-        
+
         Returns true if the point was acceptable, false otherwise.
-        
+
         `(self, camera: LensNode, px: float, py: float)`:
         Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionSegment so that it begins at the LensNode's near plane and extends
@@ -1483,7 +1483,7 @@ class CollisionVisualizer(PandaNode, CollisionRecorder):
     """This class is used to help debug the work the collisions system is doing.
     It shows the polygons that are detected as collisions, as well as those
     that are simply considered for collisions.
-    
+
     It may be parented anywhere in the scene graph where it will be rendered to
     achieve this.
     """

@@ -871,7 +871,7 @@ class BoundingVolume(TypedReferenceCount):
         planes, do not contain all points and thus correctly return is_infinite()
         == false, even though they are technically infinite.  This is a special
         case of the word 'infinite' meaning the volume covers all points in space.)
-        
+
         It completely intersects with all other volumes except empty volumes.
         """
         ...
@@ -905,7 +905,7 @@ class GeometricBoundingVolume(BoundingVolume):
     def extend_by(self, vol: GeometricBoundingVolume) -> bool:
         """`(self, vol: GeometricBoundingVolume)`:
         Increases the size of the volume to include the given volume.
-        
+
         `(self, point: LPoint3f)`:
         Increases the size of the volume to include the given point.
         """
@@ -917,11 +917,11 @@ class GeometricBoundingVolume(BoundingVolume):
         """`(self, vol: GeometricBoundingVolume)`:
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated volume.
-        
+
         `(self, point: LPoint3f)`:
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated point.
-        
+
         `(self, a: LPoint3f, b: LPoint3f)`:
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated line segment.
@@ -957,7 +957,7 @@ class FiniteBoundingVolume(GeometricBoundingVolume):
 class LParabolaf:
     """An abstract mathematical description of a parabola, particularly useful for
     describing arcs of projectiles.
-    
+
     The parabolic equation, given parametrically here, is P = At^2 + Bt + C.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -965,7 +965,7 @@ class LParabolaf:
     def __init__(self, copy: LParabolaf = ...) -> None:
         """`(self)`:
         Constructs a meaningless degenerate parabola.
-        
+
         `(self, a: LVecBase3f, b: LVecBase3f, c: LVecBase3f)`:
         Constructs a parabola given the three points of the parametric equation:
         the acceleration, initial velocity, and start point.
@@ -1031,7 +1031,7 @@ class LParabolaf:
 class LParabolad:
     """An abstract mathematical description of a parabola, particularly useful for
     describing arcs of projectiles.
-    
+
     The parabolic equation, given parametrically here, is P = At^2 + Bt + C.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -1039,7 +1039,7 @@ class LParabolad:
     def __init__(self, copy: LParabolad = ...) -> None:
         """`(self)`:
         Constructs a meaningless degenerate parabola.
-        
+
         `(self, a: LVecBase3d, b: LVecBase3d, c: LVecBase3d)`:
         Constructs a parabola given the three points of the parametric equation:
         the acceleration, initial velocity, and start point.
@@ -1111,16 +1111,16 @@ class LPlanef(LVecBase4f):
         """`(self)`:
         Creates a default plane.  This plane happens to intersect the origin,
         perpendicular to the Z axis.  It's not clear how useful a default plane is.
-        
+
         `(self, a: LPoint3f, b: LPoint3f, c: LPoint3f)`:
         Constructs a plane given three counter-clockwise points, as seen from the
         front of the plane (that is, viewed from the end of the normal vector,
         looking down).
-        
+
         `(self, normal: LVector3f, point: LPoint3f)`:
         Constructs a plane given a surface normal vector and a point within the
         plane.
-        
+
         `(self, a: float, b: float, c: float, d: float)`:
         Constructs a plane given the four terms of the plane equation.
         """
@@ -1208,16 +1208,16 @@ class LPlaned(LVecBase4d):
         """`(self)`:
         Creates a default plane.  This plane happens to intersect the origin,
         perpendicular to the Z axis.  It's not clear how useful a default plane is.
-        
+
         `(self, a: LPoint3d, b: LPoint3d, c: LPoint3d)`:
         Constructs a plane given three counter-clockwise points, as seen from the
         front of the plane (that is, viewed from the end of the normal vector,
         looking down).
-        
+
         `(self, normal: LVector3d, point: LPoint3d)`:
         Constructs a plane given a surface normal vector and a point within the
         plane.
-        
+
         `(self, a: float, b: float, c: float, d: float)`:
         Constructs a plane given the four terms of the plane equation.
         """
@@ -1299,7 +1299,7 @@ class LPlaned(LVecBase4d):
 class BoundingBox(FiniteBoundingVolume):
     """An axis-aligned bounding box; that is, a minimum and maximum coordinate
     triple.
-    
+
     This box is always axis-aligned.  If you need a more general bounding box,
     try BoundingHexahedron.
     """
@@ -1311,7 +1311,7 @@ class BoundingBox(FiniteBoundingVolume):
     def __init__(self) -> None:
         """`(self)`:
         Constructs an empty box object.
-        
+
         `(self, min: LPoint3f, max: LPoint3f)`:
         Constructs a specific box object.
         """
@@ -1433,7 +1433,7 @@ class BoundingHexahedron(FiniteBoundingVolume):
 class BoundingLine(GeometricBoundingVolume):
     """This funny bounding volume is an infinite line with no thickness and
     extending to infinity in both directions.
-    
+
     Note that it *always* extends in both directions, despite the fact that you
     specify two points to the constructor.  These are not endpoints, they are
     two arbitrary points on the line.
@@ -1472,7 +1472,7 @@ class BoundingSphere(FiniteBoundingVolume):
     def __init__(self) -> None:
         """`(self)`:
         Constructs an empty sphere.
-        
+
         `(self, center: LPoint3f, radius: float)`:
         Constructs a specific sphere.
         """
@@ -1495,7 +1495,7 @@ class BoundingSphere(FiniteBoundingVolume):
 class IntersectionBoundingVolume(GeometricBoundingVolume):
     """This special bounding volume is the intersection of all of its constituent
     bounding volumes.
-    
+
     A point is defined to be within an IntersectionBoundingVolume if it is
     within all of its component bounding volumes.
     """
@@ -1549,7 +1549,7 @@ class OmniBoundingVolume(GeometricBoundingVolume):
 class UnionBoundingVolume(GeometricBoundingVolume):
     """This special bounding volume is the union of all of its constituent
     bounding volumes.
-    
+
     A point is defined to be within a UnionBoundingVolume if it is within any
     one or more of its component bounding volumes.
     """
@@ -1647,14 +1647,14 @@ class PerlinNoise2(PerlinNoise):
         """`(self)`:
         Randomizes the tables to make a unique noise function.  Uses a default
         scale (noise frequency), table size, and seed.
-        
+
         `(self, copy: PerlinNoise2)`:
         Makes an exact copy of the existing PerlinNoise object, including its
         random seed.
-        
+
         `(self, sx: float, sy: float, table_size: int = ..., seed: int = ...)`:
         Randomizes the tables to make a unique noise function.
-        
+
         If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
@@ -1690,14 +1690,14 @@ class PerlinNoise3(PerlinNoise):
         """`(self)`:
         Randomizes the tables to make a unique noise function.  Uses a default
         scale (noise frequency), table size, and seed.
-        
+
         `(self, copy: PerlinNoise3)`:
         Makes an exact copy of the existing PerlinNoise object, including its
         random seed.
-        
+
         `(self, sx: float, sy: float, sz: float, table_size: int = ..., seed: int = ...)`:
         Randomizes the tables to make a unique noise function.
-        
+
         If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
@@ -1733,11 +1733,11 @@ class StackedPerlinNoise2:
         """`(self)`:
         Creates a StackedPerlinNoise2 object with no levels.  You should call
         add_level() to add each level by hand.
-        
+
         `(self, copy: StackedPerlinNoise2)`:
         Creates an exact duplicate of the existing StackedPerlinNoise2 object,
         including the random seed.
-        
+
         `(self, sx: float, sy: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...)`:
         Creates num_levels nested PerlinNoise2 objects.  Each stacked Perlin object
         will have a scale of 1 scale_factor times the previous object (so that it
@@ -1780,11 +1780,11 @@ class StackedPerlinNoise3:
         """`(self)`:
         Creates a StackedPerlinNoise3 object with no levels.  You should call
         add_level() to add each level by hand.
-        
+
         `(self, copy: StackedPerlinNoise3)`:
         Creates an exact duplicate of the existing StackedPerlinNoise3 object,
         including the random seed.
-        
+
         `(self, sx: float, sy: float, sz: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...)`:
         Creates num_levels nested PerlinNoise3 objects.  Each stacked Perlin object
         will have a scale of 1 scale_factor times the previous object (so that it
@@ -1820,12 +1820,12 @@ class StackedPerlinNoise3:
 class Triangulator:
     """This class can triangulate a convex or concave polygon, even one with
     holes.  It is adapted from an algorithm published as:
-    
+
     Narkhede A. and Manocha D., Fast polygon triangulation algorithm based on
     Seidel's Algorithm, UNC-CH, 1994.
-    
+
     http://www.cs.unc.edu/~dm/CODE/GEM/chapter.html
-    
+
     It works strictly on 2-d points.  See Triangulator3 for 3-d points.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -1861,7 +1861,7 @@ class Triangulator:
     def add_polygon_vertex(self, index: int) -> None:
         """Adds the next consecutive vertex of the polygon.  This vertex should index
         into the vertex pool established by repeated calls to add_vertex().
-        
+
         The vertices may be listed in either clockwise or counterclockwise order.
         Vertices should not be repeated.  In particular, do not repeat the first
         vertex at the end.
@@ -1878,7 +1878,7 @@ class Triangulator:
     def add_hole_vertex(self, index: int) -> None:
         """Adds the next consecutive vertex of the current hole.  This vertex should
         index into the vertex pool established by repeated calls to add_vertex().
-        
+
         The vertices may be listed in either clockwise or counterclockwise order.
         Vertices should not be repeated.
         """
@@ -1897,7 +1897,7 @@ class Triangulator:
     def get_triangle_v0(self, n: int) -> int:
         """Returns vertex 0 of the nth triangle generated by the previous call to
         triangulate().
-        
+
         This is a zero-based index into the vertices added by repeated calls to
         add_vertex().
         """
@@ -1905,7 +1905,7 @@ class Triangulator:
     def get_triangle_v1(self, n: int) -> int:
         """Returns vertex 1 of the nth triangle generated by the previous call to
         triangulate().
-        
+
         This is a zero-based index into the vertices added by repeated calls to
         add_vertex().
         """
@@ -1913,7 +1913,7 @@ class Triangulator:
     def get_triangle_v2(self, n: int) -> int:
         """Returns vertex 2 of the nth triangle generated by the previous call to
         triangulate().
-        
+
         This is a zero-based index into the vertices added by repeated calls to
         add_vertex().
         """

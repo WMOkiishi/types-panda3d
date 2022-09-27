@@ -69,13 +69,13 @@ class GraphicsPipe(TypedReferenceCount):
     Normally, there will only be one GraphicsPipe in an application, although
     it is possible to have multiple of these at once if there are multiple
     different API's available in the same machine.
-    
+
     Often, the GraphicsPipe corresponds to a physical output device, hence the
     term "pipe", but this is not necessarily the case.
-    
+
     The GraphicsPipe is used by the GraphicsEngine object to create and destroy
     windows; it keeps ownership of the windows it creates.
-    
+
     M. Asad added new/interim functionality where GraphicsPipe now contains a
     device interface to directx/opengl which will be used to handle multiple
     windows from same device.
@@ -131,7 +131,7 @@ class GraphicsPipe(TypedReferenceCount):
         to create a GraphicsWindow with the pipe will certainly fail.  Returns true
         if the pipe is probably valid (is this case, an attempt to create a
         GraphicsWindow should succeed, but might still fail).
-        
+
         Use the GraphicsEngine class to create a GraphicsWindow on a particular
         pipe.
         """
@@ -141,7 +141,7 @@ class GraphicsPipe(TypedReferenceCount):
         objects this pipe might be able to successfully create.  The return value
         is the union of bits in GraphicsPipe::OutputTypes that represents the set
         of GraphicsOutput types.
-        
+
         A 1 bit in a particular position is not a guarantee of success, but a 0 bit
         is a guarantee of failure.
         """
@@ -150,7 +150,7 @@ class GraphicsPipe(TypedReferenceCount):
         """A convenience function to ask if a particular type or types of
         GraphicsObjects are supported.  The parameter is a union of one or more
         bits defined in GrpahicsPipe::OutputTypes.
-        
+
         Returns true if all of the requested types are listed in the
         supported_types mask, false if any one of them is not.  This is not a
         guarantee that the indicated output type will successfully be created when
@@ -176,7 +176,7 @@ class GraphicsPipe(TypedReferenceCount):
         a value approximating the density of the monitor divided by the standard
         density of the operating system (usually 96), yielding a value like 1.5 or
         2.0.
-        
+
         @since 1.10.8
         """
         ...
@@ -489,13 +489,13 @@ class DrawableRegion:
         software renderers.  Setting this number to 2.0 reduces the number of
         pixels that have to be filled by the renderer by a factor of 2.0.  It
         doesn't make sense to set this lower than 1.0.
-        
+
         It is possible to set this on either individual DisplayRegions or on
         overall GraphicsWindows, but you will get better performance for setting it
         on the window rather than its individual DisplayRegions.  Also, you may not
         set it on a DisplayRegion that doesn't have both clear_color() and
         clear_depth() enabled.
-        
+
         This property is only supported on renderers for which it is particularly
         useful--currently, this is the tinydisplay software renderer.  Other kinds
         of renderers allow you to set this property, but ignore it.
@@ -519,7 +519,7 @@ class DrawableRegion:
         will be ignored.  If this returns false, then get_pixel_factor() will
         always return 1.0, regardless of what value you specify for
         set_pixel_zoom().
-        
+
         This may return false if the underlying renderer doesn't support pixel
         zooming, or if you have called this on a DisplayRegion that doesn't have
         both set_clear_color() and set_clear_depth() enabled.
@@ -557,10 +557,10 @@ class WindowHandle(TypedReferenceCount):
     """This object represents a window on the desktop, not necessarily a Panda
     window.  This structure can be assigned to a WindowProperties to indicate a
     parent window.
-    
+
     It also has callbacks so the Panda window can communicate with its parent
     window, which is particularly important when running embedded in a browser.
-    
+
     To create a WindowHandle, you would usually call one of the
     NativeWindowHandle::make_*() methods, depending on the kind of native
     window handle object you already have.
@@ -672,7 +672,7 @@ class WindowProperties:
         """Replaces the "default" WindowProperties with the specified structure.  The
         specified WindowProperties will be returned by future calls to
         get_default(), until clear_default() is called.
-        
+
         Note that this completely replaces the default properties; it is not
         additive.
         """
@@ -753,19 +753,19 @@ class WindowProperties:
     def has_mouse_mode(self) -> bool: ...
     def set_mouse_mode(self, mode: _WindowProperties_MouseMode) -> None:
         """Specifies the mode in which the window is to operate its mouse pointer.
-        
+
         M_absolute: the normal mode in which a mouse pointer operates, where the
         mouse can move outside the window and the mouse coordinates are relative to
         its position in the window.
-        
+
         M_relative (OSX or Unix/X11 only): a mode where only relative movements are
         reported; particularly useful for FPS-style mouse movements where you have
         hidden the mouse pointer and are are more interested in how fast the mouse
         is moving, rather than precisely where the pointer is hovering.
-        
+
         This has no effect on Windows.  On Unix/X11, this requires the Xxf86dga
         extension to be available.
-        
+
         M_confined: this mode reports absolute mouse positions, but confines the
         mouse pointer to the window boundary.  It can portably replace M_relative
         for an FPS, but you need to periodically move the pointer to the center of
@@ -949,21 +949,21 @@ class WindowProperties:
         NULL or unspecified, the window will be created as a toplevel window on the
         desktop; if this is non-NULL, the window will be bound as a child window to
         the indicated parent window.
-        
+
         You should use GraphicsPipe::make_window_handle() to create an instance of
         a WindowHandle object given an appropriate OS-specific window handle
         representation.  Each OS-specific GraphicsPipe class defines a
         make_window_handle() method that returns an appropriate WindowHandle object
         to wrap the particular OS-specific representation.
-        
+
         `(self, parent: int)`:
         Specifies the window that this window should be attached to.
-        
+
         This is a deprecated variant on this method, and exists only for backward
         compatibility.  Future code should use the version of set_parent_window()
         below that receives a WindowHandle object; that interface is much more
         robust.
-        
+
         In this deprecated variant, the actual value for "parent" is platform-
         specific.  On Windows, it is the HWND of the parent window, cast to an
         unsigned integer.  On X11, it is the Window pointer of the parent window,
@@ -1143,12 +1143,12 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
         1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
-        
+
         `(self, i: int, dimensions: LVecBase4f)`:
         Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
         1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
-        
+
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
@@ -1176,10 +1176,10 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Sets the camera that is associated with this DisplayRegion.  There is a
         one-to-many association between cameras and DisplayRegions; one camera may
         be shared by multiple DisplayRegions.
-        
+
         The camera is actually set via a NodePath, which clarifies which instance
         of the camera (if there happen to be multiple instances) we should use.
-        
+
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
@@ -1192,7 +1192,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     def set_active(self, active: bool) -> None:
         """Sets the active flag associated with the DisplayRegion.  If the
         DisplayRegion is marked inactive, nothing is rendered.
-        
+
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
@@ -1204,7 +1204,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Sets the sort value associated with the DisplayRegion.  Within a window,
         DisplayRegions will be rendered in order from the lowest sort value to the
         highest.
-        
+
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
@@ -1217,23 +1217,23 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         a stereo pair, or whether it is a normal, monocular image.  This
         automatically adjusts the lens that is used to render to this DisplayRegion
         to its left or right eye, according to the lens's stereo properties.
-        
+
         When the DisplayRegion is attached to a stereo window (one for which
         is_stereo() returns true), this also specifies which physical channel the
         DisplayRegion renders to.
-        
+
         Normally you would create at least two DisplayRegions for a stereo window,
         one for each of the left and right channels.  The two DisplayRegions may
         share the same camera (and thus the same lens); this parameter is used to
         control the exact properties of the lens when it is used to render into
         this DisplayRegion.
-        
+
         Also see the StereoDisplayRegion, which automates managing a pair of
         left/right DisplayRegions.
-        
+
         An ordinary DisplayRegion may be set to SC_mono, SC_left, or SC_right.  You
         may set SC_stereo only on a StereoDisplayRegion.
-        
+
         This call also resets tex_view_offset to its default value, which is 0 for
         the left eye or 1 for the right eye of a stereo display region, or 0 for a
         mono display region.
@@ -1249,7 +1249,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Sets the current texture view offset for this DisplayRegion.  This is
         normally set to zero.  If nonzero, it is used to select a particular view
         of any multiview textures that are rendered within this DisplayRegion.
-        
+
         For a StereoDisplayRegion, this is normally 0 for the left eye, and 1 for
         the right eye, to support stereo textures.  This is set automatically when
         you call set_stereo_channel().
@@ -1259,7 +1259,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Returns the current texture view offset for this DisplayRegion.  This is
         normally set to zero.  If nonzero, it is used to select a particular view
         of any multiview textures that are rendered within this DisplayRegion.
-        
+
         For a StereoDisplayRegion, this is normally 0 for the left eye, and 1 for
         the right eye, to support stereo textures.
         """
@@ -1269,11 +1269,11 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         rendered even if some of the geometry or textures in the scene are not
         available (e.g.  they have been temporarily paged out).  When this is
         false, the frame will be held up while this data is reloaded.
-        
+
         This flag may also be set on the GraphicsStateGuardian.  It will be
         considered true for a given DisplayRegion only if it is true on both the
         GSG and on the DisplayRegion.
-        
+
         See GraphicsStateGuardian::set_incomplete_render() for more detail.
         """
         ...
@@ -1286,7 +1286,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         which textures are loaded first when multiple textures need to be reloaded
         at once; it also controls the relative priority between asynchronous
         texture loads and asynchronous model or animation loads.
-        
+
         Specifying a larger number here makes the textures rendered by this
         DisplayRegion load up first.  This may be particularly useful to do, for
         instance, for the DisplayRegion that renders the gui.
@@ -1301,7 +1301,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Sets the lens index, allows for multiple lenses to be attached to a camera.
         This is useful for a variety of setups, such as fish eye rendering.  The
         default is 0.
-        
+
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
@@ -1329,15 +1329,15 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     def set_target_tex_page(self, page: int) -> None:
         """This is a special parameter that is only used when rendering the faces of a
         cube map or multipage and/or multiview texture.
-        
+
         This sets up the DisplayRegion to render to the ith page and jth view of
         its associated texture(s); the value must be consistent with the range of
         values availble to the texture.  A normal DisplayRegion that is not
         associated with any particular page should be set to page -1 and view 0.
-        
+
         This is particularly useful when rendering cube maps and/or stereo
         textures.
-        
+
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
@@ -1362,15 +1362,15 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Sets the CallbackObject that will be notified when the DisplayRegion is
         visited during the cull traversal.  This callback will be made during the
         cull thread.
-        
+
         The cull traversal is responsible for determining which nodes are visible
         and within the view frustum, and for accumulating state and transform, and
         generally building up the list of CullableObjects that are to be eventually
         passed to the draw traversal for rendering.
-        
+
         At the time the cull traversal callback is made, the traversal for this
         DisplayRegion has not yet started.
-        
+
         The callback is passed an instance of a DisplayRegionCullCallbackData,
         which contains pointers to the current scene information, as well as the
         current DisplayRegion and GSG.  The callback *replaces* the normal cull
@@ -1390,19 +1390,19 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Sets the CallbackObject that will be notified when the contents of
         DisplayRegion is drawn during the draw traversal.  This callback will be
         made during the draw thread.
-        
+
         The draw traversal is responsible for actually issuing the commands to the
         graphics engine to draw primitives.  Its job is to walk through the list of
         CullableObjects build up by the cull traversal, as quickly as possible,
         issuing the appropriate commands to draw each one.
-        
+
         At the time the draw traversal callback is made, the graphics state is in
         the initial state, and no projection matrix or modelview matrix is in
         effect.  begin_scene() has not yet been called, and no objects have yet
         been drawn.  However, the viewport has already been set to the appropriate
         part of the window, and the clear commands for this DisplayRegion (if any)
         have been issued.
-        
+
         The callback is passed an instance of a DisplayRegionDrawCallbackData,
         which contains pointers to the current scene information, as well as the
         current DisplayRegion and GSG.  The callback *replaces* the normal draw
@@ -1431,10 +1431,10 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     @staticmethod
     def make_screenshot_filename(prefix: str = ...) -> Filename:
         """Synthesizes a suitable default filename for passing to save_screenshot().
-        
+
         The default filename is generated from the supplied prefix and from the
         Config variable screenshot-filename, which contains the following strings:
-        
+
         %~p - the supplied prefix %~f - the frame count %~e - the value of
         screenshot-extension All other % strings in strftime().
         """
@@ -1455,7 +1455,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """`(self)`:
         Captures the most-recently rendered image from the framebuffer and returns
         it as a Texture, or NULL on failure.
-        
+
         `(self, image: PNMImage)`:
         Captures the most-recently rendered image from the framebuffer into the
         indicated PNMImage.  Returns true on success, false on failure.
@@ -1467,11 +1467,11 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     def make_cull_result_graph(self) -> PandaNode:
         """Returns a special scene graph constructed to represent the results of the
         last frame's cull operation.
-        
+
         This will be a hierarchy of nodes, one node for each bin, each of which
         will in term be a parent of a number of GeomNodes, representing the
         geometry drawn in each bin.
-        
+
         This is useful mainly for high-level debugging and abstraction tools; it
         should not be mistaken for the low-level cull result itself, which is
         constructed and maintained internally.  No such scene graph is normally
@@ -1540,11 +1540,11 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     result of a frame of rendering.  The most common kind of GraphicsOutput is
     a GraphicsWindow, which is a real-time window on the desktop, but another
     example is GraphicsBuffer, which is an offscreen buffer.
-    
+
     The actual rendering, and anything associated with the graphics context
     itself, is managed by the associated GraphicsStateGuardian (which might
     output to multiple GraphicsOutput objects).
-    
+
     GraphicsOutputs are not actually writable to bam files, of course, but they
     may be passed as event parameters, so they inherit from
     TypedWritableReferenceCount instead of TypedReferenceCount for that
@@ -1604,7 +1604,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def get_gsg(self) -> GraphicsStateGuardian:
         """Returns the GSG that is associated with this window.  There is a one-to-one
         association between windows and GSG's.
-        
+
         This may return NULL if the graphics context has not yet been created for
         the window, e.g.  before the first frame has rendered; or after the window
         has been closed.
@@ -1639,7 +1639,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def get_texture(self, i: int = ...) -> Texture:
         """Returns the nth texture into which the GraphicsOutput renders.  Returns
         NULL if there is no such texture.
-        
+
         If the texture is non-NULL, it may be applied to geometry to be rendered
         for any other windows or outputs that share the same GSG as this
         GraphicsOutput.  The effect is undefined for windows that share a different
@@ -1664,14 +1664,14 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def add_render_texture(self, tex: Texture, mode: _GraphicsOutput_RenderTextureMode, bitplane: _DrawableRegion_RenderTexturePlane = ...) -> None:
         """Creates a new Texture object, suitable for rendering the contents of this
         buffer into, and appends it to the list of render textures.
-        
+
         If tex is not NULL, it is the texture that will be set up for rendering
         into; otherwise, a new Texture object will be created, in which case you
         may call get_texture() to retrieve the new texture pointer.
-        
+
         You can specify a bitplane to attach the texture to.  the legal choices
         are:
-        
+
         - RTP_depth
         - RTP_depth_stencil
         - RTP_color
@@ -1679,19 +1679,19 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         - RTP_aux_rgba_1
         - RTP_aux_rgba_2
         - RTP_aux_rgba_3
-        
+
         If you do not specify a bitplane to attach the texture to, this routine
         will use a default based on the texture's format:
-        
+
         - F_depth_component attaches to RTP_depth
         - F_depth_stencil attaches to RTP_depth_stencil
         - all other formats attach to RTP_color.
-        
+
         The texture's format will be changed to match the format of the bitplane to
         which it is attached.  For example, if you pass in an F_rgba texture and
         order that it be attached to RTP_depth_stencil, it will turn into an
         F_depth_stencil texture.
-        
+
         Also see make_texture_buffer(), which is a higher-level interface for
         preparing render-to-a-texture mode.
         """
@@ -1700,7 +1700,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """This is a deprecated interface that made sense back when GraphicsOutputs
         could only render into one texture at a time.  From now on, use
         clear_render_textures and add_render_texture instead.
-        
+
         @deprecated Use add_render_texture() instead.
         """
         ...
@@ -1708,7 +1708,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Returns the visible size of the window or buffer, if it is known.  In
         certain cases (e.g.  fullscreen windows), the size may not be known until
         after the object has been fully created.  Check has_size() first.
-        
+
         Certain objects (like windows) may change size spontaneously; this method
         is not thread-safe.  To get the size of a window in a thread-safe manner,
         query get_properties().
@@ -1718,7 +1718,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Returns the visible width of the window or buffer, if it is known.  In
         certain cases (e.g.  fullscreen windows), the size may not be known until
         after the object has been fully created.  Check has_size() first.
-        
+
         Certain objects (like windows) may change size spontaneously; this method
         is not thread-safe.  To get the size of a window in a thread-safe manner,
         query get_properties().
@@ -1728,7 +1728,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Returns the visible height of the window or buffer, if it is known.  In
         certain cases (e.g.  fullscreen windows), the size may not be known until
         after the object has been fully created.  Check has_size() first.
-        
+
         Certain objects (like windows) may change size spontaneously; this method
         is not thread-safe.  To get the size of a window in a thread-safe manner,
         query get_properties().
@@ -1819,7 +1819,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         itself inactive.  This is particularly useful for buffers that are created
         for the purposes of render-to-texture, for static textures that don't need
         to be continually re-rendered once they have been rendered the first time.
-        
+
         Setting the buffer inactive is not the same thing as destroying it.  You
         are still responsible for passing this buffer to
         GraphicsEngine::remove_window() when you no longer need the texture, in
@@ -1838,7 +1838,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Changes the current setting of the inverted flag.  When this is true, the
         scene is rendered into the window upside-down and backwards, that is,
         inverted as if viewed through a mirror placed on the floor.
-        
+
         This is primarily intended to support DirectX (and a few buggy OpenGL
         graphics drivers) that perform a framebuffer-to-texture copy upside-down
         from the usual OpenGL (and Panda) convention.  Panda will automatically set
@@ -1869,11 +1869,11 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         will render in the red (or specified) channel only, while DisplayRegions
         that have the "right" channel set will render in the blue (or specified)
         channel only.
-        
+
         The remaining two parameters specify the particular color channel(s) to
         associate with each eye.  Use the bits defined in
         ColorWriteAttrib::Channels.
-        
+
         This can be used to achieve a cheesy stereo mode in the absence of
         hardware-supported stereo.
         """
@@ -1903,7 +1903,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         (typically the left half: (0, 0.5, 0, 1)), while DisplayRegions that have
         the "right" channel set will render on the part of the window specified by
         sbs_right_dimensions (typically the right half: (0.5, 1, 0, 1)).
-        
+
         This is commonly used in a dual-monitor mode, where a window is opened that
         spans two monitors, and each monitor represents a different eye.
         """
@@ -1961,14 +1961,14 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def set_child_sort(self, child_sort: int) -> None:
         """Specifies the sort value of future offscreen buffers created by
         make_texture_sort().
-        
+
         The purpose of this method is to allow the user to limit the sort value
         chosen for a buffer created via make_texture_buffer().  Normally, this
         buffer will be assigned a value of get_sort() - 1, so that it will be
         rendered before this window is rendered; but sometimes this isn't
         sufficiently early, especially if other buffers also have a view into the
         same scene.
-        
+
         If you specify a value here, then new buffers created via
         make_texture_buffer() will be given that sort value instead of get_sort() -
         1.
@@ -1994,16 +1994,16 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def make_display_region(self, dimensions: Vec4f = ...) -> DisplayRegion:
         """`(self)`:
         Creates a new DisplayRegion that covers the entire window.
-        
+
         If is_stereo() is true for this window, and default-stereo-camera is
         configured true, this actually makes a StereoDisplayRegion.  Call
         make_mono_display_region() or make_stereo_display_region() if you want to
         insist on one or the other.
-        
+
         `(self, dimensions: LVecBase4f)`; `(self, l: float, r: float, b: float, t: float)`:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
-        
+
         If is_stereo() is true for this window, and default-stereo-camera is
         configured true, this actually makes a StereoDisplayRegion.  Call
         make_mono_display_region() or make_stereo_display_region() if you want to
@@ -2016,17 +2016,17 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def make_mono_display_region(self, dimensions: Vec4f = ...) -> DisplayRegion:
         """`(self)`; `(self, l: float, r: float, b: float, t: float)`:
         Creates a new DisplayRegion that covers the entire window.
-        
+
         This generally returns a mono DisplayRegion, even if is_stereo() is true.
         However, if side-by-side stereo is enabled, this will return a
         StereoDisplayRegion whose two eyes are both set to SC_mono.  (This is
         necessary because in side-by-side stereo mode, it is necessary to draw even
         mono DisplayRegions twice).
-        
+
         `(self, dimensions: LVecBase4f)`:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
-        
+
         This generally returns a mono DisplayRegion, even if is_stereo() is true.
         However, if side-by-side stereo is enabled, this will return a
         StereoDisplayRegion whose two eyes are both set to SC_mono.  (This is
@@ -2040,13 +2040,13 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def make_stereo_display_region(self, dimensions: Vec4f = ...) -> StereoDisplayRegion:
         """`(self)`; `(self, l: float, r: float, b: float, t: float)`:
         Creates a new DisplayRegion that covers the entire window.
-        
+
         This always returns a stereo DisplayRegion, even if is_stereo() is false.
-        
+
         `(self, dimensions: LVecBase4f)`:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
-        
+
         This always returns a stereo DisplayRegion, even if is_stereo() is false.
         """
         ...
@@ -2055,7 +2055,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def remove_display_region(self, display_region: DisplayRegion) -> bool:
         """Removes the indicated DisplayRegion from the window, and destructs it if
         there are no other references.
-        
+
         Returns true if the DisplayRegion is found and removed, false if it was not
         a part of the window.
         """
@@ -2071,7 +2071,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         for rendering.  It is a placeholder only, to indicate the dimensions of the
         window, and is usually used internally for purposes such as clearing the
         window, or grabbing a screenshot of the window.
-        
+
         There are very few applications that require access to this DisplayRegion.
         Normally, you should create your own DisplayRegion that covers the window,
         if you want to render to the window.
@@ -2086,7 +2086,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         display region is not automatically removed; you must explicitly call
         remove_display_region() on it after replacing it with this method, if you
         wish it to be removed.
-        
+
         Normally, there is no reason to change the overlay DisplayRegion, so this
         method should be used only in very unusual circumstances.
         """
@@ -2119,26 +2119,26 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Creates and returns an offscreen buffer for rendering into, the result of
         which will be a texture suitable for applying to geometry within the scene
         rendered into this window.
-        
+
         If you pass zero as the buffer size, the buffer will have the same size as
         the host window, and will automatically be resized when the host window is.
-        
+
         If tex is not NULL, it is the texture that will be set up for rendering
         into; otherwise, a new Texture object will be created.  In either case, the
         target texture can be retrieved from the return value with
         buffer->get_texture() (assuming the return value is not NULL).
-        
+
         If to_ram is true, the buffer will be set up to download its contents to
         the system RAM memory associated with the Texture object, instead of
         keeping it strictly within texture memory; this is much slower, but it
         allows using the texture with any GSG.
-        
+
         This will attempt to be smart about maximizing render performance while
         minimizing framebuffer waste.  It might return a GraphicsBuffer set to
         render directly into a texture, if possible; or it might return a
         ParasiteBuffer that renders into this window.  The return value is NULL if
         the buffer could not be created for some reason.
-        
+
         When you are done using the buffer, you should remove it with a call to
         GraphicsEngine::remove_window().
         """
@@ -2148,12 +2148,12 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         buffer suitable for rendering to a texture that can be assigned to geometry
         in this window, but in this case, the buffer is set up to render the six
         faces of a cube map.
-        
+
         The buffer is automatically set up with six display regions and six
         cameras, each of which are assigned the indicated draw_mask and parented to
         the given camera_rig node (which you should then put in your scene to
         render the cube map from the appropriate point of view).
-        
+
         You may take the texture associated with the buffer and apply it to
         geometry, particularly with TexGenAttrib::M_world_cube_map also in effect,
         to apply a reflection of everything seen by the camera rig.
@@ -2165,7 +2165,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         filename, or empty string if the screenshot failed.  The default filename
         is generated from the supplied prefix and from the Config variable
         screenshot-filename, which contains the following strings:
-        
+
         %~p - the supplied prefix %~f - the frame count %~e - the value of
         screenshot-extension All other % strings in strftime().
         """
@@ -2188,7 +2188,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """`(self)`:
         Captures the most-recently rendered image from the framebuffer and returns
         it as Texture, or NULL on failure.
-        
+
         `(self, image: PNMImage)`:
         Captures the most-recently rendered image from the framebuffer into the
         indicated PNMImage.  Returns true on success, false on failure.
@@ -2202,7 +2202,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         this GraphicsOutput is aligned properly to the polygon.  The GraphicsOutput
         promises to surgically update the Geom inside the PandaNode if necessary to
         maintain this invariant.
-        
+
         Each invocation of this function returns a freshly- allocated PandaNode.
         You can therefore safely modify the RenderAttribs of the PandaNode.  The
         PandaNode is initially textured with the texture of this GraphicOutput.
@@ -2324,7 +2324,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     """Encapsulates all the communication with a particular instance of a given
     rendering backend.  Tries to guarantee that redundant state-change requests
     are not issued (hence "state guardian").
-    
+
     There will be one of these objects for each different graphics context
     active in the system.
     """
@@ -2517,17 +2517,17 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         rendered even if some of the geometry or textures in the scene are not
         available (e.g.  they have been temporarily paged out).  When this is
         false, the frame will be held up while this data is reloaded.
-        
+
         Setting this true allows for a smoother frame rate, but occasionally parts
         of the frame will be invisible or missing (they will generally come in
         within a second or two).  Setting this false guarantees that every frame
         will be complete, but may cause more chugs as things are loaded up at
         runtime.
-        
+
         You may want to set this false during loading screens, to guarantee that
         all of your assets are available by the time you take the loading screen
         down.
-        
+
         This flag may also be set individually on each DisplayRegion.  It will be
         considered true for a given DisplayRegion only if it is true on both the
         GSG and on the DisplayRegion.
@@ -2571,7 +2571,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         exceed this number, the lowest-priority texture stages will not be applied.
         Use TextureStage::set_priority() to adjust the relative importance of the
         different texture stages.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2580,7 +2580,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """Returns the largest possible texture size in any one dimension for a 3-d
         texture, or -1 if there is no particular limit.  Returns 0 if 3-d textures
         are not supported.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2588,7 +2588,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def get_max_2d_texture_array_layers(self) -> int:
         """Returns the largest possible number of pages, or -1 if there is no
         particular limit.  Returns 0 if 2-d texture arrays not supported.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2597,7 +2597,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """Returns the largest possible texture size in any one dimension for a cube
         map texture, or -1 if there is no particular limit.  Returns 0 if cube map
         textures are not supported.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2605,7 +2605,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def get_max_buffer_texture_size(self) -> int:
         """Returns the largest possible buffer texture size, or -1 if there is no
         particular limit.  Returns 0 if cube map textures are not supported.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2654,7 +2654,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def get_max_lights(self) -> int:
         """Returns the maximum number of simultaneous lights that may be rendered on
         geometry, or -1 if there is no particular limit.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2662,7 +2662,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def get_max_clip_planes(self) -> int:
         """Returns the maximum number of simultaneous clip planes that may be applied
         to geometry, or -1 if there is no particular limit.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2673,7 +2673,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         is 0, then the hardware (or the graphics backend) doesn't support soft-
         skinned vertices (in which case Panda will animate the vertices in
         software).
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2684,7 +2684,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         get_max_transforms() is nonzero), then the graphics hardware (or API)
         doesn't support indexed transforms, but can support direct transform
         references.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2694,7 +2694,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         to-texture copy results in a texture that is upside-down and backwards from
         Panda's usual convention; that is, it copies into a texture from the bottom
         up instead of from the top down.
-        
+
         If this is true, then on offscreen GraphicsBuffer created for the purposes
         of rendering into a texture should be created with the invert flag set
         true, to compensate.  Panda will do this automatically if you create an
@@ -2785,7 +2785,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         you exceed this number, the lowest-priority render targets will not be
         applied.  Use RenderTarget::set_priority() to adjust the relative
         importance of the different render targets.
-        
+
         The value returned may not be meaningful until after the graphics context
         has been fully created (e.g.  the window has been opened).
         """
@@ -2820,7 +2820,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         Returns true if this particular GSG can implement (or would prefer to
         implement) an alpha scale via an additional Texture layer, or false if we
         need to actually munge the alpha.
-        
+
         `(self, tex_attrib: TextureAttrib)`:
         This variant of get_alpha_scale_via_texture() answers the question of
         whether the GSG can implement an alpha scale via an additional Texture
@@ -2858,7 +2858,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         by this GSG.  This overrides the value set on individual textures via
         Texture::set_quality_level().  Set this to Texture::QL_default in order to
         allow the individual texture quality levels to be respected.
-        
+
         This is mainly useful for the tinydisplay software renderer.  See
         Texture::set_quality_level().
         """
@@ -2866,7 +2866,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def get_texture_quality_override(self) -> _Texture_QualityLevel:
         """Returns the global quality_level override specified by
         set_texture_quality_override.
-        
+
         This is mainly useful for the tinydisplay software renderer.  See
         Texture::set_quality_level().
         """
@@ -2986,7 +2986,7 @@ class GraphicsEngine(ReferenceCount):
     rendering to all all of the active windows; although it is possible to have
     multiple GraphicsEngine objects if multiple synchronicity groups are
     required.
-    
+
     The GraphicsEngine is responsible for managing the various cull and draw
     threads.  The application simply calls engine->render_frame() and considers
     it done.
@@ -3022,7 +3022,7 @@ class GraphicsEngine(ReferenceCount):
         cause windows to sync and flip as soon as they have finished drawing,
         rather than waiting for all of the windows to finish drawing first so they
         can flip together.
-        
+
         This only affects the timing of when the flip occurs.  If this is true (the
         default), the flip occurs before render_frame() returns.  If this is false,
         the flip occurs whenever flip_frame() is called, or at the beginning of the
@@ -3060,7 +3060,7 @@ class GraphicsEngine(ReferenceCount):
         GraphicsOutput object, e.g.  the main window; this allows the buffer to
         adapt itself to that window's framebuffer properties, and allows maximum
         sharing of resources.
-        
+
         `(self, gsg: GraphicsStateGuardian, name: str, sort: int, x_size: int, y_size: int)`:
         Syntactic shorthand for make_output.  This flavor accepts a GSG rather than
         a GraphicsOutput as the first parameter, which is too limiting and
@@ -3068,7 +3068,7 @@ class GraphicsEngine(ReferenceCount):
         graphics hardware prefers that.  It also attempts to request specific
         framebuffer properties and may therefore do a poorer job of sharing the GSG
         between the old buffer and the new.
-        
+
         For these reasons, this variant is a poor choice unless you are creating an
         offscreen buffer for the first time, without an onscreen window already in
         existence.  If you already have an onscreen window, you should use the
@@ -3087,7 +3087,7 @@ class GraphicsEngine(ReferenceCount):
         shouldn't be called by user code as make_output normally does this under
         the hood; it may be useful in esoteric cases in which a custom window
         object is used.
-        
+
         This can be called during the rendering loop, unlike make_output(); the
         window will be opened before the next frame begins rendering.  Because it
         doesn't call open_windows(), however, it's not guaranteed that the window
@@ -3101,10 +3101,10 @@ class GraphicsEngine(ReferenceCount):
         allowing the window to be destructed if there are no other references to
         it.  (However, the window may not be actually closed until next frame, if
         it is controlled by a sub-thread.)
-        
+
         The return value is true if the window was removed, false if it was not
         found.
-        
+
         Unlike remove_all_windows(), this function does not terminate any of the
         threads that may have been started to service this window; they are left
         running (since you might open a new window later on these threads).  If
@@ -3176,20 +3176,20 @@ class GraphicsEngine(ReferenceCount):
         image of the indicated texture and store it in the texture's ram_image
         field.  The image can then be written to disk via Texture::write(), or
         otherwise manipulated on the CPU.
-        
+
         This is useful for retrieving the contents of a texture that has been
         somehow generated on the graphics card, instead of having been loaded the
         normal way via Texture::read() or Texture::load(). It is particularly
         useful for getting the data associated with a compressed texture image.
-        
+
         Since this requires a round-trip to the draw thread, it may require waiting
         for the current thread to finish rendering if it is called in a
         multithreaded environment.  However, you can call this several consecutive
         times on different textures for little additional cost.
-        
+
         If the texture has not yet been loaded to the GSG in question, it will be
         loaded immediately.
-        
+
         The return value is true if the operation is successful, false otherwise.
         """
         ...
@@ -3198,12 +3198,12 @@ class GraphicsEngine(ReferenceCount):
         the given ShaderAttrib using the given work group counts.  This can act as
         an interface for running a one-off compute shader, without having to store
         it in the scene graph using a ComputeNode.
-        
+
         Since this requires a round-trip to the draw thread, it may require waiting
         for the current thread to finish rendering if it is called in a
         multithreaded environment.  However, you can call this several consecutive
         times on different textures for little additional cost.
-        
+
         The return value is true if the operation is successful, false otherwise.
         """
         ...
@@ -3252,7 +3252,7 @@ class GraphicsThreadingModel:
         differentiate threads.  The two names may be the same, meaning the same
         thread, or each may be the empty string, which represents the previous
         thread.
-        
+
         Thus, for example, "cull/draw" indicates that the window will be culled in
         a thread called "cull", and drawn in a separate thread called "draw".
         "draw/draw" or simply "draw" indicates the window will be culled and drawn
@@ -3261,7 +3261,7 @@ class GraphicsThreadingModel:
         named "draw".  The empty string, "" or "/", indicates the thread will be
         culled and drawn in the main thread; that is to say, a single-process
         model.
-        
+
         Finally, if the threading model begins with a "-" character, then cull and
         draw are run simultaneously, in the same thread, with no binning or state
         sorting.  It simplifies the cull process but it forces the scene to render
@@ -3349,7 +3349,7 @@ class StereoDisplayRegion(DisplayRegion):
     represented here does not have a physical association with the window, but
     it pretends it does.  Instead, it maintains a pointer to the left and right
     DisplayRegions separately.
-    
+
     Operations on the StereoDisplayRegion object affect both left and right
     eyes together.  To access the left or right eyes independently, use
     get_left_eye() and get_right_eye().
@@ -3432,7 +3432,7 @@ class FrameBufferProperties:
         """Sets the number of requested color bits as a single number that represents
         the sum of the individual numbers of red, green and blue bits.  Panda won't
         care how the individual bits are divided up.
-        
+
         See also set_rgba_bits, which allows you to specify requirements for the
         individual components.
         """
@@ -3502,11 +3502,11 @@ class FrameBufferProperties:
     def is_single_buffered(self) -> bool: ...
     def get_quality(self, reqs: FrameBufferProperties) -> int:
         """Assumes that these properties are a description of a window.
-        
+
         Measures how well this window satisfies a specified set of requirements.  A
         higher quality number means that more requirements were satisfied.  A
         quality of zero means that the window is unsuitable.
-        
+
         The routine deducts a lot if the window fails to provide a requested
         feature.  It deducts less if the window provides a feature, but at a
         degraded level of functionality (ie, the user asks for rgba8, color, but
@@ -3514,7 +3514,7 @@ class FrameBufferProperties:
         for unnecessary features.  For example, if the window has an accumulation
         buffer when one is not requested will reduce quality slightly.  Maximum
         quality is obtained when the window exactly matches the request.
-        
+
         If you want to know whether the window satisfies all of the requirements,
         use the "subsumes" function.
         """
@@ -3545,7 +3545,7 @@ class FrameBufferProperties:
     def setup_color_texture(self, tex: Texture) -> bool:
         """Sets the texture up for render-to-texture matching these framebuffer
         properties.
-        
+
         Returns true if there was a format that had enough bits, false otherwise.
         Of course, this is no guarantee that a particular graphics back-end
         supports rendering to textures of that format.
@@ -3554,7 +3554,7 @@ class FrameBufferProperties:
     def setup_depth_texture(self, tex: Texture) -> bool:
         """Sets the texture up for render-to-texture matching these framebuffer
         properties.
-        
+
         Returns true if there was a format that had enough bits, false otherwise.
         Of course, this is no guarantee that a particular graphics back-end
         supports rendering to textures of that format.
@@ -3799,7 +3799,7 @@ class GraphicsWindow(GraphicsOutput):
     def request_properties(self, requested_properties: WindowProperties) -> None:
         """Requests a property change on the window.  For example, use this method to
         request a window change size or minimize or something.
-        
+
         The change is not made immediately; rather, the request is saved and will
         be applied the next time the window task is run (probably at the next
         frame).
@@ -3821,7 +3821,7 @@ class GraphicsWindow(GraphicsOutput):
     def set_window_event(self, window_event: str) -> None:
         """Changes the name of the event that is generated when this window is
         modified externally, e.g.  to be resized or closed by the user.
-        
+
         By default, all windows have the same window event unless they are
         explicitly changed.  When the event is generated, it includes one
         parameter: the window itself.
@@ -3836,7 +3836,7 @@ class GraphicsWindow(GraphicsOutput):
     def set_close_request_event(self, close_request_event: str) -> None:
         """Sets the event that is triggered when the user requests to close the
         window, e.g.  via alt-F4, or clicking on the close box.
-        
+
         The default for each window is for this event to be the empty string, which
         means the window-close request is handled immediately by Panda (and the
         window will be closed without the app getting a chance to intervene).  If
@@ -3844,7 +3844,7 @@ class GraphicsWindow(GraphicsOutput):
         instead the event is thrown.  It is then up to the app to respond
         appropriately, for instance by presenting an "are you sure?"  dialog box,
         and eventually calling close_window() when the user is sure.
-        
+
         It is considered poor form to set this string and then not handle the
         event.  This can frustrate the user by making it difficult for him to
         cleanly shut down the application (and may force the user to hard-kill the
@@ -3921,7 +3921,7 @@ class GraphicsWindow(GraphicsOutput):
     def move_pointer(self, device: int, x: int, y: int) -> bool:
         """Forces the pointer to the indicated position within the window, if
         possible.
-        
+
         Returns true if successful, false on failure.  This may fail if the mouse
         is not currently within the window, or if the API doesn't support this
         operation.
@@ -4042,9 +4042,9 @@ class CallbackGraphicsWindow(GraphicsWindow):
         """Sets the CallbackObject that will be notified when this window is polled
         for window events, including mouse and keyboard events, as well as window
         resize events and other system-generated events.
-        
+
         This callback will receive a CallbackGraphicsWindow::EventsCallbackData.
-        
+
         This callback should process any system-generated events, and call
         data->upcall() to process requested property change requests made via
         request_properties().
@@ -4059,7 +4059,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
     def set_properties_callback(self, object: CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this window receives a
         property change request from user code (e.g.  via request_properties).
-        
+
         This callback will receive a
         CallbackGraphicsWindow::PropertiesCallbackData, which provides a
         get_properties() method that returns a modifiable reference to a
@@ -4080,7 +4080,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         """Sets the CallbackObject that will be notified when this window is invoked
         (in the draw thread) to render its contents, and/or flip the graphics
         buffers.
-        
+
         This callback will actually serve several different functions.  It
         receivces a RenderCallbackData, and you can query data->get_callback_type()
         to return the actual function of each particular callback.
@@ -4205,12 +4205,12 @@ class GraphicsPipeSelection:
         Creates a new GraphicsPipe of the indicated type (or a type more specific
         than the indicated type, if necessary) and returns it.  Returns NULL if the
         type cannot be matched.
-        
+
         `(self, type_name: str, module_name: str = ...)`:
         Creates a new GraphicsPipe of the indicated type (or a type more specific
         than the indicated type, if necessary) and returns it.  Returns NULL if the
         type cannot be matched.
-        
+
         If the type is not already defined, this will implicitly load the named
         module, or if module_name is empty, it will call load_aux_modules().
         """
@@ -4259,12 +4259,12 @@ class GraphicsPipeSelection:
 class MouseAndKeyboard(DataNode):
     """Reads the mouse and/or keyboard data sent from a GraphicsWindow, and
     transmits it down the data graph.
-    
+
     The mouse and keyboard devices are bundled together into one device here,
     because they interrelate so much.  A mouse might be constrained by the
     holding down of the shift key, for instance, or the clicking of the mouse
     button might be handled in much the same way as a keyboard key.
-    
+
     Mouse data is sent down the data graph as an x,y position as well as the
     set of buttons currently being held down; keyboard data is sent down as a
     set of keypress events in an EventDataTransition.  To throw these events to
@@ -4286,7 +4286,7 @@ class MouseAndKeyboard(DataNode):
 class NativeWindowHandle(WindowHandle):
     """This subclass of WindowHandle exists to allow simple creation of a
     WindowHandle of the appropriate type to the current OS.
-    
+
     This class exists for name scoping only.  Don't use the constructor
     directly; use one of the make_* methods.
     """
@@ -4303,7 +4303,7 @@ class NativeWindowHandle(WindowHandle):
         """Constructs a new WindowHandle that references a SubprocessWindowBuffer read
         in another process, with the named pipe filename that it uses for
         communication.
-        
+
         This is (at present, and maybe always) useful only on the OS X platform,
         where parenting child windows is particularly problematic.
         """
@@ -4316,15 +4316,15 @@ class ParasiteBuffer(GraphicsOutput):
     GraphicsBuffer, effectively allowing rendering to an offscreen buffer,
     except it does not create any framebuffer space for itself.  Instead, it
     renders into the framebuffer owned by some other GraphicsOutput.
-    
+
     The x_size and y_size must therefore fit within the bounds of the source
     GraphicsOutput.
-    
+
     Since the framebuffer will be subsequently cleared when the actual owner
     draws in it later, this only makes sense if we are going to copy the
     contents of the framebuffer to a texture immediately after we draw it.
     Thus, has_texture() is implicitly true for a ParasiteBuffer.
-    
+
     This class is useful to render offscreen to a texture while preventing the
     waste of framebuffer memory for API's that are unable to render directly
     into a texture (and must render into a separate framebuffer first and then

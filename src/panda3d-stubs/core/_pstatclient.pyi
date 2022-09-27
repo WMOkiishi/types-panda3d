@@ -32,7 +32,7 @@ class PStatClient:
         packets than it can handle if the frame rate is especially good (e.g.  if
         nothing is onscreen at the moment).  Set this parameter to a reasonable
         number to prevent this from happening.
-        
+
         This number specifies the maximum number of packets that will be sent to
         the server per second, per thread.
         """
@@ -191,14 +191,14 @@ class PStatClient:
 class PStatCollector:
     """A lightweight class that represents a single element that may be timed
     and/or counted via stats.
-    
+
     Collectors can be used to measure two different kinds of values: elapsed
     time, and "other".
-    
+
     To measure elapsed time, call start() and stop() as appropriate to bracket
     the section of code you want to time (or use a PStatTimer to do this
     automatically).
-    
+
     To measure anything else, call set_level() and/or add_level() to set the
     "level" value associated with this collector.  The meaning of the value set
     for the "level" is entirely up to the user; it may represent the number of
@@ -214,7 +214,7 @@ class PStatCollector:
         Creates a new PStatCollector, ready to start accumulating data.  The name
         of the collector uniquely identifies it among the other collectors; if two
         collectors share the same name then they are really the same collector.
-        
+
         The parent is the collector that conceptually includes all of the time
         measured for this collector.  For instance, a particular character's
         animation time is owned by the "Animation" collector, which is in turn
@@ -222,21 +222,21 @@ class PStatCollector:
         the time spent in a particular collector is completely nested within time
         spent in its parent's collector.  If parent is the empty string, the
         collector is owned by "Frame".
-        
+
         This constructor does not take a client pointer; it always creates the new
         collector on the same client as its parent.
-        
+
         `(self, name: str, client: PStatClient = ...)`:
         Creates a new PStatCollector, ready to start accumulating data.  The name
         of the collector uniquely identifies it among the other collectors; if two
         collectors share the same name then they are really the same collector.
-        
+
         The name may also be a compound name, something like "Cull:Sort", which
         indicates that this is a collector named "Sort", a child of the collector
         named "Cull". The parent may also be named explicitly by reference in the
         other flavor of the constructor; see further comments on this for that
         constructor.
-        
+
         If the client pointer is non-null, it specifies a particular client to
         register the collector with; otherwise, the global client is used.
         """
@@ -267,7 +267,7 @@ class PStatCollector:
         """`(self)`:
         Returns true if this particular collector is active on the default thread,
         and we are currently transmitting PStats data.
-        
+
         `(self, thread: PStatThread)`:
         Returns true if this particular collector is active on the indicated
         thread, and we are currently transmitting PStats data.
@@ -277,7 +277,7 @@ class PStatCollector:
         """`(self)`:
         Returns true if this particular collector has been started on the default
         thread, or false otherwise.
-        
+
         `(self, thread: PStatThread)`:
         Returns true if this particular collector has been started on the indicated
         thread, or false otherwise.
@@ -288,10 +288,10 @@ class PStatCollector:
         """`(self)`:
         Starts this particular timer ticking.  This should be called before the
         code you want to measure.
-        
+
         `(self, thread: PStatThread)`:
         Starts this timer ticking within a particular thread.
-        
+
         `(self, thread: PStatThread, as_of: float)`:
         Marks that the timer should have been started as of the indicated time.
         This must be a time based on the PStatClient's clock (see
@@ -306,10 +306,10 @@ class PStatCollector:
         """`(self)`:
         Stops this timer.  This should be called after the code you want to
         measure.
-        
+
         `(self, thread: PStatThread)`:
         Stops this timer within a particular thread.
-        
+
         `(self, thread: PStatThread, as_of: float)`:
         Marks that the timer should have been stopped as of the indicated time.
         This must be a time based on the PStatClient's clock (see
@@ -324,7 +324,7 @@ class PStatCollector:
         Removes the level setting associated with this collector for the main
         thread.  The collector will no longer show up on any level graphs in the
         main thread.  This implicitly calls flush_level().
-        
+
         `(self, thread: PStatThread)`:
         Removes the level setting associated with this collector for the indicated
         thread.  The collector will no longer show up on any level graphs in this
@@ -336,7 +336,7 @@ class PStatCollector:
         """`(self, thread: PStatThread, level: float)`:
         Sets the level setting associated with this collector for the indicated
         thread to the indicated value.
-        
+
         `(self, level: float)`:
         Sets the level setting associated with this collector for the main thread
         to the indicated value.  This implicitly calls flush_level().
@@ -351,13 +351,13 @@ class PStatCollector:
         associated with this collector for the indicated thread.  If the collector
         did not already have a level setting for this thread, it is initialized to
         0.
-        
+
         `(self, increment: float)`:
         Adds the indicated increment (which may be negative) to the level setting
         associated with this collector for the main thread.  If the collector did
         not already have a level setting for the main thread, it is initialized to
         0.
-        
+
         As an optimization, the data is not immediately set to the PStatClient.  It
         will be sent the next time flush_level() is called.
         """
@@ -371,13 +371,13 @@ class PStatCollector:
         setting associated with this collector for the indicated thread.  If the
         collector did not already have a level setting for this thread, it is
         initialized to 0.
-        
+
         `(self, decrement: float)`:
         Subtracts the indicated decrement (which may be negative) to the level
         setting associated with this collector for the main thread.  If the
         collector did not already have a level setting for the main thread, it is
         initialized to 0.
-        
+
         As an optimization, the data is not immediately set to the PStatClient.  It
         will be sent the next time flush_level() is called.
         """
@@ -399,7 +399,7 @@ class PStatCollector:
         """`(self)`:
         Returns the current level value of the given collector in the main thread.
         This implicitly calls flush_level().
-        
+
         `(self, thread: PStatThread)`:
         Returns the current level value of the given collector.
         """
@@ -473,7 +473,7 @@ class PStatThread:
         """`(self, client: PStatClient, index: int)`:
         Normally, this constructor is called only from PStatClient.  Use one of the
         constructors below to create your own Thread.
-        
+
         `(self, thread: Thread, client: PStatClient = ...)`:
         Creates a new named thread.  This will be used to unify tasks that share a
         common thread, and differentiate tasks that occur in different threads.
@@ -488,7 +488,7 @@ class PStatThread:
         """This must be called at the start of every "frame", whatever a frame may be
         deemed to be, to accumulate all the stats that have collected so far for
         the thread and ship them off to the server.
-        
+
         Calling PStatClient::thread_tick() will automatically call this for any
         threads with the indicated sync name.
         """

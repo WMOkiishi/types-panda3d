@@ -61,7 +61,7 @@ class EggUserData(TypedReferenceCount):
     """This is a base class for a user-defined data type to extend egg structures
     in processing code.  The user of the egg library may derive from
     EggUserData to associate any arbitrary data with various egg objects.
-    
+
     However, this data will not be written out to the disk when the egg file is
     written; it is an in-memory object only.
     """
@@ -79,14 +79,14 @@ class EggObject(TypedReferenceCount):
         EggUserData-derived object.  The egg library will do nothing with this
         pointer, except to hold its reference count and return the pointer on
         request.
-        
+
         The EggObject maintains multiple different EggUserData pointers, one for
         each unique type (as reported by get_type()).  If you know that only one
         type of EggUserData object will be added in your application, you may use
         the query functions that accept no parameters, but it is recommended that
         in general you pass in the type of your particular user data, to allow
         multiple applications to coexist in the same egg data.
-        
+
         This pointer is also copied by the copy assignment operator and copy
         constructor.
         """
@@ -95,7 +95,7 @@ class EggObject(TypedReferenceCount):
         """`(self)`:
         Returns the user data pointer most recently stored on this object, or NULL
         if nothing was previously stored.
-        
+
         `(self, type: TypeHandle)`:
         Returns the user data pointer of the indicated type, if it exists, or NULL
         if it does not.
@@ -105,7 +105,7 @@ class EggObject(TypedReferenceCount):
         """`(self)`:
         Returns true if a generic user data pointer has recently been set and not
         yet cleared, false otherwise.
-        
+
         `(self, type: TypeHandle)`:
         Returns true if the user data pointer of the indicated type has been set,
         false otherwise.
@@ -114,7 +114,7 @@ class EggObject(TypedReferenceCount):
     def clear_user_data(self, type: TypeHandle = ...) -> None:
         """`(self)`:
         Removes *all* user data pointers from the node.
-        
+
         `(self, type: TypeHandle)`:
         Removes the user data pointer of the indicated type.
         """
@@ -173,7 +173,7 @@ class EggNode(EggNamedObject):
     def get_vertex_frame(self) -> LMatrix4d:
         """Returns the coordinate frame of the vertices referenced by primitives at or
         under this node.  This is not the same as get_node_frame().
-        
+
         Generally, vertices in an egg file are stored in the global coordinate
         space, regardless of the transforms defined at each node.  Thus,
         get_vertex_frame() will usually return the identity transform (global
@@ -181,7 +181,7 @@ class EggNode(EggNamedObject):
         their vertices in the coordinate system under effect at the time of the
         <Instance>.  Thus, nodes under an <Instance> entry may return this non-
         identity matrix.
-        
+
         Specifically, this may return a non-identity matrix only if
         is_local_coord() is true.
         """
@@ -205,7 +205,7 @@ class EggNode(EggNamedObject):
         """Returns the transformation matrix suitable for converting the vertices as
         read from the egg file into the coordinate space of the node.  This is the
         same thing as:
-        
+
         get_vertex_frame() * get_node_frame_inv()
         """
         ...
@@ -213,7 +213,7 @@ class EggNode(EggNamedObject):
         """Returns the transformation matrix suitable for converting vertices in the
         coordinate space of the node to the appropriate coordinate space for
         storing in the egg file.  This is the same thing as:
-        
+
         get_node_frame() * get_vertex_frame_inv()
         """
         ...
@@ -263,7 +263,7 @@ class EggNode(EggNamedObject):
         graph and below.  If an instance node is encountered, removes the instance
         and applies the transform to its vertices, duplicating vertices if
         necessary.
-        
+
         Since this function may result in duplicated vertices, it may be a good
         idea to call remove_unused_vertices() after calling this.
         """
@@ -336,7 +336,7 @@ class EggNode(EggNamedObject):
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "indexed" scalar set.  Returns the value of the indexed scalar
         if it is found, or false if it is not.
-        
+
         In other words, returns true if the "indexed" flag is in effect for the
         indicated node, false otherwise.
         """
@@ -345,7 +345,7 @@ class EggNode(EggNamedObject):
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "decal" flag set.  Returns the value of the decal flag if it
         is found, or false if it is not.
-        
+
         In other words, returns true if the "decal" flag is in effect for the
         indicated node, false otherwise.
         """
@@ -396,7 +396,7 @@ class EggNode(EggNamedObject):
 class EggGroupNode(EggNode):
     """A base class for nodes in the hierarchy that are not leaf nodes.  (See also
     EggGroup, which is specifically the "<Group>" node in egg.)
-    
+
     An EggGroupNode is an STL-style container of pointers to EggNodes, like a
     vector.  Functions push_back()/pop_back() and insert()/erase() are provided
     to manipulate the list.  The list may also be operated on (read-only) via
@@ -436,7 +436,7 @@ class EggGroupNode(EggNode):
         list of children without using the iterator class; however, this is non-
         thread-safe, and so is not recommended except for languages other than C++
         which cannot use the iterators.
-        
+
         It is an error to call this without previously calling get_first_child().
         """
         ...
@@ -490,11 +490,11 @@ class EggGroupNode(EggNode):
         and below so that they accurately reflect the vertex positions.  A shared
         edge between two polygons (even in different groups) is considered smooth
         if the angle between the two edges is less than threshold degrees.
-        
+
         This function also removes degenerate polygons that do not have enough
         vertices to define a normal.  It does not affect normals for other kinds of
         primitives like Nurbs or Points.
-        
+
         This function does not remove or adjust vertices in the vertex pool; it
         only adds new vertices with the correct normals.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
@@ -505,11 +505,11 @@ class EggGroupNode(EggNode):
         and below so that they accurately reflect the vertex positions.  Normals
         are removed from the vertices and defined only on polygons, giving the
         geometry a faceted appearance.
-        
+
         This function also removes degenerate polygons that do not have enough
         vertices to define a normal.  It does not affect normals for other kinds of
         primitives like Nurbs or Points.
-        
+
         This function does not remove or adjust vertices in the vertex pool; it
         only adds new vertices with the normals removed.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
@@ -518,7 +518,7 @@ class EggGroupNode(EggNode):
     def strip_normals(self) -> None:
         """Removes all normals from primitives, and the vertices they reference, at
         this node and below.
-        
+
         This function does not remove or adjust vertices in the vertex pool; it
         only adds new vertices with the normal removed.  Thus, it is a good idea to
         call remove_unused_vertices() after calling this.
@@ -528,12 +528,12 @@ class EggGroupNode(EggNode):
         """This function recomputes the tangent and binormal for the named texture
         coordinate set for all vertices at this level and below.  Use the empty
         string for the default texture coordinate set.
-        
+
         It is necessary for each vertex to already have a normal (or at least a
         polygon normal), as well as a texture coordinate in the named texture
         coordinate set, before calling this function.  You might precede this with
         recompute_vertex_normals() to ensure that the normals exist.
-        
+
         Like recompute_vertex_normals(), this function does not remove or adjust
         vertices in the vertex pool; it only adds new vertices with the new
         tangents and binormals computed.  Thus, it is a good idea to call
@@ -550,7 +550,7 @@ class EggGroupNode(EggNode):
         """Replace all higher-order polygons at this point in the scene graph and
         below with triangles.  Returns the total number of new triangles produced,
         less degenerate polygons removed.
-        
+
         If flags contains T_polygon and T_convex, both concave and convex polygons
         will be subdivided into triangles; with only T_polygon, only concave
         polygons will be subdivided, and convex polygons will be largely unchanged.
@@ -570,7 +570,7 @@ class EggGroupNode(EggNode):
         equivalent vertices, and renumbers all vertices after the operation so
         their indices are consecutive, beginning at zero.  Returns the total number
         of vertices removed.
-        
+
         Note that this operates on the VertexPools within this group level, without
         respect to primitives that reference these vertices (unlike other functions
         like strip_normals()).  It is therefore most useful to call this on the
@@ -588,7 +588,7 @@ class EggGroupNode(EggNode):
         """Resets the connected_shading information on all primitives at this node and
         below, so that it may be accurately rederived by the next call to
         get_connected_shading().
-        
+
         It may be a good idea to call remove_unused_vertices() as well, to
         establish the correct connectivity between common vertices.
         """
@@ -603,21 +603,21 @@ class EggGroupNode(EggNode):
         """Applies per-vertex normal and color to all vertices, if they are in fact
         per-vertex (and different for each vertex), or moves them to the primitive
         if they are all the same.
-        
+
         After this call, either the primitive will have normals or its vertices
         will, but not both.  Ditto for colors.
-        
+
         If use_connected_shading is true, each polygon is considered in conjunction
         with all connected polygons; otherwise, each polygon is considered
         individually.
-        
+
         If allow_per_primitive is false, S_per_face or S_overall will treated like
         S_per_vertex: normals and colors will always be assigned to the vertices.
         In this case, there will never be per-primitive colors or normals after
         this call returns.  On the other hand, if allow_per_primitive is true, then
         S_per_face means that normals and colors should be assigned to the
         primitives, and removed from the vertices, as described above.
-        
+
         This may create redundant vertices in the vertex pool, so it may be a good
         idea to follow this up with remove_unused_vertices().
         """
@@ -627,7 +627,7 @@ class EggGroupNode(EggNode):
         normal and/or color, if the primitive is flat-shaded.  This reflects the
         OpenGL convention of storing flat-shaded properties on the last vertex,
         although it is not usually a convention in Egg.
-        
+
         This may create redundant vertices in the vertex pool, so it may be a good
         idea to follow this up with remove_unused_vertices().
         """
@@ -637,7 +637,7 @@ class EggGroupNode(EggNode):
         normal and/or color, if the primitive is flat-shaded.  This reflects the
         DirectX convention of storing flat-shaded properties on the first vertex,
         although it is not usually a convention in Egg.
-        
+
         This may create redundant vertices in the vertex pool, so it may be a good
         idea to follow this up with remove_unused_vertices().
         """
@@ -761,7 +761,7 @@ class EggAnimPreload(EggNode):
 class EggAttributes:
     """The set of attributes that may be applied to vertices as well as polygons,
     such as surface normal and color.
-    
+
     This class cannot inherit from EggObject, because it causes problems at the
     EggPolygon level with multiple appearances of the EggObject base class.
     And making EggObject a virtual base class is just no fun.
@@ -998,7 +998,7 @@ class EggVertex(EggObject, EggAttributes):
         """Returns true if the vertex is a forward reference to some vertex that
         hasn't been defined yet.  In this case, the vertex may not have any
         properties filled in yet.
-        
+
         This can only happen if you implicitly create a vertex via
         EggVertexPool::get_forward_vertex(). Presumably, when the vertex pool is
         later filled in, this vertex will be replaced with real data.
@@ -1008,15 +1008,15 @@ class EggVertex(EggObject, EggAttributes):
         """`(self, pos: LPoint2d)`:
         Sets the vertex position.  This variant sets the vertex to a two-
         dimensional value.
-        
+
         `(self, pos: LPoint3d)`:
         Sets the vertex position.  This variant sets the vertex to a three-
         dimensional value.
-        
+
         `(self, pos: LPoint4d)`:
         Sets the vertex position.  This variant sets the vertex to a four-
         dimensional value.
-        
+
         `(self, pos: float)`:
         Sets the vertex position.  This variant sets the vertex to a one-
         dimensional value.
@@ -1064,11 +1064,11 @@ class EggVertex(EggObject, EggAttributes):
         """`(self)`:
         Returns true if the vertex has an unnamed UV coordinate pair, false
         otherwise.
-        
+
         This is the more restrictive interface, and is generally useful only in the
         absence of multitexturing; see has_uv(name) for the interface that supports
         multitexturing.
-        
+
         `(self, name: str)`:
         Returns true if the vertex has the named UV coordinate pair, and the named
         UV coordinate pair is 2-d, false otherwise.
@@ -1078,11 +1078,11 @@ class EggVertex(EggObject, EggAttributes):
         """`(self)`:
         Returns the unnamed UV coordinate pair on the vertex.  It is an error to
         call this if has_uv() has returned false.
-        
+
         This is the more restrictive interface, and is generally useful only in the
         absence of multitexturing; see get_uv(name) for the interface that supports
         multitexturing.
-        
+
         `(self, name: str)`:
         Returns the named UV coordinate pair on the vertex.  It is an error to call
         this if has_uv(name) returned false.
@@ -1093,11 +1093,11 @@ class EggVertex(EggObject, EggAttributes):
         """`(self, texCoord: LPoint2d)`:
         Replaces the unnamed UV coordinate pair on the vertex with the indicated
         value.
-        
+
         This is the more restrictive interface, and is generally useful only in the
         absence of multitexturing; see set_uv(name, uv) for the interface that
         supports multitexturing.
-        
+
         `(self, name: str, texCoord: LPoint2d)`:
         Sets the indicated UV coordinate pair on the vertex.  This replaces any UV
         coordinate pair with the same name already on the vertex, but preserves UV
@@ -1109,7 +1109,7 @@ class EggVertex(EggObject, EggAttributes):
     def clear_uv(self, name: str = ...) -> None:
         """`(self)`:
         Removes all UV coordinate pairs from the vertex.
-        
+
         `(self, name: str)`:
         Removes the named UV coordinate pair from the vertex, along with any UV
         morphs.
@@ -1153,7 +1153,7 @@ class EggVertex(EggObject, EggAttributes):
     def has_aux(self, name: str = ...) -> bool:
         """`(self)`:
         Returns true if the vertex has any auxiliary data, false otherwise.
-        
+
         `(self, name: str)`:
         Returns true if the vertex has the named auxiliary data quadruple.
         """
@@ -1161,7 +1161,7 @@ class EggVertex(EggObject, EggAttributes):
     def clear_aux(self, name: str = ...) -> None:
         """`(self)`:
         Removes all auxiliary data from the vertex.
-        
+
         `(self, name: str)`:
         Removes the named auxiliary data from the vertex.
         """
@@ -1198,7 +1198,7 @@ class EggVertex(EggObject, EggAttributes):
     def make_average(first: EggVertex, second: EggVertex) -> EggVertex:
         """Creates a new vertex that lies in between the two given vertices.  The
         attributes for the UV sets they have in common are averaged.
-        
+
         Both vertices need to be either in no pool, or in the same pool.  In the
         latter case, the new vertex will be placed in that pool.
         """
@@ -1212,7 +1212,7 @@ class EggVertex(EggObject, EggAttributes):
         code; it is simply maintained along with the vertex.  It *is* used to
         differentiate otherwise identical vertices in
         EggVertexPool::create_unique_vertex(), however.
-        
+
         The intention of this number is as an aid for file converters, to associate
         an EggVertex back to the index number of the original source vertex.
         """
@@ -1242,13 +1242,13 @@ class EggVertex(EggObject, EggAttributes):
     def compare_to(self, other: EggVertex) -> int:  # type: ignore[override]
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
-        
+
         Group membership is not considered in this comparison.  This is somewhat
         problematic, but cannot easily be helped, because considering group
         membership would make it difficult to add and remove groups from vertices.
         It also makes it impossible to meaningfully compare with a concrete
         EggVertex object (which cannot have group memberships).
-        
+
         However, this is not altogether bad, because two vertices that are
         identical in all other properties should generally also be identical in
         group memberships, else the vertices will tend to fly apart when the joints
@@ -1277,7 +1277,7 @@ class EggVertex(EggObject, EggAttributes):
         """Copies all the group references from the other vertex onto this one.  This
         assigns the current vertex to exactly the same groups, with exactly the
         same memberships, as the given one.
-        
+
         Warning: only an EggVertex allocated from the free store may have groups
         assigned to it.  Do not attempt to call this on a temporary concrete
         EggVertex object; a core dump will certainly result.
@@ -1349,7 +1349,7 @@ class EggVertexPool(EggNode):
     single egg structure.  The vertices in a single pool need not necessarily
     have any connection to each other, but it is necessary that any one
     primitive (e.g.  a polygon) must pull all its vertices from the same pool.
-    
+
     An EggVertexPool is an STL-style container of pointers to EggVertex's.
     Functions add_vertex() and remove_vertex() are provided to manipulate the
     list.  The list may also be operated on (read-only) via iterators and
@@ -1446,7 +1446,7 @@ class EggVertexPool(EggNode):
         allocated from the free store; its pointer will now be owned by the vertex
         pool.  If the index number is supplied, tries to assign that index number;
         it is an error if the index number is already in use.
-        
+
         It is possible that a forward reference to this vertex was requested in the
         past; if so, the data from the supplied vertex is copied onto the forward
         reference, which becomes the actual vertex.  In this case, a different
@@ -1459,11 +1459,11 @@ class EggVertexPool(EggNode):
         """`(self)`:
         Allocates and returns a new vertex from the pool.  This is one of three
         ways to add new vertices to a vertex pool.
-        
+
         `(self, pos: LPoint2d)`; `(self, pos: LPoint3d)`; `(self, pos: LPoint4d)`; `(self, pos: float)`:
         Allocates and returns a new vertex from the pool.  This is one of three
         ways to add new vertices to a vertex pool.
-        
+
         This flavor of make_new_vertex() explicitly sets the vertex position as it
         is allocated.  It does not attempt to share vertices.
         """
@@ -1539,7 +1539,7 @@ class EggRenderMode:
     with geometry, and which may be set on the geometry primitive level, on the
     group above it, or indirectly via a texture.  It's intended to be a base
     class for egg objects that can have these properties set.
-    
+
     This class cannot inherit from EggObject, because it causes problems at the
     EggPolygon level with multiple appearances of the EggObject base class.
     And making EggObject a virtual base class is just no fun.
@@ -1768,7 +1768,7 @@ class EggTransform:
     """This represents the <Transform> entry of a group or texture node: a list of
     component transform operations, applied in order, that describe a net
     transform matrix.
-    
+
     This may be either a 3-d transform, and therefore described by a 4x4
     matrix, or a 2-d transform, described by a 3x3 matrix.
     """
@@ -1835,7 +1835,7 @@ class EggTransform:
         """`(self, quat: LQuaterniond)`:
         Appends an arbitrary 3-d rotation to the current transform, expressed as a
         quaternion.  This is converted to axis-angle notation for the egg file.
-        
+
         `(self, angle: float, axis: LVector3d)`:
         Appends a 3-d rotation about an arbitrary axis to the current transform.
         The rotation angle is specified in degrees counterclockwise about the axis.
@@ -1868,7 +1868,7 @@ class EggTransform:
         """Returns true if the transform is specified as a 2-d transform, e.g.  with a
         3x3 matrix, or false if it is specified as a 3-d transform (with a 4x4
         matrix), or not specified at all.
-        
+
         Normally, EggTextures have a 2-d matrix (but occasionally they use a 3-d
         matrix), and EggGroups always have a 3-d matrix.
         """
@@ -1882,7 +1882,7 @@ class EggTransform:
         """Returns true if the transform is specified as a 3-d transform, e.g.  with a
         4x4 matrix, or false if it is specified as a 2-d transform (with a 2x2
         matrix), or not specified at all.
-        
+
         Normally, EggTextures have a 3-d matrix (but occasionally they use a 3-d
         matrix), and EggGroups always have a 3-d matrix.
         """
@@ -2259,7 +2259,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "indexed" scalar set.  Returns the value of the indexed scalar
         if it is found, or false if it is not.
-        
+
         In other words, returns true if the "indexed" flag is in effect for the
         indicated node, false otherwise.
         """
@@ -2268,7 +2268,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "decal" flag set.  Returns the value of the decal flag if it
         is found, or false if it is not.
-        
+
         In other words, returns true if the "decal" flag is in effect for the
         indicated node, false otherwise.
         """
@@ -2279,7 +2279,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         """Returns true if this group is an instance type node; i.e.  it begins the
         root of a local coordinate space.  This is not related to instancing
         (multiple copies of a node in a scene graph).
-        
+
         This also includes the case of the node including a billboard flag without
         an explicit center, which implicitly makes the node behave like an
         instance.
@@ -2290,13 +2290,13 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def set_billboard_center(self, billboard_center: Vec3d) -> None:
         """Sets the point around which the billboard will rotate, if this node
         contains a billboard specification.
-        
+
         If a billboard type is given but no billboard_center is specified, then the
         group node is treated as an <Instance>, and the billboard rotates around
         the origin.  If, however, a billboard_center is specified, then the group
         node is *not* treated as an <Instance>, and the billboard rotates around
         the specified point.
-        
+
         The point is in the same coordinate system as the vertices of this node:
         usually global, but possibly local if there is an <Instance> somewhere
         above.  Specifically, this is the coordinate system defined by
@@ -2406,7 +2406,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         indefinitely on the node until it is requested again.  This value will be
         copied to the PandaNode that is created for this particular EggGroup if the
         egg file is loaded as a scene.
-        
+
         Each unique key stores a different string value.  There is no effective
         limit on the number of different keys that may be stored or on the length
         of any one key's value.
@@ -2764,7 +2764,7 @@ class EggBinMaker(EggObject):
         """May be overridden in derived classes to construct a new EggBin object (or
         some derived class, if needed), and preload some initial data into as
         required.
-        
+
         child is an arbitrary child of the bin, and collapse_from is the group the
         bin is being collapsed with, if any (implying collapse_group() returned
         true), or NULL if not.
@@ -2808,7 +2808,7 @@ class EggFilenameNode(EggNode):
     def get_fullpath(self) -> Filename:
         """Returns the full pathname to the file, if it is known; otherwise, returns
         the same thing as get_filename().
-        
+
         This function simply returns whatever was set by the last call to
         set_fullpath().  This string is not written to the egg file; its main
         purpose is to record the full path to a filename (for instance, a texture
@@ -3096,25 +3096,25 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     def is_equivalent_to(self, other: EggTexture, eq: int) -> bool:
         """Returns true if the two textures are equivalent in all relevant properties
         (according to eq), false otherwise.
-        
+
         The Equivalence parameter, eq, should be set to the bitwise OR of the
         following properties, according to what you consider relevant:
-        
+
         EggTexture::E_basename: The basename part of the texture filename, without
         the directory prefix *or* the filename extension.
-        
+
         EggTexture::E_extension: The extension part of the texture filename.
-        
+
         EggTexture::E_dirname: The directory prefix of the texture filename.
-        
+
         EggTexture::E_complete_filename: The union of the above three; that is, the
         complete filename, with directory, basename, and extension.
-        
+
         EggTexture::E_transform: The texture matrix.
-        
+
         EggTexture::E_attributes: All remaining texture attributes (mode, mipmap,
         etc.) except TRef name.
-        
+
         EggTexture::E_tref_name: The TRef name.
         """
         ...
@@ -3216,10 +3216,10 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         "previous" source for the next texture stage--but it will instead be
         supplied as the "last_saved_result" source for any future stages, until the
         next TextureStage with a saved_result set true is encountered.
-        
+
         This can be used to reuse the results of this texture stage as input to
         more than one stage later in the pipeline.
-        
+
         The last texture in the pipeline (the one with the highest sort value)
         should not have this flag set.
         """
@@ -3239,7 +3239,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         TextureStage, unless some other stage-specific property is specificied, in
         which case the texture will be rendered on a TextureStage with the same
         name as the tref.  This is in support of multitexturing.
-        
+
         Each different TextureStage in the world must be uniquely named.
         """
         ...
@@ -3301,7 +3301,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Specifies the named set of texture coordinates that this texture will use
         when it is applied to geometry.  Geometry may have multiple sets of texture
         coordinates defined, by name.
-        
+
         If this is not specified for a particular texture, the default set of
         texture coordinates will be used.
         """
@@ -3325,7 +3325,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Sets an additional factor that will scale all three r, g, b components
         after the texture has been applied.  This is used only when a combine mode
         is in effect.
-        
+
         The only legal values are 1, 2, or 4.
         """
         ...
@@ -3348,7 +3348,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Sets an additional factor that will scale the alpha component after the
         texture has been applied.  This is used only when a combine mode is in
         effect.
-        
+
         The only legal values are 1, 2, or 4.
         """
         ...
@@ -3393,7 +3393,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     def get_alpha_fullpath(self) -> Filename:
         """Returns the full pathname to the alpha file, if it is known; otherwise,
         returns the same thing as get_alpha_filename().
-        
+
         This function simply returns whatever was set by the last call to
         set_alpha_fullpath().  This string is not written to the egg file; its main
         purpose is to record the full path to the alpha filename if it is known,
@@ -3428,11 +3428,11 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         ...
     def set_multiview(self, multiview: bool) -> None:
         """Sets the multiview flag.
-        
+
         If multiview is true, the filename should contain a hash mark ('#'), which
         will be filled in with the view number; and a multiview texture will be
         defined with a series of images, one for each view.
-        
+
         A multiview texture is most often used for stereo textures, but other uses
         are also possible, such as for texture animation.
         """
@@ -3463,11 +3463,11 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         ...
     def set_read_mipmaps(self, read_mipmaps: bool) -> None:
         """Sets the read_mipmaps flag.
-        
+
         If read_mipmaps is true, the filename should contain a hash mark ('#'),
         which will be filled in with the mipmap level number; and the texture will
         be defined with a series of images, one for each mipmap level.
-        
+
         If the filename is of a type that already requires a hash mark, such as a
         cube map or a 3-d texture, then the filename should now require two hash
         marks, and the first one indicates the mipmap level number, while the
@@ -3532,7 +3532,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         This will guarantee that this->get_multitexture_sort() >
         other->get_multitexture_sort(), at least until clear_multitexture() is
         called on either one.
-        
+
         The return value is true if successful, or false if there is a failure
         because the other texture was already layered on top of this one (or there
         is a three- or more-way cycle).
@@ -3762,13 +3762,13 @@ class EggMaterial(EggNode):
     def is_equivalent_to(self, other: EggMaterial, eq: int) -> bool:
         """Returns true if the two materials are equivalent in all relevant properties
         (according to eq), false otherwise.
-        
+
         The Equivalence parameter, eq, should be set to the bitwise OR of the
         following properties, according to what you consider relevant:
-        
+
         EggMaterial::E_attributes: All material attributes (diff, spec, etc.)
         except MRef name.
-        
+
         EggMaterial::E_mref_name: The MRef name.
         """
         ...
@@ -3790,7 +3790,7 @@ class EggMaterial(EggNode):
     def get_base(self) -> LVecBase4f:
         """It is legal to call this even if has_base() returns false.  If so, it
         simply returns the default base color.
-        
+
         @since 1.10.0
         """
         ...
@@ -3917,7 +3917,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     """A base class for any of a number of kinds of geometry primitives: polygons,
     point lights, nurbs patches, parametrics curves, etc.  Things with a set of
     vertices and some rendering properties like color.
-    
+
     An EggPrimitive is an STL-style container of pointers to EggVertex's.  In
     fact, it IS a vector, and can be manipulated in all the ways that vectors
     can.  However, it is necessary that all vertices belong to the same vertex
@@ -4002,7 +4002,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def get_sort_name(self) -> str:
         """Returns the name of the primitive for the purposes of sorting primitives
         into different groups, if there is one.
-        
+
         Presently, this is defined as the primitive name itself, unless it begins
         with a digit.
         """
@@ -4014,7 +4014,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         A composite primitive may also return S_per_face if the individual
         component primitives have colors or normals that are not all the same
         values.
-        
+
         To get the most accurate results, you should call clear_shading() on all
         connected primitives (or on all primitives in the egg file), followed by
         get_shading() on each primitive.  You may find it easiest to call these
@@ -4029,19 +4029,19 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def get_connected_shading(self) -> _EggPrimitive_Shading:
         """Determines what sort of shading properties this primitive's connected
         neighbors have.
-        
+
         To get the most accurate results, you should first call
         clear_connected_shading() on all connected primitives (or on all primitives
         in the egg file). It might also be a good idea to call
         remove_unused_vertices() to ensure proper connectivity.
-        
+
         You may find it easiest to call these other methods on the EggData root
         node (they are defined on EggGroupNode).
         """
         ...
     def set_texture(self, texture: EggTexture) -> None:
         """Replaces the current list of textures with the indicated texture.
-        
+
         @deprecated This method is used in support of single-texturing only.
         Please use the multitexture variant add_texture instead.
         """
@@ -4049,10 +4049,10 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def has_texture(self, texture: EggTexture = ...) -> bool:
         """`(self)`:
         Returns true if the primitive has any textures specified, false otherwise.
-        
+
         @deprecated This method is used in support of single-texturing only.
         New code should be written to use the multitexture variants instead.
-        
+
         `(self, texture: EggTexture)`:
         Returns true if the primitive has the particular indicated texture, false
         otherwise.
@@ -4062,17 +4062,17 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         """`(self)`:
         Returns the first texture on the primitive, if any, or NULL if there are no
         textures on the primitive.
-        
+
         @deprecated This method is used in support of single-texturing only.
         New code should be written to use the multitexture variants instead.
-        
+
         `(self, n: int)`:
         Returns the nth texture that has been applied to the primitive.
         """
         ...
     def add_texture(self, texture: EggTexture) -> None:
         """Applies the indicated texture to the primitive.
-        
+
         Note that, in the case of multiple textures being applied to a single
         primitive, the order in which the textures are applied does not affect the
         rendering order; use EggTexture::set_sort() to specify that.
@@ -4115,7 +4115,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def has_vertex_normal(self) -> bool:
         """Returns true if any vertex on the primitive has a specific normal set,
         false otherwise.
-        
+
         If you call unify_attributes() first, this will also return false even if
         all the vertices were set to the same value (since unify_attributes()
         removes redundant vertex properties).
@@ -4124,7 +4124,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def has_vertex_color(self) -> bool:
         """Returns true if any vertex on the primitive has a specific color set, false
         otherwise.
-        
+
         If you call unify_attributes() first, this will also return false even if
         all the vertices were set to the same value (since unify_attributes()
         removes redundant vertex properties).
@@ -4133,19 +4133,19 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def unify_attributes(self, shading: _EggPrimitive_Shading) -> None:
         """If the shading property is S_per_vertex, ensures that all vertices have a
         normal and a color, and the overall primitive does not.
-        
+
         If the shading property is S_per_face, and this is a composite primitive,
         ensures that all components have a normal and a color, and the vertices and
         overall primitive do not.  (If this is a simple primitive, S_per_face works
         the same as S_overall, below).
-        
+
         If the shading property is S_overall, ensures that no vertices or
         components have a normal or a color, and the overall primitive does (if any
         exists at all).
-        
+
         After this call, either the primitive will have normals or its vertices
         will, but not both.  Ditto for colors.
-        
+
         This may create redundant vertices in the vertex pool.
         """
         ...
@@ -4154,7 +4154,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         normal and/or color, if the primitive is flat-shaded.  This reflects the
         OpenGL convention of storing flat-shaded properties on the last vertex,
         although it is not usually a convention in Egg.
-        
+
         This may introduce redundant vertices to the vertex pool.
         """
         ...
@@ -4163,7 +4163,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         normal and/or color, if the primitive is flat-shaded.  This reflects the
         DirectX convention of storing flat-shaded properties on the first vertex,
         although it is not usually a convention in Egg.
-        
+
         This may introduce redundant vertices to the vertex pool.
         """
         ...
@@ -4190,11 +4190,11 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         """Certain kinds of primitives, particularly polygons, don't like to have the
         same vertex repeated consecutively.  Unfortunately, some modeling programs
         (like MultiGen) make this an easy mistake to make.
-        
+
         It's handy to have a function to remove these redundant vertices.  If
         closed is true, it also checks that the first and last vertices are not the
         same.
-        
+
         This function identifies repeated vertices by position only; it does not
         consider any other properties, such as color or UV, significant in
         differentiating vertices.
@@ -4235,7 +4235,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         """`(self, vertex: EggVertex)`:
         Removes the indicated vertex from the primitive and returns it.  If the
         vertex was not already in the primitive, does nothing and returns NULL.
-        
+
         `(self, index: int)`:
         Removes the indicated vertex from the primitive.
         """
@@ -4347,7 +4347,7 @@ class EggCompositePrimitive(EggPrimitive):
         """Subdivides the composite primitive into triangles and adds those triangles
         to the indicated container.  Does not remove the primitive from its
         existing parent or modify it in any way.
-        
+
         Returns true if the triangulation is successful, or false if there was some
         error (in which case the container may contain some partial triangulation).
         """
@@ -4356,7 +4356,7 @@ class EggCompositePrimitive(EggPrimitive):
         """Subdivides the composite primitive into triangles and adds those triangles
         to the parent group node in place of the original primitive.  Returns a
         pointer to the original primitive, which is likely about to be destructed.
-        
+
         If convex_also is true, both concave and convex polygons will be subdivided
         into triangles; otherwise, only concave polygons will be subdivided, and
         convex polygons will be copied unchanged into the container.
@@ -4374,7 +4374,7 @@ class EggData(EggGroupNode):
     """This is the primary interface into all the egg data, and the root of the
     egg file structure.  An EggData structure corresponds exactly with an egg
     file on the disk.
-    
+
     The EggData class inherits from EggGroupNode its collection of children,
     which are accessed by using the EggData itself as an STL container with
     begin() and end() calls.  The children of the EggData class are the
@@ -4398,14 +4398,14 @@ class EggData(EggGroupNode):
         Opens the indicated filename and reads the egg data contents from it.
         Returns true if the file was successfully opened and read, false if there
         were some errors, in which case the data may be partially read.
-        
+
         error is the output stream to which to write error messages.
-        
+
         `(self, _in: istream)`:
         Parses the egg syntax contained in the indicated input stream.  Returns
         true if the stream was a completely valid egg file, false if there were
         some errors, in which case the data may be partially read.
-        
+
         Before you call this routine, you should probably call set_egg_filename()
         to set the name of the egg file we're processing, if at all possible.  If
         there is no such filename, you may set it to the empty string.
@@ -4462,7 +4462,7 @@ class EggData(EggGroupNode):
     def original_had_absolute_pathnames(self) -> bool:
         """Returns true if the data processed in the last call to read() contained
         absolute pathnames, or false if those pathnames were all relative.
-        
+
         This method is necessary because if auto_resolve_externals() is in effect,
         it may modify the pathnames to be absolute whether or not they were as
         loaded from disk.  This method can be used to query the state of the
@@ -4500,11 +4500,11 @@ class EggData(EggGroupNode):
         and below so that they accurately reflect the vertex positions.  A shared
         edge between two polygons (even in different groups) is considered smooth
         if the angle between the two edges is less than threshold degrees.
-        
+
         This function also removes degenerate polygons that do not have enough
         vertices to define a normal.  It does not affect normals for other kinds of
         primitives like Nurbs or Points.
-        
+
         This function does not remove or adjust vertices in the vertex pool; it
         only adds new vertices with the correct normals.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
@@ -4515,11 +4515,11 @@ class EggData(EggGroupNode):
         and below so that they accurately reflect the vertex positions.  Normals
         are removed from the vertices and defined only on polygons, giving the
         geometry a faceted appearance.
-        
+
         This function also removes degenerate polygons that do not have enough
         vertices to define a normal.  It does not affect normals for other kinds of
         primitives like Nurbs or Points.
-        
+
         This function does not remove or adjust vertices in the vertex pool; it
         only adds new vertices with the normals removed.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
@@ -4646,7 +4646,7 @@ class EggNameUniquifier(EggObject):
         """Generates a new name for the given node when its existing name clashes with
         some other node.  This function will be called repeatedly, if necessary,
         until it returns a name that actually is unique.
-        
+
         The category is the string returned by get_category(), and index is a
         uniquely-generated number that may be useful for synthesizing the name.
         """
@@ -4713,16 +4713,16 @@ class EggMaterialCollection:
         """Walks the egg hierarchy beginning at the indicated node, looking for
         materials that are referenced by primitives but are not already members of
         the collection, adding them to the collection.
-        
+
         If this is called following extract_materials(), it can be used to pick up
         any additional material references that appeared in the egg hierarchy (but
         whose EggMaterial node was not actually part of the hierarchy).
-        
+
         If this is called in lieu of extract_materials(), it will fill up the
         collection with all of the referenced materials (and only the referenced
         materials), without destructively removing the EggMaterials from the
         hierarchy.
-        
+
         This also has the side effect of incrementing the internal usage count for
         a material in the collection each time a material reference is encountered.
         This side effect is taken advantage of by remove_unused_materials().
@@ -4740,7 +4740,7 @@ class EggMaterialCollection:
         that are equivalent according to the indicated equivalence factor, eq (see
         EggMaterial::is_equivalent_to()).  The return value is the number of
         materials removed.
-        
+
         This flavor of collapse_equivalent_materials() automatically adjusts all
         the primitives in the egg hierarchy to refer to the new material pointers.
         """
@@ -4798,7 +4798,7 @@ class EggPolygon(EggPrimitive):
         """Calculates the true polygon normal--the vector pointing out of the front of
         the polygon--based on the vertices.  This does not return or change the
         polygon's normal as set via set_normal().
-        
+
         The return value is true if the normal is computed correctly, or false if
         the polygon is degenerate and does not have at least three noncollinear
         vertices.
@@ -4820,10 +4820,10 @@ class EggPolygon(EggPrimitive):
         container.  If the polygon is already a triangle, adds an exact copy of the
         polygon to the container.  Does not remove the polygon from its existing
         parent or modify it in any way.
-        
+
         Returns true if the triangulation is successful, or false if there was some
         error (in which case the container may contain some partial triangulation).
-        
+
         If convex_also is true, both concave and convex polygons will be subdivided
         into triangles; otherwise, only concave polygons will be subdivided, and
         convex polygons will be copied unchanged into the container.
@@ -4833,7 +4833,7 @@ class EggPolygon(EggPrimitive):
         """Subdivides the polygon into triangles and adds those triangles to the
         parent group node in place of the original polygon.  Returns a pointer to
         the original polygon, which is likely about to be destructed.
-        
+
         If convex_also is true, both concave and convex polygons will be subdivided
         into triangles; otherwise, only concave polygons will be subdivided, and
         convex polygons will be copied unchanged into the container.
@@ -5200,7 +5200,7 @@ class EggPolysetMaker(EggBinMaker):
     """A specialization on EggBinMaker for making polysets that share the same
     basic rendering characteristic.  This really just defines the example
     functions described in the leading comment to EggBinMaker.
-    
+
     It makes some common assumptions about how polysets should be grouped; if
     these are not sufficient, you can always rederive your own further
     specialization of this class.
@@ -5349,20 +5349,20 @@ class EggTextureCollection:
         """Walks the egg hierarchy beginning at the indicated node, looking for
         textures that are referenced by primitives but are not already members of
         the collection, adding them to the collection.
-        
+
         If this is called following extract_textures(), it can be used to pick up
         any additional texture references that appeared in the egg hierarchy (but
         whose EggTexture node was not actually part of the hierarchy).
-        
+
         If this is called in lieu of extract_textures(), it will fill up the
         collection with all of the referenced textures (and only the referenced
         textures), without destructively removing the EggTextures from the
         hierarchy.
-        
+
         This also has the side effect of incrementing the internal usage count for
         a texture in the collection each time a texture reference is encountered.
         This side effect is taken advantage of by remove_unused_textures().
-        
+
         And one more side effect: this function identifies the presence of
         multitexturing in the egg file, and calls multitexture_over() on each
         texture appropriately so that, after this call, you may expect
@@ -5381,7 +5381,7 @@ class EggTextureCollection:
         that are equivalent according to the indicated equivalence factor, eq (see
         EggTexture::is_equivalent_to()).  The return value is the number of
         textures removed.
-        
+
         This flavor of collapse_equivalent_textures() automatically adjusts all the
         primitives in the egg hierarchy to refer to the new texture pointers.
         """
@@ -5536,10 +5536,10 @@ class EggXfmSAnim(EggGroupNode):
         ...
     def set_value(self, row: int, mat: Mat4d) -> bool:
         """Replaces the indicated row of the table with the given matrix.
-        
+
         This function can only be called if all the constraints of add_data(),
         below, are met.  Call normalize() first if you are not sure.
-        
+
         The return value is true if the matrix can be decomposed and stored as
         scale, shear, rotate, and translate, or false otherwise.  The data is set
         in either case.
@@ -5553,22 +5553,22 @@ class EggXfmSAnim(EggGroupNode):
     def add_data(self, mat: Mat4d) -> bool:
         """Adds a new matrix to the table, by adding a new row to each of the
         subtables.
-        
+
         This is a convenience function that treats the table of tables as if it
         were a single table of matrices.  It is an error to call this if any
         SAnimData children of this node have an improper name (e.g.  not a single
         letter, or not one of "ijkabchprxyz").
-        
+
         This function has the further requirement that all nine of the subtables
         must exist and be of the same length.  Furthermore, the order string must
         be the standard order string, which matches the system compose_matrix() and
         decompose_matrix() functions.
-        
+
         Thus, you probably cannot take an existing EggXfmSAnim object and start
         adding matrices to the end; you must clear out the original data first.
         (As a special exception, if no tables exist, they will be created.)  The
         method normalize() will do this for you on an existing EggXfmSAnim.
-        
+
         This function may fail silently if the matrix cannot be decomposed into
         scale, shear, rotate, and translate.  In this case, the closest
         approximation is added to the table, and false is returned.
@@ -5578,7 +5578,7 @@ class EggXfmSAnim(EggGroupNode):
     def add_component_data(self, component: int, value: float) -> None:
         """`(self, component: int, value: float)`:
         Adds a new row to the indicated component (0-12) of the table.
-        
+
         `(self, component_name: str, value: float)`:
         Adds a new row to the named component (one of matrix_component_letters) of
         the table.
@@ -5662,7 +5662,7 @@ class EggXfmAnimData(EggAnimData):
         Returns the value of the aggregate row of the table as a matrix.  This is a
         convenience function that treats the 2-d table as if it were a single table
         of matrices.
-        
+
         `(self, row: int, col: int)`:
         Returns the value at the indicated row.  Row must be in the range 0 <= row
         < get_num_rows(); col must be in the range 0 <= col < get_num_cols().
