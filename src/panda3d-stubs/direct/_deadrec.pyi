@@ -1,5 +1,6 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Vec3f
 from panda3d.core import LPoint3f, LVecBase3f, NodePath, ostream
 

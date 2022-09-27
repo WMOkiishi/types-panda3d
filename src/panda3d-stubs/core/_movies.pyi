@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
+
 from panda3d._typing import Filepath
 from panda3d.core import (
     Datagram,

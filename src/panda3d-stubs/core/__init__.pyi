@@ -1,3 +1,5 @@
+from typing_extensions import Final
+
 from ._audio import *
 from ._chan import *
 from ._char import *
@@ -32,7 +34,6 @@ from ._putil import *
 from ._recorder import *
 from ._text import *
 from ._tform import *
-from typing_extensions import Final
 
 END_PUBLISH: Final[str]
 ENDPUBLISH: Final[str]

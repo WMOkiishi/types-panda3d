@@ -1,4 +1,5 @@
 from typing import Any, ClassVar
+
 from panda3d.core import TypedObject
 
 class BasicSkel:

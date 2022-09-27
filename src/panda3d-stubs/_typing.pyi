@@ -1,5 +1,6 @@
 from _typeshed import StrOrBytesPath
 from typing_extensions import TypeAlias
+
 from panda3d.core import (
     ConfigVariableColor,
     ConfigVariableFilename,

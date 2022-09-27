@@ -2,6 +2,7 @@ from _typeshed import StrOrBytesPath
 from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Filepath
 from panda3d.core import ConfigVariableSearchPath, TypeHandle
 

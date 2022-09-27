@@ -1,5 +1,6 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Filepath, Vec3d, Vec3f, Vec4f
 from panda3d.core import (
     AudioSound,

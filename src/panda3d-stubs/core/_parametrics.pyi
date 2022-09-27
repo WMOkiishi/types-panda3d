@@ -2,6 +2,7 @@ from array import array
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
 from panda3d.core import (
     LMatrix4f,

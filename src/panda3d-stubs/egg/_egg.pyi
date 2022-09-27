@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Filepath, Mat4d, Vec3d, Vec4d, Vec4f
 from panda3d.core import (
     BamCacheRecord,

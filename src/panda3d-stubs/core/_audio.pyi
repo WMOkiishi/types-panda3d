@@ -1,5 +1,6 @@
 from typing import overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Filepath, Vec3f
 from panda3d.core import AsyncTask, Filename, MovieAudio, TypedReferenceCount, ostream
 

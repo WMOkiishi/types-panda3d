@@ -1,4 +1,5 @@
 from typing import Any, ClassVar, overload
+
 from panda3d._typing import Filepath
 from panda3d.core import DataNode, Datagram, Filename, ReferenceCount, SocketStream, TypeHandle, TypedReferenceCount
 

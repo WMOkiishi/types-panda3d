@@ -1,4 +1,5 @@
 from typing import Any, ClassVar
+
 from panda3d.core import (
     Buffered_DatagramConnection,
     ConnectionWriter,

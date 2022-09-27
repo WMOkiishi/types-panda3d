@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from enum import Enum
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d.core import (
     ButtonEventList,
     ButtonHandle,

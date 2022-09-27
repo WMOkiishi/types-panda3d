@@ -1,5 +1,6 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Mat4f, Vec3f, Vec4f, Vec4i
 from panda3d.core import (
     BitMask_uint32_t_32,

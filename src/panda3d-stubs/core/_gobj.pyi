@@ -1,6 +1,7 @@
 from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
+
 from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f, Vec4i
 from panda3d.core import (
     AnimInterface,

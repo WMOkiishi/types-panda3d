@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal
+
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     BitMask_uint32_t_32,

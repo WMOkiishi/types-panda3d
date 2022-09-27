@@ -1,4 +1,5 @@
 from typing import Any, ClassVar, overload
+
 from panda3d._typing import Vec3f
 from panda3d.core import LVecBase3f, NodePath, ReferenceCount
 

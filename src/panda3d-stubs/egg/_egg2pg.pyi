@@ -1,4 +1,5 @@
 from typing_extensions import Literal, TypeAlias
+
 from panda3d._typing import Filepath
 from panda3d.core import BamCacheRecord, PandaNode
 from panda3d.egg import EggData

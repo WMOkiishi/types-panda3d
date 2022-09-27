@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, TypeVar, overload
+
 from panda3d.core import PStatCollectorForwardBase, Thread, ostream
 
 _Self = TypeVar('_Self')

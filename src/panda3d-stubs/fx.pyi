@@ -1,4 +1,5 @@
 from typing import Any, ClassVar, overload
+
 from panda3d._typing import Vec4f
 from panda3d.core import (
     DisplayRegion,

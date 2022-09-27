@@ -1,4 +1,5 @@
 from typing import overload
+
 from panda3d._typing import Mat4f, Vec3f
 from panda3d.core import (
     LMatrix4f,

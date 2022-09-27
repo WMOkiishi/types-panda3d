@@ -2,6 +2,7 @@ from collections import defaultdict
 from collections.abc import Iterator, Mapping, Sequence
 from itertools import chain
 from pathlib import Path
+from sys import stdlib_module_names
 from typing import Any, Protocol
 
 from attrs import Factory, define, evolve, field
@@ -377,14 +378,22 @@ class File:
         self.nested.sort(key=lambda x: x.sort())
 
     def import_lines(self) -> Iterator[str]:
-        if self.namespace:
-            modules = sorted(
-                self.imports,
-                key=lambda m: (m.startswith(self.namespace[0]), m)
-            )
-        else:
-            modules = sorted(self.imports)
-        for module in modules:
+        this_package = self.namespace[0] if self.namespace else None
+        extended_stdlib = stdlib_module_names | {'_typeshed', 'typing_extensions'}
+
+        def grouping_function(module: str) -> int:
+            if module.split('.')[0] in extended_stdlib:
+                return 0
+            elif this_package and module.startswith(this_package):
+                return 2
+            else:
+                return 1
+
+        keyed_modules = sorted((grouping_function(m), m) for m in self.imports)
+        prev_key = None
+        for key, module in keyed_modules:
+            if prev_key not in (None, key):
+                yield ''
             imported_names = sorted(self.imports[module])
             if len(module) + sum(len(n)+2 for n in imported_names) < 115:
                 yield f"from {module} import {', '.join(imported_names)}"
@@ -393,6 +402,7 @@ class File:
                 for name in imported_names:
                     yield f'    {name},'
                 yield ')'
+            prev_key = key
 
     def lines(self) -> Iterator[str]:
         yield from self.import_lines()

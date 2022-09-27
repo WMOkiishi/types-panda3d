@@ -1,6 +1,7 @@
 from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias
+
 from panda3d._typing import Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f, Vec4i
 from panda3d.core import ConfigVariable, Datagram, DatagramIterator, TypeHandle, ostream
 

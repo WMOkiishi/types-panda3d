@@ -1,6 +1,7 @@
 from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
+
 from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
 from panda3d.core import (
     AsyncTask,
