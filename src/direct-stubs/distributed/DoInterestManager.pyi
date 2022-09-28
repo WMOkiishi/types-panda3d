@@ -1,12 +1,11 @@
+from _typeshed import Self
 from collections.abc import Callable
-from typing import ClassVar, TypeVar
+from typing import ClassVar
 from typing_extensions import Literal, Protocol
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ConfigVariableBool, DatagramIterator
-
-_Self = TypeVar('_Self')
 
 class _HasNum(Protocol):
     num: int
@@ -43,7 +42,7 @@ class InterestState:
 class InterestHandle:
     def __init__(self, id: int) -> None: ...
     def asInt(self) -> int: ...
-    def __eq__(self: _Self, other: _Self | int) -> bool: ...  # type: ignore[override]
+    def __eq__(self: Self, other: Self | int) -> bool: ...  # type: ignore[override]
 
 NO_CONTEXT: Literal[0]
 

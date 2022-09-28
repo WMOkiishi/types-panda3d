@@ -255,9 +255,9 @@ def process_function(
                 ) as sig
             ]
         ) if class_name == param_type == return_type:
-            self_param.type = '_Self'
-            copy_param.type = '_Self'
-            sig.return_type = '_Self'
+            self_param.type = 'Self'
+            copy_param.type = 'Self'
+            sig.return_type = 'Self'
     return function
 
 
@@ -313,8 +313,8 @@ def process_vector_class(vector: Class) -> None:
                     Parameter() as self_param, *_
                 ]) as sig
             ]):
-                self_param.type = '_Self'
-                sig.return_type = '_Self'
+                self_param.type = 'Self'
+                sig.return_type = 'Self'
     match class_body.get('__len__'):
         case Function(signatures=[Signature() as sig]):
             sig.return_type = f'Literal[{dimension}]'

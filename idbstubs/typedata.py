@@ -49,6 +49,7 @@ KNOWN_IMPORTS: Final = {
     'overload': 'typing',
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10
     'TypeVar': 'typing',
+    'Self': '_typeshed',
     'StrOrBytesPath': '_typeshed',
     'core': 'panda3d',
 }
@@ -74,7 +75,6 @@ for _alias_name in TYPE_ALIASES:
 TYPE_VARIABLES: Final = {
     '_N': ('PandaNode',),
     '_M': ('PandaNode',),
-    '_Self': (),
 }
 
 

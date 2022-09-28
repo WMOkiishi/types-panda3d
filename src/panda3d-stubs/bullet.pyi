@@ -1,5 +1,6 @@
+from _typeshed import Self
 from collections.abc import Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Mat4f, Vec3f, Vec4f
@@ -45,7 +46,6 @@ _BulletUpAxis: TypeAlias = Literal[0, 1, 2]
 _BulletConstraint_ConstraintParam: TypeAlias = Literal[1, 2, 3, 4]
 _BulletSoftBodyConfig_AeroModel: TypeAlias = Literal[0, 1, 2, 3, 4]
 _BulletSoftBodyConfig_CollisionFlag: TypeAlias = Literal[1, 2, 15, 16, 32, 48, 64]
-_Self = TypeVar('_Self')
 
 class BulletRayHit:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -2460,7 +2460,7 @@ class BulletMultiSphereShape(BulletShape):
     def __init__(self, copy: BulletMultiSphereShape) -> None: ...
     @overload
     def __init__(self, points: PointerToArray_LVecBase3f, radii: PointerToArray_float) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def get_sphere_count(self) -> int: ...
     def get_sphere_pos(self, index: int) -> LPoint3f: ...
     def get_sphere_radius(self, index: int) -> float: ...

@@ -1,9 +1,8 @@
+from _typeshed import Self
 from collections.abc import Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 
 from panda3d.core import PStatCollectorForwardBase, Thread, ostream
-
-_Self = TypeVar('_Self')
 
 class PStatClient:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -246,7 +245,7 @@ class PStatCollector:
     def __init__(self, name: str, client: PStatClient = ...) -> None: ...
     @overload
     def __init__(self, parent: PStatCollector, name: str) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def is_valid(self) -> bool:
         """Returns true if collector is valid and may be used, or false if it was
         constructed with the default constructor (in which case any attempt to use
@@ -484,7 +483,7 @@ class PStatThread:
     def __init__(self, thread: Thread, client: PStatClient = ...) -> None: ...
     @overload
     def __init__(self, client: PStatClient, index: int) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def new_frame(self) -> None:
         """This must be called at the start of every "frame", whatever a frame may be
         deemed to be, to accumulate all the stats that have collected so far for

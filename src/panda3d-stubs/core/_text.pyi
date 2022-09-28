@@ -1,5 +1,6 @@
+from _typeshed import Self
 from collections.abc import Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4f, Vec4f
@@ -30,7 +31,6 @@ _Texture_Format: TypeAlias = Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _TextProperties_Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _TextProperties_Direction: TypeAlias = Literal[0, 1]
-_Self = TypeVar('_Self')
 
 class TextGlyph(TypedReferenceCount):
     """A representation of a single glyph (character) from a font.  This is a
@@ -766,7 +766,7 @@ class TextProperties:
     def __init__(self, copy: TextProperties = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Unsets all properties that have been specified so far, and resets the
         TextProperties structure to its initial empty state.
@@ -1354,7 +1354,7 @@ class TextAssembler:
     def __init__(self, copy: TextAssembler) -> None: ...
     @overload
     def __init__(self, encoder: TextEncoder) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Reinitializes the contents of the TextAssembler."""
         ...

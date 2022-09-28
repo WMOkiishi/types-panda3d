@@ -1,4 +1,5 @@
-from typing import Any, ClassVar, TypeVar, overload
+from _typeshed import Self
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
@@ -25,7 +26,6 @@ from panda3d.core import (
     ostream,
 )
 
-_Self = TypeVar('_Self')
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 
 class PGFrameStyle:
@@ -45,7 +45,7 @@ class PGFrameStyle:
     T_texture_border: Final[Literal[6]]
     TTextureBorder: Final[Literal[6]]
     def __init__(self, copy: PGFrameStyle = ...) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def set_type(self, type: _PGFrameStyle_Type) -> None:
         """Sets the basic type of frame."""
         ...

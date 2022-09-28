@@ -1,13 +1,13 @@
 __all__ = ['OnscreenGeom']
 
-from typing import Any, TypeVar, Union
+from _typeshed import Self
+from typing import Any, Union
 from typing_extensions import TypeAlias
 
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import LVecBase3f, LVecBase4f, NodePath, TransformState
 
-_Self = TypeVar('_Self')
 _Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]
 _Point: TypeAlias = Union[LVecBase3f, tuple[float, float, float]]
 
@@ -30,7 +30,7 @@ class OnscreenGeom(DirectObject, NodePath):
         sort: int = ...,
         color: _Color | None = None,
     ) -> None: ...
-    def getGeom(self: _Self) -> _Self: ...
+    def getGeom(self: Self) -> Self: ...
     def configure(self, option: Unused = None, **kw: Any) -> None: ...
     def __setitem__(self, key: str, value: Any) -> None: ...
     def __getitem__(self, option: str) -> Any: ...

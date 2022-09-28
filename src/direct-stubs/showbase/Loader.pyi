@@ -1,7 +1,8 @@
 __all__ = ['Loader']
 
+from _typeshed import Self
 from collections.abc import Callable, Iterable, Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
 from direct.directnotify.Notifier import Notifier
@@ -23,7 +24,6 @@ from panda3d.core import (
 from .DirectObject import DirectObject
 from .ShowBase import ShowBase
 
-_Self = TypeVar('_Self')
 _FilterType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _TextFont_RenderMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 
@@ -33,9 +33,9 @@ class _ResultAwaiter:
     requestList: Sequence[AsyncTask]
     index: int
     def __init__(self, requestList: Sequence[AsyncTask]) -> None: ...
-    def __await__(self: _Self) -> _Self: ...
-    def __anext__(self: _Self) -> _Self: ...
-    def __iter__(self: _Self) -> _Self: ...
+    def __await__(self: Self) -> Self: ...
+    def __anext__(self: Self) -> Self: ...
+    def __iter__(self: Self) -> Self: ...
     def __next__(self) -> AsyncTask: ...
 
 class _Callback:

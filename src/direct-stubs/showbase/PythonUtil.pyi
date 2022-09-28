@@ -1,4 +1,4 @@
-from _typeshed import SupportsWrite
+from _typeshed import Self, SupportsWrite
 from collections.abc import Callable, Collection, Container, Generator, Iterable, Mapping, MutableSequence, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Never, TypeAlias
@@ -12,7 +12,6 @@ _S = TypeVar('_S')
 _KT = TypeVar('_KT')
 _VT = TypeVar('_VT')
 _C = TypeVar('_C', bound=SimpleCallback)
-_Self = TypeVar('_Self')
 
 _RNG: TypeAlias = Callable[[], float]
 
@@ -128,7 +127,7 @@ def uniqueName(name: object) -> str: ...
 
 class EnumIter:
     def __init__(self, enum: Enum) -> None: ...
-    def __iter__(self: _Self) -> _Self: ...
+    def __iter__(self: Self) -> Self: ...
     def __next__(self) -> int: ...
     next = __next__
 

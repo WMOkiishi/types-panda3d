@@ -1,5 +1,6 @@
+from _typeshed import Self
 from collections.abc import Mapping, Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
@@ -24,7 +25,6 @@ from panda3d.core import (
     ostream,
 )
 
-_Self = TypeVar('_Self')
 _PartBundle_BlendType: TypeAlias = Literal[0, 1, 2, 3]
 
 class AnimGroup(TypedWritableReferenceCount, Namable):
@@ -763,7 +763,7 @@ class PartSubset:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: PartSubset = ...) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def add_include_joint(self, name: GlobPattern) -> None:
         """Adds the named joint to the list of joints that will be explicitly included
         in the subset.  Any joint at or below a named node will be included in the

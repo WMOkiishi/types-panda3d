@@ -1,5 +1,6 @@
+from _typeshed import Self
 from collections.abc import Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f
@@ -22,7 +23,6 @@ from panda3d.core import (
 )
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
-_Self = TypeVar('_Self')
 _PNMImageHeader_ColorType: TypeAlias = Literal[0, 1, 2, 3, 4]
 _PNMBrush_BrushEffect: TypeAlias = Literal[0, 1, 2, 3]
 
@@ -244,7 +244,7 @@ class PNMImageHeader:
     @property
     def type(self) -> PNMFileType: ...
     def __init__(self, copy: PNMImageHeader = ...) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def get_color_type(self) -> _PNMImageHeader_ColorType:
         """Returns the image type of the image, as an enumerated value.  This is
         really just the number of channels cast to the enumerated type.

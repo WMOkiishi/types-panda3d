@@ -1,5 +1,6 @@
+from _typeshed import Self
 from collections.abc import Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 from panda3d._typing import Filepath, Vec4f
@@ -45,7 +46,6 @@ from panda3d.core import (
 _GraphicsStateGuardian_ShaderModel: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _WindowProperties_MouseMode: TypeAlias = Literal[0, 1, 2]
 _WindowProperties_ZOrder: TypeAlias = Literal[0, 1, 2]
-_Self = TypeVar('_Self')
 _Lens_StereoChannel: TypeAlias = Literal[0, 1, 2, 3]
 _DrawableRegion_RenderTexturePlane: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 _GraphicsOutput_RenderTextureMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
@@ -654,7 +654,7 @@ class WindowProperties:
     def __init__(self, args, kwds) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     @staticmethod
     def get_config_properties() -> WindowProperties:
         """Returns a WindowProperties structure with all of the default values filled
@@ -3271,7 +3271,7 @@ class GraphicsThreadingModel:
         ...
     @overload
     def __init__(self, copy: GraphicsThreadingModel) -> None: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def get_model(self) -> str:
         """Returns the string that describes the threading model.  See the
         constructor.

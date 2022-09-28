@@ -1,6 +1,7 @@
+from _typeshed import Self
 from collections.abc import Callable, Sequence
 from enum import Enum
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f, Vec4i
@@ -38,7 +39,6 @@ from panda3d.core import (
 )
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
-_Self = TypeVar('_Self')
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]
 _BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
 _BamEnums_BamTextureMode: TypeAlias = Literal[0, 1, 2, 3, 4]
@@ -304,7 +304,7 @@ class UpdateSeq:
     def old() -> UpdateSeq: ...
     @staticmethod
     def fresh() -> UpdateSeq: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Resets the UpdateSeq to the 'initial' state."""
         ...
@@ -2981,7 +2981,7 @@ class ModifierButtons:
     def __iand__(self, other: ModifierButtons) -> ModifierButtons: ...
     def __ior__(self, other: ModifierButtons) -> ModifierButtons: ...
     def __le__(self, other: ModifierButtons) -> bool: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def set_button_list(self, other: ModifierButtons) -> None:
         """Sets the list of buttons to watch to be the same as that of the other
         ModifierButtons object.  This makes the lists pointer equivalent (until one

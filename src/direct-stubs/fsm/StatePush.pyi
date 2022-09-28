@@ -1,18 +1,18 @@
 __all__ = ['EnterExit', 'EventArgument', 'EventPulse', 'FunctionCall', 'Pulse', 'StateVar']
 
+from _typeshed import Self
 from collections.abc import Callable
 from typing import Any, Generic, TypeVar
 
 from direct.showbase.DirectObject import DirectObject
 
-_Self = TypeVar('_Self')
 _T = TypeVar('_T')
 
 class PushesStateChanges(Generic[_T]):
     def __init__(self, value: _T) -> None: ...
     def destroy(self) -> None: ...
     def getState(self) -> _T: ...
-    def pushCurrentState(self: _Self) -> _Self: ...
+    def pushCurrentState(self: Self) -> Self: ...
 
 class ReceivesStateChanges(Generic[_T]):
     def __init__(self, source: PushesStateChanges[_T]) -> None: ...

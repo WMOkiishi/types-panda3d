@@ -1,6 +1,7 @@
+from _typeshed import Self
 from collections.abc import Sequence
 from enum import Enum
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d.core import (
@@ -17,7 +18,6 @@ from panda3d.core import (
 )
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
-_Self = TypeVar('_Self')
 
 class TrackerData:
     """Stores the kinds of data that a tracker might output."""
@@ -488,7 +488,7 @@ class InputDeviceSet:
     def __len__(self) -> int:
         """Returns the number of devices in the collection."""
         ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Removes all InputDevices from the collection."""
         ...

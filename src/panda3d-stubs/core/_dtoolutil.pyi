@@ -1,6 +1,6 @@
-from _typeshed import StrOrBytesPath
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Mapping, Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath
@@ -10,7 +10,6 @@ _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int
 _TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 2]
 _Filename_Type: TypeAlias = Literal[0, 1, 2]
-_Self = TypeVar('_Self')
 
 class basic_ios_char(ios_base):
     def good(self) -> bool: ...
@@ -1604,7 +1603,7 @@ class GlobPattern:
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: GlobPattern) -> bool: ...
     def __le__(self, other: GlobPattern) -> bool: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def set_pattern(self, pattern: str) -> None:
         """Changes the pattern string that the GlobPattern object matches."""
         ...

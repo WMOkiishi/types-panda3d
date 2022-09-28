@@ -1,5 +1,6 @@
+from _typeshed import Self
 from collections.abc import Sequence
-from typing import Any, ClassVar, TypeVar, overload
+from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
@@ -17,7 +18,6 @@ from panda3d.core import (
     ostream,
 )
 
-_Self = TypeVar('_Self')
 _LinearDistanceForce_FalloffType: TypeAlias = Literal[0, 1, 2]
 
 class PhysicsObject(TypedReferenceCount):
@@ -44,7 +44,7 @@ class PhysicsObject(TypedReferenceCount):
         copy constructor
         """
         ...
-    def assign(self: _Self, other: _Self) -> _Self: ...
+    def assign(self: Self, other: Self) -> Self: ...
     def set_active(self, flag: bool) -> None:
         """Process Flag assignment"""
         ...
@@ -234,7 +234,7 @@ class PhysicsObjectCollection:
         ...
     def __iadd__(self, other: PhysicsObjectCollection) -> PhysicsObjectCollection: ...
     def __add__(self, other: PhysicsObjectCollection) -> PhysicsObjectCollection: ...
-    def assign(self: _Self, copy: _Self) -> _Self: ...
+    def assign(self: Self, copy: Self) -> Self: ...
     def add_physics_object(self, physics_object: PhysicsObject) -> None:
         """Adds a new PhysicsObject to the collection."""
         ...
