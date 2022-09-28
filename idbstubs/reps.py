@@ -394,7 +394,9 @@ class File:
         for key, module in keyed_modules:
             if prev_key not in (None, key):
                 yield ''
-            imported_names = sorted(self.imports[module])
+            imported_names = sorted(
+                self.imports[module], key=lambda s: s[0:1] + s[1:].lower()
+            )
             if len(module) + sum(len(n)+2 for n in imported_names) < 115:
                 yield f"from {module} import {', '.join(imported_names)}"
             else:
