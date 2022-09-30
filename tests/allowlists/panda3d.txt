@@ -14,10 +14,6 @@ panda3d\..+\.__init__
 panda3d\..+\.__copy__
 panda3d\..+\.__deepcopy__
 
-# These exist, but we don't really care.
-panda3d.core.NodePath.__reduce_persist__
-panda3d.core.TypedWritable.__reduce_persist__
-
 # These exist, but stubtest insists they don't.
 panda3d.bullet.BulletPersistentManifold.__get_manifold_point
 panda3d.bullet.BulletWorld.__get_manifold

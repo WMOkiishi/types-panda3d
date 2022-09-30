@@ -8,8 +8,7 @@ NO_STUBS: Final = frozenset((
     # TODO: These are used for vectors, but the typing is complex.
     '__getattr__', '__setattr__',
     # Pickle stuff
-    '__getstate__', '__setstate__',
-    '__reduce__', '__reduce_ex__', '__reduce_persist__',
+    '__getstate__', '__setstate__', '__reduce__', '__reduce_ex__',
     # Inherited from `object`; signature shouldn't change
     '__dict__', '__repr__', '__str__',
 ))

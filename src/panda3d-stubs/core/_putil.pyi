@@ -340,6 +340,7 @@ class TypedWritable(TypedObject):
 
     See also TypedObject for detailed instructions.
     """
+    def __reduce_persist__(self, pickler): ...
     def fillin(self, scan: DatagramIterator, manager: BamReader) -> None:
         """This internal function is intended to be called by each class's
         make_from_bam() method to read in all of the relevant data from the BamFile
