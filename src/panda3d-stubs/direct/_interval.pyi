@@ -2,7 +2,7 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import AnimControl, EventQueue, LVecBase2f, NodePath, TextureStage, TypedReferenceCount, TypeHandle, ostream
+from panda3d.core import AnimControl, EventQueue, LVecBase2, NodePath, TextureStage, TypedReferenceCount, TypeHandle, ostream
 
 _CInterval_State: TypeAlias = Literal[0, 1, 2, 3]
 _CInterval_EventType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
@@ -700,7 +700,7 @@ class CLerpNodePathInterval(CLerpInterval):
         ...
     @overload
     def set_end_hpr(self, quat: Vec4f) -> None:
-        """`(self, quat: LQuaternionf)`:
+        """`(self, quat: LQuaternion)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
@@ -710,7 +710,7 @@ class CLerpNodePathInterval(CLerpInterval):
         converted to a HPR trio, and the lerp will be performed in HPR space,
         componentwise.
 
-        `(self, hpr: LVecBase3f)`:
+        `(self, hpr: LVecBase3)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
@@ -733,7 +733,7 @@ class CLerpNodePathInterval(CLerpInterval):
         ...
     @overload
     def set_end_quat(self, quat: Vec4f) -> None:
-        """`(self, quat: LQuaternionf)`:
+        """`(self, quat: LQuaternion)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
@@ -744,7 +744,7 @@ class CLerpNodePathInterval(CLerpInterval):
 
         The given quaternion needs to be normalized.
 
-        `(self, hpr: LVecBase3f)`:
+        `(self, hpr: LVecBase3)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
@@ -820,14 +820,14 @@ class CLerpNodePathInterval(CLerpInterval):
         stage.
         """
         ...
-    def set_start_tex_offset(self, tex_offset: LVecBase2f) -> None:
+    def set_start_tex_offset(self, tex_offset: LVecBase2) -> None:
         """Indicates the initial UV offset of the lerped node.  This is meaningful
         only if set_end_tex_offset() is also called.  This parameter is optional;
         if unspecified, the value will be taken from the node's actual UV offset at
         the time the lerp is performed.
         """
         ...
-    def set_end_tex_offset(self, tex_offset: LVecBase2f) -> None:
+    def set_end_tex_offset(self, tex_offset: LVecBase2) -> None:
         """Indicates that the UV offset of the node should be lerped, and specifies
         the final UV offset of the node.  This should be called before
         priv_initialize().  If this is not called, the node's UV offset will not be
@@ -848,14 +848,14 @@ class CLerpNodePathInterval(CLerpInterval):
         affected by the lerp.
         """
         ...
-    def set_start_tex_scale(self, tex_scale: LVecBase2f) -> None:
+    def set_start_tex_scale(self, tex_scale: LVecBase2) -> None:
         """Indicates the initial UV scale of the lerped node.  This is meaningful only
         if set_end_tex_scale() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual UV scale at the
         time the lerp is performed.
         """
         ...
-    def set_end_tex_scale(self, tex_scale: LVecBase2f) -> None:
+    def set_end_tex_scale(self, tex_scale: LVecBase2) -> None:
         """Indicates that the UV scale of the node should be lerped, and specifies the
         final UV scale of the node.  This should be called before
         priv_initialize().  If this is not called, the node's UV scale will not be

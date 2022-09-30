@@ -7,12 +7,13 @@ from panda3d._typing import Filepath, Mat4f, Vec4f
 from panda3d.core import (
     FreetypeFont,
     Geom,
-    LMatrix4f,
-    LPoint3f,
-    LVecBase2f,
+    LColor,
+    LMatrix4,
+    LPoint3,
+    LVecBase2,
     LVecBase2i,
-    LVecBase4f,
-    LVector2f,
+    LVecBase4,
+    LVector2,
     Namable,
     NodePath,
     PandaNode,
@@ -272,8 +273,8 @@ class DynamicTextFont(TextFont, FreetypeFont):
     magfilter: _SamplerState_FilterType
     anisotropic_degree: int
     render_mode: _TextFont_RenderMode
-    fg: LVecBase4f
-    bg: LVecBase4f
+    fg: LColor
+    bg: LColor
     @property
     def font_pixel_size(self) -> int: ...
     @property
@@ -480,7 +481,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         the font, or immediately after calling clear().
         """
         ...
-    def get_fg(self) -> LVecBase4f:
+    def get_fg(self) -> LColor:
         """Returns the color of the foreground pixels of the font as they are rendered
         into the font texture.  See set_fg().
         """
@@ -500,7 +501,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         the font, or immediately after calling clear().
         """
         ...
-    def get_bg(self) -> LVecBase4f:
+    def get_bg(self) -> LColor:
         """Returns the color of the background pixels of the font as they are rendered
         into the font texture.  See set_bg().
         """
@@ -520,7 +521,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         the font, or immediately after calling clear().
         """
         ...
-    def get_outline_color(self) -> LVecBase4f:
+    def get_outline_color(self) -> LColor:
         """Returns the color of the outline pixels of the font as they are rendered
         into the font texture.  See set_outline().
         """
@@ -737,9 +738,9 @@ class TextProperties:
     indent: float
     wordwrap: float
     preserve_trailing_whitespace: bool
-    text_color: LVecBase4f
-    shadow_color: LVecBase4f
-    shadow: LVector2f
+    text_color: LColor
+    shadow_color: LColor
+    shadow: LVector2
     bin: str
     draw_order: int
     tab_width: float
@@ -918,7 +919,7 @@ class TextProperties:
         """
         ...
     def has_text_color(self) -> bool: ...
-    def get_text_color(self) -> LVecBase4f: ...
+    def get_text_color(self) -> LColor: ...
     @overload
     def set_shadow_color(self, shadow_color: Vec4f) -> None: ...
     @overload
@@ -927,9 +928,9 @@ class TextProperties:
         """Removes the shadow color specification."""
         ...
     def has_shadow_color(self) -> bool: ...
-    def get_shadow_color(self) -> LVecBase4f: ...
+    def get_shadow_color(self) -> LColor: ...
     @overload
-    def set_shadow(self, shadow_offset: LVecBase2f) -> None:
+    def set_shadow(self, shadow_offset: LVecBase2) -> None:
         """Specifies that the text should be drawn with a shadow, by creating a second
         copy of the text and offsetting it slightly behind the first.
         """
@@ -940,7 +941,7 @@ class TextProperties:
         """Specifies that a shadow will not be drawn behind the text."""
         ...
     def has_shadow(self) -> bool: ...
-    def get_shadow(self) -> LVector2f:
+    def get_shadow(self) -> LVector2:
         """Returns the offset of the shadow as set by set_shadow().  It is an error to
         call this if has_shadow() is false.
         """
@@ -1174,7 +1175,7 @@ class TextGraphic:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     model: NodePath
-    frame: LVecBase4f
+    frame: LVecBase4
     instance_flag: bool
     @overload
     def __init__(self, __param0: TextGraphic = ...) -> None: ...
@@ -1192,7 +1193,7 @@ class TextGraphic:
         contain geometry that will render the desired graphic image.
         """
         ...
-    def get_frame(self) -> LVecBase4f:
+    def get_frame(self) -> LVecBase4:
         """Returns the frame specified for the graphic.  This is the amount of space
         that will be reserved for the graphic when it is embedded in a text
         paragraph, in the form (left, right, bottom, top).
@@ -1590,12 +1591,12 @@ class TextAssembler:
         get_lr().
         """
         ...
-    def get_ul(self) -> LVector2f:
+    def get_ul(self) -> LVector2:
         """Returns the upper-left corner of the assembled text, in 2-d text
         coordinates.
         """
         ...
-    def get_lr(self) -> LVector2f:
+    def get_lr(self) -> LVector2:
         """Returns the lower-right corner of the assembled text, in 2-d text
         coordinates.
         """
@@ -1713,12 +1714,12 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     max_rows: int
-    frame_color: LVecBase4f
-    card_color: LVecBase4f
+    frame_color: LColor
+    card_color: LColor
     card_texture: Texture
     frame_line_width: float
     frame_corners: bool
-    transform: LMatrix4f  # type: ignore[assignment]
+    transform: LMatrix4  # type: ignore[assignment]
     coordinate_system: _CoordinateSystem
     usage_hint: _GeomEnums_UsageHint
     flatten_flags: int
@@ -1732,9 +1733,9 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     indent: float
     wordwrap: float
     preserve_trailing_whitespace: bool
-    text_color: LVecBase4f
-    shadow_color: LVecBase4f
-    shadow: LVector2f
+    text_color: LColor
+    shadow_color: LColor
+    shadow: LVector2
     bin: str
     draw_order: int
     tab_width: float
@@ -1795,7 +1796,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def set_frame_color(self, frame_color: Vec4f) -> None: ...
     @overload
     def set_frame_color(self, r: float, g: float, b: float, a: float) -> None: ...
-    def get_frame_color(self) -> LVecBase4f: ...
+    def get_frame_color(self) -> LColor: ...
     def set_card_border(self, size: float, uv_portion: float) -> None: ...
     def clear_card_border(self) -> None: ...
     def get_card_border_size(self) -> float: ...
@@ -1805,7 +1806,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def set_card_color(self, card_color: Vec4f) -> None: ...
     @overload
     def set_card_color(self, r: float, g: float, b: float, a: float) -> None: ...
-    def get_card_color(self) -> LVecBase4f: ...
+    def get_card_color(self) -> LColor: ...
     def set_card_texture(self, card_texture: Texture) -> None: ...
     def clear_card_texture(self) -> None: ...
     def has_card_texture(self) -> bool: ...
@@ -1836,14 +1837,14 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         get_frame_as_set() are relative to the text's origin.
         """
         ...
-    def get_frame_as_set(self) -> LVecBase4f:
+    def get_frame_as_set(self) -> LVecBase4:
         """Returns the dimensions of the frame as set by set_frame_as_margin() or
         set_frame_actual().  Use is_frame_actual() to determine how to interpret
         the values returned by this function.  It is an error to call this if
         has_frame() is false.
         """
         ...
-    def get_frame_actual(self) -> LVecBase4f:
+    def get_frame_actual(self) -> LVecBase4:
         """Returns the actual dimensions of the frame around the text.  If the frame
         was set via set_frame_as_margin(), the result returned by this function
         reflects the size of the current text; if the frame was set via
@@ -1901,14 +1902,14 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         get_card_as_set() are relative to the text's origin.
         """
         ...
-    def get_card_as_set(self) -> LVecBase4f:
+    def get_card_as_set(self) -> LVecBase4:
         """Returns the dimensions of the card as set by set_card_as_margin() or
         set_card_actual().  Use is_card_actual() to determine how to interpret the
         values returned by this function.  It is an error to call this if
         has_card() is false.
         """
         ...
-    def get_card_actual(self) -> LVecBase4f:
+    def get_card_actual(self) -> LVecBase4:
         """Returns the actual dimensions of the card around the text.  If the card was
         set via set_card_as_margin(), the result returned by this function reflects
         the size of the current text; if the card was set via set_card_actual(),
@@ -1918,7 +1919,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         itself, as if the card were set with a margin of 0, 0, 0, 0.
         """
         ...
-    def get_card_transformed(self) -> LVecBase4f:
+    def get_card_transformed(self) -> LVecBase4:
         """Returns the actual card dimensions, transformed by the matrix set by
         set_transform().  This returns the card dimensions in actual coordinates as
         seen by the rest of the world.  Also see get_upper_left_3d() and
@@ -1928,7 +1929,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def set_transform(self, transform: Mat4f) -> None:  # type: ignore[override]
         """Sets an additional transform that is applied to the entire text paragraph."""
         ...
-    def get_transform(self) -> LMatrix4f: ...  # type: ignore[override]
+    def get_transform(self) -> LMatrix4: ...  # type: ignore[override]
     def set_coordinate_system(self, cs: _CoordinateSystem) -> None:
         """Specifies the coordinate system in which the text will be generated."""
         ...
@@ -2050,7 +2051,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def set_shadow_color(self, r: float, g: float, b: float, a: float) -> None: ...
     def clear_shadow_color(self) -> None: ...
     @overload
-    def set_shadow(self, shadow_offset: LVecBase2f) -> None:
+    def set_shadow(self, shadow_offset: LVecBase2) -> None:
         """Specifies that the text should be drawn with a shadow, by creating a second
         copy of the text and offsetting it slightly behind the first.
         """
@@ -2208,12 +2209,12 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def get_width(self) -> float:
         """Returns the net width of the text in local 2-d coordinates."""
         ...
-    def get_upper_left_3d(self) -> LPoint3f:
+    def get_upper_left_3d(self) -> LPoint3:
         """Returns the upper-left extent of the text object, after it has been
         transformed into 3-d space by applying the set_transform() matrix.
         """
         ...
-    def get_lower_right_3d(self) -> LPoint3f:
+    def get_lower_right_3d(self) -> LPoint3:
         """Returns the lower-right extent of the text object, after it has been
         transformed into 3-d space by applying the set_transform() matrix.
         """

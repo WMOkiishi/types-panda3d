@@ -10,12 +10,12 @@ from panda3d.core import (
     EventHandler,
     EventParameter,
     GeomNode,
-    LMatrix4f,
-    LPoint2f,
-    LPoint3f,
+    LMatrix4,
+    LPoint2,
+    LPoint3,
     LVecBase2f,
-    LVecBase3f,
-    LVecBase4f,
+    LVecBase3,
+    LVecBase4,
     ModifierButtons,
     Namable,
     NodePath,
@@ -500,7 +500,7 @@ class DriveInterface(MouseInterfaceNode):
         buttons being held down.
         """
         ...
-    def get_pos(self) -> LPoint3f:
+    def get_pos(self) -> LPoint3:
         """Returns the driver's position."""
         ...
     def get_x(self) -> float: ...
@@ -515,7 +515,7 @@ class DriveInterface(MouseInterfaceNode):
     def set_x(self, x: float) -> None: ...
     def set_y(self, y: float) -> None: ...
     def set_z(self, z: float) -> None: ...
-    def get_hpr(self) -> LVecBase3f:
+    def get_hpr(self) -> LVecBase3:
         """Returns the driver's orientation."""
         ...
     def get_h(self) -> float: ...
@@ -573,7 +573,7 @@ class DriveInterface(MouseInterfaceNode):
     def set_mat(self, mat: Mat4f) -> None:
         """Stores the indicated transform in the DriveInterface."""
         ...
-    def get_mat(self) -> LMatrix4f:
+    def get_mat(self) -> LMatrix4:
         """Returns the current transform."""
         ...
     def force_dgraph(self) -> None:
@@ -680,7 +680,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     MouseWatcher.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    frame: LVecBase4f
+    frame: LVecBase4
     sort: int
     active: bool
     keyboard: bool
@@ -707,7 +707,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     def set_frame(self, frame: Vec4f) -> None: ...
     @overload
     def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
-    def get_frame(self) -> LVecBase4f: ...
+    def get_frame(self) -> LVecBase4: ...
     def get_area(self) -> float:
         """Returns the area of the rectangular region."""
         ...
@@ -920,7 +920,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         the mouse is in open space within the window.
         """
         ...
-    def get_mouse(self) -> LPoint2f:
+    def get_mouse(self) -> LPoint2:
         """It is only valid to call this if has_mouse() returns true.  If so, this
         returns the current position of the mouse within the window.
         """
@@ -937,7 +937,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         ...
     @overload
     def set_frame(self, frame: Vec4f) -> None:
-        """`(self, frame: LVecBase4f)`:
+        """`(self, frame: LVecBase4)`:
         Sets the frame of the MouseWatcher.  This determines the coordinate space
         in which the MouseWatcherRegions should be expected to live.  Normally,
         this is left at -1, 1, -1, 1, which is the default setting, and matches the
@@ -955,7 +955,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         ...
     @overload
     def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
-    def get_frame(self) -> LVecBase4f:
+    def get_frame(self) -> LVecBase4:
         """Returns the frame of the MouseWatcher.  See set_frame()."""
         ...
     @overload
@@ -970,7 +970,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         Returns the smallest region the mouse is currently over, or NULL if it is
         over no region.
 
-        `(self, pos: LPoint2f)`:
+        `(self, pos: LPoint2)`:
         Returns the preferred region the mouse is over.  In the case of overlapping
         regions, the region with the largest sort order is preferred; if two
         regions have the same sort order, then the smaller region is preferred.
@@ -1407,7 +1407,7 @@ class MouseWatcherParameter:
         otherwise.
         """
         ...
-    def get_mouse(self) -> LPoint2f:
+    def get_mouse(self) -> LPoint2:
         """Returns the mouse position at the time the event was generated, in the
         normalized range (-1 .. 1).  It is valid to call this only if has_mouse()
         returned true.
@@ -1471,7 +1471,7 @@ class Trackball(MouseInterfaceNode):
         in and out.
         """
         ...
-    def get_pos(self) -> LPoint3f:
+    def get_pos(self) -> LPoint3:
         """Return the offset from the center of rotation."""
         ...
     def get_x(self) -> float: ...
@@ -1486,7 +1486,7 @@ class Trackball(MouseInterfaceNode):
     def set_x(self, x: float) -> None: ...
     def set_y(self, y: float) -> None: ...
     def set_z(self, z: float) -> None: ...
-    def get_hpr(self) -> LVecBase3f:
+    def get_hpr(self) -> LVecBase3:
         """Return the trackball's orientation."""
         ...
     def get_h(self) -> float: ...
@@ -1509,7 +1509,7 @@ class Trackball(MouseInterfaceNode):
     def move_origin(self, x: float, y: float, z: float) -> None:
         """Moves the center of rotation by the given amount."""
         ...
-    def get_origin(self) -> LPoint3f:
+    def get_origin(self) -> LPoint3:
         """Returns the current center of rotation."""
         ...
     def set_origin(self, origin: Vec3f) -> None:
@@ -1565,10 +1565,10 @@ class Trackball(MouseInterfaceNode):
         global space, regardless of the rel_to node.
         """
         ...
-    def get_mat(self) -> LMatrix4f:
+    def get_mat(self) -> LMatrix4:
         """Returns the matrix represented by the trackball rotation."""
         ...
-    def get_trans_mat(self) -> LMatrix4f:
+    def get_trans_mat(self) -> LMatrix4:
         """Returns the actual transform that will be applied to the scene graph.  This
         is the same as get_mat(), unless invert is in effect.
         """

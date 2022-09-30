@@ -6,14 +6,14 @@ from typing_extensions import Final, Literal, TypeAlias
 from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f
 from panda3d.core import (
     BoundingHexahedron,
+    LColorf,
     LPoint2f,
     LPoint3f,
     LPoint4f,
+    LRGBColorf,
     LVecBase2d,
     LVecBase2f,
     LVecBase2i,
-    LVecBase3f,
-    LVecBase4f,
     ReferenceCount,
     StackedPerlinNoise2,
     TypedWritable,
@@ -150,7 +150,7 @@ class PNMImageHeader:
         @overload
         def __init__(self, __param0: PNMImageHeader.PixelSpec) -> None: ...
         @overload
-        def __init__(self, rgb: pixel, alpha: int = ...) -> None: ...
+        def __init__(self, rgb: xel, alpha: int = ...) -> None: ...
         @overload
         def __init__(self, gray_value: int, alpha: int = ...) -> None: ...
         @overload
@@ -1021,16 +1021,16 @@ class PNMImage(PNMImageHeader):
         def __len__(self) -> int:
             """Get the number of pixels in the row."""
             ...
-        def __getitem__(self, x: int) -> LVecBase4f: ...
+        def __getitem__(self, x: int) -> LColorf: ...
         def __setitem__(self, x: int, v: Vec4f) -> None:
             """Set the pixel at the given column in the row.  If the image has no alpha
             channel, the alpha component is ignored.
             """
             ...
-        def get_xel_val(self, x: int) -> pixel:
+        def get_xel_val(self, x: int) -> xel:
             """Fetch the pixel at the given column in the row."""
             ...
-        def set_xel_val(self, x: int, v: pixel) -> None:
+        def set_xel_val(self, x: int, v: xel) -> None:
             """Set the pixel at the given column in the row."""
             ...
         def get_alpha_val(self, x: int) -> int:
@@ -1052,8 +1052,8 @@ class PNMImage(PNMImageHeader):
         def __len__(self) -> int:
             """Get the number of pixels in the row."""
             ...
-        def __getitem__(self, x: int) -> LVecBase4f: ...
-        def get_xel_val(self, x: int) -> pixel:
+        def __getitem__(self, x: int) -> LColorf: ...
+        def get_xel_val(self, x: int) -> xel:
             """Fetch the pixel at the given column in the row."""
             ...
         def get_alpha_val(self, x: int) -> int:
@@ -1085,7 +1085,7 @@ class PNMImage(PNMImageHeader):
         """A handy function to clamp values to [0..get_maxval()]."""
         ...
     @overload
-    def to_val(self, input_value: Vec3f) -> pixel:
+    def to_val(self, input_value: Vec3f) -> xel:
         """A handy function to scale non-alpha values from [0..1] to
         [0..get_maxval()].  Do not use this for alpha values, see to_alpha_val.
         """
@@ -1096,7 +1096,7 @@ class PNMImage(PNMImageHeader):
         """A handy function to scale alpha values from [0..1] to [0..get_maxval()]."""
         ...
     @overload
-    def from_val(self, input_value: pixel) -> LVecBase3f:
+    def from_val(self, input_value: xel) -> LRGBColorf:
         """A handy function to scale non-alpha values from [0..get_maxval()] to
         [0..1].  Do not use this for alpha values, see from_alpha_val.
         """
@@ -1347,14 +1347,14 @@ class PNMImage(PNMImageHeader):
     def set_maxval(self, maxval: int) -> None:
         """Rescales the image to the indicated maxval."""
         ...
-    def get_xel_val(self, x: int, y: int) -> pixel:
+    def get_xel_val(self, x: int, y: int) -> xel:
         """Returns the RGB color at the indicated pixel.  Each component is in the
         range 0..maxval.
         """
         ...
     @overload
-    def set_xel_val(self, x: int, y: int, value: pixel) -> None:
-        """`(self, x: int, y: int, value: pixel)`; `(self, x: int, y: int, r: int, g: int, b: int)`:
+    def set_xel_val(self, x: int, y: int, value: xel) -> None:
+        """`(self, x: int, y: int, value: xel)`; `(self, x: int, y: int, r: int, g: int, b: int)`:
         Changes the RGB color at the indicated pixel.  Each component is in the
         range 0..maxval, encoded in the configured color space.  See set_xel if you
         instead have a linearized and normalized floating-point value.
@@ -1483,14 +1483,14 @@ class PNMImage(PNMImageHeader):
         object.
         """
         ...
-    def get_xel(self, x: int, y: int) -> LVecBase3f:
+    def get_xel(self, x: int, y: int) -> LRGBColorf:
         """Returns the RGB color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
         """
         ...
     @overload
     def set_xel(self, x: int, y: int, value: Vec3f) -> None:
-        """`(self, x: int, y: int, value: LVecBase3f)`; `(self, x: int, y: int, r: float, g: float, b: float)`:
+        """`(self, x: int, y: int, value: LRGBColorf)`; `(self, x: int, y: int, r: float, g: float, b: float)`:
         Changes the RGB color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
 
@@ -1503,7 +1503,7 @@ class PNMImage(PNMImageHeader):
     def set_xel(self, x: int, y: int, gray: float) -> None: ...
     @overload
     def set_xel(self, x: int, y: int, r: float, g: float, b: float) -> None: ...
-    def get_xel_a(self, x: int, y: int) -> LVecBase4f:
+    def get_xel_a(self, x: int, y: int) -> LColorf:
         """Returns the RGBA color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
         """
@@ -1843,10 +1843,10 @@ class PNMImage(PNMImageHeader):
         ...
     @overload
     def apply_exponent(self, red_exponent: float, green_exponent: float, blue_exponent: float, alpha_exponent: float = ...) -> None: ...
-    def get_average_xel(self) -> LVecBase3f:
+    def get_average_xel(self) -> LRGBColorf:
         """Returns the average color of all of the pixels in the image."""
         ...
-    def get_average_xel_a(self) -> LVecBase4f:
+    def get_average_xel_a(self) -> LColorf:
         """Returns the average color of all of the pixels in the image, including the
         alpha channel.
         """

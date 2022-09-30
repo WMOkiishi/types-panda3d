@@ -9,8 +9,9 @@ from panda3d.core import (
     BitArray,
     ConstPointerToArray_float,
     CopyOnWriteObject,
+    CPTA_stdfloat,
     GlobPattern,
-    LMatrix4f,
+    LMatrix4,
     Loader,
     LoaderOptions,
     ModelLoadRequest,
@@ -438,7 +439,7 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     """
     value_node: PandaNode
     def set_value(self, value: Mat4f | TransformState) -> None:
-        """`(self, value: LMatrix4f)`:
+        """`(self, value: LMatrix4)`:
         Explicitly sets the matrix value.
 
         `(self, value: TransformState)`:
@@ -470,7 +471,7 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     of nine sub-tables, each representing one component of the transform:
     scale, rotate, translate.
     """
-    tables: Mapping[Any, ConstPointerToArray_float]
+    tables: Mapping[Any, CPTA_stdfloat]
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     @staticmethod
     def is_valid_id(table_id: str) -> bool:
@@ -483,7 +484,7 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
         get_num_frames() frames.
         """
         ...
-    def get_table(self, table_id: str) -> ConstPointerToArray_float:
+    def get_table(self, table_id: str) -> CPTA_stdfloat:
         """Returns a pointer to the indicated subtable's data, if it exists, or NULL
         if it does not.
         """
@@ -535,12 +536,12 @@ class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
     """An animation channel that issues a scalar each frame, read from a table
     such as might have been read from an egg file.
     """
-    table: ConstPointerToArray_float
+    table: CPTA_stdfloat
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     def set_table(self, table: ConstPointerToArray_float | PointerToArray_float) -> None:
         """Assigns the data table."""
         ...
-    def get_table(self) -> ConstPointerToArray_float:
+    def get_table(self) -> CPTA_stdfloat:
         """Returns a pointer to the table's data, if it exists, or NULL if it does
         not.
         """
@@ -826,7 +827,7 @@ class PartBundle(PartGroup):
     blend_type: _PartBundle_BlendType
     anim_blend_flag: bool
     frame_blend_flag: bool
-    root_xform: LMatrix4f
+    root_xform: LMatrix4
     BT_linear: Final[Literal[0]]
     BTLinear: Final[Literal[0]]
     BT_normalized_linear: Final[Literal[1]]
@@ -927,7 +928,7 @@ class PartBundle(PartGroup):
     def xform(self, mat: Mat4f) -> None:
         """Applies the indicated transform to the root of the animated hierarchy."""
         ...
-    def get_root_xform(self) -> LMatrix4f:
+    def get_root_xform(self) -> LMatrix4:
         """Returns the transform matrix which is implicitly applied at the root of the
         animated hierarchy.
         """
@@ -1192,8 +1193,8 @@ class MovingPartMatrix(MovingPart_ACMatrixSwitchType):
     """This is a particular kind of MovingPart that accepts a matrix each frame."""
 
 class MovingPart_ACMatrixSwitchType(MovingPartBase):
-    def get_value(self) -> LMatrix4f: ...
-    def get_default_value(self) -> LMatrix4f: ...
+    def get_value(self) -> LMatrix4: ...
+    def get_default_value(self) -> LMatrix4: ...
     getValue = get_value
     getDefaultValue = get_default_value
 

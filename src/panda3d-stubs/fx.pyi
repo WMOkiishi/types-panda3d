@@ -6,8 +6,8 @@ from panda3d.core import (
     GeomNode,
     GraphicsEngine,
     GraphicsOutput,
+    LColor,
     Lens,
-    LVecBase4f,
     NodePath,
     PandaNode,
     PfmFile,
@@ -193,7 +193,7 @@ class ProjectionScreen(PandaNode):
         set_vignette_on().
         """
         ...
-    def get_vignette_color(self) -> LVecBase4f:
+    def get_vignette_color(self) -> LColor:
         """Returns the color the screen will be painted at the portions outside of the
         lens' frustum.  See set_vignette_color().
         """
@@ -205,7 +205,7 @@ class ProjectionScreen(PandaNode):
         set_vignette_on().
         """
         ...
-    def get_frame_color(self) -> LVecBase4f:
+    def get_frame_color(self) -> LColor:
         """Returns the color the screen will be painted at the portions outside of the
         lens' frustum.  See set_frame_color().
         """

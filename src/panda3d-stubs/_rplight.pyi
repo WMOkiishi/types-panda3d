@@ -3,17 +3,17 @@ from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Mat4f, Vec3f, Vec4f, Vec4i
 from panda3d.core import (
-    BitMask_uint32_t_32,
+    BitMask32,
     Camera,
     GraphicsOutput,
-    LMatrix3f,
-    LVecBase3f,
+    LMatrix3,
+    LVecBase3,
     LVecBase3i,
     NodePath,
-    PointerToArray_float,
-    PointerToArray_LVecBase2f,
-    PointerToArray_UnalignedLMatrix4f,
-    PointerToArray_unsigned_char,
+    PTA_float,
+    PTA_LMatrix4,
+    PTA_LVecBase2,
+    PTA_uchar,
     ReferenceCount,
     Shader,
     Texture,
@@ -72,7 +72,7 @@ class GPUCommand:
         """
         ...
     def push_vec3(self, v: LVecBase3i | Vec3f) -> None:
-        """`(self, v: LVecBase3f)`:
+        """`(self, v: LVecBase3)`:
         @brief Appends a 3-component floating point vector to the GPUCommand.
         @details This appends a 3-component floating point vector to the command.
           It basically just calls push_float() for every component, in the order
@@ -90,7 +90,7 @@ class GPUCommand:
         """
         ...
     def push_vec4(self, v: Vec4f | Vec4i) -> None:
-        """`(self, v: LVecBase4f)`:
+        """`(self, v: LVecBase4)`:
         @brief Appends a 4-component floating point vector to the GPUCommand.
         @details This appends a 4-component floating point vector to the command.
           It basically just calls push_float() for every component, in the order
@@ -107,7 +107,7 @@ class GPUCommand:
         @param v Int-Vector to append.
         """
         ...
-    def push_mat3(self, v: LMatrix3f) -> None:
+    def push_mat3(self, v: LMatrix3) -> None:
         """@brief Appends a floating point 3x3 matrix to the GPUCommand.
         @details This appends a floating point 3x3 matrix to the GPUCommand, by
           pushing all components in row-order to the command. This occupies a space of
@@ -136,7 +136,7 @@ class GPUCommand:
         @return The integer representation flag
         """
         ...
-    def write_to(self, dest: PointerToArray_unsigned_char, command_index: int) -> None:
+    def write_to(self, dest: PTA_uchar, command_index: int) -> None:
         """@brief Writes the GPU command to a given target.
         @details This method writes all the data of the GPU command to a given target.
           The target should be a pointer to memory being big enough to hold the
@@ -196,7 +196,7 @@ class GPUCommandList:
         @return Amount of commands
         """
         ...
-    def write_commands_to(self, dest: PointerToArray_unsigned_char, limit: int = ...) -> int:
+    def write_commands_to(self, dest: PTA_uchar, limit: int = ...) -> int:
         """@brief Writes the first n-commands to a destination.
         @details This takes the first #limit commands, and writes them to the
           destination using GPUCommand::write_to. See GPUCommand::write_to for
@@ -227,21 +227,21 @@ class IESDataset:
         @details This constructs a new IESDataset with no data set.
         """
         ...
-    def set_vertical_angles(self, vertical_angles: PointerToArray_float) -> None:
+    def set_vertical_angles(self, vertical_angles: PTA_float) -> None:
         """@brief Sets the vertical angles of the dataset.
         @details This sets the list of vertical angles of the dataset.
 
         @param vertical_angles Vector of all vertical angles.
         """
         ...
-    def set_horizontal_angles(self, horizontal_angles: PointerToArray_float) -> None:
+    def set_horizontal_angles(self, horizontal_angles: PTA_float) -> None:
         """@brief Sets the horizontal angles of the dataset.
         @details This sets the list of horizontal angles of the dataset.
 
         @param horizontal_angles Vector of all horizontal angles.
         """
         ...
-    def set_candela_values(self, candela_values: PointerToArray_float) -> None:
+    def set_candela_values(self, candela_values: PTA_float) -> None:
         """@brief Sets the candela values.
         @details This sets the candela values of the dataset. They should be an
           interleaved 2D array with the dimensions vertical_angles x horizontal_angles.
@@ -271,8 +271,8 @@ class RPLight(ReferenceCount):
       stores common properties, and provides methods to modify these.
       It also defines some interface functions which subclasses have to implement.
     """
-    pos: LVecBase3f
-    color: LVecBase3f
+    pos: LVecBase3
+    color: LVecBase3
     energy: float
     casts_shadows: bool
     shadow_map_resolution: int
@@ -298,7 +298,7 @@ class RPLight(ReferenceCount):
         ...
     @overload
     def set_pos(self, pos: Vec3f) -> None:
-        """`(self, pos: LVecBase3f)`:
+        """`(self, pos: LVecBase3)`:
         @brief Sets the position of the light
         @details This sets the position of the light in world space. It will cause
           the light to get invalidated, and resubmitted to the GPU.
@@ -316,7 +316,7 @@ class RPLight(ReferenceCount):
         ...
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
-    def get_pos(self) -> LVecBase3f:
+    def get_pos(self) -> LVecBase3:
         """@brief Returns the position of the light
         @details This returns the position of the light previously set with
           RPLight::set_pos(). The returned position is in world space.
@@ -325,7 +325,7 @@ class RPLight(ReferenceCount):
         ...
     @overload
     def set_color(self, color: Vec3f) -> None:
-        """`(self, color: LVecBase3f)`:
+        """`(self, color: LVecBase3)`:
         @brief Sets the lights color
         @details This sets the lights color. The color should not include the brightness
           of the light, you should control that with the energy. The color specifies
@@ -348,7 +348,7 @@ class RPLight(ReferenceCount):
         ...
     @overload
     def set_color(self, r: float, g: float, b: float) -> None: ...
-    def get_color(self) -> LVecBase3f:
+    def get_color(self) -> LVecBase3:
         """@brief Returns the lights color
         @details This returns the light color, previously set with RPLight::set_color.
           This does not include the energy of the light. It might differ from what
@@ -619,7 +619,7 @@ class TagStateManager:
         @param source Camera to unregister
         """
         ...
-    def get_mask(self, container_name: str) -> BitMask_uint32_t_32:
+    def get_mask(self, container_name: str) -> BitMask32:
         """@brief Returns the render mask for the given state
         @details This returns the mask of a given render pass, which can be used
           to either show or hide objects from this pass.
@@ -1189,7 +1189,7 @@ class PSSMCameraRig:
         @param parent Parent node path
         """
         ...
-    def get_mvp_array(self) -> PointerToArray_UnalignedLMatrix4f:
+    def get_mvp_array(self) -> PTA_LMatrix4:
         """@brief Returns a handle to the MVP array
         @details This returns a handle to the array of view-projection matrices
           of the different splits. This can be used for computing shadows. The array
@@ -1198,7 +1198,7 @@ class PSSMCameraRig:
         @return view-projection matrix array
         """
         ...
-    def get_nearfar_array(self) -> PointerToArray_LVecBase2f:
+    def get_nearfar_array(self) -> PTA_LVecBase2:
         """@brief Returns a handle to the near and far planes array
         @details This returns a handle to the near and far plane array. Each split
           has an entry in the array, whereas the x component of the vecto denotes the
@@ -1232,7 +1232,7 @@ class RPSpotLight(RPLight):
     """
     radius: float
     fov: float
-    direction: LVecBase3f
+    direction: LVecBase3
     def __init__(self) -> None:
         """@brief Creates a new spot light
         @details This creates a new spot light with default properties set. You should
@@ -1247,7 +1247,7 @@ class RPSpotLight(RPLight):
     def set_direction(self, direction: Vec3f) -> None: ...
     @overload
     def set_direction(self, dx: float, dy: float, dz: float) -> None: ...
-    def get_direction(self) -> LVecBase3f: ...
+    def get_direction(self) -> LVecBase3: ...
     @overload
     def look_at(self, point: Vec3f) -> None: ...
     @overload

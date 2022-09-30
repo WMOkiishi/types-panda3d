@@ -6,21 +6,24 @@ from typing_extensions import Final, Literal, TypeAlias
 from panda3d._typing import Filepath, Mat4d, Vec3d, Vec4d, Vec4f
 from panda3d.core import (
     BamCacheRecord,
-    BitMask_uint32_t_32,
+    CollideMask,
     ConfigVariableSearchPath,
     DSearchPath,
     Filename,
     GlobPattern,
+    LColor,
     LMatrix3d,
     LMatrix4d,
+    LNormald,
     LPoint2d,
     LPoint3d,
     LPoint4d,
+    LTexCoord3d,
+    LTexCoordd,
     LVecBase2d,
     LVecBase3d,
     LVecBase4d,
-    LVecBase4f,
-    LVector3d,
+    LVertexd,
     Namable,
     TypedReferenceCount,
     TypeHandle,
@@ -771,7 +774,7 @@ class EggAttributes:
     def __init__(self, copy: EggAttributes = ...) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def has_normal(self) -> bool: ...
-    def get_normal(self) -> LVector3d: ...
+    def get_normal(self) -> LNormald: ...
     def set_normal(self, normal: Vec3d) -> None: ...
     def clear_normal(self) -> None: ...
     def matches_normal(self, other: EggAttributes) -> bool:
@@ -785,7 +788,7 @@ class EggAttributes:
         """
         ...
     def has_color(self) -> bool: ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the color set on this particular attribute.  If there is no color
         set, returns white.
         """
@@ -865,10 +868,10 @@ class EggVertexUV(EggNamedObject):
         it is just a normal 2-d texture coordinate.
         """
         ...
-    def get_uv(self) -> LPoint2d:
+    def get_uv(self) -> LTexCoordd:
         """Returns the texture coordinate pair, if get_num_dimensions() is 2."""
         ...
-    def get_uvw(self) -> LPoint3d:
+    def get_uvw(self) -> LTexCoord3d:
         """Returns the texture coordinate triple, if get_num_dimensions() is 3.  This
         is also legal to call if get_num_dimensions() is 2 (but the last dimension
         will be zero).
@@ -886,7 +889,7 @@ class EggVertexUV(EggNamedObject):
         ...
     def has_tangent(self) -> bool: ...
     def has_tangent4(self) -> bool: ...
-    def get_tangent(self) -> LVector3d: ...
+    def get_tangent(self) -> LNormald: ...
     def get_tangent4(self) -> LVecBase4d: ...
     def set_tangent(self, tangent: Vec3d) -> None: ...
     def set_tangent4(self, tangent: Vec4d) -> None:
@@ -896,7 +899,7 @@ class EggVertexUV(EggNamedObject):
         ...
     def clear_tangent(self) -> None: ...
     def has_binormal(self) -> bool: ...
-    def get_binormal(self) -> LVector3d: ...
+    def get_binormal(self) -> LNormald: ...
     def set_binormal(self, binormal: Vec3d) -> None: ...
     def clear_binormal(self) -> None: ...
     @staticmethod
@@ -1049,7 +1052,7 @@ class EggVertex(EggObject, EggAttributes):
         two-dimensional value.
         """
         ...
-    def get_pos3(self) -> LPoint3d:
+    def get_pos3(self) -> LVertexd:
         """Valid if get_num_dimensions() returns 3 or 4. Returns the position as a
         three-dimensional value.
         """
@@ -1075,7 +1078,7 @@ class EggVertex(EggObject, EggAttributes):
         UV coordinate pair is 2-d, false otherwise.
         """
         ...
-    def get_uv(self, name: str = ...) -> LPoint2d:
+    def get_uv(self, name: str = ...) -> LTexCoordd:
         """`(self)`:
         Returns the unnamed UV coordinate pair on the vertex.  It is an error to
         call this if has_uv() has returned false.
@@ -1091,7 +1094,7 @@ class EggVertex(EggObject, EggAttributes):
         ...
     @overload
     def set_uv(self, texCoord: LVecBase2d) -> None:
-        """`(self, texCoord: LPoint2d)`:
+        """`(self, texCoord: LTexCoordd)`:
         Replaces the unnamed UV coordinate pair on the vertex with the indicated
         value.
 
@@ -1099,7 +1102,7 @@ class EggVertex(EggObject, EggAttributes):
         absence of multitexturing; see set_uv(name, uv) for the interface that
         supports multitexturing.
 
-        `(self, name: str, texCoord: LPoint2d)`:
+        `(self, name: str, texCoord: LTexCoordd)`:
         Sets the indicated UV coordinate pair on the vertex.  This replaces any UV
         coordinate pair with the same name already on the vertex, but preserves UV
         morphs.
@@ -1121,7 +1124,7 @@ class EggVertex(EggObject, EggAttributes):
         named UV coordinate triple is 3-d, false otherwise.
         """
         ...
-    def get_uvw(self, name: str) -> LPoint3d:
+    def get_uvw(self, name: str) -> LTexCoord3d:
         """Returns the named UV coordinate triple on the vertex.  It is an error to
         call this if has_uvw(name) returned false.
         """
@@ -2015,13 +2018,13 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     portal_flag: bool
     occluder_flag: bool
     indexed_flag: bool
-    collide_mask: BitMask_uint32_t_32
-    from_collide_mask: BitMask_uint32_t_32
-    into_collide_mask: BitMask_uint32_t_32
+    collide_mask: CollideMask
+    from_collide_mask: CollideMask
+    into_collide_mask: CollideMask
     blend_mode: _EggGroup_BlendMode
     blend_operand_a: _EggGroup_BlendOperand
     blend_operand_b: _EggGroup_BlendOperand
-    blend_color: LVecBase4f
+    blend_color: LColor
     lod: EggSwitchCondition
     default_pose: EggTransform
     scroll_u: float
@@ -2367,18 +2370,18 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def clear_indexed_flag(self) -> None: ...
     def has_indexed_flag(self) -> bool: ...
     def get_indexed_flag(self) -> bool: ...
-    def set_collide_mask(self, mask: BitMask_uint32_t_32) -> None: ...
+    def set_collide_mask(self, mask: CollideMask) -> None: ...
     def clear_collide_mask(self) -> None: ...
     def has_collide_mask(self) -> bool: ...
-    def get_collide_mask(self) -> BitMask_uint32_t_32: ...
-    def set_from_collide_mask(self, mask: BitMask_uint32_t_32) -> None: ...
+    def get_collide_mask(self) -> CollideMask: ...
+    def set_from_collide_mask(self, mask: CollideMask) -> None: ...
     def clear_from_collide_mask(self) -> None: ...
     def has_from_collide_mask(self) -> bool: ...
-    def get_from_collide_mask(self) -> BitMask_uint32_t_32: ...
-    def set_into_collide_mask(self, mask: BitMask_uint32_t_32) -> None: ...
+    def get_from_collide_mask(self) -> CollideMask: ...
+    def set_into_collide_mask(self, mask: CollideMask) -> None: ...
     def clear_into_collide_mask(self) -> None: ...
     def has_into_collide_mask(self) -> bool: ...
-    def get_into_collide_mask(self) -> BitMask_uint32_t_32: ...
+    def get_into_collide_mask(self) -> CollideMask: ...
     def set_blend_mode(self, blend_mode: _EggGroup_BlendMode) -> None: ...
     def get_blend_mode(self) -> _EggGroup_BlendMode: ...
     def set_blend_operand_a(self, blend_operand_a: _EggGroup_BlendOperand) -> None: ...
@@ -2392,7 +2395,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def has_blend_color(self) -> bool:
         """Returns true if the blend color has been specified, false otherwise."""
         ...
-    def get_blend_color(self) -> LVecBase4f:
+    def get_blend_color(self) -> LColor:
         """Returns the blend color if one has been specified, or (0, 0, 0, 0) if one
         has not.
         """
@@ -2845,8 +2848,8 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     quality_level: _EggTexture_QualityLevel
     stage_name: str
     priority: int
-    color: LVecBase4f
-    border_color: LVecBase4f
+    color: LColor
+    border_color: LColor
     uv_name: str
     rgb_scale: int
     alpha_scale: int
@@ -3283,7 +3286,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     def has_color(self) -> bool:
         """Returns true if a blend color has been specified for the texture."""
         ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the blend color if one has been specified, or (0, 0, 0, 1)
         otherwise.
         """
@@ -3293,7 +3296,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     def has_border_color(self) -> bool:
         """Returns true if a border color has been specified for the texture."""
         ...
-    def get_border_color(self) -> LVecBase4f:
+    def get_border_color(self) -> LColor:
         """Returns the border color if one has been specified, or (0, 0, 0, 1)
         otherwise.
         """
@@ -3742,11 +3745,11 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     getClassType = get_class_type
 
 class EggMaterial(EggNode):
-    base: LVecBase4f
-    diff: LVecBase4f
-    amb: LVecBase4f
-    emit: LVecBase4f
-    spec: LVecBase4f
+    base: LColor
+    diff: LColor
+    amb: LColor
+    emit: LColor
+    spec: LColor
     shininess: float
     roughness: float
     metallic: float
@@ -3788,7 +3791,7 @@ class EggMaterial(EggNode):
     def has_base(self) -> bool:
         """@since 1.10.0"""
         ...
-    def get_base(self) -> LVecBase4f:
+    def get_base(self) -> LColor:
         """It is legal to call this even if has_base() returns false.  If so, it
         simply returns the default base color.
 
@@ -3798,7 +3801,7 @@ class EggMaterial(EggNode):
     def set_diff(self, diff: Vec4f) -> None: ...
     def clear_diff(self) -> None: ...
     def has_diff(self) -> bool: ...
-    def get_diff(self) -> LVecBase4f:
+    def get_diff(self) -> LColor:
         """It is legal to call this even if has_diff() returns false.  If so, it
         simply returns the default diff color.
         """
@@ -3806,7 +3809,7 @@ class EggMaterial(EggNode):
     def set_amb(self, amb: Vec4f) -> None: ...
     def clear_amb(self) -> None: ...
     def has_amb(self) -> bool: ...
-    def get_amb(self) -> LVecBase4f:
+    def get_amb(self) -> LColor:
         """It is legal to call this even if has_amb() returns false.  If so, it simply
         returns the default amb color.
         """
@@ -3814,7 +3817,7 @@ class EggMaterial(EggNode):
     def set_emit(self, emit: Vec4f) -> None: ...
     def clear_emit(self) -> None: ...
     def has_emit(self) -> bool: ...
-    def get_emit(self) -> LVecBase4f:
+    def get_emit(self) -> LColor:
         """It is legal to call this even if has_emit() returns false.  If so, it
         simply returns the default emit color.
         """
@@ -3822,7 +3825,7 @@ class EggMaterial(EggNode):
     def set_spec(self, spec: Vec4f) -> None: ...
     def clear_spec(self) -> None: ...
     def has_spec(self) -> bool: ...
-    def get_spec(self) -> LVecBase4f:
+    def get_spec(self) -> LColor:
         """It is legal to call this even if has_spec() returns false.  If so, it
         simply returns the default spec color.
         """

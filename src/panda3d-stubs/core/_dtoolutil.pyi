@@ -902,8 +902,8 @@ class Filename:
         """
         ...
     def scan_directory(self) -> list[str]: ...
-    def open_read(self, stream: IFileStream | ifstream) -> bool:
-        """`(self, stream: IFileStream)`:
+    def open_read(self, stream: ifstream | pifstream) -> bool:
+        """`(self, stream: pifstream)`:
         Opens the indicated pifstream for reading the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -918,8 +918,8 @@ class Filename:
         or set_binary().
         """
         ...
-    def open_write(self, stream: OFileStream | ofstream, truncate: bool = ...) -> bool:
-        """`(self, stream: OFileStream, truncate: bool = ...)`:
+    def open_write(self, stream: ofstream | pofstream, truncate: bool = ...) -> bool:
+        """`(self, stream: pofstream, truncate: bool = ...)`:
         Opens the indicated pifstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -940,8 +940,8 @@ class Filename:
         if it already exists.  Otherwise, the file is kept at its original length.
         """
         ...
-    def open_append(self, stream: OFileStream | ofstream) -> bool:
-        """`(self, stream: OFileStream)`:
+    def open_append(self, stream: ofstream | pofstream) -> bool:
+        """`(self, stream: pofstream)`:
         Opens the indicated pifstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -956,7 +956,7 @@ class Filename:
         or set_binary().
         """
         ...
-    def open_read_write(self, stream: FileStream | fstream, truncate: bool = ...) -> bool:
+    def open_read_write(self, stream: fstream | pfstream, truncate: bool = ...) -> bool:
         """Opens the indicated fstream for read/write access to the file, if possible.
         Returns true if successful, false otherwise.  This requires the setting of
         the set_text()/set_binary() flags to open the file appropriately as
@@ -964,8 +964,8 @@ class Filename:
         one of set_text() or set_binary().
         """
         ...
-    def open_read_append(self, stream: FileStream | fstream) -> bool:
-        """`(self, stream: FileStream)`:
+    def open_read_append(self, stream: fstream | pfstream) -> bool:
+        """`(self, stream: pfstream)`:
         Opens the indicated pfstream for reading and writing the file, if possible;
         writes are appended to the end of the file.  Returns true if successful,
         false otherwise.  This requires the setting of the set_text()/set_binary()

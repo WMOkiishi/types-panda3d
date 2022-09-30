@@ -11,35 +11,43 @@ from panda3d.core import (
     BamCacheRecord,
     BitArray,
     BoundingVolume,
-    ConstPointerToArray_int,
     ConstPointerToArray_unsigned_char,
     CopyOnWriteObject,
+    CPTA_int,
+    CPTA_uchar,
     Filename,
     GraphicsStateGuardianBase,
+    LColor,
+    LMatrix3,
     LMatrix3d,
     LMatrix3f,
+    LMatrix4,
     LMatrix4d,
     LMatrix4f,
     LoaderOptions,
-    LPoint3f,
+    LPoint3,
+    LVecBase2,
     LVecBase2d,
     LVecBase2f,
     LVecBase2i,
+    LVecBase3,
     LVecBase3d,
     LVecBase3f,
     LVecBase3i,
+    LVecBase4,
     LVecBase4d,
     LVecBase4f,
     LVecBase4i,
-    LVector2f,
-    LVector3f,
+    LVector2,
+    LVector3,
     Mutex,
     Namable,
     ParamValueBase,
     PfmFile,
     PNMImage,
-    PointerToArray_int,
     PointerToArray_unsigned_char,
+    PTA_int,
+    PTA_uchar,
     ReferenceCount,
     SparseArray,
     Thread,
@@ -3188,14 +3196,14 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         ...
     @overload
     def scale_color(self, color_scale: Vec4f) -> GeomVertexData:
-        """`(self, color_scale: LVecBase4f)`:
+        """`(self, color_scale: LVecBase4)`:
         Returns a new GeomVertexData object with the color table modified in-place
         to apply the indicated scale.
 
         If the vertex data does not include a color column, a new one will not be
         added.
 
-        `(self, color_scale: LVecBase4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents)`:
+        `(self, color_scale: LVecBase4, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents)`:
         Returns a new GeomVertexData object with the color table replaced with a
         new color table that has been scaled by the indicated value.  The new color
         table will be added as a new array; if the old color table was interleaved
@@ -3206,14 +3214,14 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     def scale_color(self, color_scale: Vec4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents) -> GeomVertexData: ...
     @overload
     def set_color(self, color: Vec4f) -> GeomVertexData:
-        """`(self, color: LVecBase4f)`:
+        """`(self, color: LColor)`:
         Returns a new GeomVertexData object with the color data modified in-place
         with the new value.
 
         If the vertex data does not include a color column, a new one will not be
         added.
 
-        `(self, color: LVecBase4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents)`:
+        `(self, color: LColor, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents)`:
         Returns a new GeomVertexData object with the color table replaced with a
         new color table for which each vertex has the indicated value.  The new
         color table will be added as a new array; if the old color table was
@@ -3257,17 +3265,17 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         ...
     @overload
     def transform_vertices(self, mat: Mat4f, rows: BitArray | SparseArray = ...) -> None:
-        """`(self, mat: LMatrix4f)`:
+        """`(self, mat: LMatrix4)`:
         Applies the indicated transform matrix to all of the vertices in the
         GeomVertexData.  The transform is applied to all "point" and "vector" type
         columns described in the format.
 
-        `(self, mat: LMatrix4f, rows: SparseArray)`:
+        `(self, mat: LMatrix4, rows: SparseArray)`:
         Applies the indicated transform matrix to all of the vertices mentioned in
         the sparse array.  The transform is applied to all "point" and "vector"
         type columns described in the format.
 
-        `(self, mat: LMatrix4f, begin_row: int, end_row: int)`:
+        `(self, mat: LMatrix4, begin_row: int, end_row: int)`:
         Applies the indicated transform matrix to all of the vertices from
         begin_row up to but not including end_row.  The transform is applied to all
         "point" and "vector" type columns described in the format.
@@ -3942,7 +3950,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         the numeric type can store.
         """
         ...
-    def get_ends(self) -> ConstPointerToArray_int:
+    def get_ends(self) -> CPTA_int:
         """Returns a const pointer to the primitive ends array so application code can
         read it directly.  Do not attempt to modify the returned array; use
         modify_ends() or set_ends() for this.
@@ -3956,7 +3964,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         directly.  If you do, be sure you know what you are doing!
         """
         ...
-    def modify_ends(self) -> PointerToArray_int:
+    def modify_ends(self) -> PTA_int:
         """Returns a modifiable pointer to the primitive ends array, so application
         code can directly fiddle with this data.  Use with caution, since there are
         no checks that the data will be left in a stable state.
@@ -3973,7 +3981,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         directly.  If you do, be sure you know what you are doing!
         """
         ...
-    def set_ends(self, ends: PointerToArray_int) -> None:
+    def set_ends(self, ends: PTA_int) -> None:
         """Completely replaces the primitive ends array with a new table.  Chances are
         good that you should also replace the vertices list with set_vertices() at
         the same time.
@@ -4155,7 +4163,7 @@ class TextureStage(TypedWritableReferenceCount):
     priority: int
     texcoord_name: InternalName
     mode: _TextureStage_Mode
-    color: LVecBase4f
+    color: LColor
     rgb_scale: int
     alpha_scale: int
     saved_result: bool
@@ -4333,7 +4341,7 @@ class TextureStage(TypedWritableReferenceCount):
     def set_color(self, color: Vec4f) -> None:
         """Set the color for this stage"""
         ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """return the color for this stage"""
         ...
     def set_rgb_scale(self, rgb_scale: int) -> None:
@@ -5473,28 +5481,28 @@ class GeomVertexReader(GeomEnums):
         value, and advances the read row.
         """
         ...
-    def get_data2(self) -> LVecBase2f:
+    def get_data2(self) -> LVecBase2:
         """Returns the data associated with the read row, expressed as a 2-component
         value, and advances the read row.
         """
         ...
-    def get_data3(self) -> LVecBase3f:
+    def get_data3(self) -> LVecBase3:
         """Returns the data associated with the read row, expressed as a 3-component
         value, and advances the read row.
         """
         ...
-    def get_data4(self) -> LVecBase4f:
+    def get_data4(self) -> LVecBase4:
         """Returns the data associated with the read row, expressed as a 4-component
         value, and advances the read row.
         """
         ...
-    def get_matrix3(self) -> LMatrix3f:
+    def get_matrix3(self) -> LMatrix3:
         """Returns the 3-by-3 matrix associated with the read row and advances the
         read row.  This is a special method that only works when the column in
         question contains a matrix of an appropriate size.
         """
         ...
-    def get_matrix4(self) -> LMatrix4f:
+    def get_matrix4(self) -> LMatrix4:
         """Returns the 4-by-4 matrix associated with the read row and advances the
         read row.  This is a special method that only works when the column in
         question contains a matrix of an appropriate size.
@@ -5849,7 +5857,7 @@ class GeomVertexWriter(GeomEnums):
         """
         ...
     @overload
-    def set_data2(self, data: LVecBase2f) -> None:
+    def set_data2(self, data: LVecBase2) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5878,7 +5886,7 @@ class GeomVertexWriter(GeomEnums):
         ...
     @overload
     def set_data4(self, x: float, y: float, z: float, w: float) -> None: ...
-    def set_matrix3(self, mat: LMatrix3f) -> None:
+    def set_matrix3(self, mat: LMatrix3) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -6052,7 +6060,7 @@ class GeomVertexWriter(GeomEnums):
         """
         ...
     @overload
-    def add_data2(self, data: LVecBase2f) -> None:
+    def add_data2(self, data: LVecBase2) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -6084,7 +6092,7 @@ class GeomVertexWriter(GeomEnums):
         ...
     @overload
     def add_data4(self, x: float, y: float, z: float, w: float) -> None: ...
-    def add_matrix3(self, mat: LMatrix3f) -> None:
+    def add_matrix3(self, mat: LMatrix3) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -6379,7 +6387,7 @@ class SamplerState:
     minfilter: _SamplerState_FilterType
     magfilter: _SamplerState_FilterType
     anisotropic_degree: int
-    border_color: LVecBase4f
+    border_color: LColor
     min_lod: float
     max_lod: float
     lod_bias: float
@@ -6534,7 +6542,7 @@ class SamplerState:
         in the config file.
         """
         ...
-    def get_border_color(self) -> LVecBase4f:
+    def get_border_color(self) -> LColor:
         """Returns the solid color of the texture's border.  Some OpenGL
         implementations use a border for tiling textures; in Panda, it is only used
         for specifying the clamp color.
@@ -6654,7 +6662,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     the system RAM image is automatically freed.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    clear_color: LVecBase4f
+    clear_color: LColor
     filename: Filename
     alpha_filename: Filename
     fullpath: Filename
@@ -6671,7 +6679,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     minfilter: _SamplerState_FilterType
     magfilter: _SamplerState_FilterType
     anisotropic_degree: int
-    border_color: LVecBase4f
+    border_color: LColor
     compression: _Texture_CompressionMode
     render_to_texture: bool
     default_sampler: SamplerState
@@ -6932,7 +6940,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     @property
     def simple_y_size(self) -> int: ...
     @property
-    def simple_ram_image(self) -> ConstPointerToArray_unsigned_char: ...
+    def simple_ram_image(self) -> CPTA_uchar: ...
     @property
     def properties_modified(self) -> UpdateSeq: ...
     @property
@@ -7122,7 +7130,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     def has_clear_color(self) -> bool:
         """Returns true if a color was previously set using set_clear_color."""
         ...
-    def get_clear_color(self) -> LVecBase4f:
+    def get_clear_color(self) -> LColor:
         """Returns the color that was previously set using set_clear_color."""
         ...
     def set_clear_color(self, color: Vec4f) -> None:
@@ -7662,7 +7670,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         overridden by a sampler state specified at a higher level.
         """
         ...
-    def get_border_color(self) -> LVecBase4f:
+    def get_border_color(self) -> LColor:
         """Returns the solid color of the texture's border.  Some OpenGL
         implementations use a border for tiling textures; in Panda, it is only used
         for specifying the clamp color.
@@ -7874,7 +7882,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         get_expected_ram_image_size().
         """
         ...
-    def get_ram_image(self) -> ConstPointerToArray_unsigned_char:
+    def get_ram_image(self) -> CPTA_uchar:
         """Returns the system-RAM image data associated with the texture.  If the
         texture does not currently have an associated RAM image, and the texture
         was generated by loading an image from a disk file (the most common case),
@@ -7904,7 +7912,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         get_expected_ram_image_size()).
         """
         ...
-    def get_uncompressed_ram_image(self) -> ConstPointerToArray_unsigned_char:
+    def get_uncompressed_ram_image(self) -> CPTA_uchar:
         """Returns the system-RAM image associated with the texture, in an
         uncompressed form if at all possible.
 
@@ -7919,7 +7927,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         If an uncompressed image cannot be found, returns NULL.
         """
         ...
-    def get_ram_image_as(self, requested_format: str) -> ConstPointerToArray_unsigned_char:
+    def get_ram_image_as(self, requested_format: str) -> CPTA_uchar:
         """Returns the uncompressed system-RAM image data associated with the texture.
         Rather than just returning a pointer to the data, like
         get_uncompressed_ram_image, this function first processes the data and
@@ -7943,7 +7951,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         will return NULL.
         """
         ...
-    def modify_ram_image(self) -> PointerToArray_unsigned_char:
+    def modify_ram_image(self) -> PTA_uchar:
         """Returns a modifiable pointer to the system-RAM image.  This assumes the RAM
         image should be uncompressed.  If the RAM image has been dumped, or is
         stored compressed, creates a new one.
@@ -7951,7 +7959,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This does *not* affect keep_ram_image.
         """
         ...
-    def make_ram_image(self) -> PointerToArray_unsigned_char:
+    def make_ram_image(self) -> PTA_uchar:
         """Discards the current system-RAM image for the texture, if any, and
         allocates a new buffer of the appropriate size.  Returns the new buffer.
 
@@ -8093,12 +8101,12 @@ class Texture(TypedWritableReferenceCount, Namable):
         get_expected_ram_mipmap_view_size(n).
         """
         ...
-    def get_ram_mipmap_image(self, n: int) -> ConstPointerToArray_unsigned_char:
+    def get_ram_mipmap_image(self, n: int) -> CPTA_uchar:
         """Returns the system-RAM image data associated with the nth mipmap level, if
         present.  Returns NULL if the nth mipmap level is not present.
         """
         ...
-    def modify_ram_mipmap_image(self, n: int) -> PointerToArray_unsigned_char:
+    def modify_ram_mipmap_image(self, n: int) -> PTA_uchar:
         """Returns a modifiable pointer to the system-RAM image for the nth mipmap
         level.  This assumes the RAM image is uncompressed; if this is not the
         case, raises an assertion.
@@ -8106,7 +8114,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This does *not* affect keep_ram_image.
         """
         ...
-    def make_ram_mipmap_image(self, n: int) -> PointerToArray_unsigned_char:
+    def make_ram_mipmap_image(self, n: int) -> PTA_uchar:
         """Discards the current system-RAM image for the nth mipmap level, if any, and
         allocates a new buffer of the appropriate size.  Returns the new buffer.
 
@@ -8162,7 +8170,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         simple image.
         """
         ...
-    def get_simple_ram_image(self) -> ConstPointerToArray_unsigned_char:
+    def get_simple_ram_image(self) -> CPTA_uchar:
         """Returns the image data associated with the "simple" texture image.  This is
         provided for some textures as an option to display while the main texture
         image is being loaded from disk.
@@ -8190,12 +8198,12 @@ class Texture(TypedWritableReferenceCount, Namable):
         new_simple_ram_image().
         """
         ...
-    def modify_simple_ram_image(self) -> PointerToArray_unsigned_char:
+    def modify_simple_ram_image(self) -> PTA_uchar:
         """Returns a modifiable pointer to the internal "simple" texture image.  See
         set_simple_ram_image().
         """
         ...
-    def new_simple_ram_image(self, x_size: int, y_size: int) -> PointerToArray_unsigned_char:
+    def new_simple_ram_image(self, x_size: int, y_size: int) -> PTA_uchar:
         """Creates an empty array for the simple ram image of the indicated size, and
         returns a modifiable pointer to the new array.  See set_simple_ram_image().
         """
@@ -8361,7 +8369,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     def get_pad_z_size(self) -> int:
         """Returns size of the pad region.  See set_pad_size."""
         ...
-    def get_tex_scale(self) -> LVecBase2f:
+    def get_tex_scale(self) -> LVecBase2:
         """Returns a scale pair that is suitable for applying to geometry via
         NodePath::set_tex_scale(), which will convert texture coordinates on the
         geometry from the range 0..1 into the appropriate range to render the video
@@ -9607,19 +9615,19 @@ class Lens(TypedWritableReferenceCount):
     """
     change_event: str
     coordinate_system: _CoordinateSystem
-    film_size: LVecBase2f
-    film_offset: LVector2f
+    film_size: LVecBase2
+    film_offset: LVector2
     focal_length: float
-    fov: LVecBase2f
+    fov: LVecBase2
     min_fov: float
     aspect_ratio: float
     near: float
     far: float
-    view_hpr: LVecBase3f
+    view_hpr: LVecBase3
     interocular_distance: float
     convergence_distance: float
-    view_mat: LMatrix4f
-    keystone: LVecBase2f
+    view_mat: LMatrix4
+    keystone: LVecBase2
     SC_mono: Final[Literal[0]]
     SCMono: Final[Literal[0]]
     SC_left: Final[Literal[1]]
@@ -9641,10 +9649,10 @@ class Lens(TypedWritableReferenceCount):
     FC_keystone: Final[Literal[32]]
     FCKeystone: Final[Literal[32]]
     @property
-    def nodal_point(self) -> LPoint3f: ...
+    def nodal_point(self) -> LPoint3: ...
     def make_copy(self) -> Lens: ...
     def extrude(self, point2d: LVecBase2f | Vec3f, near_point: Vec3f, far_point: Vec3f) -> bool:
-        """`(self, point2d: LPoint2f, near_point: LPoint3f, far_point: LPoint3f)`:
+        """`(self, point2d: LPoint2, near_point: LPoint3, far_point: LPoint3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
         corresponding vector in space that maps to this point, if such a vector can
@@ -9653,7 +9661,7 @@ class Lens(TypedWritableReferenceCount):
 
         Returns true if the vector is defined, or false otherwise.
 
-        `(self, point2d: LPoint3f, near_point: LPoint3f, far_point: LPoint3f)`:
+        `(self, point2d: LPoint3, near_point: LPoint3, far_point: LPoint3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
         corresponding vector in space that maps to this point, if such a vector can
@@ -9673,7 +9681,7 @@ class Lens(TypedWritableReferenceCount):
         """
         ...
     def extrude_vec(self, point2d: LVecBase2f | Vec3f, vec3d: Vec3f) -> bool:
-        """`(self, point2d: LPoint2f, vec3d: LVector3f)`:
+        """`(self, point2d: LPoint2, vec3d: LVector3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
         vector that corresponds to the view direction.  This will be parallel to
@@ -9685,7 +9693,7 @@ class Lens(TypedWritableReferenceCount):
 
         Returns true if the vector is defined, or false otherwise.
 
-        `(self, point2d: LPoint3f, vec3d: LVector3f)`:
+        `(self, point2d: LPoint3, vec3d: LVector3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
         vector that corresponds to the view direction.  This will be parallel to
@@ -9701,7 +9709,7 @@ class Lens(TypedWritableReferenceCount):
         """
         ...
     def project(self, point3d: Vec3f, point2d: LVecBase2f | Vec3f) -> bool:
-        """`(self, point3d: LPoint3f, point2d: LPoint2f)`:
+        """`(self, point3d: LPoint3, point2d: LPoint2)`:
         Given a 3-d point in space, determine the 2-d point this maps to, in the
         range (-1,1) in both dimensions, where (0,0) is the center of the lens and
         (-1,-1) is the lower-left corner.
@@ -9711,7 +9719,7 @@ class Lens(TypedWritableReferenceCount):
         (in which case point2d will be filled in with something, which may or may
         not be meaningful).
 
-        `(self, point3d: LPoint3f, point2d: LPoint3f)`:
+        `(self, point3d: LPoint3, point2d: LPoint3)`:
         Given a 3-d point in space, determine the 2-d point this maps to, in the
         range (-1,1) in both dimensions, where (0,0) is the center of the lens and
         (-1,-1) is the lower-left corner.
@@ -9754,8 +9762,8 @@ class Lens(TypedWritableReferenceCount):
         """Resets all lens parameters to their initial default settings."""
         ...
     @overload
-    def set_film_size(self, film_size: LVecBase2f) -> None:
-        """`(self, film_size: LVecBase2f)`; `(self, width: float, height: float)`:
+    def set_film_size(self, film_size: LVecBase2) -> None:
+        """`(self, film_size: LVecBase2)`; `(self, width: float, height: float)`:
         Sets the size and shape of the "film" within the lens.  This both
         establishes the units used by calls like set_focal_length(), and
         establishes the aspect ratio of the frame.
@@ -9779,13 +9787,13 @@ class Lens(TypedWritableReferenceCount):
         ...
     @overload
     def set_film_size(self, width: float, height: float = ...) -> None: ...
-    def get_film_size(self) -> LVecBase2f:
+    def get_film_size(self) -> LVecBase2:
         """Returns the horizontal and vertical film size of the virtual film.  See
         set_film_size().
         """
         ...
     @overload
-    def set_film_offset(self, film_offset: LVecBase2f) -> None:
+    def set_film_offset(self, film_offset: LVecBase2) -> None:
         """Sets the horizontal and vertical offset amounts of this Lens.  These are
         both in the same units specified in set_film_size().
 
@@ -9794,7 +9802,7 @@ class Lens(TypedWritableReferenceCount):
         ...
     @overload
     def set_film_offset(self, x: float, y: float) -> None: ...
-    def get_film_offset(self) -> LVector2f:
+    def get_film_offset(self) -> LVector2:
         """Returns the horizontal and vertical offset amounts of this Lens.  See
         set_film_offset().
         """
@@ -9827,8 +9835,8 @@ class Lens(TypedWritableReferenceCount):
         """
         ...
     @overload
-    def set_fov(self, fov: LVecBase2f | float) -> None:
-        """`(self, fov: LVecBase2f)`:
+    def set_fov(self, fov: LVecBase2 | float) -> None:
+        """`(self, fov: LVecBase2)`:
         Sets the field of view of the lens in both dimensions.  This establishes
         both the field of view and the aspect ratio of the lens.  This is one way
         to specify the field of view of a lens; set_focal_length() is another way.
@@ -9852,7 +9860,7 @@ class Lens(TypedWritableReferenceCount):
         ...
     @overload
     def set_fov(self, hfov: float, vfov: float) -> None: ...
-    def get_fov(self) -> LVecBase2f:
+    def get_fov(self) -> LVecBase2:
         """Returns the horizontal and vertical film size of the virtual film.  See
         set_fov().
         """
@@ -9920,7 +9928,7 @@ class Lens(TypedWritableReferenceCount):
         ...
     @overload
     def set_view_hpr(self, h: float, p: float, r: float) -> None: ...
-    def get_view_hpr(self) -> LVecBase3f:
+    def get_view_hpr(self) -> LVecBase3:
         """Returns the direction in which the lens is facing."""
         ...
     @overload
@@ -9933,15 +9941,15 @@ class Lens(TypedWritableReferenceCount):
         ...
     @overload
     def set_view_vector(self, x: float, y: float, z: float, i: float, j: float, k: float) -> None: ...
-    def get_view_vector(self) -> LVector3f:
+    def get_view_vector(self) -> LVector3:
         """Returns the axis along which the lens is facing."""
         ...
-    def get_up_vector(self) -> LVector3f:
+    def get_up_vector(self) -> LVector3:
         """Returns the axis perpendicular to the camera's view vector that indicates
         the "up" direction.
         """
         ...
-    def get_nodal_point(self) -> LPoint3f:
+    def get_nodal_point(self) -> LPoint3:
         """Returns the center point of the lens: the point from which the lens is
         viewing.
         """
@@ -10001,13 +10009,13 @@ class Lens(TypedWritableReferenceCount):
         matrix will be transformed by this matrix.
         """
         ...
-    def get_view_mat(self) -> LMatrix4f:
+    def get_view_mat(self) -> LMatrix4:
         """Returns the direction in which the lens is facing."""
         ...
     def clear_view_mat(self) -> None:
         """Resets the lens transform to identity."""
         ...
-    def set_keystone(self, keystone: LVecBase2f) -> None:
+    def set_keystone(self, keystone: LVecBase2) -> None:
         """Indicates the ratio of keystone correction to perform on the lens, in each
         of three axes.  This will build a special non-affine scale factor into the
         projection matrix that will compensate for keystoning of a projected image;
@@ -10020,7 +10028,7 @@ class Lens(TypedWritableReferenceCount):
         correction in that axis.
         """
         ...
-    def get_keystone(self) -> LVecBase2f:
+    def get_keystone(self) -> LVecBase2:
         """Returns the keystone correction specified for the lens."""
         ...
     def clear_keystone(self) -> None:
@@ -10035,7 +10043,7 @@ class Lens(TypedWritableReferenceCount):
         shift, and/or keystone correction.
         """
         ...
-    def get_custom_film_mat(self) -> LMatrix4f:
+    def get_custom_film_mat(self) -> LMatrix4:
         """Returns the custom_film_mat specified for the lens."""
         ...
     def clear_custom_film_mat(self) -> None:
@@ -10119,33 +10127,33 @@ class Lens(TypedWritableReferenceCount):
         be created, returns NULL.
         """
         ...
-    def get_projection_mat(self, channel: _Lens_StereoChannel = ...) -> LMatrix4f:
+    def get_projection_mat(self, channel: _Lens_StereoChannel = ...) -> LMatrix4:
         """Returns the complete transformation matrix from a 3-d point in space to a
         point on the film, if such a matrix exists, or the identity matrix if the
         lens is nonlinear.
         """
         ...
-    def get_projection_mat_inv(self, channel: _Lens_StereoChannel = ...) -> LMatrix4f:
+    def get_projection_mat_inv(self, channel: _Lens_StereoChannel = ...) -> LMatrix4:
         """Returns the matrix that transforms from a 2-d point on the film to a 3-d
         vector in space, if such a matrix exists.
         """
         ...
-    def get_film_mat(self) -> LMatrix4f:
+    def get_film_mat(self) -> LMatrix4:
         """Returns the matrix that transforms from a point behind the lens to a point
         on the film.
         """
         ...
-    def get_film_mat_inv(self) -> LMatrix4f:
+    def get_film_mat_inv(self) -> LMatrix4:
         """Returns the matrix that transforms from a point on the film to a point
         behind the lens.
         """
         ...
-    def get_lens_mat(self) -> LMatrix4f:
+    def get_lens_mat(self) -> LMatrix4:
         """Returns the matrix that transforms from a point in front of the lens to a
         point in space.
         """
         ...
-    def get_lens_mat_inv(self) -> LMatrix4f:
+    def get_lens_mat_inv(self) -> LMatrix4:
         """Returns the matrix that transforms from a point in space to a point in
         front of the lens.
         """
@@ -10236,11 +10244,11 @@ class Material(TypedWritableReferenceCount, Namable):
     in perceptually linear in the range of 0-1.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    base_color: LVecBase4f
-    ambient: LVecBase4f
-    diffuse: LVecBase4f
-    specular: LVecBase4f
-    emission: LVecBase4f
+    base_color: LColor
+    ambient: LColor
+    diffuse: LColor
+    specular: LColor
+    emission: LColor
     shininess: float
     roughness: float
     metallic: float
@@ -10267,7 +10275,7 @@ class Material(TypedWritableReferenceCount, Namable):
         false otherwise.
         """
         ...
-    def get_base_color(self) -> LVecBase4f:
+    def get_base_color(self) -> LColor:
         """Returns the base_color color setting, if it has been set.  If neither the
         base color nor the metallic have been set, this returns the diffuse color.
         """
@@ -10292,7 +10300,7 @@ class Material(TypedWritableReferenceCount, Namable):
         material, false otherwise.
         """
         ...
-    def get_ambient(self) -> LVecBase4f:
+    def get_ambient(self) -> LColor:
         """Returns the ambient color setting, if it has been set.  Returns (0,0,0,0)
         if the ambient color has not been set.
         """
@@ -10316,7 +10324,7 @@ class Material(TypedWritableReferenceCount, Namable):
         material, false otherwise.
         """
         ...
-    def get_diffuse(self) -> LVecBase4f:
+    def get_diffuse(self) -> LColor:
         """Returns the diffuse color setting, if it has been set.  Returns (1,1,1,1)
         if the diffuse color has not been set.
         """
@@ -10340,7 +10348,7 @@ class Material(TypedWritableReferenceCount, Namable):
         material, false otherwise.
         """
         ...
-    def get_specular(self) -> LVecBase4f:
+    def get_specular(self) -> LColor:
         """Returns the specular color setting, if it has been set.  Returns (0,0,0,0)
         if the specular color has not been set.
         """
@@ -10366,7 +10374,7 @@ class Material(TypedWritableReferenceCount, Namable):
         material, false otherwise.
         """
         ...
-    def get_emission(self) -> LVecBase4f:
+    def get_emission(self) -> LColor:
         """Returns the emission color setting, if it has been set.  Returns (0,0,0,0)
         if the emission color has not been set.
         """
@@ -10607,7 +10615,7 @@ class MatrixLens(Lens):
     an explicit projection matrix, but not mess around with fov's or focal
     lengths or any of that nonsense.
     """
-    user_mat: LMatrix4f
+    user_mat: LMatrix4
     def __init__(self) -> None: ...
     def set_user_mat(self, user_mat: Mat4f) -> None:
         """Explicitly specifies the projection matrix.  This matrix should convert X
@@ -10621,7 +10629,7 @@ class MatrixLens(Lens):
         projection matrices.
         """
         ...
-    def get_user_mat(self) -> LMatrix4f:
+    def get_user_mat(self) -> LMatrix4:
         """Returns the explicit projection matrix as set by the user.  This does not
         include transforms on the lens or film (e.g.  a film offset or view hpr).
         """
@@ -10647,7 +10655,7 @@ class MatrixLens(Lens):
         the left eye.
         """
         ...
-    def get_left_eye_mat(self) -> LMatrix4f:
+    def get_left_eye_mat(self) -> LMatrix4:
         """Returns the custom projection matrix for the left eye, if any, or the
         center matrix if there is no custom matrix set for the left eye.
         """
@@ -10673,7 +10681,7 @@ class MatrixLens(Lens):
         the right eye.
         """
         ...
-    def get_right_eye_mat(self) -> LMatrix4f:
+    def get_right_eye_mat(self) -> LMatrix4:
         """Returns the custom projection matrix for the right eye, if any, or the
         center matrix if there is no custom matrix set for the right eye.
         """
@@ -11370,7 +11378,7 @@ class TexturePeeker(ReferenceCount):
         """Returns whether a given coordinate is inside of the texture dimensions."""
         ...
     def lookup(self, color: Vec4f, u: float, v: float, w: float = ...) -> None:
-        """`(self, color: LVecBase4f, u: float, v: float)`:
+        """`(self, color: LColor, u: float, v: float)`:
         Fills "color" with the RGBA color of the texel at point (u, v).
 
         The texel color is determined via nearest-point sampling (no filtering of
@@ -11378,7 +11386,7 @@ class TexturePeeker(ReferenceCount):
         texture.  u, v, and w will wrap around regardless of the texture's wrap
         mode.
 
-        `(self, color: LVecBase4f, u: float, v: float, w: float)`:
+        `(self, color: LColor, u: float, v: float, w: float)`:
         Fills "color" with the RGBA color of the texel at point (u, v, w).
 
         The texel color is determined via nearest-point sampling (no filtering of

@@ -2,7 +2,7 @@ from typing import overload
 
 from panda3d._typing import Mat4f, Vec3f
 from panda3d.core import (
-    LMatrix4f,
+    LMatrix4,
     MovingPartMatrix,
     MovingPartScalar,
     NodePathCollection,
@@ -96,11 +96,11 @@ class CharacterJoint(MovingPartMatrix):
         """
         ...
     @overload
-    def get_transform(self) -> LMatrix4f:
+    def get_transform(self) -> LMatrix4:
         """`(self)`:
         Returns the transform matrix of the joint
 
-        `(self, transform: LMatrix4f)`:
+        `(self, transform: LMatrix4)`:
         Copies the joint's current transform into the indicated matrix.
         """
         ...

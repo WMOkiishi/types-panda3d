@@ -8,9 +8,9 @@ from panda3d.core import (
     ButtonEventList,
     ButtonHandle,
     DataNode,
-    LMatrix4f,
-    LOrientationf,
-    LPoint3f,
+    LMatrix4,
+    LOrientation,
+    LPoint3,
     PointerData,
     PointerEventList,
     TypedReferenceCount,
@@ -23,8 +23,8 @@ class TrackerData:
     """Stores the kinds of data that a tracker might output."""
     DtoolClassDict: ClassVar[dict[str, Any]]
     time: float
-    pos: LPoint3f
-    orient: LOrientationf
+    pos: LPoint3
+    orient: LOrientation
     dt: float
 
 class InputDevice(TypedReferenceCount):
@@ -580,13 +580,13 @@ class TrackerNode(DataNode):
         otherwise.
         """
         ...
-    def get_pos(self) -> LPoint3f:
+    def get_pos(self) -> LPoint3:
         """Returns the current position of the tracker, if it is available."""
         ...
-    def get_orient(self) -> LOrientationf:
+    def get_orient(self) -> LOrientation:
         """Returns the current orientation of the tracker, if it is available."""
         ...
-    def get_transform(self) -> LMatrix4f:  # type: ignore[override]
+    def get_transform(self) -> LMatrix4:  # type: ignore[override]
         """Returns the current position and orientation of the tracker, as a combined
         matrix.
         """

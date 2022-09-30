@@ -12,6 +12,7 @@ from panda3d.core import (
     LMatrix4d,
     LMatrix4f,
     LPoint2d,
+    LPoint3,
     LPoint3d,
     LPoint3f,
     LVecBase2d,
@@ -907,7 +908,7 @@ class GeometricBoundingVolume(BoundingVolume):
         """`(self, vol: GeometricBoundingVolume)`:
         Increases the size of the volume to include the given volume.
 
-        `(self, point: LPoint3f)`:
+        `(self, point: LPoint3)`:
         Increases the size of the volume to include the given point.
         """
         ...
@@ -919,11 +920,11 @@ class GeometricBoundingVolume(BoundingVolume):
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated volume.
 
-        `(self, point: LPoint3f)`:
+        `(self, point: LPoint3)`:
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated point.
 
-        `(self, a: LPoint3f, b: LPoint3f)`:
+        `(self, a: LPoint3, b: LPoint3)`:
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated line segment.
         """
@@ -932,7 +933,7 @@ class GeometricBoundingVolume(BoundingVolume):
     def contains(self, point: Vec3f) -> int: ...
     @overload
     def contains(self, a: Vec3f, b: Vec3f) -> int: ...
-    def get_approx_center(self) -> LPoint3f: ...
+    def get_approx_center(self) -> LPoint3: ...
     def xform(self, mat: Mat4f) -> None: ...
     extendBy = extend_by  # type: ignore[assignment]
     getApproxCenter = get_approx_center
@@ -943,13 +944,13 @@ class FiniteBoundingVolume(GeometricBoundingVolume):
     extents.
     """
     @property
-    def min(self) -> LPoint3f: ...
+    def min(self) -> LPoint3: ...
     @property
-    def max(self) -> LPoint3f: ...
+    def max(self) -> LPoint3: ...
     @property
     def volume(self) -> float: ...
-    def get_min(self) -> LPoint3f: ...
-    def get_max(self) -> LPoint3f: ...
+    def get_min(self) -> LPoint3: ...
+    def get_max(self) -> LPoint3: ...
     def get_volume(self) -> float: ...
     getMin = get_min
     getMax = get_max
@@ -1305,15 +1306,15 @@ class BoundingBox(FiniteBoundingVolume):
     try BoundingHexahedron.
     """
     @property
-    def points(self) -> Sequence[LPoint3f]: ...
+    def points(self) -> Sequence[LPoint3]: ...
     @property
-    def planes(self) -> Sequence[LPlanef]: ...
+    def planes(self) -> Sequence[LPlane]: ...
     @overload
     def __init__(self) -> None:
         """`(self)`:
         Constructs an empty box object.
 
-        `(self, min: LPoint3f, max: LPoint3f)`:
+        `(self, min: LPoint3, max: LPoint3)`:
         Constructs a specific box object.
         """
         ...
@@ -1322,20 +1323,20 @@ class BoundingBox(FiniteBoundingVolume):
     def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a rectangular solid."""
         ...
-    def get_point(self, n: int) -> LPoint3f:
+    def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the rectangular solid."""
         ...
     def get_num_planes(self) -> Literal[6]:
         """Returns 6: the number of faces of a rectangular solid."""
         ...
-    def get_plane(self, n: int) -> LPlanef:
+    def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the rectangular solid."""
         ...
     def set_min_max(self, min: Vec3f, max: Vec3f) -> None:
         """Sets the min and max point of the rectangular solid."""
         ...
-    def get_points(self) -> tuple[LPoint3f, ...]: ...
-    def get_planes(self) -> tuple[LPlanef, ...]: ...
+    def get_points(self) -> tuple[LPoint3, ...]: ...
+    def get_planes(self) -> tuple[LPlane, ...]: ...
     getNumPoints = get_num_points
     getPoint = get_point
     getNumPlanes = get_num_planes
@@ -1403,27 +1404,27 @@ class BoundingHexahedron(FiniteBoundingVolume):
     bounding box, you may be better off with the simpler BoundingBox class.
     """
     @property
-    def points(self) -> Sequence[LPoint3f]: ...
+    def points(self) -> Sequence[LPoint3]: ...
     @property
-    def planes(self) -> Sequence[LPlanef]: ...
+    def planes(self) -> Sequence[LPlane]: ...
     @overload
-    def __init__(self, frustum: LFrustumf, is_ortho: bool, cs: _CoordinateSystem = ...) -> None: ...
+    def __init__(self, frustum: LFrustum, is_ortho: bool, cs: _CoordinateSystem = ...) -> None: ...
     @overload
     def __init__(self, fll: Vec3f, flr: Vec3f, fur: Vec3f, ful: Vec3f, nll: Vec3f, nlr: Vec3f, nur: Vec3f, nul: Vec3f) -> None: ...
     def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a hexahedron."""
         ...
-    def get_point(self, n: int) -> LPoint3f:
+    def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the hexahedron."""
         ...
     def get_num_planes(self) -> Literal[6]:
         """Returns 6: the number of faces of a hexahedron."""
         ...
-    def get_plane(self, n: int) -> LPlanef:
+    def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the hexahedron."""
         ...
-    def get_points(self) -> tuple[LPoint3f, ...]: ...
-    def get_planes(self) -> tuple[LPlanef, ...]: ...
+    def get_points(self) -> tuple[LPoint3, ...]: ...
+    def get_planes(self) -> tuple[LPlane, ...]: ...
     getNumPoints = get_num_points
     getPoint = get_point
     getNumPlanes = get_num_planes
@@ -1440,10 +1441,10 @@ class BoundingLine(GeometricBoundingVolume):
     two arbitrary points on the line.
     """
     def __init__(self, a: Vec3f, b: Vec3f) -> None: ...
-    def get_point_a(self) -> LPoint3f:
+    def get_point_a(self) -> LPoint3:
         """Returns the first point that defines the line."""
         ...
-    def get_point_b(self) -> LPoint3f:
+    def get_point_b(self) -> LPoint3:
         """Returns the second point that defines the line."""
         ...
     getPointA = get_point_a
@@ -1456,31 +1457,31 @@ class BoundingPlane(GeometricBoundingVolume):
     volume.
     """
     @property
-    def plane(self) -> LPlanef: ...
+    def plane(self) -> LPlane: ...
     def __init__(self, plane: Vec4f = ...) -> None:
         """Constructs an empty "plane" that has no intersections."""
         ...
-    def get_plane(self) -> LPlanef: ...
+    def get_plane(self) -> LPlane: ...
     getPlane = get_plane
 
 class BoundingSphere(FiniteBoundingVolume):
     """This defines a bounding sphere, consisting of a center and a radius.  It is
     always a sphere, and never an ellipsoid or other quadric.
     """
-    center: LPoint3f
+    center: LPoint3
     radius: float
     @overload
     def __init__(self) -> None:
         """`(self)`:
         Constructs an empty sphere.
 
-        `(self, center: LPoint3f, radius: float)`:
+        `(self, center: LPoint3, radius: float)`:
         Constructs a specific sphere.
         """
         ...
     @overload
     def __init__(self, center: Vec3f, radius: float) -> None: ...
-    def get_center(self) -> LPoint3f: ...
+    def get_center(self) -> LPoint3: ...
     def get_radius(self) -> float: ...
     def set_center(self, center: Vec3f) -> None:
         """Sets the center point of the sphere."""
@@ -2073,14 +2074,14 @@ PTA_LMatrix4d = PointerToArray_UnalignedLMatrix4d
 PTALMatrix4d = PTA_LMatrix4d
 CPTA_LMatrix4d = ConstPointerToArray_UnalignedLMatrix4d
 CPTALMatrix4d = CPTA_LMatrix4d
-PTA_LMatrix4 = PointerToArray_UnalignedLMatrix4f
+PTA_LMatrix4 = PTA_LMatrix4f
 PTALMatrix4 = PTA_LMatrix4
-CPTA_LMatrix4 = ConstPointerToArray_UnalignedLMatrix4f
+CPTA_LMatrix4 = CPTA_LMatrix4f
 CPTALMatrix4 = CPTA_LMatrix4
-PTAMat4 = PointerToArray_UnalignedLMatrix4f
-CPTAMat4 = ConstPointerToArray_UnalignedLMatrix4f
-PTAMat4d = PointerToArray_UnalignedLMatrix4d
-CPTAMat4d = ConstPointerToArray_UnalignedLMatrix4d
+PTAMat4 = PTA_LMatrix4
+CPTAMat4 = CPTA_LMatrix4
+PTAMat4d = PTA_LMatrix4d
+CPTAMat4d = CPTA_LMatrix4d
 PTA_LMatrix3f = PointerToArray_LMatrix3f
 PTALMatrix3f = PTA_LMatrix3f
 CPTA_LMatrix3f = ConstPointerToArray_LMatrix3f
@@ -2089,14 +2090,14 @@ PTA_LMatrix3d = PointerToArray_LMatrix3d
 PTALMatrix3d = PTA_LMatrix3d
 CPTA_LMatrix3d = ConstPointerToArray_LMatrix3d
 CPTALMatrix3d = CPTA_LMatrix3d
-PTA_LMatrix3 = PointerToArray_LMatrix3f
+PTA_LMatrix3 = PTA_LMatrix3f
 PTALMatrix3 = PTA_LMatrix3
-CPTA_LMatrix3 = ConstPointerToArray_LMatrix3f
+CPTA_LMatrix3 = CPTA_LMatrix3f
 CPTALMatrix3 = CPTA_LMatrix3
-PTAMat3 = PointerToArray_LMatrix3f
-CPTAMat3 = ConstPointerToArray_LMatrix3f
-PTAMat3d = PointerToArray_LMatrix3d
-CPTAMat3d = ConstPointerToArray_LMatrix3d
+PTAMat3 = PTA_LMatrix3
+CPTAMat3 = CPTA_LMatrix3
+PTAMat3d = PTA_LMatrix3d
+CPTAMat3d = CPTA_LMatrix3d
 PTA_LVecBase4f = PointerToArray_UnalignedLVecBase4f
 PTALVecBase4f = PTA_LVecBase4f
 CPTA_LVecBase4f = ConstPointerToArray_UnalignedLVecBase4f
@@ -2109,14 +2110,14 @@ PTA_LVecBase4i = PointerToArray_UnalignedLVecBase4i
 PTALVecBase4i = PTA_LVecBase4i
 CPTA_LVecBase4i = ConstPointerToArray_UnalignedLVecBase4i
 CPTALVecBase4i = CPTA_LVecBase4i
-PTA_LVecBase4 = PointerToArray_UnalignedLVecBase4f
+PTA_LVecBase4 = PTA_LVecBase4f
 PTALVecBase4 = PTA_LVecBase4
-CPTA_LVecBase4 = ConstPointerToArray_UnalignedLVecBase4f
+CPTA_LVecBase4 = CPTA_LVecBase4f
 CPTALVecBase4 = CPTA_LVecBase4
-PTAVecBase4f = PointerToArray_UnalignedLVecBase4f
-CPTAVecBase4f = ConstPointerToArray_UnalignedLVecBase4f
-PTAVecBase4d = PointerToArray_UnalignedLVecBase4d
-CPTAVecBase4d = ConstPointerToArray_UnalignedLVecBase4d
+PTAVecBase4f = PTA_LVecBase4f
+CPTAVecBase4f = CPTA_LVecBase4f
+PTAVecBase4d = PTA_LVecBase4d
+CPTAVecBase4d = CPTA_LVecBase4d
 PTA_LVecBase3f = PointerToArray_LVecBase3f
 PTALVecBase3f = PTA_LVecBase3f
 CPTA_LVecBase3f = ConstPointerToArray_LVecBase3f
@@ -2129,14 +2130,14 @@ PTA_LVecBase3i = PointerToArray_LVecBase3i
 PTALVecBase3i = PTA_LVecBase3i
 CPTA_LVecBase3i = ConstPointerToArray_LVecBase3i
 CPTALVecBase3i = CPTA_LVecBase3i
-PTA_LVecBase3 = PointerToArray_LVecBase3f
+PTA_LVecBase3 = PTA_LVecBase3f
 PTALVecBase3 = PTA_LVecBase3
-CPTA_LVecBase3 = ConstPointerToArray_LVecBase3f
+CPTA_LVecBase3 = CPTA_LVecBase3f
 CPTALVecBase3 = CPTA_LVecBase3
-PTAVecBase3f = PointerToArray_LVecBase3f
-CPTAVecBase3f = ConstPointerToArray_LVecBase3f
-PTAVecBase3d = PointerToArray_LVecBase3d
-CPTAVecBase3d = ConstPointerToArray_LVecBase3d
+PTAVecBase3f = PTA_LVecBase3f
+CPTAVecBase3f = CPTA_LVecBase3f
+PTAVecBase3d = PTA_LVecBase3d
+CPTAVecBase3d = CPTA_LVecBase3d
 PTA_LVecBase2f = PointerToArray_LVecBase2f
 PTALVecBase2f = PTA_LVecBase2f
 CPTA_LVecBase2f = ConstPointerToArray_LVecBase2f
@@ -2149,11 +2150,11 @@ PTA_LVecBase2i = PointerToArray_LVecBase2i
 PTALVecBase2i = PTA_LVecBase2i
 CPTA_LVecBase2i = ConstPointerToArray_LVecBase2i
 CPTALVecBase2i = CPTA_LVecBase2i
-PTA_LVecBase2 = PointerToArray_LVecBase2f
+PTA_LVecBase2 = PTA_LVecBase2f
 PTALVecBase2 = PTA_LVecBase2
-CPTA_LVecBase2 = ConstPointerToArray_LVecBase2f
+CPTA_LVecBase2 = CPTA_LVecBase2f
 CPTALVecBase2 = CPTA_LVecBase2
-PTAVecBase2f = PointerToArray_LVecBase2f
-CPTAVecBase2f = ConstPointerToArray_LVecBase2f
-PTAVecBase2d = PointerToArray_LVecBase2d
-CPTAVecBase2d = ConstPointerToArray_LVecBase2d
+PTAVecBase2f = PTA_LVecBase2f
+CPTAVecBase2f = CPTA_LVecBase2f
+PTAVecBase2d = PTA_LVecBase2d
+CPTAVecBase2d = CPTA_LVecBase2d

@@ -6,7 +6,6 @@ from typing_extensions import Final, Literal, TypeAlias, final
 from panda3d._typing import Filepath, Vec4f
 from panda3d.core import (
     AsyncFuture,
-    BitMask_uint32_t_32,
     ButtonHandle,
     ButtonMap,
     CallbackData,
@@ -14,16 +13,19 @@ from panda3d.core import (
     CullResult,
     CullTraverser,
     DataNode,
+    DrawMask,
     Filename,
     GraphicsOutputBase,
     GraphicsStateGuardianBase,
     InputDevice,
+    LColor,
     Loader,
     LPoint2i,
     LVecBase2i,
     LVecBase3i,
-    LVecBase4f,
+    LVecBase4,
     LVector2i,
+    MouseData,
     NodePath,
     PandaNode,
     PNMImage,
@@ -349,7 +351,7 @@ class DrawableRegion:
     at once, particularly for issuing clear commands and capturing screenshots.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    clear_color: LVecBase4f
+    clear_color: LColor
     clear_depth: float
     clear_stencil: int
     pixel_zoom: float
@@ -431,7 +433,7 @@ class DrawableRegion:
         false, this is meaningless.
         """
         ...
-    def get_clear_color(self) -> LVecBase4f:
+    def get_clear_color(self) -> LColor:
         """Returns the current clear color value.  This is the value that will be used
         to clear the color buffer every frame, but only if get_clear_color_active()
         returns true.  If get_clear_color_active() returns false, this is
@@ -469,7 +471,7 @@ class DrawableRegion:
     def set_clear_value(self, n: int, clear_value: Vec4f) -> None:
         """Sets the clear value for any bitplane."""
         ...
-    def get_clear_value(self, n: int) -> LVecBase4f:
+    def get_clear_value(self, n: int) -> LColor:
         """Returns the clear value for any bitplane."""
         ...
     def disable_clears(self) -> None:
@@ -1079,7 +1081,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     top of a 3-d scene.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    dimensions: LVecBase4f
+    dimensions: LVecBase4
     camera: NodePath
     active: bool
     sort: int
@@ -1113,7 +1115,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         one to render into using a geometry shader (gl_ViewportIndex in GLSL).
         """
         ...
-    def get_dimensions(self, i: int = ...) -> LVecBase4f:
+    def get_dimensions(self, i: int = ...) -> LVecBase4:
         """Retrieves the coordinates of the DisplayRegion's rectangle within its
         GraphicsOutput.  These numbers will be in the range [0..1].
         """
@@ -1140,12 +1142,12 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         ...
     @overload
     def set_dimensions(self, dimensions: Vec4f) -> None:
-        """`(self, dimensions: LVecBase4f)`; `(self, l: float, r: float, b: float, t: float)`; `(self, i: int, l: float, r: float, b: float, t: float)`:
+        """`(self, dimensions: LVecBase4)`; `(self, l: float, r: float, b: float, t: float)`; `(self, i: int, l: float, r: float, b: float, t: float)`:
         Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
         1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
 
-        `(self, i: int, dimensions: LVecBase4f)`:
+        `(self, i: int, dimensions: LVecBase4)`:
         Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
         1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
@@ -1916,13 +1918,13 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         window.  See set_side_by_side_stereo().
         """
         ...
-    def get_sbs_left_dimensions(self) -> LVecBase4f:
+    def get_sbs_left_dimensions(self) -> LVecBase4:
         """Returns the effective sub-region of the window for displaying the left
         channel, if side-by-side stereo mode is in effect for the window.  See
         set_side_by_side_stereo().
         """
         ...
-    def get_sbs_right_dimensions(self) -> LVecBase4f:
+    def get_sbs_right_dimensions(self) -> LVecBase4:
         """Returns the effective sub-region of the window for displaying the right
         channel, if side-by-side stereo mode is in effect for the window.  See
         set_side_by_side_stereo().
@@ -2001,7 +2003,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         make_mono_display_region() or make_stereo_display_region() if you want to
         insist on one or the other.
 
-        `(self, dimensions: LVecBase4f)`; `(self, l: float, r: float, b: float, t: float)`:
+        `(self, dimensions: LVecBase4)`; `(self, l: float, r: float, b: float, t: float)`:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
 
@@ -2024,7 +2026,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         necessary because in side-by-side stereo mode, it is necessary to draw even
         mono DisplayRegions twice).
 
-        `(self, dimensions: LVecBase4f)`:
+        `(self, dimensions: LVecBase4)`:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
 
@@ -2044,7 +2046,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
 
         This always returns a stereo DisplayRegion, even if is_stereo() is false.
 
-        `(self, dimensions: LVecBase4f)`:
+        `(self, dimensions: LVecBase4)`:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
 
@@ -2144,7 +2146,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         GraphicsEngine::remove_window().
         """
         ...
-    def make_cube_map(self, name: str, size: int, camera_rig: NodePath, camera_mask: BitMask_uint32_t_32 = ..., to_ram: bool = ..., fbp: FrameBufferProperties = ...) -> GraphicsOutput:
+    def make_cube_map(self, name: str, size: int, camera_rig: NodePath, camera_mask: DrawMask = ..., to_ram: bool = ..., fbp: FrameBufferProperties = ...) -> GraphicsOutput:
         """This is similar to make_texture_buffer() in that it allocates a separate
         buffer suitable for rendering to a texture that can be assigned to geometry
         in this window, but in this case, the buffer is set up to render the six
@@ -3913,7 +3915,7 @@ class GraphicsWindow(GraphicsOutput):
     def disable_pointer_events(self, device: int) -> None:
         """Turn off the generation of pointer events."""
         ...
-    def get_pointer(self, device: int) -> PointerData:
+    def get_pointer(self, device: int) -> MouseData:
         """Returns the MouseData associated with the nth input device's pointer.
         Using this to access raw mice (with an index other than 0) is deprecated,
         see the InputDeviceManager interface instead.

@@ -10,30 +10,36 @@ from panda3d.core import (
     BamEnums,
     BamReader,
     BamWriter,
-    BitMask_uint32_t_32,
+    BitMask32,
     BoundingVolume,
     CallbackData,
+    CollideMask,
     DisplayRegion,
+    DrawMask,
     Filename,
     Geom,
     GeometricBoundingVolume,
     GraphicsStateGuardianBase,
     InternalName,
+    LColor,
     Lens,
-    LMatrix3f,
-    LMatrix4f,
+    LMatrix3,
+    LMatrix4,
     LoaderOptions,
-    LPlanef,
+    LPlane,
+    LPoint3,
     LPoint3f,
-    LQuaternionf,
-    LVecBase2f,
-    LVecBase3f,
-    LVecBase4f,
-    LVector3f,
+    LQuaternion,
+    LTexCoord3,
+    LVecBase2,
+    LVecBase3,
+    LVecBase4,
+    LVector3,
     Material,
     Namable,
     NodeCachedReferenceCount,
     ParamValueBase,
+    PortalMask,
     ReferenceCount,
     SamplerState,
     Shader,
@@ -98,19 +104,19 @@ class TransformState(NodeCachedReferenceCount):
     And instead of modifying a TransformState object, create a new one.
     """
     @property
-    def pos(self) -> LPoint3f: ...
+    def pos(self) -> LPoint3: ...
     @property
-    def hpr(self) -> LVecBase3f: ...
+    def hpr(self) -> LVecBase3: ...
     @property
-    def quat(self) -> LQuaternionf: ...
+    def quat(self) -> LQuaternion: ...
     @property
-    def norm_quat(self) -> LQuaternionf: ...
+    def norm_quat(self) -> LQuaternion: ...
     @property
-    def scale(self) -> LVecBase3f: ...
+    def scale(self) -> LVecBase3: ...
     @property
-    def shear(self) -> LVecBase3f: ...
+    def shear(self) -> LVecBase3: ...
     @property
-    def mat(self) -> LMatrix4f: ...
+    def mat(self) -> LMatrix4: ...
     def __ne__(self, __other: object) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def compare_to(self, other: TransformState, uniquify_matrix: bool = ...) -> int:
@@ -191,7 +197,7 @@ class TransformState(NodeCachedReferenceCount):
         """Makes a new TransformState with the specified transformation matrix."""
         ...
     @staticmethod
-    def make_pos2d(pos: LVecBase2f) -> TransformState:
+    def make_pos2d(pos: LVecBase2) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
         ...
     @staticmethod
@@ -199,11 +205,11 @@ class TransformState(NodeCachedReferenceCount):
         """Makes a new 2-d TransformState with the specified components."""
         ...
     @staticmethod
-    def make_pos_rotate2d(pos: LVecBase2f, rotate: float) -> TransformState:
+    def make_pos_rotate2d(pos: LVecBase2, rotate: float) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
         ...
     @staticmethod
-    def make_scale2d(scale: LVecBase2f | float) -> TransformState:
+    def make_scale2d(scale: LVecBase2 | float) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
         ...
     @staticmethod
@@ -211,15 +217,15 @@ class TransformState(NodeCachedReferenceCount):
         """Makes a new 2-d TransformState with the specified components."""
         ...
     @staticmethod
-    def make_pos_rotate_scale2d(pos: LVecBase2f, rotate: float, scale: LVecBase2f) -> TransformState:
+    def make_pos_rotate_scale2d(pos: LVecBase2, rotate: float, scale: LVecBase2) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
         ...
     @staticmethod
-    def make_pos_rotate_scale_shear2d(pos: LVecBase2f, rotate: float, scale: LVecBase2f, shear: float) -> TransformState:
+    def make_pos_rotate_scale_shear2d(pos: LVecBase2, rotate: float, scale: LVecBase2, shear: float) -> TransformState:
         """Makes a new two-dimensional TransformState with the specified components."""
         ...
     @staticmethod
-    def make_mat3(mat: LMatrix3f) -> TransformState:
+    def make_mat3(mat: LMatrix3) -> TransformState:
         """Makes a new two-dimensional TransformState with the specified 3x3
         transformation matrix.
         """
@@ -331,17 +337,17 @@ class TransformState(NodeCachedReferenceCount):
         generally always true, unless is_invalid() is true.
         """
         ...
-    def get_pos(self) -> LPoint3f:
+    def get_pos(self) -> LPoint3:
         """Returns the pos component of the transform.  It is an error to call this if
         has_pos() returned false.
         """
         ...
-    def get_hpr(self) -> LVecBase3f:
+    def get_hpr(self) -> LVecBase3:
         """Returns the rotation component of the transform as a trio of Euler angles.
         It is an error to call this if has_components() returned false.
         """
         ...
-    def get_quat(self) -> LQuaternionf:
+    def get_quat(self) -> LQuaternion:
         """Returns the rotation component of the transform as a quaternion.  The
         return value will be normalized if a normalized quaternion was given to the
         constructor (or if the quaternion was computed implicitly); it will be non-
@@ -351,14 +357,14 @@ class TransformState(NodeCachedReferenceCount):
         It is an error to call this if has_components() returned false.
         """
         ...
-    def get_norm_quat(self) -> LQuaternionf:
+    def get_norm_quat(self) -> LQuaternion:
         """Returns the rotation component of the transform as a quaternion.  Unlike
         the result of get_quat(), the return value of this method is guaranteed to
         be normalized.  It is an error to call this if has_components() returned
         false.
         """
         ...
-    def get_scale(self) -> LVecBase3f:
+    def get_scale(self) -> LVecBase3:
         """Returns the scale component of the transform.  It is an error to call this
         if has_components() returned false.
         """
@@ -368,15 +374,15 @@ class TransformState(NodeCachedReferenceCount):
         error to call this if has_uniform_scale() returned false.
         """
         ...
-    def get_shear(self) -> LVecBase3f:
+    def get_shear(self) -> LVecBase3:
         """Returns the shear component of the transform.  It is an error to call this
         if has_components() returned false.
         """
         ...
-    def get_mat(self) -> LMatrix4f:
+    def get_mat(self) -> LMatrix4:
         """Returns the matrix that describes the transform."""
         ...
-    def get_pos2d(self) -> LVecBase2f:
+    def get_pos2d(self) -> LVecBase2:
         """Returns the pos component of the 2-d transform.  It is an error to call
         this if has_pos() or is_2d() returned false.
         """
@@ -387,7 +393,7 @@ class TransformState(NodeCachedReferenceCount):
         has_components() or is_2d() returned false.
         """
         ...
-    def get_scale2d(self) -> LVecBase2f:
+    def get_scale2d(self) -> LVecBase2:
         """Returns the scale component of the 2-d transform.  It is an error to call
         this if has_components() or is_2d() returned false.
         """
@@ -397,7 +403,7 @@ class TransformState(NodeCachedReferenceCount):
         this if has_components() or is_2d() returned false.
         """
         ...
-    def get_mat3(self) -> LMatrix3f:
+    def get_mat3(self) -> LMatrix3:
         """Returns the 3x3 matrix that describes the 2-d transform.  It is an error to
         call this if is_2d() returned false.
         """
@@ -431,7 +437,7 @@ class TransformState(NodeCachedReferenceCount):
         if possible.
         """
         ...
-    def set_pos2d(self, pos: LVecBase2f) -> TransformState:
+    def set_pos2d(self, pos: LVecBase2) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its pos component replaced with the indicated value.
         """
@@ -442,7 +448,7 @@ class TransformState(NodeCachedReferenceCount):
         value, if possible.
         """
         ...
-    def set_scale2d(self, scale: LVecBase2f) -> TransformState:
+    def set_scale2d(self, scale: LVecBase2) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its scale component replaced with the indicated value,
         if possible.
@@ -1006,7 +1012,7 @@ class RenderModeAttrib(RenderAttrib):
     @property
     def perspective(self) -> bool: ...
     @property
-    def wireframe_color(self) -> LVecBase4f: ...
+    def wireframe_color(self) -> LColor: ...
     @property
     def class_slot(self) -> int: ...
     @staticmethod
@@ -1052,7 +1058,7 @@ class RenderModeAttrib(RenderAttrib):
         a uniform size regardless of distance from the camera.
         """
         ...
-    def get_wireframe_color(self) -> LVecBase4f:
+    def get_wireframe_color(self) -> LColor:
         """Returns the color that is used in M_filled_wireframe mode to distinguish
         the wireframe from the rest of the geometry.
         """
@@ -1083,7 +1089,7 @@ class TexMatrixAttrib(RenderAttrib):
         """`()`:
         Constructs a TexMatrixAttrib that applies no stages at all.
 
-        `(mat: LMatrix4f)`:
+        `(mat: LMatrix4)`:
         Constructs a TexMatrixAttrib that applies the indicated matrix to the
         default texture stage.  This interface is deprecated.
 
@@ -1133,7 +1139,7 @@ class TexMatrixAttrib(RenderAttrib):
         TextureStages are in no particular order.
         """
         ...
-    def get_mat(self, stage: TextureStage = ...) -> LMatrix4f:
+    def get_mat(self, stage: TextureStage = ...) -> LMatrix4:
         """`(self)`:
         Returns the transformation matrix associated with the default texture
         stage.
@@ -1202,7 +1208,7 @@ class RenderState(NodeCachedReferenceCount):
         order defined by compare_to.
         """
         ...
-    def compare_mask(self, other: RenderState, compare_mask: BitMask_uint32_t_32) -> int:
+    def compare_mask(self, other: RenderState, compare_mask: BitMask32) -> int:
         """This version of compare_to takes a slot mask that indicates which
         attributes to include in the comparison.  Unlike compare_to, this method
         compares the attributes by pointer.
@@ -1928,7 +1934,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     transform: TransformState
     tags: Mapping[Any, str]
     overall_hidden: bool
-    into_collide_mask: BitMask_uint32_t_32
+    into_collide_mask: CollideMask
     final: bool
     UC_parents: Final[Literal[1]]
     UCParents: Final[Literal[1]]
@@ -1957,15 +1963,15 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     @property
     def python_tags(self): ...
     @property
-    def overall_bit(self) -> BitMask_uint32_t_32: ...
+    def overall_bit(self) -> DrawMask: ...
     @property
-    def all_camera_mask(self) -> BitMask_uint32_t_32: ...
+    def all_camera_mask(self) -> DrawMask: ...
     @property
-    def draw_control_mask(self) -> BitMask_uint32_t_32: ...
+    def draw_control_mask(self) -> DrawMask: ...
     @property
-    def draw_show_mask(self) -> BitMask_uint32_t_32: ...
+    def draw_show_mask(self) -> DrawMask: ...
     @property
-    def legal_collide_mask(self) -> BitMask_uint32_t_32: ...
+    def legal_collide_mask(self) -> CollideMask: ...
     @property
     def bounds_type(self) -> _BoundingVolume_BoundsType: ...
     @property
@@ -2456,14 +2462,14 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """
         ...
     @staticmethod
-    def get_overall_bit() -> BitMask_uint32_t_32:
+    def get_overall_bit() -> DrawMask:
         """Returns the special bit that, when specifically cleared in the node's
         DrawMask, indicates that the node is hidden to all cameras, regardless of
         the remaining DrawMask bits.
         """
         ...
     @staticmethod
-    def get_all_camera_mask() -> BitMask_uint32_t_32:
+    def get_all_camera_mask() -> DrawMask:
         """Returns a DrawMask that is appropriate for rendering to all cameras."""
         ...
     def is_overall_hidden(self) -> bool:
@@ -2481,7 +2487,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         draw mask, which has special meaning.
         """
         ...
-    def adjust_draw_mask(self, show_mask: BitMask_uint32_t_32, hide_mask: BitMask_uint32_t_32, clear_mask: BitMask_uint32_t_32) -> None:
+    def adjust_draw_mask(self, show_mask: DrawMask, hide_mask: DrawMask, clear_mask: DrawMask) -> None:
         """Adjusts the hide/show bits of this particular node.
 
         These three parameters can be used to adjust the _draw_control_mask and
@@ -2512,17 +2518,17 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         be inherited from a parent.
         """
         ...
-    def get_draw_control_mask(self) -> BitMask_uint32_t_32:
+    def get_draw_control_mask(self) -> DrawMask:
         """Returns the set of bits in draw_show_mask that are considered meaningful.
         See adjust_draw_mask().
         """
         ...
-    def get_draw_show_mask(self) -> BitMask_uint32_t_32:
+    def get_draw_show_mask(self) -> DrawMask:
         """Returns the hide/show bits of this particular node.  See
         adjust_draw_mask().
         """
         ...
-    def get_net_draw_control_mask(self) -> BitMask_uint32_t_32:
+    def get_net_draw_control_mask(self) -> DrawMask:
         """Returns the set of bits in get_net_draw_show_mask() that have been
         explicitly set via adjust_draw_mask(), rather than implicitly inherited.
 
@@ -2531,7 +2537,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         hide() or show_through() call for the corresponding bit.
         """
         ...
-    def get_net_draw_show_mask(self) -> BitMask_uint32_t_32:
+    def get_net_draw_show_mask(self) -> DrawMask:
         """Returns the union of all draw_show_mask values--of renderable nodes only--
         at this level and below.  If any bit in this mask is 0, there is no reason
         to traverse below this node for a camera with the corresponding
@@ -2544,7 +2550,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         indicates that all children are hidden.
         """
         ...
-    def set_into_collide_mask(self, mask: BitMask_uint32_t_32) -> None:
+    def set_into_collide_mask(self, mask: CollideMask) -> None:
         """Sets the "into" CollideMask.
 
         This specifies the set of bits that must be shared with a CollisionNode's
@@ -2557,10 +2563,10 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         collided into, such as CollisionNodes and GeomNodes.
         """
         ...
-    def get_into_collide_mask(self) -> BitMask_uint32_t_32:
+    def get_into_collide_mask(self) -> CollideMask:
         """Returns the "into" collide mask for this node."""
         ...
-    def get_legal_collide_mask(self) -> BitMask_uint32_t_32:
+    def get_legal_collide_mask(self) -> CollideMask:
         """Returns the subset of CollideMask bits that may be set for this particular
         type of PandaNode.  For most nodes, this is 0; it doesn't make sense to set
         a CollideMask for most kinds of nodes.
@@ -2569,7 +2575,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         this returns all bits on.
         """
         ...
-    def get_net_collide_mask(self, current_thread: Thread = ...) -> BitMask_uint32_t_32:
+    def get_net_collide_mask(self, current_thread: Thread = ...) -> CollideMask:
         """Returns the union of all into_collide_mask() values set at CollisionNodes
         at this level and below.
         """
@@ -3079,7 +3085,7 @@ class ShaderInput:
     def get_name(self) -> InternalName: ...
     def get_value_type(self) -> int: ...
     def get_priority(self) -> int: ...
-    def get_vector(self) -> LVecBase4f: ...
+    def get_vector(self) -> LVecBase4: ...
     def get_nodepath(self) -> NodePath:
         """Warning: no error checking is done.  This *will* crash if get_value_type()
         is not M_nodepath.
@@ -3911,14 +3917,14 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_pos(self, pos: Vec3f) -> None:
-        """`(self, pos: LVecBase3f)`:
+        """`(self, pos: LVecBase3)`:
         Sets the translation component of the transform, leaving rotation and scale
         untouched.  This also resets the node's "previous" position, so that the
         collision system will see the node as having suddenly appeared in the new
         position, without passing any points in between.  See Also:
         NodePath::set_fluid_pos
 
-        `(self, other: NodePath, pos: LVecBase3f)`; `(self, other: NodePath, x: float, y: float, z: float)`:
+        `(self, other: NodePath, pos: LVecBase3)`; `(self, other: NodePath, x: float, y: float, z: float)`:
         Sets the translation component of the transform, relative to the other
         node.
 
@@ -3964,12 +3970,12 @@ class NodePath(Generic[_N]):
     def set_z(self, other: NodePath, z: float) -> None: ...
     @overload
     def set_fluid_pos(self, pos: Vec3f) -> None:
-        """`(self, pos: LVecBase3f)`:
+        """`(self, pos: LVecBase3)`:
         Sets the translation component, without changing the "previous" position,
         so that the collision system will see the node as moving fluidly from its
         previous position to its new position.  See Also: NodePath::set_pos
 
-        `(self, other: NodePath, pos: LVecBase3f)`:
+        `(self, other: NodePath, pos: LVecBase3)`:
         Sets the translation component of the transform, relative to the other
         node.
 
@@ -3997,7 +4003,7 @@ class NodePath(Generic[_N]):
     def set_fluid_z(self, z: float) -> None: ...
     @overload
     def set_fluid_z(self, other: NodePath, z: float) -> None: ...
-    def get_pos(self, other: NodePath = ...) -> LPoint3f:
+    def get_pos(self, other: NodePath = ...) -> LPoint3:
         """`(self)`:
         Retrieves the translation component of the transform.
 
@@ -4009,7 +4015,7 @@ class NodePath(Generic[_N]):
     def get_x(self, other: NodePath = ...) -> float: ...
     def get_y(self, other: NodePath = ...) -> float: ...
     def get_z(self, other: NodePath = ...) -> float: ...
-    def get_pos_delta(self, other: NodePath = ...) -> LVector3f:
+    def get_pos_delta(self, other: NodePath = ...) -> LVector3:
         """`(self)`:
         Returns the delta vector from this node's position in the previous frame
         (according to set_prev_transform(), typically set via the use of
@@ -4031,11 +4037,11 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_hpr(self, hpr: Vec3f) -> None:
-        """`(self, hpr: LVecBase3f)`; `(self, h: float, p: float, r: float)`:
+        """`(self, hpr: LVecBase3)`; `(self, h: float, p: float, r: float)`:
         Sets the rotation component of the transform, leaving translation and scale
         untouched.
 
-        `(self, other: NodePath, hpr: LVecBase3f)`; `(self, other: NodePath, h: float, p: float, r: float)`:
+        `(self, other: NodePath, hpr: LVecBase3)`; `(self, other: NodePath, h: float, p: float, r: float)`:
         Sets the rotation component of the transform, relative to the other node.
         """
         ...
@@ -4057,7 +4063,7 @@ class NodePath(Generic[_N]):
     def set_r(self, r: float) -> None: ...
     @overload
     def set_r(self, other: NodePath, r: float) -> None: ...
-    def get_hpr(self, other: NodePath = ...) -> LVecBase3f:
+    def get_hpr(self, other: NodePath = ...) -> LVecBase3:
         """`(self)`:
         Retrieves the rotation component of the transform.
 
@@ -4071,17 +4077,17 @@ class NodePath(Generic[_N]):
     def get_r(self, other: NodePath = ...) -> float: ...
     @overload
     def set_quat(self, quat: Vec4f) -> None:
-        """`(self, quat: LQuaternionf)`:
+        """`(self, quat: LQuaternion)`:
         Sets the rotation component of the transform, leaving translation and scale
         untouched.
 
-        `(self, other: NodePath, quat: LQuaternionf)`:
+        `(self, other: NodePath, quat: LQuaternion)`:
         Sets the rotation component of the transform, relative to the other node.
         """
         ...
     @overload
     def set_quat(self, other: NodePath, quat: Vec4f) -> None: ...
-    def get_quat(self, other: NodePath = ...) -> LQuaternionf:
+    def get_quat(self, other: NodePath = ...) -> LQuaternion:
         """`(self)`:
         Retrieves the rotation component of the transform.
 
@@ -4092,11 +4098,11 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_scale(self, scale: Vec3f | float) -> None:
-        """`(self, scale: LVecBase3f)`; `(self, scale: float)`:
+        """`(self, scale: LVecBase3)`; `(self, scale: float)`:
         Sets the scale component of the transform, leaving translation and rotation
         untouched.
 
-        `(self, other: NodePath, scale: LVecBase3f)`; `(self, other: NodePath, scale: float)`; `(self, other: NodePath, sx: float, sy: float, sz: float)`:
+        `(self, other: NodePath, scale: LVecBase3)`; `(self, other: NodePath, scale: float)`; `(self, other: NodePath, sx: float, sy: float, sz: float)`:
         Sets the scale component of the transform, relative to the other node.
         """
         ...
@@ -4133,7 +4139,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_sz(self, other: NodePath, sz: float) -> None: ...
-    def get_scale(self, other: NodePath = ...) -> LVecBase3f:
+    def get_scale(self, other: NodePath = ...) -> LVecBase3:
         """`(self)`:
         Retrieves the scale component of the transform.
 
@@ -4150,11 +4156,11 @@ class NodePath(Generic[_N]):
     def get_sz(self, other: NodePath = ...) -> float: ...
     @overload
     def set_shear(self, shear: Vec3f) -> None:
-        """`(self, shear: LVecBase3f)`:
+        """`(self, shear: LVecBase3)`:
         Sets the shear component of the transform, leaving translation and rotation
         untouched.
 
-        `(self, other: NodePath, shear: LVecBase3f)`; `(self, other: NodePath, shxy: float, shxz: float, shyz: float)`:
+        `(self, other: NodePath, shear: LVecBase3)`; `(self, other: NodePath, shxy: float, shxz: float, shyz: float)`:
         Sets the shear component of the transform, relative to the other node.
 
         `(self, shxy: float, shxz: float, shyz: float)`:
@@ -4180,7 +4186,7 @@ class NodePath(Generic[_N]):
     def set_shyz(self, shyz: float) -> None: ...
     @overload
     def set_shyz(self, other: NodePath, shyz: float) -> None: ...
-    def get_shear(self, other: NodePath = ...) -> LVecBase3f:
+    def get_shear(self, other: NodePath = ...) -> LVecBase3:
         """`(self)`:
         Retrieves the shear component of the transform.
 
@@ -4197,11 +4203,11 @@ class NodePath(Generic[_N]):
     def get_shyz(self, other: NodePath = ...) -> float: ...
     @overload
     def set_pos_hpr(self, pos: Vec3f, hpr: Vec3f) -> None:
-        """`(self, pos: LVecBase3f, hpr: LVecBase3f)`; `(self, x: float, y: float, z: float, h: float, p: float, r: float)`:
+        """`(self, pos: LVecBase3, hpr: LVecBase3)`; `(self, x: float, y: float, z: float, h: float, p: float, r: float)`:
         Sets the translation and rotation component of the transform, leaving scale
         untouched.
 
-        `(self, other: NodePath, pos: LVecBase3f, hpr: LVecBase3f)`; `(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float)`:
+        `(self, other: NodePath, pos: LVecBase3, hpr: LVecBase3)`; `(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float)`:
         Sets the translation and rotation component of the transform, relative to
         the other node.
         """
@@ -4214,11 +4220,11 @@ class NodePath(Generic[_N]):
     def set_pos_hpr(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float) -> None: ...
     @overload
     def set_pos_quat(self, pos: Vec3f, quat: Vec4f) -> None:
-        """`(self, pos: LVecBase3f, quat: LQuaternionf)`:
+        """`(self, pos: LVecBase3, quat: LQuaternion)`:
         Sets the translation and rotation component of the transform, leaving scale
         untouched.
 
-        `(self, other: NodePath, pos: LVecBase3f, quat: LQuaternionf)`:
+        `(self, other: NodePath, pos: LVecBase3, quat: LQuaternion)`:
         Sets the translation and rotation component of the transform, relative to
         the other node.
         """
@@ -4227,11 +4233,11 @@ class NodePath(Generic[_N]):
     def set_pos_quat(self, other: NodePath, pos: Vec3f, quat: Vec4f) -> None: ...
     @overload
     def set_hpr_scale(self, hpr: Vec3f, scale: Vec3f) -> None:
-        """`(self, hpr: LVecBase3f, scale: LVecBase3f)`; `(self, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
+        """`(self, hpr: LVecBase3, scale: LVecBase3)`; `(self, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.
 
-        `(self, other: NodePath, hpr: LVecBase3f, scale: LVecBase3f)`; `(self, other: NodePath, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
+        `(self, other: NodePath, hpr: LVecBase3, scale: LVecBase3)`; `(self, other: NodePath, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.  This, or set_pos_hpr_scale, is the preferred way to
         update a transform when both hpr and scale are to be changed.
@@ -4245,11 +4251,11 @@ class NodePath(Generic[_N]):
     def set_hpr_scale(self, other: NodePath, h: float, p: float, r: float, sx: float, sy: float, sz: float) -> None: ...
     @overload
     def set_quat_scale(self, quat: Vec4f, scale: Vec3f) -> None:
-        """`(self, quat: LQuaternionf, scale: LVecBase3f)`:
+        """`(self, quat: LQuaternion, scale: LVecBase3)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.
 
-        `(self, other: NodePath, quat: LQuaternionf, scale: LVecBase3f)`:
+        `(self, other: NodePath, quat: LQuaternion, scale: LVecBase3)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.  This, or set_pos_quat_scale, is the preferred way
         to update a transform when both quat and scale are to be changed.
@@ -4259,11 +4265,11 @@ class NodePath(Generic[_N]):
     def set_quat_scale(self, other: NodePath, quat: Vec4f, scale: Vec3f) -> None: ...
     @overload
     def set_pos_hpr_scale(self, pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> None:
-        """`(self, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f)`:
+        """`(self, pos: LVecBase3, hpr: LVecBase3, scale: LVecBase3)`:
         Replaces the translation, rotation, and scale components, implicitly
         setting shear to 0.
 
-        `(self, other: NodePath, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f)`:
+        `(self, other: NodePath, pos: LVecBase3, hpr: LVecBase3, scale: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, and scale
         components, relative to the other node, implicitly setting shear to 0.
 
@@ -4284,11 +4290,11 @@ class NodePath(Generic[_N]):
     def set_pos_hpr_scale(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float) -> None: ...
     @overload
     def set_pos_quat_scale(self, pos: Vec3f, quat: Vec4f, scale: Vec3f) -> None:
-        """`(self, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f)`:
+        """`(self, pos: LVecBase3, quat: LQuaternion, scale: LVecBase3)`:
         Replaces the translation, rotation, and scale components, implicitly
         setting shear to 0.
 
-        `(self, other: NodePath, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f)`:
+        `(self, other: NodePath, pos: LVecBase3, quat: LQuaternion, scale: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, and scale
         components, relative to the other node, implicitly setting shear to 0.
         """
@@ -4297,11 +4303,11 @@ class NodePath(Generic[_N]):
     def set_pos_quat_scale(self, other: NodePath, pos: Vec3f, quat: Vec4f, scale: Vec3f) -> None: ...
     @overload
     def set_pos_hpr_scale_shear(self, pos: Vec3f, hpr: Vec3f, scale: Vec3f, shear: Vec3f) -> None:
-        """`(self, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f, shear: LVecBase3f)`:
+        """`(self, pos: LVecBase3, hpr: LVecBase3, scale: LVecBase3, shear: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components.
 
-        `(self, other: NodePath, pos: LVecBase3f, hpr: LVecBase3f, scale: LVecBase3f, shear: LVecBase3f)`:
+        `(self, other: NodePath, pos: LVecBase3, hpr: LVecBase3, scale: LVecBase3, shear: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components, relative to the other node.
         """
@@ -4310,11 +4316,11 @@ class NodePath(Generic[_N]):
     def set_pos_hpr_scale_shear(self, other: NodePath, pos: Vec3f, hpr: Vec3f, scale: Vec3f, shear: Vec3f) -> None: ...
     @overload
     def set_pos_quat_scale_shear(self, pos: Vec3f, quat: Vec4f, scale: Vec3f, shear: Vec3f) -> None:
-        """`(self, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f, shear: LVecBase3f)`:
+        """`(self, pos: LVecBase3, quat: LQuaternion, scale: LVecBase3, shear: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components.
 
-        `(self, other: NodePath, pos: LVecBase3f, quat: LQuaternionf, scale: LVecBase3f, shear: LVecBase3f)`:
+        `(self, other: NodePath, pos: LVecBase3, quat: LQuaternion, scale: LVecBase3, shear: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components, relative to the other node.
         """
@@ -4323,10 +4329,10 @@ class NodePath(Generic[_N]):
     def set_pos_quat_scale_shear(self, other: NodePath, pos: Vec3f, quat: Vec4f, scale: Vec3f, shear: Vec3f) -> None: ...
     @overload
     def set_mat(self, mat: Mat4f) -> None:
-        """`(self, mat: LMatrix4f)`:
+        """`(self, mat: LMatrix4)`:
         Directly sets an arbitrary 4x4 transform matrix.
 
-        `(self, other: NodePath, mat: LMatrix4f)`:
+        `(self, other: NodePath, mat: LMatrix4)`:
         Converts the indicated matrix from the other's coordinate space to the
         local coordinate space, and applies it to the node.
         """
@@ -4341,7 +4347,7 @@ class NodePath(Generic[_N]):
         referenced node, false otherwise.
         """
         ...
-    def get_mat(self, other: NodePath = ...) -> LMatrix4f:
+    def get_mat(self, other: NodePath = ...) -> LMatrix4:
         """`(self)`:
         Returns the transform matrix that has been applied to the referenced node,
         or the identity matrix if no matrix has been applied.
@@ -4353,11 +4359,11 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def look_at(self, point: Vec3f, up: Vec3f = ...) -> None:
-        """`(self, point: LPoint3f, up: LVector3f = ...)`:
+        """`(self, point: LPoint3, up: LVector3 = ...)`:
         Sets the hpr on this NodePath so that it rotates to face the indicated
         point in space.
 
-        `(self, other: NodePath, point: LPoint3f = ..., up: LVector3f = ...)`:
+        `(self, other: NodePath, point: LPoint3 = ..., up: LVector3 = ...)`:
         Sets the transform on this NodePath so that it rotates to face the
         indicated point in space, which is relative to the other NodePath.
 
@@ -4389,12 +4395,12 @@ class NodePath(Generic[_N]):
     def heads_up(self, x: float, y: float, z: float) -> None: ...
     @overload
     def heads_up(self, other: NodePath, x: float, y: float, z: float) -> None: ...
-    def get_relative_point(self, other: NodePath, point: Vec3f) -> LPoint3f:
+    def get_relative_point(self, other: NodePath, point: Vec3f) -> LPoint3:
         """Given that the indicated point is in the coordinate system of the other
         node, returns the same point in this node's coordinate system.
         """
         ...
-    def get_relative_vector(self, other: NodePath, vec: Vec3f) -> LVector3f:
+    def get_relative_vector(self, other: NodePath, vec: Vec3f) -> LVector3:
         """Given that the indicated vector is in the coordinate system of the other
         node, returns the same vector in this node's coordinate system.
         """
@@ -4431,7 +4437,7 @@ class NodePath(Generic[_N]):
         otherwise.
         """
         ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the color that has been assigned to the node, or black if no color
         has been assigned.
         """
@@ -4450,7 +4456,7 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_color_scale(self, scale: Vec4f, priority: int = ...) -> None:
-        """`(self, scale: LVecBase4f, priority: int = ...)`:
+        """`(self, scale: LVecBase4, priority: int = ...)`:
         Sets the color scale component of the transform, leaving translation and
         rotation untouched.
 
@@ -4462,7 +4468,7 @@ class NodePath(Generic[_N]):
     def set_color_scale(self, sx: float, sy: float, sz: float, sa: float, priority: int = ...) -> None: ...
     @overload
     def compose_color_scale(self, scale: Vec4f, priority: int = ...) -> None:
-        """`(self, scale: LVecBase4f, priority: int = ...)`:
+        """`(self, scale: LVecBase4, priority: int = ...)`:
         multiplies the color scale component of the transform, with previous color
         scale leaving translation and rotation untouched.
 
@@ -4516,7 +4522,7 @@ class NodePath(Generic[_N]):
         @see set_color_scale()
         """
         ...
-    def get_color_scale(self) -> LVecBase4f:
+    def get_color_scale(self) -> LVecBase4:
         """Returns the complete color scale vector that has been applied to this node
         via a previous call to set_color_scale() and/or set_alpha_scale(), or all
         1's (identity) if no scale has been applied to this particular node.
@@ -4662,26 +4668,26 @@ class NodePath(Generic[_N]):
         ...
     @overload
     def set_scissor(self, a: Vec3f, b: Vec3f) -> None:
-        """`(self, a: LPoint3f, b: LPoint3f)`:
+        """`(self, a: LPoint3, b: LPoint3)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The two points are understood to be relative to this node.  When these
         points are projected into screen space, they define the diagonally-opposite
         points that determine the scissor region.
 
-        `(self, a: LPoint3f, b: LPoint3f, c: LPoint3f, d: LPoint3f)`:
+        `(self, a: LPoint3, b: LPoint3, c: LPoint3, d: LPoint3)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The four points are understood to be relative to this node.  When these
         points are projected into screen space, they define the bounding volume of
         the scissor region (the scissor region is the smallest onscreen rectangle
         that encloses all four points).
 
-        `(self, other: NodePath, a: LPoint3f, b: LPoint3f)`:
+        `(self, other: NodePath, a: LPoint3, b: LPoint3)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The two points are understood to be relative to the indicated other node.
         When these points are projected into screen space, they define the
         diagonally-opposite points that determine the scissor region.
 
-        `(self, other: NodePath, a: LPoint3f, b: LPoint3f, c: LPoint3f, d: LPoint3f)`:
+        `(self, other: NodePath, a: LPoint3, b: LPoint3, c: LPoint3, d: LPoint3)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The four points are understood to be relative to the indicated other node.
         When these points are projected into screen space, they define the bounding
@@ -4929,7 +4935,7 @@ class NodePath(Generic[_N]):
         """overloaded for auto shader customization"""
         ...
     @overload
-    def set_shader_auto(self, shader_switch: BitMask_uint32_t_32, priority: int = ...) -> None: ...
+    def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> None: ...
     def clear_shader(self) -> None: ...
     @overload
     def set_shader_input(self, input: ShaderInput) -> None: ...
@@ -4992,7 +4998,7 @@ class NodePath(Generic[_N]):
     @overload
     def get_tex_transform(self, other: NodePath, stage: TextureStage) -> TransformState: ...
     @overload
-    def set_tex_offset(self, stage: TextureStage, uv: LVecBase2f) -> None:
+    def set_tex_offset(self, stage: TextureStage, uv: LVecBase2) -> None:
         """Sets a texture matrix on the current node to apply the indicated offset to
         UV's for the given stage.
 
@@ -5000,7 +5006,7 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def set_tex_offset(self, other: NodePath, stage: TextureStage, uv: LVecBase2f) -> None: ...
+    def set_tex_offset(self, other: NodePath, stage: TextureStage, uv: LVecBase2) -> None: ...
     @overload
     def set_tex_offset(self, stage: TextureStage, u: float, v: float) -> None: ...
     @overload
@@ -5016,14 +5022,14 @@ class NodePath(Generic[_N]):
     @overload
     def set_tex_rotate(self, other: NodePath, stage: TextureStage, r: float) -> None: ...
     @overload
-    def set_tex_scale(self, stage: TextureStage, scale: LVecBase2f | Vec3f | float) -> None:
-        """`(self, other: NodePath, stage: TextureStage, scale: LVecBase2f)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float)`; `(self, stage: TextureStage, scale: LVecBase2f)`; `(self, stage: TextureStage, su: float, sv: float)`:
+    def set_tex_scale(self, stage: TextureStage, scale: LVecBase2 | Vec3f | float) -> None:
+        """`(self, other: NodePath, stage: TextureStage, scale: LVecBase2)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float)`; `(self, stage: TextureStage, scale: LVecBase2)`; `(self, stage: TextureStage, su: float, sv: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UV's for the given stage.
 
         This call is appropriate for ordinary 2-d texture coordinates.
 
-        `(self, other: NodePath, stage: TextureStage, scale: LVecBase3f)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float, sw: float)`; `(self, stage: TextureStage, scale: LVecBase3f)`; `(self, stage: TextureStage, su: float, sv: float, sw: float)`:
+        `(self, other: NodePath, stage: TextureStage, scale: LVecBase3)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float, sw: float)`; `(self, stage: TextureStage, scale: LVecBase3)`; `(self, stage: TextureStage, su: float, sv: float, sw: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UVW's for the given stage.
 
@@ -5043,13 +5049,13 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def set_tex_scale(self, other: NodePath, stage: TextureStage, scale: LVecBase2f | Vec3f | float) -> None: ...
+    def set_tex_scale(self, other: NodePath, stage: TextureStage, scale: LVecBase2 | Vec3f | float) -> None: ...
     @overload
     def set_tex_scale(self, stage: TextureStage, su: float, sv: float, sw: float = ...) -> None: ...
     @overload
     def set_tex_scale(self, other: NodePath, stage: TextureStage, su: float, sv: float, sw: float = ...) -> None: ...
     @overload
-    def get_tex_offset(self, stage: TextureStage) -> LVecBase2f:
+    def get_tex_offset(self, stage: TextureStage) -> LVecBase2:
         """Returns the offset set for the UV's for the given stage on the current
         node.
 
@@ -5057,7 +5063,7 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def get_tex_offset(self, other: NodePath, stage: TextureStage) -> LVecBase2f: ...
+    def get_tex_offset(self, other: NodePath, stage: TextureStage) -> LVecBase2: ...
     @overload
     def get_tex_rotate(self, stage: TextureStage) -> float:
         """Returns the rotation set for the UV's for the given stage on the current
@@ -5069,14 +5075,14 @@ class NodePath(Generic[_N]):
     @overload
     def get_tex_rotate(self, other: NodePath, stage: TextureStage) -> float: ...
     @overload
-    def get_tex_scale(self, stage: TextureStage) -> LVecBase2f:
+    def get_tex_scale(self, stage: TextureStage) -> LVecBase2:
         """Returns the scale set for the UV's for the given stage on the current node.
 
         This call is appropriate for ordinary 2-d texture coordinates.
         """
         ...
     @overload
-    def get_tex_scale(self, other: NodePath, stage: TextureStage) -> LVecBase2f: ...
+    def get_tex_scale(self, other: NodePath, stage: TextureStage) -> LVecBase2: ...
     @overload
     def set_tex_pos(self, stage: TextureStage, uvw: Vec3f) -> None:
         """Sets a texture matrix on the current node to apply the indicated offset to
@@ -5106,7 +5112,7 @@ class NodePath(Generic[_N]):
     @overload
     def set_tex_hpr(self, other: NodePath, stage: TextureStage, h: float, p: float, r: float) -> None: ...
     @overload
-    def get_tex_pos(self, stage: TextureStage) -> LVecBase3f:
+    def get_tex_pos(self, stage: TextureStage) -> LVecBase3:
         """Returns the offset set for the UVW's for the given stage on the current
         node.
 
@@ -5114,9 +5120,9 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def get_tex_pos(self, other: NodePath, stage: TextureStage) -> LVecBase3f: ...
+    def get_tex_pos(self, other: NodePath, stage: TextureStage) -> LVecBase3: ...
     @overload
-    def get_tex_hpr(self, stage: TextureStage) -> LVecBase3f:
+    def get_tex_hpr(self, stage: TextureStage) -> LVecBase3:
         """Returns the 3-D HPR set for the UVW's for the given stage on the current
         node.
 
@@ -5124,9 +5130,9 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def get_tex_hpr(self, other: NodePath, stage: TextureStage) -> LVecBase3f: ...
+    def get_tex_hpr(self, other: NodePath, stage: TextureStage) -> LVecBase3: ...
     @overload
-    def get_tex_scale_3d(self, stage: TextureStage) -> LVecBase3f:
+    def get_tex_scale_3d(self, stage: TextureStage) -> LVecBase3:
         """Returns the scale set for the UVW's for the given stage on the current
         node.
 
@@ -5134,10 +5140,10 @@ class NodePath(Generic[_N]):
         """
         ...
     @overload
-    def get_tex_scale_3d(self, other: NodePath, stage: TextureStage) -> LVecBase3f: ...
+    def get_tex_scale_3d(self, other: NodePath, stage: TextureStage) -> LVecBase3: ...
     @overload
     def set_tex_gen(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, priority: int = ...) -> None:
-        """`(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: LPoint3f, priority: int = ...)`:
+        """`(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: LTexCoord3, priority: int = ...)`:
         Enables automatic texture coordinate generation for the indicated texture
         stage.  This version of this method is useful when setting M_constant,
         which requires a constant texture coordinate value.
@@ -5782,14 +5788,14 @@ class NodePath(Generic[_N]):
         below zero, it is set to zero.
         """
         ...
-    def show(self, camera_mask: BitMask_uint32_t_32 = ...) -> None:
+    def show(self, camera_mask: DrawMask = ...) -> None:
         """`(self)`:
         Undoes the effect of a previous hide() on this node: makes the referenced
         node (and the entire subgraph below this node) visible to all cameras.
 
         This will not reveal the node if a parent node has been hidden.
 
-        `(self, camera_mask: BitMask_uint32_t_32)`:
+        `(self, camera_mask: DrawMask)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
 
@@ -5797,7 +5803,7 @@ class NodePath(Generic[_N]):
         node if a parent node has been hidden.  However, see show_through().
         """
         ...
-    def show_through(self, camera_mask: BitMask_uint32_t_32 = ...) -> None:
+    def show_through(self, camera_mask: DrawMask = ...) -> None:
         """`(self)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
@@ -5805,7 +5811,7 @@ class NodePath(Generic[_N]):
         Unlike show(), this will reveal the node even if a parent node has been
         hidden, thus "showing through" a parent's hide().
 
-        `(self, camera_mask: BitMask_uint32_t_32)`:
+        `(self, camera_mask: DrawMask)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
 
@@ -5815,7 +5821,7 @@ class NodePath(Generic[_N]):
         if the no-parameter form of hide() was used.)
         """
         ...
-    def hide(self, camera_mask: BitMask_uint32_t_32 = ...) -> None:
+    def hide(self, camera_mask: DrawMask = ...) -> None:
         """`(self)`:
         Makes the referenced node (and the entire subgraph below this node)
         invisible to all cameras.  It remains part of the scene graph, its bounding
@@ -5824,7 +5830,7 @@ class NodePath(Generic[_N]):
 
         To undo this, call show().
 
-        `(self, camera_mask: BitMask_uint32_t_32)`:
+        `(self, camera_mask: DrawMask)`:
         Makes the referenced node invisible just to the cameras whose camera_mask
         shares the indicated bits.
 
@@ -5833,12 +5839,12 @@ class NodePath(Generic[_N]):
         descendent nodes for which show_through() has been called.
         """
         ...
-    def is_hidden(self, camera_mask: BitMask_uint32_t_32 = ...) -> bool:
+    def is_hidden(self, camera_mask: DrawMask = ...) -> bool:
         """Returns true if the referenced node is hidden from the indicated camera(s)
         either directly, or because some ancestor is hidden.
         """
         ...
-    def get_hidden_ancestor(self, camera_mask: BitMask_uint32_t_32 = ..., current_thread: Thread = ...) -> NodePath:
+    def get_hidden_ancestor(self, camera_mask: DrawMask = ..., current_thread: Thread = ...) -> NodePath:
         """Returns the NodePath at or above the referenced node that is hidden to the
         indicated camera(s), or an empty NodePath if no ancestor of the referenced
         node is hidden (and the node should be visible).
@@ -5875,7 +5881,7 @@ class NodePath(Generic[_N]):
         node should be visible).
         """
         ...
-    def get_collide_mask(self) -> BitMask_uint32_t_32:
+    def get_collide_mask(self) -> CollideMask:
         """Returns the union of all of the into_collide_masks for nodes at this level
         and below.  This is the same thing as node()->get_net_collide_mask().
 
@@ -5883,7 +5889,7 @@ class NodePath(Generic[_N]):
         without regard to its children, use node()->get_into_collide_mask().
         """
         ...
-    def set_collide_mask(self, new_mask: BitMask_uint32_t_32, bits_to_change: BitMask_uint32_t_32 = ..., node_type: TypeHandle = ...) -> None:
+    def set_collide_mask(self, new_mask: CollideMask, bits_to_change: CollideMask = ..., node_type: TypeHandle = ...) -> None:
         """Recursively applies the indicated CollideMask to the into_collide_masks for
         all nodes at this level and below.  If node_type is not TypeHandle::none(),
         then only nodes matching (or inheriting from) the indicated PandaNode
@@ -6625,7 +6631,7 @@ class NodePathCollection:
     def detach(self) -> None:
         """Detaches all NodePaths in the collection."""
         ...
-    def get_collide_mask(self) -> BitMask_uint32_t_32:
+    def get_collide_mask(self) -> CollideMask:
         """Returns the union of all of the into_collide_masks for nodes at this level
         and below.  This is the same thing as node()->get_net_collide_mask().
 
@@ -6633,7 +6639,7 @@ class NodePathCollection:
         without regard to its children, use node()->get_into_collide_mask().
         """
         ...
-    def set_collide_mask(self, new_mask: BitMask_uint32_t_32, bits_to_change: BitMask_uint32_t_32 = ..., node_type: TypeHandle = ...) -> None:
+    def set_collide_mask(self, new_mask: CollideMask, bits_to_change: CollideMask = ..., node_type: TypeHandle = ...) -> None:
         """Recursively applies the indicated CollideMask to the into_collide_masks for
         all nodes at this level and below.
 
@@ -7209,7 +7215,7 @@ class BillboardEffect(RenderEffect):
         NodePath::get_rel_state().
         """
         ...
-    def get_up_vector(self) -> LVector3f:
+    def get_up_vector(self) -> LVector3:
         """Returns the up vector in effect for this billboard."""
         ...
     def get_eye_relative(self) -> bool:
@@ -7239,7 +7245,7 @@ class BillboardEffect(RenderEffect):
         wherever that might be.
         """
         ...
-    def get_look_at_point(self) -> LPoint3f:
+    def get_look_at_point(self) -> LPoint3:
         """Returns the point, relative to the look_at node, towards which the
         billboard will rotate.  Normally this is (0, 0, 0).
         """
@@ -7423,7 +7429,7 @@ class Camera(LensNode):
     """
     active: bool
     scene: NodePath
-    camera_mask: BitMask_uint32_t_32
+    camera_mask: DrawMask
     cull_center: NodePath
     cull_bounds: BoundingVolume
     lod_center: NodePath
@@ -7466,7 +7472,7 @@ class Camera(LensNode):
     def get_display_region(self, n: int) -> DisplayRegion:
         """Returns the nth display region associated with the camera."""
         ...
-    def set_camera_mask(self, mask: BitMask_uint32_t_32) -> None:
+    def set_camera_mask(self, mask: DrawMask) -> None:
         """Changes the set of bits that represent the subset of the scene graph the
         camera will render.
 
@@ -7476,7 +7482,7 @@ class Camera(LensNode):
         different cameras that are otherwise viewing the same scene.
         """
         ...
-    def get_camera_mask(self) -> BitMask_uint32_t_32:
+    def get_camera_mask(self) -> DrawMask:
         """Returns the set of bits that represent the subset of the scene graph the
         camera will render.  See set_camera_mask().
         """
@@ -7636,7 +7642,7 @@ class PlaneNode(PandaNode):
     but it can serve other purposes as well; whenever a plane is needed to be
     defined in some coordinate space in the world.
     """
-    plane: LPlanef
+    plane: LPlane
     viz_scale: float
     priority: int
     clip_effect: int
@@ -7648,7 +7654,7 @@ class PlaneNode(PandaNode):
     def set_plane(self, plane: Vec4f) -> None:
         """Sets the particular plane represented by the PlaneNode."""
         ...
-    def get_plane(self) -> LPlanef:
+    def get_plane(self) -> LPlane:
         """Returns the plane represented by the PlaneNode."""
         ...
     def set_viz_scale(self, viz_scale: float) -> None:
@@ -7902,7 +7908,7 @@ class ColorAttrib(RenderAttrib):
     @property
     def color_type(self) -> _ColorAttrib_Type: ...
     @property
-    def color(self) -> LVecBase4f: ...
+    def color(self) -> LColor: ...
     @property
     def class_slot(self) -> int: ...
     @staticmethod
@@ -7940,7 +7946,7 @@ class ColorAttrib(RenderAttrib):
         T_off - use the color white.
         """
         ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """If the type is T_flat or T_off, this returns the color that will be applied
         to geometry.  If the type is T_vertex, this is meaningless.
         """
@@ -8028,7 +8034,7 @@ class ColorBlendAttrib(RenderAttrib):
     @property
     def alpha_operand_b(self) -> _ColorBlendAttrib_Operand: ...
     @property
-    def color(self) -> LVecBase4f: ...
+    def color(self) -> LColor: ...
     @property
     def class_slot(self) -> int: ...
     @staticmethod
@@ -8045,12 +8051,12 @@ class ColorBlendAttrib(RenderAttrib):
 
         @deprecated Use the three- or four-parameter constructor instead.
 
-        `(rgb_mode: _ColorBlendAttrib_Mode, rgb_a: _ColorBlendAttrib_Operand, rgb_b: _ColorBlendAttrib_Operand, alpha_mode: _ColorBlendAttrib_Mode, alpha_a: _ColorBlendAttrib_Operand, alpha_b: _ColorBlendAttrib_Operand, color: LVecBase4f = ...)`:
+        `(rgb_mode: _ColorBlendAttrib_Mode, rgb_a: _ColorBlendAttrib_Operand, rgb_b: _ColorBlendAttrib_Operand, alpha_mode: _ColorBlendAttrib_Mode, alpha_a: _ColorBlendAttrib_Operand, alpha_b: _ColorBlendAttrib_Operand, color: LColor = ...)`:
         Constructs a new ColorBlendAttrib object that enables special-effect
         blending.  This supercedes transparency.  This form is used to specify
         separate blending parameters for the RGB and alpha channels.
 
-        `(mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: LVecBase4f = ...)`:
+        `(mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: LColor = ...)`:
         Constructs a new ColorBlendAttrib object that enables special-effect
         blending.  This supercedes transparency.  The given mode and operands are
         used for both the RGB and alpha channels.
@@ -8086,7 +8092,7 @@ class ColorBlendAttrib(RenderAttrib):
     def get_alpha_operand_b(self) -> _ColorBlendAttrib_Operand:
         """Returns the alpha multiplier for the second component."""
         ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the constant color associated with the attrib."""
         ...
     def involves_constant_color(self, operand: _ColorBlendAttrib_Operand = ...) -> bool:
@@ -8126,7 +8132,7 @@ class ColorBlendAttrib(RenderAttrib):
 class ColorScaleAttrib(RenderAttrib):
     """Applies a scale to colors in the scene graph and on vertices."""
     @property
-    def scale(self) -> LVecBase4f: ...
+    def scale(self) -> LVecBase4: ...
     @property
     def class_slot(self) -> int: ...
     @staticmethod
@@ -8179,7 +8185,7 @@ class ColorScaleAttrib(RenderAttrib):
         component (ignoring RGB), or false otherwise.
         """
         ...
-    def get_scale(self) -> LVecBase4f:
+    def get_scale(self) -> LVecBase4:
         """Returns the scale to be applied to colors."""
         ...
     def set_scale(self, scale: Vec4f) -> RenderAttrib:
@@ -8333,7 +8339,7 @@ class GeomNode(PandaNode):
     will be contained in a GeomNode somewhere.
     """
     @property
-    def default_collide_mask(self) -> BitMask_uint32_t_32: ...
+    def default_collide_mask(self) -> CollideMask: ...
     def set_preserved(self, value: bool) -> None:
         """Sets the "preserved" flag.  When this is true, the GeomNode will be left
         untouched by any flatten operations.
@@ -8455,7 +8461,7 @@ class GeomNode(PandaNode):
         """Writes a detailed description of all the Geoms in the node."""
         ...
     @staticmethod
-    def get_default_collide_mask() -> BitMask_uint32_t_32:
+    def get_default_collide_mask() -> CollideMask:
         """Returns the default into_collide_mask assigned to new GeomNodes."""
         ...
     def get_geoms(self) -> tuple[Geom, ...]: ...
@@ -8669,7 +8675,7 @@ class CullBinManager(CullBinEnums):
         This method is not available in release builds.
         """
         ...
-    def get_bin_flash_color(self, bin_index: int) -> LVecBase4f:
+    def get_bin_flash_color(self, bin_index: int) -> LColor:
         """Returns the color that this bin has been configured to flash to, if
         configured.
 
@@ -8840,14 +8846,14 @@ class CullTraverserData:
         graph to the current node.
         """
         ...
-    def is_in_view(self, camera_mask: BitMask_uint32_t_32) -> bool:
+    def is_in_view(self, camera_mask: DrawMask) -> bool:
         """Returns true if the current node is within the view frustum, false
         otherwise.  If the node's bounding volume falls completely within the view
         frustum, this will also reset the view frustum pointer, saving some work
         for future nodes.
         """
         ...
-    def is_this_node_hidden(self, camera_mask: BitMask_uint32_t_32) -> bool:
+    def is_this_node_hidden(self, camera_mask: DrawMask) -> bool:
         """Returns true if this particular node is hidden, even though we might be
         traversing past this node to find a child node that has had show_through()
         called for it.  If this returns true, the node should not be rendered.
@@ -9026,9 +9032,9 @@ class Fog(PandaNode):
     camera.
     """
     mode: _Fog_Mode
-    color: LVecBase4f
-    linear_onset_point: LPoint3f
-    linear_opaque_point: LPoint3f
+    color: LColor
+    linear_onset_point: LPoint3
+    linear_opaque_point: LPoint3
     exp_density: float
     M_linear: Final[Literal[0]]
     MLinear: Final[Literal[0]]
@@ -9050,12 +9056,12 @@ class Fog(PandaNode):
         parented anywhere at all.
         """
         ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the color of the fog."""
         ...
     @overload
     def set_color(self, color: Vec4f) -> None:
-        """`(self, color: LVecBase4f)`:
+        """`(self, color: LColor)`:
         Sets the color of the fog.  The alpha component is not used.
 
         `(self, r: float, g: float, b: float)`:
@@ -9076,7 +9082,7 @@ class Fog(PandaNode):
         already set.
         """
         ...
-    def get_linear_onset_point(self) -> LPoint3f:
+    def get_linear_onset_point(self) -> LPoint3:
         """Returns the point in space at which the fog begins.  This is only used if
         the mode is M_linear.
         """
@@ -9089,7 +9095,7 @@ class Fog(PandaNode):
         ...
     @overload
     def set_linear_onset_point(self, x: float, y: float, z: float) -> None: ...
-    def get_linear_opaque_point(self) -> LPoint3f:
+    def get_linear_opaque_point(self) -> LPoint3:
         """Returns the point in space at which the fog completely obscures geometry.
         This is only used if the mode is M_linear.
         """
@@ -9232,14 +9238,14 @@ class CullTraverser(TypedReferenceCount):
         if any.
         """
         ...
-    def set_camera_mask(self, camera_mask: BitMask_uint32_t_32) -> None:
+    def set_camera_mask(self, camera_mask: DrawMask) -> None:
         """Changes the visibility mask for the camera viewing the scene.  This is
         normally set automatically at the time setup_scene() is called; you should
         change this only if you want to render some set of objects different from
         what the camera normally would draw.
         """
         ...
-    def get_camera_mask(self) -> BitMask_uint32_t_32:
+    def get_camera_mask(self) -> DrawMask:
         """Returns the visibility mask from the camera viewing the scene."""
         ...
     def get_camera_transform(self) -> TransformState:
@@ -9589,7 +9595,7 @@ class Light:
     at some arbitrary point to define the coordinate system of effect.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
-    color: LVecBase4f
+    color: LColor
     color_temperature: float
     priority: int
     def as_node(self) -> PandaNode: ...
@@ -9598,7 +9604,7 @@ class Light:
         light.
         """
         ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the basic color of the light."""
         ...
     def set_color(self, color: Vec4f) -> None:
@@ -9634,12 +9640,12 @@ class Light:
         returns 0.
         """
         ...
-    def get_specular_color(self) -> LVecBase4f:
+    def get_specular_color(self) -> LColor:
         """Returns the color of specular highlights generated by the light.  This
         value is meaningless for ambient lights.
         """
         ...
-    def get_attenuation(self) -> LVecBase3f:
+    def get_attenuation(self) -> LVecBase3:
         """Returns the terms of the attenuation equation for the light.  These are, in
         order, the constant, linear, and quadratic terms based on the distance from
         the point to the vertex.
@@ -9863,7 +9869,7 @@ class LightAttrib(RenderAttrib):
         empty NodePath if no non-ambient lights are found.
         """
         ...
-    def get_ambient_contribution(self) -> LVecBase4f:
+    def get_ambient_contribution(self) -> LColor:
         """Returns the total contribution of all the ambient lights."""
         ...
     @staticmethod
@@ -10989,7 +10995,7 @@ class TexGenAttrib(RenderAttrib):
         generation mode for the given stage.  If this stage already exists, its
         mode is replaced.
 
-        `(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: LPoint3f)`:
+        `(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: LTexCoord3)`:
         Returns a new TexGenAttrib just like this one, with the indicated
         generation mode for the given stage.  If this stage already exists, its
         mode is replaced.
@@ -11024,7 +11030,7 @@ class TexGenAttrib(RenderAttrib):
         texture coordinates encoded in the vertices).
         """
         ...
-    def get_constant_value(self, stage: TextureStage) -> LPoint3f:
+    def get_constant_value(self, stage: TextureStage) -> LTexCoord3:
         """Returns the constant value associated with the named texture stage.  This
         is only meaningful if the mode is M_constant.
         """
@@ -11056,7 +11062,7 @@ class OccluderNode(PandaNode):
     """
     double_sided: bool
     min_coverage: float
-    vertices: Sequence[LPoint3f]
+    vertices: Sequence[LPoint3]
     def __init__(self, name: str) -> None:
         """The default constructor creates a default occlusion polygon in the XZ plane
         (or XY plane in a y-up coordinate system).  Use the normal Panda set_pos(),
@@ -11090,13 +11096,13 @@ class OccluderNode(PandaNode):
         return 4.
         """
         ...
-    def get_vertex(self, n: int) -> LPoint3f:
+    def get_vertex(self, n: int) -> LPoint3:
         """Returns the nth vertex of the occluder polygon."""
         ...
     def set_vertex(self, n: int, v: Vec3f) -> None:
         """Sets the nth vertex of the occluder polygon."""
         ...
-    def get_vertices(self) -> tuple[LPoint3f, ...]: ...
+    def get_vertices(self) -> tuple[LPoint3, ...]: ...
     setDoubleSided = set_double_sided
     isDoubleSided = is_double_sided
     setMinCoverage = set_min_coverage
@@ -11184,12 +11190,12 @@ class PolylightNode(PandaNode):
         ...
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
-    def get_pos(self) -> LPoint3f:
+    def get_pos(self) -> LPoint3:
         """Returns position as a LPoint3"""
         ...
     @overload
     def set_color(self, color: Vec4f) -> None:
-        """`(self, color: LVecBase4f)`:
+        """`(self, color: LColor)`:
         Set the light's color...
 
         `(self, r: float, g: float, b: float)`:
@@ -11198,10 +11204,10 @@ class PolylightNode(PandaNode):
         ...
     @overload
     def set_color(self, r: float, g: float, b: float) -> None: ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the light's color as LColor"""
         ...
-    def get_color_scenegraph(self) -> LVecBase4f:
+    def get_color_scenegraph(self) -> LColor:
         """This differs from get_color in that when applying the light color we need
         to make sure that a color flattening external to the PolylightNode is not
         ignored.
@@ -11398,7 +11404,7 @@ class PolylightEffect(RenderEffect):
     def get_contrib(self) -> _PolylightEffect_ContribType:
         """Returns CT_all or CT_proximal"""
         ...
-    def get_effect_center(self) -> LPoint3f:
+    def get_effect_center(self) -> LPoint3:
         """Return the value of the _effect_center"""
         ...
     def has_light(self, light: NodePath) -> bool:
@@ -11473,7 +11479,7 @@ class ShaderAttrib(RenderAttrib):
         """
         ...
     @overload
-    def set_shader_auto(self, shader_switch: BitMask_uint32_t_32, priority: int = ...) -> RenderAttrib: ...
+    def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> RenderAttrib: ...
     def clear_shader(self) -> RenderAttrib: ...
     @overload
     def set_shader_input(self, input: ShaderInput) -> RenderAttrib:
@@ -11514,7 +11520,7 @@ class ShaderAttrib(RenderAttrib):
         or if it is not a nodepath.
         """
         ...
-    def get_shader_input_vector(self, id: InternalName) -> LVecBase4f:
+    def get_shader_input_vector(self, id: InternalName) -> LVecBase4:
         """Returns the ShaderInput as a vector.  Assertion fails if there is none, or
         if it is not a vector.
         """
@@ -11527,7 +11533,7 @@ class ShaderAttrib(RenderAttrib):
         assigned to it.
         """
         ...
-    def get_shader_input_matrix(self, id: InternalName, matrix: Mat4f) -> LMatrix4f:
+    def get_shader_input_matrix(self, id: InternalName, matrix: Mat4f) -> LMatrix4:
         """Returns the ShaderInput as a matrix.  Assertion fails if there is none, or
         if it is not a matrix or NodePath.
         """
@@ -11694,13 +11700,13 @@ class ScissorEffect(RenderEffect):
     @overload
     @staticmethod
     def make_node(clip: bool = ...) -> RenderEffect:
-        """`(a: LPoint3f, b: LPoint3f, c: LPoint3f, d: LPoint3f, node: NodePath = ...)`:
+        """`(a: LPoint3, b: LPoint3, c: LPoint3, d: LPoint3, node: NodePath = ...)`:
         Constructs a new node-relative ScissorEffect.  The four points are
         understood to be relative to the indicated node, or the current node if the
         indicated NodePath is empty, and determine four points surrounding the
         scissor region.
 
-        `(a: LPoint3f, b: LPoint3f, node: NodePath = ...)`:
+        `(a: LPoint3, b: LPoint3, node: NodePath = ...)`:
         Constructs a new node-relative ScissorEffect.  The two points are
         understood to be relative to the indicated node, or the current node if the
         NodePath is empty, and determine the diagonally opposite corners of the
@@ -11732,7 +11738,7 @@ class ScissorEffect(RenderEffect):
         get_frame() has a meaningful value, but get_a() and get_b() do not.
         """
         ...
-    def get_frame(self) -> LVecBase4f:
+    def get_frame(self) -> LVecBase4:
         """If is_screen() returns true, this method may be called to query the screen-
         based scissor frame.  This is a series of left, right, bottom, top,
         representing the scissor frame relative to the current DisplayRegion.  See
@@ -11742,7 +11748,7 @@ class ScissorEffect(RenderEffect):
     def get_num_points(self) -> int:
         """Returns the number of node-based scissor points.  See get_point()."""
         ...
-    def get_point(self, n: int) -> LPoint3f:
+    def get_point(self, n: int) -> LPoint3:
         """If is_screen() returns false, then get_num_points() and get_point() may be
         called to query the node-based scissor frame.  These return n points (at
         least two), which are understood to be in the space of this node, and which
@@ -11759,7 +11765,7 @@ class ScissorEffect(RenderEffect):
         it culls only.
         """
         ...
-    def get_points(self) -> tuple[LPoint3f, ...]: ...
+    def get_points(self) -> tuple[LPoint3, ...]: ...
     def get_nodes(self) -> tuple[NodePath, ...]: ...
     makeScreen = make_screen
     makeNode = make_node
@@ -12014,8 +12020,8 @@ class PortalNode(PandaNode):
     rectangle.  Other types of polygons are not supported for now.  It also
     holds a PT(PandaNode) Cell that this portal is connected to
     """
-    into_portal_mask: BitMask_uint32_t_32
-    from_portal_mask: BitMask_uint32_t_32
+    into_portal_mask: PortalMask
+    from_portal_mask: PortalMask
     portal_geom: bool
     cell_in: NodePath
     cell_out: NodePath
@@ -12024,7 +12030,7 @@ class PortalNode(PandaNode):
     max_depth: int
     open: bool
     @property
-    def vertices(self) -> Sequence[LPoint3f]: ...
+    def vertices(self) -> Sequence[LPoint3]: ...
     @overload
     def __init__(self, name: str) -> None:
         """`(self, name: str)`:
@@ -12032,37 +12038,37 @@ class PortalNode(PandaNode):
         from model.  You can also use this from python to create an empty portal.
         Then you can set the vertices yourself, with addVertex.
 
-        `(self, name: str, pos: LPoint3f, scale: float = ...)`:
+        `(self, name: str, pos: LPoint3, scale: float = ...)`:
         Create a default rectangle as portal.  Use this to create an arbitrary
         portal and setup from Python
         """
         ...
     @overload
     def __init__(self, name: str, pos: Vec3f, scale: float = ...) -> None: ...
-    def set_portal_mask(self, mask: BitMask_uint32_t_32) -> None:
+    def set_portal_mask(self, mask: PortalMask) -> None:
         """Simultaneously sets both the "from" and "into" PortalMask values to the
         same thing.
         """
         ...
-    def set_from_portal_mask(self, mask: BitMask_uint32_t_32) -> None:
+    def set_from_portal_mask(self, mask: PortalMask) -> None:
         """Sets the "from" PortalMask.  In order for a portal to be detected from this
         object into another object, the intersection of this object's "from" mask
         and the other object's "into" mask must be nonzero.
         """
         ...
-    def set_into_portal_mask(self, mask: BitMask_uint32_t_32) -> None:
+    def set_into_portal_mask(self, mask: PortalMask) -> None:
         """Sets the "into" PortalMask.  In order for a portal to be detected from
         another object into this object, the intersection of the other object's
         "from" mask and this object's "into" mask must be nonzero.
         """
         ...
-    def get_from_portal_mask(self) -> BitMask_uint32_t_32:
+    def get_from_portal_mask(self) -> PortalMask:
         """Returns the current "from" PortalMask.  In order for a portal to be
         detected from this object into another object, the intersection of this
         object's "from" mask and the other object's "into" mask must be nonzero.
         """
         ...
-    def get_into_portal_mask(self) -> BitMask_uint32_t_32:
+    def get_into_portal_mask(self) -> PortalMask:
         """Returns the current "into" PortalMask.  In order for a portal to be
         detected from another object into this object, the intersection of the
         other object's "from" mask and this object's "into" mask must be nonzero.
@@ -12093,7 +12099,7 @@ class PortalNode(PandaNode):
     def get_num_vertices(self) -> int:
         """Returns the number of vertices in the portal polygon."""
         ...
-    def get_vertex(self, n: int) -> LPoint3f:
+    def get_vertex(self, n: int) -> LPoint3:
         """Returns the nth vertex of the portal polygon."""
         ...
     def set_cell_in(self, cell: NodePath) -> None:
@@ -12132,7 +12138,7 @@ class PortalNode(PandaNode):
     def is_open(self) -> bool:
         """Is this portal open from current camera zone"""
         ...
-    def get_vertices(self) -> tuple[LPoint3f, ...]: ...
+    def get_vertices(self) -> tuple[LPoint3, ...]: ...
     setPortalMask = set_portal_mask
     setFromPortalMask = set_from_portal_mask
     setIntoPortalMask = set_into_portal_mask
@@ -12171,7 +12177,7 @@ class ScissorAttrib(RenderAttrib):
     coordinates in the scene graph, with culling.
     """
     @property
-    def frame(self) -> LVecBase4f: ...
+    def frame(self) -> LVecBase4: ...
     @property
     def class_slot(self) -> int: ...
     @staticmethod
@@ -12202,7 +12208,7 @@ class ScissorAttrib(RenderAttrib):
         that scissor testing is disabled.
         """
         ...
-    def get_frame(self) -> LVecBase4f:
+    def get_frame(self) -> LVecBase4:
         """Returns the left, right, bottom, top coordinates of the scissor frame.
         This defines a frame within the current DisplayRegion, where 0,0 is the
         lower-left corner of the DisplayRegion, and 1,1 is the upper-right corner.

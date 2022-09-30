@@ -10,8 +10,8 @@ import panda3d.interrogatedb as idb
 
 from .idbutil import (
     TYPE_NAME_OVERRIDES, TypeIndex, get_constructors, get_derivations,
-    get_python_wrappers, type_is_exposed, type_is_unscoped_enum,
-    type_is_wrapped_or_typedef, unwrap_type
+    get_python_wrappers, type_is_exposed, type_is_unexposed_wrapper,
+    type_is_unscoped_enum, unwrap_type
 )
 from .translation import ATOMIC_TYPES, class_name_from_cpp_name
 from .util import flatten, unpack_union
@@ -22,6 +22,7 @@ _modules: dict[str, str] = {}
 _inheritance: dict[str, set[str]] = {}
 _linear_inheritance: dict[str, tuple[str, ...]] = {}
 _coercions = defaultdict[TypeIndex, set[TypeIndex]](set)
+_aliases: dict[str, str] = {}
 _param_type_replacements: dict[str, str] = {}
 _enum_definitions: dict[str, str] = {}
 _implicit_cast_param_names = frozenset(
@@ -89,7 +90,7 @@ def get_type_name(t: TypeIndex, /) -> str:
     """Return the Python name for a type. If the type is a non-scoped enum,
     the name returned is an alias name, prefixed by an underscore.
     """
-    if type_is_wrapped_or_typedef(t):
+    if type_is_unexposed_wrapper(t):
         return get_type_name(idb.interrogate_type_wrapped_type(t))
     if idb.interrogate_type_is_atomic(t):
         atomic_token = idb.interrogate_type_atomic_token(t)
@@ -113,7 +114,7 @@ def get_type_name(t: TypeIndex, /) -> str:
 def load_data() -> None:
     for n in range(idb.interrogate_number_of_types()):
         t = idb.interrogate_get_type(n)
-        if type_is_wrapped_or_typedef(t):
+        if idb.interrogate_type_is_wrapped(t):
             continue
         if type_is_unscoped_enum(t):
             value_count = idb.interrogate_type_number_of_enum_values(t)
@@ -125,6 +126,11 @@ def load_data() -> None:
             mod_name = idb.interrogate_type_module_name(t)
             lib_name = idb.interrogate_type_library_name(t).removeprefix('libp3')
             _modules[get_type_name(t)] = mod_name + '._' + lib_name
+        if idb.interrogate_type_is_typedef(t):
+            if idb.interrogate_type_is_global(t):
+                _aliases[get_type_name(t)] = get_type_name(unwrap_type(t))
+            # Don't record coercion or inheritance information for typedefs
+            continue
         for cast_to in explicit_cast_to(t):
             _coercions[cast_to].add(t)
         if cast_from := set(implicit_cast_from(t)):
@@ -227,6 +233,7 @@ def get_param_type_replacement(type_name: str) -> str | None:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
     """
+    type_name = _aliases.get(type_name, type_name)
     replacement = _param_type_replacements.get(type_name)
     if replacement is not None:
         _logger.debug(f'Replaced parameter type {type_name!r}'
@@ -249,6 +256,7 @@ def get_linear_superclasses(name: str, /) -> tuple[str, ...]:
     stopping either at the top of the hierarchy or at the first class that
     inherits directly from multiple classes, whichever comes first.
     """
+    name = _aliases.get(name, name)
     return _linear_inheritance.get(name, ())
 
 
@@ -272,6 +280,7 @@ def process_dependency(
 
 def inherits_from(a: str, b: str, /) -> bool:
     """Return whether `a` is narrower than `b`."""
+    a, b = _aliases.get(a, a), _aliases.get(b, b)
     if 'Any' in (a, b):
         return False
     if a == b:
@@ -290,7 +299,8 @@ def subtype_relationship(a: str, b: str, /) -> tuple[bool, bool]:
     `a` is a subtype of `b` and vice versa, respectively.
     """
     a, b = TYPE_ALIASES.get(a, a), TYPE_ALIASES.get(b, b)
-    l1, l2 = unpack_union(a), unpack_union(b)
+    l1 = [_aliases.get(i, i) for i in unpack_union(a)]
+    l2 = [_aliases.get(i, i) for i in unpack_union(b)]
     found_broader_in_b = dict.fromkeys(l1, False)
     found_broader_in_a = dict.fromkeys(l2, False)
     for i, j in product(l1, l2):

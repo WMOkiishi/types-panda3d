@@ -6,10 +6,11 @@ from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     AudioSound,
     ButtonHandle,
-    LMatrix4f,
-    LVecBase2f,
-    LVecBase4f,
-    LVector3f,
+    LColor,
+    LMatrix4,
+    LVecBase2,
+    LVecBase4,
+    LVector3,
     MouseWatcher,
     MouseWatcherGroup,
     MouseWatcherParameter,
@@ -58,7 +59,7 @@ class PGFrameStyle:
         ...
     @overload
     def set_color(self, r: float, g: float, b: float, a: float) -> None: ...
-    def get_color(self) -> LVecBase4f:
+    def get_color(self) -> LColor:
         """Returns the dominant color of the frame."""
         ...
     def set_texture(self, texture: Texture) -> None:
@@ -76,7 +77,7 @@ class PGFrameStyle:
         """Removes the texture from the frame."""
         ...
     @overload
-    def set_width(self, width: LVecBase2f) -> None:
+    def set_width(self, width: LVecBase2) -> None:
         """Sets the width parameter, which has meaning only for certain frame types.
         For instance, this is the width of the bevel for T_bevel_in or T_bevel_out.
         The units are in screen units.
@@ -84,14 +85,14 @@ class PGFrameStyle:
         ...
     @overload
     def set_width(self, x: float, y: float) -> None: ...
-    def get_width(self) -> LVecBase2f:
+    def get_width(self) -> LVecBase2:
         """Returns the width parameter, which has meaning only for certain frame
         types.  For instance, this is the width of the bevel for T_bevel_in or
         T_bevel_out.  The units are in screen units.
         """
         ...
     @overload
-    def set_uv_width(self, uv_width: LVecBase2f) -> None:
+    def set_uv_width(self, uv_width: LVecBase2) -> None:
         """Sets the uv_width parameter, which indicates the amount of the texture that
         is consumed by the inner bevel--the width in texture space of the amount
         indicated by set_width.
@@ -99,11 +100,11 @@ class PGFrameStyle:
         ...
     @overload
     def set_uv_width(self, u: float, v: float) -> None: ...
-    def get_uv_width(self) -> LVecBase2f:
+    def get_uv_width(self) -> LVecBase2:
         """See set_uv_width()."""
         ...
     @overload
-    def set_visible_scale(self, visible_scale: LVecBase2f) -> None:
+    def set_visible_scale(self, visible_scale: LVecBase2) -> None:
         """Sets a scale factor on the visible representation of the frame, in the X
         and Y directions.  If this scale factor is other than 1, it will affect the
         size of the visible frame representation within the actual frame border.
@@ -111,14 +112,14 @@ class PGFrameStyle:
         ...
     @overload
     def set_visible_scale(self, x: float, y: float) -> None: ...
-    def get_visible_scale(self) -> LVecBase2f:
+    def get_visible_scale(self) -> LVecBase2:
         """Returns the scale factor on the visible representation of the frame, in the
         X and Y directions.  If this scale factor is other than 1, it will affect
         the size of the visible frame representation within the actual frame
         border.
         """
         ...
-    def get_internal_frame(self, frame: Vec4f) -> LVecBase4f:
+    def get_internal_frame(self, frame: Vec4f) -> LVecBase4:
         """Computes the size of the internal frame, given the indicated external
         frame, appropriate for this kind of frame style.  This simply subtracts the
         border width for those frame styles that include a border.
@@ -162,7 +163,7 @@ class PGItem(PandaNode):
         ...
     @overload
     def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
-    def get_frame(self) -> LVecBase4f:
+    def get_frame(self) -> LVecBase4:
         """Returns the bounding rectangle of the item.  See set_frame().  It is an
         error to call this if has_frame() returns false.
         """
@@ -418,7 +419,7 @@ class PGItem(PandaNode):
         key is pressed by the user.
         """
         ...
-    def get_frame_inv_xform(self) -> LMatrix4f:
+    def get_frame_inv_xform(self) -> LMatrix4:
         """Returns the inverse of the frame transform matrix"""
         ...
     def set_sound(self, event: str, sound: AudioSound) -> None:
@@ -1067,7 +1068,7 @@ class PGVirtualFrame(PGItem):
         ...
     @overload
     def set_clip_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
-    def get_clip_frame(self) -> LVecBase4f:
+    def get_clip_frame(self) -> LVecBase4:
         """Returns the bounding rectangle of the clip frame.  See set_clip_frame().
         If has_clip_frame() is false, this returns the item's actual frame.
         """
@@ -1150,7 +1151,7 @@ class PGSliderBar(PGItem):
         Normally, you should not try to set the axis directly.
         """
         ...
-    def get_axis(self) -> LVector3f:
+    def get_axis(self) -> LVector3:
         """Returns the axis of the slider bar's motion.  See set_axis()."""
         ...
     def set_range(self, min_value: float, max_value: float) -> None:
@@ -1370,7 +1371,7 @@ class PGScrollFrame(PGVirtualFrame):
         ...
     @overload
     def set_virtual_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
-    def get_virtual_frame(self) -> LVecBase4f:
+    def get_virtual_frame(self) -> LVecBase4:
         """Returns the bounding rectangle of the virtual frame.  See
         set_virtual_frame().  If has_virtual_frame() is false, this returns the
         item's clip frame.

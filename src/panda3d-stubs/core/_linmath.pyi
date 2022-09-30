@@ -5885,15 +5885,15 @@ class ConfigVariableColor(ConfigVariable):
     @overload
     def __init__(self, name: str, default_value: Vec4f | str, description: str = ..., flags: int = ...) -> None: ...
     def __getitem__(self, n: int) -> float: ...
-    def operator_typecast(self) -> LVecBase4f: ...
+    def operator_typecast(self) -> LColor: ...
     def assign(self, value: Vec4f) -> ConfigVariableColor: ...
     def set_value(self, value: Vec4f) -> None:
         """Reassigns the variable's local value."""
         ...
-    def get_value(self) -> LVecBase4f:
+    def get_value(self) -> LColor:
         """Returns the variable's value."""
         ...
-    def get_default_value(self) -> LVecBase4f:
+    def get_default_value(self) -> LColor:
         """Returns the variable's default value."""
         ...
     operatorTypecast = operator_typecast
@@ -6091,12 +6091,12 @@ LRotation = LRotationf
 LOrientation = LOrientationf
 LMatrix3 = LMatrix3f
 LMatrix4 = LMatrix4f
-LVertex = LPoint3f
-LNormal = LVector3f
-LTexCoord = LPoint2f
-LTexCoord3 = LPoint3f
-LColor = LVecBase4f
-LRGBColor = LVecBase3f
+LVertex = LVertexf
+LNormal = LNormalf
+LTexCoord = LTexCoordf
+LTexCoord3 = LTexCoord3f
+LColor = LColorf
+LRGBColor = LRGBColorf
 UnalignedLVecBase4 = UnalignedLVecBase4f
 UnalignedLMatrix4 = UnalignedLMatrix4f
 Mat4 = LMatrix4f

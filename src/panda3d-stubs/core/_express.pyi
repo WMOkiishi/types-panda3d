@@ -743,7 +743,7 @@ class Datagram(TypedObject):
     def get_length(self) -> int:
         """Returns the number of bytes in the datagram."""
         ...
-    def set_array(self, data: PointerToArray_unsigned_char) -> None:
+    def set_array(self, data: PTA_uchar) -> None:
         """Replaces the data in the Datagram with the data in the indicated PTA_uchar.
         This is assignment by reference: subsequent changes to the Datagram will
         also change the source PTA_uchar.
@@ -755,10 +755,10 @@ class Datagram(TypedObject):
         subsequent changes to the Datagram will *not* change the source CPTA_uchar.
         """
         ...
-    def get_array(self) -> ConstPointerToArray_unsigned_char:
+    def get_array(self) -> CPTA_uchar:
         """Returns a const pointer to the actual data in the Datagram."""
         ...
-    def modify_array(self) -> PointerToArray_unsigned_char:
+    def modify_array(self) -> PTA_uchar:
         """Returns a modifiable pointer to the actual data in the Datagram."""
         ...
     def set_stdfloat_double(self, stdfloat_double: bool) -> None:
@@ -3374,7 +3374,7 @@ PTAUchar = PTA_uchar
 PointerToArrayUnsignedChar = PointerToArray_unsigned_char
 PointerToVirtualFileMount = PointerTo_VirtualFileMount
 PointerToBaseVirtualFileMount = PointerToBase_VirtualFileMount
-PTA_stdfloat = PointerToArray_float
+PTA_stdfloat = PTA_float
 PTAStdfloat = PTA_stdfloat
-CPTA_stdfloat = ConstPointerToArray_float
+CPTA_stdfloat = CPTA_float
 CPTAStdfloat = CPTA_stdfloat

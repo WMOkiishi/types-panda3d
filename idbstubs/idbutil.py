@@ -32,7 +32,19 @@ TYPE_NAME_OVERRIDES: Final = {
 }
 
 
+def type_is_unexposed_wrapper(t: TypeIndex, /) -> bool:
+    """Return whether the type is a wrapper or a non-global typedef."""
+    return (
+        idb.interrogate_type_is_wrapped(t)
+        or (
+            idb.interrogate_type_is_typedef(t)
+            and not idb.interrogate_type_is_global(t)
+        )
+    )
+
+
 def type_is_wrapped_or_typedef(t: TypeIndex, /) -> bool:
+    """Return whether the type is a wrapper or typedef."""
     return (
         idb.interrogate_type_is_wrapped(t)
         or idb.interrogate_type_is_typedef(t)

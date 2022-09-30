@@ -6,11 +6,11 @@ from typing_extensions import Final, Literal, TypeAlias
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
     CollisionHandlerPusher,
-    LMatrix4f,
-    LOrientationf,
-    LPoint3f,
-    LRotationf,
-    LVector3f,
+    LMatrix4,
+    LOrientation,
+    LPoint3,
+    LRotation,
+    LVector3,
     NodePath,
     PandaNode,
     ReferenceCount,
@@ -27,15 +27,15 @@ class PhysicsObject(TypedReferenceCount):
     """
     active: bool
     mass: float
-    position: LPoint3f
-    last_position: LPoint3f
-    velocity: LVector3f
+    position: LPoint3
+    last_position: LPoint3
+    velocity: LVector3
     terminal_velocity: float
     oriented: bool
-    orientation: LOrientationf
-    rotation: LRotationf
+    orientation: LOrientation
+    rotation: LRotation
     @property
-    def implicit_velocity(self) -> LVector3f: ...
+    def implicit_velocity(self) -> LVector3: ...
     def __init__(self, copy: PhysicsObject = ...) -> None:
         """`(self)`:
         Default Constructor
@@ -59,7 +59,7 @@ class PhysicsObject(TypedReferenceCount):
         ...
     @overload
     def set_position(self, pos: Vec3f) -> None:
-        """`(self, pos: LPoint3f)`:
+        """`(self, pos: LPoint3)`:
         Vector position assignment.  This is also used as the center of mass.
 
         `(self, x: float, y: float, z: float)`:
@@ -68,7 +68,7 @@ class PhysicsObject(TypedReferenceCount):
         ...
     @overload
     def set_position(self, x: float, y: float, z: float) -> None: ...
-    def get_position(self) -> LPoint3f:
+    def get_position(self) -> LPoint3:
         """Position Query"""
         ...
     def reset_position(self, pos: Vec3f) -> None:
@@ -79,14 +79,14 @@ class PhysicsObject(TypedReferenceCount):
     def set_last_position(self, pos: Vec3f) -> None:
         """Last position assignment"""
         ...
-    def get_last_position(self) -> LPoint3f:
+    def get_last_position(self) -> LPoint3:
         """Get the position of the physics object at the start of the most recent
         do_physics.
         """
         ...
     @overload
     def set_velocity(self, vel: Vec3f) -> None:
-        """`(self, vel: LVector3f)`:
+        """`(self, vel: LVector3)`:
         Vector velocity assignment
 
         `(self, x: float, y: float, z: float)`:
@@ -95,10 +95,10 @@ class PhysicsObject(TypedReferenceCount):
         ...
     @overload
     def set_velocity(self, x: float, y: float, z: float) -> None: ...
-    def get_velocity(self) -> LVector3f:
+    def get_velocity(self) -> LVector3:
         """Velocity Query per second"""
         ...
-    def get_implicit_velocity(self) -> LVector3f:
+    def get_implicit_velocity(self) -> LVector3:
         """Velocity Query over the last dt"""
         ...
     def add_torque(self, torque: Vec4f) -> None:
@@ -155,25 +155,25 @@ class PhysicsObject(TypedReferenceCount):
     def get_oriented(self) -> bool:
         """See set_oriented()."""
         ...
-    def set_orientation(self, orientation: LOrientationf) -> None: ...
-    def get_orientation(self) -> LOrientationf:
+    def set_orientation(self, orientation: LOrientation) -> None: ...
+    def get_orientation(self) -> LOrientation:
         """get current orientation."""
         ...
-    def reset_orientation(self, orientation: LOrientationf) -> None:
+    def reset_orientation(self, orientation: LOrientation) -> None:
         """set the orientation while clearing the rotation velocity."""
         ...
     def set_rotation(self, rotation: Vec4f) -> None:
         """set rotation as a quaternion delta per second."""
         ...
-    def get_rotation(self) -> LRotationf:
+    def get_rotation(self) -> LRotation:
         """get rotation per second."""
         ...
-    def get_inertial_tensor(self) -> LMatrix4f:
+    def get_inertial_tensor(self) -> LMatrix4:
         """returns a transform matrix that represents the object's willingness to be
         forced.
         """
         ...
-    def get_lcs(self) -> LMatrix4f:
+    def get_lcs(self) -> LMatrix4:
         """returns a transform matrix to this object's local coordinate system."""
         ...
     def make_copy(self) -> PhysicsObject:
@@ -330,8 +330,8 @@ class LinearForce(BaseForce):
     def get_amplitude(self) -> float: ...
     def get_mass_dependent(self) -> bool: ...
     def set_vector_masks(self, x: bool, y: bool, z: bool) -> None: ...
-    def get_vector_masks(self) -> LVector3f: ...
-    def get_vector(self, po: PhysicsObject) -> LVector3f: ...
+    def get_vector_masks(self) -> LVector3: ...
+    def get_vector(self, po: PhysicsObject) -> LVector3: ...
     def make_copy(self) -> LinearForce: ...
     setAmplitude = set_amplitude
     setMassDependent = set_mass_dependent
@@ -345,7 +345,7 @@ class LinearForce(BaseForce):
 class AngularForce(BaseForce):
     """pure virtual parent of all quat-based forces."""
     def make_copy(self) -> AngularForce: ...
-    def get_quat(self, po: PhysicsObject) -> LRotationf:
+    def get_quat(self, po: PhysicsObject) -> LRotation:
         """access query"""
         ...
     makeCopy = make_copy
@@ -524,7 +524,7 @@ class ActorNode(PhysicalNode):
     def __init__(self, copy: ActorNode) -> None: ...
     def get_physics_object(self) -> PhysicsObject: ...
     def set_contact_vector(self, contact_vector: Vec3f) -> None: ...
-    def get_contact_vector(self) -> LVector3f: ...
+    def get_contact_vector(self) -> LVector3: ...
     def update_transform(self) -> None:
         """this sets the transform generated by the contained Physical, moving the
         node and subsequent geometry.  i.e.  copy from PhysicsObject to PandaNode
@@ -579,7 +579,7 @@ class AngularVectorForce(AngularForce):
         """`(self, copy: AngularVectorForce)`:
         copy constructor
 
-        `(self, quat: LRotationf)`; `(self, h: float, p: float, r: float)`:
+        `(self, quat: LRotation)`; `(self, h: float, p: float, r: float)`:
         constructor
         """
         ...
@@ -589,7 +589,7 @@ class AngularVectorForce(AngularForce):
     def __init__(self, h: float, p: float, r: float) -> None: ...
     def set_quat(self, quat: Vec4f) -> None: ...
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
-    def get_local_quat(self) -> LRotationf: ...
+    def get_local_quat(self) -> LRotation: ...
     setQuat = set_quat
     setHpr = set_hpr
     getLocalQuat = get_local_quat
@@ -664,7 +664,7 @@ class LinearControlForce(LinearForce):
         ...
     @overload
     def set_vector(self, v: Vec3f) -> None:
-        """`(self, v: LVector3f)`:
+        """`(self, v: LVector3)`:
         encapsulating wrapper
 
         `(self, x: float, y: float, z: float)`:
@@ -673,7 +673,7 @@ class LinearControlForce(LinearForce):
         ...
     @overload
     def set_vector(self, x: float, y: float, z: float) -> None: ...
-    def get_local_vector(self) -> LVector3f: ...
+    def get_local_vector(self) -> LVector3: ...
     clearPhysicsObject = clear_physics_object
     setPhysicsObject = set_physics_object
     getPhysicsObject = get_physics_object
@@ -734,7 +734,7 @@ class LinearDistanceForce(LinearForce):
     def get_falloff_type(self) -> _LinearDistanceForce_FalloffType:
         """falloff_type query"""
         ...
-    def get_force_center(self) -> LPoint3f:
+    def get_force_center(self) -> LPoint3:
         """force_center query"""
         ...
     def get_scalar_term(self) -> float:
@@ -816,7 +816,7 @@ class LinearSinkForce(LinearDistanceForce):
     """Attractor force.  Think black hole."""
     @overload
     def __init__(self, copy: LinearSinkForce = ...) -> None:
-        """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...)`:
+        """`(self)`; `(self, p: LPoint3, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...)`:
         Simple constructor
 
         `(self, copy: LinearSinkForce)`:
@@ -830,7 +830,7 @@ class LinearSourceForce(LinearDistanceForce):
     """Repellant force."""
     @overload
     def __init__(self, copy: LinearSourceForce = ...) -> None:
-        """`(self)`; `(self, p: LPoint3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...)`:
+        """`(self)`; `(self, p: LPoint3, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...)`:
         Simple constructor
 
         `(self, copy: LinearSourceForce)`:
@@ -852,7 +852,7 @@ class LinearVectorForce(LinearForce):
     """
     @overload
     def __init__(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...) -> None:
-        """`(self, vec: LVector3f, a: float = ..., mass: bool = ...)`:
+        """`(self, vec: LVector3, a: float = ..., mass: bool = ...)`:
         Vector Constructor
 
         `(self, copy: LinearVectorForce)`:
@@ -868,7 +868,7 @@ class LinearVectorForce(LinearForce):
     def __init__(self, vec: Vec3f, a: float = ..., mass: bool = ...) -> None: ...
     @overload
     def set_vector(self, v: Vec3f) -> None:
-        """`(self, v: LVector3f)`:
+        """`(self, v: LVector3)`:
         encapsulating wrapper
 
         `(self, x: float, y: float, z: float)`:
@@ -877,7 +877,7 @@ class LinearVectorForce(LinearForce):
         ...
     @overload
     def set_vector(self, x: float, y: float, z: float) -> None: ...
-    def get_local_vector(self) -> LVector3f: ...
+    def get_local_vector(self) -> LVector3: ...
     setVector = set_vector
     getLocalVector = get_local_vector
 

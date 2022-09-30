@@ -2,7 +2,7 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f
-from panda3d.core import LPoint3f, LVecBase3f, NodePath, ostream
+from panda3d.core import LPoint3, LVecBase3, NodePath, ostream
 
 _SmoothMover_SmoothMode: TypeAlias = Literal[0, 1]
 _SmoothMover_PredictionMode: TypeAlias = Literal[0, 1]
@@ -78,7 +78,7 @@ class SmoothMover:
         ...
     @overload
     def set_pos_hpr(self, pos: Vec3f, hpr: Vec3f) -> bool:
-        """`(self, pos: LVecBase3f, hpr: LVecBase3f)`:
+        """`(self, pos: LVecBase3, hpr: LVecBase3)`:
         Specifies the position and orientation of the SmoothMover at a particular
         time in the past.  When mark_position() is called, this will be recorded
         (along with timestamp) in a position report, which will then be used along
@@ -101,13 +101,13 @@ class SmoothMover:
         ...
     @overload
     def set_pos_hpr(self, x: float, y: float, z: float, h: float, p: float, r: float) -> bool: ...
-    def get_sample_pos(self) -> LPoint3f:
+    def get_sample_pos(self) -> LPoint3:
         """Returns the current position of the working sample point.  This position is
         updated periodically by set_x(), set_y(), etc., and its current value is
         copied to the sample point table when mark_position() is called.
         """
         ...
-    def get_sample_hpr(self) -> LVecBase3f:
+    def get_sample_hpr(self) -> LVecBase3:
         """Returns the current orientation of the working sample point.  This
         orientation is updated periodically by set_h(), set_p(), etc., and its
         current value is copied to the sample point table when mark_position() is
@@ -177,12 +177,12 @@ class SmoothMover:
         Returns true if the latest position is known, false otherwise.
         """
         ...
-    def get_smooth_pos(self) -> LPoint3f:
+    def get_smooth_pos(self) -> LPoint3:
         """Returns the smoothed position as computed by a previous call to
         compute_smooth_position().
         """
         ...
-    def get_smooth_hpr(self) -> LVecBase3f:
+    def get_smooth_hpr(self) -> LVecBase3:
         """Returns the smoothed orientation as computed by a previous call to
         compute_smooth_position().
         """
@@ -246,7 +246,7 @@ class SmoothMover:
         according to the direction of rotation.
         """
         ...
-    def get_forward_axis(self) -> LVecBase3f:
+    def get_forward_axis(self) -> LVecBase3:
         """Returns the smoothed position as computed by a previous call to
         compute_smooth_position().
         """
