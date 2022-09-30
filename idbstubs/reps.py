@@ -284,6 +284,7 @@ class Class:
     is_final: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
+    conditional: str = field(default='', kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
 
@@ -299,12 +300,17 @@ class Class:
 
     def get_dependencies(self) -> Iterator[str]:
         return chain(
+            names_within(self.conditional),
             ('final',) if self.is_final else (),
             flatten(names_within(d) for d in self.derivations),
             flatten(i.get_dependencies() for i in self.body.values()),
         )
 
     def definition(self) -> Iterator[str]:
+        if self.conditional:
+            yield f'if {self.conditional}:'
+            yield from indent_lines(evolve(self, conditional='').definition())
+            return
         if self.is_final:
             yield '@final'
         declaration = f'class {self.name}'

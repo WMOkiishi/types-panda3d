@@ -99,6 +99,9 @@ ATTR_TYPE_OVERRIDES: Final = {
 }
 
 
+CONDITIONALS: Final[dict[str, str]] = {}
+
+
 PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
     'panda3d.core.Filename.__init__': {(1, 1): 'StrOrBytesPath'},
     'panda3d.core.NodePath.__init__': {

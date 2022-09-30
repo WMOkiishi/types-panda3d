@@ -21,8 +21,8 @@ from .reps import (
     StubRep
 )
 from .special_cases import (
-    ATTR_TYPE_OVERRIDES, GENERIC, IGNORE_ERRORS, ITERABLE, NO_MANGLING,
-    NO_STUBS, NOT_EXPOSED
+    ATTR_TYPE_OVERRIDES, CONDITIONALS, GENERIC, IGNORE_ERRORS, ITERABLE,
+    NO_MANGLING, NO_STUBS, NOT_EXPOSED
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
@@ -432,12 +432,14 @@ def make_class_rep(
         doc = comment_to_docstring(idb.interrogate_type_comment(t))
     else:
         doc = ''
+    scoped_name = '.'.join(this_namespace)
     return Class(
         name, derivations, class_body,
         is_final=idb.interrogate_type_is_final(t),
+        conditional=CONDITIONALS.get(scoped_name, ''),
         namespace=namespace,
         doc=doc,
-        comment=get_comment(name, namespace),
+        comment=get_comment(scoped_name),
     )
 
 
