@@ -267,9 +267,7 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
 
 def make_type_reps(
         t: TypeIndex, /,
-        namespace: Sequence[str] = (),
-        *, infer_opt_params: bool = True,
-        ignore_coercion: bool = False) -> Iterable[StubRep]:
+        namespace: Sequence[str] = ()) -> Iterable[StubRep]:
     if idb.interrogate_type_is_enum(t):
         if idb.interrogate_type_is_scoped_enum(t):
             return make_scoped_enum_rep(t, namespace),
@@ -282,11 +280,7 @@ def make_type_reps(
     if idb.interrogate_type_is_typedef(t):
         class_ = make_typedef_rep(t)
     else:
-        class_ = make_class_rep(
-            t, namespace,
-            infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion
-        )
+        class_ = make_class_rep(t, namespace)
         if class_.name == 'BitMaskNative':
             return ()
         if not idb.interrogate_type_is_nested(t):
@@ -367,9 +361,7 @@ def make_scoped_enum_rep(t: TypeIndex, /, namespace: Sequence[str] = ()) -> Clas
 
 def make_class_rep(
         t: TypeIndex, /,
-        namespace: Sequence[str] = (),
-        *, infer_opt_params: bool = True,
-        ignore_coercion: bool = False) -> Class:
+        namespace: Sequence[str] = ()) -> Class:
     """Return a representation of a class known to interrogate."""
     name = get_direct_type_name(t)
     class_body: dict[str, StubRep] = {}
@@ -397,11 +389,7 @@ def make_class_rep(
         class_body['value'] = Attribute('value', value, namespace=this_namespace)
     # Methods
     for method in get_type_methods(t):
-        method = process_function(
-            method,
-            infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion,
-        )
+        method = process_function(method)
         if method.name in class_body:
             _logger.info(f'Discarding {method}; its name is already in use')
             continue
@@ -421,11 +409,7 @@ def make_class_rep(
             continue
         if not type_is_exposed(s):
             continue
-        type_reps = make_type_reps(
-            s, this_namespace,
-            infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion,
-        )
+        type_reps = make_type_reps(s, this_namespace)
         class_body |= {rep.name: rep for rep in type_reps}
     # Docstring
     if idb.interrogate_type_has_comment(t):
@@ -443,20 +427,13 @@ def make_class_rep(
     )
 
 
-def make_package_rep(
-        package_name: str = 'panda3d',
-        *, infer_opt_params: bool = False,
-        ignore_coercion: bool = False) -> Package:
+def make_package_rep(package_name: str = 'panda3d') -> Package:
     nested_by_mod_by_lib = defaultdict[str, defaultdict[str, list[StubRep]]](lambda: defaultdict(list))
     # Gather global functions
     for f in chain(get_global_functions(), get_global_getters()):
         if not function_is_exposed(f):
             continue
-        function = process_function(
-            make_function_rep(f),
-            infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion,
-        )
+        function = process_function(make_function_rep(f))
         mod_name = idb.interrogate_function_module_name(f)
         lib_name = '_' + idb.interrogate_function_library_name(f).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += with_alias(function)
@@ -469,9 +446,7 @@ def make_package_rep(
         mod_name = idb.interrogate_type_module_name(t)
         lib_name = '_' + idb.interrogate_type_library_name(t).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(
-            t, mod_name.split('.'),
-            infer_opt_params=infer_opt_params,
-            ignore_coercion=ignore_coercion,
+            t, mod_name.split('.')
         )
 
     # Make package

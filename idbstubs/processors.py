@@ -138,24 +138,19 @@ def get_signature_depths(signatures: Sequence[Signature]) -> list[int]:
     return sig_depths
 
 
-def process_signatures(
-        signatures: Sequence[Signature],
-        *, infer_opt_params: bool = True,
-        ignore_coercion: bool = False) -> list[Signature]:
+def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
     """Sort and compress the given sequence of function signatures."""
     depths = get_signature_depths(signatures)
     sorted_signatures: list[Signature] = []
     for i, depth in sorted(enumerate(depths), key=lambda x: x[1]):
         signature = signatures[i]
-        if depth == 0 and not ignore_coercion:
+        if depth == 0:
             account_for_casts(signature)
         sorted_signatures.append(signature)
 
     merged_signatures: list[Signature] = []
     for new in sorted(sorted_signatures, key=Signature.get_arity):
         for i, old in enumerate(merged_signatures):
-            if not infer_opt_params and len(old.parameters) != len(new.parameters):
-                continue
             if (merge_result := merge_signatures(old, new)) is not None:
                 # The signatures were successfully merged
                 merged_signatures[i] = merge_result
@@ -173,15 +168,8 @@ def account_for_casts(signature: Signature) -> None:
             param.type = replacement
 
 
-def process_function(
-        function: Function,
-        *, infer_opt_params: bool = True,
-        ignore_coercion: bool = False) -> Function:
-    new_sigs = process_signatures(
-        function.signatures,
-        infer_opt_params=infer_opt_params,
-        ignore_coercion=ignore_coercion,
-    )
+def process_function(function: Function) -> Function:
+    new_sigs = process_signatures(function.signatures)
     default_return = DEFAULT_RETURNS.get(function.name)
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
     param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name, {})

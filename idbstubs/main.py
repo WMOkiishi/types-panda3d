@@ -18,17 +18,11 @@ _logger: Final = logging.getLogger(__name__)
 def main(
         input_dir: PathLike[str] | str | None = None,
         output_dir: PathLike[str] | str = '.',
-        *, package_name: str = 'panda3d',
-        infer_optional: bool = True,
-        ignore_coercion: bool = False) -> None:
+        *, package_name: str = 'panda3d') -> None:
     load_interrogate_database(input_dir)
     _logger.debug('Gathering type information')
     load_data()
-    package = make_package_rep(
-        package_name,
-        infer_opt_params=infer_optional,
-        ignore_coercion=ignore_coercion,
-    )
+    package = make_package_rep(package_name)
     package.add_module(make_typing_module())
     for module in package:
         _logger.info(f'Writing stubs for {module}')
