@@ -397,7 +397,7 @@ class File:
             imported_names = sorted(
                 self.imports[module], key=lambda s: s[0:1] + s[1:].lower()
             )
-            if len(module) + sum(len(n)+2 for n in imported_names) < 115:
+            if len(module) + sum(len(n)+2 for n in imported_names) < 117:
                 yield f"from {module} import {', '.join(imported_names)}"
             else:
                 yield f'from {module} import ('
