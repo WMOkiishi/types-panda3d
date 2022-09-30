@@ -7,7 +7,7 @@ from typing import Any, Protocol
 
 from attrs import Factory, define, evolve, field
 
-from .util import flatten, is_dunder, names_within
+from .util import flatten, indent_lines, is_dunder, names_within
 
 
 class StubRep(Protocol):
@@ -215,10 +215,7 @@ class Function:
             yield sig_def
             if self.doc and not doc_printed:
                 if '\n' in self.doc:
-                    for line in f'"""{self.doc}\n"""'.splitlines():
-                        if line:
-                            line = '    ' + line
-                        yield line
+                    yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
                 else:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
@@ -262,10 +259,7 @@ class Attribute:
             yield function_def
             if self.doc:
                 if '\n' in self.doc:
-                    for line in f'"""{self.doc}\n"""'.splitlines():
-                        if line:
-                            line = '    ' + line
-                        yield line
+                    yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
                 else:
                     yield f'    """{self.doc}"""'
                 yield '    ...'  # This isn't really necessary
@@ -328,17 +322,11 @@ class Class:
         yield declaration
         if self.doc:
             if '\n' in self.doc:
-                for line in f'"""{self.doc}\n"""'.splitlines():
-                    if line:
-                        line = '    ' + line
-                    yield line
+                yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
             else:
                 yield f'    """{self.doc}"""'
         sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
-        for line in flatten(i.definition() for i in sorted_nested):
-            if line:
-                line = '    ' + line
-            yield line
+        yield from indent_lines(flatten(i.definition() for i in sorted_nested))
 
 
 @define

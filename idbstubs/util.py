@@ -1,7 +1,7 @@
 import ast
 import itertools
 import logging
-from collections.abc import Iterator
+from collections.abc import Iterable, Iterator
 from typing import Final
 
 _logger: Final = logging.getLogger(__name__)
@@ -17,6 +17,16 @@ def is_dunder(s: str, /) -> bool:
 def is_sunder(s: str, /) -> bool:
     """Return whether a given string starts and ends with exactly one underscore."""
     return s.startswith('_') and s.endswith('_') and not is_dunder(s)
+
+
+def indent_lines(lines: Iterable[str], *, level: int = 4) -> Iterator[str]:
+    """Yield each string from the iterable with four spaces prepended.
+    Empty strings are yielded unchanged. The number of spaces prepended
+    can be changed by passing a keyword-only `level` argument.
+    """
+    indentation = ' ' * level
+    for line in lines:
+        yield (indentation + line) if line else ''
 
 
 def names_within(s: str, /) -> Iterator[str]:
