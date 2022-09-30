@@ -25,6 +25,7 @@ class StubRep(Protocol):
 class TypeVariable:
     name: str
     bounds: Sequence[str] = field(default=(), converter=tuple)
+    variance: str = ''
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
@@ -34,14 +35,15 @@ class TypeVariable:
         return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
-        if not self.bounds:
-            definition = f'TypeVar({self.name!r})'
-        elif len(self.bounds) == 1:
-            definition = f'TypeVar({self.name!r}, bound={self.bounds[0]})'
-        else:
-            constraints = ', '.join(self.bounds)
-            definition = f'TypeVar({self.name!r}, {constraints})'
-        return f'{self.name} = {definition}'
+        parameters = [repr(self.name)]
+        if self.bounds:
+            if len(self.bounds) == 1:
+                parameters.append(f'bound={self.bounds[0]}')
+            else:
+                parameters += self.bounds
+        if self.variance and self.variance != 'invariant':
+            parameters.append(f'{self.variance}=True')
+        return f"{self.name} = TypeVar({', '.join(parameters)})"
 
     def sort(self) -> tuple[int, int]:
         return 0, 0

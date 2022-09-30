@@ -63,7 +63,7 @@ _RenderAttrib_PandaCompareFunc: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _BoundingVolume_BoundsType: TypeAlias = Literal[0, 1, 2, 3, 4]
 _TransparencyAttrib_Mode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 _LogicOpAttrib_Operation: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-_N = TypeVar('_N', bound=PandaNode)
+_N = TypeVar('_N', bound=PandaNode, covariant=True)
 _NodePath_ErrorType: TypeAlias = Literal[0, 1, 2, 3]
 _M = TypeVar('_M', bound=PandaNode)
 _RenderAttrib_TexGenMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]

@@ -73,9 +73,9 @@ _type_alias_data = [
 for _alias_name in TYPE_ALIASES:
     KNOWN_IMPORTS[_alias_name] = 'panda3d._typing'
 
-TYPE_VARIABLES: Final = {
-    '_N': ('PandaNode',),
-    '_M': ('PandaNode',),
+TYPE_VARIABLES: Final[dict[str, tuple[tuple[str, ...], str]]] = {
+    '_N': (('PandaNode',), 'covariant'),
+    '_M': (('PandaNode',), 'invariant'),
 }
 
 
@@ -264,13 +264,13 @@ def process_dependency(
         name: str,
         *, if_alias: Callable[[str], object],
         if_import: Callable[[str], object],
-        if_type_var: Callable[[Sequence], object]) -> bool:
+        if_type_var: Callable[[Sequence[str], str], object]) -> bool:
     if name in BUILTIN_NAMES:
         pass
     elif (alias_def := get_alias_def(name)) is not None:
         if_alias(alias_def)
-    elif (type_var_bounds := TYPE_VARIABLES.get(name)) is not None:
-        if_type_var(type_var_bounds)
+    elif (type_var_params := TYPE_VARIABLES.get(name)) is not None:
+        if_type_var(*type_var_params)
     elif (module := get_module(name)) is not None:
         if_import(module)
     else:

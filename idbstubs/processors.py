@@ -273,8 +273,8 @@ def process_dependencies(file: File) -> None:
             alias = Alias(name, definition, is_type_alias=True)
             file.nested.append(alias)
 
-        def as_type_var(bounds: Sequence[str]) -> None:
-            type_var = TypeVariable(name, bounds)
+        def as_type_var(bounds: Sequence[str], variance: str) -> None:
+            type_var = TypeVariable(name, bounds, variance)
             file.nested.append(type_var)
 
         def import_from(module: str) -> None:
