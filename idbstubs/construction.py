@@ -2,7 +2,7 @@ import logging
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Sequence
 from itertools import chain
-from typing import Final, TypeVar, cast
+from typing import Final, Protocol, TypeVar, cast
 
 import panda3d.interrogatedb as idb
 from attrs import evolve
@@ -39,7 +39,20 @@ _class_bodies: Final[dict[str, dict[str, StubRep]]] = {}
 # Don't replace `size` with `__len__` for these
 SIZE_NOT_LEN: Final = ('EggGroupNode', 'WindowProperties')
 
-SR = TypeVar('SR', bound=StubRep)
+
+class NamespacedStubRep(StubRep, Protocol):
+    @property
+    def namespace(self) -> Sequence[str]: ...
+
+
+SR = TypeVar('SR', bound=NamespacedStubRep)
+
+
+def get_comment(name: str, namespace: Iterable[str] = ()) -> str:
+    ignored_errors = IGNORE_ERRORS.get('.'.join((*namespace, name)))
+    if ignored_errors is None:
+        return ''
+    return f'type: ignore[{ignored_errors}]'
 
 
 def get_function_name(f: FunctionIndex, /) -> str:
@@ -71,8 +84,12 @@ def with_alias(
             if isinstance(rep, Attribute) and not rep.read_only:
                 return rep, evolve(rep, name=alias_name)
             else:
-                return rep, Alias(alias_name, name, of_local=True,
-                                  namespace=rep.namespace)
+                return rep, Alias(
+                    alias_name,
+                    name,
+                    of_local=True,
+                    comment=get_comment(alias_name, rep.namespace),
+                )
     return rep,
 
 
@@ -162,8 +179,14 @@ def make_element_rep(
         doc = comment_to_docstring(idb.interrogate_element_comment(e))
     else:
         doc = ''
-    return Attribute(check_keyword(name), type_name, read_only=read_only,
-                     namespace=namespace, doc=doc)
+    return Attribute(
+        check_keyword(name),
+        type_name,
+        read_only=read_only,
+        namespace=namespace,
+        doc=doc,
+        comment=get_comment(name, namespace),
+    )
 
 
 def make_signature_rep(
@@ -238,6 +261,7 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
         is_static=not not_static,
         namespace=namespace,
         doc=doc,
+        comment=get_comment(name, namespace),
     )
 
 
@@ -287,7 +311,14 @@ def make_make_seq_rep(ms: MakeSeqIndex, /) -> Function:
         doc = comment_to_docstring(idb.interrogate_make_seq_comment(ms))
     else:
         doc = ''
-    return Function(name, [signature], is_method=True, namespace=namespace, doc=doc)
+    return Function(
+        name,
+        [signature],
+        is_method=True,
+        namespace=namespace,
+        doc=doc,
+        comment=get_comment(name, namespace),
+    )
 
 
 def make_enum_alias_rep(t: TypeIndex, /) -> Alias:
@@ -396,10 +427,6 @@ def make_class_rep(
             ignore_coercion=ignore_coercion,
         )
         class_body |= {rep.name: rep for rep in type_reps}
-    # "type: ignore" comments
-    for rep in class_body.values():
-        if (ignored_errors := IGNORE_ERRORS.get(rep.scoped_name)) is not None:
-            rep.comment = f'type: ignore[{ignored_errors}]'
     # Docstring
     if idb.interrogate_type_has_comment(t):
         doc = comment_to_docstring(idb.interrogate_type_comment(t))
@@ -410,6 +437,7 @@ def make_class_rep(
         is_final=idb.interrogate_type_is_final(t),
         namespace=namespace,
         doc=doc,
+        comment=get_comment(name, namespace),
     )
 
 
@@ -448,8 +476,6 @@ def make_package_rep(
     modules: list[Module] = []
     for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
         for rep in flatten(nested_by_lib.values()):
-            if (ignored_errors := IGNORE_ERRORS.get(rep.scoped_name)) is not None:
-                rep.comment = f'type: ignore[{ignored_errors}]'
             if isinstance(rep, Class):
                 process_class(rep)
         nested_by_lib = cast(dict[str, Sequence[StubRep]], nested_by_lib)

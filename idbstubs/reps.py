@@ -11,11 +11,8 @@ from .util import flatten, is_dunder, names_within
 
 
 class StubRep(Protocol):
-    name: str
-    comment: str
-    namespace: Sequence[str]
     @property
-    def scoped_name(self) -> str: ...
+    def name(self) -> str: ...
     def sort(self) -> tuple[int, int]: ...
     def get_dependencies(self) -> Iterator[str]: ...
     def definition(self) -> Iterator[str]: ...
@@ -26,13 +23,6 @@ class TypeVariable:
     name: str
     bounds: Sequence[str] = field(default=(), converter=tuple)
     variance: str = ''
-    namespace: Sequence[str] = field(
-        default=(), converter=tuple, kw_only=True, eq=False)
-    comment: str = field(default='', kw_only=True, eq=False)
-
-    @property
-    def scoped_name(self) -> str:
-        return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
         parameters = [repr(self.name)]
@@ -53,10 +43,7 @@ class TypeVariable:
         yield from flatten(names_within(i) for i in self.bounds)
 
     def definition(self) -> Iterator[str]:
-        if self.comment:
-            yield f'{self}  # {self.comment}'
-        else:
-            yield str(self)
+        yield str(self)
 
 
 @define
