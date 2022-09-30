@@ -99,7 +99,9 @@ ATTR_TYPE_OVERRIDES: Final = {
 }
 
 
-CONDITIONALS: Final[dict[str, str]] = {}
+CONDITIONALS: Final = {
+    'panda3d.core.WindowsRegistry': "sys.platform == 'win32'",
+}
 
 
 PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {

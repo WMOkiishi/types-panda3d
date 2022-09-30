@@ -1,3 +1,4 @@
+import sys
 from _typeshed import Self
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
@@ -3171,64 +3172,65 @@ class WeakPointerToVoid(PointerToVoid):
     wasDeleted = was_deleted
     isValidPointer = is_valid_pointer
 
-class WindowsRegistry:
-    """This class provides a hook to Python to read and write strings and integers
-    to the windows registry.  It automatically converts strings from utf-8
-    encoding and stores them in Unicode (and conversely reconverts them on
-    retrieval).
-    """
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    rl_machine: Final[Literal[0]]
-    RlMachine: Final[Literal[0]]
-    rl_user: Final[Literal[1]]
-    RlUser: Final[Literal[1]]
-    T_none: Final[Literal[0]]
-    TNone: Final[Literal[0]]
-    T_int: Final[Literal[1]]
-    TInt: Final[Literal[1]]
-    T_string: Final[Literal[2]]
-    TString: Final[Literal[2]]
-    def __init__(self, __param0: WindowsRegistry = ...) -> None: ...
-    @staticmethod
-    def set_string_value(key: str, name: str, value: str, rl: _WindowsRegistry_RegLevel = ...) -> bool:
-        """Sets the registry key to the indicated value as a string.  The supplied
-        string value is automatically converted from whatever encoding is set by
-        TextEncoder::set_default_encoding() and written as a Unicode string.  The
-        registry key must already exist prior to calling this function.
+if sys.platform == 'win32':
+    class WindowsRegistry:
+        """This class provides a hook to Python to read and write strings and integers
+        to the windows registry.  It automatically converts strings from utf-8
+        encoding and stores them in Unicode (and conversely reconverts them on
+        retrieval).
         """
-        ...
-    @staticmethod
-    def set_int_value(key: str, name: str, value: int, rl: _WindowsRegistry_RegLevel = ...) -> bool:
-        """Sets the registry key to the indicated value as an integer.  The registry
-        key must already exist prior to calling this function.
-        """
-        ...
-    @staticmethod
-    def get_key_type(key: str, name: str, rl: _WindowsRegistry_RegLevel = ...) -> _WindowsRegistry_Type:
-        """Returns the type of the indicated key, or T_none if the key is not known or
-        is some unsupported type.
-        """
-        ...
-    @staticmethod
-    def get_string_value(key: str, name: str, default_value: str, rl: _WindowsRegistry_RegLevel = ...) -> str:
-        """Returns the value associated with the indicated registry key, assuming it
-        is a string value.  The string value is automatically encoded using
-        TextEncoder::get_default_encoding().  If the key is not defined or is not a
-        string type value, default_value is returned instead.
-        """
-        ...
-    @staticmethod
-    def get_int_value(key: str, name: str, default_value: int, rl: _WindowsRegistry_RegLevel = ...) -> int:
-        """Returns the value associated with the indicated registry key, assuming it
-        is an integer value.  If the key is not defined or is not an integer type
-        value, default_value is returned instead.
-        """
-        ...
-    setStringValue = set_string_value
-    setIntValue = set_int_value
-    getKeyType = get_key_type
-    getStringValue = get_string_value
-    getIntValue = get_int_value
+        DtoolClassDict: ClassVar[dict[str, Any]]
+        rl_machine: Final[Literal[0]]
+        RlMachine: Final[Literal[0]]
+        rl_user: Final[Literal[1]]
+        RlUser: Final[Literal[1]]
+        T_none: Final[Literal[0]]
+        TNone: Final[Literal[0]]
+        T_int: Final[Literal[1]]
+        TInt: Final[Literal[1]]
+        T_string: Final[Literal[2]]
+        TString: Final[Literal[2]]
+        def __init__(self, __param0: WindowsRegistry = ...) -> None: ...
+        @staticmethod
+        def set_string_value(key: str, name: str, value: str, rl: _WindowsRegistry_RegLevel = ...) -> bool:
+            """Sets the registry key to the indicated value as a string.  The supplied
+            string value is automatically converted from whatever encoding is set by
+            TextEncoder::set_default_encoding() and written as a Unicode string.  The
+            registry key must already exist prior to calling this function.
+            """
+            ...
+        @staticmethod
+        def set_int_value(key: str, name: str, value: int, rl: _WindowsRegistry_RegLevel = ...) -> bool:
+            """Sets the registry key to the indicated value as an integer.  The registry
+            key must already exist prior to calling this function.
+            """
+            ...
+        @staticmethod
+        def get_key_type(key: str, name: str, rl: _WindowsRegistry_RegLevel = ...) -> _WindowsRegistry_Type:
+            """Returns the type of the indicated key, or T_none if the key is not known or
+            is some unsupported type.
+            """
+            ...
+        @staticmethod
+        def get_string_value(key: str, name: str, default_value: str, rl: _WindowsRegistry_RegLevel = ...) -> str:
+            """Returns the value associated with the indicated registry key, assuming it
+            is a string value.  The string value is automatically encoded using
+            TextEncoder::get_default_encoding().  If the key is not defined or is not a
+            string type value, default_value is returned instead.
+            """
+            ...
+        @staticmethod
+        def get_int_value(key: str, name: str, default_value: int, rl: _WindowsRegistry_RegLevel = ...) -> int:
+            """Returns the value associated with the indicated registry key, assuming it
+            is an integer value.  If the key is not defined or is not an integer type
+            value, default_value is returned instead.
+            """
+            ...
+        setStringValue = set_string_value
+        setIntValue = set_int_value
+        getKeyType = get_key_type
+        getStringValue = get_string_value
+        getIntValue = get_int_value
 
 EU_http_redirect: Final[Literal[7]]
 EUHttpRedirect: Final[Literal[7]]
