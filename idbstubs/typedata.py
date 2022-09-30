@@ -4,6 +4,7 @@ from collections import defaultdict
 from collections.abc import Callable, Iterator, Sequence
 from functools import cache
 from itertools import combinations, product
+from sys import stdlib_module_names
 from typing import Final
 
 import panda3d.interrogatedb as idb
@@ -248,7 +249,14 @@ def get_alias_def(name: str) -> str | None:
 
 @cache
 def get_module(name: str) -> str | None:
-    return KNOWN_IMPORTS.get(name) or _modules.get(name)
+    if (module := KNOWN_IMPORTS.get(name)) is not None:
+        return module
+    elif (module := _modules.get(name)) is not None:
+        return module
+    elif name in stdlib_module_names:
+        return ''
+    else:
+        return None
 
 
 def get_linear_superclasses(name: str, /) -> tuple[str, ...]:

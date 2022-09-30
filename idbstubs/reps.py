@@ -359,7 +359,7 @@ class File:
         extended_stdlib = stdlib_module_names | {'_typeshed', 'typing_extensions'}
 
         def grouping_function(module: str) -> int:
-            if module.split('.')[0] in extended_stdlib:
+            if not module or module.split('.')[0] in extended_stdlib:
                 return 0
             elif this_package and module.startswith(this_package):
                 return 2
@@ -374,6 +374,10 @@ class File:
             imported_names = sorted(
                 self.imports[module], key=lambda s: s[0:1] + s[1:].lower()
             )
+            if not module:
+                for name in imported_names:
+                    yield f'import {name}'
+                continue
             if len(module) + sum(len(n)+2 for n in imported_names) < 117:
                 yield f"from {module} import {', '.join(imported_names)}"
             else:
