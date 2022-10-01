@@ -6,7 +6,7 @@ from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import (
-    BitMask_uint32_t_32,
+    BitMask32,
     CollisionHandlerFloor,
     CollisionHandlerQueue,
     CollisionNode,
@@ -36,13 +36,13 @@ class PhysicsWalker(DirectObject):
     highMark: float
     cRay: CollisionRay
     cRayNodePath: NodePath[CollisionNode]
-    cRayBitMask: BitMask_uint32_t_32
+    cRayBitMask: BitMask32
     lifter: CollisionHandlerFloor
     cRayQueue: CollisionHandlerQueue
     avatarRadius: float
     cSphere: CollisionSphere
     cSphereNodePath: NodePath[CollisionNode]
-    cSphereBitMask: BitMask_uint32_t_32
+    cSphereBitMask: BitMask32
     pusher: PhysicsCollisionHandler
     actorNode: ActorNode
     phys: PhysicsManager
@@ -54,16 +54,16 @@ class PhysicsWalker(DirectObject):
     def setWalkSpeed(self, forward: float, jump: float, reverse: float, rotate: float) -> None: ...
     def getSpeeds(self) -> tuple[float, float]: ...
     def setAvatar(self, avatar: Any) -> None: ...
-    def setupRay(self, floorBitmask: BitMask_uint32_t_32, floorOffset: float) -> None: ...
+    def setupRay(self, floorBitmask: BitMask32, floorOffset: float) -> None: ...
     def determineHeight(self) -> float: ...
-    def setupSphere(self, bitmask: BitMask_uint32_t_32, avatarRadius: float) -> None: ...
+    def setupSphere(self, bitmask: BitMask32, avatarRadius: float) -> None: ...
     def setupPhysics(self, avatarNodePath: NodePath[ActorNode]) -> NodePath[ActorNode]: ...
     def initializeCollisions(
         self,
         collisionTraverser: CollisionTraverser,
         avatarNodePath: NodePath[ActorNode],
-        wallBitmask: BitMask_uint32_t_32,
-        floorBitmask: BitMask_uint32_t_32,
+        wallBitmask: BitMask32,
+        floorBitmask: BitMask32,
         avatarRadius: float = ...,
         floorOffset: float = ...,
         reach: float = ...,

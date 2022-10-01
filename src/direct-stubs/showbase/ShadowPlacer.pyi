@@ -3,7 +3,7 @@ __all__ = ['ShadowPlacer']
 from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
-from panda3d.core import BitMask_uint32_t_32, CollisionHandlerFloor, CollisionNode, CollisionRay, CollisionTraverser, NodePath
+from panda3d.core import CollideMask, CollisionHandlerFloor, CollisionNode, CollisionRay, CollisionTraverser, NodePath
 from .DirectObject import DirectObject
 
 class ShadowPlacer(DirectObject):
@@ -13,21 +13,21 @@ class ShadowPlacer(DirectObject):
     shadowNodePath: NodePath
     cRay: CollisionRay
     cRayNodePath: NodePath[CollisionNode]
-    cRayBitMask: BitMask_uint32_t_32
+    cRayBitMask: CollideMask
     lifter: CollisionHandlerFloor
     def __init__(
         self,
         cTrav: CollisionTraverser,
         shadowNodePath: NodePath,
         wallCollideMask: object,
-        floorCollideMask: BitMask_uint32_t_32,
+        floorCollideMask: CollideMask,
     ) -> None: ...
     def setup(
         self,
         cTrav: CollisionTraverser,
         shadowNodePath: NodePath,
         wallCollideMask: object,
-        floorCollideMask: BitMask_uint32_t_32,
+        floorCollideMask: CollideMask,
     ) -> None: ...
     def delete(self) -> None: ...
     def on(self) -> None: ...

@@ -6,9 +6,9 @@ from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import (
     BitArray,
-    BitMask_uint16_t_16,
-    BitMask_uint32_t_32,
-    BitMask_uint64_t_64,
+    BitMask16,
+    BitMask32,
+    BitMask64,
     DisplayRegion,
     GraphicsOutput,
     GraphicsPipe,
@@ -22,7 +22,7 @@ from panda3d.core import (
     Texture,
 )
 
-_BitMask: TypeAlias = BitArray | BitMask_uint16_t_16 | BitMask_uint32_t_32 | BitMask_uint64_t_64
+_BitMask: TypeAlias = BitArray | BitMask16 | BitMask32 | BitMask64
 
 class TexMemWatcher(DirectObject):
     NextIndex: ClassVar[int]

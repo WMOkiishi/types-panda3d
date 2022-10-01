@@ -14,7 +14,7 @@ from panda3d._typing import Filepath, Vec4f
 from panda3d.core import (
     AudioManager,
     AudioSound,
-    BitMask_uint32_t_32,
+    BitMask32,
     ButtonThrower,
     Camera,
     ClockObject,
@@ -292,7 +292,7 @@ class ShowBase(DirectObject):
         clearColor: Vec4f | None = None,
         lens: Lens | None = None,
         camName: str = ...,
-        mask: BitMask_uint32_t_32 | int | None = None,
+        mask: BitMask32 | int | None = None,
         useCamera: NodePath[Camera] | None = None,
     ) -> NodePath[Camera]: ...
     def make_camera2d(
@@ -411,7 +411,7 @@ class ShowBase(DirectObject):
         source: GraphicsEngine | None = None,
         camera: NodePath[ModelNode] | None = None,
         size: int = ...,
-        cameraMask: BitMask_uint32_t_32 = ...,
+        cameraMask: BitMask32 = ...,
         sourceLens: Lens | None = None,
     ) -> str | None: ...
     def save_sphere_map(
@@ -421,7 +421,7 @@ class ShowBase(DirectObject):
         source: GraphicsEngine | None = None,
         camera: NodePath[ModelNode] | None = None,
         size: int = ...,
-        cameraMask: BitMask_uint32_t_32 = ...,
+        cameraMask: BitMask32 = ...,
         numVertices: int = ...,
         sourceLens: Lens | None = None,
     ) -> str | None: ...

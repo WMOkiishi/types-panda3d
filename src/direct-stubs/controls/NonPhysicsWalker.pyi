@@ -6,7 +6,7 @@ from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import (
-    BitMask_uint32_t_32,
+    BitMask32,
     CollisionHandlerFloor,
     CollisionHandlerPusher,
     CollisionNode,
@@ -38,10 +38,10 @@ class NonPhysicsWalker(DirectObject):
     cTrav: CollisionTraverser
     cSphere: CollisionSphere
     cSphereNodePath: NodePath[CollisionNode]
-    cSphereBitMask: BitMask_uint32_t_32
+    cSphereBitMask: BitMask32
     cRay: CollisionRay
     cRayNodePath: NodePath[CollisionNode]
-    cRayBitMask: BitMask_uint32_t_32
+    cRayBitMask: BitMask32
     pusher: CollisionHandlerPusher
     lifter: CollisionHandlerFloor
     def __init__(self) -> None: ...
@@ -49,9 +49,9 @@ class NonPhysicsWalker(DirectObject):
     def getSpeeds(self) -> tuple[float, float, float]: ...
     def setAvatar(self, avatar: Any) -> None: ...
     def setAirborneHeightFunc(self, getAirborneHeight: Callable[[], float]) -> None: ...
-    def setWallBitMask(self, bitMask: BitMask_uint32_t_32) -> None: ...
-    def setFloorBitMask(self, bitMask: BitMask_uint32_t_32) -> None: ...
-    def swapFloorBitMask(self, oldMask: BitMask_uint32_t_32, newMask: BitMask_uint32_t_32) -> None: ...
+    def setWallBitMask(self, bitMask: BitMask32) -> None: ...
+    def setFloorBitMask(self, bitMask: BitMask32) -> None: ...
+    def swapFloorBitMask(self, oldMask: BitMask32, newMask: BitMask32) -> None: ...
     def initializeCollisions(
         self,
         collisionTraverser: CollisionTraverser,

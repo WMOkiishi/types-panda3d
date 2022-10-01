@@ -4,7 +4,7 @@ from typing_extensions import Final, Literal
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import (
-    BitMask_uint32_t_32,
+    BitMask32,
     BoundingSphere,
     CollisionEntry,
     CollisionHandlerQueue,
@@ -109,7 +109,7 @@ class SelectionQueue(CollisionHandlerQueue):
     def __init__(self, parentNP: NodePath | None = None) -> None: ...
     def setParentNP(self, parentNP: NodePath) -> None: ...
     def addCollider(self, collider: CollisionSolid) -> None: ...
-    def collideWithBitMask(self, bitMask: BitMask_uint32_t_32) -> None: ...
+    def collideWithBitMask(self, bitMask: BitMask32) -> None: ...
     def collideWithGeom(self) -> None: ...
     def collideWithWidget(self) -> None: ...
     def addUnpickable(self, item: str) -> None: ...
@@ -125,7 +125,7 @@ class SelectionRay(SelectionQueue):
     def pick(self, targetNodePath: NodePath, xy: Sequence[float] | None = None) -> None: ...
     def pickBitMask(
         self,
-        bitMask: BitMask_uint32_t_32 = ...,
+        bitMask: BitMask32 = ...,
         targetNodePath: NodePath | None = None,
         skipFlags: int = ...,
     ) -> CollisionEntry: ...
@@ -146,7 +146,7 @@ class SelectionRay(SelectionQueue):
     ) -> CollisionEntry: ...
     def pickBitMask3D(
         self,
-        bitMask: BitMask_uint32_t_32 = ...,
+        bitMask: BitMask32 = ...,
         targetNodePath: NodePath | None = None,
         origin: Vec3f = ...,
         dir: Vec3f = ...,
@@ -165,7 +165,7 @@ class SelectionSegment(SelectionQueue):
     ) -> CollisionEntry: ...
     def pickBitMask(
         self,
-        bitMask: BitMask_uint32_t_32 = ...,
+        bitMask: BitMask32 = ...,
         targetNodePath: NodePath | None = None,
         endPointList: Sequence = ...,
         skipFlags: int = ...,
@@ -182,7 +182,7 @@ class SelectionSphere(SelectionQueue):
     def pickGeom(self, targetNodePath: NodePath | None = None, skipFlags: int = ...) -> CollisionEntry: ...
     def pickBitMask(
         self,
-        bitMask: BitMask_uint32_t_32 = ...,
+        bitMask: BitMask32 = ...,
         targetNodePath: NodePath | None = None,
         skipFlags: int = ...,
     ) -> CollisionEntry: ...

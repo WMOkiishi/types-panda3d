@@ -5,7 +5,7 @@ from typing_extensions import Literal
 from direct._typing import Unused
 from direct.gui.OnscreenText import OnscreenText
 from direct.showbase.DirectObject import DirectObject
-from panda3d.core import BitMask_uint32_t_32, NodePath
+from panda3d.core import BitMask32, NodePath
 from .ActionMgr import ActionMgr
 from .CurveEditor import CurveEditor
 from .FileMgr import FileMgr
@@ -20,12 +20,12 @@ class LevelEditorBase(DirectObject):
     fMoveCamera: bool
     NPParent: NodePath
     settingsFile: StrOrBytesPath | None
-    BASE_MODE: BitMask_uint32_t_32
-    CREATE_CURVE_MODE: BitMask_uint32_t_32
-    EDIT_CURVE_MODE: BitMask_uint32_t_32
-    ANIM_MODE: BitMask_uint32_t_32
+    BASE_MODE: BitMask32
+    CREATE_CURVE_MODE: BitMask32
+    EDIT_CURVE_MODE: BitMask32
+    ANIM_MODE: BitMask32
     GRAPH_EDITOR: bool
-    mode: BitMask_uint32_t_32
+    mode: BitMask32
     preMode = ...
     statusReadout: OnscreenText
     statusLines: list

@@ -1,6 +1,6 @@
 from collections.abc import Mapping
 
-from panda3d.core import BitMask_uint32_t_32, CollisionNode, CollisionTraverser, NodePath
+from panda3d.core import CollideMask, CollisionNode, CollisionTraverser, NodePath
 from .DirectObject import DirectObject
 from .PhasedObject import PhasedObject
 
@@ -10,7 +10,7 @@ class DistancePhasedNode(PhasedObject, DirectObject, NodePath):
     autoCleanup: bool
     enterPrefix: str
     exitPrefix: str
-    phaseCollideMask: BitMask_uint32_t_32
+    phaseCollideMask: CollideMask
     cTrav: CollisionTraverser
     fromCollideNode: CollisionNode | None
     def __init__(
@@ -20,11 +20,11 @@ class DistancePhasedNode(PhasedObject, DirectObject, NodePath):
         autoCleanup: bool = True,
         enterPrefix: str = ...,
         exitPrefix: str = ...,
-        phaseCollideMask: BitMask_uint32_t_32 = ...,
+        phaseCollideMask: CollideMask = ...,
         fromCollideNode: CollisionNode | None = None,
     ) -> None: ...
     def __del__(self) -> None: ...
-    def setPhaseCollideMask(self, mask: BitMask_uint32_t_32) -> None: ...
+    def setPhaseCollideMask(self, mask: CollideMask) -> None: ...
     def reset(self) -> None: ...
 
 class BufferedDistancePhasedNode(DistancePhasedNode):
@@ -37,6 +37,6 @@ class BufferedDistancePhasedNode(DistancePhasedNode):
         autoCleanup: bool = True,
         enterPrefix: str = ...,
         exitPrefix: str = ...,
-        phaseCollideMask: BitMask_uint32_t_32 = ...,
+        phaseCollideMask: CollideMask = ...,
         fromCollideNode: CollisionNode | None = None,
     ) -> None: ...

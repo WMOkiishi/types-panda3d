@@ -1,6 +1,6 @@
 from typing_extensions import Final, Literal
 
-from panda3d.core import BitMask_uint32_t_32, LPoint3f, LVector3f, NodePath
+from panda3d.core import BitMask32, LPoint3f, LVector3f, NodePath
 
 UNPICKABLE: Final[list[str]]
 
@@ -37,11 +37,11 @@ EDIT_TYPE_UNSCALABLE: Final[Literal[0b010]]
 EDIT_TYPE_UNROTATABLE: Final[Literal[0b100]]
 EDIT_TYPE_UNEDITABLE: Final[Literal[0b111]]
 
-LE_TOP_CAM_MASK: Final[BitMask_uint32_t_32]
-LE_FRONT_CAM_MASK: Final[BitMask_uint32_t_32]
-LE_LEFT_CAM_MASK: Final[BitMask_uint32_t_32]
-LE_PERSP_CAM_MASK: Final[BitMask_uint32_t_32]
-LE_CAM_MASKS: Final[dict[Literal['persp', 'left', 'front', 'top'], BitMask_uint32_t_32]]
+LE_TOP_CAM_MASK: Final[BitMask32]
+LE_FRONT_CAM_MASK: Final[BitMask32]
+LE_LEFT_CAM_MASK: Final[BitMask32]
+LE_PERSP_CAM_MASK: Final[BitMask32]
+LE_CAM_MASKS: Final[dict[Literal['persp', 'left', 'front', 'top'], BitMask32]]
 
 def LE_showInAllCam(nodePath: NodePath) -> None: ...
 def LE_showInOneCam(nodePath: NodePath, thisCamName: str) -> None: ...
