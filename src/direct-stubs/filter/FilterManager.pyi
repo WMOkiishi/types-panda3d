@@ -14,7 +14,7 @@ from panda3d.core import (
     FrameBufferProperties,
     GraphicsEngine,
     GraphicsOutput,
-    LVecBase4f,
+    LColor,
     NodePath,
     RenderState,
     Texture,
@@ -27,8 +27,8 @@ class FilterManager(DirectObject):
     forcey: int
     engine: GraphicsEngine
     region: DisplayRegion
-    wclears: list[tuple[bool, LVecBase4f]]
-    rclears: list[tuple[bool, LVecBase4f]]
+    wclears: list[tuple[bool, LColor]]
+    rclears: list[tuple[bool, LColor]]
     camera: NodePath[Camera]
     caminit: RenderState
     camstate: RenderState
@@ -38,7 +38,7 @@ class FilterManager(DirectObject):
     basex: int
     basey: int
     def __init__(self, win: GraphicsOutput, cam: NodePath[Camera], forcex: int = ..., forcey: int = ...) -> None: ...
-    def get_clears(self, region: DrawableRegion) -> list[tuple[bool, LVecBase4f]]: ...
+    def get_clears(self, region: DrawableRegion) -> list[tuple[bool, LColor]]: ...
     def set_clears(self, region: DrawableRegion, clears: Sequence[tuple[bool, Vec4f]]) -> None: ...
     def set_stacked_clears(
         self,

@@ -2,7 +2,7 @@ from typing import SupportsFloat
 from typing_extensions import Literal, SupportsIndex, TypeAlias
 
 from direct._typing import Unused
-from panda3d.core import Geom, GeomNode, LVecBase4f, NodePath
+from panda3d.core import Geom, GeomNode, LColor, NodePath
 
 _RealNumber: TypeAlias = SupportsFloat | SupportsIndex
 
@@ -22,30 +22,30 @@ def addCircle(
     attachNode: GeomNode,
     vertexCount: int,
     radius: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
-    centerColor: LVecBase4f | tuple[float, float, float, float] | None = None,
+    color: LColor | tuple[float, float, float, float] = ...,
+    centerColor: LColor | tuple[float, float, float, float] | None = None,
     layer: Unused = ...,
 ) -> Geom: ...
 def addCircleGeom(
     rootNode: NodePath,
     vertexCount: int,
     radius: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
-    centerColor: LVecBase4f | tuple[float, float, float, float] | None = None,
+    color: LColor | tuple[float, float, float, float] = ...,
+    centerColor: LColor | tuple[float, float, float, float] | None = None,
     layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addSquare(
     attachNode: GeomNode,
     sizeX: float,
     sizeY: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
+    color: LColor | tuple[float, float, float, float] = ...,
     layer: Unused = ...,
 ) -> Geom: ...
 def addSquareGeom(
     rootNode: NodePath,
     sizeX: float,
     sizeY: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
+    color: LColor | tuple[float, float, float, float] = ...,
     layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addBox(
@@ -53,7 +53,7 @@ def addBox(
     sizeX: float,
     sizeY: float,
     sizeZ: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
+    color: LColor | tuple[float, float, float, float] = ...,
     darken: bool = False,
 ) -> Geom: ...
 def addBoxGeom(
@@ -61,20 +61,20 @@ def addBoxGeom(
     sizeX: float,
     sizeY: float,
     sizeZ: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
+    color: LColor | tuple[float, float, float, float] = ...,
     darken: bool = False,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addArrow(
     attachNode: GeomNode,
     sizeX: float,
     sizeY: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
+    color: LColor | tuple[float, float, float, float] = ...,
     layer: Unused = ...,
 ) -> Geom: ...
 def addArrowGeom(
     rootNode: NodePath,
     sizeX: float,
     sizeY: float,
-    color: LVecBase4f | tuple[float, float, float, float] = ...,
+    color: LColor | tuple[float, float, float, float] = ...,
     layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...

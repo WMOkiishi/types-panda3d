@@ -6,9 +6,9 @@ from typing_extensions import TypeAlias
 
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
-from panda3d.core import LVecBase3f, LVecBase4f, NodePath, TransformState
+from panda3d.core import LColor, LVecBase3f, NodePath, TransformState
 
-_Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]
+_Color: TypeAlias = Union[LColor, tuple[float, float, float, float]]
 _Point: TypeAlias = Union[LVecBase3f, tuple[float, float, float]]
 
 class OnscreenGeom(DirectObject, NodePath):

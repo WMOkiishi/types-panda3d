@@ -31,10 +31,10 @@ from panda3d.core import (
     GraphicsWindow,
     InputDevice,
     InputDeviceManager,
+    LColor,
     Lens,
+    LRGBColor,
     LVecBase2i,
-    LVecBase3f,
-    LVecBase4f,
     ModelNode,
     MouseInterfaceNode,
     MouseWatcher,
@@ -362,11 +362,11 @@ class ShowBase(DirectObject):
     def init_shadow_trav(self) -> None: ...
     def restart(self, clusterSync: bool = False, cluster: Any = None) -> None: ...
     def shutdown(self) -> None: ...
-    def get_background_color(self, win: GraphicsEngine | None = None) -> LVecBase4f: ...
+    def get_background_color(self, win: GraphicsEngine | None = None) -> LColor: ...
     @overload
     def set_background_color(
         self,
-        r: LVecBase3f | LVecBase4f,
+        r: LColor | LRGBColor,
         g: None = None,
         b: None = None,
         a: float = ...,

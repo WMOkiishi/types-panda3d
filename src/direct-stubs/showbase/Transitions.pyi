@@ -8,7 +8,7 @@ from direct.interval import MetaInterval
 from direct.interval.Interval import Interval
 from direct.interval.LerpInterval import LerpColorInterval, LerpColorScaleInterval
 from panda3d._typing import Vec4f
-from panda3d.core import AsyncFuture, LVecBase3f, LVecBase4f, NodePath
+from panda3d.core import AsyncFuture, LColor, LVecBase3f, NodePath
 from panda3d.direct import CInterval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']
@@ -24,8 +24,8 @@ class Transitions:
     letterbox: NodePath | None
     fadeModel: NodePath | None
     imagePos: LVecBase3f
-    alphaOff: LVecBase4f
-    alphaOn: LVecBase4f
+    alphaOff: LColor
+    alphaOn: LColor
     lerpFunc: type[LerpColorScaleInterval] | type[LerpColorInterval]
     irisTaskName: str
     fadeTaskName: str

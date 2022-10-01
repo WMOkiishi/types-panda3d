@@ -4,10 +4,10 @@ from typing import Any, Union, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from direct._typing import Unused
-from panda3d.core import LVecBase4f, NodePath, TextFont, TextNode
+from panda3d.core import LColor, NodePath, TextFont, TextNode
 
 _Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
-_Color: TypeAlias = Union[LVecBase4f, tuple[float, float, float, float]]
+_Color: TypeAlias = Union[LColor, tuple[float, float, float, float]]
 _OrderedPair: TypeAlias = tuple[float, float]
 
 Plain: Final[Literal[1]]
@@ -29,10 +29,10 @@ class OnscreenText(NodePath[TextNode]):
     text_scale: _OrderedPair
     scale: _OrderedPair
     wordwrap: float
-    fg: LVecBase4f
-    bg: LVecBase4f
-    shadow: LVecBase4f
-    frame: LVecBase4f
+    fg: LColor
+    bg: LColor
+    shadow: LColor
+    frame: LColor
     align: _Alignment
     unicodeText: Literal[True]
     def __init__(

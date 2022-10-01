@@ -2,10 +2,10 @@ __all__ = ['DirectCheckButton']
 
 from typing import Any
 
-from panda3d.core import LVecBase4f, NodePath
+from panda3d.core import LColor, NodePath
 from .DirectButton import DirectButton
 
 class DirectCheckButton(DirectButton):
-    colors: LVecBase4f | None
+    colors: LColor | None
     def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
     def setIndicatorValue(self) -> None: ...
