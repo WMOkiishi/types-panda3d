@@ -186,8 +186,14 @@ def explicit_cast_to(t: TypeIndex, /) -> Iterator[TypeIndex]:
 
 
 def implicit_cast_from(t: TypeIndex, /) -> Iterator[TypeIndex]:
+    """Yield the indices of the types that can be implicitly cast
+    to the type with the given index.
+    """
     for w in flatten(map(get_python_wrappers, get_constructors(t))):
-        if idb.interrogate_wrapper_number_of_parameters(w) != 1:
+        max_arity = idb.interrogate_wrapper_number_of_parameters(w)
+        min_arity = sum(not idb.interrogate_wrapper_parameter_is_optional(w, n)
+                        for n in range(max_arity))
+        if min_arity > 1 or max_arity < 1:
             continue
         if (idb.interrogate_wrapper_parameter_name(w, 0)
                 not in _implicit_cast_param_names):
