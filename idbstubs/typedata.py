@@ -223,10 +223,7 @@ def make_param_type_replacement(cast_to: TypeIndex) -> str:
         if cast_from_names >= alias_of:
             cast_from_names -= alias_of
             cast_from_names.add(alias)
-    cast_from_name = ' | '.join(
-        sorted(cast_from_names, key=lambda s: (s == 'None', s))
-    )
-    return cast_from_name
+    return combine_types(*cast_from_names)
 
 
 @cache
