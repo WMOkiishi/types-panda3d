@@ -15,7 +15,7 @@ class RVASize(NamedTuple):
 
 class impdirtab(NamedTuple):
     lookup: int
-    timdat : int
+    timdat: int
     forward: int
     name: int
     impaddr: int

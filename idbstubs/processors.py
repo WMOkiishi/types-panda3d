@@ -31,8 +31,8 @@ DEFAULT_RETURNS: Final = {
 }
 RETURN_SELF: Final = [
     '__floordiv__', '__ifloordiv__', '__pow__', '__ipow__',
-     '__iadd__', '__isub__', '__imul__', '__itruediv__',
-     '__round__', '__floor__', '__ceil__',
+    '__iadd__', '__isub__', '__imul__', '__itruediv__',
+    '__round__', '__floor__', '__ceil__',
 ]
 
 

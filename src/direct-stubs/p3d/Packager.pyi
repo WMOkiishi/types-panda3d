@@ -249,7 +249,7 @@ class Packager:
     def addHost(
         self,
         host: str,
-        downloadUrl: str | None =None,
+        downloadUrl: str | None = None,
         descriptiveName: str | None = None,
         hostDir: str | None = None,
         mirrors: list[str] | None = None,

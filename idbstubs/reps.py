@@ -107,7 +107,7 @@ class Parameter:
         if self.type:
             s += ': ' + self.type
         if self.is_optional:
-            s += ' = ...'
+            s += ' = ...' if self.type else '=...'
         return s
 
     def get_dependencies(self) -> Iterator[str]:

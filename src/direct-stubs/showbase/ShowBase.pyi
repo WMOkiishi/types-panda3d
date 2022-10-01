@@ -529,7 +529,7 @@ class WindowControls:
         win: GraphicsEngine,
         cam: NodePath | None = None,
         camNode: Camera | None = None,
-        cam2d: NodePath | None =None,
+        cam2d: NodePath | None = None,
         mouseWatcher: MouseWatcher | None = None,
         mouseKeyboard: NodePath | None = None,
         closeCmd: Callable[[], object] = ...,

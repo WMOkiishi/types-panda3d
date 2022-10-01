@@ -73,7 +73,7 @@ class Actor(DirectObject, NodePath):
         def makeCopy(self) -> Actor.SubpartDef: ...
     def __init__(
         self,
-        models: dict[str, dict[str, NodePath | _Filename] | NodePath | _Filename] | NodePath | _Filename | None= None,
+        models: dict[str, dict[str, NodePath | _Filename] | NodePath | _Filename] | NodePath | _Filename | None = None,
         anims: dict[str, Mapping[str, str]] | Mapping[str, str] | None = None,
         other: Actor | None = None,
         copy: bool = True,
