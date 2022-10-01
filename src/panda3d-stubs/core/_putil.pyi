@@ -1900,7 +1900,7 @@ class ButtonHandle:
         """
         ...
     def get_ascii_equivalent(self) -> str:
-        """Returns the character code associated with the button, or '\0' if no ASCII
+        """Returns the character code associated with the button, or '\\0' if no ASCII
         code was associated.
         """
         ...

@@ -723,7 +723,7 @@ class TextProperties:
 
     This separate class exists in order to implement multiple different kinds
     of text appearing within one block.  The text string itself may reference a
-    TextProperties structure by name using the \1 and \2 tokens embedded within
+    TextProperties structure by name using the \\1 and \\2 tokens embedded within
     the string; each nested TextProperties structure modifies the appearance of
     subsequent text within the block.
     """
@@ -1235,26 +1235,26 @@ class TextPropertiesManager:
     by name from an embedded text string.
 
     A text string, as rendered by a TextNode, can contain embedded references
-    to one of the TextProperties defined here, by enclosing the name between \1
+    to one of the TextProperties defined here, by enclosing the name between \\1
     (ASCII 0x01) characters; this causes a "push" to the named state.  All text
-    following the closing \1 character will then be rendered in the new state.
-    The next \2 (ASCII 0x02) character will then restore the previous state for
+    following the closing \\1 character will then be rendered in the new state.
+    The next \\2 (ASCII 0x02) character will then restore the previous state for
     subsequent text.
 
-    For instance, "x\1up\1n\2 + y" indicates that the character "x" will be
+    For instance, "x\\1up\\1n\\2 + y" indicates that the character "x" will be
     rendered in the normal state, the character "n" will be rendered in the
     "up" state, and then " + y" will be rendered in the normal state again.
 
     This can also be used to define arbitrary models that can serve as embedded
     graphic images in a text paragraph.  This works similarly; the convention
     is to create a TextGraphic that describes the graphic image, and then
-    associate it here via the set_graphic() call.  Then "\5name\5" will embed
+    associate it here via the set_graphic() call.  Then "\\5name\\5" will embed
     the named graphic.
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_properties(self, name: str, properties: TextProperties) -> None:
         """Defines the TextProperties associated with the indicated name.  When the
-        name is subsequently encountered in text embedded between \1 characters in
+        name is subsequently encountered in text embedded between \\1 characters in
         a TextNode string, the following text will be rendered with these
         properties.
 
@@ -1293,7 +1293,7 @@ class TextPropertiesManager:
 
         `(self, name: str, graphic: TextGraphic)`:
         Defines the TextGraphic associated with the indicated name.  When the name
-        is subsequently encountered in text embedded between \5 characters in a
+        is subsequently encountered in text embedded between \\5 characters in a
         TextNode string, the specified graphic will be embedded in the text at that
         point.
 
@@ -2114,7 +2114,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         formatted by wordwrap rules.
 
         In earlier versions, this did not contain any embedded special characters
-        like \1 or \3; now it does.
+        like \\1 or \\3; now it does.
         """
         ...
     @overload
@@ -2126,7 +2126,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         `(self, line: str)`:
         Returns the width of a line of text of arbitrary characters.  The line
         should not include the newline character or any embedded control characters
-        like \1 or \3.
+        like \\1 or \\3.
 
         `(self, character: int)`:
         Returns the width of a single character of the font, or 0.0 if the
@@ -2178,7 +2178,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         formatted by wordwrap rules.
 
         In earlier versions, this did not contain any embedded special characters
-        like \1 or \3; now it does.
+        like \\1 or \\3; now it does.
         """
         ...
     def output(self, out: ostream) -> None: ...

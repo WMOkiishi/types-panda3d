@@ -1933,7 +1933,7 @@ class Multifile(ReferenceCount):
         represents binary data.  If the file is text data, it may have been
         processed by end-of-line conversion when it was added.  (But the actual
         bits in the multifile will represent the standard Unix end-of-line
-        convention, e.g.  \n instead of \r\n.)
+        convention, e.g.  \\n instead of \\r\\n.)
         """
         ...
     def get_index_end(self) -> int:

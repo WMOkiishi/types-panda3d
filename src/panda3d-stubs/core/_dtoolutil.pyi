@@ -774,7 +774,7 @@ class Filename:
         """Converts the filename from our generic Unix-like convention (forward
         slashes starting with the root at '/') to the corresponding filename in the
         local operating system (slashes in the appropriate direction, starting with
-        the root at C:\, for instance).  Returns the string representing the
+        the root at C:\\, for instance).  Returns the string representing the
         converted filename, but does not change the Filename itself.
 
         See also from_os_specific().
