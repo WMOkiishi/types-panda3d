@@ -63,7 +63,6 @@ class ConstPointerToArray_ushort(PointerToArrayBase_ushort):
 class PointerToArrayBase_ushort(PointerToBase_ReferenceCountedVector_ushort):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_ushort(PointerToVoid):
@@ -141,7 +140,6 @@ class AnimInterface:
         For instance, play(0, get_num_frames() * 2) will play the animation twice
         and then stop.
         """
-        ...
     @overload
     def play(self, _from: float, to: float) -> None: ...
     @overload
@@ -156,7 +154,6 @@ class AnimInterface:
         indefinitely.  If restart is true, the animation is restarted from the
         beginning; otherwise, it continues from the current frame.
         """
-        ...
     @overload
     def loop(self, restart: bool, _from: float, to: float) -> None: ...
     @overload
@@ -170,45 +167,37 @@ class AnimInterface:
         Loops the animation from the frame "from" to and including the frame "to",
         and then back in the opposite direction, indefinitely.
         """
-        ...
     @overload
     def pingpong(self, restart: bool, _from: float, to: float) -> None: ...
     def stop(self) -> None:
         """Stops a currently playing or looping animation right where it is.  The
         animation remains posed at the current frame.
         """
-        ...
     def pose(self, frame: float) -> None:
         """Sets the animation to the indicated frame and holds it there."""
-        ...
     def set_play_rate(self, play_rate: float) -> None:
         """Changes the rate at which the animation plays.  1.0 is the normal speed,
         2.0 is twice normal speed, and 0.5 is half normal speed.  0.0 is legal to
         pause the animation, and a negative value will play the animation
         backwards.
         """
-        ...
     def get_play_rate(self) -> float:
         """Returns the rate at which the animation plays.  See set_play_rate()."""
-        ...
     def get_frame_rate(self) -> float:
         """Returns the native frame rate of the animation.  This is the number of
         frames per second that will elapse when the play_rate is set to 1.0.  It is
         a fixed property of the animation and may not be adjusted by the user.
         """
-        ...
     def get_num_frames(self) -> int:
         """Returns the number of frames in the animation.  This is a property of the
         animation and may not be directly adjusted by the user (although it may
         change without warning with certain kinds of animations, since this is a
         virtual method that may be overridden).
         """
-        ...
     def get_frame(self) -> int:
         """Returns the current integer frame number.  This number will be in the range
         0 <= f < get_num_frames().
         """
-        ...
     def get_next_frame(self) -> int:
         """Returns the current integer frame number + 1, constrained to the range 0 <=
         f < get_num_frames().
@@ -217,7 +206,6 @@ class AnimInterface:
         get_frame() at the end of the animation.  If the play mode is any other
         value, this will wrap around to frame 0 at the end of the animation.
         """
-        ...
     def get_frac(self) -> float:
         """Returns the fractional part of the current frame.  Normally, this is in the
         range 0.0 <= f < 1.0, but in the one special case of an animation playing
@@ -226,7 +214,6 @@ class AnimInterface:
         It will always be true that get_full_frame() + get_frac() ==
         get_full_fframe().
         """
-        ...
     def get_full_frame(self) -> int:
         """Returns the current integer frame number.
 
@@ -237,7 +224,6 @@ class AnimInterface:
         Unlike the value returned by get_full_fframe(), this return value will
         never exceed the value passed to to_frame in the play() method.
         """
-        ...
     def get_full_fframe(self) -> float:
         """Returns the current floating-point frame number.
 
@@ -250,13 +236,11 @@ class AnimInterface:
         However, in this case the return value of get_full_frame() will be
         to_frame, not (to_frame + 1).
         """
-        ...
     def is_playing(self) -> bool:
         """Returns true if the animation is currently playing, false if it is stopped
         (e.g.  because stop() or pose() was called, or because it reached the end
         of the animation after play() was called).
         """
-        ...
     def output(self, out: ostream) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -291,7 +275,6 @@ class UpdateSeq:
     def seq(self) -> int: ...
     def __init__(self, copy: UpdateSeq = ...) -> None:
         """Creates an UpdateSeq in the 'initial' state."""
-        ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: UpdateSeq) -> bool: ...
@@ -307,27 +290,21 @@ class UpdateSeq:
     def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Resets the UpdateSeq to the 'initial' state."""
-        ...
     def is_initial(self) -> bool:
         """Returns true if the UpdateSeq is in the 'initial' state."""
-        ...
     def is_old(self) -> bool:
         """Returns true if the UpdateSeq is in the 'old' state."""
-        ...
     def is_fresh(self) -> bool:
         """Returns true if the UpdateSeq is in the 'fresh' state."""
-        ...
     def is_special(self) -> bool:
         """Returns true if the UpdateSeq is in any special states, i.e.  'initial',
         'old', or 'fresh'.
         """
-        ...
     def increment(self) -> UpdateSeq: ...
     def get_seq(self) -> int:
         """Returns the internal integer value associated with the UpdateSeq.  Useful
         for debugging only.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     isInitial = is_initial
     isOld = is_old
@@ -347,7 +324,6 @@ class TypedWritable(TypedObject):
         for the new object.  It is also called directly by the BamReader to re-read
         the data for an object that has been placed on the stream for an update.
         """
-        ...
     def mark_bam_modified(self) -> None:
         """Increments the bam_modified counter, so that this object will be
         invalidated and retransmitted on any open bam streams.  This should
@@ -355,12 +331,10 @@ class TypedWritable(TypedObject):
         when the object has been changed in a way that legitimately requires its
         retransmission to any connected clients.
         """
-        ...
     def get_bam_modified(self) -> UpdateSeq:
         """Returns the current bam_modified counter.  This counter is normally
         incremented automatically whenever the object is modified.
         """
-        ...
     @overload
     def encode_to_bam_stream(self) -> bytes:
         """`(self)`:
@@ -383,7 +357,6 @@ class TypedWritable(TypedObject):
         is more efficient to use the same BamWriter to serialize all of them
         together.
         """
-        ...
     @overload
     def encode_to_bam_stream(self, data: bytes, writer: BamWriter = ...) -> bool: ...
     markBamModified = mark_bam_modified
@@ -414,7 +387,6 @@ class TypedWritableReferenceCount(TypedWritable, ReferenceCount):
         management.  Note that the caller is still responsible for maintaining the
         reference count on the return value.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToTypedWritable = upcast_to_TypedWritable
@@ -444,44 +416,35 @@ class BamCacheRecord(TypedWritableReferenceCount):
         data pointer set, even though one may have been assigned to the original
         via set_data().
         """
-        ...
     def get_source_pathname(self) -> Filename:
         """Returns the full pathname to the source file that originally generated this
         cache request.  In some cases, for instance in the case of a of a multipage
         texture like "cube_#.png", this may not not a true filename on disk.
         """
-        ...
     def get_cache_filename(self) -> Filename:
         """Returns the name of the cache file as hashed from the source_pathname.
         This will be relative to the root of the cache directory, and it will not
         include any suffixes that may be appended to resolve hash conflicts.
         """
-        ...
     def get_source_timestamp(self) -> int:
         """Returns the file timestamp of the original source file that generated this
         cache record, if available.  In some cases the original file timestamp is
         not available, and this will return 0.
         """
-        ...
     def get_recorded_time(self) -> int:
         """Returns the time at which this particular record was recorded or updated."""
-        ...
     def get_num_dependent_files(self) -> int:
         """Returns the number of source files that contribute to the cache."""
-        ...
     def get_dependent_pathname(self, n: int) -> Filename:
         """Returns the full pathname of the nth source files that contributes to the
         cache.
         """
-        ...
     def dependents_unchanged(self) -> bool:
         """Returns true if all of the dependent files are still the same as when the
         cache was recorded, false otherwise.
         """
-        ...
     def clear_dependent_files(self) -> None:
         """Empties the list of files that contribute to the data in this record."""
-        ...
     @overload
     def add_dependent_file(self, pathname: Filepath) -> None:
         """`(self, pathname: Filename)`:
@@ -492,24 +455,20 @@ class BamCacheRecord(TypedWritableReferenceCount):
         `(self, file: VirtualFile)`:
         Variant of add_dependent_file that takes an already opened VirtualFile.
         """
-        ...
     @overload
     def add_dependent_file(self, file: VirtualFile) -> None: ...
     def has_data(self) -> bool:
         """Returns true if this cache record has an in-memory data object associated--
         that is, the object stored in the cache.
         """
-        ...
     def clear_data(self) -> None:
         """Removes the in-memory data object associated with this record, if any.
         This does not affect the on-disk representation of the record.
         """
-        ...
     def get_data(self) -> TypedWritable:
         """Returns a pointer to the data stored in the record, or NULL if there is no
         data.  The pointer is not removed from the record.
         """
-        ...
     @overload
     def set_data(self, ptr: TypedWritable, ref_ptr: ReferenceCount = ...) -> None:
         """`(self, ptr: TypedWritable)`:
@@ -535,7 +494,6 @@ class BamCacheRecord(TypedWritableReferenceCount):
         This variant on set_data() is provided to easily pass objects deriving from
         TypedWritableReferenceCount.
         """
-        ...
     @overload
     def set_data(self, ptr: TypedWritable, dummy: int) -> None: ...
     def output(self, out: ostream) -> None: ...
@@ -590,7 +548,6 @@ class BamCache:
         This represents the global flag.  Also see the individual cache_models,
         cache_textures, cache_compressed_textures flags.
         """
-        ...
     def get_active(self) -> bool:
         """Returns true if the BamCache is currently active, false if it is not.
         "active" means that the cache should be consulted automatically on loads,
@@ -600,31 +557,26 @@ class BamCache:
         This represents the global flag.  Also see the individual cache_models,
         cache_textures, cache_compressed_textures flags.
         """
-        ...
     def set_cache_models(self, flag: bool) -> None:
         """Indicates whether model files (e.g.  egg files and bam files) will be
         stored in the cache, as bam files.
         """
-        ...
     def get_cache_models(self) -> bool:
         """Returns whether model files (e.g.  egg files and bam files) will be stored
         in the cache, as bam files.
 
         This also returns false if get_active() is false.
         """
-        ...
     def set_cache_textures(self, flag: bool) -> None:
         """Indicates whether texture files will be stored in the cache, as
         uncompressed txo files.
         """
-        ...
     def get_cache_textures(self) -> bool:
         """Returns whether texture files (e.g.  egg files and bam files) will be
         stored in the cache, as txo files.
 
         This also returns false if get_active() is false.
         """
-        ...
     def set_cache_compressed_textures(self, flag: bool) -> None:
         """Indicates whether compressed texture files will be stored in the cache, as
         compressed txo files.  The compressed data may either be generated in-CPU,
@@ -638,27 +590,23 @@ class BamCache:
         will be cached in their compressed form.  If both are true, all textures
         will be cached, in their uncompressed or compressed form appropriately.
         """
-        ...
     def get_cache_compressed_textures(self) -> bool:
         """Returns whether compressed texture files will be stored in the cache, as
         compressed txo files.  See set_cache_compressed_textures().
 
         This also returns false if get_active() is false.
         """
-        ...
     def set_cache_compiled_shaders(self, flag: bool) -> None:
         """Indicates whether compiled shader programs will be stored in the cache, as
         binary .sho files.  This may not be supported by all shader languages or
         graphics renderers.
         """
-        ...
     def get_cache_compiled_shaders(self) -> bool:
         """Returns whether compiled shader programs will be stored in the cache, as
         binary .txo files.  See set_cache_compiled_shaders().
 
         This also returns false if get_active() is false.
         """
-        ...
     def set_root(self, root: Filepath) -> None:
         """Changes the current root pathname of the cache.  This specifies where the
         cache files are stored on disk.  This should name a directory that is on a
@@ -668,16 +616,12 @@ class BamCache:
         If the directory does not already exist, it will be created as a result of
         this call.
         """
-        ...
     def get_root(self) -> Filename:
         """Returns the current root pathname of the cache.  See set_root()."""
-        ...
     def set_flush_time(self, flush_time: int) -> None:
         """Specifies the time in seconds between automatic flushes of the cache index."""
-        ...
     def get_flush_time(self) -> int:
         """Returns the time in seconds between automatic flushes of the cache index."""
-        ...
     def set_cache_max_kbytes(self, max_kbytes: int) -> None:
         """Specifies the maximum size, in kilobytes, which the cache is allowed to
         grow to.  If a newly cached file would exceed this size, an older file is
@@ -688,25 +632,21 @@ class BamCache:
         exceed this value from time to time due to latency in checking between the
         processes.
         """
-        ...
     def get_cache_max_kbytes(self) -> int:
         """Returns the maximum size, in kilobytes, which the cache is allowed to grow
         to.  See set_cache_max_kbytes().
         """
-        ...
     def set_read_only(self, ro: bool) -> None:
         """Can be used to put the cache in read-only mode, or take it out of read-only
         mode.  Note that if you put it into read-write mode, and it discovers that
         it does not have write access, it will put itself right back into read-only
         mode.
         """
-        ...
     def get_read_only(self) -> bool:
         """Returns true if the cache is in read-only mode.  Normally, the cache starts
         in read-write mode.  It can put itself into read-only mode automatically if
         it discovers that it does not have write access to the cache.
         """
-        ...
     def lookup(self, source_filename: Filepath, cache_extension: str) -> BamCacheRecord:
         """Looks up a file in the cache.
 
@@ -723,38 +663,30 @@ class BamCache:
         loaded object; and finally, you should call store() to write the cached
         record to disk.
         """
-        ...
     def store(self, record: BamCacheRecord) -> bool:
         """Flushes a cache entry to disk.  You must have retrieved the cache record
         via a prior call to lookup(), and then stored the data via
         record->set_data().  Returns true on success, false on failure.
         """
-        ...
     def consider_flush_index(self) -> None:
         """Flushes the index if enough time has elapsed since the index was last
         flushed.
         """
-        ...
     def flush_index(self) -> None:
         """Ensures the index is written to disk."""
-        ...
     def list_index(self, out: ostream, indent_level: int = ...) -> None:
         """Writes the contents of the index to standard output."""
-        ...
     @staticmethod
     def get_global_ptr() -> BamCache:
         """Returns a pointer to the global BamCache object, which is used
         automatically by the ModelPool and TexturePool.
         """
-        ...
     @staticmethod
     def consider_flush_global_index() -> None:
         """If there is a global BamCache object, calls consider_flush_index() on it."""
-        ...
     @staticmethod
     def flush_global_index() -> None:
         """If there is a global BamCache object, calls flush_index() on it."""
-        ...
     setActive = set_active
     getActive = get_active
     setCacheModels = set_cache_models
@@ -874,19 +806,15 @@ class LoaderOptions:
         may be zero in the case of 2-d textures or cube maps, in which case the
         number of views can be inferred from the number of images found on disk.
         """
-        ...
     def get_texture_num_views(self) -> int:
         """See set_texture_num_views()."""
-        ...
     def set_auto_texture_scale(self, scale: _AutoTextureScale) -> None:
         """Set this flag to ATS_none, ATS_up, ATS_down, or ATS_pad to control how a
         texture is scaled from disk when it is subsequently loaded.  Set it to
         ATS_unspecified to restore the default behavior.
         """
-        ...
     def get_auto_texture_scale(self) -> _AutoTextureScale:
         """See set_auto_texture_scale()."""
-        ...
     def output(self, out: ostream) -> None: ...
     setFlags = set_flags
     getFlags = get_flags
@@ -934,17 +862,14 @@ class BamReader(BamEnums):
     def file_stdfloat_double(self) -> bool: ...
     def __init__(self, source: DatagramGenerator = ...) -> None:
         """The primary interface for a caller."""
-        ...
     def set_source(self, source: DatagramGenerator) -> None:
         """Changes the source of future datagrams for this BamReader.  This also
         implicitly calls init() if it has not already been called.
         """
-        ...
     def get_source(self) -> DatagramGenerator:
         """Returns the current source of the BamReader as set by set_source() or the
         constructor.
         """
-        ...
     def init(self) -> bool:
         """Initializes the BamReader prior to reading any objects from its source.
         This includes reading the Bam header.
@@ -952,21 +877,17 @@ class BamReader(BamEnums):
         This returns true if the BamReader successfully initialized, false
         otherwise.
         """
-        ...
     def get_filename(self) -> Filename:
         """If a BAM is a file, then the BamReader should contain the name of the file.
         This enables the reader to interpret pathnames in the BAM as relative to
         the directory containing the BAM.
         """
-        ...
     def get_loader_options(self) -> LoaderOptions:
         """Returns the LoaderOptions passed to the loader when the model was
         requested, if any.
         """
-        ...
     def set_loader_options(self, options: LoaderOptions) -> None:
         """Specifies the LoaderOptions for this BamReader."""
-        ...
     def read_object(self) -> TypedWritable:
         """Reads a single object from the Bam file.  If the object type is known, a
         new object of the appropriate type is created and returned; otherwise, NULL
@@ -987,12 +908,10 @@ class BamReader(BamEnums):
         This flavor of read_object() requires the caller to know what type of
         object it has received in order to properly manage the reference counts.
         """
-        ...
     def is_eof(self) -> bool:
         """Returns true if the reader has reached end-of-file, false otherwise.  This
         call is only valid after a call to read_object().
         """
-        ...
     def resolve(self) -> bool:
         """This may be called at any time during processing of the Bam file to resolve
         all the known pointers so far.  It is usually called at the end of the
@@ -1006,7 +925,6 @@ class BamReader(BamEnums):
         some objects are still outstanding (in which case you will need to call
         resolve() again later).
         """
-        ...
     def change_pointer(self, orig_pointer: TypedWritable, new_pointer: TypedWritable) -> bool:
         """Indicates that an object recently read from the bam stream should be
         replaced with a new object.  Any future occurrences of the original object
@@ -1016,38 +934,31 @@ class BamReader(BamEnums):
         if the object was not read from the stream (or if change_pointer had
         already been called on it).
         """
-        ...
     def get_file_major_ver(self) -> int:
         """Returns the major version number of the Bam file currently being read."""
-        ...
     def get_file_minor_ver(self) -> int:
         """Returns the minor version number of the Bam file currently being read."""
-        ...
     def get_file_endian(self) -> _BamEnums_BamEndian:
         """Returns the endian preference indicated by the Bam file currently being
         read.  This does not imply that every number is stored using the indicated
         convention, but individual objects may choose to respect this flag when
         recording data.
         """
-        ...
     def get_file_stdfloat_double(self) -> bool:
         """Returns true if the file stores all "standard" floats as 64-bit doubles, or
         false if they are 32-bit floats.  This is determined by the compilation
         flags of the version of Panda that generated this file.
         """
-        ...
     def get_current_major_ver(self) -> int:
         """Returns the major version number of Bam files supported by the current code
         base.  This must match get_file_major_ver() in order to successfully read a
         file.
         """
-        ...
     def get_current_minor_ver(self) -> int:
         """Returns the minor version number of Bam files supported by the current code
         base.  This must match or exceed get_file_minor_ver() in order to
         successfully read a file.
         """
-        ...
     def get_file_version(self) -> tuple[int, int]: ...
     @staticmethod
     def register_factory(handle: TypeHandle, func) -> None: ...
@@ -1112,12 +1023,10 @@ class BamWriter(BamEnums):
         """Changes the destination of future datagrams written by the BamWriter.  This
         also implicitly calls init() if it has not already been called.
         """
-        ...
     def get_target(self) -> DatagramSink:
         """Returns the current target of the BamWriter as set by set_target() or the
         constructor.
         """
-        ...
     def init(self) -> bool:
         """Initializes the BamWriter prior to writing any objects to its output
         stream.  This includes writing out the Bam header.
@@ -1125,13 +1034,11 @@ class BamWriter(BamEnums):
         This returns true if the BamWriter successfully initialized, false
         otherwise.
         """
-        ...
     def get_filename(self) -> Filename:
         """If a BAM is a file, then the BamWriter should contain the name of the file.
         This enables the writer to convert pathnames in the BAM to relative to the
         directory containing the BAM.
         """
-        ...
     def write_object(self, obj: TypedWritable) -> bool:
         """Writes a single object to the Bam file, so that the
         BamReader::read_object() can later correctly restore the object and all its
@@ -1149,65 +1056,53 @@ class BamWriter(BamEnums):
 
         Returns true if the object is successfully written, false otherwise.
         """
-        ...
     def has_object(self, obj: TypedWritable) -> bool:
         """Returns true if the object has previously been written (or at least
         requested to be written) to the bam file, or false if we've never heard of
         it before.
         """
-        ...
     def flush(self) -> None:
         """Ensures that all data written thus far is manifested on the output stream."""
-        ...
     def get_file_major_ver(self) -> int:
         """Returns the major version number of the Bam file currently being written."""
-        ...
     def get_file_minor_ver(self) -> int:
         """Returns the minor version number of the Bam file currently being written."""
-        ...
     def set_file_minor_ver(self, minor_ver: int) -> None:
         """Changes the minor .bam version to write.  This should be called before
         init().  Each Panda version has only a fairly narrow range of versions it
         is able to write; consult the .bam documentation for more information.
         """
-        ...
     def get_file_endian(self) -> _BamEnums_BamEndian:
         """Returns the endian preference indicated by the Bam file currently being
         written.  This does not imply that every number is stored using the
         indicated convention, but individual objects may choose to respect this
         flag when recording data.
         """
-        ...
     def get_file_stdfloat_double(self) -> bool:
         """Returns true if the file will store all "standard" floats as 64-bit
         doubles, or false if they are 32-bit floats.  This isn't runtime settable;
         it's based on the compilation flags of the version of Panda that generated
         this file.
         """
-        ...
     def get_file_texture_mode(self) -> _BamEnums_BamTextureMode:
         """Returns the BamTextureMode preference indicated by the Bam file currently
         being written.  Texture objects written to this Bam file will be encoded
         according to the specified mode.
         """
-        ...
     def set_file_texture_mode(self, file_texture_mode: _BamEnums_BamTextureMode) -> None:
         """Changes the BamTextureMode preference for the Bam file currently being
         written.  Texture objects written to this Bam file will be encoded
         according to the specified mode.
         """
-        ...
     def get_root_node(self) -> TypedWritable:
         """Returns the root node of the part of the scene graph we are currently
         writing out.  This is used for determining what to make NodePaths relative
         to.
         """
-        ...
     def set_root_node(self, root_node: TypedWritable) -> None:
         """Sets the root node of the part of the scene graph we are currently writing
         out.  NodePaths written to this bam file will be relative to this node.
         """
-        ...
     setTarget = set_target
     getTarget = get_target
     getFilename = get_filename
@@ -1619,23 +1514,18 @@ class BitArray:
     @staticmethod
     def all_on() -> BitArray:
         """Returns a BitArray with an infinite array of bits, all on."""
-        ...
     @staticmethod
     def all_off() -> BitArray:
         """Returns a BitArray whose bits are all off."""
-        ...
     @staticmethod
     def lower_on(on_bits: int) -> BitArray:
         """Returns a BitArray whose lower on_bits bits are on."""
-        ...
     @staticmethod
     def bit(index: int) -> BitArray:
         """Returns a BitArray with only the indicated bit on."""
-        ...
     @staticmethod
     def range(low_bit: int, size: int) -> BitArray:
         """Returns a BitArray whose size bits, beginning at low_bit, are on."""
-        ...
     @staticmethod
     def has_max_num_bits() -> bool: ...
     @staticmethod
@@ -1649,93 +1539,72 @@ class BitArray:
 
         This number may grow and/or shrink automatically as needed.
         """
-        ...
     def get_bit(self, index: int) -> bool:
         """Returns true if the nth bit is set, false if it is cleared.  It is valid
         for n to increase beyond get_num_bits(), but the return value
         get_num_bits() will always be the same.
         """
-        ...
     def set_bit(self, index: int) -> None:
         """Sets the nth bit on.  If n >= get_num_bits(), this automatically extends
         the array.
         """
-        ...
     def clear_bit(self, index: int) -> None:
         """Sets the nth bit off.  If n >= get_num_bits(), this automatically extends
         the array.
         """
-        ...
     def set_bit_to(self, index: int, value: bool) -> None:
         """Sets the nth bit either on or off, according to the indicated bool value."""
-        ...
     def get_highest_bits(self) -> bool:
         """Returns true if the infinite set of bits beyond get_num_bits() are all on,
         or false of they are all off.
         """
-        ...
     def is_zero(self) -> bool:
         """Returns true if the entire bitmask is zero, false otherwise."""
-        ...
     def is_all_on(self) -> bool:
         """Returns true if the entire bitmask is one, false otherwise."""
-        ...
     def extract(self, low_bit: int, size: int) -> int:
         """Returns a word that represents only the indicated range of bits within this
         BitArray, shifted to the least-significant position.  size must be <=
         get_num_bits_per_word().
         """
-        ...
     def store(self, value: int, low_bit: int, size: int) -> None:
         """Stores the indicated word into the indicated range of bits with this
         BitArray.
         """
-        ...
     def has_any_of(self, low_bit: int, size: int) -> bool:
         """Returns true if any bit in the indicated range is set, false otherwise."""
-        ...
     def has_all_of(self, low_bit: int, size: int) -> bool:
         """Returns true if all bits in the indicated range are set, false otherwise."""
-        ...
     def set_range(self, low_bit: int, size: int) -> None:
         """Sets the indicated range of bits on."""
-        ...
     def clear_range(self, low_bit: int, size: int) -> None:
         """Sets the indicated range of bits off."""
-        ...
     def set_range_to(self, value: bool, low_bit: int, size: int) -> None:
         """Sets the indicated range of bits to either on or off."""
-        ...
     def get_num_on_bits(self) -> int:
         """Returns the number of bits that are set to 1 in the array.  Returns -1 if
         there are an infinite number of 1 bits.
         """
-        ...
     def get_num_off_bits(self) -> int:
         """Returns the number of bits that are set to 0 in the array.  Returns -1 if
         there are an infinite number of 0 bits.
         """
-        ...
     def get_lowest_on_bit(self) -> int:
         """Returns the index of the lowest 1 bit in the array.  Returns -1 if there
         are no 1 bits.
         """
-        ...
     def get_lowest_off_bit(self) -> int:
         """Returns the index of the lowest 0 bit in the array.  Returns -1 if there
         are no 0 bits.
         """
-        ...
     def get_highest_on_bit(self) -> int:
         """Returns the index of the highest 1 bit in the array.  Returns -1 if there
         are no 1 bits or if there an infinite number of 1 bits.
         """
-        ...
     def get_highest_off_bit(self) -> int:
         """Returns the index of the highest 0 bit in the array.  Returns -1 if there
         are no 0 bits or if there an infinite number of 1 bits.
         """
-        ...
     def get_next_higher_different_bit(self, low_bit: int) -> int:
         """Returns the index of the next bit in the array, above low_bit, whose value
         is different that the value of low_bit.  Returns low_bit again if all bits
@@ -1743,61 +1612,49 @@ class BitArray:
 
         This can be used to quickly iterate through all of the bits in the array.
         """
-        ...
     def get_num_words(self) -> int:
         """Returns the number of possibly-unique words stored in the array."""
-        ...
     def get_word(self, n: int) -> BitMask_uint32_t_32 | BitMask_uint64_t_64:
         """Returns the nth word in the array.  It is valid for n to be greater than
         get_num_words(), but the return value beyond get_num_words() will always be
         the same.
         """
-        ...
     def set_word(self, n: int, value: int) -> None:
         """Replaces the nth word in the array.  If n >= get_num_words(), this
         automatically extends the array.
         """
-        ...
     def invert_in_place(self) -> None:
         """Inverts all the bits in the BitArray.  This is equivalent to array =
         ~array.
         """
-        ...
     def has_bits_in_common(self, other: BitArray | SparseArray) -> bool:
         """Returns true if this BitArray has any "one" bits in common with the other
         one, false otherwise.
 
         This is equivalent to (array & other) != 0, but may be faster.
         """
-        ...
     def clear(self) -> None:
         """Sets all the bits in the BitArray off."""
-        ...
     def output(self, out: ostream) -> None:
         """Writes the BitArray out as a hex number.  For a BitArray, this is always
         the same as output_hex(); it's too confusing for the output format to
         change back and forth at runtime.
         """
-        ...
     def output_binary(self, out: ostream, spaces_every: int = ...) -> None:
         """Writes the BitArray out as a binary number, with spaces every four bits."""
-        ...
     def output_hex(self, out: ostream, spaces_every: int = ...) -> None:
         """Writes the BitArray out as a hexadecimal number, with spaces every four
         digits.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Writes the BitArray out as a binary or a hex number, according to the
         number of bits.
         """
-        ...
     def compare_to(self, other: BitArray | SparseArray) -> int:
         """Returns a number less than zero if this BitArray sorts before the indicated
         other BitArray, greater than zero if it sorts after, or 0 if they are
         equivalent.  This is based on the same ordering defined by operator <.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     allOn = all_on
@@ -1870,7 +1727,6 @@ class ButtonHandle:
         should use either the static KeyboardButton/MouseButton getters or
         ButtonRegistry::register_button().
         """
-        ...
     @overload
     def __init__(self, index: int) -> None: ...
     @overload
@@ -1887,23 +1743,18 @@ class ButtonHandle:
         number less than 0 if this type sorts before the other one, greater than
         zero if it sorts after, 0 if they are equivalent.
         """
-        ...
     def get_hash(self) -> int:
         """Returns a hash code suitable for phash_map."""
-        ...
     def get_name(self) -> str:
         """Returns the name of the button."""
-        ...
     def has_ascii_equivalent(self) -> bool:
         """Returns true if the button was created with an ASCII equivalent code (e.g.
         for a standard keyboard button).
         """
-        ...
     def get_ascii_equivalent(self) -> str:
         """Returns the character code associated with the button, or '\\0' if no ASCII
         code was associated.
         """
-        ...
     def get_alias(self) -> ButtonHandle:
         """Returns the alias (alternate name) associated with the button, if any, or
         ButtonHandle::none() if the button has no alias.
@@ -1912,7 +1763,6 @@ class ButtonHandle:
         can refer to the same alias.  The alias should be the more general name for
         the button, for instance, shift is an alias for lshift, but not vice-versa.
         """
-        ...
     def matches(self, other: ButtonHandle) -> bool:
         """Returns true if this ButtonHandle is the same as the other one, or if the
         other one is an alias for this one.  (Does not return true if this button
@@ -1920,7 +1770,6 @@ class ButtonHandle:
 
         This is a more general comparison than operator ==.
         """
-        ...
     def get_index(self) -> int:
         """Returns the integer index associated with this ButtonHandle.  Each
         different ButtonHandle will have a different index.  However, you probably
@@ -1928,7 +1777,6 @@ class ButtonHandle:
         opaque classes.  This is provided for the convenience of non-C++ scripting
         languages to build a hashtable of ButtonHandles.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     @staticmethod
     def none() -> ButtonHandle: ...
@@ -1954,23 +1802,19 @@ class ButtonRegistry:
         """Finds a ButtonHandle in the registry matching the indicated name.  If there
         is no such ButtonHandle, registers a new one and returns it.
         """
-        ...
     def find_button(self, name: str) -> ButtonHandle:
         """Finds a ButtonHandle in the registry matching the indicated name.  If there
         is no such ButtonHandle, returns ButtonHandle::none().
         """
-        ...
     def find_ascii_button(self, ascii_equivalent: str) -> ButtonHandle:
         """Finds a ButtonHandle in the registry matching the indicated ASCII
         equivalent character.  If there is no such ButtonHandle, returns
         ButtonHandle::none().
         """
-        ...
     def write(self, out: ostream) -> None: ...
     @staticmethod
     def ptr() -> ButtonRegistry:
         """Returns the pointer to the global ButtonRegistry object."""
-        ...
     getButton = get_button
     findButton = find_button
     findAsciiButton = find_ascii_button
@@ -1985,10 +1829,8 @@ class ButtonMap(TypedReferenceCount):
     def __init__(self, __param0: ButtonMap = ...) -> None: ...
     def get_num_buttons(self) -> int:
         """Returns the number of buttons that this button mapping specifies."""
-        ...
     def get_raw_button(self, i: int) -> ButtonHandle:
         """Returns the underlying raw button associated with the nth button."""
-        ...
     @overload
     def get_mapped_button(self, raw: ButtonHandle) -> ButtonHandle:
         """`(self, raw: ButtonHandle)`; `(self, raw_name: str)`:
@@ -2000,7 +1842,6 @@ class ButtonMap(TypedReferenceCount):
         Returns the nth mapped button, meaning the button that the nth raw button
         is mapped to.
         """
-        ...
     @overload
     def get_mapped_button(self, i: int) -> ButtonHandle: ...
     @overload
@@ -2019,7 +1860,6 @@ class ButtonMap(TypedReferenceCount):
         Returns the label associated with the nth mapped button, meaning the button
         that the nth raw button is mapped to.
         """
-        ...
     @overload
     def get_mapped_button_label(self, i: int) -> str: ...
     @overload
@@ -2059,12 +1899,10 @@ class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
     def cache_ref_count(self) -> int: ...
     def get_cache_ref_count(self) -> int:
         """Returns the current reference count."""
-        ...
     def cache_ref(self) -> None:
         """Explicitly increments the cache reference count and the normal reference
         count simultaneously.
         """
-        ...
     def cache_unref(self) -> bool:
         """Explicitly decrements the cache reference count and the normal reference
         count simultaneously.
@@ -2072,12 +1910,10 @@ class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
         The return value is true if the new reference count is nonzero, false if it
         is zero.
         """
-        ...
     def test_ref_count_integrity(self) -> bool:
         """Does some easy checks to make sure that the reference count isn't
         completely bogus.
         """
-        ...
     getCacheRefCount = get_cache_ref_count
     cacheRef = cache_ref
     cacheUnref = cache_unref
@@ -2097,7 +1933,6 @@ class CallbackData(TypedObject):
         """You should make this call during the callback if you want to continue the
         normal function that would have been done in the absence of a callback.
         """
-        ...
 
 class PythonCallbackObject(CallbackObject):
     """This is a specialization on CallbackObject to allow a callback to directly
@@ -2112,10 +1947,8 @@ class PythonCallbackObject(CallbackObject):
         """Replaces the function that is called for the callback.  runs.  The
         parameter should be a Python callable object.
         """
-        ...
     def get_function(self) -> Callable:
         """Returns the function that is called for the callback."""
-        ...
     setFunction = set_function
     getFunction = get_function
 
@@ -2219,10 +2052,8 @@ class ClockObject(ReferenceCount):
         M_slave - the clock does not advance, but relies on the user to call
         set_frame_time() and/or set_frame_count() each frame.
         """
-        ...
     def get_mode(self) -> _ClockObject_Mode:
         """Returns the current mode of the clock.  See set_mode()."""
-        ...
     def get_frame_time(self, current_thread: Thread = ...) -> float:
         """Returns the time in seconds as of the last time tick() was called
         (typically, this will be as of the start of the current frame).
@@ -2231,7 +2062,6 @@ class ClockObject(ReferenceCount):
         and animation contexts, since it's important that all of the animation for
         a given frame remains in sync with each other.
         """
-        ...
     def get_real_time(self) -> float:
         """Returns the actual number of seconds elapsed since the ClockObject was
         created, or since it was last reset.  This is useful for doing real timing
@@ -2241,7 +2071,6 @@ class ClockObject(ReferenceCount):
         it may tend to drift over the long haul.  If more accurate timekeeping is
         needed over a long period of time, use get_long_time() instead.
         """
-        ...
     def get_long_time(self) -> float:
         """Returns the actual number of seconds elapsed since the ClockObject was
         created, or since it was last reset.
@@ -2252,46 +2081,38 @@ class ClockObject(ReferenceCount):
         On Windows, for instace, this is only accurate to within about 55
         milliseconds.
         """
-        ...
     def reset(self) -> None:
         """Simultaneously resets both the time and the frame count to zero."""
-        ...
     def set_real_time(self, time: float) -> None:
         """Resets the clock to the indicated time.  This changes only the real time of
         the clock as reported by get_real_time(), but does not immediately change
         the time reported by get_frame_time()--that will change after the next call
         to tick().  Also see reset(), set_frame_time(), and set_frame_count().
         """
-        ...
     def set_frame_time(self, time: float, current_thread: Thread = ...) -> None:
         """Changes the time as reported for the current frame to the indicated time.
         Normally, the way to adjust the frame time is via tick(); this function is
         provided only for occasional special adjustments.
         """
-        ...
     def set_frame_count(self, frame_count: int, current_thread: Thread = ...) -> None:
         """Resets the number of frames counted to the indicated number.  Also see
         reset(), set_real_time(), and set_frame_time().
         """
-        ...
     def get_frame_count(self, current_thread: Thread = ...) -> int:
         """Returns the number of times tick() has been called since the ClockObject
         was created, or since it was last reset.  This is generally the number of
         frames that have been rendered.
         """
-        ...
     def get_net_frame_rate(self, current_thread: Thread = ...) -> float:
         """Returns the average frame rate since the last reset.  This is simply the
         total number of frames divided by the total elapsed time.  This reports the
         virtual frame rate if the clock is in (or has been in) M_non_real_time
         mode.
         """
-        ...
     def get_dt(self, current_thread: Thread = ...) -> float:
         """Returns the elapsed time for the previous frame: the number of seconds
         elapsed between the last two calls to tick().
         """
-        ...
     def set_dt(self, dt: float) -> None:
         """In non-real-time mode, sets the number of seconds that should appear to
         elapse between frames.  In forced mode or limited mode, sets our target dt.
@@ -2300,7 +2121,6 @@ class ClockObject(ReferenceCount):
         Also see set_frame_rate(), which is a different way to specify the same
         quantity.
         """
-        ...
     def set_frame_rate(self, frame_rate: float) -> None:
         """In non-real-time mode, sets the number of frames per second that we should
         appear to be running.  In forced mode or limited mode, sets our target
@@ -2308,12 +2128,10 @@ class ClockObject(ReferenceCount):
 
         Also see set_dt(), which is a different way to specify the same quantity.
         """
-        ...
     def get_max_dt(self) -> float:
         """Returns the current maximum allowable time elapsed between any two frames.
         See set_max_dt().
         """
-        ...
     def set_max_dt(self, max_dt: float) -> None:
         """Sets a limit on the value returned by get_dt().  If this value is less than
         zero, no limit is imposed; otherwise, this is the maximum value that will
@@ -2326,7 +2144,6 @@ class ClockObject(ReferenceCount):
         This is generally used to guarantee reasonable behavior even in the
         presence of a very slow or chuggy frame rame.
         """
-        ...
     def get_degrade_factor(self) -> float:
         """In degrade mode, returns the ratio by which the performance is degraded.  A
         value of 2.0 causes the clock to be slowed down by a factor of two
@@ -2334,7 +2151,6 @@ class ClockObject(ReferenceCount):
 
         This has no effect if mode is not M_degrade.
         """
-        ...
     def set_degrade_factor(self, degrade_factor: float) -> None:
         """In degrade mode, sets the ratio by which the performance is degraded.  A
         value of 2.0 causes the clock to be slowed down by a factor of two
@@ -2342,7 +2158,6 @@ class ClockObject(ReferenceCount):
 
         This has no effect if mode is not M_degrade.
         """
-        ...
     def set_average_frame_rate_interval(self, time: float) -> None:
         """Specifies the interval of time (in seconds) over which
         get_average_frame_rate() averages the number of frames per second to
@@ -2352,24 +2167,20 @@ class ClockObject(ReferenceCount):
 
         Setting this to zero disables the computation of get_average_frame_rate().
         """
-        ...
     def get_average_frame_rate_interval(self) -> float:
         """Returns the interval of time (in seconds) over which
         get_average_frame_rate() averages the number of frames per second to
         compute the frame rate.
         """
-        ...
     def get_average_frame_rate(self, current_thread: Thread = ...) -> float:
         """Returns the average frame rate in number of frames per second over the last
         get_average_frame_rate_interval() seconds.  This measures the virtual frame
         rate if the clock is in M_non_real_time mode.
         """
-        ...
     def get_max_frame_duration(self, current_thread: Thread = ...) -> float:
         """Returns the maximum frame duration over the last
         get_average_frame_rate_interval() seconds.
         """
-        ...
     def calc_frame_rate_deviation(self, current_thread: Thread = ...) -> float:
         """Returns the standard deviation of the frame times of the frames rendered
         over the past get_average_frame_rate_interval() seconds.  This number gives
@@ -2381,14 +2192,12 @@ class ClockObject(ReferenceCount):
         instance, because the camera has just rotated from looking at a simple
         scene to looking at a more complex scene.
         """
-        ...
     def tick(self, current_thread: Thread = ...) -> None:
         """Instructs the clock that a new frame has just begun.  In normal, real-time
         mode, get_frame_time() will henceforth report the time as of this instant
         as the current start-of-frame time.  In non-real-time mode,
         get_frame_time() will be incremented by the value of dt.
         """
-        ...
     def sync_frame_time(self, current_thread: Thread = ...) -> None:
         """Resets the frame time to the current real time.  This is similar to tick(),
         except that it does not advance the frame counter and does not affect dt.
@@ -2398,7 +2207,6 @@ class ClockObject(ReferenceCount):
         In non-real-time mode, this function has no effect (because in this mode
         all frames take the same length of time).
         """
-        ...
     def check_errors(self, current_thread: Thread) -> bool:
         """Returns true if a clock error was detected since the last time
         check_errors() was called.  A clock error means that something happened, an
@@ -2406,13 +2214,11 @@ class ClockObject(ReferenceCount):
         somewhat suspect, and an application may wish to resynchronize with any
         external clocks.
         """
-        ...
     @staticmethod
     def get_global_clock() -> ClockObject:
         """Returns a pointer to the global ClockObject.  This is the ClockObject that
         most code should use for handling scene graph rendering and animation.
         """
-        ...
     setMode = set_mode
     getMode = get_mode
     getFrameTime = get_frame_time
@@ -2446,10 +2252,8 @@ class CopyOnWriteObject(CachedTypedWritableReferenceCount):
     """
     def cache_ref(self) -> None:
         """@see CachedTypedWritableReferenceCount::cache_ref()"""
-        ...
     def cache_unref(self) -> bool:
         """@see CachedTypedWritableReferenceCount::cache_unref()"""
-        ...
     cacheRef = cache_ref
     cacheUnref = cache_unref
 
@@ -2470,12 +2274,10 @@ class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
         `(self, data: bytes)`:
         Initializes the buffer with the given data.
         """
-        ...
     def upcast_to_DatagramSink(self) -> DatagramSink: ...
     def upcast_to_DatagramGenerator(self) -> DatagramGenerator: ...
     def clear(self) -> None:
         """Clears the internal buffer."""
-        ...
     upcastToDatagramSink = upcast_to_DatagramSink
     upcastToDatagramGenerator = upcast_to_DatagramGenerator
 
@@ -2495,19 +2297,16 @@ class DatagramInputFile(DatagramGenerator):
         on failure.  The DatagramInputFile does not take ownership of the stream;
         you are responsible for closing or deleting it when you are done.
         """
-        ...
     @overload
     def open(self, filename: Filepath) -> bool: ...
     @overload
     def open(self, _in: istream, filename: Filepath = ...) -> bool: ...
     def get_stream(self) -> istream:
         """Returns the istream represented by the input file."""
-        ...
     def close(self) -> None:
         """Closes the file.  This is also implicitly done when the DatagramInputFile
         destructs.
         """
-        ...
     getStream = get_stream
 
 class DatagramOutputFile(DatagramSink):
@@ -2532,7 +2331,6 @@ class DatagramOutputFile(DatagramSink):
         failure.  The DatagramOutputFile does not take ownership of the stream; you
         are responsible for closing or deleting it when you are done.
         """
-        ...
     @overload
     def open(self, filename: Filepath) -> bool: ...
     @overload
@@ -2541,14 +2339,12 @@ class DatagramOutputFile(DatagramSink):
         """Closes the file.  This is also implicitly done when the DatagramOutputFile
         destructs.
         """
-        ...
     def write_header(self, header: str) -> bool:
         """Writes a sequence of bytes to the beginning of the datagram file.  This may
         be called any number of times after the file has been opened and before the
         first datagram is written.  It may not be called once the first datagram is
         written.
         """
-        ...
     writeHeader = write_header
 
 class DoubleBitMask_BitMaskNative:
@@ -2804,14 +2600,12 @@ class GamepadButton:
     @staticmethod
     def trigger() -> ButtonHandle:
         """Flight stick buttons, takes zero-based index.  First is always trigger."""
-        ...
     @staticmethod
     def joystick(button_number: int) -> ButtonHandle:
         """Returns the ButtonHandle associated with the particular numbered joystick
         button (zero-based), if there is one, or ButtonHandle::none() if there is
         not.
         """
-        ...
     @staticmethod
     def hat_up() -> ButtonHandle: ...
     @staticmethod
@@ -2848,7 +2642,6 @@ class KeyboardButton:
         """Returns the ButtonHandle associated with the particular ASCII character, if
         there is one, or ButtonHandle::none() if there is not.
         """
-        ...
     @staticmethod
     def space() -> ButtonHandle: ...
     @staticmethod
@@ -2886,7 +2679,6 @@ class KeyboardButton:
     @staticmethod
     def f13() -> ButtonHandle:
         """PC keyboards don't have these four buttons, but Macs do."""
-        ...
     @staticmethod
     def f14() -> ButtonHandle: ...
     @staticmethod
@@ -2914,11 +2706,9 @@ class KeyboardButton:
     @staticmethod
     def _del() -> ButtonHandle:
         """delete is a C++ keyword."""
-        ...
     @staticmethod
     def help() -> ButtonHandle:
         """delete is a C++ keyword."""
-        ...
     @staticmethod
     def menu() -> ButtonHandle: ...
     @staticmethod
@@ -2992,26 +2782,22 @@ class ModifierButtons:
         and is also on the new lists.  Any other buttons will get reset to the
         default state of "up".
         """
-        ...
     def matches(self, other: ModifierButtons) -> bool:
         """Returns true if the set of buttons indicated as down by this
         ModifierButtons object is the same set of buttons indicated as down by the
         other ModifierButtons object.  The buttons indicated as up are not
         relevant.
         """
-        ...
     def add_button(self, button: ButtonHandle) -> bool:
         """Adds the indicated button to the set of buttons that will be monitored for
         upness and downness.  Returns true if the button was added, false if it was
         already being monitored or if too many buttons are currently being
         monitored.
         """
-        ...
     def has_button(self, button: ButtonHandle) -> bool:
         """Returns true if the indicated button is in the set of buttons being
         monitored, false otherwise.
         """
-        ...
     def remove_button(self, button: ButtonHandle) -> bool:
         """Removes the indicated button from the set of buttons being monitored.
         Returns true if the button was removed, false if it was not being monitored
@@ -3020,35 +2806,29 @@ class ModifierButtons:
         Unlike the other methods, you cannot remove a button by removing its alias;
         you have to remove exactly the button itself.
         """
-        ...
     def get_num_buttons(self) -> int:
         """Returns the number of buttons that the ModifierButtons object is monitoring
         (e.g.  the number of buttons passed to add_button()).
         """
-        ...
     def get_button(self, index: int) -> ButtonHandle:
         """Returns the nth button that the ModifierButtons object is monitoring (the
         nth button passed to add_button()).  This must be in the range 0 <= index <
         get_num_buttons().
         """
-        ...
     def button_down(self, button: ButtonHandle) -> bool:
         """Records that a particular button has been pressed.  If the given button is
         one of the buttons that is currently being monitored, this will update the
         internal state appropriately; otherwise, it will do nothing.  Returns true
         if the button is one that was monitored, or false otherwise.
         """
-        ...
     def button_up(self, button: ButtonHandle) -> bool:
         """Records that a particular button has been released.  If the given button is
         one of the buttons that is currently being monitored, this will update the
         internal state appropriately; otherwise, it will do nothing.  Returns true
         if the button is one that was monitored, or false otherwise.
         """
-        ...
     def all_buttons_up(self) -> None:
         """Marks all monitored buttons as being in the "up" state."""
-        ...
     @overload
     def is_down(self, button: ButtonHandle) -> bool:
         """`(self, button: ButtonHandle)`:
@@ -3059,27 +2839,22 @@ class ModifierButtons:
         Returns true if the indicated button is known to be down, or false if it is
         known to be up.
         """
-        ...
     @overload
     def is_down(self, index: int) -> bool: ...
     def is_any_down(self) -> bool:
         """Returns true if any of the tracked button are known to be down, or false if
         all of them are up.
         """
-        ...
     def get_prefix(self) -> str:
         """Returns a string which can be used to prefix any button name or event name
         with the unique set of modifier buttons currently being held.
         """
-        ...
     def output(self, out: ostream) -> None:
         """Writes a one-line summary of the buttons known to be down."""
-        ...
     def write(self, out: ostream) -> None:
         """Writes a multi-line summary including all of the buttons being monitored
         and which ones are known to be down.
         """
-        ...
     def get_buttons(self) -> tuple[ButtonHandle, ...]: ...
     setButtonList = set_button_list
     addButton = add_button
@@ -3107,57 +2882,46 @@ class MouseButton:
         button (zero-based), if there is one, or ButtonHandle::none() if there is
         not.
         """
-        ...
     @staticmethod
     def one() -> ButtonHandle:
         """Returns the ButtonHandle associated with the first mouse button."""
-        ...
     @staticmethod
     def two() -> ButtonHandle:
         """Returns the ButtonHandle associated with the second mouse button."""
-        ...
     @staticmethod
     def three() -> ButtonHandle:
         """Returns the ButtonHandle associated with the third mouse button."""
-        ...
     @staticmethod
     def four() -> ButtonHandle:
         """Returns the ButtonHandle associated with the fourth mouse button."""
-        ...
     @staticmethod
     def five() -> ButtonHandle:
         """Returns the ButtonHandle associated with the fifth mouse button."""
-        ...
     @staticmethod
     def wheel_up() -> ButtonHandle:
         """Returns the ButtonHandle generated when the mouse wheel is rolled one notch
         upwards.
         """
-        ...
     @staticmethod
     def wheel_down() -> ButtonHandle:
         """Returns the ButtonHandle generated when the mouse wheel is rolled one notch
         downwards.
         """
-        ...
     @staticmethod
     def wheel_left() -> ButtonHandle:
         """Returns the ButtonHandle generated when the mouse is scrolled to the left.
         Usually, you'll only find the horizontal scroll on laptops.
         """
-        ...
     @staticmethod
     def wheel_right() -> ButtonHandle:
         """Returns the ButtonHandle generated when the mouse is scrolled to the right.
         Usually, you'll only find the horizontal scroll on laptops.
         """
-        ...
     @staticmethod
     def is_mouse_button(button: ButtonHandle) -> bool:
         """Returns true if the indicated ButtonHandle is a mouse button, false if it
         is some other kind of button.
         """
-        ...
     wheelUp = wheel_up
     wheelDown = wheel_down
     wheelLeft = wheel_left
@@ -3195,7 +2959,6 @@ class PointerData:
         """If this returns false, the pointer is not currently present in the window
         and the values returned by get_x() and get_y() may not be meaningful.
         """
-        ...
     getX = get_x
     getY = get_y
     getInWindow = get_in_window
@@ -3233,7 +2996,6 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     RCache: Final[Literal[2]]
     def get_node_ref_count(self) -> int:
         """Returns the current reference count."""
-        ...
     def node_ref(self) -> None:
         """Explicitly increments the reference count.
 
@@ -3242,7 +3004,6 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
         of fiddling with the object.  An object might be const in other ways, but
         we still need to accurately count the number of references to it.
         """
-        ...
     def node_unref(self) -> bool:
         """Explicitly decrements the node reference count and the normal reference
         count simultaneously.
@@ -3250,7 +3011,6 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
         The return value is true if the new reference count is nonzero, false if it
         is zero.
         """
-        ...
     def get_referenced_bits(self) -> int:
         """Returns the union of the values defined in the Referenced enum that
         represents the various things that appear to be holding a pointer to this
@@ -3259,7 +3019,6 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
         If R_node is included, at least one node is holding a pointer; if R_cache
         is included, at least one cache element is.
         """
-        ...
     getNodeRefCount = get_node_ref_count
     nodeRef = node_ref
     nodeUnref = node_unref
@@ -3301,23 +3060,18 @@ class SparseArray:
     @staticmethod
     def all_on() -> SparseArray:
         """Returns a SparseArray with an infinite array of bits, all on."""
-        ...
     @staticmethod
     def all_off() -> SparseArray:
         """Returns a SparseArray whose bits are all off."""
-        ...
     @staticmethod
     def lower_on(on_bits: int) -> SparseArray:
         """Returns a SparseArray whose lower on_bits bits are on."""
-        ...
     @staticmethod
     def bit(index: int) -> SparseArray:
         """Returns a SparseArray with only the indicated bit on."""
-        ...
     @staticmethod
     def range(low_bit: int, size: int) -> SparseArray:
         """Returns a SparseArray whose size bits, beginning at low_bit, are on."""
-        ...
     @staticmethod
     def has_max_num_bits() -> Literal[False]:
         """Returns true if there is a maximum number of bits that may be stored in
@@ -3328,7 +3082,6 @@ class SparseArray:
         bits.  This method is defined so generic programming algorithms can use
         BitMask or SparseArray interchangeably.
         """
-        ...
     @staticmethod
     def get_max_num_bits() -> int:
         """If get_max_num_bits() returned true, this method may be called to return
@@ -3339,7 +3092,6 @@ class SparseArray:
         number of bits.  This method is defined so generic programming algorithms
         can use BitMask or SparseArray interchangeably.
         """
-        ...
     def get_num_bits(self) -> int:
         """Returns the current number of possibly different bits in this array.  There
         are actually an infinite number of bits, but every bit higher than this bit
@@ -3347,82 +3099,63 @@ class SparseArray:
 
         This number may grow and/or shrink automatically as needed.
         """
-        ...
     def get_bit(self, index: int) -> bool:
         """Returns true if the nth bit is set, false if it is cleared.  It is valid
         for n to increase beyond get_num_bits(), but the return value
         get_num_bits() will always be the same.
         """
-        ...
     def set_bit(self, index: int) -> None:
         """Sets the nth bit on.  If n >= get_num_bits(), this automatically extends
         the array.
         """
-        ...
     def clear_bit(self, index: int) -> None:
         """Sets the nth bit off.  If n >= get_num_bits(), this automatically extends
         the array.
         """
-        ...
     def set_bit_to(self, index: int, value: bool) -> None:
         """Sets the nth bit either on or off, according to the indicated bool value."""
-        ...
     def get_highest_bits(self) -> bool:
         """Returns true if the infinite set of bits beyond get_num_bits() are all on,
         or false of they are all off.
         """
-        ...
     def is_zero(self) -> bool:
         """Returns true if the entire bitmask is zero, false otherwise."""
-        ...
     def is_all_on(self) -> bool:
         """Returns true if the entire bitmask is one, false otherwise."""
-        ...
     def has_any_of(self, low_bit: int, size: int) -> bool:
         """Returns true if any bit in the indicated range is set, false otherwise."""
-        ...
     def has_all_of(self, low_bit: int, size: int) -> bool:
         """Returns true if all bits in the indicated range are set, false otherwise."""
-        ...
     def set_range(self, low_bit: int, size: int) -> None:
         """Sets the indicated range of bits on."""
-        ...
     def clear_range(self, low_bit: int, size: int) -> None:
         """Sets the indicated range of bits off."""
-        ...
     def set_range_to(self, value: bool, low_bit: int, size: int) -> None:
         """Sets the indicated range of bits to either on or off."""
-        ...
     def get_num_on_bits(self) -> int:
         """Returns the number of bits that are set to 1 in the array.  Returns -1 if
         there are an infinite number of 1 bits.
         """
-        ...
     def get_num_off_bits(self) -> int:
         """Returns the number of bits that are set to 0 in the array.  Returns -1 if
         there are an infinite number of 0 bits.
         """
-        ...
     def get_lowest_on_bit(self) -> int:
         """Returns the index of the lowest 1 bit in the array.  Returns -1 if there
         are no 1 bits or if there are an infinite number of 1 bits.
         """
-        ...
     def get_lowest_off_bit(self) -> int:
         """Returns the index of the lowest 0 bit in the array.  Returns -1 if there
         are no 0 bits or if there are an infinite number of 1 bits.
         """
-        ...
     def get_highest_on_bit(self) -> int:
         """Returns the index of the highest 1 bit in the array.  Returns -1 if there
         are no 1 bits or if there an infinite number of 1 bits.
         """
-        ...
     def get_highest_off_bit(self) -> int:
         """Returns the index of the highest 0 bit in the array.  Returns -1 if there
         are no 0 bits or if there an infinite number of 1 bits.
         """
-        ...
     def get_next_higher_different_bit(self, low_bit: int) -> int:
         """Returns the index of the next bit in the array, above low_bit, whose value
         is different that the value of low_bit.  Returns low_bit again if all bits
@@ -3430,22 +3163,18 @@ class SparseArray:
 
         This can be used to quickly iterate through all of the bits in the array.
         """
-        ...
     def invert_in_place(self) -> None:
         """Inverts all the bits in the SparseArray.  This is equivalent to array =
         ~array.
         """
-        ...
     def has_bits_in_common(self, other: BitArray | SparseArray) -> bool:
         """Returns true if this SparseArray has any "one" bits in common with the
         other one, false otherwise.
 
         This is equivalent to (array & other) != 0, but may be faster.
         """
-        ...
     def clear(self) -> None:
         """Sets all the bits in the SparseArray off."""
-        ...
     def output(self, out: ostream) -> None: ...
     def compare_to(self, other: BitArray | SparseArray) -> int:
         """Returns a number less than zero if this SparseArray sorts before the
@@ -3453,7 +3182,6 @@ class SparseArray:
         they are equivalent.  This is based on the same ordering defined by
         operator <.
         """
-        ...
     def is_inverse(self) -> bool:
         """If this is true, the SparseArray is actually defined as a list of subranges
         of integers that are *not* in the set.  If this is false (the default),
@@ -3461,7 +3189,6 @@ class SparseArray:
         the interpretation of the values returned by iterating through
         get_num_subranges().
         """
-        ...
     def get_num_subranges(self) -> int:
         """Returns the number of separate subranges stored in the SparseArray.  You
         can use this limit to iterate through the subranges, calling
@@ -3469,19 +3196,16 @@ class SparseArray:
 
         Also see is_inverse().
         """
-        ...
     def get_subrange_begin(self, n: int) -> int:
         """Returns the first numeric element in the nth subrange.
 
         Also see is_inverse().
         """
-        ...
     def get_subrange_end(self, n: int) -> int:
         """Returns the last numeric element, plus one, in the nth subrange.
 
         Also see is_inverse().
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     allOn = all_on
@@ -3524,7 +3248,6 @@ class ParamValueBase(TypedWritableReferenceCount):
     """
     def get_value_type(self) -> TypeHandle:
         """Returns the type of the underlying value."""
-        ...
     def output(self, out: ostream) -> None: ...
     getValueType = get_value_type
 
@@ -3537,7 +3260,6 @@ class ParamTypedRefCount(ParamValueBase):
     def __init__(self, value: TypedReferenceCount) -> None: ...
     def get_value(self) -> TypedReferenceCount:
         """Retrieves the value stored in the parameter."""
-        ...
     getValue = get_value
 
 class ParamValue_string(ParamValueBase):
@@ -3692,14 +3414,12 @@ class UniqueIdAllocator:
     @overload
     def __init__(self, min: int = ..., max: int = ...) -> None:
         """Create a free id pool in the range [min:max]."""
-        ...
     @overload
     def __init__(self, __param0: UniqueIdAllocator) -> None: ...
     def allocate(self) -> int:
         """Returns an id between _min and _max (that were passed to the constructor).
         IndexEnd is returned if no ids are available.
         """
-        ...
     def initial_reserve_id(self, id: int) -> None:
         """This may be called to mark a particular id as having already been allocated
         (for instance, by a prior pass).  The specified id is removed from the
@@ -3711,23 +3431,18 @@ class UniqueIdAllocator:
         a performance warning only; if performance is not an issue, any id may be
         reserved at any time.
         """
-        ...
     def free(self, index: int) -> None:
         """Free an allocated index (index must be between _min and _max that were
         passed to the constructor).
         """
-        ...
     def fraction_used(self) -> float:
         """return the decimal fraction of the pool that is used.  The range is 0 to
         1.0 (e.g.  75% would be 0.75).
         """
-        ...
     def output(self, out: ostream) -> None:
         """...intended for debugging only."""
-        ...
     def write(self, out: ostream) -> None:
         """...intended for debugging only."""
-        ...
     initialReserveId = initial_reserve_id
     fractionUsed = fraction_used
 
@@ -3766,7 +3481,6 @@ def load_prc_file(filename: Filepath) -> ConfigPage:
     prc stuff, so that it can take advantage of the virtual file system (which
     is defined in express), and the model path (which is in putil).
     """
-    ...
 def load_prc_file_data(name: str, data: str) -> ConfigPage:
     """Another convenience function to load a prc file from an explicit string,
     which represents the contents of the prc file.
@@ -3776,7 +3490,6 @@ def load_prc_file_data(name: str, data: str) -> ConfigPage:
     name that is meaningful to you.  The name is only used when the set of
     loaded prc files is listed.
     """
-    ...
 def unload_prc_file(page: ConfigPage) -> bool: ...
 def hash_prc_variables(hash: HashVal) -> None: ...
 def py_decode_TypedWritable_from_bam_stream(this_class, data: bytes):
@@ -3785,7 +3498,6 @@ def py_decode_TypedWritable_from_bam_stream(this_class, data: bytes):
     This hooks into the native pickle and cPickle modules, but it cannot
     properly handle self-referential BAM objects.
     """
-    ...
 def py_decode_TypedWritable_from_bam_stream_persist(unpickler, this_class, data: bytes):
     """This wrapper is defined as a global function to suit pickle's needs.
 
@@ -3795,7 +3507,6 @@ def py_decode_TypedWritable_from_bam_stream_persist(unpickler, this_class, data:
     This hooks into the pickle and cPickle modules implemented in
     direct/src/stdpy.
     """
-    ...
 parseColorSpaceString = parse_color_space_string
 formatColorSpace = format_color_space
 getModelPath = get_model_path

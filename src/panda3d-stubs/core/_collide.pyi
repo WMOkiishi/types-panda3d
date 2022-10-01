@@ -48,14 +48,12 @@ class CollisionSolid(CopyOnWriteObject):
         object to intersect it, or false to make it intangible, so that a
         CollisionHandlerPusher will ignore it except to throw an event.
         """
-        ...
     def is_tangible(self) -> bool:
         """Returns whether the solid is considered 'tangible' or not.  An intangible
         solid has no effect in a CollisionHandlerPusher (except to throw an event);
         it's useful for defining 'trigger' planes and spheres, that cause an effect
         when passed through.
         """
-        ...
     def set_effective_normal(self, effective_normal: Vec3f) -> None:
         """Records a false normal for this CollisionSolid that will be reported by the
         collision system with all collisions into it, instead of its actual normal.
@@ -63,36 +61,28 @@ class CollisionSolid(CopyOnWriteObject):
         stand on a sloping ground; by storing a false normal, the ground appears to
         be perfectly level, and the avatar does not tend to slide down it.
         """
-        ...
     def clear_effective_normal(self) -> None:
         """Removes the normal previously set by set_effective_normal()."""
-        ...
     def has_effective_normal(self) -> bool:
         """Returns true if a special normal was set by set_effective_normal(), false
         otherwise.
         """
-        ...
     def get_effective_normal(self) -> LVector3:
         """Returns the normal that was set by set_effective_normal().  It is an error
         to call this unless has_effective_normal() returns true.
         """
-        ...
     def set_respect_effective_normal(self, respect_effective_normal: bool) -> None:
         """This is only meaningful for CollisionSolids that will be added to a
         traverser as colliders.  It is normally true, but if set false, it means
         that this particular solid does not care about the "effective" normal of
         other solids it meets, but rather always uses the true normal.
         """
-        ...
     def get_respect_effective_normal(self) -> bool:
         """See set_respect_effective_normal()."""
-        ...
     def get_bounds(self) -> BoundingVolume:
         """Returns the solid's bounding volume."""
-        ...
     def set_bounds(self, bounding_volume: BoundingVolume) -> None:
         """Returns the solid's bounding volume."""
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     getCollisionOrigin = get_collision_origin
@@ -126,27 +116,20 @@ class CollisionBox(CollisionSolid):
         Create the Box by giving a Center and distances of each of the sides of
         box from the Center.
         """
-        ...
     @overload
     def __init__(self, center: Vec3f, x: float, y: float, z: float) -> None: ...
     def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a rectangular solid."""
-        ...
     def get_point_aabb(self, n: int) -> LPoint3:
         """Returns the nth vertex of the Axis Aligned Bounding Box."""
-        ...
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the OBB."""
-        ...
     def get_num_planes(self) -> Literal[6]:
         """Returns 6: the number of faces of a rectangular solid."""
-        ...
     def set_plane(self, n: int) -> LPlane:
         """Creates the nth face of the rectangular solid."""
-        ...
     def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the rectangular solid."""
-        ...
     @overload
     def set_center(self, center: Vec3f) -> None: ...
     @overload
@@ -222,58 +205,47 @@ class CollisionNode(PandaNode):
         """Simultaneously sets both the "from" and "into" CollideMask values to the
         same thing.
         """
-        ...
     def set_from_collide_mask(self, mask: CollideMask) -> None:
         """Sets the "from" CollideMask.  In order for a collision to be detected from
         this object into another object, the intersection of this object's "from"
         mask and the other object's "into" mask must be nonzero.
         """
-        ...
     def set_into_collide_mask(self, mask: CollideMask) -> None:
         """Sets the "into" CollideMask.  In order for a collision to be detected from
         another object into this object, the intersection of the other object's
         "from" mask and this object's "into" mask must be nonzero.
         """
-        ...
     def get_from_collide_mask(self) -> CollideMask:
         """Returns the current "from" CollideMask.  In order for a collision to be
         detected from this object into another object, the intersection of this
         object's "from" mask and the other object's "into" mask must be nonzero.
         """
-        ...
     def get_into_collide_mask(self) -> CollideMask:
         """Returns the current "into" CollideMask.  In order for a collision to be
         detected from another object into this object, the intersection of the
         other object's "from" mask and this object's "into" mask must be nonzero.
         """
-        ...
     def clear_solids(self) -> None:
         """Removes all solids from the node."""
-        ...
     def get_num_solids(self) -> int: ...
     def get_solid(self, n: int) -> CollisionSolid: ...
     def modify_solid(self, n: int) -> CollisionSolid: ...
     def set_solid(self, n: int, solid: CollisionSolid) -> None:
         """Replaces the solid with the indicated index."""
-        ...
     def insert_solid(self, n: int, solid: CollisionSolid) -> None:
         """Inserts the indicated solid to the node at the indicated position."""
-        ...
     def remove_solid(self, n: int) -> None:
         """Removes the solid with the indicated index.  This will shift all subsequent
         indices down by one.
         """
-        ...
     def add_solid(self, solid: CollisionSolid) -> int:
         """Adds the indicated solid to the node.  Returns the index of the new solid
         within the node's list of solids.
         """
-        ...
     def get_collider_sort(self) -> int:
         """Returns the collider_sort value that has been set for this particular node.
         See set_collider_sort().
         """
-        ...
     def set_collider_sort(self, sort: int) -> None:
         """Sets a particular collider_sort value on this node.  This controls the
         order in which colliders (that is, "from nodes") are grouped together for
@@ -286,11 +258,9 @@ class CollisionNode(PandaNode):
         optimization to group colliders that have similar bounding volumes together
         (by giving them similar sort values).
         """
-        ...
     @staticmethod
     def get_default_collide_mask() -> CollideMask:
         """Returns the default into_collide_mask assigned to new CollisionNodes."""
-        ...
     def get_solids(self) -> tuple[CollisionSolid, ...]: ...
     setCollideMask = set_collide_mask
     setFromCollideMask = set_from_collide_mask
@@ -336,12 +306,10 @@ class CollisionTraverser(Namable):
         enhanced by the information about objects in motion.  If this is false,
         objects are always considered to be static.  The default is false.
         """
-        ...
     def get_respect_prev_transform(self) -> bool:
         """Returns the flag that indicates whether the prev_transform stored on a node
         is respected to calculate collisions.  See set_respect_prev_transform().
         """
-        ...
     def add_collider(self, collider: NodePath, handler: CollisionHandler) -> None:
         """Adds a new CollisionNode, representing an object that will be tested for
         collisions into other objects, along with the handler that will serve each
@@ -351,47 +319,39 @@ class CollisionTraverser(Namable):
         The handler that serves a particular node may be changed from time to time
         by calling add_collider() again on the same node.
         """
-        ...
     def remove_collider(self, collider: NodePath) -> bool:
         """Removes the collider (and its associated handler) from the set of
         CollisionNodes that will be tested each frame for collisions into other
         objects.  Returns true if the definition was found and removed, false if it
         wasn't present to begin with.
         """
-        ...
     def has_collider(self, collider: NodePath) -> bool:
         """Returns true if the indicated node is current in the set of nodes that will
         be tested each frame for collisions into other objects.
         """
-        ...
     def get_num_colliders(self) -> int:
         """Returns the number of CollisionNodes that have been added to the traverser
         via add_collider().
         """
-        ...
     def get_collider(self, n: int) -> NodePath:
         """Returns the nth CollisionNode that has been added to the traverser via
         add_collider().
         """
-        ...
     def get_handler(self, collider: NodePath) -> CollisionHandler:
         """Returns the handler that is currently assigned to serve the indicated
         collision node, or NULL if the node is not on the traverser's set of active
         nodes.
         """
-        ...
     def clear_colliders(self) -> None:
         """Completely empties the set of collision nodes and their associated
         handlers.
         """
-        ...
     def traverse(self, root: NodePath) -> None:
         """Perform the traversal. Begins at the indicated root and detects all
         collisions with any of its collider objects against nodes at or below the
         indicated root, calling the appropriate CollisionHandler for each detected
         collision.
         """
-        ...
     def set_recorder(self, recorder: CollisionRecorder) -> None:
         """Uses the indicated CollisionRecorder object to start recording the
         intersection tests made by each subsequent call to traverse() on this
@@ -408,32 +368,26 @@ class CollisionTraverser(Namable):
         CollisionRecorder is destructed, it will cleanly remove itself from the
         traverser.
         """
-        ...
     def has_recorder(self) -> bool:
         """Returns true if the CollisionTraverser has a CollisionRecorder object
         currently assigned, false otherwise.
         """
-        ...
     def get_recorder(self) -> CollisionRecorder:
         """Returns the CollisionRecorder currently assigned, or NULL if no recorder is
         assigned.
         """
-        ...
     def clear_recorder(self) -> None:
         """Removes the CollisionRecorder from the traverser and restores normal low-
         overhead operation.
         """
-        ...
     def show_collisions(self, root: NodePath) -> CollisionVisualizer:
         """This is a high-level function to create a CollisionVisualizer object to
         render the collision tests performed by this traverser.  The supplied root
         should be any node in the scene graph; typically, the top node (e.g.
         render).  The CollisionVisualizer will be attached to this node.
         """
-        ...
     def hide_collisions(self) -> None:
         """Undoes the effect of a previous call to show_collisions()."""
-        ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def get_colliders(self) -> tuple[NodePath, ...]: ...
     setRespectPrevTransform = set_respect_prev_transform
@@ -489,27 +443,23 @@ class CollisionEntry(TypedWritableReferenceCount):
         """Returns the CollisionSolid pointer for the particular solid that triggered
         this collision.
         """
-        ...
     def has_into(self) -> bool:
         """Returns true if the "into" solid is, in fact, a CollisionSolid, and its
         pointer is known (in which case get_into() may be called to retrieve it).
         If this returns false, the collision was detected into a GeomNode, and
         there is no CollisionSolid pointer to be retrieved.
         """
-        ...
     def get_into(self) -> CollisionSolid:
         """Returns the CollisionSolid pointer for the particular solid was collided
         into.  This pointer might be NULL if the collision was into a piece of
         visible geometry, instead of a normal CollisionSolid collision; see
         has_into().
         """
-        ...
     def get_from_node(self) -> CollisionNode:
         """Returns the node that contains the CollisionSolid that triggered this
         collision.  This will be a node that has been added to a CollisionTraverser
         via add_collider().
         """
-        ...
     def get_into_node(self) -> PandaNode:
         """Returns the node that contains the CollisionSolid that was collided into.
         This returns a PandaNode pointer instead of something more specific,
@@ -517,13 +467,11 @@ class CollisionEntry(TypedWritableReferenceCount):
 
         Also see get_into_node_path().
         """
-        ...
     def get_from_node_path(self) -> NodePath:
         """Returns the NodePath that represents the CollisionNode that contains the
         CollisionSolid that triggered this collision.  This will be a NodePath that
         has been added to a CollisionTraverser via add_collider().
         """
-        ...
     def get_into_node_path(self) -> NodePath:
         """Returns the NodePath that represents the specific CollisionNode or GeomNode
         instance that was collided into.  This is the same node returned by
@@ -531,42 +479,34 @@ class CollisionEntry(TypedWritableReferenceCount):
         because the NodePath can resolve the particular instance of the node, if
         there is more than one.
         """
-        ...
     def set_t(self, t: float) -> None:
         """Sets a time value for this collision relative to other CollisionEntries"""
-        ...
     def get_t(self) -> float:
         """returns time value for this collision relative to other CollisionEntries"""
-        ...
     def collided(self) -> bool:
         """returns true if this represents an actual collision as opposed to a
         potential collision, needed for iterative collision resolution where path
         of collider changes mid-frame
         """
-        ...
     def reset_collided(self) -> None:
         """prepare for another collision test"""
-        ...
     def get_respect_prev_transform(self) -> bool:
         """Returns true if the collision was detected by a CollisionTraverser whose
         respect_prev_transform flag was set true, meaning we should consider motion
         significant in evaluating collisions.
         """
-        ...
     def set_surface_point(self, point: Vec3f) -> None:
         """Stores the point, on the surface of the "into" object, at which a collision
         is detected.
 
         This point is specified in the coordinate space of the "into" object.
         """
-        ...
     def set_surface_normal(self, normal: Vec3f) -> None:
         """Stores the surface normal of the "into" object at the point of the
         intersection.
 
         This normal is specified in the coordinate space of the "into" object.
         """
-        ...
     def set_interior_point(self, point: Vec3f) -> None:
         """Stores the point, within the interior of the "into" object, which
         represents the depth to which the "from" object has penetrated.  This can
@@ -575,50 +515,42 @@ class CollisionEntry(TypedWritableReferenceCount):
 
         This point is specified in the coordinate space of the "into" object.
         """
-        ...
     def has_surface_point(self) -> bool:
         """Returns true if the surface point has been specified, false otherwise.  See
         get_surface_point().  Some types of collisions may not compute the surface
         point.
         """
-        ...
     def has_surface_normal(self) -> bool:
         """Returns true if the surface normal has been specified, false otherwise.
         See get_surface_normal().  Some types of collisions may not compute the
         surface normal.
         """
-        ...
     def has_interior_point(self) -> bool:
         """Returns true if the interior point has been specified, false otherwise.
         See get_interior_point().  Some types of collisions may not compute the
         interior point.
         """
-        ...
     def set_contact_pos(self, pos: Vec3f) -> None:
         """Stores the position of the "from" object at the instant at which the
         collision is first detected.
 
         This position is specified in the coordinate space of the "into" object.
         """
-        ...
     def set_contact_normal(self, normal: Vec3f) -> None:
         """Stores the surface normal of the "into" object at the contact pos.
 
         This normal is specified in the coordinate space of the "into" object.
         """
-        ...
     def has_contact_pos(self) -> bool:
         """Returns true if the contact position has been specified, false otherwise.
         See get_contact_pos().  Some types of collisions may not compute the
         contact pos.
         """
-        ...
     def has_contact_normal(self) -> bool:
         """Returns true if the contact normal has been specified, false otherwise.
         See get_contact_normal().  Some types of collisions may not compute the
         contact normal.
         """
-        ...
     def get_surface_point(self, space: NodePath) -> LPoint3:
         """Returns the point, on the surface of the "into" object, at which a
         collision is detected.  This can be thought of as the first point of
@@ -628,7 +560,6 @@ class CollisionEntry(TypedWritableReferenceCount):
         The point will be converted into whichever coordinate space the caller
         specifies.
         """
-        ...
     def get_surface_normal(self, space: NodePath) -> LVector3:
         """Returns the surface normal of the "into" object at the point at which a
         collision is detected.
@@ -636,7 +567,6 @@ class CollisionEntry(TypedWritableReferenceCount):
         The normal will be converted into whichever coordinate space the caller
         specifies.
         """
-        ...
     def get_interior_point(self, space: NodePath) -> LPoint3:
         """Returns the point, within the interior of the "into" object, which
         represents the depth to which the "from" object has penetrated.  This can
@@ -647,7 +577,6 @@ class CollisionEntry(TypedWritableReferenceCount):
         The point will be converted into whichever coordinate space the caller
         specifies.
         """
-        ...
     def get_all(self, space: NodePath, surface_point: Vec3f, surface_normal: Vec3f, interior_point: Vec3f) -> bool:
         """Simultaneously transforms the surface point, surface normal, and interior
         point of the collision into the indicated coordinate space.
@@ -655,7 +584,6 @@ class CollisionEntry(TypedWritableReferenceCount):
         Returns true if all three properties are available, or false if any one of
         them is not.
         """
-        ...
     def get_contact_pos(self, space: NodePath) -> LPoint3:
         """Returns the position of the "from" object at the instant that a collision
         is first detected.
@@ -663,14 +591,12 @@ class CollisionEntry(TypedWritableReferenceCount):
         The position will be converted into whichever coordinate space the caller
         specifies.
         """
-        ...
     def get_contact_normal(self, space: NodePath) -> LVector3:
         """Returns the surface normal of the "into" object at the contact position.
 
         The normal will be converted into whichever coordinate space the caller
         specifies.
         """
-        ...
     def get_all_contact_info(self, space: NodePath, contact_pos: Vec3f, contact_normal: Vec3f) -> bool:
         """Simultaneously transforms the contact position and contact normal of the
         collision into the indicated coordinate space.
@@ -678,7 +604,6 @@ class CollisionEntry(TypedWritableReferenceCount):
         Returns true if all three properties are available, or false if any one of
         them is not.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     getFrom = get_from
@@ -724,7 +649,6 @@ class CollisionPlane(CollisionSolid):
     def get_plane(self) -> LPlane: ...
     def flip(self) -> None:
         """Convenience method to flip the plane in-place."""
-        ...
     getNormal = get_normal
     distToPlane = dist_to_plane
     setPlane = set_plane
@@ -742,13 +666,10 @@ class CollisionFloorMesh(CollisionSolid):
         """This is only for the convenience of CollisionPolygon.  Normally, you should
         not attempt to create an uninitialized CollisionPlane.
         """
-        ...
     def add_vertex(self, vert: Vec3f) -> None:
         """store away a vertex to index against"""
-        ...
     def add_triangle(self, pointA: int, pointB: int, pointC: int) -> None:
         """store a triangle for processing"""
-        ...
     def get_num_vertices(self) -> int: ...
     def get_vertex(self, index: int) -> LPoint3: ...
     def get_num_triangles(self) -> int: ...
@@ -774,27 +695,22 @@ class CollisionPolygon(CollisionPlane):
     def __init__(self, a: Vec3f, b: Vec3f, c: Vec3f, d: Vec3f = ...) -> None: ...
     def get_num_points(self) -> int:
         """Returns the number of vertices of the CollisionPolygon."""
-        ...
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the CollisionPolygon, expressed in 3-D space."""
-        ...
     @staticmethod
     def verify_points(a: Vec3f, b: Vec3f, c: Vec3f, d: Vec3f = ...) -> bool:
         """Verifies that the indicated set of points will define a valid
         CollisionPolygon: that is, at least three non-collinear points, with no
         points repeated.
         """
-        ...
     def is_valid(self) -> bool:
         """Returns true if the CollisionPolygon is valid (that is, it has at least
         three vertices), or false otherwise.
         """
-        ...
     def is_concave(self) -> bool:
         """Returns true if the CollisionPolygon appears to be concave, or false if it
         is safely convex.
         """
-        ...
     def get_points(self) -> tuple[LPoint3, ...]: ...
     getNumPoints = get_num_points
     getPoint = get_point
@@ -820,10 +736,8 @@ class CollisionHandlerEvent(CollisionHandler):
         strings must first be set via a call to add_in_pattern() and/or
         add_out_pattern().
         """
-        ...
     def clear_in_patterns(self) -> None:
         """Removes all of the previously-added in patterns.  See add_in_pattern."""
-        ...
     def add_in_pattern(self, in_pattern: str) -> None:
         """Adds a pattern string to the list of events that will be generated in
         response to a collision.  The pattern string describes how the event name
@@ -854,25 +768,20 @@ class CollisionHandlerEvent(CollisionHandler):
         again_pattern is thrown.  The first frame in which the collision is no
         longer detected, the out_pattern event is thrown.
         """
-        ...
     def set_in_pattern(self, in_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
 
         @deprecated Use add_in_pattern() instead.
         """
-        ...
     def get_num_in_patterns(self) -> int:
         """Returns the number of in pattern strings that have been added."""
-        ...
     def get_in_pattern(self, n: int) -> str:
         """Returns the nth pattern string that indicates how the event names are
         generated for each collision detected.  See add_in_pattern().
         """
-        ...
     def clear_again_patterns(self) -> None:
         """Removes all of the previously-added in patterns.  See add_again_pattern."""
-        ...
     def add_again_pattern(self, again_pattern: str) -> None:
         """Adds the pattern string that indicates how the event names are generated
         when a collision between two particular nodes is *still* detected.  This
@@ -885,25 +794,20 @@ class CollisionHandlerEvent(CollisionHandler):
         again_pattern is thrown.  The first frame in which the collision is no
         longer detected, the out_pattern event is thrown.
         """
-        ...
     def set_again_pattern(self, again_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
 
         @deprecated Use add_again_pattern() instead.
         """
-        ...
     def get_num_again_patterns(self) -> int:
         """Returns the number of in pattern strings that have been added."""
-        ...
     def get_again_pattern(self, n: int) -> str:
         """Returns the nth pattern string that indicates how the event names are
         generated for each collision detected.  See add_again_pattern().
         """
-        ...
     def clear_out_patterns(self) -> None:
         """Removes all of the previously-added in patterns.  See add_out_pattern."""
-        ...
     def add_out_pattern(self, out_pattern: str) -> None:
         """Adds the pattern string that indicates how the event names are generated
         when a collision between two particular nodes is *no longer* detected.
@@ -914,22 +818,18 @@ class CollisionHandlerEvent(CollisionHandler):
         again_pattern is thrown.  The first frame in which the collision is no
         longer detected, the out_pattern event is thrown.
         """
-        ...
     def set_out_pattern(self, out_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
 
         @deprecated Use add_out_pattern() instead.
         """
-        ...
     def get_num_out_patterns(self) -> int:
         """Returns the number of in pattern strings that have been added."""
-        ...
     def get_out_pattern(self, n: int) -> str:
         """Returns the nth pattern string that indicates how the event names are
         generated for each collision detected.  See add_out_pattern().
         """
-        ...
     def clear(self) -> None:
         """Empties the list of elements that all colliders are known to be colliding
         with.  No "out" events will be thrown; if the same collision is detected
@@ -941,18 +841,14 @@ class CollisionHandlerEvent(CollisionHandler):
         that is thrown when a collision is detected for two or more consecutive
         frames.
         """
-        ...
     def flush(self) -> None:
         """Same as clear() except "out" events are thrown."""
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Serializes this object, to implement pickle support."""
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Restores the object state from the given datagram, previously obtained using
         __getstate__.
         """
-        ...
     def get_in_patterns(self) -> tuple[str, ...]: ...
     def get_again_patterns(self) -> tuple[str, ...]: ...
     def get_out_patterns(self) -> tuple[str, ...]: ...
@@ -998,47 +894,38 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
         transform each frame.  This method should be used when the target is
         directly controlled by a DriveInterface.
         """
-        ...
     def remove_collider(self, collider: NodePath) -> bool:
         """Removes the collider from the list of colliders that this handler knows
         about.
         """
-        ...
     def has_collider(self, collider: NodePath) -> bool:
         """Returns true if the handler knows about the indicated collider, false
         otherwise.
         """
-        ...
     def clear_colliders(self) -> None:
         """Completely empties the list of colliders this handler knows about."""
-        ...
     def set_center(self, center: NodePath) -> None:
         """Specifies an arbitrary NodePath that the handler is always considered to be
         facing.  It does not detect collisions with surfaces that appear to be
         facing away from this NodePath.  This works best when the collision
         surfaces in question are polygons.
         """
-        ...
     def clear_center(self) -> None:
         """Clears the center NodePath specified with set_center."""
-        ...
     def get_center(self) -> NodePath:
         """Returns the NodePath specified with set_center, or the empty NodePath if
         nothing has been specified.
         """
-        ...
     def has_center(self) -> bool:
         """Returns true if a NodePath has been specified with set_center(), false
         otherwise.
         """
-        ...
     def has_contact(self) -> bool:
         """Did the handler make any contacts with anything on the last collision pass?
         Depending on how your world is setup, this can be used to tell if the
         handler is out of the world (i.e.  out of bounds). That is the original use
         of this call.
         """
-        ...
     addCollider = add_collider
     removeCollider = remove_collider
     hasCollider = has_collider
@@ -1064,30 +951,24 @@ class CollisionHandlerFloor(CollisionHandlerPhysical):
         collision point to determine the actual height at which to set the
         collider.
         """
-        ...
     def get_offset(self) -> float:
         """Returns the linear offset to add to (or subtract from) the highest detected
         collision point to determine the actual height at which to set the
         collider.
         """
-        ...
     def set_reach(self, reach: float) -> None:
         """Sets the reach to add to (or subtract from) the highest collision point"""
-        ...
     def get_reach(self) -> float:
         """Returns the reach to add to (or subtract from) the highest collision point"""
-        ...
     def set_max_velocity(self, max_vel: float) -> None:
         """Sets the maximum speed at which the object will be allowed to descend
         towards a floor below it, in units per second.  Set this to zero to allow
         it to instantly teleport any distance.
         """
-        ...
     def get_max_velocity(self) -> float:
         """Retrieves the maximum speed at which the object will be allowed to descend
         towards a floor below it, in units per second.  See set_max_velocity().
         """
-        ...
     setOffset = set_offset
     getOffset = get_offset
     setReach = set_reach
@@ -1137,46 +1018,37 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
         collision point to determine the actual height at which to set the
         collider.
         """
-        ...
     def get_offset(self) -> float:
         """Returns the linear offset to add to (or subtract from) the highest detected
         collision point to determine the actual height at which to set the
         collider.
         """
-        ...
     def set_reach(self, reach: float) -> None:
         """Sets the reach to add to (or subtract from) the highest collision point"""
-        ...
     def get_reach(self) -> float:
         """Returns the reach to add to (or subtract from) the highest collision point"""
-        ...
     def get_airborne_height(self) -> float:
         """Return the height of the object from the ground.
 
         The object might not necessarily be at rest.  Use is_on_ground() if you
         want to know whether the object is on the ground and at rest.
         """
-        ...
     def is_on_ground(self) -> bool:
         """Is the object at rest?"""
-        ...
     def get_impact_velocity(self) -> float:
         """How hard did the object hit the ground.  This value is set on impact with
         the ground.  You may want to watch (poll) on is_on_ground() and when that is
         true, call get_impact_velocity(). Normally I avoid polling, but we are
         calling is_on_ground() frequently anyway.
         """
-        ...
     def get_contact_normal(self) -> LVector3: ...
     def add_velocity(self, velocity: float) -> None:
         """Adds the sepcified amount to the current velocity.  This is mostly here
         allow this common operation to be faster for scripting, but it's also more
         concise even in cpp.
         """
-        ...
     def set_velocity(self, velocity: float) -> None:
         """Sets the current vertical velocity."""
-        ...
     def get_velocity(self) -> float:
         """Gets the current vertical velocity.
 
@@ -1188,33 +1060,26 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
 
         See Also: is_on_ground() and get_gravity()
         """
-        ...
     def set_gravity(self, gravity: float) -> None:
         """Sets the linear gravity force (always plumb)."""
-        ...
     def get_gravity(self) -> float:
         """Gets the linear gravity force (always plumb)."""
-        ...
     def set_max_velocity(self, max_vel: float) -> None:
         """Sets the maximum speed at which the object will be allowed to descend
         towards a floor below it, in units per second.  Set this to zero to allow
         it to instantly teleport any distance.
         """
-        ...
     def get_max_velocity(self) -> float:
         """Retrieves the maximum speed at which the object will be allowed to descend
         towards a floor below it, in units per second.  See set_max_velocity().
         """
-        ...
     def set_legacy_mode(self, legacy_mode: bool) -> None:
         """Enables old behavior required by Toontown (Sellbot Factory lava room is
         good test case, lava and conveyor belt specifically). Behavior is to throw
         enter/exit events only for floor that the toon is in contact with
         """
-        ...
     def get_legacy_mode(self) -> bool:
         """returns true if legacy mode is enabled"""
-        ...
     setOffset = set_offset
     getOffset = get_offset
     setReach = set_reach
@@ -1244,7 +1109,6 @@ class CollisionHandlerHighestEvent(CollisionHandlerEvent):
         strings must first be set via a call to add_in_pattern() and/or
         add_out_pattern().
         """
-        ...
 
 class CollisionHandlerQueue(CollisionHandler):
     """A special kind of CollisionHandler that does nothing except remember the
@@ -1261,16 +1125,12 @@ class CollisionHandlerQueue(CollisionHandler):
         collider's origin (e.g., the center of the CollisionSphere, or the point_a
         of a CollisionSegment) appear first.
         """
-        ...
     def clear_entries(self) -> None:
         """Removes all the entries from the queue."""
-        ...
     def get_num_entries(self) -> int:
         """Returns the number of CollisionEntries detected last pass."""
-        ...
     def get_entry(self, n: int) -> CollisionEntry:
         """Returns the nth CollisionEntry detected last pass."""
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def get_entries(self) -> tuple[CollisionEntry, ...]: ...
@@ -1320,7 +1180,6 @@ class CollisionRay(CollisionSolid):
         user will subsequently adjust the ray via set_origin()/set_direction() or
         set_from_lens().
         """
-        ...
     @overload
     def __init__(self, origin: Vec3f, direction: Vec3f) -> None: ...
     @overload
@@ -1351,7 +1210,6 @@ class CollisionRay(CollisionSolid):
         infinity, making it suitable for picking objects from the screen given a
         camera and a mouse location.
         """
-        ...
     @overload
     def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool: ...
     setOrigin = set_origin
@@ -1370,7 +1228,6 @@ class CollisionLine(CollisionRay):
         the user will subsequently adjust the line via set_origin()/set_direction()
         or set_from_lens().
         """
-        ...
     @overload
     def __init__(self, origin: Vec3f, direction: Vec3f) -> None: ...
     @overload
@@ -1396,27 +1253,20 @@ class CollisionParabola(CollisionSolid):
         Creates a parabola with the endpoints between t1 and t2 in the parametric
         space of the parabola.
         """
-        ...
     @overload
     def __init__(self, parabola: LParabola, t1: float, t2: float) -> None: ...
     def set_parabola(self, parabola: LParabola) -> None:
         """Replaces the parabola specified by this solid."""
-        ...
     def get_parabola(self) -> LParabola:
         """Returns the parabola specified by this solid."""
-        ...
     def set_t1(self, t1: float) -> None:
         """Changes the starting point on the parabola."""
-        ...
     def get_t1(self) -> float:
         """Returns the starting point on the parabola."""
-        ...
     def set_t2(self, t2: float) -> None:
         """Changes the ending point on the parabola."""
-        ...
     def get_t2(self) -> float:
         """Returns the ending point on the parabola."""
-        ...
     setParabola = set_parabola
     getParabola = get_parabola
     setT1 = set_t1
@@ -1440,7 +1290,6 @@ class CollisionSegment(CollisionSolid):
         the user will subsequently adjust the segment via
         set_origin()/set_direction() or set_from_lens().
         """
-        ...
     @overload
     def __init__(self, a: Vec3f, db: Vec3f) -> None: ...
     @overload
@@ -1471,7 +1320,6 @@ class CollisionSegment(CollisionSolid):
         to the far plane, making it suitable for picking objects from the screen
         given a camera and a mouse location.
         """
-        ...
     @overload
     def set_from_lens(self, camera: LensNode, px: float, py: float) -> bool: ...
     setPointA = set_point_a
@@ -1494,7 +1342,6 @@ class CollisionVisualizer(PandaNode, CollisionRecorder):
     @overload
     def __init__(self, copy: CollisionVisualizer) -> None:
         """Copy constructor."""
-        ...
     @overload
     def __init__(self, name: str) -> None: ...
     def upcast_to_PandaNode(self) -> PandaNode: ...
@@ -1507,10 +1354,8 @@ class CollisionVisualizer(PandaNode, CollisionRecorder):
         are measured on some other scale or if you need to observe these objects in
         a smaller window.
         """
-        ...
     def get_point_scale(self) -> float:
         """Returns the value last set by set_point_scale()."""
-        ...
     def set_normal_scale(self, normal_scale: float) -> None:
         """Scales the line segments that are drawn to represent the normals of the
         collisions.  By default, these objects are drawn at an arbitrary scale
@@ -1518,15 +1363,12 @@ class CollisionVisualizer(PandaNode, CollisionRecorder):
         scale accordinatly if the scene units are measured on some other scale or
         if you need to observe these normals from farther away.
         """
-        ...
     def get_normal_scale(self) -> float:
         """Returns the value last set by set_normal_scale()."""
-        ...
     def clear(self) -> None:
         """Removes all the visualization data from a previous traversal and resets the
         visualizer to empty.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToPandaNode = upcast_to_PandaNode

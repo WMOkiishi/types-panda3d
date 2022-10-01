@@ -38,23 +38,19 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
 
         The return value may be NULL if a GSG has not been created.
         """
-        ...
     @staticmethod
     def set_default_gsg(default_gsg: GraphicsStateGuardianBase) -> None:
         """Specifies a particular GSG to use as the "default" GSG.  See
         get_default_gsg().
         """
-        ...
     @staticmethod
     def get_num_gsgs() -> int:
         """Returns the total number of GSG's in the universe."""
-        ...
     @staticmethod
     def get_gsg(n: int) -> GraphicsStateGuardianBase:
         """Returns the nth GSG in the universe.  GSG's automatically add themselves
         and remove themselves from this list as they are created and destroyed.
         """
-        ...
     def get_gsgs(self) -> tuple[GraphicsStateGuardianBase, ...]: ...
     getIncompleteRender = get_incomplete_render
     getEffectiveIncompleteRender = get_effective_incomplete_render

@@ -64,7 +64,6 @@ class EventParameter:
         `(self, value: str)`:
         Defines an EventParameter that stores a wstring value.
         """
-        ...
     @overload
     def __init__(self, copy: EventParameter | float | str | None) -> None: ...
     @overload
@@ -76,62 +75,50 @@ class EventParameter:
         corresponding value.  Of course, it is possible that the EventParameter
         is some user-defined type, and is none of these.
         """
-        ...
     def is_int(self) -> bool:
         """Returns true if the EventParameter stores an integer value, false
         otherwise.
         """
-        ...
     def get_int_value(self) -> int:
         """Retrieves the value stored in the EventParameter.  It is only valid to call
         this if is_int() has already returned true.
         """
-        ...
     def is_double(self) -> bool:
         """Returns true if the EventParameter stores a double floating-point value,
         false otherwise.
         """
-        ...
     def get_double_value(self) -> float:
         """Retrieves the value stored in the EventParameter.  It is only valid to call
         this if is_double() has already returned true.
         """
-        ...
     def is_string(self) -> bool:
         """Returns true if the EventParameter stores a string value, false otherwise."""
-        ...
     def get_string_value(self) -> str:
         """Retrieves the value stored in the EventParameter.  It is only valid to call
         this if is_string() has already returned true.
         """
-        ...
     def is_wstring(self) -> bool:
         """Returns true if the EventParameter stores a wstring value, false otherwise."""
-        ...
     def get_wstring_value(self) -> str:
         """Retrieves the value stored in the EventParameter.  It is only valid to call
         this if is_wstring() has already returned true.
         """
-        ...
     def is_typed_ref_count(self) -> bool:
         """Returns true if the EventParameter stores a TypedReferenceCount pointer,
         false otherwise.  Note that a TypedReferenceCount is not exactly the same
         kind of pointer as a TypedWritableReferenceCount, hence the need for this
         separate call.
         """
-        ...
     def get_typed_ref_count_value(self) -> TypedReferenceCount:
         """Retrieves the value stored in the EventParameter.  It is only valid to call
         this if is_typed_ref_count() has already returned true.
         """
-        ...
     def get_ptr(self) -> TypedWritableReferenceCount:
         """Retrieves a pointer to the actual value stored in the parameter.  The
         TypeHandle of this pointer may be examined to determine the actual type of
         parameter it contains.  This is the only way to retrieve the value when it
         is not one of the above predefined types.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     isEmpty = is_empty
     isInt = is_int
@@ -183,17 +170,14 @@ class AsyncFuture(TypedReferenceCount):
     done_event: str
     def __init__(self, __param0: AsyncFuture = ...) -> None:
         """Initializes the future in the pending state."""
-        ...
     def __await__(self) -> Generator[Awaitable, None, None]: ...
     def __iter__(self) -> Generator[Awaitable, None, None]: ...
     def done(self) -> bool:
         """Returns true if the future is done or has been cancelled.  It is always
         safe to call this.
         """
-        ...
     def cancelled(self) -> bool:
         """Returns true if the future was cancelled.  It is always safe to call this."""
-        ...
     def result(self, timeout=...): ...
     def cancel(self) -> bool:
         """Cancels the future.  Returns true if it was cancelled, or false if the
@@ -202,18 +186,15 @@ class AsyncFuture(TypedReferenceCount):
 
         In the case of a task, this is equivalent to remove().
         """
-        ...
     def set_done_event(self, done_event: str) -> None:
         """Sets the event name that will be triggered when the future finishes.  Will
         not be triggered if the future is cancelled, but it will be triggered for
         a coroutine task that exits with an exception.
         """
-        ...
     def get_done_event(self) -> str:
         """Returns the event name that will be triggered when the future finishes.
         See set_done_event().
         """
-        ...
     def add_done_callback(self, fn): ...
     @staticmethod
     def gather(args) -> AsyncFuture: ...
@@ -225,7 +206,6 @@ class AsyncFuture(TypedReferenceCount):
         `(self, timeout: float)`:
         Waits until the future is done, or until the timeout is reached.
         """
-        ...
     def set_result(self, __param0) -> None: ...
     setDoneEvent = set_done_event
     getDoneEvent = get_done_event
@@ -284,7 +264,6 @@ class AsyncTask(AsyncFuture, Namable):
         """This is a number guaranteed to be unique for each different AsyncTask
         object in the universe.
         """
-        ...
     @property
     def dt(self) -> float: ...
     @property
@@ -296,7 +275,6 @@ class AsyncTask(AsyncFuture, Namable):
     def upcast_to_Namable(self) -> Namable: ...
     def get_state(self) -> _AsyncTask_State:
         """Returns the current state of the task."""
-        ...
     def is_alive(self) -> bool:
         """Returns true if the task is currently active or sleeping on some task
         chain, meaning that it will be executed in its turn, or false if it is not
@@ -304,18 +282,15 @@ class AsyncTask(AsyncFuture, Namable):
         execution, this will return false, because the task will not run again once
         it finishes.
         """
-        ...
     def get_manager(self) -> AsyncTaskManager:
         """Returns the AsyncTaskManager that this task is active on.  This will be
         NULL if the state is S_inactive.
         """
-        ...
     def remove(self) -> bool:
         """Removes the task from its active manager, if any, and makes the state
         S_inactive (or possible S_servicing_removed).  This is a no-op if the state
         is already S_inactive.
         """
-        ...
     def set_delay(self, delay: float) -> None:
         """Specifies the amount of time, in seconds, by which this task will be
         delayed after it has been added to the AsyncTaskManager.  At least the
@@ -330,21 +305,17 @@ class AsyncTask(AsyncFuture, Namable):
         queue in the future, for instance if the task returns DS_again.  However,
         see recalc_wake_time() if you wish to apply the delay effect immediately.
         """
-        ...
     def clear_delay(self) -> None:
         """Removes any delay specified for the task.  The next time the task is added
         to the queue, it will run immediately.  This does not affect the task's
         wake time if it has already been added to the queue.
         """
-        ...
     def has_delay(self) -> bool:
         """Returns true if a delay has been set for this task via set_delay(), or
         false otherwise.
         """
-        ...
     def get_delay(self) -> float:
         """Returns the delay value that has been set via set_delay, if any."""
-        ...
     def get_wake_time(self) -> float:
         """If this task has been added to an AsyncTaskManager with a delay in effect,
         this returns the time at which the task is expected to awaken.  It has no
@@ -353,7 +324,6 @@ class AsyncTask(AsyncFuture, Namable):
 
         If the task's status is not S_sleeping, this returns 0.0.
         """
-        ...
     def recalc_wake_time(self) -> None:
         """If the task is currently sleeping on a task chain, this resets its wake
         time to the current time + get_delay().  It is as if the task had suddenly
@@ -363,59 +333,49 @@ class AsyncTask(AsyncFuture, Namable):
 
         If the task is not already sleeping, this method has no effect.
         """
-        ...
     def get_start_time(self) -> float:
         """Returns the time at which the task was started, according to the task
         manager's clock.
 
         It is only valid to call this if the task's status is not S_inactive.
         """
-        ...
     def get_elapsed_time(self) -> float:
         """Returns the amount of time that has elapsed since the task was started,
         according to the task manager's clock.
 
         It is only valid to call this if the task's status is not S_inactive.
         """
-        ...
     def get_start_frame(self) -> int:
         """Returns the frame number at which the task was started, according to the
         task manager's clock.
 
         It is only valid to call this if the task's status is not S_inactive.
         """
-        ...
     def get_elapsed_frames(self) -> int:
         """Returns the number of frames that have elapsed since the task was started,
         according to the task manager's clock.
 
         It is only valid to call this if the task's status is not S_inactive.
         """
-        ...
     def set_name(self, name: str) -> None: ...
     def clear_name(self) -> None:
         """Resets the task's name to empty."""
-        ...
     def get_name_prefix(self) -> str:
         """Returns the initial part of the name, up to but not including any trailing
         digits following a hyphen or underscore.
         """
-        ...
     def get_task_id(self) -> int:
         """Returns a number guaranteed to be unique for each different AsyncTask
         object in the universe.
         """
-        ...
     def set_task_chain(self, chain_name: str) -> None:
         """Specifies the AsyncTaskChain on which this task will be running.  Each task
         chain runs tasks independently of the others.
         """
-        ...
     def get_task_chain(self) -> str:
         """Returns the AsyncTaskChain on which this task will be running.  Each task
         chain runs tasks independently of the others.
         """
-        ...
     def set_sort(self, sort: int) -> None:
         """Specifies a sort value for this task.  Within a given AsyncTaskManager, all
         of the tasks with a given sort value are guaranteed to be completed before
@@ -428,10 +388,8 @@ class AsyncTask(AsyncFuture, Namable):
         This is different from the priority, which makes no such exclusion
         guarantees.
         """
-        ...
     def get_sort(self) -> int:
         """Returns the task's current sort value.  See set_sort()."""
-        ...
     def set_priority(self, priority: int) -> None:
         """Specifies a priority value for this task.  In general, tasks with a higher
         priority value are executed before tasks with a lower priority value (but
@@ -449,32 +407,26 @@ class AsyncTask(AsyncFuture, Namable):
         you set the timeslice_priority flag to true, then changing a task's
         priority has an effect on the number of times it runs.
         """
-        ...
     def get_priority(self) -> int:
         """Returns the task's current priority value.  See set_priority()."""
-        ...
     def set_done_event(self, done_event: str) -> None:
         """Sets the event name that will be triggered when the task finishes.  This
         should only be called before the task has been started, or after it has
         finished and before it is about to be restarted (i.e.  when get_state()
         returns S_inactive).
         """
-        ...
     def get_dt(self) -> float:
         """Returns the amount of time elapsed during the task's previous run cycle, in
         seconds.
         """
-        ...
     def get_max_dt(self) -> float:
         """Returns the maximum amount of time elapsed during any one of the task's
         previous run cycles, in seconds.
         """
-        ...
     def get_average_dt(self) -> float:
         """Returns the average amount of time elapsed during each of the task's
         previous run cycles, in seconds.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -540,7 +492,6 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         """Stops all threads and messily empties the task list.  This is intended to
         be called on destruction only.
         """
-        ...
     def set_clock(self, clock: ClockObject) -> None:
         """Replaces the clock pointer used within the AsyncTaskManager.  This is used
         to control when tasks with a set_delay() specified will be scheduled.  It
@@ -548,46 +499,37 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
 
         The default is the global clock pointer.
         """
-        ...
     def get_clock(self) -> ClockObject:
         """Returns the clock pointer used within the AsyncTaskManager.  See
         set_clock().
         """
-        ...
     def get_num_task_chains(self) -> int:
         """Returns the number of different task chains."""
-        ...
     def get_task_chain(self, n: int) -> AsyncTaskChain:
         """Returns the nth task chain."""
-        ...
     def make_task_chain(self, name: str) -> AsyncTaskChain:
         """Creates a new AsyncTaskChain of the indicated name and stores it within the
         AsyncTaskManager.  If a task chain with this name already exists, returns
         it instead.
         """
-        ...
     def find_task_chain(self, name: str) -> AsyncTaskChain:
         """Searches a new AsyncTaskChain of the indicated name and returns it if it
         exists, or NULL otherwise.
         """
-        ...
     def remove_task_chain(self, name: str) -> bool:
         """Removes the AsyncTaskChain of the indicated name.  If the chain still has
         tasks, this will block until all tasks are finished.
 
         Returns true if successful, or false if the chain did not exist.
         """
-        ...
     def add(self, task: AsyncTask) -> None:
         """Adds the indicated task to the active queue.  It is an error if the task is
         already added to this or any other active queue.
         """
-        ...
     def has_task(self, task: AsyncTask) -> bool:
         """Returns true if the indicated task has been added to this AsyncTaskManager,
         false otherwise.
         """
-        ...
     def find_task(self, name: str) -> AsyncTask:
         """Returns the first task found with the indicated name, or NULL if there is
         no task with the indicated name.
@@ -595,15 +537,12 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         If there are multiple tasks with the same name, returns one of them
         arbitrarily.
         """
-        ...
     def find_tasks(self, name: str) -> AsyncTaskCollection:
         """Returns the list of tasks found with the indicated name."""
-        ...
     def find_tasks_matching(self, pattern: GlobPattern) -> AsyncTaskCollection:
         """Returns the list of tasks found whose name matches the indicated glob
         pattern, e.g.  "my_task_*".
         """
-        ...
     @overload
     def remove(self, task: AsyncTask) -> bool:
         """`(self, task: AsyncTask)`:
@@ -614,56 +553,46 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         Removes all of the tasks in the AsyncTaskCollection.  Returns the number of
         tasks removed.
         """
-        ...
     @overload
     def remove(self, tasks: AsyncTaskCollection) -> int: ...
     def wait_for_tasks(self) -> None:
         """Blocks until the task list is empty."""
-        ...
     def stop_threads(self) -> None:
         """Stops any threads that are currently running.  If any tasks are still
         pending and have not yet been picked up by a thread, they will not be
         serviced unless poll() or start_threads() is later called.
         """
-        ...
     def start_threads(self) -> None:
         """Starts any requested threads to service the tasks on the queue.  This is
         normally not necessary, since adding a task will start the threads
         automatically.
         """
-        ...
     def get_num_tasks(self) -> int:
         """Returns the number of tasks that are currently active or sleeping within
         the task manager.
         """
-        ...
     def get_tasks(self) -> AsyncTaskCollection:
         """Returns the set of tasks that are active or sleeping on the task manager,
         at the time of the call.
         """
-        ...
     def get_active_tasks(self) -> AsyncTaskCollection:
         """Returns the set of tasks that are active (and not sleeping) on the task
         manager, at the time of the call.
         """
-        ...
     def get_sleeping_tasks(self) -> AsyncTaskCollection:
         """Returns the set of tasks that are sleeping (and not active) on the task
         manager, at the time of the call.
         """
-        ...
     def poll(self) -> None:
         """Runs through all the tasks in the task list, once, if the task manager is
         running in single-threaded mode (no threads available).  This method does
         nothing in threaded mode, so it may safely be called in either case.
         """
-        ...
     def get_next_wake_time(self) -> float:
         """Returns the scheduled time (on the manager's clock) of the next sleeping
         task, on any task chain, to awaken.  Returns -1 if there are no sleeping
         tasks.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     @staticmethod
@@ -671,7 +600,6 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         """Returns a pointer to the global AsyncTaskManager.  This is the
         AsyncTaskManager that most code should use for queueing tasks and suchlike.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_task_chains(self) -> tuple[AsyncTaskChain, ...]: ...
@@ -712,19 +640,16 @@ class AsyncTaskCollection:
         """Returns the nth AsyncTask in the collection.  This is the same as
         get_task(), but it may be a more convenient way to access it.
         """
-        ...
     def __len__(self) -> int:
         """Returns the number of tasks in the collection.  This is the same thing as
         get_num_tasks().
         """
-        ...
     def __iadd__(self, other: AsyncTaskCollection) -> AsyncTaskCollection: ...
     def __add__(self, other: AsyncTaskCollection) -> AsyncTaskCollection: ...
     def __iter__(self) -> Iterator[AsyncTask]: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def add_task(self, task: AsyncTask) -> None:
         """Adds a new AsyncTask to the collection."""
-        ...
     @overload
     def remove_task(self, task: AsyncTask) -> bool:
         """`(self, task: AsyncTask)`:
@@ -734,7 +659,6 @@ class AsyncTaskCollection:
         `(self, index: int)`:
         Removes the nth AsyncTask from the collection.
         """
-        ...
     @overload
     def remove_task(self, index: int) -> None: ...
     def add_tasks_from(self, other: AsyncTaskCollection) -> None:
@@ -742,47 +666,37 @@ class AsyncTaskCollection:
         The other tasks are simply appended to the end of the tasks in this list;
         duplicates are not automatically removed.
         """
-        ...
     def remove_tasks_from(self, other: AsyncTaskCollection) -> None:
         """Removes from this collection all of the AsyncTasks listed in the other
         collection.
         """
-        ...
     def remove_duplicate_tasks(self) -> None:
         """Removes any duplicate entries of the same AsyncTasks on this collection.
         If a AsyncTask appears multiple times, the first appearance is retained;
         subsequent appearances are removed.
         """
-        ...
     def has_task(self, task: AsyncTask) -> bool:
         """Returns true if the indicated AsyncTask appears in this collection, false
         otherwise.
         """
-        ...
     def clear(self) -> None:
         """Removes all AsyncTasks from the collection."""
-        ...
     def find_task(self, name: str) -> AsyncTask:
         """Returns the task in the collection with the indicated name, if any, or NULL
         if no task has that name.
         """
-        ...
     def get_num_tasks(self) -> int:
         """Returns the number of AsyncTasks in the collection."""
-        ...
     def get_task(self, index: int) -> AsyncTask:
         """Returns the nth AsyncTask in the collection."""
-        ...
     def output(self, out: ostream) -> None:
         """Writes a brief one-line description of the AsyncTaskCollection to the
         indicated output stream.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Writes a complete multi-line description of the AsyncTaskCollection to the
         indicated output stream.
         """
-        ...
     def get_tasks(self) -> tuple[AsyncTask, ...]: ...
     addTask = add_task
     removeTask = remove_task
@@ -821,34 +735,27 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         """Sets the tick_clock flag.  When this is true, get_clock()->tick() will be
         called automatically at each task epoch.  This is false by default.
         """
-        ...
     def get_tick_clock(self) -> bool:
         """Returns the tick_clock flag.  See set_tick_clock()."""
-        ...
     def set_num_threads(self, num_threads: int) -> None:
         """Changes the number of threads for this task chain.  This may require
         stopping the threads if they are already running.
         """
-        ...
     def get_num_threads(self) -> int:
         """Returns the number of threads that will be servicing tasks for this chain.
         Also see get_num_running_threads().
         """
-        ...
     def get_num_running_threads(self) -> int:
         """Returns the number of threads that have been created and are actively
         running.  This will return 0 before the threads have been started; it will
         also return 0 if thread support is not available.
         """
-        ...
     def set_thread_priority(self, priority: _ThreadPriority) -> None:
         """Changes the priority associated with threads that serve this task chain.
         This may require stopping the threads if they are already running.
         """
-        ...
     def get_thread_priority(self) -> _ThreadPriority:
         """Returns the priority associated with threads that serve this task chain."""
-        ...
     def set_frame_budget(self, frame_budget: float) -> None:
         """Sets the maximum amount of time per frame the tasks on this chain are
         granted for execution.  If this is less than zero, there is no limit; if it
@@ -857,12 +764,10 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         chain will stop executing tasks until the next frame, as defined by the
         TaskManager's clock.
         """
-        ...
     def get_frame_budget(self) -> float:
         """Returns the maximum amount of time per frame the tasks on this chain are
         granted for execution.  See set_frame_budget().
         """
-        ...
     def set_frame_sync(self, frame_sync: bool) -> None:
         """Sets the frame_sync flag.  When this flag is true, this task chain will be
         forced to sync with the TaskManager's clock.  It will run no faster than
@@ -877,10 +782,8 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         This only makes sense for threaded task chains.  Non-threaded task chains
         are automatically synchronous.
         """
-        ...
     def get_frame_sync(self) -> bool:
         """Returns the frame_sync flag.  See set_frame_sync()."""
-        ...
     def set_timeslice_priority(self, timeslice_priority: bool) -> None:
         """Sets the timeslice_priority flag.  This changes the interpretation of
         priority, and the number of times per epoch each task will run.
@@ -898,59 +801,48 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         epoch, round-robin style.  Priority is only used to determine which task
         runs first within tasks of the same sort value.
         """
-        ...
     def get_timeslice_priority(self) -> bool:
         """Returns the timeslice_priority flag.  This changes the interpretation of
         priority, and the number of times per epoch each task will run.  See
         set_timeslice_priority().
         """
-        ...
     def stop_threads(self) -> None:
         """Stops any threads that are currently running.  If any tasks are still
         pending and have not yet been picked up by a thread, they will not be
         serviced unless poll() or start_threads() is later called.
         """
-        ...
     def start_threads(self) -> None:
         """Starts any requested threads to service the tasks on the queue.  This is
         normally not necessary, since adding a task will start the threads
         automatically.
         """
-        ...
     def is_started(self) -> bool:
         """Returns true if the thread(s) have been started and are ready to service
         requests, false otherwise.  If this is false, the next call to add() or
         add_and_do() will automatically start the threads.
         """
-        ...
     def has_task(self, task: AsyncTask) -> bool:
         """Returns true if the indicated task has been added to this AsyncTaskChain,
         false otherwise.
         """
-        ...
     def wait_for_tasks(self) -> None:
         """Blocks until the task list is empty."""
-        ...
     def get_num_tasks(self) -> int:
         """Returns the number of tasks that are currently active or sleeping within
         the task chain.
         """
-        ...
     def get_tasks(self) -> AsyncTaskCollection:
         """Returns the set of tasks that are active or sleeping on the task chain, at
         the time of the call.
         """
-        ...
     def get_active_tasks(self) -> AsyncTaskCollection:
         """Returns the set of tasks that are active (and not sleeping) on the task
         chain, at the time of the call.
         """
-        ...
     def get_sleeping_tasks(self) -> AsyncTaskCollection:
         """Returns the set of tasks that are sleeping (and not active) on the task
         chain, at the time of the call.
         """
-        ...
     def poll(self) -> None:
         """Runs through all the tasks in the task list, once, if the task chain is
         running in single-threaded mode (no threads available).  This method does
@@ -959,13 +851,11 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         Normally, you would not call this function directly; instead, call
         AsyncTaskManager::poll(), which polls all of the task chains in sequence.
         """
-        ...
     def get_next_wake_time(self) -> float:
         """Returns the scheduled time (on the manager's clock) of the next sleeping
         task, on any task chain, to awaken.  Returns -1 if there are no sleeping
         tasks.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     @staticmethod
@@ -1029,15 +919,12 @@ class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
         number of times.  If it is negative, it will run forever until it is
         explicitly removed.
         """
-        ...
     def get_repeat_count(self) -> int:
         """Returns the repeat count of the sequence.  See set_repeat_count()."""
-        ...
     def get_current_task_index(self) -> int:
         """Returns the index of the task within the sequence that is currently being
         executed (or that will be executed at the next epoch).
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToAsyncTask = upcast_to_AsyncTask
@@ -1113,27 +1000,21 @@ class ButtonEventList(ParamValueBase):
     def assign(self: Self, copy: Self) -> Self: ...
     def add_event(self, event: ButtonEvent) -> None:
         """Adds a new event to the end of the list."""
-        ...
     def get_num_events(self) -> int:
         """Returns the number of events in the list."""
-        ...
     def get_event(self, n: int) -> ButtonEvent:
         """Returns the nth event in the list.  This does not remove the event from the
         list; the only way to remove events is to empty the whole list with
         clear().
         """
-        ...
     def clear(self) -> None:
         """Empties all the events from the list."""
-        ...
     def add_events(self, other: ButtonEventList) -> None:
         """Appends the events from the other list onto the end of this one."""
-        ...
     def update_mods(self, mods: ModifierButtons) -> None:
         """Updates the indicated ModifierButtons object with all of the button up/down
         transitions indicated in the list.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     addEvent = add_event
     getNumEvents = get_num_events
@@ -1158,12 +1039,10 @@ class Event(TypedReferenceCount):
     def set_name(self, name: str) -> None: ...
     def clear_name(self) -> None:
         """Resets the Event's name to empty."""
-        ...
     def has_name(self) -> bool:
         """Returns true if the Event has a nonempty name set, false if the name is
         empty.
         """
-        ...
     def get_name(self) -> str: ...
     def add_parameter(self, obj: EventParameter | float | str | None) -> None: ...
     def get_num_parameters(self) -> int: ...
@@ -1197,23 +1076,19 @@ class EventHandler(TypedObject):
         """Returns a pending future that will be marked as done when the event is next
         fired.
         """
-        ...
     def process_events(self) -> None:
         """The main processing loop of the EventHandler.  This function must be called
         periodically to service events.  Walks through each pending event and calls
         its assigned hooks.
         """
-        ...
     def dispatch_event(self, event: Event) -> None:
         """Calls the hooks assigned to the indicated single event."""
-        ...
     def write(self, out: ostream) -> None: ...
     @staticmethod
     def get_global_event_handler(queue: EventQueue = ...) -> EventHandler:
         """Returns a pointer to the one global EventHandler object.  If the global
         object has not yet been created, this will create it.
         """
-        ...
     getFuture = get_future
     processEvents = process_events
     dispatchEvent = dispatch_event
@@ -1229,18 +1104,15 @@ class EventQueue:
     def queue_event(self, event: Event) -> None: ...
     def clear(self) -> None:
         """Empties all events on the queue, throwing them on the floor."""
-        ...
     def is_queue_empty(self) -> bool: ...
     def is_queue_full(self) -> Literal[False]:
         """@deprecated Always returns false; the queue can never be full."""
-        ...
     def dequeue_event(self) -> Event: ...
     @staticmethod
     def get_global_event_queue() -> EventQueue:
         """Returns a pointer to the one global EventQueue object.  If the global
         object has not yet been created, this will create it.
         """
-        ...
     queueEvent = queue_event
     isQueueEmpty = is_queue_empty
     isQueueFull = is_queue_full
@@ -1255,43 +1127,30 @@ class PointerEventList(ParamValueBase):
     def __init__(self) -> None: ...
     def get_num_events(self) -> int:
         """Returns the number of events in the list."""
-        ...
     def get_in_window(self, n: int) -> bool:
         """Get the in-window flag of the nth event."""
-        ...
     def get_xpos(self, n: int) -> int:
         """Get the x-coordinate of the nth event."""
-        ...
     def get_ypos(self, n: int) -> int:
         """Get the y-coordinate of the nth event."""
-        ...
     def get_dx(self, n: int) -> float:
         """Get the x-delta of the nth event."""
-        ...
     def get_dy(self, n: int) -> float:
         """Get the y-delta of the nth event."""
-        ...
     def get_sequence(self, n: int) -> int:
         """Get the sequence number of the nth event."""
-        ...
     def get_length(self, n: int) -> float:
         """Get the length of the nth event."""
-        ...
     def get_direction(self, n: int) -> float:
         """Get the direction of the nth event."""
-        ...
     def get_rotation(self, n: int) -> float:
         """Get the rotation of the nth event."""
-        ...
     def get_time(self, n: int) -> float:
         """Get the timestamp of the nth event."""
-        ...
     def clear(self) -> None:
         """Empties all the events from the list."""
-        ...
     def pop_front(self) -> None:
         """Discards the first event on the list."""
-        ...
     @overload
     def add_event(self, data: PointerData, seq: int, time: float) -> None:
         """`(self, data: PointerData, seq: int, time: float)`:
@@ -1304,21 +1163,18 @@ class PointerEventList(ParamValueBase):
         Adds a new event to the end of the list.  Automatically calculates the dx,
         dy, length, direction, and rotation for all but the first event.
         """
-        ...
     @overload
     def add_event(self, in_win: bool, xpos: int, ypos: int, seq: int, time: float) -> None: ...
     @overload
     def add_event(self, in_win: bool, xpos: int, ypos: int, xdelta: float, ydelta: float, seq: int, time: float) -> None: ...
     def encircles(self, x: int, y: int) -> bool:
         """Returns true if the trail loops around the specified point."""
-        ...
     def total_turns(self, sec: float) -> float:
         """returns the total angular deviation that the trail has made in the
         specified time period.  A small number means that the trail is moving in a
         relatively straight line, a large number means that the trail is zig-
         zagging or spinning.  The result is in degrees.
         """
-        ...
     def match_pattern(self, pattern: str, rot: float, seglen: float) -> float:
         """This function is not implemented yet.  It is a work in progress.  The
         intent is as follows:
@@ -1330,7 +1186,6 @@ class PointerEventList(ParamValueBase):
         amount before testing.  Seglen is the minimum length a mouse movement needs
         to be in order to be considered significant.
         """
-        ...
     getNumEvents = get_num_events
     getInWindow = get_in_window
     getXpos = get_xpos
@@ -1359,7 +1214,6 @@ class PythonTask(AsyncTask):
         """The amount of seconds that have elapsed since the task was started,
         according to the task manager's clock.
         """
-        ...
     @property
     def wake_time(self) -> float:
         """If this task has been added to an AsyncTaskManager with a delay in
@@ -1368,17 +1222,14 @@ class PythonTask(AsyncTask):
         there was no delay in effect at the time the task was added.  If the
         task's status is not S_sleeping, this contains 0.0.
         """
-        ...
     @property
     def wakeTime(self) -> float:
         """Alias of wake_time."""
-        ...
     @property
     def frame(self) -> int:
         """The number of frames that have elapsed since the task was started,
         according to the task manager's clock.
         """
-        ...
     @overload
     def __init__(self, function: Callable = ..., name: str = ...) -> None: ...
     @overload
@@ -1386,23 +1237,19 @@ class PythonTask(AsyncTask):
     def set_function(self, function: Callable) -> None: ...
     def get_function(self) -> Callable:
         """Returns the function that is called when the task runs."""
-        ...
     def set_args(self, args, append_task: bool) -> None: ...
     def get_args(self) -> tuple[Any, ...]: ...
     def set_upon_death(self, upon_death: Callable) -> None: ...
     def get_upon_death(self) -> Callable:
         """Returns the function that is called when the task finishes."""
-        ...
     def set_owner(self, owner) -> None: ...
     def get_owner(self):
         """Returns the "owner" object.  See set_owner()."""
-        ...
     def set_result(self, result) -> None:
         """Sets the "result" of this task.  This is the value returned from an "await"
         expression on this task.
         This can only be called while the task is still alive.
         """
-        ...
     setFunction = set_function
     getFunction = get_function
     setArgs = set_args

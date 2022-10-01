@@ -21,7 +21,6 @@ class AIBehaviors:
         is the function we want the user to call for seek to be done.  This
         function is overloaded to accept a NodePath or an LVecBase3.
         """
-        ...
     @overload
     def seek(self, target_object: NodePath, seek_wt: float = ...) -> None: ...
     @overload
@@ -29,59 +28,48 @@ class AIBehaviors:
         """This function activates flee_activate and creates an object of the Flee
         class.  This function is overloaded to accept a NodePath or an LVecBase3.
         """
-        ...
     @overload
     def flee(self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None: ...
     def pursue(self, target_object: NodePath, pursue_wt: float = ...) -> None:
         """This function activates pursue.  This is the function we want the user to
         call for pursue to be done.
         """
-        ...
     def evade(self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., evade_wt: float = ...) -> None:
         """This function activates evade_activate."""
-        ...
     def arrival(self, distance: float = ...) -> None:
         """This function activates arrival.  This is the function we want the user to
         call for arrival to be done.
         """
-        ...
     def flock(self, flock_wt: float) -> None:
         """This function activates flock.  This is the function we want the user to
         call for flock to be done.
         """
-        ...
     def wander(self, wander_radius: float = ..., flag: int = ..., aoe: float = ..., wander_weight: float = ...) -> None:
         """This function activates wander.  This is the function we want the user to
         call for flock to be done.
         """
-        ...
     def obstacle_avoidance(self, feeler_length: float = ...) -> None:
         """This function activates obstacle avoidance for a given character.  This is
         the function we want the user to call for obstacle avoidance to be
         performed.
         """
-        ...
     def path_follow(self, follow_wt: float = ...) -> None:
         """This function activates path following.  This is the function we want the
         user to call for path following.
         """
-        ...
     def add_to_path(self, pos: Vec3f) -> None:
         """This function adds positions to the path to follow."""
-        ...
     def start_follow(self, type: str = ...) -> None: ...
     def init_path_find(self, navmesh_filename: str) -> None:
         """This function activates path finding in the character.  This function
         accepts the meshdata in .csv format.
         """
-        ...
     @overload
     def path_find_to(self, pos: Vec3f, type: str = ...) -> None:
         """This function checks for the source and target in the navigation mesh for
         its availability and then finds the best path via the A* algorithm Then it
         calls the path follower to make the object follow the path.
         """
-        ...
     @overload
     def path_find_to(self, target: NodePath, type: str = ...) -> None: ...
     def add_static_obstacle(self, obstacle: NodePath) -> None:
@@ -90,26 +78,20 @@ class AIBehaviors:
         of the obstacle as non-traversable.  Hence will not be considered by the
         pathfinding algorithm.
         """
-        ...
     def add_dynamic_obstacle(self, obstacle: NodePath) -> None:
         """This function starts the pathfinding obstacle navigation for the passed in
         obstacle.
         """
-        ...
     def remove_ai(self, ai_type: str) -> None:
         """This function removes individual or all the AIs."""
-        ...
     def pause_ai(self, ai_type: str) -> None:
         """This function pauses individual or all the AIs."""
-        ...
     def resume_ai(self, ai_type: str) -> None:
         """This function resumes individual or all the AIs"""
-        ...
     def behavior_status(self, ai_type: str) -> str:
         """This function returns the status of an AI Type whether it is active, paused
         or disabled.  It returns -1 if an invalid string is passed.
         """
-        ...
     obstacleAvoidance = obstacle_avoidance
     pathFollow = path_follow
     addToPath = add_to_path
@@ -140,7 +122,6 @@ class AICharacter(ReferenceCount):
     def get_ai_behaviors(self) -> AIBehaviors: ...
     def set_pf_guide(self, pf_guide: bool) -> None:
         """This function is used to enable or disable the guides for path finding."""
-        ...
     getMass = get_mass
     setMass = set_mass
     getVelocity = get_velocity
@@ -167,7 +148,6 @@ class AINode:
         """This is a handy function which returns true if the passed position is
         within the node's dimensions.
         """
-        ...
 
 class Flock:
     """This class is used to define the flock attributes and the AI characters
@@ -180,10 +160,8 @@ class Flock:
     def __init__(self, flock_id: int, vcone_angle: float, vcone_radius: float, separation_wt: int = ..., cohesion_wt: int = ..., alignment_wt: int = ...) -> None: ...
     def add_ai_char(self, ai_char: AICharacter) -> None:
         """This function adds AI characters to the flock."""
-        ...
     def get_id(self) -> int:
         """Function to access the private member flock_id."""
-        ...
     addAiChar = add_ai_char
     getId = get_id
 
@@ -206,41 +184,32 @@ class AIWorld:
         AICharPool.  This function allows adding the AI characetrs as part of a
         flock.
         """
-        ...
     def flock_off(self, flock_id: int) -> None:
         """This function turns off the flock behavior temporarily.  Similar to pausing
         the behavior.
         """
-        ...
     def flock_on(self, flock_id: int) -> None:
         """This function turns on the flock behavior."""
-        ...
     def remove_flock(self, flock_id: int) -> None:
         """This function removes the flock behavior completely."""
-        ...
     def get_flock(self, flock_id: int) -> Flock:
         """This function returns a handle to the Flock whose id is passed."""
-        ...
     def add_obstacle(self, obstacle: NodePath) -> None:
         """This function adds the nodepath as an obstacle that is needed by the
         obstacle avoidance behavior.
         """
-        ...
     def remove_obstacle(self, obstacle: NodePath) -> None:
         """This function removes the nodepath from the obstacles list that is needed
         by the obstacle avoidance behavior.
         """
-        ...
     def print_list(self) -> None:
         """This function prints the names of the AI characters that have been added to
         the AIWorld.  Useful for debugging purposes.
         """
-        ...
     def update(self) -> None:
         """The AIWorld update function calls the update function of all the AI
         characters which have been added to the AIWorld.
         """
-        ...
     addAiChar = add_ai_char
     removeAiChar = remove_ai_char
     addFlock = add_flock

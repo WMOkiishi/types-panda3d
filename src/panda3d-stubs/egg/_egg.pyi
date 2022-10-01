@@ -94,7 +94,6 @@ class EggObject(TypedReferenceCount):
         This pointer is also copied by the copy assignment operator and copy
         constructor.
         """
-        ...
     def get_user_data(self, type: TypeHandle = ...) -> EggUserData:
         """`(self)`:
         Returns the user data pointer most recently stored on this object, or NULL
@@ -104,7 +103,6 @@ class EggObject(TypedReferenceCount):
         Returns the user data pointer of the indicated type, if it exists, or NULL
         if it does not.
         """
-        ...
     def has_user_data(self, type: TypeHandle = ...) -> bool:
         """`(self)`:
         Returns true if a generic user data pointer has recently been set and not
@@ -114,7 +112,6 @@ class EggObject(TypedReferenceCount):
         Returns true if the user data pointer of the indicated type has been set,
         false otherwise.
         """
-        ...
     def clear_user_data(self, type: TypeHandle = ...) -> None:
         """`(self)`:
         Removes *all* user data pointers from the node.
@@ -122,7 +119,6 @@ class EggObject(TypedReferenceCount):
         `(self, type: TypeHandle)`:
         Removes the user data pointer of the indicated type.
         """
-        ...
     setUserData = set_user_data
     getUserData = get_user_data
     hasUserData = has_user_data
@@ -157,23 +153,19 @@ class EggNode(EggNamedObject):
     def get_parent(self) -> EggGroupNode: ...
     def get_depth(self) -> int:
         """Returns the number of nodes above this node in the egg hierarchy."""
-        ...
     def is_under_instance(self) -> bool:
         """Returns true if there is an <Instance> node somewhere in the egg tree at or
         above this node, false otherwise.
         """
-        ...
     def is_under_transform(self) -> bool:
         """Returns true if there is a <Transform> entry somewhere in the egg tree at
         or above this node, false otherwise.
         """
-        ...
     def is_local_coord(self) -> bool:
         """Returns true if this node's vertices are not in the global coordinate
         space.  This will be the case if there was an <Instance> node under a
         transform at or above this node.
         """
-        ...
     def get_vertex_frame(self) -> LMatrix4d:
         """Returns the coordinate frame of the vertices referenced by primitives at or
         under this node.  This is not the same as get_node_frame().
@@ -189,22 +181,18 @@ class EggNode(EggNamedObject):
         Specifically, this may return a non-identity matrix only if
         is_local_coord() is true.
         """
-        ...
     def get_node_frame(self) -> LMatrix4d:
         """Returns the coordinate frame of the node itself.  This is simply the net
         product of all transformations up to the root.
         """
-        ...
     def get_vertex_frame_inv(self) -> LMatrix4d:
         """Returns the inverse of the matrix returned by get_vertex_frame().  See
         get_vertex_frame().
         """
-        ...
     def get_node_frame_inv(self) -> LMatrix4d:
         """Returns the inverse of the matrix returned by get_node_frame().  See
         get_node_frame().
         """
-        ...
     def get_vertex_to_node(self) -> LMatrix4d:
         """Returns the transformation matrix suitable for converting the vertices as
         read from the egg file into the coordinate space of the node.  This is the
@@ -212,7 +200,6 @@ class EggNode(EggNamedObject):
 
         get_vertex_frame() * get_node_frame_inv()
         """
-        ...
     def get_node_to_vertex(self) -> LMatrix4d:
         """Returns the transformation matrix suitable for converting vertices in the
         coordinate space of the node to the appropriate coordinate space for
@@ -220,48 +207,39 @@ class EggNode(EggNamedObject):
 
         get_node_frame() * get_vertex_frame_inv()
         """
-        ...
     def get_vertex_frame_ptr(self) -> LMatrix4d:
         """Returns either a NULL pointer or a unique pointer shared by nodes with the
         same get_vertex_frame() matrix.
         """
-        ...
     def get_node_frame_ptr(self) -> LMatrix4d:
         """Returns either a NULL pointer or a unique pointer shared by nodes with the
         same get_node_frame() matrix.
         """
-        ...
     def get_vertex_frame_inv_ptr(self) -> LMatrix4d:
         """Returns either a NULL pointer or a unique pointer shared by nodes with the
         same get_vertex_frame_inv() matrix.
         """
-        ...
     def get_node_frame_inv_ptr(self) -> LMatrix4d:
         """Returns either a NULL pointer or a unique pointer shared by nodes with the
         same get_node_frame_inv() matrix.
         """
-        ...
     def get_vertex_to_node_ptr(self) -> LMatrix4d:
         """Returns either a NULL pointer or a unique pointer shared by nodes with the
         same get_vertex_to_node() matrix.
         """
-        ...
     def get_node_to_vertex_ptr(self) -> LMatrix4d:
         """Returns either a NULL pointer or a unique pointer shared by nodes with the
         same get_node_to_vertex() matrix.
         """
-        ...
     def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation to the node and all of its
         descendants.
         """
-        ...
     def transform_vertices_only(self, mat: Mat4d) -> None:
         """Applies the indicated transformation only to vertices that appear in global
         space within vertex pools at this node and below.  Joints and other
         transforms are not affected, nor are local vertices.
         """
-        ...
     def flatten_transforms(self) -> None:
         """Removes any transform and instance records from this node in the scene
         graph and below.  If an instance node is encountered, removes the instance
@@ -271,71 +249,60 @@ class EggNode(EggNamedObject):
         Since this function may result in duplicated vertices, it may be a good
         idea to call remove_unused_vertices() after calling this.
         """
-        ...
     def apply_texmats(self) -> None:
         """Applies the texture matrices to the UV's of the vertices that reference
         them, and then removes the texture matrices from the textures themselves.
         """
-        ...
     def is_joint(self) -> bool:
         """Returns true if this particular node represents a <Joint> entry or not.
         This is a handy thing to know since Joints are sorted to the end of their
         sibling list when writing an egg file.  See EggGroupNode::write().
         """
-        ...
     def is_anim_matrix(self) -> bool:
         """Returns true if this node represents a table of animation transformation
         data, false otherwise.
         """
-        ...
     def determine_alpha_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has an alpha_mode
         other than AM_unspecified.  Returns a valid EggRenderMode pointer if one is
         found, or NULL otherwise.
         """
-        ...
     def determine_depth_write_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a
         depth_write_mode other than DWM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_depth_test_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a
         depth_test_mode other than DTM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_visibility_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a
         visibility_mode other than VM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_depth_offset(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a depth_offset
         specified.  Returns a valid EggRenderMode pointer if one is found, or NULL
         otherwise.
         """
-        ...
     def determine_draw_order(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a draw_order
         specified.  Returns a valid EggRenderMode pointer if one is found, or NULL
         otherwise.
         """
-        ...
     def determine_bin(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a bin specified.
         Returns a valid EggRenderMode pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_indexed(self) -> bool:
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "indexed" scalar set.  Returns the value of the indexed scalar
@@ -344,7 +311,6 @@ class EggNode(EggNamedObject):
         In other words, returns true if the "indexed" flag is in effect for the
         indicated node, false otherwise.
         """
-        ...
     def determine_decal(self) -> bool:
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "decal" flag set.  Returns the value of the decal flag if it
@@ -353,7 +319,6 @@ class EggNode(EggNamedObject):
         In other words, returns true if the "decal" flag is in effect for the
         indicated node, false otherwise.
         """
-        ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def parse_egg(self, egg_syntax: str) -> bool:
         """Parses the egg syntax given in the indicate string as if it had been read
@@ -361,7 +326,6 @@ class EggNode(EggNamedObject):
         accordingly.  Returns true if successful, false if there was some parse
         error or if the object does not support this functionality.
         """
-        ...
     def test_under_integrity(self) -> None: ...
     getParent = get_parent
     getDepth = get_depth
@@ -432,7 +396,6 @@ class EggGroupNode(EggNode):
         is non-thread-safe, and so is not recommended except for languages other
         than C++ which cannot use the iterators.
         """
-        ...
     def get_next_child(self) -> EggNode:
         """Returns the next child in the group's list of children since the last call
         to get_first_child() or get_next_child(), or NULL if the last child has
@@ -443,52 +406,43 @@ class EggGroupNode(EggNode):
 
         It is an error to call this without previously calling get_first_child().
         """
-        ...
     def get_children(self) -> list[EggNode]: ...
     def add_child(self, node: EggNode) -> EggNode:
         """Adds the indicated child to the group and returns it.  If the child node is
         already a child of some other node, removes it first.
         """
-        ...
     def remove_child(self, node: EggNode) -> EggNode:
         """Removes the indicated child node from the group and returns it.  If the
         child was not already in the group, does nothing and returns NULL.
         """
-        ...
     def steal_children(self, other: EggGroupNode) -> None:
         """Moves all the children from the other node to this one.  This is especially
         useful because the group node copy assignment operator does not copy
         children.
         """
-        ...
     def find_child(self, name: str) -> EggNode:
         """Returns the child of this node whose name is the indicated string, or NULL
         if there is no child of this node by that name.  Does not search
         recursively.
         """
-        ...
     def has_absolute_pathnames(self) -> bool:
         """Returns true if any nodes at this level and below include a reference to a
         file via an absolute pathname, or false if all references are relative.
         """
-        ...
     def resolve_filenames(self, searchpath: ConfigVariableSearchPath | DSearchPath) -> None:
         """Walks the tree and attempts to resolve any filenames encountered.  This
         looks up filenames along the specified search path; it does not
         automatically search the model_path for missing files.
         """
-        ...
     def force_filenames(self, directory: Filepath) -> None:
         """Similar to resolve_filenames, but each non-absolute filename encountered is
         arbitrarily taken to be in the indicated directory, whether or not the so-
         named filename exists.
         """
-        ...
     def reverse_vertex_ordering(self) -> None:
         """Reverses the vertex ordering of all polygons defined at this node and
         below.  Does not change the surface normals, if any.
         """
-        ...
     def recompute_vertex_normals(self, threshold: float, cs: _CoordinateSystem = ...) -> None:
         """Recomputes all the vertex normals for polygon geometry at this group node
         and below so that they accurately reflect the vertex positions.  A shared
@@ -503,7 +457,6 @@ class EggGroupNode(EggNode):
         only adds new vertices with the correct normals.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
         """
-        ...
     def recompute_polygon_normals(self, cs: _CoordinateSystem = ...) -> None:
         """Recomputes all the polygon normals for polygon geometry at this group node
         and below so that they accurately reflect the vertex positions.  Normals
@@ -518,7 +471,6 @@ class EggGroupNode(EggNode):
         only adds new vertices with the normals removed.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
         """
-        ...
     def strip_normals(self) -> None:
         """Removes all normals from primitives, and the vertices they reference, at
         this node and below.
@@ -527,7 +479,6 @@ class EggGroupNode(EggNode):
         only adds new vertices with the normal removed.  Thus, it is a good idea to
         call remove_unused_vertices() after calling this.
         """
-        ...
     def recompute_tangent_binormal(self, uv_name: GlobPattern) -> bool:
         """This function recomputes the tangent and binormal for the named texture
         coordinate set for all vertices at this level and below.  Use the empty
@@ -543,13 +494,11 @@ class EggGroupNode(EggNode):
         tangents and binormals computed.  Thus, it is a good idea to call
         remove_unused_vertices() after calling this.
         """
-        ...
     def recompute_tangent_binormal_auto(self) -> bool:
         """This function recomputes the tangent and binormal for any texture
         coordinate set that affects a normal map.  Returns true if anything was
         done.
         """
-        ...
     def triangulate_polygons(self, flags: int) -> int:
         """Replace all higher-order polygons at this point in the scene graph and
         below with triangles.  Returns the total number of new triangles produced,
@@ -559,15 +508,12 @@ class EggGroupNode(EggNode):
         will be subdivided into triangles; with only T_polygon, only concave
         polygons will be subdivided, and convex polygons will be largely unchanged.
         """
-        ...
     def mesh_triangles(self, flags: int) -> None:
         """Combine triangles together into triangle strips, at this group and below."""
-        ...
     def make_point_primitives(self) -> None:
         """Creates PointLight primitives to reference any otherwise unreferences
         vertices discovered in this group or below.
         """
-        ...
     def remove_unused_vertices(self, recurse: bool) -> int:
         """Removes all vertices from VertexPools within this group or below that are
         not referenced by at least one primitive.  Also collapses together
@@ -581,13 +527,11 @@ class EggGroupNode(EggNode):
         EggData root, rather than on a subgroup within the hierarchy, since a
         VertexPool may appear anywhere in the hierarchy.
         """
-        ...
     def remove_invalid_primitives(self, recurse: bool) -> int:
         """Removes primitives at this level and below which appear to be degenerate;
         e.g.  polygons with fewer than 3 vertices, etc.  Returns the number of
         primitives removed.
         """
-        ...
     def clear_connected_shading(self) -> None:
         """Resets the connected_shading information on all primitives at this node and
         below, so that it may be accurately rederived by the next call to
@@ -596,13 +540,11 @@ class EggGroupNode(EggNode):
         It may be a good idea to call remove_unused_vertices() as well, to
         establish the correct connectivity between common vertices.
         """
-        ...
     def get_connected_shading(self) -> None:
         """Queries the connected_shading information on all primitives at this node
         and below, to ensure that it has been completely filled in before we start
         mucking around with vertices.
         """
-        ...
     def unify_attributes(self, use_connected_shading: bool, allow_per_primitive: bool, recurse: bool) -> None:
         """Applies per-vertex normal and color to all vertices, if they are in fact
         per-vertex (and different for each vertex), or moves them to the primitive
@@ -625,7 +567,6 @@ class EggGroupNode(EggNode):
         This may create redundant vertices in the vertex pool, so it may be a good
         idea to follow this up with remove_unused_vertices().
         """
-        ...
     def apply_last_attribute(self, recurse: bool) -> None:
         """Sets the last vertex of the triangle (or each component) to the primitive
         normal and/or color, if the primitive is flat-shaded.  This reflects the
@@ -635,7 +576,6 @@ class EggGroupNode(EggNode):
         This may create redundant vertices in the vertex pool, so it may be a good
         idea to follow this up with remove_unused_vertices().
         """
-        ...
     def apply_first_attribute(self, recurse: bool) -> None:
         """Sets the first vertex of the triangle (or each component) to the primitive
         normal and/or color, if the primitive is flat-shaded.  This reflects the
@@ -645,32 +585,26 @@ class EggGroupNode(EggNode):
         This may create redundant vertices in the vertex pool, so it may be a good
         idea to follow this up with remove_unused_vertices().
         """
-        ...
     def post_apply_flat_attribute(self, recurse: bool) -> None:
         """Intended as a followup to apply_last_attribute(), this also sets an
         attribute on the first vertices of the primitive, if they don't already
         have an attribute set, just so they end up with *something*.
         """
-        ...
     def has_primitives(self) -> bool:
         """Returns true if there are any primitives (e.g.  polygons) defined within
         this group or below, false otherwise.
         """
-        ...
     def joint_has_primitives(self) -> bool:
         """Returns true if there are any primitives (e.g.  polygons) defined within
         this group or below, but the search does not include nested joints.
         """
-        ...
     def has_normals(self) -> bool:
         """Returns true if any of the primitives (e.g.  polygons) defined within this
         group or below have either face or vertex normals defined, false otherwise.
         """
-        ...
     @staticmethod
     def is_right(v1: LVecBase2d, v2: LVecBase2d) -> bool:
         """Returns true if the 2-d v1 is to the right of v2."""
-        ...
     getFirstChild = get_first_child
     getNextChild = get_next_child
     getChildren = get_children
@@ -712,19 +646,14 @@ class EggAnimData(EggNode):
     def has_fps(self) -> bool: ...
     def get_fps(self) -> float:
         """This is only valid if has_fps() returns true."""
-        ...
     def clear_data(self) -> None:
         """Removes all data and empties the table."""
-        ...
     def add_data(self, value: float) -> None:
         """Adds a single element to the table."""
-        ...
     def get_size(self) -> int:
         """Returns the number of elements in the table."""
-        ...
     def quantize(self, quantum: float) -> None:
         """Rounds each element of the table to the nearest multiple of quantum."""
-        ...
     setFps = set_fps
     clearFps = clear_fps
     hasFps = has_fps
@@ -746,13 +675,11 @@ class EggAnimPreload(EggNode):
     def has_fps(self) -> bool: ...
     def get_fps(self) -> float:
         """This is only valid if has_fps() returns true."""
-        ...
     def set_num_frames(self, num_frames: int) -> None: ...
     def clear_num_frames(self) -> None: ...
     def has_num_frames(self) -> bool: ...
     def get_num_frames(self) -> int:
         """This is only valid if has_num_frames() returns true."""
-        ...
     setFps = set_fps
     clearFps = clear_fps
     hasFps = has_fps
@@ -781,46 +708,37 @@ class EggAttributes:
         """Returns true if this normal matches that of the other EggAttributes object,
         include the morph list.
         """
-        ...
     def copy_normal(self, other: EggAttributes) -> None:
         """Sets this normal to be the same as the other's, include morphs.  If the
         other has no normal, this clears the normal.
         """
-        ...
     def has_color(self) -> bool: ...
     def get_color(self) -> LColor:
         """Returns the color set on this particular attribute.  If there is no color
         set, returns white.
         """
-        ...
     def set_color(self, Color: Vec4f) -> None: ...
     def clear_color(self) -> None: ...
     def matches_color(self, other: EggAttributes) -> bool:
         """Returns true if this color matches that of the other EggAttributes object,
         include the morph list.
         """
-        ...
     def copy_color(self, other: EggAttributes) -> None:
         """Sets this color to be the same as the other's, include morphs.  If the
         other has no color, this clears the color.
         """
-        ...
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes the attributes to the indicated output stream in Egg format."""
-        ...
     def sorts_less_than(self, other: EggAttributes) -> bool:
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
-        ...
     def compare_to(self, other: EggAttributes) -> int:
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
-        ...
     def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to the attributes."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     hasNormal = has_normal
@@ -856,37 +774,30 @@ class EggVertexUV(EggNamedObject):
         Usually this is the same string that is input, but for historical reasons
         the texture coordinate name "default" is mapped to the empty string.
         """
-        ...
     def set_name(self, name: str) -> None: ...
     def get_num_dimensions(self) -> int:
         """Returns the number of components of the texture coordinate set.  This is
         either 2 (the normal case) or 3 (for a 3-d texture coordinate).
         """
-        ...
     def has_w(self) -> bool:
         """Returns true if the texture coordinate has a third, w component, false if
         it is just a normal 2-d texture coordinate.
         """
-        ...
     def get_uv(self) -> LTexCoordd:
         """Returns the texture coordinate pair, if get_num_dimensions() is 2."""
-        ...
     def get_uvw(self) -> LTexCoord3d:
         """Returns the texture coordinate triple, if get_num_dimensions() is 3.  This
         is also legal to call if get_num_dimensions() is 2 (but the last dimension
         will be zero).
         """
-        ...
     def set_uv(self, texCoord: LVecBase2d) -> None:
         """Sets the texture coordinate pair.  This makes the texture coordinate a 2-d
         texture coordinate, which is the usual case.
         """
-        ...
     def set_uvw(self, texCoord: Vec3d) -> None:
         """Sets the texture coordinate triple.  This makes the texture coordinate a
         3-d texture coordinate.
         """
-        ...
     def has_tangent(self) -> bool: ...
     def has_tangent4(self) -> bool: ...
     def get_tangent(self) -> LNormald: ...
@@ -896,7 +807,6 @@ class EggVertexUV(EggNamedObject):
         """Sets the tangent vector, along with a fourth parameter that is multiplied
         with the result of cross(normal, tangent) when computing the binormal.
         """
-        ...
     def clear_tangent(self) -> None: ...
     def has_binormal(self) -> bool: ...
     def get_binormal(self) -> LNormald: ...
@@ -907,18 +817,15 @@ class EggVertexUV(EggNamedObject):
         """Creates a new EggVertexUV that contains the averaged values of the two
         given objects.  It is an error if they don't have the same name.
         """
-        ...
     def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to the UV's tangent and/or
         binormal.  This does nothing if there is no tangent or binormal.
         """
-        ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def compare_to(self, other: EggVertexUV) -> int:
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
-        ...
     filterName = filter_name
     setName = set_name
     getNumDimensions = get_num_dimensions
@@ -954,22 +861,18 @@ class EggVertexAux(EggNamedObject):
     def set_name(self, name: str) -> None: ...
     def get_aux(self) -> LVecBase4d:
         """Returns the auxiliary data quadruple."""
-        ...
     def set_aux(self, aux: Vec4d) -> None:
         """Sets the auxiliary data quadruple."""
-        ...
     @staticmethod
     def make_average(first: EggVertexAux, second: EggVertexAux) -> EggVertexAux:
         """Creates a new EggVertexAux that contains the averaged values of the two
         given objects.  It is an error if they don't have the same name.
         """
-        ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def compare_to(self, other: EggVertexAux) -> int:
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
-        ...
     setName = set_name
     getAux = get_aux
     setAux = set_aux
@@ -985,19 +888,16 @@ class EggVertex(EggObject, EggAttributes):
         """Copies all properties of the vertex except its vertex pool, index number,
         and group membership.
         """
-        ...
     def upcast_to_EggObject(self) -> EggObject: ...
     def upcast_to_EggAttributes(self) -> EggAttributes: ...
     def assign(self: Self, copy: Self) -> Self:
         """Copies all properties of the vertex except its vertex pool, index number,
         and group membership.
         """
-        ...
     def get_pool(self) -> EggVertexPool:
         """Returns the vertex pool this vertex belongs in.  This may be NULL if the
         vertex has not been added to a pool.
         """
-        ...
     def is_forward_reference(self) -> bool:
         """Returns true if the vertex is a forward reference to some vertex that
         hasn't been defined yet.  In this case, the vertex may not have any
@@ -1007,7 +907,6 @@ class EggVertex(EggObject, EggAttributes):
         EggVertexPool::get_forward_vertex(). Presumably, when the vertex pool is
         later filled in, this vertex will be replaced with real data.
         """
-        ...
     def set_pos(self, pos: LVecBase2d | Vec3d | Vec4d | float) -> None:
         """`(self, pos: LPoint2d)`:
         Sets the vertex position.  This variant sets the vertex to a two-
@@ -1025,7 +924,6 @@ class EggVertex(EggObject, EggAttributes):
         Sets the vertex position.  This variant sets the vertex to a one-
         dimensional value.
         """
-        ...
     def set_pos4(self, pos: Vec4d) -> None:
         """This special flavor of set_pos() sets the vertex as a four-component value,
         but does not change the set number of dimensions.  It's handy for
@@ -1033,7 +931,6 @@ class EggVertex(EggObject, EggAttributes):
         it back again, without worrying about the number of dimensions it actually
         had.
         """
-        ...
     def get_num_dimensions(self) -> int:
         """get_pos[123] return the pos as the corresponding type.  It is an error to
         call any of these without first verifying that get_num_dimensions()
@@ -1041,29 +938,24 @@ class EggVertex(EggObject, EggAttributes):
         returns the pos as a four-component point in homogeneous space (with a
         1.0 in the last position if the pos has fewer than four components).
         """
-        ...
     def get_pos1(self) -> float:
         """Only valid if get_num_dimensions() returns 1. Returns the position as a
         one-dimensional value.
         """
-        ...
     def get_pos2(self) -> LPoint2d:
         """Only valid if get_num_dimensions() returns 2. Returns the position as a
         two-dimensional value.
         """
-        ...
     def get_pos3(self) -> LVertexd:
         """Valid if get_num_dimensions() returns 3 or 4. Returns the position as a
         three-dimensional value.
         """
-        ...
     def get_pos4(self) -> LPoint4d:
         """This is always valid, regardless of the value of get_num_dimensions.  It
         returns the position as a four-dimensional value.  If the pos has fewer
         than four dimensions, this value represents the pos extended into four-
         dimensional homogenous space, e.g.  by adding 1 as the fourth component.
         """
-        ...
     def has_uv(self, name: str = ...) -> bool:
         """`(self)`:
         Returns true if the vertex has an unnamed UV coordinate pair, false
@@ -1077,7 +969,6 @@ class EggVertex(EggObject, EggAttributes):
         Returns true if the vertex has the named UV coordinate pair, and the named
         UV coordinate pair is 2-d, false otherwise.
         """
-        ...
     def get_uv(self, name: str = ...) -> LTexCoordd:
         """`(self)`:
         Returns the unnamed UV coordinate pair on the vertex.  It is an error to
@@ -1091,7 +982,6 @@ class EggVertex(EggObject, EggAttributes):
         Returns the named UV coordinate pair on the vertex.  It is an error to call
         this if has_uv(name) returned false.
         """
-        ...
     @overload
     def set_uv(self, texCoord: LVecBase2d) -> None:
         """`(self, texCoord: LTexCoordd)`:
@@ -1107,7 +997,6 @@ class EggVertex(EggObject, EggAttributes):
         coordinate pair with the same name already on the vertex, but preserves UV
         morphs.
         """
-        ...
     @overload
     def set_uv(self, name: str, texCoord: LVecBase2d) -> None: ...
     def clear_uv(self, name: str = ...) -> None:
@@ -1118,42 +1007,35 @@ class EggVertex(EggObject, EggAttributes):
         Removes the named UV coordinate pair from the vertex, along with any UV
         morphs.
         """
-        ...
     def has_uvw(self, name: str) -> bool:
         """Returns true if the vertex has the named UV coordinate triple, and the
         named UV coordinate triple is 3-d, false otherwise.
         """
-        ...
     def get_uvw(self, name: str) -> LTexCoord3d:
         """Returns the named UV coordinate triple on the vertex.  It is an error to
         call this if has_uvw(name) returned false.
         """
-        ...
     def set_uvw(self, name: str, texCoord: Vec3d) -> None:
         """Sets the indicated UV coordinate triple on the vertex.  This replaces any
         UV coordinate pair or triple with the same name already on the vertex, but
         preserves UV morphs.
         """
-        ...
     def get_uv_obj(self, name: str) -> EggVertexUV:
         """Returns the named EggVertexUV object, which defines both the UV coordinate
         pair for this name and the UV morphs.  This object might be shared between
         multiple vertices.  You should not attempt to modify this object; instead,
         call modify_uv_object to return a modifiable pointer.
         """
-        ...
     def modify_uv_obj(self, name: str) -> EggVertexUV:
         """Returns a modifiable pointer to the named EggVertexUV object, which defines
         both the UV coordinate pair for this name and the UV morphs.  Returns NULL
         if there is no such named UV object.
         """
-        ...
     def set_uv_obj(self, vertex_uv: EggVertexUV) -> None:
         """Sets the indicated EggVertexUV on the vertex.  This replaces any UV
         coordinate pair with the same name already on the vertex, including UV
         morphs.
         """
-        ...
     def has_aux(self, name: str = ...) -> bool:
         """`(self)`:
         Returns true if the vertex has any auxiliary data, false otherwise.
@@ -1161,7 +1043,6 @@ class EggVertex(EggObject, EggAttributes):
         `(self, name: str)`:
         Returns true if the vertex has the named auxiliary data quadruple.
         """
-        ...
     def clear_aux(self, name: str = ...) -> None:
         """`(self)`:
         Removes all auxiliary data from the vertex.
@@ -1169,35 +1050,29 @@ class EggVertex(EggObject, EggAttributes):
         `(self, name: str)`:
         Removes the named auxiliary data from the vertex.
         """
-        ...
     def get_aux(self, name: str) -> LVecBase4d:
         """Returns the named auxiliary data quadruple on the vertex.  It is an error
         to call this if has_aux(name) returned false.
         """
-        ...
     def set_aux(self, name: str, aux: Vec4d) -> None:
         """Sets the indicated auxiliary data quadruple on the vertex.  This replaces
         any auxiliary data with the same name already on the vertex.
         """
-        ...
     def get_aux_obj(self, name: str) -> EggVertexAux:
         """Returns the named EggVertexAux object, which defines the auxiliary data for
         this name.  This object might be shared between multiple vertices.  You
         should not attempt to modify this object; instead, call modify_aux_object
         to return a modifiable pointer.
         """
-        ...
     def modify_aux_obj(self, name: str) -> EggVertexAux:
         """Returns a modifiable pointer to the named EggVertexAux object, which
         defines the auxiliary data for this name.  Returns NULL if there is no such
         named UV object.
         """
-        ...
     def set_aux_obj(self, vertex_aux: EggVertexAux) -> None:
         """Sets the indicated EggVertexAux on the vertex.  This replaces any auxiliary
         data with the same name already on the vertex.
         """
-        ...
     @staticmethod
     def make_average(first: EggVertex, second: EggVertex) -> EggVertex:
         """Creates a new vertex that lies in between the two given vertices.  The
@@ -1206,10 +1081,8 @@ class EggVertex(EggObject, EggAttributes):
         Both vertices need to be either in no pool, or in the same pool.  In the
         latter case, the new vertex will be placed in that pool.
         """
-        ...
     def get_index(self) -> int:
         """Returns the index number of the vertex within its pool."""
-        ...
     def set_external_index(self, external_index: int) -> None:
         """Sets a special index number that is associated with the EggVertex (but is
         not written to the egg file). This number is not interpreted by any egg
@@ -1220,29 +1093,23 @@ class EggVertex(EggObject, EggAttributes):
         The intention of this number is as an aid for file converters, to associate
         an EggVertex back to the index number of the original source vertex.
         """
-        ...
     def get_external_index(self) -> int:
         """Returns the number set by set_external_index().  See set_external_index()."""
-        ...
     def set_external_index2(self, external_index2: int) -> None:
         """Similar to set_external_index(), but this is a different number which may
         be used for a different purpose by the calling code.  The egg library does
         not assign any meaning to this number or use it in any way.
         """
-        ...
     def get_external_index2(self) -> int:
         """Returns the number set by set_external_index2().  See
         set_external_index2().
         """
-        ...
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes the vertex to the indicated output stream in Egg format."""
-        ...
     def sorts_less_than(self, other: EggVertex) -> bool:  # type: ignore[override]
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
-        ...
     def compare_to(self, other: EggVertex) -> int:  # type: ignore[override]
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
@@ -1258,25 +1125,20 @@ class EggVertex(EggObject, EggAttributes):
         group memberships, else the vertices will tend to fly apart when the joints
         animate.
         """
-        ...
     def get_num_local_coord(self) -> int:
         """Returns the number of primitives that own this vertex whose vertices are
         interpreted to be in a local coordinate system.
         """
-        ...
     def get_num_global_coord(self) -> int:
         """Returns the number of primitives that own this vertex whose vertices are
         interpreted in the global coordinate system.
         """
-        ...
     def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to the vertex."""
-        ...
     def has_gref(self, group: EggGroup) -> bool:
         """Returns true if the indicated group references this vertex, false
         otherwise.
         """
-        ...
     def copy_grefs_from(self, other: EggVertex) -> None:
         """Copies all the group references from the other vertex onto this one.  This
         assigns the current vertex to exactly the same groups, with exactly the
@@ -1286,17 +1148,14 @@ class EggVertex(EggObject, EggAttributes):
         assigned to it.  Do not attempt to call this on a temporary concrete
         EggVertex object; a core dump will certainly result.
         """
-        ...
     def clear_grefs(self) -> None:
         """Removes all group references from the vertex, so that it is not assigned to
         any group.
         """
-        ...
     def has_pref(self, prim: EggPrimitive) -> int:
         """Returns the number of times the vertex appears in the indicated primitive,
         or 0 if it does not appear.
         """
-        ...
     def test_gref_integrity(self) -> None: ...
     def test_pref_integrity(self) -> None: ...
     def output(self, out: ostream) -> None: ...
@@ -1365,37 +1224,30 @@ class EggVertexPool(EggNode):
         the vertices and assign new pointers to them all.  There will be no
         polygons referring to the new vertices.
         """
-        ...
     @overload
     def __init__(self, name: str) -> None: ...
     def __getitem__(self, index: int) -> EggVertex:
         """Returns the vertex in the pool with the indicated index number, or NULL if
         no vertices have that index number.
         """
-        ...
     def __len__(self) -> int:
         """Returns the number of vertices in the pool."""
-        ...
     def has_vertex(self, index: int) -> bool:
         """Returns true if the indicated vertex has been defined in the vertex pool,
         false otherwise.  This does not include forward references.
         """
-        ...
     def has_forward_vertices(self) -> bool:
         """Returns true if any vertices in the pool are undefined forward-reference
         vertices, false if all vertices are defined.
         """
-        ...
     def has_defined_vertices(self) -> bool:
         """Returns true if any vertices in the pool are fully defined vertices, false
         if all vertices are forward references.
         """
-        ...
     def get_vertex(self, index: int) -> EggVertex:
         """Returns the vertex in the pool with the indicated index number, or NULL if
         no vertices have that index number.
         """
-        ...
     def get_forward_vertex(self, index: int) -> EggVertex:
         """Returns the vertex in the pool with the indicated index number.  If there
         is not a vertex in the pool with the indicated index number, creates a
@@ -1403,47 +1255,38 @@ class EggVertexPool(EggNode):
         that the vertex pool has not yet been fully read and more data will be
         available later.
         """
-        ...
     def get_highest_index(self) -> int:
         """Returns the highest index number used by any vertex in the pool (except
         forward references).  Returns -1 if the pool is empty.
         """
-        ...
     def set_highest_index(self, highest_index: int) -> None:
         """Artificially changes the "highest index number", so that a newly created
         vertex will begin at this number plus 1.  This can be used to default a
         vertex pool to start counting at 1 (or any other index number), instead of
         the default of 0.  Use with caution.
         """
-        ...
     def get_num_dimensions(self) -> int:
         """Returns the maximum number of dimensions used by any vertex in the pool."""
-        ...
     def has_normals(self) -> bool:
         """Returns true if any vertex in the pool has a normal defined, false if none
         of them do.
         """
-        ...
     def has_colors(self) -> bool:
         """Returns true if any vertex in the pool has a color defined, false if none
         of them do.
         """
-        ...
     def has_nonwhite_colors(self) -> bool:
         """Returns true if any vertex in the pool has a color defined other than
         white, false if no vertices have colors, or if all colors are white.
         """
-        ...
     def has_uvs(self) -> bool:
         """Returns true if any vertex in the pool has a uv defined, false if none of
         them do.
         """
-        ...
     def has_aux(self) -> bool:
         """Returns true if any vertex in the pool has auxiliary data defined, false if
         none of them do.
         """
-        ...
     def add_vertex(self, vertex: EggVertex, index: int = ...) -> EggVertex:
         """Adds the indicated vertex to the pool.  It is an error if the vertex is
         already a member of this or any other pool.  The vertex must have been
@@ -1458,7 +1301,6 @@ class EggVertexPool(EggNode):
         usual case, however, the vertex pointer passed in is the one that is saved
         in the vertex pool and returned from this method.
         """
-        ...
     def make_new_vertex(self, pos: LVecBase2d | Vec3d | Vec4d | float = ...) -> EggVertex:
         """`(self)`:
         Allocates and returns a new vertex from the pool.  This is one of three
@@ -1471,36 +1313,30 @@ class EggVertexPool(EggNode):
         This flavor of make_new_vertex() explicitly sets the vertex position as it
         is allocated.  It does not attempt to share vertices.
         """
-        ...
     def create_unique_vertex(self, copy: EggVertex) -> EggVertex:
         """Creates a new vertex in the pool that is a copy of the indicated one and
         returns it.  If there is already a vertex in the pool like the indicated
         one, simply returns that one.
         """
-        ...
     def find_matching_vertex(self, copy: EggVertex) -> EggVertex:
         """If the EggVertexPool already has a vertex matching the indicated vertex,
         returns it; otherwise, returns NULL.  This is similar to
         create_unique_vertex() except that a new vertex is never created.
         """
-        ...
     def remove_vertex(self, vertex: EggVertex) -> None:
         """Removes the vertex from the pool.  It is an error if the vertex is not
         already a member of the pool.
         """
-        ...
     def remove_unused_vertices(self) -> int:
         """Removes all vertices from the pool that are not referenced by at least one
         primitive.  Also collapses together equivalent vertices, and renumbers all
         vertices after the operation so their indices are consecutive, beginning at
         zero.  Returns the number of vertices removed.
         """
-        ...
     def add_unused_vertices_to_prim(self, prim: EggPrimitive) -> None:
         """Adds all of the unused vertices in this vertex pool to the indicated
         primitive, in ascending order.
         """
-        ...
     def transform(self, mat: Mat4d) -> None:
         """Applies the indicated transformation matrix to all the vertices.  However,
         vertices that are attached to primitives that believe their vertices are in
@@ -1509,13 +1345,11 @@ class EggVertexPool(EggNode):
         primitive, and the transformation includes a translation component, the
         vertex will be split.
         """
-        ...
     def sort_by_external_index(self) -> None:
         """Re-orders (and re-numbers) the vertices in this vertex pool so that they
         appear in increasing order by the optional external_index that has been
         assigned to each vertex.
         """
-        ...
     hasVertex = has_vertex
     hasForwardVertices = has_forward_vertices
     hasDefinedVertices = has_defined_vertices
@@ -1590,14 +1424,12 @@ class EggRenderMode:
     def __init__(self, copy: EggRenderMode = ...) -> None: ...
     def __eq__(self, __other: object) -> bool:
         """Comparison operators are handy."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: EggRenderMode) -> bool: ...
     def __le__(self, other: EggRenderMode) -> bool: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes the attributes to the indicated output stream in Egg format."""
-        ...
     def set_alpha_mode(self, mode: _EggRenderMode_AlphaMode) -> None:
         """Specifies precisely how the transparency for this geometry should be
         achieved, or if it should be used.  The default, AM_unspecified, is to use
@@ -1607,88 +1439,72 @@ class EggRenderMode:
         specific ways to turn on transparency, which may or may not be supported by
         a particular rendering backend.
         """
-        ...
     def get_alpha_mode(self) -> _EggRenderMode_AlphaMode:
         """Returns the alpha mode that was set, or AM_unspecified if nothing was set.
         See set_alpha_mode().
         """
-        ...
     def set_depth_write_mode(self, mode: _EggRenderMode_DepthWriteMode) -> None:
         """Specifies whether writes should be made to the depth buffer (assuming the
         rendering backend provides a depth buffer) when rendering this geometry.
         """
-        ...
     def get_depth_write_mode(self) -> _EggRenderMode_DepthWriteMode:
         """Returns the depth_write mode that was set, or DWM_unspecified if nothing
         was set.  See set_depth_write_mode().
         """
-        ...
     def set_depth_test_mode(self, mode: _EggRenderMode_DepthTestMode) -> None:
         """Specifies whether this geometry should be tested against the depth buffer
         when it is drawn (assuming the rendering backend provides a depth buffer).
         Note that this is different, and independent from, the depth_write mode.
         """
-        ...
     def get_depth_test_mode(self) -> _EggRenderMode_DepthTestMode:
         """Returns the depth_test mode that was set, or DTM_unspecified if nothing was
         set.  See set_depth_test_mode().
         """
-        ...
     def set_visibility_mode(self, mode: _EggRenderMode_VisibilityMode) -> None:
         """Specifies whether this geometry is to be considered normally visible, or
         hidden.  If it is hidden, it is either not loaded into the scene graph at
         all, or loaded as a "stashed" node, according to the setting of egg-
         suppress-hidden.
         """
-        ...
     def get_visibility_mode(self) -> _EggRenderMode_VisibilityMode:
         """Returns the visibility mode that was set, or VM_unspecified if nothing was
         set.  See set_visibility_mode().
         """
-        ...
     def set_depth_offset(self, bias: int) -> None:
         """Sets the "depth-offset" flag associated with this object.  This adds or
         subtracts an offset bias into the depth buffer.  See also DepthOffsetAttrib
         and NodePath::set_depth_offset().
         """
-        ...
     def get_depth_offset(self) -> int:
         """Returns the "depth-offset" flag as set for this particular object.  See
         set_depth_offset().
         """
-        ...
     def has_depth_offset(self) -> bool:
         """Returns true if the depth-offset flag has been set for this particular
         object.  See set_depth_offset().
         """
-        ...
     def clear_depth_offset(self) -> None:
         """Removes the depth-offset flag from this particular object.  See
         set_depth_offset().
         """
-        ...
     def set_draw_order(self, order: int) -> None:
         """Sets the "draw-order" flag associated with this object.  This specifies a
         particular order in which objects of this type should be drawn, within the
         specified bin.  If a bin is not explicitly specified, "fixed" is used.  See
         also set_bin().
         """
-        ...
     def get_draw_order(self) -> int:
         """Returns the "draw-order" flag as set for this particular object.  See
         set_draw_order().
         """
-        ...
     def has_draw_order(self) -> bool:
         """Returns true if the draw-order flag has been set for this particular
         object.  See set_draw_order().
         """
-        ...
     def clear_draw_order(self) -> None:
         """Removes the draw-order flag from this particular object.  See
         set_draw_order().
         """
-        ...
     def set_bin(self, bin: str) -> None:
         """Sets the "bin" string for this particular object.  This names a particular
         bin in which the object should be rendered.  The exact meaning of a bin is
@@ -1696,50 +1512,42 @@ class EggRenderMode:
         also be specifically added to the rendering engine (e.g.  the
         CullTraverser) in use for this to work.  See also set_draw_order().
         """
-        ...
     def get_bin(self) -> str:
         """Returns the bin name that has been set for this particular object, if any.
         See set_bin().
         """
-        ...
     def has_bin(self) -> bool:
         """Returns true if a bin name has been set for this particular object.  See
         set_bin().
         """
-        ...
     def clear_bin(self) -> None:
         """Removes the bin name that was set for this particular object.  See
         set_bin().
         """
-        ...
     @staticmethod
     def string_alpha_mode(string: str) -> _EggRenderMode_AlphaMode:
         """Returns the AlphaMode value associated with the given string
         representation, or AM_unspecified if the string does not match any known
         AlphaMode value.
         """
-        ...
     @staticmethod
     def string_depth_write_mode(string: str) -> _EggRenderMode_DepthWriteMode:
         """Returns the DepthWriteMode value associated with the given string
         representation, or DWM_unspecified if the string does not match any known
         DepthWriteMode value.
         """
-        ...
     @staticmethod
     def string_depth_test_mode(string: str) -> _EggRenderMode_DepthTestMode:
         """Returns the DepthTestMode value associated with the given string
         representation, or DTM_unspecified if the string does not match any known
         DepthTestMode value.
         """
-        ...
     @staticmethod
     def string_visibility_mode(string: str) -> _EggRenderMode_VisibilityMode:
         """Returns the HiddenMode value associated with the given string
         representation, or VM_unspecified if the string does not match any known
         HiddenMode value.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     setAlphaMode = set_alpha_mode
@@ -1807,33 +1615,26 @@ class EggTransform:
     def assign(self: Self, copy: Self) -> Self: ...
     def clear_transform(self) -> None:
         """Resets the transform to empty, identity."""
-        ...
     def add_translate2d(self, translate: LVecBase2d) -> None:
         """Appends a 2-d translation operation to the current transform."""
-        ...
     def add_translate3d(self, translate: Vec3d) -> None:
         """Appends a 3-d translation operation to the current transform."""
-        ...
     def add_rotate2d(self, angle: float) -> None:
         """Appends a 2-d rotation to the current transform.  The rotation angle is
         specified in degrees counterclockwise about the origin.
         """
-        ...
     def add_rotx(self, angle: float) -> None:
         """Appends a rotation about the X axis to the current transform.  The rotation
         angle is specified in degrees counterclockwise about the axis.
         """
-        ...
     def add_roty(self, angle: float) -> None:
         """Appends a rotation about the Y axis to the current transform.  The rotation
         angle is specified in degrees counterclockwise about the axis.
         """
-        ...
     def add_rotz(self, angle: float) -> None:
         """Appends a rotation about the Z axis to the current transform.  The rotation
         angle is specified in degrees counterclockwise about the axis.
         """
-        ...
     @overload
     def add_rotate3d(self, quat: Vec4d) -> None:
         """`(self, quat: LQuaterniond)`:
@@ -1844,30 +1645,23 @@ class EggTransform:
         Appends a 3-d rotation about an arbitrary axis to the current transform.
         The rotation angle is specified in degrees counterclockwise about the axis.
         """
-        ...
     @overload
     def add_rotate3d(self, angle: float, axis: Vec3d) -> None: ...
     def add_scale2d(self, scale: LVecBase2d) -> None:
         """Appends a possibly non-uniform scale to the current transform."""
-        ...
     def add_scale3d(self, scale: Vec3d) -> None:
         """Appends a possibly non-uniform scale to the current transform."""
-        ...
     def add_uniform_scale(self, scale: float) -> None:
         """Appends a uniform scale to the current transform."""
-        ...
     def add_matrix3(self, mat: LMatrix3d) -> None:
         """Appends an arbitrary 3x3 matrix to the current transform."""
-        ...
     def add_matrix4(self, mat: Mat4d) -> None:
         """Appends an arbitrary 4x4 matrix to the current transform."""
-        ...
     def has_transform(self) -> bool:
         """Returns true if the transform is nonempty, false if it is empty (no
         transform components have been added).  This is true for either a 2-d or a
         3-d transform.
         """
-        ...
     def has_transform2d(self) -> bool:
         """Returns true if the transform is specified as a 2-d transform, e.g.  with a
         3x3 matrix, or false if it is specified as a 3-d transform (with a 4x4
@@ -1876,12 +1670,10 @@ class EggTransform:
         Normally, EggTextures have a 2-d matrix (but occasionally they use a 3-d
         matrix), and EggGroups always have a 3-d matrix.
         """
-        ...
     def set_transform2d(self, mat: LMatrix3d) -> None:
         """Sets the overall transform as a 3x3 matrix.  This completely replaces
         whatever componentwise transform may have been defined.
         """
-        ...
     def has_transform3d(self) -> bool:
         """Returns true if the transform is specified as a 3-d transform, e.g.  with a
         4x4 matrix, or false if it is specified as a 2-d transform (with a 2x2
@@ -1890,64 +1682,51 @@ class EggTransform:
         Normally, EggTextures have a 3-d matrix (but occasionally they use a 3-d
         matrix), and EggGroups always have a 3-d matrix.
         """
-        ...
     def set_transform3d(self, mat: Mat4d) -> None:
         """Sets the overall transform as a 4x4 matrix.  This completely replaces
         whatever componentwise transform may have been defined.
         """
-        ...
     def get_transform2d(self) -> LMatrix3d:
         """Returns the overall transform as a 3x3 matrix.  It is an error to call this
         if has_transform3d() is true.
         """
-        ...
     def get_transform3d(self) -> LMatrix4d:
         """Returns the overall transform as a 4x4 matrix.  It is valid to call this
         even if has_transform2d() is true; in this case, the 3x3 transform will be
         expanded to a 4x4 matrix.
         """
-        ...
     def transform_is_identity(self) -> bool:
         """Returns true if the described transform is identity, false otherwise."""
-        ...
     def get_num_components(self) -> int:
         """Returns the number of components that make up the transform."""
-        ...
     def get_component_type(self, n: int) -> _EggTransform_ComponentType:
         """Returns the type of the nth component."""
-        ...
     def get_component_number(self, n: int) -> float:
         """Returns the solitary number associated with the nth component.  In the case
         of a rotation, this is the angle in degrees to rotate; in the case of
         uniform scale, this is the amount of the scale.  Other types do not use
         this property.
         """
-        ...
     def get_component_vec2(self, n: int) -> LVecBase2d:
         """Returns the 2-component vector associated with the nth component.  This may
         be the translate vector, rotate axis, or non-uniform scale.  It is an error
         to call this if the component type does not use a 2-d vector property.
         """
-        ...
     def get_component_vec3(self, n: int) -> LVecBase3d:
         """Returns the 3-component vector associated with the nth component.  This may
         be the translate vector, rotate axis, or non-uniform scale.  It is an error
         to call this if the component type does not use a 3-d vector property.
         """
-        ...
     def get_component_mat3(self, n: int) -> LMatrix3d:
         """Returns the 3x3 matrix associated with the nth component.  It is an error
         to call this if the component type is not CT_matrix3.
         """
-        ...
     def get_component_mat4(self, n: int) -> LMatrix4d:
         """Returns the 4x4 matrix associated with the nth component.  It is an error
         to call this if the component type is not CT_matrix4.
         """
-        ...
     def write(self, out: ostream, indent_level: int, label: str) -> None:
         """Writes the transform to the indicated stream in Egg format."""
-        ...
     clearTransform = clear_transform
     addTranslate2d = add_translate2d
     addTranslate3d = add_translate3d
@@ -2173,92 +1952,75 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         """Writes the group and all of its children to the indicated output stream in
         Egg format.
         """
-        ...
     def write_billboard_flags(self, out: ostream, indent_level: int) -> None:
         """Writes just the <Billboard> entry and related fields to the indicated
         ostream.
         """
-        ...
     def write_collide_flags(self, out: ostream, indent_level: int) -> None:
         """Writes just the <Collide> entry and related fields to the indicated
         ostream.
         """
-        ...
     def write_model_flags(self, out: ostream, indent_level: int) -> None:
         """Writes the <Model> flag and related flags to the indicated ostream."""
-        ...
     def write_switch_flags(self, out: ostream, indent_level: int) -> None:
         """Writes the <Switch> flag and related flags to the indicated ostream."""
-        ...
     def write_object_types(self, out: ostream, indent_level: int) -> None:
         """Writes just the <ObjectTypes> entries, if any, to the indicated ostream."""
-        ...
     def write_decal_flags(self, out: ostream, indent_level: int) -> None:
         """Writes the flags related to decaling, if any."""
-        ...
     def write_tags(self, out: ostream, indent_level: int) -> None:
         """Writes just the <Tag> entries, if any, to the indicated ostream."""
-        ...
     def write_render_mode(self, out: ostream, indent_level: int) -> None:
         """Writes the flags inherited from EggRenderMode and similar flags that
         control obscure render effects.
         """
-        ...
     def is_joint(self) -> bool:
         """Returns true if this particular node represents a <Joint> entry or not.
         This is a handy thing to know since Joints are sorted to the end of their
         sibling list when writing an egg file.  See EggGroupNode::write().
         """
-        ...
     def determine_alpha_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this group that has an alpha_mode
         other than AM_unspecified.  Returns a valid EggRenderMode pointer if one is
         found, or NULL otherwise.
         """
-        ...
     def determine_depth_write_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this group that has a
         depth_write_mode other than DWM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_depth_test_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this group that has a
         depth_test_mode other than DTM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_visibility_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this group that has a
         visibility_mode other than VM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_depth_offset(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this group that has a depth_offset
         specified.  Returns a valid EggRenderMode pointer if one is found, or NULL
         otherwise.
         """
-        ...
     def determine_draw_order(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this group that has a draw_order
         specified.  Returns a valid EggRenderMode pointer if one is found, or NULL
         otherwise.
         """
-        ...
     def determine_bin(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this group that has a bin
         specified.  Returns a valid EggRenderMode pointer if one is found, or NULL
         otherwise.
         """
-        ...
     def determine_indexed(self) -> bool:
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "indexed" scalar set.  Returns the value of the indexed scalar
@@ -2267,7 +2029,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         In other words, returns true if the "indexed" flag is in effect for the
         indicated node, false otherwise.
         """
-        ...
     def determine_decal(self) -> bool:
         """Walks back up the hierarchy, looking for an EggGroup at this level or above
         that has the "decal" flag set.  Returns the value of the decal flag if it
@@ -2276,7 +2037,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         In other words, returns true if the "decal" flag is in effect for the
         indicated node, false otherwise.
         """
-        ...
     def set_group_type(self, type: _EggGroup_GroupType) -> None: ...
     def get_group_type(self) -> _EggGroup_GroupType: ...
     def is_instance_type(self) -> bool:
@@ -2288,7 +2048,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         an explicit center, which implicitly makes the node behave like an
         instance.
         """
-        ...
     def set_billboard_type(self, type: _EggGroup_BillboardType) -> None: ...
     def get_billboard_type(self) -> _EggGroup_BillboardType: ...
     def set_billboard_center(self, billboard_center: Vec3d) -> None:
@@ -2306,7 +2065,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         above.  Specifically, this is the coordinate system defined by
         get_vertex_frame().
         """
-        ...
     def clear_billboard_center(self) -> None: ...
     def has_billboard_center(self) -> bool: ...
     def get_billboard_center(self) -> LPoint3d: ...
@@ -2324,7 +2082,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         """Returns true if the specified DCS type is not DC_none and not
         DC_unspecified.
         """
-        ...
     def set_dart_type(self, type: _EggGroup_DartType) -> None: ...
     def get_dart_type(self) -> _EggGroup_DartType: ...
     def set_switch_flag(self, flag: bool) -> None: ...
@@ -2339,13 +2096,11 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         """Returns true if the indicated object type has been added to the group, or
         false otherwise.
         """
-        ...
     def remove_object_type(self, object_type: str) -> bool:
         """Removes the first instance of the indicated object type from the group if
         it is present.  Returns true if the object type was found and removed,
         false otherwise.
         """
-        ...
     def set_model_flag(self, flag: bool) -> None: ...
     def get_model_flag(self) -> bool: ...
     def set_texlist_flag(self, flag: bool) -> None: ...
@@ -2366,7 +2121,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         """If this flag is true, geometry at this node and below will be generated as
         indexed geometry.
         """
-        ...
     def clear_indexed_flag(self) -> None: ...
     def has_indexed_flag(self) -> bool: ...
     def get_indexed_flag(self) -> bool: ...
@@ -2391,15 +2145,12 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def set_blend_color(self, blend_color: Vec4f) -> None: ...
     def clear_blend_color(self) -> None:
         """Removes the blend color specification."""
-        ...
     def has_blend_color(self) -> bool:
         """Returns true if the blend color has been specified, false otherwise."""
-        ...
     def get_blend_color(self) -> LColor:
         """Returns the blend color if one has been specified, or (0, 0, 0, 0) if one
         has not.
         """
-        ...
     def set_lod(self, lod: EggSwitchCondition) -> None: ...
     def clear_lod(self) -> None: ...
     def has_lod(self) -> bool: ...
@@ -2415,24 +2166,20 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         limit on the number of different keys that may be stored or on the length
         of any one key's value.
         """
-        ...
     def get_tag(self, key: str) -> str:
         """Retrieves the user-defined value that was previously set on this node for
         the particular key, if any.  If no value has been previously set, returns
         the empty string.
         """
-        ...
     def has_tag(self, key: str) -> bool:
         """Returns true if a value has been defined on this node for the particular
         key (even if that value is the empty string), or false if no value has been
         set.
         """
-        ...
     def clear_tag(self, key: str) -> None:
         """Removes the value defined for this key on this particular node.  After a
         call to clear_tag(), has_tag() will return false for the indicated key.
         """
-        ...
     def get_default_pose(self) -> EggTransform:
         """Returns a read-only accessor to the initial pose transform.  This is the
         <DefaultPose> entry for a Joint, and defines only the initial transform
@@ -2440,7 +2187,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         <Transform> entry, which defines the (eventual) space of the group's
         vertices.
         """
-        ...
     def modify_default_pose(self) -> EggTransform:
         """Returns a writable accessor to the initial pose transform.  This is the
         <DefaultPose> entry for a Joint, and defines only the initial transform
@@ -2448,17 +2194,14 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         <Transform> entry, which defines the (eventual) space of the group's
         vertices.
         """
-        ...
     def set_default_pose(self, transform: EggTransform) -> None:
         """Replaces the initial pose transform.  This is the <DefaultPose> entry for a
         Joint, and defines only the initial transform pose for the unanimated
         joint; it has nothing to do with the group's <Transform> entry, which
         defines the (eventual) space of the group's vertices.
         """
-        ...
     def clear_default_pose(self) -> None:
         """Removes the initial pose transform.  See set_default_pose()."""
-        ...
     def set_scroll_u(self, u_speed: float) -> None: ...
     def set_scroll_v(self, v_speed: float) -> None: ...
     def set_scroll_w(self, w_speed: float) -> None: ...
@@ -2473,85 +2216,69 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         indicated membership level.  If the vertex is already being referenced,
         increases the membership amount by the indicated amount.
         """
-        ...
     def unref_vertex(self, vert: EggVertex) -> None:
         """Removes the vertex from the set of those referenced by the group.  Does
         nothing if the vertex is not already reffed.
         """
-        ...
     def unref_all_vertices(self) -> None:
         """Removes all vertices from the reference list."""
-        ...
     def get_vertex_membership(self, vert: EggVertex) -> float:
         """Returns the amount of membership of the indicated vertex in this group.  If
         the vertex is not reffed by the group, returns 0.
         """
-        ...
     def set_vertex_membership(self, vert: EggVertex, membership: float) -> None:
         """Explicitly sets the net membership of the indicated vertex in this group to
         the given value.
         """
-        ...
     def steal_vrefs(self, other: EggGroup) -> None:
         """Moves all of the vertex references from the indicated other group into this
         one.  If a given vertex was previously shared by both groups, the relative
         memberships will be summed.
         """
-        ...
     def test_vref_integrity(self) -> None: ...
     def add_group_ref(self, group: EggGroup) -> None:
         """Adds a new <Ref> entry to the group.  This declares an internal reference
         to another node, and is used to implement scene-graph instancing; it is
         only valid if the group_type is GT_instance.
         """
-        ...
     def get_num_group_refs(self) -> int:
         """Returns the number of <Ref> entries within this group.  See
         add_group_ref().
         """
-        ...
     def get_group_ref(self, n: int) -> EggGroup:
         """Returns the nth <Ref> entry within this group.  See add_group_ref()."""
-        ...
     def remove_group_ref(self, n: int) -> None:
         """Removes the nth <Ref> entry within this group.  See add_group_ref()."""
-        ...
     def clear_group_refs(self) -> None:
         """Removes all of the <Ref> entries within this group.  See add_group_ref()."""
-        ...
     @staticmethod
     def string_group_type(strval: str) -> _EggGroup_GroupType:
         """Returns the GroupType value associated with the given string
         representation, or GT_invalid if the string does not match any known
         GroupType value.
         """
-        ...
     @staticmethod
     def string_dart_type(strval: str) -> _EggGroup_DartType:
         """Returns the DartType value associated with the given string representation,
         or DT_none if the string does not match any known DartType value.
         """
-        ...
     @staticmethod
     def string_dcs_type(strval: str) -> _EggGroup_DCSType:
         """Returns the DCSType value associated with the given string representation,
         or DC_unspecified if the string does not match any known DCSType value.
         """
-        ...
     @staticmethod
     def string_billboard_type(strval: str) -> _EggGroup_BillboardType:
         """Returns the BillboardType value associated with the given string
         representation, or BT_none if the string does not match any known
         BillboardType value.
         """
-        ...
     @staticmethod
     def string_cs_type(strval: str) -> _EggGroup_CollisionSolidType:
         """Returns the CollisionSolidType value associated with the given string
         representation, or CST_none if the string does not match any known
         CollisionSolidType value.
         """
-        ...
     @staticmethod
     def string_collide_flags(strval: str) -> _EggGroup_CollideFlags:
         """Returns the CollideFlags value associated with the given string
@@ -2559,21 +2286,18 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         CollideFlags value.  This only recognizes a single keyword; it does not
         attempt to parse a string of keywords.
         """
-        ...
     @staticmethod
     def string_blend_mode(strval: str) -> _EggGroup_BlendMode:
         """Returns the BlendMode value associated with the given string
         representation, or BM_none if the string does not match any known
         BlendMode.
         """
-        ...
     @staticmethod
     def string_blend_operand(strval: str) -> _EggGroup_BlendOperand:
         """Returns the BlendOperand value associated with the given string
         representation, or BO_none if the string does not match any known
         BlendOperand.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_object_types(self) -> tuple[str, ...]: ...
@@ -2738,13 +2462,11 @@ class EggBinMaker(EggObject):
         at the indicated root node, and moves all binnable nodes into EggBin
         objects.  Returns the number of EggBins created.
         """
-        ...
     def prepare_node(self, node: EggNode) -> None:
         """May be overridden in derived classes to perform some setup work as each
         node is encountered.  This will be called once for each node in the egg
         hierarchy.
         """
-        ...
     def get_bin_number(self, node: EggNode) -> int: ...
     def sorts_less(self, bin_number: int, a: EggNode, b: EggNode) -> bool:
         """May be overridden in derived classes to create additional bins within a
@@ -2753,17 +2475,14 @@ class EggBinMaker(EggObject):
         nodes do not sort to the same position, different bins are created for each
         one (with the same bin number on each bin).
         """
-        ...
     def collapse_group(self, group: EggGroup, bin_number: int) -> bool:
         """May be overridden in derived classes to specify whether a particular group
         node, apparently redundant, may be safely collapsed out.
         """
-        ...
     def get_bin_name(self, bin_number: int, child: EggNode) -> str:
         """May be overridden in derived classes to define a name for each new bin,
         based on its bin number, and a sample child.
         """
-        ...
     def make_bin(self, bin_number: int, child: EggNode, collapse_from: EggGroup) -> EggBin:
         """May be overridden in derived classes to construct a new EggBin object (or
         some derived class, if needed), and preload some initial data into as
@@ -2773,7 +2492,6 @@ class EggBinMaker(EggObject):
         bin is being collapsed with, if any (implying collapse_group() returned
         true), or NULL if not.
         """
-        ...
     makeBins = make_bins
     prepareNode = prepare_node
     getBinNumber = get_bin_number
@@ -2804,10 +2522,8 @@ class EggFilenameNode(EggNode):
     """
     def get_default_extension(self) -> str:
         """Returns the default extension for this filename type."""
-        ...
     def get_filename(self) -> Filename:
         """Returns a nonmodifiable reference to the filename."""
-        ...
     def set_filename(self, filename: Filepath) -> None: ...
     def get_fullpath(self) -> Filename:
         """Returns the full pathname to the file, if it is known; otherwise, returns
@@ -2819,10 +2535,8 @@ class EggFilenameNode(EggNode):
         filename) if it is known, for egg structures that are generated in-memory
         and then immediately converted to a scene graph.
         """
-        ...
     def set_fullpath(self, fullpath: Filepath) -> None:
         """Records the full pathname to the file, for the benefit of get_fullpath()."""
-        ...
     getDefaultExtension = get_default_extension
     getFilename = get_filename
     setFilename = set_filename
@@ -3096,7 +2810,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     def assign(self: Self, copy: Self) -> Self: ...
     def write(self, out: ostream, indent_level: int) -> None:  # type: ignore[override]
         """Writes the texture definition to the indicated output stream in Egg format."""
-        ...
     def is_equivalent_to(self, other: EggTexture, eq: int) -> bool:
         """Returns true if the two textures are equivalent in all relevant properties
         (according to eq), false otherwise.
@@ -3121,20 +2834,17 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
 
         EggTexture::E_tref_name: The TRef name.
         """
-        ...
     def sorts_less_than(self, other: EggTexture, eq: int) -> bool:
         """An ordering operator to compare two textures for sorting order.  This
         imposes an arbitrary ordering useful to identify unique textures, according
         to the indicated Equivalence factor.  See is_equivalent_to().
         """
-        ...
     def has_alpha_channel(self, num_components: int) -> bool:
         """Given the number of color components (channels) in the image file as
         actually read from the disk, return true if this texture seems to have an
         alpha channel or not.  This depends on the EggTexture's format as well as
         the number of channels.
         """
-        ...
     def set_texture_type(self, texture_type: _EggTexture_TextureType) -> None: ...
     def get_texture_type(self) -> _EggTexture_TextureType: ...
     def set_format(self, format: _EggTexture_Format) -> None: ...
@@ -3148,37 +2858,31 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Returns the amount specified for U wrap.  This may be unspecified, even if
         there is an overall wrap value.
         """
-        ...
     def determine_wrap_u(self) -> _EggTexture_WrapMode:
         """Determines the appropriate wrap in the U direction.  This is different from
         get_wrap_u() in that if the U wrap is unspecified, it returns the overall
         wrap value.
         """
-        ...
     def set_wrap_v(self, mode: _EggTexture_WrapMode) -> None: ...
     def get_wrap_v(self) -> _EggTexture_WrapMode:
         """Returns the amount specified for V wrap.  This may be unspecified, even if
         there is an overall wrap value.
         """
-        ...
     def determine_wrap_v(self) -> _EggTexture_WrapMode:
         """Determines the appropriate wrap in the V direction.  This is different from
         get_wrap_v() in that if the V wrap is unspecified, it returns the overall
         wrap value.
         """
-        ...
     def set_wrap_w(self, mode: _EggTexture_WrapMode) -> None: ...
     def get_wrap_w(self) -> _EggTexture_WrapMode:
         """Returns the amount specified for W wrap.  This may be unspecified, even if
         there is an overall wrap value.
         """
-        ...
     def determine_wrap_w(self) -> _EggTexture_WrapMode:
         """Determines the appropriate wrap in the W direction.  This is different from
         get_wrap_w() in that if the W wrap is unspecified, it returns the overall
         wrap value.
         """
-        ...
     def set_minfilter(self, type: _EggTexture_FilterType) -> None: ...
     def get_minfilter(self) -> _EggTexture_FilterType: ...
     def set_magfilter(self, type: _EggTexture_FilterType) -> None: ...
@@ -3187,27 +2891,22 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Sets the degree of anisotropic filtering for this texture.  1 is off;
         higher levels indicate filtering in effect.
         """
-        ...
     def clear_anisotropic_degree(self) -> None:
         """Removes the specification of anisotropic filtering from the texture."""
-        ...
     def has_anisotropic_degree(self) -> bool:
         """Returns true if a value for the anisotropic filtering degree has been
         specified for this texture, false otherwise.
         """
-        ...
     def get_anisotropic_degree(self) -> int:
         """Returns the anisotropic filtering degree that has been specified for this
         texture, or 0 if nothing has been specified.
         """
-        ...
     def set_env_type(self, type: _EggTexture_EnvType) -> None: ...
     def get_env_type(self) -> _EggTexture_EnvType: ...
     def affects_polygon_alpha(self) -> bool:
         """Returns true if this texture's environment type or combine mode allows the
         texture to have an effect on the polygon's alpha values, false otherwise.
         """
-        ...
     def set_combine_mode(self, channel: _EggTexture_CombineChannel, cm: _EggTexture_CombineMode) -> None: ...
     def get_combine_mode(self, channel: _EggTexture_CombineChannel) -> _EggTexture_CombineMode: ...
     def set_combine_source(self, channel: _EggTexture_CombineChannel, n: int, cs: _EggTexture_CombineSource) -> None: ...
@@ -3227,12 +2926,10 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         The last texture in the pipeline (the one with the highest sort value)
         should not have this flag set.
         """
-        ...
     def get_saved_result(self) -> bool:
         """Returns the current setting of the saved_result flag.  See
         set_saved_result().
         """
-        ...
     def set_tex_gen(self, tex_gen: _EggTexture_TexGen) -> None: ...
     def get_tex_gen(self) -> _EggTexture_TexGen: ...
     def set_quality_level(self, quality_level: _EggTexture_QualityLevel) -> None: ...
@@ -3246,61 +2943,49 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
 
         Each different TextureStage in the world must be uniquely named.
         """
-        ...
     def clear_stage_name(self) -> None:
         """Removes the named TextureStage specification."""
-        ...
     def has_stage_name(self) -> bool:
         """Returns true if a stage name has been explicitly specified for this
         texture, false otherwise.
         """
-        ...
     def get_stage_name(self) -> str:
         """Returns the stage name that has been specified for this texture, or the
         tref name if no texture stage has explicitly been specified.
         """
-        ...
     def set_priority(self, priority: int) -> None:
         """Sets the importance of this texture with respect to other textures also
         applied on the same geometry.  This is only meaningful in the presence of
         multitexturing.
         """
-        ...
     def clear_priority(self) -> None:
         """Removes the specification of multitexture priority from the texture.  The
         default priority value is 0.
         """
-        ...
     def has_priority(self) -> bool:
         """Returns true if a priority value for multitexture importance has been
         specified for the texture, false otherwise.
         """
-        ...
     def get_priority(self) -> int:
         """Returns the multitexture importance value that has been specified for the
         texture, or 0 if no priority value has been specified.
         """
-        ...
     def set_color(self, color: Vec4f) -> None: ...
     def clear_color(self) -> None: ...
     def has_color(self) -> bool:
         """Returns true if a blend color has been specified for the texture."""
-        ...
     def get_color(self) -> LColor:
         """Returns the blend color if one has been specified, or (0, 0, 0, 1)
         otherwise.
         """
-        ...
     def set_border_color(self, border_color: Vec4f) -> None: ...
     def clear_border_color(self) -> None: ...
     def has_border_color(self) -> bool:
         """Returns true if a border color has been specified for the texture."""
-        ...
     def get_border_color(self) -> LColor:
         """Returns the border color if one has been specified, or (0, 0, 0, 1)
         otherwise.
         """
-        ...
     def set_uv_name(self, uv_name: str) -> None:
         """Specifies the named set of texture coordinates that this texture will use
         when it is applied to geometry.  Geometry may have multiple sets of texture
@@ -3309,22 +2994,18 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         If this is not specified for a particular texture, the default set of
         texture coordinates will be used.
         """
-        ...
     def clear_uv_name(self) -> None:
         """Removes the restriction to a particular named set of texture coordinates
         and restores the texture to using the default texture coordinates.
         """
-        ...
     def has_uv_name(self) -> bool:
         """Returns true if a texcoord name has been explicitly specified for this
         texture, false otherwise.
         """
-        ...
     def get_uv_name(self) -> str:
         """Returns the texcoord name that has been specified for this texture, or the
         empty string if no texcoord name has explicitly been specified.
         """
-        ...
     def set_rgb_scale(self, rgb_scale: int) -> None:
         """Sets an additional factor that will scale all three r, g, b components
         after the texture has been applied.  This is used only when a combine mode
@@ -3332,22 +3013,18 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
 
         The only legal values are 1, 2, or 4.
         """
-        ...
     def clear_rgb_scale(self) -> None:
         """Removes the rgb_scale from the texture and restores it to the default value
         of 1.
         """
-        ...
     def has_rgb_scale(self) -> bool:
         """Returns true if an rgb_scale has been specified for the texture, false
         otherwise.
         """
-        ...
     def get_rgb_scale(self) -> int:
         """Returns the rgb_scale value that has been specified for the texture, or 1
         if no rgb_scale value has been specified.
         """
-        ...
     def set_alpha_scale(self, alpha_scale: int) -> None:
         """Sets an additional factor that will scale the alpha component after the
         texture has been applied.  This is used only when a combine mode is in
@@ -3355,45 +3032,37 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
 
         The only legal values are 1, 2, or 4.
         """
-        ...
     def clear_alpha_scale(self) -> None:
         """Removes the alpha_scale from the texture and restores it to the default
         value of 1.
         """
-        ...
     def has_alpha_scale(self) -> bool:
         """Returns true if an alpha_scale has been specified for the texture, false
         otherwise.
         """
-        ...
     def get_alpha_scale(self) -> int:
         """Returns the alpha_scale value that has been specified for the texture, or 1
         if no alpha_scale value has been specified.
         """
-        ...
     def set_alpha_filename(self, filename: Filepath) -> None:
         """Specifies a separate file that will be loaded in with the 1- or 3-component
         texture and applied as the alpha channel.  This is useful when loading
         textures from file formats that do not support alpha, for instance jpg.
         """
-        ...
     def clear_alpha_filename(self) -> None: ...
     def has_alpha_filename(self) -> bool:
         """Returns true if a separate file for the alpha component has been applied,
         false otherwise.  See set_alpha_filename().
         """
-        ...
     def get_alpha_filename(self) -> Filename:
         """Returns the separate file assigned for the alpha channel.  It is an error
         to call this unless has_alpha_filename() returns true.  See
         set_alpha_filename().
         """
-        ...
     def set_alpha_fullpath(self, fullpath: Filepath) -> None:
         """Records the full pathname to the file, for the benefit of
         get_alpha_fullpath().
         """
-        ...
     def get_alpha_fullpath(self) -> Filename:
         """Returns the full pathname to the alpha file, if it is known; otherwise,
         returns the same thing as get_alpha_filename().
@@ -3404,7 +3073,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         for egg structures that are generated in-memory and then immediately
         converted to a scene graph.
         """
-        ...
     def set_alpha_file_channel(self, alpha_file_channel: int) -> None:
         """If a separate alpha-file is specified, this indicates which channel number
         should be extracted from this file to derive the alpha channel for the
@@ -3413,23 +3081,19 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         1, 2, or 3 for r, g, or b, respectively, or 4 for the alpha channel of a
         four-component image.
         """
-        ...
     def clear_alpha_file_channel(self) -> None:
         """Removes the specification of a particular channel to use from the alpha-
         file image.
         """
-        ...
     def has_alpha_file_channel(self) -> bool:
         """Returns true if a particular channel has been specified for the alpha-file
         image, false otherwise.
         """
-        ...
     def get_alpha_file_channel(self) -> int:
         """Returns the particular channel that has been specified for the alpha-file
         image, or 0 if no channel has been specified.  See
         set_alpha_file_channel().
         """
-        ...
     def set_multiview(self, multiview: bool) -> None:
         """Sets the multiview flag.
 
@@ -3440,31 +3104,25 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         A multiview texture is most often used for stereo textures, but other uses
         are also possible, such as for texture animation.
         """
-        ...
     def get_multiview(self) -> bool:
         """Returns the current setting of the multiview flag.  See set_multiview()."""
-        ...
     def set_num_views(self, num_views: int) -> None:
         """When loading a 3-D multiview texture, this parameter is necessary to
         specify how many views will be expected.  The z size is determined
         implicitly from the number of images loaded.
         """
-        ...
     def clear_num_views(self) -> None:
         """Removes the specification of the number of views for a 3-D multiview
         texture.
         """
-        ...
     def has_num_views(self) -> bool:
         """Returns true if the number of views has been specified for the 3-D
         multiview texture, false otherwise.
         """
-        ...
     def get_num_views(self) -> int:
         """Returns the specified number of views specified for the 3-D multiview
         texture.  See set_num_views().
         """
-        ...
     def set_read_mipmaps(self, read_mipmaps: bool) -> None:
         """Sets the read_mipmaps flag.
 
@@ -3477,60 +3135,45 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         marks, and the first one indicates the mipmap level number, while the
         second indicates the face number or 3-d level number.
         """
-        ...
     def get_read_mipmaps(self) -> bool:
         """Returns the current setting of the read_mipmaps flag.  See
         set_read_mipmaps().
         """
-        ...
     def set_min_lod(self, min_lod: float) -> None:
         """Sets the minimum mipmap level that may be sampled."""
-        ...
     def clear_min_lod(self) -> None:
         """Removes the specification of a minimum mipmap level from the texture."""
-        ...
     def has_min_lod(self) -> bool:
         """Returns true if a value for the minimum mipmap level has been specified for
         this texture, false otherwise.
         """
-        ...
     def get_min_lod(self) -> float:
         """Returns the minimum mipmap level that has been specified for this texture."""
-        ...
     def set_max_lod(self, max_lod: float) -> None:
         """Sets the maximum mipmap level that may be sampled."""
-        ...
     def clear_max_lod(self) -> None:
         """Removes the specification of a maximum mipmap level from the texture."""
-        ...
     def has_max_lod(self) -> bool:
         """Returns true if a value for the maximum mipmap level has been specified for
         this texture, false otherwise.
         """
-        ...
     def get_max_lod(self) -> float:
         """Returns the maximum mipmap level that has been specified for this texture."""
-        ...
     def set_lod_bias(self, lod_bias: float) -> None:
         """Sets the mipmap level bias that is added to the mipmap level to be sampled."""
-        ...
     def clear_lod_bias(self) -> None:
         """Removes the specification of a maximum mipmap level from the texture."""
-        ...
     def has_lod_bias(self) -> bool:
         """Returns true if a value for the maximum mipmap level has been specified for
         this texture, false otherwise.
         """
-        ...
     def get_lod_bias(self) -> float:
         """Returns the maximum mipmap level that has been specified for this texture."""
-        ...
     def clear_multitexture(self) -> None:
         """Resets the multitexture flags set by multitexture_over().  After this call,
         get_multitexture() will return false, and get_multitexture_sort() will
         return 0.
         """
-        ...
     def multitexture_over(self, other: EggTexture) -> bool:
         """Indicates that this texture should be layered on top of the other texture.
         This will guarantee that this->get_multitexture_sort() >
@@ -3541,7 +3184,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         because the other texture was already layered on top of this one (or there
         is a three- or more-way cycle).
         """
-        ...
     def get_multitexture_sort(self) -> int:
         """Returns an integer that represents the depth to which this texture is
         layered on all other textures in the egg file.  In general, if texture A is
@@ -3549,79 +3191,67 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         layered over any other texture, then sort(A) == 0.  More than that is
         difficult to guarantee.
         """
-        ...
     @staticmethod
     def string_texture_type(string: str) -> _EggTexture_TextureType:
         """Returns the Texture_ype value associated with the given string
         representation, or TT_unspecified if the string does not match any known
         TextureType value.
         """
-        ...
     @staticmethod
     def string_format(string: str) -> _EggTexture_Format:
         """Returns the Format value associated with the given string representation,
         or F_unspecified if the string does not match any known Format value.
         """
-        ...
     @staticmethod
     def string_compression_mode(string: str) -> _EggTexture_CompressionMode:
         """Returns the CompressionMode value associated with the given string
         representation, or CM_default if the string does not match any known
         CompressionMode value.
         """
-        ...
     @staticmethod
     def string_wrap_mode(string: str) -> _EggTexture_WrapMode:
         """Returns the WrapMode value associated with the given string representation,
         or WM_unspecified if the string does not match any known WrapMode value.
         """
-        ...
     @staticmethod
     def string_filter_type(string: str) -> _EggTexture_FilterType:
         """Returns the FilterType value associated with the given string
         representation, or FT_unspecified if the string does not match any known
         FilterType value.
         """
-        ...
     @staticmethod
     def string_env_type(string: str) -> _EggTexture_EnvType:
         """Returns the EnvType value associated with the given string representation,
         or ET_unspecified if the string does not match any known EnvType value.
         """
-        ...
     @staticmethod
     def string_combine_mode(string: str) -> _EggTexture_CombineMode:
         """Returns the CombineMode value associated with the given string
         representation, or CM_unspecified if the string does not match any known
         CombineMode value.
         """
-        ...
     @staticmethod
     def string_combine_source(string: str) -> _EggTexture_CombineSource:
         """Returns the CombineSource value associated with the given string
         representation, or CS_unspecified if the string does not match any known
         CombineSource value.
         """
-        ...
     @staticmethod
     def string_combine_operand(string: str) -> _EggTexture_CombineOperand:
         """Returns the CombineOperand value associated with the given string
         representation, or CO_unspecified if the string does not match any known
         CombineOperand value.
         """
-        ...
     @staticmethod
     def string_tex_gen(string: str) -> _EggTexture_TexGen:
         """Returns the TexGen value associated with the given string representation,
         or ET_unspecified if the string does not match any known TexGen value.
         """
-        ...
     @staticmethod
     def string_quality_level(string: str) -> _EggTexture_QualityLevel:
         """Returns the TexGen value associated with the given string representation,
         or ET_unspecified if the string does not match any known TexGen value.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToEggFilenameNode = upcast_to_EggFilenameNode
@@ -3775,29 +3405,23 @@ class EggMaterial(EggNode):
 
         EggMaterial::E_mref_name: The MRef name.
         """
-        ...
     def sorts_less_than(self, other: EggMaterial, eq: int) -> bool:
         """An ordering operator to compare two materials for sorting order.  This
         imposes an arbitrary ordering useful to identify unique materials,
         according to the indicated Equivalence factor.  See is_equivalent_to().
         """
-        ...
     def set_base(self, base: Vec4f) -> None:
         """@since 1.10.0"""
-        ...
     def clear_base(self) -> None:
         """@since 1.10.0"""
-        ...
     def has_base(self) -> bool:
         """@since 1.10.0"""
-        ...
     def get_base(self) -> LColor:
         """It is legal to call this even if has_base() returns false.  If so, it
         simply returns the default base color.
 
         @since 1.10.0
         """
-        ...
     def set_diff(self, diff: Vec4f) -> None: ...
     def clear_diff(self) -> None: ...
     def has_diff(self) -> bool: ...
@@ -3805,7 +3429,6 @@ class EggMaterial(EggNode):
         """It is legal to call this even if has_diff() returns false.  If so, it
         simply returns the default diff color.
         """
-        ...
     def set_amb(self, amb: Vec4f) -> None: ...
     def clear_amb(self) -> None: ...
     def has_amb(self) -> bool: ...
@@ -3813,7 +3436,6 @@ class EggMaterial(EggNode):
         """It is legal to call this even if has_amb() returns false.  If so, it simply
         returns the default amb color.
         """
-        ...
     def set_emit(self, emit: Vec4f) -> None: ...
     def clear_emit(self) -> None: ...
     def has_emit(self) -> bool: ...
@@ -3821,7 +3443,6 @@ class EggMaterial(EggNode):
         """It is legal to call this even if has_emit() returns false.  If so, it
         simply returns the default emit color.
         """
-        ...
     def set_spec(self, spec: Vec4f) -> None: ...
     def clear_spec(self) -> None: ...
     def has_spec(self) -> bool: ...
@@ -3829,47 +3450,34 @@ class EggMaterial(EggNode):
         """It is legal to call this even if has_spec() returns false.  If so, it
         simply returns the default spec color.
         """
-        ...
     def set_shininess(self, shininess: float) -> None: ...
     def clear_shininess(self) -> None: ...
     def has_shininess(self) -> bool: ...
     def get_shininess(self) -> float: ...
     def set_roughness(self, roughness: float) -> None:
         """@since 1.10.0"""
-        ...
     def clear_roughness(self) -> None:
         """@since 1.10.0"""
-        ...
     def has_roughness(self) -> bool:
         """@since 1.10.0"""
-        ...
     def get_roughness(self) -> float:
         """@since 1.10.0"""
-        ...
     def set_metallic(self, metallic: float) -> None:
         """@since 1.10.0"""
-        ...
     def clear_metallic(self) -> None:
         """@since 1.10.0"""
-        ...
     def has_metallic(self) -> bool:
         """@since 1.10.0"""
-        ...
     def get_metallic(self) -> float:
         """@since 1.10.0"""
-        ...
     def set_ior(self, ior: float) -> None:
         """@since 1.10.0"""
-        ...
     def clear_ior(self) -> None:
         """@since 1.10.0"""
-        ...
     def has_ior(self) -> bool:
         """@since 1.10.0"""
-        ...
     def get_ior(self) -> float:
         """@since 1.10.0"""
-        ...
     def set_local(self, local: bool) -> None: ...
     def clear_local(self) -> None: ...
     def has_local(self) -> bool: ...
@@ -3960,49 +3568,42 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         alpha_mode other than AM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_depth_write_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a
         depth_write_mode other than DWM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_depth_test_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a
         depth_test_mode other than DTM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_visibility_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this node that has a
         visibility_mode other than VM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
-        ...
     def determine_depth_offset(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this primitive that has a
         depth_offset specified.  Returns a valid EggRenderMode pointer if one is
         found, or NULL otherwise.
         """
-        ...
     def determine_draw_order(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this primitive that has a
         draw_order specified.  Returns a valid EggRenderMode pointer if one is
         found, or NULL otherwise.
         """
-        ...
     def determine_bin(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this primitive that has a bin
         specified.  Returns a valid EggRenderMode pointer if one is found, or NULL
         otherwise.
         """
-        ...
     def get_sort_name(self) -> str:
         """Returns the name of the primitive for the purposes of sorting primitives
         into different groups, if there is one.
@@ -4010,7 +3611,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         Presently, this is defined as the primitive name itself, unless it begins
         with a digit.
         """
-        ...
     def get_shading(self) -> _EggPrimitive_Shading:
         """Returns the shading properties apparent on this particular primitive.  This
         returns S_per_vertex if the vertices have colors or normals (and they are
@@ -4024,12 +3624,10 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         get_shading() on each primitive.  You may find it easiest to call these
         methods on the EggData root node (they are defined on EggGroupNode).
         """
-        ...
     def clear_connected_shading(self) -> None:
         """Resets the connected_shading member in this primitive, so that
         get_connected_shading() will recompute a new value.
         """
-        ...
     def get_connected_shading(self) -> _EggPrimitive_Shading:
         """Determines what sort of shading properties this primitive's connected
         neighbors have.
@@ -4042,14 +3640,12 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         You may find it easiest to call these other methods on the EggData root
         node (they are defined on EggGroupNode).
         """
-        ...
     def set_texture(self, texture: EggTexture) -> None:
         """Replaces the current list of textures with the indicated texture.
 
         @deprecated This method is used in support of single-texturing only.
         Please use the multitexture variant add_texture instead.
         """
-        ...
     def has_texture(self, texture: EggTexture = ...) -> bool:
         """`(self)`:
         Returns true if the primitive has any textures specified, false otherwise.
@@ -4061,7 +3657,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         Returns true if the primitive has the particular indicated texture, false
         otherwise.
         """
-        ...
     def get_texture(self, n: int = ...) -> EggTexture:
         """`(self)`:
         Returns the first texture on the primitive, if any, or NULL if there are no
@@ -4073,7 +3668,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         `(self, n: int)`:
         Returns the nth texture that has been applied to the primitive.
         """
-        ...
     def add_texture(self, texture: EggTexture) -> None:
         """Applies the indicated texture to the primitive.
 
@@ -4081,41 +3675,31 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         primitive, the order in which the textures are applied does not affect the
         rendering order; use EggTexture::set_sort() to specify that.
         """
-        ...
     def clear_texture(self) -> None:
         """Removes any texturing from the primitive."""
-        ...
     def get_num_textures(self) -> int:
         """Returns the number of textures applied to the primitive."""
-        ...
     def set_material(self, material: EggMaterial) -> None:
         """Applies the indicated material to the primitive."""
-        ...
     def clear_material(self) -> None:
         """Removes any material from the primitive."""
-        ...
     def get_material(self) -> EggMaterial:
         """Returns a pointer to the applied material, or NULL if there is no material
         applied.
         """
-        ...
     def has_material(self) -> bool:
         """Returns true if the primitive is materiald (and get_material() will return
         a real pointer), false otherwise (and get_material() will return NULL).
         """
-        ...
     def set_bface_flag(self, flag: bool) -> None:
         """Sets the backfacing flag of the polygon.  If this is true, the polygon will
         be rendered so that both faces are visible; if it is false, only the front
         face of the polygon will be visible.
         """
-        ...
     def get_bface_flag(self) -> bool:
         """Retrieves the backfacing flag of the polygon.  See set_bface_flag()."""
-        ...
     def copy_attributes(self, other: EggAttributes) -> None:
         """Copies the rendering attributes from the indicated primitive."""
-        ...
     def has_vertex_normal(self) -> bool:
         """Returns true if any vertex on the primitive has a specific normal set,
         false otherwise.
@@ -4124,7 +3708,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         all the vertices were set to the same value (since unify_attributes()
         removes redundant vertex properties).
         """
-        ...
     def has_vertex_color(self) -> bool:
         """Returns true if any vertex on the primitive has a specific color set, false
         otherwise.
@@ -4133,7 +3716,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         all the vertices were set to the same value (since unify_attributes()
         removes redundant vertex properties).
         """
-        ...
     def unify_attributes(self, shading: _EggPrimitive_Shading) -> None:
         """If the shading property is S_per_vertex, ensures that all vertices have a
         normal and a color, and the overall primitive does not.
@@ -4152,7 +3734,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
 
         This may create redundant vertices in the vertex pool.
         """
-        ...
     def apply_last_attribute(self) -> None:
         """Sets the last vertex of the triangle (or each component) to the primitive
         normal and/or color, if the primitive is flat-shaded.  This reflects the
@@ -4161,7 +3742,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
 
         This may introduce redundant vertices to the vertex pool.
         """
-        ...
     def apply_first_attribute(self) -> None:
         """Sets the first vertex of the triangle (or each component) to the primitive
         normal and/or color, if the primitive is flat-shaded.  This reflects the
@@ -4170,26 +3750,22 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
 
         This may introduce redundant vertices to the vertex pool.
         """
-        ...
     def post_apply_flat_attribute(self) -> None:
         """Intended as a followup to apply_last_attribute(), this also sets an
         attribute on the first vertices of the primitive, if they don't already
         have an attribute set, just so they end up with *something*.
         """
-        ...
     def reverse_vertex_ordering(self) -> None:
         """Reverses the ordering of the vertices in this primitive, if appropriate, in
         order to change the direction the polygon appears to be facing.  Does not
         adjust the surface normal, if any.
         """
-        ...
     def cleanup(self) -> bool:
         """Cleans up modeling errors in whatever context this makes sense.  For
         instance, for a polygon, this calls remove_doubled_verts(true).  For a
         point, it calls remove_nonunique_verts().  Returns true if the primitive is
         valid, or false if it is degenerate.
         """
-        ...
     def remove_doubled_verts(self, closed: bool) -> None:
         """Certain kinds of primitives, particularly polygons, don't like to have the
         same vertex repeated consecutively.  Unfortunately, some modeling programs
@@ -4203,37 +3779,30 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         consider any other properties, such as color or UV, significant in
         differentiating vertices.
         """
-        ...
     def remove_nonunique_verts(self) -> None:
         """Removes any multiple appearances of the same vertex from the primitive.
         This primarily makes sense for a point primitive, which is really a
         collection of points and which doesn't make sense to include the same point
         twice, in any order.
         """
-        ...
     def has_primitives(self) -> bool:
         """Returns true if there are any primitives (e.g.  polygons) defined within
         this group or below, false otherwise.
         """
-        ...
     def joint_has_primitives(self) -> bool:
         """Returns true if there are any primitives (e.g.  polygons) defined within
         this group or below, but the search does not include nested joints.
         """
-        ...
     def has_normals(self) -> bool:
         """Returns true if any of the primitives (e.g.  polygons) defined within this
         group or below have either face or vertex normals defined, false otherwise.
         """
-        ...
     def clear(self) -> None:
         """Removes all of the vertices from the primitive."""
-        ...
     def add_vertex(self, vertex: EggVertex) -> EggVertex:
         """Adds the indicated vertex to the end of the primitive's list of vertices,
         and returns it.
         """
-        ...
     @overload
     def remove_vertex(self, vertex: EggVertex) -> EggVertex:
         """`(self, vertex: EggVertex)`:
@@ -4243,34 +3812,27 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         `(self, index: int)`:
         Removes the indicated vertex from the primitive.
         """
-        ...
     @overload
     def remove_vertex(self, index: int) -> None: ...
     def copy_vertices(self, other: EggPrimitive) -> None:
         """Replaces the current primitive's list of vertices with a copy of the list
         of vertices on the other primitive.
         """
-        ...
     def get_num_vertices(self) -> int:
         """These are shorthands if you don't want to use the iterators."""
-        ...
     def get_vertex(self, index: int) -> EggVertex:
         """Returns a particular index based on its index number."""
-        ...
     def set_vertex(self, index: int, vertex: EggVertex) -> None:
         """Replaces a particular vertex based on its index number in the list of
         vertices.  This is just a convenience function for people who don't want to
         mess with the iterators.
         """
-        ...
     def insert_vertex(self, index: int, vertex: EggVertex) -> None:
         """Inserts a vertex at the given position."""
-        ...
     def get_pool(self) -> EggVertexPool:
         """Returns the vertex pool associated with the vertices of the primitive, or
         NULL if the primitive has no vertices.
         """
-        ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def test_vref_integrity(self) -> None: ...
     @staticmethod
@@ -4340,13 +3902,10 @@ class EggCompositePrimitive(EggPrimitive):
         """Returns the number of individual component triangles within the composite.
         Each one of these might have a different set of attributes.
         """
-        ...
     def get_component(self, i: int) -> EggAttributes:
         """Returns the attributes for the nth component triangle."""
-        ...
     def set_component(self, i: int, attrib: EggAttributes) -> None:
         """Changes the attributes for the nth component triangle."""
-        ...
     def triangulate_into(self, container: EggGroupNode) -> bool:
         """Subdivides the composite primitive into triangles and adds those triangles
         to the indicated container.  Does not remove the primitive from its
@@ -4355,7 +3914,6 @@ class EggCompositePrimitive(EggPrimitive):
         Returns true if the triangulation is successful, or false if there was some
         error (in which case the container may contain some partial triangulation).
         """
-        ...
     def triangulate_in_place(self) -> EggCompositePrimitive:
         """Subdivides the composite primitive into triangles and adds those triangles
         to the parent group node in place of the original primitive.  Returns a
@@ -4365,7 +3923,6 @@ class EggCompositePrimitive(EggPrimitive):
         into triangles; otherwise, only concave polygons will be subdivided, and
         convex polygons will be copied unchanged into the container.
         """
-        ...
     def get_components(self) -> tuple[EggAttributes, ...]: ...
     getNumComponents = get_num_components
     getComponent = get_component
@@ -4395,7 +3952,6 @@ class EggData(EggGroupNode):
         then along the model_path.  If found, updates the filename to the full path
         and returns true; otherwise, returns false.
         """
-        ...
     @overload
     def read(self, _in: istream) -> bool:
         """`(self, filename: Filename, display_name: str = ...)`:
@@ -4414,14 +3970,12 @@ class EggData(EggGroupNode):
         to set the name of the egg file we're processing, if at all possible.  If
         there is no such filename, you may set it to the empty string.
         """
-        ...
     @overload
     def read(self, filename: Filepath, display_name: str = ...) -> bool: ...
     def merge(self, other: EggData) -> None:
         """Appends the other egg structure to the end of this one.  The other egg
         structure is invalidated.
         """
-        ...
     @overload
     def load_externals(self, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
         """Loads up all the egg files referenced by <File> entries within the egg
@@ -4430,7 +3984,6 @@ class EggData(EggGroupNode):
         error messages to the indicated output stream.  Returns true if all
         externals were loaded successfully, false otherwise.
         """
-        ...
     @overload
     def load_externals(self, searchpath: ConfigVariableSearchPath | DSearchPath, record: BamCacheRecord) -> bool: ...
     def collapse_equivalent_textures(self) -> int:
@@ -4439,30 +3992,25 @@ class EggData(EggGroupNode):
         but different tref names, to be equivalent, and collapses them, choosing
         one tref name to keep arbitrarily.  Returns the number of textures removed.
         """
-        ...
     def collapse_equivalent_materials(self) -> int:
         """Removes duplicate references to the same material with the same properties.
         Considers two material references with identical properties, but different
         mref names, to be equivalent, and collapses them, choosing one mref name to
         keep arbitrarily.  Returns the number of materials removed.
         """
-        ...
     @overload
     def write_egg(self, filename: Filepath) -> bool:
         """The main interface for writing complete egg files."""
-        ...
     @overload
     def write_egg(self, out: ostream) -> bool: ...
     def set_auto_resolve_externals(self, resolve: bool) -> None:
         """Indicates whether the EggData object will automatically resolve any
         external references when read() is called.  The default is false.
         """
-        ...
     def get_auto_resolve_externals(self) -> bool:
         """Indicates whether the EggData object will automatically resolve any
         external references when read() is called.  The default is false.
         """
-        ...
     def original_had_absolute_pathnames(self) -> bool:
         """Returns true if the data processed in the last call to read() contained
         absolute pathnames, or false if those pathnames were all relative.
@@ -4472,33 +4020,26 @@ class EggData(EggGroupNode):
         loaded from disk.  This method can be used to query the state of the
         original egg file from disk.
         """
-        ...
     def set_coordinate_system(self, coordsys: _CoordinateSystem) -> None:
         """Changes the coordinate system of the EggData.  If the coordinate system was
         previously different, this may result in a conversion of the data.
         """
-        ...
     def get_coordinate_system(self) -> _CoordinateSystem:
         """Returns the coordinate system in which the egg file is defined."""
-        ...
     def set_egg_filename(self, egg_filename: Filepath) -> None:
         """Sets the filename--especially the directory part--in which the egg file is
         considered to reside.  This is also implicitly set by read().
         """
-        ...
     def get_egg_filename(self) -> Filename:
         """Returns the directory in which the egg file is considered to reside."""
-        ...
     def set_egg_timestamp(self, egg_timestamp: int) -> None:
         """Sets the timestamp of the egg file on disk, at the time it was opened for
         reading.  This is also implicitly set by read().
         """
-        ...
     def get_egg_timestamp(self) -> int:
         """Returns the timestamp of the egg file on disk, at the time it was opened
         for reading, or 0 if this information is not available.
         """
-        ...
     def recompute_vertex_normals(self, threshold: float) -> None:  # type: ignore[override]
         """Recomputes all the vertex normals for polygon geometry at this group node
         and below so that they accurately reflect the vertex positions.  A shared
@@ -4513,7 +4054,6 @@ class EggData(EggGroupNode):
         only adds new vertices with the correct normals.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
         """
-        ...
     def recompute_polygon_normals(self) -> None:  # type: ignore[override]
         """Recomputes all the polygon normals for polygon geometry at this group node
         and below so that they accurately reflect the vertex positions.  Normals
@@ -4528,7 +4068,6 @@ class EggData(EggGroupNode):
         only adds new vertices with the normals removed.  Thus, it is a good idea
         to call remove_unused_vertices() after calling this.
         """
-        ...
     resolveEggFilename = resolve_egg_filename
     loadExternals = load_externals
     collapseEquivalentTextures = collapse_equivalent_textures
@@ -4576,27 +4115,22 @@ class EggCurve(EggPrimitive):
         made; it's just a hint to any curve renderer or quick tesselator.)  Set the
         number to 0 to disable the hint.
         """
-        ...
     def get_subdiv(self) -> int:
         """Returns the requested number of subdivisions, or 0 if no particular
         subdivisions have been requested.
         """
-        ...
     def set_curve_type(self, type: _EggCurve_CurveType) -> None:
         """Sets the type of the curve.  This is primarily used as a hint to any code
         that may need to deal with this curve.
         """
-        ...
     def get_curve_type(self) -> _EggCurve_CurveType:
         """Returns the indicated type of the curve."""
-        ...
     @staticmethod
     def string_curve_type(string: str) -> _EggCurve_CurveType:
         """Returns the CurveType value associated with the given string
         representation, or CT_invalid if the string does not match any known
         CurveType value.
         """
-        ...
     setSubdiv = set_subdiv
     getSubdiv = get_subdiv
     setCurveType = set_curve_type
@@ -4619,33 +4153,27 @@ class EggNameUniquifier(EggObject):
     """
     def clear(self) -> None:
         """Empties the table of used named and prepares the Uniquifier for a new tree."""
-        ...
     def uniquify(self, node: EggNode) -> None:
         """Begins the traversal from the indicated node."""
-        ...
     def get_node(self, category: str, name: str) -> EggNode:
         """Returns the node associated with the given category and name, or NULL if
         the name has not been used.
         """
-        ...
     def has_name(self, category: str, name: str) -> bool:
         """Returns true if the name has been used for the indicated category already,
         false otherwise.
         """
-        ...
     def add_name(self, category: str, name: str, node: EggNode = ...) -> bool:
         """Adds the name to the indicated category.  This name will not be used for
         any other egg node within this category.  Returns true if the name was
         added, or false if it was already in use for the category.
         """
-        ...
     def get_category(self, node: EggNode) -> str: ...
     def filter_name(self, node: EggNode) -> str:
         """Returns the name of the given node, or at least the name it should be.
         This provides a hook to adjust the name before attempting to uniquify it,
         if desired, for instance to remove invalid characters.
         """
-        ...
     def generate_name(self, node: EggNode, category: str, index: int) -> str:
         """Generates a new name for the given node when its existing name clashes with
         some other node.  This function will be called repeatedly, if necessary,
@@ -4654,7 +4182,6 @@ class EggNameUniquifier(EggObject):
         The category is the string returned by get_category(), and index is a
         uniquely-generated number that may be useful for synthesizing the name.
         """
-        ...
     getNode = get_node
     hasName = has_name
     addName = add_name
@@ -4673,7 +4200,6 @@ class EggGroupUniquifier(EggNameUniquifier):
         and underscore.  If filter_names is false, the group names will be left
         unchanged.
         """
-        ...
 
 class EggLine(EggCompositePrimitive):
     """A line segment, or a series of connected line segments, defined by a <Line>
@@ -4688,7 +4214,6 @@ class EggLine(EggCompositePrimitive):
         """Returns the thickness set on this particular line.  If there is no
         thickness set, returns 1.0.
         """
-        ...
     def set_thick(self, thick: float) -> None: ...
     def clear_thick(self) -> None: ...
     hasThick = has_thick
@@ -4706,13 +4231,11 @@ class EggMaterialCollection:
     def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Removes all materials from the collection."""
-        ...
     def extract_materials(self, node: EggGroupNode) -> int:
         """Walks the egg hierarchy beginning at the indicated node, and removes any
         EggMaterials encountered in the hierarchy, adding them to the collection.
         Returns the number of EggMaterials encountered.
         """
-        ...
     def find_used_materials(self, node: EggNode) -> int:
         """Walks the egg hierarchy beginning at the indicated node, looking for
         materials that are referenced by primitives but are not already members of
@@ -4731,14 +4254,12 @@ class EggMaterialCollection:
         a material in the collection each time a material reference is encountered.
         This side effect is taken advantage of by remove_unused_materials().
         """
-        ...
     def remove_unused_materials(self, node: EggNode) -> None:
         """Removes any materials from the collection that aren't referenced by any
         primitives in the indicated egg hierarchy.  This also, incidentally, adds
         materials to the collection that had been referenced by primitives but had
         not previously appeared in the collection.
         """
-        ...
     def collapse_equivalent_materials(self, eq: int, node: EggGroupNode) -> int:
         """Walks through the collection and collapses together any separate materials
         that are equivalent according to the indicated equivalence factor, eq (see
@@ -4748,39 +4269,32 @@ class EggMaterialCollection:
         This flavor of collapse_equivalent_materials() automatically adjusts all
         the primitives in the egg hierarchy to refer to the new material pointers.
         """
-        ...
     def uniquify_mrefs(self) -> None:
         """Guarantees that each material in the collection has a unique MRef name.
         This is essential before writing an egg file.
         """
-        ...
     def sort_by_mref(self) -> None:
         """Sorts all the materials into alphabetical order by MRef name.  Subsequent
         operations using begin()/end() will traverse in this sorted order.
         """
-        ...
     def add_material(self, material: EggMaterial) -> bool:
         """Explicitly adds a new material to the collection.  Returns true if the
         material was added, false if it was already there or if there was some
         error.
         """
-        ...
     def remove_material(self, material: EggMaterial) -> bool:
         """Explicitly removes a material from the collection.  Returns true if the
         material was removed, false if it wasn't there or if there was some error.
         """
-        ...
     def create_unique_material(self, copy: EggMaterial, eq: int) -> EggMaterial:
         """create_unique_material() creates a new material if there is not already
         one equivalent (according to eq, see EggMaterial::is_equivalent_to()) to
         the indicated material, or returns the existing one if there is.
         """
-        ...
     def find_mref(self, mref_name: str) -> EggMaterial:
         """Returns the material with the indicated MRef name, or NULL if no material
         matches.
         """
-        ...
     extractMaterials = extract_materials
     findUsedMaterials = find_used_materials
     removeUnusedMaterials = remove_unused_materials
@@ -4807,18 +4321,15 @@ class EggPolygon(EggPrimitive):
         the polygon is degenerate and does not have at least three noncollinear
         vertices.
         """
-        ...
     def is_planar(self) -> bool:
         """Returns true if all of the polygon's vertices lie within the same plane,
         false otherwise.
         """
-        ...
     def recompute_polygon_normal(self, cs: _CoordinateSystem = ...) -> bool:
         """Recalculates the normal according to the order of the vertices, and sets
         it.  Returns true if the normal is computed correctly, or false if the
         polygon is degenerate and does not have a normal.
         """
-        ...
     def triangulate_into(self, container: EggGroupNode, convex_also: bool) -> bool:
         """Subdivides the polygon into triangles and adds each one to the indicated
         container.  If the polygon is already a triangle, adds an exact copy of the
@@ -4832,7 +4343,6 @@ class EggPolygon(EggPrimitive):
         into triangles; otherwise, only concave polygons will be subdivided, and
         convex polygons will be copied unchanged into the container.
         """
-        ...
     def triangulate_in_place(self, convex_also: bool) -> EggPolygon:
         """Subdivides the polygon into triangles and adds those triangles to the
         parent group node in place of the original polygon.  Returns a pointer to
@@ -4842,7 +4352,6 @@ class EggPolygon(EggPrimitive):
         into triangles; otherwise, only concave polygons will be subdivided, and
         convex polygons will be copied unchanged into the container.
         """
-        ...
     calculateNormal = calculate_normal
     isPlanar = is_planar
     recomputePolygonNormal = recompute_polygon_normal
@@ -4867,14 +4376,12 @@ class EggNurbsCurve(EggCurve):
         number of knots minus the order), but it is up to the user to add the
         correct number of vertices to the curve by repeatedly calling push_back().
         """
-        ...
     def set_order(self, order: int) -> None:
         """Directly changes the order to the indicated value (which must be an integer
         in the range 1 <= order <= 4).  If possible, it is preferable to use the
         setup() method instead of this method, since changing the order directly
         may result in an invalid curve.
         """
-        ...
     def set_num_knots(self, num: int) -> None:
         """Directly changes the number of knots.  This will either add zero-valued
         knots onto the end, or truncate knot values from the end, depending on
@@ -4882,31 +4389,25 @@ class EggNurbsCurve(EggCurve):
         preferable to use the setup() method instead of directly setting the number
         of knots, as this may result in an invalid curve.
         """
-        ...
     def set_knot(self, k: int, value: float) -> None:
         """Resets the value of the indicated knot as indicated.  k must be in the
         range 0 <= k < get_num_knots(), and the value must be in the range
         get_knot(k - 1) <= value <= get_knot(k + 1).
         """
-        ...
     def is_valid(self) -> bool:
         """Returns true if the NURBS parameters are all internally consistent (e.g.
         it has the right number of vertices to match its number of knots and order
         in each dimension), or false otherwise.
         """
-        ...
     def get_order(self) -> int:
         """Returns the order of the curve.  The order is the degree of the NURBS
         equation plus 1; for a typical NURBS, the order is 4.  With this
         implementation of NURBS, the order must be in the range [1, 4].
         """
-        ...
     def get_degree(self) -> int:
         """Returns the degree of the curve.  For a typical NURBS, the degree is 3."""
-        ...
     def get_num_knots(self) -> int:
         """Returns the number of knots."""
-        ...
     def get_num_cvs(self) -> int:
         """Returns the total number of control vertices that *should* be defined for
         the curve.  This is determined by the number of knots and the order, in
@@ -4914,16 +4415,13 @@ class EggNurbsCurve(EggCurve):
         have actually been added to the curve.  (However, if the number of vertices
         in the curve are wrong, the curve is invalid.)
         """
-        ...
     def is_closed(self) -> bool:
         """Returns true if the curve appears to be closed.  Since the Egg syntax does
         not provide a means for explicit indication of closure, this has to be
         guessed at by examining the curve itself.
         """
-        ...
     def get_knot(self, k: int) -> float:
         """Returns the nth knot value defined."""
-        ...
     def get_knots(self) -> tuple[float, ...]: ...
     setOrder = set_order
     setNumKnots = set_num_knots
@@ -4945,24 +4443,20 @@ class EggSurface(EggPrimitive):
         subdivisions will be made; it's just a hint to any surface renderer or
         quick tesselator.)  Set the number to 0 to disable the hint.
         """
-        ...
     def get_u_subdiv(self) -> int:
         """Returns the requested number of subdivisions in the U direction, or 0 if no
         particular subdivisions have been requested.
         """
-        ...
     def set_v_subdiv(self, subdiv: int) -> None:
         """Sets the number of subdivisions in the U direction that will be requested
         across the surface.  (This doesn't necessary guarantee that this number of
         subdivisions will be made; it's just a hint to any surface renderer or
         quick tesselator.)  Set the number to 0 to disable the hint.
         """
-        ...
     def get_v_subdiv(self) -> int:
         """Returns the requested number of subdivisions in the U direction, or 0 if no
         particular subdivisions have been requested.
         """
-        ...
     setUSubdiv = set_u_subdiv
     getUSubdiv = get_u_subdiv
     setVSubdiv = set_v_subdiv
@@ -4981,21 +4475,18 @@ class EggNurbsSurface(EggSurface):
         up to the user to add the correct number of vertices to the surface by
         repeatedly calling push_back().
         """
-        ...
     def set_u_order(self, u_order: int) -> None:
         """Directly changes the order in the U direction to the indicated value (which
         must be an integer in the range 1 <= u_order <= 4).  If possible, it is
         preferable to use the setup() method instead of this method, since changing
         the order directly may result in an invalid surface.
         """
-        ...
     def set_v_order(self, v_order: int) -> None:
         """Directly changes the order in the V direction to the indicated value (which
         must be an integer in the range 1 <= v_order <= 4).  If possible, it is
         preferable to use the setup() method instead of this method, since changing
         the order directly may result in an invalid surface.
         """
-        ...
     def set_num_u_knots(self, num: int) -> None:
         """Directly changes the number of knots in the U direction.  This will either
         add zero-valued knots onto the end, or truncate knot values from the end,
@@ -5003,7 +4494,6 @@ class EggNurbsSurface(EggSurface):
         possible, it is preferable to use the setup() method instead of directly
         setting the number of knots, as this may result in an invalid surface.
         """
-        ...
     def set_num_v_knots(self, num: int) -> None:
         """Directly changes the number of knots in the V direction.  This will either
         add zero-valued knots onto the end, or truncate knot values from the end,
@@ -5011,59 +4501,48 @@ class EggNurbsSurface(EggSurface):
         possible, it is preferable to use the setup() method instead of directly
         setting the number of knots, as this may result in an invalid surface.
         """
-        ...
     def set_u_knot(self, k: int, value: float) -> None:
         """Resets the value of the indicated knot as indicated.  k must be in the
         range 0 <= k < get_num_u_knots(), and the value must be in the range
         get_u_knot(k - 1) <= value <= get_u_knot(k + 1).
         """
-        ...
     def set_v_knot(self, k: int, value: float) -> None:
         """Resets the value of the indicated knot as indicated.  k must be in the
         range 0 <= k < get_num_v_knots(), and the value must be in the range
         get_v_knot(k - 1) <= value <= get_v_knot(k + 1).
         """
-        ...
     def set_cv(self, ui: int, vi: int, vertex: EggVertex) -> None:
         """Redefines the control vertex associated with a particular u, v coordinate
         pair.  This is just a shorthand to access the EggPrimitive's normal vertex
         assignment for a 2-d control vertex.
         """
-        ...
     def is_valid(self) -> bool:
         """Returns true if the NURBS parameters are all internally consistent (e.g.
         it has the right number of vertices to match its number of knots and order
         in each dimension), or false otherwise.
         """
-        ...
     def get_u_order(self) -> int:
         """Returns the order of the surface in the U direction.  The order is the
         degree of the NURBS equation plus 1; for a typical NURBS, the order is 4.
         With this implementation of NURBS, the order must be in the range [1, 4].
         """
-        ...
     def get_v_order(self) -> int:
         """Returns the order of the surface in the V direction.  The order is the
         degree of the NURBS equation plus 1; for a typical NURBS, the order is 4.
         With this implementation of NURBS, the order must be in the range [1, 4].
         """
-        ...
     def get_u_degree(self) -> int:
         """Returns the degree of the surface in the U direction.  For a typical NURBS,
         the degree is 3.
         """
-        ...
     def get_v_degree(self) -> int:
         """Returns the degree of the surface in the V direction.  for a typical NURBS,
         the degree is 3.
         """
-        ...
     def get_num_u_knots(self) -> int:
         """Returns the number of knots in the U direction."""
-        ...
     def get_num_v_knots(self) -> int:
         """Returns the number of knots in the V direction."""
-        ...
     def get_num_u_cvs(self) -> int:
         """Returns the number of control vertices that should be present in the U
         direction.  This is determined by the number of knots and the order; it
@@ -5071,7 +4550,6 @@ class EggNurbsSurface(EggSurface):
         added to the surface.  (However, if the number of vertices in the surface
         are wrong, the surface is invalid.)
         """
-        ...
     def get_num_v_cvs(self) -> int:
         """Returns the number of control vertices that should be present in the V
         direction.  This is determined by the number of knots and the order; it
@@ -5079,7 +4557,6 @@ class EggNurbsSurface(EggSurface):
         added to the surface.  (However, if the number of vertices in the surface
         are wrong, the surface is invalid.)
         """
-        ...
     def get_num_cvs(self) -> int:
         """Returns the total number of control vertices that *should* be defined for
         the surface.  This is determined by the number of knots and the order, in
@@ -5087,47 +4564,38 @@ class EggNurbsSurface(EggSurface):
         have actually been added to the surface.  (However, if the number of
         vertices in the surface are wrong, the surface is invalid.)
         """
-        ...
     def get_u_index(self, vertex_index: int) -> int:
         """Returns the U index number of the given vertex within the EggPrimitive's
         linear list of vertices.  An EggNurbsSurface maps a linear list of vertices
         to its 2-d mesh; this returns the U index number that corresponds to the
         nth vertex in the list.
         """
-        ...
     def get_v_index(self, vertex_index: int) -> int:
         """Returns the V index number of the given vertex within the EggPrimitive's
         linear list of vertices.  An EggNurbsSurface maps a linear list of vertices
         to its 2-d mesh; this returns the V index number that corresponds to the
         nth vertex in the list.
         """
-        ...
     def get_vertex_index(self, ui: int, vi: int) -> int:
         """Returns the index number within the EggPrimitive's list of the control
         vertex at position ui, vi.
         """
-        ...
     def is_closed_u(self) -> bool:
         """Returns true if the surface appears to be closed in the U direction.  Since
         the Egg syntax does not provide a means for explicit indication of closure,
         this has to be guessed at by examining the surface itself.
         """
-        ...
     def is_closed_v(self) -> bool:
         """Returns true if the surface appears to be closed in the V direction.  Since
         the Egg syntax does not provide a means for explicit indication of closure,
         this has to be guessed at by examining the surface itself.
         """
-        ...
     def get_u_knot(self, k: int) -> float:
         """Returns the nth knot value defined in the U direction."""
-        ...
     def get_v_knot(self, k: int) -> float:
         """Returns the nth knot value defined in the V direction."""
-        ...
     def get_cv(self, ui: int, vi: int) -> EggVertex:
         """Returns the control vertex at the indicate U, V position."""
-        ...
     def get_u_knots(self) -> tuple[float, ...]: ...
     def get_v_knots(self) -> tuple[float, ...]: ...
     setUOrder = set_u_order
@@ -5180,7 +4648,6 @@ class EggPoint(EggPrimitive):
         """Returns the thickness set on this particular point.  If there is no
         thickness set, returns 1.0.
         """
-        ...
     def set_thick(self, thick: float) -> None: ...
     def clear_thick(self) -> None: ...
     def has_perspective(self) -> bool: ...
@@ -5188,7 +4655,6 @@ class EggPoint(EggPrimitive):
         """Returns the perspective flag set on this particular point.  If there is no
         perspective flag set, returns false.
         """
-        ...
     def set_perspective(self, perspective: bool) -> None: ...
     def clear_perspective(self) -> None: ...
     hasThick = has_thick
@@ -5240,7 +4706,6 @@ class EggPolysetMaker(EggBinMaker):
         the properties that matter.  If this is 0, all polygons (within a given
         group) will be lumped into a common polyset regardless of their properties.
         """
-        ...
     setProperties = set_properties
 
 class EggPoolUniquifier(EggNameUniquifier):
@@ -5262,22 +4727,18 @@ class EggSAnimData(EggAnimData):
         """Returns the number of rows in the table.  For an SAnim table, each row has
         one column.
         """
-        ...
     def get_value(self, row: int) -> float:
         """Returns the value at the indicated row.  Row must be in the range 0 <= row
         < get_num_rows().
         """
-        ...
     def set_value(self, row: int, value: float) -> None:
         """Changes the value at the indicated row.  Row must be in the range 0 <= row
         < get_num_rows().
         """
-        ...
     def optimize(self) -> None:
         """Optimizes the data by collapsing a long table of duplicate values into a
         single value.
         """
-        ...
     getNumRows = get_num_rows
     getValue = get_value
     setValue = set_value
@@ -5304,14 +4765,12 @@ class EggTable(EggGroupNode):
         """Returns true if the table contains a transform description, false
         otherwise.
         """
-        ...
     @staticmethod
     def string_table_type(string: str) -> _EggTable_TableType:
         """Returns the TableType value associated with the given string
         representation, or TT_invalid if the string does not match any known
         TableType value.
         """
-        ...
     setTableType = set_table_type
     getTableType = get_table_type
     hasTransform = has_transform
@@ -5326,29 +4785,22 @@ class EggTextureCollection:
     def __init__(self, copy: EggTextureCollection = ...) -> None: ...
     def __getitem__(self, n: int) -> EggTexture:
         """Returns the nth EggTexture in the collection."""
-        ...
     def __len__(self) -> int:
         """Returns the number of EggTextures in the collection."""
-        ...
     def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Removes all textures from the collection."""
-        ...
     def extract_textures(self, node: EggGroupNode) -> int:
         """Walks the egg hierarchy beginning at the indicated node, and removes any
         EggTextures encountered in the hierarchy, adding them to the collection.
         Returns the number of EggTextures encountered.
         """
-        ...
     def is_empty(self) -> bool:
         """Returns true if there are no EggTexures in the collection, false otherwise."""
-        ...
     def get_num_textures(self) -> int:
         """Returns the number of EggTextures in the collection."""
-        ...
     def get_texture(self, index: int) -> EggTexture:
         """Returns the nth EggTexture in the collection."""
-        ...
     def find_used_textures(self, node: EggNode) -> int:
         """Walks the egg hierarchy beginning at the indicated node, looking for
         textures that are referenced by primitives but are not already members of
@@ -5372,14 +4824,12 @@ class EggTextureCollection:
         texture appropriately so that, after this call, you may expect
         get_multitexture_sort() to return a reasonable value for each texture.
         """
-        ...
     def remove_unused_textures(self, node: EggNode) -> None:
         """Removes any textures from the collection that aren't referenced by any
         primitives in the indicated egg hierarchy.  This also, incidentally, adds
         textures to the collection that had been referenced by primitives but had
         not previously appeared in the collection.
         """
-        ...
     def collapse_equivalent_textures(self, eq: int, node: EggGroupNode) -> int:
         """Walks through the collection and collapses together any separate textures
         that are equivalent according to the indicated equivalence factor, eq (see
@@ -5389,50 +4839,41 @@ class EggTextureCollection:
         This flavor of collapse_equivalent_textures() automatically adjusts all the
         primitives in the egg hierarchy to refer to the new texture pointers.
         """
-        ...
     def uniquify_trefs(self) -> None:
         """Guarantees that each texture in the collection has a unique TRef name.
         This is essential before writing an egg file.
         """
-        ...
     def sort_by_tref(self) -> None:
         """Sorts all the textures into alphabetical order by TRef name.  Subsequent
         operations using begin()/end() will traverse in this sorted order.
         """
-        ...
     def sort_by_basename(self) -> None:
         """Sorts all the textures into alphabetical order by the basename part
         (including extension) of the filename.  Subsequent operations using
         begin()/end() will traverse in this sorted order.
         """
-        ...
     def add_texture(self, texture: EggTexture) -> bool:
         """Explicitly adds a new texture to the collection.  Returns true if the
         texture was added, false if it was already there or if there was some
         error.
         """
-        ...
     def remove_texture(self, texture: EggTexture) -> bool:
         """Explicitly removes a texture from the collection.  Returns true if the
         texture was removed, false if it wasn't there or if there was some error.
         """
-        ...
     def create_unique_texture(self, copy: EggTexture, eq: int) -> EggTexture:
         """create_unique_texture() creates a new texture if there is not already one
         equivalent (according to eq, see EggTexture::is_equivalent_to()) to the
         indicated texture, or returns the existing one if there is.
         """
-        ...
     def find_tref(self, tref_name: str) -> EggTexture:
         """Returns the texture with the indicated TRef name, or NULL if no texture
         matches.
         """
-        ...
     def find_filename(self, filename: Filepath) -> EggTexture:
         """Returns the texture with the indicated filename, or NULL if no texture
         matches.
         """
-        ...
     def get_textures(self) -> tuple[EggTexture, ...]: ...
     extractTextures = extract_textures
     isEmpty = is_empty
@@ -5478,7 +4919,6 @@ class EggXfmSAnim(EggGroupNode):
     @overload
     def __init__(self, name: str = ..., cs: _CoordinateSystem = ...) -> None:
         """Converts the older-style XfmAnim table to the newer-style XfmSAnim table."""
-        ...
     @overload
     def __init__(self, convert_from: EggXfmAnimData) -> None: ...
     @overload
@@ -5488,7 +4928,6 @@ class EggXfmSAnim(EggGroupNode):
     def has_fps(self) -> bool: ...
     def get_fps(self) -> float:
         """This is only valid if has_fps() returns true."""
-        ...
     def set_order(self, order: str) -> None: ...
     def clear_order(self) -> None: ...
     def has_order(self) -> bool: ...
@@ -5499,37 +4938,31 @@ class EggXfmSAnim(EggGroupNode):
         the order string must be set to in order to use set_value() or add_data()
         successfully.
         """
-        ...
     def get_coordinate_system(self) -> _CoordinateSystem:
         """Returns the coordinate system this table believes it is defined within.
         This should always match the coordinate system of the EggData structure
         that owns it.  It is necessary to store it here because the meaning of the
         h, p, and r columns depends on the coordinate system.
         """
-        ...
     def optimize(self) -> None:
         """Optimizes the table by collapsing redundant sub-tables."""
-        ...
     def optimize_to_standard_order(self) -> None:
         """Optimizes the table by collapsing redundant sub-tables, and simultaneously
         ensures that the order string is the standard order (which is the same as
         that supported by compose_matrix() and decompose_matrix()).
         """
-        ...
     def normalize(self) -> None:
         """The inverse operation of optimize(), this ensures that all the sub-tables
         have the same length by duplicating rows as necessary.  This is needed
         before doing operations like add_data() or set_value() on an existing
         table.
         """
-        ...
     def get_num_rows(self) -> int:
         """Returns the effective number of rows in the table.  This is actually the
         number of rows of the smallest subtable larger than one row.  This is a
         convenience function that treats the table of tables as if it were a single
         table of matrices.
         """
-        ...
     def get_value(self, row: int, mat: Mat4d) -> None:
         """Returns the value of the aggregate row of the table as a matrix.  This is a
         convenience function that treats the table of tables as if it were a single
@@ -5537,7 +4970,6 @@ class EggXfmSAnim(EggGroupNode):
         of this node have an improper name (e.g.  not a single letter, or not one
         of "ijkabchprxyz").
         """
-        ...
     def set_value(self, row: int, mat: Mat4d) -> bool:
         """Replaces the indicated row of the table with the given matrix.
 
@@ -5548,12 +4980,10 @@ class EggXfmSAnim(EggGroupNode):
         scale, shear, rotate, and translate, or false otherwise.  The data is set
         in either case.
         """
-        ...
     def clear_data(self) -> None:
         """Removes all data from the table.  It does this by removing all of its
         children.
         """
-        ...
     def add_data(self, mat: Mat4d) -> bool:
         """Adds a new matrix to the table, by adding a new row to each of the
         subtables.
@@ -5577,7 +5007,6 @@ class EggXfmSAnim(EggGroupNode):
         scale, shear, rotate, and translate.  In this case, the closest
         approximation is added to the table, and false is returned.
         """
-        ...
     @overload
     def add_component_data(self, component: int, value: float) -> None:
         """`(self, component: int, value: float)`:
@@ -5587,7 +5016,6 @@ class EggXfmSAnim(EggGroupNode):
         Adds a new row to the named component (one of matrix_component_letters) of
         the table.
         """
-        ...
     @overload
     def add_component_data(self, component_name: str, value: float) -> None: ...
     @staticmethod
@@ -5596,7 +5024,6 @@ class EggXfmSAnim(EggGroupNode):
         order string.  The components will be applied in the order indicated by the
         string.
         """
-        ...
     setFps = set_fps
     clearFps = clear_fps
     hasFps = has_fps
@@ -5625,7 +5052,6 @@ class EggXfmAnimData(EggAnimData):
     @overload
     def __init__(self, name: str = ..., cs: _CoordinateSystem = ...) -> None:
         """Converts the newer-style XfmSAnim table to the older-style XfmAnim table."""
-        ...
     @overload
     def __init__(self, copy: EggXfmAnimData) -> None: ...
     @overload
@@ -5640,7 +5066,6 @@ class EggXfmAnimData(EggAnimData):
         the order string must be set to in order to use set_value() or add_data()
         successfully.
         """
-        ...
     def set_contents(self, contents: str) -> None: ...
     def clear_contents(self) -> None: ...
     def has_contents(self) -> bool: ...
@@ -5651,15 +5076,12 @@ class EggXfmAnimData(EggAnimData):
         that owns it.  It is necessary to store it here because the meaning of the
         h, p, and r columns depends on the coordinate system.
         """
-        ...
     def get_num_rows(self) -> int:
         """Returns the number of rows in the table."""
-        ...
     def get_num_cols(self) -> int:
         """Returns the number of columns in the table.  This is set according to the
         "contents" string, which defines the meaning of each column.
         """
-        ...
     @overload
     def get_value(self, row: int, mat: Mat4d) -> None:
         """`(self, row: int, mat: LMatrix4d)`:
@@ -5671,7 +5093,6 @@ class EggXfmAnimData(EggAnimData):
         Returns the value at the indicated row.  Row must be in the range 0 <= row
         < get_num_rows(); col must be in the range 0 <= col < get_num_cols().
         """
-        ...
     @overload
     def get_value(self, row: int, col: int) -> float: ...
     setOrder = set_order
@@ -5690,9 +5111,7 @@ class EggXfmAnimData(EggAnimData):
 
 def parse_egg_data(egg_syntax: str) -> EggData:
     """Parses an EggData from the raw egg syntax."""
-    ...
 def parse_egg_node(egg_syntax: str) -> EggNode:
     """Parses a single egg node from the raw egg syntax."""
-    ...
 parseEggData = parse_egg_data
 parseEggNode = parse_egg_node

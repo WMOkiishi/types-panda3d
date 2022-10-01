@@ -43,7 +43,6 @@ class LightNode(Light, PandaNode):  # type: ignore[misc]
         """We have to explicitly publish these because they resolve the multiple
         inheritance.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -86,13 +85,10 @@ class CallbackNode(PandaNode):
         the cull traversal to continue to visit this node and below, you must call
         cbdata->upcall() from your callback.
         """
-        ...
     def clear_cull_callback(self) -> None:
         """Removes the callback set by an earlier call to set_cull_callback()."""
-        ...
     def get_cull_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_cull_callback()."""
-        ...
     def set_draw_callback(self, object: CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this node is visited
         during the draw traversal.  This callback will be made during the draw
@@ -112,13 +108,10 @@ class CallbackNode(PandaNode):
         current GSG.  There is a Geom pointer as well, but it will always be NULL
         to this callback, since the CallbackNode does not itself contain any Geoms.
         """
-        ...
     def clear_draw_callback(self) -> None:
         """Removes the callback set by an earlier call to set_draw_callback()."""
-        ...
     def get_draw_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_draw_callback()."""
-        ...
     setCullCallback = set_cull_callback
     clearCullCallback = clear_cull_callback
     getCullCallback = get_cull_callback
@@ -135,38 +128,30 @@ class ComputeNode(PandaNode):
         """Creates a ComputeNode with the given name.  Use add_dispatch and  also
         assign a shader using a ShaderAttrib.
         """
-        ...
     @overload
     def add_dispatch(self, num_groups: LVecBase3i) -> None:
         """Adds a dispatch command with the given number of work groups in the X, Y,
         and Z dimensions.  Any of these values may be set to 1 if the respective
         dimension should not be used.
         """
-        ...
     @overload
     def add_dispatch(self, num_groups_x: int, num_groups_y: int, num_groups_z: int) -> None: ...
     def get_num_dispatches(self) -> int:
         """Returns the number of times add_dispatch has been called on this object."""
-        ...
     def get_dispatch(self, i: int) -> LVecBase3i:
         """Returns the group counts of the nth dispatch associated with this object."""
-        ...
     def set_dispatch(self, i: int, num_groups: LVecBase3i) -> None:
         """Sets the group counts of the nth dispatch associated with this object."""
-        ...
     def insert_dispatch(self, i: int, num_groups: LVecBase3i) -> None:
         """Inserts a dispatch command with the given number of work groups in the X,
         Y, and Z dimensions at the given position in the list of dispatch commands.
         Any of these values may be set to 1 if the respective dimension should not
         be used.
         """
-        ...
     def remove_dispatch(self, i: int) -> None:
         """Erases the given dispatch index from the list."""
-        ...
     def clear_dispatches(self) -> None:
         """Removes all dispatch commands."""
-        ...
     def get_dispatches(self) -> tuple[LVecBase3i, ...]: ...
     addDispatch = add_dispatch
     getNumDispatches = get_num_dispatches
@@ -192,10 +177,8 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
         """Returns true if this light defines a specular color, false if the specular
         color is derived automatically from the light color.
         """
-        ...
     def is_shadow_caster(self) -> bool:
         """Returns whether this light is configured to cast shadows or not."""
-        ...
     @overload
     def set_shadow_caster(self, caster: bool) -> None:
         """`(self, caster: bool)`:
@@ -210,29 +193,23 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
         will be set up, the sort parameter specifies the sort.  Note that enabling
         shadows will require the shader generator to be enabled on the scene.
         """
-        ...
     @overload
     def set_shadow_caster(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...) -> None: ...
     def get_shadow_buffer_sort(self) -> int:
         """Returns the sort of the shadow buffer to be created for this light source."""
-        ...
     def get_shadow_buffer_size(self) -> LVecBase2i:
         """Returns the size of the shadow buffer to be created for this light source."""
-        ...
     def set_shadow_buffer_size(self, size: LVecBase2i) -> None:
         """Sets the size of the shadow buffer to be created for this light source."""
-        ...
     def get_shadow_buffer(self, gsg: GraphicsStateGuardianBase) -> GraphicsOutputBase:
         """Returns the buffer that has been constructed for a given GSG, or NULL if no
         such buffer has (yet) been constructed.  This should be used for debugging
         only, you will not need to call this normally.
         """
-        ...
     def output(self, out: ostream) -> None:
         """We have to explicitly publish these because they resolve the multiple
         inheritance.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -257,12 +234,10 @@ class DirectionalLight(LightLensNode):
     def __init__(self, name: str) -> None: ...
     def set_specular_color(self, color: Vec4f) -> None:
         """Sets the color of specular highlights generated by the light."""
-        ...
     def clear_specular_color(self) -> None:
         """Clears a custom specular color setting, meaning that the specular color
         will now come from the color.
         """
-        ...
     def get_point(self) -> LPoint3:
         """Returns the point in space at which the light is located.  This is local to
         the coordinate space in which the light is assigned.
@@ -271,18 +246,14 @@ class DirectionalLight(LightLensNode):
         light is rendered as if it were infinitely far away.  This is only used to
         create a visible representation of the light.
         """
-        ...
     def set_point(self, point: Vec3f) -> None:
         """Sets the point in space at which the light is located."""
-        ...
     def get_direction(self) -> LVector3:
         """Returns the direction in which the light is aimed.  This is local to the
         coordinate space in which the light is assigned.
         """
-        ...
     def set_direction(self, direction: Vec3f) -> None:
         """Sets the direction in which the light is aimed."""
-        ...
     setSpecularColor = set_specular_color
     clearSpecularColor = clear_specular_color
     getPoint = get_point
@@ -310,7 +281,6 @@ class LODNode(PandaNode):
         """Creates a new LODNode of the type specified by the default-lod-type config
         variable.
         """
-        ...
     def add_switch(self, _in: float, out: float) -> None:
         """Adds a switch range to the LODNode.  This implies that the corresponding
         child node has been parented to the node.
@@ -319,75 +289,61 @@ class LODNode(PandaNode):
         you from far away: it switches "in" at the far distance, and switches "out"
         at the close distance.  Thus, "in" should be larger than "out".
         """
-        ...
     def set_switch(self, index: int, _in: float, out: float) -> bool:
         """Changes the switching range of a particular child of the LODNode.  See
         add_switch().
         """
-        ...
     def clear_switches(self) -> None:
         """Removes the set of switching ranges for the LODNode, presumably in
         conjunction with removing all of its children.  See add_switch().
         """
-        ...
     def get_num_switches(self) -> int:
         """Returns the number of switch ranges added to the LODNode.  This should
         correspond to the number of children of the node in order for the LODNode
         to function correctly.
         """
-        ...
     def get_in(self, index: int) -> float:
         """Returns the "in" distance of the indicated switch range.  This should be
         larger than the "out" distance of the same range.
         """
-        ...
     def get_out(self, index: int) -> float:
         """Returns the "out" distance of the indicated switch range.  This should be
         smaller than the "in" distance of the same range.
         """
-        ...
     def get_lowest_switch(self) -> int:
         """Returns the index number of the child with the lowest level of detail; that
         is, the one that is designed to be seen from the farthest away.  This is
         usually the first child, but it is not necessarily so.
         """
-        ...
     def get_highest_switch(self) -> int:
         """Returns the index number of the child with the highest level of detail;
         that is, the one that is designed to be seen from the closest to the
         camera.  This is usually the last child, but it is not necessarily so.
         """
-        ...
     def force_switch(self, index: int) -> None:
         """Forces the LODNode to show the indicated level instead of the level that
         would normally be shown based on the distance from the camera.
         """
-        ...
     def clear_force_switch(self) -> None:
         """Undoes the effect of a previous call to force_switch() and releases the
         LODNode to once again display the normal level.
         """
-        ...
     def set_lod_scale(self, value: float) -> None:
         """Sets the multiplier for lod distances.  A higher value means you'll see
         farther switchs than normal
         """
-        ...
     def get_lod_scale(self) -> float:
         """Returns the multiplier for lod distances"""
-        ...
     def set_center(self, center: Vec3f) -> None:
         """Specifies the center of the LOD.  This is the point that is compared to the
         camera (in camera space) to determine the particular LOD that should be
         chosen.
         """
-        ...
     def get_center(self) -> LPoint3:
         """Returns the center of the LOD.  This is the point that is compared to the
         camera (in camera space) to determine the particular LOD that should be
         chosen.
         """
-        ...
     def show_switch(self, index: int, color: Vec4f = ...) -> None:
         """This is provided as a debugging aid.  show_switch() will put the LODNode
         into a special mode where rather than computing and drawing the appropriate
@@ -399,28 +355,22 @@ class LODNode(PandaNode):
         hide_switch() or hide_all_switches() to undo this mode and restore the
         LODNode to its normal behavior.
         """
-        ...
     def hide_switch(self, index: int) -> None:
         """Disables a previous call to show_switch()."""
-        ...
     def show_all_switches(self) -> None:
         """Shows all levels in their default colors."""
-        ...
     def hide_all_switches(self) -> None:
         """Hides all levels, restoring the LODNode to normal operation."""
-        ...
     def is_any_shown(self) -> bool:
         """Returns true if any switch has been shown with show_switch(), indicating
         the LODNode is in debug show mode; or false if it is in the normal mode.
         """
-        ...
     def verify_child_bounds(self) -> bool:
         """Returns true if the bounding volumes for the geometry of each fhild node
         entirely fits within the switch_in radius for that child, or false
         otherwise.  It is almost always a mistake for the geometry of an LOD level
         to be larger than its switch_in radius.
         """
-        ...
     def get_ins(self) -> tuple[float, ...]: ...
     def get_outs(self) -> tuple[float, ...]: ...
     makeDefaultLod = make_default_lod
@@ -457,37 +407,30 @@ class FadeLODNode(LODNode):
     def fade_bin_draw_order(self) -> int: ...
     def set_fade_time(self, t: float) -> None:
         """set the time taken to complete an LOD switch"""
-        ...
     def get_fade_time(self) -> float:
         """get the time taken to complete an LOD switch"""
-        ...
     def set_fade_bin(self, name: str, draw_order: int) -> None:
         """Specifies the cull bin and draw order that is assigned to the fading part
         of the geometry during a transition.
         """
-        ...
     def get_fade_bin_name(self) -> str:
         """Returns the cull bin that is assigned to the fading part of the geometry
         during a transition.
         """
-        ...
     def get_fade_bin_draw_order(self) -> int:
         """Returns the draw order that is assigned (along with the bin name) to the
         fading part of the geometry during a transition.
         """
-        ...
     def set_fade_state_override(self, override: int) -> None:
         """Specifies the override value that is applied to the state changes necessary
         to apply the fade effect.  This should be larger than any attrib overrides
         on the fading geometry.
         """
-        ...
     def get_fade_state_override(self) -> int:
         """Returns the override value that is applied to the state changes necessary
         to apply the fade effect.  This should be larger than any attrib overrides
         on the fading geometry.
         """
-        ...
     setFadeTime = set_fade_time
     getFadeTime = get_fade_time
     setFadeBin = set_fade_bin
@@ -505,13 +448,11 @@ class NodeCullCallbackData(CallbackData):
         contains data that does not change during the traversal, such as the
         DisplayRegion and Camera in use.
         """
-        ...
     def get_data(self) -> CullTraverserData:
         """Returns the CullTraverserData in use at the time of the callback.  This
         object contains data that changes at each node of the traversal, such as
         the current node and the current net transform to that node.
         """
-        ...
     getTrav = get_trav
     getData = get_data
 
@@ -526,36 +467,29 @@ class PointLight(LightLensNode):
     def __init__(self, name: str) -> None: ...
     def set_specular_color(self, color: Vec4f) -> None:
         """Sets the color of specular highlights generated by the light."""
-        ...
     def clear_specular_color(self) -> None:
         """Clears a custom specular color setting, meaning that the specular color
         will now come from the color.
         """
-        ...
     def set_attenuation(self, attenuation: Vec3f) -> None:
         """Sets the terms of the attenuation equation for the light.  These are, in
         order, the constant, linear, and quadratic terms based on the distance from
         the point to the vertex.
         """
-        ...
     def get_max_distance(self) -> float:
         """Returns the maximum distance at which the light has any effect, as previously
         specified by set_max_distance.
         """
-        ...
     def set_max_distance(self, max_distance: float) -> None:
         """Sets the radius of the light's sphere of influence.  Beyond this distance, the
         light may be attenuated to zero, if this is supported by the shader.
         """
-        ...
     def get_point(self) -> LPoint3:
         """Returns the point in space at which the light is located.  This is local to
         the coordinate space in which the light is assigned, and is usually 0.
         """
-        ...
     def set_point(self, point: Vec3f) -> None:
         """Sets the point in space at which the light is located.  Usually 0."""
-        ...
     setSpecularColor = set_specular_color
     clearSpecularColor = clear_specular_color
     setAttenuation = set_attenuation
@@ -576,12 +510,10 @@ class RectangleLight(LightLensNode):
         """Returns the maximum distance at which the light has any effect, as previously
         specified by set_max_distance.
         """
-        ...
     def set_max_distance(self, max_distance: float) -> None:
         """Sets the radius of the light's sphere of influence.  Beyond this distance, the
         light may be attenuated to zero, if this is supported by the shader.
         """
-        ...
     getMaxDistance = get_max_distance
     setMaxDistance = set_max_distance
 
@@ -605,13 +537,11 @@ class SequenceNode(SelectiveChildNode, AnimInterface):
         change without warning with certain kinds of animations, since this is a
         virtual method that may be overridden).
         """
-        ...
     def set_frame_rate(self, frame_rate: float) -> None:
         """Changes the advertised frame rate of the SequenceNode.  This can be used in
         conjunction with get_play_rate() to change the effective frame rate of the
         node.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToSelectiveChildNode = upcast_to_SelectiveChildNode
@@ -648,7 +578,6 @@ class ShaderGenerator(TypedReferenceCount):
         certain results.  The parameter that must be passed is the GSG to which the
         shader generator belongs.
         """
-        ...
     @overload
     def __init__(self, __param0: ShaderGenerator) -> None: ...
     def synthesize_shader(self, rs: RenderState, anim: GeomVertexAnimationSpec) -> ShaderAttrib:
@@ -678,7 +607,6 @@ class ShaderGenerator(TypedReferenceCount):
         Potential optimizations
         - omit attenuation calculations if attenuation off
         """
-        ...
     def rehash_generated_shaders(self) -> None:
         """Rehashes all the states with generated shaders, removing the ones that are
         no longer fresh.
@@ -689,14 +617,12 @@ class ShaderGenerator(TypedReferenceCount):
 
         @since 1.10.0
         """
-        ...
     def clear_generated_shaders(self) -> None:
         """Removes all previously generated shaders, requiring all shaders to be
         regenerated.  Does not clear cache of compiled shaders.
 
         @since 1.10.0
         """
-        ...
     synthesizeShader = synthesize_shader
     rehashGeneratedShaders = rehash_generated_shaders
     clearGeneratedShaders = clear_generated_shaders
@@ -710,10 +636,8 @@ class SphereLight(PointLight):
     radius: float
     def get_radius(self) -> float:
         """Returns the radius of the sphere."""
-        ...
     def set_radius(self, radius: float) -> None:
         """Sets the radius of the sphere."""
-        ...
     getRadius = get_radius
     setRadius = set_radius
 
@@ -740,31 +664,25 @@ class Spotlight(LightLensNode):
         result in a more focused light source, regardless of the field-of-view of
         the lens.
         """
-        ...
     def set_specular_color(self, color: Vec4f) -> None:
         """Sets the color of specular highlights generated by the light."""
-        ...
     def clear_specular_color(self) -> None:
         """Clears a custom specular color setting, meaning that the specular color
         will now come from the color.
         """
-        ...
     def set_attenuation(self, attenuation: Vec3f) -> None:
         """Sets the terms of the attenuation equation for the light.  These are, in
         order, the constant, linear, and quadratic terms based on the distance from
         the point to the vertex.
         """
-        ...
     def get_max_distance(self) -> float:
         """Returns the maximum distance at which the light has any effect, as previously
         specified by set_max_distance.
         """
-        ...
     def set_max_distance(self, max_distance: float) -> None:
         """Sets the radius of the light's sphere of influence.  Beyond this distance, the
         light may be attenuated to zero, if this is supported by the shader.
         """
-        ...
     @staticmethod
     def make_spot(pixel_width: int, full_radius: float, fg: Vec4f, bg: Vec4f) -> Texture:
         """Returns a newly-generated Texture that renders a circular spot image as
@@ -778,7 +696,6 @@ class Spotlight(LightLensNode):
         of the fully bright center spot, and fg and bg are the colors of the
         interior and exterior of the spot, respectively.
         """
-        ...
     setExponent = set_exponent
     setSpecularColor = set_specular_color
     clearSpecularColor = clear_specular_color
@@ -796,10 +713,8 @@ class SwitchNode(SelectiveChildNode):
         """Specifies the particular child of this node, by index, that will be
         visible.
         """
-        ...
     def get_visible_child(self) -> int:
         """Returns the index of the child that should be visible."""
-        ...
     setVisibleChild = set_visible_child
     getVisibleChild = get_visible_child
 
@@ -846,22 +761,17 @@ class SceneGraphAnalyzer:
     def __init__(self, __param0: SceneGraphAnalyzer = ...) -> None: ...
     def set_lod_mode(self, lod_mode: _SceneGraphAnalyzer_LodMode) -> None:
         """Specifies the mode in which LODNodes are analyzed."""
-        ...
     def get_lod_mode(self, lod_mode: _SceneGraphAnalyzer_LodMode) -> _SceneGraphAnalyzer_LodMode:
         """Returns the mode in which LODNodes are analyzed."""
-        ...
     def clear(self) -> None:
         """Resets all of the data in the analyzer in preparation for a new run."""
-        ...
     def add_node(self, node: PandaNode) -> None:
         """Adds a new node to the set of data for analysis.  Normally, this would only
         be called once, and passed the top of the scene graph, but it's possible to
         repeatedly pass in subgraphs to get an analysis of all the graphs together.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Describes all the data collected."""
-        ...
     def get_num_nodes(self) -> int: ...
     def get_num_instances(self) -> int: ...
     def get_num_transforms(self) -> int: ...

@@ -56,20 +56,16 @@ class LVecBase2f:
     @staticmethod
     def zero() -> LVecBase2f:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase2f:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase2f:
         """Returns a unit Y vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> float: ...
     def set_cell(self, i: int, value: float) -> None: ...
     def get_x(self) -> float: ...
@@ -81,7 +77,6 @@ class LVecBase2f:
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: float) -> None: ...
     def add_y(self, value: float) -> None: ...
     @staticmethod
@@ -90,30 +85,24 @@ class LVecBase2f:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float) -> None: ...
     def dot(self, other: LVecBase2f) -> float: ...
     def length_squared(self) -> float:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def length(self) -> float:
         """Returns the length of the vector, by the Pythagorean theorem."""
-        ...
     def normalize(self) -> bool:
         """Normalizes the vector in place.  Returns true if the vector was normalized,
         false if it was a zero-length vector.
         """
-        ...
     def normalized(self) -> LVecBase2f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: LVecBase2f) -> LVecBase2f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def compare_to(self, other: LVecBase2f, threshold: float = ...) -> int:
         """`(self, other: LVecBase2f)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -124,13 +113,10 @@ class LVecBase2f:
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: LVecBase2f) -> None: ...
     def fmax(self, other: LVecBase2f) -> LVecBase2f: ...
     def fmin(self, other: LVecBase2f) -> LVecBase2f: ...
@@ -143,7 +129,6 @@ class LVecBase2f:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -152,21 +137,17 @@ class LVecBase2f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -241,20 +222,16 @@ class LVecBase2d:
     @staticmethod
     def zero() -> LVecBase2d:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase2d:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase2d:
         """Returns a unit Y vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> float: ...
     def set_cell(self, i: int, value: float) -> None: ...
     def get_x(self) -> float: ...
@@ -266,7 +243,6 @@ class LVecBase2d:
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: float) -> None: ...
     def add_y(self, value: float) -> None: ...
     @staticmethod
@@ -275,30 +251,24 @@ class LVecBase2d:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float) -> None: ...
     def dot(self, other: LVecBase2d) -> float: ...
     def length_squared(self) -> float:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def length(self) -> float:
         """Returns the length of the vector, by the Pythagorean theorem."""
-        ...
     def normalize(self) -> bool:
         """Normalizes the vector in place.  Returns true if the vector was normalized,
         false if it was a zero-length vector.
         """
-        ...
     def normalized(self) -> LVecBase2d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: LVecBase2d) -> LVecBase2d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def compare_to(self, other: LVecBase2d, threshold: float = ...) -> int:
         """`(self, other: LVecBase2d)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -309,13 +279,10 @@ class LVecBase2d:
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: LVecBase2d) -> None: ...
     def fmax(self, other: LVecBase2d) -> LVecBase2d: ...
     def fmin(self, other: LVecBase2d) -> LVecBase2d: ...
@@ -328,7 +295,6 @@ class LVecBase2d:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -337,21 +303,17 @@ class LVecBase2d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -424,20 +386,16 @@ class LVecBase2i:
     @staticmethod
     def zero() -> LVecBase2i:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase2i:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase2i:
         """Returns a unit Y vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> int: ...
     def set_cell(self, i: int, value: int) -> None: ...
     def get_x(self) -> int: ...
@@ -449,7 +407,6 @@ class LVecBase2i:
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: int) -> None: ...
     def add_y(self, value: int) -> None: ...
     @staticmethod
@@ -458,23 +415,18 @@ class LVecBase2i:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: int, y: int) -> None: ...
     def dot(self, other: LVecBase2i) -> int: ...
     def length_squared(self) -> int:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def compare_to(self, other: LVecBase2i) -> int:
         """This flavor of compare_to uses a default threshold value based on the
         numeric type.
         """
-        ...
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: LVecBase2i) -> None: ...
     def fmax(self, other: LVecBase2i) -> LVecBase2i: ...
     def fmin(self, other: LVecBase2i) -> LVecBase2i: ...
@@ -487,7 +439,6 @@ class LVecBase2i:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -496,21 +447,17 @@ class LVecBase2i:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -551,7 +498,6 @@ class LVector2f(LVecBase2f):
         `(self, fill_value: float)`:
         Constructs a new LVector2 with all components set to the fill value.
         """
-        ...
     @overload
     def __init__(self, fill_value: float) -> None: ...
     @overload
@@ -570,35 +516,28 @@ class LVector2f(LVecBase2f):
     @staticmethod
     def zero() -> LVector2f:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector2f:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector2f:
         """Returns a unit Y vector."""
-        ...
     def normalized(self) -> LVector2f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: LVecBase2f) -> LVector2f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def signed_angle_rad(self, other: LVecBase2f) -> float:
         """returns the signed angled between two vectors.  normalization is NOT
         necessary
         """
-        ...
     def signed_angle_deg(self, other: LVecBase2f) -> float:
         """returns the signed angled between two vectors.  normalization is NOT
         necessary
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     signedAngleRad = signed_angle_rad
@@ -614,7 +553,6 @@ class LVector2d(LVecBase2d):
         `(self, fill_value: float)`:
         Constructs a new LVector2 with all components set to the fill value.
         """
-        ...
     @overload
     def __init__(self, fill_value: float) -> None: ...
     @overload
@@ -633,35 +571,28 @@ class LVector2d(LVecBase2d):
     @staticmethod
     def zero() -> LVector2d:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector2d:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector2d:
         """Returns a unit Y vector."""
-        ...
     def normalized(self) -> LVector2d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: LVecBase2d) -> LVector2d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def signed_angle_rad(self, other: LVecBase2d) -> float:
         """returns the signed angled between two vectors.  normalization is NOT
         necessary
         """
-        ...
     def signed_angle_deg(self, other: LVecBase2d) -> float:
         """returns the signed angled between two vectors.  normalization is NOT
         necessary
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     signedAngleRad = signed_angle_rad
@@ -677,7 +608,6 @@ class LVector2i(LVecBase2i):
         `(self, fill_value: int)`:
         Constructs a new LVector2 with all components set to the fill value.
         """
-        ...
     @overload
     def __init__(self, fill_value: int) -> None: ...
     @overload
@@ -695,15 +625,12 @@ class LVector2i(LVecBase2i):
     @staticmethod
     def zero() -> LVector2i:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector2i:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector2i:
         """Returns a unit Y vector."""
-        ...
     unitX = unit_x
     unitY = unit_y
 
@@ -720,7 +647,6 @@ class LPoint2f(LVecBase2f):
         `(self, x: float, y: float)`:
         Constructs a new LPoint2 with the given components
         """
-        ...
     @overload
     def __init__(self, fill_value: float) -> None: ...
     @overload
@@ -741,25 +667,20 @@ class LPoint2f(LVecBase2f):
     @staticmethod
     def zero() -> LPoint2f:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint2f:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint2f:
         """Returns a unit Y point."""
-        ...
     def normalized(self) -> LPoint2f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: LVecBase2f) -> LPoint2f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
 
@@ -776,7 +697,6 @@ class LPoint2d(LVecBase2d):
         `(self, x: float, y: float)`:
         Constructs a new LPoint2 with the given components
         """
-        ...
     @overload
     def __init__(self, fill_value: float) -> None: ...
     @overload
@@ -797,25 +717,20 @@ class LPoint2d(LVecBase2d):
     @staticmethod
     def zero() -> LPoint2d:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint2d:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint2d:
         """Returns a unit Y point."""
-        ...
     def normalized(self) -> LPoint2d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: LVecBase2d) -> LPoint2d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
 
@@ -832,7 +747,6 @@ class LPoint2i(LVecBase2i):
         `(self, x: int, y: int)`:
         Constructs a new LPoint2 with the given components
         """
-        ...
     @overload
     def __init__(self, fill_value: int) -> None: ...
     @overload
@@ -852,15 +766,12 @@ class LPoint2i(LVecBase2i):
     @staticmethod
     def zero() -> LPoint2i:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint2i:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint2i:
         """Returns a unit Y point."""
-        ...
     unitX = unit_x
     unitY = unit_y
 
@@ -917,24 +828,19 @@ class LVecBase3f:
     @staticmethod
     def zero() -> LVecBase3f:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase3f:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase3f:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVecBase3f:
         """Returns a unit Z vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> float: ...
     def get_x(self) -> float: ...
     def get_y(self) -> float: ...
@@ -947,23 +853,19 @@ class LVecBase3f:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LVecBase2f:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LVecBase2f:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def add_to_cell(self, i: int, value: float) -> None:
         """These next functions add to an existing value.  i.e.
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: float) -> None: ...
     def add_y(self, value: float) -> None: ...
     def add_z(self, value: float) -> None: ...
@@ -973,30 +875,24 @@ class LVecBase3f:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float, z: float) -> None: ...
     def dot(self, other: Vec3f) -> float: ...
     def length_squared(self) -> float:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def length(self) -> float:
         """Returns the length of the vector, by the Pythagorean theorem."""
-        ...
     def normalize(self) -> bool:
         """Normalizes the vector in place.  Returns true if the vector was normalized,
         false if it was a zero-length vector.
         """
-        ...
     def normalized(self) -> LVecBase3f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec3f) -> LVecBase3f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def cross(self, other: Vec3f) -> LVecBase3f: ...
     def get_standardized_hpr(self) -> LVecBase3f:
         """Try to un-spin the hpr to a standard form.  Like all standards, someone
@@ -1010,7 +906,6 @@ class LVecBase3f:
         bar_hpr.  Try using LQuaternionf::is_same_direction() for that.  See Also:
         get_standardized_rotation, LQuaternion::is_same_direction
         """
-        ...
     def compare_to(self, other: Vec3f, threshold: float = ...) -> int:
         """`(self, other: LVecBase3f)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -1021,13 +916,10 @@ class LVecBase3f:
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: Vec3f) -> None: ...
     def fmax(self, other: Vec3f) -> LVecBase3f: ...
     def fmin(self, other: Vec3f) -> LVecBase3f: ...
@@ -1041,7 +933,6 @@ class LVecBase3f:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -1050,21 +941,17 @@ class LVecBase3f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -1157,24 +1044,19 @@ class LVecBase3d:
     @staticmethod
     def zero() -> LVecBase3d:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase3d:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase3d:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVecBase3d:
         """Returns a unit Z vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> float: ...
     def get_x(self) -> float: ...
     def get_y(self) -> float: ...
@@ -1187,23 +1069,19 @@ class LVecBase3d:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LVecBase2d:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LVecBase2d:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def add_to_cell(self, i: int, value: float) -> None:
         """These next functions add to an existing value.  i.e.
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: float) -> None: ...
     def add_y(self, value: float) -> None: ...
     def add_z(self, value: float) -> None: ...
@@ -1213,30 +1091,24 @@ class LVecBase3d:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float, z: float) -> None: ...
     def dot(self, other: Vec3d) -> float: ...
     def length_squared(self) -> float:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def length(self) -> float:
         """Returns the length of the vector, by the Pythagorean theorem."""
-        ...
     def normalize(self) -> bool:
         """Normalizes the vector in place.  Returns true if the vector was normalized,
         false if it was a zero-length vector.
         """
-        ...
     def normalized(self) -> LVecBase3d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec3d) -> LVecBase3d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def cross(self, other: Vec3d) -> LVecBase3d: ...
     def get_standardized_hpr(self) -> LVecBase3d:
         """Try to un-spin the hpr to a standard form.  Like all standards, someone
@@ -1250,7 +1122,6 @@ class LVecBase3d:
         bar_hpr.  Try using LQuaternionf::is_same_direction() for that.  See Also:
         get_standardized_rotation, LQuaternion::is_same_direction
         """
-        ...
     def compare_to(self, other: Vec3d, threshold: float = ...) -> int:
         """`(self, other: LVecBase3d)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -1261,13 +1132,10 @@ class LVecBase3d:
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: Vec3d) -> None: ...
     def fmax(self, other: Vec3d) -> LVecBase3d: ...
     def fmin(self, other: Vec3d) -> LVecBase3d: ...
@@ -1281,7 +1149,6 @@ class LVecBase3d:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -1290,21 +1157,17 @@ class LVecBase3d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -1395,24 +1258,19 @@ class LVecBase3i:
     @staticmethod
     def zero() -> LVecBase3i:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase3i:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase3i:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVecBase3i:
         """Returns a unit Z vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> int: ...
     def get_x(self) -> int: ...
     def get_y(self) -> int: ...
@@ -1425,23 +1283,19 @@ class LVecBase3i:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LVecBase2i:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LVecBase2i:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def add_to_cell(self, i: int, value: int) -> None:
         """These next functions add to an existing value.  i.e.
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: int) -> None: ...
     def add_y(self, value: int) -> None: ...
     def add_z(self, value: int) -> None: ...
@@ -1451,24 +1305,19 @@ class LVecBase3i:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: int, y: int, z: int) -> None: ...
     def dot(self, other: LVecBase3i) -> int: ...
     def length_squared(self) -> int:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def cross(self, other: LVecBase3i) -> LVecBase3i: ...
     def compare_to(self, other: LVecBase3i) -> int:
         """This flavor of compare_to uses a default threshold value based on the
         numeric type.
         """
-        ...
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: LVecBase3i) -> None: ...
     def fmax(self, other: LVecBase3i) -> LVecBase3i: ...
     def fmin(self, other: LVecBase3i) -> LVecBase3i: ...
@@ -1482,7 +1331,6 @@ class LVecBase3i:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -1491,21 +1339,17 @@ class LVecBase3i:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -1579,55 +1423,44 @@ class LVector3f(LVecBase3f):
     @staticmethod
     def zero() -> LVector3f:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector3f:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector3f:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVector3f:
         """Returns a unit Z vector."""
-        ...
     def get_xy(self) -> LVector2f:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LVector2f:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LVector2f:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def cross(self, other: Vec3f) -> LVector3f: ...
     def normalized(self) -> LVector3f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec3f) -> LVector3f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def angle_rad(self, other: Vec3f) -> float:
         """Returns the unsigned angle between this vector and the other one, expressed
         in radians.  Both vectors should be initially normalized.
         """
-        ...
     def angle_deg(self, other: Vec3f) -> float:
         """Returns the angle between this vector and the other one, expressed in
         degrees.  Both vectors should be initially normalized.
         """
-        ...
     def signed_angle_rad(self, other: Vec3f, ref: Vec3f) -> float:
         """returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
@@ -1635,7 +1468,6 @@ class LVector3f(LVecBase3f):
 
         Vectors (except the ref vector) should be initially normalized.
         """
-        ...
     def signed_angle_deg(self, other: Vec3f, ref: Vec3f) -> float:
         """Returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
@@ -1643,43 +1475,33 @@ class LVector3f(LVecBase3f):
 
         Vectors (except the ref vector) should be initially normalized.
         """
-        ...
     def relative_angle_rad(self, other: Vec3f) -> float:
         """@deprecated Do not use."""
-        ...
     def relative_angle_deg(self, other: Vec3f) -> float:
         """@deprecated Do not use."""
-        ...
     @staticmethod
     def up(cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the up vector for the given coordinate system."""
-        ...
     @staticmethod
     def right(cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the right vector for the given coordinate system."""
-        ...
     @staticmethod
     def forward(cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the forward vector for the given coordinate system."""
-        ...
     @staticmethod
     def down(cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the down vector for the given coordinate system."""
-        ...
     @staticmethod
     def left(cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the left vector for the given coordinate system."""
-        ...
     @staticmethod
     def back(cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the back vector for the given coordinate system."""
-        ...
     @staticmethod
     def rfu(right: float, fwd: float, up: float, cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns a vector that is described by its right, forward, and up
         components, in whatever way the coordinate system represents that vector.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -1728,55 +1550,44 @@ class LVector3d(LVecBase3d):
     @staticmethod
     def zero() -> LVector3d:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector3d:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector3d:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVector3d:
         """Returns a unit Z vector."""
-        ...
     def get_xy(self) -> LVector2d:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LVector2d:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LVector2d:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def cross(self, other: Vec3d) -> LVector3d: ...
     def normalized(self) -> LVector3d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec3d) -> LVector3d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def angle_rad(self, other: Vec3d) -> float:
         """Returns the unsigned angle between this vector and the other one, expressed
         in radians.  Both vectors should be initially normalized.
         """
-        ...
     def angle_deg(self, other: Vec3d) -> float:
         """Returns the angle between this vector and the other one, expressed in
         degrees.  Both vectors should be initially normalized.
         """
-        ...
     def signed_angle_rad(self, other: Vec3d, ref: Vec3d) -> float:
         """returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
@@ -1784,7 +1595,6 @@ class LVector3d(LVecBase3d):
 
         Vectors (except the ref vector) should be initially normalized.
         """
-        ...
     def signed_angle_deg(self, other: Vec3d, ref: Vec3d) -> float:
         """Returns the signed angle between two vectors.  The angle is positive if the
         rotation from this vector to other is clockwise when looking in the
@@ -1792,43 +1602,33 @@ class LVector3d(LVecBase3d):
 
         Vectors (except the ref vector) should be initially normalized.
         """
-        ...
     def relative_angle_rad(self, other: Vec3d) -> float:
         """@deprecated Do not use."""
-        ...
     def relative_angle_deg(self, other: Vec3d) -> float:
         """@deprecated Do not use."""
-        ...
     @staticmethod
     def up(cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the up vector for the given coordinate system."""
-        ...
     @staticmethod
     def right(cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the right vector for the given coordinate system."""
-        ...
     @staticmethod
     def forward(cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the forward vector for the given coordinate system."""
-        ...
     @staticmethod
     def down(cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the down vector for the given coordinate system."""
-        ...
     @staticmethod
     def left(cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the left vector for the given coordinate system."""
-        ...
     @staticmethod
     def back(cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the back vector for the given coordinate system."""
-        ...
     @staticmethod
     def rfu(right: float, fwd: float, up: float, cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns a vector that is described by its right, forward, and up
         components, in whatever way the coordinate system represents that vector.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -1876,65 +1676,51 @@ class LVector3i(LVecBase3i):
     @staticmethod
     def zero() -> LVector3i:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector3i:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector3i:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVector3i:
         """Returns a unit Z vector."""
-        ...
     def get_xy(self) -> LVector2i:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LVector2i:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LVector2i:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def cross(self, other: LVecBase3i) -> LVector3i: ...
     @staticmethod
     def up(cs: _CoordinateSystem = ...) -> LVector3i:
         """Returns the up vector for the given coordinate system."""
-        ...
     @staticmethod
     def right(cs: _CoordinateSystem = ...) -> LVector3i:
         """Returns the right vector for the given coordinate system."""
-        ...
     @staticmethod
     def forward(cs: _CoordinateSystem = ...) -> LVector3i:
         """Returns the forward vector for the given coordinate system."""
-        ...
     @staticmethod
     def down(cs: _CoordinateSystem = ...) -> LVector3i:
         """Returns the down vector for the given coordinate system."""
-        ...
     @staticmethod
     def left(cs: _CoordinateSystem = ...) -> LVector3i:
         """Returns the left vector for the given coordinate system."""
-        ...
     @staticmethod
     def back(cs: _CoordinateSystem = ...) -> LVector3i:
         """Returns the back vector for the given coordinate system."""
-        ...
     @staticmethod
     def rfu(right: int, fwd: int, up: int, cs: _CoordinateSystem = ...) -> LVector3i:
         """Returns a vector that is described by its right, forward, and up
         components, in whatever way the coordinate system represents that vector.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -1979,58 +1765,47 @@ class LPoint3f(LVecBase3f):
     @staticmethod
     def zero() -> LPoint3f:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint3f:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint3f:
         """Returns a unit Y point."""
-        ...
     @staticmethod
     def unit_z() -> LPoint3f:
         """Returns a unit Z point."""
-        ...
     def get_xy(self) -> LPoint2f:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LPoint2f:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LPoint2f:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def cross(self, other: Vec3f) -> LPoint3f: ...
     def normalized(self) -> LPoint3f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec3f) -> LPoint3f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     @staticmethod
     def origin(cs: _CoordinateSystem = ...) -> LPoint3f:
         """Returns the origin of the indicated coordinate system.  This is always 0,
         0, 0 with all of our existing coordinate systems; it's hard to imagine it
         ever being different.
         """
-        ...
     @staticmethod
     def rfu(right: float, fwd: float, up: float, cs: _CoordinateSystem = ...) -> LPoint3f:
         """Returns a point described by right, forward, up displacements from the
         origin, wherever that maps to in the given coordinate system.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -2075,58 +1850,47 @@ class LPoint3d(LVecBase3d):
     @staticmethod
     def zero() -> LPoint3d:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint3d:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint3d:
         """Returns a unit Y point."""
-        ...
     @staticmethod
     def unit_z() -> LPoint3d:
         """Returns a unit Z point."""
-        ...
     def get_xy(self) -> LPoint2d:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LPoint2d:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LPoint2d:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def cross(self, other: Vec3d) -> LPoint3d: ...
     def normalized(self) -> LPoint3d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec3d) -> LPoint3d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     @staticmethod
     def origin(cs: _CoordinateSystem = ...) -> LPoint3d:
         """Returns the origin of the indicated coordinate system.  This is always 0,
         0, 0 with all of our existing coordinate systems; it's hard to imagine it
         ever being different.
         """
-        ...
     @staticmethod
     def rfu(right: float, fwd: float, up: float, cs: _CoordinateSystem = ...) -> LPoint3d:
         """Returns a point described by right, forward, up displacements from the
         origin, wherever that maps to in the given coordinate system.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -2170,34 +1934,27 @@ class LPoint3i(LVecBase3i):
     @staticmethod
     def zero() -> LPoint3i:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint3i:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint3i:
         """Returns a unit Y point."""
-        ...
     @staticmethod
     def unit_z() -> LPoint3i:
         """Returns a unit Z point."""
-        ...
     def get_xy(self) -> LPoint2i:
         """Returns a 2-component vector that shares just the first two components of
         this vector.
         """
-        ...
     def get_xz(self) -> LPoint2i:
         """Returns a 2-component vector that shares just the first and last components
         of this vector.
         """
-        ...
     def get_yz(self) -> LPoint2i:
         """Returns a 2-component vector that shares just the last two components of
         this vector.
         """
-        ...
     def cross(self, other: LVecBase3i) -> LPoint3i: ...
     @staticmethod
     def origin(cs: _CoordinateSystem = ...) -> LPoint3i:
@@ -2205,13 +1962,11 @@ class LPoint3i(LVecBase3i):
         0, 0 with all of our existing coordinate systems; it's hard to imagine it
         ever being different.
         """
-        ...
     @staticmethod
     def rfu(right: int, fwd: int, up: int, cs: _CoordinateSystem = ...) -> LPoint3i:
         """Returns a point described by right, forward, up displacements from the
         origin, wherever that maps to in the given coordinate system.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -2239,7 +1994,6 @@ class LVecBase4f:
         `(self, vector: LVector3f)`:
         Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
         """
-        ...
     @overload
     def __init__(self, copy: Vec4f) -> None: ...
     @overload
@@ -2281,28 +2035,22 @@ class LVecBase4f:
     @staticmethod
     def zero() -> LVecBase4f:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase4f:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase4f:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVecBase4f:
         """Returns a unit Z vector."""
-        ...
     @staticmethod
     def unit_w() -> LVecBase4f:
         """Returns a unit W vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> float: ...
     def set_cell(self, i: int, value: float) -> None: ...
     def get_x(self) -> float: ...
@@ -2311,10 +2059,8 @@ class LVecBase4f:
     def get_w(self) -> float: ...
     def get_xyz(self) -> LVecBase3f:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LVecBase2f:
         """Returns the x and y component of this vector"""
-        ...
     def set_x(self, value: float) -> None: ...
     def set_y(self, value: float) -> None: ...
     def set_z(self, value: float) -> None: ...
@@ -2324,7 +2070,6 @@ class LVecBase4f:
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: float) -> None: ...
     def add_y(self, value: float) -> None: ...
     def add_z(self, value: float) -> None: ...
@@ -2335,30 +2080,24 @@ class LVecBase4f:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float, z: float, w: float) -> None: ...
     def dot(self, other: Vec4f) -> float: ...
     def length_squared(self) -> float:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def length(self) -> float:
         """Returns the length of the vector, by the Pythagorean theorem."""
-        ...
     def normalize(self) -> bool:
         """Normalizes the vector in place.  Returns true if the vector was normalized,
         false if it was a zero-length vector.
         """
-        ...
     def normalized(self) -> LVecBase4f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec4f) -> LVecBase4f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def compare_to(self, other: Vec4f, threshold: float = ...) -> int:
         """`(self, other: LVecBase4f)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -2369,13 +2108,10 @@ class LVecBase4f:
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: Vec4f) -> None: ...
     def fmax(self, other: Vec4f) -> LVecBase4f: ...
     def fmin(self, other: Vec4f) -> LVecBase4f: ...
@@ -2388,7 +2124,6 @@ class LVecBase4f:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -2397,21 +2132,17 @@ class LVecBase4f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -2479,7 +2210,6 @@ class UnalignedLVecBase4f:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float, z: float, w: float) -> None: ...
     @staticmethod
     def get_num_components() -> int: ...
@@ -2508,7 +2238,6 @@ class LVecBase4d:
         `(self, vector: LVector3d)`:
         Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
         """
-        ...
     @overload
     def __init__(self, copy: Vec4d) -> None: ...
     @overload
@@ -2550,28 +2279,22 @@ class LVecBase4d:
     @staticmethod
     def zero() -> LVecBase4d:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase4d:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase4d:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVecBase4d:
         """Returns a unit Z vector."""
-        ...
     @staticmethod
     def unit_w() -> LVecBase4d:
         """Returns a unit W vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> float: ...
     def set_cell(self, i: int, value: float) -> None: ...
     def get_x(self) -> float: ...
@@ -2580,10 +2303,8 @@ class LVecBase4d:
     def get_w(self) -> float: ...
     def get_xyz(self) -> LVecBase3d:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LVecBase2d:
         """Returns the x and y component of this vector"""
-        ...
     def set_x(self, value: float) -> None: ...
     def set_y(self, value: float) -> None: ...
     def set_z(self, value: float) -> None: ...
@@ -2593,7 +2314,6 @@ class LVecBase4d:
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: float) -> None: ...
     def add_y(self, value: float) -> None: ...
     def add_z(self, value: float) -> None: ...
@@ -2604,30 +2324,24 @@ class LVecBase4d:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float, z: float, w: float) -> None: ...
     def dot(self, other: Vec4d) -> float: ...
     def length_squared(self) -> float:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def length(self) -> float:
         """Returns the length of the vector, by the Pythagorean theorem."""
-        ...
     def normalize(self) -> bool:
         """Normalizes the vector in place.  Returns true if the vector was normalized,
         false if it was a zero-length vector.
         """
-        ...
     def normalized(self) -> LVecBase4d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec4d) -> LVecBase4d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     def compare_to(self, other: Vec4d, threshold: float = ...) -> int:
         """`(self, other: LVecBase4d)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -2638,13 +2352,10 @@ class LVecBase4d:
         0 if this vector sorts before the other one, greater than zero if it sorts
         after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: Vec4d) -> None: ...
     def fmax(self, other: Vec4d) -> LVecBase4d: ...
     def fmin(self, other: Vec4d) -> LVecBase4d: ...
@@ -2657,7 +2368,6 @@ class LVecBase4d:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -2666,21 +2376,17 @@ class LVecBase4d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -2748,7 +2454,6 @@ class UnalignedLVecBase4d:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: float, y: float, z: float, w: float) -> None: ...
     @staticmethod
     def get_num_components() -> int: ...
@@ -2777,7 +2482,6 @@ class LVecBase4i:
         `(self, vector: LVector3i)`:
         Constructs an LVecBase4 from an LVector3.  The w coordinate is set to 0.0.
         """
-        ...
     @overload
     def __init__(self, copy: Vec4i) -> None: ...
     @overload
@@ -2817,28 +2521,22 @@ class LVecBase4i:
     @staticmethod
     def zero() -> LVecBase4i:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVecBase4i:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVecBase4i:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVecBase4i:
         """Returns a unit Z vector."""
-        ...
     @staticmethod
     def unit_w() -> LVecBase4i:
         """Returns a unit W vector."""
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the vector is not-a-number, false
         otherwise.
         """
-        ...
     def get_cell(self, i: int) -> int: ...
     def set_cell(self, i: int, value: int) -> None: ...
     def get_x(self) -> int: ...
@@ -2847,10 +2545,8 @@ class LVecBase4i:
     def get_w(self) -> int: ...
     def get_xyz(self) -> LVecBase3i:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LVecBase2i:
         """Returns the x and y component of this vector"""
-        ...
     def set_x(self, value: int) -> None: ...
     def set_y(self, value: int) -> None: ...
     def set_z(self, value: int) -> None: ...
@@ -2860,7 +2556,6 @@ class LVecBase4i:
         foo.set_x(foo.get_x() + value) These are useful to reduce overhead in
         scripting languages:
         """
-        ...
     def add_x(self, value: int) -> None: ...
     def add_y(self, value: int) -> None: ...
     def add_z(self, value: int) -> None: ...
@@ -2871,23 +2566,18 @@ class LVecBase4i:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: int, y: int, z: int, w: int) -> None: ...
     def dot(self, other: Vec4i) -> int: ...
     def length_squared(self) -> int:
         """Returns the square of the vector's length, cheap and easy."""
-        ...
     def compare_to(self, other: Vec4i) -> int:
         """This flavor of compare_to uses a default threshold value based on the
         numeric type.
         """
-        ...
     def get_hash(self) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int) -> int:
         """Adds the vector into the running hash."""
-        ...
     def componentwise_mult(self, other: Vec4i) -> None: ...
     def fmax(self, other: Vec4i) -> LVecBase4i: ...
     def fmin(self, other: Vec4i) -> LVecBase4i: ...
@@ -2900,7 +2590,6 @@ class LVecBase4i:
         Returns true if two vectors are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_float32() or add_float64(),
@@ -2909,21 +2598,17 @@ class LVecBase4i:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the vector to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     unitX = unit_x
@@ -2991,7 +2676,6 @@ class UnalignedLVecBase4i:
         """Sets each element of the vector to the indicated fill_value.  This is
         particularly useful for initializing to zero.
         """
-        ...
     def set(self, x: int, y: int, z: int, w: int) -> None: ...
     @staticmethod
     def get_num_components() -> int: ...
@@ -3028,39 +2712,30 @@ class LVector4f(LVecBase4f):
     @staticmethod
     def zero() -> LVector4f:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector4f:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector4f:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVector4f:
         """Returns a unit Z vector."""
-        ...
     @staticmethod
     def unit_w() -> LVector4f:
         """Returns a unit W vector."""
-        ...
     def get_xyz(self) -> LVector3f:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LVector2f:
         """Returns the x and y component of this vector"""
-        ...
     def normalized(self) -> LVector4f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec4f) -> LVector4f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -3096,39 +2771,30 @@ class LVector4d(LVecBase4d):
     @staticmethod
     def zero() -> LVector4d:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector4d:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector4d:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVector4d:
         """Returns a unit Z vector."""
-        ...
     @staticmethod
     def unit_w() -> LVector4d:
         """Returns a unit W vector."""
-        ...
     def get_xyz(self) -> LVector3d:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LVector2d:
         """Returns the x and y component of this vector"""
-        ...
     def normalized(self) -> LVector4d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec4d) -> LVector4d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -3163,29 +2829,22 @@ class LVector4i(LVecBase4i):
     @staticmethod
     def zero() -> LVector4i:
         """Returns a zero-length vector."""
-        ...
     @staticmethod
     def unit_x() -> LVector4i:
         """Returns a unit X vector."""
-        ...
     @staticmethod
     def unit_y() -> LVector4i:
         """Returns a unit Y vector."""
-        ...
     @staticmethod
     def unit_z() -> LVector4i:
         """Returns a unit Z vector."""
-        ...
     @staticmethod
     def unit_w() -> LVector4i:
         """Returns a unit W vector."""
-        ...
     def get_xyz(self) -> LVector3i:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LVector2i:
         """Returns the x and y component of this vector"""
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -3223,39 +2882,30 @@ class LPoint4f(LVecBase4f):
     @staticmethod
     def zero() -> LPoint4f:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint4f:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint4f:
         """Returns a unit Y point."""
-        ...
     @staticmethod
     def unit_z() -> LPoint4f:
         """Returns a unit Z point."""
-        ...
     @staticmethod
     def unit_w() -> LPoint4f:
         """Returns a unit W point."""
-        ...
     def get_xyz(self) -> LPoint3f:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LPoint2f:
         """Returns the x and y component of this vector"""
-        ...
     def normalized(self) -> LPoint4f:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec4f) -> LPoint4f:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -3293,39 +2943,30 @@ class LPoint4d(LVecBase4d):
     @staticmethod
     def zero() -> LPoint4d:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint4d:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint4d:
         """Returns a unit Y point."""
-        ...
     @staticmethod
     def unit_z() -> LPoint4d:
         """Returns a unit Z point."""
-        ...
     @staticmethod
     def unit_w() -> LPoint4d:
         """Returns a unit W point."""
-        ...
     def get_xyz(self) -> LPoint3d:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LPoint2d:
         """Returns the x and y component of this vector"""
-        ...
     def normalized(self) -> LPoint4d:
         """Normalizes the vector and returns the normalized vector as a copy.  If the
         vector was a zero-length vector, a zero length vector will be returned.
         """
-        ...
     def project(self, onto: Vec4d) -> LPoint4d:
         """Returns a new vector representing the projection of this vector onto
         another one.  The resulting vector will be a scalar multiple of onto.
         """
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -3362,29 +3003,22 @@ class LPoint4i(LVecBase4i):
     @staticmethod
     def zero() -> LPoint4i:
         """Returns a zero-length point."""
-        ...
     @staticmethod
     def unit_x() -> LPoint4i:
         """Returns a unit X point."""
-        ...
     @staticmethod
     def unit_y() -> LPoint4i:
         """Returns a unit Y point."""
-        ...
     @staticmethod
     def unit_z() -> LPoint4i:
         """Returns a unit Z point."""
-        ...
     @staticmethod
     def unit_w() -> LPoint4i:
         """Returns a unit W point."""
-        ...
     def get_xyz(self) -> LPoint3i:
         """Returns the x, y and z component of this vector"""
-        ...
     def get_xy(self) -> LPoint2i:
         """Returns the x and y component of this vector"""
-        ...
     unitX = unit_x
     unitY = unit_y
     unitZ = unit_z
@@ -3405,7 +3039,6 @@ class LMatrix3f:
         def __setitem__(self, i: int, assign_val: float) -> None: ...
         def __len__(self) -> Literal[3]:
             """Returns 3: the number of columns of a LMatrix3."""
-            ...
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
     class CRow:
@@ -3414,7 +3047,6 @@ class LMatrix3f:
         def __getitem__(self, i: int) -> float: ...
         def __len__(self) -> Literal[3]:
             """Returns 3: the number of columns of a LMatrix3."""
-            ...
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3427,7 +3059,6 @@ class LMatrix3f:
     @overload
     def __init__(self, other: LMatrix3f = ...) -> None:
         """Constructs the matrix from three individual rows."""
-        ...
     @overload
     def __init__(self, __param0: Vec3f, __param1: Vec3f, __param2: Vec3f) -> None: ...
     @overload
@@ -3435,7 +3066,6 @@ class LMatrix3f:
     def __getitem__(self, i: int) -> LMatrix3f.CRow | LMatrix3f.Row: ...
     def __len__(self) -> Literal[3]:
         """Returns 3: the number of rows of a LMatrix3."""
-        ...
     def __call__(self, row: int, col: int) -> float | None: ...
     def __lt__(self, other: LMatrix3f) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -3447,19 +3077,15 @@ class LMatrix3f:
     def __truediv__(self, scalar: float) -> LMatrix3f: ...
     def __iadd__(self, other: LMatrix3f) -> LMatrix3f:
         """Performs a memberwise addition between two matrices."""
-        ...
     def __isub__(self, other: LMatrix3f) -> LMatrix3f:
         """Performs a memberwise subtraction between two matrices."""
-        ...
     @overload
     def __imul__(self, other: LMatrix3f) -> LMatrix3f:
         """Performs a memberwise scale."""
-        ...
     @overload
     def __imul__(self, scalar: float) -> LMatrix3f: ...
     def __itruediv__(self, scalar: float) -> LMatrix3f:
         """Performs a memberwise scale."""
-        ...
     def __le__(self, other: LMatrix3f) -> bool: ...
     @overload
     def assign(self, other: LMatrix3f) -> LMatrix3f: ...
@@ -3469,7 +3095,6 @@ class LMatrix3f:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-        ...
     def set(self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float) -> None: ...
     def set_row(self, row: int, v: LVecBase2f | Vec3f) -> None:
         """`(self, row: int, v: LVecBase2f)`:
@@ -3479,7 +3104,6 @@ class LMatrix3f:
         `(self, row: int, v: LVecBase3f)`:
         Replaces the indicated row of the matrix from a three-component vector.
         """
-        ...
     def set_col(self, col: int, v: LVecBase2f | Vec3f) -> None:
         """`(self, col: int, v: LVecBase2f)`:
         Replaces the indicated column of the matrix from a two-component vector,
@@ -3488,7 +3112,6 @@ class LMatrix3f:
         `(self, col: int, v: LVecBase3f)`:
         Replaces the indicated column of the matrix from a three-component vector.
         """
-        ...
     @overload
     def get_row(self, row: int) -> LVecBase3f:
         """`(self, result_vec: LVecBase3f, row: int)`:
@@ -3497,41 +3120,32 @@ class LMatrix3f:
         `(self, row: int)`:
         Returns the indicated row of the matrix as a three-component vector.
         """
-        ...
     @overload
     def get_row(self, result_vec: Vec3f, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase3f:
         """Returns the indicated column of the matrix as a three-component vector."""
-        ...
     def get_row2(self, row: int) -> LVecBase2f:
         """Returns the indicated row of the matrix as a two-component vector, ignoring
         the last column.
         """
-        ...
     def get_col2(self, col: int) -> LVecBase2f:
         """Returns the indicated column of the matrix as a two-component vector,
         ignoring the last row.
         """
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the matrix is not-a-number, false
         otherwise.
         """
-        ...
     def is_identity(self) -> bool:
         """Returns true if this is (close enough to) the identity matrix, false
         otherwise.
         """
-        ...
     def get_cell(self, row: int, col: int) -> float:
         """Returns a particular element of the matrix."""
-        ...
     def set_cell(self, row: int, col: int, value: float) -> None:
         """Changes a particular element of the matrix."""
-        ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, nine."""
-        ...
     def compare_to(self, other: LMatrix3f, threshold: float = ...) -> int:
         """`(self, other: LMatrix3f)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -3542,21 +3156,16 @@ class LMatrix3f:
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def xform(self, v: Vec3f) -> LVecBase3f:
         """3-component vector or point times matrix."""
-        ...
     def xform_point(self, v: LVecBase2f) -> LVecBase2f:
         """The matrix transforms a 2-component point (including translation component)
         and returns the result.  This assumes the matrix is an affine transform.
         """
-        ...
     @overload
     def xform_vec(self, v: LVecBase2f) -> LVecBase2f:
         """`(self, v: LVecBase2f)`:
@@ -3569,22 +3178,18 @@ class LMatrix3f:
 
         In practice, this is the same computation as xform().
         """
-        ...
     @overload
     def xform_vec(self, v: Vec3f) -> LVecBase3f: ...
     def xform_vec_general(self, v: Vec3f) -> LVecBase3f:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result, as a fully general operation.
         """
-        ...
     def xform_in_place(self, v: Vec3f) -> None:
         """3-component vector or point times matrix."""
-        ...
     def xform_point_in_place(self, v: LVecBase2f) -> None:
         """The matrix transforms a 2-component point (including translation
         component).  This assumes the matrix is an affine transform.
         """
-        ...
     def xform_vec_in_place(self, v: LVecBase2f | Vec3f) -> None:
         """`(self, v: LVecBase2f)`:
         The matrix transforms a 2-component vector (without translation component).
@@ -3596,19 +3201,15 @@ class LMatrix3f:
 
         In practice, this is the same computation as xform().
         """
-        ...
     def xform_vec_general_in_place(self, v: Vec3f) -> None:
         """The matrix transforms a 3-component vector (without translation component),
         as a fully general operation.
         """
-        ...
     def multiply(self, other1: LMatrix3f, other2: LMatrix3f) -> None:
         """this = other1 * other2"""
-        ...
     def componentwise_mult(self, other: LMatrix3f) -> None: ...
     def determinant(self) -> float:
         """Returns the determinant of the matrix."""
-        ...
     def transpose_from(self, other: LMatrix3f) -> None: ...
     def transpose_in_place(self) -> None: ...
     def invert_from(self, other: LMatrix3f) -> bool:
@@ -3622,17 +3223,14 @@ class LMatrix3f:
         The return value is true if the matrix was successfully inverted, false if
         there was a singularity.
         """
-        ...
     def invert_in_place(self) -> bool:
         """Inverts the current matrix.  Returns true if the inverse is successful,
         false if the matrix was singular.
         """
-        ...
     def invert_transpose_from(self, other: LMatrix3f | Mat4f) -> bool:
         """Simultaneously computes the inverse of the indicated matrix, and then the
         transpose of that inverse.
         """
-        ...
     @staticmethod
     def ident_mat() -> LMatrix3f:
         """Returns an identity matrix.
@@ -3640,10 +3238,8 @@ class LMatrix3f:
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
-        ...
     def set_translate_mat(self, trans: LVecBase2f) -> None:
         """Fills mat with a matrix that applies the indicated translation."""
-        ...
     @overload
     def set_rotate_mat(self, angle: float) -> None:
         """`(self, angle: float)`:
@@ -3654,7 +3250,6 @@ class LMatrix3f:
         Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     @overload
     def set_rotate_mat(self, angle: float, axis: Vec3f, cs: _CoordinateSystem = ...) -> None: ...
     def set_scale_mat(self, scale: LVecBase2f | Vec3f) -> None:
@@ -3666,12 +3261,10 @@ class LMatrix3f:
         Fills mat with a matrix that applies the indicated scale in each of the
         three axes.
         """
-        ...
     @overload
     @staticmethod
     def translate_mat(trans: LVecBase2f) -> LMatrix3f:
         """Returns a matrix that applies the indicated translation."""
-        ...
     @overload
     @staticmethod
     def translate_mat(tx: float, ty: float) -> LMatrix3f: ...
@@ -3686,7 +3279,6 @@ class LMatrix3f:
         Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     @overload
     @staticmethod
     def rotate_mat(angle: float, axis: Vec3f, cs: _CoordinateSystem = ...) -> LMatrix3f: ...
@@ -3700,7 +3292,6 @@ class LMatrix3f:
         Returns a matrix that applies the indicated scale in each of the three
         axes.
         """
-        ...
     @overload
     @staticmethod
     def scale_mat(sx: float, sy: float, sz: float = ...) -> LMatrix3f: ...
@@ -3709,37 +3300,31 @@ class LMatrix3f:
         counterclockwise about the indicated vector.  Assumes axis has been
         normalized.
         """
-        ...
     @staticmethod
     def rotate_mat_normaxis(angle: float, axis: Vec3f, cs: _CoordinateSystem = ...) -> LMatrix3f:
         """Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
         normalized.
         """
-        ...
     def set_shear_mat(self, shear: Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated shear in each of the
         three planes.
         """
-        ...
     @overload
     @staticmethod
     def shear_mat(shear: Vec3f, cs: _CoordinateSystem = ...) -> LMatrix3f:
         """Returns a matrix that applies the indicated shear in each of the three
         planes.
         """
-        ...
     @overload
     @staticmethod
     def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3f: ...
     def set_scale_shear_mat(self, scale: Vec3f, shear: Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def scale_shear_mat(scale: Vec3f, shear: Vec3f, cs: _CoordinateSystem = ...) -> LMatrix3f:
         """Returns a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3f: ...
@@ -3748,7 +3333,6 @@ class LMatrix3f:
         """Returns a matrix that transforms from the indicated coordinate system to
         the indicated coordinate system.
         """
-        ...
     def almost_equal(self, other: LMatrix3f, threshold: float = ...) -> bool:
         """`(self, other: LMatrix3f)`:
         Returns true if two matrices are memberwise equal within a default
@@ -3758,7 +3342,6 @@ class LMatrix3f:
         Returns true if two matrices are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -3768,21 +3351,17 @@ class LMatrix3f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, scan: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the matrix to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_rows(self) -> tuple[None, ...]: ...
@@ -3851,7 +3430,6 @@ class LMatrix4f:
         def __setitem__(self, i: int, assign_val: float) -> None: ...
         def __len__(self) -> Literal[4]:
             """Returns 4: the number of columns of a LMatrix4."""
-            ...
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
     class CRow:
@@ -3860,7 +3438,6 @@ class LMatrix4f:
         def __getitem__(self, i: int) -> float: ...
         def __len__(self) -> Literal[4]:
             """Returns 4: the number of columns of a LMatrix4."""
-            ...
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3879,7 +3456,6 @@ class LMatrix4f:
         `(self, __param0: LVecBase4f, __param1: LVecBase4f, __param2: LVecBase4f, __param3: LVecBase4f)`:
         Constructs the matrix from four individual rows.
         """
-        ...
     @overload
     def __init__(self, other: Mat4f) -> None: ...
     @overload
@@ -3891,7 +3467,6 @@ class LMatrix4f:
     def __getitem__(self, i: int) -> LMatrix4f.CRow | LMatrix4f.Row: ...
     def __len__(self) -> Literal[4]:
         """Returns 4: the number of rows of a LMatrix4."""
-        ...
     def __call__(self, row: int, col: int) -> float | None: ...
     def __lt__(self, other: Mat4f) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -3903,10 +3478,8 @@ class LMatrix4f:
     def __truediv__(self, scalar: float) -> LMatrix4f: ...
     def __iadd__(self, other: Mat4f) -> LMatrix4f:
         """Performs a memberwise addition between two matrices."""
-        ...
     def __isub__(self, other: Mat4f) -> LMatrix4f:
         """Performs a memberwise subtraction between two matrices."""
-        ...
     @overload
     def __imul__(self, other: Mat4f) -> LMatrix4f: ...
     @overload
@@ -3921,14 +3494,11 @@ class LMatrix4f:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-        ...
     def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
     def set_upper_3(self, upper3: LMatrix3f) -> None:
         """Get and set the upper 3x3 rotation matrix."""
-        ...
     def get_upper_3(self) -> LMatrix3f:
         """Retrieves the upper 3x3 submatrix."""
-        ...
     def set_row(self, row: int, v: Vec3f | Vec4f) -> None:
         """`(self, row: int, v: LVecBase3f)`:
         Replaces the indicated row of the matrix with the indicated 3-component
@@ -3937,7 +3507,6 @@ class LMatrix4f:
         `(self, row: int, v: LVecBase4f)`:
         Replaces the indicated row of the matrix.
         """
-        ...
     def set_col(self, col: int, v: Vec3f | Vec4f) -> None:
         """`(self, col: int, v: LVecBase3f)`:
         Replaces the indicated column of the matrix with the indicated 3-component
@@ -3946,7 +3515,6 @@ class LMatrix4f:
         `(self, col: int, v: LVecBase4f)`:
         Replaces the indicated column of the matrix.
         """
-        ...
     @overload
     def get_row(self, row: int) -> LVecBase4f:
         """`(self, result_vec: LVecBase4f, row: int)`:
@@ -3955,12 +3523,10 @@ class LMatrix4f:
         `(self, row: int)`:
         Retrieves the indicated row of the matrix as a 4-component vector.
         """
-        ...
     @overload
     def get_row(self, result_vec: Vec4f, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase4f:
         """Retrieves the indicated column of the matrix as a 4-component vector."""
-        ...
     @overload
     def get_row3(self, row: int) -> LVecBase3f:
         """`(self, result_vec: LVecBase3f, row: int)`:
@@ -3971,33 +3537,26 @@ class LMatrix4f:
         Retrieves the row column of the matrix as a 3-component vector, ignoring
         the last column.
         """
-        ...
     @overload
     def get_row3(self, result_vec: Vec3f, row: int) -> None: ...
     def get_col3(self, col: int) -> LVecBase3f:
         """Retrieves the indicated column of the matrix as a 3-component vector,
         ignoring the last row.
         """
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the matrix is not-a-number, false
         otherwise.
         """
-        ...
     def is_identity(self) -> bool:
         """Returns true if this is (close enough to) the identity matrix, false
         otherwise.
         """
-        ...
     def get_cell(self, row: int, col: int) -> float:
         """Returns a particular element of the matrix."""
-        ...
     def set_cell(self, row: int, col: int, value: float) -> None:
         """Changes a particular element of the matrix."""
-        ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, 16."""
-        ...
     def compare_to(self, other: Mat4f, threshold: float = ...) -> int:
         """`(self, other: LMatrix4f)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -4008,67 +3567,53 @@ class LMatrix4f:
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def xform(self, v: Vec4f) -> LVecBase4f:
         """4-component vector or point times matrix.  This is a fully general
         operation.
         """
-        ...
     def xform_point(self, v: Vec3f) -> LVecBase3f:
         """The matrix transforms a 3-component point (including translation component)
         and returns the result.  This assumes the matrix is an affine transform.
         """
-        ...
     def xform_point_general(self, v: Vec3f) -> LVecBase3f:
         """The matrix transforms a 3-component point (including translation component)
         and returns the result, as a fully general operation.
         """
-        ...
     def xform_vec(self, v: Vec3f) -> LVecBase3f:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result.  This assumes the matrix is an orthonormal
         transform.
         """
-        ...
     def xform_vec_general(self, v: Vec3f) -> LVecBase3f:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result, as a fully general operation.
         """
-        ...
     def xform_in_place(self, v: Vec4f) -> None:
         """4-component vector or point times matrix.  This is a fully general
         operation.
         """
-        ...
     def xform_point_in_place(self, v: Vec3f) -> None:
         """The matrix transforms a 3-component point (including translation
         component).  This assumes the matrix is an affine transform.
         """
-        ...
     def xform_point_general_in_place(self, v: Vec3f) -> None:
         """The matrix transforms a 3-component point (including translation
         component), as a fully general operation.
         """
-        ...
     def xform_vec_in_place(self, v: Vec3f) -> None:
         """The matrix transforms a 3-component vector (without translation component).
         This assumes the matrix is an orthonormal transform.
         """
-        ...
     def xform_vec_general_in_place(self, v: Vec3f) -> None:
         """The matrix transforms a 3-component vector (without translation component),
         as a fully general operation.
         """
-        ...
     def multiply(self, other1: Mat4f, other2: Mat4f) -> None:
         """this = other1 * other2"""
-        ...
     def componentwise_mult(self, other: Mat4f) -> None: ...
     def transpose_from(self, other: Mat4f) -> None: ...
     def transpose_in_place(self) -> None: ...
@@ -4083,20 +3628,16 @@ class LMatrix4f:
         The return value is true if the matrix was successfully inverted, false if
         the was a singularity.
         """
-        ...
     def invert_affine_from(self, other: Mat4f) -> bool:
         """bugbug: we could optimize this for rotationscaletranslation matrices
         (transpose upper 3x3 and take negative of translation component)
         """
-        ...
     def invert_in_place(self) -> bool:
         """Inverts the current matrix.  Returns true if the inverse is successful,
         false if the matrix was singular.
         """
-        ...
     def accumulate(self, other: Mat4f, weight: float) -> None:
         """Computes `(*this) += other * weight`."""
-        ...
     @staticmethod
     def ident_mat() -> LMatrix4f:
         """Returns an identity matrix.
@@ -4104,47 +3645,37 @@ class LMatrix4f:
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
-        ...
     @staticmethod
     def ones_mat() -> LMatrix4f:
         """Returns an matrix filled with ones."""
-        ...
     @staticmethod
     def zeros_mat() -> LMatrix4f:
         """Returns an matrix filled with zeros."""
-        ...
     def set_translate_mat(self, trans: Vec3f) -> None:
         """Fills mat with a matrix that applies the indicated translation."""
-        ...
     def set_rotate_mat(self, angle: float, axis: Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Sets mat to a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     def set_rotate_mat_normaxis(self, angle: float, axis: Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
         prenormalized.
         """
-        ...
     def set_scale_mat(self, scale: Vec3f) -> None:
         """Fills mat with a matrix that applies the indicated scale in each of the
         three axes.
         """
-        ...
     def set_shear_mat(self, shear: Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated shear in each of the
         three planes.
         """
-        ...
     def set_scale_shear_mat(self, scale: Vec3f, shear: Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def translate_mat(trans: Vec3f) -> LMatrix4f:
         """Returns a matrix that applies the indicated translation."""
-        ...
     @overload
     @staticmethod
     def translate_mat(tx: float, ty: float, tz: float) -> LMatrix4f: ...
@@ -4153,14 +3684,12 @@ class LMatrix4f:
         """Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     @staticmethod
     def rotate_mat_normaxis(angle: float, axis: Vec3f, cs: _CoordinateSystem = ...) -> LMatrix4f:
         """Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
         prenormalized.
         """
-        ...
     @overload
     @staticmethod
     def scale_mat(scale: Vec3f | float) -> LMatrix4f:
@@ -4171,7 +3700,6 @@ class LMatrix4f:
         `(scale: float)`:
         Returns a matrix that applies the indicated uniform scale.
         """
-        ...
     @overload
     @staticmethod
     def scale_mat(sx: float, sy: float, sz: float) -> LMatrix4f: ...
@@ -4181,7 +3709,6 @@ class LMatrix4f:
         """Returns a matrix that applies the indicated shear in each of the three
         planes.
         """
-        ...
     @overload
     @staticmethod
     def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4f: ...
@@ -4189,7 +3716,6 @@ class LMatrix4f:
     @staticmethod
     def scale_shear_mat(scale: Vec3f, shear: Vec3f, cs: _CoordinateSystem = ...) -> LMatrix4f:
         """Returns a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4f: ...
@@ -4198,19 +3724,16 @@ class LMatrix4f:
         """Returns a matrix that transforms from the Y-up coordinate system to the
         Z-up coordinate system.
         """
-        ...
     @staticmethod
     def z_to_y_up_mat() -> LMatrix4f:
         """Returns a matrix that transforms from the Y-up coordinate system to the
         Z-up coordinate system.
         """
-        ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix4f:
         """Returns a matrix that transforms from the indicated coordinate system to
         the indicated coordinate system.
         """
-        ...
     def almost_equal(self, other: Mat4f, threshold: float = ...) -> bool:
         """`(self, other: LMatrix4f)`:
         Returns true if two matrices are memberwise equal within a default
@@ -4221,7 +3744,6 @@ class LMatrix4f:
         tolerance.  This is faster than the equivalence operator as this doesn't
         have to guarantee that it is transitive.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -4231,21 +3753,17 @@ class LMatrix4f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, scan: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the matrix to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_rows(self) -> tuple[None, ...]: ...
@@ -4331,7 +3849,6 @@ class UnalignedLMatrix4f:
     def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, sixteen."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getNumComponents = get_num_components
@@ -4350,7 +3867,6 @@ class LMatrix3d:
         def __setitem__(self, i: int, assign_val: float) -> None: ...
         def __len__(self) -> Literal[3]:
             """Returns 3: the number of columns of a LMatrix3."""
-            ...
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
     class CRow:
@@ -4359,7 +3875,6 @@ class LMatrix3d:
         def __getitem__(self, i: int) -> float: ...
         def __len__(self) -> Literal[3]:
             """Returns 3: the number of columns of a LMatrix3."""
-            ...
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -4372,7 +3887,6 @@ class LMatrix3d:
     @overload
     def __init__(self, other: LMatrix3d = ...) -> None:
         """Constructs the matrix from three individual rows."""
-        ...
     @overload
     def __init__(self, __param0: Vec3d, __param1: Vec3d, __param2: Vec3d) -> None: ...
     @overload
@@ -4380,7 +3894,6 @@ class LMatrix3d:
     def __getitem__(self, i: int) -> LMatrix3d.CRow | LMatrix3d.Row: ...
     def __len__(self) -> Literal[3]:
         """Returns 3: the number of rows of a LMatrix3."""
-        ...
     def __call__(self, row: int, col: int) -> float | None: ...
     def __lt__(self, other: LMatrix3d) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -4392,19 +3905,15 @@ class LMatrix3d:
     def __truediv__(self, scalar: float) -> LMatrix3d: ...
     def __iadd__(self, other: LMatrix3d) -> LMatrix3d:
         """Performs a memberwise addition between two matrices."""
-        ...
     def __isub__(self, other: LMatrix3d) -> LMatrix3d:
         """Performs a memberwise subtraction between two matrices."""
-        ...
     @overload
     def __imul__(self, other: LMatrix3d) -> LMatrix3d:
         """Performs a memberwise scale."""
-        ...
     @overload
     def __imul__(self, scalar: float) -> LMatrix3d: ...
     def __itruediv__(self, scalar: float) -> LMatrix3d:
         """Performs a memberwise scale."""
-        ...
     def __le__(self, other: LMatrix3d) -> bool: ...
     @overload
     def assign(self, other: LMatrix3d) -> LMatrix3d: ...
@@ -4414,7 +3923,6 @@ class LMatrix3d:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-        ...
     def set(self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float) -> None: ...
     def set_row(self, row: int, v: LVecBase2d | Vec3d) -> None:
         """`(self, row: int, v: LVecBase2d)`:
@@ -4424,7 +3932,6 @@ class LMatrix3d:
         `(self, row: int, v: LVecBase3d)`:
         Replaces the indicated row of the matrix from a three-component vector.
         """
-        ...
     def set_col(self, col: int, v: LVecBase2d | Vec3d) -> None:
         """`(self, col: int, v: LVecBase2d)`:
         Replaces the indicated column of the matrix from a two-component vector,
@@ -4433,7 +3940,6 @@ class LMatrix3d:
         `(self, col: int, v: LVecBase3d)`:
         Replaces the indicated column of the matrix from a three-component vector.
         """
-        ...
     @overload
     def get_row(self, row: int) -> LVecBase3d:
         """`(self, result_vec: LVecBase3d, row: int)`:
@@ -4442,41 +3948,32 @@ class LMatrix3d:
         `(self, row: int)`:
         Returns the indicated row of the matrix as a three-component vector.
         """
-        ...
     @overload
     def get_row(self, result_vec: Vec3d, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase3d:
         """Returns the indicated column of the matrix as a three-component vector."""
-        ...
     def get_row2(self, row: int) -> LVecBase2d:
         """Returns the indicated row of the matrix as a two-component vector, ignoring
         the last column.
         """
-        ...
     def get_col2(self, col: int) -> LVecBase2d:
         """Returns the indicated column of the matrix as a two-component vector,
         ignoring the last row.
         """
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the matrix is not-a-number, false
         otherwise.
         """
-        ...
     def is_identity(self) -> bool:
         """Returns true if this is (close enough to) the identity matrix, false
         otherwise.
         """
-        ...
     def get_cell(self, row: int, col: int) -> float:
         """Returns a particular element of the matrix."""
-        ...
     def set_cell(self, row: int, col: int, value: float) -> None:
         """Changes a particular element of the matrix."""
-        ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, nine."""
-        ...
     def compare_to(self, other: LMatrix3d, threshold: float = ...) -> int:
         """`(self, other: LMatrix3d)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -4487,21 +3984,16 @@ class LMatrix3d:
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def xform(self, v: Vec3d) -> LVecBase3d:
         """3-component vector or point times matrix."""
-        ...
     def xform_point(self, v: LVecBase2d) -> LVecBase2d:
         """The matrix transforms a 2-component point (including translation component)
         and returns the result.  This assumes the matrix is an affine transform.
         """
-        ...
     @overload
     def xform_vec(self, v: LVecBase2d) -> LVecBase2d:
         """`(self, v: LVecBase2d)`:
@@ -4514,22 +4006,18 @@ class LMatrix3d:
 
         In practice, this is the same computation as xform().
         """
-        ...
     @overload
     def xform_vec(self, v: Vec3d) -> LVecBase3d: ...
     def xform_vec_general(self, v: Vec3d) -> LVecBase3d:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result, as a fully general operation.
         """
-        ...
     def xform_in_place(self, v: Vec3d) -> None:
         """3-component vector or point times matrix."""
-        ...
     def xform_point_in_place(self, v: LVecBase2d) -> None:
         """The matrix transforms a 2-component point (including translation
         component).  This assumes the matrix is an affine transform.
         """
-        ...
     def xform_vec_in_place(self, v: LVecBase2d | Vec3d) -> None:
         """`(self, v: LVecBase2d)`:
         The matrix transforms a 2-component vector (without translation component).
@@ -4541,19 +4029,15 @@ class LMatrix3d:
 
         In practice, this is the same computation as xform().
         """
-        ...
     def xform_vec_general_in_place(self, v: Vec3d) -> None:
         """The matrix transforms a 3-component vector (without translation component),
         as a fully general operation.
         """
-        ...
     def multiply(self, other1: LMatrix3d, other2: LMatrix3d) -> None:
         """this = other1 * other2"""
-        ...
     def componentwise_mult(self, other: LMatrix3d) -> None: ...
     def determinant(self) -> float:
         """Returns the determinant of the matrix."""
-        ...
     def transpose_from(self, other: LMatrix3d) -> None: ...
     def transpose_in_place(self) -> None: ...
     def invert_from(self, other: LMatrix3d) -> bool:
@@ -4567,17 +4051,14 @@ class LMatrix3d:
         The return value is true if the matrix was successfully inverted, false if
         there was a singularity.
         """
-        ...
     def invert_in_place(self) -> bool:
         """Inverts the current matrix.  Returns true if the inverse is successful,
         false if the matrix was singular.
         """
-        ...
     def invert_transpose_from(self, other: LMatrix3d | Mat4d) -> bool:
         """Simultaneously computes the inverse of the indicated matrix, and then the
         transpose of that inverse.
         """
-        ...
     @staticmethod
     def ident_mat() -> LMatrix3d:
         """Returns an identity matrix.
@@ -4585,10 +4066,8 @@ class LMatrix3d:
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
-        ...
     def set_translate_mat(self, trans: LVecBase2d) -> None:
         """Fills mat with a matrix that applies the indicated translation."""
-        ...
     @overload
     def set_rotate_mat(self, angle: float) -> None:
         """`(self, angle: float)`:
@@ -4599,7 +4078,6 @@ class LMatrix3d:
         Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     @overload
     def set_rotate_mat(self, angle: float, axis: Vec3d, cs: _CoordinateSystem = ...) -> None: ...
     def set_scale_mat(self, scale: LVecBase2d | Vec3d) -> None:
@@ -4611,12 +4089,10 @@ class LMatrix3d:
         Fills mat with a matrix that applies the indicated scale in each of the
         three axes.
         """
-        ...
     @overload
     @staticmethod
     def translate_mat(trans: LVecBase2d) -> LMatrix3d:
         """Returns a matrix that applies the indicated translation."""
-        ...
     @overload
     @staticmethod
     def translate_mat(tx: float, ty: float) -> LMatrix3d: ...
@@ -4631,7 +4107,6 @@ class LMatrix3d:
         Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     @overload
     @staticmethod
     def rotate_mat(angle: float, axis: Vec3d, cs: _CoordinateSystem = ...) -> LMatrix3d: ...
@@ -4645,7 +4120,6 @@ class LMatrix3d:
         Returns a matrix that applies the indicated scale in each of the three
         axes.
         """
-        ...
     @overload
     @staticmethod
     def scale_mat(sx: float, sy: float, sz: float = ...) -> LMatrix3d: ...
@@ -4654,37 +4128,31 @@ class LMatrix3d:
         counterclockwise about the indicated vector.  Assumes axis has been
         normalized.
         """
-        ...
     @staticmethod
     def rotate_mat_normaxis(angle: float, axis: Vec3d, cs: _CoordinateSystem = ...) -> LMatrix3d:
         """Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
         normalized.
         """
-        ...
     def set_shear_mat(self, shear: Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated shear in each of the
         three planes.
         """
-        ...
     @overload
     @staticmethod
     def shear_mat(shear: Vec3d, cs: _CoordinateSystem = ...) -> LMatrix3d:
         """Returns a matrix that applies the indicated shear in each of the three
         planes.
         """
-        ...
     @overload
     @staticmethod
     def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3d: ...
     def set_scale_shear_mat(self, scale: Vec3d, shear: Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def scale_shear_mat(scale: Vec3d, shear: Vec3d, cs: _CoordinateSystem = ...) -> LMatrix3d:
         """Returns a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3d: ...
@@ -4693,7 +4161,6 @@ class LMatrix3d:
         """Returns a matrix that transforms from the indicated coordinate system to
         the indicated coordinate system.
         """
-        ...
     def almost_equal(self, other: LMatrix3d, threshold: float = ...) -> bool:
         """`(self, other: LMatrix3d)`:
         Returns true if two matrices are memberwise equal within a default
@@ -4703,7 +4170,6 @@ class LMatrix3d:
         Returns true if two matrices are memberwise equal within a specified
         tolerance.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -4713,21 +4179,17 @@ class LMatrix3d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, scan: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the matrix to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_rows(self) -> tuple[None, ...]: ...
@@ -4796,7 +4258,6 @@ class LMatrix4d:
         def __setitem__(self, i: int, assign_val: float) -> None: ...
         def __len__(self) -> Literal[4]:
             """Returns 4: the number of columns of a LMatrix4."""
-            ...
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
     class CRow:
@@ -4805,7 +4266,6 @@ class LMatrix4d:
         def __getitem__(self, i: int) -> float: ...
         def __len__(self) -> Literal[4]:
             """Returns 4: the number of columns of a LMatrix4."""
-            ...
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -4824,7 +4284,6 @@ class LMatrix4d:
         `(self, __param0: LVecBase4d, __param1: LVecBase4d, __param2: LVecBase4d, __param3: LVecBase4d)`:
         Constructs the matrix from four individual rows.
         """
-        ...
     @overload
     def __init__(self, other: Mat4d) -> None: ...
     @overload
@@ -4836,7 +4295,6 @@ class LMatrix4d:
     def __getitem__(self, i: int) -> LMatrix4d.CRow | LMatrix4d.Row: ...
     def __len__(self) -> Literal[4]:
         """Returns 4: the number of rows of a LMatrix4."""
-        ...
     def __call__(self, row: int, col: int) -> float | None: ...
     def __lt__(self, other: Mat4d) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -4848,10 +4306,8 @@ class LMatrix4d:
     def __truediv__(self, scalar: float) -> LMatrix4d: ...
     def __iadd__(self, other: Mat4d) -> LMatrix4d:
         """Performs a memberwise addition between two matrices."""
-        ...
     def __isub__(self, other: Mat4d) -> LMatrix4d:
         """Performs a memberwise subtraction between two matrices."""
-        ...
     @overload
     def __imul__(self, other: Mat4d) -> LMatrix4d: ...
     @overload
@@ -4866,14 +4322,11 @@ class LMatrix4d:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-        ...
     def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
     def set_upper_3(self, upper3: LMatrix3d) -> None:
         """Get and set the upper 3x3 rotation matrix."""
-        ...
     def get_upper_3(self) -> LMatrix3d:
         """Retrieves the upper 3x3 submatrix."""
-        ...
     def set_row(self, row: int, v: Vec3d | Vec4d) -> None:
         """`(self, row: int, v: LVecBase3d)`:
         Replaces the indicated row of the matrix with the indicated 3-component
@@ -4882,7 +4335,6 @@ class LMatrix4d:
         `(self, row: int, v: LVecBase4d)`:
         Replaces the indicated row of the matrix.
         """
-        ...
     def set_col(self, col: int, v: Vec3d | Vec4d) -> None:
         """`(self, col: int, v: LVecBase3d)`:
         Replaces the indicated column of the matrix with the indicated 3-component
@@ -4891,7 +4343,6 @@ class LMatrix4d:
         `(self, col: int, v: LVecBase4d)`:
         Replaces the indicated column of the matrix.
         """
-        ...
     @overload
     def get_row(self, row: int) -> LVecBase4d:
         """`(self, result_vec: LVecBase4d, row: int)`:
@@ -4900,12 +4351,10 @@ class LMatrix4d:
         `(self, row: int)`:
         Retrieves the indicated row of the matrix as a 4-component vector.
         """
-        ...
     @overload
     def get_row(self, result_vec: Vec4d, row: int) -> None: ...
     def get_col(self, col: int) -> LVecBase4d:
         """Retrieves the indicated column of the matrix as a 4-component vector."""
-        ...
     @overload
     def get_row3(self, row: int) -> LVecBase3d:
         """`(self, result_vec: LVecBase3d, row: int)`:
@@ -4916,33 +4365,26 @@ class LMatrix4d:
         Retrieves the row column of the matrix as a 3-component vector, ignoring
         the last column.
         """
-        ...
     @overload
     def get_row3(self, result_vec: Vec3d, row: int) -> None: ...
     def get_col3(self, col: int) -> LVecBase3d:
         """Retrieves the indicated column of the matrix as a 3-component vector,
         ignoring the last row.
         """
-        ...
     def is_nan(self) -> bool:
         """Returns true if any component of the matrix is not-a-number, false
         otherwise.
         """
-        ...
     def is_identity(self) -> bool:
         """Returns true if this is (close enough to) the identity matrix, false
         otherwise.
         """
-        ...
     def get_cell(self, row: int, col: int) -> float:
         """Returns a particular element of the matrix."""
-        ...
     def set_cell(self, row: int, col: int, value: float) -> None:
         """Changes a particular element of the matrix."""
-        ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, 16."""
-        ...
     def compare_to(self, other: Mat4d, threshold: float = ...) -> int:
         """`(self, other: LMatrix4d)`:
         This flavor of compare_to uses a default threshold value based on the
@@ -4953,67 +4395,53 @@ class LMatrix4d:
         than 0 if this matrix sorts before the other one, greater than zero if it
         sorts after, 0 if they are equivalent (within the indicated tolerance).
         """
-        ...
     def get_hash(self, threshold: float = ...) -> int:
         """Returns a suitable hash for phash_map."""
-        ...
     def add_hash(self, hash: int, threshold: float = ...) -> int:
         """Adds the vector into the running hash."""
-        ...
     def xform(self, v: Vec4d) -> LVecBase4d:
         """4-component vector or point times matrix.  This is a fully general
         operation.
         """
-        ...
     def xform_point(self, v: Vec3d) -> LVecBase3d:
         """The matrix transforms a 3-component point (including translation component)
         and returns the result.  This assumes the matrix is an affine transform.
         """
-        ...
     def xform_point_general(self, v: Vec3d) -> LVecBase3d:
         """The matrix transforms a 3-component point (including translation component)
         and returns the result, as a fully general operation.
         """
-        ...
     def xform_vec(self, v: Vec3d) -> LVecBase3d:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result.  This assumes the matrix is an orthonormal
         transform.
         """
-        ...
     def xform_vec_general(self, v: Vec3d) -> LVecBase3d:
         """The matrix transforms a 3-component vector (without translation component)
         and returns the result, as a fully general operation.
         """
-        ...
     def xform_in_place(self, v: Vec4d) -> None:
         """4-component vector or point times matrix.  This is a fully general
         operation.
         """
-        ...
     def xform_point_in_place(self, v: Vec3d) -> None:
         """The matrix transforms a 3-component point (including translation
         component).  This assumes the matrix is an affine transform.
         """
-        ...
     def xform_point_general_in_place(self, v: Vec3d) -> None:
         """The matrix transforms a 3-component point (including translation
         component), as a fully general operation.
         """
-        ...
     def xform_vec_in_place(self, v: Vec3d) -> None:
         """The matrix transforms a 3-component vector (without translation component).
         This assumes the matrix is an orthonormal transform.
         """
-        ...
     def xform_vec_general_in_place(self, v: Vec3d) -> None:
         """The matrix transforms a 3-component vector (without translation component),
         as a fully general operation.
         """
-        ...
     def multiply(self, other1: Mat4d, other2: Mat4d) -> None:
         """this = other1 * other2"""
-        ...
     def componentwise_mult(self, other: Mat4d) -> None: ...
     def transpose_from(self, other: Mat4d) -> None: ...
     def transpose_in_place(self) -> None: ...
@@ -5028,20 +4456,16 @@ class LMatrix4d:
         The return value is true if the matrix was successfully inverted, false if
         the was a singularity.
         """
-        ...
     def invert_affine_from(self, other: Mat4d) -> bool:
         """bugbug: we could optimize this for rotationscaletranslation matrices
         (transpose upper 3x3 and take negative of translation component)
         """
-        ...
     def invert_in_place(self) -> bool:
         """Inverts the current matrix.  Returns true if the inverse is successful,
         false if the matrix was singular.
         """
-        ...
     def accumulate(self, other: Mat4d, weight: float) -> None:
         """Computes `(*this) += other * weight`."""
-        ...
     @staticmethod
     def ident_mat() -> LMatrix4d:
         """Returns an identity matrix.
@@ -5049,47 +4473,37 @@ class LMatrix4d:
         This function definition must appear first, since some inline functions
         below take advantage of it.
         """
-        ...
     @staticmethod
     def ones_mat() -> LMatrix4d:
         """Returns an matrix filled with ones."""
-        ...
     @staticmethod
     def zeros_mat() -> LMatrix4d:
         """Returns an matrix filled with zeros."""
-        ...
     def set_translate_mat(self, trans: Vec3d) -> None:
         """Fills mat with a matrix that applies the indicated translation."""
-        ...
     def set_rotate_mat(self, angle: float, axis: Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Sets mat to a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     def set_rotate_mat_normaxis(self, angle: float, axis: Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
         prenormalized.
         """
-        ...
     def set_scale_mat(self, scale: Vec3d) -> None:
         """Fills mat with a matrix that applies the indicated scale in each of the
         three axes.
         """
-        ...
     def set_shear_mat(self, shear: Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated shear in each of the
         three planes.
         """
-        ...
     def set_scale_shear_mat(self, scale: Vec3d, shear: Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Fills mat with a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def translate_mat(trans: Vec3d) -> LMatrix4d:
         """Returns a matrix that applies the indicated translation."""
-        ...
     @overload
     @staticmethod
     def translate_mat(tx: float, ty: float, tz: float) -> LMatrix4d: ...
@@ -5098,14 +4512,12 @@ class LMatrix4d:
         """Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.
         """
-        ...
     @staticmethod
     def rotate_mat_normaxis(angle: float, axis: Vec3d, cs: _CoordinateSystem = ...) -> LMatrix4d:
         """Returns a matrix that rotates by the given angle in degrees
         counterclockwise about the indicated vector.  Assumes axis has been
         prenormalized.
         """
-        ...
     @overload
     @staticmethod
     def scale_mat(scale: Vec3d | float) -> LMatrix4d:
@@ -5116,7 +4528,6 @@ class LMatrix4d:
         `(scale: float)`:
         Returns a matrix that applies the indicated uniform scale.
         """
-        ...
     @overload
     @staticmethod
     def scale_mat(sx: float, sy: float, sz: float) -> LMatrix4d: ...
@@ -5126,7 +4537,6 @@ class LMatrix4d:
         """Returns a matrix that applies the indicated shear in each of the three
         planes.
         """
-        ...
     @overload
     @staticmethod
     def shear_mat(shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4d: ...
@@ -5134,7 +4544,6 @@ class LMatrix4d:
     @staticmethod
     def scale_shear_mat(scale: Vec3d, shear: Vec3d, cs: _CoordinateSystem = ...) -> LMatrix4d:
         """Returns a matrix that applies the indicated scale and shear."""
-        ...
     @overload
     @staticmethod
     def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4d: ...
@@ -5143,19 +4552,16 @@ class LMatrix4d:
         """Returns a matrix that transforms from the Y-up coordinate system to the
         Z-up coordinate system.
         """
-        ...
     @staticmethod
     def z_to_y_up_mat() -> LMatrix4d:
         """Returns a matrix that transforms from the Y-up coordinate system to the
         Z-up coordinate system.
         """
-        ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix4d:
         """Returns a matrix that transforms from the indicated coordinate system to
         the indicated coordinate system.
         """
-        ...
     def almost_equal(self, other: Mat4d, threshold: float = ...) -> bool:
         """`(self, other: LMatrix4d)`:
         Returns true if two matrices are memberwise equal within a default
@@ -5166,7 +4572,6 @@ class LMatrix4d:
         tolerance.  This is faster than the equivalence operator as this doesn't
         have to guarantee that it is transitive.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -5176,21 +4581,17 @@ class LMatrix4d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, scan: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the matrix to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_rows(self) -> tuple[None, ...]: ...
@@ -5276,7 +4677,6 @@ class UnalignedLMatrix4d:
     def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, sixteen."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getNumComponents = get_num_components
@@ -5307,12 +4707,10 @@ class LQuaternionf(LVecBase4f):
         """Returns a new quaternion that represents this quaternion raised to the
         given power.
         """
-        ...
     @staticmethod
     def pure_imaginary(v: Vec3f) -> LQuaternionf: ...
     def conjugate(self) -> LQuaternionf:
         """Returns the complex conjugate of this quat."""
-        ...
     @overload
     def xform(self, v: Vec3f) -> LVecBase3f:
         """`(self, v: LVecBase3f)`:
@@ -5321,22 +4719,18 @@ class LQuaternionf(LVecBase4f):
         `(self, v: LVecBase4f)`:
         Transforms a 4-d vector by the indicated rotation
         """
-        ...
     @overload
     def xform(self, v: Vec4f) -> LVecBase4f: ...
     def multiply(self, rhs: Vec4f) -> LQuaternionf:
         """actual multiply call (non virtual)"""
-        ...
     def angle_rad(self, other: Vec4f) -> float:
         """Returns the angle between the orientation represented by this quaternion
         and the other one, expressed in radians.
         """
-        ...
     def angle_deg(self, other: Vec4f) -> float:
         """Returns the angle between the orientation represented by this quaternion
         and the other one, expressed in degrees.
         """
-        ...
     def almost_equal(self, other: Vec4f, threshold: float = ...) -> bool:
         """`(self, other: LQuaternionf)`:
         Returns true if two quaternions are memberwise equal within a default
@@ -5346,47 +4740,38 @@ class LQuaternionf(LVecBase4f):
         Returns true if two quaternions are memberwise equal within a specified
         tolerance.
         """
-        ...
     def is_same_direction(self, other: Vec4f) -> bool:
         """Returns true if two quaternions represent the same rotation within a
         default tolerance based on the numeric type.
         """
-        ...
     def almost_same_direction(self, other: Vec4f, threshold: float) -> bool:
         """Returns true if two quaternions represent the same rotation within a
         specified tolerance.
         """
-        ...
     def output(self, __param0: ostream) -> None: ...
     def extract_to_matrix(self, m: LMatrix3f | Mat4f) -> None:
         """Based on the quat lib from VRPN."""
-        ...
     def set_from_matrix(self, m: LMatrix3f | Mat4f) -> None:
         """Sets the quaternion according to the rotation represented by the matrix.
         Originally we tried an algorithm presented by Do-While Jones, but that
         turned out to be broken.  This is based on the quat lib from UNC.
         """
-        ...
     def set_hpr(self, hpr: Vec3f, cs: _CoordinateSystem = ...) -> None:
         """Sets the quaternion as the unit quaternion that is equivalent to these
         Euler angles.  (from Real-time Rendering, p.49)
         """
-        ...
     def get_hpr(self, cs: _CoordinateSystem = ...) -> LVecBase3f:
         """Extracts the equivalent Euler angles from the unit quaternion."""
-        ...
     def get_axis(self) -> LVector3f:
         """This, along with get_angle(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the axis; it
         is not normalized.
         """
-        ...
     def get_axis_normalized(self) -> LVector3f:
         """This, along with get_angle(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the
         normalized axis.
         """
-        ...
     def get_angle_rad(self) -> float:
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
@@ -5395,7 +4780,6 @@ class LQuaternionf(LVecBase4f):
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
-        ...
     def get_angle(self) -> float:
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
@@ -5404,28 +4788,22 @@ class LQuaternionf(LVecBase4f):
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
-        ...
     def set_from_axis_angle_rad(self, angle_rad: float, axis: Vec3f) -> None:
         """angle_rad is the angle about the axis in radians.  axis must be normalized."""
-        ...
     def set_from_axis_angle(self, angle_deg: float, axis: Vec3f) -> None:
         """angle_deg is the angle about the axis in degrees.  axis must be normalized."""
-        ...
     def get_up(self, cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the orientation represented by this quaternion, expressed as an up
         vector.
         """
-        ...
     def get_right(self, cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the orientation represented by this quaternion, expressed as a
         right vector.
         """
-        ...
     def get_forward(self, cs: _CoordinateSystem = ...) -> LVector3f:
         """Returns the orientation represented by this quaternion, expressed as a
         forward vector.
         """
-        ...
     def get_r(self) -> float: ...
     def get_i(self) -> float: ...
     def get_j(self) -> float: ...
@@ -5445,12 +4823,10 @@ class LQuaternionf(LVecBase4f):
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
-        ...
     def conjugate_in_place(self) -> bool:
         """Sets this to be the conjugate of the current quat.  Returns true if the
         successful, false if the quat was singular.
         """
-        ...
     def invert_from(self, other: Vec4f) -> bool:
         """Computes the inverse of the other quat, and stores the result in this quat.
         This is a fully general operation and makes no assumptions about the type
@@ -5462,26 +4838,21 @@ class LQuaternionf(LVecBase4f):
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
-        ...
     def invert_in_place(self) -> bool:
         """Inverts the current quat.  Returns true if the inverse is successful, false
         if the quat was singular.
         """
-        ...
     def is_identity(self) -> bool:
         """Returns true if this quaternion represents the identity transformation: no
         rotation.
         """
-        ...
     def is_almost_identity(self, tolerance: float) -> bool:
         """Returns true if this quaternion represents the identity transformation
         within a given tolerance.
         """
-        ...
     @staticmethod
     def ident_quat() -> LQuaternionf:
         """Returns an identity quaternion."""
-        ...
     pureImaginary = pure_imaginary
     angleRad = angle_rad
     angleDeg = angle_deg
@@ -5542,12 +4913,10 @@ class LQuaterniond(LVecBase4d):
         """Returns a new quaternion that represents this quaternion raised to the
         given power.
         """
-        ...
     @staticmethod
     def pure_imaginary(v: Vec3d) -> LQuaterniond: ...
     def conjugate(self) -> LQuaterniond:
         """Returns the complex conjugate of this quat."""
-        ...
     @overload
     def xform(self, v: Vec3d) -> LVecBase3d:
         """`(self, v: LVecBase3d)`:
@@ -5556,22 +4925,18 @@ class LQuaterniond(LVecBase4d):
         `(self, v: LVecBase4d)`:
         Transforms a 4-d vector by the indicated rotation
         """
-        ...
     @overload
     def xform(self, v: Vec4d) -> LVecBase4d: ...
     def multiply(self, rhs: Vec4d) -> LQuaterniond:
         """actual multiply call (non virtual)"""
-        ...
     def angle_rad(self, other: Vec4d) -> float:
         """Returns the angle between the orientation represented by this quaternion
         and the other one, expressed in radians.
         """
-        ...
     def angle_deg(self, other: Vec4d) -> float:
         """Returns the angle between the orientation represented by this quaternion
         and the other one, expressed in degrees.
         """
-        ...
     def almost_equal(self, other: Vec4d, threshold: float = ...) -> bool:
         """`(self, other: LQuaterniond)`:
         Returns true if two quaternions are memberwise equal within a default
@@ -5581,47 +4946,38 @@ class LQuaterniond(LVecBase4d):
         Returns true if two quaternions are memberwise equal within a specified
         tolerance.
         """
-        ...
     def is_same_direction(self, other: Vec4d) -> bool:
         """Returns true if two quaternions represent the same rotation within a
         default tolerance based on the numeric type.
         """
-        ...
     def almost_same_direction(self, other: Vec4d, threshold: float) -> bool:
         """Returns true if two quaternions represent the same rotation within a
         specified tolerance.
         """
-        ...
     def output(self, __param0: ostream) -> None: ...
     def extract_to_matrix(self, m: LMatrix3d | Mat4d) -> None:
         """Based on the quat lib from VRPN."""
-        ...
     def set_from_matrix(self, m: LMatrix3d | Mat4d) -> None:
         """Sets the quaternion according to the rotation represented by the matrix.
         Originally we tried an algorithm presented by Do-While Jones, but that
         turned out to be broken.  This is based on the quat lib from UNC.
         """
-        ...
     def set_hpr(self, hpr: Vec3d, cs: _CoordinateSystem = ...) -> None:
         """Sets the quaternion as the unit quaternion that is equivalent to these
         Euler angles.  (from Real-time Rendering, p.49)
         """
-        ...
     def get_hpr(self, cs: _CoordinateSystem = ...) -> LVecBase3d:
         """Extracts the equivalent Euler angles from the unit quaternion."""
-        ...
     def get_axis(self) -> LVector3d:
         """This, along with get_angle(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the axis; it
         is not normalized.
         """
-        ...
     def get_axis_normalized(self) -> LVector3d:
         """This, along with get_angle(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the
         normalized axis.
         """
-        ...
     def get_angle_rad(self) -> float:
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
@@ -5630,7 +4986,6 @@ class LQuaterniond(LVecBase4d):
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
-        ...
     def get_angle(self) -> float:
         """This, along with get_axis(), returns the rotation represented by the
         quaternion as an angle about an arbitrary axis.  This returns the angle, in
@@ -5639,28 +4994,22 @@ class LQuaterniond(LVecBase4d):
         It is necessary to ensure the quaternion has been normalized (for instance,
         with a call to normalize()) before calling this method.
         """
-        ...
     def set_from_axis_angle_rad(self, angle_rad: float, axis: Vec3d) -> None:
         """angle_rad is the angle about the axis in radians.  axis must be normalized."""
-        ...
     def set_from_axis_angle(self, angle_deg: float, axis: Vec3d) -> None:
         """angle_deg is the angle about the axis in degrees.  axis must be normalized."""
-        ...
     def get_up(self, cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the orientation represented by this quaternion, expressed as an up
         vector.
         """
-        ...
     def get_right(self, cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the orientation represented by this quaternion, expressed as a
         right vector.
         """
-        ...
     def get_forward(self, cs: _CoordinateSystem = ...) -> LVector3d:
         """Returns the orientation represented by this quaternion, expressed as a
         forward vector.
         """
-        ...
     def get_r(self) -> float: ...
     def get_i(self) -> float: ...
     def get_j(self) -> float: ...
@@ -5680,12 +5029,10 @@ class LQuaterniond(LVecBase4d):
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
-        ...
     def conjugate_in_place(self) -> bool:
         """Sets this to be the conjugate of the current quat.  Returns true if the
         successful, false if the quat was singular.
         """
-        ...
     def invert_from(self, other: Vec4d) -> bool:
         """Computes the inverse of the other quat, and stores the result in this quat.
         This is a fully general operation and makes no assumptions about the type
@@ -5697,26 +5044,21 @@ class LQuaterniond(LVecBase4d):
         The return value is true if the quat was successfully inverted, false if
         there was a singularity.
         """
-        ...
     def invert_in_place(self) -> bool:
         """Inverts the current quat.  Returns true if the inverse is successful, false
         if the quat was singular.
         """
-        ...
     def is_identity(self) -> bool:
         """Returns true if this quaternion represents the identity transformation: no
         rotation.
         """
-        ...
     def is_almost_identity(self, tolerance: float) -> bool:
         """Returns true if this quaternion represents the identity transformation
         within a given tolerance.
         """
-        ...
     @staticmethod
     def ident_quat() -> LQuaterniond:
         """Returns an identity quaternion."""
-        ...
     pureImaginary = pure_imaginary
     angleRad = angle_rad
     angleDeg = angle_deg
@@ -5768,7 +5110,6 @@ class LRotationf(LQuaternionf):
         `(self, h: float, p: float, r: float)`:
         Sets the rotation from the given Euler angles.
         """
-        ...
     @overload
     def __init__(self, m: LMatrix3f | Mat4f) -> None: ...
     @overload
@@ -5803,7 +5144,6 @@ class LRotationd(LQuaterniond):
         `(self, h: float, p: float, r: float)`:
         Sets the rotation from the given Euler angles.
         """
-        ...
     @overload
     def __init__(self, m: LMatrix3d | Mat4d) -> None: ...
     @overload
@@ -5835,7 +5175,6 @@ class LOrientationf(LQuaternionf):
         `(self, point_at: LVector3f, twist: float)`:
         vector + twist
         """
-        ...
     @overload
     def __init__(self, m: LMatrix3f | Mat4f) -> None: ...
     @overload
@@ -5857,7 +5196,6 @@ class LOrientationd(LQuaterniond):
         `(self, point_at: LVector3d, twist: float)`:
         vector + twist
         """
-        ...
     @overload
     def __init__(self, m: LMatrix3d | Mat4d) -> None: ...
     @overload
@@ -5889,13 +5227,10 @@ class ConfigVariableColor(ConfigVariable):
     def assign(self, value: Vec4f) -> ConfigVariableColor: ...
     def set_value(self, value: Vec4f) -> None:
         """Reassigns the variable's local value."""
-        ...
     def get_value(self) -> LColor:
         """Returns the variable's value."""
-        ...
     def get_default_value(self) -> LColor:
         """Returns the variable's default value."""
-        ...
     operatorTypecast = operator_typecast
     setValue = set_value
     getValue = get_value

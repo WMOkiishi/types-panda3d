@@ -11,40 +11,28 @@ class FilterProperties(TypedReferenceCount):
     def __init__(self, __param0: FilterProperties = ...) -> None: ...
     def clear(self) -> None:
         """Removes all DSP postprocessing."""
-        ...
     def add_lowpass(self, cutoff_freq: float, resonance_q: float) -> None:
         """Add a lowpass filter to the end of the DSP chain."""
-        ...
     def add_highpass(self, cutoff_freq: float, resonance_q: float) -> None:
         """Add a highpass filter to the end of the DSP chain."""
-        ...
     def add_echo(self, drymix: float, wetmix: float, delay: float, decayratio: float) -> None:
         """Add a echo filter to the end of the DSP chain."""
-        ...
     def add_flange(self, drymix: float, wetmix: float, depth: float, rate: float) -> None:
         """Add a flange filter to the end of the DSP chain."""
-        ...
     def add_distort(self, level: float) -> None:
         """Add a distort filter to the end of the DSP chain."""
-        ...
     def add_normalize(self, fadetime: float, threshold: float, maxamp: float) -> None:
         """Add a normalize filter to the end of the DSP chain."""
-        ...
     def add_parameq(self, center_freq: float, bandwidth: float, gain: float) -> None:
         """Add a parameq filter to the end of the DSP chain."""
-        ...
     def add_pitchshift(self, pitch: float, fftsize: float, overlap: float) -> None:
         """Add a pitchshift filter to the end of the DSP chain."""
-        ...
     def add_chorus(self, drymix: float, wet1: float, wet2: float, wet3: float, delay: float, rate: float, depth: float) -> None:
         """Add a chorus filter to the end of the DSP chain."""
-        ...
     def add_sfxreverb(self, drylevel: float = ..., room: float = ..., roomhf: float = ..., decaytime: float = ..., decayhfratio: float = ..., reflectionslevel: float = ..., reflectionsdelay: float = ..., reverblevel: float = ..., reverbdelay: float = ..., diffusion: float = ..., density: float = ..., hfreference: float = ..., roomlf: float = ..., lfreference: float = ...) -> None:
         """Add a reverb filter to the end of the DSP chain."""
-        ...
     def add_compress(self, threshold: float, attack: float, release: float, gainmakeup: float) -> None:
         """Add a compress filter to the end of the DSP chain."""
-        ...
     addLowpass = add_lowpass
     addHighpass = add_highpass
     addEcho = add_echo
@@ -68,15 +56,12 @@ class AudioSound(TypedReferenceCount):
         second time on the same sound before it is finished will start the sound
         again (creating a skipping or stuttering effect).
         """
-        ...
     def stop(self) -> None: ...
     def set_loop(self, loop: bool = ...) -> None:
         """loop: false = play once; true = play forever.  inits to false."""
-        ...
     def get_loop(self) -> bool: ...
     def set_loop_count(self, loop_count: int = ...) -> None:
         """loop_count: 0 = forever; 1 = play once; n = play n times.  inits to 1."""
-        ...
     def get_loop_count(self) -> int: ...
     def set_time(self, start_time: float = ...) -> None:
         """Control time position within the sound, in seconds.  This is similar (in
@@ -95,55 +80,44 @@ class AudioSound(TypedReferenceCount):
            * PN_stdfloat percent_complete = s.get_time() / s.length();
            * @endcode
         """
-        ...
     def get_time(self) -> float: ...
     def set_volume(self, volume: float = ...) -> None:
         """0 = minimum; 1.0 = maximum.  inits to 1.0."""
-        ...
     def get_volume(self) -> float: ...
     def set_balance(self, balance_right: float = ...) -> None:
         """-1.0 is hard left 0.0 is centered 1.0 is hard right inits to 0.0."""
-        ...
     def get_balance(self) -> float: ...
     def set_play_rate(self, play_rate: float = ...) -> None:
         """play_rate is any positive PN_stdfloat value.  inits to 1.0."""
-        ...
     def get_play_rate(self) -> float: ...
     def set_active(self, flag: bool = ...) -> None:
         """inits to manager's state."""
-        ...
     def get_active(self) -> bool: ...
     def set_finished_event(self, event: str) -> None:
         """Set (or clear) the event that will be thrown when the sound finishes
         playing.  To clear the event, pass an empty string.
         """
-        ...
     def get_finished_event(self) -> str: ...
     def get_name(self) -> str:
         """There is no set_name(), this is intentional."""
-        ...
     def length(self) -> float:
         """return: playing time in seconds."""
-        ...
     def set_3d_attributes(self, px: float, py: float, pz: float, vx: float, vy: float, vz: float) -> None:
         """Controls the position of this sound's emitter.  px, py and pz are the
         emitter's position.  vx, vy and vz are the emitter's velocity in UNITS
         PER SECOND (default: meters).
         """
-        ...
     def set_3d_min_distance(self, dist: float) -> None:
         """Controls the distance (in units) that this sound begins to fall off.
         Also affects the rate it falls off.  Default is 1.0 CloserFaster, <1.0
         FartherSlower, >1.0
         """
-        ...
     def get_3d_min_distance(self) -> float: ...
     def set_3d_max_distance(self, dist: float) -> None:
         """Controls the maximum distance (in units) that this sound stops falling
         off.  The sound does not stop at that point, it just doesn't get any
         quieter.  You should rarely need to adjust this.  Default is 1000000000.0
         """
-        ...
     def get_3d_max_distance(self) -> float: ...
     def get_speaker_mix(self, speaker: int) -> float:
         """speaker_mix and speaker_level(s) serve the same purpose.
@@ -152,7 +126,6 @@ class AudioSound(TypedReferenceCount):
         two APIs.  Hopefully the difference can be reconciled into a single
         interface at some point.
         """
-        ...
     def set_speaker_mix(self, frontleft: float, frontright: float, center: float, sub: float, backleft: float, backright: float, sideleft: float, sideright: float) -> None: ...
     def get_speaker_level(self, index: int) -> float: ...
     def set_speaker_levels(self, level1: float, level2: float = ..., level3: float = ..., level4: float = ..., level5: float = ..., level6: float = ..., level7: float = ..., level8: float = ..., level9: float = ...) -> None: ...
@@ -253,11 +226,9 @@ class AudioManager(TypedReferenceCount):
         sound manager and the sounds it creates should not crash the application
         even when the objects are not valid.
         """
-        ...
     @overload
     def get_sound(self, file_name: Filepath, positional: bool = ..., mode: int = ...) -> AudioSound:
         """Get a sound:"""
-        ...
     @overload
     def get_sound(self, source: MovieAudio, positional: bool = ..., mode: int = ...) -> AudioSound: ...
     def get_null_sound(self) -> AudioSound: ...
@@ -267,7 +238,6 @@ class AudioManager(TypedReferenceCount):
         by get_sound() from this manager.  It's only affecting whether the
         AudioManager keeps a copy of the sound in its poolcache.
         """
-        ...
     def clear_cache(self) -> None: ...
     def set_cache_limit(self, count: int) -> None: ...
     def get_cache_limit(self) -> int: ...
@@ -276,7 +246,6 @@ class AudioManager(TypedReferenceCount):
         the volume up later, you'll hear the sound playing at that late point.  0
         = minimum; 1.0 = maximum.  inits to 1.0.
         """
-        ...
     def get_volume(self) -> float: ...
     def set_active(self, flag: bool) -> None:
         """Turn the manager on or off.  If you play a sound while the manager is
@@ -285,7 +254,6 @@ class AudioManager(TypedReferenceCount):
         are playing (those that have a loop_count of zero), they will start
         playing from the beginning of their loop.  Defaults to true.
         """
-        ...
     def get_active(self) -> bool: ...
     def set_concurrent_sound_limit(self, limit: int = ...) -> None:
         """This controls the number of sounds that you allow at once.  This is more
@@ -294,7 +262,6 @@ class AudioManager(TypedReferenceCount):
         exclusive (one sound at a time).  Which is an example of: n == allow n
         sounds to be playing at the same time.
         """
-        ...
     def get_concurrent_sound_limit(self) -> int: ...
     def reduce_sounds_playing_to(self, count: int) -> None:
         """This is likely to be a utility function for the concurrent_sound_limit
@@ -303,16 +270,13 @@ class AudioManager(TypedReferenceCount):
         to count by some implementation specific means.  If the number of sounds
         currently playing is at or below count then there is no effect.
         """
-        ...
     def stop_all_sounds(self) -> None:
         """Stop playback on all sounds managed by this manager.  This is effectively
         the same as reduce_sounds_playing_to(0), but this call may be for
         efficient on some implementations.
         """
-        ...
     def update(self) -> None:
         """This should be called every frame.  Failure to call could cause problems."""
-        ...
     def audio_3d_set_listener_attributes(self, px: float, py: float, pz: float, vx: float, vy: float, vz: float, fx: float, fy: float, fz: float, ux: float, uy: float, uz: float) -> None:
         """This controls the "set of ears" that listens to 3D spacialized sound px,
         py, pz are position coordinates.  vx, vy, vz are a velocity vector in
@@ -320,7 +284,6 @@ class AudioManager(TypedReferenceCount):
         components of a unit forward-vector ux, uy and uz are the respective
         components of a unit up-vector
         """
-        ...
     def audio_3d_set_distance_factor(self, factor: float) -> None:
         """Control the "relative scale that sets the distance factor" units for 3D
         spacialized audio. This is a float in units-per-meter. Default value is
@@ -328,20 +291,17 @@ class AudioManager(TypedReferenceCount):
         feet, set 3.28. This factor is applied only to Fmod and OpenAL at the
         moment.
         """
-        ...
     def audio_3d_get_distance_factor(self) -> float: ...
     def audio_3d_set_doppler_factor(self, factor: float) -> None:
         """Control the presence of the Doppler effect.  Default is 1.0 Exaggerated
         Doppler, use >1.0 Diminshed Doppler, use <1.0
         """
-        ...
     def audio_3d_get_doppler_factor(self) -> float: ...
     def audio_3d_set_drop_off_factor(self, factor: float) -> None:
         """Exaggerate or diminish the effect of distance on sound.  Default is 1.0
         Valid range is 0 to 10 Faster drop off, use >1.0 Slower drop off, use
         <1.0
         """
-        ...
     def audio_3d_get_drop_off_factor(self) -> float: ...
     @staticmethod
     def get_dls_pathname() -> Filename: ...
@@ -349,7 +309,6 @@ class AudioManager(TypedReferenceCount):
     def write(self, out: ostream) -> None: ...
     def set_speaker_configuration(self, speaker1: Vec3f, speaker2: Vec3f = ..., speaker3: Vec3f = ..., speaker4: Vec3f = ..., speaker5: Vec3f = ..., speaker6: Vec3f = ..., speaker7: Vec3f = ..., speaker8: Vec3f = ..., speaker9: Vec3f = ...) -> None:
         """set_speaker_configuration is a Miles only method."""
-        ...
     getSpeakerSetup = get_speaker_setup
     setSpeakerSetup = set_speaker_setup
     configureFilters = configure_filters
@@ -390,22 +349,18 @@ class AudioLoadRequest(AsyncTask):
         """Create a new AudioLoadRequest, and add it to the loader via load_async(),
         to begin an asynchronous load.
         """
-        ...
     @overload
     def __init__(self, audio_manager: AudioManager, filename: str, positional: bool) -> None: ...
     def get_audio_manager(self) -> AudioManager:
         """Returns the AudioManager that will serve this asynchronous
         AudioLoadRequest.
         """
-        ...
     def get_filename(self) -> str:
         """Returns the filename associated with this asynchronous AudioLoadRequest."""
-        ...
     def get_positional(self) -> bool:
         """Returns the positional flag associated with this asynchronous
         AudioLoadRequest.
         """
-        ...
     def is_ready(self) -> bool:
         """Returns true if this request has completed, false if it is still pending.
         When this returns true, you may retrieve the sound loaded by calling
@@ -413,14 +368,12 @@ class AudioLoadRequest(AsyncTask):
         Equivalent to `req.done() and not req.cancelled()`.
         @see done()
         """
-        ...
     def get_sound(self) -> AudioSound:
         """Returns the sound that was loaded asynchronously, if any, or nullptr if
         there was an error.  It is an error to call this unless done() returns
         true.
         @deprecated Use result() instead.
         """
-        ...
     getAudioManager = get_audio_manager
     getFilename = get_filename
     getPositional = get_positional

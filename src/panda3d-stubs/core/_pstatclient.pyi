@@ -22,10 +22,8 @@ class PStatClient:
         """Sets the name of the client.  This is reported to the PStatsServer, and
         will presumably be written in the title bar or something.
         """
-        ...
     def get_client_name(self) -> str:
         """Retrieves the name of the client as set."""
-        ...
     def set_max_rate(self, rate: float) -> None:
         """Controls the number of packets that will be sent to the server.  Normally,
         one packet is sent per frame, but this can flood the server with more
@@ -36,126 +34,99 @@ class PStatClient:
         This number specifies the maximum number of packets that will be sent to
         the server per second, per thread.
         """
-        ...
     def get_max_rate(self) -> float:
         """Returns the maximum number of packets that will be sent to the server per
         second, per thread.  See set_max_rate().
         """
-        ...
     def get_num_collectors(self) -> int:
         """Returns the total number of collectors the Client knows about."""
-        ...
     def get_collector(self, index: int) -> PStatCollector:
         """Returns the nth collector."""
-        ...
     def get_collector_name(self, index: int) -> str:
         """Returns the name of the indicated collector."""
-        ...
     def get_collector_fullname(self, index: int) -> str:
         """Returns the "full name" of the indicated collector.  This will be the
         concatenation of all of the collector's parents' names (except Frame) and
         the collector's own name.
         """
-        ...
     def get_num_threads(self) -> int:
         """Returns the total number of threads the Client knows about."""
-        ...
     def get_thread(self, index: int) -> PStatThread:
         """Returns the nth thread."""
-        ...
     def get_thread_name(self, index: int) -> str:
         """Returns the name of the indicated thread."""
-        ...
     def get_thread_sync_name(self, index: int) -> str:
         """Returns the sync_name of the indicated thread."""
-        ...
     def get_thread_object(self, index: int) -> Thread:
         """Returns the Panda Thread object associated with the indicated PStatThread."""
-        ...
     def get_main_thread(self) -> PStatThread:
         """Returns a handle to the client's Main thread.  This is the thread that
         started the application.
         """
-        ...
     def get_current_thread(self) -> PStatThread:
         """Returns a handle to the currently-executing thread.  This is the thread
         that PStatCollectors will be counted in if they do not specify otherwise.
         """
-        ...
     def get_real_time(self) -> float:
         """Returns the time according to to the PStatClient's clock object.  It keeps
         its own clock, instead of using the global clock object, so the stats won't
         get mucked up if you put the global clock in non-real-time mode or
         something.
         """
-        ...
     @staticmethod
     def connect(hostname: str = ..., port: int = ...) -> bool:
         """Attempts to establish a connection to the indicated PStatServer.  Returns
         true if successful, false on failure.
         """
-        ...
     @staticmethod
     def disconnect() -> None:
         """Closes the connection previously established."""
-        ...
     @staticmethod
     def is_connected() -> bool:
         """Returns true if the client believes it is connected to a working
         PStatServer, false otherwise.
         """
-        ...
     @staticmethod
     def resume_after_pause() -> None:
         """Resumes the PStatClient after the simulation has been paused for a while.
         This allows the stats to continue exactly where it left off, instead of
         leaving a big gap that would represent a chug.
         """
-        ...
     @staticmethod
     def main_tick() -> None:
         """A convenience function to call new_frame() on the global PStatClient's main
         thread, and any other threads with a sync_name of "Main".
         """
-        ...
     @staticmethod
     def thread_tick(sync_name: str) -> None:
         """A convenience function to call new_frame() on any threads with the
         indicated sync_name
         """
-        ...
     def client_main_tick(self) -> None:
         """A convenience function to call new_frame() on the given PStatClient's main
         thread, and any other threads with a sync_name of "Main".
         """
-        ...
     def client_thread_tick(self, sync_name: str) -> None:
         """A convenience function to call new_frame() on all of the threads with the
         indicated sync name.
         """
-        ...
     def client_connect(self, hostname: str, port: int) -> bool:
         """The nonstatic implementation of connect()."""
-        ...
     def client_disconnect(self) -> None:
         """The nonstatic implementation of disconnect()."""
-        ...
     def client_is_connected(self) -> bool:
         """The nonstatic implementation of is_connected()."""
-        ...
     def client_resume_after_pause(self) -> None:
         """Resumes the PStatClient after the simulation has been paused for a while.
         This allows the stats to continue exactly where it left off, instead of
         leaving a big gap that would represent a chug.
         """
-        ...
     @staticmethod
     def get_global_pstats() -> PStatClient:
         """Returns a pointer to the global PStatClient object.  It's legal to declare
         your own PStatClient locally, but it's also convenient to have a global one
         that everyone can register with.  This is the global one.
         """
-        ...
     def get_collectors(self) -> tuple[PStatCollector, ...]: ...
     def get_threads(self) -> tuple[PStatThread, ...]: ...
     setClientName = set_client_name
@@ -240,7 +211,6 @@ class PStatCollector:
         If the client pointer is non-null, it specifies a particular client to
         register the collector with; otherwise, the global client is used.
         """
-        ...
     @overload
     def __init__(self, name: str, client: PStatClient = ...) -> None: ...
     @overload
@@ -251,17 +221,14 @@ class PStatCollector:
         constructed with the default constructor (in which case any attempt to use
         it will crash).
         """
-        ...
     def get_name(self) -> str:
         """Returns the local name of this collector.  This is the rightmost part of
         the fullname, after the rightmost colon.
         """
-        ...
     def get_fullname(self) -> str:
         """Returns the full name of this collector.  This includes the names of all
         the collector's parents, concatenated together with colons.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def is_active(self, thread: PStatThread = ...) -> bool:
         """`(self)`:
@@ -272,7 +239,6 @@ class PStatCollector:
         Returns true if this particular collector is active on the indicated
         thread, and we are currently transmitting PStats data.
         """
-        ...
     def is_started(self, thread: PStatThread = ...) -> bool:
         """`(self)`:
         Returns true if this particular collector has been started on the default
@@ -282,7 +248,6 @@ class PStatCollector:
         Returns true if this particular collector has been started on the indicated
         thread, or false otherwise.
         """
-        ...
     @overload
     def start(self, thread: PStatThread = ...) -> None:
         """`(self)`:
@@ -298,7 +263,6 @@ class PStatCollector:
         PStatClient::get_clock()), and care should be taken that all such calls
         exhibit a monotonically increasing series of time values.
         """
-        ...
     @overload
     def start(self, thread: PStatThread, as_of: float) -> None: ...
     @overload
@@ -316,7 +280,6 @@ class PStatCollector:
         PStatClient::get_clock()), and care should be taken that all such calls
         exhibit a monotonically increasing series of time values.
         """
-        ...
     @overload
     def stop(self, thread: PStatThread, as_of: float) -> None: ...
     def clear_level(self, thread: PStatThread = ...) -> None:
@@ -330,7 +293,6 @@ class PStatCollector:
         thread.  The collector will no longer show up on any level graphs in this
         thread.
         """
-        ...
     @overload
     def set_level(self, level: float) -> None:
         """`(self, thread: PStatThread, level: float)`:
@@ -341,7 +303,6 @@ class PStatCollector:
         Sets the level setting associated with this collector for the main thread
         to the indicated value.  This implicitly calls flush_level().
         """
-        ...
     @overload
     def set_level(self, thread: PStatThread, level: float) -> None: ...
     @overload
@@ -361,7 +322,6 @@ class PStatCollector:
         As an optimization, the data is not immediately set to the PStatClient.  It
         will be sent the next time flush_level() is called.
         """
-        ...
     @overload
     def add_level(self, thread: PStatThread, increment: float) -> None: ...
     @overload
@@ -381,20 +341,16 @@ class PStatCollector:
         As an optimization, the data is not immediately set to the PStatClient.  It
         will be sent the next time flush_level() is called.
         """
-        ...
     @overload
     def sub_level(self, thread: PStatThread, decrement: float) -> None: ...
     def add_level_now(self, increment: float) -> None:
         """Calls add_level() and immediately calls flush_level()."""
-        ...
     def sub_level_now(self, decrement: float) -> None:
         """Calls sub_level() and immediately calls flush_level()."""
-        ...
     def flush_level(self) -> None:
         """Updates the PStatClient with the recent results from add_level() and
         sub_level().
         """
-        ...
     def get_level(self, thread: PStatThread = ...) -> float:
         """`(self)`:
         Returns the current level value of the given collector in the main thread.
@@ -403,42 +359,35 @@ class PStatCollector:
         `(self, thread: PStatThread)`:
         Returns the current level value of the given collector.
         """
-        ...
     def clear_thread_level(self) -> None:
         """Removes the level setting associated with this collector for the current
         thread.  The collector will no longer show up on any level graphs in the
         current thread.
         """
-        ...
     def set_thread_level(self, level: float) -> None:
         """Sets the level setting associated with this collector for the current
         thread to the indicated value.
         """
-        ...
     def add_thread_level(self, increment: float) -> None:
         """Adds the indicated increment (which may be negative) to the level setting
         associated with this collector for the current thread.  If the collector
         did not already have a level setting for the current thread, it is
         initialized to 0.
         """
-        ...
     def sub_thread_level(self, decrement: float) -> None:
         """Subtracts the indicated decrement (which may be negative) to the level
         setting associated with this collector for the current thread.  If the
         collector did not already have a level setting for the current thread, it
         is initialized to 0.
         """
-        ...
     def get_thread_level(self) -> float:
         """Returns the current level value of the given collector in the current
         thread.
         """
-        ...
     def get_index(self) -> int:
         """Returns the index number of this particular collector within the
         PStatClient.
         """
-        ...
     isValid = is_valid
     getName = get_name
     getFullname = get_fullname
@@ -478,7 +427,6 @@ class PStatThread:
         Creates a new named thread.  This will be used to unify tasks that share a
         common thread, and differentiate tasks that occur in different threads.
         """
-        ...
     @overload
     def __init__(self, thread: Thread, client: PStatClient = ...) -> None: ...
     @overload
@@ -492,15 +440,12 @@ class PStatThread:
         Calling PStatClient::thread_tick() will automatically call this for any
         threads with the indicated sync name.
         """
-        ...
     def get_thread(self) -> Thread:
         """Returns the Panda Thread object associated with this particular
         PStatThread.
         """
-        ...
     def get_index(self) -> int:
         """Returns the index number of this particular thread within the PStatClient."""
-        ...
     newFrame = new_frame
     getThread = get_thread
     getIndex = get_index

@@ -43,20 +43,15 @@ class PhysicsObject(TypedReferenceCount):
         `(self, copy: PhysicsObject)`:
         copy constructor
         """
-        ...
     def assign(self: Self, other: Self) -> Self: ...
     def set_active(self, flag: bool) -> None:
         """Process Flag assignment"""
-        ...
     def get_active(self) -> bool:
         """Process Flag Query"""
-        ...
     def set_mass(self, __param0: float) -> None:
         """Set the mass in slugs (or kilograms)."""
-        ...
     def get_mass(self) -> float:
         """Get the mass in slugs (or kilograms)."""
-        ...
     @overload
     def set_position(self, pos: Vec3f) -> None:
         """`(self, pos: LPoint3)`:
@@ -65,25 +60,20 @@ class PhysicsObject(TypedReferenceCount):
         `(self, x: float, y: float, z: float)`:
         Piecewise position assignment
         """
-        ...
     @overload
     def set_position(self, x: float, y: float, z: float) -> None: ...
     def get_position(self) -> LPoint3:
         """Position Query"""
-        ...
     def reset_position(self, pos: Vec3f) -> None:
         """use this to place an object in a completely new position, that has nothing
         to do with its last position.
         """
-        ...
     def set_last_position(self, pos: Vec3f) -> None:
         """Last position assignment"""
-        ...
     def get_last_position(self) -> LPoint3:
         """Get the position of the physics object at the start of the most recent
         do_physics.
         """
-        ...
     @overload
     def set_velocity(self, vel: Vec3f) -> None:
         """`(self, vel: LVector3)`:
@@ -92,27 +82,22 @@ class PhysicsObject(TypedReferenceCount):
         `(self, x: float, y: float, z: float)`:
         Piecewise velocity assignment
         """
-        ...
     @overload
     def set_velocity(self, x: float, y: float, z: float) -> None: ...
     def get_velocity(self) -> LVector3:
         """Velocity Query per second"""
-        ...
     def get_implicit_velocity(self) -> LVector3:
         """Velocity Query over the last dt"""
-        ...
     def add_torque(self, torque: Vec4f) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
         """
-        ...
     def add_impulse(self, impulse: Vec3f) -> None:
         """Adds an impulse force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the velocity, add a vector to it and set that value to
         be the new velocity.
         """
-        ...
     def add_impact(self, offset_from_center_of_mass: Vec3f, impulse: Vec3f) -> None:
         """Adds an impulse and/or torque (i.e.  an instantanious change in velocity)
         based on how well the offset and impulse align with the center of mass (aka
@@ -120,19 +105,16 @@ class PhysicsObject(TypedReferenceCount):
         impulse and torque and call add_impulse and add_torque respectively.
         offset and force are in global (or parent) coordinates.
         """
-        ...
     def add_local_torque(self, torque: Vec4f) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
         """
-        ...
     def add_local_impulse(self, impulse: Vec3f) -> None:
         """Adds an impulse force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the velocity, add a vector to it and set that value to
         be the new velocity.
         """
-        ...
     def add_local_impact(self, offset_from_center_of_mass: Vec3f, impulse: Vec3f) -> None:
         """Adds an impulse and/or torque (i.e.  an instantanious change in velocity)
         based on how well the offset and impulse align with the center of mass (aka
@@ -140,53 +122,39 @@ class PhysicsObject(TypedReferenceCount):
         impulse and torque and call add_impulse and add_torque respectively.
         offset and force are in local coordinates.
         """
-        ...
     def set_terminal_velocity(self, tv: float) -> None:
         """tv assignment"""
-        ...
     def get_terminal_velocity(self) -> float:
         """tv query"""
-        ...
     def set_oriented(self, flag: bool) -> None:
         """Set flag to determine whether this object should do any rotation or
         orientation calculations.  Optimization.
         """
-        ...
     def get_oriented(self) -> bool:
         """See set_oriented()."""
-        ...
     def set_orientation(self, orientation: LOrientation) -> None: ...
     def get_orientation(self) -> LOrientation:
         """get current orientation."""
-        ...
     def reset_orientation(self, orientation: LOrientation) -> None:
         """set the orientation while clearing the rotation velocity."""
-        ...
     def set_rotation(self, rotation: Vec4f) -> None:
         """set rotation as a quaternion delta per second."""
-        ...
     def get_rotation(self) -> LRotation:
         """get rotation per second."""
-        ...
     def get_inertial_tensor(self) -> LMatrix4:
         """returns a transform matrix that represents the object's willingness to be
         forced.
         """
-        ...
     def get_lcs(self) -> LMatrix4:
         """returns a transform matrix to this object's local coordinate system."""
-        ...
     def make_copy(self) -> PhysicsObject:
         """dynamic copy."""
-        ...
     def set_name(self, name: str) -> None: ...
     def get_name(self) -> str: ...
     def output(self, out: ostream) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     setActive = set_active
     getActive = get_active
     setMass = set_mass
@@ -231,65 +199,52 @@ class PhysicsObjectCollection:
         """Returns the number of physics objects in the collection.  This is the same
         thing as get_num_physics_objects().
         """
-        ...
     def __iadd__(self, other: PhysicsObjectCollection) -> PhysicsObjectCollection: ...
     def __add__(self, other: PhysicsObjectCollection) -> PhysicsObjectCollection: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def add_physics_object(self, physics_object: PhysicsObject) -> None:
         """Adds a new PhysicsObject to the collection."""
-        ...
     def remove_physics_object(self, physics_object: PhysicsObject) -> bool:
         """Removes the indicated PhysicsObject from the collection.  Returns true if
         the physics_object was removed, false if it was not a member of the
         collection.
         """
-        ...
     def add_physics_objects_from(self, other: PhysicsObjectCollection) -> None:
         """Adds all the PhysicsObjects indicated in the other collection to this
         collection.  The other physics_objects are simply appended to the end of
         the physics_objects in this list; duplicates are not automatically removed.
         """
-        ...
     def remove_physics_objects_from(self, other: PhysicsObjectCollection) -> None:
         """Removes from this collection all of the PhysicsObjects listed in the other
         collection.
         """
-        ...
     def remove_duplicate_physics_objects(self) -> None:
         """Removes any duplicate entries of the same PhysicsObjects on this
         collection.  If a PhysicsObject appears multiple times, the first
         appearance is retained; subsequent appearances are removed.
         """
-        ...
     def has_physics_object(self, physics_object: PhysicsObject) -> bool:
         """Returns true if the indicated PhysicsObject appears in this collection,
         false otherwise.
         """
-        ...
     def clear(self) -> None:
         """Removes all PhysicsObjects from the collection."""
-        ...
     def is_empty(self) -> bool:
         """Returns true if there are no PhysicsObjects in the collection, false
         otherwise.
         """
-        ...
     def get_num_physics_objects(self) -> int:
         """Returns the number of PhysicsObjects in the collection."""
-        ...
     def get_physics_object(self, index: int) -> PhysicsObject:
         """Returns the nth PhysicsObject in the collection."""
-        ...
     def output(self, out: ostream) -> None:
         """Writes a brief one-line description of the PhysicsObjectCollection to the
         indicated output stream.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Writes a complete multi-line description of the PhysicsObjectCollection to
         the indicated output stream.
         """
-        ...
     def get_physics_objects(self) -> tuple[PhysicsObject, ...]: ...
     addPhysicsObject = add_physics_object
     removePhysicsObject = remove_physics_object
@@ -311,10 +266,8 @@ class BaseForce(TypedReferenceCount):
     def get_force_node_path(self) -> NodePath: ...
     def output(self, out: ostream) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     getActive = get_active
     setActive = set_active
     isLinear = is_linear
@@ -347,7 +300,6 @@ class AngularForce(BaseForce):
     def make_copy(self) -> AngularForce: ...
     def get_quat(self, po: PhysicsObject) -> LRotation:
         """access query"""
-        ...
     makeCopy = make_copy
     getQuat = get_quat
 
@@ -380,65 +332,48 @@ class Physical(TypedReferenceCount):
         physics_object vector with dead nodes, pre-allocating for the speed end of
         the speed-vs-overhead deal.
         """
-        ...
     @overload
     def __init__(self, copy: Physical) -> None: ...
     def get_physics_manager(self) -> PhysicsManager:
         """helpers"""
-        ...
     def get_physical_node(self) -> PhysicalNode: ...
     def get_physical_node_path(self) -> NodePath: ...
     def get_phys_body(self) -> PhysicsObject: ...
     def clear_linear_forces(self) -> None:
         """Erases the linear force list"""
-        ...
     def clear_angular_forces(self) -> None:
         """Erases the angular force list"""
-        ...
     def clear_physics_objects(self) -> None:
         """Erases the object list"""
-        ...
     def add_linear_force(self, f: LinearForce) -> None:
         """Adds a linear force to the force list"""
-        ...
     def add_angular_force(self, f: AngularForce) -> None:
         """Adds an angular force to the force list"""
-        ...
     def add_physics_object(self, po: PhysicsObject) -> None:
         """Adds an object to the physics object vector"""
-        ...
     def remove_linear_force(self, f: LinearForce) -> None:
         """removes a linear force from the force list"""
-        ...
     def remove_angular_force(self, f: AngularForce) -> None:
         """removes an angular force from the force list"""
-        ...
     def get_num_linear_forces(self) -> int: ...
     def get_linear_force(self, index: int) -> LinearForce: ...
     def get_num_angular_forces(self) -> int: ...
     def get_angular_force(self, index: int) -> AngularForce: ...
     def set_viscosity(self, viscosity: float) -> None:
         """Set the local viscosity."""
-        ...
     def get_viscosity(self) -> float:
         """Get the local viscosity."""
-        ...
     def get_objects(self) -> PhysicsObjectCollection: ...
     def output(self, out: ostream = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_physics_objects(self, out: ostream = ..., indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_linear_forces(self, out: ostream = ..., indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_angular_forces(self, out: ostream = ..., indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write(self, out: ostream = ..., indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def get_linear_forces(self) -> tuple[LinearForce, ...]: ...
     def get_angular_forces(self) -> tuple[AngularForce, ...]: ...
     getPhysicsManager = get_physics_manager
@@ -471,7 +406,6 @@ class PhysicalNode(PandaNode):
     physicals: Sequence[Physical]
     def __init__(self, name: str) -> None:
         """default constructor"""
-        ...
     def clear(self) -> None: ...
     def get_physical(self, index: int) -> Physical: ...
     def get_num_physicals(self) -> int: ...
@@ -479,20 +413,15 @@ class PhysicalNode(PandaNode):
         """Adds a Physical to this PhysicalNode.  If it is already added to this node,
         does nothing.  It is an error to add a Physical to multiple PhysicalNodes.
         """
-        ...
     def add_physicals_from(self, other: PhysicalNode) -> None:
         """append operation"""
-        ...
     def set_physical(self, index: int, physical: Physical) -> None:
         """replace operation"""
-        ...
     def insert_physical(self, index: int, physical: Physical) -> None:
         """insert operation"""
-        ...
     @overload
     def remove_physical(self, physical: Physical) -> None:
         """remove operation"""
-        ...
     @overload
     def remove_physical(self, index: int) -> None: ...
     def get_physicals(self) -> tuple[Physical, ...]: ...
@@ -519,7 +448,6 @@ class ActorNode(PhysicalNode):
         `(self, name: str = ...)`:
         Constructor
         """
-        ...
     @overload
     def __init__(self, copy: ActorNode) -> None: ...
     def get_physics_object(self) -> PhysicsObject: ...
@@ -529,7 +457,6 @@ class ActorNode(PhysicalNode):
         """this sets the transform generated by the contained Physical, moving the
         node and subsequent geometry.  i.e.  copy from PhysicsObject to PandaNode
         """
-        ...
     def set_transform_limit(self, limit: float) -> None: ...
     getPhysicsObject = get_physics_object
     setContactVector = set_contact_vector
@@ -544,16 +471,12 @@ class BaseIntegrator(ReferenceCount):
     def __init__(self, __param0: BaseIntegrator) -> None: ...
     def output(self, out: ostream) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_precomputed_linear_matrices(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_precomputed_angular_matrices(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     writePrecomputedLinearMatrices = write_precomputed_linear_matrices
     writePrecomputedAngularMatrices = write_precomputed_angular_matrices
 
@@ -568,7 +491,6 @@ class AngularEulerIntegrator(AngularIntegrator):
     """
     def __init__(self) -> None:
         """constructor"""
-        ...
 
 class AngularVectorForce(AngularForce):
     """a simple directed torque force, the angular equivalent of simple vector
@@ -582,7 +504,6 @@ class AngularVectorForce(AngularForce):
         `(self, quat: LRotation)`; `(self, h: float, p: float, r: float)`:
         constructor
         """
-        ...
     @overload
     def __init__(self, quat: Vec4f) -> None: ...
     @overload
@@ -602,29 +523,23 @@ class ForceNode(PandaNode):
     forces: Sequence[BaseForce]
     def __init__(self, name: str) -> None:
         """default constructor"""
-        ...
     def clear(self) -> None: ...
     def get_force(self, index: int) -> BaseForce: ...
     def get_num_forces(self) -> int: ...
     def add_force(self, force: BaseForce) -> None: ...
     def add_forces_from(self, other: ForceNode) -> None:
         """append operation"""
-        ...
     def set_force(self, index: int, force: BaseForce) -> None:
         """replace operation"""
-        ...
     def insert_force(self, index: int, force: BaseForce) -> None:
         """insert operation"""
-        ...
     @overload
     def remove_force(self, force: BaseForce) -> None:
         """remove operation"""
-        ...
     @overload
     def remove_force(self, index: int) -> None: ...
     def write_forces(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def get_forces(self) -> tuple[BaseForce, ...]: ...
     getForce = get_force
     getNumForces = get_num_forces
@@ -650,18 +565,14 @@ class LinearControlForce(LinearForce):
         `(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...)`:
         Vector Constructor
         """
-        ...
     @overload
     def __init__(self, copy: LinearControlForce) -> None: ...
     def clear_physics_object(self) -> None:
         """encapsulating wrapper"""
-        ...
     def set_physics_object(self, po: PhysicsObject) -> None:
         """encapsulating wrapper"""
-        ...
     def get_physics_object(self) -> PhysicsObject:
         """piecewise encapsulating wrapper"""
-        ...
     @overload
     def set_vector(self, v: Vec3f) -> None:
         """`(self, v: LVector3)`:
@@ -670,7 +581,6 @@ class LinearControlForce(LinearForce):
         `(self, x: float, y: float, z: float)`:
         piecewise encapsulating wrapper
         """
-        ...
     @overload
     def set_vector(self, x: float, y: float, z: float) -> None: ...
     def get_local_vector(self) -> LVector3: ...
@@ -695,7 +605,6 @@ class LinearCylinderVortexForce(LinearForce):
         `(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...)`:
         Simple Constructor
         """
-        ...
     @overload
     def __init__(self, copy: LinearCylinderVortexForce) -> None: ...
     def set_coef(self, coef: float) -> None: ...
@@ -721,25 +630,18 @@ class LinearDistanceForce(LinearForce):
     FTONEOVERRCUBED: Final[Literal[2]]
     def set_radius(self, r: float) -> None:
         """set the radius"""
-        ...
     def set_falloff_type(self, ft: _LinearDistanceForce_FalloffType) -> None:
         """falloff_type encapsulating wrap"""
-        ...
     def set_force_center(self, p: Vec3f) -> None:
         """set the force center"""
-        ...
     def get_radius(self) -> float:
         """radius query"""
-        ...
     def get_falloff_type(self) -> _LinearDistanceForce_FalloffType:
         """falloff_type query"""
-        ...
     def get_force_center(self) -> LPoint3:
         """force_center query"""
-        ...
     def get_scalar_term(self) -> float:
         """calculate the term based on falloff"""
-        ...
     setRadius = set_radius
     setFalloffType = set_falloff_type
     setForceCenter = set_force_center
@@ -759,7 +661,6 @@ class LinearEulerIntegrator(LinearIntegrator):
     """
     def __init__(self) -> None:
         """constructor"""
-        ...
 
 class LinearFrictionForce(LinearForce):
     """Friction-based drag force"""
@@ -771,7 +672,6 @@ class LinearFrictionForce(LinearForce):
         `(self, coef: float = ..., a: float = ..., m: bool = ...)`:
         Constructor
         """
-        ...
     @overload
     def __init__(self, copy: LinearFrictionForce) -> None: ...
     def set_coef(self, coef: float) -> None: ...
@@ -794,7 +694,6 @@ class LinearJitterForce(LinearRandomForce):
         `(self, a: float = ..., m: bool = ...)`:
         constructor
         """
-        ...
     @overload
     def __init__(self, copy: LinearJitterForce) -> None: ...
 
@@ -808,7 +707,6 @@ class LinearNoiseForce(LinearRandomForce):
         `(self, a: float = ..., m: bool = ...)`:
         constructor
         """
-        ...
     @overload
     def __init__(self, copy: LinearNoiseForce) -> None: ...
 
@@ -822,7 +720,6 @@ class LinearSinkForce(LinearDistanceForce):
         `(self, copy: LinearSinkForce)`:
         copy constructor
         """
-        ...
     @overload
     def __init__(self, p: Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
 
@@ -836,7 +733,6 @@ class LinearSourceForce(LinearDistanceForce):
         `(self, copy: LinearSourceForce)`:
         copy constructor
         """
-        ...
     @overload
     def __init__(self, p: Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
 
@@ -844,7 +740,6 @@ class LinearUserDefinedForce(LinearForce):
     """A programmable force that takes an evaluator function."""
     def __init__(self, copy: LinearUserDefinedForce) -> None:
         """copy constructor"""
-        ...
 
 class LinearVectorForce(LinearForce):
     """Simple directed vector force.  Suitable for gravity, non-turbulent wind,
@@ -861,7 +756,6 @@ class LinearVectorForce(LinearForce):
         `(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...)`:
         Default/Piecewise constructor
         """
-        ...
     @overload
     def __init__(self, copy: LinearVectorForce) -> None: ...
     @overload
@@ -874,7 +768,6 @@ class LinearVectorForce(LinearForce):
         `(self, x: float, y: float, z: float)`:
         piecewise encapsulating wrapper
         """
-        ...
     @overload
     def set_vector(self, x: float, y: float, z: float) -> None: ...
     def get_local_vector(self) -> LVector3: ...
@@ -888,7 +781,6 @@ class PhysicsCollisionHandler(CollisionHandlerPusher):
     """
     def set_almost_stationary_speed(self, speed: float) -> None:
         """These setters and getter are a bit of a hack:"""
-        ...
     def get_almost_stationary_speed(self) -> float: ...
     def set_static_friction_coef(self, coef: float) -> None: ...
     def get_static_friction_coef(self) -> float: ...
@@ -908,55 +800,38 @@ class PhysicsManager:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: PhysicsManager = ...) -> None:
         """Default Constructor.  NOTE: EulerIntegrator is the standard default."""
-        ...
     def attach_linear_integrator(self, i: LinearIntegrator) -> None:
         """Hooks a linear integrator into the manager"""
-        ...
     def attach_angular_integrator(self, i: AngularIntegrator) -> None:
         """Hooks an angular integrator into the manager"""
-        ...
     def attach_physical(self, p: Physical) -> None:
         """Registers a Physical class with the manager"""
-        ...
     def attach_physicalnode(self, p: PhysicalNode) -> None:
         """Please call attach_physical_node instead."""
-        ...
     def attach_physical_node(self, p: PhysicalNode) -> None:
         """Registers a physicalnode with the manager"""
-        ...
     def add_linear_force(self, f: LinearForce) -> None:
         """Adds a global linear force to the physics manager"""
-        ...
     def add_angular_force(self, f: AngularForce) -> None:
         """Adds a global angular force to the physics manager"""
-        ...
     def clear_linear_forces(self) -> None:
         """Resets the physics manager force vector"""
-        ...
     def clear_angular_forces(self) -> None:
         """Resets the physics manager force vector"""
-        ...
     def clear_physicals(self) -> None:
         """Resets the physics manager objects vector"""
-        ...
     def set_viscosity(self, viscosity: float) -> None:
         """Set the global viscosity."""
-        ...
     def get_viscosity(self) -> float:
         """Get the global viscosity."""
-        ...
     def remove_physical(self, p: Physical) -> None:
         """takes a physical out of the object list"""
-        ...
     def remove_physical_node(self, p: PhysicalNode) -> None:
         """Removes a physicalnode from the manager"""
-        ...
     def remove_linear_force(self, f: LinearForce) -> None:
         """takes a linear force out of the physics list"""
-        ...
     def remove_angular_force(self, f: AngularForce) -> None:
         """takes an angular force out of the physics list"""
-        ...
     def do_physics(self, dt: float, p: Physical = ...) -> None:
         """`(self, dt: float)`:
         This is the main high-level API call.  Performs integration on every
@@ -966,30 +841,22 @@ class PhysicsManager:
         This is the main high-level API call.  Performs integration on a single
         physical.  Make sure its associated forces are active.
         """
-        ...
     def init_random_seed(self) -> None:
         """One-time config function, sets up the random seed used by the physics and
         particle systems.  For synchronizing across distributed computers
         """
-        ...
     def output(self, out: ostream) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_physicals(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_linear_forces(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write_angular_forces(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def write(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     def debug_output(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
-        ...
     attachLinearIntegrator = attach_linear_integrator
     attachAngularIntegrator = attach_angular_integrator
     attachPhysical = attach_physical

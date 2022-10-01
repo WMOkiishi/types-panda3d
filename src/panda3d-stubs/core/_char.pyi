@@ -31,7 +31,6 @@ class CharacterJoint(MovingPartMatrix):
         A CharacterJointEffect for this joint's Character will automatically be
         added to the specified node.
         """
-        ...
     def remove_net_transform(self, node: PandaNode) -> bool:
         """Removes the indicated node from the list of nodes that will be updated each
         frame with the joint's net transform from the root.  Returns true if the
@@ -40,23 +39,19 @@ class CharacterJoint(MovingPartMatrix):
         If the node has a CharacterJointEffect that matches this joint's Character,
         it will be cleared.
         """
-        ...
     def has_net_transform(self, node: PandaNode) -> bool:
         """Returns true if the node is on the list of nodes that will be updated each
         frame with the joint's net transform from the root, false otherwise.
         """
-        ...
     def clear_net_transforms(self) -> None:
         """Removes all nodes from the list of nodes that will be updated each frame
         with the joint's net transform from the root.
         """
-        ...
     def get_net_transforms(self) -> NodePathCollection:
         """Returns a list of the net transforms set for this node.  Note that this
         returns a list of NodePaths, even though the net transforms are actually a
         list of PandaNodes.
         """
-        ...
     def add_local_transform(self, node: PandaNode) -> bool:
         """Adds the indicated node to the list of nodes that will be updated each
         frame with the joint's local transform from its parent.  Returns true if
@@ -69,7 +64,6 @@ class CharacterJoint(MovingPartMatrix):
         A CharacterJointEffect for this joint's Character will automatically be
         added to the specified node.
         """
-        ...
     def remove_local_transform(self, node: PandaNode) -> bool:
         """Removes the indicated node from the list of nodes that will be updated each
         frame with the joint's local transform from its parent.  Returns true if
@@ -78,23 +72,19 @@ class CharacterJoint(MovingPartMatrix):
         If the node has a CharacterJointEffect that matches this joint's Character,
         it will be cleared.
         """
-        ...
     def has_local_transform(self, node: PandaNode) -> bool:
         """Returns true if the node is on the list of nodes that will be updated each
         frame with the joint's local transform from its parent, false otherwise.
         """
-        ...
     def clear_local_transforms(self) -> None:
         """Removes all nodes from the list of nodes that will be updated each frame
         with the joint's local transform from its parent.
         """
-        ...
     def get_local_transforms(self) -> NodePathCollection:
         """Returns a list of the local transforms set for this node.  Note that this
         returns a list of NodePaths, even though the local transforms are actually
         a list of PandaNodes.
         """
-        ...
     @overload
     def get_transform(self) -> LMatrix4:
         """`(self)`:
@@ -103,7 +93,6 @@ class CharacterJoint(MovingPartMatrix):
         `(self, transform: LMatrix4)`:
         Copies the joint's current transform into the indicated matrix.
         """
-        ...
     @overload
     def get_transform(self, transform: Mat4f) -> None: ...
     def get_transform_state(self) -> TransformState: ...
@@ -111,10 +100,8 @@ class CharacterJoint(MovingPartMatrix):
         """Copies the joint's current net transform (composed from the root of the
         character joint hierarchy) into the indicated matrix.
         """
-        ...
     def get_character(self) -> Character:
         """Returns the Character that owns this joint."""
-        ...
     addNetTransform = add_net_transform
     removeNetTransform = remove_net_transform
     hasNetTransform = has_net_transform
@@ -145,12 +132,10 @@ class CharacterVertexSlider(VertexSlider):
         """Constructs a new object that converts vertices from the indicated joint's
         coordinate space, into the other indicated joint's space.
         """
-        ...
     def get_char_slider(self) -> CharacterSlider:
         """Returns the CharacterSlider object for which this object returns the slider
         value.
         """
-        ...
     getCharSlider = get_char_slider
 
 class JointVertexTransform(VertexTransform):
@@ -167,10 +152,8 @@ class JointVertexTransform(VertexTransform):
         """Constructs a new object that converts vertices from the indicated joint's
         coordinate space, into the other indicated joint's space.
         """
-        ...
     def get_joint(self) -> CharacterJoint:
         """Returns the joint for which this object returns the transform."""
-        ...
     getJoint = get_joint
 
 class Character(PartBundleNode):
@@ -211,7 +194,6 @@ class Character(PartBundleNode):
         This method is intended to unify two different models that share a common
         skeleton, for instance, different LOD's of the same model.
         """
-        ...
     @overload
     def merge_bundles(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle) -> None: ...
     def set_lod_animation(self, center: Vec3f, far_distance: float, near_distance: float, delay_factor: float) -> None:
@@ -236,36 +218,30 @@ class Character(PartBundleNode):
         If multiple cameras are viewing the character in any given frame, the
         closest one counts.
         """
-        ...
     def clear_lod_animation(self) -> None:
         """Undoes the effect of a recent call to set_lod_animation().  Henceforth, the
         character will animate every frame, regardless of its distance from the
         camera.
         """
-        ...
     def find_joint(self, name: str) -> CharacterJoint:
         """Returns a pointer to the joint with the given name, if there is such a
         joint, or NULL if there is no such joint.  This will not return a pointer
         to a slider.
         """
-        ...
     def find_slider(self, name: str) -> CharacterSlider:
         """Returns a pointer to the slider with the given name, if there is such a
         slider, or NULL if there is no such slider.  This will not return a pointer
         to a joint.
         """
-        ...
     def write_parts(self, out: ostream) -> None:
         """Writes a list of the Character's joints and sliders, in their hierchical
         structure, to the indicated output stream.
         """
-        ...
     def write_part_values(self, out: ostream) -> None:
         """Writes a list of the Character's joints and sliders, along with each
         current position, in their hierchical structure, to the indicated output
         stream.
         """
-        ...
     def update_to_now(self) -> None:
         """Advances the character's frame to the current time, and then calls
         update().  This can be used by show code to force an update of the
@@ -274,16 +250,13 @@ class Character(PartBundleNode):
 
         @deprecated Call update() instead.
         """
-        ...
     def update(self) -> None:
         """Recalculates the Character's joints and vertices for the current frame.
         Normally this is performed automatically during the render and need not be
         called explicitly.
         """
-        ...
     def force_update(self) -> None:
         """Recalculates the character even if we think it doesn't need it."""
-        ...
     getBundle = get_bundle
     mergeBundles = merge_bundles
     setLodAnimation = set_lod_animation
@@ -301,10 +274,8 @@ class CharacterJointBundle(PartBundle):
         """Normally, there is no need to create a CharacterJointBundle directly.  The
         Character node will automatically create one for itself.
         """
-        ...
     def get_node(self, n: int) -> Character:
         """Returns the nth Character associated with this PartBundle."""
-        ...
     getNode = get_node
 
 class CharacterJointEffect(RenderEffect):
@@ -323,10 +294,8 @@ class CharacterJointEffect(RenderEffect):
         contains the CharacterJointEffect, it will implicitly call
         character->update() first.
         """
-        ...
     def get_character(self) -> Character:
         """Returns the Character that will get update() called on it when this node's
         relative transform is queried, or NULL if there is no such character.
         """
-        ...
     getCharacter = get_character

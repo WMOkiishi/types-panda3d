@@ -218,7 +218,6 @@ class Function:
                     yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
                 else:
                     yield f'    """{self.doc}"""'
-                yield '    ...'  # This isn't really necessary
                 doc_printed = True
 
 
@@ -262,7 +261,6 @@ class Attribute:
                     yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
                 else:
                     yield f'    """{self.doc}"""'
-                yield '    ...'  # This isn't really necessary
         else:
             if self.type:
                 attribute_def = f'{self.name}: {self.type}'

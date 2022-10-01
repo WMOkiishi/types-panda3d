@@ -33,25 +33,21 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
         at 8000 samples per second.  To get more interesting audio, you need to
         construct a subclass of this class.
         """
-        ...
     @overload
     def __init__(self, __param0: MovieAudio) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def open(self) -> MovieAudioCursor:
         """Open this audio, returning a MovieAudioCursor"""
-        ...
     @staticmethod
     def get(name: Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file.  Just calls
         MovieTypeRegistry::make_audio().
         """
-        ...
     def get_filename(self) -> Filename:
         """Returns the movie's filename.  A movie is not guaranteed to have a
         filename, if not, then this function returns a null filename.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
@@ -67,13 +63,11 @@ class FlacAudio(MovieAudio):
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
-        ...
     @overload
     def __init__(self, __param0: FlacAudio) -> None: ...
     @staticmethod
     def make(name: Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
-        ...
 
 class MovieAudioCursor(TypedWritableReferenceCount):
     """A MovieAudio is actually any source that provides a sequence of audio
@@ -92,18 +86,14 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         at 8000 samples per second.  To get more interesting audio, you need to
         construct a subclass of this class.
         """
-        ...
     @overload
     def __init__(self, __param0: MovieAudioCursor) -> None: ...
     def get_source(self) -> MovieAudio:
         """Returns the MovieAudio which this cursor references."""
-        ...
     def audio_rate(self) -> int:
         """Returns the audio sample rate."""
-        ...
     def audio_channels(self) -> int:
         """Returns the number of audio channels (ie, two for stereo, one for mono)."""
-        ...
     def length(self) -> float:
         """Returns the length of the movie.  Attempting to read audio samples beyond
         the specified length will produce silent samples.
@@ -121,7 +111,6 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         An audio consumer needs to check the length, the ready status, and the
         aborted flag.
         """
-        ...
     def can_seek(self) -> bool:
         """Returns true if the movie can seek.  If this is true, seeking is still not
         guaranteed to be fast: for some movies, seeking is implemented by rewinding
@@ -130,21 +119,16 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         location by reading samples and discarding them.  However, to move
         backward, can_seek must return true.
         """
-        ...
     def can_seek_fast(self) -> bool:
         """Returns true if seek operations are constant time."""
-        ...
     def tell(self) -> float:
         """Returns the current offset within the file."""
-        ...
     def skip_samples(self, n: int) -> None:
         """Skip audio samples from the stream.  This is mostly for debugging purposes."""
-        ...
     def aborted(self) -> bool:
         """If aborted is true, it means that the "ready" samples are not being
         replenished.  See the method "ready" for an explanation.
         """
-        ...
     def ready(self) -> int:
         """Returns the number of audio samples that are ready to read.  This is
         primarily relevant for sources like microphones which produce samples at a
@@ -167,7 +151,6 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         An audio consumer needs to check the length, the ready status, and the
         aborted flag.
         """
-        ...
     def seek(self, offset: float) -> None:
         """Skips to the specified offset within the file.
 
@@ -185,7 +168,6 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         target location.  However, in truth, the data you read may come from a
         slightly offset location.
         """
-        ...
     @overload
     def read_samples(self, n: int) -> str:
         """`(self, n: int)`:
@@ -203,7 +185,6 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         This is not particularly efficient, but it may be a convenient way to
         manipulate samples in python.
         """
-        ...
     @overload
     def read_samples(self, n: int, dg: Datagram) -> None: ...
     getSource = get_source
@@ -225,7 +206,6 @@ class FlacAudioCursor(MovieAudioCursor):
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
-        ...
     @overload
     def __init__(self, src: FlacAudio, stream: istream) -> None: ...
 
@@ -249,7 +229,6 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
         white frames that last one second each.  To get more interesting video, you
         need to construct a subclass of this class.
         """
-        ...
     @overload
     def __init__(self, __param0: MovieVideo) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
@@ -258,23 +237,19 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
         """Open this video, returning a MovieVideoCursor of the appropriate type.
         Returns NULL on error.
         """
-        ...
     @staticmethod
     def get(name: Filepath) -> MovieVideo:
         """Obtains a MovieVideo that references a file.  Just calls
         MovieTypeRegistry::make_video().
         """
-        ...
     def get_filename(self) -> Filename:
         """Returns the movie's filename.  A movie is not guaranteed to have a
         filename, if not, then this function returns an empty filename.
         """
-        ...
     def get_subfile_info(self) -> SubfileInfo:
         """If the movie is to be loaded from a subfile on disk, this returns the
         subfile info.  Check info.is_empty() to see if this is valid data.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
@@ -288,7 +263,6 @@ class InkblotVideo(MovieVideo):
     @overload
     def __init__(self, __param0: InkblotVideo) -> None:
         """xxx"""
-        ...
     @overload
     def __init__(self, x: int, y: int, fps: int) -> None: ...
 
@@ -314,13 +288,11 @@ class MovieVideoCursor(TypedWritableReferenceCount):
             Returns 0 if the two buffers are of the same frame, <0 if this one comes
             earlier than the other one, and >0 if the other one comes earlier.
             """
-            ...
         def get_timestamp(self) -> float:
             """Returns the nearest timestamp value of this particular buffer.  Ideally,
             MovieVideoCursor::set_time() for this timestamp would return this buffer
             again.  This need be defined only if compare_timestamp() is also defined.
             """
-            ...
         @staticmethod
         def get_class_type() -> TypeHandle: ...
         compareTimestamp = compare_timestamp
@@ -329,16 +301,12 @@ class MovieVideoCursor(TypedWritableReferenceCount):
     def __init__(self, __param0: MovieVideoCursor) -> None: ...
     def get_source(self) -> MovieVideo:
         """Get the MovieVideo which this cursor references."""
-        ...
     def size_x(self) -> int:
         """Get the horizontal size of the movie."""
-        ...
     def size_y(self) -> int:
         """Get the vertical size of the movie."""
-        ...
     def get_num_components(self) -> int:
         """Returns 4 if the movie has an alpha channel, 3 otherwise."""
-        ...
     def length(self) -> float:
         """Returns the length of the movie.
 
@@ -361,7 +329,6 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         elongated video (padded with black frames).  There are utilities out there
         to fix the length values in AVI files.
         """
-        ...
     def can_seek(self) -> bool:
         """Returns true if the movie can seek.  If this is true, seeking is still not
         guaranteed to be fast: for some movies, seeking is implemented by rewinding
@@ -370,22 +337,18 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         location by reading frames and discarding them.  However, to move backward,
         can_seek must return true.
         """
-        ...
     def can_seek_fast(self) -> bool:
         """Returns true if seek operations are constant time."""
-        ...
     def aborted(self) -> bool:
         """Returns true if the video has aborted prematurely.  For example, this could
         occur if the Movie was actually an internet TV station, and the connection
         was lost.  Reaching the normal end of the video does not constitute an
         'abort' condition.
         """
-        ...
     def ready(self) -> bool:
         """Returns true if the cursor is a streaming source, and if a video frame is
         ready to be read.  For non- streaming sources, this is always false.
         """
-        ...
     def streaming(self) -> bool:
         """Returns true if the video frames are being "pushed" at us by something that
         operates at its own speed - for example, a webcam.  In this case, the
@@ -397,12 +360,10 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         When streaming, you should still pay attention to last_start, but the value
         of next_start is only a guess.
         """
-        ...
     def setup_texture(self, tex: Texture) -> None:
         """Set up the specified Texture object to contain content from this movie.
         This should be called once, not every frame.
         """
-        ...
     def set_time(self, timestamp: float, loop_count: int) -> bool:
         """Updates the cursor to the indicated time.  If loop_count >= 1, the time is
         clamped to the movie's length * loop_count.  If loop_count <= 0, the time
@@ -420,7 +381,6 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         quickly.  It may have to rewind the movie and then fast forward to the
         desired location.  Only if can_seek_fast returns true can it seek rapidly.
         """
-        ...
     def fetch_buffer(self) -> MovieVideoCursor.Buffer:
         """Gets the current video frame (as specified by set_time()) from the movie
         and returns it in a pre-allocated buffer.  You may simply let the buffer
@@ -429,20 +389,16 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         This may return NULL (even if set_time() returned true) if the frame is not
         available for some reason.
         """
-        ...
     def apply_to_texture(self, buffer: MovieVideoCursor.Buffer, t: Texture, page: int) -> None:
         """Stores this buffer's contents in the indicated texture."""
-        ...
     def apply_to_texture_rgb(self, buffer: MovieVideoCursor.Buffer, t: Texture, page: int) -> None:
         """Copies this buffer's contents into the RGB channels of the supplied
         texture.  The alpha channel of the texture is not touched.
         """
-        ...
     def apply_to_texture_alpha(self, buffer: MovieVideoCursor.Buffer, t: Texture, page: int, alpha_src: int) -> None:
         """Copies this buffer's contents into the alpha channel of the supplied
         texture.  The RGB channels of the texture are not touched.
         """
-        ...
     getSource = get_source
     sizeX = size_x
     sizeY = size_y
@@ -461,7 +417,6 @@ class InkblotVideoCursor(MovieVideoCursor):
     @overload
     def __init__(self, src: InkblotVideo) -> None:
         """xxx"""
-        ...
     @overload
     def __init__(self, __param0: InkblotVideoCursor) -> None: ...
 
@@ -481,17 +436,13 @@ class MicrophoneAudio(MovieAudio):
         plus a set of configuration parameters.  For example, "Soundblaster Audigy
         Line in at 44,100 samples/sec" would be an option.
         """
-        ...
     @staticmethod
     def get_option(n: int) -> MicrophoneAudio:
         """Returns the nth microphone option."""
-        ...
     def get_channels(self) -> int:
         """Returns the number of channels."""
-        ...
     def get_rate(self) -> int:
         """Returns the sample rate."""
-        ...
     def get_options(self) -> tuple[MicrophoneAudio, ...]: ...
     getNumOptions = get_num_options
     getOption = get_option
@@ -508,13 +459,11 @@ class OpusAudio(MovieAudio):
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
-        ...
     @overload
     def __init__(self, __param0: OpusAudio) -> None: ...
     @staticmethod
     def make(name: Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
-        ...
 
 class OpusAudioCursor(MovieAudioCursor):
     """Interfaces with the libopusfile library to implement decoding of Opus
@@ -528,7 +477,6 @@ class OpusAudioCursor(MovieAudioCursor):
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
-        ...
     @overload
     def __init__(self, src: OpusAudio, stream: istream) -> None: ...
 
@@ -544,7 +492,6 @@ class UserDataAudio(MovieAudio):
         """This constructor returns a UserDataAudio --- a means to supply raw audio
         samples manually.
         """
-        ...
     @overload
     def __init__(self, rate: int, channels: int, remove_after_read: bool = ...) -> None: ...
     @overload
@@ -558,14 +505,12 @@ class UserDataAudio(MovieAudio):
         stored little-endian in the string.  This is not particularly efficient,
         but it may be convenient to deal with samples in python.
         """
-        ...
     @overload
     def append(self, src: DatagramIterator, len: int = ...) -> None: ...
     def done(self) -> None:
         """Promises not to append any more samples, ie, this marks the end of the
         audio stream.
         """
-        ...
 
 class UserDataAudioCursor(MovieAudioCursor):
     """A UserDataAudioCursor is a means to manually supply a sequence of raw audio
@@ -583,13 +528,11 @@ class VorbisAudio(MovieAudio):
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
-        ...
     @overload
     def __init__(self, __param0: VorbisAudio) -> None: ...
     @staticmethod
     def make(name: Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
-        ...
 
 class VorbisAudioCursor(MovieAudioCursor):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
@@ -600,7 +543,6 @@ class VorbisAudioCursor(MovieAudioCursor):
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
-        ...
     @overload
     def __init__(self, src: VorbisAudio, stream: istream) -> None: ...
 
@@ -611,13 +553,11 @@ class WavAudio(MovieAudio):
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
-        ...
     @overload
     def __init__(self, __param0: WavAudio) -> None: ...
     @staticmethod
     def make(name: Filepath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
-        ...
 
 class WavAudioCursor(MovieAudioCursor):
     """Used for reading PCM .wav files.  Supported formats are linear PCM, IEEE
@@ -628,6 +568,5 @@ class WavAudioCursor(MovieAudioCursor):
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
-        ...
     @overload
     def __init__(self, src: WavAudio, stream: istream) -> None: ...

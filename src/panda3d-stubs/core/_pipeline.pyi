@@ -65,36 +65,30 @@ class Thread(TypedReferenceCount, Namable):
         within a given thread, unless it is given the same name each time (in which
         case the same pointer will be returned each time).
         """
-        ...
     def get_sync_name(self) -> str:
         """Returns the sync name of the thread.  This name collects threads into "sync
         groups", which are expected to run synchronously.  This is mainly used for
         the benefit of PStats; threads with the same sync name can be ticked all at
         once via the thread_tick() call.
         """
-        ...
     def get_pstats_index(self) -> int:
         """Returns the PStats index associated with this thread, or -1 if no index has
         yet been associated with this thread.  This is used internally by the
         PStatClient; you should not need to call this directly.
         """
-        ...
     def get_python_index(self) -> int:
         """Returns the Python index associated with this thread, or -1 if no index has
         yet been associated with this thread.  This is used internally by the
         direct.stdpy.thread module; you should not need to call this directly.
         """
-        ...
     def get_unique_id(self) -> str:
         """Returns a string that is guaranteed to be unique to this thread, across all
         processes on the machine, during at least the lifetime of this process.
         """
-        ...
     def get_pipeline_stage(self) -> int:
         """Returns the Pipeline stage number associated with this thread.  The default
         stage is 0 if no stage is specified otherwise.  See set_pipeline_stage().
         """
-        ...
     def set_pipeline_stage(self, pipeline_stage: int) -> None:
         """Specifies the Pipeline stage number associated with this thread.  The
         default stage is 0 if no stage is specified otherwise.
@@ -105,18 +99,15 @@ class Thread(TypedReferenceCount, Namable):
         may set it to 1 or 2 (to operate on the previous frame's data, or the
         second previous frame's data).
         """
-        ...
     def set_min_pipeline_stage(self, min_pipeline_stage: int) -> None:
         """Sets this thread's pipeline stage number to at least the indicated value,
         unless it is already larger.  See set_pipeline_stage().
         """
-        ...
     @staticmethod
     def get_main_thread() -> Thread:
         """Returns a pointer to the "main" Thread object--this is the Thread that
         started the whole process.
         """
-        ...
     @staticmethod
     def get_external_thread() -> Thread:
         """Returns a pointer to the "external" Thread object--this is a special Thread
@@ -124,7 +115,6 @@ class Thread(TypedReferenceCount, Namable):
         interface.  Note that multiple different threads may share this same
         pointer.
         """
-        ...
     @staticmethod
     def get_current_thread() -> Thread:
         """Returns a pointer to the currently-executing Thread object.  If this is
@@ -136,27 +126,23 @@ class Thread(TypedReferenceCount, Namable):
         system, although all non-Panda threads will return the exact same Thread
         pointer.
         """
-        ...
     @staticmethod
     def get_current_pipeline_stage() -> int:
         """Returns the integer pipeline stage associated with the current thread.
         This is the same thing as get_current_thread()->get_pipeline_stage(), but
         it may be faster to retrieve in some contexts.
         """
-        ...
     @staticmethod
     def is_threading_supported() -> bool:
         """Returns true if threading support has been compiled in and enabled, or
         false if no threading is available (and Thread::start() will always fail).
         """
-        ...
     @staticmethod
     def is_true_threads() -> bool:
         """Returns true if a real threading library is available that supports actual
         OS-implemented threads, or false if the only threading we can provide is
         simulated user-space threading.
         """
-        ...
     @staticmethod
     def is_simple_threads() -> bool:
         """Returns true if Panda is currently compiled for "simple threads", which is
@@ -165,41 +151,34 @@ class Thread(TypedReferenceCount, Namable):
         "true threads", since one possible implementation of simple threads is via
         true threads with mutex protection to ensure only one runs at a time.
         """
-        ...
     @staticmethod
     def sleep(seconds: float) -> None:
         """Suspends the current thread for at least the indicated amount of time.  It
         might be suspended for longer.
         """
-        ...
     @staticmethod
     def force_yield() -> None:
         """Suspends the current thread for the rest of the current epoch."""
-        ...
     @staticmethod
     def consider_yield() -> None:
         """Possibly suspends the current thread for the rest of the current epoch, if
         it has run for enough this epoch.  This is especially important for the
         simple thread implementation, which relies on cooperative yields like this.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def output_blocker(self, out: ostream) -> None:
         """Writes a description of the mutex or condition variable that this thread is
         blocked on.  Writes nothing if there is no blocker, or if we are not in
         DEBUG_THREADS mode.
         """
-        ...
     @staticmethod
     def write_status(out: ostream) -> None: ...
     def is_started(self) -> bool:
         """Returns true if the thread has been started, false if it has not, or if
         join() has already been called.
         """
-        ...
     def is_joinable(self) -> bool:
         """Returns the value of joinable that was passed to the start() call."""
-        ...
     def start(self, priority: _ThreadPriority, joinable: bool) -> bool:
         """Starts the thread executing.  It is only valid to call this once.
 
@@ -219,35 +198,29 @@ class Thread(TypedReferenceCount, Namable):
         The return value is true if the thread is successfully started, false
         otherwise.
         """
-        ...
     def join(self) -> None:
         """Blocks the calling process until the thread terminates.  If the thread has
         already terminated, this returns immediately.
         """
-        ...
     def preempt(self) -> None:
         """Indicates that this thread should run as soon as possible, preemptying any
         other threads that may be scheduled to run.  This may not be implemented on
         every platform.
         """
-        ...
     def get_current_task(self) -> TypedReferenceCount:
         """Returns the task currently executing on this thread (via the
         AsyncTaskManager), if any, or NULL if the thread is not currently servicing
         a task.
         """
-        ...
     def set_python_index(self, index: int) -> None:
         """Stores a Python index to be associated with this thread.  This is used
         internally by the thread module; you should not need to call this directly.
         """
-        ...
     @staticmethod
     def prepare_for_exit() -> None:
         """Should be called by the main thread just before exiting the program, this
         blocks until any remaining thread cleanup has finished.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
@@ -294,12 +267,10 @@ class MutexDirect:
 
         Also see MutexHolder.
         """
-        ...
     def try_acquire(self) -> bool:
         """Returns immediately, with a true value indicating the mutex has been
         acquired, and false indicating it has not.
         """
-        ...
     def release(self) -> None:
         """Releases the mutex.  It is an error to call this if the mutex was not
         already locked.
@@ -307,31 +278,24 @@ class MutexDirect:
         This method is considered const so that you can lock and unlock const
         mutexes, mainly to allow thread-safe access to otherwise const data.
         """
-        ...
     def debug_is_locked(self) -> bool:
         """Returns true if the current thread has locked the Mutex, false otherwise.
         This method is only intended for use in debugging, hence the method name;
         in the MutexDirect case, it always returns true, since there's not a
         reliable way to determine this otherwise.
         """
-        ...
     def set_name(self, name: str) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def clear_name(self) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def has_name(self) -> bool:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def get_name(self) -> str:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def output(self, out: ostream) -> None:
         """This method is declared virtual in MutexDebug, but non-virtual in
         MutexDirect.
         """
-        ...
     tryAcquire = try_acquire
     debugIsLocked = debug_is_locked
     setName = set_name
@@ -354,7 +318,6 @@ class ConditionVarDirect:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
-        ...
     def wait(self, timeout: float = ...) -> None:
         """`(self)`:
         Waits on the condition.  The caller must already be holding the lock
@@ -381,7 +344,6 @@ class ConditionVarDirect:
 
         See wait() with no parameters for more.
         """
-        ...
     def notify(self) -> None:
         """Informs one of the other threads who are currently blocked on wait() that
         the relevant condition has changed.  If multiple threads are currently
@@ -394,12 +356,10 @@ class ConditionVarDirect:
 
         If no threads are waiting, this is a no-op: the notify event is lost.
         """
-        ...
     def output(self, out: ostream) -> None:
         """This method is declared virtual in ConditionVarDebug, but non-virtual in
         ConditionVarDirect.
         """
-        ...
     getMutex = get_mutex
 
 class ConditionVar(ConditionVarDirect):
@@ -409,10 +369,8 @@ class ConditionVar(ConditionVarDirect):
         responsibility to ensure the Mutex object does not destruct during the
         lifetime of the condition variable.
         """
-        ...
     def get_mutex(self) -> Mutex:
         """Returns the mutex associated with this condition variable."""
-        ...
     getMutex = get_mutex
 
 class ConditionVarFullDirect:
@@ -427,7 +385,6 @@ class ConditionVarFullDirect:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
-        ...
     def wait(self, timeout: float = ...) -> None:
         """`(self)`:
         Waits on the condition.  The caller must already be holding the lock
@@ -454,7 +411,6 @@ class ConditionVarFullDirect:
 
         See wait() with no parameters for more.
         """
-        ...
     def notify(self) -> None:
         """Informs one of the other threads who are currently blocked on wait() that
         the relevant condition has changed.  If multiple threads are currently
@@ -467,7 +423,6 @@ class ConditionVarFullDirect:
 
         If no threads are waiting, this is a no-op: the notify is lost.
         """
-        ...
     def notify_all(self) -> None:
         """Informs all of the other threads who are currently blocked on wait() that
         the relevant condition has changed.
@@ -477,12 +432,10 @@ class ConditionVarFullDirect:
 
         If no threads are waiting, this is a no-op: the notify event is lost.
         """
-        ...
     def output(self, out: ostream) -> None:
         """This method is declared virtual in ConditionVarFullDebug, but non-virtual
         in ConditionVarFullDirect.
         """
-        ...
     getMutex = get_mutex
     notifyAll = notify_all
 
@@ -493,10 +446,8 @@ class ConditionVarFull(ConditionVarFullDirect):
         responsibility to ensure the Mutex object does not destruct during the
         lifetime of the condition variable.
         """
-        ...
     def get_mutex(self) -> Mutex:
         """Returns the mutex associated with this condition variable."""
-        ...
     getMutex = get_mutex
 
 class ReMutexDirect:
@@ -520,12 +471,10 @@ class ReMutexDirect:
         This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
         """
-        ...
     def try_acquire(self, current_thread: Thread = ...) -> bool:
         """Returns immediately, with a true value indicating the mutex has been
         acquired, and false indicating it has not.
         """
-        ...
     def elevate_lock(self) -> None:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one
@@ -536,7 +485,6 @@ class ReMutexDirect:
         it already holds the lock.  It is an error to call this when the calling
         thread does not hold the lock.
         """
-        ...
     def release(self) -> None:
         """Releases the reMutex.  It is an error to call this if the reMutex was not
         already locked.
@@ -544,31 +492,24 @@ class ReMutexDirect:
         This method is considered const so that you can lock and unlock const
         reMutexes, mainly to allow thread-safe access to otherwise const data.
         """
-        ...
     def debug_is_locked(self) -> bool:
         """Returns true if the current thread has locked the ReMutex, false otherwise.
         This method is only intended for use in debugging, hence the method name;
         in the ReMutexDirect case, it always returns true, since there's not a
         reliable way to determine this otherwise.
         """
-        ...
     def set_name(self, name: str) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def clear_name(self) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def has_name(self) -> bool:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def get_name(self) -> str:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def output(self, out: ostream) -> None:
         """This method is declared virtual in MutexDebug, but non-virtual in
         ReMutexDirect.
         """
-        ...
     tryAcquire = try_acquire
     elevateLock = elevate_lock
     debugIsLocked = debug_is_locked
@@ -602,7 +543,6 @@ class LightMutexDirect:
 
         Also see LightMutexHolder.
         """
-        ...
     def release(self) -> None:
         """Releases the lightMutex.  It is an error to call this if the lightMutex was
         not already locked.
@@ -610,31 +550,24 @@ class LightMutexDirect:
         This method is considered const so that you can lock and unlock const
         lightMutexes, mainly to allow thread-safe access to otherwise const data.
         """
-        ...
     def debug_is_locked(self) -> bool:
         """Returns true if the current thread has locked the LightMutex, false
         otherwise.  This method is only intended for use in debugging, hence the
         method name; in the LightMutexDirect case, it always returns true, since
         there's not a reliable way to determine this otherwise.
         """
-        ...
     def set_name(self, name: str) -> None:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def clear_name(self) -> None:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def has_name(self) -> bool:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def get_name(self) -> str:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def output(self, out: ostream) -> None:
         """This method is declared virtual in LightMutexDebug, but non-virtual in
         LightMutexDirect.
         """
-        ...
     debugIsLocked = debug_is_locked
     setName = set_name
     clearName = clear_name
@@ -666,7 +599,6 @@ class LightReMutexDirect:
         This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
         """
-        ...
     def elevate_lock(self) -> None:
         """This method increments the lock count, assuming the calling thread already
         holds the lock.  After this call, release() will need to be called one
@@ -677,7 +609,6 @@ class LightReMutexDirect:
         it already holds the lock.  It is an error to call this when the calling
         thread does not hold the lock.
         """
-        ...
     def release(self) -> None:
         """Releases the lightReMutex.  It is an error to call this if the lightReMutex
         was not already locked.
@@ -685,31 +616,24 @@ class LightReMutexDirect:
         This method is considered const so that you can lock and unlock const
         lightReMutexes, mainly to allow thread-safe access to otherwise const data.
         """
-        ...
     def debug_is_locked(self) -> bool:
         """Returns true if the current thread has locked the LightReMutex, false
         otherwise.  This method is only intended for use in debugging, hence the
         method name; in the LightReMutexDirect case, it always returns true, since
         there's not a reliable way to determine this otherwise.
         """
-        ...
     def set_name(self, name: str) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def clear_name(self) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def has_name(self) -> bool:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def get_name(self) -> str:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-        ...
     def output(self, out: ostream) -> None:
         """This method is declared virtual in MutexDebug, but non-virtual in
         LightReMutexDirect.
         """
-        ...
     elevateLock = elevate_lock
     debugIsLocked = debug_is_locked
     setName = set_name
@@ -739,24 +663,20 @@ class Semaphore:
         """Decrements the internal count.  If the count was already at zero, blocks
         until the count is nonzero, then decrements it.
         """
-        ...
     def try_acquire(self) -> bool:
         """If the semaphore can be acquired without blocking, does so and returns
         true.  Otherwise, returns false.
         """
-        ...
     def release(self) -> int:
         """Increments the semaphore's internal count.  This may wake up another thread
         blocked on acquire().
 
         Returns the count of the semaphore upon release.
         """
-        ...
     def get_count(self) -> int:
         """Returns the current semaphore count.  Note that this call is not thread-
         safe (the count may change at any time).
         """
-        ...
     def output(self, out: ostream) -> None: ...
     tryAcquire = try_acquire
     getCount = get_count

@@ -67,17 +67,14 @@ class PNMFileType(TypedWritable):
         """Returns the number of different possible filename extensions associated
         with this particular file type.
         """
-        ...
     def get_extension(self, n: int) -> str:
         """Returns the nth possible filename extension associated with this particular
         file type, without a leading dot.
         """
-        ...
     def get_suggested_extension(self) -> str:
         """Returns a suitable filename extension (without a leading dot) to suggest
         for files of this type, or empty string if no suggestions are available.
         """
-        ...
     def get_extensions(self) -> tuple[str, ...]: ...
     getName = get_name
     getNumExtensions = get_num_extensions
@@ -93,38 +90,31 @@ class PNMFileTypeRegistry:
     def __init__(self, __param0: PNMFileTypeRegistry) -> None: ...
     def get_num_types(self) -> int:
         """Returns the total number of types registered."""
-        ...
     def get_type(self, n: int) -> PNMFileType:
         """Returns the nth type registered."""
-        ...
     def get_type_from_extension(self, filename: str) -> PNMFileType:
         """Tries to determine what the PNMFileType is likely to be for a particular
         image file based on its extension.  Returns a suitable PNMFileType pointer,
         or NULL if no type can be determined.
         """
-        ...
     def get_type_from_magic_number(self, magic_number: str) -> PNMFileType:
         """Tries to determine what the PNMFileType is likely to be for a particular
         image file based on its magic number, the first two bytes read from the
         file.  Returns a suitable PNMFileType pointer, or NULL if no type can be
         determined.
         """
-        ...
     def get_type_by_handle(self, handle: TypeHandle) -> PNMFileType:
         """Returns the PNMFileType instance stored in the registry for the given
         TypeHandle, e.g.  as retrieved by a previous call to get_type() on the type
         instance.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Writes a list of supported image file types to the indicated output stream,
         one per line.
         """
-        ...
     @staticmethod
     def get_global_ptr() -> PNMFileTypeRegistry:
         """Returns a pointer to the global PNMFileTypeRegistry object."""
-        ...
     def get_types(self) -> tuple[PNMFileType, ...]: ...
     getNumTypes = get_num_types
     getType = get_type
@@ -163,7 +153,6 @@ class PNMImageHeader:
             """Specifies the number of components in the PixelSpec; this is always 4,
             regardless of the type of image it was taken from.
             """
-            ...
         def __le__(self, other: PNMImageHeader.PixelSpec) -> bool: ...
         def compare_to(self, other: PNMImageHeader.PixelSpec) -> int: ...
         def get_red(self) -> int: ...
@@ -196,12 +185,10 @@ class PNMImageHeader:
         def __init__(self, __param0: PNMImageHeader.Histogram = ...) -> None: ...
         def get_num_pixels(self) -> int:
             """Returns the number of unique pixel colors in the histogram."""
-            ...
         def get_pixel(self, n: int) -> PNMImageHeader.PixelSpec:
             """Returns the nth unique pixel color in the histogram.  These are ordered by
             default from most common to least common.
             """
-            ...
         @overload
         def get_count(self, pixel: PNMImageHeader.PixelSpec) -> int:
             """`(self, pixel: PNMImageHeader.PixelSpec)`:
@@ -212,7 +199,6 @@ class PNMImageHeader:
             Returns the number of occurrences in the image of the nth unique pixel
             color in the histogram.
             """
-            ...
         @overload
         def get_count(self, n: int) -> int: ...
         def write(self, out: ostream) -> None: ...
@@ -249,10 +235,8 @@ class PNMImageHeader:
         """Returns the image type of the image, as an enumerated value.  This is
         really just the number of channels cast to the enumerated type.
         """
-        ...
     def get_num_channels(self) -> int:
         """Returns the number of channels in the image."""
-        ...
     def is_grayscale(self, color_type: _PNMImageHeader_ColorType = ...) -> bool:
         """`(self)`:
         Returns false if the image is a full-color image, and has red, green, and
@@ -264,7 +248,6 @@ class PNMImageHeader:
         This static variant of is_grayscale() returns true if the indicated image
         type represents a grayscale image, false otherwise.
         """
-        ...
     def has_alpha(self, color_type: _PNMImageHeader_ColorType = ...) -> bool:
         """`(self)`:
         Returns true if the image includes an alpha channel, false otherwise.
@@ -275,54 +258,43 @@ class PNMImageHeader:
         This static variant of has_alpha() returns true if the indicated image type
         includes an alpha channel, false otherwise.
         """
-        ...
     def get_maxval(self) -> int:
         """Returns the maximum channel value allowable for any pixel in this image;
         for instance, 255 for a typical 8-bit-per-channel image.  A pixel with this
         value is full on.
         """
-        ...
     def get_color_space(self) -> _ColorSpace:
         """Returns the color space that the image is encoded in, or CS_unspecified if
         unknown.
         """
-        ...
     def get_x_size(self) -> int:
         """Returns the number of pixels in the X direction.  This is one more than the
         largest allowable X coordinate.
         """
-        ...
     def get_y_size(self) -> int:
         """Returns the number of pixels in the Y direction.  This is one more than the
         largest allowable Y coordinate.
         """
-        ...
     def get_size(self) -> LVecBase2i:
         """Returns the number of pixels in each direction.  This is one more than the
         largest allowable coordinates.
         """
-        ...
     def get_comment(self) -> str:
         """Gets the user comment from the file."""
-        ...
     def set_comment(self, comment: str) -> None:
         """Writes a user comment string to the image (header)."""
-        ...
     def has_type(self) -> bool:
         """Returns true if the PNMImageHeader knows what type it is, false otherwise."""
-        ...
     def get_type(self) -> PNMFileType:
         """If the file type is known (e.g.  has_type() returns true), returns its
         PNMFileType pointer; otherwise, returns NULL.
         """
-        ...
     def set_type(self, type: PNMFileType) -> None:
         """Sets the file type of this PNMImage.  This will be the default type used
         when an image is read, if the type cannot be determined by magic number or
         inferred by extension, or the type used when the image is written, if the
         type cannot be inferred from the filename extension.
         """
-        ...
     @overload
     def read_header(self, filename: Filepath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ..., report_unknown_type: bool = ...)`:
@@ -342,7 +314,6 @@ class PNMImageHeader:
 
         Returns true if successful, false on error.
         """
-        ...
     @overload
     def read_header(self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool: ...
     def output(self, out: ostream) -> None: ...
@@ -381,7 +352,6 @@ class PfmFile(PNMImageHeader):
         0 is allowed only in the case that x_size and y_size are also == 0; and
         this makes an empty (and invalid) PfmFile.
         """
-        ...
     @overload
     def clear(self, x_size: int, y_size: int, num_channels: int) -> None: ...
     @overload
@@ -400,7 +370,6 @@ class PfmFile(PNMImageHeader):
         This can also handle reading a standard image file supported by PNMImage;
         it will be quietly converted to a floating-point type.
         """
-        ...
     @overload
     def read(self, _in: istream, fullpath: Filepath = ...) -> bool: ...
     @overload
@@ -417,17 +386,14 @@ class PfmFile(PNMImageHeader):
         Writes the PFM data to the indicated stream, returning true on success,
         false on failure.
         """
-        ...
     @overload
     def write(self, out: ostream, fullpath: Filepath = ...) -> bool: ...
     def load(self, pnmimage: PNMImage) -> bool:
         """Fills the PfmFile with the data from the indicated PNMImage, converted to
         floating-point values.
         """
-        ...
     def store(self, pnmimage: PNMImage) -> bool:
         """Copies the data to the indicated PNMImage, converting to RGB values."""
-        ...
     @overload
     def store_mask(self, pnmimage: PNMImage) -> bool:
         """`(self, pnmimage: PNMImage)`:
@@ -445,157 +411,123 @@ class PfmFile(PNMImageHeader):
         min_point[c] <= value[c] <= max_point[c], for any c, are stored with a 0 in
         the mask.
         """
-        ...
     @overload
     def store_mask(self, pnmimage: PNMImage, min_point: Vec4f, max_point: Vec4f) -> bool: ...
     def is_valid(self) -> bool: ...
     def get_scale(self) -> float:
         """The "scale" is reported in the pfm header and is probably meaningless."""
-        ...
     def set_scale(self, scale: float) -> None:
         """The "scale" is reported in the pfm header and is probably meaningless."""
-        ...
     def has_point(self, x: int, y: int) -> bool:
         """Returns true if there is a valid point at x, y.  This always returns true
         unless a "no data" value has been set, in which case it returns false if
         the point at x, y is the "no data" value.
         """
-        ...
     def get_channel(self, x: int, y: int, c: int) -> float:
         """Returns the cth channel of the point value at the indicated point."""
-        ...
     def set_channel(self, x: int, y: int, c: int, value: float) -> None:
         """Replaces the cth channel of the point value at the indicated point."""
-        ...
     def get_point1(self, x: int, y: int) -> float:
         """Returns the 1-component point value at the indicated point."""
-        ...
     def set_point1(self, x: int, y: int, point: float) -> None:
         """Replaces the 1-component point value at the indicated point."""
-        ...
     def get_point2(self, x: int, y: int) -> LPoint2f:
         """Returns the 2-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-        ...
     def set_point2(self, x: int, y: int, point: LVecBase2d | LVecBase2f) -> None:
         """Replaces the 2-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
-        ...
     def modify_point2(self, x: int, y: int) -> LPoint2f:
         """Returns a modifiable 2-component point value at the indicated point."""
-        ...
     def get_point(self, x: int, y: int) -> LPoint3f:
         """Returns the 3-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-        ...
     def set_point(self, x: int, y: int, point: Vec3d | Vec3f) -> None:
         """Replaces the 3-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
-        ...
     def modify_point(self, x: int, y: int) -> LPoint3f:
         """Returns a modifiable 3-component point value at the indicated point."""
-        ...
     def get_point3(self, x: int, y: int) -> LPoint3f:
         """Returns the 3-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-        ...
     def set_point3(self, x: int, y: int, point: Vec3d | Vec3f) -> None:
         """Replaces the 3-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
-        ...
     def modify_point3(self, x: int, y: int) -> LPoint3f:
         """Returns a modifiable 3-component point value at the indicated point."""
-        ...
     def get_point4(self, x: int, y: int) -> LPoint4f:
         """Returns the 4-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-        ...
     def set_point4(self, x: int, y: int, point: Vec4d | Vec4f) -> None:
         """Replaces the 4-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
-        ...
     def modify_point4(self, x: int, y: int) -> LPoint4f:
         """Returns a modifiable 4-component point value at the indicated point."""
-        ...
     def fill(self, value: LVecBase2f | Vec3f | Vec4f | float) -> None:
         """Fills the table with all of the same value."""
-        ...
     def fill_nan(self) -> None:
         """Fills the table with all NaN."""
-        ...
     def fill_no_data_value(self) -> None:
         """Fills the table with the current no_data value, so that the table is empty."""
-        ...
     def fill_channel(self, channel: int, value: float) -> None:
         """Fills the indicated channel with all of the same value, leaving the other
         channels unchanged.
         """
-        ...
     def fill_channel_nan(self, channel: int) -> None:
         """Fills the indicated channel with NaN, leaving the other channels unchanged."""
-        ...
     def fill_channel_masked(self, channel: int, value: float) -> None:
         """Fills the indicated channel with all of the same value, but only where the
         table already has a data point.  Leaves empty points unchanged.
         """
-        ...
     def fill_channel_masked_nan(self, channel: int) -> None:
         """Fills the indicated channel with NaN, but only where the table already has
         a data point.  Leaves empty points unchanged.
         """
-        ...
     def calc_average_point(self, result: Vec3f, x: float, y: float, radius: float) -> bool:
         """Computes the unweighted average point of all points within the box centered
         at (x, y) with the indicated Manhattan-distance radius.  Missing points are
         assigned the value of their nearest neighbor.  Returns true if successful,
         or false if the point value cannot be determined.
         """
-        ...
     def calc_bilinear_point(self, result: Vec3f, x: float, y: float) -> bool:
         """Computes the weighted average of the four nearest points to the floating-
         point index (x, y).  Returns true if the point has any contributors, false
         if the point is unknown.
         """
-        ...
     def calc_min_max(self, min_points: Vec3f, max_points: Vec3f) -> bool:
         """Calculates the minimum and maximum x, y, and z depth component values,
         representing the bounding box of depth values, and places them in the
         indicated vectors.  Returns true if successful, false if the mesh contains
         no points.
         """
-        ...
     def calc_autocrop(self, range: Vec4d | Vec4f) -> bool:
         """Computes the minimum range of x and y across the PFM file that include all
         points.  If there are no points with no_data_value in the grid--that is,
         all points are included--then this will return (0, get_x_size(), 0,
         get_y_size()).
         """
-        ...
     def is_row_empty(self, y: int, x_begin: int, x_end: int) -> bool:
         """Returns true if all of the points on row y, in the range [x_begin, x_end),
         are the no_data value, or false if any one of these points has a value.
         """
-        ...
     def is_column_empty(self, x: int, y_begin: int, y_end: int) -> bool:
         """Returns true if all of the points on column x, from [y_begin, y_end), are
         the no_data value, or false if any one of these points has a value.
         """
-        ...
     def set_zero_special(self, zero_special: bool) -> None:
         """Sets the zero_special flag.  When this flag is true, values of (0, 0, 0) in
         the pfm file are treated as a special case, and are not processed.
 
         This is a special case of set_no_data_value().
         """
-        ...
     def set_no_data_chan4(self, chan4: bool) -> None:
         """Sets the no_data_chan4 flag.  When this flag is true, and the pfm file has
         4 channels, then a negative value in the fourth channel indicates no data.
@@ -603,7 +535,6 @@ class PfmFile(PNMImageHeader):
 
         This is a special case of set_no_data_value().
         """
-        ...
     def set_no_data_nan(self, num_channels: int) -> None:
         """Sets the no_data_nan flag.  When num_channels is nonzero, then a NaN value
         in any of the first num_channels channels indicates no data for that point.
@@ -611,67 +542,55 @@ class PfmFile(PNMImageHeader):
 
         This is a special case of set_no_data_value().
         """
-        ...
     def set_no_data_value(self, no_data_value: Vec4d | Vec4f) -> None:
         """Sets the special value that means "no data" when it appears in the pfm
         file.
         """
-        ...
     def set_no_data_threshold(self, no_data_value: Vec4d | Vec4f) -> None:
         """Sets the special threshold value.  Points that are below this value in all
         components are considered "no value".
         """
-        ...
     def clear_no_data_value(self) -> None:
         """Removes the special value that means "no data" when it appears in the pfm
         file.  All points will thus be considered valid.
         """
-        ...
     def has_no_data_value(self) -> bool:
         """Returns whether a "no data" value has been established by
         set_no_data_value().
         """
-        ...
     def has_no_data_threshold(self) -> bool:
         """Returns whether a "no data" threshold value has been established by
         set_no_data_threshold().
         """
-        ...
     def get_no_data_value(self) -> LPoint4f:
         """If has_no_data_value() returns true, this returns the particular "no data"
         value.
         """
-        ...
     def resize(self, new_x_size: int, new_y_size: int) -> None:
         """Applies a simple filter to resample the pfm file in-place to the indicated
         size.  Don't confuse this with applying a scale to all of the points via
         xform().
         """
-        ...
     def box_filter_from(self, radius: float, copy: PfmFile) -> None:
         """Makes a resized copy of the indicated image into this one using the
         indicated filter.  The image to be copied is squashed and stretched to
         match the dimensions of the current image, applying the appropriate filter
         to perform the stretching.
         """
-        ...
     def gaussian_filter_from(self, radius: float, copy: PfmFile) -> None:
         """Makes a resized copy of the indicated image into this one using the
         indicated filter.  The image to be copied is squashed and stretched to
         match the dimensions of the current image, applying the appropriate filter
         to perform the stretching.
         """
-        ...
     def quick_filter_from(self, copy: PfmFile) -> None:
         """Resizes from the given image, with a fixed radius of 0.5. This is a very
         specialized and simple algorithm that doesn't handle dropping below the
         Nyquist rate very well, but is quite a bit faster than the more general
         box_filter(), above.
         """
-        ...
     def reverse_rows(self) -> None:
         """Performs an in-place reversal of the row (y) data."""
-        ...
     def flip(self, flip_x: bool, flip_y: bool, transpose: bool) -> None:
         """Reverses, transposes, and/or rotates the table in-place according to the
         specified parameters.  If flip_x is true, the x axis is reversed; if flip_y
@@ -679,10 +598,8 @@ class PfmFile(PNMImageHeader):
         axes are exchanged.  These parameters can be used to select any combination
         of 90-degree or 180-degree rotations and flips.
         """
-        ...
     def xform(self, transform: Mat4d | Mat4f) -> None:
         """Applies the indicated transform matrix to all points in-place."""
-        ...
     def forward_distort(self, dist: PfmFile, scale_factor: float = ...) -> None:
         """Applies the distortion indicated in the supplied dist map to the current
         map.  The dist map is understood to be a mapping of points in the range
@@ -700,7 +617,6 @@ class PfmFile(PNMImageHeader):
         coordinates here.  A y value of 0 in the distortion map corresponds with a
         v value of 1 in this file.
         """
-        ...
     def reverse_distort(self, dist: PfmFile, scale_factor: float = ...) -> None:
         """Applies the distortion indicated in the supplied dist map to the current
         map.  The dist map is understood to be a mapping of points in the range
@@ -718,19 +634,16 @@ class PfmFile(PNMImageHeader):
         coordinates here.  A y value of 0 in the distortion map corresponds with a
         v value of 1 in this file.
         """
-        ...
     def apply_1d_lut(self, channel: int, lut: PfmFile, x_scale: float = ...) -> None:
         """Assumes that lut is an X by 1, 1-component PfmFile whose X axis maps points
         to target points.  For each point in this pfm file, computes: p(u,
         v)[channel] = lut(p(u, v)[channel] * x_scale, 0)[0]
         """
-        ...
     def merge(self, other: PfmFile) -> None:
         """Wherever there is missing data in this PfmFile (that is, wherever
         has_point() returns false), copy data from the other PfmFile, which must be
         exactly the same dimensions as this one.
         """
-        ...
     def apply_mask(self, other: PfmFile) -> None:
         """Wherever there is missing data in the other PfmFile, set this the
         corresponding point in this PfmFile to missing as well, so that this
@@ -738,41 +651,34 @@ class PfmFile(PNMImageHeader):
 
         The point is set to "missing" by setting it the no_data_value.
         """
-        ...
     def copy_channel(self, to_channel: int, other: PfmFile, from_channel: int) -> None:
         """Copies just the specified channel values from the indicated PfmFile (which
         could be same as this PfmFile) into the specified channel of this one.
         """
-        ...
     def copy_channel_masked(self, to_channel: int, other: PfmFile, from_channel: int) -> None:
         """Copies just the specified channel values from the indicated PfmFile, but
         only where the other file has a data point.
         """
-        ...
     def apply_crop(self, x_begin: int, x_end: int, y_begin: int, y_end: int) -> None:
         """Reduces the PFM file to the cells in the rectangle bounded by (x_begin,
         x_end, y_begin, y_end), where the _end cells are not included.
         """
-        ...
     def clear_to_texcoords(self, x_size: int, y_size: int) -> None:
         """Replaces this PfmFile with a new PfmFile of size x_size x y_size x 3,
         containing the x y 0 values in the range 0 .. 1 according to the x y index.
         """
-        ...
     def pull_spot(self, delta: Vec4f, xc: float, yc: float, xr: float, yr: float, exponent: float) -> int:
         """Applies delta * t to the point values within radius (xr, yr) distance of
         (xc, yc).  The t value is scaled from 1.0 at the center to 0.0 at radius
         (xr, yr), and this scale follows the specified exponent.  Returns the
         number of points affected.
         """
-        ...
     def calc_tight_bounds(self, min_point: Vec3f, max_point: Vec3f) -> bool:
         """Calculates the minimum and maximum vertices of all points within the table.
         Assumes the table contains 3-D points.
 
         The return value is true if any points in the table, or false if none are.
         """
-        ...
     def compute_planar_bounds(self, center: LVecBase2d | LVecBase2f, point_dist: float, sample_radius: float, points_only: bool) -> BoundingHexahedron:
         """Computes the minmax bounding volume of the points in 3-D space, assuming
         the points represent a mostly-planar surface.
@@ -787,14 +693,12 @@ class PfmFile(PNMImageHeader):
         center, point_dist and sample_radius are in UV space, i.e.  in the range
         0..1.
         """
-        ...
     def compute_sample_point(self, result: Vec3f, x: float, y: float, sample_radius: float) -> None:
         """Computes the average of all the point within sample_radius (manhattan
         distance) and the indicated point.
 
         The point coordinates are given in UV space, in the range 0..1.
         """
-        ...
     def copy_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...) -> None:
         """Copies a rectangular area of another image into a rectangular area of this
         image.  Both images must already have been initialized.  The upper-left
@@ -802,23 +706,19 @@ class PfmFile(PNMImageHeader):
         if the size is omitted, it defaults to the entire other image, or the
         largest piece that will fit.
         """
-        ...
     def add_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are added to the
         pixels of the destination, after scaling by the specified pixel_scale.
         """
-        ...
     def mult_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are multiplied to the
         pixels of the destination, after scaling by the specified pixel_scale.
         """
-        ...
     def divide_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are divided into the
         pixels of the destination, after scaling by the specified pixel_scale.
         dest(x, y) = dest(x, y) / (copy(x, y) * pixel_scale).
         """
-        ...
     def indirect_1d_lookup(self, index_image: PfmFile, channel: int, pixel_values: PfmFile) -> None:
         """index_image is a WxH 1-channel image, while pixel_values is an Nx1
         image with any number of channels.  Typically pixel_values will be
@@ -834,19 +734,16 @@ class PfmFile(PNMImageHeader):
         At present, no interpolation is performed; the nearest value in
         pixel_values is discovered.  This may change in the future.
         """
-        ...
     def gamma_correct(self, from_gamma: float, to_gamma: float) -> None:
         """Assuming the image was constructed with a gamma curve of from_gamma in the
         RGB channels, converts it to an image with a gamma curve of to_gamma in the
         RGB channels.  Does not affect the alpha channel.
         """
-        ...
     def gamma_correct_alpha(self, from_gamma: float, to_gamma: float) -> None:
         """Assuming the image was constructed with a gamma curve of from_gamma in the
         alpha channel, converts it to an image with a gamma curve of to_gamma in
         the alpha channel.  Does not affect the RGB channels.
         """
-        ...
     @overload
     def apply_exponent(self, gray_exponent: float, alpha_exponent: float = ...) -> None:
         """`(self, gray_exponent: float)`; `(self, gray_exponent: float, alpha_exponent: float)`; `(self, c0_exponent: float, c1_exponent: float, c2_exponent: float, c3_exponent: float)`:
@@ -859,7 +756,6 @@ class PfmFile(PNMImageHeader):
         grayscale image, the blue_exponent value is used for the grayscale value,
         and red_exponent and green_exponent are unused.
         """
-        ...
     @overload
     def apply_exponent(self, c0_exponent: float, c1_exponent: float, c2_exponent: float, c3_exponent: float = ...) -> None: ...
     def get_points(self): ...
@@ -956,19 +852,16 @@ class PNMBrush(ReferenceCount):
         """Returns a new brush that does not paint anything.  Can be used as either a
         pen or a fill brush to make borderless or unfilled shapes, respectively.
         """
-        ...
     @staticmethod
     def make_pixel(color: Vec4f, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
         """Returns a new brush that paints a single pixel of the indicated color on a
         border, or paints a solid color in an interior.
         """
-        ...
     @staticmethod
     def make_spot(color: Vec4f, radius: float, fuzzy: bool, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
         """Returns a new brush that paints a spot of the indicated color and radius.
         If fuzzy is true, the spot is fuzzy; otherwise, it is hard-edged.
         """
-        ...
     @staticmethod
     def make_image(image: PNMImage, xc: float, yc: float, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
         """Returns a new brush that paints with the indicated image.  xc and yc
@@ -977,7 +870,6 @@ class PNMBrush(ReferenceCount):
         The brush makes a copy of the image; it is safe to deallocate or modify the
         image after making this call.
         """
-        ...
     makeTransparent = make_transparent
     makePixel = make_pixel
     makeSpot = make_spot
@@ -1020,25 +912,19 @@ class PNMImage(PNMImageHeader):
         def __init__(self, __param0: PNMImage.Row) -> None: ...
         def __len__(self) -> int:
             """Get the number of pixels in the row."""
-            ...
         def __getitem__(self, x: int) -> LColorf: ...
         def __setitem__(self, x: int, v: Vec4f) -> None:
             """Set the pixel at the given column in the row.  If the image has no alpha
             channel, the alpha component is ignored.
             """
-            ...
         def get_xel_val(self, x: int) -> xel:
             """Fetch the pixel at the given column in the row."""
-            ...
         def set_xel_val(self, x: int, v: xel) -> None:
             """Set the pixel at the given column in the row."""
-            ...
         def get_alpha_val(self, x: int) -> int:
             """Fetch the alpha value at the given column in the row."""
-            ...
         def set_alpha_val(self, x: int, v: int) -> None:
             """Set the alpha value at the given column in the row."""
-            ...
         getXelVal = get_xel_val
         setXelVal = set_xel_val
         getAlphaVal = get_alpha_val
@@ -1051,14 +937,11 @@ class PNMImage(PNMImageHeader):
         def __init__(self, __param0: PNMImage.CRow) -> None: ...
         def __len__(self) -> int:
             """Get the number of pixels in the row."""
-            ...
         def __getitem__(self, x: int) -> LColorf: ...
         def get_xel_val(self, x: int) -> xel:
             """Fetch the pixel at the given column in the row."""
-            ...
         def get_alpha_val(self, x: int) -> int:
             """Fetch the alpha value at the given column in the row."""
-            ...
         getXelVal = get_xel_val
         getAlphaVal = get_alpha_val
     @overload
@@ -1083,29 +966,24 @@ class PNMImage(PNMImageHeader):
     def __imul__(self, multiplier: float) -> PNMImage: ...
     def clamp_val(self, input_value: int) -> int:
         """A handy function to clamp values to [0..get_maxval()]."""
-        ...
     @overload
     def to_val(self, input_value: Vec3f) -> xel:
         """A handy function to scale non-alpha values from [0..1] to
         [0..get_maxval()].  Do not use this for alpha values, see to_alpha_val.
         """
-        ...
     @overload
     def to_val(self, input_value: float) -> int: ...
     def to_alpha_val(self, input_value: float) -> int:
         """A handy function to scale alpha values from [0..1] to [0..get_maxval()]."""
-        ...
     @overload
     def from_val(self, input_value: xel) -> LRGBColorf:
         """A handy function to scale non-alpha values from [0..get_maxval()] to
         [0..1].  Do not use this for alpha values, see from_alpha_val.
         """
-        ...
     @overload
     def from_val(self, input_value: int) -> float: ...
     def from_alpha_val(self, input_value: int) -> float:
         """A handy function to scale alpha values from [0..get_maxval()] to [0..1]."""
-        ...
     @overload
     def clear(self) -> None:
         """`(self)`:
@@ -1116,12 +994,10 @@ class PNMImage(PNMImageHeader):
         This flavor of clear() reinitializes the image to an empty (black) image
         with the given dimensions.
         """
-        ...
     @overload
     def clear(self, x_size: int, y_size: int, num_channels: int = ..., maxval: int = ..., type: PNMFileType = ..., color_space: _ColorSpace = ...) -> None: ...
     def copy_from(self, copy: PNMImage) -> None:
         """Makes this image become a copy of the other image."""
-        ...
     @overload
     def copy_channel(self, copy: PNMImage, src_channel: int, dest_channel: int) -> None:
         """`(self, copy: PNMImage, src_channel: int, dest_channel: int)`:
@@ -1131,7 +1007,6 @@ class PNMImage(PNMImageHeader):
         Copies just a single channel from the source image into a single channel of
         this image, leaving the remaining channels alone.
         """
-        ...
     @overload
     def copy_channel(self, copy: PNMImage, xto: int, yto: int, cto: int, xfrom: int = ..., yfrom: int = ..., cfrom: int = ..., x_size: int = ..., y_size: int = ...) -> None: ...
     def copy_channel_bits(self, copy: PNMImage, src_channel: int, dest_channel: int, src_mask: int, right_shift: int) -> None:
@@ -1141,18 +1016,15 @@ class PNMImage(PNMImageHeader):
 
         If right_shift is negative, it means a left shift.
         """
-        ...
     def copy_header_from(self, header: PNMImageHeader) -> None:
         """Copies just the header information into this image.  This will blow away
         any image data stored in the image.  The new image data will be allocated,
         but left unitialized.
         """
-        ...
     def take_from(self, orig: PNMImage) -> None:
         """Move the contents of the other image into this one, and empty the other
         image.
         """
-        ...
     @overload
     def fill(self, gray: float = ...) -> None:
         """`(self, gray: float = ...)`:
@@ -1162,7 +1034,6 @@ class PNMImage(PNMImageHeader):
         `(self, red: float, green: float, blue: float)`:
         Sets the entire image (except the alpha channel) to the given color.
         """
-        ...
     @overload
     def fill(self, red: float, green: float, blue: float) -> None: ...
     @overload
@@ -1174,15 +1045,12 @@ class PNMImage(PNMImageHeader):
         `(self, red: int, green: int, blue: int)`:
         Sets the entire image (except the alpha channel) to the given color.
         """
-        ...
     @overload
     def fill_val(self, red: int, green: int, blue: int) -> None: ...
     def alpha_fill(self, alpha: float = ...) -> None:
         """Sets the entire alpha channel to the given level."""
-        ...
     def alpha_fill_val(self, alpha: int = ...) -> None:
         """Sets the entire alpha channel to the given level."""
-        ...
     def set_read_size(self, x_size: int, y_size: int) -> None:
         """Specifies the size to we'd like to scale the image upon reading it.  This
         will affect the next call to read().  This is usually used to reduce the
@@ -1194,26 +1062,20 @@ class PNMImage(PNMImageHeader):
         the image normally, and them perform a linear scale after it has been
         loaded.
         """
-        ...
     def clear_read_size(self) -> None:
         """Undoes the effect of a previous call to set_read_size()."""
-        ...
     def has_read_size(self) -> bool:
         """Returns true if set_read_size() has been called."""
-        ...
     def get_read_x_size(self) -> int:
         """Returns the requested x_size of the image if set_read_size() has been
         called, or the image x_size otherwise (if it is known).
         """
-        ...
     def get_read_y_size(self) -> int:
         """Returns the requested y_size of the image if set_read_size() has been
         called, or the image y_size otherwise (if it is known).
         """
-        ...
     def get_color_space(self) -> _ColorSpace:
         """Returns the color space in which the image is encoded."""
-        ...
     @overload
     def read(self, filename: Filepath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ..., report_unknown_type: bool = ...)`:
@@ -1233,7 +1095,6 @@ class PNMImage(PNMImageHeader):
 
         Returns true if successful, false on error.
         """
-        ...
     @overload
     def read(self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool: ...
     @overload
@@ -1251,7 +1112,6 @@ class PNMImage(PNMImageHeader):
         If type is non-NULL, it is a suggestion for the type of image file to
         write.
         """
-        ...
     @overload
     def write(self, data: ostream, filename: str = ..., type: PNMFileType = ...) -> bool: ...
     def is_valid(self) -> bool:
@@ -1259,14 +1119,12 @@ class PNMImage(PNMImageHeader):
         height and width.  If this returns false, virtually all member functions
         except clear() and read() are invalid function calls.
         """
-        ...
     def set_num_channels(self, num_channels: int) -> None:
         """Changes the number of channels associated with the image.  The new number
         of channels must be an integer in the range 1 through 4, inclusive.  This
         will allocate and/or deallocate memory as necessary to accommodate; see
         set_color_type().
         """
-        ...
     def set_color_type(self, color_type: _PNMImageHeader_ColorType) -> None:
         """Translates the image to or from grayscale, color, or four-color mode.
         Grayscale images are converted to full-color images with R, G, B set to the
@@ -1274,7 +1132,6 @@ class PNMImage(PNMImageHeader):
         the value of Bright().  The alpha channel, if added, is initialized to
         zero.
         """
-        ...
     def set_color_space(self, color_space: _ColorSpace) -> None:
         """Converts the colors in the image to the indicated color space.  This may be
         a lossy operation, in particular when going from sRGB to linear.  The alpha
@@ -1289,15 +1146,12 @@ class PNMImage(PNMImageHeader):
         Some color spaces, particularly scRGB, may enforce the use of a particular
         maxval setting.
         """
-        ...
     def add_alpha(self) -> None:
         """Adds an alpha channel to the image, if it does not already have one.  The
         alpha channel is initialized to zeros.
         """
-        ...
     def remove_alpha(self) -> None:
         """Removes the image's alpha channel, if it exists."""
-        ...
     @overload
     def make_grayscale(self) -> None:
         """`(self)`:
@@ -1309,14 +1163,12 @@ class PNMImage(PNMImageHeader):
         is left undisturbed.  The optional rc, gc, bc values represent the relative
         weights to apply to each channel to convert it to grayscale.
         """
-        ...
     @overload
     def make_grayscale(self, rc: float, gc: float, bc: float) -> None: ...
     def make_rgb(self) -> None:
         """Converts the image from grayscale to RGB.  Any alpha channel, if present,
         is left undisturbed.
         """
-        ...
     def premultiply_alpha(self) -> None:
         """Converts an image in-place to its "premultiplied" form, where, for every
         pixel in the image, the red, green, and blue components are multiplied by
@@ -1324,7 +1176,6 @@ class PNMImage(PNMImageHeader):
 
         This does not modify any alpha values.
         """
-        ...
     def unpremultiply_alpha(self) -> None:
         """Converts an image in-place to its "straight alpha" form (presumably from a
         "premultiplied" form), where, for every pixel in the image, the red, green,
@@ -1332,10 +1183,8 @@ class PNMImage(PNMImageHeader):
 
         This does not modify any alpha values.
         """
-        ...
     def reverse_rows(self) -> None:
         """Performs an in-place reversal of the row (y) data."""
-        ...
     def flip(self, flip_x: bool, flip_y: bool, transpose: bool) -> None:
         """Reverses, transposes, and/or rotates the image in-place according to the
         specified parameters.  If flip_x is true, the x axis is reversed; if flip_y
@@ -1343,15 +1192,12 @@ class PNMImage(PNMImageHeader):
         axes are exchanged.  These parameters can be used to select any combination
         of 90-degree or 180-degree rotations and flips.
         """
-        ...
     def set_maxval(self, maxval: int) -> None:
         """Rescales the image to the indicated maxval."""
-        ...
     def get_xel_val(self, x: int, y: int) -> xel:
         """Returns the RGB color at the indicated pixel.  Each component is in the
         range 0..maxval.
         """
-        ...
     @overload
     def set_xel_val(self, x: int, y: int, value: xel) -> None:
         """`(self, x: int, y: int, value: xel)`; `(self, x: int, y: int, r: int, g: int, b: int)`:
@@ -1365,7 +1211,6 @@ class PNMImage(PNMImageHeader):
         encoded in the configured color space.  See set_xel if you instead have a
         linearized and normalized floating-point value.
         """
-        ...
     @overload
     def set_xel_val(self, x: int, y: int, gray: int) -> None: ...
     @overload
@@ -1374,19 +1219,16 @@ class PNMImage(PNMImageHeader):
         """Returns the red component color at the indicated pixel.  The value returned
         is in the range 0..maxval and encoded in the configured color space.
         """
-        ...
     def get_green_val(self, x: int, y: int) -> int:
         """Returns the green component color at the indicated pixel.  The value
         returned is in the range 0..maxval and encoded in the configured color
         space.
         """
-        ...
     def get_blue_val(self, x: int, y: int) -> int:
         """Returns the blue component color at the indicated pixel.  The value
         returned is in the range 0..maxval and encoded in the configured color
         space.
         """
-        ...
     def get_gray_val(self, x: int, y: int) -> int:
         """Returns the gray component color at the indicated pixel.  This only has a
         meaningful value for grayscale images; for other image types, this returns
@@ -1394,34 +1236,29 @@ class PNMImage(PNMImageHeader):
         function.  The value returned is in the range 0..maxval and encoded in the
         configured color space.
         """
-        ...
     def get_alpha_val(self, x: int, y: int) -> int:
         """Returns the alpha component color at the indicated pixel.  It is an error
         to call this unless has_alpha() is true.  The value returned is in the
         range 0..maxval and always linear.
         """
-        ...
     def set_red_val(self, x: int, y: int, r: int) -> None:
         """Sets the red component color only at the indicated pixel.  The value given
         should be in the range 0..maxval, encoded in the configured color space.
         See set_red if you instead have a linearized and normalized floating-point
         value.
         """
-        ...
     def set_green_val(self, x: int, y: int, g: int) -> None:
         """Sets the green component color only at the indicated pixel.  The value
         given should be in the range 0..maxval, encoded in the configured color
         space.  See set_green if you instead have a linearized and normalized
         floating-point value.
         """
-        ...
     def set_blue_val(self, x: int, y: int, b: int) -> None:
         """Sets the blue component color only at the indicated pixel.  The value given
         should be in the range 0..maxval, encoded in the configured color space.
         See set_blue if you instead have a linearized and normalized floating-point
         value.
         """
-        ...
     def set_gray_val(self, x: int, y: int, gray: int) -> None:
         """Sets the gray component color at the indicated pixel.  This is only
         meaningful for grayscale images; for other image types, this simply sets
@@ -1431,7 +1268,6 @@ class PNMImage(PNMImageHeader):
         in the range 0..maxval, encoded in the configured color space.  See
         set_gray if you instead have a linearized normalized floating-point value.
         """
-        ...
     def set_alpha_val(self, x: int, y: int, a: int) -> None:
         """Sets the alpha component color only at the indicated pixel.  It is an error
         to call this unless has_alpha() is true.  The value given should be in the
@@ -1440,7 +1276,6 @@ class PNMImage(PNMImageHeader):
         This value is always linearly encoded, even if the image is set to the sRGB
         color space.
         """
-        ...
     def get_channel_val(self, x: int, y: int, channel: int) -> int:
         """Returns the nth component color at the indicated pixel.  The channel index
         should be in the range 0..(get_num_channels()-1).  The channels are ordered
@@ -1448,7 +1283,6 @@ class PNMImage(PNMImageHeader):
         values directly by named methods.  The value returned is in the range
         0..maxval.
         """
-        ...
     def set_channel_val(self, x: int, y: int, channel: int, value: int) -> None:
         """Sets the nth component color at the indicated pixel.  The channel index
         should be in the range 0..(get_num_channels()-1).  The channels are ordered
@@ -1456,7 +1290,6 @@ class PNMImage(PNMImageHeader):
         values directly by named methods.  The value given should be in the range
         0..maxval.
         """
-        ...
     def get_channel(self, x: int, y: int, channel: int) -> float:
         """Returns the nth component color at the indicated pixel.  The channel index
         should be in the range 0..(get_num_channels()-1).  The channels are ordered
@@ -1464,7 +1297,6 @@ class PNMImage(PNMImageHeader):
         values directly by named methods.  The value returned is a float in the
         range 0..1.
         """
-        ...
     def set_channel(self, x: int, y: int, channel: int, value: float) -> None:
         """Sets the nth component color at the indicated pixel.  The channel index
         should be in the range 0..(get_num_channels()-1).  The channels are ordered
@@ -1472,22 +1304,18 @@ class PNMImage(PNMImageHeader):
         values directly by named methods.  The value given should be a float in the
         range 0..1.
         """
-        ...
     def get_pixel(self, x: int, y: int) -> PNMImageHeader.PixelSpec:
         """Returns the (r, g, b, a) pixel value at the indicated pixel, using a
         PixelSpec object.
         """
-        ...
     def set_pixel(self, x: int, y: int, pixel: PNMImageHeader.PixelSpec) -> None:
         """Sets the (r, g, b, a) pixel value at the indicated pixel, using a PixelSpec
         object.
         """
-        ...
     def get_xel(self, x: int, y: int) -> LRGBColorf:
         """Returns the RGB color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
         """
-        ...
     @overload
     def set_xel(self, x: int, y: int, value: Vec3f) -> None:
         """`(self, x: int, y: int, value: LRGBColorf)`; `(self, x: int, y: int, r: float, g: float, b: float)`:
@@ -1498,7 +1326,6 @@ class PNMImage(PNMImageHeader):
         Changes all three color components at the indicated pixel to the same
         value.  The value is a linearized float in the range 0..1.
         """
-        ...
     @overload
     def set_xel(self, x: int, y: int, gray: float) -> None: ...
     @overload
@@ -1507,58 +1334,48 @@ class PNMImage(PNMImageHeader):
         """Returns the RGBA color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
         """
-        ...
     @overload
     def set_xel_a(self, x: int, y: int, value: Vec4f) -> None:
         """Changes the RGBA color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
         """
-        ...
     @overload
     def set_xel_a(self, x: int, y: int, r: float, g: float, b: float, a: float) -> None: ...
     def get_red(self, x: int, y: int) -> float:
         """Returns the red component color at the indicated pixel.  The value returned
         is a linearized float in the range 0..1.
         """
-        ...
     def get_green(self, x: int, y: int) -> float:
         """Returns the green component color at the indicated pixel.  The value
         returned is a linearized float in the range 0..1.
         """
-        ...
     def get_blue(self, x: int, y: int) -> float:
         """Returns the blue component color at the indicated pixel.  The value
         returned is a linearized float in the range 0..1.
         """
-        ...
     def get_gray(self, x: int, y: int) -> float:
         """Returns the gray component color at the indicated pixel.  This only has a
         meaningful value for grayscale images; for other image types, this returns
         the value of the blue channel only.  However, also see the get_bright()
         function.  The value returned is a linearized float in the range 0..1.
         """
-        ...
     def get_alpha(self, x: int, y: int) -> float:
         """Returns the alpha component color at the indicated pixel.  It is an error
         to call this unless has_alpha() is true.  The value returned is a float in
         the range 0..1.
         """
-        ...
     def set_red(self, x: int, y: int, r: float) -> None:
         """Sets the red component color only at the indicated pixel.  The value given
         should be a linearized float in the range 0..1.
         """
-        ...
     def set_green(self, x: int, y: int, g: float) -> None:
         """Sets the green component color only at the indicated pixel.  The value
         given should be a linearized float in the range 0..1.
         """
-        ...
     def set_blue(self, x: int, y: int, b: float) -> None:
         """Sets the blue component color only at the indicated pixel.  The value given
         should be a linearized float in the range 0..1.
         """
-        ...
     def set_gray(self, x: int, y: int, gray: float) -> None:
         """Sets the gray component color at the indicated pixel.  This is only
         meaningful for grayscale images; for other image types, this simply sets
@@ -1567,13 +1384,11 @@ class PNMImage(PNMImageHeader):
         both for grayscale and color images.  The value given should be a
         linearized float in the range 0..1.
         """
-        ...
     def set_alpha(self, x: int, y: int, a: float) -> None:
         """Sets the alpha component color only at the indicated pixel.  It is an error
         to call this unless has_alpha() is true.  The value given should be in the
         range 0..1.
         """
-        ...
     @overload
     def get_bright(self, x: int, y: int) -> float:
         """`(self, x: int, y: int)`:
@@ -1591,7 +1406,6 @@ class PNMImage(PNMImageHeader):
         It returns a single brightness value for the RGBA color at the indicated
         pixel, based on the supplied weights for each component.
         """
-        ...
     @overload
     def get_bright(self, x: int, y: int, rc: float, gc: float, bc: float, ac: float = ...) -> float: ...
     @overload
@@ -1601,7 +1415,6 @@ class PNMImage(PNMImageHeader):
         and completely replaces whatever was there previously; alpha of 0.0 is
         fully transparent and does nothing.
         """
-        ...
     @overload
     def blend(self, x: int, y: int, r: float, g: float, b: float, alpha: float) -> None: ...
     def copy_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...) -> None:
@@ -1611,7 +1424,6 @@ class PNMImage(PNMImageHeader):
         if the size is omitted, it defaults to the entire other image, or the
         largest piece that will fit.
         """
-        ...
     def blend_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), except the alpha channel of the copy is used
         to blend the copy into the destination image, instead of overwriting pixels
@@ -1623,19 +1435,16 @@ class PNMImage(PNMImageHeader):
         If pixel_scale is 1.0 and the copy has no alpha channel, this degenerates
         into copy_sub_image().
         """
-        ...
     def add_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are added to the
         pixels of the destination, after scaling by the specified pixel_scale.
         Unlike blend_sub_image(), the alpha channel is not treated specially.
         """
-        ...
     def mult_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are multiplied to the
         pixels of the destination, after scaling by the specified pixel_scale.
         Unlike blend_sub_image(), the alpha channel is not treated specially.
         """
-        ...
     def darken_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), but the resulting color will be the darker
         of the source and destination colors at each pixel (and at each R, G, B, A
@@ -1646,7 +1455,6 @@ class PNMImage(PNMImageHeader):
         applied with the center at 1.0: scaling the pixel value smaller brings it
         closer to 1.0.
         """
-        ...
     def lighten_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
         """Behaves like copy_sub_image(), but the resulting color will be the lighter
         of the source and destination colors at each pixel (and at each R, G, B, A
@@ -1655,7 +1463,6 @@ class PNMImage(PNMImageHeader):
         If pixel_scale is not 1.0, it specifies an amount to scale each pixel value
         of the source image before applying it to the target image.
         """
-        ...
     def threshold(self, select_image: PNMImage, channel: int, threshold: float, lt: PNMImage, ge: PNMImage) -> None:
         """Selectively copies each pixel from either one source or another source,
         depending on the pixel value of the indicated channel of select_image.
@@ -1673,7 +1480,6 @@ class PNMImage(PNMImageHeader):
         must be the same size.  As a special case, lt and ge may both be 1x1 images
         instead of the source image size.
         """
-        ...
     def fill_distance_inside(self, mask: PNMImage, threshold: float, radius: int, shrink_from_border: bool) -> None:
         """Replaces this image with a grayscale image whose gray channel represents
         the linear Manhattan distance from the nearest dark pixel in the given mask
@@ -1691,7 +1497,6 @@ class PNMImage(PNMImageHeader):
         The mask image may be the same image as this one, in which case it is
         destructively modified by this process.
         """
-        ...
     def fill_distance_outside(self, mask: PNMImage, threshold: float, radius: int) -> None:
         """Replaces this image with a grayscale image whose gray channel represents
         the linear Manhattan distance from the nearest white pixel in the given
@@ -1705,7 +1510,6 @@ class PNMImage(PNMImageHeader):
         The mask image may be the same image as this one, in which case it is
         destructively modified by this process.
         """
-        ...
     def indirect_1d_lookup(self, index_image: PNMImage, channel: int, pixel_values: PNMImage) -> None:
         """index_image is a WxH grayscale image, while pixel_values is an Nx1 color
         (or grayscale) image.  Typically pixel_values will be a 256x1 image.
@@ -1720,14 +1524,12 @@ class PNMImage(PNMImageHeader):
         At present, no interpolation is performed; the nearest value in
         pixel_values is discovered.  This may change in the future.
         """
-        ...
     def rescale(self, min_val: float, max_val: float) -> None:
         """Rescales the RGB channel values so that any values in the original image
         between min_val and max_val are expanded to the range 0 .. 1.  Values below
         min_val are set to 0, and values above max_val are set to 1. Does not
         affect the alpha channel, if any.
         """
-        ...
     def render_spot(self, fg: Vec4f, bg: Vec4f, min_radius: float, max_radius: float) -> None:
         """Renders a solid-color circle, with a fuzzy edge, into the center of the
         PNMImage.  If the PNMImage is non-square, this actually renders an ellipse.
@@ -1737,43 +1539,36 @@ class PNMImage(PNMImageHeader):
         (but still antialiased); otherwise, the pixels between min_radius and
         max_radius are smoothly blended between fg and bg colors.
         """
-        ...
     def expand_border(self, left: int, right: int, bottom: int, top: int, color: Vec4f) -> None:
         """Expands the image by the indicated number of pixels on each edge.  The new
         pixels are set to the indicated color.
 
         If any of the values is negative, this actually crops the image.
         """
-        ...
     def box_filter(self, radius: float = ...) -> None:
         """This flavor of box_filter() will apply the filter over the entire image
         without resizing or copying; the effect is that of a blur operation.
         """
-        ...
     def gaussian_filter(self, radius: float = ...) -> None:
         """This flavor of gaussian_filter() will apply the filter over the entire
         image without resizing or copying; the effect is that of a blur operation.
         """
-        ...
     def unfiltered_stretch_from(self, copy: PNMImage) -> None:
         """Resizes from the indicated image into this one by performing a nearest-
         point sample.
         """
-        ...
     def box_filter_from(self, radius: float, copy: PNMImage) -> None:
         """Makes a resized copy of the indicated image into this one using the
         indicated filter.  The image to be copied is squashed and stretched to
         match the dimensions of the current image, applying the appropriate filter
         to perform the stretching.
         """
-        ...
     def gaussian_filter_from(self, radius: float, copy: PNMImage) -> None:
         """Makes a resized copy of the indicated image into this one using the
         indicated filter.  The image to be copied is squashed and stretched to
         match the dimensions of the current image, applying the appropriate filter
         to perform the stretching.
         """
-        ...
     def quick_filter_from(self, copy: PNMImage, xborder: int = ..., yborder: int = ...) -> None:
         """Resizes from the given image, with a fixed radius of 0.5. This is a very
         specialized and simple algorithm that doesn't handle dropping below the
@@ -1782,10 +1577,8 @@ class PNMImage(PNMImageHeader):
         the size of the resulting image.  There's no point in using
         quick_box_filter() on a single image.
         """
-        ...
     def make_histogram(self, hist: PNMImageHeader.Histogram) -> None:
         """Computes a histogram of the colors used in the image."""
-        ...
     def quantize(self, max_colors: int) -> None:
         """Reduces the number of unique colors in the image to (at most) the given
         count.  Fewer colors than requested may be left in the image after this
@@ -1795,7 +1588,6 @@ class PNMImage(PNMImageHeader):
 
         @since 1.10.5
         """
-        ...
     @overload
     def perlin_noise_fill(self, perlin: StackedPerlinNoise2) -> None:
         """`(self, perlin: StackedPerlinNoise2)`:
@@ -1808,26 +1600,22 @@ class PNMImage(PNMImageHeader):
         and sy parameters are in multiples of the size of this image.  See also the
         PerlinNoise2 class in mathutil.
         """
-        ...
     @overload
     def perlin_noise_fill(self, sx: float, sy: float, table_size: int = ..., seed: int = ...) -> None: ...
     def remix_channels(self, conv: Mat4f) -> None:
         """Transforms every pixel using the operation (Ro,Go,Bo) =
         conv.xform_point(Ri,Gi,Bi); Input must be a color image.
         """
-        ...
     def gamma_correct(self, from_gamma: float, to_gamma: float) -> None:
         """Assuming the image was constructed with a gamma curve of from_gamma in the
         RGB channels, converts it to an image with a gamma curve of to_gamma in the
         RGB channels.  Does not affect the alpha channel.
         """
-        ...
     def gamma_correct_alpha(self, from_gamma: float, to_gamma: float) -> None:
         """Assuming the image was constructed with a gamma curve of from_gamma in the
         alpha channel, converts it to an image with a gamma curve of to_gamma in
         the alpha channel.  Does not affect the RGB channels.
         """
-        ...
     @overload
     def apply_exponent(self, gray_exponent: float, alpha_exponent: float = ...) -> None:
         """`(self, gray_exponent: float)`; `(self, gray_exponent: float, alpha_exponent: float)`:
@@ -1840,25 +1628,20 @@ class PNMImage(PNMImageHeader):
         grayscale image, the blue_exponent value is used for the grayscale value,
         and red_exponent and green_exponent are unused.
         """
-        ...
     @overload
     def apply_exponent(self, red_exponent: float, green_exponent: float, blue_exponent: float, alpha_exponent: float = ...) -> None: ...
     def get_average_xel(self) -> LRGBColorf:
         """Returns the average color of all of the pixels in the image."""
-        ...
     def get_average_xel_a(self) -> LColorf:
         """Returns the average color of all of the pixels in the image, including the
         alpha channel.
         """
-        ...
     def get_average_gray(self) -> float:
         """Returns the average grayscale component of all of the pixels in the image."""
-        ...
     def do_fill_distance(self, xi: int, yi: int, d: int) -> None:
         """Recursively fills in the minimum distance measured from a certain set of
         points into the gray channel.
         """
-        ...
     clampVal = clamp_val
     toVal = to_val
     toAlphaVal = to_alpha_val
@@ -1973,7 +1756,6 @@ class PNMPainter:
         of the upper-left corner of the image, which can allow you to adjust the
         pattern to line up with nested images, if necessary.
         """
-        ...
     @overload
     def __init__(self, image: PNMImage, xo: int = ..., yo: int = ...) -> None: ...
     def set_pen(self, pen: PNMBrush) -> None:
@@ -1985,10 +1767,8 @@ class PNMPainter:
         ownership of the pen.  It is not necessary to keep a separate pointer to
         it.
         """
-        ...
     def get_pen(self) -> PNMBrush:
         """Returns the current pen.  See set_pen()."""
-        ...
     def set_fill(self, fill: PNMBrush) -> None:
         """Specifies a PNMBrush that will be used for filling in the interiors of
         objects.  If the brush is a bitmap brush, its image will be tiled
@@ -1998,23 +1778,18 @@ class PNMPainter:
         ownership of the fill brush.  It is not necessary to keep a separate
         pointer to it.
         """
-        ...
     def get_fill(self) -> PNMBrush:
         """Returns the current fill brush.  See set_fill()."""
-        ...
     def draw_point(self, x: float, y: float) -> None:
         """Draws an antialiased point on the PNMImage, using the current pen."""
-        ...
     def draw_line(self, xa: float, ya: float, xb: float, yb: float) -> None:
         """Draws an antialiased line on the PNMImage, using the current pen."""
-        ...
     def draw_rectangle(self, xa: float, ya: float, xb: float, yb: float) -> None:
         """Draws a filled rectangule on the PNMImage, using the current pen for the
         outline, and the current fill brush for the interior.
 
         The two coordinates specify any two diagonally opposite corners.
         """
-        ...
     setPen = set_pen
     getPen = get_pen
     setFill = set_fill

@@ -13,20 +13,16 @@ class BasicSkel:
     def __init__(self, __param0: BasicSkel = ...) -> None: ...
     def set_value(self, n: int) -> None:
         """These inline functions allow you to get and set _value."""
-        ...
     def get_value(self) -> int:
         """Retreives a value that was previously stored."""
-        ...
     def set_value_alt(self, n: int) -> None:
         """Stores an integer value.  Exact same functionality as set_value, except
         that this isn't an inline function.
         """
-        ...
     def get_value_alt(self) -> int:
         """Retreives a value that was previously stored.  Exact same functionality as
         get_value, except that this isn't an inline function.
         """
-        ...
     setValue = set_value
     getValue = get_value
     setValueAlt = set_value_alt
@@ -42,20 +38,16 @@ class TypedSkel(TypedObject):
     def __init__(self) -> None: ...
     def set_value(self, n: int) -> None:
         """These inline functions allow you to get and set _value."""
-        ...
     def get_value(self) -> int:
         """Retreives a value that was previously stored."""
-        ...
     def set_value_alt(self, n: int) -> None:
         """Stores an integer value.  Exact same functionality as set_value, except
         that this isn't an inline function.
         """
-        ...
     def get_value_alt(self) -> int:
         """Retreives a value that was previously stored.  Exact same functionality as
         get_value, except that this isn't an inline function.
         """
-        ...
     setValue = set_value
     getValue = get_value
     setValueAlt = set_value_alt

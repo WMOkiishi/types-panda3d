@@ -56,11 +56,9 @@ class TiXmlBase:
                 into a single space or not. The default is to condense. Note changing this
                 value is not thread safe.
         """
-        ...
     @staticmethod
     def IsWhiteSpaceCondensed() -> bool:
         """Return the current white space setting."""
-        ...
     def Row(self) -> int:
         """Return the position, in the original source file, of this node or attribute.
                 The row and column are 1-based. (That is the first row and first column is
@@ -80,10 +78,8 @@ class TiXmlBase:
 
                 @sa TiXmlDocument::SetTabSize()
         """
-        ...
     def Column(self) -> int:
         """< See Row()"""
-        ...
 
 class TiXmlDeclaration(TiXmlNode):
     """In correct XML the declaration is the first entry in the file.
@@ -110,19 +106,15 @@ class TiXmlDeclaration(TiXmlNode):
         `(self, _version: str, _encoding: str, _standalone: str)`:
         Constructor.
         """
-        ...
     @overload
     def __init__(self, _version: str, _encoding: str, _standalone: str) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def Version(self) -> str:
         """Version. Will return an empty string if none was found."""
-        ...
     def Encoding(self) -> str:
         """Encoding. Will return an empty string if none was found."""
-        ...
     def Standalone(self) -> str:
         """Is this a standalone document?"""
-        ...
 
 class TiXmlNode(TiXmlBase):
     """The parent class for everything in the Document Object Model.
@@ -158,13 +150,11 @@ class TiXmlNode(TiXmlBase):
 
                 The subclasses will wrap this function.
         """
-        ...
     def ValueStr(self) -> str:
         """Return Value() as a std::string. If you only use STL,
                 this is more efficient than calling Value().
                 Only available in STL mode.
         """
-        ...
     def ValueTStr(self) -> str: ...
     def SetValue(self, _value: str) -> None:
         """`(self, _value: str)`:
@@ -180,13 +170,10 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str)`:
         STL std::string form.
         """
-        ...
     def Clear(self) -> None:
         """Delete all the children of this node. Does not affect 'this'."""
-        ...
     def Parent(self) -> TiXmlNode:
         """One step up the DOM."""
-        ...
     @overload
     def FirstChild(self, _value: str = ...) -> TiXmlNode:
         """`(self)`; `(self)`:
@@ -199,7 +186,6 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
         """
-        ...
     @overload
     def FirstChild(self, value: str) -> TiXmlNode: ...
     @overload
@@ -213,7 +199,6 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
         """
-        ...
     @overload
     def LastChild(self, value: str) -> TiXmlNode: ...
     @overload
@@ -241,7 +226,6 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str, previous: TiXmlNode)`; `(self, _value: str, previous: TiXmlNode)`:
         < STL std::string form.
         """
-        ...
     @overload
     def IterateChildren(self, _value: str, previous: TiXmlNode) -> TiXmlNode: ...
     @overload
@@ -250,25 +234,20 @@ class TiXmlNode(TiXmlBase):
         """Add a new node related to this. Adds a child past the LastChild.
                 Returns a pointer to the new object or NULL if an error occured.
         """
-        ...
     def InsertBeforeChild(self, beforeThis: TiXmlNode, addThis: TiXmlNode) -> TiXmlNode:
         """Add a new node related to this. Adds a child before the specified child.
                 Returns a pointer to the new object or NULL if an error occured.
         """
-        ...
     def InsertAfterChild(self, afterThis: TiXmlNode, addThis: TiXmlNode) -> TiXmlNode:
         """Add a new node related to this. Adds a child after the specified child.
                 Returns a pointer to the new object or NULL if an error occured.
         """
-        ...
     def ReplaceChild(self, replaceThis: TiXmlNode, withThis: TiXmlNode) -> TiXmlNode:
         """Replace a child of this node.
                 Returns a pointer to the new object or NULL if an error occured.
         """
-        ...
     def RemoveChild(self, removeThis: TiXmlNode) -> bool:
         """Delete a child of this node."""
-        ...
     @overload
     def PreviousSibling(self, _prev: str = ...) -> TiXmlNode:
         """`(self)`; `(self, __param0: str)`:
@@ -277,7 +256,6 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
         """
-        ...
     @overload
     def PreviousSibling(self, _value: str) -> TiXmlNode: ...
     @overload
@@ -291,7 +269,6 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
         """
-        ...
     @overload
     def NextSibling(self, _value: str) -> TiXmlNode: ...
     @overload
@@ -304,7 +281,6 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
         """
-        ...
     @overload
     def NextSiblingElement(self, _value: str) -> TiXmlElement: ...
     def FirstChildElement(self, _value: str = ...) -> TiXmlElement:
@@ -314,44 +290,33 @@ class TiXmlNode(TiXmlBase):
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
         """
-        ...
     def Type(self) -> int:
         """Query the type (as an enumerated value, above) of this node.
                 The possible types are: DOCUMENT, ELEMENT, COMMENT,
                                         UNKNOWN, TEXT, and DECLARATION.
         """
-        ...
     def GetDocument(self) -> TiXmlDocument:
         """Return a pointer to the Document this node lives in.
                 Returns null if not in a document.
         """
-        ...
     def NoChildren(self) -> bool:
         """Returns true if this node has no children."""
-        ...
     def ToDocument(self) -> TiXmlDocument:
         """< Cast to a more defined type. Will return null if not of the requested type."""
-        ...
     def ToElement(self) -> TiXmlElement:
         """< Cast to a more defined type. Will return null if not of the requested type."""
-        ...
     def ToComment(self) -> TiXmlComment:
         """< Cast to a more defined type. Will return null if not of the requested type."""
-        ...
     def ToUnknown(self) -> TiXmlUnknown:
         """< Cast to a more defined type. Will return null if not of the requested type."""
-        ...
     def ToText(self) -> TiXmlText:
         """< Cast to a more defined type. Will return null if not of the requested type."""
-        ...
     def ToDeclaration(self) -> TiXmlDeclaration:
         """< Cast to a more defined type. Will return null if not of the requested type."""
-        ...
     def Clone(self) -> TiXmlNode:
         """Create an exact duplicate of this node and return it. The memory must be deleted
                 by the caller.
         """
-        ...
     def Accept(self, visitor: TiXmlVisitor) -> bool:
         """Accept a hierchical visit the nodes in the TinyXML DOM. Every node in the
                 XML tree will be conditionally visited and the host will be called back
@@ -375,7 +340,6 @@ class TiXmlNode(TiXmlBase):
                 const char* xmlcstr = printer.CStr();
                 @endverbatim
         """
-        ...
 
 class TiXmlDocument(TiXmlNode):
     """Always the top level node. A document binds together all the
@@ -393,7 +357,6 @@ class TiXmlDocument(TiXmlNode):
         `(self, documentName: str)`:
         Constructor.
         """
-        ...
     @overload
     def __init__(self, copy: TiXmlDocument) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
@@ -410,7 +373,6 @@ class TiXmlDocument(TiXmlNode):
         `(self, filename: str, encoding: _TiXmlEncoding = ...)`:
         < STL std::string version.
         """
-        ...
     @overload
     def LoadFile(self, filename: str, encoding: _TiXmlEncoding = ...) -> bool: ...
     def SaveFile(self, filename: str = ...) -> bool:
@@ -423,28 +385,23 @@ class TiXmlDocument(TiXmlNode):
         `(self, filename: str)`:
         < STL std::string version.
         """
-        ...
     def RootElement(self) -> TiXmlElement:
         """Get the root element -- the only top level element -- of the document.
                 In well formed XML, there should only be one. TinyXml is tolerant of
                 multiple elements at the document level.
         """
-        ...
     def Error(self) -> bool:
         """If an error occurs, Error will be set to true. Also,
                 - The ErrorId() will contain the integer identifier of the error (not generally useful)
                 - The ErrorDesc() method will return the name of the error. (very useful)
                 - The ErrorRow() and ErrorCol() will return the location of the error (if known)
         """
-        ...
     def ErrorDesc(self) -> str:
         """Contains a textual (english) description of the error if one occurs."""
-        ...
     def ErrorId(self) -> int:
         """Generally, you probably want the error string ( ErrorDesc() ). But if you
                 prefer the ErrorId, this function will fetch it.
         """
-        ...
     def ErrorRow(self) -> int:
         """Returns the location (if known) of the error. The first column is column 1,
                 and the first row is row 1. A value of 0 means the row and column wasn't applicable
@@ -453,10 +410,8 @@ class TiXmlDocument(TiXmlNode):
 
                 @sa SetTabSize, Row, Column
         """
-        ...
     def ErrorCol(self) -> int:
         """< The column where the error occured. See ErrorRow()"""
-        ...
     def SetTabSize(self, _tabsize: int) -> None:
         """SetTabSize() allows the error reporting functions (ErrorRow() and ErrorCol())
                 to report the correct values for row and column. It does not change the output
@@ -482,16 +437,13 @@ class TiXmlDocument(TiXmlNode):
 
                 @sa Row, Column
         """
-        ...
     def TabSize(self) -> int: ...
     def ClearError(self) -> None:
         """If you have handled the error, it can be reset with this call. The error
                 state is automatically cleared if you Parse a new XML block.
         """
-        ...
     def Print(self) -> None:
         """Write the document to standard out using formatted printing ("pretty print")."""
-        ...
 
 class TiXmlElement(TiXmlNode):
     """The element is a container class. It has a value, the element name,
@@ -506,7 +458,6 @@ class TiXmlElement(TiXmlNode):
         `(self, _value: str)`:
         std::string constructor.
         """
-        ...
     @overload
     def __init__(self, __param0: TiXmlElement) -> None: ...
     @overload
@@ -516,7 +467,6 @@ class TiXmlElement(TiXmlNode):
         """Given an attribute name, Attribute() returns the value
                 for the attribute of that name, or null if none exists.
         """
-        ...
     @overload
     def SetAttribute(self, name: str, _value: int | str) -> None:
         """`(self, name: str, _value: str)`; `(self, name: str, value: int)`:
@@ -529,7 +479,6 @@ class TiXmlElement(TiXmlNode):
         `(self, name: str, _value: str)`:
         STL std::string form.
         """
-        ...
     @overload
     def SetAttribute(self, name: str, value: int) -> None: ...
     def SetDoubleAttribute(self, name: str, value: float) -> None:
@@ -540,7 +489,6 @@ class TiXmlElement(TiXmlNode):
         `(self, name: str, value: float)`:
         < STL std::string form.
         """
-        ...
     def RemoveAttribute(self, name: str) -> None:
         """`(self, name: str)`:
         Deletes an attribute with the given name.
@@ -548,13 +496,10 @@ class TiXmlElement(TiXmlNode):
         `(self, name: str)`:
         < STL std::string form.
         """
-        ...
     def FirstAttribute(self) -> TiXmlAttribute:
         """< Access the first attribute in this element."""
-        ...
     def LastAttribute(self) -> TiXmlAttribute:
         """< Access the last attribute in this element."""
-        ...
     def GetText(self) -> str:
         """Convenience function for easy access to the text inside an element. Although easy
                 and concise, GetText() is limited compared to getting the TiXmlText child
@@ -588,7 +533,6 @@ class TiXmlElement(TiXmlNode):
                          similarly named TiXmlHandle::Text() and TiXmlNode::ToText() which are
                          safe type casts on the referenced node.
         """
-        ...
 
 class TiXmlCursor:
     """Internal structure for tracking location of items
@@ -626,7 +570,6 @@ class TiXmlVisitor:
         `(self, __param0: TiXmlElement, __param1: TiXmlAttribute)`:
         firstAttribute
         """
-        ...
     @overload
     def VisitEnter(self, __param0: TiXmlElement, __param1: TiXmlAttribute) -> bool: ...
     def VisitExit(self, __param0: TiXmlDocument | TiXmlElement) -> bool:
@@ -636,7 +579,6 @@ class TiXmlVisitor:
         `(self, __param0: TiXmlElement)`:
         element
         """
-        ...
     def Visit(self, __param0: TiXmlComment | TiXmlDeclaration | TiXmlText | TiXmlUnknown) -> bool:
         """`(self, __param0: TiXmlComment)`:
         comment
@@ -650,7 +592,6 @@ class TiXmlVisitor:
         `(self, __param0: TiXmlUnknown)`:
         unknown
         """
-        ...
 
 class TiXmlAttribute(TiXmlBase):
     """An attribute is a name-value pair. Elements have an arbitrary
@@ -671,7 +612,6 @@ class TiXmlAttribute(TiXmlBase):
         `(self, _name: str, _value: str)`:
         std::string constructor.
         """
-        ...
     @overload
     def __init__(self, _name: str, _value: str) -> None: ...
     def __eq__(self, __rhs: object) -> bool: ...
@@ -680,22 +620,16 @@ class TiXmlAttribute(TiXmlBase):
     def __le__(self, rhs: TiXmlAttribute) -> bool: ...
     def Name(self) -> str:
         """< Return the name of this attribute."""
-        ...
     def Value(self) -> str:
         """< Return the value of this attribute."""
-        ...
     def ValueStr(self) -> str:
         """< Return the value of this attribute."""
-        ...
     def IntValue(self) -> int:
         """< Return the value of this attribute, converted to an integer."""
-        ...
     def DoubleValue(self) -> float:
         """< Return the value of this attribute, converted to a double."""
-        ...
     def NameTStr(self) -> str:
         """Get the tinyxml string representation"""
-        ...
     def SetName(self, _name: str) -> None:
         """`(self, _name: str)`:
         < Set the name of this attribute.
@@ -703,7 +637,6 @@ class TiXmlAttribute(TiXmlBase):
         `(self, _name: str)`:
         STL std::string form.
         """
-        ...
     def SetValue(self, _value: str) -> None:
         """`(self, _value: str)`:
         < Set the value.
@@ -711,24 +644,18 @@ class TiXmlAttribute(TiXmlBase):
         `(self, _value: str)`:
         STL std::string form.
         """
-        ...
     def SetIntValue(self, _value: int) -> None:
         """< Set the value from an integer."""
-        ...
     def SetDoubleValue(self, _value: float) -> None:
         """< Set the value from a double."""
-        ...
     def Next(self) -> TiXmlAttribute:
         """Get the next sibling attribute in the DOM. Returns null at end."""
-        ...
     def Previous(self) -> TiXmlAttribute:
         """Get the previous sibling attribute in the DOM. Returns null at beginning."""
-        ...
     def SetDocument(self, doc: TiXmlDocument) -> None:
         """[internal use]
         Set the document pointer so the attribute can report errors.
         """
-        ...
 
 class TiXmlAttributeSet:
     """A class used to manage a group of attributes.
@@ -762,7 +689,6 @@ class TiXmlComment(TiXmlNode):
         `(self, _value: str)`:
         Construct a comment from text.
         """
-        ...
     @overload
     def __init__(self, _value: str) -> None: ...
     def assign(self: Self, base: Self) -> Self: ...
@@ -783,16 +709,13 @@ class TiXmlText(TiXmlNode):
         `(self, initValue: str)`:
         Constructor.
         """
-        ...
     @overload
     def __init__(self, copy: TiXmlText) -> None: ...
     def assign(self: Self, base: Self) -> Self: ...
     def CDATA(self) -> bool:
         """Queries whether this represents text using a CDATA section."""
-        ...
     def SetCDATA(self, _cdata: bool) -> None:
         """Turns on or off a CDATA representation of text."""
-        ...
 
 class TiXmlUnknown(TiXmlNode):
     """Any tag that tinyXml doesn't recognize is saved as an
@@ -894,7 +817,6 @@ class TiXmlHandle:
         `(self, _node: TiXmlNode)`:
         Create a handle from any node (at any depth of the tree.) This can be a null pointer.
         """
-        ...
     @overload
     def __init__(self, _node: TiXmlNode) -> None: ...
     def assign(self: Self, ref: Self) -> Self: ...
@@ -906,7 +828,6 @@ class TiXmlHandle:
         `(self, value: str)`:
         Return a handle to the first child node with the given name.
         """
-        ...
     @overload
     def FirstChild(self, _value: str) -> TiXmlHandle: ...
     @overload
@@ -917,7 +838,6 @@ class TiXmlHandle:
         `(self, value: str)`:
         Return a handle to the first child element with the given name.
         """
-        ...
     @overload
     def FirstChildElement(self, _value: str) -> TiXmlHandle: ...
     @overload
@@ -930,7 +850,6 @@ class TiXmlHandle:
         Return a handle to the "index" child.
                 The first child is 0, the second 1, etc.
         """
-        ...
     @overload
     def Child(self, value: str, index: int) -> TiXmlHandle: ...
     @overload
@@ -947,43 +866,34 @@ class TiXmlHandle:
                 The first child element is 0, the second 1, etc. Note that only TiXmlElements
                 are indexed: other types are not counted.
         """
-        ...
     @overload
     def ChildElement(self, value: str, index: int) -> TiXmlHandle: ...
     @overload
     def ChildElement(self, _value: str, index: int) -> TiXmlHandle: ...
     def ToNode(self) -> TiXmlNode:
         """Return the handle as a TiXmlNode. This may return null."""
-        ...
     def ToElement(self) -> TiXmlElement:
         """Return the handle as a TiXmlElement. This may return null."""
-        ...
     def ToText(self) -> TiXmlText:
         """Return the handle as a TiXmlText. This may return null."""
-        ...
     def ToUnknown(self) -> TiXmlUnknown:
         """Return the handle as a TiXmlUnknown. This may return null."""
-        ...
     def Node(self) -> TiXmlNode:
         """@deprecated use ToNode.
                 Return the handle as a TiXmlNode. This may return null.
         """
-        ...
     def Element(self) -> TiXmlElement:
         """@deprecated use ToElement.
                 Return the handle as a TiXmlElement. This may return null.
         """
-        ...
     def Text(self) -> TiXmlText:
         """@deprecated use ToText()
                 Return the handle as a TiXmlText. This may return null.
         """
-        ...
     def Unknown(self) -> TiXmlUnknown:
         """@deprecated use ToUnknown()
                 Return the handle as a TiXmlUnknown. This may return null.
         """
-        ...
 
 class TiXmlPrinter(TiXmlVisitor):
     """Print to memory functionality. The TiXmlPrinter is useful when you need to:
@@ -1010,33 +920,25 @@ class TiXmlPrinter(TiXmlVisitor):
         """Set the indent characters for printing. By default 4 spaces
                 but tab (\\t) is also useful, or null/empty string for no indentation.
         """
-        ...
     def Indent(self) -> str:
         """Query the indention string."""
-        ...
     def SetLineBreak(self, _lineBreak: str) -> None:
         """Set the line breaking string. By default set to newline (\\n).
                 Some operating systems prefer other characters, or can be
                 set to the null/empty string for no indenation.
         """
-        ...
     def LineBreak(self) -> str:
         """Query the current line breaking string."""
-        ...
     def SetStreamPrinting(self) -> None:
         """Switch over to "stream printing" which is the most dense formatting without
                 linebreaks. Common when the XML is needed for network transmission.
         """
-        ...
     def CStr(self) -> str:
         """Return the result."""
-        ...
     def Size(self) -> int:
         """Return the length of the result string."""
-        ...
     def Str(self) -> str:
         """Return the result."""
-        ...
 
 TIXML_ENCODING_UNKNOWN: Final[Literal[0]]
 TIXMLENCODINGUNKNOWN: Final[Literal[0]]
@@ -1048,7 +950,6 @@ def read_xml_stream(_in: istream) -> TiXmlDocument:
     """Reads an XML document from the indicated stream.
     @returns the document, or NULL on error.
     """
-    ...
 def write_xml_stream(out: ostream, doc: TiXmlDocument) -> None: ...
 def print_xml(xnode: TiXmlNode) -> None: ...
 def print_xml_to_file(filename: Filepath, xnode: TiXmlNode) -> None: ...

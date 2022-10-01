@@ -29,22 +29,18 @@ class ARToolKit:
         parameter indicates how large you printed the physical markers.  You should
         use the same size units that you wish to use in the panda code.
         """
-        ...
     def set_threshold(self, n: float) -> None:
         """As part of its analysis, the ARToolKit occasionally converts images to
         black and white by thresholding them.  The threshold is set to 0.5 by
         default, but you can tweak it here.
         """
-        ...
     def attach_pattern(self, pattern: Filepath, path: NodePath) -> None:
         """Associates the specified glyph with the specified NodePath.  Each time you
         call analyze, ARToolKit will update the NodePath's transform.  If the node
         is not visible, its scale will be set to zero.
         """
-        ...
     def detach_patterns(self) -> None:
         """Dissociates all patterns from all NodePaths."""
-        ...
     def analyze(self, tex: Texture, do_flip_texture: bool = ...) -> None:
         """Analyzes the non-pad region of the specified texture.  This causes all
         attached nodepaths to move.  The parameter do_flip_texture is true by
@@ -52,7 +48,6 @@ class ARToolKit:
         ARToolKit.  If you already have a texture that's upside-down, however, you
         should set it to false.
         """
-        ...
     setThreshold = set_threshold
     attachPattern = attach_pattern
     detachPatterns = detach_patterns
@@ -69,30 +64,23 @@ class WebcamVideo(MovieVideo):
         plus a set of configuration parameters.  For example, "Creative Webcam Live
         at 640x480, 30 fps" is an option.
         """
-        ...
     @staticmethod
     def get_option(n: int) -> WebcamVideo:
         """Returns the nth webcam option."""
-        ...
     def get_size_x(self) -> int:
         """Returns the camera's size_x."""
-        ...
     def get_size_y(self) -> int:
         """Returns the camera's size_y."""
-        ...
     def get_fps(self) -> float:
         """Returns the camera's framerate.  This is a maximum theoretical: the actual
         performance will depend on the speed of the hardware.
         """
-        ...
     def get_pixel_format(self) -> str:
         """Returns the camera's pixel format, as a FourCC code, if known."""
-        ...
     def output(self, out: ostream) -> None:
         """Outputs the WebcamVideo.  This function simply writes the name, size and
         FPS to the output stream.
         """
-        ...
     def get_options(self) -> tuple[WebcamVideo, ...]: ...
     getNumOptions = get_num_options
     getOption = get_option

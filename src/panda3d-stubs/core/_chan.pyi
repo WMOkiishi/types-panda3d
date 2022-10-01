@@ -41,43 +41,35 @@ class AnimGroup(TypedWritableReferenceCount, Namable):
         """Creates the AnimGroup, and adds it to the indicated parent.  The only way
         to delete it subsequently is to delete the entire hierarchy.
         """
-        ...
     @overload
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def get_num_children(self) -> int:
         """Returns the number of child nodes of the group."""
-        ...
     def get_child(self, n: int) -> AnimGroup:
         """Returns the nth child of the group."""
-        ...
     def get_child_named(self, name: str) -> AnimGroup:
         """Returns the first child found with the indicated name, or NULL if no such
         child exists.  This method searches only the children of this particular
         AnimGroup; it does not recursively search the entire graph.  See also
         find_child().
         """
-        ...
     def find_child(self, name: str) -> AnimGroup:
         """Returns the first descendant found with the indicated name, or NULL if no
         such descendant exists.  This method searches the entire graph beginning at
         this AnimGroup; see also get_child_named().
         """
-        ...
     def sort_descendants(self) -> None:
         """Sorts the children nodes at each level of the hierarchy into alphabetical
         order.  This should be done after creating the hierarchy, to guarantee that
         the correct names will match up together when the AnimBundle is later bound
         to a PlayerRoot.
         """
-        ...
     def output(self, out: ostream) -> None:
         """Writes a one-line description of the group."""
-        ...
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes a brief description of the group and all of its descendants."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_children(self) -> tuple[AnimGroup, ...]: ...
@@ -109,19 +101,16 @@ class AnimBundle(AnimGroup):
         However, the actual data stored in the leaves--that is, animation tables,
         such as those stored in an AnimChannelMatrixXfmTable--will be shared.
         """
-        ...
     def get_base_frame_rate(self) -> float:
         """Returns the ideal number of frames per second of the animation, when it is
         running at normal speed.  This may not be the same as the actual playing
         frame rate, as it might have been adjusted through set_play_rate() on the
         AnimControl object.  See AnimControl::get_effective_frame_rate().
         """
-        ...
     def get_num_frames(self) -> int:
         """Returns the number of frames of animation, or 0 if the animation has no
         fixed number of frames.
         """
-        ...
     copyBundle = copy_bundle
     getBaseFrameRate = get_base_frame_rate
     getNumFrames = get_num_frames
@@ -138,7 +127,6 @@ class AnimBundleNode(PandaNode):
         derived classes of AnimBundleNode will automatically create a AnimBundle of
         the appropriate type, and pass it up to this constructor.
         """
-        ...
     def get_bundle(self) -> AnimBundle: ...
     @staticmethod
     def find_anim_bundle(root: PandaNode) -> AnimBundle:
@@ -146,7 +134,6 @@ class AnimBundleNode(PandaNode):
         need not be an AnimBundleNode), and returns the first AnimBundle found.
         Returns NULL if no AnimBundle can be found.
         """
-        ...
     getBundle = get_bundle
     findAnimBundle = find_anim_bundle
 
@@ -167,48 +154,39 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         """Creates the PartGroup, and adds it to the indicated parent.  The only way
         to delete it subsequently is to delete the entire hierarchy.
         """
-        ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def is_character_joint(self) -> bool:
         """Returns true if this part is a CharacterJoint, false otherwise.  This is a
         tiny optimization over is_of_type(CharacterType::get_class_type()).
         """
-        ...
     def make_copy(self) -> PartGroup:
         """Allocates and returns a new copy of the node.  Children are not copied, but
         see copy_subgraph().
         """
-        ...
     def copy_subgraph(self) -> PartGroup:
         """Allocates and returns a new copy of this node and of all of its children."""
-        ...
     def get_num_children(self) -> int:
         """Returns the number of child nodes of the group."""
-        ...
     def get_child(self, n: int) -> PartGroup:
         """Returns the nth child of the group."""
-        ...
     def get_child_named(self, name: str) -> PartGroup:
         """Returns the first child found with the indicated name, or NULL if no such
         child exists.  This method searches only the children of this particular
         PartGroup; it does not recursively search the entire graph.  See also
         find_child().
         """
-        ...
     def find_child(self, name: str) -> PartGroup:
         """Returns the first descendant found with the indicated name, or NULL if no
         such descendant exists.  This method searches the entire graph beginning at
         this PartGroup; see also get_child_named().
         """
-        ...
     def sort_descendants(self) -> None:
         """Sorts the children nodes at each level of the hierarchy into alphabetical
         order.  This should be done after creating the hierarchy, to guarantee that
         the correct names will match up together when the AnimBundle is later bound
         to a PlayerRoot.
         """
-        ...
     def apply_freeze(self, transform: TransformState) -> bool:
         """Freezes this particular joint so that it will always hold the specified
         transform.  Returns true if this is a joint that can be so frozen, false
@@ -217,7 +195,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         This is normally only called internally by PartBundle::freeze_joint(), but
         you may also call it directly.
         """
-        ...
     def apply_freeze_matrix(self, pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> bool:
         """Freezes this particular joint so that it will always hold the specified
         transform.  Returns true if this is a joint that can be so frozen, false
@@ -226,7 +203,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         This is normally only called internally by PartBundle::freeze_joint(), but
         you may also call it directly.
         """
-        ...
     def apply_freeze_scalar(self, value: float) -> bool:
         """Freezes this particular joint so that it will always hold the specified
         transform.  Returns true if this is a joint that can be so frozen, false
@@ -235,7 +211,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         This is normally only called internally by PartBundle::freeze_joint(), but
         you may also call it directly.
         """
-        ...
     def apply_control(self, node: PandaNode) -> bool:
         """Specifies a node to influence this particular joint so that it will always
         hold the node's transform.  Returns true if this is a joint that can be so
@@ -244,7 +219,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         This is normally only called internally by PartBundle::control_joint(), but
         you may also call it directly.
         """
-        ...
     def clear_forced_channel(self) -> bool:
         """Undoes the effect of a previous call to apply_freeze() or apply_control().
         Returns true if the joint was modified, false otherwise.
@@ -252,21 +226,17 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         This is normally only called internally by PartBundle::release_joint(), but
         you may also call it directly.
         """
-        ...
     def get_forced_channel(self) -> AnimChannelBase:
         """Returns the AnimChannelBase that has been forced to this joint by a
         previous call to apply_freeze() or apply_control(), or NULL if no such
         channel has been applied.
         """
-        ...
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes a brief description of the group and all of its descendants."""
-        ...
     def write_with_value(self, out: ostream, indent_level: int) -> None:
         """Writes a brief description of the group, showing its current value, and
         that of all of its descendants.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_children(self) -> tuple[PartGroup, ...]: ...
@@ -306,34 +276,27 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
         available and will be perfectly useful (though get_anim() might return
         NULL), but nothing visible will happen immediately.
         """
-        ...
     def wait_pending(self) -> None:
         """Blocks the current thread until the AnimControl has finished loading and is
         fully bound.
         """
-        ...
     def has_anim(self) -> bool:
         """Returns true if the AnimControl was successfully loaded, or false if there
         was a problem.  This may return false while is_pending() is true.
         """
-        ...
     def set_pending_done_event(self, done_event: str) -> None:
         """Specifies an event name that will be thrown when the AnimControl is
         finished binding asynchronously.  If the AnimControl has already finished
         binding, the event will be thrown immediately.
         """
-        ...
     def get_pending_done_event(self) -> str:
         """Returns the event name that will be thrown when the AnimControl is finished
         binding asynchronously.
         """
-        ...
     def get_part(self) -> PartBundle:
         """Returns the PartBundle bound in with this AnimControl."""
-        ...
     def get_anim(self) -> AnimBundle:
         """Returns the AnimBundle bound in with this AnimControl."""
-        ...
     def get_channel_index(self) -> int:
         """Returns the particular channel index associated with this AnimControl.
         This channel index is the slot on which each AnimGroup is bound to its
@@ -343,7 +306,6 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
         get_part()->find_child("n")->get_bound(get_channel_index()) ==
         get_anim()->find_child("n"), for each joint "n".
         """
-        ...
     def get_bound_joints(self) -> BitArray:
         """Returns the subset of joints controlled by this AnimControl.  Most of the
         time, this will be BitArray::all_on(), for a normal full-body animation.
@@ -351,7 +313,6 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
         corresponding to the set of joints and sliders actually bound (as
         enumerated by bind_hierarchy() in depth-first LIFO order).
         """
-        ...
     def set_anim_model(self, model: PandaNode) -> None:
         """Associates the indicated PandaNode with the AnimControl.  By convention,
         this node represents the root node of the model file that corresponds to
@@ -362,10 +323,8 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
         count on the ModelRoot node that generated it, so that the model will not
         disappear from the model pool until it is no longer referenced.
         """
-        ...
     def get_anim_model(self) -> PandaNode:
         """Retrieves the pointer set via set_anim_model().  See set_anim_model()."""
-        ...
     def output(self, out: ostream) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -398,7 +357,6 @@ class AnimChannel_ACMatrixSwitchType(AnimChannelBase):
     def get_value(self, frame: int, value: Mat4f) -> None: ...
     def get_value_no_scale_shear(self, frame: int, value: Mat4f) -> None:
         """These transform-component methods only have meaning for matrix types."""
-        ...
     def get_scale(self, frame: int, scale: Vec3f) -> None: ...
     def get_hpr(self, frame: int, hpr: Vec3f) -> None: ...
     def get_quat(self, frame: int, quat: Vec4f) -> None: ...
@@ -446,20 +404,16 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
         Explicitly sets the matrix value, using the indicated TransformState object
         as a convenience.
         """
-        ...
     def set_value_node(self, node: PandaNode) -> None:
         """Specifies a node whose transform will be queried each frame to implicitly
         specify the transform of this joint.
         """
-        ...
     def get_value_transform(self) -> TransformState:
         """Returns the explicit TransformState value that was set via set_value(), if
         any.
         """
-        ...
     def get_value_node(self) -> PandaNode:
         """Returns the node that was set via set_value_node(), if any."""
-        ...
     setValue = set_value
     setValueNode = set_value_node
     getValueTransform = get_value_transform
@@ -476,30 +430,24 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     @staticmethod
     def is_valid_id(table_id: str) -> bool:
         """Returns true if the given letter is one of the nine valid table id's."""
-        ...
     def set_table(self, table_id: str, table: ConstPointerToArray_float | PointerToArray_float) -> None:
         """Assigns the indicated table.  table_id is one of 'i', 'j', 'k', for scale,
         'a', 'b', 'c' for shear, 'h', 'p', 'r', for rotation, and 'x', 'y', 'z',
         for translation.  The new table must have either zero, one, or
         get_num_frames() frames.
         """
-        ...
     def get_table(self, table_id: str) -> CPTA_stdfloat:
         """Returns a pointer to the indicated subtable's data, if it exists, or NULL
         if it does not.
         """
-        ...
     def clear_all_tables(self) -> None:
         """Removes all the tables from the channel, and resets it to its initial
         state.
         """
-        ...
     def has_table(self, table_id: str) -> bool:
         """Returns true if the indicated subtable has been assigned."""
-        ...
     def clear_table(self, table_id: str) -> None:
         """Removes the indicated table from the definition."""
-        ...
     isValidId = is_valid_id
     setTable = set_table
     getTable = get_table
@@ -522,13 +470,11 @@ class AnimChannelScalarDynamic(AnimChannel_ACScalarSwitchType):
         """Explicitly sets the value.  This will remove any node assigned via
         set_value_node().
         """
-        ...
     def set_value_node(self, node: PandaNode) -> None:
         """Specifies a node whose transform will be queried each frame to implicitly
         specify the transform of this joint.  This will override the values set by
         set_value().
         """
-        ...
     setValue = set_value
     setValueNode = set_value_node
 
@@ -540,18 +486,14 @@ class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     def set_table(self, table: ConstPointerToArray_float | PointerToArray_float) -> None:
         """Assigns the data table."""
-        ...
     def get_table(self) -> CPTA_stdfloat:
         """Returns a pointer to the table's data, if it exists, or NULL if it does
         not.
         """
-        ...
     def has_table(self) -> bool:
         """Returns true if the data table has been assigned."""
-        ...
     def clear_table(self) -> None:
         """Empties the data table."""
-        ...
     setTable = set_table
     getTable = get_table
     hasTable = has_table
@@ -569,55 +511,43 @@ class AnimControlCollection:
         """Returns the AnimControl associated with the given name, or NULL if no such
         control has been associated.
         """
-        ...
     def store_anim(self, control: AnimControl, name: str) -> None:
         """Associates the given AnimControl with this collection under the given name.
         The AnimControl will remain associated until a new AnimControl is
         associated with the same name later, or until unbind_anim() is called with
         this name.
         """
-        ...
     def find_anim(self, name: str) -> AnimControl:
         """Returns the AnimControl associated with the given name, or NULL if no such
         control has been associated.
         """
-        ...
     def unbind_anim(self, name: str) -> bool:
         """Removes the AnimControl associated with the given name, if any.  Returns
         true if an AnimControl was removed, false if there was no AnimControl with
         the indicated name.
         """
-        ...
     def get_num_anims(self) -> int:
         """Returns the number of AnimControls associated with this collection."""
-        ...
     def get_anim(self, n: int) -> AnimControl:
         """Returns the nth AnimControl associated with this collection."""
-        ...
     def get_anim_name(self, n: int) -> str:
         """Returns the name of the nth AnimControl associated with this collection."""
-        ...
     def clear_anims(self) -> None:
         """Disassociates all anims from this collection."""
-        ...
     @overload
     def play(self, anim_name: str) -> bool:
         """Starts the named animation playing."""
-        ...
     @overload
     def play(self, anim_name: str, _from: float, to: float) -> bool: ...
     @overload
     def loop(self, anim_name: str, restart: bool) -> bool:
         """Starts the named animation looping."""
-        ...
     @overload
     def loop(self, anim_name: str, restart: bool, _from: float, to: float) -> bool: ...
     def stop(self, anim_name: str) -> bool:
         """Stops the named animation."""
-        ...
     def pose(self, anim_name: str, frame: float) -> bool:
         """Sets to a particular frame in the named animation."""
-        ...
     @overload
     def play_all(self) -> None:
         """`(self)`:
@@ -626,23 +556,19 @@ class AnimControlCollection:
         `(self, _from: float, to: float)`:
         Starts all animations playing.
         """
-        ...
     @overload
     def play_all(self, _from: float, to: float) -> None: ...
     @overload
     def loop_all(self, restart: bool) -> None:
         """Starts all animations looping."""
-        ...
     @overload
     def loop_all(self, restart: bool, _from: float, to: float) -> None: ...
     def stop_all(self) -> bool:
         """Stops all currently playing animations.  Returns true if any animations
         were stopped, false if none were playing.
         """
-        ...
     def pose_all(self, frame: float) -> None:
         """Sets all animations to the indicated frame."""
-        ...
     def get_frame(self, anim_name: str = ...) -> int:
         """`(self)`:
         Returns the current frame in the last-started animation.
@@ -651,7 +577,6 @@ class AnimControlCollection:
         Returns the current frame in the named animation, or 0 if the animation is
         not found.
         """
-        ...
     def get_num_frames(self, anim_name: str = ...) -> int:
         """`(self)`:
         Returns the total number of frames in the last-started animation.
@@ -660,7 +585,6 @@ class AnimControlCollection:
         Returns the total number of frames in the named animation, or 0 if the
         animation is not found.
         """
-        ...
     def is_playing(self, anim_name: str = ...) -> bool:
         """`(self)`:
         Returns true if the last-started animation is currently playing, false
@@ -669,13 +593,11 @@ class AnimControlCollection:
         `(self, anim_name: str)`:
         Returns true if the named animation is currently playing, false otherwise.
         """
-        ...
     def which_anim_playing(self) -> str:
         """Returns the name of the bound AnimControl currently playing, if any.  If
         more than one AnimControl is currently playing, returns all of the names
         separated by spaces.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
     def get_anims(self) -> tuple[AnimControl, ...]: ...
@@ -708,7 +630,6 @@ class AnimPreloadTable(CopyOnWriteObject):
     def __init__(self) -> None: ...
     def get_num_anims(self) -> int:
         """Returns the number of animation records in the table."""
-        ...
     def find_anim(self, basename: str) -> int:
         """Returns the index number in the table of the animation record with the
         indicated name, or -1 if the name is not present.  By convention, the
@@ -716,35 +637,27 @@ class AnimPreloadTable(CopyOnWriteObject):
         and without the extension.  That is, it is
         Filename::get_basename_wo_extension().
         """
-        ...
     def get_basename(self, n: int) -> str:
         """Returns the basename stored for the nth animation record.  See find_anim()."""
-        ...
     def get_base_frame_rate(self, n: int) -> float:
         """Returns the frame rate stored for the nth animation record."""
-        ...
     def get_num_frames(self, n: int) -> int:
         """Returns the number of frames stored for the nth animation record."""
-        ...
     def clear_anims(self) -> None:
         """Removes all animation records from the table."""
-        ...
     def remove_anim(self, n: int) -> None:
         """Removes the nth animation records from the table.  This renumbers indexes
         for following animations.
         """
-        ...
     def add_anim(self, basename: str, base_frame_rate: float, num_frames: int) -> None:
         """Adds a new animation record to the table.  If there is already a record of
         this name, no operation is performed (the original record is unchanged).
         See find_anim().  This will invalidate existing index numbers.
         """
-        ...
     def add_anims_from(self, other: AnimPreloadTable) -> None:
         """Copies the animation records from the other table into this one.  If a
         given record name exists in both tables, the record in this one supercedes.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     getNumAnims = get_num_anims
@@ -773,7 +686,6 @@ class PartSubset:
         Since the name is a GlobPattern, it may of course include filename globbing
         characters like * and ?.
         """
-        ...
     def add_exclude_joint(self, name: GlobPattern) -> None:
         """Adds the named joint to the list of joints that will be explicitly
         exlcluded from the subset.  Any joint at or below a named node will not be
@@ -783,28 +695,23 @@ class PartSubset:
         Since the name is a GlobPattern, it may of course include filename globbing
         characters like * and ?.
         """
-        ...
     def append(self, other: PartSubset) -> None:
         """Appends the include and exclude list from the other object onto this
         object's lists.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def is_include_empty(self) -> bool:
         """Returns true if the include list is completely empty, false otherwise.  If
         it is empty, it is the same thing as including all joints.
         """
-        ...
     def matches_include(self, joint_name: str) -> bool:
         """Returns true if the indicated name matches a name on the include list,
         false otherwise.
         """
-        ...
     def matches_exclude(self, joint_name: str) -> bool:
         """Returns true if the indicated name matches a name on the exclude list,
         false otherwise.
         """
-        ...
     addIncludeJoint = add_include_joint
     addExcludeJoint = add_exclude_joint
     isIncludeEmpty = is_include_empty
@@ -842,27 +749,21 @@ class PartBundle(PartGroup):
         """Normally, a PartBundle constructor should not be called directly--it will
         get created when a PartBundleNode is created.
         """
-        ...
     def get_anim_preload(self) -> AnimPreloadTable:
         """Returns the AnimPreloadTable associated with the PartBundle.  This table,
         if present, can be used for the benefit of load_bind_anim() to allow
         asynchronous binding.
         """
-        ...
     def modify_anim_preload(self) -> AnimPreloadTable:
         """Returns a modifiable pointer to the AnimPreloadTable associated with the
         PartBundle, if any.
         """
-        ...
     def set_anim_preload(self, table: AnimPreloadTable) -> None:
         """Replaces the AnimPreloadTable associated with the PartBundle."""
-        ...
     def clear_anim_preload(self) -> None:
         """Removes any AnimPreloadTable associated with the PartBundle."""
-        ...
     def merge_anim_preloads(self, other: PartBundle) -> None:
         """Copies the contents of the other PartBundle's preload table into this one."""
-        ...
     def set_blend_type(self, bt: _PartBundle_BlendType) -> None:
         """Defines the algorithm that is used when blending multiple frames or
         multiple animations together, when either anim_blend_flag or
@@ -871,13 +772,11 @@ class PartBundle(PartGroup):
         See partBundle.h for a description of the meaning of each of the BlendType
         values.
         """
-        ...
     def get_blend_type(self) -> _PartBundle_BlendType:
         """Returns the algorithm that is used when blending multiple frames or
         multiple animations together, when either anim_blend_flag or
         frame_blend_flag is set to true.
         """
-        ...
     def set_anim_blend_flag(self, anim_blend_flag: bool) -> None:
         """Defines the way the character responds to multiple calls to
         set_control_effect()).  By default, this flag is set false, which disallows
@@ -890,12 +789,10 @@ class PartBundle(PartGroup):
         set via set_control_effect() whenever an animation is to affect the
         character.
         """
-        ...
     def get_anim_blend_flag(self) -> bool:
         """Returns whether the character allows multiple different animations to be
         bound simultaneously.  See set_anim_blend_flag().
         """
-        ...
     def set_frame_blend_flag(self, frame_blend_flag: bool) -> None:
         """Specifies whether the character interpolates (blends) between two
         sequential frames of an active animation, showing a smooth intra-frame
@@ -913,40 +810,32 @@ class PartBundle(PartGroup):
         Use set_blend_type() to change the algorithm that the character uses to
         interpolate matrix positions.
         """
-        ...
     def get_frame_blend_flag(self) -> bool:
         """Returns whether the character interpolates (blends) between two sequential
         animation frames, or whether it holds the current frame until the next one
         is ready.  See set_frame_blend_flag().
         """
-        ...
     def set_root_xform(self, root_xform: Mat4f) -> None:
         """Specifies the transform matrix which is implicitly applied at the root of
         the animated hierarchy.
         """
-        ...
     def xform(self, mat: Mat4f) -> None:
         """Applies the indicated transform to the root of the animated hierarchy."""
-        ...
     def get_root_xform(self) -> LMatrix4:
         """Returns the transform matrix which is implicitly applied at the root of the
         animated hierarchy.
         """
-        ...
     def apply_transform(self, transform: TransformState) -> PartBundle:
         """Returns a PartBundle that is a duplicate of this one, but with the
         indicated transform applied.  If this is called multiple times with the
         same TransformState pointer, it returns the same PartBundle each time.
         """
-        ...
     def get_num_nodes(self) -> int:
         """Returns the number of PartBundleNodes that contain a pointer to this
         PartBundle.
         """
-        ...
     def get_node(self, n: int) -> PartBundleNode:
         """Returns the nth PartBundleNode associated with this PartBundle."""
-        ...
     def clear_control_effects(self) -> None:
         """Sets the control effect of all AnimControls to zero (but does not "stop"
         the AnimControls).  The character will no longer be affected by any
@@ -958,7 +847,6 @@ class PartBundle(PartGroup):
         reassociated with the PartBundle they will resume at their current frame as
         if they'd been running all along.
         """
-        ...
     def set_control_effect(self, control: AnimControl, effect: float) -> None:
         """Sets the amount by which the character is affected by the indicated
         AnimControl (and its associated animation).  Normally, this will only be
@@ -970,15 +858,12 @@ class PartBundle(PartGroup):
         case, the effect is a weight that indicates the relative importance of each
         AnimControl to the final animation.
         """
-        ...
     def get_control_effect(self, control: AnimControl) -> float:
         """Returns the amount by which the character is affected by the indicated
         AnimControl and its associated animation.  See set_control_effect().
         """
-        ...
     def output(self, out: ostream) -> None:
         """Writes a one-line description of the bundle."""
-        ...
     def bind_anim(self, anim: AnimBundle, hierarchy_match_flags: int = ..., subset: PartSubset = ...) -> AnimControl:
         """Binds the animation to the bundle, if possible, and returns a new
         AnimControl that can be used to start and stop the animation.  If the anim
@@ -996,7 +881,6 @@ class PartBundle(PartGroup):
         unbind itself when the AnimControl destructs (i.e.  its reference count
         goes to zero).
         """
-        ...
     def load_bind_anim(self, loader: Loader, filename: Filepath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool) -> AnimControl:
         """Binds an animation to the bundle.  The animation is loaded from the disk
         via the indicated Loader object.  In other respects, this behaves similarly
@@ -1018,12 +902,10 @@ class PartBundle(PartGroup):
         when the animation finishes loading with
         AnimControl::set_pending_done_event().
         """
-        ...
     def wait_pending(self) -> None:
         """Blocks the current thread until all currently-pending AnimControls, with a
         nonzero control effect, have been loaded and are properly bound.
         """
-        ...
     @overload
     def freeze_joint(self, joint_name: str, value: float) -> bool:
         """Specifies that the joint with the indicated name should be frozen with the
@@ -1033,7 +915,6 @@ class PartBundle(PartGroup):
         Returns true if the joint is successfully frozen, or false if the named
         child is not a joint (or slider) or does not exist.
         """
-        ...
     @overload
     def freeze_joint(self, joint_name: str, transform: TransformState) -> bool: ...
     @overload
@@ -1047,7 +928,6 @@ class PartBundle(PartGroup):
         Returns true if the joint is successfully controlled, or false if the named
         child is not a joint (or slider) or does not exist.
         """
-        ...
     def release_joint(self, joint_name: str) -> bool:
         """Releases the named joint from the effects of a previous call to
         freeze_joint() or control_joint(). It will henceforth once again follow
@@ -1056,7 +936,6 @@ class PartBundle(PartGroup):
         Returns true if the joint is released, or false if the named child was not
         previously controlled or frozen, or it does not exist.
         """
-        ...
     def update(self) -> bool:
         """Updates all the parts in the bundle to reflect the data for the current
         frame (as set in each of the AnimControls).
@@ -1064,12 +943,10 @@ class PartBundle(PartGroup):
         Returns true if any part has changed as a result of this, or false
         otherwise.
         """
-        ...
     def force_update(self) -> bool:
         """Updates all the parts in the bundle to reflect the data for the current
         frame, whether we believe it needs it or not.
         """
-        ...
     def get_nodes(self) -> tuple[PartBundleNode, ...]: ...
     getAnimPreload = get_anim_preload
     modifyAnimPreload = modify_anim_preload
@@ -1117,7 +994,6 @@ class PartBundleNode(PandaNode):
         derived classes of PartBundleNode will automatically create a PartBundle of
         the appropriate type, and pass it up to this constructor.
         """
-        ...
     def get_num_bundles(self) -> int: ...
     def get_bundle(self, n: int) -> PartBundle: ...
     def get_bundle_handle(self, n: int) -> PartBundleHandle:
@@ -1125,7 +1001,6 @@ class PartBundleNode(PandaNode):
         While the PartBundle pointer might later change due to a future flatten
         operation, the PartBundleHandle will not.
         """
-        ...
     def get_bundles(self) -> tuple[PartBundle, ...]: ...
     def get_bundle_handles(self) -> tuple[PartBundleHandle, ...]: ...
     getNumBundles = get_num_bundles
@@ -1152,10 +1027,8 @@ class PartBundleHandle(ReferenceCount):
     def __init__(self, __param0: PartBundleHandle) -> None: ...
     def get_bundle(self) -> PartBundle:
         """Returns the actual PartBundle embedded within the handle."""
-        ...
     def set_bundle(self, bundle: PartBundle) -> None:
         """Changes the actual PartBundle embedded within the handle."""
-        ...
     getBundle = get_bundle
     setBundle = set_bundle
 
@@ -1173,7 +1046,6 @@ class MovingPartBase(PartGroup):
         the list; it is one more than the index number of the highest bound
         channel.  Thus, it is called get_max_bound() instead of get_num_bound().
         """
-        ...
     def get_bound(self, n: int) -> AnimChannelBase:
         """Returns the nth bound channel on this PartGroup.  n can be determined by
         iterating from 0 to one less than get_max_bound(); or n might be
@@ -1183,7 +1055,6 @@ class MovingPartBase(PartGroup):
         It is an error to call this if n is less than zero or greater than or equal
         to get_max_bound().
         """
-        ...
     def output_value(self, out: ostream) -> None: ...
     getMaxBound = get_max_bound
     getBound = get_bound

@@ -31,22 +31,16 @@ class CMotionTrail(TypedReferenceCount):
     """
     def __init__(self, __param0: CMotionTrail = ...) -> None:
         """Constructor"""
-        ...
     def reset(self) -> None:
         """Reset the frame sample history."""
-        ...
     def reset_vertex_list(self) -> None:
         """Reset the vertex list."""
-        ...
     def enable(self, enable: bool) -> None:
         """Enable/disable the motion trail."""
-        ...
     def set_geom_node(self, geom_node: GeomNode) -> None:
         """Set the GeomNode."""
-        ...
     def add_vertex(self, vertex: Vec4f, start_color: Vec4f, end_color: Vec4f, v: float) -> None:
         """Add a vertex."""
-        ...
     def set_parameters(self, sampling_time: float, time_window: float, use_texture: bool, calculate_relative_matrix: bool, use_nurbs: bool, resolution_distance: float) -> None:
         """Set motion trail parameters.
 
@@ -66,13 +60,10 @@ class CMotionTrail(TypedReferenceCount):
         samples.  samples = motion trail length / resolution_distance.  Applicable
         only if nurbs is on.
         """
-        ...
     def check_for_update(self, current_time: float) -> int:
         """Check if a sample can be submitted."""
-        ...
     def update_motion_trail(self, current_time: float, transform: Mat4f) -> None:
         """See class header comments."""
-        ...
     resetVertexList = reset_vertex_list
     setGeomNode = set_geom_node
     addVertex = add_vertex

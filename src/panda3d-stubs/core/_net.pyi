@@ -25,7 +25,6 @@ class PointerTo_Connection(PointerToBase_Connection):
         ptr).  This provides a clean downcast that doesn't require .p() or any
         double-casting, and it can be run-time checked for correctness.
         """
-        ...
     @overload
     def assign(self, ptr: Connection) -> PointerTo_Connection: ...
     @overload
@@ -50,7 +49,6 @@ class NetAddress:
         constructor should not be used by user code; instead, create a default
         NetAddress and use one of the set_*() functions to set up an address.
         """
-        ...
     @overload
     def __init__(self, addr: Socket_Address) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -60,48 +58,36 @@ class NetAddress:
         particular IP.  Returns true if successful, false otherwise (currently,
         this only returns true).
         """
-        ...
     def set_localhost(self, port: int) -> bool:
         """Sets the address up to refer to a particular port, on this host."""
-        ...
     def set_broadcast(self, port: int) -> bool:
         """Sets the address to the broadcast address."""
-        ...
     def set_host(self, hostname: str, port: int) -> bool:
         """Sets the address up to refer to a particular port on a particular host.
         Returns true if the hostname is known, false otherwise.
         """
-        ...
     def clear(self) -> None:
         """Resets the NetAddress to its initial state."""
-        ...
     def get_port(self) -> int:
         """Returns the port number to which this address refers."""
-        ...
     def set_port(self, port: int) -> None:
         """Resets the port number without otherwise changing the address."""
-        ...
     def get_ip_string(self) -> str:
         """Returns the IP address to which this address refers, formatted as a string."""
-        ...
     def is_any(self) -> bool:
         """Returns true if the IP address has only zeroes."""
-        ...
     def get_ip(self) -> int:
         """Returns the IP address to which this address refers, as a 32-bit integer,
         in host byte order.
         @deprecated  Does not work with IPv6 addresses.
         """
-        ...
     def get_ip_component(self, n: int) -> str:
         """Returns the nth 8-bit component of the IP address.  An IP address has four
         components; component 0 is the first (leftmost), and component 3 is the
         last (rightmost) in the dotted number convention.
         """
-        ...
     def get_addr(self) -> Socket_Address:
         """Returns the Socket_Address for this address."""
-        ...
     def output(self, out: ostream) -> None: ...
     def get_hash(self) -> int: ...
     setAny = set_any
@@ -124,18 +110,14 @@ class Connection(ReferenceCount):
         directly by user code; use one of the methods in ConnectionManager to make
         a new connection.
         """
-        ...
     def get_address(self) -> NetAddress:
         """Returns the address bound to this connection, if it is a TCP connection."""
-        ...
     def get_manager(self) -> ConnectionManager:
         """Returns a pointer to the ConnectionManager object that serves this
         connection.
         """
-        ...
     def get_socket(self) -> Socket_IP:
         """Returns the internal Socket_IP that defines the connection."""
-        ...
     def set_collect_tcp(self, collect_tcp: bool) -> None:
         """Enables or disables "collect-tcp" mode.  In this mode, individual TCP
         packets are not sent immediately, but rather they are collected together
@@ -150,32 +132,26 @@ class Connection(ReferenceCount):
         If you enable this mode, you may also need to periodically call
         consider_flush() to flush the queue if no packets have been sent recently.
         """
-        ...
     def get_collect_tcp(self) -> bool:
         """Returns the current setting of "collect-tcp" mode.  See set_collect_tcp()."""
-        ...
     def set_collect_tcp_interval(self, interval: float) -> None:
         """Specifies the interval in time, in seconds, for which to hold TCP packets
         before sending all of the recently received packets at once.  This only has
         meaning if "collect-tcp" mode is enabled; see set_collect_tcp().
         """
-        ...
     def get_collect_tcp_interval(self) -> float:
         """Returns the interval in time, in seconds, for which to hold TCP packets
         before sending all of the recently received packets at once.  This only has
         meaning if "collect-tcp" mode is enabled; see set_collect_tcp().
         """
-        ...
     def consider_flush(self) -> bool:
         """Sends the most recently queued TCP datagram(s) if enough time has elapsed.
         This only has meaning if set_collect_tcp() has been set to true.
         """
-        ...
     def flush(self) -> bool:
         """Sends the most recently queued TCP datagram(s) now.  This only has meaning
         if set_collect_tcp() has been set to true.
         """
-        ...
     def set_linger(self, flag: bool, time: float) -> None:
         """Sets the time to linger on close if data is present.  If flag is false,
         when you close a socket with data available the system attempts to deliver
@@ -184,35 +160,26 @@ class Connection(ReferenceCount):
         If flag is false but time is nonzero, the system waits up to time seconds
         to deliver the data.
         """
-        ...
     def set_reuse_addr(self, flag: bool) -> None:
         """Sets whether local address reuse is allowed."""
-        ...
     def set_keep_alive(self, flag: bool) -> None:
         """Sets whether the connection is periodically tested to see if it is still
         alive.
         """
-        ...
     def set_recv_buffer_size(self, size: int) -> None:
         """Sets the size of the receive buffer, in bytes."""
-        ...
     def set_send_buffer_size(self, size: int) -> None:
         """Sets the size of the send buffer, in bytes."""
-        ...
     def set_ip_time_to_live(self, ttl: int) -> None:
         """Sets IP time-to-live."""
-        ...
     def set_ip_type_of_service(self, tos: int) -> None:
         """Sets IP type-of-service and precedence."""
-        ...
     def set_no_delay(self, flag: bool) -> None:
         """If flag is true, this disables the Nagle algorithm, and prevents delaying
         of send to coalesce packets.
         """
-        ...
     def set_max_segment(self, size: int) -> None:
         """Sets the maximum segment size."""
-        ...
     getAddress = get_address
     getManager = get_manager
     getSocket = get_socket
@@ -260,7 +227,6 @@ class ConnectionReader:
 
         add_connection() is thread-safe, and may be called at will by any thread.
         """
-        ...
     def remove_connection(self, connection: Connection) -> bool:
         """Removes a socket from the list of sockets being monitored.  Returns true if
         the socket was correctly removed, false if it was not on the list in the
@@ -269,7 +235,6 @@ class ConnectionReader:
         remove_connection() is thread-safe, and may be called at will by any
         thread.
         """
-        ...
     def is_connection_ok(self, connection: Connection) -> bool:
         """Returns true if the indicated connection has been added to the
         ConnectionReader and is being monitored properly, false if it is not known,
@@ -277,7 +242,6 @@ class ConnectionReader:
         was an error condition, normally the ConnectionManager would have been
         informed and closed the connection.)
         """
-        ...
     def poll(self) -> None:
         """Explicitly polls the available sockets to see if any of them have any
         noise.  This function does nothing unless this is a polling-type
@@ -286,18 +250,14 @@ class ConnectionReader:
 
         It is not necessary to call this explicitly for a QueuedConnectionReader.
         """
-        ...
     def get_manager(self) -> ConnectionManager:
         """Returns a pointer to the ConnectionManager object that serves this
         ConnectionReader.
         """
-        ...
     def is_polling(self) -> bool:
         """Returns true if the reader is a polling reader, i.e.  it has no threads."""
-        ...
     def get_num_threads(self) -> int:
         """Returns the number of threads the ConnectionReader has been created with."""
-        ...
     def set_raw_mode(self, mode: bool) -> None:
         """Sets the ConnectionReader into raw mode (or turns off raw mode).  In raw
         mode, datagram headers are not expected; instead, all the data available on
@@ -306,25 +266,20 @@ class ConnectionReader:
         This is similar to set_tcp_header_size(0), except that it also turns off
         headers for UDP packets.
         """
-        ...
     def get_raw_mode(self) -> bool:
         """Returns the current setting of the raw mode flag.  See set_raw_mode()."""
-        ...
     def set_tcp_header_size(self, tcp_header_size: int) -> None:
         """Sets the header size of TCP packets.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver
         must independently agree on this.
         """
-        ...
     def get_tcp_header_size(self) -> int:
         """Returns the current setting of TCP header size.  See set_tcp_header_size()."""
-        ...
     def shutdown(self) -> None:
         """Terminates all threads cleanly.  Normally this is only called by the
         destructor, but it may be called explicitly before destruction.
         """
-        ...
     addConnection = add_connection
     removeConnection = remove_connection
     isConnectionOk = is_connection_ok
@@ -352,24 +307,19 @@ class NetDatagram(Datagram):
     """
     def __init__(self, copy: Datagram = ...) -> None:
         """Constructs an empty datagram."""
-        ...
     def assign(self, copy: Datagram) -> NetDatagram: ...
     def set_connection(self, connection: Connection) -> None:
         """Specifies the socket to which the datagram should be written."""
-        ...
     def get_connection(self) -> Connection:
         """Retrieves the socket from which the datagram was read, or to which it is
         scheduled to be written.
         """
-        ...
     def set_address(self, address: NetAddress) -> None:
         """Specifies the host to which the datagram should be sent."""
-        ...
     def get_address(self) -> NetAddress:
         """Retrieves the host from which the datagram was read, or to which it is
         scheduled to be sent.
         """
-        ...
     setConnection = set_connection
     getConnection = get_connection
     setAddress = set_address
@@ -444,7 +394,6 @@ class ConnectionManager:
         Use a ConnectionReader and ConnectionWriter to handle the actual
         communication.
         """
-        ...
     @overload
     def open_UDP_connection(self, hostname: str, port: int, for_broadcast: bool = ...) -> Connection: ...
     @overload
@@ -481,7 +430,6 @@ class ConnectionManager:
 
         backlog is the maximum length of the queue of pending connections.
         """
-        ...
     @overload
     def open_TCP_server_rendezvous(self, port: int, backlog: int) -> Connection: ...
     @overload
@@ -497,7 +445,6 @@ class ConnectionManager:
         This is a shorthand version of the function to directly establish
         communications to a named host and port.
         """
-        ...
     @overload
     def open_TCP_client_connection(self, hostname: str, port: int, timeout_ms: int) -> Connection: ...
     def close_connection(self, connection: Connection) -> bool:
@@ -514,7 +461,6 @@ class ConnectionManager:
         anything about whether the connection has *actually* been closed yet based
         on the return value.
         """
-        ...
     def wait_for_readers(self, timeout: float) -> bool:
         """Blocks the process for timeout number of seconds, or until any data is
         available on any of the non-threaded ConnectionReaders or
@@ -529,30 +475,25 @@ class ConnectionManager:
         threaded.  If any threaded ConnectionReaders are part of the
         ConnectionManager, the timeout value is implicitly treated as 0.
         """
-        ...
     @staticmethod
     def get_host_name() -> str:
         """Returns the name of this particular machine on the network, if available,
         or the empty string if the hostname cannot be determined.
         """
-        ...
     def scan_interfaces(self) -> None:
         """Repopulates the list reported by get_num_interface()/get_interface().  It
         is not necessary to call this explicitly, unless you want to re-determine
         the connected interfaces (for instance, if you suspect the hardware has
         recently changed).
         """
-        ...
     def get_num_interfaces(self) -> int:
         """This returns the number of usable network interfaces detected on this
         machine.  See scan_interfaces() to repopulate this list.
         """
-        ...
     def get_interface(self, n: int) -> ConnectionManager.Interface:
         """Returns the nth usable network interface detected on this machine.
         See scan_interfaces() to repopulate this list.
         """
-        ...
     def get_interfaces(self) -> tuple[ConnectionManager.Interface, ...]: ...
     openUDPConnection = open_UDP_connection
     openTCPServerRendezvous = open_TCP_server_rendezvous
@@ -581,21 +522,17 @@ class ConnectionWriter:
         If num_threads is 0, all datagrams will be sent immediately instead of
         queueing for later transmission by a thread.
         """
-        ...
     def set_max_queue_size(self, max_size: int) -> None:
         """Limits the number of packets that may be pending on the outbound queue.
         This only has an effect when using threads; if num_threads is 0, then all
         packets are sent immediately.
         """
-        ...
     def get_max_queue_size(self) -> int:
         """Returns the maximum size the queue is allowed to grow to.  See
         set_max_queue_size().
         """
-        ...
     def get_current_queue_size(self) -> int:
         """Returns the current number of things in the queue."""
-        ...
     @overload
     def send(self, datagram: Datagram, connection: Connection, block: bool = ...) -> bool:
         """`(self, datagram: Datagram, connection: Connection, address: NetAddress, block: bool = ...)`:
@@ -624,25 +561,20 @@ class ConnectionWriter:
         If block is true, this will not return false if the send queue is filled;
         instead, it will wait until there is space available.
         """
-        ...
     @overload
     def send(self, datagram: Datagram, connection: Connection, address: NetAddress, block: bool = ...) -> bool: ...
     def is_valid_for_udp(self, datagram: Datagram) -> bool:
         """Returns true if the datagram is small enough to be sent over a UDP packet,
         false otherwise.
         """
-        ...
     def get_manager(self) -> ConnectionManager:
         """Returns a pointer to the ConnectionManager object that serves this
         ConnectionWriter.
         """
-        ...
     def is_immediate(self) -> bool:
         """Returns true if the writer is an immediate writer, i.e.  it has no threads."""
-        ...
     def get_num_threads(self) -> int:
         """Returns the number of threads the ConnectionWriter has been created with."""
-        ...
     def set_raw_mode(self, mode: bool) -> None:
         """Sets the ConnectionWriter into raw mode (or turns off raw mode).  In raw
         mode, datagrams are not sent along with their headers; the bytes in the
@@ -653,25 +585,20 @@ class ConnectionWriter:
         when the ConnectionWriter is communicating to a process that does not
         expect datagrams.
         """
-        ...
     def get_raw_mode(self) -> bool:
         """Returns the current setting of the raw mode flag.  See set_raw_mode()."""
-        ...
     def set_tcp_header_size(self, tcp_header_size: int) -> None:
         """Sets the header size of TCP packets.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver
         must independently agree on this.
         """
-        ...
     def get_tcp_header_size(self) -> int:
         """Returns the current setting of TCP header size.  See set_tcp_header_size()."""
-        ...
     def shutdown(self) -> None:
         """Stops all the threads and cleans them up.  This is called automatically by
         the destructor, but it may be called explicitly before destruction.
         """
-        ...
     setMaxQueueSize = set_max_queue_size
     getMaxQueueSize = get_max_queue_size
     getCurrentQueueSize = get_current_queue_size
@@ -695,7 +622,6 @@ class DatagramGeneratorNet(DatagramGenerator, ConnectionReader, QueuedReturn_Dat
         handle requests.  Normally num_threads should be either 0 or 1 to guarantee
         that datagrams are generated in the same order in which they were received.
         """
-        ...
     def upcast_to_DatagramGenerator(self) -> DatagramGenerator: ...
     def upcast_to_ConnectionReader(self) -> ConnectionReader: ...
     def upcast_to_QueuedReturn_Datagram(self) -> QueuedReturn_Datagram: ...
@@ -703,15 +629,12 @@ class DatagramGeneratorNet(DatagramGenerator, ConnectionReader, QueuedReturn_Dat
         """Reads the next datagram from the stream.  Blocks until a datagram is
         available.  Returns true on success, false on stream closed or error.
         """
-        ...
     def is_eof(self) -> bool:
         """Returns true if the stream has been closed normally.  This test may only be
         made after a call to get_datagram() has failed.
         """
-        ...
     def is_error(self) -> bool:
         """Returns true if the stream has an error condition."""
-        ...
     upcastToDatagramGenerator = upcast_to_DatagramGenerator
     upcastToConnectionReader = upcast_to_ConnectionReader
     upcastToQueuedReturnDatagram = upcast_to_QueuedReturn_Datagram
@@ -742,32 +665,26 @@ class DatagramSinkNet(DatagramSink, ConnectionWriter):
         handle writing.  Normally num_threads should be either 0 or 1 to guarantee
         that datagrams are delivered in the same order in which they were sent.
         """
-        ...
     def upcast_to_DatagramSink(self) -> DatagramSink: ...
     def upcast_to_ConnectionWriter(self) -> ConnectionWriter: ...
     def set_target(self, connection: Connection) -> None:
         """Specifies the Connection that will receive all future Datagrams sent."""
-        ...
     def get_target(self) -> Connection:
         """Returns the current target Connection, or NULL if the target has not yet
         been set.  See set_target().
         """
-        ...
     def put_datagram(self, data: Datagram) -> bool:
         """Sends the given datagram to the target.  Returns true on success, false if
         there is an error.  Blocks if necessary until the target is ready.
         """
-        ...
     def is_error(self) -> bool:
         """Returns true if there is an error on the target connection, or if the
         target has never been set.
         """
-        ...
     def flush(self) -> None:
         """Ensures that all datagrams previously written will be visible on the
         stream.
         """
-        ...
     upcastToDatagramSink = upcast_to_DatagramSink
     upcastToConnectionWriter = upcast_to_ConnectionWriter
     setTarget = set_target
@@ -787,7 +704,6 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
         """Returns true if a new connection was recently established; the connection
         information may then be retrieved via get_new_connection().
         """
-        ...
     @overload
     def get_new_connection(self, new_connection: Connection | PointerTo_Connection | None) -> bool:
         """`(self, new_connection: PointerTo_Connection)`:
@@ -809,7 +725,6 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
         false if there was, in fact, no new connection.  (This may happen if there
         are multiple threads accessing the QueuedConnectionListener).
         """
-        ...
     @overload
     def get_new_connection(self, rendezvous: Connection | PointerTo_Connection | None, address: NetAddress, new_connection: Connection | PointerTo_Connection | None) -> bool: ...
     upcastToConnectionListener = upcast_to_ConnectionListener
@@ -856,7 +771,6 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
         reset by this call.  (There is no harm in calling close_connection() more
         than once on a given socket.)
         """
-        ...
     def get_reset_connection(self, connection: Connection | PointerTo_Connection | None) -> bool:
         """If a previous call to reset_connection_available() returned true, this
         function will return information about the newly reset connection.
@@ -872,7 +786,6 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
         false if there was, in fact, no reset connection.  (This may happen if
         there are multiple threads accessing the QueuedConnectionManager).
         """
-        ...
     upcastToConnectionManager = upcast_to_ConnectionManager
     upcastToQueuedReturnPointerToConnection = upcast_to_QueuedReturn_PointerTo_Connection
     resetConnectionAvailable = reset_connection_available
@@ -905,7 +818,6 @@ class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
         """Returns true if a datagram is available on the queue; call get_data() to
         extract the datagram.
         """
-        ...
     def get_data(self, result: Datagram) -> bool:
         """`(self, result: Datagram)`:
         This flavor of QueuedConnectionReader::get_data(), works like the other,
@@ -921,7 +833,6 @@ class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
         if there was, in fact, no datagram available.  (This may happen if there
         are multiple threads accessing the QueuedConnectionReader).
         """
-        ...
     upcastToConnectionReader = upcast_to_ConnectionReader
     upcastToQueuedReturnNetDatagram = upcast_to_QueuedReturn_NetDatagram
     dataAvailable = data_available
@@ -954,7 +865,6 @@ class RecentConnectionReader(ConnectionReader):
         """Returns true if a datagram is available on the queue; call get_data() to
         extract the datagram.
         """
-        ...
     def get_data(self, result: Datagram) -> bool:
         """`(self, result: Datagram)`:
         This flavor of RecentConnectionReader::get_data(), works like the other,
@@ -970,7 +880,6 @@ class RecentConnectionReader(ConnectionReader):
         if there was, in fact, no datagram available.  (This may happen if there
         are multiple threads accessing the RecentConnectionReader).
         """
-        ...
     dataAvailable = data_available
     getData = get_data
 

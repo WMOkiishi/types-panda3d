@@ -57,7 +57,6 @@ class ConstPointerToArray_LMatrix3d(PointerToArrayBase_LMatrix3d):
 class PointerToArrayBase_LMatrix3d(PointerToBase_ReferenceCountedVector_LMatrix3d):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LMatrix3d(PointerToVoid):
@@ -83,7 +82,6 @@ class ConstPointerToArray_LMatrix3f(PointerToArrayBase_LMatrix3f):
 class PointerToArrayBase_LMatrix3f(PointerToBase_ReferenceCountedVector_LMatrix3f):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LMatrix3f(PointerToVoid):
@@ -109,7 +107,6 @@ class ConstPointerToArray_LVecBase2d(PointerToArrayBase_LVecBase2d):
 class PointerToArrayBase_LVecBase2d(PointerToBase_ReferenceCountedVector_LVecBase2d):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LVecBase2d(PointerToVoid):
@@ -135,7 +132,6 @@ class ConstPointerToArray_LVecBase2f(PointerToArrayBase_LVecBase2f):
 class PointerToArrayBase_LVecBase2f(PointerToBase_ReferenceCountedVector_LVecBase2f):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LVecBase2f(PointerToVoid):
@@ -161,7 +157,6 @@ class ConstPointerToArray_LVecBase2i(PointerToArrayBase_LVecBase2i):
 class PointerToArrayBase_LVecBase2i(PointerToBase_ReferenceCountedVector_LVecBase2i):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LVecBase2i(PointerToVoid):
@@ -187,7 +182,6 @@ class ConstPointerToArray_LVecBase3d(PointerToArrayBase_LVecBase3d):
 class PointerToArrayBase_LVecBase3d(PointerToBase_ReferenceCountedVector_LVecBase3d):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LVecBase3d(PointerToVoid):
@@ -213,7 +207,6 @@ class ConstPointerToArray_LVecBase3f(PointerToArrayBase_LVecBase3f):
 class PointerToArrayBase_LVecBase3f(PointerToBase_ReferenceCountedVector_LVecBase3f):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LVecBase3f(PointerToVoid):
@@ -239,7 +232,6 @@ class ConstPointerToArray_LVecBase3i(PointerToArrayBase_LVecBase3i):
 class PointerToArrayBase_LVecBase3i(PointerToBase_ReferenceCountedVector_LVecBase3i):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_LVecBase3i(PointerToVoid):
@@ -265,7 +257,6 @@ class ConstPointerToArray_UnalignedLMatrix4d(PointerToArrayBase_UnalignedLMatrix
 class PointerToArrayBase_UnalignedLMatrix4d(PointerToBase_ReferenceCountedVector_UnalignedLMatrix4d):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_UnalignedLMatrix4d(PointerToVoid):
@@ -291,7 +282,6 @@ class ConstPointerToArray_UnalignedLMatrix4f(PointerToArrayBase_UnalignedLMatrix
 class PointerToArrayBase_UnalignedLMatrix4f(PointerToBase_ReferenceCountedVector_UnalignedLMatrix4f):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_UnalignedLMatrix4f(PointerToVoid):
@@ -317,7 +307,6 @@ class ConstPointerToArray_UnalignedLVecBase4d(PointerToArrayBase_UnalignedLVecBa
 class PointerToArrayBase_UnalignedLVecBase4d(PointerToBase_ReferenceCountedVector_UnalignedLVecBase4d):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_UnalignedLVecBase4d(PointerToVoid):
@@ -343,7 +332,6 @@ class ConstPointerToArray_UnalignedLVecBase4f(PointerToArrayBase_UnalignedLVecBa
 class PointerToArrayBase_UnalignedLVecBase4f(PointerToBase_ReferenceCountedVector_UnalignedLVecBase4f):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_UnalignedLVecBase4f(PointerToVoid):
@@ -369,7 +357,6 @@ class ConstPointerToArray_UnalignedLVecBase4i(PointerToArrayBase_UnalignedLVecBa
 class PointerToArrayBase_UnalignedLVecBase4i(PointerToBase_ReferenceCountedVector_UnalignedLVecBase4i):
     def __eq__(self, __other: object) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
-        ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_UnalignedLVecBase4i(PointerToVoid):
@@ -865,7 +852,6 @@ class BoundingVolume(TypedReferenceCount):
         radius zero, since that contains one point (the center).  It intersects
         with no other volumes.
         """
-        ...
     def is_infinite(self) -> bool:
         """The other side of the empty coin is an infinite volume.  This is a
         degenerate state of a normally finite volume that contains all points.
@@ -876,20 +862,16 @@ class BoundingVolume(TypedReferenceCount):
 
         It completely intersects with all other volumes except empty volumes.
         """
-        ...
     def set_infinite(self) -> None:
         """Marks the volume as infinite, even if it is normally finite.  You can think
         of this as an infinite extend_by() operation.
         """
-        ...
     def extend_by(self, vol: BoundingVolume) -> bool:
         """Increases the size of the volume to include the given volume."""
-        ...
     def contains(self, vol: BoundingVolume) -> int:
         """Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated volume.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     makeCopy = make_copy
@@ -911,7 +893,6 @@ class GeometricBoundingVolume(BoundingVolume):
         `(self, point: LPoint3)`:
         Increases the size of the volume to include the given point.
         """
-        ...
     @overload
     def extend_by(self, point: Vec3f) -> bool: ...
     @overload  # type: ignore[override]
@@ -928,7 +909,6 @@ class GeometricBoundingVolume(BoundingVolume):
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated line segment.
         """
-        ...
     @overload
     def contains(self, point: Vec3f) -> int: ...
     @overload
@@ -972,31 +952,25 @@ class LParabolaf:
         Constructs a parabola given the three points of the parametric equation:
         the acceleration, initial velocity, and start point.
         """
-        ...
     @overload
     def __init__(self, a: Vec3f, b: Vec3f, c: Vec3f) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def xform(self, mat: Mat4f) -> None:
         """Transforms the parabola by the indicated matrix."""
-        ...
     def get_a(self) -> LVecBase3f:
         """Returns the first point of the parabola's parametric equation: the
         acceleration.
         """
-        ...
     def get_b(self) -> LVecBase3f:
         """Returns the second point of the parabola's parametric equation: the initial
         velocity.
         """
-        ...
     def get_c(self) -> LVecBase3f:
         """Returns the third point of the parabola's parametric equation: the start
         point.
         """
-        ...
     def calc_point(self, t: float) -> LPoint3f:
         """Computes the point on the parabola at time t."""
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -1006,21 +980,17 @@ class LParabolaf:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the parabola from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the parabola to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the parabola from the Datagram using get_stdfloat()."""
-        ...
     getA = get_a
     getB = get_b
     getC = get_c
@@ -1046,31 +1016,25 @@ class LParabolad:
         Constructs a parabola given the three points of the parametric equation:
         the acceleration, initial velocity, and start point.
         """
-        ...
     @overload
     def __init__(self, a: Vec3d, b: Vec3d, c: Vec3d) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def xform(self, mat: Mat4d) -> None:
         """Transforms the parabola by the indicated matrix."""
-        ...
     def get_a(self) -> LVecBase3d:
         """Returns the first point of the parabola's parametric equation: the
         acceleration.
         """
-        ...
     def get_b(self) -> LVecBase3d:
         """Returns the second point of the parabola's parametric equation: the initial
         velocity.
         """
-        ...
     def get_c(self) -> LVecBase3d:
         """Returns the third point of the parabola's parametric equation: the start
         point.
         """
-        ...
     def calc_point(self, t: float) -> LPoint3d:
         """Computes the point on the parabola at time t."""
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_datagram_fixed(self, destination: Datagram) -> None:
@@ -1080,21 +1044,17 @@ class LParabolad:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-        ...
     def read_datagram_fixed(self, source: DatagramIterator) -> None:
         """Reads the parabola from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
-        ...
     def write_datagram(self, destination: Datagram) -> None:
         """Writes the parabola to the Datagram using add_stdfloat().  This is
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-        ...
     def read_datagram(self, source: DatagramIterator) -> None:
         """Reads the parabola from the Datagram using get_stdfloat()."""
-        ...
     getA = get_a
     getB = get_b
     getC = get_c
@@ -1126,7 +1086,6 @@ class LPlanef(LVecBase4f):
         `(self, a: float, b: float, c: float, d: float)`:
         Constructs a plane given the four terms of the plane equation.
         """
-        ...
     @overload
     def __init__(self, normal: Vec3f, point: Vec3f) -> None: ...
     @overload
@@ -1138,20 +1097,16 @@ class LPlanef(LVecBase4f):
     def __neg__(self) -> LPlanef: ...
     def xform(self, mat: Mat4f) -> None:
         """Transforms the plane by the indicated matrix."""
-        ...
     def get_reflection_mat(self) -> LMatrix4f:
         """This computes a transform matrix that reflects the universe to the other
         side of the plane, as in a mirror.
         """
-        ...
     def get_normal(self) -> LVector3f:
         """Returns the surface normal of the plane."""
-        ...
     def get_point(self) -> LPoint3f:
         """Returns an arbitrary point in the plane.  This can be used along with the
         normal returned by get_normal() to reconstruct the plane.
         """
-        ...
     def dist_to_plane(self, point: Vec3f) -> float:
         """Returns the straight-line shortest distance from the point to the plane.
         The returned value is positive if the point is in front of the plane (on
@@ -1159,25 +1114,20 @@ class LPlanef(LVecBase4f):
         the opposite side from the normal). It's zero if the point is exactly in
         the plane.
         """
-        ...
     def normalize(self) -> bool:
         """Normalizes the plane in place.  Returns true if the plane was normalized,
         false if the plane had a zero-length normal vector.
         """
-        ...
     def normalized(self) -> LPlanef:
         """Normalizes the plane and returns the normalized plane as a copy.  If the
         plane's normal was a zero-length vector, the same plane is returned.
         """
-        ...
     def project(self, point: Vec3f) -> LPoint3f:  # type: ignore[override]
         """Returns the point within the plane nearest to the indicated point in space."""
-        ...
     def flip(self) -> None:
         """Convenience method that flips the plane in-place.  This is done by simply
         flipping the normal vector.
         """
-        ...
     def intersects_line(self, intersection_point: Vec3f, p1: Vec3f, p2: Vec3f) -> bool:
         """Returns true if the plane intersects the infinite line passing through
         points p1 and p2, false if the line is parallel.  The points p1 and p2 are
@@ -1185,14 +1135,12 @@ class LPlanef(LVecBase4f):
         intersection test.  If true, sets intersection_point to the point of
         intersection.
         """
-        ...
     def intersects_plane(self, _from: Vec3f, delta: Vec3f, other: Vec4f) -> bool:
         """Returns true if the two planes intersect, false if they do not.  If they do
         intersect, then from and delta are filled in with the parametric
         representation of the line of intersection: that is, from is a point on
         that line, and delta is a vector showing the direction of the line.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     getReflectionMat = get_reflection_mat
     getNormal = get_normal
@@ -1223,7 +1171,6 @@ class LPlaned(LVecBase4d):
         `(self, a: float, b: float, c: float, d: float)`:
         Constructs a plane given the four terms of the plane equation.
         """
-        ...
     @overload
     def __init__(self, normal: Vec3d, point: Vec3d) -> None: ...
     @overload
@@ -1235,20 +1182,16 @@ class LPlaned(LVecBase4d):
     def __neg__(self) -> LPlaned: ...
     def xform(self, mat: Mat4d) -> None:
         """Transforms the plane by the indicated matrix."""
-        ...
     def get_reflection_mat(self) -> LMatrix4d:
         """This computes a transform matrix that reflects the universe to the other
         side of the plane, as in a mirror.
         """
-        ...
     def get_normal(self) -> LVector3d:
         """Returns the surface normal of the plane."""
-        ...
     def get_point(self) -> LPoint3d:
         """Returns an arbitrary point in the plane.  This can be used along with the
         normal returned by get_normal() to reconstruct the plane.
         """
-        ...
     def dist_to_plane(self, point: Vec3d) -> float:
         """Returns the straight-line shortest distance from the point to the plane.
         The returned value is positive if the point is in front of the plane (on
@@ -1256,25 +1199,20 @@ class LPlaned(LVecBase4d):
         the opposite side from the normal). It's zero if the point is exactly in
         the plane.
         """
-        ...
     def normalize(self) -> bool:
         """Normalizes the plane in place.  Returns true if the plane was normalized,
         false if the plane had a zero-length normal vector.
         """
-        ...
     def normalized(self) -> LPlaned:
         """Normalizes the plane and returns the normalized plane as a copy.  If the
         plane's normal was a zero-length vector, the same plane is returned.
         """
-        ...
     def project(self, point: Vec3d) -> LPoint3d:  # type: ignore[override]
         """Returns the point within the plane nearest to the indicated point in space."""
-        ...
     def flip(self) -> None:
         """Convenience method that flips the plane in-place.  This is done by simply
         flipping the normal vector.
         """
-        ...
     def intersects_line(self, intersection_point: Vec3d, p1: Vec3d, p2: Vec3d) -> bool:
         """Returns true if the plane intersects the infinite line passing through
         points p1 and p2, false if the line is parallel.  The points p1 and p2 are
@@ -1282,14 +1220,12 @@ class LPlaned(LVecBase4d):
         intersection test.  If true, sets intersection_point to the point of
         intersection.
         """
-        ...
     def intersects_plane(self, _from: Vec3d, delta: Vec3d, other: Vec4d) -> bool:
         """Returns true if the two planes intersect, false if they do not.  If they do
         intersect, then from and delta are filled in with the parametric
         representation of the line of intersection: that is, from is a point on
         that line, and delta is a vector showing the direction of the line.
         """
-        ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     getReflectionMat = get_reflection_mat
     getNormal = get_normal
@@ -1317,24 +1253,18 @@ class BoundingBox(FiniteBoundingVolume):
         `(self, min: LPoint3, max: LPoint3)`:
         Constructs a specific box object.
         """
-        ...
     @overload
     def __init__(self, min: Vec3f, max: Vec3f) -> None: ...
     def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a rectangular solid."""
-        ...
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the rectangular solid."""
-        ...
     def get_num_planes(self) -> Literal[6]:
         """Returns 6: the number of faces of a rectangular solid."""
-        ...
     def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the rectangular solid."""
-        ...
     def set_min_max(self, min: Vec3f, max: Vec3f) -> None:
         """Sets the min and max point of the rectangular solid."""
-        ...
     def get_points(self) -> tuple[LPoint3, ...]: ...
     def get_planes(self) -> tuple[LPlane, ...]: ...
     getNumPoints = get_num_points
@@ -1351,18 +1281,15 @@ class LFrustumf:
     @overload
     def make_ortho_2D(self) -> None:
         """Sets up a two-dimensional orthographic frustum"""
-        ...
     @overload
     def make_ortho_2D(self, l: float, r: float, t: float, b: float) -> None: ...
     @overload
     def make_ortho(self, fnear: float, ffar: float) -> None:
         """Behaves like gluOrtho"""
-        ...
     @overload
     def make_ortho(self, fnear: float, ffar: float, l: float, r: float, t: float, b: float) -> None: ...
     def make_perspective_hfov(self, xfov: float, aspect: float, fnear: float, ffar: float) -> None:
         """Behaves like gluPerspective (Aspect = width/height, Yfov in degrees)"""
-        ...
     def make_perspective_vfov(self, yfov: float, aspect: float, fnear: float, ffar: float) -> None: ...
     def make_perspective(self, xfov: float, yfov: float, fnear: float, ffar: float) -> None: ...
     makeOrtho2D = make_ortho_2D
@@ -1377,18 +1304,15 @@ class LFrustumd:
     @overload
     def make_ortho_2D(self) -> None:
         """Sets up a two-dimensional orthographic frustum"""
-        ...
     @overload
     def make_ortho_2D(self, l: float, r: float, t: float, b: float) -> None: ...
     @overload
     def make_ortho(self, fnear: float, ffar: float) -> None:
         """Behaves like gluOrtho"""
-        ...
     @overload
     def make_ortho(self, fnear: float, ffar: float, l: float, r: float, t: float, b: float) -> None: ...
     def make_perspective_hfov(self, xfov: float, aspect: float, fnear: float, ffar: float) -> None:
         """Behaves like gluPerspective (Aspect = width/height, Yfov in degrees)"""
-        ...
     def make_perspective_vfov(self, yfov: float, aspect: float, fnear: float, ffar: float) -> None: ...
     def make_perspective(self, xfov: float, yfov: float, fnear: float, ffar: float) -> None: ...
     makeOrtho2D = make_ortho_2D
@@ -1413,16 +1337,12 @@ class BoundingHexahedron(FiniteBoundingVolume):
     def __init__(self, fll: Vec3f, flr: Vec3f, fur: Vec3f, ful: Vec3f, nll: Vec3f, nlr: Vec3f, nur: Vec3f, nul: Vec3f) -> None: ...
     def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a hexahedron."""
-        ...
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the hexahedron."""
-        ...
     def get_num_planes(self) -> Literal[6]:
         """Returns 6: the number of faces of a hexahedron."""
-        ...
     def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the hexahedron."""
-        ...
     def get_points(self) -> tuple[LPoint3, ...]: ...
     def get_planes(self) -> tuple[LPlane, ...]: ...
     getNumPoints = get_num_points
@@ -1443,10 +1363,8 @@ class BoundingLine(GeometricBoundingVolume):
     def __init__(self, a: Vec3f, b: Vec3f) -> None: ...
     def get_point_a(self) -> LPoint3:
         """Returns the first point that defines the line."""
-        ...
     def get_point_b(self) -> LPoint3:
         """Returns the second point that defines the line."""
-        ...
     getPointA = get_point_a
     getPointB = get_point_b
 
@@ -1460,7 +1378,6 @@ class BoundingPlane(GeometricBoundingVolume):
     def plane(self) -> LPlane: ...
     def __init__(self, plane: Vec4f = ...) -> None:
         """Constructs an empty "plane" that has no intersections."""
-        ...
     def get_plane(self) -> LPlane: ...
     getPlane = get_plane
 
@@ -1478,17 +1395,14 @@ class BoundingSphere(FiniteBoundingVolume):
         `(self, center: LPoint3, radius: float)`:
         Constructs a specific sphere.
         """
-        ...
     @overload
     def __init__(self, center: Vec3f, radius: float) -> None: ...
     def get_center(self) -> LPoint3: ...
     def get_radius(self) -> float: ...
     def set_center(self, center: Vec3f) -> None:
         """Sets the center point of the sphere."""
-        ...
     def set_radius(self, radius: float) -> None:
         """Sets the radius of the sphere."""
-        ...
     getCenter = get_center
     getRadius = get_radius
     setCenter = set_center
@@ -1505,16 +1419,12 @@ class IntersectionBoundingVolume(GeometricBoundingVolume):
     def components(self) -> Sequence[GeometricBoundingVolume]: ...
     def __init__(self) -> None:
         """Constructs an empty intersection."""
-        ...
     def get_num_components(self) -> int:
         """Returns the number of components in the intersection."""
-        ...
     def get_component(self, n: int) -> GeometricBoundingVolume:
         """Returns the nth component in the intersection."""
-        ...
     def clear_components(self) -> None:
         """Removes all components from the volume."""
-        ...
     def add_component(self, component: GeometricBoundingVolume) -> None:
         """Adds a new component to the volume.  This does not necessarily increase the
         total number of components by one, and you may or may not be able to find
@@ -1522,7 +1432,6 @@ class IntersectionBoundingVolume(GeometricBoundingVolume):
         certain optimizations may prevent the component from being added, or have
         other unexpected effects on the total set of components.
         """
-        ...
     def get_components(self) -> tuple[GeometricBoundingVolume, ...]: ...
     getNumComponents = get_num_components
     getComponent = get_component
@@ -1536,12 +1445,10 @@ class Mersenne:
     @overload
     def __init__(self, __param0: Mersenne) -> None:
         """initializes mt[N] with a seed"""
-        ...
     @overload
     def __init__(self, seed: int) -> None: ...
     def get_uint31(self) -> int:
         """generates a random number on [0,0x7fffffff]-interval"""
-        ...
     getUint31 = get_uint31
 
 class OmniBoundingVolume(GeometricBoundingVolume):
@@ -1559,16 +1466,12 @@ class UnionBoundingVolume(GeometricBoundingVolume):
     def components(self) -> Sequence[GeometricBoundingVolume]: ...
     def __init__(self) -> None:
         """Constructs an empty union."""
-        ...
     def get_num_components(self) -> int:
         """Returns the number of components in the union."""
-        ...
     def get_component(self, n: int) -> GeometricBoundingVolume:
         """Returns the nth component in the union."""
-        ...
     def clear_components(self) -> None:
         """Removes all components from the volume."""
-        ...
     def add_component(self, component: GeometricBoundingVolume) -> None:
         """Adds a new component to the volume.  This does not necessarily increase the
         total number of components by one, and you may or may not be able to find
@@ -1576,12 +1479,10 @@ class UnionBoundingVolume(GeometricBoundingVolume):
         certain optimizations may prevent the component from being added, or have
         other unexpected effects on the total set of components.
         """
-        ...
     def filter_intersection(self, volume: BoundingVolume) -> None:
         """Removes from the union any components that have no intersection with the
         indicated volume.
         """
-        ...
     def get_components(self) -> tuple[GeometricBoundingVolume, ...]: ...
     getNumComponents = get_num_components
     getComponent = get_component
@@ -1598,28 +1499,22 @@ class Randomizer:
         """If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
-        ...
     @overload
     def __init__(self, copy: Randomizer) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def random_int(self, range: int) -> int:
         """Returns a random integer in the range [0, range)."""
-        ...
     def random_real(self, range: float) -> float:
         """Returns a random double in the range [0, range)."""
-        ...
     def random_real_unit(self) -> float:
         """Returns a random double in the range [-0.5, 0.5)."""
-        ...
     @staticmethod
     def get_next_seed() -> int:
         """Returns a random seed value for the next global Randomizer object."""
-        ...
     def get_seed(self) -> int:
         """Returns a unique seed value based on the seed value passed to this
         Randomizer object (and on its current state).
         """
-        ...
     randomInt = random_int
     randomReal = random_real
     randomRealUnit = random_real_unit
@@ -1636,7 +1531,6 @@ class PerlinNoise:
         """Returns a unique seed value based on the seed value passed to this
         PerlinNoise object (and on its current state).
         """
-        ...
     getSeed = get_seed
 
 class PerlinNoise2(PerlinNoise):
@@ -1660,7 +1554,6 @@ class PerlinNoise2(PerlinNoise):
         If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
-        ...
     @overload
     def __init__(self, sx: float, sy: float, table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1671,13 +1564,11 @@ class PerlinNoise2(PerlinNoise):
     @overload
     def set_scale(self, scale: LVecBase2d | LVecBase2f | float) -> None:
         """Changes the scale (frequency) of the noise."""
-        ...
     @overload
     def set_scale(self, sx: float, sy: float) -> None: ...
     @overload
     def noise(self, value: LVecBase2d | LVecBase2f) -> float:
         """Returns the noise function of the three inputs."""
-        ...
     @overload
     def noise(self, x: float, y: float) -> float: ...
     setScale = set_scale
@@ -1703,7 +1594,6 @@ class PerlinNoise3(PerlinNoise):
         If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
-        ...
     @overload
     def __init__(self, sx: float, sy: float, sz: float, table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1714,13 +1604,11 @@ class PerlinNoise3(PerlinNoise):
     @overload
     def set_scale(self, scale: Vec3d | Vec3f | float) -> None:
         """Changes the scale (frequency) of the noise."""
-        ...
     @overload
     def set_scale(self, sx: float, sy: float, sz: float) -> None: ...
     @overload
     def noise(self, value: Vec3d | Vec3f) -> float:
         """Returns the noise function of the three inputs."""
-        ...
     @overload
     def noise(self, x: float, y: float, z: float) -> float: ...
     setScale = set_scale
@@ -1746,7 +1634,6 @@ class StackedPerlinNoise2:
         is higher-frequency, if scale_factor > 1), and an amplitude of amp_scale
         times the previous object (so that it is less important, if amp_scale < 1).
         """
-        ...
     @overload
     def __init__(self, sx: float, sy: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1758,16 +1645,13 @@ class StackedPerlinNoise2:
         """Adds an arbitrary PerlinNoise2 object, and an associated amplitude, to the
         stack.
         """
-        ...
     def clear(self) -> None:
         """Removes all levels from the stack.  You must call add_level() again to
         restore them.
         """
-        ...
     @overload
     def noise(self, value: LVecBase2d | LVecBase2f) -> float:
         """Returns the noise function of the three inputs."""
-        ...
     @overload
     def noise(self, x: float, y: float) -> float: ...
     addLevel = add_level
@@ -1793,7 +1677,6 @@ class StackedPerlinNoise3:
         is higher-frequency, if scale_factor > 1), and an amplitude of amp_scale
         times the previous object (so that it is less important, if amp_scale < 1).
         """
-        ...
     @overload
     def __init__(self, sx: float, sy: float, sz: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...) -> None: ...
     @overload
@@ -1805,16 +1688,13 @@ class StackedPerlinNoise3:
         """Adds an arbitrary PerlinNoise3 object, and an associated amplitude, to the
         stack.
         """
-        ...
     def clear(self) -> None:
         """Removes all levels from the stack.  You must call add_level() again to
         restore them.
         """
-        ...
     @overload
     def noise(self, value: Vec3d | Vec3f) -> float:
         """Returns the noise function of the three inputs."""
-        ...
     @overload
     def noise(self, x: float, y: float, z: float) -> float: ...
     addLevel = add_level
@@ -1838,11 +1718,9 @@ class Triangulator:
         """Removes all vertices and polygon specifications from the Triangulator, and
         prepares it to start over.
         """
-        ...
     @overload
     def add_vertex(self, point: LVecBase2d) -> int:
         """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
-        ...
     @overload
     def add_vertex(self, x: float, y: float) -> int: ...
     def get_num_vertices(self) -> int:
@@ -1851,15 +1729,12 @@ class Triangulator:
         of the polygon is self-intersecting, or if any of the holes intersect some
         part of the polygon edges.
         """
-        ...
     def get_vertex(self, n: int) -> LPoint2d:
         """Returns the nth vertex."""
-        ...
     def clear_polygon(self) -> None:
         """Removes the current polygon definition (and its set of holes), but does not
         clear the vertex pool.
         """
-        ...
     def add_polygon_vertex(self, index: int) -> None:
         """Adds the next consecutive vertex of the polygon.  This vertex should index
         into the vertex pool established by repeated calls to add_vertex().
@@ -1868,15 +1743,12 @@ class Triangulator:
         Vertices should not be repeated.  In particular, do not repeat the first
         vertex at the end.
         """
-        ...
     def is_left_winding(self) -> bool:
         """Returns true if the polygon vertices are listed in counterclockwise order,
         or false if they appear to be listed in clockwise order.
         """
-        ...
     def begin_hole(self) -> None:
         """Finishes the previous hole, if any, and prepares to add a new hole."""
-        ...
     def add_hole_vertex(self, index: int) -> None:
         """Adds the next consecutive vertex of the current hole.  This vertex should
         index into the vertex pool established by repeated calls to add_vertex().
@@ -1884,18 +1756,15 @@ class Triangulator:
         The vertices may be listed in either clockwise or counterclockwise order.
         Vertices should not be repeated.
         """
-        ...
     def triangulate(self) -> None:
         """Does the work of triangulating the specified polygon.  After this call, you
         may retrieve the new triangles one at a time by iterating through
         get_triangle_v0/1/2().
         """
-        ...
     def get_num_triangles(self) -> int:
         """Returns the number of triangles generated by the previous call to
         triangulate().
         """
-        ...
     def get_triangle_v0(self, n: int) -> int:
         """Returns vertex 0 of the nth triangle generated by the previous call to
         triangulate().
@@ -1903,7 +1772,6 @@ class Triangulator:
         This is a zero-based index into the vertices added by repeated calls to
         add_vertex().
         """
-        ...
     def get_triangle_v1(self, n: int) -> int:
         """Returns vertex 1 of the nth triangle generated by the previous call to
         triangulate().
@@ -1911,7 +1779,6 @@ class Triangulator:
         This is a zero-based index into the vertices added by repeated calls to
         add_vertex().
         """
-        ...
     def get_triangle_v2(self, n: int) -> int:
         """Returns vertex 2 of the nth triangle generated by the previous call to
         triangulate().
@@ -1919,7 +1786,6 @@ class Triangulator:
         This is a zero-based index into the vertices added by repeated calls to
         add_vertex().
         """
-        ...
     def get_vertices(self) -> tuple[LPoint2d, ...]: ...
     addVertex = add_vertex
     getNumVertices = get_num_vertices
@@ -1949,17 +1815,14 @@ class Triangulator3(Triangulator):
     @overload  # type: ignore[override]
     def add_vertex(self, point: Vec3d) -> int:
         """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
-        ...
     @overload
     def add_vertex(self, x: float, y: float, z: float) -> int: ...
     def get_vertex(self, n: int) -> LPoint3d:  # type: ignore[override]
         """Returns the nth vertex."""
-        ...
     def get_plane(self) -> LPlaned:
         """Returns the plane of the polygon.  This is only available after calling
         triangulate().
         """
-        ...
     def get_vertices(self) -> tuple[LPoint3d, ...]: ...  # type: ignore[override]
     addVertex = add_vertex  # type: ignore[assignment]
     getVertex = get_vertex  # type: ignore[assignment]

@@ -71,22 +71,18 @@ class ButtonThrower(DataNode):
 
         See also set_keystroke_event().
         """
-        ...
     def get_button_down_event(self) -> str:
         """Returns the button_down_event that has been set on this ButtonThrower.  See
         set_button_down_event().
         """
-        ...
     def set_button_up_event(self, button_up_event: str) -> None:
         """Specifies the generic event that is generated (if any) each time a key or
         button is released.  See set_button_down_event().
         """
-        ...
     def get_button_up_event(self) -> str:
         """Returns the button_up_event that has been set on this ButtonThrower.  See
         set_button_up_event().
         """
-        ...
     def set_button_repeat_event(self, button_repeat_event: str) -> None:
         """Specifies the generic event that is generated (if any) repeatedly while a
         key or button is held down.  Unlike the specific events that are unique to
@@ -99,12 +95,10 @@ class ButtonThrower(DataNode):
 
         See also set_keystroke_event().
         """
-        ...
     def get_button_repeat_event(self) -> str:
         """Returns the button_repeat_event that has been set on this ButtonThrower.
         See set_button_repeat_event().
         """
-        ...
     def set_keystroke_event(self, keystroke_event: str) -> None:
         """Specifies the event that is generated (if any) for each keystroke that is
         received.  A keystroke is different than a button event: it represents the
@@ -123,12 +117,10 @@ class ButtonThrower(DataNode):
 
         See also set_button_down_event().
         """
-        ...
     def get_keystroke_event(self) -> str:
         """Returns the keystroke_event that has been set on this ButtonThrower.  See
         set_keystroke_event().
         """
-        ...
     def set_candidate_event(self, candidate_event: str) -> None:
         """Specifies the event that is generated (if any) for each IME candidate
         string event received.  Events of this nature are received only when the
@@ -144,66 +136,54 @@ class ButtonThrower(DataNode):
         string, the character at which to start the highlight, the character at
         which to end the highlight, and the current cursor position.
         """
-        ...
     def get_candidate_event(self) -> str:
         """Returns the candidate_event that has been set on this ButtonThrower.  See
         set_candidate_event().
         """
-        ...
     def set_move_event(self, move_event: str) -> None:
         """Specifies the event that is generated (if any) each time the mouse is moved
         within the window.
         """
-        ...
     def get_move_event(self) -> str:
         """Returns the move_event that has been set on this ButtonThrower.  See
         set_move_event().
         """
-        ...
     def set_raw_button_down_event(self, raw_button_down_event: str) -> None:
         """Like set_button_down_event, but uses the raw, untransformed scan key from
         the operating system.  This uses buttons that are independent of the user's
         selected keyboard layout.
         """
-        ...
     def get_raw_button_down_event(self) -> str:
         """Returns the raw_button_down_event that has been set on this ButtonThrower.
         See set_raw_button_down_event().
         """
-        ...
     def set_raw_button_up_event(self, raw_button_up_event: str) -> None:
         """Specifies the generic event that is generated (if any) each time a key or
         button is released.  See set_raw_button_down_event().
         """
-        ...
     def get_raw_button_up_event(self) -> str:
         """Returns the raw_button_up_event that has been set on this ButtonThrower.
         See set_raw_button_up_event().
         """
-        ...
     def set_prefix(self, prefix: str) -> None:
         """Sets the prefix which is prepended to all specific event names (that is,
         event names generated from the button name itself, as opposed to the
         generic event names like set_button_down_event) thrown by this object.
         """
-        ...
     def get_prefix(self) -> str:
         """Returns the prefix that has been set on this ButtonThrower.  See
         set_prefix().
         """
-        ...
     def set_specific_flag(self, specific_flag: bool) -> None:
         """Sets the flag that indicates whether specific events (events prefixed by
         set_prefix, and based on the event name) should be generated at all.  This
         is true by default, but may be disabled if you are only interested in the
         generic events (for instance, events like set_button_down_event).
         """
-        ...
     def get_specific_flag(self) -> bool:
         """Returns the flag that indicates whether specific events should be
         generated.  See set_specific_flag().
         """
-        ...
     def set_time_flag(self, time_flag: bool) -> None:
         """Sets the flag that indicates whether the time of the button event should be
         passed as a parameter or not.  When this is true, an additional parameter
@@ -212,27 +192,22 @@ class ButtonThrower(DataNode):
         time the button was pressed or released, as a value from
         ClockObject::get_global_clock().
         """
-        ...
     def get_time_flag(self) -> bool:
         """Returns the flag that indicates whether the time of the button event should
         be passed as a parameter.
         """
-        ...
     def add_parameter(self, obj: EventParameter | float | str | None) -> None:
         """Adds the indicated parameter to the list of parameters that will be passed
         with each event generated by this ButtonThrower.
         """
-        ...
     def get_num_parameters(self) -> int:
         """Returns the number of parameters that have been added to the list of
         parameters to be passed with each event generated by this ButtonThrower.
         """
-        ...
     def get_parameter(self, n: int) -> EventParameter:
         """Returns the nth parameter that has been added to the list of parameters
         passed with each event generated by this ButtonThrower.
         """
-        ...
     def get_modifier_buttons(self) -> ModifierButtons:
         """Returns the set of ModifierButtons that the ButtonThrower will consider
         important enough to prepend the event name with.  Normally, this set will
@@ -241,7 +216,6 @@ class ButtonThrower(DataNode):
         this set, and those modifier buttons are set on the button event, then the
         event name will be prepended with the names of the modifier buttons.
         """
-        ...
     def set_modifier_buttons(self, mods: ModifierButtons) -> None:
         """Changes the set of ModifierButtons that the ButtonThrower will consider
         important enough to prepend the event name with.  Normally, this set will
@@ -255,20 +229,17 @@ class ButtonThrower(DataNode):
         set_modifier_buttons().  This way the current state of the modifier buttons
         will not be lost.
         """
-        ...
     def set_throw_buttons_active(self, flag: bool) -> None:
         """Sets the flag that indicates whether the ButtonThrower will only process
         events for the explicitly named buttons or not.  Normally this is false,
         meaning all buttons are processed; set it true to indicate that only some
         buttons should be processed.  See add_throw_button().
         """
-        ...
     def get_throw_buttons_active(self) -> bool:
         """Returns the flag that indicates whether the ButtonThrower will only process
         events for the explicitly named buttons or not.  See
         set_throw_buttons_active().
         """
-        ...
     def add_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool:
         """Adds a new button to the set of buttons that the ButtonThrower explicitly
         processes.
@@ -284,7 +255,6 @@ class ButtonThrower(DataNode):
         The return value is true if the button is added, or false if it was already
         in the set.
         """
-        ...
     def remove_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool:
         """Removes the indicated button from the set of buttons that the ButtonThrower
         explicitly processes.  See add_throw_button().
@@ -292,7 +262,6 @@ class ButtonThrower(DataNode):
         The return value is true if the button is removed, or false if it was not
         on the set.
         """
-        ...
     @overload
     def has_throw_button(self, button: ButtonHandle) -> bool:
         """`(self, button: ButtonHandle)`:
@@ -306,14 +275,12 @@ class ButtonThrower(DataNode):
         Returns true if the indicated button is on the set of buttons that will be
         processed by the ButtonThrower, false otherwise.  See add_throw_button().
         """
-        ...
     @overload
     def has_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool: ...
     def clear_throw_buttons(self) -> None:
         """Empties the set of buttons that were added via add_throw_button().  See
         add_throw_button().
         """
-        ...
     def get_parameters(self) -> tuple[EventParameter, ...]: ...
     setButtonDownEvent = set_button_down_event
     getButtonDownEvent = get_button_down_event
@@ -364,17 +331,14 @@ class MouseInterfaceNode(DataNode):
         For instance, this may be called to make a Trackball object respect mouse
         input only when the control key is held down.
         """
-        ...
     def clear_button(self, button: ButtonHandle) -> None:
         """Removes any requirement on the indicated button set by an earlier call to
         require_button().
         """
-        ...
     def clear_all_buttons(self) -> None:
         """Removes all requirements on buttons set by an earlier call to
         require_button().
         """
-        ...
     requireButton = require_button
     clearButton = clear_button
     clearAllButtons = clear_all_buttons
@@ -392,124 +356,101 @@ class DriveInterface(MouseInterfaceNode):
         """Sets the speed of full forward motion, when the mouse is at the very top of
         the window.  This is in units (e.g.  feet) per second.
         """
-        ...
     def get_forward_speed(self) -> float:
         """Returns the speed of full forward motion, when the mouse is at the very top
         of the window.  This is in units (e.g.  feet) per second.
         """
-        ...
     def set_reverse_speed(self, speed: float) -> None:
         """Sets the speed of full reverse motion, when the mouse is at the very bottom
         of the window.  This is in units (e.g.  feet) per second.
         """
-        ...
     def get_reverse_speed(self) -> float:
         """Returns the speed of full reverse motion, when the mouse is at the very
         bottom of the window.  This is in units (e.g.  feet) per second.
         """
-        ...
     def set_rotate_speed(self, speed: float) -> None:
         """Sets the maximum rate at which the user can rotate left or right, when the
         mouse is at the very edge of the window.  This is in degrees per second.
         """
-        ...
     def get_rotate_speed(self) -> float:
         """Returns the maximum rate at which the user can rotate left or right, when
         the mouse is at the very edge of the window.  This is in degrees per
         second.
         """
-        ...
     def set_vertical_dead_zone(self, zone: float) -> None:
         """Sets the size of the horizontal bar in the center of the screen that
         represents the "dead zone" of vertical motion: the region in which the
         mouse does not report vertical motion.  This is in a fraction of the window
         height, so 0.5 will set a dead zone as large as half the screen.
         """
-        ...
     def get_vertical_dead_zone(self) -> float:
         """Returns the size of the horizontal bar in the center of the screen that
         represents the "dead zone" of vertical motion: the region in which the
         mouse does not report vertical motion.  This is in a fraction of the window
         height, so 0.5 will set a dead zone as large as half the screen.
         """
-        ...
     def set_horizontal_dead_zone(self, zone: float) -> None:
         """Sets the size of the vertical bar in the center of the screen that
         represents the "dead zone" of horizontal motion: the region in which the
         mouse does not report horizontal motion.  This is in a fraction of the
         window width, so 0.5 will set a dead zone as large as half the screen.
         """
-        ...
     def get_horizontal_dead_zone(self) -> float:
         """Returns the size of the vertical bar in the center of the screen that
         represents the "dead zone" of horizontal motion: the region in which the
         mouse does not report horizontal motion.  This is in a fraction of the
         window width, so 0.5 will set a dead zone as large as half the screen.
         """
-        ...
     def set_vertical_ramp_up_time(self, ramp_up_time: float) -> None:
         """Sets the amount of time, in seconds, it takes between the time an up or
         down arrow key is pressed and the time it registers full forward or
         backward motion.
         """
-        ...
     def get_vertical_ramp_up_time(self) -> float:
         """Returns the amount of time, in seconds, it takes between the time an up or
         down arrow key is pressed and the time it registers full forward or
         backward motion.
         """
-        ...
     def set_vertical_ramp_down_time(self, ramp_down_time: float) -> None:
         """Sets the amount of time, in seconds, it takes between the time an up or
         down arrow key is released and the time it registers no motion.
         """
-        ...
     def get_vertical_ramp_down_time(self) -> float:
         """Returns the amount of time, in seconds, it takes between the time an up or
         down arrow key is released and the time it registers no motion.
         """
-        ...
     def set_horizontal_ramp_up_time(self, ramp_up_time: float) -> None:
         """Sets the amount of time, in seconds, it takes between the time a left or
         right arrow key is pressed and the time it registers full rotation.
         """
-        ...
     def get_horizontal_ramp_up_time(self) -> float:
         """Returns the amount of time, in seconds, it takes between the time a left or
         right arrow key is pressed and the time it registers full rotation.
         """
-        ...
     def set_horizontal_ramp_down_time(self, ramp_down_time: float) -> None:
         """Sets the amount of time, in seconds, it takes between the time a left or
         right arrow key is released and the time it registers no motion.
         """
-        ...
     def get_horizontal_ramp_down_time(self) -> float:
         """Returns the amount of time, in seconds, it takes between the time a left or
         right arrow key is released and the time it registers no motion.
         """
-        ...
     def get_speed(self) -> float:
         """Returns the speed of the previous update in units/sec"""
-        ...
     def get_rot_speed(self) -> float:
         """Returns the rot_speed of the previous update in units/sec"""
-        ...
     def reset(self) -> None:
         """Reinitializes the driver to the origin and resets any knowledge about
         buttons being held down.
         """
-        ...
     def get_pos(self) -> LPoint3:
         """Returns the driver's position."""
-        ...
     def get_x(self) -> float: ...
     def get_y(self) -> float: ...
     def get_z(self) -> float: ...
     @overload
     def set_pos(self, vec: Vec3f) -> None:
         """Directly sets the driver's position."""
-        ...
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
     def set_x(self, x: float) -> None: ...
@@ -517,14 +458,12 @@ class DriveInterface(MouseInterfaceNode):
     def set_z(self, z: float) -> None: ...
     def get_hpr(self) -> LVecBase3:
         """Returns the driver's orientation."""
-        ...
     def get_h(self) -> float: ...
     def get_p(self) -> float: ...
     def get_r(self) -> float: ...
     @overload
     def set_hpr(self, hpr: Vec3f) -> None:
         """Directly sets the driver's orientation."""
-        ...
     @overload
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     def set_h(self, h: float) -> None: ...
@@ -532,7 +471,6 @@ class DriveInterface(MouseInterfaceNode):
     def set_r(self, r: float) -> None: ...
     def set_force_roll(self, force_roll: float) -> None:
         """This function is no longer used and does nothing.  It will be removed soon."""
-        ...
     def set_ignore_mouse(self, ignore_mouse: bool) -> None:
         """Changes the state of the ignore_mouse flag.  If this flag is true, the
         DriveInterface will ignore mouse down button events (but still recognize
@@ -541,22 +479,18 @@ class DriveInterface(MouseInterfaceNode):
         holding down a mouse button it will not stop immediately until the user
         eventually releases the button.
         """
-        ...
     def get_ignore_mouse(self) -> bool:
         """Returns the current setting of the ignore_mouse flag.  See
         set_ignore_mouse().
         """
-        ...
     def set_force_mouse(self, force_mouse: bool) -> None:
         """Changes the state of the force_mouse flag.  If this flag is true, the mouse
         button need not be held down in order to drive the avatar around.
         """
-        ...
     def get_force_mouse(self) -> bool:
         """Returns the current setting of the force_mouse flag.  See
         set_force_mouse().
         """
-        ...
     def set_stop_this_frame(self, stop_this_frame: bool) -> None:
         """If stop_this_frame is true, the next time the frame is computed no motion
         will be allowed, and then the flag is reset to false.  This can be used to
@@ -564,25 +498,20 @@ class DriveInterface(MouseInterfaceNode):
         elapsed, for instance when we take a screenshot, without munging the clock
         for everything else.
         """
-        ...
     def get_stop_this_frame(self) -> bool:
         """Returns the current setting of the stop_this_frame flag.  See
         set_stop_this_frame().
         """
-        ...
     def set_mat(self, mat: Mat4f) -> None:
         """Stores the indicated transform in the DriveInterface."""
-        ...
     def get_mat(self) -> LMatrix4:
         """Returns the current transform."""
-        ...
     def force_dgraph(self) -> None:
         """This is a special kludge for DriveInterface to allow us to avoid the one-
         frame latency after a collision.  It forces an immediate partial data flow
         for all data graph nodes below this node, causing all data nodes that
         depend on this matrix to be updated immediately.
         """
-        ...
     setForwardSpeed = set_forward_speed
     getForwardSpeed = get_forward_speed
     setReverseSpeed = set_reverse_speed
@@ -646,29 +575,24 @@ class MouseSubregion(MouseInterfaceNode):
         """Retrieves the x coordinate of the left edge of the rectangle within the
         window.  This number will be in the range [0..1].
         """
-        ...
     def get_right(self) -> float:
         """Retrieves the x coordinate of the right edge of the rectangle within the
         window.  This number will be in the range [0..1].
         """
-        ...
     def get_bottom(self) -> float:
         """Retrieves the y coordinate of the bottom edge of the rectangle within the
         window.  This number will be in the range [0..1].
         """
-        ...
     def get_top(self) -> float:
         """Retrieves the y coordinate of the top edge of the rectangle within the
         window.  This number will be in the range [0..1].
         """
-        ...
     def set_dimensions(self, l: float, r: float, b: float, t: float) -> None:
         """Changes the region of the window in which the mouse is considered to be
         active.  The parameters are identical to those for a DisplayRegion: they
         range from 0 to 1, where 0,0 is the lower left corner and 1,1 is the upper
         right; (0, 1, 0, 1) represents the whole window.
         """
-        ...
     getLeft = get_left
     getRight = get_right
     getBottom = get_bottom
@@ -710,7 +634,6 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     def get_frame(self) -> LVecBase4: ...
     def get_area(self) -> float:
         """Returns the area of the rectangular region."""
-        ...
     def set_sort(self, sort: int) -> None:
         """Changes the sorting order of this particular region.  The sorting order is
         used to resolve conflicts in the case of overlapping region; the region
@@ -718,32 +641,26 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
         same sort value, the smallest region will be preferred.  The default
         sorting order, if none is explicitly specified, is 0.
         """
-        ...
     def get_sort(self) -> int:
         """Returns the current sorting order of this region.  See set_sort()."""
-        ...
     def set_active(self, active: bool) -> None:
         """Sets whether the region is active or not.  If it is not active, the
         MouseWatcher will never consider the mouse to be over the region.  The
         region might still receive keypress events if its set_keyboard() flag is
         true.
         """
-        ...
     def get_active(self) -> bool:
         """Returns whether the region is active or not.  See set_active()."""
-        ...
     def set_keyboard(self, keyboard: bool) -> None:
         """Sets whether the region is interested in global keyboard events.  If this
         is true, then any keyboard button events will be passed to press() and
         release() regardless of the position of the mouse onscreen; otherwise,
         these events will only be passed if the mouse is over the region.
         """
-        ...
     def get_keyboard(self) -> bool:
         """Returns whether the region is interested in global keyboard events; see
         set_keyboard().
         """
-        ...
     def set_suppress_flags(self, suppress_flags: int) -> None:
         """Sets which events are suppressed when the mouse is over the region.  This
         is the union of zero or more various SF_* values.  Normally, this is 0,
@@ -753,10 +670,8 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
         the mouse position will not be sent along the data graph when the mouse is
         over this particular region.
         """
-        ...
     def get_suppress_flags(self) -> int:
         """Returns the current suppress_flags.  See set_suppress_flags()."""
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     @staticmethod
@@ -791,41 +706,32 @@ class MouseWatcherBase:
         """Adds the indicated region to the set of regions in the group.  It is no
         longer an error to call this for the same region more than once.
         """
-        ...
     def has_region(self, region: MouseWatcherRegion) -> bool:
         """Returns true if the indicated region has already been added to the
         MouseWatcherBase, false otherwise.
         """
-        ...
     def remove_region(self, region: MouseWatcherRegion) -> bool:
         """Removes the indicated region from the group.  Returns true if it was
         successfully removed, or false if it wasn't there in the first place.
         """
-        ...
     def find_region(self, name: str) -> MouseWatcherRegion:
         """Returns a pointer to the first region found with the indicated name.  If
         multiple regions share the same name, the one that is returned is
         indeterminate.
         """
-        ...
     def clear_regions(self) -> None:
         """Removes all the regions from the group."""
-        ...
     def sort_regions(self) -> None:
         """Sorts all the regions in this group into pointer order."""
-        ...
     def is_sorted(self) -> bool:
         """Returns true if the group has already been sorted, false otherwise."""
-        ...
     def get_num_regions(self) -> int:
         """Returns the number of regions in the group."""
-        ...
     def get_region(self, n: int) -> MouseWatcherRegion:
         """Returns the nth region of the group; returns NULL if there is no nth
         region.  Note that this is not thread-safe; another thread might have
         removed the nth region before you called this method.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def show_regions(self, render2d: NodePath, bin_name: str, draw_order: int) -> None:
@@ -833,18 +739,14 @@ class MouseWatcherBase:
         MouseWatcherBase.  The supplied NodePath should be the root of the 2-d
         scene graph for the window.
         """
-        ...
     def set_color(self, color: Vec4f) -> None:
         """Specifies the color used to draw the region rectangles for the regions
         visualized by show_regions().
         """
-        ...
     def hide_regions(self) -> None:
         """Stops the visualization created by a previous call to show_regions()."""
-        ...
     def update_regions(self) -> None:
         """Refreshes the visualization created by show_regions()."""
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_regions(self) -> tuple[MouseWatcherRegion, ...]: ...
@@ -908,33 +810,27 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Removes the indicated region from the group.  Returns true if it was
         successfully removed, or false if it wasn't there in the first place.
         """
-        ...
     def has_mouse(self) -> bool:
         """Returns true if the mouse is anywhere within the window, false otherwise.
         Also see is_mouse_open().
         """
-        ...
     def is_mouse_open(self) -> bool:
         """Returns true if the mouse is within the window and not over some particular
         MouseWatcherRegion that is marked to suppress mouse events; that is, that
         the mouse is in open space within the window.
         """
-        ...
     def get_mouse(self) -> LPoint2:
         """It is only valid to call this if has_mouse() returns true.  If so, this
         returns the current position of the mouse within the window.
         """
-        ...
     def get_mouse_x(self) -> float:
         """It is only valid to call this if has_mouse() returns true.  If so, this
         returns the current X position of the mouse within the window.
         """
-        ...
     def get_mouse_y(self) -> float:
         """It is only valid to call this if has_mouse() returns true.  If so, this
         returns the current Y position of the mouse within the window.
         """
-        ...
     @overload
     def set_frame(self, frame: Vec4f) -> None:
         """`(self, frame: LVecBase4)`:
@@ -952,16 +848,13 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         Sets the frame of the MouseWatcher.  See the next flavor of this method for
         a more verbose explanation.
         """
-        ...
     @overload
     def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
     def get_frame(self) -> LVecBase4:
         """Returns the frame of the MouseWatcher.  See set_frame()."""
-        ...
     @overload
     def is_over_region(self, pos: LVecBase2f = ...) -> bool:
         """Returns true if the mouse is over any rectangular region, false otherwise."""
-        ...
     @overload
     def is_over_region(self, x: float, y: float) -> bool: ...
     @overload
@@ -979,14 +872,12 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         Returns the smallest region the indicated point is over, or NULL if it is
         over no region.
         """
-        ...
     @overload
     def get_over_region(self, x: float, y: float) -> MouseWatcherRegion: ...
     def is_button_down(self, button: ButtonHandle) -> bool:
         """Returns true if the indicated button is currently being held down, false
         otherwise.
         """
-        ...
     def set_button_down_pattern(self, pattern: str) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when a button is depressed.  This is a string that may contain any of the
@@ -999,22 +890,18 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         all occurrences of the above strings replaced with the corresponding
         values.
         """
-        ...
     def get_button_down_pattern(self) -> str:
         """Returns the string that indicates how event names are generated when a
         button is depressed.  See set_button_down_pattern().
         """
-        ...
     def set_button_up_pattern(self, pattern: str) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when a button is released.  See set_button_down_pattern().
         """
-        ...
     def get_button_up_pattern(self) -> str:
         """Returns the string that indicates how event names are generated when a
         button is released.  See set_button_down_pattern().
         """
-        ...
     def set_button_repeat_pattern(self, pattern: str) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when a button is continuously held and generates keyrepeat "down" events.
@@ -1027,109 +914,91 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         all occurrences of the above strings replaced with the corresponding
         values.
         """
-        ...
     def get_button_repeat_pattern(self) -> str:
         """Returns the string that indicates how event names are names are generated
         when a button is continuously held and generates keyrepeat "down" events.
         See set_button_repeat_pattern().
         """
-        ...
     def set_enter_pattern(self, pattern: str) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse enters a region.  This is different from within_pattern, in
         that a mouse is only "entered" in the topmost region at a given time, while
         it might be "within" multiple nested regions.
         """
-        ...
     def get_enter_pattern(self) -> str:
         """Returns the string that indicates how event names are generated when the
         mouse enters a region.  This is different from within_pattern, in that a
         mouse is only "entered" in the topmost region at a given time, while it
         might be "within" multiple nested regions.
         """
-        ...
     def set_leave_pattern(self, pattern: str) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse leaves a region.  This is different from without_pattern, in
         that a mouse is only "entered" in the topmost region at a given time, while
         it might be "within" multiple nested regions.
         """
-        ...
     def get_leave_pattern(self) -> str:
         """Returns the string that indicates how event names are generated when the
         mouse leaves a region.  This is different from without_pattern, in that a
         mouse is only "entered" in the topmost region at a given time, while it
         might be "within" multiple nested regions.
         """
-        ...
     def set_within_pattern(self, pattern: str) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse wanders over a region.  This is different from
         enter_pattern, in that a mouse is only "entered" in the topmost region at a
         given time, while it might be "within" multiple nested regions.
         """
-        ...
     def get_within_pattern(self) -> str:
         """Returns the string that indicates how event names are generated when the
         mouse wanders over a region.  This is different from enter_pattern, in that
         a mouse is only "entered" in the topmost region at a given time, while it
         might be "within" multiple nested regions.
         """
-        ...
     def set_without_pattern(self, pattern: str) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse wanders out of a region.  This is different from
         leave_pattern, in that a mouse is only "entered" in the topmost region at a
         given time, while it might be "within" multiple nested regions.
         """
-        ...
     def get_without_pattern(self) -> str:
         """Returns the string that indicates how event names are generated when the
         mouse wanders out of a region.  This is different from leave_pattern, in
         that a mouse is only "entered" in the topmost region at a given time, while
         it might be "within" multiple nested regions.
         """
-        ...
     def set_geometry(self, node: PandaNode) -> None:
         """Sets the node that will be transformed each frame by the mouse's
         coordinates.  It will also be hidden when the mouse goes outside the
         window.  This can be used to implement a software mouse pointer for when a
         hardware (or system) mouse pointer is unavailable.
         """
-        ...
     def has_geometry(self) -> bool:
         """Returns true if a software mouse pointer has been setup via set_geometry(),
         or false otherwise.  See set_geometry().
         """
-        ...
     def get_geometry(self) -> PandaNode:
         """Returns the node that has been set as the software mouse pointer, or NULL
         if no node has been set.  See has_geometry() and set_geometry().
         """
-        ...
     def clear_geometry(self) -> None:
         """Stops the use of the software cursor set up via set_geometry()."""
-        ...
     def set_extra_handler(self, eh: EventHandler) -> None:
         """As an optimization for the C++ Gui, an extra handler can be registered with
         a mouseWatcher so that events can be dealt with much sooner.
         """
-        ...
     def get_extra_handler(self) -> EventHandler:
         """As an optimization for the C++ Gui, an extra handler can be registered with
         a mouseWatcher so that events can be dealt with much sooner.
         """
-        ...
     def set_modifier_buttons(self, mods: ModifierButtons) -> None:
         """Sets the buttons that should be monitored as modifier buttons for
         generating events to the MouseWatcherRegions.
         """
-        ...
     def get_modifier_buttons(self) -> ModifierButtons:
         """Returns the set of buttons that are being monitored as modifier buttons, as
         well as their current state.
         """
-        ...
     def set_display_region(self, dr: DisplayRegion) -> None:
         """Constrains the MouseWatcher to watching the mouse within a particular
         indicated region of the screen.  DataNodes parented under the MouseWatcher
@@ -1139,24 +1008,20 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
 
         Do not delete the DisplayRegion while it is owned by the MouseWatcher.
         """
-        ...
     def clear_display_region(self) -> None:
         """Removes the display region constraint from the MouseWatcher, and restores
         it to the default behavior of watching the whole window.
         """
-        ...
     def get_display_region(self) -> DisplayRegion:
         """Returns the display region the MouseWatcher is constrained to by
         set_display_region(), or NULL if it is not constrained.
         """
-        ...
     def has_display_region(self) -> bool:
         """Returns true if the MouseWatcher has been constrained to a particular
         region of the screen via set_display_region(), or false otherwise.  If this
         returns true, get_display_region() may be used to return the particular
         region.
         """
-        ...
     def add_group(self, group: MouseWatcherGroup) -> bool:
         """Adds the indicated group of regions to the set of regions the MouseWatcher
         will monitor each frame.
@@ -1169,13 +1034,11 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         Returns true if the group was successfully added, or false if it was
         already on the list.
         """
-        ...
     def remove_group(self, group: MouseWatcherGroup) -> bool:
         """Removes the indicated group from the set of extra groups associated with
         the MouseWatcher.  Returns true if successful, or false if the group was
         already removed or was never added via add_group().
         """
-        ...
     def replace_group(self, old_group: MouseWatcherGroup, new_group: MouseWatcherGroup) -> bool:
         """Atomically removes old_group from the MouseWatcher, and replaces it with
         new_group.  Presumably old_group and new_group might have some regions in
@@ -1185,15 +1048,12 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         false.  Otherwise, removes old_group and adds new_group, and then returns
         true.
         """
-        ...
     def get_num_groups(self) -> int:
         """Returns the number of separate groups added to the MouseWatcher via
         add_group().
         """
-        ...
     def get_group(self, n: int) -> MouseWatcherGroup:
         """Returns the nth group added to the MouseWatcher via add_group()."""
-        ...
     def set_inactivity_timeout(self, timeout: float) -> None:
         """Sets an inactivity timeout on the mouse activity.  When this timeout (in
         seconds) is exceeded with no keyboard or mouse activity, all currently-held
@@ -1204,30 +1064,24 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         Also, when this timeout expires, the event specified by
         set_inactivity_timeout_event() will be generated.
         """
-        ...
     def has_inactivity_timeout(self) -> bool:
         """Returns true if an inactivity timeout has been set, false otherwise."""
-        ...
     def get_inactivity_timeout(self) -> float:
         """Returns the inactivity timeout that has been set.  It is an error to call
         this if has_inactivity_timeout() returns false.
         """
-        ...
     def clear_inactivity_timeout(self) -> None:
         """Removes the inactivity timeout and restores the MouseWatcher to its default
         behavior of allowing a key to be held indefinitely.
         """
-        ...
     def set_inactivity_timeout_event(self, event: str) -> None:
         """Specifies the event string that will be generated when the inactivity
         timeout counter expires.  See set_inactivity_timeout().
         """
-        ...
     def get_inactivity_timeout_event(self) -> str:
         """Returns the event string that will be generated when the inactivity timeout
         counter expires.  See set_inactivity_timeout().
         """
-        ...
     def get_trail_log(self) -> PointerEventList:
         """Obtain the mouse trail log.  This is a PointerEventList.  Does not make a
         copy, therefore, this PointerEventList will be updated each time
@@ -1237,19 +1091,16 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         in the GraphicsWindowInputDevice and set the trail log duration in the
         MouseWatcher.  Otherwise, the trail log will be empty.
         """
-        ...
     def num_trail_recent(self) -> int:
         """This counter indicates how many events were added to the trail log this
         frame.  The trail log is updated once per frame, during the process_events
         operation.
         """
-        ...
     def set_trail_log_duration(self, duration: float) -> None:
         """If the duration is nonzero, causes the MouseWatcher to log the mouse's
         trail.  Events older than the specified duration are discarded.  If the
         duration is zero, logging is disabled.
         """
-        ...
     def get_trail_node(self) -> GeomNode:
         """Returns a GeomNode that represents the mouse trail.  The intent is that you
         should reparent this GeomNode to Render2D, and then forget about it.  The
@@ -1261,19 +1112,16 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         so, It is suggested that you might want to apply a line thickness and
         antialias mode to the line --- doing so makes it look a lot better.
         """
-        ...
     def clear_trail_node(self) -> None:
         """If you have previously fetched the trail node using get_trail_node, then
         the MouseWatcher is continually updating the trail node every frame.  Using
         clear_trail_node causes the MouseWatcher to forget the trail node and stop
         updating it.
         """
-        ...
     def clear_trail_log(self) -> None:
         """Clears the mouse trail log.  This does not prevent further accumulation of
         the log given future events.
         """
-        ...
     def note_activity(self) -> None:
         """Can be used in conjunction with the inactivity timeout to inform the
         MouseWatcher that the user has just performed some action which proves
@@ -1284,7 +1132,6 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         with no keyboard or mouse activity and no calls to note_activity(), then
         any buttons held will be automatically released.
         """
-        ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     def get_groups(self) -> tuple[MouseWatcherGroup, ...]: ...
@@ -1357,67 +1204,53 @@ class MouseWatcherParameter:
         """Returns true if this parameter has an associated mouse or keyboard button,
         false otherwise.
         """
-        ...
     def get_button(self) -> ButtonHandle:
         """Returns the mouse or keyboard button associated with this event.  If
         has_button(), above, returns false, this returns ButtonHandle::none().
         """
-        ...
     def is_keyrepeat(self) -> bool:
         """Returns true if the button-down even was generated due to keyrepeat, or
         false if it was an original button down.
         """
-        ...
     def has_keycode(self) -> bool:
         """Returns true if this parameter has an associated keycode, false otherwise."""
-        ...
     def get_keycode(self) -> int:
         """Returns the keycode associated with this event.  If has_keycode(), above,
         returns false, this returns 0.
         """
-        ...
     def has_candidate(self) -> bool:
         """Returns true if this parameter has an associated candidate string, false
         otherwise.
         """
-        ...
     def get_candidate_string_encoded(self, encoding: _TextEncoder_Encoding = ...) -> str:
         """Returns the candidate string associated with this event.  If
         has_candidate(), above, returns false, this returns the empty string.
         """
-        ...
     def get_highlight_start(self) -> int:
         """Returns the first highlighted character in the candidate string."""
-        ...
     def get_highlight_end(self) -> int:
         """Returns one more than the last highlighted character in the candidate
         string.
         """
-        ...
     def get_cursor_pos(self) -> int:
         """Returns the position of the user's edit cursor within the candidate string."""
-        ...
     def get_modifier_buttons(self) -> ModifierButtons:
         """Returns the set of modifier buttons that were being held down while the
         event was generated.
         """
-        ...
     def has_mouse(self) -> bool:
         """Returns true if this parameter has an associated mouse position, false
         otherwise.
         """
-        ...
     def get_mouse(self) -> LPoint2:
         """Returns the mouse position at the time the event was generated, in the
         normalized range (-1 .. 1).  It is valid to call this only if has_mouse()
         returned true.
         """
-        ...
     def is_outside(self) -> bool:
         """Returns true if the mouse was outside the region at the time the event was
         generated, false otherwise.  This is only valid for "release" type events.
         """
-        ...
     def output(self, out: ostream) -> None: ...
     hasButton = has_button
     getButton = get_button
@@ -1459,28 +1292,23 @@ class Trackball(MouseInterfaceNode):
     def __init__(self, name: str) -> None: ...
     def reset(self) -> None:
         """Reinitializes all transforms to identity."""
-        ...
     def get_forward_scale(self) -> float:
         """Returns the scale factor applied to forward and backward motion.  See
         set_forward_scale().
         """
-        ...
     def set_forward_scale(self, fwdscale: float) -> None:
         """Changes the scale factor applied to forward and backward motion.  The
         larger this number, the faster the model will move in response to dollying
         in and out.
         """
-        ...
     def get_pos(self) -> LPoint3:
         """Return the offset from the center of rotation."""
-        ...
     def get_x(self) -> float: ...
     def get_y(self) -> float: ...
     def get_z(self) -> float: ...
     @overload
     def set_pos(self, vec: Vec3f) -> None:
         """Directly set the offset from the rotational origin."""
-        ...
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
     def set_x(self, x: float) -> None: ...
@@ -1488,14 +1316,12 @@ class Trackball(MouseInterfaceNode):
     def set_z(self, z: float) -> None: ...
     def get_hpr(self) -> LVecBase3:
         """Return the trackball's orientation."""
-        ...
     def get_h(self) -> float: ...
     def get_p(self) -> float: ...
     def get_r(self) -> float: ...
     @overload
     def set_hpr(self, hpr: Vec3f) -> None:
         """Directly set the mover's orientation."""
-        ...
     @overload
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     def set_h(self, h: float) -> None: ...
@@ -1505,16 +1331,12 @@ class Trackball(MouseInterfaceNode):
         """Reposition the center of rotation to coincide with the current translation
         offset.  Future rotations will be about the current origin.
         """
-        ...
     def move_origin(self, x: float, y: float, z: float) -> None:
         """Moves the center of rotation by the given amount."""
-        ...
     def get_origin(self) -> LPoint3:
         """Returns the current center of rotation."""
-        ...
     def set_origin(self, origin: Vec3f) -> None:
         """Directly sets the center of rotation."""
-        ...
     def set_control_mode(self, control_mode: _Trackball_ControlMode) -> None:
         """Sets the control mode.  Normally this is CM_default, which means each mouse
         button serves its normal function.  When it is CM_truck, CM_pan, CM_dolly,
@@ -1522,57 +1344,46 @@ class Trackball(MouseInterfaceNode):
         of their normal function.  This can be used in conjunction with some
         external way of changing modes.
         """
-        ...
     def get_control_mode(self) -> _Trackball_ControlMode:
         """Returns the control mode.  See set_control_mode()."""
-        ...
     def set_invert(self, flag: bool) -> None:
         """Sets the invert flag.  When this is set, the inverse matrix is generated,
         suitable for joining to a camera, instead of parenting the scene under it.
         """
-        ...
     def get_invert(self) -> bool:
         """Returns the invert flag.  When this is set, the inverse matrix is
         generated, suitable for joining to a camera, instead of parenting the scene
         under it.
         """
-        ...
     def set_rel_to(self, rel_to: NodePath) -> None:
         """Sets the NodePath that all trackball manipulations are to be assumed to be
         relative to.  For instance, set your camera node here to make the trackball
         motion camera relative.  The default is the empty path, which means
         trackball motion is in global space.
         """
-        ...
     def get_rel_to(self) -> NodePath:
         """Returns the NodePath that all trackball manipulations are relative to, or
         the empty path.
         """
-        ...
     def set_coordinate_system(self, cs: _CoordinateSystem) -> None:
         """Sets the coordinate system of the Trackball.  Normally, this is the default
         coordinate system.  This changes the axes the Trackball manipulates so that
         the user interface remains consistent across different coordinate systems.
         """
-        ...
     def get_coordinate_system(self) -> _CoordinateSystem:
         """Returns the coordinate system of the Trackball.  See
         set_coordinate_system().
         """
-        ...
     def set_mat(self, mat: Mat4f) -> None:
         """Stores the indicated transform in the trackball.  This is a transform in
         global space, regardless of the rel_to node.
         """
-        ...
     def get_mat(self) -> LMatrix4:
         """Returns the matrix represented by the trackball rotation."""
-        ...
     def get_trans_mat(self) -> LMatrix4:
         """Returns the actual transform that will be applied to the scene graph.  This
         is the same as get_mat(), unless invert is in effect.
         """
-        ...
     getForwardScale = get_forward_scale
     setForwardScale = set_forward_scale
     getPos = get_pos
@@ -1619,11 +1430,9 @@ class Transform2SG(DataNode):
     def __init__(self, name: str) -> None: ...
     def set_node(self, node: PandaNode) -> None:
         """Sets the node that this object will adjust."""
-        ...
     def get_node(self) -> PandaNode:
         """Returns the node that this object will adjust, or NULL if the node has not
         yet been set.
         """
-        ...
     setNode = set_node
     getNode = get_node
