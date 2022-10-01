@@ -114,7 +114,7 @@ class AppRunner(DirectObject):
         argv,
         instanceId,
         interactiveConsole: bool,
-        p3dOffset: int = 0,
+        p3dOffset: int = ...,
         p3dUrl: URLSpec | str | None = None,
     ) -> None: ...
     def loadMultifilePrcFiles(self, mf, root) -> None: ...
@@ -135,7 +135,7 @@ class AppRunner(DirectObject):
         self,
         operation,
         object,
-        propertyName: str = '',
+        propertyName: str = ...,
         value=None,
         needsResponse: bool = True,
     ): ...

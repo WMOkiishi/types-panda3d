@@ -45,7 +45,7 @@ class ClientRepositoryBase(ConnectionRepository):
     def __init__(
         self,
         dcFileNames: str | Iterable[StrOrBytesPath] | None = None,
-        dcSuffix: str = '',
+        dcSuffix: str = ...,
         connectMethod: int | None = None,
         threadedNet: bool | None = None,
     ) -> None: ...

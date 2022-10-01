@@ -298,7 +298,7 @@ class ShowBase(DirectObject):
     def make_camera2d(
         self,
         win: GraphicsOutput,
-        sort: int = 10,
+        sort: int = ...,
         displayRegion: Vec4f | tuple[float, float, float, float] = ...,
         coords: Vec4f | tuple[float, float, float, float] = ...,
         lens: Lens | None = None,
@@ -307,7 +307,7 @@ class ShowBase(DirectObject):
     def make_camera2dp(
         self,
         win: GraphicsOutput,
-        sort: int = 10,
+        sort: int = ...,
         displayRegion: Vec4f | tuple[float, float, float, float] = ...,
         coords: Vec4f | tuple[float, float, float, float] = ...,
         lens: Lens | None = None,

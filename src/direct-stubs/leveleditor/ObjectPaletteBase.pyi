@@ -2,7 +2,7 @@ from typing import Any
 
 class ObjectGen:
     name: str
-    def __init__(self, name: str = '') -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
 
 class ObjectBase(ObjectGen):
     createFunction = ...
@@ -20,7 +20,7 @@ class ObjectBase(ObjectGen):
     propertiesMask: dict
     def __init__(
         self,
-        name: str = '',
+        name: str = ...,
         createFunction=None,
         model=None,
         models: list = ...,

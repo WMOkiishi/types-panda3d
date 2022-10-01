@@ -22,8 +22,8 @@ class AsyncRequest(DirectObject):
         self,
         air: ClientRepository,
         replyToChannelId: int | None = None,
-        timeoutTime: float = 8,
-        numRetries: int = 0,
+        timeoutTime: float = ...,
+        numRetries: int = ...,
     ) -> None: ...
     def delete(self) -> None: ...
     def askForObjectField(

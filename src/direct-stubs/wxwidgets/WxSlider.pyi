@@ -18,7 +18,7 @@ class WxSlider(wx.Slider):
         size=...,
         style=...,
         validator=...,
-        name: str = 'slider',
+        name: str = ...,
         textSize: tuple[int, int] = ...,
     ) -> None: ...
     def GetValue(self) -> float: ...

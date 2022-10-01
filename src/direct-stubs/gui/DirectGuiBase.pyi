@@ -26,7 +26,7 @@ class DirectGuiBase(DirectObject):
         self,
         keywords: Mapping[str, Any],
         optionDefs: Iterable[tuple[str, Any, Callable[[], object] | None]],
-        dynamicGroups: Iterable = (),
+        dynamicGroups: Iterable = ...,
     ) -> None: ...
     def addoptions(
         self,

@@ -23,7 +23,7 @@ class ClientRepository(ClientRepositoryBase):
         self,
         className=None,
         distObj=None,
-        zoneId: int = 0,
+        zoneId: int = ...,
         optionalFields=None,
         doId=None,
         reserveDoId: bool = False,

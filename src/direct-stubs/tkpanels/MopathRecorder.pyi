@@ -172,7 +172,7 @@ class MopathRecorder(AppShell, DirectObject):
     def setPathDuration(self, event) -> None: ...
     def setPathDurationTo(self, newMaxT: float) -> None: ...
     def setRecordStart(self, value: float) -> None: ...
-    def getPrePoints(self, type: str = 'Refine') -> None: ...
+    def getPrePoints(self, type: str = ...) -> None: ...
     def setControlStart(self, value: float) -> None: ...
     def setControlStop(self, value: float) -> None: ...
     def setRefineStop(self, value: float) -> None: ...
@@ -183,7 +183,7 @@ class MopathRecorder(AppShell, DirectObject):
     def cropCurve(self) -> None: ...
     def loadCurveFromFile(self) -> None: ...
     def saveCurveToFile(self) -> None: ...
-    def followTerrain(self, height: float = 1) -> None: ...
+    def followTerrain(self, height: float = ...) -> None: ...
     def getWidget(self, category: str, text: str) -> Any: ...
     def getVariable(self, category: str, text: str) -> Any: ...
     def createLabeledEntry(
@@ -192,12 +192,12 @@ class MopathRecorder(AppShell, DirectObject):
         category: str,
         text: str,
         balloonHelp,
-        value: str = '',
+        value: str = ...,
         command=None,
-        relief: _TkRelief = 'sunken',
+        relief: _TkRelief = ...,
         side: _TkSide = ...,
-        expand: int = 1,
-        width: int = 12,
+        expand: int = ...,
+        width: int = ...,
     ) -> tuple[Frame, Label, Entry]: ...
     def createButton(
         self,
@@ -207,7 +207,7 @@ class MopathRecorder(AppShell, DirectObject):
         balloonHelp,
         command,
         side: _TkSide = ...,
-        expand: int = 0,
+        expand: int = ...,
         fill: _TkFill = ...,
     ) -> Button: ...
     def createCheckbutton(
@@ -220,7 +220,7 @@ class MopathRecorder(AppShell, DirectObject):
         initialState,
         side: str = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
     ) -> Checkbutton: ...
     def createRadiobutton(
         self,
@@ -233,7 +233,7 @@ class MopathRecorder(AppShell, DirectObject):
         value,
         command=None,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
     ) -> Radiobutton: ...
     def createFloater(
         self,
@@ -263,12 +263,12 @@ class MopathRecorder(AppShell, DirectObject):
         text: str,
         balloonHelp,
         command=None,
-        min: float = 0,
-        max: float = 1,
+        min: float = ...,
+        max: float = ...,
         resolution: float | None = None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 1,
+        expand: int = ...,
         **kw,
     ) -> Slider: ...
     def createEntryScale(
@@ -278,12 +278,12 @@ class MopathRecorder(AppShell, DirectObject):
         text: str,
         balloonHelp,
         command=None,
-        min: float = 0,
-        max: float = 1,
+        min: float = ...,
+        max: float = ...,
         resolution: float | None = None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 1,
+        expand: int = ...,
         **kw,
     ) -> EntryScale: ...
     def createVector2Entry(self, parent, category: str, text: str, balloonHelp, command=None, **kw) -> Vector2Entry: ...
@@ -298,9 +298,9 @@ class MopathRecorder(AppShell, DirectObject):
         balloonHelp,
         items,
         command,
-        history: int = 0,
+        history: int = ...,
         side: _TkSide = ...,
-        expand: int = 0,
+        expand: int = ...,
         fill: _TkFill = ...,
     ) -> Pmw.ComboBox: ...
     def makeCameraWindow(self) -> None: ...

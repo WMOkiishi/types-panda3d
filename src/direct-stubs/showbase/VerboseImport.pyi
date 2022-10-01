@@ -9,6 +9,6 @@ def newimport(
     name: str,
     globals: Mapping[str, Any] | None = None,
     locals: Mapping[str, Any] | None = None,
-    fromlist: Sequence[str] = (),
+    fromlist: Sequence[str] = ...,
     level: int = ...,
 ) -> Any: ...

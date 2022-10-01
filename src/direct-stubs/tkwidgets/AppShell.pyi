@@ -64,7 +64,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
     def buttonAdd(self, buttonName, helpMessage=None, statusMessage=None, **kw): ...
     def alignbuttons(self) -> None: ...
     def bind(self, child, balloonHelpMsg, statusHelpMsg=None) -> None: ...
-    def updateProgress(self, newValue=0, newMax=0) -> None: ...
+    def updateProgress(self, newValue=..., newMax=...) -> None: ...
     def addWidget(self, category: str, text: str, widget) -> None: ...
     def getWidget(self, category: str, text: str) -> Any | None: ...
     def addVariable(self, category: str, text: str, variable) -> None: ...
@@ -87,25 +87,25 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
-        value: str = '',
-        width: int = 12,
+        value: str = ...,
+        width: int = ...,
         relief: _TkRelief = ...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
     ) -> Entry: ...
     def newCreateButton(
         self,
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Button: ...
     def newCreateCheckbutton(
@@ -113,13 +113,13 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         initialState: bool = False,
         anchor: _TkAnchor = ...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Checkbutton: ...
     def newCreateRadiobutton(
@@ -130,11 +130,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         variable,
         value,
         command=None,
-        help: str = '',
+        help: str = ...,
         anchor: _TkAnchor = ...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Radiobutton: ...
     def newCreateFloater(
@@ -142,11 +142,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Floater: ...
     def newCreateDial(
@@ -154,11 +154,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Dial: ...
     def newCreateSider(
@@ -166,11 +166,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Slider: ...
     def newCreateEntryScale(
@@ -178,11 +178,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> EntryScale: ...
     def newCreateVector2Entry(
@@ -190,11 +190,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Vector2Entry: ...
     def newCreateVector3Entry(
@@ -202,11 +202,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Vector3Entry: ...
     def newCreateColorEntry(
@@ -214,11 +214,11 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> ColorEntry: ...
     def newCreateOptionMenu(
@@ -226,16 +226,16 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         items: list[str] = ...,
         labelpos=...,
         label_anchor: _TkAnchor = ...,
-        label_width: int = 16,
-        menu_tearoff: int = 1,
+        label_width: int = ...,
+        menu_tearoff: int = ...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Pmw.OptionMenu: ...
     def newCreateComboBox(
@@ -243,21 +243,21 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        help: str = '',
+        help: str = ...,
         command=None,
         items=...,
         state: _TkState = ...,
         history: Unused = ...,
         labelpos=...,
         label_anchor: _TkAnchor = ...,
-        label_width: int = 16,
-        entry_width: int = 16,
+        label_width: int = ...,
+        entry_width: int = ...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
-        expand: int = 0,
+        expand: int = ...,
         **kw: Any,
     ) -> Pmw.ComboBox: ...
-    def transformRGB(self, rgb: tuple[int, int, int], max: float = 1) -> str: ...
+    def transformRGB(self, rgb: tuple[int, int, int], max: float = ...) -> str: ...
 
 class TestAppShell(AppShell):
     def createButtons(self) -> None: ...
