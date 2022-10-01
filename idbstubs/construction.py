@@ -49,7 +49,20 @@ SR = TypeVar('SR', bound=NamespacedStubRep)
 
 
 def get_comment(name: str, namespace: Iterable[str] = ()) -> str:
-    ignored_errors = IGNORE_ERRORS.get('.'.join((*namespace, name)))
+    scoped_name = '.'.join((*namespace, name))
+    # Sneak in some "noqa" comments
+    if scoped_name == 'panda3d.core.StreamWrapper.iostream':
+        return 'noqa: F811'
+    elif (
+        scoped_name.startswith('panda3d.core.CallbackGraphicsWindow')
+        and scoped_name.endswith((
+            'EventsCallbackData',
+            'PropertiesCallbackData',
+            'RenderCallbackData',
+        ))
+    ):
+        return 'noqa: F821'
+    ignored_errors = IGNORE_ERRORS.get(scoped_name)
     if ignored_errors is None:
         return ''
     return f'type: ignore[{ignored_errors}]'

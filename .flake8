@@ -1,0 +1,45 @@
+# Switched off for all files:
+#   E501: line too long
+#         Stubs have a longer suggested maximum line length, and
+#         the scripts here follow the 79-character limit loosely.
+
+# Irrelevant for stub files:
+#   E301: expected 1 blank line, found 0
+#   E302: expected 2 blank lines, found 0
+#   E305: expected 2 blank lines after end of function or class
+#   E701: multiple statements on one line (colon)
+#   F401: module imported but unused
+#   F822: undefined name name in __all__
+
+# Dictated by source, not stubs:
+#   E741: do not use variables named 'l', 'O', or 'I'
+#   F403: 'from module import *' used; unable to detect undefined names
+
+# The auto-generated panda3d stubs don't conform to these rules:
+#   Y021: Docstrings should not be included in stubs.
+#   Y042: Type alias names should use CamelCase rather than snake_case.
+#         Some of the enum aliases use snake_case to match the name of a class.
+
+# The direct stubs don't conform to these rules:
+#   Y011: All default values for typed function arguments must be '...'.
+#         Currently, defaults are kept if they are singleton values.
+#   Y014: All default values for arguments must be '...'.
+#   Y037: Use PEP 604 syntax instead of 'typing.Union' and 'typing.Optional'.
+#         This will be changed once some Mypy bugs are fixed.
+
+
+[flake8]
+extend-ignore = E501
+per-file-ignores =
+    src/direct-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, F822, Y011, Y014, Y037
+    src/panda3d-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, Y021, Y042
+
+extend-exclude =
+    venv,
+    # The following aren't quite ready for checking
+    src/direct-stubs/leveleditor,
+    src/direct-stubs/tkpanels,
+    src/direct-stubs/tkwidgets,
+    src/direct-stubs/wxwidgets,
+
+noqa_require_code = true
