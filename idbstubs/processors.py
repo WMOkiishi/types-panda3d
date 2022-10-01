@@ -8,7 +8,8 @@ from .reps import (
     Alias, Class, File, Function, Parameter, Signature, TypeVariable
 )
 from .special_cases import (
-    ATTRIBUTE_NAME_SHADOWS, PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
+    ATTRIBUTE_NAME_SHADOWS, INPLACE_DUNDERS, PARAM_TYPE_OVERRIDES,
+    RETURN_TYPE_OVERRIDES
 )
 from .typedata import (
     combine_types, get_param_type_replacement, process_dependency,
@@ -30,9 +31,11 @@ DEFAULT_RETURNS: Final = {
     'get_subdata': 'bytes',
 }
 RETURN_SELF: Final = [
-    '__floordiv__', '__ifloordiv__', '__pow__', '__ipow__',
-    '__iadd__', '__isub__', '__imul__', '__itruediv__',
-    '__round__', '__floor__', '__ceil__',
+    '__floordiv__',
+    '__pow__',
+    '__round__',
+    '__floor__',
+    '__ceil__',
 ]
 
 
@@ -246,6 +249,14 @@ def process_function(function: Function) -> Function:
             self_param.type = 'Self'
             copy_param.type = 'Self'
             sig.return_type = 'Self'
+        case Function(
+            name=name,
+            namespace=[*_, class_name],
+            signatures=[Signature(return_type=return_type), *_] as signatures,
+        ) if name in INPLACE_DUNDERS and return_type in (class_name, ''):
+            for sig in signatures:
+                sig.parameters[0].type = 'Self'
+                sig.return_type = 'Self'
     return function
 
 

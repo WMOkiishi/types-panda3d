@@ -46,8 +46,16 @@ NOT_EXPOSED: Final = frozenset((
 ))
 
 
+# These almost certainly behave as if they return `self`
+INPLACE_DUNDERS: Final = frozenset({
+    '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
+    '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
+    '__imod__', '__ipow__',
+})
+
+
 # Camel-case aliases are not generated for these names
-NO_MANGLING: Final = frozenset((
+NO_MANGLING: Final = INPLACE_DUNDERS | {
     '_del',
     '__init__', '__call__', '__iter__', '__await__',
     '__getattribute__', '__getattr__', '__setattr__', '__delattr__',
@@ -55,16 +63,14 @@ NO_MANGLING: Final = frozenset((
     '__eq__', '__ne__', '__lt__', '__le__', '__ge__', '__gt__',
     '__neg__', '__pos__', '__invert__',
     '__and__', '__or__', '__xor__', '__lshift__', '__rshift__',
-    '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
     '__rand__', '__ror__', '__rxor__', '__rlshift__', '__rrshift__',
     '__add__', '__sub__', '__mul__', '__truediv__', '__floordiv__',
-    '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
     '__radd__', '__rsub__', '__rmul__', '__rtruediv__', '__rfloordiv__',
-    '__mod__', '__imod__', '__rmod__', '__pow__', '__ipow__', '__rpow__',
+    '__mod__', '__rmod__', '__pow__', '__rpow__',
     '__repr__', '__str__', '__float__', '__int__', '__bool__', '__len__',
     '__copy__', '__deepcopy__', '__getstate__', '__setstate__',
     '__reduce__', '__reduce_ex__', '__reduce_persist__',
-))
+}
 
 
 # These classes implement iteration via `__getitem__`

@@ -1093,7 +1093,7 @@ class LPlanef(LVecBase4f):
     @overload
     def __init__(self, a: float, b: float, c: float, d: float) -> None: ...
     def __mul__(self, mat: LMatrix3f | Mat4f) -> LPlanef: ...  # type: ignore[override]
-    def __imul__(self, mat: Mat4f) -> LPlanef: ...  # type: ignore[misc, override]
+    def __imul__(self: Self, mat: Mat4f) -> Self: ...  # type: ignore[misc, override]
     def __neg__(self) -> LPlanef: ...
     def xform(self, mat: Mat4f) -> None:
         """Transforms the plane by the indicated matrix."""
@@ -1178,7 +1178,7 @@ class LPlaned(LVecBase4d):
     @overload
     def __init__(self, a: float, b: float, c: float, d: float) -> None: ...
     def __mul__(self, mat: LMatrix3d | Mat4d) -> LPlaned: ...  # type: ignore[override]
-    def __imul__(self, mat: Mat4d) -> LPlaned: ...  # type: ignore[misc, override]
+    def __imul__(self: Self, mat: Mat4d) -> Self: ...  # type: ignore[misc, override]
     def __neg__(self) -> LPlaned: ...
     def xform(self, mat: Mat4d) -> None:
         """Transforms the plane by the indicated matrix."""
