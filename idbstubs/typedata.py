@@ -26,9 +26,14 @@ _coercions = defaultdict[TypeIndex, set[TypeIndex]](set)
 _aliases: dict[str, str] = {}
 _param_type_replacements: dict[str, str] = {}
 _enum_definitions: dict[str, str] = {}
-_implicit_cast_param_names = frozenset(
-    ('param0', 'copy', 'other', 'value', 'from')
-)
+_implicit_cast_param_names = frozenset({
+    'param0',
+    'copy',
+    'other',
+    'value',
+    'from',
+    'url',
+})
 
 BUILTIN_NAMES: Final = frozenset(dir(builtins))
 KNOWN_IMPORTS: Final = {
@@ -66,6 +71,7 @@ TYPE_ALIASES: Final = {
     'Mat4d': 'LMatrix4d | UnalignedLMatrix4d',
     'Mat4f': 'LMatrix4f | UnalignedLMatrix4f',
     'Filepath': 'StrOrBytesPath | ConfigVariableFilename',
+    'URL': 'URLSpec | str',
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))

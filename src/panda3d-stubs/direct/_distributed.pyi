@@ -1,5 +1,6 @@
 from typing import Any, ClassVar
 
+from panda3d._typing import URL
 from panda3d.core import (
     Buffered_DatagramConnection,
     ConnectionWriter,
@@ -10,7 +11,6 @@ from panda3d.core import (
     QueuedConnectionManager,
     QueuedConnectionReader,
     SocketStream,
-    URLSpec,
 )
 from panda3d.direct import DCClass, DCFile
 
@@ -94,7 +94,7 @@ class CConnectionRepository:
         HTTP connection.  Returns NULL if there is no current HTTP connection.
         """
         ...
-    def try_connect_net(self, url: URLSpec) -> bool:
+    def try_connect_net(self, url: URL) -> bool:
         """Uses Panda's "net" library to try to connect to the server and port named
         in the indicated URL.  Returns true if successful, false otherwise.
         """
@@ -108,7 +108,7 @@ class CConnectionRepository:
     def get_qcr(self) -> QueuedConnectionReader:
         """Returns the QueuedConnectionReader object associated with the repository."""
         ...
-    def connect_native(self, url: URLSpec) -> bool:
+    def connect_native(self, url: URL) -> bool:
         """Connects to the server using Panda's low-level and fast "native net"
         library.
         """

@@ -2,7 +2,7 @@ from _typeshed import Self
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath
+from panda3d._typing import URL, Filepath
 from panda3d.core import (
     Buffer,
     Datagram,
@@ -222,7 +222,7 @@ class URLSpec:
     @property
     def ssl(self) -> bool: ...
     @overload
-    def __init__(self, __param0: URLSpec = ...) -> None:
+    def __init__(self, __param0: URL = ...) -> None:
         """Creates a URLSpec by appending a path to the end of the old URLSpec,
         inserting an intervening forward slash if necessary.
         """
@@ -230,16 +230,16 @@ class URLSpec:
     @overload
     def __init__(self, url: str, server_name_expected: bool = ...) -> None: ...
     @overload
-    def __init__(self, url: URLSpec, path: Filepath) -> None: ...
+    def __init__(self, url: URL, path: Filepath) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def __lt__(self, other: URLSpec) -> bool: ...
+    def __lt__(self, other: URL) -> bool: ...
     def __len__(self) -> int: ...
     def __getitem__(self, n: int) -> str: ...
-    def __le__(self, other: URLSpec) -> bool: ...
+    def __le__(self, other: URL) -> bool: ...
     def assign(self, url: str) -> URLSpec: ...
-    def compare_to(self, other: URLSpec) -> int:
+    def compare_to(self, other: URL) -> int:
         """Returns a number less than zero if this URLSpec sorts before the other one,
         greater than zero if it sorts after, or zero if they are equivalent.
         """
@@ -577,7 +577,7 @@ class HTTPCookie:
         """
         ...
     @overload
-    def __init__(self, format: str, url: URLSpec) -> None: ...
+    def __init__(self, format: str, url: URL) -> None: ...
     @overload
     def __init__(self, name: str, path: str, domain: str) -> None: ...
     def __lt__(self, other: HTTPCookie) -> bool: ...
@@ -627,7 +627,7 @@ class HTTPCookie:
         existing cookie within a set with new values.
         """
         ...
-    def parse_set_cookie(self, format: str, url: URLSpec) -> bool:
+    def parse_set_cookie(self, format: str, url: URL) -> bool:
         """Separates out the parameter/value pairs of the Set-Cookie header and
         assigns the values of the cookie appropriate.  Returns true if the header
         is parsed correctly, false if something is not understood.
@@ -638,7 +638,7 @@ class HTTPCookie:
         false otherwise.
         """
         ...
-    def matches_url(self, url: URLSpec) -> bool:
+    def matches_url(self, url: URL) -> bool:
         """Returns true if the cookie is appropriate to send with the indicated URL
         request, false otherwise.
         """
@@ -743,7 +743,7 @@ class HTTPClient(ReferenceCount):
         made to build up the set of proxy servers.
         """
         ...
-    def add_proxy(self, scheme: str, proxy: URLSpec) -> None:
+    def add_proxy(self, scheme: str, proxy: URL) -> None:
         """Adds the indicated proxy host as a proxy for communications on the given
         scheme.  Usually the scheme is "http" or "https".  It may be the empty
         string to indicate a general proxy.  The proxy string may be the empty URL
@@ -762,7 +762,7 @@ class HTTPClient(ReferenceCount):
         IP address, and it may include the * as a wildcard character.
         """
         ...
-    def get_proxies_for_url(self, url: URLSpec) -> str:
+    def get_proxies_for_url(self, url: URL) -> str:
         """Returns a semicolon-delimited list of proxies, in the order in which they
         should be tried, that are appropriate for the indicated URL.  The keyword
         DIRECT indicates a direct connection should be tried.
@@ -819,7 +819,7 @@ class HTTPClient(ReferenceCount):
         host).
         """
         ...
-    def send_cookies(self, out: ostream, url: URLSpec) -> None:
+    def send_cookies(self, out: ostream, url: URL) -> None:
         """Writes to the indicated ostream a "Cookie" header line for sending the
         cookies appropriate to the indicated URL along with an HTTP request.  This
         also removes expired cookies.
@@ -853,7 +853,7 @@ class HTTPClient(ReferenceCount):
         determine ahead of time if the certificate can be loaded correctly.
         """
         ...
-    def add_preapproved_server_certificate_filename(self, url: URLSpec, filename: Filepath) -> bool:
+    def add_preapproved_server_certificate_filename(self, url: URL, filename: Filepath) -> bool:
         """Adds the certificate defined in the indicated PEM filename as a "pre-
         approved" certificate for the indicated server, defined by the hostname and
         port (only) from the given URL.
@@ -866,7 +866,7 @@ class HTTPClient(ReferenceCount):
         weaker add_preapproved_server_certificate_name().
         """
         ...
-    def add_preapproved_server_certificate_pem(self, url: URLSpec, pem: str) -> bool:
+    def add_preapproved_server_certificate_pem(self, url: URL, pem: str) -> bool:
         """Adds the certificate defined in the indicated data string, formatted as a
         PEM block, as a "pre-approved" certificate for the indicated server,
         defined by the hostname and port (only) from the given URL.
@@ -879,7 +879,7 @@ class HTTPClient(ReferenceCount):
         weaker add_preapproved_server_certificate_name().
         """
         ...
-    def add_preapproved_server_certificate_name(self, url: URLSpec, name: str) -> bool:
+    def add_preapproved_server_certificate_name(self, url: URL, name: str) -> bool:
         """Adds the certificate *name* only, as a "pre-approved" certificate name for
         the indicated server, defined by the hostname and port (only) from the
         given URL.
@@ -900,7 +900,7 @@ class HTTPClient(ReferenceCount):
         type0=value0/type1=value1/type2=...
         """
         ...
-    def clear_preapproved_server_certificates(self, url: URLSpec) -> None:
+    def clear_preapproved_server_certificates(self, url: URL) -> None:
         """Removes all preapproved server certificates for the indicated server and
         port.
         """
@@ -981,20 +981,20 @@ class HTTPClient(ReferenceCount):
         the connection after the first document.
         """
         ...
-    def post_form(self, url: URLSpec, body: str) -> HTTPChannel:
+    def post_form(self, url: URL, body: str) -> HTTPChannel:
         """Posts form data to a particular URL and retrieves the response.  Returns a
         new HTTPChannel object whether the document is successfully read or not;
         you can test is_valid() and get_return_code() to determine whether the
         document was retrieved.
         """
         ...
-    def get_document(self, url: URLSpec) -> HTTPChannel:
+    def get_document(self, url: URL) -> HTTPChannel:
         """Opens the named document for reading.  Returns a new HTTPChannel object
         whether the document is successfully read or not; you can test is_valid()
         and get_return_code() to determine whether the document was retrieved.
         """
         ...
-    def get_header(self, url: URLSpec) -> HTTPChannel:
+    def get_header(self, url: URL) -> HTTPChannel:
         """Like get_document(), except only the header associated with the document is
         retrieved.  This may be used to test for existence of the document; it
         might also return the size of the document (if the server gives us this
@@ -1161,16 +1161,16 @@ class DocumentSpec:
     CC_no_cache: Final[Literal[2]]
     CCNoCache: Final[Literal[2]]
     @overload
-    def __init__(self, copy: DocumentSpec = ...) -> None: ...
+    def __init__(self, copy: DocumentSpec | URL = ...) -> None: ...
     @overload
-    def __init__(self, url: URLSpec | str) -> None: ...
+    def __init__(self, url: URL) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def __lt__(self, other: DocumentSpec) -> bool: ...
-    def __le__(self, other: DocumentSpec) -> bool: ...
-    def assign(self: Self, copy: Self) -> Self: ...
-    def compare_to(self, other: DocumentSpec) -> int: ...
-    def set_url(self, url: URLSpec) -> None:
+    def __lt__(self, other: DocumentSpec | URL) -> bool: ...
+    def __le__(self, other: DocumentSpec | URL) -> bool: ...
+    def assign(self, copy: DocumentSpec | URL) -> DocumentSpec: ...
+    def compare_to(self, other: DocumentSpec | URL) -> int: ...
+    def set_url(self, url: URL) -> None:
         """Changes the URL of the DocumentSpec without modifying its other properties.
         Normally this would be a strange thing to do, because the tag and date are
         usually strongly associated with the URL.  To get a DocumentSpec pointing
@@ -1736,12 +1736,12 @@ class HTTPChannel(TypedReferenceCount):
         request.
         """
         ...
-    def get_document(self, url: DocumentSpec) -> bool:
+    def get_document(self, url: DocumentSpec | URL) -> bool:
         """Opens the named document for reading, if available.  Returns true if
         successful, false otherwise.
         """
         ...
-    def get_subdocument(self, url: DocumentSpec, first_byte: int, last_byte: int) -> bool:
+    def get_subdocument(self, url: DocumentSpec | URL, first_byte: int, last_byte: int) -> bool:
         """Retrieves only the specified byte range of the indicated document.  If
         last_byte is 0, it stands for the last byte of the document.  When a
         subdocument is requested, get_file_size() and get_bytes_downloaded() will
@@ -1749,30 +1749,30 @@ class HTTPChannel(TypedReferenceCount):
         document.
         """
         ...
-    def get_header(self, url: DocumentSpec) -> bool:
+    def get_header(self, url: DocumentSpec | URL) -> bool:
         """Like get_document(), except only the header associated with the document is
         retrieved.  This may be used to test for existence of the document; it
         might also return the size of the document (if the server gives us this
         information).
         """
         ...
-    def post_form(self, url: DocumentSpec, body: str) -> bool:
+    def post_form(self, url: DocumentSpec | URL, body: str) -> bool:
         """Posts form data to a particular URL and retrieves the response."""
         ...
-    def put_document(self, url: DocumentSpec, body: str) -> bool:
+    def put_document(self, url: DocumentSpec | URL, body: str) -> bool:
         """Uploads the indicated body to the server to replace the indicated URL, if
         the server allows this.
         """
         ...
-    def delete_document(self, url: DocumentSpec) -> bool:
+    def delete_document(self, url: DocumentSpec | URL) -> bool:
         """Requests the server to remove the indicated URL."""
         ...
-    def get_trace(self, url: DocumentSpec) -> bool:
+    def get_trace(self, url: DocumentSpec | URL) -> bool:
         """Sends a TRACE message to the server, which should return back the same
         message as the server received it, allowing inspection of proxy hops, etc.
         """
         ...
-    def connect_to(self, url: DocumentSpec) -> bool:
+    def connect_to(self, url: DocumentSpec | URL) -> bool:
         """Establish a direct connection to the server and port indicated by the URL,
         but do not issue any HTTP requests.  If successful, the connection may then
         be taken to use for whatever purposes you like by calling get_connection().
@@ -1780,12 +1780,12 @@ class HTTPChannel(TypedReferenceCount):
         This establishes a blocking I/O socket.  Also see begin_connect_to().
         """
         ...
-    def get_options(self, url: DocumentSpec) -> bool:
+    def get_options(self, url: DocumentSpec | URL) -> bool:
         """Sends an OPTIONS message to the server, which should query the available
         options, possibly in relation to a specified URL.
         """
         ...
-    def begin_get_document(self, url: DocumentSpec) -> None:
+    def begin_get_document(self, url: DocumentSpec | URL) -> None:
         """Begins a non-blocking request to retrieve a given document.  This method
         will return immediately, even before a connection to the server has
         necessarily been established; you must then call run() from time to time
@@ -1795,7 +1795,7 @@ class HTTPChannel(TypedReferenceCount):
         If a previous request had been pending, that request is discarded.
         """
         ...
-    def begin_get_subdocument(self, url: DocumentSpec, first_byte: int, last_byte: int) -> None:
+    def begin_get_subdocument(self, url: DocumentSpec | URL, first_byte: int, last_byte: int) -> None:
         """Begins a non-blocking request to retrieve only the specified byte range of
         the indicated document.  If last_byte is 0, it stands for the last byte of
         the document.  When a subdocument is requested, get_file_size() and
@@ -1803,12 +1803,12 @@ class HTTPChannel(TypedReferenceCount):
         not of the complete document.
         """
         ...
-    def begin_get_header(self, url: DocumentSpec) -> None:
+    def begin_get_header(self, url: DocumentSpec | URL) -> None:
         """Begins a non-blocking request to retrieve a given header.  See
         begin_get_document() and get_header().
         """
         ...
-    def begin_post_form(self, url: DocumentSpec, body: str) -> None:
+    def begin_post_form(self, url: DocumentSpec | URL, body: str) -> None:
         """Posts form data to a particular URL and retrieves the response, all using
         non-blocking I/O.  See begin_get_document() and post_form().
 
@@ -1829,7 +1829,7 @@ class HTTPChannel(TypedReferenceCount):
         complete.
         """
         ...
-    def begin_connect_to(self, url: DocumentSpec) -> None:
+    def begin_connect_to(self, url: DocumentSpec | URL) -> None:
         """Begins a non-blocking request to establish a direct connection to the
         server and port indicated by the URL.  No HTTP requests will be issued
         beyond what is necessary to establish the connection.  When run() has
@@ -2380,7 +2380,7 @@ class VirtualFileHTTP(VirtualFile):
 
 class VirtualFileMountHTTP(VirtualFileMount):
     """Maps a web page (URL root) into the VirtualFileSystem."""
-    def __init__(self, root: URLSpec, http: HTTPClient = ...) -> None: ...
+    def __init__(self, root: URL, http: HTTPClient = ...) -> None: ...
     def get_http_client(self) -> HTTPClient:
         """Returns the HTTPClient object that services this mount point."""
         ...

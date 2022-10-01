@@ -18,6 +18,7 @@ from panda3d.core import (
     UnalignedLVecBase4d,
     UnalignedLVecBase4f,
     UnalignedLVecBase4i,
+    URLSpec,
 )
 
 Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
@@ -28,3 +29,4 @@ Vec4i: TypeAlias = LVecBase4i | UnalignedLVecBase4i
 Mat4d: TypeAlias = LMatrix4d | UnalignedLMatrix4d
 Mat4f: TypeAlias = LMatrix4f | UnalignedLMatrix4f
 Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
+URL: TypeAlias = URLSpec | str
