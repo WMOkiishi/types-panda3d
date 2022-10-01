@@ -1,7 +1,7 @@
 __all__ = ['directNotify', 'giveNotify']
 
-from typing import ClassVar
-from typing_extensions import Final, Protocol
+from typing import ClassVar, Protocol
+from typing_extensions import Final
 
 from .DirectNotify import DirectNotify
 from .Notifier import Notifier

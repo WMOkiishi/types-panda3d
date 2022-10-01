@@ -1,8 +1,7 @@
 __all__ = ['Dtool_ObjectToDict', 'Dtool_funcToMethod']
 
 from collections.abc import Callable, MutableMapping
-from typing import Any, ClassVar
-from typing_extensions import Protocol
+from typing import Any, ClassVar, Protocol
 
 class _DtoolClass(Protocol):
     DtoolClassDict: ClassVar[MutableMapping[str, Any]]

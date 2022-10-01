@@ -1,5 +1,5 @@
 from typing import ClassVar
-from typing_extensions import Final, Self
+from typing_extensions import Final
 
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import AnalogNode, ButtonNode, ClientBase, DialNode, NodePath, TrackerNode

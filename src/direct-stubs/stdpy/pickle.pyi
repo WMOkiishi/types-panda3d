@@ -21,8 +21,7 @@ from pickle import (
     Unpickler as BaseUnpickler,
     UnpicklingError as UnpicklingError,
 )
-from typing import Any, TypeVar
-from typing_extensions import Protocol
+from typing import Any, Protocol, TypeVar
 
 _T_co = TypeVar('_T_co', covariant=True)
 

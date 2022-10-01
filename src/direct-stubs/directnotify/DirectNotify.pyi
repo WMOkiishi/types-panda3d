@@ -1,6 +1,5 @@
 from tkinter import Toplevel
-from typing import Any, ClassVar
-from typing_extensions import Protocol
+from typing import Any, ClassVar, Protocol
 
 from .Logger import Logger
 from .Notifier import Notifier

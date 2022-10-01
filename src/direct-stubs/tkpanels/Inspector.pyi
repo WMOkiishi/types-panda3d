@@ -18,8 +18,8 @@ __all__ = [
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from tkinter import Menu, Toplevel
 from types import CodeType, ModuleType
-from typing import Any, Generic, TypeVar, overload
-from typing_extensions import Literal, Protocol
+from typing import Any, Generic, Protocol, TypeVar, overload
+from typing_extensions import Literal
 
 _T = TypeVar('_T')
 _T_co = TypeVar('_T_co')

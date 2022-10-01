@@ -1,5 +1,5 @@
-from typing import Any, ClassVar
-from typing_extensions import Literal, Protocol
+from typing import Any, ClassVar, Protocol
+from typing_extensions import Literal
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier

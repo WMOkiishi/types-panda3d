@@ -1,5 +1,5 @@
-from typing import ClassVar
-from typing_extensions import Final, Literal, Protocol
+from typing import ClassVar, Protocol
+from typing_extensions import Final, Literal
 
 from panda3d.core import ConfigVariableBool, LVector3f
 from .CartesianGridBase import CartesianGridBase

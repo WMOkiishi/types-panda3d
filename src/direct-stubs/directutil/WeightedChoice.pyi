@@ -1,5 +1,5 @@
 from collections.abc import Iterable, Sequence
-from typing_extensions import Protocol
+from typing import Protocol
 
 class _RNG(Protocol):
     def randrange(self, __start: int) -> int: ...

@@ -12,8 +12,8 @@ __all__ = [
 ]
 
 from collections.abc import Callable, Sequence
-from typing import Any, ClassVar, NoReturn, overload
-from typing_extensions import Final, Literal, Protocol
+from typing import Any, ClassVar, NoReturn, Protocol, overload
+from typing_extensions import Final, Literal
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier

@@ -1,7 +1,7 @@
 from _typeshed import Self
 from collections.abc import Callable
-from typing import ClassVar
-from typing_extensions import Literal, Protocol
+from typing import ClassVar, Protocol
+from typing_extensions import Literal
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject

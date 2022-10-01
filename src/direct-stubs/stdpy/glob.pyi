@@ -1,6 +1,7 @@
 __all__ = ['glob', 'iglob']
 
-from typing import AnyStr, Generator
+from collections.abc import Generator
+from typing import AnyStr
 
 def glob(pathname: AnyStr) -> list[AnyStr]: ...
 def iglob(pathname: AnyStr) -> Generator[AnyStr, None, None]: ...

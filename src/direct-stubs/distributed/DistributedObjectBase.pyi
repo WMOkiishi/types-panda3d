@@ -1,5 +1,4 @@
-from typing import ClassVar
-from typing_extensions import Protocol
+from typing import ClassVar, Protocol
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
