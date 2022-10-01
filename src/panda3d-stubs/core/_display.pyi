@@ -3024,6 +3024,7 @@ class FrameBufferProperties:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     depth_bits: int
+    """Individual queries."""
     color_bits: int
     red_bits: int
     green_bits: int

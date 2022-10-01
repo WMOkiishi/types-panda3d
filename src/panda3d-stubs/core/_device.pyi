@@ -107,7 +107,9 @@ class InputDevice(TypedReferenceCount):
     class BatteryData:
         DtoolClassDict: ClassVar[dict[str, Any]]
         level: int
+        """Ranges from 0 through max_level."""
         max_level: int
+        """Maximum value of 'level' field."""
         def __init__(self, __param0: InputDevice.BatteryData = ...) -> None: ...
     S_unknown: Final[Literal[0]]
     SUnknown: Final[Literal[0]]

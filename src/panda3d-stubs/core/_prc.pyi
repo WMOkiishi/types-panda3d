@@ -1651,6 +1651,7 @@ class StreamWriter:
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     softspace: int
+    """Python 2 needs this for printing to work correctly."""
     @property
     def ostream(self) -> ostream: ...
     @overload

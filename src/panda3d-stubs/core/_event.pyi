@@ -219,10 +219,14 @@ class AsyncTask(AsyncFuture, Namable):
     """
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
+    """The name of this task."""
     task_chain: str
     sort: int
     priority: int
     done_event: str
+    """Returns the event name that will be triggered when the future finishes.
+    See set_done_event().
+    """
     DS_done: Final[Literal[0]]
     DSDone: Final[Literal[0]]
     DS_cont: Final[Literal[1]]
@@ -1208,7 +1212,9 @@ class PythonTask(AsyncTask):
     with the AsyncTaskManager.
     """
     delay_time: float
+    """The delay value that has been set on this task, if any, or None."""
     delayTime: float
+    """Alias of delay_time."""
     @property
     def time(self) -> float:
         """The amount of seconds that have elapsed since the task was started,

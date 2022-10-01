@@ -1544,24 +1544,51 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     usage_hint: _GeomEnums_UsageHint
     flatten_flags: int
     font: TextFont
+    """Returns the font currently in use, if any.  If no font is in use, this
+    returns the default font.
+    """
     small_caps: bool
+    """Returns the small_caps flag.  See set_small_caps()."""
     small_caps_scale: float
+    """Returns the scale factor applied to lowercase letters from their uppercase
+    equivalents, when the small_caps flag is in effect.  See set_small_caps()
+    and set_small_caps_scale().
+    """
     slant: float
+    """Returns the factor by which the text is specified to slant to the right."""
     underscore: bool
+    """Returns the underscore flag.  See set_underscore()."""
     underscore_height: float
+    """Returns the vertical height of the underscore; see set_underscore_height()."""
     align: _TextProperties_Alignment
     indent: float
     wordwrap: float
     preserve_trailing_whitespace: bool
+    """Returns the preserve_trailing_whitespace flag.  See
+    set_preserve_trailing_whitespace().
+    """
     text_color: LColor
     shadow_color: LColor
     shadow: LVector2
+    """Returns the offset of the shadow as set by set_shadow().  It is an error to
+    call this if has_shadow() is false.
+    """
     bin: str
+    """Returns the drawing bin set with set_bin(), or empty string if no bin has
+    been set.
+    """
     draw_order: int
+    """Returns the drawing order set with set_draw_order()."""
     tab_width: float
+    """Returns the width set via set_tab_width()."""
     glyph_scale: float
+    """Returns the scale factor of each letter as specified by set_glyph_scale()."""
     glyph_shift: float
+    """Returns the vertical shift of each letter as specified by
+    set_glyph_shift().
+    """
     text_scale: float
+    """Returns the scale factor of the text as specified by set_text_scale()."""
     FF_none: Final[Literal[0]]
     FFNone: Final[Literal[0]]
     FF_light: Final[Literal[1]]

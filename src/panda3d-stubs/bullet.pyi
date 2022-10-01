@@ -158,18 +158,22 @@ class BulletBaseCharacterControllerNode(PandaNode): ...
 
 class BulletBodyNode(PandaNode):
     static: bool
+    """Static and kinematic"""
     kinematic: bool
     collision_notification: bool
     collision_response: bool
     contact_processing_threshold: float
     active: bool
+    """Deactivation"""
     deactivation_time: float
     deactivation_enabled: bool
     debug_enabled: bool
     restitution: float
+    """Friction and Restitution"""
     friction: float
     anisotropic_friction: LVecBase3
     ccd_swept_sphere_radius: float
+    """CCD"""
     ccd_motion_threshold: float
     @property
     def shapes(self) -> Sequence[BulletShape]: ...
@@ -519,13 +523,17 @@ class BulletRigidBodyNode(BulletBodyNode):
     mass: float
     inertia: LVector3
     linear_velocity: LVector3
+    """Velocity"""
     angular_velocity: LVector3
     linear_damping: float
+    """Damping"""
     angular_damping: float
     linear_sleep_threshold: float
+    """Deactivation thresholds"""
     angular_sleep_threshold: float
     gravity: LVector3
     linear_factor: LVector3
+    """Restrict movement"""
     angular_factor: LVector3
     @property
     def inv_mass(self) -> float: ...
@@ -2298,6 +2306,7 @@ class BulletPlaneShape(BulletShape):
 
 class BulletSliderConstraint(BulletConstraint):
     lower_linear_limit: float
+    """Limits"""
     upper_linear_limit: float
     lower_angular_limit: float
     upper_angular_limit: float

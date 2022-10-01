@@ -256,11 +256,7 @@ class Attribute:
             if self.comment:
                 function_def += '  # ' + self.comment
             yield function_def
-            if self.doc:
-                if '\n' in self.doc:
-                    yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
-                else:
-                    yield f'    """{self.doc}"""'
+            doc_indent_level = 4
         else:
             if self.type:
                 attribute_def = f'{self.name}: {self.type}'
@@ -269,9 +265,13 @@ class Attribute:
             if self.comment:
                 attribute_def += '  # ' + self.comment
             yield attribute_def
-        # if self.doc:
-        #     one_line_doc = self.doc.strip('"\n').replace('\n', ' ')
-        #     yield f'{definition}  # {one_line_doc}'
+            doc_indent_level = 0
+        if self.doc:
+            if '\n' in self.doc:
+                yield from indent_lines(f'"""{self.doc}\n"""'.splitlines(),
+                                        level=doc_indent_level)
+            else:
+                yield f'{" " * doc_indent_level}"""{self.doc}"""'
 
 
 @define

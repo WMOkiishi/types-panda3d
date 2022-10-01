@@ -6003,6 +6003,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     anisotropic_degree: int
     border_color: LColor
     compression: _Texture_CompressionMode
+    """Could maybe use has_compression here, too"""
     render_to_texture: bool
     default_sampler: SamplerState
     quality_level: _Texture_QualityLevel
