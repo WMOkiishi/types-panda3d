@@ -16,7 +16,6 @@ from panda3d.core import (
     AnimGroup,
     Character,
     ConfigVariableBool,
-    Filename,
     GeomNode,
     LMatrix4f,
     Loader,
@@ -32,7 +31,7 @@ from panda3d.core import (
 )
 
 _BlendType: TypeAlias = Literal[0, 1, 2, 3]
-_Filename: TypeAlias = Filename | StrOrBytesPath
+_NodePathOrFilepath: TypeAlias = NodePath[PandaNode] | StrOrBytesPath
 
 class Actor(DirectObject, NodePath):
     notify: ClassVar[Notifier]
@@ -73,7 +72,7 @@ class Actor(DirectObject, NodePath):
         def makeCopy(self) -> Actor.SubpartDef: ...
     def __init__(
         self,
-        models: dict[str, dict[str, NodePath | _Filename] | NodePath | _Filename] | NodePath | _Filename | None = None,
+        models: dict[str, dict[str, _NodePathOrFilepath] | _NodePathOrFilepath] | _NodePathOrFilepath | None = None,
         anims: dict[str, Mapping[str, str]] | Mapping[str, str] | None = None,
         other: Actor | None = None,
         copy: bool = True,
@@ -241,7 +240,7 @@ class Actor(DirectObject, NodePath):
     ) -> list[AnimControl]: ...
     def load_model(
         self,
-        modelPath: NodePath | _Filename,
+        modelPath: _NodePathOrFilepath,
         partName: str = ...,
         lodName: str = ...,
         copy: bool = True,
