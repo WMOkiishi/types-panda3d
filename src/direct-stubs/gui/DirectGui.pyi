@@ -1,4 +1,4 @@
-from . import DirectGuiGlobals as DGG
+from . import DirectGuiGlobals
 from .DirectButton import *
 from .DirectCheckButton import *
 from .DirectDialog import *
@@ -16,3 +16,5 @@ from .DirectWaitBar import *
 from .OnscreenGeom import *
 from .OnscreenImage import *
 from .OnscreenText import *
+
+DGG = DirectGuiGlobals
