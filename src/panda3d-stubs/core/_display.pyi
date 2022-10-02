@@ -3551,7 +3551,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
     windows via callbacks.  This can be used to allow Panda to render into an
     already-created OpenGL context, for instance.
     """
-    class WindowCallbackData(CallbackData):  # noqa: F821
+    class WindowCallbackData(CallbackData):
         DtoolClassDict: ClassVar[dict[str, Any]]
         @property
         def window(self) -> CallbackGraphicsWindow: ...
