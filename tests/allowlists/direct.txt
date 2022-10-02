@@ -9,8 +9,6 @@ direct\.\w+\.\w+\.(ATS|CS|ES|EU|HC|LNT|NS|PCT|PT|ST|TIXML|TINYXML|TP)[A-Z_].*
 direct\.\w+\.\w+\.(e|inf|nan|pi|tau)
 
 # Constants from other direct modules
-direct\.\w+\.\w+\.(CLIENT|CONTROL|STATESERVER|DBSS|DBSERVER|CLIENTAGENT)_[A-Z_]+
-direct\.\w+\.\w+\.[A-Z_]+_CMU
 direct\.(?!cluster\.ClusterConfig).+\.ClientConfigs
 direct\.(?!cluster\.ClusterMsgs).+\.(SERVER_STARTUP_STRING|CLUSTER_[A-Z_]+)
 direct\.(?!controls\.ControlManager).+\.CollisionHandlerRayStart
@@ -19,7 +17,9 @@ direct\.(?!directtools\.DirectGlobals).+\.(UNPICKABLE|ZERO_VEC|ORIGIN|UNIT_VEC|Z
 direct\.(?!directtools\.DirectGlobals).+\.(NEG_)?[XYZ]_AXIS
 direct\.(?!directtools\.DirectGlobals).+\.(DIRECT|SKIP|EDIT_TYPE|LE)_[A-Z_]+
 direct\.(?!directtools\.DirectSelection).+\.COA_(ORIGIN|CENTER)
-direct\.(?!distributed\.MsgTypes).+\.(CLIENT_LOGIN_[23]_[A-Z_]+|QUIET_ZONE_IGNORED_LIST|MsgName2Id|MsgId2Names)
+direct\.(?!distributed\.MsgTypes(CMU)?).+\.(MsgName2Id|MsgId2Names)
+direct\.(?!distributed\.MsgTypes).+\.(CLIENT|CONTROL|STATESERVER|DBSS|DBSERVER|CLIENTAGENT|QUIET)_\w+
+direct\.(?!distributed\.MsgTypesCMU).+\.(CLIENT_OBJECT_UPDATE_FIELD|[A-Z_]+_CMU)
 direct\.(?!distributed\.ClockDelta).+\.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
 direct\.(?!gui\.OnscreenText).+\.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)
 direct\.(?!showbase\.PythonUtil).+\.(rad(90|180|270|360)|GoldenRatio)
