@@ -24,15 +24,6 @@ direct\.(?!distributed\.ClockDelta).+\.(NetworkTime\w+|MaxTimeDelta|ClockDriftPe
 direct\.(?!gui\.OnscreenText).+\.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)
 direct\.(?!showbase\.PythonUtil).+\.(rad(90|180|270|360)|GoldenRatio)
 
-# Undocumented modules
-direct.fsm.SampleFSM
-direct.gui.DirectGuiTest
-direct.interval.IntervalTest
-direct.interval.ProjectileIntervalTest
-direct.particles.ParticleFloorTest
-direct.particles.ParticleTest
-direct.task.TaskTester
-
 # Modules that error on import
 direct.directdevices.DirectJoybox
 direct.showbase.ProfileSession
