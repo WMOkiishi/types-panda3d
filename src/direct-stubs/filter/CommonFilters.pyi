@@ -3,6 +3,13 @@ from typing_extensions import Final, Literal
 
 from direct.task.Task import Task
 from panda3d.core import Camera, GraphicsOutput, NodePath, Texture
+from .filterBloomI import BLOOM_I as BLOOM_I
+from .filterBloomX import BLOOM_X as BLOOM_X
+from .filterBloomY import BLOOM_Y as BLOOM_Y
+from .filterBlurX import BLUR_X as BLUR_X
+from .filterBlurY import BLUR_Y as BLUR_Y
+from .filterCopy import COPY as COPY
+from .filterDown4 import DOWN_4 as DOWN_4
 from .FilterManager import FilterManager
 
 CARTOON_BODY: Final[str]

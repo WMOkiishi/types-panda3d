@@ -44,7 +44,6 @@ direct.showbase.TkGlobal
 # Variables not meant to be exported
 direct.distributed.DistributedSmoothNode.cont
 direct.distributed.NetMessenger.i
-direct\.filter\.CommonFilters\.(BLOOM_[IXY]|BLUR_[XY]|COPY|DOWN_4)
 direct.particles.ForceGroup.physicsMgr
 direct.particles.GlobalForceGroup.physicsMgr
 
