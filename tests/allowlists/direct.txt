@@ -52,9 +52,6 @@ direct.particles.GlobalForceGroup.physicsMgr
 direct\.distributed\.StagedObject\.StagedObject\.go(Off|On)Stage
 direct\.interval\.(MetaInterval|IntervalGlobal)\.MetaInterval\.__(repr|str)__
 direct\.interval\.(SoundInterval|IntervalGlobal)\.SoundInterval\.finish
-direct.showbase.ContainerLeakDetector.ObjectRef.goesThrough
-direct.showbase.ContainerLeakDetector.ObjectRef.goesThroughGen
-direct.showbase.PythonUtil.Singleton.__call__
 direct.showbase.ShowBase.ShowBase.set_background_color
 direct.stdpy.file.join
 
