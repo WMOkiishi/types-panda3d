@@ -1,10 +1,10 @@
 __all__ = ['ShowBase', 'WindowControls']
 
-from collections.abc import Callable
 from types import ModuleType
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
+from direct._typing import SimpleCallback, Unused
 from direct.directnotify.Notifier import Notifier
 from direct.directtools.DirectSession import DirectSession
 from direct.p3d.AppRunner import AppRunner
@@ -86,8 +86,8 @@ class ShowBase(DirectObject):
     wantTk: bool
     wantWx: bool
     wantDirect: bool
-    exitFunc: Callable[[], object] | None
-    finalExitCallbacks: list[Callable[[], object]]
+    exitFunc: SimpleCallback | None
+    finalExitCallbacks: list[SimpleCallback]
     windowType: _WindowType
     requireWindow: bool
     win: GraphicsEngine
@@ -228,7 +228,7 @@ class ShowBase(DirectObject):
         scene: NodePath | None = None,
         stereo: bool | None = None,
         unexposedDraw: bool | None = None,
-        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
+        callbackWindowDict: dict[str, SimpleCallback] | None = None,
         requireWindow: bool | None = None,
     ) -> GraphicsWindow: ...
     def close_window(self, win: GraphicsOutput, keepCamera: bool = False, removeWindow: bool = True) -> None: ...
@@ -248,7 +248,7 @@ class ShowBase(DirectObject):
         scene: NodePath | None = None,
         stereo: bool | None = None,
         unexposedDraw: bool | None = None,
-        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
+        callbackWindowDict: dict[str, SimpleCallback] | None = None,
         requireWindow: bool | None = None,
     ) -> bool: ...
     def open_main_window(
@@ -267,7 +267,7 @@ class ShowBase(DirectObject):
         scene: NodePath | None = None,
         stereo: bool | None = None,
         unexposedDraw: bool | None = None,
-        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
+        callbackWindowDict: dict[str, SimpleCallback] | None = None,
         requireWindow: bool | None = None,
     ) -> bool: ...
     def set_sleep(self, amount: float) -> None: ...
@@ -329,7 +329,7 @@ class ShowBase(DirectObject):
     def toggle_particles(self) -> None: ...
     def isParticleMgrEnabled(self) -> bool: ...
     def isPhysicsMgrEnabled(self) -> bool: ...
-    def updateManagers(self, state: object) -> Literal[1]: ...
+    def updateManagers(self, state: Unused) -> Literal[1]: ...
     def create_stats(self, hostname: str | None = None, port: int | None = None) -> bool: ...
     def add_sfx_manager(self, extraSfxManager: AudioManager) -> None: ...
     def createBaseAudioManagers(self) -> None: ...
@@ -522,7 +522,7 @@ class WindowControls:
     camera2d: NodePath | None
     mouseWatcher: MouseWatcher | None
     mouseKeyboard: NodePath | None
-    closeCommand: Callable[[], object]
+    closeCommand: SimpleCallback
     grid: Any
     def __init__(
         self,
@@ -532,6 +532,6 @@ class WindowControls:
         cam2d: NodePath | None = None,
         mouseWatcher: MouseWatcher | None = None,
         mouseKeyboard: NodePath | None = None,
-        closeCmd: Callable[[], object] = ...,
+        closeCmd: SimpleCallback = ...,
         grid: Any = None,
     ) -> None: ...
