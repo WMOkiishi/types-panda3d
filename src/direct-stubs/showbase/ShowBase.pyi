@@ -78,8 +78,8 @@ class ShowBase(DirectObject):
     wantFog: bool
     wantRender2dp: bool
     screenshotExtension: str
-    musicManager: AudioManager | None
-    musicManagerIsValid: bool | None
+    musicManager: AudioManager
+    musicManagerIsValid: bool
     sfxManagerList: list[AudioManager]
     sfxManagerIsValidList: list[bool]
     wantStats: bool
@@ -90,36 +90,36 @@ class ShowBase(DirectObject):
     finalExitCallbacks: list[Callable[[], object]]
     windowType: _WindowType
     requireWindow: bool
-    win: GraphicsEngine | None
+    win: GraphicsEngine
     frameRateMeter: FrameRateMeter | None
     sceneGraphAnalyzerMeter: SceneGraphAnalyzerMeter | None
     winList: list[GraphicsEngine]
     winControls: list[WindowControls]
     mainWinMinimized: bool
     mainWinForeground: bool
-    pipe: GraphicsPipe | None
+    pipe: GraphicsPipe
     pipeList: list[GraphicsPipe]
-    mouse2cam: NodePath[Transform2SG] | None
-    buttonThrowers: list[ButtonThrower] | None
-    mouseWatcher: NodePath[MouseWatcher] | None
-    mouseWatcherNode: MouseWatcher | None
-    pointerWatcherNodes: list[MouseWatcher] | None
+    mouse2cam: NodePath[Transform2SG]
+    buttonThrowers: list[ButtonThrower]
+    mouseWatcher: NodePath[MouseWatcher]
+    mouseWatcherNode: MouseWatcher
+    pointerWatcherNodes: list[MouseWatcher]
     mouseInterface: NodePath[MouseInterfaceNode]
     mouseInterfaceNode: MouseInterfaceNode
-    drive: NodePath[DriveInterface] | None
-    trackball: NodePath[Trackball] | None
+    drive: NodePath[DriveInterface]
+    trackball: NodePath[Trackball]
     texmem: TexMemWatcher | None
     showVertices: NodePath[Camera] | None
     deviceButtonThrowers: list[NodePath[ButtonThrower]]
-    cam: NodePath[Camera] | None
-    cam2d: NodePath[Camera] | None
-    cam2dp: NodePath[Camera] | None
-    camera: NodePath[ModelNode] | None
-    camera2d: NodePath | None
-    camera2dp: NodePath | None
+    cam: NodePath[Camera]
+    cam2d: NodePath[Camera]
+    cam2dp: NodePath[Camera]
+    camera: NodePath[ModelNode]
+    camera2d: NodePath[PandaNode]
+    camera2dp: NodePath[PandaNode]
     camList: list[NodePath[Camera]]
-    camNode: Camera | None
-    camLens: Lens | None
+    camNode: Camera
+    camLens: Lens
     camFrustumVis: NodePath[GeomNode] | None
     direct: DirectSession | None
     wxApp: Any
