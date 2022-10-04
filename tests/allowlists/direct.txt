@@ -29,9 +29,6 @@ direct.directdevices.DirectJoybox
 direct.showbase.ProfileSession
 direct.showbase.TkGlobal
 
-# This one only fails for Python 3.10
-(direct.directscripts.gendocs)?
-
 # Variables not meant to be exported
 direct.distributed.DistributedSmoothNode.cont
 direct.distributed.NetMessenger.i

@@ -4,7 +4,9 @@ from pathlib import Path
 
 
 def main() -> int:
-    allowlist = Path('allowlists', 'direct.txt')
+    allowlists = [Path('allowlists', 'direct.txt')]
+    if sys.version_info >= (3, 10):
+        allowlists.append(Path('allowlists', 'direct-py310.txt'))
     src_dir = Path('..', 'src', 'direct-stubs')
     modules = (p.stem for p in src_dir.glob('*'))
     dont_check = {
@@ -23,9 +25,12 @@ def main() -> int:
         '-m',
         'mypy.stubtest',
         *('direct.' + m for m in modules if m not in dont_check),
-        '--allowlist',
-        str(allowlist),
     ]
+    for allowlist in allowlists:
+        cmd += [
+            '--allowlist',
+            str(allowlist),
+        ]
     try:
         print(' '.join(cmd), file=sys.stderr)
         subprocess.run(cmd, check=True)
