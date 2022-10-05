@@ -6,7 +6,7 @@ from typing_extensions import Literal
 from panda3d.core import Datagram, DatagramIterator
 from panda3d.direct import DCClass
 from .ClientRepository import ClientRepository
-from .DistributedObjectBase import DistributedObjectBase as DistributedObjectBase
+from .DistributedObjectBase import DistributedObjectBase
 
 class DistributedObjectUD(DistributedObjectBase):
     QuietZone: ClassVar[int]
