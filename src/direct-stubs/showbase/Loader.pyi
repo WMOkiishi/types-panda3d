@@ -77,7 +77,7 @@ class Loader(DirectObject):
         loaderOptions: LoaderOptions | None = None,
         noCache: bool | None = None,
         allowInstance: bool = False,
-        okMissing: bool | None = None,
+        okMissing: Literal[True] | None = None,
         callback: None = None,
         extraArgs: Iterable[Any] = ...,
         priority: float | None = None,
@@ -86,16 +86,70 @@ class Loader(DirectObject):
     @overload
     def load_model(
         self,
+        modelPath: str,
+        loaderOptions: LoaderOptions | None = None,
+        noCache: bool | None = None,
+        allowInstance: bool = False,
+        *,
+        okMissing: Literal[False],
+        callback: None = None,
+        extraArgs: Iterable[Any] = ...,
+        priority: float | None = None,
+        blocking: Literal[True] | None = None,
+    ) -> NodePath: ...
+    @overload
+    def load_model(
+        self,
+        modelPath: str,
+        loaderOptions: LoaderOptions | None,
+        noCache: bool | None,
+        allowInstance: bool,
+        okMissing: Literal[False],
+        callback: None = None,
+        extraArgs: Iterable[Any] = ...,
+        priority: float | None = None,
+        blocking: Literal[True] | None = None,
+    ) -> NodePath: ...
+    @overload
+    def load_model(
+        self,
         modelPath: list[str] | set[str] | tuple[str, ...],
         loaderOptions: LoaderOptions | None = None,
         noCache: bool | None = None,
         allowInstance: bool = False,
-        okMissing: bool | None = None,
+        okMissing: Literal[True] | None = None,
         callback: None = None,
         extraArgs: Iterable[Any] = ...,
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath | None]: ...
+    @overload
+    def load_model(
+        self,
+        modelPath: list[str] | set[str] | tuple[str, ...],
+        loaderOptions: LoaderOptions | None = None,
+        noCache: bool | None = None,
+        allowInstance: bool = False,
+        *,
+        okMissing: Literal[False],
+        callback: None = None,
+        extraArgs: Iterable[Any] = ...,
+        priority: float | None = None,
+        blocking: Literal[True] | None = None,
+    ) -> list[NodePath]: ...
+    @overload
+    def load_model(
+        self,
+        modelPath: list[str] | set[str] | tuple[str, ...],
+        loaderOptions: LoaderOptions | None,
+        noCache: bool | None,
+        allowInstance: bool,
+        okMissing: Literal[False],
+        callback: None = None,
+        extraArgs: Iterable[Any] = ...,
+        priority: float | None = None,
+        blocking: Literal[True] | None = None,
+    ) -> list[NodePath]: ...
     @overload
     def load_model(
         self,
