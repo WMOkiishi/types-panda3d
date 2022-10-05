@@ -2,7 +2,7 @@ __all__ = ['PackageInfo']
 
 from collections.abc import Generator
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import Filename, HTTPClient, PStatCollector, TiXmlElement
@@ -26,10 +26,10 @@ class PackageInfo:
     uncompressFactor: float
     unpackFactor: float
     patchFactor: float
-    stepComplete: ClassVar[Literal[1]]
-    stepFailed: ClassVar[Literal[2]]
-    restartDownload: ClassVar[Literal[3]]
-    stepContinue: ClassVar[Literal[4]]
+    stepComplete: Final[Literal[1]]
+    stepFailed: Final[Literal[2]]
+    restartDownload: Final[Literal[3]]
+    stepContinue: Final[Literal[4]]
     UsageBasename: ClassVar[str]
     host: HostInfo
     packageName: str

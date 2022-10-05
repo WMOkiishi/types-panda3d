@@ -1,6 +1,6 @@
 from collections.abc import Iterable
 from typing import Any, ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from direct._typing import Unused
 from direct.directdevices.DirectDeviceManager import DirectDeviceManager
@@ -19,7 +19,7 @@ from .DirectManipulation import DirectManipulationControl
 from .DirectSelection import SelectedNodePaths, SelectionRay
 
 class DirectSession(DirectObject):
-    DIRECTdisablePost: ClassVar[Literal['disableDIRECT']]
+    DIRECTdisablePost: Final[Literal['disableDIRECT']]
     group: NodePath
     font: TextFont
     fEnabled: bool

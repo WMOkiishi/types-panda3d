@@ -27,11 +27,11 @@ class ViewportManager:
     def layoutAll(*args, **kwargs) -> None: ...
 
 class Viewport(WxPandaWindow, DirectObject):
-    CREATENEW: ClassVar[Literal[99]]
-    VPLEFT: ClassVar[Literal[10]]
-    VPFRONT: ClassVar[Literal[11]]
-    VPTOP: ClassVar[Literal[12]]
-    VPPERSPECTIVE: ClassVar[Literal[13]]
+    CREATENEW: Final[Literal[99]]
+    VPLEFT: Final[Literal[10]]
+    VPFRONT: Final[Literal[11]]
+    VPTOP: Final[Literal[12]]
+    VPPERSPECTIVE: Final[Literal[13]]
     name: str
     camera: NodePath | None
     lens: Lens | None

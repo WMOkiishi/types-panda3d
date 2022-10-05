@@ -42,10 +42,10 @@ pickup: Final[Literal[3]]
 exit: Final[Literal[4]]
 
 class Task(PythonTask):  # type: ignore[misc]
-    cont: ClassVar[Literal[1]]
-    again: ClassVar[Literal[2]]
-    pickup: ClassVar[Literal[3]]
-    exit: ClassVar[Literal[4]]
+    cont: Final[Literal[1]]
+    again: Final[Literal[2]]
+    pickup: Final[Literal[3]]
+    exit: Final[Literal[4]]
     pause: type[AsyncTaskPause]
     @staticmethod
     def sequence(*taskList: AsyncTask) -> AsyncTaskSequence: ...

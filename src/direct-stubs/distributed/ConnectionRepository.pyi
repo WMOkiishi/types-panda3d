@@ -3,7 +3,7 @@ __all__ = ['ConnectionRepository', 'GCTrigger']
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from typing import Any, ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import Datagram, DatagramIterator, HTTPChannel, HTTPClient, PythonTask, RecorderController
@@ -14,9 +14,9 @@ from .DoInterestManager import DoInterestManager
 class ConnectionRepository(DoInterestManager, DoCollectionManager, CConnectionRepository):
     taskPriority: ClassVar[int]
     taskChain: ClassVar[str | None]
-    CM_HTTP: ClassVar[Literal[0]]
-    CM_NET: ClassVar[Literal[1]]
-    CM_NATIVE: ClassVar[Literal[2]]
+    CM_HTTP: Final[Literal[0]]
+    CM_NET: Final[Literal[1]]
+    CM_NATIVE: Final[Literal[2]]
     gcNotify: ClassVar[Notifier]
     GarbageCollectTaskName: ClassVar[str]
     GarbageThresholdTaskName: ClassVar[str]

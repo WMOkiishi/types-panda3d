@@ -1,7 +1,7 @@
 __all__ = ['PackageInstaller']
 
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
@@ -33,10 +33,10 @@ class PackageInstaller(DirectObject):
     notify: ClassVar[Notifier]
     globalLock: ClassVar[Lock]
     nextUniqueId: ClassVar[int]
-    S_initial: ClassVar[Literal[0]]
-    S_ready: ClassVar[Literal[1]]
-    S_started: ClassVar[Literal[2]]
-    S_done: ClassVar[Literal[3]]
+    S_initial: Final[Literal[0]]
+    S_ready: Final[Literal[1]]
+    S_started: Final[Literal[2]]
+    S_done: Final[Literal[3]]
     uniqueId: int
     appRunner: AppRunner
     taskChain: str

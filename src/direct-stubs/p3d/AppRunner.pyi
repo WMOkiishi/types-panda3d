@@ -2,7 +2,7 @@ __all__ = ['AppRunner', 'ArgumentError', 'dummyAppRunner']
 
 from collections.abc import Callable
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
@@ -20,11 +20,11 @@ class AppRunner(DirectObject):
     notify: ClassVar[Notifier]
     ConfigBasename: ClassVar[str]
     maxDiskUsage: ClassVar[int]
-    P3DVCNone: ClassVar[Literal[0]]
-    P3DVCNormal: ClassVar[Literal[1]]
-    P3DVCForce: ClassVar[Literal[2]]
-    P3DVCNever: ClassVar[Literal[3]]
-    P3D_CONTENTS_DEFAULT_MAX_AGE: ClassVar[Literal[5]]
+    P3DVCNone: Final[Literal[0]]
+    P3DVCNormal: Final[Literal[1]]
+    P3DVCForce: Final[Literal[2]]
+    P3DVCNever: Final[Literal[3]]
+    P3D_CONTENTS_DEFAULT_MAX_AGE: Final[Literal[5]]
     dummy: bool
     allowPythonDev: bool
     guiApp: bool

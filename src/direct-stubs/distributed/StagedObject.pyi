@@ -1,10 +1,9 @@
-from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 class StagedObject:
-    UNKNOWN: ClassVar[Literal[-1]]
-    OFF: ClassVar[Literal[0]]
-    ON: ClassVar[Literal[1]]
+    UNKNOWN: Final[Literal[-1]]
+    OFF: Final[Literal[0]]
+    ON: Final[Literal[1]]
     def __init__(self, initState: Literal[-1, 0, 1] = ...) -> None: ...
     def goOnStage(self) -> None: ...
     def handleOnStage(self) -> None: ...
