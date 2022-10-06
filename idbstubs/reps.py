@@ -293,6 +293,10 @@ class Class:
     def __str__(self) -> str:
         return f'Class {self.scoped_name!r}'
 
+    def is_empty(self) -> bool:
+        """Return whether the class has any body (including a docstring)."""
+        return not (self.doc or self.body)
+
     def sort(self) -> tuple[int, int]:
         return 0, 1
 
@@ -315,7 +319,7 @@ class Class:
         if self.derivations:
             declaration += f"({', '.join(self.derivations)})"
         declaration += ':'
-        if not (self.body or self.doc):
+        if self.is_empty():
             if self.comment:
                 yield f'{declaration} ...  # {self.comment}'
             else:
@@ -332,7 +336,7 @@ class Class:
         sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
         prev_was_class = False
         for item in sorted_nested:
-            is_class = isinstance(item, Class) and bool(item.body)
+            is_class = isinstance(item, Class) and not item.is_empty()
             if is_class or prev_was_class:
                 yield ''
             prev_was_class = is_class
@@ -404,7 +408,7 @@ class File:
         prev_was_class = False
         first_item = True
         for item in self.nested:
-            is_class = isinstance(item, Class) and bool(item.body)
+            is_class = isinstance(item, Class) and not item.is_empty()
             if (is_class or prev_was_class) and not first_item:
                 yield ''
             prev_was_class = is_class
