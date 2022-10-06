@@ -330,7 +330,13 @@ class Class:
             else:
                 yield f'    """{self.doc}"""'
         sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
-        yield from indent_lines(flatten(i.definition() for i in sorted_nested))
+        prev_was_class = False
+        for item in sorted_nested:
+            is_class = isinstance(item, Class) and bool(item.body)
+            if is_class or prev_was_class:
+                yield ''
+            prev_was_class = is_class
+            yield from indent_lines(item.definition())
 
 
 @define

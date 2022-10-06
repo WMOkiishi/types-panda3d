@@ -49,6 +49,7 @@ programFile: str
 okMissing: list[str]
 
 class Freezer:
+
     class ModuleDef:
         moduleName: str
         filename: Filename | None
@@ -71,6 +72,7 @@ class Freezer:
             fromSource: Any = None,
             text: str | None = None,
         ) -> None: ...
+
     platform: str
     cenv: CompilationEnvironment | None
     path: list[str] | None

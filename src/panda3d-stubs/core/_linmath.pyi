@@ -3031,6 +3031,7 @@ class LMatrix3f:
     rotation-and-scale (no translation) matrix in 3-d, or a full affine matrix
     (rotation, scale, translation) in 2-d, e.g.  for a texture matrix.
     """
+
     class Row:
         """These helper classes are used to support two-level operator []."""
         DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3041,6 +3042,7 @@ class LMatrix3f:
             """Returns 3: the number of columns of a LMatrix3."""
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
+
     class CRow:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix3f.CRow) -> None: ...
@@ -3049,6 +3051,7 @@ class LMatrix3f:
             """Returns 3: the number of columns of a LMatrix3."""
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[9]]
     is_int: Final[Literal[0]]
@@ -3422,6 +3425,7 @@ class LMatrix3f:
 
 class LMatrix4f:
     """This is a 4-by-4 transform matrix."""
+
     class Row:
         """These helper classes are used to support two-level operator []."""
         DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3432,6 +3436,7 @@ class LMatrix4f:
             """Returns 4: the number of columns of a LMatrix4."""
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
+
     class CRow:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix4f.CRow) -> None: ...
@@ -3440,6 +3445,7 @@ class LMatrix4f:
             """Returns 4: the number of columns of a LMatrix4."""
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[16]]
     is_int: Final[Literal[0]]
@@ -3859,6 +3865,7 @@ class LMatrix3d:
     rotation-and-scale (no translation) matrix in 3-d, or a full affine matrix
     (rotation, scale, translation) in 2-d, e.g.  for a texture matrix.
     """
+
     class Row:
         """These helper classes are used to support two-level operator []."""
         DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3869,6 +3876,7 @@ class LMatrix3d:
             """Returns 3: the number of columns of a LMatrix3."""
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
+
     class CRow:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix3d.CRow) -> None: ...
@@ -3877,6 +3885,7 @@ class LMatrix3d:
             """Returns 3: the number of columns of a LMatrix3."""
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[9]]
     is_int: Final[Literal[0]]
@@ -4250,6 +4259,7 @@ class LMatrix3d:
 
 class LMatrix4d:
     """This is a 4-by-4 transform matrix."""
+
     class Row:
         """These helper classes are used to support two-level operator []."""
         DtoolClassDict: ClassVar[dict[str, Any]]
@@ -4260,6 +4270,7 @@ class LMatrix4d:
             """Returns 4: the number of columns of a LMatrix4."""
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
+
     class CRow:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix4d.CRow) -> None: ...
@@ -4268,6 +4279,7 @@ class LMatrix4d:
             """Returns 4: the number of columns of a LMatrix4."""
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[16]]
     is_int: Final[Literal[0]]

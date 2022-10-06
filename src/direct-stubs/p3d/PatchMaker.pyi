@@ -12,6 +12,7 @@ _Key: TypeAlias = tuple[str | None, str | None, str | None, str | None, FileSpec
 _Plan: TypeAlias = list[tuple[PatchMaker.Patchfile, PatchMaker.PackageVersion]]
 
 class PatchMaker:
+
     class PackageVersion:
         packageName: str | None
         platform: str | None
@@ -46,6 +47,7 @@ class PatchMaker:
         def getFile(self) -> Filename | None: ...
         def applyPatch(self, origFile: Filepath, patchFilename: Filepath) -> Filename | None: ...
         def getNext(self, package: PatchMaker.Package) -> PatchMaker.Patchfile: ...
+
     class Patchfile:
         package: PatchMaker.Package
         packageName: str | None
@@ -69,6 +71,7 @@ class PatchMaker:
         ) -> None: ...
         def loadXml(self, xpatch: TiXmlElement) -> None: ...
         def makeXml(self, package: PatchMaker.Package) -> TiXmlElement: ...
+
     class Package:
         packageDir: Filename
         packageDesc: Filepath
@@ -94,6 +97,7 @@ class PatchMaker:
         def getGenericKey(self, fileSpec: FileSpec | None) -> _Key: ...
         def readDescFile(self, doProcessing: bool = False) -> bool: ...
         def writeDescFile(self) -> None: ...
+
     installDir: Filepath
     packageVersions: dict[_Key, PatchMaker.PackageVersion]
     packages: list[PatchMaker.Package]

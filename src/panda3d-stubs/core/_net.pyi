@@ -336,6 +336,7 @@ class ConnectionManager:
     QueuedConnectionManager to get reports about these events (or derive your
     own class to handle these events properly).
     """
+
     class Interface:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: ConnectionManager.Interface) -> None: ...
@@ -360,6 +361,7 @@ class ConnectionManager:
         getBroadcast = get_broadcast
         hasP2p = has_p2p
         getP2p = get_p2p
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def host_name(self) -> str: ...

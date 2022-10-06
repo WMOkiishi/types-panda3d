@@ -48,6 +48,7 @@ class InputDevice(TypedReferenceCount):
 
     @since 1.10.0
     """
+
     class DeviceClass(Enum):
         unknown: int
         virtual_device: int
@@ -61,12 +62,14 @@ class InputDevice(TypedReferenceCount):
         hmd: int
         spatial_mouse: int
         digitizer: int
+
     class Feature(Enum):
         pointer: int
         keyboard: int
         tracker: int
         vibration: int
         battery: int
+
     class Axis(Enum):
         none: int
         x: int
@@ -87,6 +90,7 @@ class InputDevice(TypedReferenceCount):
         accelerator: int
         brake: int
         pressure: int
+
     class ButtonState:
         DtoolClassDict: ClassVar[dict[str, Any]]
         @property
@@ -97,6 +101,7 @@ class InputDevice(TypedReferenceCount):
         def handle(self) -> ButtonHandle: ...
         def __init__(self, __param0: InputDevice.ButtonState) -> None: ...
         def __bool__(self) -> bool: ...
+
     class AxisState:
         DtoolClassDict: ClassVar[dict[str, Any]]
         axis: InputDevice.Axis
@@ -104,6 +109,7 @@ class InputDevice(TypedReferenceCount):
         known: bool
         def __init__(self, __param0: InputDevice.AxisState) -> None: ...
         def __bool__(self) -> bool: ...
+
     class BatteryData:
         DtoolClassDict: ClassVar[dict[str, Any]]
         level: int
@@ -111,6 +117,7 @@ class InputDevice(TypedReferenceCount):
         max_level: int
         """Maximum value of 'level' field."""
         def __init__(self, __param0: InputDevice.BatteryData = ...) -> None: ...
+
     S_unknown: Final[Literal[0]]
     SUnknown: Final[Literal[0]]
     S_up: Final[Literal[1]]

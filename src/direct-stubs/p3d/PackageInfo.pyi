@@ -11,6 +11,7 @@ from .FileSpec import FileSpec
 from .HostInfo import HostInfo
 
 class PackageInfo:
+
     class InstallStep:
         bytesNeeded: int
         bytesDone: int
@@ -21,6 +22,7 @@ class PackageInfo:
         def func(self): ...
         def getEffort(self) -> int: ...
         def getProgress(self) -> float: ...
+
     notify: ClassVar[Notifier]
     downloadFactor: int
     uncompressFactor: float

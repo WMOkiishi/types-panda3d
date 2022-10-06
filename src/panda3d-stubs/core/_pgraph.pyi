@@ -1712,6 +1712,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     all specialized nodes, and also serves as a generic node with no special
     properties.
     """
+
     class Children:
         """This class is returned from get_children().  Use it to walk through the
         list of children.  This is faster, and safer, than walking through the
@@ -1723,16 +1724,19 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
+
     class Stashed:
         """Similarly for stashed children."""
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
+
     class Parents:
         """This class is returned from get_parents()."""
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     state: RenderState
     effects: RenderEffects
@@ -9030,6 +9034,7 @@ class Loader(TypedReferenceCount, Namable):
     is not available, the asynchronous loading interface may be used, but it
     loads synchronously.
     """
+
     class Results:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, copy: Loader.Results = ...) -> None: ...
@@ -9049,6 +9054,7 @@ class Loader(TypedReferenceCount, Namable):
         getFileType = get_file_type
         getFiles = get_files
         getFileTypes = get_file_types
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -9412,10 +9418,12 @@ class ModelRoot(ModelNode):
     contents of the model; at the moment, it contains no special information,
     but can be used as a flag to indicate the presence of a loaded model file.
     """
+
     class ModelReference(ReferenceCount):
         """This class is used to unify references to the same model."""
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: ModelRoot.ModelReference = ...) -> None: ...
+
     fullpath: Filename
     timestamp: int
     reference: ModelRoot.ModelReference

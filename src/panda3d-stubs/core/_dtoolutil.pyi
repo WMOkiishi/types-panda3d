@@ -1234,6 +1234,7 @@ class DSearchPath:
     traditional searchpath-style string, e.g.  a list of directory names
     delimited by spaces or colons, but it can also be built up explicitly.
     """
+
     class Results:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, copy: DSearchPath.Results = ...) -> None: ...
@@ -1253,6 +1254,7 @@ class DSearchPath:
         def write(self, out: ostream, indent_level: int = ...) -> None: ...
         getNumFiles = get_num_files
         getFile = get_file
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def directories(self) -> Sequence[Filename]: ...

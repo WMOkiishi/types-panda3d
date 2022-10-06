@@ -131,6 +131,7 @@ class PNMImageHeader:
     image except the image data itself.  It's the sort of information you
     typically read from the image file's header.
     """
+
     class PixelSpec:
         """Contains a single pixel specification used in compute_histogram() and
         make_histogram().  Note that pixels are stored by integer value, not by
@@ -173,12 +174,14 @@ class PNMImageHeader:
         setGreen = set_green
         setBlue = set_blue
         setAlpha = set_alpha
+
     class PixelSpecCount:
         """Associates a pixel specification with an appearance count, for use in
         Histogram, below.
         """
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImageHeader.PixelSpecCount) -> None: ...
+
     class Histogram:
         """Used to return a pixel histogram in PNMImage::get_histogram()."""
         DtoolClassDict: ClassVar[dict[str, Any]]
@@ -207,6 +210,7 @@ class PNMImageHeader:
         getPixel = get_pixel
         getCount = get_count
         getPixels = get_pixels
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     comment: str
     CT_invalid: Final[Literal[0]]
@@ -904,6 +908,7 @@ class PNMImage(PNMImageHeader):
     This class is not inherently thread-safe; use it from a single thread or
     protect access using a mutex.
     """
+
     class Row:
         """Provides an accessor for reading or writing the contents of one row of
         the image in-place.
@@ -929,6 +934,7 @@ class PNMImage(PNMImageHeader):
         setXelVal = set_xel_val
         getAlphaVal = get_alpha_val
         setAlphaVal = set_alpha_val
+
     class CRow:
         """Provides an accessor for reading the contents of one row of the image in-
         place.
@@ -944,6 +950,7 @@ class PNMImage(PNMImageHeader):
             """Fetch the alpha value at the given column in the row."""
         getXelVal = get_xel_val
         getAlphaVal = get_alpha_val
+
     @overload
     def __init__(self, copy: PNMImage = ...) -> None: ...
     @overload

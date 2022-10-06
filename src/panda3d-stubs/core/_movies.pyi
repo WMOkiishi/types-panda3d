@@ -277,6 +277,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
     file at the same time, as long as they use separate MovieVideoCursor
     objects.
     """
+
     class Buffer(TypedReferenceCount):
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: MovieVideoCursor.Buffer) -> None: ...
@@ -298,6 +299,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         compareTimestamp = compare_timestamp
         getTimestamp = get_timestamp
         getClassType = get_class_type
+
     def __init__(self, __param0: MovieVideoCursor) -> None: ...
     def get_source(self) -> MovieVideo:
         """Get the MovieVideo which this cursor references."""

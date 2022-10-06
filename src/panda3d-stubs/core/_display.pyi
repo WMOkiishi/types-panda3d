@@ -529,6 +529,7 @@ class WindowHandle(TypedReferenceCount):
     NativeWindowHandle::make_*() methods, depending on the kind of native
     window handle object you already have.
     """
+
     class OSHandle(TypedReferenceCount):
         """This internal pointer within WindowHandle stores the actual OS-specific
         window handle type, whatever type that is.  It is subclassed for each OS.
@@ -544,6 +545,7 @@ class WindowHandle(TypedReferenceCount):
         def get_class_type() -> TypeHandle: ...
         getIntHandle = get_int_handle
         getClassType = get_class_type
+
     os_handle: WindowHandle.OSHandle
     @overload
     def __init__(self, copy: WindowHandle) -> None: ...
@@ -3551,6 +3553,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
     windows via callbacks.  This can be used to allow Panda to render into an
     already-created OpenGL context, for instance.
     """
+
     class WindowCallbackData(CallbackData):
         DtoolClassDict: ClassVar[dict[str, Any]]
         @property
@@ -3561,11 +3564,13 @@ class CallbackGraphicsWindow(GraphicsWindow):
         def get_class_type() -> TypeHandle: ...
         getWindow = get_window
         getClassType = get_class_type
+
     class EventsCallbackData(CallbackGraphicsWindow.WindowCallbackData):  # noqa: F821
         DtoolClassDict: ClassVar[dict[str, Any]]
         @staticmethod
         def get_class_type() -> TypeHandle: ...
         getClassType = get_class_type
+
     class PropertiesCallbackData(CallbackGraphicsWindow.WindowCallbackData):  # noqa: F821
         DtoolClassDict: ClassVar[dict[str, Any]]
         def get_properties(self) -> WindowProperties:
@@ -3577,6 +3582,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         def get_class_type() -> TypeHandle: ...
         getProperties = get_properties
         getClassType = get_class_type
+
     class RenderCallbackData(CallbackGraphicsWindow.WindowCallbackData):  # noqa: F821
         DtoolClassDict: ClassVar[dict[str, Any]]
         render_flag: bool
@@ -3609,6 +3615,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         setRenderFlag = set_render_flag
         getRenderFlag = get_render_flag
         getClassType = get_class_type
+
     RCT_begin_frame: Final[Literal[0]]
     RCTBeginFrame: Final[Literal[0]]
     RCT_end_frame: Final[Literal[1]]

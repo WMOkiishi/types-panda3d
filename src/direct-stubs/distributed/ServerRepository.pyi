@@ -20,6 +20,7 @@ from .DistributedObjectBase import DistributedObjectBase
 
 class ServerRepository:
     notify: ClassVar[Notifier]
+
     class Client:
         connection: Connection
         netAddress: NetAddress
@@ -29,11 +30,13 @@ class ServerRepository:
         objectsByDoId: dict[int, DistributedObjectBase]
         objectsByZoneId: dict[int, DistributedObjectBase]
         def __init__(self, connection: Connection, netAddress: NetDatagram, doIdBase: int) -> None: ...
+
     class Object:
         doId: int
         zoneId: int
         dclass: DCClass
         def __init__(self, doId: int, zoneId: int, dclass: DCClass) -> None: ...
+
     qcm: QueuedConnectionManager
     qcl: QueuedConnectionListener
     qcr: QueuedConnectionReader

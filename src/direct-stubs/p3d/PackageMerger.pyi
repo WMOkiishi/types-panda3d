@@ -12,6 +12,7 @@ from .SeqValue import SeqValue
 class PackageMergerError(Exception): ...
 
 class PackageMerger:
+
     class PackageEntry:
         sourceDir: Filepath
         packageName: str
@@ -29,6 +30,7 @@ class PackageMerger:
         def loadXml(self, xpackage: TiXmlElement) -> None: ...
         def makeXml(self) -> TiXmlElement: ...
         def validatePackageContents(self) -> None: ...
+
     notify: ClassVar[Notifier]
     installDir: Filepath
     xhost: TiXmlNode | None

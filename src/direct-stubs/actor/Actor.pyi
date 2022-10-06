@@ -46,6 +46,7 @@ class Actor(DirectObject, NodePath):
     loader: Loader
     switches: dict[str, tuple[float, float]] | None
     gotName: bool
+
     class PartDef:
         partBundleNP: NodePath[Character]
         partBundleHandle: PartBundleHandle
@@ -58,6 +59,7 @@ class Actor(DirectObject, NodePath):
         ) -> None: ...
         def get_bundle(self) -> PartBundle: ...
         getBundle = get_bundle
+
     class AnimDef:
         filename: str | None
         animBundle: AnimBundle | None
@@ -65,11 +67,13 @@ class Actor(DirectObject, NodePath):
         def __init__(self, filename: str | None = None, animBundle: AnimBundle | None = None) -> None: ...
         def make_copy(self) -> Actor.AnimDef: ...
         makeCopy = make_copy
+
     class SubpartDef:
         truePartName: str
         subset: PartSubset
         def __init__(self, truePartName: str, subset: PartSubset = ...) -> None: ...
         def makeCopy(self) -> Actor.SubpartDef: ...
+
     def __init__(
         self,
         models: dict[str, dict[str, _NodePathOrFilepath] | _NodePathOrFilepath] | _NodePathOrFilepath | None = None,

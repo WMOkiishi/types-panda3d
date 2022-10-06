@@ -12,6 +12,7 @@ from .HostInfo import HostInfo
 from .PackageInfo import PackageInfo
 
 class PackageInstaller(DirectObject):
+
     class PendingPackage:
         notify: ClassVar[Notifier]
         packageName: str
@@ -30,6 +31,7 @@ class PackageInstaller(DirectObject):
         def getProgress(self) -> float: ...
         def checkDescFile(self) -> bool: ...
         def getDescFile(self, http) -> bool: ...
+
     notify: ClassVar[Notifier]
     globalLock: ClassVar[Lock]
     nextUniqueId: ClassVar[int]
