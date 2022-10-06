@@ -398,7 +398,7 @@ class File:
         prev_was_class = False
         first_item = True
         for item in self.nested:
-            is_class = isinstance(item, Class)
+            is_class = isinstance(item, Class) and bool(item.body)
             if (is_class or prev_was_class) and not first_item:
                 yield ''
             prev_was_class = is_class
