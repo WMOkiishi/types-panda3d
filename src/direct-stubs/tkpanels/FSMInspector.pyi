@@ -1,12 +1,9 @@
 __all__ = ['FSMInspector', 'StateInspector']
 
-from typing import Any
-
+import Pmw  # type: ignore[import]
 from direct.fsm.ClassicFSM import ClassicFSM
 from direct.fsm.State import State
 from direct.tkwidgets.AppShell import AppShell
-
-Pmw: Any
 
 class FSMInspector(AppShell):
     fsm: ClassicFSM

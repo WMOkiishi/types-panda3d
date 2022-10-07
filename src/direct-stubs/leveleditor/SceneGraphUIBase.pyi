@@ -1,9 +1,7 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any
 
+import wx  # type: ignore[import]
 from panda3d.core import NodePath
-
-wx: Any
 
 class SceneGraphUIDropTarget(wx.TextDropTarget):
     editor = ...

@@ -34,12 +34,6 @@ per-file-ignores =
     src/direct-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, F822, Y011, Y014, Y037
     src/panda3d-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, Y021, Y042
 
-extend-exclude =
-    venv,
-    # The following aren't quite ready for checking
-    src/direct-stubs/leveleditor,
-    src/direct-stubs/tkpanels,
-    src/direct-stubs/tkwidgets,
-    src/direct-stubs/wxwidgets,
+extend-exclude = venv
 
 noqa_require_code = true

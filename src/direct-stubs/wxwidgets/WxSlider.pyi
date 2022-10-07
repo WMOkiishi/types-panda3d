@@ -1,6 +1,4 @@
-from typing import Any
-
-wx: Any
+import wx  # type: ignore[import]
 
 class WxSlider(wx.Slider):
     maxValue: float

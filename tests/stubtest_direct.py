@@ -5,19 +5,19 @@ from pathlib import Path
 
 def main() -> int:
     allowlists = [Path('allowlists', 'direct.txt')]
-    if sys.version_info >= (3, 10):
-        allowlists.append(Path('allowlists', 'direct-py310.txt'))
+    version_allowlist = Path(
+        'allowlists',
+        f'direct-py{sys.version_info.major}{sys.version_info.minor}.txt'
+    )
+    if version_allowlist.exists():
+        allowlists.append(version_allowlist)
     src_dir = Path('..', 'src', 'direct-stubs')
     modules = (p.stem for p in src_dir.glob('*'))
     dont_check = {
         '__init__',
         'directbase',
         'directutil',
-        'leveleditor',
         'p3d',
-        'tkpanels',
-        'tkwidgets',
-        'wxwidgets',
     }
     cmd = [
         sys.executable,

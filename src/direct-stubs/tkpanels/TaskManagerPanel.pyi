@@ -2,11 +2,10 @@ from tkinter import Button, Checkbutton, IntVar, Misc, Toplevel
 from typing import Any
 from typing_extensions import Literal
 
+import Pmw  # type: ignore[import]
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import TaskManager
 from direct.tkwidgets.AppShell import AppShell
-
-Pmw: Any
 
 class TaskManagerPanel(AppShell):
     taskMgr: TaskManager

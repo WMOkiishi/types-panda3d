@@ -1,6 +1,6 @@
-from typing import Any, ClassVar
+from typing import ClassVar
 
-wx: Any
+import wx  # type: ignore[import]
 
 class WxAppShell(wx.Frame):
     appversion: ClassVar[str]

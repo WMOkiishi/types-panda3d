@@ -1,10 +1,7 @@
 __all__ = ['Slider', 'SliderWidget', 'rgbPanel']
 
-from typing import Any
-
+import Pmw  # type: ignore[import]
 from .Valuator import Valuator, rgbPanel as rgbPanel
-
-Pmw: Any
 
 class Slider(Valuator):
     def setMin(self) -> None: ...

@@ -4,6 +4,7 @@ from tkinter import Checkbutton, Entry, Frame, IntVar, Menu, Menubutton, Misc, R
 from typing import Any, SupportsInt
 from typing_extensions import Literal, TypeAlias
 
+import Pmw  # type: ignore[import]
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.tkwidgets.AppShell import AppShell
 from direct.tkwidgets.Dial import AngleDial
@@ -11,13 +12,7 @@ from direct.tkwidgets.Floater import Floater
 from direct.tkwidgets.Slider import Slider
 from direct.tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
 
-Pmw: Any
-
-_TkAnchor: TypeAlias = Literal['nw', 'n', 'ne', 'w', 'center', 'e', 'sw', 's', 'se']
-_TkFill: TypeAlias = Literal['none', 'x', 'y', 'both']
-_TkRelief: TypeAlias = Literal['raised', 'sunken', 'flat', 'ridge', 'solid', 'groove']
 _TkSide: TypeAlias = Literal['left', 'right', 'top', 'bottom']
-_TkState: TypeAlias = Literal['normal', 'active', 'disabled']
 
 class ParticlePanel(AppShell):
     particleEffect: ParticleEffect
@@ -55,7 +50,7 @@ class ParticlePanel(AppShell):
     forceGroupNotebook: Pmw.NoteBook
     def __init__(self, particleEffect: ParticleEffect | None = None, **kw) -> None: ...
     def createCheckbutton(
-        self, parent: Misc | None, category: str, text: str, balloonHelp, command, initialState, side: _TkSide = 'top'
+        self, parent: Misc | None, category: str, text: str, balloonHelp, command, initialState, side: _TkSide = ...
     ) -> Checkbutton: ...
     def createRadiobutton(
         self,

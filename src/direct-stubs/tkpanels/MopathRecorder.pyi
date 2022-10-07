@@ -5,6 +5,7 @@ from tkinter import Button, Checkbutton, Entry, Frame, Label, Misc, Radiobutton,
 from typing import Any, ClassVar, SupportsFloat, SupportsInt
 from typing_extensions import Final, Literal, TypeAlias
 
+import Pmw  # type: ignore[import]
 from direct._typing import AnyReal, Unused
 from direct.directtools.DirectGeometry import LineNodePath
 from direct.directtools.DirectSelection import SelectionRay
@@ -16,8 +17,6 @@ from direct.tkwidgets.Floater import Floater
 from direct.tkwidgets.Slider import Slider
 from direct.tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
 from panda3d.core import CurveFitter, GeomNode, LPoint3f, LRGBColor, NodePath
-
-Pmw: Any
 
 _TkFill: TypeAlias = Literal['none', 'x', 'y', 'both']
 _TkRelief: TypeAlias = Literal['raised', 'sunken', 'flat', 'ridge', 'solid', 'groove']
@@ -184,6 +183,7 @@ class MopathRecorder(AppShell, DirectObject):
     def loadCurveFromFile(self) -> None: ...
     def saveCurveToFile(self) -> None: ...
     def followTerrain(self, height: float = ...) -> None: ...
+    def addWidget(self, widget, category: str, text: str) -> None: ...  # type: ignore[override]
     def getWidget(self, category: str, text: str) -> Any: ...
     def getVariable(self, category: str, text: str) -> Any: ...
     def createLabeledEntry(

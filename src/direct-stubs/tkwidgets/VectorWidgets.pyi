@@ -1,11 +1,9 @@
 __all__ = ['ColorEntry', 'VectorEntry', 'Vector2Entry', 'Vector3Entry', 'Vector4Entry']
 
 from tkinter import Menu, Menubutton
-from typing import Any
 
+import Pmw  # type: ignore[import]
 from .Valuator import ValuatorGroupPanel
-
-Pmw: Any
 
 class VectorEntry(Pmw.MegaWidget):
     entryFormat: str

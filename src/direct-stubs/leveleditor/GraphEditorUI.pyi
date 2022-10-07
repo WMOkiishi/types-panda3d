@@ -1,15 +1,15 @@
 from collections.abc import Sequence
-from typing import Any, SupportsFloat, Union
+from typing import SupportsFloat, Union
 from typing_extensions import TypeAlias
 
+import wx  # type: ignore[import]
 from panda3d.core import LVecBase2f
 
-wx: Any
 PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
 
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 
-property: PyEmbeddedImage
+property: list[str]
 ZoomIn: PyEmbeddedImage
 ZoomOut: PyEmbeddedImage
 OneTangent: PyEmbeddedImage

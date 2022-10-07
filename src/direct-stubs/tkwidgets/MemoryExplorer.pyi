@@ -2,10 +2,9 @@ from tkinter import Button, Label, Scale
 from typing import Any, SupportsFloat
 from typing_extensions import Final
 
+import Pmw  # type: ignore[import]
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath
-
-Pmw: Any
 
 DEFAULT_BT_WIDTH: Final[float]
 

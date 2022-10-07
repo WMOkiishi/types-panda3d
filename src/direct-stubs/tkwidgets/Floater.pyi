@@ -1,11 +1,9 @@
 __all__ = ['Floater', 'FloaterGroup', 'FloaterWidget']
 
-from typing import Any
 from typing_extensions import Final, Literal
 
+import Pmw  # type: ignore[import]
 from .Valuator import Valuator
-
-Pmw: Any
 
 FLOATER_WIDTH: Final[Literal[22]]
 FLOATER_HEIGHT: Final[Literal[18]]

@@ -1,12 +1,10 @@
 __all__ = ['NotifyPanel']
 
 from tkinter import IntVar, Radiobutton, Toplevel
-from typing import Any
 
+import Pmw  # type: ignore[import]
 from direct.directnotify.DirectNotify import DirectNotify
 from direct.directnotify.Notifier import Notifier
-
-Pmw: Any
 
 class NotifyPanel:
     activeCategory: Notifier | None

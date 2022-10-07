@@ -1,14 +1,13 @@
-from typing import Any, SupportsFloat
+from typing import SupportsFloat
 from typing_extensions import Final, Literal
 
+import wx  # type: ignore[import]
 from direct._typing import Unused
 from direct.wxwidgets.WxPandaShell import WxPandaShell
 from direct.wxwidgets.WxSlider import WxSlider
 from .AnimControlUI import AnimControlUI
 from .CurveAnimUI import CurveAnimUI
 from .GraphEditorUI import GraphEditorUI
-
-wx: Any
 
 class PandaTextDropTarget(wx.TextDropTarget):
     editor = ...

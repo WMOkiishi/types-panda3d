@@ -1,7 +1,7 @@
-from typing import Any
 from typing_extensions import TypeAlias
 
-wx: Any
+import wx  # type: ignore[import]
+
 ScrolledPanel: TypeAlias = wx.lib.scrolledpanel.ScrolledPanel
 
 class EditHotKeyDialog(wx.Dialog):

@@ -2,16 +2,14 @@ __all__ = ['Placer', 'place']
 
 from collections.abc import Callable, MutableMapping
 from tkinter import Button, StringVar
-from typing import Any
 from typing_extensions import Literal
 
+import Pmw  # type: ignore[import]
 from direct._typing import Unused
 from direct.tkwidgets.AppShell import AppShell
 from direct.tkwidgets.Dial import AngleDial
 from direct.tkwidgets.Floater import Floater
 from panda3d.core import LVecBase3f, LVector3f, NodePath
-
-Pmw: Any
 
 class Placer(AppShell):
     tempCS: NodePath

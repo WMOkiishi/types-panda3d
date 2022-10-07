@@ -1,6 +1,4 @@
-from typing import Any
-
-wx: Any
+import wx  # type: ignore[import]
 
 class CurveAnimUI(wx.Dialog):
     editor = ...

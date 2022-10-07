@@ -5,6 +5,7 @@ from tkinter import Button, Checkbutton, Entry, Frame, IntVar, Radiobutton, Topl
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
+import Pmw  # type: ignore[import]
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from .Dial import Dial
@@ -12,8 +13,6 @@ from .EntryScale import EntryScale
 from .Floater import Floater
 from .Slider import Slider
 from .VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
-
-Pmw: Any
 
 _W = TypeVar('_W', bound=Widget)
 _TkAnchor: TypeAlias = Literal['nw', 'n', 'ne', 'w', 'center', 'e', 'sw', 's', 'se']
@@ -28,7 +27,7 @@ def resetVariableDict() -> None: ...
 class AppShell(Pmw.MegaWidget, DirectObject):
     appversion: ClassVar[str]
     appname: ClassVar[str]
-    copytight: ClassVar[str]
+    copyright: ClassVar[str]
     contactname: ClassVar[str]
     contactphone: ClassVar[str]
     contactemail: ClassVar[str]

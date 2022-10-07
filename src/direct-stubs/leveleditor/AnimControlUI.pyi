@@ -1,7 +1,7 @@
-from typing import Any
 from typing_extensions import TypeAlias
 
-wx: Any
+import wx  # type: ignore[import]
+
 PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
 
 FirstFrame: PyEmbeddedImage

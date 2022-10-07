@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any
 
-wx: Any
+import wx  # type: ignore[import]
 
 class ProtoDropTarget(wx.PyDropTarget):
     ui = ...

@@ -2,8 +2,8 @@ __all__ = ['DirectSessionPanel']
 
 from collections.abc import Callable, MutableMapping
 from tkinter import BooleanVar, Button, Checkbutton, Menubutton, Misc, Toplevel
-from typing import Any
 
+import Pmw  # type: ignore[import]
 from direct.directtools.DirectLights import DirectLight
 from direct.tkwidgets.AppShell import AppShell
 from direct.tkwidgets.Dial import AngleDial
@@ -14,8 +14,6 @@ from direct.tkwidgets.Slider import Slider
 from direct.tkwidgets.VectorWidgets import ColorEntry
 from panda3d.core import NodePath
 from .TaskManagerPanel import TaskManagerWidget
-
-Pmw: Any
 
 class DirectSessionPanel(AppShell):
     activeLight: DirectLight | None

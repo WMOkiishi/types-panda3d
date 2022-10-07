@@ -1,9 +1,7 @@
 from collections.abc import Sequence
-from typing import Any
 
+import wx  # type: ignore[import]
 from .PaletteTreeCtrl import PaletteTreeCtrl
-
-wx: Any
 
 class UniversalDropTarget(wx.PyDropTarget):
     editor = ...

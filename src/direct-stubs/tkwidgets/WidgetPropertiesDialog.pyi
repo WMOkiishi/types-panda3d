@@ -6,7 +6,7 @@ from tkinter import Misc, Toplevel
 from typing import Any
 from typing_extensions import TypeAlias
 
-Pmw: Any
+import Pmw  # type: ignore[import]
 
 _PropertyDict: TypeAlias = dict[str, tuple[Any, Any, Any, bool]]
 

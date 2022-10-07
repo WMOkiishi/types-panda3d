@@ -3,9 +3,8 @@ __all__ = ['EntryScale', 'EntryScaleGroup']
 from collections.abc import Callable
 from typing import Any
 
+import Pmw  # type: ignore[import]
 from panda3d.core import NodePath
-
-Pmw: Any
 
 class EntryScale(Pmw.MegaWidget):
     value = ...

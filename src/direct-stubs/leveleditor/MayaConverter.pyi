@@ -2,7 +2,7 @@ from collections.abc import Callable
 from typing import Any
 from typing_extensions import Final, Literal
 
-wx: Any
+import wx  # type: ignore[import]
 
 CLOSE_STDIN: Final[str]
 

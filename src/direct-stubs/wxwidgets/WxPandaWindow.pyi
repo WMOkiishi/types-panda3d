@@ -1,10 +1,9 @@
 import sys
-from typing import Any, ClassVar
+from typing import ClassVar
 
+import wx  # type: ignore[import]
+import wx.glcanvas as wxgl  # type: ignore[import]
 from panda3d.core import ConfigVariableBool, GraphicsWindow, InputDevice
-
-wx: Any
-wxgl: Any
 
 class EmbeddedPandaWindow(wx.Window):
     win: GraphicsWindow

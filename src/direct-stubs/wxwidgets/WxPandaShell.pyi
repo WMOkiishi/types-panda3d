@@ -1,12 +1,11 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal
 
+import wx  # type: ignore[import]
 from direct.showbase.ShowBase import ShowBase
 from direct.task.Task import Task
 from .ViewPort import Viewport
 from .WxAppShell import WxAppShell
-
-wx: Any
 
 base: ShowBase
 ID_FOUR_VIEW: Final[Literal[401]]
