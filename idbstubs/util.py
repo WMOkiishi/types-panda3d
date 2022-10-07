@@ -29,6 +29,18 @@ def indent_lines(lines: Iterable[str], *, level: int = 4) -> Iterator[str]:
         yield (indentation + line) if line else ''
 
 
+def docstring_lines(doc: str) -> Iterator[str]:
+    """Yield the lines of a docstring (including quotes)
+    with the given contents (excluding quotes).
+    """
+    if not doc:
+        return
+    elif '\n' in doc:
+        yield from f'"""{doc}\n"""'.splitlines()
+    else:
+        yield f'"""{doc}"""'
+
+
 def names_within(s: str, /) -> Iterator[str]:
     """Yield the identifiers referenced by an expression."""
     if s.isalnum():

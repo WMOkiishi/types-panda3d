@@ -7,7 +7,9 @@ from typing import Any, Protocol
 
 from attrs import Factory, define, evolve, field
 
-from .util import flatten, indent_lines, is_dunder, names_within
+from .util import (
+    docstring_lines, flatten, indent_lines, is_dunder, names_within
+)
 
 
 class StubRep(Protocol):
@@ -213,11 +215,8 @@ class Function:
                 sig_def += f'  # {self.comment}'
                 comment_printed = True
             yield sig_def
-            if self.doc and not doc_printed:
-                if '\n' in self.doc:
-                    yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
-                else:
-                    yield f'    """{self.doc}"""'
+            if not doc_printed:
+                yield from indent_lines(docstring_lines(self.doc))
                 doc_printed = True
 
 
@@ -266,12 +265,8 @@ class Attribute:
                 attribute_def += '  # ' + self.comment
             yield attribute_def
             doc_indent_level = 0
-        if self.doc:
-            if '\n' in self.doc:
-                yield from indent_lines(f'"""{self.doc}\n"""'.splitlines(),
-                                        level=doc_indent_level)
-            else:
-                yield f'{" " * doc_indent_level}"""{self.doc}"""'
+        yield from indent_lines(docstring_lines(self.doc),
+                                level=doc_indent_level)
 
 
 @define
@@ -328,11 +323,7 @@ class Class:
         if self.comment:
             declaration += f'  # {self.comment}'
         yield declaration
-        if self.doc:
-            if '\n' in self.doc:
-                yield from indent_lines(f'"""{self.doc}\n"""'.splitlines())
-            else:
-                yield f'    """{self.doc}"""'
+        yield from indent_lines(docstring_lines(self.doc))
         sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
         prev_was_class = False
         for item in sorted_nested:
