@@ -30,6 +30,7 @@ class TiXmlBase:
         A Decleration contains: Attributes (not on tree)
         @endverbatim
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     TIXML_NO_ERROR: Final[Literal[0]]
     TIXML_ERROR: Final[Literal[1]]
@@ -95,6 +96,7 @@ class TiXmlDeclaration(TiXmlNode):
         handled as special cases, not generic attributes, simply
         because there can only be at most 3 and they are always the same.
     """
+
     @overload
     def __init__(self, copy: TiXmlDeclaration = ...) -> None:
         """`(self)`:
@@ -123,6 +125,7 @@ class TiXmlNode(TiXmlBase):
         in a document, or stand on its own. The type of a TiXmlNode
         can be queried, and it can be cast to its more defined type.
     """
+
     TINYXML_DOCUMENT: Final[Literal[0]]
     TINYXMLDOCUMENT: Final[Literal[0]]
     TINYXML_ELEMENT: Final[Literal[1]]
@@ -346,6 +349,7 @@ class TiXmlDocument(TiXmlNode):
         XML pieces. It can be saved, loaded, and printed to the screen.
         The 'value' of a document node is the xml file name.
     """
+
     @overload
     def __init__(self, documentName: str = ...) -> None:
         """`(self)`:
@@ -450,6 +454,7 @@ class TiXmlElement(TiXmlNode):
         and can contain other elements, text, comments, and unknowns.
         Elements also contain an arbitrary number of attributes.
     """
+
     @overload
     def __init__(self, in_value: str) -> None:
         """`(self, in_value: str)`:
@@ -538,6 +543,7 @@ class TiXmlCursor:
     """Internal structure for tracking location of items
         in the XML file.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: TiXmlCursor) -> None: ...
 
@@ -560,6 +566,7 @@ class TiXmlVisitor:
 
         @sa TiXmlNode::Accept()
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: TiXmlVisitor = ...) -> None: ...
     @overload
@@ -601,6 +608,7 @@ class TiXmlAttribute(TiXmlBase):
               part of the tinyXML document object model. There are other
               suggested ways to look at this problem.
     """
+
     @overload
     def __init__(self) -> None:
         """`(self)`:
@@ -670,6 +678,7 @@ class TiXmlAttributeSet:
             - I like circular lists
             - it demonstrates some independence from the (typical) doubly linked list.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def Add(self, attribute: TiXmlAttribute) -> None: ...
@@ -681,6 +690,7 @@ class TiXmlAttributeSet:
 
 class TiXmlComment(TiXmlNode):
     """An XML comment."""
+
     @overload
     def __init__(self, __param0: TiXmlComment = ...) -> None:
         """`(self)`:
@@ -699,6 +709,7 @@ class TiXmlText(TiXmlNode):
         you generally want to leave it alone, but you can change the output mode with
         SetCDATA() and query it with CDATA().
     """
+
     @overload
     def __init__(self, initValue: str) -> None:
         """`(self, initValue: str)`:
@@ -725,6 +736,7 @@ class TiXmlUnknown(TiXmlNode):
 
         DTD tags get thrown into TiXmlUnknowns.
     """
+
     def __init__(self, copy: TiXmlUnknown = ...) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
 
@@ -808,6 +820,7 @@ class TiXmlHandle:
         }
         @endverbatim
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, ref: TiXmlHandle) -> None:
@@ -915,6 +928,7 @@ class TiXmlPrinter(TiXmlVisitor):
         fprintf( stdout, "%s", printer.CStr() );
         @endverbatim
     """
+
     def __init__(self, __param0: TiXmlPrinter = ...) -> None: ...
     def SetIndent(self, _indent: str) -> None:
         """Set the indent characters for printing. By default 4 spaces

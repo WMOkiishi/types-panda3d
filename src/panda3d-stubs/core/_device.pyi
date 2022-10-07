@@ -21,6 +21,7 @@ _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 
 class TrackerData:
     """Stores the kinds of data that a tracker might output."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     time: float
     pos: LPoint3
@@ -247,6 +248,7 @@ class ClientBase(TypedReferenceCount):
     their data; it is used by TrackerNode etc.  to put these devices in the
     data graph.
     """
+
     def fork_asynchronous_thread(self, poll_time: float) -> bool:
         """Forks a separate thread to do all the polling of connected devices.  The
         forked thread will poll after every poll_time seconds has elapsed.  Returns
@@ -294,6 +296,7 @@ class AnalogNode(DataNode):
     the two channels of an xy datagram, similarly to the way a mouse places its
     position data.  In this way, an AnalogNode may be used in place of a mouse.
     """
+
     @overload
     def __init__(self, __param0: AnalogNode) -> None: ...
     @overload
@@ -355,6 +358,7 @@ class ButtonNode(DataNode):
     buttons are associated with ButtonHandles, this node will put appropriate
     up and down events on the data graph for each button state change.
     """
+
     @overload
     def __init__(self, __param0: ButtonNode) -> None: ...
     @overload
@@ -411,6 +415,7 @@ class DialNode(DataNode):
     any number of times.  Therefore it does not have a specific position at any
     given time, unlike an AnalogDevice.
     """
+
     @overload
     def __init__(self, __param0: DialNode) -> None: ...
     @overload
@@ -442,6 +447,7 @@ class InputDeviceSet:
     InputDeviceManager methods.  This is implemented like a set, meaning the
     same device cannot occur more than once.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: InputDeviceSet = ...) -> None: ...
     def __getitem__(self, index: int) -> InputDevice:
@@ -470,6 +476,7 @@ class InputDeviceManager:
 
     @since 1.10.0
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_devices(self, device_class: InputDevice.DeviceClass = ...) -> InputDeviceSet:
         """`(self)`:
@@ -508,6 +515,7 @@ class InputDeviceNode(DataNode):
 
     This is intended to only be accessed from the app thread.
     """
+
     device: InputDevice
     @overload
     def __init__(self, __param0: InputDeviceNode) -> None: ...
@@ -520,6 +528,7 @@ class TrackerNode(DataNode):
     It is also the primary interface to a Tracker object associated with a
     ClientBase.
     """
+
     @overload
     def __init__(self, device: InputDevice) -> None: ...
     @overload
@@ -579,6 +588,7 @@ class VirtualMouse(DataNode):
     device.  The user can write high-level code to put the mouse wherever
     he/she wants, and to insert keypresses on demand.
     """
+
     @overload
     def __init__(self, __param0: VirtualMouse) -> None: ...
     @overload

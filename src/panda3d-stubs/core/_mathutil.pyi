@@ -825,6 +825,7 @@ class BoundingVolume(TypedReferenceCount):
     GeometricBoundingVolume); this is simply an abstract interface for bounds
     of any sort.
     """
+
     IF_no_intersection: Final[Literal[0]]
     IFNoIntersection: Final[Literal[0]]
     IF_possible: Final[Literal[1]]
@@ -885,6 +886,7 @@ class GeometricBoundingVolume(BoundingVolume):
     that actually enclose points in 3-d space, such as BSP's and bounding
     spheres.
     """
+
     @overload  # type: ignore[override]
     def extend_by(self, vol: GeometricBoundingVolume) -> bool:
         """`(self, vol: GeometricBoundingVolume)`:
@@ -923,6 +925,7 @@ class FiniteBoundingVolume(GeometricBoundingVolume):
     is possible to query this kind of volume for its minimum and maximum
     extents.
     """
+
     @property
     def min(self) -> LPoint3: ...
     @property
@@ -942,6 +945,7 @@ class LParabolaf:
 
     The parabolic equation, given parametrically here, is P = At^2 + Bt + C.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: LParabolaf = ...) -> None:
@@ -1006,6 +1010,7 @@ class LParabolad:
 
     The parabolic equation, given parametrically here, is P = At^2 + Bt + C.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: LParabolad = ...) -> None:
@@ -1068,6 +1073,7 @@ class LPlanef(LVecBase4f):
     """An abstract mathematical description of a plane.  A plane is defined by the
     equation Ax + By + Cz + D = 0.
     """
+
     @overload
     def __init__(self, copy: Vec4f = ...) -> None:
         """`(self)`:
@@ -1153,6 +1159,7 @@ class LPlaned(LVecBase4d):
     """An abstract mathematical description of a plane.  A plane is defined by the
     equation Ax + By + Cz + D = 0.
     """
+
     @overload
     def __init__(self, copy: Vec4d = ...) -> None:
         """`(self)`:
@@ -1241,6 +1248,7 @@ class BoundingBox(FiniteBoundingVolume):
     This box is always axis-aligned.  If you need a more general bounding box,
     try BoundingHexahedron.
     """
+
     @property
     def points(self) -> Sequence[LPoint3]: ...
     @property
@@ -1327,6 +1335,7 @@ class BoundingHexahedron(FiniteBoundingVolume):
     including simple boxes.  However, if all you want is an axis-aligned
     bounding box, you may be better off with the simpler BoundingBox class.
     """
+
     @property
     def points(self) -> Sequence[LPoint3]: ...
     @property
@@ -1360,6 +1369,7 @@ class BoundingLine(GeometricBoundingVolume):
     specify two points to the constructor.  These are not endpoints, they are
     two arbitrary points on the line.
     """
+
     def __init__(self, a: Vec3f, b: Vec3f) -> None: ...
     def get_point_a(self) -> LPoint3:
         """Returns the first point that defines the line."""
@@ -1374,6 +1384,7 @@ class BoundingPlane(GeometricBoundingVolume):
     and the part in front of the normal, which is "outside" the bounding
     volume.
     """
+
     @property
     def plane(self) -> LPlane: ...
     def __init__(self, plane: Vec4f = ...) -> None:
@@ -1385,6 +1396,7 @@ class BoundingSphere(FiniteBoundingVolume):
     """This defines a bounding sphere, consisting of a center and a radius.  It is
     always a sphere, and never an ellipsoid or other quadric.
     """
+
     center: LPoint3
     radius: float
     @overload
@@ -1415,6 +1427,7 @@ class IntersectionBoundingVolume(GeometricBoundingVolume):
     A point is defined to be within an IntersectionBoundingVolume if it is
     within all of its component bounding volumes.
     """
+
     @property
     def components(self) -> Sequence[GeometricBoundingVolume]: ...
     def __init__(self) -> None:
@@ -1453,6 +1466,7 @@ class Mersenne:
 
 class OmniBoundingVolume(GeometricBoundingVolume):
     """This is a special kind of GeometricBoundingVolume that fills all of space."""
+
     def __init__(self) -> None: ...
 
 class UnionBoundingVolume(GeometricBoundingVolume):
@@ -1462,6 +1476,7 @@ class UnionBoundingVolume(GeometricBoundingVolume):
     A point is defined to be within a UnionBoundingVolume if it is within any
     one or more of its component bounding volumes.
     """
+
     @property
     def components(self) -> Sequence[GeometricBoundingVolume]: ...
     def __init__(self) -> None:
@@ -1493,6 +1508,7 @@ class UnionBoundingVolume(GeometricBoundingVolume):
 
 class Randomizer:
     """A handy class to return random numbers."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, seed: int = ...) -> None:
@@ -1526,6 +1542,7 @@ class PerlinNoise:
     dimensions of Perlin noise implementation.  The base class just collects
     the common functionality.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_seed(self) -> int:
         """Returns a unique seed value based on the seed value passed to this
@@ -1538,6 +1555,7 @@ class PerlinNoise2(PerlinNoise):
     This code is loosely based on the reference implementation at
     https://mrl.nyu.edu/~perlin/noise/ .
     """
+
     @overload
     def __init__(self, copy: PerlinNoise2 = ...) -> None:
         """`(self)`:
@@ -1578,6 +1596,7 @@ class PerlinNoise3(PerlinNoise):
     This code is loosely based on the reference implementation at
     http://mrl.nyu.edu/~perlin/noise/ .
     """
+
     @overload
     def __init__(self, copy: PerlinNoise3 = ...) -> None:
         """`(self)`:
@@ -1617,6 +1636,7 @@ class StackedPerlinNoise2:
     """Implements a multi-layer PerlinNoise, with one or more high-frequency noise
     functions added to a lower-frequency base noise function.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: StackedPerlinNoise2 = ...) -> None:
@@ -1660,6 +1680,7 @@ class StackedPerlinNoise3:
     """Implements a multi-layer PerlinNoise, with one or more high-frequency noise
     functions added to a lower-frequency base noise function.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: StackedPerlinNoise3 = ...) -> None:
@@ -1710,6 +1731,7 @@ class Triangulator:
 
     It works strictly on 2-d points.  See Triangulator3 for 3-d points.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def vertices(self) -> Sequence[LPoint2d]: ...
@@ -1807,6 +1829,7 @@ class Triangulator3(Triangulator):
     and internally projects the supplied points into 2-D for passing to the
     underlying Triangulator object.
     """
+
     @property
     def vertices(self) -> Sequence[LPoint3d]: ...  # type: ignore[override]
     @property

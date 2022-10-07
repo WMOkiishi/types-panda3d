@@ -9,6 +9,7 @@ class BasicSkel:
     The skeleton classes are intended to help you learn how to add C++ classes
     to panda.  See also the manual, "Adding C++ Classes to Panda."
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: BasicSkel = ...) -> None: ...
     def set_value(self, n: int) -> None:
@@ -35,6 +36,7 @@ class TypedSkel(TypedObject):
     The skeleton classes are intended to help you learn how to add C++ classes
     to panda.  See also the manual, "Adding C++ Classes to Panda."
     """
+
     def __init__(self) -> None: ...
     def set_value(self, n: int) -> None:
         """These inline functions allow you to get and set _value."""

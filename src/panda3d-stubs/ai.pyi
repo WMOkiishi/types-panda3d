@@ -13,6 +13,7 @@ class AIBehaviors:
     the AICharacter.  This class also provides functionality such as pausing,
     resuming and removing the AI behaviors of an AI character at anytime.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: AIBehaviors) -> None: ...
     @overload
@@ -139,6 +140,7 @@ class AINode:
     on the mesh.  Note: The Mesh Generator which is a standalone tool makes use
     of this class to generate the nodes on the mesh.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AINode) -> None: ...
@@ -153,6 +155,7 @@ class Flock:
     """This class is used to define the flock attributes and the AI characters
     which are part of the flock.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: Flock) -> None: ...
@@ -172,6 +175,7 @@ class AIWorld:
     updates each characters state.  The AI characters can also be added to the
     world as flocks.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AIWorld) -> None: ...

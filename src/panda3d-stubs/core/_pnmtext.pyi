@@ -13,6 +13,7 @@ class FreetypeFont(Namable):
     glyphs from fonts; this class abstracts out that common wrapper around
     FreeType.
     """
+
     winding_order: _FreetypeFont_WindingOrder
     WO_default: Final[Literal[0]]
     WODefault: Final[Literal[0]]
@@ -129,6 +130,7 @@ class FreetypeFont(Namable):
 
 class PNMTextGlyph:
     """A single glyph in a PNMTextMaker."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: PNMTextGlyph) -> None: ...
@@ -186,6 +188,7 @@ class PNMTextMaker(FreetypeFont):
     use the Freetype library to generate text in the scene graph, to be
     rendered onscreen via the Panda render traversal.
     """
+
     A_left: Final[Literal[0]]
     ALeft: Final[Literal[0]]
     A_right: Final[Literal[1]]

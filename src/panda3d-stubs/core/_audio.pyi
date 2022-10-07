@@ -344,6 +344,7 @@ class AudioLoadRequest(AsyncTask):
     with any AsyncTaskManager.  Create a new AudioLoadRequest, and add it to
     the loader via load_async(), to begin an asynchronous load.
     """
+
     @overload
     def __init__(self, __param0: AudioLoadRequest) -> None:
         """Create a new AudioLoadRequest, and add it to the loader via load_async(),

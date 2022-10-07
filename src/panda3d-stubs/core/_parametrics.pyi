@@ -26,6 +26,7 @@ class ParametricCurve(PandaNode):
     """A virtual base class for parametric curves.  This encapsulates all curves
     in 3-d space defined for a single parameter t in the range [0,get_max_t()].
     """
+
     def is_valid(self) -> bool:
         """Returns true if the curve is defined.  This base class function always
         returns true; derived classes might override this to sometimes return
@@ -165,6 +166,7 @@ class ParametricCurveCollection(ReferenceCount):
     can then be evaluated as a unit to return a single transformation matrix
     for a given unit of time.
     """
+
     curves: Sequence[ParametricCurve]
     @property
     def xyz_curve(self) -> ParametricCurve: ...
@@ -458,6 +460,7 @@ class PiecewiseCurve(ParametricCurve):
     a head-to-tail fashion.  The length of each curve segment in parametric
     space is definable.
     """
+
     def __init__(self) -> None: ...
 
 class HermiteCurve(PiecewiseCurve):
@@ -469,6 +472,7 @@ class HermiteCurve(PiecewiseCurve):
     The HermiteCurve class itself keeps its own list of the CV's that are used
     to define the curve (since the CubicCurveseg class doesn't retain these).
     """
+
     def __init__(self, pc: ParametricCurve = ...) -> None:
         """Constructs a Hermite from the indicated (possibly non-hermite) curve."""
     def get_num_cvs(self) -> int:
@@ -583,6 +587,7 @@ class NurbsCurveInterface:
 
     The NurbsCurve class inherits both from this and from ParametricCurve.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_order(self, order: int) -> None: ...
     def get_order(self) -> int: ...
@@ -655,6 +660,7 @@ class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
     "NurbsCurve" instead of this one, and performs most of the NURBS curve
     functions.  This class then becomes vestigial.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, pc: ParametricCurve = ...) -> None:
         """Constructs a NURBS curve equivalent to the indicated (possibly non-NURBS)
@@ -678,6 +684,7 @@ class NurbsCurveResult(ReferenceCount):
     parallel implementation of NURBS curves, and will probably eventually
     replace the whole ParametricCurve class hierarchy.
     """
+
     def __init__(self, __param0: NurbsCurveResult) -> None: ...
     def get_start_t(self) -> float:
         """Returns the first legal value of t on the curve.  Usually this is 0.0."""
@@ -793,6 +800,7 @@ class NurbsCurveEvaluator(ReferenceCount):
     parallel implementation of NURBS curves, and will probably eventually
     replace the whole ParametricCurve class hierarchy.
     """
+
     def __init__(self, __param0: NurbsCurveEvaluator = ...) -> None: ...
     def set_order(self, order: int) -> None:
         """Sets the order of the curve.  This resets the knot vector to the default
@@ -944,6 +952,7 @@ class NurbsSurfaceResult(ReferenceCount):
     a particular coordinate space.  It can return the point and/or normal to
     the surface at any point.
     """
+
     def __init__(self, __param0: NurbsSurfaceResult) -> None: ...
     def get_start_u(self) -> float:
         """Returns the first legal value of u on the surface.  Usually this is 0.0."""
@@ -1043,6 +1052,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
     array of vertices, each of which may be in a different coordinate space (as
     defined by a NodePath), as well as an optional knot vector.
     """
+
     u_order: int
     v_order: int
     u_knots: Sequence[float]
@@ -1236,6 +1246,7 @@ class RopeNode(PandaNode):
     parallel implementation of NURBS curves, and will probably eventually
     replace the whole ParametricCurve class hierarchy.
     """
+
     curve: NurbsCurveEvaluator
     render_mode: _RopeNode_RenderMode
     uv_mode: _RopeNode_UVMode
@@ -1448,6 +1459,7 @@ class SheetNode(PandaNode):
     parallel implementation of NURBS surfaces, and will probably eventually
     replace the whole ParametricSurface class hierarchy.
     """
+
     def set_surface(self, surface: NurbsSurfaceEvaluator) -> None:
         """Sets the particular surface represented by the SheetNode."""
     def get_surface(self) -> NurbsSurfaceEvaluator:

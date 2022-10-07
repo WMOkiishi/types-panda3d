@@ -26,6 +26,7 @@ class CylindricalLens(Lens):
     two relatively nearby points on the film, but it becomes increasingly
     evident as you compare points widely spaced on the film.
     """
+
     def __init__(self) -> None: ...
 
 class FisheyeLens(Lens):
@@ -33,6 +34,7 @@ class FisheyeLens(Lens):
     the image, which is minimal at small angles from the lens, and increases at
     larger angles from the lens.  The field of view may extend to 360 degrees.
     """
+
     def __init__(self) -> None: ...
 
 class ProjectionScreen(PandaNode):
@@ -53,6 +55,7 @@ class ProjectionScreen(PandaNode):
     nonlinear, that might be defined using the Lens interface, including
     fisheye and cylindrical lenses.
     """
+
     def __init__(self, name: str = ...) -> None: ...
     def set_projector(self, projector: NodePath) -> None:
         """Specifies the LensNode that is to serve as the projector for this screen.
@@ -288,6 +291,7 @@ class NonlinearImager:
     perspective or orthographic) lenses.  The projectors and viewers may be any
     arbitrary lens, linear or otherwise.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: NonlinearImager = ...) -> None: ...
     @overload
@@ -459,6 +463,7 @@ class OSphereLens(Lens):
     A OSphereLens is similar to a Cylindrical lens and PSphereLens, except that
     it is orthographic in the vertical direction.
     """
+
     def __init__(self) -> None: ...
 
 class PSphereLens(Lens):
@@ -473,4 +478,5 @@ class PSphereLens(Lens):
     call a sphere mapping: the x coordinate is proportional to azimuth, while
     the y coordinate is proportional to altitude.
     """
+
     def __init__(self) -> None: ...

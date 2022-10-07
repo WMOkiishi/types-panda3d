@@ -20,6 +20,7 @@ class SmoothMover:
     update.  The assumption is that all SmoothMovers in the world will be
     operating in the same mode together.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     SM_off: Final[Literal[0]]
     SMOff: Final[Literal[0]]

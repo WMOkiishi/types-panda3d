@@ -25,6 +25,7 @@ class PhysicsObject(TypedReferenceCount):
     motion to your class, do NOT derive from this.  Derive from Physical
     instead.
     """
+
     active: bool
     mass: float
     position: LPoint3
@@ -192,6 +193,7 @@ class PhysicsObjectCollection:
     """This is a set of zero or more PhysicsObjects.  It's handy for returning
     from functions that need to return multiple PhysicsObjects.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: PhysicsObjectCollection = ...) -> None: ...
     def __getitem__(self, index: int) -> PhysicsObject: ...
@@ -259,6 +261,7 @@ class PhysicsObjectCollection:
 
 class BaseForce(TypedReferenceCount):
     """pure virtual base class for all forces that could POSSIBLY exist."""
+
     def get_active(self) -> bool: ...
     def set_active(self, active: bool) -> None: ...
     def is_linear(self) -> bool: ...
@@ -278,6 +281,7 @@ class LinearForce(BaseForce):
     """A force that acts on a PhysicsObject by way of an Integrator.  This is a
     pure virtual base class.
     """
+
     def set_amplitude(self, a: float) -> None: ...
     def set_mass_dependent(self, m: bool) -> None: ...
     def get_amplitude(self) -> float: ...
@@ -297,6 +301,7 @@ class LinearForce(BaseForce):
 
 class AngularForce(BaseForce):
     """pure virtual parent of all quat-based forces."""
+
     def make_copy(self) -> AngularForce: ...
     def get_quat(self, po: PhysicsObject) -> LRotation:
         """access query"""
@@ -307,6 +312,7 @@ class Physical(TypedReferenceCount):
     """Defines a set of physically modeled attributes.  If you want physics
     applied to your class, derive it from this.
     """
+
     @property
     def linear_forces(self) -> Sequence[LinearForce]: ...
     @property
@@ -403,6 +409,7 @@ class Physical(TypedReferenceCount):
 
 class PhysicalNode(PandaNode):
     """Graph node that encapsulated a series of physical objects"""
+
     physicals: Sequence[Physical]
     def __init__(self, name: str) -> None:
         """default constructor"""
@@ -440,6 +447,7 @@ class ActorNode(PhysicalNode):
     will be reflected as transforms.  This relation goes both ways; changes in
     the transform will update the object's position (shoves).
     """
+
     @overload
     def __init__(self, name: str = ...) -> None:
         """`(self, copy: ActorNode)`:
@@ -468,6 +476,7 @@ class BaseIntegrator(ReferenceCount):
     """pure virtual integrator class that holds cached matrix information that
     really should be common to any possible child implementation.
     """
+
     def __init__(self, __param0: BaseIntegrator) -> None: ...
     def output(self, out: ostream) -> None:
         """Write a string representation of this instance to <out>."""
@@ -489,6 +498,7 @@ class AngularEulerIntegrator(AngularIntegrator):
     """Performs Euler integration on a vector of physically modelable objects
     given a quantum dt.
     """
+
     def __init__(self) -> None:
         """constructor"""
 
@@ -496,6 +506,7 @@ class AngularVectorForce(AngularForce):
     """a simple directed torque force, the angular equivalent of simple vector
     force.
     """
+
     @overload
     def __init__(self, copy: AngularVectorForce) -> None:
         """`(self, copy: AngularVectorForce)`:
@@ -520,6 +531,7 @@ class ForceNode(PandaNode):
     coordinate systems.  An example of this would be simulating gravity in a
     rotating space station.  or something.
     """
+
     forces: Sequence[BaseForce]
     def __init__(self, name: str) -> None:
         """default constructor"""
@@ -557,6 +569,7 @@ class LinearControlForce(LinearForce):
     not make sense for a physics simulation, but it's very handy for a game.
     I.e.  this is the force applied by user on the selected object.
     """
+
     @overload
     def __init__(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...) -> None:
         """`(self, copy: LinearControlForce)`:
@@ -597,6 +610,7 @@ class LinearCylinderVortexForce(LinearForce):
     warned- this will suck anything that it can reach directly into orbit and
     will NOT let go.
     """
+
     @overload
     def __init__(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...) -> None:
         """`(self, copy: LinearCylinderVortexForce)`:
@@ -622,6 +636,7 @@ class LinearCylinderVortexForce(LinearForce):
 
 class LinearDistanceForce(LinearForce):
     """Pure virtual class for sinks and sources"""
+
     FT_ONE_OVER_R: Final[Literal[0]]
     FTONEOVERR: Final[Literal[0]]
     FT_ONE_OVER_R_SQUARED: Final[Literal[1]]
@@ -659,11 +674,13 @@ class LinearEulerIntegrator(LinearIntegrator):
     """Performs Euler integration on a vector of physically modelable objects
     given a quantum dt.
     """
+
     def __init__(self) -> None:
         """constructor"""
 
 class LinearFrictionForce(LinearForce):
     """Friction-based drag force"""
+
     @overload
     def __init__(self, coef: float = ..., a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearFrictionForce)`:
@@ -686,6 +703,7 @@ class LinearJitterForce(LinearRandomForce):
     """Completely random noise force vector.  Not repeatable, reliable, or
     predictable.
     """
+
     @overload
     def __init__(self, a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearJitterForce)`:
@@ -699,6 +717,7 @@ class LinearJitterForce(LinearRandomForce):
 
 class LinearNoiseForce(LinearRandomForce):
     """Repeating noise force vector."""
+
     @overload
     def __init__(self, a: float = ..., m: bool = ...) -> None:
         """`(self, copy: LinearNoiseForce)`:
@@ -712,6 +731,7 @@ class LinearNoiseForce(LinearRandomForce):
 
 class LinearSinkForce(LinearDistanceForce):
     """Attractor force.  Think black hole."""
+
     @overload
     def __init__(self, copy: LinearSinkForce = ...) -> None:
         """`(self)`; `(self, p: LPoint3, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...)`:
@@ -725,6 +745,7 @@ class LinearSinkForce(LinearDistanceForce):
 
 class LinearSourceForce(LinearDistanceForce):
     """Repellant force."""
+
     @overload
     def __init__(self, copy: LinearSourceForce = ...) -> None:
         """`(self)`; `(self, p: LPoint3, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...)`:
@@ -738,6 +759,7 @@ class LinearSourceForce(LinearDistanceForce):
 
 class LinearUserDefinedForce(LinearForce):
     """A programmable force that takes an evaluator function."""
+
     def __init__(self, copy: LinearUserDefinedForce) -> None:
         """copy constructor"""
 
@@ -745,6 +767,7 @@ class LinearVectorForce(LinearForce):
     """Simple directed vector force.  Suitable for gravity, non-turbulent wind,
     etc...
     """
+
     @overload
     def __init__(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...) -> None:
         """`(self, vec: LVector3, a: float = ..., mass: bool = ...)`:
@@ -779,6 +802,7 @@ class PhysicsCollisionHandler(CollisionHandlerPusher):
     that attempt to move into solid walls.  This also puts forces onto the
     physics objects
     """
+
     def set_almost_stationary_speed(self, speed: float) -> None:
         """These setters and getter are a bit of a hack:"""
     def get_almost_stationary_speed(self) -> float: ...
@@ -797,6 +821,7 @@ class PhysicsManager:
     """Physics don't get much higher-level than this.  Attach as many Physicals
     (particle systems, etc..) as you want, pick an integrator and go.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: PhysicsManager = ...) -> None:
         """Default Constructor.  NOTE: EulerIntegrator is the standard default."""

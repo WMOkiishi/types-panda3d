@@ -62,6 +62,7 @@ class GraphicsDevice(TypedReferenceCount):
     windows under single device or multiple devices (i.e.  more than one
     adapters in the machine).
     """
+
     def get_pipe(self) -> GraphicsPipe:
         """Returns the GraphicsPipe that this device is associated with."""
     getPipe = get_pipe
@@ -82,6 +83,7 @@ class GraphicsPipe(TypedReferenceCount):
     device interface to directx/opengl which will be used to handle multiple
     windows from same device.
     """
+
     OT_window: Final[Literal[1]]
     OTWindow: Final[Literal[1]]
     OT_fullscreen_window: Final[Literal[2]]
@@ -196,6 +198,7 @@ class GraphicsPipe(TypedReferenceCount):
 
 class DisplayInformation:
     """This class contains various display information."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     DS_unknown: Final[Literal[0]]
     DSUnknown: Final[Literal[0]]
@@ -333,6 +336,7 @@ class DrawableRegion:
     single display region, and sometimes you want to deal with the whole window
     at once, particularly for issuing clear commands and capturing screenshots.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     clear_color: LColor
     clear_depth: float
@@ -534,6 +538,7 @@ class WindowHandle(TypedReferenceCount):
         """This internal pointer within WindowHandle stores the actual OS-specific
         window handle type, whatever type that is.  It is subclassed for each OS.
         """
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: WindowHandle.OSHandle) -> None: ...
         def get_int_handle(self) -> int:
@@ -580,6 +585,7 @@ class WindowProperties:
     graphics window before we open it.  This also serves to hold the current
     properties for a window after it has been opened.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     default: WindowProperties
     origin: LPoint2i
@@ -963,6 +969,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     DisplayRegions like panes of glass, usually for layering 2-d interfaces on
     top of a 3-d scene.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     dimensions: LVecBase4
     camera: NodePath
@@ -1388,6 +1395,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     TypedWritableReferenceCount instead of TypedReferenceCount for that
     convenience.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     active: bool
     one_shot: bool
@@ -2090,6 +2098,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     There will be one of these objects for each different graphics context
     active in the system.
     """
+
     active: bool
     incomplete_render: bool
     loader: Loader
@@ -2683,6 +2692,7 @@ class GraphicsEngine(ReferenceCount):
     threads.  The application simply calls engine->render_frame() and considers
     it done.
     """
+
     threading_model: GraphicsThreadingModel
     auto_flip: bool
     portal_cull: bool
@@ -2910,6 +2920,7 @@ class GraphicsThreadingModel:
     """This represents the user's specification of how a particular frame is
     handled by the various threads.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, model: str = ...) -> None:
@@ -3009,6 +3020,7 @@ class StereoDisplayRegion(DisplayRegion):
     eyes together.  To access the left or right eyes independently, use
     get_left_eye() and get_right_eye().
     """
+
     @property
     def left_eye(self) -> DisplayRegion: ...
     @property
@@ -3024,6 +3036,7 @@ class FrameBufferProperties:
     """A container for the various kinds of properties we might ask to have on a
     graphics frameBuffer before we create a GSG.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     depth_bits: int
     """Individual queries."""
@@ -3258,6 +3271,7 @@ class GraphicsWindowInputDevice(InputDevice):
     that is associated with a particular window.  It collects mouse and
     keyboard events from the windowing system while the window is in focus.
     """
+
     def button_down(self, button: ButtonHandle, time: float = ...) -> None:
         """The following interface is for the various kinds of GraphicsWindows to
         record the data incoming on the device.
@@ -3326,6 +3340,7 @@ class GraphicsWindowInputDevice(InputDevice):
 
 class TouchInfo:
     """Stores information for a single touch event."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     TIF_move: Final[Literal[1]]
     TIFMove: Final[Literal[1]]
@@ -3348,6 +3363,7 @@ class GraphicsWindowProcCallbackData(CallbackData):
     initiated from from an implementation of the GraphicsWindowProc class, such
     as PythonGraphicsWindowProc.
     """
+
     def get_hwnd(self) -> int:
         """Returns the Windows proc hwnd parameter."""
     def get_msg(self) -> int:
@@ -3374,6 +3390,7 @@ class GraphicsWindow(GraphicsOutput):
     """A window, fullscreen or on a desktop, into which a graphics device sends
     its output for interactive display.
     """
+
     window_event: str
     close_request_event: str
     unexposed_draw: bool
@@ -3700,6 +3717,7 @@ class DisplayRegionCullCallbackData(CallbackData):
     """This specialization on CallbackData is passed when the callback is
     initiated from the cull traversal, for a DisplayRegion.
     """
+
     def get_scene_setup(self) -> SceneSetup:
         """Returns a pointer to the SceneSetup object, which contains information
         about the camera and such.
@@ -3710,6 +3728,7 @@ class DisplayRegionDrawCallbackData(CallbackData):
     """This specialization on CallbackData is passed when the callback is
     initiated from the draw traversal, for a DisplayRegion.
     """
+
     def get_cull_result(self) -> CullResult:
         """Returns a pointer to the CullResult, the list of CullableObjects that
         should be drawn in this DisplayRegion.
@@ -3723,6 +3742,7 @@ class DisplayRegionDrawCallbackData(CallbackData):
 
 class DisplaySearchParameters:
     """Parameters used for searching display capabilities."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: DisplaySearchParameters = ...) -> None: ...
     def set_minimum_width(self, minimum_width: int) -> None: ...
@@ -3742,6 +3762,7 @@ class GraphicsBuffer(GraphicsOutput):
     """An offscreen buffer for rendering into.  This is similar in function to a
     GraphicsWindow, except that the output is not visible to the user.
     """
+
     def set_size(self, x: int, y: int) -> None:
         """This is called by the GraphicsEngine to request that the buffer resize
         itself.  Although calls to get the size will return the new value, much of
@@ -3755,6 +3776,7 @@ class GraphicsPipeSelection:
     creation.  Normally there is one default interactive GraphicsPipe, and
     possibly other types available as well.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def pipe_types(self) -> Sequence[TypeHandle]: ...
@@ -3834,6 +3856,7 @@ class MouseAndKeyboard(DataNode):
     the system, you must attach an EventThrower to the MouseAndKeyboard object;
     otherwise, the events will be discarded.
     """
+
     @overload
     def __init__(self, __param0: MouseAndKeyboard) -> None: ...
     @overload
@@ -3852,6 +3875,7 @@ class NativeWindowHandle(WindowHandle):
     This class exists for name scoping only.  Don't use the constructor
     directly; use one of the make_* methods.
     """
+
     @staticmethod
     def make_int(window: int) -> WindowHandle:
         """Constructs a new WindowHandle with an int value, which is understood to be
@@ -3891,6 +3915,7 @@ class ParasiteBuffer(GraphicsOutput):
     copy to texture).  It is also the only way to render to a texture on API's
     that do not support offscreen rendering.
     """
+
     def set_size(self, x: int, y: int) -> None:
         """This is called by the GraphicsEngine to request that the buffer resize
         itself.  Although calls to get the size will return the new value, much of

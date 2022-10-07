@@ -33,6 +33,7 @@ class AnimGroup(TypedWritableReferenceCount, Namable):
     hierarchy of AnimChannels.  The root of the hierarchy must be an
     AnimBundle.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def children(self) -> Sequence[AnimGroup]: ...
@@ -88,6 +89,7 @@ class AnimBundle(AnimGroup):
     number of frames of all the channels in the hierarchy (which must all
     match).
     """
+
     @property
     def base_frame_rate(self) -> float: ...
     @property
@@ -120,6 +122,7 @@ class AnimBundleNode(PandaNode):
     PartBundleNode, it exists solely to make it easy to store AnimBundles in
     the scene graph.
     """
+
     @property
     def bundle(self) -> AnimBundle: ...
     def __init__(self, name: str, bundle: AnimBundle) -> None:
@@ -141,6 +144,7 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     """This is the base class for PartRoot and MovingPart.  It defines a hierarchy
     of MovingParts.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     HMF_ok_part_extra: Final[Literal[1]]
     HMFOkPartExtra: Final[Literal[1]]
@@ -266,6 +270,7 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
     animation: whether started, stopped, or looping, and the current frame
     number and play rate.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedReferenceCount(self) -> TypedReferenceCount: ...
     def upcast_to_AnimInterface(self) -> AnimInterface: ...
@@ -350,6 +355,7 @@ class AnimChannelBase(AnimGroup):
     a table read from an egg file (but possibly computed or generated in any
     other way).
     """
+
     def get_type(self) -> TypeHandle: ...
     getType = get_type
 
@@ -395,6 +401,7 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
     the programmer should call set_value_node() to indicate the node whose
     transform will be copied to the joint each frame.
     """
+
     value_node: PandaNode
     def set_value(self, value: Mat4f | TransformState) -> None:
         """`(self, value: LMatrix4)`:
@@ -425,6 +432,7 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     of nine sub-tables, each representing one component of the transform:
     scale, rotate, translate.
     """
+
     tables: Mapping[Any, CPTA_stdfloat]
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     @staticmethod
@@ -464,6 +472,7 @@ class AnimChannelScalarDynamic(AnimChannel_ACScalarSwitchType):
     the programmer should call set_value_node() to indicate the node whose X
     component will be copied to the scalar each frame.
     """
+
     value: float
     value_node: PandaNode
     def set_value(self, value: float) -> None:
@@ -482,6 +491,7 @@ class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
     """An animation channel that issues a scalar each frame, read from a table
     such as might have been read from an egg file.
     """
+
     table: CPTA_stdfloat
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     def set_table(self, table: ConstPointerToArray_float | PointerToArray_float) -> None:
@@ -506,6 +516,7 @@ class AnimControlCollection:
     name will decrement the previous control's reference count (and possibly
     delete it, unbinding its animation).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: AnimControlCollection = ...) -> None:
         """Returns the AnimControl associated with the given name, or NULL if no such
@@ -627,6 +638,7 @@ class AnimPreloadTable(CopyOnWriteObject):
 
     This table is normally built by an offline tool, such as egg-optchar.
     """
+
     def __init__(self) -> None: ...
     def get_num_anims(self) -> int:
         """Returns the number of animation records in the table."""
@@ -675,6 +687,7 @@ class PartSubset:
     PartBundle::bind_anim() operation.  Only those part names within the subset
     will be included in the bind.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: PartSubset = ...) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
@@ -722,6 +735,7 @@ class BindAnimRequest(ModelLoadRequest):
     """This class object manages an asynchronous load-and-bind animation request,
     as issued through PartBundle::load_bind_anim().
     """
+
     @overload
     def __init__(self, __param0: BindAnimRequest) -> None: ...
     @overload
@@ -731,6 +745,7 @@ class PartBundle(PartGroup):
     """This is the root of a MovingPart hierarchy.  It defines the hierarchy of
     moving parts that make up an animatable object.
     """
+
     blend_type: _PartBundle_BlendType
     anim_blend_flag: bool
     frame_blend_flag: bool
@@ -985,6 +1000,7 @@ class PartBundleNode(PandaNode):
     it is also the base class of the Character node type, which adds additional
     functionality.)
     """
+
     @property
     def bundles(self) -> Sequence[PartBundle]: ...
     @property
@@ -1020,6 +1036,7 @@ class PartBundleHandle(ReferenceCount):
     store a list of PartBundleHandles instead of on actual PartBundles, so that
     it will be immune to changes from these flatten operations.
     """
+
     bundle: PartBundle
     @overload
     def __init__(self, bundle: PartBundle) -> None: ...
@@ -1040,6 +1057,7 @@ class MovingPartBase(PartGroup):
     MovingPartBase does not have a particular value type.  See the derived
     template class, MovingPart, for this.
     """
+
     def get_max_bound(self) -> int:
         """Returns the number of channels that might be bound to this PartGroup.  This
         might not be the actual number of channels, since there might be holes in

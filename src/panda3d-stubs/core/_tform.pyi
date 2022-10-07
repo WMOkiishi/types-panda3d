@@ -40,6 +40,7 @@ class ButtonThrower(DataNode):
     MouseAndKeyboard device.  It simply takes each button it finds and throws a
     corresponding event based on the button name via the throw_event() call.
     """
+
     button_down_event: str
     button_up_event: str
     button_repeat_event: str
@@ -324,6 +325,7 @@ class MouseInterfaceNode(DataNode):
     It collects together some common interface; in particular, the
     require_button() and related methods.
     """
+
     def __init__(self, __param0: MouseInterfaceNode) -> None: ...
     def require_button(self, button: ButtonHandle, is_down: bool) -> None:
         """Indicates that the indicated button must be in the required state (either
@@ -348,6 +350,7 @@ class DriveInterface(MouseInterfaceNode):
     matrix in response to mouse input.  The basic motion is on a horizontal
     plane, as if driving a vehicle.
     """
+
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload
@@ -567,6 +570,7 @@ class MouseSubregion(MouseInterfaceNode):
     DisplayRegion within your window, you end up with a virtual mouse within
     your DisplayRegion.
     """
+
     @overload
     def __init__(self, __param0: MouseSubregion) -> None: ...
     @overload
@@ -603,6 +607,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     """This is the class that defines a rectangular region on the screen for the
     MouseWatcher.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     frame: LVecBase4
     sort: int
@@ -697,6 +702,7 @@ class MouseWatcherBase:
     MouseWatcher, and exists so that we don't have to make MouseWatcher inherit
     from ReferenceCount more than once.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def sorted(self) -> bool: ...
@@ -771,6 +777,7 @@ class MouseWatcherGroup(MouseWatcherBase, ReferenceCount):
     a group.  The implementation for this is in MouseWatcherBase; this class
     exists so that we can inherit from ReferenceCount.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_MouseWatcherBase(self) -> MouseWatcherBase: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
@@ -802,6 +809,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     trail log duration in the MouseWatcher.  Otherwise, the trail log will be
     empty.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_DataNode(self) -> DataNode: ...
@@ -1199,6 +1207,7 @@ class MouseWatcherParameter:
     """This is sent along as a parameter to most events generated for a region to
     indicate the mouse and button state for the event.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def has_button(self) -> bool:
         """Returns true if this parameter has an associated mouse or keyboard button,
@@ -1276,6 +1285,7 @@ class Trackball(MouseInterfaceNode):
     parent a Transform2SG node under it to actually transform objects (or
     cameras) in the world.
     """
+
     CM_default: Final[Literal[0]]
     CMDefault: Final[Literal[0]]
     CM_truck: Final[Literal[1]]
@@ -1424,6 +1434,7 @@ class Transform2SG(DataNode):
     output: none, but applies the matrix as the transform transition for a
     given arc of the scene graph.
     """
+
     @overload
     def __init__(self, __param0: Transform2SG) -> None: ...
     @overload

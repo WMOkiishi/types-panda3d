@@ -20,6 +20,7 @@ class CInterval(TypedReferenceCount):
     C++ will inherit from this class; Intervals that must be implemented in
     Python will inherit from the similar Python class.
     """
+
     done_event: str
     t: float
     auto_pause: bool
@@ -319,6 +320,7 @@ class CIntervalManager:
     It is also possible to create multiple IntervalManager objects for special
     needs.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def set_event_queue(self, event_queue: EventQueue) -> None:
@@ -426,6 +428,7 @@ class CConstraintInterval(CInterval):
     """The base class for a family of intervals that constrain some property to a
     value over time.
     """
+
     bogus_variable: bool
     def __init__(self, __param0: CConstraintInterval) -> None: ...
 
@@ -433,6 +436,7 @@ class CConstrainHprInterval(CConstraintInterval):
     """A constraint interval that will constrain the orientation of one node to
     the orientation of another.
     """
+
     @overload
     def __init__(self, __param0: CConstrainHprInterval) -> None:
         """Constructs a constraint interval that will constrain the orientation of one
@@ -455,6 +459,7 @@ class CConstrainPosHprInterval(CConstraintInterval):
     """A constraint interval that will constrain the position and orientation of
     one node to the position and orientation of another.
     """
+
     @overload
     def __init__(self, __param0: CConstrainPosHprInterval) -> None:
         """Constructs a constraint interval that will constrain the position and
@@ -478,6 +483,7 @@ class CConstrainPosInterval(CConstraintInterval):
     """A constraint interval that will constrain the position of one node to the
     position of another.
     """
+
     @overload
     def __init__(self, __param0: CConstrainPosInterval) -> None:
         """Constructs a constraint interval that will constrain the position of one
@@ -500,6 +506,7 @@ class CConstrainTransformInterval(CConstraintInterval):
     """A constraint interval that will constrain the transform of one node to the
     transform of another.
     """
+
     @overload
     def __init__(self, __param0: CConstrainTransformInterval) -> None:
         """Constructs a constraint interval that will constrain the transform of one
@@ -523,6 +530,7 @@ class CLerpInterval(CInterval):
     """The base class for a family of intervals that linearly interpolate one or
     more numeric values over time.
     """
+
     BT_no_blend: Final[Literal[0]]
     BTNoBlend: Final[Literal[0]]
     BT_ease_in: Final[Literal[1]]
@@ -555,6 +563,7 @@ class CLerpAnimEffectInterval(CLerpInterval):
     CLerpAnimEffectInterval to adjust the degree to which each animation
     affects the actor.
     """
+
     @overload
     def __init__(self, __param0: CLerpAnimEffectInterval) -> None: ...
     @overload
@@ -573,6 +582,7 @@ class CLerpNodePathInterval(CLerpInterval):
     """An interval that lerps one or more properties (like pos, hpr, etc.) on a
     NodePath over time.
     """
+
     @overload
     def __init__(self, __param0: CLerpNodePathInterval) -> None:
         """Constructs a lerp interval that will lerp some properties on the indicated
@@ -812,6 +822,7 @@ class CMetaInterval(CInterval):
     own begin and end times.  Some of them may overlap and some of them may
     not.
     """
+
     RS_previous_end: Final[Literal[0]]
     RSPreviousEnd: Final[Literal[0]]
     RS_previous_begin: Final[Literal[1]]
@@ -966,6 +977,7 @@ class CMetaInterval(CInterval):
 
 class HideInterval(CInterval):
     """An interval that calls NodePath::hide()."""
+
     @overload
     def __init__(self, __param0: HideInterval) -> None: ...
     @overload
@@ -992,6 +1004,7 @@ class NoBlendType(LerpBlendType):
 
 class ShowInterval(CInterval):
     """An interval that calls NodePath::show()."""
+
     @overload
     def __init__(self, __param0: ShowInterval) -> None: ...
     @overload
@@ -1001,6 +1014,7 @@ class WaitInterval(CInterval):
     """This interval does absolutely nothing, and is mainly useful for marking
     time between other intervals within a sequence.
     """
+
     @overload
     def __init__(self, __param0: WaitInterval) -> None:
         """All Wait intervals have the same name.  No one really cares if their names

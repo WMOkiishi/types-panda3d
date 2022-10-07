@@ -22,6 +22,7 @@ class CharacterJoint(MovingPartMatrix):
     """This represents one joint of the character's animation, containing an
     animating transform matrix.
     """
+
     def __init__(self, character: Character, root: PartBundle, parent: PartGroup, name: str, default_value: Mat4f) -> None: ...
     def add_net_transform(self, node: PandaNode) -> bool:
         """Adds the indicated node to the list of nodes that will be updated each
@@ -122,12 +123,14 @@ class CharacterSlider(MovingPartScalar):
     floating-point value that animates generally between 0 and 1, that controls
     the effects of one or more morphs within the character.
     """
+
     def __init__(self, parent: PartGroup, name: str, default_value: float = ...) -> None: ...
 
 class CharacterVertexSlider(VertexSlider):
     """This is a specialization on VertexSlider that returns the slider value
     associated with a particular CharacterSlider object.
     """
+
     def __init__(self, char_slider: CharacterSlider) -> None:
         """Constructs a new object that converts vertices from the indicated joint's
         coordinate space, into the other indicated joint's space.
@@ -148,6 +151,7 @@ class JointVertexTransform(VertexTransform):
     Multiple combinations of these with different weights are used to implement
     soft-skinned vertices for an animated character.
     """
+
     def __init__(self, joint: CharacterJoint) -> None:
         """Constructs a new object that converts vertices from the indicated joint's
         coordinate space, into the other indicated joint's space.
@@ -160,6 +164,7 @@ class Character(PartBundleNode):
     """An animated character, with skeleton-morph animation and either soft-
     skinned or hard-skinned vertices.
     """
+
     @overload
     def __init__(self, __param0: Character) -> None: ...
     @overload
@@ -270,6 +275,7 @@ class Character(PartBundleNode):
 
 class CharacterJointBundle(PartBundle):
     """The collection of all the joints and sliders in the character."""
+
     def __init__(self, name: str = ...) -> None:
         """Normally, there is no need to create a CharacterJointBundle directly.  The
         Character node will automatically create one for itself.
@@ -287,6 +293,7 @@ class CharacterJointEffect(RenderEffect):
     relative transform of the affected node will automatically force the
     indicated character to be updated first.
     """
+
     @staticmethod
     def make(character: Character) -> RenderEffect:
         """Constructs a new CharacterJointEffect object that references the indicated

@@ -16,6 +16,7 @@ class ARToolKit:
 
     This class is a wrapper around the ARToolKit library.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ARToolKit) -> None: ...
     @staticmethod
@@ -56,6 +57,7 @@ class WebcamVideo(MovieVideo):
     """Allows you to open a webcam or other video capture device as a video
     stream.
     """
+
     @property
     def options(self) -> Sequence[WebcamVideo]: ...
     @staticmethod

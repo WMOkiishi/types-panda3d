@@ -4,6 +4,7 @@ class VrpnClient(ClientBase):
     """A specific ClientBase that connects to a VRPN server and records
     information on the connected VRPN devices.
     """
+
     def __init__(self, server_name: str) -> None: ...
     def get_server_name(self) -> str:
         """Returns the name of the server as passed to the VrpnClient constructor."""

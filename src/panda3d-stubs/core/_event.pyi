@@ -30,6 +30,7 @@ class EventParameter:
     EventParameter constructors transparently use the ParamValue template class
     from paramValue.h.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, value: float | str = ...) -> None:
@@ -167,6 +168,7 @@ class AsyncFuture(TypedReferenceCount):
 
     @since 1.10.0
     """
+
     done_event: str
     def __init__(self, __param0: AsyncFuture = ...) -> None:
         """Initializes the future in the pending state."""
@@ -217,6 +219,7 @@ class AsyncTask(AsyncFuture, Namable):
     Normally, you would subclass from this class, and override do_task(), to
     define the functionality you wish to have the task perform.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     """The name of this task."""
@@ -479,6 +482,7 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
     create only one AsyncTaskChain, which runs in the main thread.  This is a
     common configuration.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     clock: ClockObject
     @property
@@ -638,6 +642,7 @@ class AsyncTaskCollection:
 
     TODO: None of this is thread-safe yet.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: AsyncTaskCollection = ...) -> None: ...
     def __getitem__(self, index: int) -> AsyncTask:
@@ -732,6 +737,7 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
     together, but tasks with different priority values might be (if there is
     more than one thread).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedReferenceCount(self) -> TypedReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
@@ -896,6 +902,7 @@ class AsyncTaskPause(AsyncTask):
     specified number of seconds and then finish.  It's intended to be used
     within an AsyncTaskSequence.
     """
+
     @overload
     def __init__(self, __param0: AsyncTaskPause) -> None: ...
     @overload
@@ -910,6 +917,7 @@ class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
     arbitrary point in the sequence, you can construct a task sequence whose
     duration changes during playback.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AsyncTaskSequence) -> None: ...
@@ -961,6 +969,7 @@ class ButtonEvent:
     This API should not be considered stable and may change in a future version
     of Panda3D.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_down: Final[Literal[0]]
     TDown: Final[Literal[0]]
@@ -998,6 +1007,7 @@ class ButtonEventList(ParamValueBase):
     usually used only in the data graph, to transmit the recent button presses,
     but it may be used anywhere a list of ButtonEvents is desired.
     """
+
     @property
     def events(self) -> Sequence[ButtonEvent]: ...
     def __init__(self, copy: ButtonEventList = ...) -> None: ...
@@ -1035,6 +1045,7 @@ class Event(TypedReferenceCount):
     to get its name the Python code.  Now it just copies the Namable interface
     in.
     """
+
     name: str
     @property
     def parameters(self) -> Sequence[EventParameter]: ...
@@ -1075,6 +1086,7 @@ class EventHandler(TypedObject):
     entirely by the scripting language, e.g.  via Scheme hooks or the messenger
     in Python.
     """
+
     def __init__(self, ev_queue: EventQueue) -> None: ...
     def get_future(self, event_name: str) -> AsyncFuture:
         """Returns a pending future that will be marked as done when the event is next
@@ -1103,6 +1115,7 @@ class EventQueue:
     queue; eventually, they will be extracted out again by an EventHandler and
     processed.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def queue_event(self, event: Event) -> None: ...
@@ -1128,6 +1141,7 @@ class PointerEventList(ParamValueBase):
     usually used only in the data graph, to transmit the recent pointer
     presses, but it may be used anywhere a list of PointerEvents is desired.
     """
+
     def __init__(self) -> None: ...
     def get_num_events(self) -> int:
         """Returns the number of events in the list."""
@@ -1211,6 +1225,7 @@ class PythonTask(AsyncTask):
     """This class exists to allow association of a Python function or coroutine
     with the AsyncTaskManager.
     """
+
     delay_time: float
     """The delay value that has been set on this task, if any, or None."""
     delayTime: float

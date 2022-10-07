@@ -14,6 +14,7 @@ class Thread(TypedReferenceCount, Namable):
     object will automatically be destructed if no other pointers are
     referencing it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     pipeline_stage: int
     @property
@@ -256,6 +257,7 @@ class MutexDirect:
     underlying implementation layer.  It doesn't perform any debugging
     operations.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self) -> None:
         """Grabs the mutex if it is available.  If it is not available, blocks until
@@ -315,6 +317,7 @@ class ConditionVarDirect:
     A condition variable is associated with a single mutex, and several
     condition variables may share the same mutex.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
@@ -382,6 +385,7 @@ class ConditionVarFullDirect:
     A condition variable is associated with a single mutex, and several
     condition variables may share the same mutex.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
@@ -455,6 +459,7 @@ class ReMutexDirect:
     underlying implementation layer.  It doesn't perform any debugging
     operations.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self, current_thread: Thread = ...) -> None:
         """`(self)`:
@@ -531,6 +536,7 @@ class LightMutexDirect:
     underlying implementation layer.  It doesn't perform any debugging
     operations.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self) -> None:
         """Grabs the lightMutex if it is available.  If it is not available, blocks
@@ -582,6 +588,7 @@ class LightReMutexDirect:
     underlying implementation layer.  It doesn't perform any debugging
     operations.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self, current_thread: Thread = ...) -> None:
         """`(self)`:
@@ -657,6 +664,7 @@ class Semaphore:
     never go below zero; when acquire() finds that it is zero, it blocks,
     waiting until some other thread calls release().
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, initial_count: int = ...) -> None: ...
     def acquire(self) -> None:
@@ -686,6 +694,7 @@ class PythonThread(Thread):
     the Python level.  It will spawn a thread that executes an arbitrary Python
     functor.
     """
+
     args = ...
     def __init__(self, function, args, name: str, sync_name: str) -> None: ...
     def join(self): ...

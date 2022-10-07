@@ -137,6 +137,7 @@ class PGItem(PandaNode):
     The PGItem node must be parented to the scene graph somewhere beneath a
     PGTop node in order for this behavior to work.
     """
+
     def set_name(self, name: str) -> None: ...
     @overload
     def set_frame(self, frame: Vec4f) -> None:
@@ -453,6 +454,7 @@ class PGButton(PGItem):
     normal button object.  It keeps track of its own state, and handles mouse
     events sensibly.
     """
+
     S_ready: Final[Literal[0]]
     SReady: Final[Literal[0]]
     S_depressed: Final[Literal[1]]
@@ -524,6 +526,7 @@ class PGTop(PandaNode):
     each node within the MouseWatcher and forces everything to render in a
     depth-first, left-to-right order, appropriate for 2-d objects.
     """
+
     def set_mouse_watcher(self, watcher: MouseWatcher) -> None:
         """Sets the MouseWatcher pointer that the PGTop object registers its PG items
         with.  This must be set before the PG items are active.
@@ -570,6 +573,7 @@ class PGEntry(PGItem):
     setters, which use whatever encoding method is specified by the associated
     TextNode.
     """
+
     S_focus: Final[Literal[0]]
     SFocus: Final[Literal[0]]
     S_no_focus: Final[Literal[1]]
@@ -889,6 +893,7 @@ class PGMouseWatcherParameter(TypedWritableReferenceCount, MouseWatcherParameter
     elements to events for the gui system, and also inherits from
     TypedWritableReferenceCount so we can attach this thing to an event.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: PGMouseWatcherParameter) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
@@ -905,6 +910,7 @@ class PGMouseWatcherBackground(MouseWatcherRegion):
     and is never active, but just quietly listens for keypresses and sends them
     to all the PGItems with background focus.
     """
+
     def __init__(self, __param0: PGMouseWatcherBackground = ...) -> None: ...
 
 class PGVirtualFrame(PGItem):
@@ -926,6 +932,7 @@ class PGVirtualFrame(PGItem):
     See PGScrollFrame for a specialization of this class that handles the
     traditional scrolling canvas, with scroll bars.
     """
+
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float) -> None:
         """Creates a PGVirtualFrame with the indicated dimensions."""
@@ -978,6 +985,7 @@ class PGSliderBar(PGItem):
     This is used as an implementation for both DirectSlider and for
     DirectScrollBar.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGItem(self) -> PGItem: ...
@@ -1184,6 +1192,7 @@ class PGScrollFrame(PGVirtualFrame):
     scroll bars, and restricts the virtual transform to translate only (no
     scale or rotate).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGVirtualFrame(self) -> PGVirtualFrame: ...
@@ -1289,6 +1298,7 @@ class PGWaitBar(PGItem):
     left to right to indicate a slow process gradually completing, like a
     traditional "wait, loading" bar.
     """
+
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float, range: float) -> None:
         """Creates a PGWaitBar with the indicated dimensions, with the indicated

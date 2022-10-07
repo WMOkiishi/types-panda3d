@@ -29,6 +29,7 @@ class GPUCommand:
       It has a command type, which tells the GPU what to do once it recieved this
       "packet". It stores a limited amount of floating point components.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     CMD_invalid: Final[Literal[0]]
     CMDInvalid: Final[Literal[0]]
@@ -163,6 +164,7 @@ class GPUCommandList:
     @details This is a class to store a list of GPUCommands. It provides
       functionality to only provide the a given amount of commands at one time.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_commands(self) -> int: ...
@@ -207,6 +209,7 @@ class IESDataset:
       and horizontal angles, as well as a set of candela values, which then are
       lineary interpolated onto a 2D LUT Texture.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: IESDataset = ...) -> None:
         """@brief Constructs a new empty dataset.
@@ -252,6 +255,7 @@ class RPLight(ReferenceCount):
       stores common properties, and provides methods to modify these.
       It also defines some interface functions which subclasses have to implement.
     """
+
     pos: LVecBase3
     color: LVecBase3
     energy: float
@@ -475,6 +479,7 @@ class ShadowAtlas:
     @details This class manages the shadow atlas. It handles finding and reserving
       space for new shadow maps.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_used_tiles(self) -> int: ...
@@ -526,6 +531,7 @@ class TagStateManager:
       The Manager also stores a list of all cameras used in the different stages,
       to keep track of the states used and to be able to attach new states.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, main_cam_node: NodePath) -> None:
@@ -727,6 +733,7 @@ class InternalLightManager:
       the light and shadow slots, and also communicates with the GPU with the
       GPUCommandQueue to store light and shadow source data.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     shadow_manager: ShadowManager
     @property
@@ -887,6 +894,7 @@ class RPPointLight(RPLight):
       radius. Checkout the RenderPipeline documentation for more information
       about this type of light.
     """
+
     radius: float
     inner_radius: float
     def __init__(self) -> None:
@@ -956,6 +964,7 @@ class PSSMCameraRig:
       To understand the functionality of this class, a detailed knowledge of the
       PSSM algorithm is helpful.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: PSSMCameraRig) -> None:
@@ -1141,6 +1150,7 @@ class RPSpotLight(RPLight):
       direction and FoV. Checkout the RenderPipeline documentation for more
       information about this type of light.
     """
+
     radius: float
     fov: float
     direction: LVecBase3

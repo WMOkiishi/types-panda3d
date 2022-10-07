@@ -6,6 +6,7 @@ class Socket_Address:
     """A simple place to store and manipulate tcp and port address for
     communication layer
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, port: int = ...) -> None:
@@ -80,6 +81,7 @@ class Socket_IP(TypedObject):
     |                       |                           | SocketTCP
     SocketTCP_Listen    SocketUDP_Incoming   SocketUDP_OutBound
     """
+
     def __init__(self, _in: int = ...) -> None:
         """`(self)`:
         Def Constructor
@@ -127,6 +129,7 @@ class Socket_TCP(Socket_IP):
     by itself but it does hide some of the platform differences from machine to
     machine
     """
+
     def __init__(self, __param0: int = ...) -> None: ...
     def SetNoDelay(self, flag: bool = ...) -> int:
         """Disable Nagle algorithm.  Don't delay send to coalesce packets"""
@@ -160,6 +163,7 @@ class Socket_TCP(Socket_IP):
 
 class Socket_TCP_Listen(Socket_IP):
     """Base functionality for a TCP rendezvous socket"""
+
     def __init__(self) -> None: ...
     @overload
     def OpenForListen(self, address: Socket_Address, backlog_size: int = ...) -> bool:
@@ -170,6 +174,7 @@ class Socket_TCP_Listen(Socket_IP):
 
 class Socket_UDP_Incoming(Socket_IP):
     """Base functionality for a UDP Reader"""
+
     def __init__(self) -> None: ...
     @overload
     def OpenForInput(self, address: Socket_Address) -> bool:
@@ -187,6 +192,7 @@ class Socket_UDP_Incoming(Socket_IP):
 
 class Socket_UDP_Outgoing(Socket_IP):
     """Base functionality for a UDP sending socket"""
+
     def __init__(self) -> None: ...
     def InitToAddress(self, address: Socket_Address) -> bool:
         """Connects the Socket to a specified address"""
@@ -223,6 +229,7 @@ class Buffered_DatagramConnection(Socket_TCP):
     trying to get a active connect open 3. Socket is open and  writable.. (
     Fully powered up )...
     """
+
     def __init__(self, rbufsize: int, wbufsize: int, write_flush_point: int) -> None: ...
     def GetMessage(self, val: Datagram) -> bool:
         """Reads a message.  Returns false on failure."""
@@ -248,6 +255,7 @@ class Socket_UDP(Socket_UDP_Incoming):
     duplicates code from Socket_UDP_Outgoing, to avoid the problems of multiple
     inheritance.
     """
+
     def InitToAddress(self, address: Socket_Address) -> bool:
         """Connects the socket to a Specified address"""
     def Send(self, data: str) -> bool:

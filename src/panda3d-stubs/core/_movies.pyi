@@ -24,6 +24,7 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     difference between a filename and a file handle.  The MovieAudio just
     indicates a particular movie.  The MovieAudioCursor is what allows access.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def filename(self) -> Filename: ...
@@ -60,6 +61,7 @@ class FlacAudio(MovieAudio):
 
     @since 1.10.0
     """
+
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
@@ -80,6 +82,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
     file at the same time, as long as they use separate MovieAudioCursor
     objects.
     """
+
     @overload
     def __init__(self, src: MovieAudio) -> None:
         """This constructor returns a null audio stream --- a stream of total silence,
@@ -201,6 +204,7 @@ class FlacAudioCursor(MovieAudioCursor):
     @see FlacAudio
     @since 1.10.0
     """
+
     @overload
     def __init__(self, __param0: FlacAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
@@ -218,6 +222,7 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
     difference between a filename and a file handle.  The MovieVideo just
     indicates a particular movie.  The MovieVideoCursor is what allows access.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def filename(self) -> Filename: ...
@@ -260,6 +265,7 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
 
 class InkblotVideo(MovieVideo):
     """A cellular automaton that generates an amusing pattern of swirling colors."""
+
     @overload
     def __init__(self, __param0: InkblotVideo) -> None:
         """xxx"""
@@ -416,6 +422,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
 
 class InkblotVideoCursor(MovieVideoCursor):
     """A cellular automaton that generates an amusing pattern of swirling colors."""
+
     @overload
     def __init__(self, src: InkblotVideo) -> None:
         """xxx"""
@@ -426,6 +433,7 @@ class MicrophoneAudio(MovieAudio):
     """Class MicrophoneAudio provides the means to read raw audio samples from a
     microphone.
     """
+
     @property
     def options(self) -> Sequence[MicrophoneAudio]: ...
     @property
@@ -458,6 +466,7 @@ class OpusAudio(MovieAudio):
 
     @since 1.10.0
     """
+
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
@@ -474,6 +483,7 @@ class OpusAudioCursor(MovieAudioCursor):
     @see OpusAudio
     @since 1.10.0
     """
+
     @overload
     def __init__(self, __param0: OpusAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
@@ -489,6 +499,7 @@ class UserDataAudio(MovieAudio):
     (word); Example for stereo: 1.word = 1.channel,2.word = 2.channel, 3.word =
     1.channel,4.word = 2.channel, etc.
     """
+
     @overload
     def __init__(self, __param0: UserDataAudio) -> None:
         """This constructor returns a UserDataAudio --- a means to supply raw audio
@@ -518,6 +529,7 @@ class UserDataAudioCursor(MovieAudioCursor):
     """A UserDataAudioCursor is a means to manually supply a sequence of raw audio
     samples.
     """
+
     @overload
     def __init__(self, src: UserDataAudio) -> None: ...
     @overload
@@ -527,6 +539,7 @@ class VorbisAudio(MovieAudio):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
     Vorbis audio files.
     """
+
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
@@ -540,6 +553,7 @@ class VorbisAudioCursor(MovieAudioCursor):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
     Vorbis audio files.
     """
+
     @overload
     def __init__(self, __param0: VorbisAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
@@ -552,6 +566,7 @@ class WavAudio(MovieAudio):
     """A native PCM .wav loader.  Supported formats are linear PCM, IEEE float,
     A-law and mu-law.
     """
+
     @overload
     def __init__(self, name: Filepath) -> None:
         """xxx"""
@@ -565,6 +580,7 @@ class WavAudioCursor(MovieAudioCursor):
     """Used for reading PCM .wav files.  Supported formats are linear PCM, IEEE
     float, A-law and mu-law.
     """
+
     @overload
     def __init__(self, __param0: WavAudioCursor) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read

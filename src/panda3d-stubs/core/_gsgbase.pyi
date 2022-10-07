@@ -2,6 +2,7 @@ from panda3d.core import TypedWritableReferenceCount
 
 class GraphicsOutputBase(TypedWritableReferenceCount):
     """An abstract base class for GraphicsOutput, for all the usual reasons."""
+
     def set_sort(self, sort: int) -> None: ...
     setSort = set_sort
 
@@ -17,6 +18,7 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
     TypedWritableReferenceCount instead of TypedReferenceCount for that
     convenience.
     """
+
     def get_incomplete_render(self) -> bool: ...
     def get_effective_incomplete_render(self) -> bool: ...
     def prefers_triangle_strips(self) -> bool: ...

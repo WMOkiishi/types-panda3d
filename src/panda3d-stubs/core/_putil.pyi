@@ -109,6 +109,7 @@ class AnimInterface:
     type interface for frame-based animation, such as animated characters.
     This is the base class for AnimControl and other, similar classes.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     play_rate: float
     @property
@@ -270,6 +271,7 @@ class UpdateSeq:
     number 'fresh', which is newer than any other sequence number.  All other
     sequences are numeric and are monotonically increasing.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def seq(self) -> int: ...
@@ -317,6 +319,7 @@ class TypedWritable(TypedObject):
 
     See also TypedObject for detailed instructions.
     """
+
     def __reduce_persist__(self, pickler): ...
     def fillin(self, scan: DatagramIterator, manager: BamReader) -> None:
         """This internal function is intended to be called by each class's
@@ -372,6 +375,7 @@ class TypedWritableReferenceCount(TypedWritable, ReferenceCount):
 
     See also TypedObject for detailed instructions.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedWritable(self) -> TypedWritable: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
@@ -399,6 +403,7 @@ class BamCacheRecord(TypedWritableReferenceCount):
     make the file a cached instance of some other loadable resource.  This
     record contains information needed to test the validity of the cache.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     data: TypedWritable
     @property
@@ -529,6 +534,7 @@ class BamCache:
     too heavily on low-level os-provided file locks (which work poorly with C++
     iostreams).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     active: bool
     cache_models: bool
@@ -716,6 +722,7 @@ class BamEnums:
     """This class exists just to provide scoping for the enums shared by BamReader
     and BamWriter.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     BE_bigendian: Final[Literal[0]]
     BEBigendian: Final[Literal[0]]
@@ -747,6 +754,7 @@ class BamEnums:
 
 class LoaderOptions:
     """Specifies parameters that may be passed to the loader."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     flags: int
     texture_flags: int
@@ -850,6 +858,7 @@ class BamReader(BamEnums):
     See also BamFile, which defines a higher-level interface to read and write
     Bam files on disk.
     """
+
     source: DatagramGenerator
     loader_options: LoaderOptions
     @property
@@ -1005,6 +1014,7 @@ class BamWriter(BamEnums):
     See also BamFile, which defines a higher-level interface to read and write
     Bam files on disk.
     """
+
     target: DatagramSink
     root_node: TypedWritable
     @property
@@ -1490,6 +1500,7 @@ class BitArray:
     This is similar to a BitMask, except it appears to contain an infinite
     number of bits.  You can use it very much as you would use a BitMask.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_bits_per_word: Final[Literal[64]]
     @overload
@@ -1699,6 +1710,7 @@ class ButtonHandle:
     keyboard buttons and mouse buttons (but see KeyboardButton and
     MouseButton).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def index(self) -> int: ...
@@ -1796,6 +1808,7 @@ class ButtonRegistry:
     given system.  There should be only one ButtonRegistry class during the
     lifetime of the application.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ButtonRegistry) -> None: ...
     def get_button(self, name: str) -> ButtonHandle:
@@ -1826,6 +1839,7 @@ class ButtonMap(TypedReferenceCount):
     which may optionally be associated with an appropriate platform-specific
     name for the button.
     """
+
     def __init__(self, __param0: ButtonMap = ...) -> None: ...
     def get_num_buttons(self) -> int:
         """Returns the number of buttons that this button mapping specifies."""
@@ -1877,6 +1891,7 @@ class CallbackObject(TypedReferenceCount):
     handful of specialized callback object types.  You can also subclass it
     yourself to make your own callback handler.
     """
+
     def __init__(self, __param0: CallbackObject) -> None: ...
     def output(self, out: ostream) -> None: ...
     @staticmethod
@@ -1895,6 +1910,7 @@ class CachedTypedWritableReferenceCount(TypedWritableReferenceCount):
     count is automatically included in the overall reference count: calling
     cache_ref() and cache_unref() automatically calls ref() and unref().
     """
+
     @property
     def cache_ref_count(self) -> int: ...
     def get_cache_ref_count(self) -> int:
@@ -1928,6 +1944,7 @@ class CallbackData(TypedObject):
     Specializations of this class will contain the actual data relevant to each
     callback type.
     """
+
     def output(self, out: ostream) -> None: ...
     def upcall(self) -> None:
         """You should make this call during the callback if you want to continue the
@@ -1938,6 +1955,7 @@ class PythonCallbackObject(CallbackObject):
     """This is a specialization on CallbackObject to allow a callback to directly
     call an arbitrary Python function.  Powerful!  But use with caution.
     """
+
     function: Callable
     @overload
     def __init__(self, function: Callable = ...) -> None: ...
@@ -1979,6 +1997,7 @@ class ClockObject(ReferenceCount):
     every frame so that its get_frame_time() will return the time for the
     current frame.
     """
+
     mode: _ClockObject_Mode
     frame_time: float
     real_time: float
@@ -2250,6 +2269,7 @@ class CopyOnWriteObject(CachedTypedWritableReferenceCount):
     with a CopyOnWritePointer to provide get_read_pointer() and
     get_write_pointer().
     """
+
     def cache_ref(self) -> None:
         """@see CachedTypedWritableReferenceCount::cache_ref()"""
     def cache_unref(self) -> bool:
@@ -2265,6 +2285,7 @@ class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
     This uses the same format as DatagramInputFile and DatagramOutputFile,
     meaning that Datagram sizes are always stored little-endian.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     data: bytes
     def __init__(self, data: bytes = ...) -> None:
@@ -2285,6 +2306,7 @@ class DatagramInputFile(DatagramGenerator):
     """This class can be used to read a binary file that consists of an arbitrary
     header followed by a number of datagrams.
     """
+
     def __init__(self) -> None: ...
     @overload
     def open(self, file: FileReference) -> bool:
@@ -2313,6 +2335,7 @@ class DatagramOutputFile(DatagramSink):
     """This class can be used to write a binary file that consists of an arbitrary
     header followed by a number of datagrams.
     """
+
     @property
     def stream(self) -> ostream: ...
     def __init__(self) -> None: ...
@@ -2545,6 +2568,7 @@ class GamepadButton:
     """This class is just used as a convenient namespace for grouping all of these
     handy functions that return buttons which map to gamepad buttons.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: GamepadButton = ...) -> None: ...
     @staticmethod
@@ -2635,6 +2659,7 @@ class KeyboardButton:
     """This class is just used as a convenient namespace for grouping all of these
     handy functions that return buttons which map to standard keyboard keys.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: KeyboardButton = ...) -> None: ...
     @staticmethod
@@ -2760,6 +2785,7 @@ class ModifierButtons:
     """This class monitors the state of a number of individual buttons and tracks
     whether each button is known to be down or up.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def buttons(self) -> Sequence[ButtonHandle]: ...
@@ -2874,6 +2900,7 @@ class MouseButton:
     """This class is just used as a convenient namespace for grouping all of these
     handy functions that return buttons which map to standard mouse buttons.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: MouseButton = ...) -> None: ...
     @staticmethod
@@ -2939,6 +2966,7 @@ class PointerData:
     """Holds the data that might be generated by a 2-d pointer input device, such
     as the mouse in the GraphicsWindow.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def x(self) -> float: ...
@@ -2990,6 +3018,7 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     there does exist a NodePointerTo<> class to maintain the node_ref counters
     automatically.
     """
+
     R_node: Final[Literal[1]]
     RNode: Final[Literal[1]]
     R_cache: Final[Literal[2]]
@@ -3040,6 +3069,7 @@ class SparseArray:
 
     Also, unlike BitArray, the SparseArray can store negative integers.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, _from: BitArray | SparseArray = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -3246,6 +3276,7 @@ class ParamValueBase(TypedWritableReferenceCount):
     """A non-template base class of ParamValue (below), which serves mainly to
     define the placeholder for the virtual output function.
     """
+
     def get_value_type(self) -> TypeHandle:
         """Returns the type of the underlying value."""
     def output(self, out: ostream) -> None: ...
@@ -3255,6 +3286,7 @@ class ParamTypedRefCount(ParamValueBase):
     """A class object for storing specifically objects of type
     TypedReferenceCount, which is different than TypedWritableReferenceCount.
     """
+
     @property
     def value(self) -> TypedReferenceCount: ...
     def __init__(self, value: TypedReferenceCount) -> None: ...
@@ -3410,6 +3442,7 @@ class UniqueIdAllocator:
     would like to kick around other implementation ideas, please contact
     Schuyler.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, min: int = ..., max: int = ...) -> None:

@@ -36,6 +36,7 @@ class CollisionSolid(CopyOnWriteObject):
     subclass for each basic shape of solid, and double-dispatch function calls
     handle the subset of the N*N intersection tests that we care about.
     """
+
     tangible: bool
     respect_effective_normal: bool
     bounds: BoundingVolume
@@ -99,6 +100,7 @@ class CollisionSolid(CopyOnWriteObject):
 
 class CollisionBox(CollisionSolid):
     """A cuboid collision volume or object."""
+
     @property
     def center(self) -> LPoint3: ...
     @property
@@ -156,6 +158,7 @@ class CollisionCapsule(CollisionSolid):
 
     This shape was previously erroneously called CollisionTube.
     """
+
     point_a: LPoint3
     point_b: LPoint3
     radius: float
@@ -188,6 +191,7 @@ class CollisionHandler(TypedReferenceCount):
     CollisionTraverser that is processing collisions in order to specify how to
     dispatch detected collisions.
     """
+
     def __init__(self, __param0: CollisionHandler) -> None: ...
 
 class CollisionNode(PandaNode):
@@ -196,6 +200,7 @@ class CollisionNode(PandaNode):
     will collide with, or an animated object twirling around in the world and
     running into things.
     """
+
     from_collide_mask: CollideMask
     solids: Sequence[CollisionSolid]
     collider_sort: int
@@ -290,6 +295,7 @@ class CollisionTraverser(Namable):
     indicated root, calling the appropriate CollisionHandler for each detected
     collision.
     """
+
     respect_preV_transform: bool
     respect_prev_transform: bool
     recorder: CollisionRecorder
@@ -412,6 +418,7 @@ class CollisionRecorder(TypedObject):
     It is a virtual base class that just provides an interface for recording
     collisions tested and detected each frame.
     """
+
     def output(self, out: ostream) -> None: ...
 
 class CollisionEntry(TypedWritableReferenceCount):
@@ -424,6 +431,7 @@ class CollisionEntry(TypedWritableReferenceCount):
     collision.  It is up to the handler to determine what information is known
     and to do the right thing with it.
     """
+
     t: float
     @property
     def from_solid(self) -> CollisionSolid: ...
@@ -658,6 +666,7 @@ class CollisionFloorMesh(CollisionSolid):
     """This object represents a solid made entirely of triangles, which will only
     be tested again z axis aligned rays
     """
+
     @property
     def vertices(self) -> Sequence[LPoint3]: ...
     @property
@@ -725,6 +734,7 @@ class CollisionHandlerEvent(CollisionHandler):
     moving object or the struck object, or both.  The first parameter of the
     event will be a pointer to the CollisionEntry that triggered it.
     """
+
     @property
     def in_patterns(self) -> Sequence[str]: ...
     @property
@@ -878,6 +888,7 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
     physical effect on their moving bodies: they need to update the nodes'
     positions based on the effects of the collision.
     """
+
     center: NodePath
     def add_collider(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface = ...) -> None:
         """`(self, collider: NodePath, target: NodePath)`:
@@ -942,6 +953,7 @@ class CollisionHandlerFloor(CollisionHandlerPhysical):
     each frame.  It's intended to implement walking around on a floor of
     varying height by casting a ray down from the avatar's head.
     """
+
     offset: float
     reach: float
     max_velocity: float
@@ -981,6 +993,7 @@ class CollisionHandlerPusher(CollisionHandlerPhysical):
     that attempt to move into solid walls.  This is the simplest kind of "real-
     world" collisions you can have.
     """
+
     horizontal: bool
     def __init__(self) -> None: ...
     def set_horizontal(self, flag: bool) -> None: ...
@@ -999,6 +1012,7 @@ class CollisionHandlerGravity(CollisionHandlerPhysical):
     each frame.  It's intended to implement walking around on a floor of
     varying height by casting a ray down from the avatar's head.
     """
+
     offset: float
     reach: float
     velocity: float
@@ -1104,6 +1118,7 @@ class CollisionHandlerHighestEvent(CollisionHandlerEvent):
     moving object or the struck object, or both.  The first parameter of the
     event will be a pointer to the CollisionEntry that triggered it.
     """
+
     def __init__(self, __param0: CollisionHandlerHighestEvent = ...) -> None:
         """The default CollisionHandlerEvent will throw no events.  Its pattern
         strings must first be set via a call to add_in_pattern() and/or
@@ -1116,6 +1131,7 @@ class CollisionHandlerQueue(CollisionHandler):
     then be queried by the calling function.  It's primarily useful when a
     simple intersection test is being made, e.g.  for picking from the window.
     """
+
     @property
     def entries(self) -> Sequence[CollisionEntry]: ...
     def __init__(self, __param0: CollisionHandlerQueue = ...) -> None: ...
@@ -1142,6 +1158,7 @@ class CollisionHandlerQueue(CollisionHandler):
 
 class CollisionSphere(CollisionSolid):
     """A spherical collision volume or object."""
+
     center: LPoint3
     radius: float
     @overload
@@ -1172,6 +1189,7 @@ class CollisionRay(CollisionSolid):
     origin and continues in one direction to infinity, and it has no radius.
     Useful for picking from a window, or for gravity effects.
     """
+
     origin: LPoint3
     direction: LVector3
     @overload
@@ -1222,6 +1240,7 @@ class CollisionLine(CollisionRay):
     """An infinite line, similar to a CollisionRay, except that it extends in both
     directions.  It is, however, directional.
     """
+
     @overload
     def __init__(self) -> None:
         """Creates an invalid line.  This isn't terribly useful; it's expected that
@@ -1241,6 +1260,7 @@ class CollisionParabola(CollisionSolid):
     Think of it as a wire bending from point t1 to point t2 along the path of a
     pre-defined parabola.
     """
+
     parabola: LParabola
     t1: float
     t2: float
@@ -1282,6 +1302,7 @@ class CollisionSegment(CollisionSolid):
     point of the segment is intersecting a solid, the reported intersection
     point is generally the closest on the segment to point A.
     """
+
     point_a: LPoint3
     point_b: LPoint3
     @overload
@@ -1336,6 +1357,7 @@ class CollisionVisualizer(PandaNode, CollisionRecorder):
     It may be parented anywhere in the scene graph where it will be rendered to
     achieve this.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     point_scale: float
     normal_scale: float

@@ -8,6 +8,7 @@ class DataGraphTraverser:
     data from input devices, etc.  See the overview of the data graph in
     dataNode.h.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, current_thread: Thread = ...) -> None: ...
@@ -36,6 +37,7 @@ class DataNode(PandaNode):
     DataNode does not attempt to cycle its data with a PipelineCycler.  The
     data graph is intended to be used only within a single thread.
     """
+
     def write_inputs(self, out: ostream) -> None:
         """Writes to the indicated ostream a list of all the inputs this DataNode
         might expect to receive.

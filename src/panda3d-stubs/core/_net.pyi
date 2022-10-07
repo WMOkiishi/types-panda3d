@@ -38,6 +38,7 @@ class NetAddress:
     """Represents a network address to which UDP packets may be sent or to which a
     TCP socket may be bound.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: NetAddress = ...) -> None:
@@ -105,6 +106,7 @@ class NetAddress:
 
 class Connection(ReferenceCount):
     """Represents a single TCP or UDP socket for input or output."""
+
     def __init__(self, manager: ConnectionManager, socket: Socket_IP) -> None:
         """Creates a connection.  Normally this constructor should not be used
         directly by user code; use one of the methods in ConnectionManager to make
@@ -214,6 +216,7 @@ class ConnectionReader:
     ConnectionListener derives from this class, extending it to accept
     connections on a rendezvous socket rather than read datagrams.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def add_connection(self, connection: Connection) -> bool:
         """Adds a new socket to the list of sockets the ConnectionReader will monitor.
@@ -305,6 +308,7 @@ class NetDatagram(Datagram):
     from a network.  It's different only in that it knows which Connection
     and/or NetAddress it is to be sent to or was received from.
     """
+
     def __init__(self, copy: Datagram = ...) -> None:
         """Constructs an empty datagram."""
     def assign(self, copy: Datagram) -> NetDatagram: ...
@@ -516,6 +520,7 @@ class ConnectionWriter:
     write its datagrams to sockets.  The number of threads is specified at
     construction time and cannot be changed.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int, thread_name: str = ...) -> None:
         """Creates a new ConnectionWriter with the indicated number of threads to
@@ -618,6 +623,7 @@ class DatagramGeneratorNet(DatagramGenerator, ConnectionReader, QueuedReturn_Dat
     via a TCP connection.  If a datagram is not available, get_datagram() will
     block until one is.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None:
         """Creates a new DatagramGeneratorNet with the indicated number of threads to
@@ -661,6 +667,7 @@ class DatagramSinkNet(DatagramSink, ConnectionWriter):
     """This class accepts datagrams one-at-a-time and sends them over the net, via
     a TCP connection.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None:
         """Creates a new DatagramSinkNet with the indicated number of threads to
@@ -698,6 +705,7 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
     """This flavor of ConnectionListener will queue up all of the TCP connections
     it established for later detection by the client code.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_ConnectionListener(self) -> ConnectionListener: ...
@@ -757,6 +765,7 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
     responsibility of the client to call close_connection() on that connection
     to free up its resources.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
     def upcast_to_ConnectionManager(self) -> ConnectionManager: ...
@@ -812,6 +821,7 @@ class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
     useful for client code that doesn't want to deal with threading and is
     willing to poll for datagrams at its convenience.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_ConnectionReader(self) -> ConnectionReader: ...
@@ -862,6 +872,7 @@ class RecentConnectionReader(ConnectionReader):
 
     This class will always create one thread for itself.
     """
+
     def __init__(self, manager: ConnectionManager) -> None: ...
     def data_available(self) -> bool:
         """Returns true if a datagram is available on the queue; call get_data() to

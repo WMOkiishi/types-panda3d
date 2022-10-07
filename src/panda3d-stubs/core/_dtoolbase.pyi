@@ -16,6 +16,7 @@ class NeverFreeMemory:
     since this will help reduce fragmentation problems in the dynamic heap.
     Also, memory allocated from here will exhibit less wasted space.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_total_alloc() -> int:
@@ -51,6 +52,7 @@ class TypeHandle:
     that ancestry of a particular type may be queried, and the type name may be
     retrieved for run-time display.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     MC_singleton: Final[Literal[0]]
     MCSingleton: Final[Literal[0]]
@@ -186,6 +188,7 @@ class TypeRegistry:
     should be migrated to shared memory as soon as shared memory becomes
     available.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def typehandles(self) -> Sequence[TypeHandle]: ...
@@ -389,6 +392,7 @@ class TypedObject:
     }
     @endcode
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def type(self) -> TypeHandle:

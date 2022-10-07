@@ -15,6 +15,7 @@ class ConfigFlags:
     It exists only to provide a convenient name scoping for some enumerated
     values common to both classes.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     VT_undefined: Final[Literal[0]]
     VTUndefined: Final[Literal[0]]
@@ -56,6 +57,7 @@ class ConfigPage:
     it may also represent a list of declarations built up by application code
     and explicitly loaded.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     sort: int
     trust_level: int
@@ -206,6 +208,7 @@ class ConfigDeclaration(ConfigFlags):
     pairing of a string name (actually, a ConfigVariableCore pointer) to a
     string value.
     """
+
     @property
     def page(self) -> ConfigPage: ...
     @property
@@ -331,6 +334,7 @@ class ConfigVariableCore(ConfigFlags):
     make() method, which may return a shared instance.  Once created, these
     objects are never destructed.
     """
+
     value_type: _ConfigFlags_ValueType
     description: str
     default_value: ConfigDeclaration
@@ -534,6 +538,7 @@ class Notify:
     independently enabled or disabled, so that error messages may be squelched
     or respected according to the wishes of the user.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: Notify = ...) -> None: ...
     def set_ostream_ptr(self, ostream_ptr: ostream, delete_later: bool) -> None:
@@ -637,6 +642,7 @@ class ConfigPageManager(ConfigFlags):
     """A global object that maintains the set of ConfigPages everywhere in the
     world, and keeps them in sorted order.
     """
+
     @property
     def search_path(self) -> DSearchPath: ...
     @property
@@ -757,6 +763,7 @@ class ConfigVariableManager:
     ConfigVariableCores) everywhere in the world, and keeps them in sorted
     order.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def variables(self) -> Sequence[ConfigVariableCore]: ...
@@ -845,6 +852,7 @@ class ConfigVariableBase(ConfigFlags):
     and/or ConfigDeclaration, more or less duplicating the interface presented
     there.
     """
+
     @property
     def name(self) -> str: ...
     @property
@@ -933,6 +941,7 @@ class ConfigVariable(ConfigVariableBase):
     and/or ConfigDeclaration, more or less duplicating the interface presented
     there.
     """
+
     @overload
     def __init__(self, __param0: ConfigVariable) -> None:
         """Use this constructor to make a ConfigVariable of an unspecified type.
@@ -963,6 +972,7 @@ class ConfigVariable(ConfigVariableBase):
 
 class ConfigVariableBool(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a boolean type."""
+
     value: bool
     @property
     def default_value(self) -> bool: ...
@@ -999,6 +1009,7 @@ class ConfigVariableDouble(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a floating-
     point type.
     """
+
     value: float
     @property
     def default_value(self) -> float: ...
@@ -1038,6 +1049,7 @@ class ConfigVariableFilename(ConfigVariable):
     put OS-specific filenames, or filenames based on environment variables, in
     the prc file.
     """
+
     value: Filename
     @property
     def default_value(self) -> Filename: ...
@@ -1112,6 +1124,7 @@ class ConfigVariableInt(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as an integer
     type.
     """
+
     value: int
     @property
     def default_value(self) -> int: ...
@@ -1148,6 +1161,7 @@ class ConfigVariableInt64(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a 64-bit
     integer type.
     """
+
     value: int
     @property
     def default_value(self) -> int: ...
@@ -1191,6 +1205,7 @@ class ConfigVariableList(ConfigVariableBase):
 
     A ConfigVariableList cannot be modified locally.
     """
+
     @overload
     def __init__(self, __param0: ConfigVariableList) -> None: ...
     @overload
@@ -1226,6 +1241,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     variable, created by using the same name to the constructor, will not
     reflect the local changes.
     """
+
     @property
     def value(self) -> DSearchPath: ...
     @property
@@ -1308,6 +1324,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
 
 class ConfigVariableString(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a string type."""
+
     value: str
     @property
     def default_value(self) -> str: ...
@@ -1353,6 +1370,7 @@ class NotifyCategory(ConfigFlags):
     a package level; further nested categories can be created within a package
     if a finer grain of control is required.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     severity: _NotifySeverity
     @property
@@ -1448,6 +1466,7 @@ class IDecryptStream(istream):
 
     Seeking is not supported.
     """
+
     @property
     def algorithm(self) -> str: ...
     @property
@@ -1482,6 +1501,7 @@ class OEncryptStream(ostream):
 
     Seeking is not supported.
     """
+
     algorithm: str
     key_length: int
     iteration_count: int
@@ -1530,6 +1550,7 @@ class StreamReader:
     """A class to read sequential binary data directly from an istream.  Its
     interface is similar to DatagramIterator by design; see also StreamWriter.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def istream(self) -> istream: ...
@@ -1649,6 +1670,7 @@ class StreamWriter:
     primarily intended as a convenience to eliminate the overhead of writing
     bytes to a Datagram and then writing the Datagram to a stream.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     softspace: int
     """Python 2 needs this for printing to work correctly."""
@@ -1759,6 +1781,7 @@ class StreamWrapperBase:
     """The base class for both IStreamWrapper and OStreamWrapper, this provides
     the common locking interface.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self) -> None:
         """Acquires the internal lock.
@@ -1783,6 +1806,7 @@ class IStreamWrapper(StreamWrapperBase):
     A thread may use this class to perform an atomic seek/read/gcount
     operation.
     """
+
     @property
     def istream(self) -> istream: ...
     def __init__(self, stream: core.istream) -> None: ...
@@ -1796,6 +1820,7 @@ class OStreamWrapper(StreamWrapperBase):
     """This class provides a locking wrapper around an arbitrary ostream pointer.
     A thread may use this class to perform an atomic seek/write operation.
     """
+
     @property
     def ostream(self) -> ostream: ...
     def __init__(self, stream: core.ostream) -> None: ...
@@ -1809,6 +1834,7 @@ class StreamWrapper(IStreamWrapper, OStreamWrapper):  # type: ignore[misc]
     """This class provides a locking wrapper around a combination ostream/istream
     pointer.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def iostream(self) -> iostream: ...  # noqa: F811

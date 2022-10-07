@@ -23,6 +23,7 @@ class ios_base:
     But we'd like to expose some of these methods anyway, so no
     problem.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     beg: Final[Literal[0]]
     Beg: Final[Literal[0]]
@@ -78,6 +79,7 @@ class IFileStream(istream):
     simple-threading implementation (using this interface will block only the
     current thread, rather than the entire process, on I/O waits).
     """
+
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -91,6 +93,7 @@ class OFileStream(ostream):
     simple-threading implementation (using this interface will block only the
     current thread, rather than the entire process, on I/O waits).
     """
+
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -105,6 +108,7 @@ class FileStream(iostream):
     will block only the current thread, rather than the entire process, on I/O
     waits).
     """
+
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -121,6 +125,7 @@ class TextEncoder:
     This class is also a base class of TextNode, which inherits this
     functionality.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     default_encoding: _TextEncoder_Encoding
     text: str
@@ -381,6 +386,7 @@ class Filename:
     for file existence and searching a searchpath, as well as the best way to
     open an fstream for reading or writing.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     T_general: Final[Literal[0]]
     TGeneral: Final[Literal[0]]
@@ -1024,6 +1030,7 @@ class PandaSystem:
     Panda.  Application developers can use this class to query the runtime
     version or capabilities of the current Panda environment.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def version_string(self) -> str: ...
@@ -1337,6 +1344,7 @@ class ExecutionEnvironment:
     at the time of execution.  This is encapsulated to support accessing these
     things during static init time, which seems to be risky at best.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     environment_variables: Mapping[Any, str]
     binary_name: str
@@ -1432,6 +1440,7 @@ class GlobPattern:
     the pattern or not.  It can be used, for example, to scan a directory for
     all files matching a particular pattern.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     pattern: str
     case_sensitive: bool
@@ -1502,6 +1511,7 @@ class LineStream(ostream):
     otherwise affected when a line of text is extracted.  More text can still
     be written to it and continuously extracted.
     """
+
     def __init__(self) -> None: ...
     def is_text_available(self) -> bool:
         """Returns true if there is at least one line of text (or even a partial line)

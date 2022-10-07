@@ -36,6 +36,7 @@ class LightNode(Light, PandaNode):  # type: ignore[misc]
     Spotlight (which must inherit from LensNode instead) inherit from this
     class.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_Light(self) -> Light: ...
     def upcast_to_PandaNode(self) -> PandaNode: ...
@@ -55,12 +56,14 @@ class AmbientLight(LightNode):
     kind of light need not actually be part of the scene graph, since it has no
     meaningful position.
     """
+
     def __init__(self, name: str) -> None: ...
 
 class CallbackNode(PandaNode):
     """A special node that can issue arbitrary callbacks to user code, either
     during the cull or draw traversals.
     """
+
     cull_callback: CallbackObject
     draw_callback: CallbackObject
     def set_cull_callback(self, object: CallbackObject) -> None:
@@ -123,6 +126,7 @@ class ComputeNode(PandaNode):
     """A special node, the sole purpose of which is to invoke a dispatch operation
     on the assigned compute shader.
     """
+
     dispatches: Sequence[LVecBase3i]
     def __init__(self, name: str) -> None:
         """Creates a ComputeNode with the given name.  Use add_dispatch and  also
@@ -167,6 +171,7 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
     not directly derive from LensNode, but through the Camera class.  The
     Camera serves no purpose unless shadows are enabled.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     shadow_buffer_size: LVecBase2i
     @property
@@ -228,6 +233,7 @@ class DirectionalLight(LightLensNode):
     """A light shining from infinitely far away in a particular direction, like
     sunlight.
     """
+
     specular_color: LColor
     point: LPoint3
     direction: LVector3
@@ -266,6 +272,7 @@ class LODNode(PandaNode):
     rendering, according to the distance from the camera and the table
     indicated in the associated LOD object.
     """
+
     lod_scale: float
     center: LPoint3
     @property
@@ -399,6 +406,7 @@ class LODNode(PandaNode):
 
 class FadeLODNode(LODNode):
     """A Level-of-Detail node with alpha based switching."""
+
     fade_time: float
     fade_state_override: int
     @property
@@ -443,6 +451,7 @@ class NodeCullCallbackData(CallbackData):
     """This kind of CallbackData is passed to the CallbackObject added to
     CallbackNode:set_cull_callback().
     """
+
     def get_trav(self) -> CullTraverser:
         """Returns the CullTraverser in use at the time of the callback.  This object
         contains data that does not change during the traversal, such as the
@@ -460,6 +469,7 @@ class PointLight(LightLensNode):
     """A light originating from a single point in space, and shining in all
     directions.
     """
+
     specular_color: LColor
     attenuation: LVecBase3
     max_distance: float
@@ -504,6 +514,7 @@ class RectangleLight(LightLensNode):
 
     @since 1.10.0
     """
+
     max_distance: float
     def __init__(self, name: str) -> None: ...
     def get_max_distance(self) -> float:
@@ -526,6 +537,7 @@ class SequenceNode(SelectiveChildNode, AnimInterface):
     """A node that automatically cycles through rendering each one of its children
     according to its frame rate.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     frame_rate: float
     def __init__(self, name: str) -> None: ...
@@ -572,6 +584,7 @@ class ShaderGenerator(TypedReferenceCount):
 
     Thanks to them!
     """
+
     @overload
     def __init__(self, gsg: GraphicsStateGuardianBase) -> None:
         """Create a ShaderGenerator.  This has no state, except possibly to cache
@@ -633,6 +646,7 @@ class SphereLight(PointLight):
 
     @since 1.10.0
     """
+
     radius: float
     def get_radius(self) -> float:
         """Returns the radius of the sphere."""
@@ -651,6 +665,7 @@ class Spotlight(LightLensNode):
     Note that the class is named Spotlight instead of SpotLight, because
     "spotlight" is a single English word, instead of two words.
     """
+
     exponent: float
     specular_color: LColor
     attenuation: LVecBase3
@@ -708,6 +723,7 @@ class SwitchNode(SelectiveChildNode):
     """A node that renders only one of its children, according to the user's
     indication.
     """
+
     visible_child: int
     def set_visible_child(self, index: int) -> None:
         """Specifies the particular child of this node, by index, that will be
@@ -720,6 +736,7 @@ class SwitchNode(SelectiveChildNode):
 
 class UvScrollNode(PandaNode):
     """This node is placed at key points within the scene graph to animate uvs."""
+
     u_speed: float
     v_speed: float
     w_speed: float
@@ -749,6 +766,7 @@ class SceneGraphAnalyzer:
     """A handy class that can scrub over a scene graph and collect interesting
     statistics on it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     LM_lowest: Final[Literal[0]]
     LMLowest: Final[Literal[0]]

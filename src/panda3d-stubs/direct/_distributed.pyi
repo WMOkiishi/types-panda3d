@@ -25,6 +25,7 @@ class CConnectionRepository:
     the C++ layer, while server messages that are not understood by the C++
     layer are returned up to the Python layer for processing.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, has_owner_view: bool = ..., threaded_net: bool = ...) -> None: ...
     def get_dc_file(self) -> DCFile:
@@ -258,6 +259,7 @@ class CDistributedSmoothNodeBase:
     """This class defines some basic methods of DistributedSmoothNodeBase which
     have been moved into C++ as a performance optimization.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: CDistributedSmoothNodeBase = ...) -> None: ...
     def set_repository(self, repository: CConnectionRepository, is_ai: bool, ai_id: int) -> None:

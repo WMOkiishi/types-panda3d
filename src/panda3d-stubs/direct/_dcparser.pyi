@@ -14,6 +14,7 @@ class DCPackerInterface:
     Normally these methods are called only by the DCPacker object; the user
     wouldn't normally call these directly.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_name(self) -> str:
         """Returns the name of this field, or empty string if the field is unnamed."""
@@ -59,6 +60,7 @@ class DCKeywordList:
     """This is a list of keywords (see DCKeyword) that may be set on a particular
     field.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def has_keyword(self, keyword: DCKeyword) -> bool:
@@ -85,6 +87,7 @@ class DCKeywordList:
 
 class DCField(DCPackerInterface, DCKeywordList):
     """A single field of a Distributed Class, either atomic or molecular."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_DCPackerInterface(self) -> DCPackerInterface: ...
     def upcast_to_DCKeywordList(self) -> DCKeywordList: ...
@@ -218,6 +221,7 @@ class DCField(DCPackerInterface, DCKeywordList):
 
 class DCPackData:
     """This is a block of data that receives the results of DCPacker."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: DCPackData = ...) -> None: ...
     def clear(self) -> None:
@@ -240,6 +244,7 @@ class DCPacker:
     See also direct/src/doc/dcPacker.txt for a more complete description and
     examples of using this class.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: DCPacker = ...) -> None: ...
     def clear_data(self) -> None:
@@ -649,6 +654,7 @@ class DCParameter(DCField):
     This may also be a typedef reference to another type, which has the same
     properties as the referenced type, but a different name.
     """
+
     def as_simple_parameter(self) -> DCSimpleParameter: ...
     def as_array_parameter(self) -> DCArrayParameter: ...
     def make_copy(self) -> DCParameter: ...
@@ -668,6 +674,7 @@ class DCArrayParameter(DCParameter):
     parameter type accepts an arbitrary (or possibly fixed) number of nested
     fields, all of which are of the same type.
     """
+
     def get_element_type(self) -> DCParameter:
         """Returns the type of the individual elements of this array."""
     def get_array_size(self) -> int:
@@ -682,6 +689,7 @@ class DCAtomicField(DCField):
     This defines an interface to the Distributed Class, and is always
     implemented as a remote procedure method.
     """
+
     def get_num_elements(self) -> int:
         """Returns the number of elements (parameters) of the atomic field."""
     def get_element(self, n: int) -> DCParameter:
@@ -737,6 +745,7 @@ class DCDeclaration:
     only purpose is so that classes and typedefs can be stored in one list
     together so they can be ordered correctly on output.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def as_class(self) -> DCClass: ...
     def as_switch(self) -> DCSwitch: ...
@@ -749,6 +758,7 @@ class DCDeclaration:
 
 class DCClass(DCDeclaration):
     """Defines a particular DistributedClass as read from an input .dc file."""
+
     def get_dc_file(self) -> DCFile:
         """Returns the DCFile object that contains the class."""
     def get_name(self) -> str:
@@ -971,6 +981,7 @@ class DCClassParameter(DCParameter):
     """This represents a class (or struct) object used as a parameter itself.
     This means that all the fields of the class get packed into the message.
     """
+
     def get_class(self) -> DCClass:
         """Returns the class object this parameter represents."""
     getClass = get_class
@@ -979,6 +990,7 @@ class DCFile:
     """Represents the complete list of Distributed Class descriptions as read from
     a .dc file.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: DCFile = ...) -> None: ...
     def clear(self) -> None:
@@ -1111,6 +1123,7 @@ class DCKeyword(DCDeclaration):
     define a communication property associated with a field, for instance
     "broadcast" or "airecv".
     """
+
     def get_name(self) -> str:
         """Returns the name of this keyword."""
     getName = get_name
@@ -1120,6 +1133,7 @@ class DCMolecularField(DCField):
     This represents a combination of two or more related atomic fields, that
     will often be treated as a unit.
     """
+
     def get_num_atomics(self) -> int:
         """Returns the number of atomic fields that make up this molecular field."""
     def get_atomic(self, n: int) -> DCAtomicField:
@@ -1136,6 +1150,7 @@ class DCSimpleParameter(DCParameter):
     divisor, which is meaningful only for the numeric type elements (and
     represents a fixed-point numeric convention).
     """
+
     def get_type(self) -> _DCSubatomicType:
         """Returns the particular subatomic type represented by this instance."""
     def has_modulus(self) -> bool:
@@ -1163,6 +1178,7 @@ class DCSwitch(DCDeclaration):
     and represents two or more alternative unpacking schemes based on the first
     field read.
     """
+
     def get_name(self) -> str:
         """Returns the name of this switch."""
     def get_key_parameter(self) -> DCField:
@@ -1209,6 +1225,7 @@ class DCSwitchParameter(DCParameter):
     """This represents a switch object used as a parameter itself, which packs the
     appropriate fields of the switch into the message.
     """
+
     def get_switch(self) -> DCSwitch:
         """Returns the switch object this parameter represents."""
     getSwitch = get_switch
@@ -1217,6 +1234,7 @@ class DCTypedef(DCDeclaration):
     """This represents a single typedef declaration in the dc file.  It assigns a
     particular type to a new name, just like a C typedef.
     """
+
     def get_number(self) -> int:
         """Returns a unique index number associated with this typedef definition.
         This is defined implicitly when the .dc file(s) are read.

@@ -14,6 +14,7 @@ class MathNumbers:
 
 class LVecBase2f:
     """This is the base class for all two-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
@@ -180,6 +181,7 @@ class LVecBase2f:
 
 class LVecBase2d:
     """This is the base class for all two-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
@@ -346,6 +348,7 @@ class LVecBase2d:
 
 class LVecBase2i:
     """This is the base class for all two-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: int
     y: int
@@ -490,6 +493,7 @@ class LVecBase2i:
 
 class LVector2f(LVecBase2f):
     """This is a two-component vector offset."""
+
     @overload
     def __init__(self, copy: LVecBase2f = ...) -> None:
         """`(self, copy: LVecBase2f)`:
@@ -545,6 +549,7 @@ class LVector2f(LVecBase2f):
 
 class LVector2d(LVecBase2d):
     """This is a two-component vector offset."""
+
     @overload
     def __init__(self, copy: LVecBase2d = ...) -> None:
         """`(self, copy: LVecBase2d)`:
@@ -600,6 +605,7 @@ class LVector2d(LVecBase2d):
 
 class LVector2i(LVecBase2i):
     """This is a two-component vector offset."""
+
     @overload
     def __init__(self, copy: LVecBase2i = ...) -> None:
         """`(self, copy: LVecBase2i)`:
@@ -636,6 +642,7 @@ class LVector2i(LVecBase2i):
 
 class LPoint2f(LVecBase2f):
     """This is a two-component point in space."""
+
     @overload
     def __init__(self, copy: LVecBase2f = ...) -> None:
         """`(self, copy: LVecBase2f)`:
@@ -686,6 +693,7 @@ class LPoint2f(LVecBase2f):
 
 class LPoint2d(LVecBase2d):
     """This is a two-component point in space."""
+
     @overload
     def __init__(self, copy: LVecBase2d = ...) -> None:
         """`(self, copy: LVecBase2d)`:
@@ -736,6 +744,7 @@ class LPoint2d(LVecBase2d):
 
 class LPoint2i(LVecBase2i):
     """This is a two-component point in space."""
+
     @overload
     def __init__(self, copy: LVecBase2i = ...) -> None:
         """`(self, copy: LVecBase2i)`:
@@ -777,6 +786,7 @@ class LPoint2i(LVecBase2i):
 
 class LVecBase3f:
     """This is the base class for all three-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
@@ -993,6 +1003,7 @@ class LVecBase3f:
 
 class LVecBase3d:
     """This is the base class for all three-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
@@ -1209,6 +1220,7 @@ class LVecBase3d:
 
 class LVecBase3i:
     """This is the base class for all three-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: int
     y: int
@@ -1395,6 +1407,7 @@ class LVector3f(LVecBase3f):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
+
     @property
     def xy(self) -> LVector2f: ...
     @property
@@ -1522,6 +1535,7 @@ class LVector3d(LVecBase3d):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
+
     @property
     def xy(self) -> LVector2d: ...
     @property
@@ -1649,6 +1663,7 @@ class LVector3i(LVecBase3i):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
+
     @property
     def xy(self) -> LVector2i: ...
     @property
@@ -1735,6 +1750,7 @@ class LPoint3f(LVecBase3f):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
+
     @property
     def xy(self) -> LPoint2f: ...
     @property
@@ -1820,6 +1836,7 @@ class LPoint3d(LVecBase3d):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
+
     @property
     def xy(self) -> LPoint2d: ...
     @property
@@ -1905,6 +1922,7 @@ class LPoint3i(LVecBase3i):
     subtraction of two points yields a vector, while addition of a vector and a
     point yields a point.
     """
+
     @property
     def xy(self) -> LPoint2i: ...
     @property
@@ -1976,6 +1994,7 @@ class LPoint3i(LVecBase3i):
 
 class LVecBase4f:
     """This is the base class for all three-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
@@ -2192,6 +2211,7 @@ class UnalignedLVecBase4f:
     alignment, and then copy it to a proper LVecBase4 to get actual use from
     it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[4]]
     is_int: Final[Literal[0]]
@@ -2220,6 +2240,7 @@ class UnalignedLVecBase4f:
 
 class LVecBase4d:
     """This is the base class for all three-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
@@ -2436,6 +2457,7 @@ class UnalignedLVecBase4d:
     alignment, and then copy it to a proper LVecBase4 to get actual use from
     it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[4]]
     is_int: Final[Literal[0]]
@@ -2464,6 +2486,7 @@ class UnalignedLVecBase4d:
 
 class LVecBase4i:
     """This is the base class for all three-component vectors and points."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: int
     y: int
@@ -2658,6 +2681,7 @@ class UnalignedLVecBase4i:
     alignment, and then copy it to a proper LVecBase4 to get actual use from
     it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[4]]
     is_int: Final[Literal[1]]
@@ -2686,6 +2710,7 @@ class UnalignedLVecBase4i:
 
 class LVector4f(LVecBase4f):
     """This is a four-component vector distance."""
+
     @property
     def xyz(self) -> LVector3f: ...
     @property
@@ -2745,6 +2770,7 @@ class LVector4f(LVecBase4f):
 
 class LVector4d(LVecBase4d):
     """This is a four-component vector distance."""
+
     @property
     def xyz(self) -> LVector3d: ...
     @property
@@ -2804,6 +2830,7 @@ class LVector4d(LVecBase4d):
 
 class LVector4i(LVecBase4i):
     """This is a four-component vector distance."""
+
     @property
     def xyz(self) -> LVector3i: ...
     @property
@@ -2854,6 +2881,7 @@ class LVector4i(LVecBase4i):
 
 class LPoint4f(LVecBase4f):
     """This is a four-component point in space."""
+
     @property
     def xyz(self) -> LPoint3f: ...
     @property
@@ -2915,6 +2943,7 @@ class LPoint4f(LVecBase4f):
 
 class LPoint4d(LVecBase4d):
     """This is a four-component point in space."""
+
     @property
     def xyz(self) -> LPoint3d: ...
     @property
@@ -2976,6 +3005,7 @@ class LPoint4d(LVecBase4d):
 
 class LPoint4i(LVecBase4i):
     """This is a four-component point in space."""
+
     @property
     def xyz(self) -> LPoint3i: ...
     @property
@@ -3034,6 +3064,7 @@ class LMatrix3f:
 
     class Row:
         """These helper classes are used to support two-level operator []."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix3f.Row) -> None: ...
         def __getitem__(self, i: int) -> float: ...
@@ -3428,6 +3459,7 @@ class LMatrix4f:
 
     class Row:
         """These helper classes are used to support two-level operator []."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix4f.Row) -> None: ...
         def __getitem__(self, i: int) -> float: ...
@@ -3842,6 +3874,7 @@ class UnalignedLMatrix4f:
     Use it only when you need to pack numbers tightly without respect to
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[16]]
     @overload
@@ -3868,6 +3901,7 @@ class LMatrix3d:
 
     class Row:
         """These helper classes are used to support two-level operator []."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix3d.Row) -> None: ...
         def __getitem__(self, i: int) -> float: ...
@@ -4262,6 +4296,7 @@ class LMatrix4d:
 
     class Row:
         """These helper classes are used to support two-level operator []."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: LMatrix4d.Row) -> None: ...
         def __getitem__(self, i: int) -> float: ...
@@ -4676,6 +4711,7 @@ class UnalignedLMatrix4d:
     Use it only when you need to pack numbers tightly without respect to
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[16]]
     @overload
@@ -4696,6 +4732,7 @@ class UnalignedLMatrix4d:
 
 class LQuaternionf(LVecBase4f):
     """This is the base quaternion class"""
+
     @overload
     def __init__(self, copy: Vec4f = ...) -> None: ...
     @overload
@@ -4902,6 +4939,7 @@ class LQuaternionf(LVecBase4f):
 
 class LQuaterniond(LVecBase4d):
     """This is the base quaternion class"""
+
     @overload
     def __init__(self, copy: Vec4d = ...) -> None: ...
     @overload
@@ -5108,6 +5146,7 @@ class LQuaterniond(LVecBase4d):
 
 class LRotationf(LQuaternionf):
     """This is a unit quaternion representing a rotation."""
+
     @overload
     def __init__(self, c: LQuaternionf = ...) -> None:
         """`(self, m: LMatrix3f)`:
@@ -5142,6 +5181,7 @@ class LRotationf(LQuaternionf):
 
 class LRotationd(LQuaterniond):
     """This is a unit quaternion representing a rotation."""
+
     @overload
     def __init__(self, c: LQuaterniond = ...) -> None:
         """`(self, m: LMatrix3d)`:
@@ -5176,6 +5216,7 @@ class LRotationd(LQuaterniond):
 
 class LOrientationf(LQuaternionf):
     """This is a unit quaternion representing an orientation."""
+
     @overload
     def __init__(self, c: Vec4f = ...) -> None:
         """`(self, m: LMatrix3f)`:
@@ -5197,6 +5238,7 @@ class LOrientationf(LQuaternionf):
 
 class LOrientationd(LQuaterniond):
     """This is a unit quaternion representing an orientation."""
+
     @overload
     def __init__(self, c: Vec4d = ...) -> None:
         """`(self, m: LMatrix3d)`:
@@ -5228,6 +5270,7 @@ class ConfigVariableColor(ConfigVariable):
     This isn't defined in dtool because it relies on the LColor class, which is
     defined in linmath.
     """
+
     @overload
     def __init__(self, __param0: ConfigVariableColor) -> None: ...
     @overload

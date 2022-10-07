@@ -28,6 +28,7 @@ class SSReader:
     class for both ISocketStream and SocketStream; its purpose is to minimize
     redundant code between them.  Do not use it directly.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def receive_datagram(self, dg: Datagram) -> bool:
         """Receives a datagram over the socket by expecting a little-endian 16-bit
@@ -55,6 +56,7 @@ class SSWriter:
     class for both OSocketStream and SocketStream; its purpose is to minimize
     redundant code between them.  Do not use it directly.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def send_datagram(self, dg: Datagram) -> bool:
         """Transmits the indicated datagram over the socket by prepending it with a
@@ -121,6 +123,7 @@ class ISocketStream(istream, SSReader):
     after an eof condition to check whether the socket has been closed, or
     whether more data may be available later.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     RS_initial: Final[Literal[0]]
     RSInitial: Final[Literal[0]]
@@ -146,6 +149,7 @@ class OSocketStream(ostream, SSWriter):
     check whether the socket has been closed, or whether more data may be sent
     later.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_ostream(self) -> ostream: ...
     def upcast_to_SSWriter(self) -> SSWriter: ...
@@ -163,6 +167,7 @@ class SocketStream(iostream, SSReader, SSWriter):  # type: ignore[misc]
     """A base class for iostreams that read and write to a (possibly non-blocking)
     socket.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_iostream(self) -> iostream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
@@ -194,6 +199,7 @@ class URLSpec:
     The URLSpec object is similar to a Filename in that it contains logic to
     identify the various parts of a URL and return (or modify) them separately.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     scheme: str
     authority: str
@@ -414,6 +420,7 @@ class HTTPEnum:
     """This class is just used as a namespace wrapper for some of the enumerated
     types used by various classes within the HTTPClient family.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     HV_09: Final[Literal[0]]
     HV09: Final[Literal[0]]
@@ -447,6 +454,7 @@ class HTTPDate:
     conversely, it can accept a time_t value and encode it for output as a
     string.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: HTTPDate = ...) -> None:
@@ -495,6 +503,7 @@ class HTTPCookie:
     """A cookie sent from an HTTP server to be stored on the client and returned
     when the path and/or domain matches.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     value: str
@@ -605,6 +614,7 @@ class HTTPClient(ReferenceCount):
     There is a default, global HTTPClient available in
     HTTPClient::get_global_ptr().
     """
+
     VS_no_verify: Final[Literal[0]]
     VSNoVerify: Final[Literal[0]]
     VS_no_date_check: Final[Literal[1]]
@@ -955,6 +965,7 @@ class HTTPEntityTag:
     identify a particular version of a document or resource, particularly
     useful for verifying caches.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: HTTPEntityTag = ...) -> None:
@@ -1016,6 +1027,7 @@ class DocumentSpec:
     The DocumentSpec may also be used to request a newer document than a
     particular one if available, for instance to refresh a cached document.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     url: URLSpec
     tag: HTTPEntityTag
@@ -1163,6 +1175,7 @@ class HTTPChannel(TypedReferenceCount):
     requested from the same HTTPChannel until the first document has been fully
     retrieved.
     """
+
     SC_incomplete: Final[Literal[0]]
     SCIncomplete: Final[Literal[0]]
     SC_internal_error: Final[Literal[1]]
@@ -1847,6 +1860,7 @@ class Decompressor:
     """This manages run-time decompression of a zlib-compressed stream, as a
     background or foreground task.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def progress(self) -> float: ...
@@ -1890,6 +1904,7 @@ class DownloadDb:
     the files on the client system, and another copy for the server,
     representing the files the server has available.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     Status_incomplete: Final[Literal[0]]
     StatusIncomplete: Final[Literal[0]]
@@ -2039,6 +2054,7 @@ class Extractor:
     Multifile.  Call run() whenever you have spare cycles until run() returns
     EU_success.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def progress(self) -> float: ...
@@ -2098,6 +2114,7 @@ class MultiplexStream(ostream):
     a disk file or to system logging utilities.  It's a very handy thing to set
     Notify to refer to when running in batch mode.
     """
+
     def __init__(self) -> None: ...
     def add_ostream(self, out: ostream, delete_later: bool = ...) -> None:
         """Adds the indicated generic ostream to the multiplex output.  The ostream
@@ -2131,6 +2148,7 @@ class VirtualFileHTTP(VirtualFile):
 
 class VirtualFileMountHTTP(VirtualFileMount):
     """Maps a web page (URL root) into the VirtualFileSystem."""
+
     def __init__(self, root: URL, http: HTTPClient = ...) -> None: ...
     def get_http_client(self) -> HTTPClient:
         """Returns the HTTPClient object that services this mount point."""
@@ -2152,6 +2170,7 @@ class VirtualFileMountHTTP(VirtualFileMount):
 
 class Patcher:
     """Applies a patch synchronously"""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: Patcher = ...) -> None: ...
@@ -2167,6 +2186,7 @@ class StringStream(iostream):
     buffer, which can be retrieved and/or set as a string in Python 2 or a
     bytes object in Python 3.
     """
+
     data: bytes
     @overload
     def __init__(self) -> None: ...

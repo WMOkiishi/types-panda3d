@@ -178,6 +178,7 @@ class PStatCollector:
     is reset via another set_level() or adjusted via a call to add_level().  It
     may also be completely removed via clear_level().
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: PStatCollector) -> None:
@@ -412,6 +413,7 @@ class PStatThread:
     """A lightweight class that represents a single thread of execution to PStats.
     It corresponds one-to-one with Panda's Thread instance.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def thread(self) -> Thread: ...
@@ -455,4 +457,5 @@ class PStatCollectorForward(PStatCollectorForwardBase):
     classes that are defined before the pstats module may access the
     PStatCollector.
     """
+
     def __init__(self, col: PStatCollector) -> None: ...

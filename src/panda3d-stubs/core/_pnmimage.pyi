@@ -56,6 +56,7 @@ class PNMFileType(TypedWritable):
     """This is the base class of a family of classes that represent particular
     image file types that PNMImage supports.
     """
+
     @property
     def name(self) -> str: ...
     @property
@@ -84,6 +85,7 @@ class PNMFileType(TypedWritable):
 
 class PNMFileTypeRegistry:
     """This class maintains the set of all known PNMFileTypes in the universe."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def types(self) -> Sequence[PNMFileType]: ...
@@ -137,6 +139,7 @@ class PNMImageHeader:
         make_histogram().  Note that pixels are stored by integer value, not by
         floating-point scaled value.
         """
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         @overload
         def __init__(self, __param0: PNMImageHeader.PixelSpec) -> None: ...
@@ -179,11 +182,13 @@ class PNMImageHeader:
         """Associates a pixel specification with an appearance count, for use in
         Histogram, below.
         """
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImageHeader.PixelSpecCount) -> None: ...
 
     class Histogram:
         """Used to return a pixel histogram in PNMImage::get_histogram()."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImageHeader.Histogram = ...) -> None: ...
         def get_num_pixels(self) -> int:
@@ -341,6 +346,7 @@ class PfmFile(PNMImageHeader):
     """Defines a pfm file, a 2-d table of floating-point numbers, either
     3-component or 1-component, or with a special extension, 2- or 4-component.
     """
+
     scale: float
     @property
     def valid(self) -> bool: ...
@@ -843,6 +849,7 @@ class PNMBrush(ReferenceCount):
     "smeared" over the border; when it is used to fill the interior, it is
     tiled through the interior.
     """
+
     BE_set: Final[Literal[0]]
     BESet: Final[Literal[0]]
     BE_blend: Final[Literal[1]]
@@ -913,6 +920,7 @@ class PNMImage(PNMImageHeader):
         """Provides an accessor for reading or writing the contents of one row of
         the image in-place.
         """
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImage.Row) -> None: ...
         def __len__(self) -> int:
@@ -939,6 +947,7 @@ class PNMImage(PNMImageHeader):
         """Provides an accessor for reading the contents of one row of the image in-
         place.
         """
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: PNMImage.CRow) -> None: ...
         def __len__(self) -> int:
@@ -1749,6 +1758,7 @@ class PNMPainter:
     ownership of the object; you are responsible for ensuring that the PNMImage
     does not destruct during the lifetime of the PNMPainter object.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     pen: PNMBrush
     fill: PNMBrush

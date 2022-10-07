@@ -103,6 +103,7 @@ class TransformState(NodeCachedReferenceCount):
     directly.  Instead, call one of the make() functions to create one for you.
     And instead of modifying a TransformState object, create a new one.
     """
+
     @property
     def pos(self) -> LPoint3: ...
     @property
@@ -690,6 +691,7 @@ class RenderAttribRegistry:
     index at runtime, so we can store a list of RenderAttribs in the
     RenderState object, and very quickly look them up by type.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_slot(self, type_handle: TypeHandle) -> int:
         """Returns the slot number assigned to the indicated TypeHandle, or 0 if no
@@ -751,6 +753,7 @@ class RenderAttrib(TypedWritableReferenceCount):
     and it may share pointers if possible.  Do not modify the new RenderAttrib
     if you wish to change its properties; instead, create a new one.
     """
+
     M_none: Final[Literal[0]]
     MNone: Final[Literal[0]]
     M_never: Final[Literal[1]]
@@ -887,6 +890,7 @@ class RenderAttrib(TypedWritableReferenceCount):
 
 class RenderModeAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
+
     M_unchanged: Final[Literal[0]]
     MUnchanged: Final[Literal[0]]
     M_filled: Final[Literal[1]]
@@ -968,6 +972,7 @@ class RenderModeAttrib(RenderAttrib):
 
 class TexMatrixAttrib(RenderAttrib):
     """Applies a transform matrix to UV's before they are rendered."""
+
     @property
     def class_slot(self) -> int: ...
     @overload
@@ -1064,6 +1069,7 @@ class RenderState(NodeCachedReferenceCount):
     Instead, call one of the make() functions to create one for you.  And
     instead of modifying a RenderState object, create a new one.
     """
+
     @property
     def attribs(self) -> Mapping[Any, RenderAttrib]: ...
     def compare_to(self, other: RenderState) -> int:
@@ -1445,6 +1451,7 @@ class AlphaTestAttrib(RenderAttrib):
     """Enables or disables writing of pixel to framebuffer based on its alpha
     value relative to a reference alpha value
     """
+
     @property
     def reference_alpha(self) -> float: ...
     @property
@@ -1474,6 +1481,7 @@ class AntialiasAttrib(RenderAttrib):
     """Specifies whether or how to enable antialiasing, if supported by the
     backend renderer.
     """
+
     M_point: Final[Literal[1]]
     MPoint: Final[Literal[1]]
     M_line: Final[Literal[2]]
@@ -1570,6 +1578,7 @@ class RenderEffect(TypedWritableReferenceCount):
     and it may share pointers if possible.  Do not modify the new RenderEffect
     if you wish to change its properties; instead, create a new one.
     """
+
     def compare_to(self, other: RenderEffect) -> int:
         """Provides an arbitrary ordering among all unique RenderEffects, so we can
         store the essentially different ones in a big set and throw away the rest.
@@ -1610,6 +1619,7 @@ class RenderEffects(TypedWritableReferenceCount):
     Instead, call one of the make() functions to create one for you.  And
     instead of modifying a RenderEffects object, create a new one.
     """
+
     def __lt__(self, other: RenderEffects) -> bool: ...
     def __len__(self) -> int:
         """Returns the number of separate effects indicated in the state."""
@@ -1721,18 +1731,21 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         the lock with each iteration, or to keep the lock held for the entire
         pass.
         """
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
 
     class Stashed:
         """Similarly for stashed children."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
 
     class Parents:
         """This class is returned from get_parents()."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
@@ -2635,6 +2648,7 @@ class TransparencyAttrib(RenderAttrib):
     effect unless you actually want it to be at least partially transparent
     (and it has alpha components less than 1).
     """
+
     M_alpha: Final[Literal[1]]
     MAlpha: Final[Literal[1]]
     M_premultiplied_alpha: Final[Literal[2]]
@@ -2674,6 +2688,7 @@ class LogicOpAttrib(RenderAttrib):
 
     @since 1.10.0
     """
+
     O_none: Final[Literal[0]]
     ONone: Final[Literal[0]]
     O_clear: Final[Literal[1]]
@@ -2738,6 +2753,7 @@ class ShaderInput:
     """This is a small container class that can hold any one of the value types
     that can be passed as input to a shader.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     A_read: Final[Literal[1]]
     ARead: Final[Literal[1]]
@@ -3022,6 +3038,7 @@ class NodePath(Generic[_N]):
     removed or reparented (perhaps through a different NodePath), the NodePath
     will automatically be updated to reflect the changes.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     ET_ok: Final[Literal[0]]
@@ -5876,6 +5893,7 @@ class NodePathCollection:
     functions that need to return multiple NodePaths (for instance,
     NodePaths::get_children).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: NodePathCollection = ...) -> None: ...
@@ -6089,6 +6107,7 @@ class AttribNodeRegistry:
     type), the identified node is used instead of the node referenced within
     the bam file itself.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def add_node(self, attrib_node: NodePath) -> None:
         """Adds the indicated NodePath to the registry.  The name and type of the node
@@ -6168,6 +6187,7 @@ class AttribNodeRegistry:
 
 class AudioVolumeAttrib(RenderAttrib):
     """Applies a scale to audio volume for positional sounds in the scene graph."""
+
     @property
     def volume(self) -> float: ...
     @property
@@ -6244,6 +6264,7 @@ class AuxBitplaneAttrib(RenderAttrib):
     AuxBitplaneAttrib is relevant only when shader generation is enabled.
     Otherwise, it has no effect.
     """
+
     ABO_glow: Final[Literal[1]]
     ABOGlow: Final[Literal[1]]
     ABO_aux_normal: Final[Literal[2]]
@@ -6284,6 +6305,7 @@ class AuxSceneData(TypedReferenceCount):
     remember during traversal at what point it is in the fade, separately for
     each instance and for each camera.
     """
+
     def __init__(self, __param0: AuxSceneData) -> None: ...
     def set_duration(self, duration: float) -> None:
         """Specifies the minimum length in time, in seconds, to keep this AuxSceneData
@@ -6325,6 +6347,7 @@ class BamFile(BamEnums):
     are given filenames ending in ".boo" to differentiate them from the more
     common scene graph files.
     """
+
     @property
     def file_endian(self) -> _BamEnums_BamEndian: ...
     @property
@@ -6462,6 +6485,7 @@ class BillboardEffect(RenderEffect):
     """Indicates that geometry at this node should automatically rotate to face
     the camera, or any other arbitrary node.
     """
+
     @staticmethod
     def make(up_vector: Vec3f, eye_relative: bool, axial_rotate: bool, offset: float, look_at: NodePath, look_at_point: Vec3f, fixed_depth: bool = ...) -> RenderEffect:
         """Constructs a new BillboardEffect object with the indicated properties."""
@@ -6530,6 +6554,7 @@ class LensNode(PandaNode):
     node is a Camera, but other kinds of nodes also contain a lens (for
     instance, a Spotlight).
     """
+
     def __init__(self, name: str, lens: Lens = ...) -> None: ...
     @overload
     def copy_lens(self, lens: Lens) -> None:
@@ -6607,6 +6632,7 @@ class WeakNodePath:
     the node is still around; if it is, get_node_path() will return the
     associated NodePath.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, node_path: NodePath) -> None: ...
@@ -6673,6 +6699,7 @@ class Camera(LensNode):
     """A node that can be positioned around in the scene graph to represent a
     point of view for rendering a scene.
     """
+
     active: bool
     scene: NodePath
     camera_mask: DrawMask
@@ -6858,6 +6885,7 @@ class PlaneNode(PandaNode):
     but it can serve other purposes as well; whenever a plane is needed to be
     defined in some coordinate space in the world.
     """
+
     plane: LPlane
     viz_scale: float
     priority: int
@@ -6917,6 +6945,7 @@ class ClipPlaneAttrib(RenderAttrib):
     ClipPlaneAttrib can either add planes or remove planes from the total set
     of clipping planes in effect.
     """
+
     O_set: Final[Literal[0]]
     OSet: Final[Literal[0]]
     O_add: Final[Literal[1]]
@@ -7085,6 +7114,7 @@ class ClipPlaneAttrib(RenderAttrib):
 
 class ColorAttrib(RenderAttrib):
     """Indicates what color should be applied to renderable geometry."""
+
     T_vertex: Final[Literal[0]]
     TVertex: Final[Literal[0]]
     T_flat: Final[Literal[1]]
@@ -7145,6 +7175,7 @@ class ColorBlendAttrib(RenderAttrib):
     """This specifies how colors are blended into the frame buffer, for special
     effects.  This overrides transparency if transparency is also specified.
     """
+
     M_add: Final[Literal[1]]
     MAdd: Final[Literal[1]]
     M_subtract: Final[Literal[2]]
@@ -7299,6 +7330,7 @@ class ColorBlendAttrib(RenderAttrib):
 
 class ColorScaleAttrib(RenderAttrib):
     """Applies a scale to colors in the scene graph and on vertices."""
+
     @property
     def scale(self) -> LVecBase4: ...
     @property
@@ -7369,6 +7401,7 @@ class ColorWriteAttrib(RenderAttrib):
     for certain special effects in which it is important to write to the depth
     buffer without affecting the color buffer.
     """
+
     C_off: Final[Literal[0]]
     COff: Final[Literal[0]]
     C_red: Final[Literal[1]]
@@ -7426,6 +7459,7 @@ class CompassEffect(RenderEffect):
     need to explicitly set a large (or infinite) bounding volume on the effect
     node.
     """
+
     P_x: Final[Literal[1]]
     PX: Final[Literal[1]]
     P_y: Final[Literal[2]]
@@ -7469,6 +7503,7 @@ class CullBinEnums:
     """Provides scoping for the enumerated type shared by CullBin and
     CullBinManager.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     BT_invalid: Final[Literal[0]]
     BTInvalid: Final[Literal[0]]
@@ -7489,6 +7524,7 @@ class GeomNode(PandaNode):
     primary kind of leaf node in the scene graph; almost all visible objects
     will be contained in a GeomNode somewhere.
     """
+
     @property
     def default_collide_mask(self) -> CollideMask: ...
     def set_preserved(self, value: bool) -> None:
@@ -7624,6 +7660,7 @@ class CullBinAttrib(RenderAttrib):
     """Assigns geometry to a particular bin by name.  The bins must be created
     separately via the CullBinManager interface.
     """
+
     @property
     def bin_name(self) -> str: ...
     @property
@@ -7663,6 +7700,7 @@ class CullBinManager(CullBinEnums):
     """This is a global object that maintains the collection of named CullBins in
     the world.
     """
+
     def add_bin(self, name: str, type: _CullBinEnums_BinType, sort: int) -> int:
         """Defines a new bin with the indicated name, and returns the new bin_index.
         If there is already a bin with the same name returns its bin_index if it
@@ -7835,6 +7873,7 @@ class CullBinManager(CullBinEnums):
 
 class CullFaceAttrib(RenderAttrib):
     """Indicates which faces should be culled based on their vertex ordering."""
+
     M_cull_none: Final[Literal[0]]
     MCullNone: Final[Literal[0]]
     M_cull_clockwise: Final[Literal[1]]
@@ -7914,6 +7953,7 @@ class WorkingNodePath:
     NodePath, and it will construct and return a new NodePath representing the
     complete generated chain.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def valid(self) -> bool: ...
@@ -7930,6 +7970,7 @@ class CullTraverserData:
     parameters, and provides a place to abstract out some of the cull behavior
     (like view-frustum culling).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def node_path(self) -> NodePath: ...
@@ -7977,6 +8018,7 @@ class SceneSetup(TypedReferenceCount):
     """This object holds the camera position, etc., and other general setup
     information for rendering a particular scene.
     """
+
     def __init__(self, __param0: SceneSetup) -> None: ...
     def set_display_region(self, display_region: DisplayRegion) -> None:
         """Specifies the display region for the scene."""
@@ -8102,6 +8144,7 @@ class Fog(PandaNode):
     generate traditonal camera-relative fog, as if it were parented to the
     camera.
     """
+
     mode: _Fog_Mode
     color: LColor
     linear_onset_point: LPoint3
@@ -8227,6 +8270,7 @@ class Fog(PandaNode):
 
 class FogAttrib(RenderAttrib):
     """Applies a Fog to the geometry at and below this node."""
+
     @property
     def fog(self) -> Fog: ...
     @property
@@ -8266,6 +8310,7 @@ class CullTraverser(TypedReferenceCount):
     GeomNodes.  Each renderable Geom encountered is passed along with its
     associated RenderState to the CullHandler object.
     """
+
     def __init__(self, copy: CullTraverser = ...) -> None: ...
     def get_gsg(self) -> GraphicsStateGuardianBase:
         """Returns the GraphicsStateGuardian in effect."""
@@ -8383,6 +8428,7 @@ class GeomDrawCallbackData(CallbackData):
     """This specialization on CallbackData is passed when the callback is
     initiated from deep within the draw traversal, for a particular Geom.
     """
+
     def get_gsg(self) -> GraphicsStateGuardianBase:
         """Returns a pointer to the current GSG."""
     def get_force(self) -> bool:
@@ -8408,6 +8454,7 @@ class GeomDrawCallbackData(CallbackData):
 
 class RescaleNormalAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
+
     M_rescale: Final[Literal[1]]
     MRescale: Final[Literal[1]]
     M_normalize: Final[Literal[2]]
@@ -8446,6 +8493,7 @@ class CullResult(ReferenceCount):
     This is also used to keep the results of last frame's cull traversal around
     to make next frame's traversal of the same scene a little easier.
     """
+
     def __init__(self, __param0: CullResult) -> None: ...
     def make_next(self) -> CullResult:
         """Returns a newly-allocated CullResult object that contains a copy of just
@@ -8477,6 +8525,7 @@ class DecalEffect(RenderEffect):
     """Applied to a GeomNode to indicate that the children of this GeomNode are
     coplanar and should be drawn as decals (eliminating Z-fighting).
     """
+
     @staticmethod
     def make() -> RenderEffect:
         """Constructs a new DecalEffect object."""
@@ -8507,6 +8556,7 @@ class DepthOffsetAttrib(RenderAttrib):
     constrain the Z output value to a subset of the usual [0, 1] range (or
     reversing its direction) by specifying a new min_value and max_value.
     """
+
     @property
     def offset(self) -> int: ...
     @property
@@ -8557,6 +8607,7 @@ class DepthOffsetAttrib(RenderAttrib):
 
 class DepthTestAttrib(RenderAttrib):
     """Enables or disables writing to the depth buffer."""
+
     @property
     def mode(self) -> _RenderAttrib_PandaCompareFunc: ...
     @property
@@ -8579,6 +8630,7 @@ class DepthTestAttrib(RenderAttrib):
 
 class DepthWriteAttrib(RenderAttrib):
     """Enables or disables writing to the depth buffer."""
+
     M_on: Final[Literal[1]]
     MOn: Final[Literal[1]]
     @property
@@ -8606,6 +8658,7 @@ class Light:
     also inherit from PandaNode, and can therefore be added to the scene graph
     at some arbitrary point to define the coordinate system of effect.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     color: LColor
     color_temperature: float
@@ -8689,6 +8742,7 @@ class LightAttrib(RenderAttrib):
     geometry at this level and below.  A LightAttrib can either add lights or
     remove lights from the total set of "on" lights.
     """
+
     O_set: Final[Literal[0]]
     OSet: Final[Literal[0]]
     O_add: Final[Literal[1]]
@@ -8886,6 +8940,7 @@ class LightRampAttrib(RenderAttrib):
     a kind of light ramp.  So is HDR tone mapping.  So is cartoon shading.  See
     the constructors for an explanation of each kind of ramp.
     """
+
     LRT_default: Final[Literal[0]]
     LRTDefault: Final[Literal[0]]
     LRT_identity: Final[Literal[1]]
@@ -9155,6 +9210,7 @@ class LoaderFileType(TypedObject):
     Loader supports.  Each kind of loader that's available should define a
     corresponding LoaderFileType object and register itself.
     """
+
     def get_name(self) -> str: ...
     def get_extension(self) -> str: ...
     def get_additional_extensions(self) -> str:
@@ -9194,6 +9250,7 @@ class LoaderFileType(TypedObject):
 
 class LoaderFileTypeRegistry:
     """This class maintains the set of all known LoaderFileTypes in the universe."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def types(self) -> Sequence[LoaderFileType]: ...
@@ -9231,6 +9288,7 @@ class MaterialAttrib(RenderAttrib):
     material is used primarily to control lighting effects, and isn't necessary
     (or useful) in the absence of lighting.
     """
+
     @property
     def material(self) -> Material: ...
     @property
@@ -9272,6 +9330,7 @@ class ModelFlattenRequest(AsyncTask):
     available), without affecting the original model; and when the result is
     done it may be retrieved from this object.
     """
+
     @property
     def orig(self) -> PandaNode: ...
     @overload
@@ -9304,6 +9363,7 @@ class ModelLoadRequest(AsyncTask):
     Create a new ModelLoadRequest, and add it to the loader via load_async(),
     to begin an asynchronous load.
     """
+
     @property
     def filename(self) -> Filename: ...
     @property
@@ -9355,6 +9415,7 @@ class ModelNode(PandaNode):
     ModelNodes are created in response to a <Model> { 1 } flag within an egg
     file.
     """
+
     PT_none: Final[Literal[0]]
     PTNone: Final[Literal[0]]
     PT_local: Final[Literal[1]]
@@ -9421,6 +9482,7 @@ class ModelRoot(ModelNode):
 
     class ModelReference(ReferenceCount):
         """This class is used to unify references to the same model."""
+
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: ModelRoot.ModelReference = ...) -> None: ...
 
@@ -9501,6 +9563,7 @@ class ModelPool:
     loading, and can automatically consult the ModelPool, according to the
     supplied LoaderOptions.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def has_model(filename: Filepath) -> bool:
@@ -9610,6 +9673,7 @@ class ModelSaveRequest(AsyncTask):
     Create a new ModelSaveRequest, and add it to the loader via save_async(),
     to begin an asynchronous save.
     """
+
     @property
     def filename(self) -> Filename: ...
     @property
@@ -9659,6 +9723,7 @@ class TextureAttrib(RenderAttrib):
     """Indicates the set of TextureStages and their associated Textures that
     should be applied to (or removed from) a node.
     """
+
     @property
     def on_stages(self) -> Sequence[TextureStage]: ...
     @property
@@ -9837,6 +9902,7 @@ class TexGenAttrib(RenderAttrib):
     refraction maps, for instance to make shiny surfaces, as well as other
     special effects such as projective texturing.
     """
+
     @property
     def class_slot(self) -> int: ...
     @overload
@@ -9919,6 +9985,7 @@ class OccluderNode(PandaNode):
     render.set_occluder(), then objects whose bouding volume lies entirely
     behind the occluder will not be rendered.
     """
+
     double_sided: bool
     min_coverage: float
     vertices: Sequence[LPoint3]
@@ -9970,6 +10037,7 @@ class OccluderEffect(RenderEffect):
     it is encountered during traversal, and thus can only add occluders; it may
     not remove them.
     """
+
     @staticmethod
     def make() -> RenderEffect:
         """Constructs a new OccluderEffect object that does nothing."""
@@ -10004,6 +10072,7 @@ class OccluderEffect(RenderEffect):
 
 class PolylightNode(PandaNode):
     """A PolylightNode"""
+
     FRANDOM: Final[Literal[0]]
     FSIN: Final[Literal[1]]
     FCUSTOM: Final[Literal[2]]
@@ -10168,6 +10237,7 @@ class PolylightEffect(RenderEffect):
     that add color to the polygons of a model based on distance.  PolylightNode
     is a cheap way to get lighting effects specially for night scenes
     """
+
     CT_proximal: Final[Literal[0]]
     CTProximal: Final[Literal[0]]
     CT_all: Final[Literal[1]]
@@ -10368,6 +10438,7 @@ class ShowBoundsEffect(RenderEffect):
     this node.  This is generally used only during development to help identify
     bounding volume issues.
     """
+
     @staticmethod
     def make(tight: bool = ...) -> RenderEffect:
         """Constructs a new ShowBoundsEffect object."""
@@ -10401,6 +10472,7 @@ class TexProjectorEffect(RenderEffect):
     through the world.  With a LensNode, you can project a texture onto the
     walls, for instance to apply a flashlight effect or an image-based shadow.
     """
+
     @staticmethod
     def make() -> RenderEffect:
         """Constructs a TexProjectorEffect that modifies no stages at all."""
@@ -10460,6 +10532,7 @@ class ScissorEffect(RenderEffect):
     the scissor region to be defined via points relative to the current node,
     and also performs culling based on the scissor region.
     """
+
     @staticmethod
     def make_screen(frame: Vec4f, clip: bool = ...) -> RenderEffect:
         """Constructs a new screen-relative ScissorEffect.  The frame defines a left,
@@ -10548,6 +10621,7 @@ class SceneGraphReducer:
     needed, to fine-tune the flattening behavior, but normally the default
     behavior is sufficient.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     TT_transform: Final[Literal[1]]
     TTTransform: Final[Literal[1]]
@@ -10751,6 +10825,7 @@ class SceneGraphReducer:
 
 class ParamNodePath(ParamValueBase):
     """A class object for storing a NodePath as a parameter."""
+
     def __init__(self, node_path: NodePath) -> None:
         """Creates a new ParamNodePath storing the given node path object."""
     def get_value(self) -> NodePath:
@@ -10762,6 +10837,7 @@ class PortalNode(PandaNode):
     rectangle.  Other types of polygons are not supported for now.  It also
     holds a PT(PandaNode) Cell that this portal is connected to
     """
+
     into_portal_mask: PortalMask
     from_portal_mask: PortalMask
     portal_geom: bool
@@ -10894,6 +10970,7 @@ class ScissorAttrib(RenderAttrib):
     See ScissorEffect if you wish to define a region relative to 2-D or 3-D
     coordinates in the scene graph, with culling.
     """
+
     @property
     def frame(self) -> LVecBase4: ...
     @property
@@ -10939,6 +11016,7 @@ class ShadeModelAttrib(RenderAttrib):
     """Specifies whether flat shading (per-polygon) or smooth shading (per-vertex)
     is in effect.
     """
+
     M_flat: Final[Literal[0]]
     MFlat: Final[Literal[0]]
     M_smooth: Final[Literal[1]]
@@ -10971,6 +11049,7 @@ class StencilAttrib(RenderAttrib):
     make or make_2_sided.  To determine if two sided stencil is supported, call
     the function GraphicsStateGuardian:: get_supports_two_sided_stencil.
     """
+
     SRS_front_comparison_function: Final[Literal[0]]
     SRSFrontComparisonFunction: Final[Literal[0]]
     SRS_front_stencil_fail_operation: Final[Literal[1]]
@@ -11070,6 +11149,7 @@ class ShaderPool:
     system.  It is similar to ModelPool and TexturePool in that it unifies
     references to the same filename.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def has_shader(filename: Filepath) -> bool:

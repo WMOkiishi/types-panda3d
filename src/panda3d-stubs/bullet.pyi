@@ -1388,6 +1388,7 @@ class BulletVehicle(TypedReferenceCount):
     tuned in various ways.  It is possible to add a (probably) arbitrary number
     of wheels.
     """
+
     @property
     def chassis(self) -> BulletRigidBodyNode: ...
     @property
@@ -1462,6 +1463,7 @@ class BulletWheel:
     """One wheel of a BulletVehicle.  Instances should not be created directly but
     using the factory method BulletVehicle::create_wheel().
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     suspension_stiffness: float
     max_suspension_travel_cm: float
@@ -1955,6 +1957,7 @@ class BulletFilterCallbackData(CallbackData):
 
 class BulletRotationalLimitMotor:
     """Rotation Limit structure for generic joints."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     motor_enabled: bool
     @property
@@ -2010,6 +2013,7 @@ class BulletRotationalLimitMotor:
 
 class BulletTranslationalLimitMotor:
     """Rotation Limit structure for generic joints."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def current_error(self) -> LVector3: ...
@@ -2153,6 +2157,7 @@ class BulletHingeConstraint(BulletConstraint):
     """The hinge constraint lets two bodies rotate around a given axis while
     adhering to specified limits.  It's motor can apply angular force to them.
     """
+
     angular_only: bool
     @property
     def hinge_angle(self) -> float: ...
@@ -2422,6 +2427,7 @@ class BulletSphericalConstraint(BulletConstraint):
     in global space.  The spherical constraint can be seen as a "ball and
     socket" joint.
     """
+
     pivot_a: LPoint3
     pivot_b: LPoint3
     @overload

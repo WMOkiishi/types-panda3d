@@ -46,6 +46,7 @@ class CardMaker(Namable):
     """This class generates 2-d "cards", that is, rectangular polygons,
     particularly useful for showing textures etc.  in the 2-d scene graph.
     """
+
     @overload
     def __init__(self, __param0: CardMaker) -> None: ...
     @overload
@@ -142,6 +143,7 @@ class FisheyeMaker(Namable):
 
     This class is particularly suited for converting cube maps to sphere maps.
     """
+
     @overload
     def __init__(self, __param0: FisheyeMaker) -> None: ...
     @overload
@@ -192,6 +194,7 @@ class FrameRateMeter(TextNode):
     channel or window.  If this is done, it creates a DisplayRegion for itself
     and renders itself in the upper-right-hand corner.
     """
+
     @overload
     def __init__(self, __param0: FrameRateMeter) -> None: ...
     @overload
@@ -258,6 +261,7 @@ class GeoMipTerrain(TypedObject):
     algoritm, see this paper, written by Willem H. de Boer:
     https://flipcode.com/articles/article_geomipmaps.pdf
     """
+
     AFM_off: Final[Literal[0]]
     AFMOff: Final[Literal[0]]
     AFM_light: Final[Literal[1]]
@@ -572,6 +576,7 @@ class LineSegs(Namable):
     to be the smartest it could possibly be; it's intended primarily as a
     visualization and editing tool.
     """
+
     @overload
     def __init__(self, name: str = ...) -> None:
         """Constructs a LineSegs object, which can be used to create any number of
@@ -694,6 +699,7 @@ class MeshDrawer(TypedObject):
     GeomVertexRewriter's.  The internal geom consists of vertex, normal, uv and
     color channels.
     """
+
     def __init__(self) -> None:
         """Creates the MeshDrawer low level system."""
     def set_budget(self, budget: int) -> None:
@@ -777,6 +783,7 @@ class MeshDrawer2D(TypedObject):
     """This class allows the drawing of 2D objects - mainly based on quads and
     rectangles.  It allows clipping and several high level UI theme functions.
     """
+
     def __init__(self) -> None:
         """Creates the MeshDrawer2D low level system."""
     def set_budget(self, budget: int) -> None:
@@ -820,6 +827,7 @@ class MovieTexture(Texture):
     """A texture that fetches video frames from an underlying object of class
     Movie.
     """
+
     time: float
     loop: bool
     loop_count: int
@@ -934,6 +942,7 @@ class MultitexReducer:
     of the textures once they have been flattened.  It is, however, useful for
     "baking in" a particular multitexture effect.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: MultitexReducer = ...) -> None: ...
     def clear(self) -> None: ...
@@ -980,6 +989,7 @@ class NodeVertexTransform(VertexTransform):
     allowing you to build up a chain of NodeVertexTransforms that represent a
     list of composed matrices.
     """
+
     @property
     def node(self) -> PandaNode: ...
     @property
@@ -1008,6 +1018,7 @@ class ShaderTerrainMesh(PandaNode):
       use in your own shaders. IMPORTANT: If you don't set an appropriate shader
       on the terrain, nothing will be visible.
     """
+
     heightfield: Texture
     chunk_size: int
     generate_patches: bool
@@ -1159,6 +1170,7 @@ class SceneGraphAnalyzerMeter(TextNode):
     channel or window.  If this is done, it creates a DisplayRegion for itself
     and renders itself in the upper-right-hand corner.
     """
+
     @overload
     def __init__(self, __param0: SceneGraphAnalyzerMeter) -> None: ...
     @overload
@@ -1225,6 +1237,7 @@ class RigidBodyCombiner(PandaNode):
 
     RenderEffects such as Billboards are not supported below this node.
     """
+
     @property
     def internal_scene(self) -> NodePath: ...
     def collect(self) -> None:
@@ -1267,6 +1280,7 @@ class PipeOcclusionCullTraverser(CullTraverser):
     GraphicsPipe and DisplayRegion and other classes in display.  So we put it
     in grutil instead, for lack of any better ideas.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, host: GraphicsOutput) -> None: ...
     def upcast_to_CullTraverser(self) -> CullTraverser: ...
@@ -1301,6 +1315,7 @@ class PipeOcclusionCullTraverser(CullTraverser):
 
 class PfmVizzer:
     """This class aids in the visualization and manipulation of PfmFile objects."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     CT_texcoord2: Final[Literal[0]]
     CTTexcoord2: Final[Literal[0]]

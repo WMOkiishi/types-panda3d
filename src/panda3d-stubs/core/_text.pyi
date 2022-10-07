@@ -37,6 +37,7 @@ class TextGlyph(TypedReferenceCount):
     """A representation of a single glyph (character) from a font.  This is a
     piece of renderable geometry of some kind.
     """
+
     @property
     def character(self) -> int: ...
     @property
@@ -94,6 +95,7 @@ class TextFont(TypedReferenceCount, Namable):
     This is just an abstract interface; see StaticTextFont or DynamicTextFont
     for an actual implementation.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     line_height: float
     space_advance: float
@@ -158,6 +160,7 @@ class DynamicTextGlyph(TextGlyph):
     DynamicTextFont.  This keeps some additional information, such as where the
     glyph appears on a texture map.
     """
+
     @property
     def page(self) -> DynamicTextPage: ...
     def get_page(self) -> DynamicTextPage:
@@ -214,6 +217,7 @@ class DynamicTextPage(Texture):
     a number of glyphs for rendering.  The font starts out with one page, and
     will add more as it needs them.
     """
+
     def __init__(self, __param0: DynamicTextPage) -> None: ...
     def get_size(self) -> LVecBase2i:
         """Returns the size of the page (texture), in pixels."""
@@ -233,6 +237,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
     from a standard font file (e.g.  a TTF file) on the fly.  It requires the
     FreeType 2.0 library (or any higher, backward-compatible version).
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     point_size: float
     pixels_per_unit: float
@@ -554,6 +559,7 @@ class FontPool:
     It is similar to ModelPool and TexturePool in that it unifies references to
     the same filename.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def has_font(filename: str) -> bool:
@@ -621,6 +627,7 @@ class StaticTextFont(TextFont):
     available for use.  It doesn't require linking with any external libraries
     like FreeType.
     """
+
     def __init__(self, font_def: PandaNode, cs: _CoordinateSystem = ...) -> None:
         """The constructor expects the root node to a model generated via egg-mkfont,
         which consists of a set of models, one per each character in the font.
@@ -646,6 +653,7 @@ class TextProperties:
     the string; each nested TextProperties structure modifies the appearance of
     subsequent text within the block.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     font: TextFont
     small_caps: bool
@@ -1043,6 +1051,7 @@ class TextGraphic:
     within this rectangle, but if it does not, it may visually overlap with
     nearby text.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     model: NodePath
     frame: LVecBase4
@@ -1115,6 +1124,7 @@ class TextPropertiesManager:
     associate it here via the set_graphic() call.  Then "\\5name\\5" will embed
     the named graphic.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_properties(self, name: str, properties: TextProperties) -> None:
         """Defines the TextProperties associated with the indicated name.  When the
@@ -1200,6 +1210,7 @@ class TextAssembler:
     according to the TextProperties.  However, user code may take advantage of
     it, if desired, for very low-level text operations.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     usage_hint: _GeomEnums_UsageHint
     max_rows: int
@@ -1532,6 +1543,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     containing ordinary geometry, which you may use however you like.  Each
     time you call generate() a new node is returned.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     max_rows: int
     frame_color: LColor

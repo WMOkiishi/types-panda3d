@@ -325,12 +325,12 @@ class Class:
         yield declaration
         yield from indent_lines(docstring_lines(self.doc))
         sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
-        prev_was_class = False
+        need_blank_line = bool(self.doc)
         for item in sorted_nested:
             is_class = isinstance(item, Class) and not item.is_empty()
-            if is_class or prev_was_class:
+            if is_class or need_blank_line:
                 yield ''
-            prev_was_class = is_class
+            need_blank_line = is_class
             yield from indent_lines(item.definition())
 
 

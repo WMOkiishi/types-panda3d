@@ -94,6 +94,7 @@ class AdaptiveLru(Namable):
     The interface is designed to be identical to that for SimpleLru, so that it
     may be used as a drop-in replacement.
     """
+
     def __init__(self, name: str, max_size: int) -> None: ...
     def get_total_size(self) -> int:
         """Returns the total size of all objects currently active on the LRU."""
@@ -164,6 +165,7 @@ class AdaptiveLruPage:
     this; it maintains its pages in two different lists, one grouped by
     priority, and one in order by next partial update needs.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: AdaptiveLruPage) -> None: ...
@@ -235,6 +237,7 @@ class GeomEnums:
     used by Geom, GeomVertexData, GeomVertexArrayData, GeomPrimitive, and other
     related classes.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     UH_client: Final[Literal[0]]
     UHClient: Final[Literal[0]]
@@ -377,6 +380,7 @@ class GeomVertexAnimationSpec(GeomEnums):
     actually performed; this just specifies how the vertices are set up to be
     animated.
     """
+
     @property
     def animation_type(self) -> _GeomEnums_AnimationType: ...
     @property
@@ -433,6 +437,7 @@ class InternalName(TypedWritableReferenceCount):
     composition of one or more other names, or by giving it a source string
     directly.
     """
+
     @property
     def parent(self) -> InternalName: ...
     @property
@@ -675,6 +680,7 @@ class GeomVertexColumn(GeomEnums):
     stored within a Geom.  The GeomVertexArrayFormat class maintains a list of
     these to completely define a particular array structure.
     """
+
     @overload
     def __init__(self, copy: GeomVertexColumn) -> None: ...
     @overload
@@ -803,6 +809,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     "normal", "texcoord", and "color"; other kinds of data may be piggybacked
     into the data record simply by choosing a unique name.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     stride: int
     pad_to: int
@@ -1009,6 +1016,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     standard and/or user-defined columns in your custom GeomVertexFormat
     constructions.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     animation: GeomVertexAnimationSpec
     arrays: Sequence[GeomVertexArrayFormat]
@@ -1404,6 +1412,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 
 class SimpleLru(Namable):
     """An implementation of a very simple LRU algorithm.  Also see AdaptiveLru."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str, max_size: int) -> None: ...
     def upcast_to_Namable(self) -> Namable: ...
@@ -1453,6 +1462,7 @@ class SimpleLruPage:
     """One atomic piece that may be managed by a SimpleLru chain.  To use this
     class, inherit from it and override evict_lru().
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: SimpleLruPage) -> None: ...
@@ -1514,6 +1524,7 @@ class SimpleAllocator:
     allocate ranges of nonnegative integers within a specified upper limit; it
     uses a simple first-fit algorithm to find the next available space.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, max_size: int, lock: Mutex) -> None: ...
     def alloc(self, size: int, alignment: int = ...) -> SimpleAllocatorBlock:
@@ -1557,6 +1568,7 @@ class SimpleAllocator:
 
 class SimpleAllocatorBlock:
     """A single block as returned from SimpleAllocator::alloc()."""
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def free(self) -> None:
         """Releases the allocated space."""
@@ -1599,6 +1611,7 @@ class VertexDataSaveFile(SimpleAllocator):
     and written to disk.  All vertex data arrays are written into one large
     flat file.
     """
+
     def is_valid(self) -> bool:
         """Returns true if the save file was successfully created and is ready for
         use, false if there was an error.
@@ -1618,6 +1631,7 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
     may be paged out, in the form of in-memory compression or to an on-disk
     cache file, if necessary.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     RC_resident: Final[Literal[0]]
     RCResident: Final[Literal[0]]
@@ -1728,6 +1742,7 @@ class VertexDataBook:
     """A collection of VertexDataPages, which can be used to allocate new
     VertexDataBlock objects.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, block_size: int) -> None: ...
     def alloc(self, size: int) -> VertexDataBlock:
@@ -1765,6 +1780,7 @@ class VertexDataBlock(SimpleAllocatorBlock, ReferenceCount):
     """A block of bytes that stores the actual raw vertex data referenced by a
     GeomVertexArrayData object.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_SimpleAllocatorBlock(self) -> SimpleAllocatorBlock: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
@@ -1794,6 +1810,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
     GeomVertexReader/Writer/Rewriter for high-level tools to manipulate the
     actual vertex data.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     usage_hint: _GeomEnums_UsageHint
     @property
@@ -1989,6 +2006,7 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
     This class serves in lieu of a pair of GeomVertexArrayDataPipelineReader
     and GeomVertexArrayDataPipelineWriter classes
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def object(self) -> GeomVertexArrayData: ...
@@ -2105,6 +2123,7 @@ class GeomCacheManager:
     pointers, and mixes them all up in the same LRU cache list.  Some of them
     (such as GeomMunger) are reference-counted here in the cache; most are not.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_max_size(self, max_size: int) -> None:
         """Specifies the maximum number of entries in the cache for storing pre-
@@ -2138,6 +2157,7 @@ class VertexTransform(TypedWritableReferenceCount):
     rendering.  This is used to implement soft-skinned and animated vertices.
     Derived classes will define how the transform is actually computed.
     """
+
     @property
     def modified(self) -> UpdateSeq: ...
     def get_matrix(self, matrix: Mat4f) -> None: ...
@@ -2189,6 +2209,7 @@ class TransformTable(TypedWritableReferenceCount):
     vertices on the graphics card.  See TransformBlendTable for one set up to
     compute its dynamic vertices on the CPU.
     """
+
     transforms: Sequence[VertexTransform]
     @property
     def registered(self) -> bool: ...
@@ -2259,6 +2280,7 @@ class TransformBlend:
     """This defines a single entry in a TransformBlendTable.  It represents a
     unique combination of VertexTransform pointers and blend amounts.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     transforms: Sequence[VertexTransform]
     @property
@@ -2392,6 +2414,7 @@ class TransformBlendTable(CopyOnWriteObject):
     vertices on the CPU.  See TransformTable for one set up to compute its
     dynamic vertices on the graphics card.
     """
+
     blends: Sequence[TransformBlend]
     rows: SparseArray
     @property
@@ -2466,6 +2489,7 @@ class VertexSlider(TypedWritableReferenceCount):
     It is similar to VertexTransform, which keeps a full 4x4 transform matrix,
     but the VertexSlider only keeps a single float value.
     """
+
     @property
     def name(self) -> InternalName: ...
     @property
@@ -2497,6 +2521,7 @@ class SliderTable(TypedWritableReferenceCount):
     Also, it is only used when animating vertices on the CPU, since GPU's don't
     support morphs at this point in time.
     """
+
     @property
     def modified(self) -> UpdateSeq: ...
     def __init__(self, copy: SliderTable = ...) -> None: ...
@@ -2592,6 +2617,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     GeomVertexWriter, and GeomVertexRewriter objects to read and write vertex
     data at a high level.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     usage_hint: _GeomEnums_UsageHint
@@ -3034,6 +3060,7 @@ class AnimateVerticesRequest(AsyncTask):
     requests are being run (presumably on multiple CPUs/cores), to ensure that
     the data has been computed by the time it's needed.
     """
+
     @overload
     def __init__(self, __param0: AnimateVerticesRequest) -> None:
         """Create a new AnimateVerticesRequest."""
@@ -3062,6 +3089,7 @@ class BufferContext(SavedContext):
     This class provides methods for tracking the video memory utilization, as
     well as residency of each object, via PStats.
     """
+
     @property
     def object(self) -> TypedWritableReferenceCount: ...
     @property
@@ -3112,6 +3140,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
     from each three consecutive vertices, while a GeomTriangleStrip renders a
     strip of (n - 2) connected triangles from each sequence of n vertices.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def primitive_type(self) -> _GeomEnums_PrimitiveType: ...
@@ -3740,6 +3769,7 @@ class TextureStage(TypedWritableReferenceCount):
     active TextureStages in order and then issuing the appropriate rendering
     calls to activate them.
     """
+
     name: str
     sort: int
     priority: int
@@ -4116,6 +4146,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
     vertices in the table), and all of them must be rendered at the same time,
     in the same graphics state.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     primitives: Sequence[GeomPrimitive]
     bounds_type: _BoundingVolume_BoundsType
@@ -4602,6 +4633,7 @@ class GeomContext(SavedContext):
     In the case of OpenGL, for example, a GeomContext corresponds to a display
     list identifier.
     """
+
     @property
     def geom(self) -> Geom: ...
     def get_geom(self) -> Geom: ...
@@ -4609,6 +4641,7 @@ class GeomContext(SavedContext):
 
 class GeomLines(GeomPrimitive):
     """Defines a series of disconnected line segments."""
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4620,6 +4653,7 @@ class GeomLinesAdjacency(GeomPrimitive):
 
     @since 1.10.0
     """
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4627,6 +4661,7 @@ class GeomLinesAdjacency(GeomPrimitive):
 
 class GeomLinestrips(GeomPrimitive):
     """Defines a series of line strips."""
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4637,6 +4672,7 @@ class GeomLinestripsAdjacency(GeomPrimitive):
 
     @since 1.10.0
     """
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4646,6 +4682,7 @@ class GeomPatches(GeomPrimitive):
     """Defines a series of "patches", fixed-size groupings of vertices that must
     be processed by a tessellation shader.
     """
+
     @overload
     def __init__(self, copy: GeomPatches) -> None:
         """The number of vertices per patch must be specified to the GeomPatches
@@ -4658,6 +4695,7 @@ class GeomPatches(GeomPrimitive):
 
 class GeomPoints(GeomPrimitive):
     """Defines a series of disconnected points."""
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4665,6 +4703,7 @@ class GeomPoints(GeomPrimitive):
 
 class GeomTriangles(GeomPrimitive):
     """Defines a series of disconnected triangles."""
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4675,6 +4714,7 @@ class GeomTrianglesAdjacency(GeomPrimitive):
 
     @since 1.10.0
     """
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4682,6 +4722,7 @@ class GeomTrianglesAdjacency(GeomPrimitive):
 
 class GeomTrifans(GeomPrimitive):
     """Defines a series of triangle fans."""
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4689,6 +4730,7 @@ class GeomTrifans(GeomPrimitive):
 
 class GeomTristrips(GeomPrimitive):
     """Defines a series of triangle strips."""
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4699,6 +4741,7 @@ class GeomTristripsAdjacency(GeomPrimitive):
 
     @since 1.10.0
     """
+
     @overload
     def __init__(self, usage_hint: _GeomEnums_UsageHint) -> None: ...
     @overload
@@ -4727,6 +4770,7 @@ class GeomVertexReader(GeomEnums):
     cause the vertex buffer to be deallocated.  Better yet, use a
     GeomVertexRewriter if you are going to create both of them anyway.
     """
+
     @overload
     def __init__(self, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
@@ -5031,6 +5075,7 @@ class GeomVertexWriter(GeomEnums):
     cause the vertex buffer to be deallocated.  Better yet, use a
     GeomVertexRewriter if you are going to create both of them anyway.
     """
+
     @overload
     def __init__(self, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
@@ -5593,6 +5638,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
     manage the reference counts properly between the reader and the writer to
     avoid accidentally dereferencing either array while recopying.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, current_thread: Thread = ...) -> None:
@@ -5736,6 +5782,7 @@ class SamplerState:
     can be used to sample the same texture using different settings in
     different places.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     wrap_u: _SamplerState_WrapMode
     wrap_v: _SamplerState_WrapMode
@@ -5983,6 +6030,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     image data is copied to texture memory (actually, to the graphics API), and
     the system RAM image is automatically freed.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     clear_color: LColor
     filename: Filename
@@ -8053,6 +8101,7 @@ class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):
 
     @since 1.10.0
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def data_size_bytes(self) -> int: ...
@@ -8130,6 +8179,7 @@ class PreparedGraphicsObjects(ReferenceCount):
     hence their storage here in a separate object rather than as a part of the
     GraphicsStateGuardian.
     """
+
     def get_name(self) -> str:
         """Returns the name of the PreparedGraphicsObjects structure.  This is an
         arbitrary name that serves mainly to uniquify the context for PStats
@@ -8625,6 +8675,7 @@ class IndexBufferContext(BufferContext, AdaptiveLruPage):
     sense.  For instance, DirectX can allocate a vertex buffer for the array.
     OpenGL can create a buffer object.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_BufferContext(self) -> BufferContext: ...
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
@@ -8646,6 +8697,7 @@ class Lens(TypedWritableReferenceCount):
     in other contexts, however; for instance, a Spotlight is also defined using
     a lens.
     """
+
     change_event: str
     coordinate_system: _CoordinateSystem
     film_size: LVecBase2
@@ -9213,6 +9265,7 @@ class Material(TypedWritableReferenceCount, Namable):
     the specular exponent (shininess) or by specifying a roughness value that
     in perceptually linear in the range of 0-1.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     base_color: LColor
     ambient: LColor
@@ -9489,6 +9542,7 @@ class MaterialPool:
     be the the same object you supplied; in either case, it will have the same
     value.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def get_material(temp: Material) -> Material:
@@ -9539,6 +9593,7 @@ class MatrixLens(Lens):
     an explicit projection matrix, but not mess around with fov's or focal
     lengths or any of that nonsense.
     """
+
     user_mat: LMatrix4
     def __init__(self) -> None: ...
     def set_user_mat(self, user_mat: Mat4f) -> None:
@@ -9619,12 +9674,14 @@ class OrthographicLens(Lens):
     represents a planar projection onto its imaginary film of the specified
     size, hanging in space.
     """
+
     def __init__(self) -> None: ...
 
 class ParamTextureSampler(ParamValueBase):
     """A class object for storing a pointer to a Texture along with a sampler
     state that indicates how to to sample the given texture.
     """
+
     @property
     def texture(self) -> Texture: ...
     @property
@@ -9647,6 +9704,7 @@ class ParamTextureImage(ParamValueBase):
     This class is useful for binding texture images to a shader, which is a
     fairly esoteric feature.
     """
+
     @property
     def texture(self) -> Texture: ...
     @property
@@ -9684,6 +9742,7 @@ class ParamTextureImage(ParamValueBase):
 
 class PerspectiveLens(Lens):
     """A perspective-type lens: a normal camera."""
+
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -9695,6 +9754,7 @@ class TextureReloadRequest(AsyncTask):
     GraphicsStateGuardian::async_reload_texture(), when get_incomplete_render()
     is true.
     """
+
     @property
     def texture(self) -> Texture: ...
     @overload
@@ -9735,6 +9795,7 @@ class TextureContext(BufferContext, AdaptiveLruPage):
     the GSG will create some internal handle for the texture and store it here.
     The texture stores all of these handles internally.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_BufferContext(self) -> BufferContext: ...
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
@@ -9811,6 +9872,7 @@ class UserVertexSlider(VertexSlider):
     any arbitrary slider valie he likes.  This is rarely used except for
     testing.
     """
+
     def __init__(self, name: InternalName | str) -> None: ...
     def set_slider(self, slider: float) -> None:
         """Stores the indicated slider value."""
@@ -9821,6 +9883,7 @@ class UserVertexTransform(VertexTransform):
     any arbitrary transform matrix he likes.  This is rarely used except for
     testing.
     """
+
     def __init__(self, name: str) -> None: ...
     def get_name(self) -> str:
         """Returns the name passed to the constructor.  Completely arbitrary."""
@@ -9835,6 +9898,7 @@ class VideoTexture(Texture, AnimInterface):
     started, etc.  using the AnimInterface controls, similar to an animated
     character.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def video_width(self) -> int: ...
@@ -9875,6 +9939,7 @@ class VertexBufferContext(BufferContext, AdaptiveLruPage):
     sense.  For instance, DirectX can allocate a vertex buffer for the array.
     OpenGL can create a buffer object.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_BufferContext(self) -> BufferContext: ...
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
@@ -9906,6 +9971,7 @@ class TextureCollection:
     """Manages a list of Texture objects, as returned by
     TexturePool::find_all_textures().
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: TextureCollection = ...) -> None: ...
@@ -9993,6 +10059,7 @@ class TexturePool:
     unifies all references to the same filename, so that multiple models that
     reference the same textures don't waste texture memory unnecessarily.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
     def has_texture(filename: Filepath) -> bool:
@@ -10194,6 +10261,7 @@ class TexturePeeker(ReferenceCount):
     allows quick and easy inspection of a texture's texels by (u, v)
     coordinates.
     """
+
     def __init__(self, __param0: TexturePeeker) -> None: ...
     def get_x_size(self) -> int:
         """Returns the width of the texture image that is contributing to the
@@ -10266,6 +10334,7 @@ class TextureStagePool:
     It runs in one of three different modes, according to set_mode().  See that
     method for more information.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     mode: _TextureStagePool_Mode
     M_none: Final[Literal[0]]

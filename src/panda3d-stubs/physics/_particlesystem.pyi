@@ -83,6 +83,7 @@ class BaseParticleEmitter(ReferenceCount):
 
 class RingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
+
     def __init__(self, copy: RingEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -109,6 +110,7 @@ class RingEmitter(BaseParticleEmitter):
 
 class ArcEmitter(RingEmitter):
     """Describes a planar ring region in which particles are generated."""
+
     def __init__(self, copy: ArcEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -129,6 +131,7 @@ class ArcEmitter(RingEmitter):
 
 class BaseParticleFactory(ReferenceCount):
     """Pure Virtual base class for creating particles"""
+
     def set_lifespan_base(self, lb: float) -> None:
         """public"""
     def set_lifespan_spread(self, ls: float) -> None:
@@ -172,6 +175,7 @@ class BaseParticleFactory(ReferenceCount):
 
 class BaseParticleRenderer(ReferenceCount):
     """Pure virtual particle renderer base class"""
+
     PR_ALPHA_NONE: Final[Literal[0]]
     PRALPHANONE: Final[Literal[0]]
     PR_ALPHA_OUT: Final[Literal[1]]
@@ -229,6 +233,7 @@ class BaseParticleRenderer(ReferenceCount):
 
 class BoxEmitter(BaseParticleEmitter):
     """Describes a voluminous box region in which particles are generated."""
+
     def __init__(self, copy: BoxEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -331,6 +336,7 @@ class ColorInterpolationManager(ReferenceCount):
 
 class DiscEmitter(BaseParticleEmitter):
     """Describes a planar disc region from which particles are generated"""
+
     def __init__(self, copy: DiscEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -413,6 +419,7 @@ class GeomParticleRenderer(BaseParticleRenderer):
 
 class LineEmitter(BaseParticleEmitter):
     """Describes a linear region in which particles are generated."""
+
     def __init__(self, copy: LineEmitter = ...) -> None:
         """constructor"""
     def set_endpoint1(self, point: Vec3f) -> None:
@@ -450,6 +457,7 @@ class LineParticleRenderer(BaseParticleRenderer):
 
 class ParticleSystem(Physical):
     """Contains and manages a particle system."""
+
     @overload
     def __init__(self, pool_size: int = ...) -> None:
         """`(self, copy: ParticleSystem)`:
@@ -588,6 +596,7 @@ class ParticleSystem(Physical):
 
 class PointEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
+
     def __init__(self, copy: PointEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -650,6 +659,7 @@ class PointParticleRenderer(BaseParticleRenderer):
 
 class RectangleEmitter(BaseParticleEmitter):
     """Describes a planar square region in which particles are generated."""
+
     def __init__(self, copy: RectangleEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -672,6 +682,7 @@ class RectangleEmitter(BaseParticleEmitter):
 
 class SparkleParticleRenderer(BaseParticleRenderer):
     """pretty sparkly things."""
+
     SP_NO_SCALE: Final[Literal[0]]
     SPNOSCALE: Final[Literal[0]]
     SP_SCALE: Final[Literal[1]]
@@ -709,6 +720,7 @@ class SparkleParticleRenderer(BaseParticleRenderer):
 
 class SphereSurfaceEmitter(BaseParticleEmitter):
     """Describes a curved space in which particles are generated."""
+
     def __init__(self, copy: SphereSurfaceEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -723,6 +735,7 @@ class SphereSurfaceEmitter(BaseParticleEmitter):
 
 class SphereVolumeEmitter(BaseParticleEmitter):
     """Describes a voluminous spherical region in which particles are generated."""
+
     def __init__(self, copy: SphereVolumeEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -739,6 +752,7 @@ class SpriteAnim(ReferenceCount):
     """Helper class used by SpriteParticleRenderer to keep track of its textures
     and their respective UVs and source types.
     """
+
     ST_texture: Final[Literal[0]]
     STTexture: Final[Literal[0]]
     ST_from_node: Final[Literal[1]]
@@ -762,6 +776,7 @@ class SpriteAnim(ReferenceCount):
 
 class SpriteParticleRenderer(BaseParticleRenderer):
     """Renders a particle system with high-speed nasty trick sprites."""
+
     @overload
     def __init__(self, tex: Texture = ...) -> None:
         """`(self, copy: SpriteParticleRenderer)`:
@@ -974,6 +989,7 @@ class TangentRingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which tangent particles are generated,
     and particles fly off tangential to the ring.
     """
+
     def __init__(self, copy: TangentRingEmitter = ...) -> None:
         """`(self)`:
         constructor
@@ -1032,6 +1048,7 @@ class ParticleSystemManager:
     one doesn't have to be updated and rendered every frame See Also :
     particleSystemManager.cxx
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, every_nth_frame: int = ...) -> None:

@@ -23,6 +23,7 @@ class RecorderBase:
     ReferenceCount, except for MouseRecorder, which would otherwise doubly
     inherit from ReferenceCount.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def is_recording(self) -> bool:
         """Returns true if this recorder is presently recording data for saving to a
@@ -47,6 +48,7 @@ class MouseRecorder(DataNode, RecorderBase):
     of the node you wish to record.  It also serves as a pass-through, so that
     additional child nodes may be parented directly to it.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str) -> None: ...
     def upcast_to_DataNode(self) -> DataNode: ...
@@ -61,6 +63,7 @@ class RecorderController(TypedReferenceCount):
     """This object manages the process of recording the user's runtime inputs to a
     bam file so that the session can be recreated later.
     """
+
     def __init__(self) -> None: ...
     def begin_record(self, filename: Filepath) -> bool:
         """Begins recording data to the indicated filename.  All of the recorders in
@@ -204,6 +207,7 @@ class SocketStreamRecorder(RecorderBase, ReferenceCount):
     Outbound data will not be recorded, but will be sent straight through to
     the socket if it is connected, or silently ignored if it is not.
     """
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...

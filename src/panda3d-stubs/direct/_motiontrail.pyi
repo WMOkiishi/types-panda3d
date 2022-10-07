@@ -29,6 +29,7 @@ class CMotionTrail(TypedReferenceCount):
     coordinate of the texture corresponds to time and the v coordinate
     corresponds to the "shape" of the motion trail.
     """
+
     def __init__(self, __param0: CMotionTrail = ...) -> None:
         """Constructor"""
     def reset(self) -> None:
