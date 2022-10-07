@@ -31,14 +31,7 @@ class GraphEditorWindow(wx.Window):
     Z: list
     buffer: wx.EmptyBitmap
     def __init__(
-        self,
-        parent,
-        windowSize,
-        property,
-        xRange: SupportsFloat,
-        yRange: SupportsFloat,
-        curFrame: int,
-        object,
+        self, parent, windowSize, property, xRange: SupportsFloat, yRange: SupportsFloat, curFrame: int, object
     ) -> None: ...
     def refresh(self) -> None: ...
     def generateInfo(self) -> None: ...

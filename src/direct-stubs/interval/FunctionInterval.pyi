@@ -61,23 +61,13 @@ class WrtParentInterval(FunctionInterval):
 class PosInterval(FunctionInterval):
     posIntervalNum: ClassVar[int]
     def __init__(
-        self,
-        nodePath: NodePath,
-        pos: Vec3f,
-        duration: float = ...,
-        name: str | None = None,
-        other: NodePath | None = None,
+        self, nodePath: NodePath, pos: Vec3f, duration: float = ..., name: str | None = None, other: NodePath | None = None
     ) -> None: ...
 
 class HprInterval(FunctionInterval):
     hprIntervalNum: ClassVar[int]
     def __init__(
-        self,
-        nodePath: NodePath,
-        hpr: Vec3f,
-        duration: float = ...,
-        name: str | None = None,
-        other: NodePath | None = None,
+        self, nodePath: NodePath, hpr: Vec3f, duration: float = ..., name: str | None = None, other: NodePath | None = None
     ) -> None: ...
 
 class ScaleInterval(FunctionInterval):
@@ -130,12 +120,7 @@ class PosHprScaleInterval(FunctionInterval):
 
 class Func(FunctionInterval):
     def __init__(
-        self,
-        function: Callable[..., object],
-        *extraArgs: Any,
-        name: str | None = None,
-        openEnded: bool = True,
-        **kw: Any,
+        self, function: Callable[..., object], *extraArgs: Any, name: str | None = None, openEnded: bool = True, **kw: Any
     ) -> None: ...
 
 class Wait(WaitInterval):

@@ -15,11 +15,7 @@ class FileSpec:
     hash: str | None
     def __init__(self) -> None: ...
     def fromFile(
-        self,
-        packageDir: Filepath,
-        filename: Filepath,
-        pathname: Filename | None = None,
-        st: stat_result | None = None,
+        self, packageDir: Filepath, filename: Filepath, pathname: Filename | None = None, st: stat_result | None = None
     ) -> None: ...
     def readHash(self, pathname: Filepath) -> None: ...
     def loadXml(self, xelement: TiXmlElement) -> None: ...
@@ -33,9 +29,6 @@ class FileSpec:
         correctSelf: bool = False,
     ) -> bool: ...
     def fullVerify(
-        self,
-        packageDir: Filepath | None = None,
-        pathname: Filename | None = None,
-        notify: Notifier | None = None,
+        self, packageDir: Filepath | None = None, pathname: Filename | None = None, notify: Notifier | None = None
     ) -> bool: ...
     def checkHash(self, packageDir: Filepath, pathname: Filename | None, st: stat_result | None) -> bool: ...

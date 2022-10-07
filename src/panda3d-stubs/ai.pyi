@@ -30,12 +30,16 @@ class AIBehaviors:
         class.  This function is overloaded to accept a NodePath or an LVecBase3.
         """
     @overload
-    def flee(self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None: ...
+    def flee(
+        self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...
+    ) -> None: ...
     def pursue(self, target_object: NodePath, pursue_wt: float = ...) -> None:
         """This function activates pursue.  This is the function we want the user to
         call for pursue to be done.
         """
-    def evade(self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., evade_wt: float = ...) -> None:
+    def evade(
+        self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., evade_wt: float = ...
+    ) -> None:
         """This function activates evade_activate."""
     def arrival(self, distance: float = ...) -> None:
         """This function activates arrival.  This is the function we want the user to
@@ -160,7 +164,15 @@ class Flock:
     @overload
     def __init__(self, __param0: Flock) -> None: ...
     @overload
-    def __init__(self, flock_id: int, vcone_angle: float, vcone_radius: float, separation_wt: int = ..., cohesion_wt: int = ..., alignment_wt: int = ...) -> None: ...
+    def __init__(
+        self,
+        flock_id: int,
+        vcone_angle: float,
+        vcone_radius: float,
+        separation_wt: int = ...,
+        cohesion_wt: int = ...,
+        alignment_wt: int = ...,
+    ) -> None: ...
     def add_ai_char(self, ai_char: AICharacter) -> None:
         """This function adds AI characters to the flock."""
     def get_id(self) -> int:

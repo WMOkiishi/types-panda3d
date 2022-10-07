@@ -17,7 +17,7 @@ _DeferredInfo: TypeAlias = tuple[
     tuple[int, int | None, int, int, DatagramIterator],
     bool,
     Datagram,
-    list[tuple[Datagram, DatagramIterator] | tuple[_MsgType, tuple[Datagram, DatagramIterator]]]
+    list[tuple[Datagram, DatagramIterator] | tuple[_MsgType, tuple[Datagram, DatagramIterator]]],
 ]
 _MsgType: TypeAlias = Literal[1, 2, 3, 4]
 
@@ -61,20 +61,10 @@ class ClientRepositoryBase(ConnectionRepository):
     def replayDeferredGenerate(self, msgType: _MsgType, extra: Any) -> None: ...
     def doDeferredGenerate(self, task: object) -> Literal[0, 2]: ...
     def generateWithRequiredFields(
-        self,
-        dclass: DCClass,
-        doId: int,
-        di: DatagramIterator,
-        parentId: int | None,
-        zoneId: int | None,
+        self, dclass: DCClass, doId: int, di: DatagramIterator, parentId: int | None, zoneId: int | None
     ) -> DistributedObject: ...
     def generateWithRequiredOtherFields(
-        self,
-        dclass: DCClass,
-        doId: int,
-        di: DatagramIterator,
-        parentId: int | None = None,
-        zoneId: int | None = None,
+        self, dclass: DCClass, doId: int, di: DatagramIterator, parentId: int | None = None, zoneId: int | None = None
     ) -> DistributedObject: ...
     def generateWithRequiredOtherFieldsOwner(self, dclass: DCClass, doId: int, di: DatagramIterator) -> DistributedObject: ...
     def disableDoId(self, doId: int, ownerView: bool = False) -> None: ...

@@ -20,13 +20,7 @@ class ClientRepository(ClientRepositoryBase):
     def freeDoId(self, doId: int) -> None: ...
     def storeObjectLocation(self, object: DistributedObject, parentId: int, zoneId: int) -> None: ...  # type: ignore[override]
     def createDistributedObject(
-        self,
-        className=None,
-        distObj=None,
-        zoneId: int = ...,
-        optionalFields=None,
-        doId=None,
-        reserveDoId: bool = False,
+        self, className=None, distObj=None, zoneId: int = ..., optionalFields=None, doId=None, reserveDoId: bool = False
     ): ...
     def formatGenerate(self, distObj, extraFields): ...
     def sendDeleteMsg(self, doId) -> None: ...

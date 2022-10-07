@@ -62,11 +62,7 @@ class GravityWalker(DirectObject):
     avatarNodePath: NodePath
     cTrav: CollisionTraverser
     def __init__(
-        self,
-        gravity: float = ...,
-        standableGround: float = ...,
-        hardLandingForce: float = ...,
-        legacyLifter: bool = False,
+        self, gravity: float = ..., standableGround: float = ..., hardLandingForce: float = ..., legacyLifter: bool = False
     ) -> None: ...
     def setWalkSpeed(self, forward: float, jump: float, reverse: float, rotate: float) -> None: ...
     def getSpeeds(self) -> tuple[float, float, float]: ...

@@ -3082,7 +3082,6 @@ class LMatrix3f:
             """Returns 3: the number of columns of a LMatrix3."""
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
-
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[9]]
     is_int: Final[Literal[0]]
@@ -3096,7 +3095,18 @@ class LMatrix3f:
     @overload
     def __init__(self, __param0: Vec3f, __param1: Vec3f, __param2: Vec3f) -> None: ...
     @overload
-    def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float) -> None: ...
+    def __init__(
+        self,
+        __param0: float,
+        __param1: float,
+        __param2: float,
+        __param3: float,
+        __param4: float,
+        __param5: float,
+        __param6: float,
+        __param7: float,
+        __param8: float,
+    ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix3f.CRow | LMatrix3f.Row: ...
     def __len__(self) -> Literal[3]:
         """Returns 3: the number of rows of a LMatrix3."""
@@ -3129,7 +3139,9 @@ class LMatrix3f:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-    def set(self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float) -> None: ...
+    def set(
+        self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float
+    ) -> None: ...
     def set_row(self, row: int, v: LVecBase2f | Vec3f) -> None:
         """`(self, row: int, v: LVecBase2f)`:
         Replaces the indicated row of the matrix from a two-component vector,
@@ -3361,7 +3373,9 @@ class LMatrix3f:
         """Returns a matrix that applies the indicated scale and shear."""
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3f: ...
+    def scale_shear_mat(
+        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+    ) -> LMatrix3f: ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix3f:
         """Returns a matrix that transforms from the indicated coordinate system to
@@ -3477,7 +3491,6 @@ class LMatrix4f:
             """Returns 4: the number of columns of a LMatrix4."""
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
-
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[16]]
     is_int: Final[Literal[0]]
@@ -3501,7 +3514,25 @@ class LMatrix4f:
     @overload
     def __init__(self, __param0: Vec4f, __param1: Vec4f, __param2: Vec4f, __param3: Vec4f) -> None: ...
     @overload
-    def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float, __param9: float, __param10: float, __param11: float, __param12: float, __param13: float, __param14: float, __param15: float) -> None: ...
+    def __init__(
+        self,
+        __param0: float,
+        __param1: float,
+        __param2: float,
+        __param3: float,
+        __param4: float,
+        __param5: float,
+        __param6: float,
+        __param7: float,
+        __param8: float,
+        __param9: float,
+        __param10: float,
+        __param11: float,
+        __param12: float,
+        __param13: float,
+        __param14: float,
+        __param15: float,
+    ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix4f.CRow | LMatrix4f.Row: ...
     def __len__(self) -> Literal[4]:
         """Returns 4: the number of rows of a LMatrix4."""
@@ -3532,7 +3563,25 @@ class LMatrix4f:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-    def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
+    def set(
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e03: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e13: float,
+        e20: float,
+        e21: float,
+        e22: float,
+        e23: float,
+        e30: float,
+        e31: float,
+        e32: float,
+        e33: float,
+    ) -> None: ...
     def set_upper_3(self, upper3: LMatrix3f) -> None:
         """Get and set the upper 3x3 rotation matrix."""
     def get_upper_3(self) -> LMatrix3f:
@@ -3756,7 +3805,9 @@ class LMatrix4f:
         """Returns a matrix that applies the indicated scale and shear."""
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4f: ...
+    def scale_shear_mat(
+        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+    ) -> LMatrix4f: ...
     @staticmethod
     def y_to_z_up_mat() -> LMatrix4f:
         """Returns a matrix that transforms from the Y-up coordinate system to the
@@ -3880,12 +3931,48 @@ class UnalignedLMatrix4f:
     @overload
     def __init__(self, copy: Mat4f = ...) -> None: ...
     @overload
-    def __init__(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
+    def __init__(
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e03: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e13: float,
+        e20: float,
+        e21: float,
+        e22: float,
+        e23: float,
+        e30: float,
+        e31: float,
+        e32: float,
+        e33: float,
+    ) -> None: ...
     def __call__(self, row: int, col: int) -> float | None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def assign(self, copy: Mat4f) -> UnalignedLMatrix4f: ...
-    def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
+    def set(
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e03: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e13: float,
+        e20: float,
+        e21: float,
+        e22: float,
+        e23: float,
+        e30: float,
+        e31: float,
+        e32: float,
+        e33: float,
+    ) -> None: ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, sixteen."""
     @staticmethod
@@ -3919,7 +4006,6 @@ class LMatrix3d:
             """Returns 3: the number of columns of a LMatrix3."""
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
-
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[9]]
     is_int: Final[Literal[0]]
@@ -3933,7 +4019,18 @@ class LMatrix3d:
     @overload
     def __init__(self, __param0: Vec3d, __param1: Vec3d, __param2: Vec3d) -> None: ...
     @overload
-    def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float) -> None: ...
+    def __init__(
+        self,
+        __param0: float,
+        __param1: float,
+        __param2: float,
+        __param3: float,
+        __param4: float,
+        __param5: float,
+        __param6: float,
+        __param7: float,
+        __param8: float,
+    ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix3d.CRow | LMatrix3d.Row: ...
     def __len__(self) -> Literal[3]:
         """Returns 3: the number of rows of a LMatrix3."""
@@ -3966,7 +4063,9 @@ class LMatrix3d:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-    def set(self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float) -> None: ...
+    def set(
+        self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float
+    ) -> None: ...
     def set_row(self, row: int, v: LVecBase2d | Vec3d) -> None:
         """`(self, row: int, v: LVecBase2d)`:
         Replaces the indicated row of the matrix from a two-component vector,
@@ -4198,7 +4297,9 @@ class LMatrix3d:
         """Returns a matrix that applies the indicated scale and shear."""
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix3d: ...
+    def scale_shear_mat(
+        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+    ) -> LMatrix3d: ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix3d:
         """Returns a matrix that transforms from the indicated coordinate system to
@@ -4314,7 +4415,6 @@ class LMatrix4d:
             """Returns 4: the number of columns of a LMatrix4."""
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
-
     DtoolClassDict: ClassVar[dict[str, Any]]
     num_components: Final[Literal[16]]
     is_int: Final[Literal[0]]
@@ -4338,7 +4438,25 @@ class LMatrix4d:
     @overload
     def __init__(self, __param0: Vec4d, __param1: Vec4d, __param2: Vec4d, __param3: Vec4d) -> None: ...
     @overload
-    def __init__(self, __param0: float, __param1: float, __param2: float, __param3: float, __param4: float, __param5: float, __param6: float, __param7: float, __param8: float, __param9: float, __param10: float, __param11: float, __param12: float, __param13: float, __param14: float, __param15: float) -> None: ...
+    def __init__(
+        self,
+        __param0: float,
+        __param1: float,
+        __param2: float,
+        __param3: float,
+        __param4: float,
+        __param5: float,
+        __param6: float,
+        __param7: float,
+        __param8: float,
+        __param9: float,
+        __param10: float,
+        __param11: float,
+        __param12: float,
+        __param13: float,
+        __param14: float,
+        __param15: float,
+    ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix4d.CRow | LMatrix4d.Row: ...
     def __len__(self) -> Literal[4]:
         """Returns 4: the number of rows of a LMatrix4."""
@@ -4369,7 +4487,25 @@ class LMatrix4d:
         """Sets each element of the matrix to the indicated fill_value.  This is of
         questionable value, but is sometimes useful when initializing to zero.
         """
-    def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
+    def set(
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e03: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e13: float,
+        e20: float,
+        e21: float,
+        e22: float,
+        e23: float,
+        e30: float,
+        e31: float,
+        e32: float,
+        e33: float,
+    ) -> None: ...
     def set_upper_3(self, upper3: LMatrix3d) -> None:
         """Get and set the upper 3x3 rotation matrix."""
     def get_upper_3(self) -> LMatrix3d:
@@ -4593,7 +4729,9 @@ class LMatrix4d:
         """Returns a matrix that applies the indicated scale and shear."""
     @overload
     @staticmethod
-    def scale_shear_mat(sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...) -> LMatrix4d: ...
+    def scale_shear_mat(
+        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+    ) -> LMatrix4d: ...
     @staticmethod
     def y_to_z_up_mat() -> LMatrix4d:
         """Returns a matrix that transforms from the Y-up coordinate system to the
@@ -4717,12 +4855,48 @@ class UnalignedLMatrix4d:
     @overload
     def __init__(self, copy: Mat4d = ...) -> None: ...
     @overload
-    def __init__(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
+    def __init__(
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e03: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e13: float,
+        e20: float,
+        e21: float,
+        e22: float,
+        e23: float,
+        e30: float,
+        e31: float,
+        e32: float,
+        e33: float,
+    ) -> None: ...
     def __call__(self, row: int, col: int) -> float | None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def assign(self, copy: Mat4d) -> UnalignedLMatrix4d: ...
-    def set(self, e00: float, e01: float, e02: float, e03: float, e10: float, e11: float, e12: float, e13: float, e20: float, e21: float, e22: float, e23: float, e30: float, e31: float, e32: float, e33: float) -> None: ...
+    def set(
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e03: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e13: float,
+        e20: float,
+        e21: float,
+        e22: float,
+        e23: float,
+        e30: float,
+        e31: float,
+        e32: float,
+        e33: float,
+    ) -> None: ...
     def get_num_components(self) -> int:
         """Returns the number of elements in the matrix, sixteen."""
     @staticmethod
@@ -5303,6 +5477,7 @@ CS_yup_left: Final[Literal[4]]
 CSYupLeft: Final[Literal[4]]
 CS_invalid: Final[Literal[5]]
 CSInvalid: Final[Literal[5]]
+
 @overload
 def __mul__(v: LPoint3d, m: LMatrix3d) -> LPoint3d: ...
 @overload
@@ -5408,9 +5583,13 @@ def decompose_matrix(mat: Mat4d, scale: Vec3d, hpr: Vec3d, translate: Vec3d, cs:
 @overload
 def decompose_matrix(mat: Mat4f, scale: Vec3f, hpr: Vec3f, translate: Vec3f, cs: _CoordinateSystem = ...) -> bool: ...
 @overload
-def decompose_matrix(mat: Mat4d, scale: Vec3d, shear: Vec3d, hpr: Vec3d, translate: Vec3d, cs: _CoordinateSystem = ...) -> bool: ...
+def decompose_matrix(
+    mat: Mat4d, scale: Vec3d, shear: Vec3d, hpr: Vec3d, translate: Vec3d, cs: _CoordinateSystem = ...
+) -> bool: ...
 @overload
-def decompose_matrix(mat: Mat4f, scale: Vec3f, shear: Vec3f, hpr: Vec3f, translate: Vec3f, cs: _CoordinateSystem = ...) -> bool: ...
+def decompose_matrix(
+    mat: Mat4f, scale: Vec3f, shear: Vec3f, hpr: Vec3f, translate: Vec3f, cs: _CoordinateSystem = ...
+) -> bool: ...
 @overload
 def decompose_matrix_old_hpr(mat: LMatrix3d, scale: Vec3d, shear: Vec3d, hpr: Vec3d, cs: _CoordinateSystem = ...) -> bool: ...
 @overload
@@ -5419,6 +5598,7 @@ def decompose_matrix_old_hpr(mat: LMatrix3f, scale: Vec3f, shear: Vec3f, hpr: Ve
 def old_to_new_hpr(old_hpr: Vec3d) -> LVecBase3d: ...
 @overload
 def old_to_new_hpr(old_hpr: Vec3f) -> LVecBase3f: ...
+
 deg2Rad = deg_2_rad
 rad2Deg = rad_2_deg
 getDefaultCoordinateSystem = get_default_coordinate_system

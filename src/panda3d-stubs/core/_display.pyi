@@ -550,7 +550,6 @@ class WindowHandle(TypedReferenceCount):
         def get_class_type() -> TypeHandle: ...
         getIntHandle = get_int_handle
         getClassType = get_class_type
-
     os_handle: WindowHandle.OSHandle
     @overload
     def __init__(self, copy: WindowHandle) -> None: ...
@@ -1497,7 +1496,9 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """If the GraphicsOutput is currently rendering to a texture, then all
         textures are dissociated from the GraphicsOuput.
         """
-    def add_render_texture(self, tex: Texture, mode: _GraphicsOutput_RenderTextureMode, bitplane: _DrawableRegion_RenderTexturePlane = ...) -> None:
+    def add_render_texture(
+        self, tex: Texture, mode: _GraphicsOutput_RenderTextureMode, bitplane: _DrawableRegion_RenderTexturePlane = ...
+    ) -> None:
         """Creates a new Texture object, suitable for rendering the contents of this
         buffer into, and appends it to the list of render textures.
 
@@ -1715,7 +1716,9 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         spans two monitors, and each monitor represents a different eye.
         """
     @overload
-    def set_side_by_side_stereo(self, side_by_side_stereo: bool, sbs_left_dimensions: Vec4f, sbs_right_dimensions: Vec4f) -> None: ...
+    def set_side_by_side_stereo(
+        self, side_by_side_stereo: bool, sbs_left_dimensions: Vec4f, sbs_right_dimensions: Vec4f
+    ) -> None: ...
     def get_side_by_side_stereo(self) -> bool:
         """Returns whether side-by-side stereo mode is in effect for this particular
         window.  See set_side_by_side_stereo().
@@ -1897,7 +1900,9 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         likely if the number of display regions has changed since the last call to
         get_num_active_display_regions().
         """
-    def make_texture_buffer(self, name: str, x_size: int, y_size: int, tex: Texture = ..., to_ram: bool = ..., fbp: FrameBufferProperties = ...) -> GraphicsOutput:
+    def make_texture_buffer(
+        self, name: str, x_size: int, y_size: int, tex: Texture = ..., to_ram: bool = ..., fbp: FrameBufferProperties = ...
+    ) -> GraphicsOutput:
         """Creates and returns an offscreen buffer for rendering into, the result of
         which will be a texture suitable for applying to geometry within the scene
         rendered into this window.
@@ -1924,7 +1929,15 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         When you are done using the buffer, you should remove it with a call to
         GraphicsEngine::remove_window().
         """
-    def make_cube_map(self, name: str, size: int, camera_rig: NodePath, camera_mask: DrawMask = ..., to_ram: bool = ..., fbp: FrameBufferProperties = ...) -> GraphicsOutput:
+    def make_cube_map(
+        self,
+        name: str,
+        size: int,
+        camera_rig: NodePath,
+        camera_mask: DrawMask = ...,
+        to_ram: bool = ...,
+        fbp: FrameBufferProperties = ...,
+    ) -> GraphicsOutput:
         """This is similar to make_texture_buffer() in that it allocates a separate
         buffer suitable for rendering to a texture that can be assigned to geometry
         in this window, but in this case, the buffer is set up to render the six
@@ -2743,7 +2756,17 @@ class GraphicsEngine(ReferenceCount):
         """Returns the Loader object that will be assigned to every GSG created with
         this GraphicsEngine.  See GraphicsStateGuardian::set_loader().
         """
-    def make_output(self, pipe: GraphicsPipe, name: str, sort: int, fb_prop: FrameBufferProperties, win_prop: WindowProperties, flags: int, gsg: GraphicsStateGuardian = ..., host: GraphicsOutput = ...) -> GraphicsOutput: ...
+    def make_output(
+        self,
+        pipe: GraphicsPipe,
+        name: str,
+        sort: int,
+        fb_prop: FrameBufferProperties,
+        win_prop: WindowProperties,
+        flags: int,
+        gsg: GraphicsStateGuardian = ...,
+        host: GraphicsOutput = ...,
+    ) -> GraphicsOutput: ...
     @overload
     def make_buffer(self, host: GraphicsOutput, name: str, sort: int, x_size: int, y_size: int) -> GraphicsOutput:
         """`(self, host: GraphicsOutput, name: str, sort: int, x_size: int, y_size: int)`:
@@ -3632,7 +3655,6 @@ class CallbackGraphicsWindow(GraphicsWindow):
         setRenderFlag = set_render_flag
         getRenderFlag = get_render_flag
         getClassType = get_class_type
-
     RCT_begin_frame: Final[Literal[0]]
     RCTBeginFrame: Final[Literal[0]]
     RCT_end_frame: Final[Literal[1]]

@@ -25,22 +25,10 @@ class ObjectMgrBase:
     def reset(self) -> None: ...
     def genUniqueId(self) -> str: ...
     def addNewCurveFromFile(
-        self,
-        curveInfo: Iterable,
-        degree,
-        uid=None,
-        parent=None,
-        fSelectObject: bool = True,
-        nodePath: Unused = None,
+        self, curveInfo: Iterable, degree, uid=None, parent=None, fSelectObject: bool = True, nodePath: Unused = None
     ) -> NodePath: ...
     def addNewCurve(
-        self,
-        curveInfo,
-        degree,
-        uid=None,
-        parent=None,
-        fSelectObject: bool = True,
-        nodePath: NodePath | None = None,
+        self, curveInfo, degree, uid=None, parent=None, fSelectObject: bool = True, nodePath: NodePath | None = None
     ) -> NodePath: ...
     def addNewObject(
         self,

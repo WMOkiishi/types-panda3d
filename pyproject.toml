@@ -36,6 +36,13 @@ multi_line_output = 5
 combine_as_imports = true
 extra_standard_library = ["typing_extensions"]
 
+[tool.black]
+line_length = 130
+target_version = ["py310"]
+include = 'src/.*\.pyi'
+skip_string_normalization = true
+skip_magic_trailing_comma = true
+
 [tool.mypy]
 show_error_codes = true
 warn_unused_ignores = true

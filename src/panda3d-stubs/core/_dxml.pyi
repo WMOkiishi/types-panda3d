@@ -9,26 +9,26 @@ _TiXmlEncoding: TypeAlias = Literal[0, 1, 2]
 
 class TiXmlBase:
     """TiXmlBase is a base class for every class in TinyXml.
-        It does little except to establish that TinyXml classes
-        can be printed and provide some utility functions.
+    It does little except to establish that TinyXml classes
+    can be printed and provide some utility functions.
 
-        In XML, the document and elements can contain
-        other elements and other types of nodes.
+    In XML, the document and elements can contain
+    other elements and other types of nodes.
 
-        @verbatim
-        A Document can contain: Element (container or leaf)
-                                Comment (leaf)
-                                Unknown (leaf)
-                                Declaration( leaf )
+    @verbatim
+    A Document can contain: Element (container or leaf)
+                            Comment (leaf)
+                            Unknown (leaf)
+                            Declaration( leaf )
 
-        An Element can contain: Element (container or leaf)
-                                Text    (leaf)
-                                Attributes (not on tree)
-                                Comment (leaf)
-                                Unknown (leaf)
+    An Element can contain: Element (container or leaf)
+                            Text    (leaf)
+                            Attributes (not on tree)
+                            Comment (leaf)
+                            Unknown (leaf)
 
-        A Decleration contains: Attributes (not on tree)
-        @endverbatim
+    A Decleration contains: Attributes (not on tree)
+    @endverbatim
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -52,49 +52,49 @@ class TiXmlBase:
     @staticmethod
     def SetCondenseWhiteSpace(condense: bool) -> None:
         """The world does not agree on whether white space should be kept or
-                not. In order to make everyone happy, these global, static functions
-                are provided to set whether or not TinyXml will condense all white space
-                into a single space or not. The default is to condense. Note changing this
-                value is not thread safe.
+        not. In order to make everyone happy, these global, static functions
+        are provided to set whether or not TinyXml will condense all white space
+        into a single space or not. The default is to condense. Note changing this
+        value is not thread safe.
         """
     @staticmethod
     def IsWhiteSpaceCondensed() -> bool:
         """Return the current white space setting."""
     def Row(self) -> int:
         """Return the position, in the original source file, of this node or attribute.
-                The row and column are 1-based. (That is the first row and first column is
-                1,1). If the returns values are 0 or less, then the parser does not have
-                a row and column value.
+        The row and column are 1-based. (That is the first row and first column is
+        1,1). If the returns values are 0 or less, then the parser does not have
+        a row and column value.
 
-                Generally, the row and column value will be set when the TiXmlDocument::Load(),
-                TiXmlDocument::LoadFile(), or any TiXmlNode::Parse() is called. It will NOT be set
-                when the DOM was created from operator>>.
+        Generally, the row and column value will be set when the TiXmlDocument::Load(),
+        TiXmlDocument::LoadFile(), or any TiXmlNode::Parse() is called. It will NOT be set
+        when the DOM was created from operator>>.
 
-                The values reflect the initial load. Once the DOM is modified programmatically
-                (by adding or changing nodes and attributes) the new values will NOT update to
-                reflect changes in the document.
+        The values reflect the initial load. Once the DOM is modified programmatically
+        (by adding or changing nodes and attributes) the new values will NOT update to
+        reflect changes in the document.
 
-                There is a minor performance cost to computing the row and column. Computation
-                can be disabled if TiXmlDocument::SetTabSize() is called with 0 as the value.
+        There is a minor performance cost to computing the row and column. Computation
+        can be disabled if TiXmlDocument::SetTabSize() is called with 0 as the value.
 
-                @sa TiXmlDocument::SetTabSize()
+        @sa TiXmlDocument::SetTabSize()
         """
     def Column(self) -> int:
         """< See Row()"""
 
 class TiXmlDeclaration(TiXmlNode):
     """In correct XML the declaration is the first entry in the file.
-        @verbatim
-            <?xml version="1.0" standalone="yes"?>
-        @endverbatim
+    @verbatim
+        <?xml version="1.0" standalone="yes"?>
+    @endverbatim
 
-        TinyXml will happily read or write files without a declaration,
-        however. There are 3 possible attributes to the declaration:
-        version, encoding, and standalone.
+    TinyXml will happily read or write files without a declaration,
+    however. There are 3 possible attributes to the declaration:
+    version, encoding, and standalone.
 
-        Note: In this version of the code, the attributes are
-        handled as special cases, not generic attributes, simply
-        because there can only be at most 3 and they are always the same.
+    Note: In this version of the code, the attributes are
+    handled as special cases, not generic attributes, simply
+    because there can only be at most 3 and they are always the same.
     """
 
     @overload
@@ -120,10 +120,10 @@ class TiXmlDeclaration(TiXmlNode):
 
 class TiXmlNode(TiXmlBase):
     """The parent class for everything in the Document Object Model.
-        (Except for attributes).
-        Nodes have siblings, a parent, and children. A node can be
-        in a document, or stand on its own. The type of a TiXmlNode
-        can be queried, and it can be cast to its more defined type.
+    (Except for attributes).
+    Nodes have siblings, a parent, and children. A node can be
+    in a document, or stand on its own. The type of a TiXmlNode
+    can be queried, and it can be cast to its more defined type.
     """
 
     TINYXML_DOCUMENT: Final[Literal[0]]
@@ -142,21 +142,21 @@ class TiXmlNode(TiXmlBase):
     TINYXMLTYPECOUNT: Final[Literal[6]]
     def Value(self) -> str:
         """The meaning of 'value' changes for the specific type of
-                TiXmlNode.
-                @verbatim
-                Document:   filename of the xml file
-                Element:    name of the element
-                Comment:    the comment text
-                Unknown:    the tag contents
-                Text:       the text string
-                @endverbatim
+        TiXmlNode.
+        @verbatim
+        Document:   filename of the xml file
+        Element:    name of the element
+        Comment:    the comment text
+        Unknown:    the tag contents
+        Text:       the text string
+        @endverbatim
 
-                The subclasses will wrap this function.
+        The subclasses will wrap this function.
         """
     def ValueStr(self) -> str:
         """Return Value() as a std::string. If you only use STL,
-                this is more efficient than calling Value().
-                Only available in STL mode.
+        this is more efficient than calling Value().
+        Only available in STL mode.
         """
     def ValueTStr(self) -> str: ...
     def SetValue(self, _value: str) -> None:
@@ -235,19 +235,19 @@ class TiXmlNode(TiXmlBase):
     def IterateChildren(self, value: str, previous: TiXmlNode) -> TiXmlNode: ...
     def InsertEndChild(self, addThis: TiXmlNode) -> TiXmlNode:
         """Add a new node related to this. Adds a child past the LastChild.
-                Returns a pointer to the new object or NULL if an error occured.
+        Returns a pointer to the new object or NULL if an error occured.
         """
     def InsertBeforeChild(self, beforeThis: TiXmlNode, addThis: TiXmlNode) -> TiXmlNode:
         """Add a new node related to this. Adds a child before the specified child.
-                Returns a pointer to the new object or NULL if an error occured.
+        Returns a pointer to the new object or NULL if an error occured.
         """
     def InsertAfterChild(self, afterThis: TiXmlNode, addThis: TiXmlNode) -> TiXmlNode:
         """Add a new node related to this. Adds a child after the specified child.
-                Returns a pointer to the new object or NULL if an error occured.
+        Returns a pointer to the new object or NULL if an error occured.
         """
     def ReplaceChild(self, replaceThis: TiXmlNode, withThis: TiXmlNode) -> TiXmlNode:
         """Replace a child of this node.
-                Returns a pointer to the new object or NULL if an error occured.
+        Returns a pointer to the new object or NULL if an error occured.
         """
     def RemoveChild(self, removeThis: TiXmlNode) -> bool:
         """Delete a child of this node."""
@@ -295,12 +295,12 @@ class TiXmlNode(TiXmlBase):
         """
     def Type(self) -> int:
         """Query the type (as an enumerated value, above) of this node.
-                The possible types are: DOCUMENT, ELEMENT, COMMENT,
-                                        UNKNOWN, TEXT, and DECLARATION.
+        The possible types are: DOCUMENT, ELEMENT, COMMENT,
+                                UNKNOWN, TEXT, and DECLARATION.
         """
     def GetDocument(self) -> TiXmlDocument:
         """Return a pointer to the Document this node lives in.
-                Returns null if not in a document.
+        Returns null if not in a document.
         """
     def NoChildren(self) -> bool:
         """Returns true if this node has no children."""
@@ -318,36 +318,36 @@ class TiXmlNode(TiXmlBase):
         """< Cast to a more defined type. Will return null if not of the requested type."""
     def Clone(self) -> TiXmlNode:
         """Create an exact duplicate of this node and return it. The memory must be deleted
-                by the caller.
+        by the caller.
         """
     def Accept(self, visitor: TiXmlVisitor) -> bool:
         """Accept a hierchical visit the nodes in the TinyXML DOM. Every node in the
-                XML tree will be conditionally visited and the host will be called back
-                via the TiXmlVisitor interface.
+        XML tree will be conditionally visited and the host will be called back
+        via the TiXmlVisitor interface.
 
-                This is essentially a SAX interface for TinyXML. (Note however it doesn't re-parse
-                the XML for the callbacks, so the performance of TinyXML is unchanged by using this
-                interface versus any other.)
+        This is essentially a SAX interface for TinyXML. (Note however it doesn't re-parse
+        the XML for the callbacks, so the performance of TinyXML is unchanged by using this
+        interface versus any other.)
 
-                The interface has been based on ideas from:
+        The interface has been based on ideas from:
 
-                - http://www.saxproject.org/
-                - http://c2.com/cgi/wiki?HierarchicalVisitorPattern
+        - http://www.saxproject.org/
+        - http://c2.com/cgi/wiki?HierarchicalVisitorPattern
 
-                Which are both good references for "visiting".
+        Which are both good references for "visiting".
 
-                An example of using Accept():
-                @verbatim
-                TiXmlPrinter printer;
-                tinyxmlDoc.Accept( &printer );
-                const char* xmlcstr = printer.CStr();
-                @endverbatim
+        An example of using Accept():
+        @verbatim
+        TiXmlPrinter printer;
+        tinyxmlDoc.Accept( &printer );
+        const char* xmlcstr = printer.CStr();
+        @endverbatim
         """
 
 class TiXmlDocument(TiXmlNode):
     """Always the top level node. A document binds together all the
-        XML pieces. It can be saved, loaded, and printed to the screen.
-        The 'value' of a document node is the xml file name.
+    XML pieces. It can be saved, loaded, and printed to the screen.
+    The 'value' of a document node is the xml file name.
     """
 
     @overload
@@ -391,68 +391,68 @@ class TiXmlDocument(TiXmlNode):
         """
     def RootElement(self) -> TiXmlElement:
         """Get the root element -- the only top level element -- of the document.
-                In well formed XML, there should only be one. TinyXml is tolerant of
-                multiple elements at the document level.
+        In well formed XML, there should only be one. TinyXml is tolerant of
+        multiple elements at the document level.
         """
     def Error(self) -> bool:
         """If an error occurs, Error will be set to true. Also,
-                - The ErrorId() will contain the integer identifier of the error (not generally useful)
-                - The ErrorDesc() method will return the name of the error. (very useful)
-                - The ErrorRow() and ErrorCol() will return the location of the error (if known)
+        - The ErrorId() will contain the integer identifier of the error (not generally useful)
+        - The ErrorDesc() method will return the name of the error. (very useful)
+        - The ErrorRow() and ErrorCol() will return the location of the error (if known)
         """
     def ErrorDesc(self) -> str:
         """Contains a textual (english) description of the error if one occurs."""
     def ErrorId(self) -> int:
         """Generally, you probably want the error string ( ErrorDesc() ). But if you
-                prefer the ErrorId, this function will fetch it.
+        prefer the ErrorId, this function will fetch it.
         """
     def ErrorRow(self) -> int:
         """Returns the location (if known) of the error. The first column is column 1,
-                and the first row is row 1. A value of 0 means the row and column wasn't applicable
-                (memory errors, for example, have no row/column) or the parser lost the error. (An
-                error in the error reporting, in that case.)
+        and the first row is row 1. A value of 0 means the row and column wasn't applicable
+        (memory errors, for example, have no row/column) or the parser lost the error. (An
+        error in the error reporting, in that case.)
 
-                @sa SetTabSize, Row, Column
+        @sa SetTabSize, Row, Column
         """
     def ErrorCol(self) -> int:
         """< The column where the error occured. See ErrorRow()"""
     def SetTabSize(self, _tabsize: int) -> None:
         """SetTabSize() allows the error reporting functions (ErrorRow() and ErrorCol())
-                to report the correct values for row and column. It does not change the output
-                or input in any way.
+        to report the correct values for row and column. It does not change the output
+        or input in any way.
 
-                By calling this method, with a tab size
-                greater than 0, the row and column of each node and attribute is stored
-                when the file is loaded. Very useful for tracking the DOM back in to
-                the source file.
+        By calling this method, with a tab size
+        greater than 0, the row and column of each node and attribute is stored
+        when the file is loaded. Very useful for tracking the DOM back in to
+        the source file.
 
-                The tab size is required for calculating the location of nodes. If not
-                set, the default of 4 is used. The tabsize is set per document. Setting
-                the tabsize to 0 disables row/column tracking.
+        The tab size is required for calculating the location of nodes. If not
+        set, the default of 4 is used. The tabsize is set per document. Setting
+        the tabsize to 0 disables row/column tracking.
 
-                Note that row and column tracking is not supported when using operator>>.
+        Note that row and column tracking is not supported when using operator>>.
 
-                The tab size needs to be enabled before the parse or load. Correct usage:
-                @verbatim
-                TiXmlDocument doc;
-                doc.SetTabSize( 8 );
-                doc.Load( "myfile.xml" );
-                @endverbatim
+        The tab size needs to be enabled before the parse or load. Correct usage:
+        @verbatim
+        TiXmlDocument doc;
+        doc.SetTabSize( 8 );
+        doc.Load( "myfile.xml" );
+        @endverbatim
 
-                @sa Row, Column
+        @sa Row, Column
         """
     def TabSize(self) -> int: ...
     def ClearError(self) -> None:
         """If you have handled the error, it can be reset with this call. The error
-                state is automatically cleared if you Parse a new XML block.
+        state is automatically cleared if you Parse a new XML block.
         """
     def Print(self) -> None:
         """Write the document to standard out using formatted printing ("pretty print")."""
 
 class TiXmlElement(TiXmlNode):
     """The element is a container class. It has a value, the element name,
-        and can contain other elements, text, comments, and unknowns.
-        Elements also contain an arbitrary number of attributes.
+    and can contain other elements, text, comments, and unknowns.
+    Elements also contain an arbitrary number of attributes.
     """
 
     @overload
@@ -470,7 +470,7 @@ class TiXmlElement(TiXmlNode):
     def assign(self: Self, base: Self) -> Self: ...
     def Attribute(self, name: str) -> str:
         """Given an attribute name, Attribute() returns the value
-                for the attribute of that name, or null if none exists.
+        for the attribute of that name, or null if none exists.
         """
     @overload
     def SetAttribute(self, name: str, _value: int | str) -> None:
@@ -507,41 +507,41 @@ class TiXmlElement(TiXmlNode):
         """< Access the last attribute in this element."""
     def GetText(self) -> str:
         """Convenience function for easy access to the text inside an element. Although easy
-                and concise, GetText() is limited compared to getting the TiXmlText child
-                and accessing it directly.
+        and concise, GetText() is limited compared to getting the TiXmlText child
+        and accessing it directly.
 
-                If the first child of 'this' is a TiXmlText, the GetText()
-                returns the character string of the Text node, else null is returned.
+        If the first child of 'this' is a TiXmlText, the GetText()
+        returns the character string of the Text node, else null is returned.
 
-                This is a convenient method for getting the text of simple contained text:
-                @verbatim
-                <foo>This is text</foo>
-                const char* str = fooElement->GetText();
-                @endverbatim
+        This is a convenient method for getting the text of simple contained text:
+        @verbatim
+        <foo>This is text</foo>
+        const char* str = fooElement->GetText();
+        @endverbatim
 
-                'str' will be a pointer to "This is text".
+        'str' will be a pointer to "This is text".
 
-                Note that this function can be misleading. If the element foo was created from
-                this XML:
-                @verbatim
-                <foo><b>This is text</b></foo>
-                @endverbatim
+        Note that this function can be misleading. If the element foo was created from
+        this XML:
+        @verbatim
+        <foo><b>This is text</b></foo>
+        @endverbatim
 
-                then the value of str would be null. The first child node isn't a text node, it is
-                another element. From this XML:
-                @verbatim
-                <foo>This is <b>text</b></foo>
-                @endverbatim
-                GetText() will return "This is ".
+        then the value of str would be null. The first child node isn't a text node, it is
+        another element. From this XML:
+        @verbatim
+        <foo>This is <b>text</b></foo>
+        @endverbatim
+        GetText() will return "This is ".
 
-                WARNING: GetText() accesses a child node - don't become confused with the
-                         similarly named TiXmlHandle::Text() and TiXmlNode::ToText() which are
-                         safe type casts on the referenced node.
+        WARNING: GetText() accesses a child node - don't become confused with the
+                 similarly named TiXmlHandle::Text() and TiXmlNode::ToText() which are
+                 safe type casts on the referenced node.
         """
 
 class TiXmlCursor:
     """Internal structure for tracking location of items
-        in the XML file.
+    in the XML file.
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -549,22 +549,22 @@ class TiXmlCursor:
 
 class TiXmlVisitor:
     """Implements the interface to the "Visitor pattern" (see the Accept() method.)
-        If you call the Accept() method, it requires being passed a TiXmlVisitor
-        class to handle callbacks. For nodes that contain other nodes (Document, Element)
-        you will get called with a VisitEnter/VisitExit pair. Nodes that are always leaves
-        are simply called with Visit().
+    If you call the Accept() method, it requires being passed a TiXmlVisitor
+    class to handle callbacks. For nodes that contain other nodes (Document, Element)
+    you will get called with a VisitEnter/VisitExit pair. Nodes that are always leaves
+    are simply called with Visit().
 
-        If you return 'true' from a Visit method, recursive parsing will continue. If you return
-        false, <b>no children of this node or its sibilings</b> will be Visited.
+    If you return 'true' from a Visit method, recursive parsing will continue. If you return
+    false, <b>no children of this node or its sibilings</b> will be Visited.
 
-        All flavors of Visit methods have a default implementation that returns 'true' (continue
-        visiting). You need to only override methods that are interesting to you.
+    All flavors of Visit methods have a default implementation that returns 'true' (continue
+    visiting). You need to only override methods that are interesting to you.
 
-        Generally Accept() is called on the TiXmlDocument, although all nodes suppert Visiting.
+    Generally Accept() is called on the TiXmlDocument, although all nodes suppert Visiting.
 
-        You should never change the document from a callback.
+    You should never change the document from a callback.
 
-        @sa TiXmlNode::Accept()
+    @sa TiXmlNode::Accept()
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -602,11 +602,11 @@ class TiXmlVisitor:
 
 class TiXmlAttribute(TiXmlBase):
     """An attribute is a name-value pair. Elements have an arbitrary
-        number of attributes, each with a unique name.
+    number of attributes, each with a unique name.
 
-        @note The attributes are not TiXmlNodes, since they are not
-              part of the tinyXML document object model. There are other
-              suggested ways to look at this problem.
+    @note The attributes are not TiXmlNodes, since they are not
+          part of the tinyXML document object model. There are other
+          suggested ways to look at this problem.
     """
 
     @overload
@@ -667,16 +667,16 @@ class TiXmlAttribute(TiXmlBase):
 
 class TiXmlAttributeSet:
     """A class used to manage a group of attributes.
-        It is only used internally, both by the ELEMENT and the DECLARATION.
+    It is only used internally, both by the ELEMENT and the DECLARATION.
 
-        The set can be changed transparent to the Element and Declaration
-        classes that use it, but NOT transparent to the Attribute
-        which has to implement a next() and previous() method. Which makes
-        it a bit problematic and prevents the use of STL.
+    The set can be changed transparent to the Element and Declaration
+    classes that use it, but NOT transparent to the Attribute
+    which has to implement a next() and previous() method. Which makes
+    it a bit problematic and prevents the use of STL.
 
-        This version is implemented with circular lists because:
-            - I like circular lists
-            - it demonstrates some independence from the (typical) doubly linked list.
+    This version is implemented with circular lists because:
+        - I like circular lists
+        - it demonstrates some independence from the (typical) doubly linked list.
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -705,9 +705,9 @@ class TiXmlComment(TiXmlNode):
 
 class TiXmlText(TiXmlNode):
     """XML text. A text node can have 2 ways to output the next. "normal" output
-        and CDATA. It will default to the mode it was parsed from the XML file and
-        you generally want to leave it alone, but you can change the output mode with
-        SetCDATA() and query it with CDATA().
+    and CDATA. It will default to the mode it was parsed from the XML file and
+    you generally want to leave it alone, but you can change the output mode with
+    SetCDATA() and query it with CDATA().
     """
 
     @overload
@@ -730,11 +730,11 @@ class TiXmlText(TiXmlNode):
 
 class TiXmlUnknown(TiXmlNode):
     """Any tag that tinyXml doesn't recognize is saved as an
-        unknown. It is a tag of text, but should not be modified.
-        It will be written back to the XML, unchanged, when the file
-        is saved.
+    unknown. It is a tag of text, but should not be modified.
+    It will be written back to the XML, unchanged, when the file
+    is saved.
 
-        DTD tags get thrown into TiXmlUnknowns.
+    DTD tags get thrown into TiXmlUnknowns.
     """
 
     def __init__(self, copy: TiXmlUnknown = ...) -> None: ...
@@ -742,83 +742,83 @@ class TiXmlUnknown(TiXmlNode):
 
 class TiXmlHandle:
     """A TiXmlHandle is a class that wraps a node pointer with null checks; this is
-        an incredibly useful thing. Note that TiXmlHandle is not part of the TinyXml
-        DOM structure. It is a separate utility class.
+    an incredibly useful thing. Note that TiXmlHandle is not part of the TinyXml
+    DOM structure. It is a separate utility class.
 
-        Take an example:
-        @verbatim
-        <Document>
-            <Element attributeA = "valueA">
-                <Child attributeB = "value1" />
-                <Child attributeB = "value2" />
-            </Element>
-        <Document>
-        @endverbatim
+    Take an example:
+    @verbatim
+    <Document>
+        <Element attributeA = "valueA">
+            <Child attributeB = "value1" />
+            <Child attributeB = "value2" />
+        </Element>
+    <Document>
+    @endverbatim
 
-        Assuming you want the value of "attributeB" in the 2nd "Child" element, it's very
-        easy to write a *lot* of code that looks like:
+    Assuming you want the value of "attributeB" in the 2nd "Child" element, it's very
+    easy to write a *lot* of code that looks like:
 
-        @verbatim
-        TiXmlElement* root = document.FirstChildElement( "Document" );
-        if ( root )
+    @verbatim
+    TiXmlElement* root = document.FirstChildElement( "Document" );
+    if ( root )
+    {
+        TiXmlElement* element = root->FirstChildElement( "Element" );
+        if ( element )
         {
-            TiXmlElement* element = root->FirstChildElement( "Element" );
-            if ( element )
+            TiXmlElement* child = element->FirstChildElement( "Child" );
+            if ( child )
             {
-                TiXmlElement* child = element->FirstChildElement( "Child" );
-                if ( child )
+                TiXmlElement* child2 = child->NextSiblingElement( "Child" );
+                if ( child2 )
                 {
-                    TiXmlElement* child2 = child->NextSiblingElement( "Child" );
-                    if ( child2 )
-                    {
-                        // Finally do something useful.
-        @endverbatim
+                    // Finally do something useful.
+    @endverbatim
 
-        And that doesn't even cover "else" cases. TiXmlHandle addresses the verbosity
-        of such code. A TiXmlHandle checks for null pointers so it is perfectly safe
-        and correct to use:
+    And that doesn't even cover "else" cases. TiXmlHandle addresses the verbosity
+    of such code. A TiXmlHandle checks for null pointers so it is perfectly safe
+    and correct to use:
 
-        @verbatim
-        TiXmlHandle docHandle( &document );
-        TiXmlElement* child2 = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).Child( "Child", 1 ).ToElement();
-        if ( child2 )
-        {
-            // do something useful
-        @endverbatim
+    @verbatim
+    TiXmlHandle docHandle( &document );
+    TiXmlElement* child2 = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).Child( "Child", 1 ).ToElement();
+    if ( child2 )
+    {
+        // do something useful
+    @endverbatim
 
-        Which is MUCH more concise and useful.
+    Which is MUCH more concise and useful.
 
-        It is also safe to copy handles - internally they are nothing more than node pointers.
-        @verbatim
-        TiXmlHandle handleCopy = handle;
-        @endverbatim
+    It is also safe to copy handles - internally they are nothing more than node pointers.
+    @verbatim
+    TiXmlHandle handleCopy = handle;
+    @endverbatim
 
-        What they should not be used for is iteration:
+    What they should not be used for is iteration:
 
-        @verbatim
-        int i=0;
-        while ( true )
-        {
-            TiXmlElement* child = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).Child( "Child", i ).ToElement();
-            if ( !child )
-                break;
-            // do something
-            ++i;
-        }
-        @endverbatim
+    @verbatim
+    int i=0;
+    while ( true )
+    {
+        TiXmlElement* child = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).Child( "Child", i ).ToElement();
+        if ( !child )
+            break;
+        // do something
+        ++i;
+    }
+    @endverbatim
 
-        It seems reasonable, but it is in fact two embedded while loops. The Child method is
-        a linear walk to find the element, so this code would iterate much more than it needs
-        to. Instead, prefer:
+    It seems reasonable, but it is in fact two embedded while loops. The Child method is
+    a linear walk to find the element, so this code would iterate much more than it needs
+    to. Instead, prefer:
 
-        @verbatim
-        TiXmlElement* child = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).FirstChild( "Child" ).ToElement();
+    @verbatim
+    TiXmlElement* child = docHandle.FirstChild( "Document" ).FirstChild( "Element" ).FirstChild( "Child" ).ToElement();
 
-        for( child; child; child=child->NextSiblingElement() )
-        {
-            // do something
-        }
-        @endverbatim
+    for( child; child; child=child->NextSiblingElement() )
+    {
+        // do something
+    }
+    @endverbatim
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -893,59 +893,59 @@ class TiXmlHandle:
         """Return the handle as a TiXmlUnknown. This may return null."""
     def Node(self) -> TiXmlNode:
         """@deprecated use ToNode.
-                Return the handle as a TiXmlNode. This may return null.
+        Return the handle as a TiXmlNode. This may return null.
         """
     def Element(self) -> TiXmlElement:
         """@deprecated use ToElement.
-                Return the handle as a TiXmlElement. This may return null.
+        Return the handle as a TiXmlElement. This may return null.
         """
     def Text(self) -> TiXmlText:
         """@deprecated use ToText()
-                Return the handle as a TiXmlText. This may return null.
+        Return the handle as a TiXmlText. This may return null.
         """
     def Unknown(self) -> TiXmlUnknown:
         """@deprecated use ToUnknown()
-                Return the handle as a TiXmlUnknown. This may return null.
+        Return the handle as a TiXmlUnknown. This may return null.
         """
 
 class TiXmlPrinter(TiXmlVisitor):
     """Print to memory functionality. The TiXmlPrinter is useful when you need to:
 
-        -# Print to memory (especially in non-STL mode)
-        -# Control formatting (line endings, etc.)
+    -# Print to memory (especially in non-STL mode)
+    -# Control formatting (line endings, etc.)
 
-        When constructed, the TiXmlPrinter is in its default "pretty printing" mode.
-        Before calling Accept() you can call methods to control the printing
-        of the XML document. After TiXmlNode::Accept() is called, the printed document can
-        be accessed via the CStr(), Str(), and Size() methods.
+    When constructed, the TiXmlPrinter is in its default "pretty printing" mode.
+    Before calling Accept() you can call methods to control the printing
+    of the XML document. After TiXmlNode::Accept() is called, the printed document can
+    be accessed via the CStr(), Str(), and Size() methods.
 
-        TiXmlPrinter uses the Visitor API.
-        @verbatim
-        TiXmlPrinter printer;
-        printer.SetIndent( "\\t" );
+    TiXmlPrinter uses the Visitor API.
+    @verbatim
+    TiXmlPrinter printer;
+    printer.SetIndent( "\\t" );
 
-        doc.Accept( &printer );
-        fprintf( stdout, "%s", printer.CStr() );
-        @endverbatim
+    doc.Accept( &printer );
+    fprintf( stdout, "%s", printer.CStr() );
+    @endverbatim
     """
 
     def __init__(self, __param0: TiXmlPrinter = ...) -> None: ...
     def SetIndent(self, _indent: str) -> None:
         """Set the indent characters for printing. By default 4 spaces
-                but tab (\\t) is also useful, or null/empty string for no indentation.
+        but tab (\\t) is also useful, or null/empty string for no indentation.
         """
     def Indent(self) -> str:
         """Query the indention string."""
     def SetLineBreak(self, _lineBreak: str) -> None:
         """Set the line breaking string. By default set to newline (\\n).
-                Some operating systems prefer other characters, or can be
-                set to the null/empty string for no indenation.
+        Some operating systems prefer other characters, or can be
+        set to the null/empty string for no indenation.
         """
     def LineBreak(self) -> str:
         """Query the current line breaking string."""
     def SetStreamPrinting(self) -> None:
         """Switch over to "stream printing" which is the most dense formatting without
-                linebreaks. Common when the XML is needed for network transmission.
+        linebreaks. Common when the XML is needed for network transmission.
         """
     def CStr(self) -> str:
         """Return the result."""
@@ -960,10 +960,12 @@ TIXML_ENCODING_UTF8: Final[Literal[1]]
 TIXMLENCODINGUTF8: Final[Literal[1]]
 TIXML_ENCODING_LEGACY: Final[Literal[2]]
 TIXMLENCODINGLEGACY: Final[Literal[2]]
+
 def read_xml_stream(_in: istream) -> TiXmlDocument:
     """Reads an XML document from the indicated stream.
     @returns the document, or NULL on error.
     """
+
 def write_xml_stream(out: ostream, doc: TiXmlDocument) -> None: ...
 def print_xml(xnode: TiXmlNode) -> None: ...
 def print_xml_to_file(filename: Filepath, xnode: TiXmlNode) -> None: ...
@@ -971,6 +973,7 @@ def get_TIXML_MAJOR_VERSION() -> int: ...
 def get_TIXML_MINOR_VERSION() -> int: ...
 def get_TIXML_PATCH_VERSION() -> int: ...
 def get_TIXML_DEFAULT_ENCODING() -> _TiXmlEncoding: ...
+
 readXmlStream = read_xml_stream
 writeXmlStream = write_xml_stream
 printXml = print_xml

@@ -46,12 +46,7 @@ class _Callback:
     requests: set[AsyncTask] | None
     requestList: list[AsyncTask] | None
     def __init__(
-        self,
-        loader: Loader,
-        numObjects: int,
-        gotList: bool,
-        callback: Callable[..., object],
-        extraArgs: Iterable[Any],
+        self, loader: Loader, numObjects: int, gotList: bool, callback: Callable[..., object], extraArgs: Iterable[Any]
     ) -> None: ...
     def gotObject(self, index: int, object: Any) -> None: ...
     def cancel(self) -> None: ...

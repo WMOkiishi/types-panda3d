@@ -215,7 +215,6 @@ class PNMImageHeader:
         getPixel = get_pixel
         getCount = get_count
         getPixels = get_pixels
-
     DtoolClassDict: ClassVar[dict[str, Any]]
     comment: str
     CT_invalid: Final[Literal[0]]
@@ -324,7 +323,9 @@ class PNMImageHeader:
         Returns true if successful, false on error.
         """
     @overload
-    def read_header(self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool: ...
+    def read_header(
+        self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...
+    ) -> bool: ...
     def output(self, out: ostream) -> None: ...
     getColorType = get_color_type
     getNumChannels = get_num_channels
@@ -689,7 +690,9 @@ class PfmFile(PNMImageHeader):
 
         The return value is true if any points in the table, or false if none are.
         """
-    def compute_planar_bounds(self, center: LVecBase2d | LVecBase2f, point_dist: float, sample_radius: float, points_only: bool) -> BoundingHexahedron:
+    def compute_planar_bounds(
+        self, center: LVecBase2d | LVecBase2f, point_dist: float, sample_radius: float, points_only: bool
+    ) -> BoundingHexahedron:
         """Computes the minmax bounding volume of the points in 3-D space, assuming
         the points represent a mostly-planar surface.
 
@@ -709,22 +712,54 @@ class PfmFile(PNMImageHeader):
 
         The point coordinates are given in UV space, in the range 0..1.
         """
-    def copy_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...) -> None:
+    def copy_sub_image(
+        self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...
+    ) -> None:
         """Copies a rectangular area of another image into a rectangular area of this
         image.  Both images must already have been initialized.  The upper-left
         corner of the region in both images is specified, and the size of the area;
         if the size is omitted, it defaults to the entire other image, or the
         largest piece that will fit.
         """
-    def add_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def add_sub_image(
+        self,
+        copy: PfmFile,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are added to the
         pixels of the destination, after scaling by the specified pixel_scale.
         """
-    def mult_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def mult_sub_image(
+        self,
+        copy: PfmFile,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are multiplied to the
         pixels of the destination, after scaling by the specified pixel_scale.
         """
-    def divide_sub_image(self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def divide_sub_image(
+        self,
+        copy: PfmFile,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are divided into the
         pixels of the destination, after scaling by the specified pixel_scale.
         dest(x, y) = dest(x, y) / (copy(x, y) * pixel_scale).
@@ -959,13 +994,20 @@ class PNMImage(PNMImageHeader):
             """Fetch the alpha value at the given column in the row."""
         getXelVal = get_xel_val
         getAlphaVal = get_alpha_val
-
     @overload
     def __init__(self, copy: PNMImage = ...) -> None: ...
     @overload
     def __init__(self, filename: Filepath, type: PNMFileType = ...) -> None: ...
     @overload
-    def __init__(self, x_size: int, y_size: int, num_channels: int = ..., maxval: int = ..., type: PNMFileType = ..., color_space: _ColorSpace = ...) -> None: ...
+    def __init__(
+        self,
+        x_size: int,
+        y_size: int,
+        num_channels: int = ...,
+        maxval: int = ...,
+        type: PNMFileType = ...,
+        color_space: _ColorSpace = ...,
+    ) -> None: ...
     def __getitem__(self, y: int) -> PNMImage.CRow | PNMImage.Row: ...
     def __invert__(self) -> PNMImage: ...
     def __add__(self, other: PNMImage | Vec4f) -> PNMImage: ...
@@ -1011,7 +1053,15 @@ class PNMImage(PNMImageHeader):
         with the given dimensions.
         """
     @overload
-    def clear(self, x_size: int, y_size: int, num_channels: int = ..., maxval: int = ..., type: PNMFileType = ..., color_space: _ColorSpace = ...) -> None: ...
+    def clear(
+        self,
+        x_size: int,
+        y_size: int,
+        num_channels: int = ...,
+        maxval: int = ...,
+        type: PNMFileType = ...,
+        color_space: _ColorSpace = ...,
+    ) -> None: ...
     def copy_from(self, copy: PNMImage) -> None:
         """Makes this image become a copy of the other image."""
     @overload
@@ -1024,7 +1074,18 @@ class PNMImage(PNMImageHeader):
         this image, leaving the remaining channels alone.
         """
     @overload
-    def copy_channel(self, copy: PNMImage, xto: int, yto: int, cto: int, xfrom: int = ..., yfrom: int = ..., cfrom: int = ..., x_size: int = ..., y_size: int = ...) -> None: ...
+    def copy_channel(
+        self,
+        copy: PNMImage,
+        xto: int,
+        yto: int,
+        cto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        cfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+    ) -> None: ...
     def copy_channel_bits(self, copy: PNMImage, src_channel: int, dest_channel: int, src_mask: int, right_shift: int) -> None:
         """Copies some subset of the bits of the specified channel from one image into
         some subset of the bits of the specified channel in another image.  Images
@@ -1433,14 +1494,26 @@ class PNMImage(PNMImageHeader):
         """
     @overload
     def blend(self, x: int, y: int, r: float, g: float, b: float, alpha: float) -> None: ...
-    def copy_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...) -> None:
+    def copy_sub_image(
+        self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...
+    ) -> None:
         """Copies a rectangular area of another image into a rectangular area of this
         image.  Both images must already have been initialized.  The upper-left
         corner of the region in both images is specified, and the size of the area;
         if the size is omitted, it defaults to the entire other image, or the
         largest piece that will fit.
         """
-    def blend_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def blend_sub_image(
+        self,
+        copy: PNMImage,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), except the alpha channel of the copy is used
         to blend the copy into the destination image, instead of overwriting pixels
         unconditionally.
@@ -1451,17 +1524,47 @@ class PNMImage(PNMImageHeader):
         If pixel_scale is 1.0 and the copy has no alpha channel, this degenerates
         into copy_sub_image().
         """
-    def add_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def add_sub_image(
+        self,
+        copy: PNMImage,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are added to the
         pixels of the destination, after scaling by the specified pixel_scale.
         Unlike blend_sub_image(), the alpha channel is not treated specially.
         """
-    def mult_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def mult_sub_image(
+        self,
+        copy: PNMImage,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), except the copy pixels are multiplied to the
         pixels of the destination, after scaling by the specified pixel_scale.
         Unlike blend_sub_image(), the alpha channel is not treated specially.
         """
-    def darken_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def darken_sub_image(
+        self,
+        copy: PNMImage,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), but the resulting color will be the darker
         of the source and destination colors at each pixel (and at each R, G, B, A
         component value).
@@ -1471,7 +1574,17 @@ class PNMImage(PNMImageHeader):
         applied with the center at 1.0: scaling the pixel value smaller brings it
         closer to 1.0.
         """
-    def lighten_sub_image(self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ..., pixel_scale: float = ...) -> None:
+    def lighten_sub_image(
+        self,
+        copy: PNMImage,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
+        pixel_scale: float = ...,
+    ) -> None:
         """Behaves like copy_sub_image(), but the resulting color will be the lighter
         of the source and destination colors at each pixel (and at each R, G, B, A
         component value).
@@ -1645,7 +1758,9 @@ class PNMImage(PNMImageHeader):
         and red_exponent and green_exponent are unused.
         """
     @overload
-    def apply_exponent(self, red_exponent: float, green_exponent: float, blue_exponent: float, alpha_exponent: float = ...) -> None: ...
+    def apply_exponent(
+        self, red_exponent: float, green_exponent: float, blue_exponent: float, alpha_exponent: float = ...
+    ) -> None: ...
     def get_average_xel(self) -> LRGBColorf:
         """Returns the average color of all of the pixels in the image."""
     def get_average_xel_a(self) -> LColorf:
@@ -1819,6 +1934,7 @@ def decode_sRGB_float(val: float | str) -> float: ...
 def decode_sRGB_uchar(val: float | str) -> str: ...
 def encode_sRGB_float(val: float | str) -> float: ...
 def encode_sRGB_uchar(val: float | str) -> str: ...
+
 decodeSRGBFloat = decode_sRGB_float
 decodeSRGBUchar = decode_sRGB_uchar
 encodeSRGBFloat = encode_sRGB_float

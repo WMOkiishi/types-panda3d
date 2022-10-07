@@ -20,12 +20,7 @@ from panda3d.core import (
 from .ClusterMsgs import ClusterMsgHandler
 
 _NamedMovement: TypeAlias = tuple[
-    str,
-    float, float, float,
-    float, float, float,
-    float, float, float,
-    float, float, float, float,
-    bool,
+    str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
 ]
 _TaskCont: TypeAlias = Literal[1]
 _Vec3f: TypeAlias = Union[Vec3f, tuple[float, float, float]]
@@ -59,11 +54,7 @@ class ClusterServer(DirectObject):
     def removeObjectMapping(self, name: str) -> None: ...
     def redoSortedPriorities(self) -> None: ...
     def addControlMapping(
-        self,
-        objectName: str,
-        controlledName: str,
-        offset: LVector3f | None = None,
-        priority: int = ...,
+        self, objectName: str, controlledName: str, offset: LVector3f | None = None, priority: int = ...
     ) -> None: ...
     def setControlMappingOffset(self, objectName: str, offset: LVector3f) -> None: ...
     def removeControlMapping(self, name: str) -> None: ...

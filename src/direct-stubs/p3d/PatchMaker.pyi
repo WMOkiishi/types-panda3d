@@ -12,7 +12,6 @@ _Key: TypeAlias = tuple[str | None, str | None, str | None, str | None, FileSpec
 _Plan: TypeAlias = list[tuple[PatchMaker.Patchfile, PatchMaker.PackageVersion]]
 
 class PatchMaker:
-
     class PackageVersion:
         packageName: str | None
         platform: str | None
@@ -27,22 +26,14 @@ class PatchMaker:
         toPatches: list[PatchMaker.Patchfile]
         tempFile: Filename | None
         def __init__(
-            self,
-            packageName: str | None,
-            platform: str | None,
-            version: str | None,
-            hostUrl: str | None,
-            file: FileSpec | None,
+            self, packageName: str | None, platform: str | None, version: str | None, hostUrl: str | None, file: FileSpec | None
         ) -> None: ...
         def cleanup(self) -> None: ...
         def getPatchChain(
-            self: Self,
-            startPv: Self,
-            alreadyVisited: MutableSequence[Self] = ...,
+            self: Self, startPv: Self, alreadyVisited: MutableSequence[Self] = ...
         ) -> list[PatchMaker.Patchfile] | None: ...
         def getRecreateFilePlan(
-            self: Self,
-            alreadyVisited: MutableSequence[Self] = ...,
+            self: Self, alreadyVisited: MutableSequence[Self] = ...
         ) -> tuple[Filename, PatchMaker.PackageVersion, _Plan] | tuple[None, None, None]: ...
         def getFile(self) -> Filename | None: ...
         def applyPatch(self, origFile: Filepath, patchFilename: Filepath) -> Filename | None: ...
@@ -63,11 +54,7 @@ class PatchMaker:
         def getSourceKey(self) -> _Key: ...
         def getTargetKey(self) -> _Key: ...
         def fromFile(
-            self,
-            packageDir: Filepath,
-            patchFilename: Filepath,
-            sourceFile: FileSpec | None,
-            targetFile: FileSpec | None,
+            self, packageDir: Filepath, patchFilename: Filepath, sourceFile: FileSpec | None, targetFile: FileSpec | None
         ) -> None: ...
         def loadXml(self, xpatch: TiXmlElement) -> None: ...
         def makeXml(self, package: PatchMaker.Package) -> TiXmlElement: ...
@@ -123,10 +110,5 @@ class PatchMaker:
         patchFilename: Filename | str,
     ) -> bool: ...
     def buildPatchFile(
-        self,
-        origFilename: Filename,
-        newFilename: Filepath,
-        patchFilename: Filename,
-        printOrigName: object,
-        printNewName: object,
+        self, origFilename: Filename, newFilename: Filepath, patchFilename: Filename, printOrigName: object, printNewName: object
     ) -> bool: ...

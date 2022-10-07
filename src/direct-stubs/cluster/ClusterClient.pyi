@@ -22,12 +22,7 @@ from panda3d.core import (
 from .ClusterMsgs import ClusterMsgHandler
 
 _NamedMovement: TypeAlias = tuple[
-    str,
-    float, float, float,
-    float, float, float,
-    float, float, float,
-    float, float, float, float,
-    bool,
+    str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
 ]
 _TaskCont: TypeAlias = Literal[1]
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
@@ -60,12 +55,7 @@ class ClusterClient(DirectObject):
     def sendNamedMovementDone(self, serverList: Sequence[int] | None = None) -> None: ...
     def redoSortedPriorities(self) -> None: ...
     def moveObject(
-        self,
-        nodePath: NodePath,
-        object: str,
-        serverList: Iterable[int],
-        offset: _Vec3f,
-        hasColor: bool = True,
+        self, nodePath: NodePath, object: str, serverList: Iterable[int], offset: _Vec3f, hasColor: bool = True
     ) -> None: ...
     def moveCameraTask(self, task: Unused) -> _TaskCont: ...
     def moveCamera(self, xyz: _Vec3f, hpr: _Vec3f) -> None: ...
@@ -86,22 +76,13 @@ class ClusterClient(DirectObject):
     def getNodePathFindCmd(self, nodePath: NodePath) -> str: ...
     def getNodePathName(self, nodePath: NodePath) -> str: ...
     def addObjectTag(
-        self,
-        object: str,
-        selectFunction: Any,
-        deselectFunction: Any,
-        selectArgs: Any,
-        deselectArgs: Any,
+        self, object: str, selectFunction: Any, deselectFunction: Any, selectArgs: Any, deselectArgs: Any
     ) -> None: ...
     def removeObjectTag(self, object: str) -> None: ...
     def selectNodePath(self, nodePath: NodePath) -> None: ...
     def deselectNodePath(self, nodePath: NodePath) -> None: ...
     def sendCamFrustum(
-        self,
-        focalLength: float,
-        filmSize: _Vec2f,
-        filmOffset: _Vec2f,
-        indexList: Iterable[int] = ...,
+        self, focalLength: float, filmSize: _Vec2f, filmOffset: _Vec2f, indexList: Iterable[int] = ...
     ) -> None: ...
     def loadModel(self, nodePath: Unused) -> None: ...
     def __call__(self, commandString: str, fLocally: bool = True, serverList: Iterable[int] = ...) -> None: ...

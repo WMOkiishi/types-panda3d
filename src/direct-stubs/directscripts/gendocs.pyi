@@ -107,6 +107,7 @@ class InterrogateDatabase:
     def __init__(self, tokzr: InterrogateTokenizer) -> None: ...
 
 def printTree(tree, indent: int) -> None: ...
+
 COMPOUND_STMT_PATTERN: Final[tuple]
 DOCSTRING_STMT_PATTERN: Final[tuple]
 DERIVATION_PATTERN: Final[tuple]
@@ -177,7 +178,5 @@ def generate(
     urlsuffix: str,
 ) -> None: ...
 def expandImports(
-    indirlist: str | Iterable[str],
-    directdirlist: str | Iterable[str],
-    fixdirlist: str | Iterable[str],
+    indirlist: str | Iterable[str], directdirlist: str | Iterable[str], fixdirlist: str | Iterable[str]
 ) -> None: ...

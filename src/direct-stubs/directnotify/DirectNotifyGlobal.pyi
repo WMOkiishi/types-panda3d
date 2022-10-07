@@ -11,4 +11,5 @@ class _SupportsNotify(Protocol):
     notify: ClassVar[Notifier]
 
 directNotify: Final[DirectNotify]
+
 def giveNotify(cls: type[_SupportsNotify]) -> None: ...

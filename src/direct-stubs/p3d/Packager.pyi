@@ -28,7 +28,6 @@ class OutsideOfPackageError(PackagerError): ...
 class ArgumentError(PackagerError): ...
 
 class Packager:
-
     class PackFile:
         filename: Filename
         newName: str
@@ -292,11 +291,7 @@ class Packager:
     do_require = requirePackagesNamed
     def requirePackage(self, package: Packager.Package) -> None: ...
     def addModule(
-        self,
-        moduleNames: Sequence[str],
-        newName: str | None = None,
-        filename: Filepath | None = None,
-        required: bool = False,
+        self, moduleNames: Sequence[str], newName: str | None = None, filename: Filepath | None = None, required: bool = False
     ) -> None: ...
     do_module = addModule
     def do_excludeModule(self, *args: str) -> None: ...

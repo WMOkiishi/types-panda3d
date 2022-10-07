@@ -42,7 +42,15 @@ class CMotionTrail(TypedReferenceCount):
         """Set the GeomNode."""
     def add_vertex(self, vertex: Vec4f, start_color: Vec4f, end_color: Vec4f, v: float) -> None:
         """Add a vertex."""
-    def set_parameters(self, sampling_time: float, time_window: float, use_texture: bool, calculate_relative_matrix: bool, use_nurbs: bool, resolution_distance: float) -> None:
+    def set_parameters(
+        self,
+        sampling_time: float,
+        time_window: float,
+        use_texture: bool,
+        calculate_relative_matrix: bool,
+        use_nurbs: bool,
+        resolution_distance: float,
+    ) -> None:
         """Set motion trail parameters.
 
         sampling_time = Can be used to specify a lower sampling rate than the frame

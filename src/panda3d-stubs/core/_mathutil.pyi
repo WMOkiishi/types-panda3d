@@ -1343,7 +1343,9 @@ class BoundingHexahedron(FiniteBoundingVolume):
     @overload
     def __init__(self, frustum: LFrustum, is_ortho: bool, cs: _CoordinateSystem = ...) -> None: ...
     @overload
-    def __init__(self, fll: Vec3f, flr: Vec3f, fur: Vec3f, ful: Vec3f, nll: Vec3f, nlr: Vec3f, nur: Vec3f, nul: Vec3f) -> None: ...
+    def __init__(
+        self, fll: Vec3f, flr: Vec3f, fur: Vec3f, ful: Vec3f, nll: Vec3f, nlr: Vec3f, nur: Vec3f, nul: Vec3f
+    ) -> None: ...
     def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a hexahedron."""
     def get_point(self, n: int) -> LPoint3:
@@ -1655,7 +1657,16 @@ class StackedPerlinNoise2:
         times the previous object (so that it is less important, if amp_scale < 1).
         """
     @overload
-    def __init__(self, sx: float, sy: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...) -> None: ...
+    def __init__(
+        self,
+        sx: float,
+        sy: float,
+        num_levels: int = ...,
+        scale_factor: float = ...,
+        amp_scale: float = ...,
+        table_size: int = ...,
+        seed: int = ...,
+    ) -> None: ...
     @overload
     def __call__(self, value: LVecBase2d | LVecBase2f) -> float: ...
     @overload
@@ -1699,7 +1710,17 @@ class StackedPerlinNoise3:
         times the previous object (so that it is less important, if amp_scale < 1).
         """
     @overload
-    def __init__(self, sx: float, sy: float, sz: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...) -> None: ...
+    def __init__(
+        self,
+        sx: float,
+        sy: float,
+        sz: float,
+        num_levels: int = ...,
+        scale_factor: float = ...,
+        amp_scale: float = ...,
+        table_size: int = ...,
+        seed: int = ...,
+    ) -> None: ...
     @overload
     def __call__(self, value: Vec3d | Vec3f) -> float: ...
     @overload
@@ -1888,6 +1909,7 @@ def look_at(quat: Vec4f, fwd: Vec3f, cs: _CoordinateSystem) -> None: ...
 def rotate_to(mat: LMatrix3d | Mat4d, a: Vec3d, b: Vec3d) -> None: ...
 @overload
 def rotate_to(mat: LMatrix3f | Mat4f, a: Vec3f, b: Vec3f) -> None: ...
+
 headsUp = heads_up
 lookAt = look_at
 rotateTo = rotate_to

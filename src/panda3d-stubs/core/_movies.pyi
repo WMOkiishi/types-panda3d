@@ -305,7 +305,6 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         compareTimestamp = compare_timestamp
         getTimestamp = get_timestamp
         getClassType = get_class_type
-
     def __init__(self, __param0: MovieVideoCursor) -> None: ...
     def get_source(self) -> MovieVideo:
         """Get the MovieVideo which this cursor references."""

@@ -8,12 +8,7 @@ from panda3d._typing import Vec3f, Vec4f
 from panda3d.core import Datagram, DatagramIterator, LVecBase2f, NetDatagram, QueuedConnectionReader
 
 _NamedMovement: TypeAlias = tuple[
-    str,
-    float, float, float,
-    float, float, float,
-    float, float, float,
-    float, float, float, float,
-    bool,
+    str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
 ]
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 _Vec3f: TypeAlias = Union[Vec3f, tuple[float, float, float]]
@@ -40,12 +35,10 @@ class ClusterMsgHandler:
     notify: Notifier
     def __init__(self, packetStart: int, notify: Notifier) -> None: ...
     def nonBlockingRead(
-        self,
-        qcr: QueuedConnectionReader,
+        self, qcr: QueuedConnectionReader
     ) -> tuple[NetDatagram, PyDatagramIterator, str] | tuple[NetDatagram | None, None, Literal[0]]: ...
     def blockingRead(
-        self,
-        qcr: QueuedConnectionReader,
+        self, qcr: QueuedConnectionReader
     ) -> tuple[NetDatagram, PyDatagramIterator, str] | tuple[NetDatagram, None, Literal[0]]: ...
     def readHeader(self, datagram: Datagram | DatagramIterator) -> tuple[PyDatagramIterator, str]: ...
     def makeCamOffsetDatagram(self, xyz: _Vec3f, hpr: _Vec3f) -> PyDatagram: ...
@@ -55,20 +48,13 @@ class ClusterMsgHandler:
     def makeCamMovementDatagram(self, xyz: _Vec3f, hpr: _Vec3f) -> PyDatagram: ...
     def makeNamedMovementDone(self) -> PyDatagram: ...
     def makeNamedObjectMovementDatagram(
-        self,
-        xyz: _Vec3f,
-        hpr: _Vec3f,
-        scale: _Vec3f,
-        color: _Vec4f,
-        hidden: bool,
-        name: str,
+        self, xyz: _Vec3f, hpr: _Vec3f, scale: _Vec3f, color: _Vec4f, hidden: bool, name: str
     ) -> PyDatagram: ...
     def parseCamMovementDatagram(self, dgi: DatagramIterator) -> tuple[float, float, float, float, float, float]: ...
     def parseNamedMovementDatagram(self, dgi: DatagramIterator) -> _NamedMovement: ...
     def makeSelectedMovementDatagram(self, xyz: _Vec3f, hpr: _Vec3f, scale: _Vec3f) -> PyDatagram: ...
     def parseSelectedMovementDatagram(
-        self,
-        dgi: DatagramIterator,
+        self, dgi: DatagramIterator
     ) -> tuple[float, float, float, float, float, float, float, float, float]: ...
     def makeCommandStringDatagram(self, commandString: str) -> PyDatagram: ...
     def parseCommandStringDatagram(self, dgi: DatagramIterator) -> str: ...

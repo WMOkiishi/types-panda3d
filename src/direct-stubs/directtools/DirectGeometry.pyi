@@ -8,11 +8,7 @@ class LineNodePath(NodePath[GeomNode]):
     lineNode: GeomNode
     lineSegs: LineSegs
     def __init__(
-        self,
-        parent: NodePath | None = None,
-        name: str | None = None,
-        thickness: float = ...,
-        colorVec: Vec4f = ...,
+        self, parent: NodePath | None = None, name: str | None = None, thickness: float = ..., colorVec: Vec4f = ...
     ) -> None: ...
     @overload
     def moveTo(self, __v: Vec3f) -> None: ...

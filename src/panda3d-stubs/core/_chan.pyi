@@ -739,7 +739,16 @@ class BindAnimRequest(ModelLoadRequest):
     @overload
     def __init__(self, __param0: BindAnimRequest) -> None: ...
     @overload
-    def __init__(self, name: str, filename: Filepath, options: LoaderOptions, loader: Loader, control: AnimControl, hierarchy_match_flags: int, subset: PartSubset) -> None: ...
+    def __init__(
+        self,
+        name: str,
+        filename: Filepath,
+        options: LoaderOptions,
+        loader: Loader,
+        control: AnimControl,
+        hierarchy_match_flags: int,
+        subset: PartSubset,
+    ) -> None: ...
 
 class PartBundle(PartGroup):
     """This is the root of a MovingPart hierarchy.  It defines the hierarchy of
@@ -896,7 +905,9 @@ class PartBundle(PartGroup):
         unbind itself when the AnimControl destructs (i.e.  its reference count
         goes to zero).
         """
-    def load_bind_anim(self, loader: Loader, filename: Filepath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool) -> AnimControl:
+    def load_bind_anim(
+        self, loader: Loader, filename: Filepath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool
+    ) -> AnimControl:
         """Binds an animation to the bundle.  The animation is loaded from the disk
         via the indicated Loader object.  In other respects, this behaves similarly
         to bind_anim(), with the addition of asynchronous support.
@@ -1097,6 +1108,7 @@ class MovingPart_ACScalarSwitchType(MovingPartBase):
     getDefaultValue = get_default_value
 
 def auto_bind(root_node: PandaNode, controls: AnimControlCollection, hierarchy_match_flags: int = ...) -> None: ...
+
 autoBind = auto_bind
 AnimChannelACMatrixSwitchType = AnimChannel_ACMatrixSwitchType
 AnimChannelMatrix = AnimChannel_ACMatrixSwitchType

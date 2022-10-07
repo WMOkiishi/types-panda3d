@@ -1,15 +1,4 @@
-__all__ = [
-    'Task',
-    'TaskManager',
-    'again',
-    'cont',
-    'done',
-    'exit',
-    'loop',
-    'pause',
-    'pickup',
-    'sequence',
-]
+__all__ = ['Task', 'TaskManager', 'again', 'cont', 'done', 'exit', 'loop', 'pause', 'pickup', 'sequence']
 
 from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, NoReturn, Protocol, overload
@@ -167,10 +156,7 @@ class TaskManager:
     def popupControls(self) -> TaskManagerPanel: ...
     def getProfileSession(self, name: str | None = None) -> ProfileSession: ...
     def profileFrames(
-        self,
-        num: int | None = None,
-        session: ProfileSession | None = None,
-        callback: Callable[[], object] | None = None,
+        self, num: int | None = None, session: ProfileSession | None = None, callback: Callable[[], object] | None = None
     ) -> None: ...
     def getProfileFrames(self) -> bool: ...
     def getProfileFramesSV(self) -> StateVar: ...

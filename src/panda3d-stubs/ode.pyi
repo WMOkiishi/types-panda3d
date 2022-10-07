@@ -87,7 +87,18 @@ class OdeWorld(TypedObject):
     def init_surface_table(self, num_surfaces: str) -> None: ...
     def add_body_dampening(self, body: OdeBody, surface: int) -> None:
         """void assign_surface_body(OdeBody& body, int surface);"""
-    def set_surface_entry(self, pos1: str, pos2: str, mu: float, bounce: float, bounce_vel: float, soft_erp: float, soft_cfm: float, slip: float, dampen: float) -> None: ...
+    def set_surface_entry(
+        self,
+        pos1: str,
+        pos2: str,
+        mu: float,
+        bounce: float,
+        bounce_vel: float,
+        soft_erp: float,
+        soft_cfm: float,
+        slip: float,
+        dampen: float,
+    ) -> None: ...
     def apply_dampening(self, dt: float, body: OdeBody) -> float: ...
     isEmpty = is_empty
     getId = get_id
@@ -324,7 +335,19 @@ class OdeMass(TypedReferenceCount):
     @overload
     def set_parameters(self, themass: float, center: Vec3f, r: LMatrix3f) -> None: ...
     @overload
-    def set_parameters(self, themass: float, cgx: float, cgy: float, cgz: float, I11: float, I22: float, I33: float, I12: float, I13: float, I23: float) -> None: ...
+    def set_parameters(
+        self,
+        themass: float,
+        cgx: float,
+        cgy: float,
+        cgz: float,
+        I11: float,
+        I22: float,
+        I33: float,
+        I12: float,
+        I13: float,
+        I23: float,
+    ) -> None: ...
     def set_sphere(self, density: float, radius: float) -> None: ...
     def set_sphere_total(self, total_mass: float, radius: float) -> None: ...
     def set_capsule(self, density: float, direction: int, radius: float, length: float) -> None: ...

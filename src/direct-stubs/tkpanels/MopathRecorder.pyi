@@ -43,7 +43,7 @@ class MopathRecorder(AppShell, DirectObject):
     nodePathNames: list[str]
     manipulandumId = ...
     trace: LineNodePath
-    oldPlaybackNodePath= ...
+    oldPlaybackNodePath = ...
     pointSet: list
     prePoints: list
     postPoints: list
@@ -247,15 +247,7 @@ class MopathRecorder(AppShell, DirectObject):
         maxVelocity: float = ...,
         **kw,
     ) -> Floater: ...
-    def createAngleDial(
-        self,
-        parent,
-        category: str,
-        text: str,
-        balloonHelp,
-        command=None,
-        **kw,
-    ) -> AngleDial: ...
+    def createAngleDial(self, parent, category: str, text: str, balloonHelp, command=None, **kw) -> AngleDial: ...
     def createSlider(
         self,
         parent,

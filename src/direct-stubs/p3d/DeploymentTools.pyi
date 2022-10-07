@@ -11,7 +11,9 @@ from panda3d.core import Filename, HTTPClient, PNMImage
 from .HostInfo import HostInfo
 
 P3DEMBED_MAGIC: Final[Literal[0xFF3D3D00]]
+
 def archiveFilter(info): ...
+
 class TarInfoRoot(TarInfo): ...
 class TarInfoRootOSX(TarInfoRoot): ...
 

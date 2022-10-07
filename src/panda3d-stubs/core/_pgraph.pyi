@@ -914,7 +914,9 @@ class RenderModeAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _RenderModeAttrib_Mode, thickness: float = ..., perspective: bool = ..., wireframe_color: Vec4f = ...) -> RenderAttrib:
+    def make(
+        mode: _RenderModeAttrib_Mode, thickness: float = ..., perspective: bool = ..., wireframe_color: Vec4f = ...
+    ) -> RenderAttrib:
         """Constructs a new RenderModeAttrib object that specifies whether to draw
         polygons in the normal, filled mode, or wireframe mode, or in some other
         yet-to-be-defined mode.
@@ -1134,10 +1136,19 @@ class RenderState(NodeCachedReferenceCount):
     def make(attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, override: int = ...) -> RenderState: ...
     @overload
     @staticmethod
-    def make(attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, attrib4: RenderAttrib, override: int = ...) -> RenderState: ...
+    def make(
+        attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, attrib4: RenderAttrib, override: int = ...
+    ) -> RenderState: ...
     @overload
     @staticmethod
-    def make(attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, attrib4: RenderAttrib, attrib5: RenderAttrib, override: int = ...) -> RenderState: ...
+    def make(
+        attrib1: RenderAttrib,
+        attrib2: RenderAttrib,
+        attrib3: RenderAttrib,
+        attrib4: RenderAttrib,
+        attrib5: RenderAttrib,
+        override: int = ...,
+    ) -> RenderState: ...
     def compose(self, other: RenderState) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state with the other state.
@@ -2788,7 +2799,9 @@ class ShaderInput:
     @overload
     def __init__(self, name: InternalName, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
     @overload
-    def __init__(self, name: InternalName, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...) -> None: ...
+    def __init__(
+        self, name: InternalName, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
+    ) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -3867,9 +3880,13 @@ class NodePath(Generic[_N]):
     @overload
     def set_pos_hpr_scale(self, other: NodePath, pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> None: ...
     @overload
-    def set_pos_hpr_scale(self, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float) -> None: ...
+    def set_pos_hpr_scale(
+        self, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float
+    ) -> None: ...
     @overload
-    def set_pos_hpr_scale(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float) -> None: ...
+    def set_pos_hpr_scale(
+        self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float
+    ) -> None: ...
     @overload
     def set_pos_quat_scale(self, pos: Vec3f, quat: Vec4f, scale: Vec3f) -> None:
         """`(self, pos: LVecBase3, quat: LQuaternion, scale: LVecBase3)`:
@@ -4463,9 +4480,13 @@ class NodePath(Generic[_N]):
     @overload
     def set_shader_input(self, id: InternalName, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
     @overload
-    def set_shader_input(self, id: InternalName, n1: float, n2: float, n3: float = ..., n4: float = ..., priority: int = ...) -> None: ...
+    def set_shader_input(
+        self, id: InternalName, n1: float, n2: float, n3: float = ..., n4: float = ..., priority: int = ...
+    ) -> None: ...
     @overload
-    def set_shader_input(self, id: InternalName, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...) -> None: ...
+    def set_shader_input(
+        self, id: InternalName, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
+    ) -> None: ...
     def set_shader_inputs(self, args, kwargs) -> None: ...
     def clear_shader_input(self, id: InternalName) -> None: ...
     def set_instance_count(self, instance_count: int) -> None:
@@ -4655,7 +4676,9 @@ class NodePath(Generic[_N]):
         stage.
         """
     @overload
-    def set_tex_gen(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3f, priority: int = ...) -> None: ...
+    def set_tex_gen(
+        self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3f, priority: int = ...
+    ) -> None: ...
     def clear_tex_gen(self, stage: TextureStage = ...) -> None:
         """`(self)`:
         Removes the texture coordinate generation mode from all texture stages on
@@ -6487,7 +6510,15 @@ class BillboardEffect(RenderEffect):
     """
 
     @staticmethod
-    def make(up_vector: Vec3f, eye_relative: bool, axial_rotate: bool, offset: float, look_at: NodePath, look_at_point: Vec3f, fixed_depth: bool = ...) -> RenderEffect:
+    def make(
+        up_vector: Vec3f,
+        eye_relative: bool,
+        axial_rotate: bool,
+        offset: float,
+        look_at: NodePath,
+        look_at_point: Vec3f,
+        fixed_depth: bool = ...,
+    ) -> RenderEffect:
         """Constructs a new BillboardEffect object with the indicated properties."""
     @staticmethod
     def make_axis() -> RenderEffect:
@@ -6980,7 +7011,9 @@ class ClipPlaneAttrib(RenderAttrib):
     def make(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode = ...) -> RenderAttrib: ...
     @overload
     @staticmethod
-    def make(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode, plane4: PlaneNode) -> RenderAttrib: ...
+    def make(
+        op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode, plane4: PlaneNode
+    ) -> RenderAttrib: ...
     @staticmethod
     def make_default() -> RenderAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
@@ -7273,10 +7306,20 @@ class ColorBlendAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
-    def make(mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: Vec4f = ...) -> RenderAttrib: ...
+    def make(
+        mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: Vec4f = ...
+    ) -> RenderAttrib: ...
     @overload
     @staticmethod
-    def make(rgb_mode: _ColorBlendAttrib_Mode, rgb_a: _ColorBlendAttrib_Operand, rgb_b: _ColorBlendAttrib_Operand, alpha_mode: _ColorBlendAttrib_Mode, alpha_a: _ColorBlendAttrib_Operand, alpha_b: _ColorBlendAttrib_Operand, color: Vec4f = ...) -> RenderAttrib: ...
+    def make(
+        rgb_mode: _ColorBlendAttrib_Mode,
+        rgb_a: _ColorBlendAttrib_Operand,
+        rgb_b: _ColorBlendAttrib_Operand,
+        alpha_mode: _ColorBlendAttrib_Mode,
+        alpha_a: _ColorBlendAttrib_Operand,
+        alpha_b: _ColorBlendAttrib_Operand,
+        color: Vec4f = ...,
+    ) -> RenderAttrib: ...
     @staticmethod
     def make_default() -> RenderAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
@@ -9109,7 +9152,6 @@ class Loader(TypedReferenceCount, Namable):
         getFileType = get_file_type
         getFiles = get_files
         getFileTypes = get_file_types
-
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
@@ -11121,16 +11163,66 @@ class StencilAttrib(RenderAttrib):
         properties for render attributes of this type ought to be.
         """
     @staticmethod
-    def make(front_enable: bool, front_comparison_function: _RenderAttrib_PandaCompareFunc, stencil_fail_operation: _StencilAttrib_StencilOperation, stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation, front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation, reference: int, read_mask: int, write_mask: int = ...) -> RenderAttrib:
+    def make(
+        front_enable: bool,
+        front_comparison_function: _RenderAttrib_PandaCompareFunc,
+        stencil_fail_operation: _StencilAttrib_StencilOperation,
+        stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation,
+        front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
+        reference: int,
+        read_mask: int,
+        write_mask: int = ...,
+    ) -> RenderAttrib:
         """Constructs a front face StencilAttrib."""
     @staticmethod
-    def make_2_sided(front_enable: bool, back_enable: bool, front_comparison_function: _RenderAttrib_PandaCompareFunc, stencil_fail_operation: _StencilAttrib_StencilOperation, stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation, front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation, reference: int, read_mask: int, write_mask: int, back_comparison_function: _RenderAttrib_PandaCompareFunc, back_stencil_fail_operation: _StencilAttrib_StencilOperation, back_stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation, back_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation) -> RenderAttrib:
+    def make_2_sided(
+        front_enable: bool,
+        back_enable: bool,
+        front_comparison_function: _RenderAttrib_PandaCompareFunc,
+        stencil_fail_operation: _StencilAttrib_StencilOperation,
+        stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation,
+        front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
+        reference: int,
+        read_mask: int,
+        write_mask: int,
+        back_comparison_function: _RenderAttrib_PandaCompareFunc,
+        back_stencil_fail_operation: _StencilAttrib_StencilOperation,
+        back_stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation,
+        back_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
+    ) -> RenderAttrib:
         """Constructs a two-sided StencilAttrib."""
     @staticmethod
-    def make_with_clear(front_enable: bool, front_comparison_function: _RenderAttrib_PandaCompareFunc, stencil_fail_operation: _StencilAttrib_StencilOperation, stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation, front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation, reference: int, read_mask: int, write_mask: int, clear: bool, clear_value: int) -> RenderAttrib:
+    def make_with_clear(
+        front_enable: bool,
+        front_comparison_function: _RenderAttrib_PandaCompareFunc,
+        stencil_fail_operation: _StencilAttrib_StencilOperation,
+        stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation,
+        front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
+        reference: int,
+        read_mask: int,
+        write_mask: int,
+        clear: bool,
+        clear_value: int,
+    ) -> RenderAttrib:
         """Constructs a front face StencilAttrib."""
     @staticmethod
-    def make_2_sided_with_clear(front_enable: bool, back_enable: bool, front_comparison_function: _RenderAttrib_PandaCompareFunc, stencil_fail_operation: _StencilAttrib_StencilOperation, stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation, front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation, reference: int, read_mask: int, write_mask: int, back_comparison_function: _RenderAttrib_PandaCompareFunc, back_stencil_fail_operation: _StencilAttrib_StencilOperation, back_stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation, back_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation, clear: bool, clear_value: int) -> RenderAttrib:
+    def make_2_sided_with_clear(
+        front_enable: bool,
+        back_enable: bool,
+        front_comparison_function: _RenderAttrib_PandaCompareFunc,
+        stencil_fail_operation: _StencilAttrib_StencilOperation,
+        stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation,
+        front_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
+        reference: int,
+        read_mask: int,
+        write_mask: int,
+        back_comparison_function: _RenderAttrib_PandaCompareFunc,
+        back_stencil_fail_operation: _StencilAttrib_StencilOperation,
+        back_stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation,
+        back_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
+        clear: bool,
+        clear_value: int,
+    ) -> RenderAttrib:
         """Constructs a two-sided StencilAttrib."""
     def get_render_state(self, render_state_identifier: _StencilAttrib_StencilRenderState) -> int:
         """Returns render state."""
@@ -11207,5 +11299,6 @@ class ShaderPool:
 
 def py_decode_NodePath_from_bam_stream(data: bytes) -> NodePath: ...
 def py_decode_NodePath_from_bam_stream_persist(unpickler, data: bytes) -> NodePath: ...
+
 pyDecodeNodePathFromBamStream = py_decode_NodePath_from_bam_stream
 pyDecodeNodePathFromBamStreamPersist = py_decode_NodePath_from_bam_stream_persist

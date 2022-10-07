@@ -16,18 +16,10 @@ class ShadowPlacer(DirectObject):
     cRayBitMask: CollideMask
     lifter: CollisionHandlerFloor
     def __init__(
-        self,
-        cTrav: CollisionTraverser,
-        shadowNodePath: NodePath,
-        wallCollideMask: object,
-        floorCollideMask: CollideMask,
+        self, cTrav: CollisionTraverser, shadowNodePath: NodePath, wallCollideMask: object, floorCollideMask: CollideMask
     ) -> None: ...
     def setup(
-        self,
-        cTrav: CollisionTraverser,
-        shadowNodePath: NodePath,
-        wallCollideMask: object,
-        floorCollideMask: CollideMask,
+        self, cTrav: CollisionTraverser, shadowNodePath: NodePath, wallCollideMask: object, floorCollideMask: CollideMask
     ) -> None: ...
     def delete(self) -> None: ...
     def on(self) -> None: ...

@@ -12,7 +12,6 @@ from .HostInfo import HostInfo
 from .PackageInfo import PackageInfo
 
 class PackageInstaller(DirectObject):
-
     class PendingPackage:
         notify: ClassVar[Notifier]
         packageName: str

@@ -11,12 +11,7 @@ _AllCallback: TypeAlias = Callable[[list[DistributedObjectBase | None]], object]
 _EachCallback: TypeAlias = Callable[[DistributedObjectBase], object]
 _TimeoutCallback: TypeAlias = Callable[[Sequence[int]], object]
 _CallbackTuple: TypeAlias = tuple[
-    _AllCallback | None,
-    _EachCallback | None,
-    _TimeoutCallback | None,
-    list[int],
-    Sequence[int],
-    str | None,
+    _AllCallback | None, _EachCallback | None, _TimeoutCallback | None, list[int], Sequence[int], str | None,
 ]
 
 class RelatedObjectMgr(DirectObject):

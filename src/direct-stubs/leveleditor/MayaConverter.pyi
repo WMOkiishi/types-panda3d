@@ -5,6 +5,7 @@ from typing_extensions import Final, Literal
 wx: Any
 
 CLOSE_STDIN: Final[str]
+
 class StartupError(Exception): ...
 
 class Process:

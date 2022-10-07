@@ -717,13 +717,17 @@ class MeshDrawer(TypedObject):
         """Pass the current camera node and the root node.  Passing the camera is
         required to generate bill boards that face it.
         """
-    def tri(self, v1: Vec3f, c1: Vec4f, uv1: LVecBase2f, v2: Vec3f, c2: Vec4f, uv2: LVecBase2f, v3: Vec3f, c3: Vec4f, uv3: LVecBase2f) -> None:
+    def tri(
+        self, v1: Vec3f, c1: Vec4f, uv1: LVecBase2f, v2: Vec3f, c2: Vec4f, uv2: LVecBase2f, v3: Vec3f, c3: Vec4f, uv3: LVecBase2f
+    ) -> None:
         """Draws a triangle with the given parameters."""
     def particle(self, pos: Vec3f, frame: Vec4f, size: float, color: Vec4f, rotation: float) -> None:
         """Draws a particle that is sort of like a bill board but has an extra
         rotation component.  Frame contains u,v,u-size,v-size quadruple.
         """
-    def blended_particle(self, pos: Vec3f, frame1: Vec4f, frame2: Vec4f, blend: float, size: float, color: Vec4f, rotation: float) -> None:
+    def blended_particle(
+        self, pos: Vec3f, frame1: Vec4f, frame2: Vec4f, blend: float, size: float, color: Vec4f, rotation: float
+    ) -> None:
         """Works just like particle but accepts 2 frames and a blend (from 0 to 1)
         component between them Frame contains u,v,u-size,v-size quadruple.
         """
@@ -740,7 +744,16 @@ class MeshDrawer(TypedObject):
         bill boarding behavior and instead draws 2 planes in a cross.  Stars at
         start and ends at stop.  Frame contains u,v,u-size,v-size quadruple.
         """
-    def uneven_segment(self, start: Vec3f, stop: Vec3f, frame: Vec4f, thickness_start: float, color_start: Vec4f, thickness_stop: float, color_stop: Vec4f) -> None:
+    def uneven_segment(
+        self,
+        start: Vec3f,
+        stop: Vec3f,
+        frame: Vec4f,
+        thickness_start: float,
+        color_start: Vec4f,
+        thickness_stop: float,
+        color_stop: Vec4f,
+    ) -> None:
         """Draws a segment a line with different thickness and color on both sides.
         Stars at start and ends at stop.  Frame contains u,v,u-size,v-size
         quadruple.
@@ -792,22 +805,78 @@ class MeshDrawer2D(TypedObject):
         """Gets the total triangle budget of the drawer."""
     def get_root(self) -> NodePath:
         """Returns the root NodePath."""
-    def quad_raw(self, v1: Vec3f, c1: Vec4f, uv1: LVecBase2f, v2: Vec3f, c2: Vec4f, uv2: LVecBase2f, v3: Vec3f, c3: Vec4f, uv3: LVecBase2f, v4: Vec3f, c4: Vec4f, uv4: LVecBase2f) -> None:
+    def quad_raw(
+        self,
+        v1: Vec3f,
+        c1: Vec4f,
+        uv1: LVecBase2f,
+        v2: Vec3f,
+        c2: Vec4f,
+        uv2: LVecBase2f,
+        v3: Vec3f,
+        c3: Vec4f,
+        uv3: LVecBase2f,
+        v4: Vec3f,
+        c4: Vec4f,
+        uv4: LVecBase2f,
+    ) -> None:
         """Draws a 2D rectangle.  Ignores the clipping rectangle."""
-    def rectangle_raw(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None: ...
+    def rectangle_raw(
+        self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f
+    ) -> None: ...
     def set_clip(self, x: float, y: float, w: float, h: float) -> None:
         """Sets the clipping rectangle."""
     def rectangle(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
         """Draws a 2D rectangle which can be clipped."""
-    def rectangle_border(self, x: float, y: float, w: float, h: float, r: float, t: float, l: float, b: float, tr: float, tt: float, tl: float, tb: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
+    def rectangle_border(
+        self,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        r: float,
+        t: float,
+        l: float,
+        b: float,
+        tr: float,
+        tt: float,
+        tl: float,
+        tb: float,
+        u: float,
+        v: float,
+        us: float,
+        vs: float,
+        color: Vec4f,
+    ) -> None:
         """Draws a 2d rectangle, with borders and corders, taken from the surrounding
         texture
         """
-    def rectangle_border_tiled(self, x: float, y: float, w: float, h: float, r: float, t: float, l: float, b: float, tr: float, tt: float, tl: float, tb: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
+    def rectangle_border_tiled(
+        self,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        r: float,
+        t: float,
+        l: float,
+        b: float,
+        tr: float,
+        tt: float,
+        tl: float,
+        tb: float,
+        u: float,
+        v: float,
+        us: float,
+        vs: float,
+        color: Vec4f,
+    ) -> None:
         """Draws a 2d rectangle, with borders and corders, taken from the surrounding
         texture
         """
-    def rectangle_tiled(self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f) -> None:
+    def rectangle_tiled(
+        self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4f
+    ) -> None:
         """Draws a tiled rectangle, size of tiles is in us and vs"""
     def begin(self) -> None:
         """Opens up the geom for drawing, don't forget to call MeshDrawer2D::end()"""
@@ -1451,7 +1520,15 @@ class PfmVizzer:
         """Removes all of the previously-added vis columns in preparation for building
         a new list.  See add_vis_column().
         """
-    def add_vis_column(self, source: _PfmVizzer_ColumnType, target: _PfmVizzer_ColumnType, name: InternalName, transform: TransformState = ..., lens: Lens = ..., undist_lut: PfmFile = ...) -> None:
+    def add_vis_column(
+        self,
+        source: _PfmVizzer_ColumnType,
+        target: _PfmVizzer_ColumnType,
+        name: InternalName,
+        transform: TransformState = ...,
+        lens: Lens = ...,
+        undist_lut: PfmFile = ...,
+    ) -> None:
         """Adds a new vis column specification to the list of vertex data columns that
         will be generated at the next call to generate_vis_points() or
         generate_vis_mesh().  This advanced interface supercedes the higher-level

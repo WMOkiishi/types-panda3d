@@ -1,16 +1,4 @@
-__all__ = [
-    'execfile',
-    'exists',
-    'getmtime',
-    'getsize',
-    'isdir',
-    'isfile',
-    'join',
-    'lexists',
-    'listdir',
-    'open',
-    'walk',
-]
+__all__ = ['execfile', 'exists', 'getmtime', 'getsize', 'isdir', 'isfile', 'join', 'lexists', 'listdir', 'open', 'walk']
 
 from _typeshed import ReadableBuffer
 from collections.abc import Generator, Iterable, Mapping
@@ -45,10 +33,7 @@ class StreamIOWrapper(IOBase):
 
 def listdir(path: str) -> list[str]: ...
 def walk(
-    top: _F,
-    topdown: bool = True,
-    onerror: Unused = None,
-    followlinks: bool = True,
+    top: _F, topdown: bool = True, onerror: Unused = None, followlinks: bool = True
 ) -> Generator[tuple[_F, list[str], list[str]], None, None]: ...
 def isfile(path: str) -> bool: ...
 def isdir(path: str) -> bool: ...

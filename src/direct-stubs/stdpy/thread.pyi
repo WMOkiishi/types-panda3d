@@ -5,10 +5,13 @@ from typing_extensions import Final
 from direct._typing import Unused
 
 TIMEOUT_MAX: Final[float]
+
 def force_yield() -> None: ...
 def consider_yield() -> None: ...
+
 forceYield = force_yield
 considerYield = consider_yield
+
 class error(Exception): ...
 
 class LockType:
@@ -20,10 +23,7 @@ class LockType:
     acquire = __enter__
 
 def start_new_thread(
-    function: Callable[..., object],
-    args: Sequence[Any],
-    kwargs: Mapping[str, Any] = ...,
-    name: str | None = None,
+    function: Callable[..., object], args: Sequence[Any], kwargs: Mapping[str, Any] = ..., name: str | None = None
 ) -> int: ...
 def interrupt_main() -> None: ...
 def exit() -> NoReturn: ...

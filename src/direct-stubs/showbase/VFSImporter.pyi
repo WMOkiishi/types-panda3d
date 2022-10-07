@@ -25,12 +25,7 @@ class VFSLoader:
     desc: bytes
     packagePath: Filename | None
     def __init__(
-        self,
-        dir_path: Filename,
-        vfile: VirtualFile | None,
-        filename: Filename,
-        desc: bytes,
-        packagePath: Filename | None = None,
+        self, dir_path: Filename, vfile: VirtualFile | None, filename: Filename, desc: bytes, packagePath: Filename | None = None
     ) -> None: ...
     def load_module(self, fullname: str, loadingShared: bool = False) -> ModuleType: ...
     def getdata(self, path: Filepath) -> bytes: ...

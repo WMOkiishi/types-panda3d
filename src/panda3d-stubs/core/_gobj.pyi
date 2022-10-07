@@ -75,7 +75,60 @@ _BoundingVolume_BoundsType: TypeAlias = Literal[0, 1, 2, 3, 4]
 _SamplerState_WrapMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _SamplerState_FilterType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _Texture_TextureType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
-_Texture_Format: TypeAlias = Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52]
+_Texture_Format: TypeAlias = Literal[
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+]
 _Texture_ComponentType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _Texture_CompressionMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 _Texture_QualityLevel: TypeAlias = Literal[0, 1, 2, 3]
@@ -684,7 +737,17 @@ class GeomVertexColumn(GeomEnums):
     @overload
     def __init__(self, copy: GeomVertexColumn) -> None: ...
     @overload
-    def __init__(self, name: InternalName, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents, start: int, column_alignment: int = ..., num_elements: int = ..., element_stride: int = ...) -> None: ...
+    def __init__(
+        self,
+        name: InternalName,
+        num_components: int,
+        numeric_type: _GeomEnums_NumericType,
+        contents: _GeomEnums_Contents,
+        start: int,
+        column_alignment: int = ...,
+        num_elements: int = ...,
+        element_stride: int = ...,
+    ) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def get_name(self) -> InternalName:
         """Returns the name of this particular data field, e.g.  "vertex" or "normal".
@@ -823,13 +886,57 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     @overload
     def __init__(self, copy: GeomVertexArrayFormat = ...) -> None: ...
     @overload
-    def __init__(self, name0: InternalName, num_components0: int, numeric_type0: _GeomEnums_NumericType, contents0: _GeomEnums_Contents) -> None: ...
+    def __init__(
+        self, name0: InternalName, num_components0: int, numeric_type0: _GeomEnums_NumericType, contents0: _GeomEnums_Contents
+    ) -> None: ...
     @overload
-    def __init__(self, name0: InternalName, num_components0: int, numeric_type0: _GeomEnums_NumericType, contents0: _GeomEnums_Contents, name1: InternalName, num_components1: int, numeric_type1: _GeomEnums_NumericType, contents1: _GeomEnums_Contents) -> None: ...
+    def __init__(
+        self,
+        name0: InternalName,
+        num_components0: int,
+        numeric_type0: _GeomEnums_NumericType,
+        contents0: _GeomEnums_Contents,
+        name1: InternalName,
+        num_components1: int,
+        numeric_type1: _GeomEnums_NumericType,
+        contents1: _GeomEnums_Contents,
+    ) -> None: ...
     @overload
-    def __init__(self, name0: InternalName, num_components0: int, numeric_type0: _GeomEnums_NumericType, contents0: _GeomEnums_Contents, name1: InternalName, num_components1: int, numeric_type1: _GeomEnums_NumericType, contents1: _GeomEnums_Contents, name2: InternalName, num_components2: int, numeric_type2: _GeomEnums_NumericType, contents2: _GeomEnums_Contents) -> None: ...
+    def __init__(
+        self,
+        name0: InternalName,
+        num_components0: int,
+        numeric_type0: _GeomEnums_NumericType,
+        contents0: _GeomEnums_Contents,
+        name1: InternalName,
+        num_components1: int,
+        numeric_type1: _GeomEnums_NumericType,
+        contents1: _GeomEnums_Contents,
+        name2: InternalName,
+        num_components2: int,
+        numeric_type2: _GeomEnums_NumericType,
+        contents2: _GeomEnums_Contents,
+    ) -> None: ...
     @overload
-    def __init__(self, name0: InternalName, num_components0: int, numeric_type0: _GeomEnums_NumericType, contents0: _GeomEnums_Contents, name1: InternalName, num_components1: int, numeric_type1: _GeomEnums_NumericType, contents1: _GeomEnums_Contents, name2: InternalName, num_components2: int, numeric_type2: _GeomEnums_NumericType, contents2: _GeomEnums_Contents, name3: InternalName, num_components3: int, numeric_type3: _GeomEnums_NumericType, contents3: _GeomEnums_Contents) -> None: ...
+    def __init__(
+        self,
+        name0: InternalName,
+        num_components0: int,
+        numeric_type0: _GeomEnums_NumericType,
+        contents0: _GeomEnums_Contents,
+        name1: InternalName,
+        num_components1: int,
+        numeric_type1: _GeomEnums_NumericType,
+        contents1: _GeomEnums_Contents,
+        name2: InternalName,
+        num_components2: int,
+        numeric_type2: _GeomEnums_NumericType,
+        contents2: _GeomEnums_Contents,
+        name3: InternalName,
+        num_components3: int,
+        numeric_type3: _GeomEnums_NumericType,
+        contents3: _GeomEnums_Contents,
+    ) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
     def assign(self: Self, copy: Self) -> Self: ...
@@ -910,7 +1017,15 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         The return value is the index number of the new data type.
         """
     @overload
-    def add_column(self, name: InternalName, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents, start: int = ..., column_alignment: int = ...) -> int: ...
+    def add_column(
+        self,
+        name: InternalName,
+        num_components: int,
+        numeric_type: _GeomEnums_NumericType,
+        contents: _GeomEnums_Contents,
+        start: int = ...,
+        column_alignment: int = ...,
+    ) -> int: ...
     def remove_column(self, name: InternalName) -> None:
         """Removes the column with the indicated name, if any.  This leaves a gap in
         the byte structure.
@@ -2059,7 +2174,9 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
         data array is adjusted accordingly.
         """
     @overload
-    def copy_subdata_from(self, to_start: int, to_size: int, other: GeomVertexArrayDataHandle, from_start: int, from_size: int) -> None: ...
+    def copy_subdata_from(
+        self, to_start: int, to_size: int, other: GeomVertexArrayDataHandle, from_start: int, from_size: int
+    ) -> None: ...
     @overload
     def copy_subdata_from(self, to_start: int, to_size: int, buffer, from_start: int, from_size: int) -> None: ...
     def get_data(self) -> bytes:
@@ -2294,9 +2411,27 @@ class TransformBlend:
     @overload
     def __init__(self, transform0: VertexTransform, weight0: float, transform1: VertexTransform, weight1: float) -> None: ...
     @overload
-    def __init__(self, transform0: VertexTransform, weight0: float, transform1: VertexTransform, weight1: float, transform2: VertexTransform, weight2: float) -> None: ...
+    def __init__(
+        self,
+        transform0: VertexTransform,
+        weight0: float,
+        transform1: VertexTransform,
+        weight1: float,
+        transform2: VertexTransform,
+        weight2: float,
+    ) -> None: ...
     @overload
-    def __init__(self, transform0: VertexTransform, weight0: float, transform1: VertexTransform, weight1: float, transform2: VertexTransform, weight2: float, transform3: VertexTransform, weight3: float) -> None: ...
+    def __init__(
+        self,
+        transform0: VertexTransform,
+        weight0: float,
+        transform1: VertexTransform,
+        weight1: float,
+        transform2: VertexTransform,
+        weight2: float,
+        transform3: VertexTransform,
+        weight3: float,
+    ) -> None: ...
     def __lt__(self, other: TransformBlend) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -2900,7 +3035,9 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         with a previous array, the previous array will not be repacked.
         """
     @overload
-    def scale_color(self, color_scale: Vec4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents) -> GeomVertexData: ...
+    def scale_color(
+        self, color_scale: Vec4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
+    ) -> GeomVertexData: ...
     @overload
     def set_color(self, color: Vec4f) -> GeomVertexData:
         """`(self, color: LColor)`:
@@ -2917,7 +3054,9 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         interleaved with a previous array, the previous array will not be repacked.
         """
     @overload
-    def set_color(self, color: Vec4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents) -> GeomVertexData: ...
+    def set_color(
+        self, color: Vec4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
+    ) -> GeomVertexData: ...
     def reverse_normals(self) -> GeomVertexData:
         """Returns a new GeomVertexData object with the normal data modified in-place,
         so that each lighting normal is now facing in the opposite direction.
@@ -2967,7 +3106,9 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """
     @overload
     def transform_vertices(self, mat: Mat4f, begin_row: int, end_row: int) -> None: ...
-    def replace_column(self, name: InternalName, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents) -> GeomVertexData:
+    def replace_column(
+        self, name: InternalName, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
+    ) -> GeomVertexData:
         """Returns a new GeomVertexData object, suitable for modification, with the
         indicated data type replaced with a new table filled with undefined values.
         The new table will be added as a new array; if the old table was
@@ -3985,7 +4126,9 @@ class TextureStage(TypedWritableReferenceCount):
         set_tex_view_offset().
         """
     @overload
-    def set_combine_rgb(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand) -> None:
+    def set_combine_rgb(
+        self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand
+    ) -> None:
         """`(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand)`:
         Specifies any of the CombineMode values that represent a one-parameter
         operation.  Specifically, this is CM_replace only.
@@ -4000,9 +4143,25 @@ class TextureStage(TypedWritableReferenceCount):
         operation.  Specifically, this is CM_interpolate only.
         """
     @overload
-    def set_combine_rgb(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand, source1: _TextureStage_CombineSource, operand1: _TextureStage_CombineOperand) -> None: ...
+    def set_combine_rgb(
+        self,
+        mode: _TextureStage_CombineMode,
+        source0: _TextureStage_CombineSource,
+        operand0: _TextureStage_CombineOperand,
+        source1: _TextureStage_CombineSource,
+        operand1: _TextureStage_CombineOperand,
+    ) -> None: ...
     @overload
-    def set_combine_rgb(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand, source1: _TextureStage_CombineSource, operand1: _TextureStage_CombineOperand, source2: _TextureStage_CombineSource, operand2: _TextureStage_CombineOperand) -> None: ...
+    def set_combine_rgb(
+        self,
+        mode: _TextureStage_CombineMode,
+        source0: _TextureStage_CombineSource,
+        operand0: _TextureStage_CombineOperand,
+        source1: _TextureStage_CombineSource,
+        operand1: _TextureStage_CombineOperand,
+        source2: _TextureStage_CombineSource,
+        operand2: _TextureStage_CombineOperand,
+    ) -> None: ...
     def get_combine_rgb_mode(self) -> _TextureStage_CombineMode:
         """Get the combine_rgb_mode"""
     def get_num_combine_rgb_operands(self) -> int:
@@ -4022,7 +4181,9 @@ class TextureStage(TypedWritableReferenceCount):
     def get_combine_rgb_operand2(self) -> _TextureStage_CombineOperand:
         """Get operand2 of combine_rgb_mode"""
     @overload
-    def set_combine_alpha(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand) -> None:
+    def set_combine_alpha(
+        self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand
+    ) -> None:
         """`(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand)`:
         Specifies any of the CombineMode values that represent a one-parameter
         operation.  Specifically, this is CM_replace only.
@@ -4037,9 +4198,25 @@ class TextureStage(TypedWritableReferenceCount):
         operation.  Specifically, this is CM_interpolate only.
         """
     @overload
-    def set_combine_alpha(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand, source1: _TextureStage_CombineSource, operand1: _TextureStage_CombineOperand) -> None: ...
+    def set_combine_alpha(
+        self,
+        mode: _TextureStage_CombineMode,
+        source0: _TextureStage_CombineSource,
+        operand0: _TextureStage_CombineOperand,
+        source1: _TextureStage_CombineSource,
+        operand1: _TextureStage_CombineOperand,
+    ) -> None: ...
     @overload
-    def set_combine_alpha(self, mode: _TextureStage_CombineMode, source0: _TextureStage_CombineSource, operand0: _TextureStage_CombineOperand, source1: _TextureStage_CombineSource, operand1: _TextureStage_CombineOperand, source2: _TextureStage_CombineSource, operand2: _TextureStage_CombineOperand) -> None: ...
+    def set_combine_alpha(
+        self,
+        mode: _TextureStage_CombineMode,
+        source0: _TextureStage_CombineSource,
+        operand0: _TextureStage_CombineOperand,
+        source1: _TextureStage_CombineSource,
+        operand1: _TextureStage_CombineOperand,
+        source2: _TextureStage_CombineSource,
+        operand2: _TextureStage_CombineOperand,
+    ) -> None: ...
     def get_combine_alpha_mode(self) -> _TextureStage_CombineMode:
         """Get combine_alpha_mode"""
     def get_num_combine_alpha_operands(self) -> int:
@@ -6344,7 +6521,15 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Reinitializes the texture to its default, empty state (except for the
         name).
         """
-    def setup_texture(self, texture_type: _Texture_TextureType, x_size: int, y_size: int, z_size: int, component_type: _Texture_ComponentType, format: _Texture_Format) -> None:
+    def setup_texture(
+        self,
+        texture_type: _Texture_TextureType,
+        x_size: int,
+        y_size: int,
+        z_size: int,
+        component_type: _Texture_ComponentType,
+        format: _Texture_Format,
+    ) -> None:
         """Sets the texture to the indicated type and dimensions, presumably in
         preparation for calling read() or load(), or set_ram_image() or
         modify_ram_image(), or use set_clear_color to let the texture be cleared to
@@ -6379,7 +6564,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         solid color.
         """
     @overload
-    def setup_2d_texture(self, x_size: int, y_size: int, component_type: _Texture_ComponentType, format: _Texture_Format) -> None: ...
+    def setup_2d_texture(
+        self, x_size: int, y_size: int, component_type: _Texture_ComponentType, format: _Texture_Format
+    ) -> None: ...
     @overload
     def setup_3d_texture(self, z_size: int = ...) -> None:
         """`(self, z_size: int = ...)`:
@@ -6394,7 +6581,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         the image data.
         """
     @overload
-    def setup_3d_texture(self, x_size: int, y_size: int, z_size: int, component_type: _Texture_ComponentType, format: _Texture_Format) -> None: ...
+    def setup_3d_texture(
+        self, x_size: int, y_size: int, z_size: int, component_type: _Texture_ComponentType, format: _Texture_Format
+    ) -> None: ...
     @overload
     def setup_cube_map(self) -> None:
         """`(self)`:
@@ -6429,7 +6618,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         the texture be cleared to a solid color.
         """
     @overload
-    def setup_2d_texture_array(self, x_size: int, y_size: int, z_size: int, component_type: _Texture_ComponentType, format: _Texture_Format) -> None: ...
+    def setup_2d_texture_array(
+        self, x_size: int, y_size: int, z_size: int, component_type: _Texture_ComponentType, format: _Texture_Format
+    ) -> None: ...
     @overload
     def setup_cube_map_array(self, num_cube_maps: int) -> None:
         """`(self, num_cube_maps: int)`:
@@ -6452,8 +6643,12 @@ class Texture(TypedWritableReferenceCount, Namable):
         @since 1.10.0
         """
     @overload
-    def setup_cube_map_array(self, size: int, num_cube_maps: int, component_type: _Texture_ComponentType, format: _Texture_Format) -> None: ...
-    def setup_buffer_texture(self, size: int, component_type: _Texture_ComponentType, format: _Texture_Format, usage: _GeomEnums_UsageHint) -> None:
+    def setup_cube_map_array(
+        self, size: int, num_cube_maps: int, component_type: _Texture_ComponentType, format: _Texture_Format
+    ) -> None: ...
+    def setup_buffer_texture(
+        self, size: int, component_type: _Texture_ComponentType, format: _Texture_Format, usage: _GeomEnums_UsageHint
+    ) -> None:
         """Sets the texture as an empty buffer texture with the specified size and
         properties.  Follow up with set_ram_image() or modify_ram_image() to fill
         the image data, or use set_clear_color to let the texture be cleared to a
@@ -6577,11 +6772,32 @@ class Texture(TypedWritableReferenceCount, Namable):
         the various parameters.
         """
     @overload
-    def read(self, fullpath: Filepath, alpha_fullpath: Filepath, primary_file_num_channels: int, alpha_file_channel: int, options: LoaderOptions = ...) -> bool: ...
+    def read(
+        self,
+        fullpath: Filepath,
+        alpha_fullpath: Filepath,
+        primary_file_num_channels: int,
+        alpha_file_channel: int,
+        options: LoaderOptions = ...,
+    ) -> bool: ...
     @overload
-    def read(self, fullpath: Filepath, z: int, n: int, read_pages: bool, read_mipmaps: bool, options: LoaderOptions = ...) -> bool: ...
+    def read(
+        self, fullpath: Filepath, z: int, n: int, read_pages: bool, read_mipmaps: bool, options: LoaderOptions = ...
+    ) -> bool: ...
     @overload
-    def read(self, fullpath: Filepath, alpha_fullpath: Filepath, primary_file_num_channels: int, alpha_file_channel: int, z: int, n: int, read_pages: bool, read_mipmaps: bool, record: BamCacheRecord = ..., options: LoaderOptions = ...) -> bool: ...
+    def read(
+        self,
+        fullpath: Filepath,
+        alpha_fullpath: Filepath,
+        primary_file_num_channels: int,
+        alpha_file_channel: int,
+        z: int,
+        n: int,
+        read_pages: bool,
+        read_mipmaps: bool,
+        record: BamCacheRecord = ...,
+        options: LoaderOptions = ...,
+    ) -> bool: ...
     @overload
     def write(self, fullpath: Filepath) -> bool:
         """`(self, fullpath: Filename)`:
@@ -7255,7 +7471,12 @@ class Texture(TypedWritableReferenceCount, Namable):
         it to the bam cache successfully, false otherwise.  For most textures, this
         is the same as has_ram_image().
         """
-    def compress_ram_image(self, compression: _Texture_CompressionMode = ..., quality_level: _Texture_QualityLevel = ..., gsg: GraphicsStateGuardianBase = ...) -> bool:
+    def compress_ram_image(
+        self,
+        compression: _Texture_CompressionMode = ...,
+        quality_level: _Texture_QualityLevel = ...,
+        gsg: GraphicsStateGuardianBase = ...,
+    ) -> bool:
         """Attempts to compress the texture's RAM image internally, to a format
         supported by the indicated GSG.  In order for this to work, the squish
         library must have been compiled into Panda.
@@ -7374,7 +7595,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         This variant is particularly useful to set an external pointer from a
         language like Python, which doesn't support void pointers directly.
         """
-    def set_ram_mipmap_image(self, n: int, image: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char, page_size: int = ...) -> None:
+    def set_ram_mipmap_image(
+        self, n: int, image: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char, page_size: int = ...
+    ) -> None:
         """Replaces the current system-RAM image for the indicated mipmap level with
         the new data.  If compression is not CM_off, it indicates that the new data
         is already pre-compressed in the indicated format.
@@ -7419,7 +7642,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         parameters of the full texture.  The simple image is only supported for
         ordinary 2-d textures.
         """
-    def set_simple_ram_image(self, image: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char, x_size: int, y_size: int) -> None:
+    def set_simple_ram_image(
+        self, image: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char, x_size: int, y_size: int
+    ) -> None:
         """Replaces the internal "simple" texture image.  This can be used as an
         option to display while the main texture image is being loaded from disk.
         It is normally a very small image, 16x16 or smaller (and maybe even 1x1),
@@ -7995,7 +8220,14 @@ class Shader(TypedWritableReferenceCount):
         """
     @overload
     @staticmethod
-    def load(lang: _Shader_ShaderLanguage, vertex: Filepath, fragment: Filepath, geometry: Filepath = ..., tess_control: Filepath = ..., tess_evaluation: Filepath = ...) -> Shader: ...
+    def load(
+        lang: _Shader_ShaderLanguage,
+        vertex: Filepath,
+        fragment: Filepath,
+        geometry: Filepath = ...,
+        tess_control: Filepath = ...,
+        tess_evaluation: Filepath = ...,
+    ) -> Shader: ...
     @overload
     @staticmethod
     def make(body: str, lang: _Shader_ShaderLanguage = ...) -> Shader:
@@ -8007,7 +8239,14 @@ class Shader(TypedWritableReferenceCount):
         """
     @overload
     @staticmethod
-    def make(lang: _Shader_ShaderLanguage, vertex: str, fragment: str, geometry: str = ..., tess_control: str = ..., tess_evaluation: str = ...) -> Shader: ...
+    def make(
+        lang: _Shader_ShaderLanguage,
+        vertex: str,
+        fragment: str,
+        geometry: str = ...,
+        tess_control: str = ...,
+        tess_evaluation: str = ...,
+    ) -> Shader: ...
     @staticmethod
     def load_compute(lang: _Shader_ShaderLanguage, fn: Filepath) -> Shader:
         """Loads a compute shader."""
@@ -10080,10 +10319,18 @@ class TexturePool:
         """
     @overload
     @staticmethod
-    def get_texture(filename: Filepath, alpha_filename: Filepath, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ...) -> Texture: ...
+    def get_texture(
+        filename: Filepath,
+        alpha_filename: Filepath,
+        primary_file_num_channels: int = ...,
+        alpha_file_channel: int = ...,
+        read_mipmaps: bool = ...,
+    ) -> Texture: ...
     @overload
     @staticmethod
-    def load_texture(filename: Filepath, primary_file_num_channels: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_texture(
+        filename: Filepath, primary_file_num_channels: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...
+    ) -> Texture:
         """`(filename: Filename, alpha_filename: Filename, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...)`:
         Loads the given filename up into a texture, if it has not already been
         loaded, and returns the new texture.  If a texture with the same filename
@@ -10106,7 +10353,14 @@ class TexturePool:
         """
     @overload
     @staticmethod
-    def load_texture(filename: Filepath, alpha_filename: Filepath, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture: ...
+    def load_texture(
+        filename: Filepath,
+        alpha_filename: Filepath,
+        primary_file_num_channels: int = ...,
+        alpha_file_channel: int = ...,
+        read_mipmaps: bool = ...,
+        options: LoaderOptions = ...,
+    ) -> Texture: ...
     @staticmethod
     def load_3d_texture(filename_pattern: Filepath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
         """Loads a 3-D texture that is specified with a series of n pages, all
@@ -10316,7 +10570,9 @@ class TexturePeeker(ReferenceCount):
         must be in the range [0, 1].
         """
     @overload
-    def filter_rect(self, color: Vec4f, min_u: float, min_v: float, min_w: float, max_u: float, max_v: float, max_w: float) -> None: ...
+    def filter_rect(
+        self, color: Vec4f, min_u: float, min_v: float, min_w: float, max_u: float, max_v: float, max_w: float
+    ) -> None: ...
     getXSize = get_x_size
     getYSize = get_y_size
     getZSize = get_z_size

@@ -26,12 +26,7 @@ class MetaInterval(CMetaInterval):
     pythonIvals: list[_Interval]
     inPython: bool
     def __init__(
-        self,
-        *ivals: _Interval,
-        name: str | None = None,
-        autoPause: bool = False,
-        autoFinish: bool = False,
-        duration: float = ...,
+        self, *ivals: _Interval, name: str | None = None, autoPause: bool = False, autoFinish: bool = False, duration: float = ...
     ) -> None: ...
     def append(self, ival: _Interval) -> None: ...
     def extend(self, ivals: MetaInterval | Iterable[_Interval]) -> None: ...
@@ -52,28 +47,13 @@ class MetaInterval(CMetaInterval):
     def __iadd__(self: Self, other: MetaInterval | Iterable[_Interval]) -> Self: ...
     def __add__(self: Self, other: MetaInterval | Iterable[_Interval]) -> Self: ...
     def add_sequence(
-        self,
-        list: Iterable[_Interval],
-        name: str,
-        relTime: float,
-        relTo: _RelativeStart,
-        duration: float,
+        self, list: Iterable[_Interval], name: str, relTime: float, relTo: _RelativeStart, duration: float
     ) -> None: ...
     def add_parallel(
-        self,
-        list: Iterable[_Interval],
-        name: str,
-        relTime: float,
-        relTo: _RelativeStart,
-        duration: float,
+        self, list: Iterable[_Interval], name: str, relTime: float, relTo: _RelativeStart, duration: float
     ) -> None: ...
     def add_parallel_end_together(
-        self,
-        list: Iterable[_Interval],
-        name: str,
-        relTime: float,
-        relTo: _RelativeStart,
-        duration: float,
+        self, list: Iterable[_Interval], name: str, relTime: float, relTo: _RelativeStart, duration: float
     ) -> None: ...
     def add_track(
         self,

@@ -41,19 +41,10 @@ class InputState(DirectObject):
     def set(self, name: str, isActive: bool, inputSource: str | None = None) -> None: ...
     def release_inputs(self, name: str) -> None: ...
     def watch(
-        self,
-        name: str,
-        eventOn: str,
-        eventOff: str,
-        startState: bool = False,
-        inputSource: str | None = None,
+        self, name: str, eventOn: str, eventOff: str, startState: bool = False, inputSource: str | None = None
     ) -> InputStateWatchToken: ...
     def watch_with_modifiers(
-        self,
-        name: str,
-        event: str,
-        startState: bool = False,
-        inputSource: str | None = None,
+        self, name: str, event: str, startState: bool = False, inputSource: str | None = None
     ) -> InputStateTokenGroup: ...
     def force(self, name: str, value: bool, inputSource: str) -> InputStateForceToken: ...
     def debug_print(self, message: str) -> None: ...

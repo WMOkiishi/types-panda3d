@@ -11,7 +11,6 @@ from .FileSpec import FileSpec
 from .HostInfo import HostInfo
 
 class PackageInfo:
-
     class InstallStep:
         bytesNeeded: int
         bytesDone: int

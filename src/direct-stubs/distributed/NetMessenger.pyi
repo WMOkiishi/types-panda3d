@@ -5,13 +5,15 @@ from typing_extensions import Final, Literal, TypedDict
 from direct.showbase.Messenger import Messenger
 from .ClientRepository import ClientRepository
 
-MESSAGE_TYPES: Final[tuple[
-    Literal['avatarOnline'],
-    Literal['avatarOffline'],
-    Literal['create'],
-    Literal['needUberdogCreates'],
-    Literal['transferDo'],
-]]
+MESSAGE_TYPES: Final[
+    tuple[
+        Literal['avatarOnline'],
+        Literal['avatarOffline'],
+        Literal['create'],
+        Literal['needUberdogCreates'],
+        Literal['transferDo'],
+    ]
+]
 
 class _message_strings(TypedDict):
     avatarOnline: Literal[1]

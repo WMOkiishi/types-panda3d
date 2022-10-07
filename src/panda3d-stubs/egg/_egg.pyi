@@ -5065,7 +5065,9 @@ class EggXfmSAnim(EggGroupNode):
     @overload
     def add_component_data(self, component_name: str, value: float) -> None: ...
     @staticmethod
-    def compose_with_order(mat: Mat4d, scale: Vec3d, shear: Vec3d, hpr: Vec3d, trans: Vec3d, order: str, cs: _CoordinateSystem) -> None:
+    def compose_with_order(
+        mat: Mat4d, scale: Vec3d, shear: Vec3d, hpr: Vec3d, trans: Vec3d, order: str, cs: _CoordinateSystem
+    ) -> None:
         """Composes a matrix out of the nine individual components, respecting the
         order string.  The components will be applied in the order indicated by the
         string.
@@ -5158,7 +5160,9 @@ class EggXfmAnimData(EggAnimData):
 
 def parse_egg_data(egg_syntax: str) -> EggData:
     """Parses an EggData from the raw egg syntax."""
+
 def parse_egg_node(egg_syntax: str) -> EggNode:
     """Parses a single egg node from the raw egg syntax."""
+
 parseEggData = parse_egg_data
 parseEggNode = parse_egg_node

@@ -12,7 +12,6 @@ from .SeqValue import SeqValue
 class PackageMergerError(Exception): ...
 
 class PackageMerger:
-
     class PackageEntry:
         sourceDir: Filepath
         packageName: str

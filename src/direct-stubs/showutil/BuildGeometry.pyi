@@ -11,12 +11,7 @@ GEO_ID: int
 def circleX(angle: _RealNumber, radius: float, centerX: float, centerY: float) -> float: ...
 def circleY(angle: _RealNumber, radius: float, centerX: float, centerY: float) -> float: ...
 def getCirclePoints(
-    segCount: int,
-    centerX: float,
-    centerY: float,
-    radius: float,
-    wideX: float = ...,
-    wideY: float = ...,
+    segCount: int, centerX: float, centerY: float, radius: float, wideX: float = ..., wideY: float = ...
 ) -> list[tuple[float, float, Literal[1]]]: ...
 def addCircle(
     attachNode: GeomNode,
@@ -35,18 +30,10 @@ def addCircleGeom(
     layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addSquare(
-    attachNode: GeomNode,
-    sizeX: float,
-    sizeY: float,
-    color: LColor | tuple[float, float, float, float] = ...,
-    layer: Unused = ...,
+    attachNode: GeomNode, sizeX: float, sizeY: float, color: LColor | tuple[float, float, float, float] = ..., layer: Unused = ...
 ) -> Geom: ...
 def addSquareGeom(
-    rootNode: NodePath,
-    sizeX: float,
-    sizeY: float,
-    color: LColor | tuple[float, float, float, float] = ...,
-    layer: Unused = ...,
+    rootNode: NodePath, sizeX: float, sizeY: float, color: LColor | tuple[float, float, float, float] = ..., layer: Unused = ...
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addBox(
     attachNode: GeomNode,
@@ -65,16 +52,8 @@ def addBoxGeom(
     darken: bool = False,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addArrow(
-    attachNode: GeomNode,
-    sizeX: float,
-    sizeY: float,
-    color: LColor | tuple[float, float, float, float] = ...,
-    layer: Unused = ...,
+    attachNode: GeomNode, sizeX: float, sizeY: float, color: LColor | tuple[float, float, float, float] = ..., layer: Unused = ...
 ) -> Geom: ...
 def addArrowGeom(
-    rootNode: NodePath,
-    sizeX: float,
-    sizeY: float,
-    color: LColor | tuple[float, float, float, float] = ...,
-    layer: Unused = ...,
+    rootNode: NodePath, sizeX: float, sizeY: float, color: LColor | tuple[float, float, float, float] = ..., layer: Unused = ...
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...

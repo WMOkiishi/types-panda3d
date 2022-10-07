@@ -447,7 +447,9 @@ class CConstrainHprInterval(CConstraintInterval):
         node's local orientation will be copied unaltered.
         """
     @overload
-    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, hprOffset: Vec3f = ...) -> None: ...
+    def __init__(
+        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, hprOffset: Vec3f = ...
+    ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
     def get_target(self) -> NodePath:
@@ -471,7 +473,16 @@ class CConstrainPosHprInterval(CConstraintInterval):
         unaltered.
         """
     @overload
-    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: Vec3f = ..., hprOffset: Vec3f = ...) -> None: ...
+    def __init__(
+        self,
+        name: str,
+        duration: float,
+        node: NodePath,
+        target: NodePath,
+        wrt: bool,
+        posOffset: Vec3f = ...,
+        hprOffset: Vec3f = ...,
+    ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
     def get_target(self) -> NodePath:
@@ -494,7 +505,9 @@ class CConstrainPosInterval(CConstraintInterval):
         node's local position will be copied unaltered.
         """
     @overload
-    def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: Vec3f = ...) -> None: ...
+    def __init__(
+        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: Vec3f = ...
+    ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
     def get_target(self) -> NodePath:
@@ -608,7 +621,16 @@ class CLerpNodePathInterval(CLerpInterval):
         otherwise, it is reset.
         """
     @overload
-    def __init__(self, name: str, duration: float, blend_type: _CLerpInterval_BlendType, bake_in_start: bool, fluid: bool, node: NodePath, other: NodePath) -> None: ...
+    def __init__(
+        self,
+        name: str,
+        duration: float,
+        blend_type: _CLerpInterval_BlendType,
+        bake_in_start: bool,
+        fluid: bool,
+        node: NodePath,
+        other: NodePath,
+    ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the node being lerped."""
     def get_other(self) -> NodePath:
@@ -870,7 +892,9 @@ class CMetaInterval(CInterval):
         The return value is the index of the def entry representing the new
         interval.
         """
-    def add_ext_index(self, ext_index: int, name: str, duration: float, open_ended: bool, rel_time: float, rel_to: _CMetaInterval_RelativeStart) -> int:
+    def add_ext_index(
+        self, ext_index: int, name: str, duration: float, open_ended: bool, rel_time: float, rel_to: _CMetaInterval_RelativeStart
+    ) -> int:
         """Adds a new external interval to the list.  This represents some object in
         the external scripting language that has properties similar to a CInterval
         (for instance, a Python Interval object).

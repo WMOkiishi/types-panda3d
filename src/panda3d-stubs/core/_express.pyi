@@ -21,7 +21,45 @@ from panda3d.core import (
     ostream,
 )
 
-_ErrorUtilCode: TypeAlias = Literal[-80, -73, -72, -71, -70, -67, -66, -65, -64, -63, -62, -61, -60, -54, -53, -52, -51, -50, -42, -41, -40, -34, -33, -32, -31, -30, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7]
+_ErrorUtilCode: TypeAlias = Literal[
+    -80,
+    -73,
+    -72,
+    -71,
+    -70,
+    -67,
+    -66,
+    -65,
+    -64,
+    -63,
+    -62,
+    -61,
+    -60,
+    -54,
+    -53,
+    -52,
+    -51,
+    -50,
+    -42,
+    -41,
+    -40,
+    -34,
+    -33,
+    -32,
+    -31,
+    -30,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+]
 _WindowsRegistry_RegLevel: TypeAlias = Literal[0, 1]
 _WindowsRegistry_Type: TypeAlias = Literal[0, 1, 2]
 
@@ -2453,7 +2491,9 @@ class VirtualFileSystem:
         the same thing as get_file().  If the filename is located within a read-
         only directory, or the directory doesn't exist, returns NULL.
         """
-    def find_file(self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, status_only: bool = ...) -> VirtualFile:
+    def find_file(
+        self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, status_only: bool = ...
+    ) -> VirtualFile:
         """Uses the indicated search path to find the file within the file system.
         Returns the first occurrence of the file found, or NULL if the file cannot
         be found.
@@ -2478,12 +2518,16 @@ class VirtualFileSystem:
         """Attempts to copy the contents of the indicated file to the indicated file.
         Returns true on success, false on failure.
         """
-    def resolve_filename(self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, default_extension: str = ...) -> bool:
+    def resolve_filename(
+        self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, default_extension: str = ...
+    ) -> bool:
         """Searches the given search path for the filename.  If it is found, updates
         the filename to the full pathname found and returns true; otherwise,
         returns false.
         """
-    def find_all_files(self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, results: DSearchPath.Results) -> int:
+    def find_all_files(
+        self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, results: DSearchPath.Results
+    ) -> int:
         """Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
         found, if any.  Returns the number of matches found.
@@ -2814,23 +2858,23 @@ class Patchfile:
 class ProfileTimer:
     """ProfileTimer
 
-        HowTo:
-          Create a ProfileTimer and hold onto it.
-          Call init() whenever you like (the timer doesn't
-            start yet).
-          Call on() to start the timer.
-          While the timer is on, call mark() at each point of interest,
-            in the code you are timing.
-          You can turn the timer off() and on() to skip things you
-            don't want to time.
-          When your timing is finished, call printTo() to see the
-            results (e.g. myTimer.printTo(cerr)).
+    HowTo:
+      Create a ProfileTimer and hold onto it.
+      Call init() whenever you like (the timer doesn't
+        start yet).
+      Call on() to start the timer.
+      While the timer is on, call mark() at each point of interest,
+        in the code you are timing.
+      You can turn the timer off() and on() to skip things you
+        don't want to time.
+      When your timing is finished, call printTo() to see the
+        results (e.g. myTimer.printTo(cerr)).
 
-        Notes:
-          You should be able to time things down to the millisecond
-          well enough, but if you call on() and off() within micro-
-          seconds of each other, I don't think you'll get very good
-          results.
+    Notes:
+      You should be able to time things down to the millisecond
+      well enough, but if you call on() and off() within micro-
+      seconds of each other, I don't think you'll get very good
+      results.
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3003,6 +3047,7 @@ EU_error_http_proxy_authentication: Final[Literal[-73]]
 EUErrorHttpProxyAuthentication: Final[Literal[-73]]
 EU_error_zlib: Final[Literal[-80]]
 EUErrorZlib: Final[Literal[-80]]
+
 def compress_string(source: str, compression_level: int) -> str: ...
 def decompress_string(source: str) -> str: ...
 def compress_file(source: Filepath, dest: Filepath, compression_level: int) -> bool: ...
@@ -3010,17 +3055,24 @@ def decompress_file(source: Filepath, dest: Filepath) -> bool: ...
 def compress_stream(source: istream, dest: ostream, compression_level: int) -> bool: ...
 def decompress_stream(source: istream, dest: ostream) -> bool: ...
 def copy_stream(source: istream, dest: ostream) -> bool: ...
-def encrypt_string(source: str, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...) -> str: ...
+def encrypt_string(
+    source: str, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...
+) -> str: ...
 def decrypt_string(source: str, password: str) -> str: ...
-def encrypt_file(source: Filepath, dest: Filepath, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...) -> bool: ...
+def encrypt_file(
+    source: Filepath, dest: Filepath, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...
+) -> bool: ...
 def decrypt_file(source: Filepath, dest: Filepath, password: str) -> bool: ...
-def encrypt_stream(source: istream, dest: ostream, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...) -> bool: ...
+def encrypt_stream(
+    source: istream, dest: ostream, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...
+) -> bool: ...
 def decrypt_stream(source: istream, dest: ostream, password: str) -> bool: ...
 def error_to_text(err: _ErrorUtilCode) -> str: ...
 def get_write_error() -> int: ...
 def handle_socket_error() -> str: ...
 def get_network_error() -> int: ...
 def password_hash(password: str, salt: str, iters: int, keylen: int) -> str: ...
+
 compressString = compress_string
 decompressString = decompress_string
 compressFile = compress_file

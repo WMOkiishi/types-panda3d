@@ -9,6 +9,7 @@ easeIn: EaseInBlendType
 easeOut: EaseOutBlendType
 easeInOut: EaseInOutBlendType
 noBlend: NoBlendType
+
 @overload
 def getBlend(blendType: Literal['easeIn']) -> EaseInBlendType: ...
 @overload

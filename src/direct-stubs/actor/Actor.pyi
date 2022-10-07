@@ -52,10 +52,7 @@ class Actor(DirectObject, NodePath):
         partBundleHandle: PartBundleHandle
         partModel: PandaNode
         def __init__(
-            self,
-            partBundleNP: NodePath[Character],
-            partBundleHandle: PartBundleHandle,
-            partModel: PandaNode,
+            self, partBundleNP: NodePath[Character], partBundleHandle: PartBundleHandle, partModel: PandaNode
         ) -> None: ...
         def get_bundle(self) -> PartBundle: ...
         getBundle = get_bundle
@@ -142,21 +139,12 @@ class Actor(DirectObject, NodePath):
     def show_part(self, partName: str, lodName: str = ...) -> None: ...
     def show_all_parts(self, partName: str, lodName: str = ...) -> None: ...
     def expose_joint(
-        self,
-        node: NodePath,
-        partName: str,
-        jointName: str,
-        lodName: str = ...,
-        localTransform: bool = False,
+        self, node: NodePath, partName: str, jointName: str, lodName: str = ..., localTransform: bool = False
     ) -> NodePath | None: ...
     def stop_joint(self, partName: str, jointName: str, lodName: str = ...) -> None: ...
     def get_joints(self, partName: str | None = None, jointName: str = ..., lodName: str | None = None) -> list[AnimGroup]: ...
     def get_overlapping_joints(
-        self,
-        partNameA: str,
-        partNameB: str,
-        jointName: str = ...,
-        lodName: str | None = None,
+        self, partNameA: str, partNameB: str, jointName: str = ..., lodName: str | None = None
     ) -> set[AnimGroup]: ...
     def get_joint_transform(self, partName: str, jointName: str, lodName: str = ...) -> LMatrix4f | None: ...
     def get_joint_transform_state(self, partName: str, jointName: str, lodName: str = ...) -> TransformState | None: ...
@@ -174,12 +162,7 @@ class Actor(DirectObject, NodePath):
     def instance(self, path: NodePath, partName: str, jointName: str, lodName: str = ...) -> None: ...
     def attach(self, partName: str, anotherPartName: str, jointName: str, lodName: str = ...) -> None: ...
     def draw_in_front(
-        self,
-        frontPartName: str,
-        backPartName: str,
-        mode: int,
-        root: NodePath | None = None,
-        lodName: str | None = None,
+        self, frontPartName: str, backPartName: str, mode: int, root: NodePath | None = None, lodName: str | None = None
     ) -> None: ...
     def fix_bounds(self, partName: str | None = None) -> None: ...
     def fix_bounds_old(self, part: NodePath | None = None) -> None: ...
@@ -188,11 +171,7 @@ class Actor(DirectObject, NodePath):
     def anim_panel(self) -> AnimPanel: ...
     def stop(self, animName: str | None = None, partName: str | None = None) -> None: ...
     def play(
-        self,
-        animName: str | None,
-        partName: str | None = None,
-        fromFrame: float | None = None,
-        toFrame: float | None = None,
+        self, animName: str | None, partName: str | None = None, fromFrame: float | None = None, toFrame: float | None = None
     ) -> None: ...
     def loop(
         self,
@@ -221,26 +200,14 @@ class Actor(DirectObject, NodePath):
     def enable_blend(self, blendType: _BlendType = ..., partName: str | None = None) -> None: ...
     def disable_blend(self, partName: str | None = None) -> None: ...
     def set_control_effect(
-        self,
-        animName: str,
-        effect: float,
-        partName: str | None = None,
-        lodName: str | None = None,
+        self, animName: str, effect: float, partName: str | None = None, lodName: str | None = None
     ) -> None: ...
     def get_anim_filename(self, animName: str, partName: str = ...) -> str | None: ...
     def get_anim_control(
-        self,
-        animName: str,
-        partName: str | None = None,
-        lodName: str | None = None,
-        allowAsyncBind: bool = True,
+        self, animName: str, partName: str | None = None, lodName: str | None = None, allowAsyncBind: bool = True
     ) -> AnimControl | None: ...
     def get_anim_controls(
-        self,
-        animName: str | None = None,
-        partName: str | None = None,
-        lodName: str | None = None,
-        allowAsyncBind: bool = True,
+        self, animName: str | None = None, partName: str | None = None, lodName: str | None = None, allowAsyncBind: bool = True
     ) -> list[AnimControl]: ...
     def load_model(
         self,
@@ -266,13 +233,11 @@ class Actor(DirectObject, NodePath):
     def init_anims_on_all_lods(self, partNames: Iterable[str]) -> None: ...
     def load_anims_on_all_lods(self, anims: Mapping[str, str], partName: str = ...) -> None: ...
     def post_flatten(self) -> None: ...
-    def unload_anims(self, anims: Iterable[str] | None = None, partName: str | None = None, lodName: str | None = None) -> None: ...
+    def unload_anims(
+        self, anims: Iterable[str] | None = None, partName: str | None = None, lodName: str | None = None
+    ) -> None: ...
     def bind_anim(
-        self,
-        animName: str,
-        partName: str | None = None,
-        lodName: str | None = None,
-        allowAsyncBind: bool = False,
+        self, animName: str, partName: str | None = None, lodName: str | None = None, allowAsyncBind: bool = False
     ) -> None: ...
     def bind_all_anims(self, allowAsyncBind: bool = False) -> None: ...
     def wait_pending(self, partName: str | None = None) -> None: ...
@@ -293,10 +258,7 @@ class Actor(DirectObject, NodePath):
         lodName: str | None = None,
     ) -> ActorInterval: ...
     def get_anim_blends(
-        self,
-        animName: str | None = None,
-        partName: str | None = None,
-        lodName: str | None = None,
+        self, animName: str | None = None, partName: str | None = None, lodName: str | None = None
     ) -> list[tuple[str, list[tuple[str, list[tuple[str, float]]]]]]: ...
     def print_anim_blends(self, animName: str | None = None, partName: str | None = None, lodName: str | None = None) -> None: ...
     def osd_anim_blends(self, animName: str | None = None, partName: str | None = None, lodName: str | None = None) -> None: ...

@@ -17,67 +17,31 @@ P_BOUNCE: Final[Literal[7]]
 R_BOUNCE: Final[Literal[8]]
 
 def createScaleXBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createScaleYBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createScaleZBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValue: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValue: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createXBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createYBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createZBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createHBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createPBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createRBounce(
-    nodeObj: NodePath,
-    numBounces: int,
-    startValues: Sequence[float],
-    totalTime: float,
-    amplitude: float,
+    nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float
 ) -> MetaInterval.Sequence: ...
 def createBounce(
     nodeObj: NodePath,

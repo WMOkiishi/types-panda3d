@@ -29,6 +29,6 @@ class AnimControlInterval(Interval):
         startFrame: int | None = None,
         endFrame: int | None = None,
         playRate: float = ...,
-        name: str | None = None
+        name: str | None = None,
     ) -> None: ...
     def getCurrentFrame(self) -> float | None: ...

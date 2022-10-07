@@ -63,22 +63,14 @@ class CheckContainers(Job):
 class FPTObjsOfType(Job):
     notify: Notifier
     def __init__(
-        self,
-        name: str,
-        leakDetector: ContainerLeakDetector,
-        otn: str,
-        doneCallback: SimpleCallback | None = None,
+        self, name: str, leakDetector: ContainerLeakDetector, otn: str, doneCallback: SimpleCallback | None = None
     ) -> None: ...
     def run(self) -> Generator[Any | None, None, None]: ...
 
 class FPTObjsNamed(Job):
     notify: Notifier
     def __init__(
-        self,
-        name: str,
-        leakDetector: ContainerLeakDetector,
-        on: str,
-        doneCallback: SimpleCallback | None = None,
+        self, name: str, leakDetector: ContainerLeakDetector, on: str, doneCallback: SimpleCallback | None = None
     ) -> None: ...
     def run(self) -> Generator[Any | None, None, None]: ...
 

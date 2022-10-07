@@ -204,7 +204,9 @@ class BaseParticleRenderer(ReferenceCount):
         """sets alpha for "user" alpha mode"""
     def get_user_alpha(self) -> float:
         """gets alpha for "user" alpha mode"""
-    def set_color_blend_mode(self, bm: _ColorBlendAttrib_Mode, oa: _ColorBlendAttrib_Operand = ..., ob: _ColorBlendAttrib_Operand = ...) -> None:
+    def set_color_blend_mode(
+        self, bm: _ColorBlendAttrib_Mode, oa: _ColorBlendAttrib_Operand = ..., ob: _ColorBlendAttrib_Operand = ...
+    ) -> None:
         """sets the ColorBlendAttrib on the _render_node"""
     def set_ignore_scale(self, ignore_scale: bool) -> None:
         """Sets the "ignore scale" flag.  When this is true, particles will be drawn
@@ -315,10 +317,31 @@ class ColorInterpolationManager(ReferenceCount):
     def __init__(self, copy: ColorInterpolationManager = ...) -> None: ...
     @overload
     def __init__(self, c: Vec4f) -> None: ...
-    def add_constant(self, time_begin: float = ..., time_end: float = ..., color: Vec4f = ..., is_modulated: bool = ...) -> int: ...
-    def add_linear(self, time_begin: float = ..., time_end: float = ..., color_a: Vec4f = ..., color_b: Vec4f = ..., is_modulated: bool = ...) -> int: ...
-    def add_stepwave(self, time_begin: float = ..., time_end: float = ..., color_a: Vec4f = ..., color_b: Vec4f = ..., width_a: float = ..., width_b: float = ..., is_modulated: bool = ...) -> int: ...
-    def add_sinusoid(self, time_begin: float = ..., time_end: float = ..., color_a: Vec4f = ..., color_b: Vec4f = ..., period: float = ..., is_modulated: bool = ...) -> int: ...
+    def add_constant(
+        self, time_begin: float = ..., time_end: float = ..., color: Vec4f = ..., is_modulated: bool = ...
+    ) -> int: ...
+    def add_linear(
+        self, time_begin: float = ..., time_end: float = ..., color_a: Vec4f = ..., color_b: Vec4f = ..., is_modulated: bool = ...
+    ) -> int: ...
+    def add_stepwave(
+        self,
+        time_begin: float = ...,
+        time_end: float = ...,
+        color_a: Vec4f = ...,
+        color_b: Vec4f = ...,
+        width_a: float = ...,
+        width_b: float = ...,
+        is_modulated: bool = ...,
+    ) -> int: ...
+    def add_sinusoid(
+        self,
+        time_begin: float = ...,
+        time_end: float = ...,
+        color_a: Vec4f = ...,
+        color_b: Vec4f = ...,
+        period: float = ...,
+        is_modulated: bool = ...,
+    ) -> int: ...
     def set_default_color(self, c: Vec4f) -> None: ...
     def get_segment(self, seg_id: int) -> ColorInterpolationSegment: ...
     def get_segment_id_list(self) -> str: ...
@@ -627,7 +650,15 @@ class PointParticleRenderer(BaseParticleRenderer):
     PP_BLEND_VEL: Final[Literal[2]]
     PPBLENDVEL: Final[Literal[2]]
     @overload
-    def __init__(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: Vec4f = ..., ec: Vec4f = ...) -> None:
+    def __init__(
+        self,
+        ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ...,
+        point_size: float = ...,
+        bt: _PointParticleRenderer_PointParticleBlendType = ...,
+        bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ...,
+        sc: Vec4f = ...,
+        ec: Vec4f = ...,
+    ) -> None:
         """`(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: LColor = ..., ec: LColor = ...)`:
         special constructor
 
@@ -696,7 +727,15 @@ class SparkleParticleRenderer(BaseParticleRenderer):
         Copy Constructor
         """
     @overload
-    def __init__(self, center: Vec4f, edge: Vec4f, birth_radius: float, death_radius: float, life_scale: _SparkleParticleRenderer_SparkleParticleLifeScale, alpha_mode: _BaseParticleRenderer_ParticleRendererAlphaMode) -> None: ...
+    def __init__(
+        self,
+        center: Vec4f,
+        edge: Vec4f,
+        birth_radius: float,
+        death_radius: float,
+        life_scale: _SparkleParticleRenderer_SparkleParticleLifeScale,
+        alpha_mode: _BaseParticleRenderer_ParticleRendererAlphaMode,
+    ) -> None: ...
     def set_center_color(self, c: Vec4f) -> None: ...
     def set_edge_color(self, c: Vec4f) -> None: ...
     def set_birth_radius(self, radius: float) -> None: ...
@@ -848,7 +887,9 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         now on.  (Default is false)
         """
     @overload
-    def add_from_node(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ..., resize: bool = ...) -> None: ...
+    def add_from_node(
+        self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ..., resize: bool = ...
+    ) -> None: ...
     def set_texture(self, tex: Texture, texels_per_unit: float = ...) -> None:
         """Sets the renderer up to render the entire texture image.  The scale of each
         particle is based on the size of the texture in each dimension, modified by

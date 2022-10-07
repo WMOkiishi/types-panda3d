@@ -14,4 +14,5 @@ wantStackDumpLog: bool
 wantStackDumpUpload: bool
 variableDumpReasons: list
 dumpOnExceptionInit: bool
+
 def install(log: bool, upload: bool) -> None: ...

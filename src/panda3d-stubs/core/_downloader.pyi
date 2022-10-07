@@ -2206,5 +2206,6 @@ class StringStream(iostream):
 
 def check_crc(name: Filepath) -> int: ...
 def check_adler(name: Filepath) -> int: ...
+
 checkCrc = check_crc
 checkAdler = check_adler

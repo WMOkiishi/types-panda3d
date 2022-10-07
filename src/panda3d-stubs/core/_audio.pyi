@@ -29,7 +29,23 @@ class FilterProperties(TypedReferenceCount):
         """Add a pitchshift filter to the end of the DSP chain."""
     def add_chorus(self, drymix: float, wet1: float, wet2: float, wet3: float, delay: float, rate: float, depth: float) -> None:
         """Add a chorus filter to the end of the DSP chain."""
-    def add_sfxreverb(self, drylevel: float = ..., room: float = ..., roomhf: float = ..., decaytime: float = ..., decayhfratio: float = ..., reflectionslevel: float = ..., reflectionsdelay: float = ..., reverblevel: float = ..., reverbdelay: float = ..., diffusion: float = ..., density: float = ..., hfreference: float = ..., roomlf: float = ..., lfreference: float = ...) -> None:
+    def add_sfxreverb(
+        self,
+        drylevel: float = ...,
+        room: float = ...,
+        roomhf: float = ...,
+        decaytime: float = ...,
+        decayhfratio: float = ...,
+        reflectionslevel: float = ...,
+        reflectionsdelay: float = ...,
+        reverblevel: float = ...,
+        reverbdelay: float = ...,
+        diffusion: float = ...,
+        density: float = ...,
+        hfreference: float = ...,
+        roomlf: float = ...,
+        lfreference: float = ...,
+    ) -> None:
         """Add a reverb filter to the end of the DSP chain."""
     def add_compress(self, threshold: float, attack: float, release: float, gainmakeup: float) -> None:
         """Add a compress filter to the end of the DSP chain."""
@@ -65,20 +81,20 @@ class AudioSound(TypedReferenceCount):
     def get_loop_count(self) -> int: ...
     def set_time(self, start_time: float = ...) -> None:
         """Control time position within the sound, in seconds.  This is similar (in
-           * concept) to the seek position within a file.  The value starts at 0.0 (the
-           * default) and ends at the value given by the length() method.
-           *
-           * The current time position will not change while the sound is playing; you
-           * must call play() again to effect the change.  To play the same sound from
-           * a time offset a second time, explicitly set the time position again.  When
-           * looping, the second and later loops will start from the beginning of the
-           * sound.
-           *
-           * If a sound is playing, calling get_time() repeatedly will return different
-           * results over time.  e.g.
-           * @code
-           * PN_stdfloat percent_complete = s.get_time() / s.length();
-           * @endcode
+        * concept) to the seek position within a file.  The value starts at 0.0 (the
+        * default) and ends at the value given by the length() method.
+        *
+        * The current time position will not change while the sound is playing; you
+        * must call play() again to effect the change.  To play the same sound from
+        * a time offset a second time, explicitly set the time position again.  When
+        * looping, the second and later loops will start from the beginning of the
+        * sound.
+        *
+        * If a sound is playing, calling get_time() repeatedly will return different
+        * results over time.  e.g.
+        * @code
+        * PN_stdfloat percent_complete = s.get_time() / s.length();
+        * @endcode
         """
     def get_time(self) -> float: ...
     def set_volume(self, volume: float = ...) -> None:
@@ -126,9 +142,30 @@ class AudioSound(TypedReferenceCount):
         two APIs.  Hopefully the difference can be reconciled into a single
         interface at some point.
         """
-    def set_speaker_mix(self, frontleft: float, frontright: float, center: float, sub: float, backleft: float, backright: float, sideleft: float, sideright: float) -> None: ...
+    def set_speaker_mix(
+        self,
+        frontleft: float,
+        frontright: float,
+        center: float,
+        sub: float,
+        backleft: float,
+        backright: float,
+        sideleft: float,
+        sideright: float,
+    ) -> None: ...
     def get_speaker_level(self, index: int) -> float: ...
-    def set_speaker_levels(self, level1: float, level2: float = ..., level3: float = ..., level4: float = ..., level5: float = ..., level6: float = ..., level7: float = ..., level8: float = ..., level9: float = ...) -> None: ...
+    def set_speaker_levels(
+        self,
+        level1: float,
+        level2: float = ...,
+        level3: float = ...,
+        level4: float = ...,
+        level5: float = ...,
+        level6: float = ...,
+        level7: float = ...,
+        level8: float = ...,
+        level9: float = ...,
+    ) -> None: ...
     def get_priority(self) -> int: ...
     def set_priority(self, priority: int) -> None: ...
     def configure_filters(self, config: FilterProperties) -> bool: ...
@@ -277,7 +314,21 @@ class AudioManager(TypedReferenceCount):
         """
     def update(self) -> None:
         """This should be called every frame.  Failure to call could cause problems."""
-    def audio_3d_set_listener_attributes(self, px: float, py: float, pz: float, vx: float, vy: float, vz: float, fx: float, fy: float, fz: float, ux: float, uy: float, uz: float) -> None:
+    def audio_3d_set_listener_attributes(
+        self,
+        px: float,
+        py: float,
+        pz: float,
+        vx: float,
+        vy: float,
+        vz: float,
+        fx: float,
+        fy: float,
+        fz: float,
+        ux: float,
+        uy: float,
+        uz: float,
+    ) -> None:
         """This controls the "set of ears" that listens to 3D spacialized sound px,
         py, pz are position coordinates.  vx, vy, vz are a velocity vector in
         UNITS PER SECOND (default: meters). fx, fy and fz are the respective
@@ -307,7 +358,18 @@ class AudioManager(TypedReferenceCount):
     def get_dls_pathname() -> Filename: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
-    def set_speaker_configuration(self, speaker1: Vec3f, speaker2: Vec3f = ..., speaker3: Vec3f = ..., speaker4: Vec3f = ..., speaker5: Vec3f = ..., speaker6: Vec3f = ..., speaker7: Vec3f = ..., speaker8: Vec3f = ..., speaker9: Vec3f = ...) -> None:
+    def set_speaker_configuration(
+        self,
+        speaker1: Vec3f,
+        speaker2: Vec3f = ...,
+        speaker3: Vec3f = ...,
+        speaker4: Vec3f = ...,
+        speaker5: Vec3f = ...,
+        speaker6: Vec3f = ...,
+        speaker7: Vec3f = ...,
+        speaker8: Vec3f = ...,
+        speaker9: Vec3f = ...,
+    ) -> None:
         """set_speaker_configuration is a Miles only method."""
     getSpeakerSetup = get_speaker_setup
     setSpeakerSetup = set_speaker_setup

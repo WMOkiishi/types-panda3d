@@ -30,7 +30,8 @@ class DirectObject:
         appendTask: bool = False,
         uponDeath: Callable[..., object] | None = None,
         taskChain: str | None = None,
-        *, delay: float | None = None,
+        *,
+        delay: float | None = None,
     ) -> AsyncTask: ...
     @overload
     def add_task(
@@ -43,7 +44,8 @@ class DirectObject:
         appendTask: bool = False,
         uponDeath: Callable[..., object] | None = None,
         taskChain: str | None = None,
-        *, delay: float | None = None,
+        *,
+        delay: float | None = None,
     ) -> PythonTask: ...
     @overload
     def do_method_later(

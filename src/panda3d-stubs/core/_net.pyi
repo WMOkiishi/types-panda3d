@@ -365,7 +365,6 @@ class ConnectionManager:
         getBroadcast = get_broadcast
         hasP2p = has_p2p
         getP2p = get_p2p
-
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def host_name(self) -> str: ...
@@ -736,7 +735,12 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
         are multiple threads accessing the QueuedConnectionListener).
         """
     @overload
-    def get_new_connection(self, rendezvous: Connection | PointerTo_Connection | None, address: NetAddress, new_connection: Connection | PointerTo_Connection | None) -> bool: ...
+    def get_new_connection(
+        self,
+        rendezvous: Connection | PointerTo_Connection | None,
+        address: NetAddress,
+        new_connection: Connection | PointerTo_Connection | None,
+    ) -> bool: ...
     upcastToConnectionListener = upcast_to_ConnectionListener
     upcastToQueuedReturnConnectionListenerData = upcast_to_QueuedReturn_ConnectionListenerData
     newConnectionAvailable = new_connection_available

@@ -16,13 +16,7 @@ class DistributedCartesianGridAI(DistributedNodeAI, CartesianGridBase):
     gridObjects: dict[int, Any]
     updateTaskStarted: bool
     def __init__(
-        self,
-        air: ClientRepository,
-        startingZone: int,
-        gridSize: int,
-        gridRadius: float,
-        cellWidth: float,
-        style: str = ...,
+        self, air: ClientRepository, startingZone: int, gridSize: int, gridRadius: float, cellWidth: float, style: str = ...
     ) -> None: ...
     def isGridParent(self) -> Literal[True]: ...
     def getCellWidth(self) -> float: ...
