@@ -39,7 +39,7 @@ extra_standard_library = ["typing_extensions"]
 [tool.black]
 line_length = 130
 target_version = ["py310"]
-include = 'src/.*\.pyi'
+force_exclude = "/(tests|idbstubs)/"
 skip_string_normalization = true
 skip_magic_trailing_comma = true
 
