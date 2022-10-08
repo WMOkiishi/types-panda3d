@@ -47,13 +47,13 @@ class FilterManager(DirectObject):
     def get_scaled_size(self, mul: float, div: float, align: float) -> tuple[int, int]: ...
     def render_scene_into(
         self,
-        depthtex: Texture | None = None,
-        colortex: Texture | None = None,
-        auxtex: Texture | None = None,
+        depthtex: Texture | None = ...,
+        colortex: Texture | None = ...,
+        auxtex: Texture | None = ...,
         auxbits: int = ...,
-        textures: Mapping[str, Texture] | None = None,
-        fbprops: FrameBufferProperties | None = None,
-        clamping: bool | None = None,
+        textures: Mapping[str, Texture] | None = ...,
+        fbprops: FrameBufferProperties | None = ...,
+        clamping: bool | None = ...,
     ) -> NodePath | None: ...
     def render_quad_into(
         self,
@@ -61,11 +61,11 @@ class FilterManager(DirectObject):
         mul: float = ...,
         div: float = ...,
         align: float = ...,
-        depthtex: Texture | None = None,
-        colortex: Texture | None = None,
-        auxtex0: Texture | None = None,
-        auxtex1: Texture | None = None,
-        fbprops: FrameBufferProperties | None = None,
+        depthtex: Texture | None = ...,
+        colortex: Texture | None = ...,
+        auxtex0: Texture | None = ...,
+        auxtex1: Texture | None = ...,
+        fbprops: FrameBufferProperties | None = ...,
     ) -> NodePath | None: ...
     def create_buffer(
         self,
@@ -73,8 +73,8 @@ class FilterManager(DirectObject):
         xsize: int,
         ysize: int,
         texgroup: tuple[Texture, Texture, Texture, Texture],
-        depthbits: bool = True,
-        fbprops: FrameBufferProperties | None = None,
+        depthbits: bool = ...,
+        fbprops: FrameBufferProperties | None = ...,
     ) -> GraphicsOutput: ...
     def window_event(self, win: Unused) -> None: ...
     def resize_buffers(self) -> None: ...

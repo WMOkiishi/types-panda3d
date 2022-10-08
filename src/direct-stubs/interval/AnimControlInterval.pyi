@@ -21,14 +21,14 @@ class AnimControlInterval(Interval):
     def __init__(
         self,
         controls: AnimControl | AnimControlCollection,
-        loop: bool = False,
-        constrainedLoop: bool = False,
-        duration: float | None = None,
-        startTime: int | None = None,
-        endTime: int | None = None,
-        startFrame: int | None = None,
-        endFrame: int | None = None,
+        loop: bool = ...,
+        constrainedLoop: bool = ...,
+        duration: float | None = ...,
+        startTime: int | None = ...,
+        endTime: int | None = ...,
+        startFrame: int | None = ...,
+        endFrame: int | None = ...,
         playRate: float = ...,
-        name: str | None = None,
+        name: str | None = ...,
     ) -> None: ...
     def getCurrentFrame(self) -> float | None: ...

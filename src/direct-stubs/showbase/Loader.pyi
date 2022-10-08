@@ -69,28 +69,28 @@ class Loader(DirectObject):
     def load_model(
         self,
         modelPath: str,
-        loaderOptions: LoaderOptions | None = None,
-        noCache: bool | None = None,
-        allowInstance: bool = False,
-        okMissing: Literal[True] | None = None,
-        callback: None = None,
+        loaderOptions: LoaderOptions | None = ...,
+        noCache: bool | None = ...,
+        allowInstance: bool = ...,
+        okMissing: Literal[True] | None = ...,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[True] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[True] | None = ...,
     ) -> NodePath | None: ...
     @overload
     def load_model(
         self,
         modelPath: str,
-        loaderOptions: LoaderOptions | None = None,
-        noCache: bool | None = None,
-        allowInstance: bool = False,
+        loaderOptions: LoaderOptions | None = ...,
+        noCache: bool | None = ...,
+        allowInstance: bool = ...,
         *,
         okMissing: Literal[False],
-        callback: None = None,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[True] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[True] | None = ...,
     ) -> NodePath: ...
     @overload
     def load_model(
@@ -100,37 +100,37 @@ class Loader(DirectObject):
         noCache: bool | None,
         allowInstance: bool,
         okMissing: Literal[False],
-        callback: None = None,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[True] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[True] | None = ...,
     ) -> NodePath: ...
     @overload
     def load_model(
         self,
         modelPath: list[str] | set[str] | tuple[str, ...],
-        loaderOptions: LoaderOptions | None = None,
-        noCache: bool | None = None,
-        allowInstance: bool = False,
-        okMissing: Literal[True] | None = None,
-        callback: None = None,
+        loaderOptions: LoaderOptions | None = ...,
+        noCache: bool | None = ...,
+        allowInstance: bool = ...,
+        okMissing: Literal[True] | None = ...,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[True] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[True] | None = ...,
     ) -> list[NodePath | None]: ...
     @overload
     def load_model(
         self,
         modelPath: list[str] | set[str] | tuple[str, ...],
-        loaderOptions: LoaderOptions | None = None,
-        noCache: bool | None = None,
-        allowInstance: bool = False,
+        loaderOptions: LoaderOptions | None = ...,
+        noCache: bool | None = ...,
+        allowInstance: bool = ...,
         *,
         okMissing: Literal[False],
-        callback: None = None,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[True] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[True] | None = ...,
     ) -> list[NodePath]: ...
     @overload
     def load_model(
@@ -140,24 +140,24 @@ class Loader(DirectObject):
         noCache: bool | None,
         allowInstance: bool,
         okMissing: Literal[False],
-        callback: None = None,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[True] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[True] | None = ...,
     ) -> list[NodePath]: ...
     @overload
     def load_model(
         self,
         modelPath: str | list[str] | set[str] | tuple[str, ...],
-        loaderOptions: LoaderOptions | None = None,
-        noCache: bool | None = None,
-        allowInstance: bool = False,
-        okMissing: bool | None = None,
+        loaderOptions: LoaderOptions | None = ...,
+        noCache: bool | None = ...,
+        allowInstance: bool = ...,
+        okMissing: bool | None = ...,
         *,
         callback: Callable[..., object],
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[False] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[False] | None = ...,
     ) -> _Callback: ...
     @overload
     def load_model(
@@ -169,13 +169,13 @@ class Loader(DirectObject):
         okMissing: bool | None,
         callback: Callable[..., object],
         extraArgs: Iterable[Any] = ...,
-        priority: float | None = None,
-        blocking: Literal[False] | None = None,
+        priority: float | None = ...,
+        blocking: Literal[False] | None = ...,
     ) -> _Callback: ...
     def cancelRequest(self, cb: _Callback) -> None: ...
     def isRequestPending(self, cb: _Callback) -> bool: ...
     def loadModelOnce(self, modelPath: str) -> NodePath | None: ...
-    def loadModelCopy(self, modelPath: str, loaderOptions: LoaderOptions | None = None) -> NodePath | None: ...
+    def loadModelCopy(self, modelPath: str, loaderOptions: LoaderOptions | None = ...) -> NodePath | None: ...
     def loadModelNode(self, modelPath: str) -> PandaNode | None: ...
     def unload_model(self, model: NodePath | ModelNode | Filename | str) -> None: ...
     @overload
@@ -183,34 +183,34 @@ class Loader(DirectObject):
         self,
         modelPath: str,
         node: NodePath | PandaNode,
-        loaderOptions: LoaderOptions | None = None,
-        callback: None = None,
+        loaderOptions: LoaderOptions | None = ...,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: int | None = None,
-        blocking: Literal[True] | None = None,
+        priority: int | None = ...,
+        blocking: Literal[True] | None = ...,
     ) -> bool: ...
     @overload
     def save_model(
         self,
         modelPath: list[str] | set[str] | tuple[str, ...],
         node: NodePath | PandaNode,
-        loaderOptions: LoaderOptions | None = None,
-        callback: None = None,
+        loaderOptions: LoaderOptions | None = ...,
+        callback: None = ...,
         extraArgs: Iterable[Any] = ...,
-        priority: int | None = None,
-        blocking: bool | None = None,
+        priority: int | None = ...,
+        blocking: bool | None = ...,
     ) -> list[bool]: ...
     @overload
     def save_model(
         self,
         modelPath: str | list[str] | set[str] | tuple[str, ...],
         node: NodePath | PandaNode,
-        loaderOptions: LoaderOptions | None = None,
+        loaderOptions: LoaderOptions | None = ...,
         *,
         callback: Callable[..., object],
         extraArgs: Iterable[Any] = ...,
-        priority: int | None = None,
-        blocking: Literal[False] | None = None,
+        priority: int | None = ...,
+        blocking: Literal[False] | None = ...,
     ) -> _Callback: ...
     @overload
     def save_model(
@@ -220,107 +220,107 @@ class Loader(DirectObject):
         loaderOptions: LoaderOptions | None,
         callback: Callable[..., object],
         extraArgs: Iterable[Any] = ...,
-        priority: int | None = None,
-        blocking: Literal[False] | None = None,
+        priority: int | None = ...,
+        blocking: Literal[False] | None = ...,
     ) -> _Callback: ...
     def load_font(
         self,
         modelPath: str,
-        spaceAdvance: float | None = None,
-        lineHeight: float | None = None,
-        pointSize: float | None = None,
-        pixelsPerUnit: float | None = None,
-        scaleFactor: float | None = None,
-        textureMargin: int | None = None,
-        polyMargin: float | None = None,
-        minFilter: _FilterType | None = None,
-        magFilter: _FilterType | None = None,
-        anisotropicDegree: int | None = None,
-        color: Vec4f | None = None,
-        outlineWidth: float | None = None,
+        spaceAdvance: float | None = ...,
+        lineHeight: float | None = ...,
+        pointSize: float | None = ...,
+        pixelsPerUnit: float | None = ...,
+        scaleFactor: float | None = ...,
+        textureMargin: int | None = ...,
+        polyMargin: float | None = ...,
+        minFilter: _FilterType | None = ...,
+        magFilter: _FilterType | None = ...,
+        anisotropicDegree: int | None = ...,
+        color: Vec4f | None = ...,
+        outlineWidth: float | None = ...,
         outlineFeather: float = ...,
         outlineColor: Vec4f = ...,
-        renderMode: _TextFont_RenderMode | None = None,
-        okMissing: bool = False,
+        renderMode: _TextFont_RenderMode | None = ...,
+        okMissing: bool = ...,
     ) -> TextFont: ...
     def load_texture(
         self,
         texturePath: Filepath,
-        alphaPath: Filepath | None = None,
-        readMipmaps: bool = False,
-        okMissing: bool = False,
-        minfilter: _FilterType | None = None,
-        magfilter: _FilterType | None = None,
-        anisotropicDegree: int | None = None,
-        loaderOptions: LoaderOptions | None = None,
-        multiview: bool | None = None,
+        alphaPath: Filepath | None = ...,
+        readMipmaps: bool = ...,
+        okMissing: bool = ...,
+        minfilter: _FilterType | None = ...,
+        magfilter: _FilterType | None = ...,
+        anisotropicDegree: int | None = ...,
+        loaderOptions: LoaderOptions | None = ...,
+        multiview: bool | None = ...,
     ) -> Texture: ...
     def load_3d_texture(
         self,
         texturePattern: Filepath,
-        readMipmaps: bool = False,
-        okMissing: bool = False,
-        minfilter: _FilterType | None = None,
-        magfilter: _FilterType | None = None,
-        anisotropicDegree: int | None = None,
-        loaderOptions: LoaderOptions | None = None,
-        multiview: bool | None = None,
+        readMipmaps: bool = ...,
+        okMissing: bool = ...,
+        minfilter: _FilterType | None = ...,
+        magfilter: _FilterType | None = ...,
+        anisotropicDegree: int | None = ...,
+        loaderOptions: LoaderOptions | None = ...,
+        multiview: bool | None = ...,
         numViews: int = ...,
     ) -> Texture: ...
     def load2DTextureArray(
         self,
         texturePattern: Filepath,
-        readMipmaps: bool = False,
-        okMissing: bool = False,
-        minfilter: _FilterType | None = None,
-        magfilter: _FilterType | None = None,
-        anisotropicDegree: int | None = None,
-        loaderOptions: LoaderOptions | None = None,
-        multiview: bool | None = None,
+        readMipmaps: bool = ...,
+        okMissing: bool = ...,
+        minfilter: _FilterType | None = ...,
+        magfilter: _FilterType | None = ...,
+        anisotropicDegree: int | None = ...,
+        loaderOptions: LoaderOptions | None = ...,
+        multiview: bool | None = ...,
         numViews: int = ...,
     ) -> Texture: ...
     def load_cube_map(
         self,
         texturePattern: Filepath,
-        readMipmaps: bool = False,
-        okMissing: bool = False,
-        minfilter: _FilterType | None = None,
-        magfilter: _FilterType | None = None,
-        anisotropicDegree: int | None = None,
-        loaderOptions: LoaderOptions | None = None,
-        multiview: bool | None = None,
+        readMipmaps: bool = ...,
+        okMissing: bool = ...,
+        minfilter: _FilterType | None = ...,
+        magfilter: _FilterType | None = ...,
+        anisotropicDegree: int | None = ...,
+        loaderOptions: LoaderOptions | None = ...,
+        multiview: bool | None = ...,
     ) -> Texture: ...
     def unload_texture(self, texture: Texture) -> None: ...
     def load_sfx(
         self,
         soundPath: Filepath | list[Filepath] | set[Filepath] | tuple[Filepath, ...],
-        positional: bool = False,
-        callback: Callable[..., object] | None = None,
+        positional: bool = ...,
+        callback: Callable[..., object] | None = ...,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback | None: ...
     def load_music(
         self,
         soundPath: Filepath | list[Filepath] | set[Filepath] | tuple[Filepath, ...],
-        positional: bool = False,
-        callback: Callable[..., object] | None = None,
+        positional: bool = ...,
+        callback: Callable[..., object] | None = ...,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback | None: ...
     def load_sound(
         self,
         manager: AudioManager,
         soundPath: Filepath | list[Filepath] | set[Filepath] | tuple[Filepath, ...],
-        positional: bool = False,
-        callback: Callable[..., object] | None = None,
+        positional: bool = ...,
+        callback: Callable[..., object] | None = ...,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback: ...
     def unload_sfx(self, sfx: AudioSound) -> None: ...
-    def load_shader(self, shaderPath: Filepath, okMissing: bool = False) -> Shader: ...
+    def load_shader(self, shaderPath: Filepath, okMissing: bool = ...) -> Shader: ...
     def unload_shader(self, shaderPath: Filepath | None) -> None: ...
     def async_flatten_strong(
         self,
         model: NodePath | Iterable[NodePath],
-        inPlace: bool = True,
-        callback: Callable[..., object] | None = None,
+        inPlace: bool = ...,
+        callback: Callable[..., object] | None = ...,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback: ...
     loadModel = load_model

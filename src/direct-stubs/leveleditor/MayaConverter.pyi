@@ -34,9 +34,9 @@ class MayaConverter(wx.Dialog):
         parent,
         editor,
         mayaFile,
-        callBack: Callable[[list[str]], object] | None = None,
-        obj=None,
-        isAnim: bool = False,
+        callBack: Callable[[list[str]], object] | None = ...,
+        obj=...,
+        isAnim: bool = ...,
         convertMode: Literal[0, 1] = ...,
     ) -> None: ...
     def convertFromMaya(self) -> None: ...

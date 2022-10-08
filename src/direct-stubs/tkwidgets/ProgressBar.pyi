@@ -24,13 +24,13 @@ class ProgressBar:
     label: int
     def __init__(
         self,
-        master=None,
+        master=...,
         orientation: str = ...,
         min: int = ...,
         max: int = ...,
         width: int = ...,
         height: int = ...,
-        doLabel: bool = True,
+        doLabel: bool = ...,
         appearance: str = ...,
         fillColor: str = ...,
         background: str = ...,
@@ -41,5 +41,5 @@ class ProgressBar:
         value: int = ...,
         bd: int = ...,
     ) -> None: ...
-    def updateProgress(self, newValue: int, newMax: int | None = None) -> None: ...
+    def updateProgress(self, newValue: int, newMax: int | None = ...) -> None: ...
     def update(self) -> None: ...

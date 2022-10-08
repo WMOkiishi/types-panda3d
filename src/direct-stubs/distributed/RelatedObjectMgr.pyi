@@ -24,10 +24,10 @@ class RelatedObjectMgr(DirectObject):
     def requestObjects(
         self,
         doIdList: Sequence[int],
-        allCallback: _AllCallback | None = None,
-        eachCallback: _EachCallback | None = None,
-        timeout: float | None = None,
-        timeoutCallback: _TimeoutCallback | None = None,
+        allCallback: _AllCallback | None = ...,
+        eachCallback: _EachCallback | None = ...,
+        timeout: float | None = ...,
+        timeoutCallback: _TimeoutCallback | None = ...,
     ) -> _CallbackTuple: ...
     def abortRequest(self, tuple: _CallbackTuple) -> None: ...
     def abortAllRequests(self) -> None: ...

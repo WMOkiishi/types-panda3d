@@ -7,8 +7,8 @@ def setupMirror(
     name: str,
     width: float,
     height: float,
-    rootCamera: NodePath | None = None,
+    rootCamera: NodePath | None = ...,
     bufferSize: int = ...,
-    clearColor: Vec4f | None = None,
+    clearColor: Vec4f | None = ...,
 ) -> NodePath: ...
 def showFrustum(np: NodePath) -> None: ...

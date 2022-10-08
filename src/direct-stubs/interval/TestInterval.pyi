@@ -12,8 +12,8 @@ class TestInterval(Interval):
         self,
         particleEffect: ParticleEffect,
         duration: float = ...,
-        parent: NodePath | None = None,
-        renderParent: NodePath | None = None,
-        name: str | None = None,
+        parent: NodePath | None = ...,
+        renderParent: NodePath | None = ...,
+        name: str | None = ...,
     ) -> None: ...
     def __del__(self) -> None: ...

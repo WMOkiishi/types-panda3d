@@ -18,7 +18,7 @@ def addCircle(
     vertexCount: int,
     radius: float,
     color: LColor | tuple[float, float, float, float] = ...,
-    centerColor: LColor | tuple[float, float, float, float] | None = None,
+    centerColor: LColor | tuple[float, float, float, float] | None = ...,
     layer: Unused = ...,
 ) -> Geom: ...
 def addCircleGeom(
@@ -26,7 +26,7 @@ def addCircleGeom(
     vertexCount: int,
     radius: float,
     color: LColor | tuple[float, float, float, float] = ...,
-    centerColor: LColor | tuple[float, float, float, float] | None = None,
+    centerColor: LColor | tuple[float, float, float, float] | None = ...,
     layer: Unused = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addSquare(
@@ -41,7 +41,7 @@ def addBox(
     sizeY: float,
     sizeZ: float,
     color: LColor | tuple[float, float, float, float] = ...,
-    darken: bool = False,
+    darken: bool = ...,
 ) -> Geom: ...
 def addBoxGeom(
     rootNode: NodePath,
@@ -49,7 +49,7 @@ def addBoxGeom(
     sizeY: float,
     sizeZ: float,
     color: LColor | tuple[float, float, float, float] = ...,
-    darken: bool = False,
+    darken: bool = ...,
 ) -> tuple[NodePath[GeomNode], GeomNode, Geom]: ...
 def addArrow(
     attachNode: GeomNode, sizeX: float, sizeY: float, color: LColor | tuple[float, float, float, float] = ..., layer: Unused = ...

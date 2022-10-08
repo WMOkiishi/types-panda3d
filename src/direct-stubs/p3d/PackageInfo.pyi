@@ -64,10 +64,10 @@ class PackageInfo:
         host: HostInfo,
         packageName: str,
         packageVersion: str | None,
-        platform: str | None = None,
-        solo: bool = False,
-        asMirror: bool = False,
-        perPlatform: bool = False,
+        platform: str | None = ...,
+        solo: bool = ...,
+        asMirror: bool = ...,
+        perPlatform: bool = ...,
     ) -> None: ...
     def getPackageDir(self) -> Filename: ...
     def getDownloadEffort(self) -> int: ...

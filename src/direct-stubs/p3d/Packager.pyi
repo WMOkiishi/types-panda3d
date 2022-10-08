@@ -45,17 +45,17 @@ class Packager:
             self,
             package,
             filename: Filename,
-            newName: str | None = None,
-            deleteTemp: bool = False,
-            explicit: bool = False,
-            compress: bool | None = None,
-            extract: bool | None = None,
-            text: str | None = None,
-            unprocessed: bool | None = None,
-            executable: bool | None = None,
-            dependencyDir: str | None = None,
-            platformSpecific: bool | None = None,
-            required: bool = False,
+            newName: str | None = ...,
+            deleteTemp: bool = ...,
+            explicit: bool = ...,
+            compress: bool | None = ...,
+            extract: bool | None = ...,
+            text: str | None = ...,
+            unprocessed: bool | None = ...,
+            executable: bool | None = ...,
+            dependencyDir: str | None = ...,
+            platformSpecific: bool | None = ...,
+            required: bool = ...,
         ) -> None: ...
         def isExcluded(self, package: Packager.Package) -> bool: ...
 
@@ -101,14 +101,14 @@ class Packager:
         altHosts: dict[str, str]
         def __init__(
             self,
-            url: str | None = None,
-            downloadUrl: str | None = None,
-            descriptiveName: str | None = None,
-            hostDir: str | None = None,
-            mirrors: list[str] | None = None,
+            url: str | None = ...,
+            downloadUrl: str | None = ...,
+            descriptiveName: str | None = ...,
+            hostDir: str | None = ...,
+            mirrors: list[str] | None = ...,
         ) -> None: ...
         def loadXml(self, xhost: TiXmlElement, packager: Packager) -> None: ...
-        def makeXml(self, packager: Packager | None = None) -> TiXmlElement: ...
+        def makeXml(self, packager: Packager | None = ...) -> TiXmlElement: ...
 
     class Package:
         packageName: str
@@ -158,17 +158,17 @@ class Packager:
         def addFile(
             self,
             filename: Filename,
-            newName: str | None = None,
-            delteTemp: bool = False,
-            explicit: bool = False,
-            compress: bool | None = None,
-            extract: bool | None = None,
-            text: str | None = None,
-            unprocessed: bool | None = None,
-            executable: bool | None = None,
-            dependencyDir: str | None = None,
-            platformSpecific: bool | None = None,
-            required: bool = False,
+            newName: str | None = ...,
+            delteTemp: bool = ...,
+            explicit: bool = ...,
+            compress: bool | None = ...,
+            extract: bool | None = ...,
+            text: str | None = ...,
+            unprocessed: bool | None = ...,
+            executable: bool | None = ...,
+            dependencyDir: str | None = ...,
+            platformSpecific: bool | None = ...,
+            required: bool = ...,
         ) -> Packager.PackFile: ...
         def excludeFile(self, filename: Filename) -> None: ...
         def addExtensionModules(self) -> None: ...
@@ -239,101 +239,101 @@ class Packager:
     currentPackage: Packager.Package | None
     p3dInstallDir: str
     allowPackages: bool
-    def __init__(self, platform: str | None = None) -> None: ...
+    def __init__(self, platform: str | None = ...) -> None: ...
     def loadLdconfigCache(self) -> bool: ...
     def resolveLibrary(self, filename: Filename) -> bool: ...
-    def setPlatform(self, platform: str | None = None) -> None: ...
+    def setPlatform(self, platform: str | None = ...) -> None: ...
     def setHost(
         self,
         host: str,
-        downloadUrl: str | None = None,
-        descriptiveName: str | None = None,
-        hostDir: str | None = None,
-        mirrors: list[str] | None = None,
+        downloadUrl: str | None = ...,
+        descriptiveName: str | None = ...,
+        hostDir: str | None = ...,
+        mirrors: list[str] | None = ...,
     ) -> None: ...
     def addHost(
         self,
         host: str,
-        downloadUrl: str | None = None,
-        descriptiveName: str | None = None,
-        hostDir: str | None = None,
-        mirrors: list[str] | None = None,
+        downloadUrl: str | None = ...,
+        descriptiveName: str | None = ...,
+        hostDir: str | None = ...,
+        mirrors: list[str] | None = ...,
     ) -> HostEntry: ...
     def addAltHost(
         self,
         keyword: str,
         altHost: str,
-        origHost: str | None = None,
-        downloadUrl: str | None = None,
-        descriptiveName: str | None = None,
-        hostDir: str | None = None,
-        mirrors: list[str] | None = None,
+        origHost: str | None = ...,
+        downloadUrl: str | None = ...,
+        descriptiveName: str | None = ...,
+        hostDir: str | None = ...,
+        mirrors: list[str] | None = ...,
     ) -> None: ...
     def addWindowsSearchPath(self, searchPath, varname: str) -> None: ...
     def addPosixSearchPath(self, searchPath, varname: str) -> None: ...
     def setup(self) -> None: ...
     def close(self) -> None: ...
     def buildPatches(self, packages: Iterable[Packager.Package]) -> None: ...
-    def readPackageDef(self, packageDef, packageNames: Container[str] | None = None) -> list[Packager.Package]: ...
-    def beginPackage(self, packageName: str, p3dApplication: bool = False, solo: bool = False) -> None: ...
+    def readPackageDef(self, packageDef, packageNames: Container[str] | None = ...) -> list[Packager.Package]: ...
+    def beginPackage(self, packageName: str, p3dApplication: bool = ..., solo: bool = ...) -> None: ...
     def endPackage(self) -> None: ...
     def findPackage(
         self,
         packageName: str,
-        platform: str | None = None,
-        version: str | None = None,
-        host: str | None = None,
-        requires: Iterable[Packager.Package] | None = None,
+        platform: str | None = ...,
+        version: str | None = ...,
+        host: str | None = ...,
+        requires: Iterable[Packager.Package] | None = ...,
     ) -> Packager.Package | None: ...
     def do_setVer(self, value: tuple[int, ...] | str) -> None: ...
     def do_config(self, **kw: Any) -> None: ...
-    def requirePackagesNamed(self, names: Iterable[str], version: str | None = None, host: str | None = None) -> None: ...
+    def requirePackagesNamed(self, names: Iterable[str], version: str | None = ..., host: str | None = ...) -> None: ...
     do_require = requirePackagesNamed
     def requirePackage(self, package: Packager.Package) -> None: ...
     def addModule(
-        self, moduleNames: Sequence[str], newName: str | None = None, filename: Filepath | None = None, required: bool = False
+        self, moduleNames: Sequence[str], newName: str | None = ..., filename: Filepath | None = ..., required: bool = ...
     ) -> None: ...
     do_module = addModule
     def do_excludeModule(self, *args: str) -> None: ...
     def do_main(self, filename: Filepath | None) -> None: ...
-    def do_mainModule(self, moduleName: str, newName: str | None = None, filename: Filepath | None = None) -> None: ...
-    def do_sign(self, certificate, chain=None, pkey=None, password=None) -> None: ...
-    def do_setupPanda3D(self, p3dpythonName: str | None = None, p3dpythonwName: str | None = None) -> None: ...
-    def do_freeze(self, filename: str, compileToExe: bool = False) -> None: ...
+    def do_mainModule(self, moduleName: str, newName: str | None = ..., filename: Filepath | None = ...) -> None: ...
+    def do_sign(self, certificate, chain=..., pkey=..., password=...) -> None: ...
+    def do_setupPanda3D(self, p3dpythonName: str | None = ..., p3dpythonwName: str | None = ...) -> None: ...
+    def do_freeze(self, filename: str, compileToExe: bool = ...) -> None: ...
     def do_makeBundle(
         self,
         bundleName: str,
         plist: str,
-        executable: Filepath | None = None,
-        resources: Sequence[Filepath] | None = None,
-        dependencyDir: str | None = None,
+        executable: Filepath | None = ...,
+        resources: Sequence[Filepath] | None = ...,
+        dependencyDir: str | None = ...,
     ) -> None: ...
     def addFiles(
         self,
         filenames: Sequence[Filepath],
-        text: str | None = None,
-        newName: str | None = None,
-        newDir: Filepath | None = None,
-        extract: bool | None = None,
-        executable: bool | None = None,
-        deleteTemp: bool = False,
-        literal: bool = False,
-        dependencyDir: str | None = None,
-        required: bool = False,
+        text: str | None = ...,
+        newName: str | None = ...,
+        newDir: Filepath | None = ...,
+        extract: bool | None = ...,
+        executable: bool | None = ...,
+        deleteTemp: bool = ...,
+        literal: bool = ...,
+        dependencyDir: str | None = ...,
+        required: bool = ...,
     ) -> None: ...
     do_file = addFiles
     def do_exclude(self, filename: Filepath) -> None: ...
     def do_includeExtensions(
         self,
-        executableExtensions: Iterable[str] | None = None,
-        extractExtensions: Iterable[str] | None = None,
-        imageExtensions: Iterable[str] | None = None,
-        textExtensions: Iterable[str] | None = None,
-        uncompressibleExtensions: Iterable[str] | None = None,
-        unprocessedExtensions: Iterable[str] | None = None,
-        suppressWarningForExtensions: Iterable[str] | None = None,
+        executableExtensions: Iterable[str] | None = ...,
+        extractExtensions: Iterable[str] | None = ...,
+        imageExtensions: Iterable[str] | None = ...,
+        textExtensions: Iterable[str] | None = ...,
+        uncompressibleExtensions: Iterable[str] | None = ...,
+        unprocessedExtensions: Iterable[str] | None = ...,
+        suppressWarningForExtensions: Iterable[str] | None = ...,
     ) -> None: ...
-    def do_dir(self, dirname: Filepath, newDir: str | None = None, unprocessed: bool | None = None) -> None: ...
+    def do_dir(self, dirname: Filepath, newDir: str | None = ..., unprocessed: bool | None = ...) -> None: ...
     def readContentsFile(self) -> None: ...
     def writeContentsFile(self) -> None: ...
 

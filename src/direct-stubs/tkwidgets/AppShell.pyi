@@ -48,7 +48,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
     dateArea: Frame
     about: Pmw.AboutDialog
     toggleBalloonVar: IntVar
-    def __init__(self, parent: Toplevel | None = None, **kw) -> None: ...
+    def __init__(self, parent: Toplevel | None = ..., **kw) -> None: ...
     def toggleBalloon(self) -> None: ...
     def showAbout(self) -> None: ...
     def quit(self) -> None: ...
@@ -60,9 +60,9 @@ class AppShell(Pmw.MegaWidget, DirectObject):
     def balloon(self) -> Pmw.Balloon: ...
     def buttonBox(self) -> Pmw.ButtonBox: ...
     def messageBar(self) -> Pmw.MessageBar: ...
-    def buttonAdd(self, buttonName, helpMessage=None, statusMessage=None, **kw): ...
+    def buttonAdd(self, buttonName, helpMessage=..., statusMessage=..., **kw): ...
     def alignbuttons(self) -> None: ...
-    def bind(self, child, balloonHelpMsg, statusHelpMsg=None) -> None: ...
+    def bind(self, child, balloonHelpMsg, statusHelpMsg=...) -> None: ...
     def updateProgress(self, newValue=..., newMax=...) -> None: ...
     def addWidget(self, category: str, text: str, widget) -> None: ...
     def getWidget(self, category: str, text: str) -> Any | None: ...
@@ -87,7 +87,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         value: str = ...,
         width: int = ...,
         relief: _TkRelief = ...,
@@ -101,7 +101,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -113,8 +113,8 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
-        initialState: bool = False,
+        command=...,
+        initialState: bool = ...,
         anchor: _TkAnchor = ...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
@@ -128,7 +128,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         text: str,
         variable,
         value,
-        command=None,
+        command=...,
         help: str = ...,
         anchor: _TkAnchor = ...,
         side: _TkSide = ...,
@@ -142,7 +142,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -154,7 +154,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -166,7 +166,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -178,7 +178,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -190,7 +190,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -202,7 +202,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -214,7 +214,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
@@ -226,7 +226,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         items: list[str] = ...,
         labelpos=...,
         label_anchor: _TkAnchor = ...,
@@ -243,7 +243,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         category: str,
         text: str,
         help: str = ...,
-        command=None,
+        command=...,
         items=...,
         state: _TkState = ...,
         history: Unused = ...,

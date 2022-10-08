@@ -74,12 +74,12 @@ class TaskManager:
     def setupTaskChain(
         self,
         chainName: str,
-        numThreads: int | None = None,
-        tickClock: bool | None = None,
-        threadPriority: Literal[0, 1, 2, 3, None] = None,
-        frameBudget: float | None = None,
-        frameSync: bool | None = None,
-        timeslicePriority: bool | None = None,
+        numThreads: int | None = ...,
+        tickClock: bool | None = ...,
+        threadPriority: Literal[0, 1, 2, 3, None] = ...,
+        frameBudget: float | None = ...,
+        frameSync: bool | None = ...,
+        timeslicePriority: bool | None = ...,
     ) -> None: ...
     def hasTaskNamed(self, taskName: str) -> bool: ...
     def getTasksNamed(self, taskName: str) -> list[Task]: ...
@@ -93,13 +93,13 @@ class TaskManager:
         delayTime: float,
         funcOrTask: AsyncTask,
         name: str | None,
-        extraArgs: Sequence[Any] | None = None,
-        sort: int | None = None,
-        priority: int | None = None,
-        taskChain: str | None = None,
-        uponDeath: Callable[..., object] | None = None,
-        appendTask: bool = False,
-        owner: _TaskOwner | None = None,
+        extraArgs: Sequence[Any] | None = ...,
+        sort: int | None = ...,
+        priority: int | None = ...,
+        taskChain: str | None = ...,
+        uponDeath: Callable[..., object] | None = ...,
+        appendTask: bool = ...,
+        owner: _TaskOwner | None = ...,
     ) -> AsyncTask: ...
     @overload
     def do_method_later(
@@ -107,42 +107,42 @@ class TaskManager:
         delayTime: float,
         funcOrTask: Callable,
         name: str | None,
-        extraArgs: Sequence[Any] | None = None,
-        sort: int | None = None,
-        priority: int | None = None,
-        taskChain: str | None = None,
-        uponDeath: Callable[..., object] | None = None,
-        appendTask: bool = False,
-        owner: _TaskOwner | None = None,
+        extraArgs: Sequence[Any] | None = ...,
+        sort: int | None = ...,
+        priority: int | None = ...,
+        taskChain: str | None = ...,
+        uponDeath: Callable[..., object] | None = ...,
+        appendTask: bool = ...,
+        owner: _TaskOwner | None = ...,
     ) -> PythonTask: ...
     doMethodLater = do_method_later
     @overload
     def add(
         self,
         funcOrTask: AsyncTask,
-        name: str | None = None,
-        sort: int | None = None,
-        extraArgs: Sequence[Any] | None = None,
-        priority: int | None = None,
-        uponDeath: Callable[..., object] | None = None,
-        appendTask: bool = False,
-        taskChain: str | None = None,
-        owner: _TaskOwner | None = None,
-        delay: float | None = None,
+        name: str | None = ...,
+        sort: int | None = ...,
+        extraArgs: Sequence[Any] | None = ...,
+        priority: int | None = ...,
+        uponDeath: Callable[..., object] | None = ...,
+        appendTask: bool = ...,
+        taskChain: str | None = ...,
+        owner: _TaskOwner | None = ...,
+        delay: float | None = ...,
     ) -> AsyncTask: ...
     @overload
     def add(
         self,
         funcOrTask: Callable,
-        name: str | None = None,
-        sort: int | None = None,
-        extraArgs: Sequence[Any] | None = None,
-        priority: int | None = None,
-        uponDeath: Callable[..., object] | None = None,
-        appendTask: bool = False,
-        taskChain: str | None = None,
-        owner: _TaskOwner | None = None,
-        delay: float | None = None,
+        name: str | None = ...,
+        sort: int | None = ...,
+        extraArgs: Sequence[Any] | None = ...,
+        priority: int | None = ...,
+        uponDeath: Callable[..., object] | None = ...,
+        appendTask: bool = ...,
+        taskChain: str | None = ...,
+        owner: _TaskOwner | None = ...,
+        delay: float | None = ...,
     ) -> PythonTask: ...
     @overload
     def remove(self, taskOrName: str | AsyncTask) -> bool: ...
@@ -154,9 +154,9 @@ class TaskManager:
     def stop(self) -> None: ...
     def replaceMethod(self, oldMethod: Callable[..., Any], newFunction: Callable[..., Any]) -> int: ...
     def popupControls(self) -> TaskManagerPanel: ...
-    def getProfileSession(self, name: str | None = None) -> ProfileSession: ...
+    def getProfileSession(self, name: str | None = ...) -> ProfileSession: ...
     def profileFrames(
-        self, num: int | None = None, session: ProfileSession | None = None, callback: Callable[[], object] | None = None
+        self, num: int | None = ..., session: ProfileSession | None = ..., callback: Callable[[], object] | None = ...
     ) -> None: ...
     def getProfileFrames(self) -> bool: ...
     def getProfileFramesSV(self) -> StateVar: ...
@@ -164,6 +164,6 @@ class TaskManager:
     def getProfileTasks(self) -> bool: ...
     def getProfileTasksSV(self) -> StateVar: ...
     def setProfileTasks(self, profileTasks: bool) -> None: ...
-    def logTaskProfiles(self, name: str | None = None) -> None: ...
-    def flushTaskProfiles(self, name: str | None = None) -> None: ...
+    def logTaskProfiles(self, name: str | None = ...) -> None: ...
+    def flushTaskProfiles(self, name: str | None = ...) -> None: ...
     def doYield(self, frameStartTime: Unused, nextScheduledTaskTime: Unused) -> None: ...

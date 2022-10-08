@@ -16,9 +16,9 @@ class MopathInterval(LerpFunctionInterval):
         mopath: Mopath,
         node: NodePath,
         fromT: float = ...,
-        toT: float | None = None,
-        duration: float | None = None,
+        toT: float | None = ...,
+        duration: float | None = ...,
         blendType: Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend'] = ...,
-        name: str | None = None,
+        name: str | None = ...,
     ) -> None: ...
     def destroy(self) -> None: ...

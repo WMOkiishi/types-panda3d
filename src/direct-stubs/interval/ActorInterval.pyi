@@ -29,21 +29,21 @@ class ActorInterval(Interval):
         self,
         actor: Actor,
         animName: str,
-        loop: bool = False,
-        constrainedLoop: bool = False,
-        duration: float | None = None,
-        startTime: float | None = None,
-        endTime: float | None = None,
-        startFrame: float | None = None,
-        endFrame: float | None = None,
+        loop: bool = ...,
+        constrainedLoop: bool = ...,
+        duration: float | None = ...,
+        startTime: float | None = ...,
+        endTime: float | None = ...,
+        startFrame: float | None = ...,
+        endFrame: float | None = ...,
         playRate: float = ...,
-        name: str | None = None,
-        forceUpdate: bool = False,
-        partName: str | None = None,
-        lodName: str | None = None,
+        name: str | None = ...,
+        forceUpdate: bool = ...,
+        partName: str | None = ...,
+        lodName: str | None = ...,
     ) -> None: ...
     def getCurrentFrame(self) -> float | None: ...
-    def resetControls(self, partName: str | None, lodName: str | None = None) -> None: ...
+    def resetControls(self, partName: str | None, lodName: str | None = ...) -> None: ...
 
 class LerpAnimInterval(CLerpAnimEffectInterval):
     lerpAnimNum: ClassVar[int]
@@ -56,7 +56,7 @@ class LerpAnimInterval(CLerpAnimEffectInterval):
         startWeight: float = ...,
         endWeight: float = ...,
         blendType: _BlendType = ...,
-        name: str | None = None,
-        partName: str | None = None,
-        lodName: str | None = None,
+        name: str | None = ...,
+        partName: str | None = ...,
+        lodName: str | None = ...,
     ) -> None: ...

@@ -18,14 +18,14 @@ class SoundInterval(Interval):
     def __init__(
         self,
         sound: AudioSound,
-        loop: bool = False,
+        loop: bool = ...,
         duration: float = ...,
-        name: str | None = None,
+        name: str | None = ...,
         volume: float = ...,
         startTime: float = ...,
-        node: NodePath | None = None,
-        seamlessLoop: bool = True,
-        listenerNode: NodePath | None = None,
-        cutOff: float | None = None,
+        node: NodePath | None = ...,
+        seamlessLoop: bool = ...,
+        listenerNode: NodePath | None = ...,
+        cutOff: float | None = ...,
     ) -> None: ...
-    def loop(self, startT: float = ..., endT: float = ..., playRate: float = ..., stagger: bool = False) -> None: ...
+    def loop(self, startT: float = ..., endT: float = ..., playRate: float = ..., stagger: bool = ...) -> None: ...

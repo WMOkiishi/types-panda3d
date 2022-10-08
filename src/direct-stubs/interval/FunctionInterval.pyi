@@ -33,8 +33,8 @@ class FunctionInterval(Interval):
         self,
         function: Callable[..., object],
         *,
-        name: str | None = None,
-        openEnded: bool = True,
+        name: str | None = ...,
+        openEnded: bool = ...,
         extraArgs: Iterable[Any] = ...,
         **kw: Any,
     ) -> None: ...
@@ -45,29 +45,29 @@ class EventInterval(FunctionInterval):
     def __init__(self, event: str, sentArgs: list[Any] = ...) -> None: ...
 
 class AcceptInterval(FunctionInterval):
-    def __init__(self, dirObj: DirectObject, event: str, function: Callable[..., object], name: str | None = None) -> None: ...
+    def __init__(self, dirObj: DirectObject, event: str, function: Callable[..., object], name: str | None = ...) -> None: ...
 
 class IgnoreInterval(FunctionInterval):
-    def __init__(self, dirObj: DirectObject, event: str, name: str | None = None) -> None: ...
+    def __init__(self, dirObj: DirectObject, event: str, name: str | None = ...) -> None: ...
 
 class ParentInterval(FunctionInterval):
     parentIntervalNum: ClassVar[int]
-    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = None) -> None: ...
+    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = ...) -> None: ...
 
 class WrtParentInterval(FunctionInterval):
     wrtParentIntervalNum: ClassVar[int]
-    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = None) -> None: ...
+    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = ...) -> None: ...
 
 class PosInterval(FunctionInterval):
     posIntervalNum: ClassVar[int]
     def __init__(
-        self, nodePath: NodePath, pos: Vec3f, duration: float = ..., name: str | None = None, other: NodePath | None = None
+        self, nodePath: NodePath, pos: Vec3f, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
     ) -> None: ...
 
 class HprInterval(FunctionInterval):
     hprIntervalNum: ClassVar[int]
     def __init__(
-        self, nodePath: NodePath, hpr: Vec3f, duration: float = ..., name: str | None = None, other: NodePath | None = None
+        self, nodePath: NodePath, hpr: Vec3f, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
     ) -> None: ...
 
 class ScaleInterval(FunctionInterval):
@@ -77,8 +77,8 @@ class ScaleInterval(FunctionInterval):
         nodePath: NodePath,
         scale: Vec3f | float,
         duration: float = ...,
-        name: str | None = None,
-        other: NodePath | None = None,
+        name: str | None = ...,
+        other: NodePath | None = ...,
     ) -> None: ...
 
 class PosHprInterval(FunctionInterval):
@@ -89,8 +89,8 @@ class PosHprInterval(FunctionInterval):
         pos: Vec3f,
         hpr: Vec3f,
         duration: float = ...,
-        name: str | None = None,
-        other: NodePath | None = None,
+        name: str | None = ...,
+        other: NodePath | None = ...,
     ) -> None: ...
 
 class HprScaleInterval(FunctionInterval):
@@ -101,8 +101,8 @@ class HprScaleInterval(FunctionInterval):
         hpr: Vec3f,
         scale: Vec3f | float,
         duration: float = ...,
-        name: str | None = None,
-        other: NodePath | None = None,
+        name: str | None = ...,
+        other: NodePath | None = ...,
     ) -> None: ...
 
 class PosHprScaleInterval(FunctionInterval):
@@ -114,13 +114,13 @@ class PosHprScaleInterval(FunctionInterval):
         hpr: Vec3f,
         scale: Vec3f | float,
         duration: float = ...,
-        name: str | None = None,
-        other: NodePath | None = None,
+        name: str | None = ...,
+        other: NodePath | None = ...,
     ) -> None: ...
 
 class Func(FunctionInterval):
     def __init__(
-        self, function: Callable[..., object], *extraArgs: Any, name: str | None = None, openEnded: bool = True, **kw: Any
+        self, function: Callable[..., object], *extraArgs: Any, name: str | None = ..., openEnded: bool = ..., **kw: Any
     ) -> None: ...
 
 class Wait(WaitInterval):

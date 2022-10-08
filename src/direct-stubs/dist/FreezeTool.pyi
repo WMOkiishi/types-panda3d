@@ -11,6 +11,7 @@ _File = TypeVar('_File', bound=_OpenFile)
 _OpenFile: TypeAlias = StrOrBytesPath | int
 
 p3extend_frozen: Any | None
+
 def pytest_imports() -> list[str]: ...
 
 python: Final[str]
@@ -49,7 +50,6 @@ programFile: str
 okMissing: list[str]
 
 class Freezer:
-
     class ModuleDef:
         moduleName: str
         filename: Filename | None
@@ -63,14 +63,14 @@ class Freezer:
         def __init__(
             self,
             moduleName: str,
-            filename: StrOrBytesPath | None = None,
-            implicit: bool = False,
-            guess: bool = False,
-            exclude: bool = False,
-            forbid: bool = False,
-            allowChildren: bool = False,
-            fromSource: Any = None,
-            text: str | None = None,
+            filename: StrOrBytesPath | None = ...,
+            implicit: bool = ...,
+            guess: bool = ...,
+            exclude: bool = ...,
+            forbid: bool = ...,
+            allowChildren: bool = ...,
+            fromSource: Any = ...,
+            text: str | None = ...,
         ) -> None: ...
 
     platform: str
@@ -90,34 +90,24 @@ class Freezer:
     mf: PandaModuleFinder | None
     moduleSuffixes: list[tuple[str, str, int]]
     def __init__(
-        self,
-        previous: Freezer | None = None,
-        debugLevel: Unused = ...,
-        platform: str | None = None,
-        path: list[str] | None = None,
+        self, previous: Freezer | None = ..., debugLevel: Unused = ..., platform: str | None = ..., path: list[str] | None = ...
     ) -> None: ...
     def excludeFrom(self, freezer: Freezer) -> None: ...
-    def excludeModule(
-        self,
-        moduleName: str,
-        forbid: bool = False,
-        allowChildren: bool = False,
-        fromSource: Any = None,
-    ) -> None: ...
+    def excludeModule(self, moduleName: str, forbid: bool = ..., allowChildren: bool = ..., fromSource: Any = ...) -> None: ...
     def handleCustomPath(self, moduleName: str) -> None: ...
     def getModulePath(self, moduleName: str) -> list[str] | None: ...
     def getModuleStar(self, moduleName: str) -> list[str] | None: ...
     def addModule(
         self,
         moduleName: str,
-        implicit: bool = False,
-        newName: str | None = None,
-        filename: StrOrBytesPath | None = None,
-        guess: bool = False,
-        fromSource: Any = None,
-        text: str | None = None,
+        implicit: bool = ...,
+        newName: str | None = ...,
+        filename: StrOrBytesPath | None = ...,
+        guess: bool = ...,
+        fromSource: Any = ...,
+        text: str | None = ...,
     ) -> None: ...
-    def done(self, addStartupModules: bool = False) -> None: ...
+    def done(self, addStartupModules: bool = ...) -> None: ...
     def reset(self) -> None: ...
     def mangleName(self, moduleName: str) -> str: ...
     def getAllModuleNames(self) -> list[str]: ...
@@ -125,15 +115,15 @@ class Freezer:
     def addToMultifile(self, multifile: Multifile, compressionLevel: int = ...) -> None: ...
     def writeMultifile(self, mfname: StrOrBytesPath) -> None: ...
     def writeCode(self, filename: _OpenFile | None, initCode: str = ...) -> None: ...
-    def generateCode(self, basename: str, compileToExe: bool = False) -> str: ...
+    def generateCode(self, basename: str, compileToExe: bool = ...) -> str: ...
     def generateRuntimeFromStub(
         self,
         target: _File,
         stub_file: SupportsRead[bytes],
         use_console: bool,
         fields: Mapping[str, str | None] = ...,
-        log_append: bool = False,
-        log_filename_strftime: bool = False,
+        log_append: bool = ...,
+        log_filename_strftime: bool = ...,
     ) -> _File: ...
     def makeModuleDef(self, mangledName: str, code: bytes) -> str: ...
     def makeModuleListEntry(self, mangledName: str, code: bytes, moduleName: str, module: object) -> str: ...
@@ -149,4 +139,4 @@ class PandaModuleFinder(ModuleFinder):
         *,
         suffixes: Iterable[tuple[str, str, int]] = ...,
     ) -> None: ...
-    def find_module(self, name: str, path: str | None = None, parent: Module | None = None): ...
+    def find_module(self, name: str, path: str | None = ..., parent: Module | None = ...): ...

@@ -21,9 +21,9 @@ class IndirectInterval(Interval):
         self,
         interval: Interval,
         startT: float = ...,
-        endT: float | None = None,
+        endT: float | None = ...,
         playRate: float = ...,
-        duration: float | None = None,
+        duration: float | None = ...,
         blendType: _BlendType = ...,
-        name: str | None = None,
+        name: str | None = ...,
     ) -> None: ...

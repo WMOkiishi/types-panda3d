@@ -18,8 +18,8 @@ class State(DirectObject):
     def __init__(
         self,
         name: str,
-        enterFunc: _Callback = None,
-        exitFunc: _Callback = None,
+        enterFunc: _Callback = ...,
+        exitFunc: _Callback = ...,
         transitions: list[str] | _ANY = ...,
         inspectorPos: typing.Any = ...,
     ) -> None: ...
