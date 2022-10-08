@@ -1,0 +1,3 @@
+# Modules that error on import
+direct.leveleditor.\w+
+direct.wxwidgets.\w+

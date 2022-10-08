@@ -1,0 +1,25 @@
+# Modules that error on import
+direct.leveleditor.testData
+direct.wxwidgets.WxPandaStart
+
+
+# ====================================
+# Variables imported with star imports
+# ====================================
+
+# From wx.lib.agw.cubecolourdialog
+direct.leveleditor.LevelEditorUIBase.(pi|colourAttributes|colourMaxValues|HTMLCodes)  # Through direct.leveleditor.ObjectPropertyUI
+direct.leveleditor.ObjectPropertyUI.(pi|colourAttributes|colourMaxValues|HTMLCodes|[A-Z_]+)
+
+# From direct.directtools.DirectGlobals
+direct.leveleditor.CurveEditor.[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
+direct.leveleditor.LevelEditorBase.[A-Z_]+  # Through direct.leveleditor.CurveEditor
+direct.leveleditor.LevelEditorUIBase.(?!ID_)[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
+direct.wxwidgets.WxPandaShell.[A-Z_]+
+
+# Other
+direct.leveleditor.LevelEditor.(?!LevelEditor$)\w+  # From various through direct.leveleditor.LevelEditorBase/LevelEditorUI
+direct.leveleditor.LevelEditorBase.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)  # From direct.gui.DirectGui
+direct.leveleditor.LevelEditorUI.(?!LevelEditorUI$)\w+  # From various through direct.leveleditor.LevelEditorUIBase
+direct.leveleditor.LevelEditorUIBase.ID_(FOUR|FRONT|LEFT|PERSP|TOP)_VIEW  # From direct.wxwidgets.WxPandaShell
+direct.leveleditor.LevelEditorUIBase.property  # From direct.leveleditor.GraphEditorUI

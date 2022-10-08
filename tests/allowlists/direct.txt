@@ -1,8 +1,6 @@
 # Modules that error on import
 direct.directdevices.DirectJoybox
-direct.leveleditor.testData
 direct.showbase.ProfileSession
-direct.wxwidgets.WxPandaStart
 
 # Variables not meant to be exported
 direct.cluster.ClusterClient.ClientConfigs
@@ -62,7 +60,6 @@ direct.directdevices.DirectRadamec.(e|inf|nan|pi|tau)
 direct.showutil.BuildGeometry.(e|inf|nan|pi|tau)
 
 # From tkinter
-
 direct.showbase.TkGlobal.(?!spawnTkLoop$)\w+
 direct.tkwidgets.MemoryExplorer.(TclVersion|TkVersion|(?!DEFAULT_BT_WIDTH)[A-Z_]+)  # Through direct.showbase.TkGlobal
 
@@ -70,10 +67,6 @@ direct.tkwidgets.MemoryExplorer.(TclVersion|TkVersion|(?!DEFAULT_BT_WIDTH)[A-Z_]
 direct.*\.Dtool_PyNativeInterface
 direct.*\.END_?PUBLISH
 direct.*\.(ATS|CS|ES|EU|HC|LNT|NS|PCT|PT|ST|TIXML|TINYXML|TP)[A-Z_]\w*
-
-# From wx.lib.agw.cubecolourdialog
-direct.leveleditor.LevelEditorUIBase.(pi|colourAttributes|colourMaxValues|HTMLCodes)  # Through direct.leveleditor.ObjectPropertyUI
-direct.leveleditor.ObjectPropertyUI.(pi|colourAttributes|colourMaxValues|HTMLCodes|[A-Z_]+)
 
 # From direct.cluster.ClusterMsgs
 direct.cluster.ClusterClient.[A-Z_]+
@@ -93,10 +86,6 @@ direct.directtools.DirectManipulation.[A-Z_]+
 direct.directtools.DirectSelection.(?!COA)[A-Z_]+
 direct.directtools.DirectSession.[A-Z_]+  # Through direct.directtools.DirectUtil
 direct.directtools.DirectUtil.(?!ROUND|CLAMP)[A-Z_]+
-direct.leveleditor.CurveEditor.[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
-direct.leveleditor.LevelEditorBase.[A-Z_]+  # Through direct.leveleditor.CurveEditor
-direct.leveleditor.LevelEditorUIBase.(?!ID_)[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
-direct.wxwidgets.WxPandaShell.[A-Z_]+
 
 # From direct.distributed.ClockDelta
 direct.distributed.ClientRepositoryBase.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
@@ -113,14 +102,7 @@ direct.distributed.PyDatagram.(MsgName2Id|MsgId2Names|[A-Z_23]+)
 direct.distributed.ClientRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
 direct.distributed.ServerRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
 
-# From direct.gui.DirectGui
-direct.gui.DirectCheckBox.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)
-direct.leveleditor.LevelEditorBase.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)
-
 # Other
 direct.controls.TwoDWalker.CollisionHandlerRayStart  # From direct.controls.GravityWalker
 direct.distributed.DoInterestManager.(rad(90|180|270|360)|GoldenRatio)  # From direct.showbase.PythonUtil
-direct.leveleditor.LevelEditor.(?!LevelEditor$)\w+  # From various through direct.leveleditor.LevelEditorBase/LevelEditorUI
-direct.leveleditor.LevelEditorUI.(?!LevelEditorUI$)\w+  # From various through direct.leveleditor.LevelEditorUIBase
-direct.leveleditor.LevelEditorUIBase.ID_(FOUR|FRONT|LEFT|PERSP|TOP)_VIEW  # From direct.wxwidgets.WxPandaShell
-direct.leveleditor.LevelEditorUIBase.property  # From direct.leveleditor.GraphEditorUI
+direct.gui.DirectCheckBox.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)  # From direct.gui.DirectGui

@@ -9,8 +9,11 @@ def main() -> int:
         'allowlists',
         f'direct-py{sys.version_info.major}{sys.version_info.minor}.txt'
     )
+    platform_allowlist = Path('allowlists', f'direct-{sys.platform}.txt')
     if version_allowlist.exists():
         allowlists.append(version_allowlist)
+    if platform_allowlist.exists():
+        allowlists.append(platform_allowlist)
     src_dir = Path('..', 'src', 'direct-stubs')
     modules = (p.stem for p in src_dir.glob('*'))
     dont_check = {
