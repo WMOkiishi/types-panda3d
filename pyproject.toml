@@ -46,3 +46,6 @@ skip_magic_trailing_comma = true
 [tool.mypy]
 show_error_codes = true
 warn_unused_ignores = true
+
+[tool.pyright]
+reportSelfClsParameterName = false

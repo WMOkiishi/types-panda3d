@@ -1,7 +1,7 @@
 __all__ = ['Pool']
 
 from collections.abc import Callable
-from typing import Any, ClassVar, Generic, TypeVar
+from typing import Any, ClassVar, Generic, TypeVar, overload
 
 from direct.directnotify.Notifier import Notifier
 
@@ -9,7 +9,10 @@ _T = TypeVar('_T')
 
 class Pool(Generic[_T]):
     notify: ClassVar[Notifier]
-    def __init__(self, free: list[_T] | None = ...) -> None: ...
+    @overload
+    def __init__(self, free: None = ...) -> None: ...
+    @overload
+    def __init__(self, free: list[_T]) -> None: ...
     def add(self, item: _T) -> None: ...
     def remove(self, item: _T) -> None: ...
     def checkout(self) -> _T: ...
