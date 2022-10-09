@@ -1,4 +1,5 @@
 __all__ = [
+    'DEFAULT_PROTOCOL',
     'HIGHEST_PROTOCOL',
     'PickleError',
     'Pickler',
