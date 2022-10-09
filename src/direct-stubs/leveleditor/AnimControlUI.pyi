@@ -1,8 +1,5 @@
-from typing_extensions import TypeAlias
-
 import wx  # type: ignore[import]
-
-PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
+from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
 
 FirstFrame: PyEmbeddedImage
 PreFrame: PyEmbeddedImage
@@ -23,7 +20,7 @@ class TimeSlider(wx.Window):
     sliderStartFrame: int
     sliderEndFrame: int
     frameNum: int
-    buffer: wx.EmptyBitmap
+    buffer: wx.Bitmap
     unitWidth: float
     def __init__(self, parent, slidersize, sliderStartFrame: int, sliderEndFrame: int, curFrame: int) -> None: ...
     def InitBuffer(self) -> None: ...
@@ -46,7 +43,7 @@ class TimeRange(wx.Window):
     frameNum: int
     w = ...
     h = ...
-    buffer: wx.EmptyBitmap
+    buffer: wx.Bitmap
     unitWidth: float
     rangePosX: float
     rangePosY: float

@@ -4,8 +4,7 @@ from typing_extensions import TypeAlias
 
 import wx  # type: ignore[import]
 from panda3d.core import LVecBase2f
-
-PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
+from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
 
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 
@@ -29,7 +28,7 @@ class GraphEditorWindow(wx.Window):
     X: list
     Y: list
     Z: list
-    buffer: wx.EmptyBitmap
+    buffer: wx.Bitmap
     def __init__(
         self, parent, windowSize, property, xRange: SupportsFloat, yRange: SupportsFloat, curFrame: int, object
     ) -> None: ...

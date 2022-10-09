@@ -1,13 +1,11 @@
 from collections.abc import Callable, Iterable
-from typing_extensions import TypeAlias
 
 import wx  # type: ignore[import]
 from direct._typing import Unused
 from direct.wxwidgets.WxSlider import WxSlider
-
-CubeColourDialog: TypeAlias = wx.lib.agw.cubecolourdialog.CubeColourDialog
-PyEmbeddedImage: TypeAlias = wx.lib.embeddedimage.PyEmbeddedImage
-ScrolledPanel: TypeAlias = wx.lib.scrolledpanel.ScrolledPanel
+from wx.lib.agw.cubecolourdialog import CubeColourDialog  # type: ignore[import]
+from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
+from wx.lib.scrolledpanel import ScrolledPanel  # type: ignore[import]
 
 Key: PyEmbeddedImage
 
