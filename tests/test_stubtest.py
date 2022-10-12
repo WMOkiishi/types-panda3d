@@ -46,17 +46,17 @@ def prevent_running(names: Container[str], *, index: int = 2) -> None:
 
 
 def main() -> int:
-    allowlists = [Path('allowlists', 'direct.txt')]
+    allowlists = [Path('allowlists', 'common.txt')]
     version_allowlist = Path(
         'allowlists',
-        f'direct-py{sys.version_info.major}{sys.version_info.minor}.txt'
+        f'py{sys.version_info.major}{sys.version_info.minor}.txt'
     )
-    platform_allowlist = Path('allowlists', f'direct-{sys.platform}.txt')
+    platform_allowlist = Path('allowlists', f'{sys.platform}.txt')
     if version_allowlist.exists():
         allowlists.append(version_allowlist)
     if platform_allowlist.exists():
         allowlists.append(platform_allowlist)
-    args = ['direct']
+    args = ['panda3d', 'direct']
     for allowlist in allowlists:
         args += [
             '--allowlist',

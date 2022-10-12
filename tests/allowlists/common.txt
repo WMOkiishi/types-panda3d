@@ -15,6 +15,10 @@ direct.distributed.NetMessenger.i
 direct.particles.ForceGroup.physicsMgr
 direct.particles.GlobalForceGroup.physicsMgr
 
+# For some reason, Mypy checks the arguments for __init__ differently than
+# other methods.
+panda3d\..+\.__init__
+
 # Functions that technically don't match
 direct.distributed.StagedObject.StagedObject.goOnStage
 direct.distributed.StagedObject.StagedObject.goOffStage
@@ -26,8 +30,21 @@ direct.showbase.ShowBase.ShowBase.set_background_color
 direct.stdpy.file.join
 direct.tkwidgets.Valuator.ValuatorGroupPanel.get
 
+# Stubtest thinks these have a "mod" parameter, but they don't.
+panda3d.core.L(RGB)?Color[df]?.__pow__
+panda3d.core.LQuaternion[df]?.__pow__
+panda3d.core.LVecBase[2-4][dfi]?.__pow__
+panda3d.core.Quat[DF]?.__pow__
+panda3d.core.VBase[2-4][DF]?.__pow__
+
 # Things that don't exist at runtime
+panda3d.\w+._\w+
+panda3d._typing
 direct._typing
+panda3d.core.AsyncTaskCollection.__iter__
+panda3d.core.L(RGB)?Color[df]?.__iter__
+panda3d.core.LVecBase[2-4][dfi]?.__iter__
+panda3d.core.VBase[2-4][DF]?.__iter__
 direct.showbase.PythonUtil.ScratchPad.__getattr__
 direct.stdpy.threading2?.local.__getattr__
 
@@ -36,15 +53,30 @@ direct.stdpy.threading2?.local.__getattr__
 (direct.wxwidgets.WxPandaShell.base)?
 
 # Things missing from the stubs
+panda3d\..+\.__deepcopy__
+panda3d\..+\.__copy__
 direct.interval.IntervalGlobal.WaitInterval.__(deep)?copy__
 direct.task.Task.(Task|pause).__(deep)?copy__
+
+# These exist in every C++ module, but I don't know what they're for.
+panda3d\.\w+\.Dtool_BorrowThisReference
+panda3d\.\w+\.Dtool_PyNativeInterface
 
 # I'm not sure what's going on here
 (direct.directscripts.gendocs.__warningregistry__)?
 (direct.dist.FreezeTool.__warningregistry__)?
 
+# Stubtest doesn't understand these at runtime.
+panda3d.core.ExecutionEnvironment.args
+panda3d.core.MicrophoneAudio.options
+panda3d.vision.WebcamVideo.options
+
 # This is an issue with an attribute overriding a method added by extensions_native
 direct.distributed.DistributedCamera.Fixture.id
+
+# This is the name of both a staticmethod and instance attribute.
+# We skip writing the staticmethod in the stubs (it's deprecated anyway).
+panda3d.core.WindowProperties.size
 
 # These methods are overriden by attributes on initialization
 direct.tkwidgets.EntryScale.EntryScale.entry
@@ -52,6 +84,15 @@ direct.tkwidgets.EntryScale.EntryScale.label
 direct.tkwidgets.EntryScale.EntryScale.scale
 direct.tkwidgets.VectorWidgets.VectorEntry.entryList
 direct.tkwidgets.VectorWidgets.VectorEntry.menu
+
+# These exist, but stubtest insists they don't.
+panda3d.bullet.BulletPersistentManifold.__get_manifold_point
+panda3d.bullet.BulletWorld.__get_manifold
+
+# Stubtest doesn't understand these at runtime.
+panda3d.core.ExecutionEnvironment.args
+panda3d.core.MicrophoneAudio.options
+panda3d.vision.WebcamVideo.options
 
 
 # ====================================

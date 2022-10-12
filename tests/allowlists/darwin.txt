@@ -2,6 +2,14 @@
 direct.leveleditor.testData
 direct.wxwidgets.WxPandaStart
 
+# These differ by OS, but the stubs don't yet reflect that.
+panda3d.core.GraphicsWindowProcCallbackData.get_hwnd
+panda3d.core.GraphicsWindowProcCallbackData.get_lparam
+panda3d.core.GraphicsWindowProcCallbackData.get_msg
+panda3d.core.GraphicsWindowProcCallbackData.get_wparam
+panda3d.core.LinuxJoystickDevice
+panda3d\.lib(p3)?[A-Za-z_]*
+
 
 # ====================================
 # Variables imported with star imports
