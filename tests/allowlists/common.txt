@@ -1,4 +1,5 @@
 # Modules that error on import
+(direct.directbase.DirectStart.*)?  # This fails if a window cannot be opened
 direct.directdevices.DirectJoybox
 direct.directutil.DirectMySQLdb
 direct.directutil.DirectMySQLdbConnection
