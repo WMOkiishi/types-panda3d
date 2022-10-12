@@ -1,5 +1,7 @@
 # Modules that error on import
 direct.directdevices.DirectJoybox
+direct.directutil.DirectMySQLdb
+direct.directutil.DirectMySQLdbConnection
 direct.showbase.ProfileSession
 
 # Variables not meant to be exported
@@ -19,6 +21,7 @@ direct.distributed.StagedObject.StagedObject.goOffStage
 direct.interval.(MetaInterval|IntervalGlobal).MetaInterval.__repr__
 direct.interval.(MetaInterval|IntervalGlobal).MetaInterval.__str__
 direct.interval.(SoundInterval|IntervalGlobal).SoundInterval.finish
+direct.p3d.Packager.metaclass_def.__new__
 direct.showbase.ShowBase.ShowBase.set_background_color
 direct.stdpy.file.join
 direct.tkwidgets.Valuator.ValuatorGroupPanel.get
@@ -28,8 +31,9 @@ direct._typing
 direct.showbase.PythonUtil.ScratchPad.__getattr__
 direct.stdpy.threading2?.local.__getattr__
 
-# This might not exist, depending on whether a script from directbase has been run
-(direct.showbase.ShowBaseGlobal\.base)?
+# These might not exist, depending on whether another script has been run
+(direct.showbase.ShowBaseGlobal.base)?
+(direct.wxwidgets.WxPandaShell.base)?
 
 # Things missing from the stubs
 direct.interval.IntervalGlobal.WaitInterval.__(deep)?copy__
@@ -86,6 +90,7 @@ direct.directtools.DirectManipulation.[A-Z_]+
 direct.directtools.DirectSelection.(?!COA)[A-Z_]+
 direct.directtools.DirectSession.[A-Z_]+  # Through direct.directtools.DirectUtil
 direct.directtools.DirectUtil.(?!ROUND|CLAMP)[A-Z_]+
+direct.directutil.Mopath.[A-Z_]+  # Through direct.directtools.DirectGeometry
 
 # From direct.distributed.ClockDelta
 direct.distributed.ClientRepositoryBase.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
