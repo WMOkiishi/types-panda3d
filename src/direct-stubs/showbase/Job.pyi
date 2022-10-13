@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 from collections.abc import Generator
 from typing import Any, ClassVar
 from typing_extensions import Final
@@ -6,7 +6,7 @@ from typing_extensions import Final
 from .DirectObject import DirectObject
 from .PythonUtil import ScratchPad
 
-class Job(DirectObject, ABC):
+class Job(DirectObject, metaclass=ABCMeta):
     Done: Final[object]
     Continue: Final[None]
     Sleep: Final[object]
