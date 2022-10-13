@@ -15,7 +15,7 @@ ID_LEFT_VIEW: Final[Literal[404]]
 ID_PERSP_VIEW: Final[Literal[405]]
 
 class WxPandaShell(WxAppShell):
-    MENU_TEXTS: ClassVar[dict[Literal[401, 402, 403, 404, 405], tuple[str, None]]]
+    MENU_TEXTS: ClassVar[dict[int, tuple[str, str | None]]]
     fStartDirect: bool
     wxApp: wx.App
     menuView: wx.Menu
