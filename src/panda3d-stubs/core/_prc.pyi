@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -988,6 +988,7 @@ class ConfigVariableBool(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> bool: ...
+    def __iter__(self) -> Iterator[bool]: ...  # Doesn't actually exist
     def assign(self, value: bool) -> ConfigVariableBool: ...
     def set_value(self, value: bool) -> None:
         """Reassigns the variable's local value."""
@@ -1025,6 +1026,7 @@ class ConfigVariableDouble(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> float: ...
+    def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
     def assign(self, value: float) -> ConfigVariableDouble: ...
     def set_value(self, value: float) -> None:
         """Reassigns the variable's local value."""
@@ -1140,6 +1142,7 @@ class ConfigVariableInt(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> int: ...
+    def __iter__(self) -> Iterator[int]: ...  # Doesn't actually exist
     def assign(self, value: int) -> ConfigVariableInt: ...
     def set_value(self, value: int) -> None:
         """Reassigns the variable's local value."""
@@ -1177,6 +1180,7 @@ class ConfigVariableInt64(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> int: ...
+    def __iter__(self) -> Iterator[int]: ...  # Doesn't actually exist
     def assign(self, value: int) -> ConfigVariableInt64: ...
     def set_value(self, value: int) -> None:
         """Reassigns the variable's local value."""
@@ -1215,6 +1219,7 @@ class ConfigVariableList(ConfigVariableBase):
     def __len__(self) -> int:
         """Returns the number of unique values of the variable."""
     def __getitem__(self, n: int) -> str: ...
+    def __iter__(self) -> Iterator[str]: ...  # Doesn't actually exist
     def get_num_values(self) -> int:
         """Returns the number of values in the variable."""
     def get_string_value(self, n: int) -> str:

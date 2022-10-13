@@ -72,15 +72,6 @@ NO_MANGLING: Final = INPLACE_DUNDERS | {
     '__reduce__', '__reduce_ex__', '__reduce_persist__',
 }
 
-
-# These classes implement iteration via `__getitem__`
-ITERABLE: Final = {
-    'AsyncTaskCollection': 'AsyncTask',
-    'LVecBase2f': 'float', 'LVecBase2d': 'float', 'LVecBase2i': 'int',
-    'LVecBase3f': 'float', 'LVecBase3d': 'float', 'LVecBase3i': 'int',
-    'LVecBase4f': 'float', 'LVecBase4d': 'float', 'LVecBase4i': 'int',
-}
-
 # These classes are effectively generic
 GENERIC: Final = {
     'NodePath': '_N',

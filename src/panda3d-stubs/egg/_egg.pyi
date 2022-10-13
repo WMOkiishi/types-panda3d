@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -1244,6 +1244,7 @@ class EggVertexPool(EggNode):
         """
     def __len__(self) -> int:
         """Returns the number of vertices in the pool."""
+    def __iter__(self) -> Iterator[EggVertex]: ...  # Doesn't actually exist
     def has_vertex(self, index: int) -> bool:
         """Returns true if the indicated vertex has been defined in the vertex pool,
         false otherwise.  This does not include forward references.
@@ -4830,6 +4831,7 @@ class EggTextureCollection:
         """Returns the nth EggTexture in the collection."""
     def __len__(self) -> int:
         """Returns the number of EggTextures in the collection."""
+    def __iter__(self) -> Iterator[EggTexture]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Removes all textures from the collection."""

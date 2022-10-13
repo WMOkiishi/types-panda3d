@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -203,6 +203,7 @@ class PhysicsObjectCollection:
         """
     def __iadd__(self: Self, other: PhysicsObjectCollection) -> Self: ...
     def __add__(self, other: PhysicsObjectCollection) -> PhysicsObjectCollection: ...
+    def __iter__(self) -> Iterator[PhysicsObject]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
     def add_physics_object(self, physics_object: PhysicsObject) -> None:
         """Adds a new PhysicsObject to the collection."""

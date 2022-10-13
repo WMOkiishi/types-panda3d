@@ -21,8 +21,8 @@ from .reps import (
     StubRep
 )
 from .special_cases import (
-    ATTR_TYPE_OVERRIDES, CONDITIONALS, GENERIC, IGNORE_ERRORS, ITERABLE,
-    NO_MANGLING, NO_STUBS, NOT_EXPOSED
+    ATTR_TYPE_OVERRIDES, CONDITIONALS, GENERIC, IGNORE_ERRORS, NO_MANGLING,
+    NO_STUBS, NOT_EXPOSED
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
@@ -407,12 +407,29 @@ def make_class_rep(
             _logger.info(f'Discarding {method}; its name is already in use')
             continue
         class_body |= {rep.name: rep for rep in with_alias(method)}
-    if (iterable_of := ITERABLE.get(name)) is not None:
-        class_body['__iter__'] = Function(
-            '__iter__',
-            [Signature([Parameter.as_self()], f'Iterator[{iterable_of}]')],
-            is_method=True, namespace=this_namespace,
-        )
+    match class_body:
+        case {
+            '__len__': _,
+            '__getitem__': Function(
+                signatures=[
+                    Signature(
+                        parameters=[
+                            Parameter(is_self=True),
+                            Parameter(type='int'),
+                        ],
+                        return_type=item_type,
+                    )
+                ]
+            )
+        }:
+            iter_return_type = f'Iterator[{item_type}]' if item_type else 'Iterator'
+            class_body['__iter__'] = Function(
+                '__iter__',
+                [Signature([Parameter.as_self()], iter_return_type)],
+                is_method=True,
+                namespace=this_namespace,
+                comment="Doesn't actually exist",
+            )
     # Nested types
     for n in range(idb.interrogate_type_number_of_nested_types(t)):
         s = idb.interrogate_type_get_nested_type(t, n)

@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
@@ -1746,6 +1746,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
+        def __iter__(self) -> Iterator[PandaNode]: ...  # Doesn't actually exist
 
     class Stashed:
         """Similarly for stashed children."""
@@ -1753,6 +1754,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
+        def __iter__(self) -> Iterator[PandaNode]: ...  # Doesn't actually exist
 
     class Parents:
         """This class is returned from get_parents()."""
@@ -1760,6 +1762,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __getitem__(self, n: int) -> PandaNode: ...
         def __len__(self) -> int: ...
+        def __iter__(self) -> Iterator[PandaNode]: ...  # Doesn't actually exist
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     state: RenderState
@@ -2847,6 +2850,7 @@ class InternalNameCollection:
         """
     def __iadd__(self: Self, other: InternalNameCollection) -> Self: ...
     def __add__(self, other: InternalNameCollection) -> InternalNameCollection: ...
+    def __iter__(self) -> Iterator[InternalName]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
     def add_name(self, name: InternalName) -> None:
         """Adds a new InternalName to the collection."""
@@ -2910,6 +2914,7 @@ class MaterialCollection:
         """
     def __iadd__(self: Self, other: MaterialCollection) -> Self: ...
     def __add__(self, other: MaterialCollection) -> MaterialCollection: ...
+    def __iter__(self) -> Iterator[Material]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
     def add_material(self, node_material: Material) -> None:
         """Adds a new Material to the collection."""
@@ -2976,6 +2981,7 @@ class TextureStageCollection:
         """
     def __iadd__(self: Self, other: TextureStageCollection) -> Self: ...
     def __add__(self, other: TextureStageCollection) -> TextureStageCollection: ...
+    def __iter__(self) -> Iterator[TextureStage]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
     def add_texture_stage(self, node_texture_stage: TextureStage) -> None:
         """Adds a new TextureStage to the collection."""
@@ -5929,6 +5935,7 @@ class NodePathCollection:
         """
     def __iadd__(self: Self, other: NodePathCollection) -> Self: ...
     def __add__(self, other: NodePathCollection) -> NodePathCollection: ...
+    def __iter__(self) -> Iterator[NodePath]: ...  # Doesn't actually exist
     def add_path(self, node_path: NodePath) -> None:
         """Adds a new NodePath to the collection."""
     def remove_path(self, node_path: NodePath) -> bool:

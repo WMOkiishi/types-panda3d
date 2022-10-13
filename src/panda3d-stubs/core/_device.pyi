@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from enum import Enum
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
@@ -454,6 +454,7 @@ class InputDeviceSet:
         """Returns the nth InputDevice in the collection."""
     def __len__(self) -> int:
         """Returns the number of devices in the collection."""
+    def __iter__(self) -> Iterator[InputDevice]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Removes all InputDevices from the collection."""

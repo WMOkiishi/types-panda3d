@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
@@ -10226,6 +10226,7 @@ class TextureCollection:
         """
     def __iadd__(self: Self, other: TextureCollection) -> Self: ...
     def __add__(self, other: TextureCollection) -> TextureCollection: ...
+    def __iter__(self) -> Iterator[Texture]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
     def add_texture(self, texture: Texture) -> None:
         """Adds a new Texture to the collection."""

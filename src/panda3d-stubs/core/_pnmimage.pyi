@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -50,6 +50,7 @@ class pixel:
     def __lt__(self, other: pixel) -> bool: ...
     def __len__(self) -> Literal[3]: ...
     def __le__(self, other: pixel) -> bool: ...
+    def __iter__(self) -> Iterator[int]: ...  # Doesn't actually exist
     def output(self, out: ostream) -> None: ...
 
 class PNMFileType(TypedWritable):
@@ -158,6 +159,7 @@ class PNMImageHeader:
             regardless of the type of image it was taken from.
             """
         def __le__(self, other: PNMImageHeader.PixelSpec) -> bool: ...
+        def __iter__(self) -> Iterator[int]: ...  # Doesn't actually exist
         def compare_to(self, other: PNMImageHeader.PixelSpec) -> int: ...
         def get_red(self) -> int: ...
         def get_green(self) -> int: ...
@@ -965,6 +967,7 @@ class PNMImage(PNMImageHeader):
             """Set the pixel at the given column in the row.  If the image has no alpha
             channel, the alpha component is ignored.
             """
+        def __iter__(self) -> Iterator[LColorf]: ...  # Doesn't actually exist
         def get_xel_val(self, x: int) -> xel:
             """Fetch the pixel at the given column in the row."""
         def set_xel_val(self, x: int, v: xel) -> None:
@@ -988,6 +991,7 @@ class PNMImage(PNMImageHeader):
         def __len__(self) -> int:
             """Get the number of pixels in the row."""
         def __getitem__(self, x: int) -> LColorf: ...
+        def __iter__(self) -> Iterator[LColorf]: ...  # Doesn't actually exist
         def get_xel_val(self, x: int) -> xel:
             """Fetch the pixel at the given column in the row."""
         def get_alpha_val(self, x: int) -> int:

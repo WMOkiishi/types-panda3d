@@ -42,10 +42,7 @@ panda3d.core.VBase[2-4][DF]?.__pow__
 panda3d.\w+._\w+
 panda3d._typing
 direct._typing
-panda3d.core.AsyncTaskCollection.__iter__
-panda3d.core.L(RGB)?Color[df]?.__iter__
-panda3d.core.LVecBase[2-4][dfi]?.__iter__
-panda3d.core.VBase[2-4][DF]?.__iter__
+panda3d\..+\.__iter__
 direct.showbase.PythonUtil.ScratchPad.__getattr__
 direct.stdpy.threading2?.local.__getattr__
 

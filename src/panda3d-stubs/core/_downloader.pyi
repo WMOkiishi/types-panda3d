@@ -1,4 +1,5 @@
 from _typeshed import Self
+from collections.abc import Iterator
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -227,6 +228,7 @@ class URLSpec:
     def __len__(self) -> int: ...
     def __getitem__(self, n: int) -> str: ...
     def __le__(self, other: URL) -> bool: ...
+    def __iter__(self) -> Iterator[str]: ...  # Doesn't actually exist
     def assign(self, url: str) -> URLSpec: ...
     def compare_to(self, other: URL) -> int:
         """Returns a number less than zero if this URLSpec sorts before the other one,

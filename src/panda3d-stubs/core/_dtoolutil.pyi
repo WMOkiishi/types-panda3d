@@ -1,5 +1,5 @@
 from _typeshed import Self, StrOrBytesPath
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -1250,6 +1250,7 @@ class DSearchPath:
             """Returns the num of filenames in the set.  This method is defined to make
             the Results object appear to be a list in Python.
             """
+        def __iter__(self) -> Iterator[Filename]: ...  # Doesn't actually exist
         def assign(self, copy: DSearchPath.Results) -> DSearchPath.Results: ...
         def clear(self) -> None:
             """Removes all the files from the list."""
