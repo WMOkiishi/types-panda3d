@@ -3,6 +3,7 @@ from typing import Any
 from typing_extensions import Final, Literal
 
 import wx  # type: ignore[import]
+from .LevelEditor import LevelEditor
 
 CLOSE_STDIN: Final[str]
 
@@ -20,7 +21,7 @@ FROM_MAYA_TO_EGG: Final[Literal[0]]
 FROM_BAM_TO_MAYA: Final[Literal[1]]
 
 class MayaConverter(wx.Dialog):
-    editor = ...
+    editor: LevelEditor
     obj = ...
     isAnim: bool
     callBack: Callable[[list[str]], object] | None
@@ -32,7 +33,7 @@ class MayaConverter(wx.Dialog):
     def __init__(
         self,
         parent,
-        editor,
+        editor: LevelEditor,
         mayaFile,
         callBack: Callable[[list[str]], object] | None = ...,
         obj=...,

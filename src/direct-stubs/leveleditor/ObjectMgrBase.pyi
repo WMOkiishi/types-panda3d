@@ -3,6 +3,7 @@ from typing import SupportsInt, TypeVar
 
 from direct._typing import Unused
 from panda3d.core import NodePath, PandaNode
+from .LevelEditor import LevelEditor
 
 _N = TypeVar('_N', bound=PandaNode)
 
@@ -10,7 +11,7 @@ class PythonNodePath(NodePath[_N]):
     def __init__(self, node: _N) -> None: ...
 
 class ObjectMgrBase:
-    editor = ...
+    editor: LevelEditor
     objects: dict
     npIndex: dict
     saveData: list
@@ -21,7 +22,7 @@ class ObjectMgrBase:
     currLiveNP = ...
     Actor: list
     Nodes: list
-    def __init__(self, editor) -> None: ...
+    def __init__(self, editor: LevelEditor) -> None: ...
     def reset(self) -> None: ...
     def genUniqueId(self) -> str: ...
     def addNewCurveFromFile(

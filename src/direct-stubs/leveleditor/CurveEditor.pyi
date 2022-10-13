@@ -5,18 +5,19 @@ from direct.showbase.DirectObject import DirectObject
 from direct.showutil.Rope import Rope
 from direct.task.Task import Task
 from panda3d.core import LVecBase3f, LVecBase4f
+from .LevelEditor import LevelEditor
 
 _Vert: TypeAlias = Union[LVecBase3f, LVecBase4f, tuple[float, float, float], tuple[float, float, float, float]]
 
 class CurveEditor(DirectObject):
-    editor = ...
+    editor: LevelEditor
     i: int
     ropeNum: int
     curve: list
     curveControl: list
     currentRope: Rope | None
     degree: int
-    def __init__(self, editor) -> None: ...
+    def __init__(self, editor: LevelEditor) -> None: ...
     def createCurve(self) -> None: ...
     def editCurve(self, task: Task) -> Literal[1] | None: ...
     def onControlerDelete(self) -> None: ...

@@ -1,10 +1,11 @@
 from typing import Any
 
 import wx  # type: ignore[import]
+from .LevelEditor import LevelEditor
 from .PaletteTreeCtrl import PaletteTreeCtrl
 
 class ObjectPaletteUI(wx.Panel):
-    editor = ...
+    editor: LevelEditor
     palette: Any
     tree: PaletteTreeCtrl
     opSortAlpha: str
@@ -12,7 +13,7 @@ class ObjectPaletteUI(wx.Panel):
     opSort: str
     menuItems: list[str]
     popupmenu: wx.Menu
-    def __init__(self, parent, editor) -> None: ...
+    def __init__(self, parent, editor: LevelEditor) -> None: ...
     def populate(self) -> None: ...
     def onSelected(self, event) -> None: ...
     def onShowPopup(self, event) -> None: ...

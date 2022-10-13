@@ -3,9 +3,10 @@ from collections.abc import Callable, Sequence
 from direct._typing import Unused
 from direct.interval import MetaInterval
 from panda3d.core import LVecBase3f, NodePath
+from .LevelEditor import LevelEditor
 
 class AnimMgrBase:
-    editor = ...
+    editor: LevelEditor
     graphEditorCounter: int
     keyFramesInfo: dict
     curveAnimation: dict
@@ -16,7 +17,7 @@ class AnimMgrBase:
     hprs: list[LVecBase3f]
     curveSequence: MetaInterval.Sequence
     parallel: list
-    def __init__(self, editor) -> None: ...
+    def __init__(self, editor: LevelEditor) -> None: ...
     def reset(self) -> None: ...
     def generateKeyFrames(self) -> None: ...
     def generateSlope(self, list: Sequence) -> None: ...
