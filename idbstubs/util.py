@@ -1,8 +1,12 @@
 import ast
 import itertools
 import logging
-from collections.abc import Iterable, Iterator
-from typing import Final
+from collections.abc import Iterable, Iterator, Mapping, Set
+from typing import Final, TypeVar, cast
+
+T = TypeVar('T')
+KT = TypeVar('KT')
+VT = TypeVar('VT', covariant=True)
 
 _logger: Final = logging.getLogger(__name__)
 
@@ -84,3 +88,55 @@ def unpack_union(s: str, /) -> list[str]:
             type_list.append(s)
 
     return type_list
+
+
+class TrackingSet(Set[T]):
+    __slots__ = '_mapping'
+    _mapping: dict[T, bool]
+
+    def __init__(self, iterable: Iterable[T]) -> None:
+        self._mapping = dict.fromkeys(iterable, False)
+
+    def __len__(self) -> int:
+        return len(self._mapping)
+
+    def __contains__(self, item: object) -> bool:
+        result = item in self._mapping
+        if result:
+            self._mapping[cast(T, item)] = True
+        return result
+
+    def __iter__(self) -> Iterator[T]:
+        return iter(self._mapping)
+
+    def used_items(self) -> set[T]:
+        return {k for k, v in self._mapping.items() if v}
+
+    def unused_items(self) -> set[T]:
+        return {k for k, v in self._mapping.items() if not v}
+
+
+class TrackingMap(Mapping[KT, VT]):
+    __slots__ = '_mapping'
+    _mapping: dict[KT, tuple[VT, bool]]
+
+    def __init__(self, mapping: Mapping[KT, VT]) -> None:
+        self._mapping = {k: (v, False) for k, v in mapping.items()}
+
+    def __len__(self) -> int:
+        return len(self._mapping)
+
+    def __getitem__(self, key: KT) -> VT:
+        value, used = self._mapping[key]
+        if not used:
+            self._mapping[key] = value, True
+        return value
+
+    def __iter__(self) -> Iterator[KT]:
+        return iter(self._mapping)
+
+    def used_keys(self) -> set[KT]:
+        return {k for k, (_, used) in self._mapping.items() if used}
+
+    def unused_keys(self) -> set[KT]:
+        return {k for k, (_, used) in self._mapping.items() if not used}

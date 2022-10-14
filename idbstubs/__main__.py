@@ -3,6 +3,7 @@ import logging
 import os.path
 from typing import cast
 
+from . import special_cases
 from .main import main
 
 
@@ -42,6 +43,7 @@ def cli() -> None:
 
     main(database_dir, output_dir,
          package_name=package_name)
+    special_cases.log_unused()
 
 
 if __name__ == '__main__':

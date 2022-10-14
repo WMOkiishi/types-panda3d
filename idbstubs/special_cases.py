@@ -1,8 +1,42 @@
+import logging
 from collections.abc import Container
 from typing import Final
 
+from .util import TrackingMap, TrackingSet
+
+_logger: Final = logging.getLogger(__name__)
+
+
+def log_unused() -> None:
+    """Log warnings for any unused entries
+    from the collections in this module.
+    """
+    for i in NO_STUBS.unused_items():
+        _logger.warning(f'Unused item in NO_STUBS: {i!r}')
+    for i in NOT_EXPOSED.unused_items():
+        _logger.warning(f'Unused item in NOT_EXPOSED: {i!r}')
+    for i in INPLACE_DUNDERS.unused_items():
+        _logger.warning(f'Unused item in INPLACE_DUNDERS: {i!r}')
+    for i in NO_MANGLING.unused_items():
+        _logger.warning(f'Unused item in NO_MANGLING: {i!r}')
+    for k in GENERIC.unused_keys():
+        _logger.warning(f'Unused key in GENERIC: {k!r}')
+    for k in ATTRIBUTE_NAME_SHADOWS.unused_keys():
+        _logger.warning(f'Unused key in ATTRIBUTE_NAME_SHADOWS: {k!r}')
+    for k in CONDITIONALS.unused_keys():
+        _logger.warning(f'Unused key in CONDITIONALS: {k!r}')
+    for k in ATTR_TYPE_OVERRIDES.unused_keys():
+        _logger.warning(f'Unused key in ATTR_TYPE_OVERRIDES: {k!r}')
+    for k in RETURN_TYPE_OVERRIDES.unused_keys():
+        _logger.warning(f'Unused key in RETURN_TYPE_OVERRIDES: {k!r}')
+    for k in PARAM_TYPE_OVERRIDES.unused_keys():
+        _logger.warning(f'Unused key in PARAM_TYPE_OVERRIDES: {k!r}')
+    for k in IGNORE_ERRORS.unused_keys():
+        _logger.warning(f'Unused key in IGNORE_ERRORS: {k!r}')
+
+
 # Don't write stubs for anything with these names
-NO_STUBS: Final = frozenset({
+NO_STUBS: Final = TrackingSet({
     # as per https://typing.readthedocs.io/en/latest/source/stubs.html#attribute-access
     '__getattribute__', '__delattr__',
     # TODO: These are used for vectors, but the typing is complex.
@@ -15,7 +49,7 @@ NO_STUBS: Final = frozenset({
 
 
 # These names are not exposed to Python, even though they may seem like they are
-NOT_EXPOSED: Final = frozenset({
+NOT_EXPOSED: Final = TrackingSet({
     'BitMaskNative',
     # These two haven't been removed yet, but will be soon.
     # (They're currently exposed as panda3d.core.__mul__ / __imul__.)
@@ -47,7 +81,7 @@ NOT_EXPOSED: Final = frozenset({
 
 
 # These methods almost certainly behave as if they return `self`
-INPLACE_DUNDERS: Final = frozenset({
+INPLACE_DUNDERS: Final = TrackingSet({
     '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
     '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
     '__imod__', '__ipow__',
@@ -55,7 +89,7 @@ INPLACE_DUNDERS: Final = frozenset({
 
 
 # Camel-case aliases are not generated for these names
-NO_MANGLING: Final = INPLACE_DUNDERS | {
+NO_MANGLING: Final = TrackingSet(INPLACE_DUNDERS | {
     '_del',
     '__init__', '__call__', '__iter__', '__await__',
     '__getattribute__', '__getattr__', '__setattr__', '__delattr__',
@@ -70,40 +104,40 @@ NO_MANGLING: Final = INPLACE_DUNDERS | {
     '__repr__', '__str__', '__float__', '__int__', '__bool__', '__len__',
     '__copy__', '__deepcopy__', '__getstate__', '__setstate__',
     '__reduce__', '__reduce_ex__', '__reduce_persist__',
-}
+})
 
 
 # These types are effectively generic
-GENERIC: Final = {
+GENERIC: Final = TrackingMap({
     'NodePath': '_N',
-}
+})
 
 
 # These types have attributes sharing names with other types
-ATTRIBUTE_NAME_SHADOWS: Final[dict[str, Container[str]]] = {
+ATTRIBUTE_NAME_SHADOWS: Final = TrackingMap[str, Container[str]]({
     'panda3d.core.StreamReader': ('istream',),
     'panda3d.core.StreamWriter': ('ostream',),
     'panda3d.core.StreamWrapper': ('iostream',),
     'panda3d.core.IStreamWrapper': ('istream',),
     'panda3d.core.OStreamWrapper': ('ostream',),
-}
+})
 
 
 # These types only exist under certain conditions
-CONDITIONALS: Final = {
+CONDITIONALS: Final = TrackingMap({
     'panda3d.core.WindowsRegistry': "sys.platform == 'win32'",
-}
+})
 
 
 # These override type hints for various things
-ATTR_TYPE_OVERRIDES: Final = {
+ATTR_TYPE_OVERRIDES: Final = TrackingMap({
     'BamReader::file_version': 'tuple[int, int]',
     'EggGroupNode::children': 'list[EggNode]',
     'PythonCallbackObject::function': 'Callable',
     'StringStream::data': 'bytes',
     'TextEncoder::text': 'str',
-}
-PARAM_TYPE_OVERRIDES: Final[dict[str, dict[tuple[int, int], str]]] = {
+})
+PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.Filename.__init__': {(1, 1): 'StrOrBytesPath'},
     'panda3d.core.NodePath.__init__': {
         (1, 1): 'NodePath[_N]', (2, 1): '_N', (4, 2): '_N'
@@ -118,8 +152,8 @@ PARAM_TYPE_OVERRIDES: Final[dict[str, dict[tuple[int, int], str]]] = {
     'panda3d.core.StringStream.set_data': {(0, 1): 'bytes'},
     'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
     'panda3d.core.TextEncoder.set_text': {(0, 1): 'str', (1, 1): 'bytes'},
-}
-RETURN_TYPE_OVERRIDES: Final[dict[str, str | dict[int, str]]] = {
+})
+RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.AsyncFuture.__await__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.__iter__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.gather': 'AsyncFuture',
@@ -189,11 +223,11 @@ RETURN_TYPE_OVERRIDES: Final[dict[str, str | dict[int, str]]] = {
     'panda3d.egg.EggGroupNode.get_children': 'list[EggNode]',
     'panda3d.ode.OdeGeom.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
     'panda3d.ode.OdeSpace.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
-}
+})
 
 
 # This adds comments to ignore Mypy errors
-IGNORE_ERRORS: Final = {
+IGNORE_ERRORS: Final = TrackingMap({
     'panda3d.core.AsyncTaskSequence': 'misc',
     'panda3d.core.DatagramBuffer': 'misc',
     'panda3d.core.GeomVertexRewriter.setColumn': 'assignment',
@@ -256,4 +290,4 @@ IGNORE_ERRORS: Final = {
     'panda3d.egg.EggVertex.compareTo': 'assignment',
     'panda3d.egg.EggVertex.sorts_less_than': 'override',
     'panda3d.egg.EggVertex.sortsLessThan': 'assignment',
-}
+})
