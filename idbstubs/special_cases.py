@@ -1,8 +1,8 @@
 from collections.abc import Container
 from typing import Final
 
-# Don't write or check for stubs for anything with these names
-NO_STUBS: Final = frozenset((
+# Don't write stubs for anything with these names
+NO_STUBS: Final = frozenset({
     # as per https://typing.readthedocs.io/en/latest/source/stubs.html#attribute-access
     '__getattribute__', '__delattr__',
     # TODO: These are used for vectors, but the typing is complex.
@@ -11,11 +11,11 @@ NO_STUBS: Final = frozenset((
     '__getstate__', '__setstate__', '__reduce__', '__reduce_ex__',
     # Inherited from `object`; signature shouldn't change
     '__dict__', '__repr__', '__str__',
-))
+})
 
 
 # These names are not exposed to Python, even though they may seem like they are
-NOT_EXPOSED: Final = frozenset((
+NOT_EXPOSED: Final = frozenset({
     'BitMaskNative',
     # These two haven't been removed yet, but will be soon.
     # (They're currently exposed as panda3d.core.__mul__ / __imul__.)
@@ -43,10 +43,10 @@ NOT_EXPOSED: Final = frozenset((
     'UnalignedLMatrix4f::get_data',
     'UnalignedLMatrix4d::get_data',
     'Filename::operator /',
-))
+})
 
 
-# These almost certainly behave as if they return `self`
+# These methods almost certainly behave as if they return `self`
 INPLACE_DUNDERS: Final = frozenset({
     '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
     '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
@@ -72,12 +72,14 @@ NO_MANGLING: Final = INPLACE_DUNDERS | {
     '__reduce__', '__reduce_ex__', '__reduce_persist__',
 }
 
-# These classes are effectively generic
+
+# These types are effectively generic
 GENERIC: Final = {
     'NodePath': '_N',
 }
 
 
+# These types have attributes sharing names with other types
 ATTRIBUTE_NAME_SHADOWS: Final[dict[str, Container[str]]] = {
     'panda3d.core.StreamReader': ('istream',),
     'panda3d.core.StreamWriter': ('ostream',),
@@ -87,6 +89,13 @@ ATTRIBUTE_NAME_SHADOWS: Final[dict[str, Container[str]]] = {
 }
 
 
+# These types only exist under certain conditions
+CONDITIONALS: Final = {
+    'panda3d.core.WindowsRegistry': "sys.platform == 'win32'",
+}
+
+
+# These override type hints for various things
 ATTR_TYPE_OVERRIDES: Final = {
     'BamReader::file_version': 'tuple[int, int]',
     'EggGroupNode::children': 'list[EggNode]',
@@ -94,14 +103,7 @@ ATTR_TYPE_OVERRIDES: Final = {
     'StringStream::data': 'bytes',
     'TextEncoder::text': 'str',
 }
-
-
-CONDITIONALS: Final = {
-    'panda3d.core.WindowsRegistry': "sys.platform == 'win32'",
-}
-
-
-PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
+PARAM_TYPE_OVERRIDES: Final[dict[str, dict[tuple[int, int], str]]] = {
     'panda3d.core.Filename.__init__': {(1, 1): 'StrOrBytesPath'},
     'panda3d.core.NodePath.__init__': {
         (1, 1): 'NodePath[_N]', (2, 1): '_N', (4, 2): '_N'
@@ -117,8 +119,7 @@ PARAM_TYPE_OVERRIDES: dict[str, dict[tuple[int, int], str]] = {
     'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
     'panda3d.core.TextEncoder.set_text': {(0, 1): 'str', (1, 1): 'bytes'},
 }
-
-RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
+RETURN_TYPE_OVERRIDES: Final[dict[str, str | dict[int, str]]] = {
     'panda3d.core.AsyncFuture.__await__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.__iter__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.gather': 'AsyncFuture',
@@ -135,6 +136,18 @@ RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.core.Filename.scan_directory': 'list[str]',
     'panda3d.core.GlobPattern.match_files': 'list[str]',
     'panda3d.core.GraphicsStateGuardian.get_prepared_textures': 'list[Any]',
+    'panda3d.core.LMatrix3f.__len__': 'Literal[3]',
+    'panda3d.core.LMatrix3f.Row.__len__': 'Literal[3]',
+    'panda3d.core.LMatrix3f.CRow.__len__': 'Literal[3]',
+    'panda3d.core.LMatrix3d.__len__': 'Literal[3]',
+    'panda3d.core.LMatrix3d.Row.__len__': 'Literal[3]',
+    'panda3d.core.LMatrix3d.CRow.__len__': 'Literal[3]',
+    'panda3d.core.LMatrix4f.__len__': 'Literal[4]',
+    'panda3d.core.LMatrix4f.Row.__len__': 'Literal[4]',
+    'panda3d.core.LMatrix4f.CRow.__len__': 'Literal[4]',
+    'panda3d.core.LMatrix4d.__len__': 'Literal[4]',
+    'panda3d.core.LMatrix4d.Row.__len__': 'Literal[4]',
+    'panda3d.core.LMatrix4d.CRow.__len__': 'Literal[4]',
     'panda3d.core.NodePath.any_path': 'NodePath[_M]',
     'panda3d.core.NodePath.attach_new_node': {0: 'NodePath[_M]'},
     'panda3d.core.NodePath.flatten_light': 'Literal[0]',
@@ -146,6 +159,7 @@ RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.core.OccluderNode.get_num_vertices': 'Literal[4]',
     'panda3d.core.PandaNode.get_python_tags': 'dict[Any, Any]',
     'panda3d.core.PandaNode.get_tag_keys': 'tuple[str, ...]',
+    'panda3d.core.PNMImageHeader.PixelSpec.__len__': 'Literal[4]',
     'panda3d.core.PythonCallbackObject.get_function': 'Callable',
     'panda3d.core.PythonTask.get_args': 'tuple[Any, ...]',
     'panda3d.core.PythonTask.get_function': 'Callable',
@@ -171,22 +185,14 @@ RETURN_TYPE_OVERRIDES: dict[str, str | dict[int, str]] = {
     'panda3d.core.TransformState.get_unused_states': 'list[TransformState]',
     'panda3d.core.VirtualFile.extract_bytes': 'bytes',
     'panda3d.core.VirtualFile.read_file': 'bytes',
+    'panda3d.core.pixel.__len__': 'Literal[3]',
     'panda3d.egg.EggGroupNode.get_children': 'list[EggNode]',
     'panda3d.ode.OdeGeom.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
     'panda3d.ode.OdeSpace.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
 }
 
-_fixed_lengths = [
-    ('LMatrix3f', 3), ('LMatrix3f.Row', 3), ('LMatrix3f.CRow', 3),
-    ('LMatrix3d', 3), ('LMatrix3d.Row', 3), ('LMatrix3d.CRow', 3),
-    ('LMatrix4f', 4), ('LMatrix4f.Row', 4), ('LMatrix4f.CRow', 4),
-    ('LMatrix4d', 4), ('LMatrix4d.Row', 4), ('LMatrix4d.CRow', 4),
-    ('pixel', 3), ('PNMImageHeader.PixelSpec', 4),
-]
-for _name, _len in _fixed_lengths:
-    RETURN_TYPE_OVERRIDES[f'panda3d.core.{_name}.__len__'] = f'Literal[{_len}]'
 
-
+# This adds comments to ignore Mypy errors
 IGNORE_ERRORS: Final = {
     'panda3d.core.AsyncTaskSequence': 'misc',
     'panda3d.core.DatagramBuffer': 'misc',
