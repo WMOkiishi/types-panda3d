@@ -37,12 +37,10 @@ def log_unused() -> None:
 
 # Don't write stubs for anything with these names
 NO_STUBS: Final = TrackingSet({
-    # as per https://typing.readthedocs.io/en/latest/source/stubs.html#attribute-access
-    '__getattribute__', '__delattr__',
-    # TODO: These are used for vectors, but the typing is complex.
-    '__getattr__', '__setattr__',
+    # Attribute access
+    '__getattr__', '__setattr__', '__delattr__',
     # Pickle stuff
-    '__getstate__', '__setstate__', '__reduce__', '__reduce_ex__',
+    '__getstate__', '__setstate__', '__reduce__',
     # Inherited from `object`; signature shouldn't change
     '__dict__', '__repr__', '__str__',
 })
@@ -50,11 +48,6 @@ NO_STUBS: Final = TrackingSet({
 
 # These names are not exposed to Python, even though they may seem like they are
 NOT_EXPOSED: Final = TrackingSet({
-    'BitMaskNative',
-    # These two haven't been removed yet, but will be soon.
-    # (They're currently exposed as panda3d.core.__mul__ / __imul__.)
-    # 'operator *',
-    # 'operator *=',
     'TIXML_NO_ATTRIBUTE',
     'TIXML_SUCCESS',
     'TIXML_WRONG_TYPE',
@@ -217,7 +210,6 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.TransformState.get_invert_composition_cache': 'list[tuple[Any, Any] | tuple[None, None]]',
     'panda3d.core.TransformState.get_states': 'list[TransformState]',
     'panda3d.core.TransformState.get_unused_states': 'list[TransformState]',
-    'panda3d.core.VirtualFile.extract_bytes': 'bytes',
     'panda3d.core.VirtualFile.read_file': 'bytes',
     'panda3d.core.pixel.__len__': 'Literal[3]',
     'panda3d.egg.EggGroupNode.get_children': 'list[EggNode]',
@@ -245,10 +237,8 @@ IGNORE_ERRORS: Final = TrackingMap({
     'panda3d.core.LPlanef.project': 'override',
     'panda3d.core.LQuaterniond.__imul__': 'misc, override',
     'panda3d.core.LQuaterniond.__mul__': 'override',
-    'panda3d.core.LQuaterniond.project': 'override',
     'panda3d.core.LQuaternionf.__imul__': 'misc, override',
     'panda3d.core.LQuaternionf.__mul__': 'override',
-    'panda3d.core.LQuaternionf.project': 'override',
     'panda3d.core.LRotationd.__mul__': 'override',
     'panda3d.core.LRotationf.__mul__': 'override',
     'panda3d.core.LightNode': 'misc',
