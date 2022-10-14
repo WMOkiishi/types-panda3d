@@ -34,7 +34,7 @@ from .typedata import (
 from .util import flatten, is_dunder
 
 _logger: Final = logging.getLogger(__name__)
-_class_bodies: Final[dict[str, dict[str, StubRep]]] = {}
+_classes: Final[dict[str, Class]] = {}
 
 # Don't replace `size` with `__len__` for these
 SIZE_NOT_LEN: Final = ('EggGroupNode', 'WindowProperties')
@@ -296,8 +296,6 @@ def make_type_reps(
         class_ = make_class_rep(t, namespace)
         if class_.name == 'BitMaskNative':
             return ()
-        if not idb.interrogate_type_is_nested(t):
-            _class_bodies[class_.name] = dict(class_.body)
     return with_alias(class_, True)
 
 
@@ -447,7 +445,7 @@ def make_class_rep(
     else:
         doc = ''
     scoped_name = '.'.join(this_namespace)
-    return Class(
+    class_ = Class(
         name, derivations, class_body,
         is_final=idb.interrogate_type_is_final(t),
         conditional=CONDITIONALS.get(scoped_name, ''),
@@ -455,6 +453,11 @@ def make_class_rep(
         doc=doc,
         comment=get_comment(scoped_name),
     )
+    if VECTOR_NAME_REGEX.match(class_.name):
+        process_vector_class(class_)
+    if not idb.interrogate_type_is_nested(t):
+        _classes[class_.name] = class_
+    return class_
 
 
 def make_package_rep(package_name: str = 'panda3d') -> Package:
@@ -479,12 +482,13 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
             t, mod_name.split('.')
         )
 
+    # Process classes
+    for class_ in _classes.values():
+        remove_redefinitions(class_)
+
     # Make package
     modules: list[Module] = []
     for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
-        for rep in flatten(nested_by_lib.values()):
-            if isinstance(rep, Class):
-                process_class(rep)
         nested_by_lib = cast(dict[str, Sequence[StubRep]], nested_by_lib)
         modules.append(Module(
             mod_name.removeprefix(package_name + '.'),
@@ -493,17 +497,17 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
     return Package(package_name, modules)
 
 
-def process_class(class_: Class) -> None:
-    class_body = _class_bodies.get(class_.name)
-    if class_body is None:
+def remove_redefinitions(class_: Class) -> None:
+    """Remove items in a class body that are implied by inheritance."""
+    class_body = class_.body
+    if not class_body:
         return
-    if VECTOR_NAME_REGEX.match(class_.name):
-        process_vector_class(class_)
     nested_names = set(class_body.keys())
-    for base_class in get_linear_superclasses(class_.name):
-        base_class_body = _class_bodies.get(base_class)
-        if base_class_body is None:
+    for base_class_name in get_linear_superclasses(class_.name):
+        base_class = _classes.get(base_class_name)
+        if base_class is None:
             continue
+        base_class_body = base_class.body
         for name in nested_names & base_class_body.keys():
             match class_body[name], base_class_body[name]:
                 case Class() | Alias(of_local=True), _:
@@ -519,10 +523,9 @@ def process_class(class_: Class) -> None:
                 ) if doc_1 and doc_1 != doc_2:
                     continue
                 case a, b if a == b:
-                    del class_body[name]
                     nested_names.remove(name)
     new_nested: dict[str, StubRep] = {}
-    for rep in class_.body.values():
+    for rep in class_body.values():
         if isinstance(rep, Alias) and rep.of_local:
             name_to_check = rep.alias_of
         else:
