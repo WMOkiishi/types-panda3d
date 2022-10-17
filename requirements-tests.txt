@@ -1,0 +1,5 @@
+mypy==0.982
+panda3d==1.10.12
+Pmw-py3==2.1
+wxPython==4.2.0 ; sys_platform != 'linux'
+# -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/ wxPython==4.2.0 ; sys_platform == 'linux'
