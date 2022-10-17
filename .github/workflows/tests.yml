@@ -26,7 +26,6 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         python-version: ['3.7', '3.8', '3.9', '3.10']
       fail-fast: false
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -39,3 +38,20 @@ jobs:
           pip install tox tox-gh-actions
       - name: Test with tox
         run: tox
+
+  pyright:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check the stubs with Pyright
+        uses: jakebailey/pyright-action@v1
+        with:
+          working-directory: src
+          version: 1.1.275
+          python-platform: ${{ matrix.python-platform }}
+          python-version: ${{ matrix.python-version }}
