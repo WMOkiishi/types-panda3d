@@ -433,7 +433,8 @@ class Package:
 
 
 _rep_matchers: list[Callable[[StubRep], bool]] = [
-    lambda r: isinstance(r, TypeVariable) or isinstance(r, Alias) and r.is_type_alias,
+    lambda r: isinstance(r, TypeVariable),
+    lambda r: isinstance(r, Alias) and r.is_type_alias,
     lambda r: isinstance(r, Class),
     lambda r: isinstance(r, Alias) and not r.of_local,
     lambda r: isinstance(r, Attribute) and not r.read_only,
