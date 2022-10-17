@@ -1,5 +1,5 @@
 from collections import defaultdict
-from collections.abc import Iterator, Mapping, Sequence
+from collections.abc import Callable, Iterator, Mapping, Sequence
 from itertools import chain
 from pathlib import Path
 from sys import stdlib_module_names
@@ -15,7 +15,6 @@ from .util import (
 class StubRep(Protocol):
     @property
     def name(self) -> str: ...
-    def sort(self) -> tuple[int, int]: ...
     def get_dependencies(self) -> Iterator[str]: ...
     def definition(self) -> Iterator[str]: ...
 
@@ -36,9 +35,6 @@ class TypeVariable:
         if self.variance and self.variance != 'invariant':
             parameters.append(f'{self.variance}=True')
         return f"{self.name} = TypeVar({', '.join(parameters)})"
-
-    def sort(self) -> tuple[int, int]:
-        return 0, 0
 
     def get_dependencies(self) -> Iterator[str]:
         yield 'TypeVar'
@@ -67,13 +63,6 @@ class Alias:
             return f'{self.name}: TypeAlias = {self.alias_of}'
         else:
             return f'{self.name} = {self.alias_of}'
-
-    def sort(self) -> tuple[int, int]:
-        if self.of_local:
-            return 2, 1
-        if self.is_type_alias:
-            return 0, 0
-        return 0, 2
 
     def get_dependencies(self) -> Iterator[str]:
         """Yield the names of types referenced by the alias."""
@@ -186,11 +175,6 @@ class Function:
         kind = 'Method' if self.is_method else 'Function'
         return f'{kind} {self.scoped_name!r}'
 
-    def sort(self) -> tuple[int, int]:
-        if is_dunder(self.name):
-            return 1, 0
-        return 1, 1
-
     def get_dependencies(self) -> Iterator[str]:
         return chain(
             flatten(s.get_dependencies() for s in self.signatures),
@@ -236,9 +220,6 @@ class Attribute:
 
     def __str__(self) -> str:
         return f'Element {self.name!r} ({self.type})'
-
-    def sort(self) -> tuple[int, int]:
-        return (0, 4) if self.read_only else (0, 3)
 
     def get_dependencies(self) -> Iterator[str]:
         return names_within(self.type)
@@ -292,9 +273,6 @@ class Class:
         """Return whether the class has any body (including a docstring)."""
         return not (self.doc or self.body)
 
-    def sort(self) -> tuple[int, int]:
-        return 0, 1
-
     def get_dependencies(self) -> Iterator[str]:
         return chain(
             names_within(self.conditional),
@@ -324,7 +302,7 @@ class Class:
             declaration += f'  # {self.comment}'
         yield declaration
         yield from indent_lines(docstring_lines(self.doc))
-        sorted_nested = sorted(self.body.values(), key=lambda i: i.sort())
+        sorted_nested = sorted(self.body.values(), key=_sort_rep)
         need_blank_line = bool(self.doc)
         for item in sorted_nested:
             is_class = isinstance(item, Class) and not item.is_empty()
@@ -357,7 +335,7 @@ class File:
         return f'Stub File {self.scoped_name!r}'
 
     def sort_items(self) -> None:
-        self.nested.sort(key=lambda x: x.sort())
+        self.nested.sort(key=_sort_rep)
 
     def import_lines(self) -> Iterator[str]:
         this_package = self.namespace[0] if self.namespace else None
@@ -452,3 +430,22 @@ class Package:
 
     def add_module(self, module: Module) -> None:
         self.modules.append(module)
+
+
+_rep_matchers: list[Callable[[StubRep], bool]] = [
+    lambda r: isinstance(r, TypeVariable) or isinstance(r, Alias) and r.is_type_alias,
+    lambda r: isinstance(r, Class),
+    lambda r: isinstance(r, Alias) and not r.of_local,
+    lambda r: isinstance(r, Attribute) and not r.read_only,
+    lambda r: isinstance(r, Attribute),
+    lambda r: isinstance(r, Function) and is_dunder(r.name),
+    lambda r: isinstance(r, Function),
+    lambda r: isinstance(r, Alias),
+]
+
+
+def _sort_rep(rep: StubRep) -> int:
+    for i, f in enumerate(_rep_matchers):
+        if f(rep):
+            return i
+    return len(_rep_matchers)
