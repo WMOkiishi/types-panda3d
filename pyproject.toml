@@ -48,4 +48,5 @@ show_error_codes = true
 warn_unused_ignores = true
 
 [tool.pyright]
+stubPath = "src"
 reportSelfClsParameterName = false
