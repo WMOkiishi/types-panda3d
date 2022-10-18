@@ -77,7 +77,6 @@ class DataResource:
     def get_text(self, errors: str = ...) -> str: ...
 
 class IconGroupResource:
-
     class Icon(NamedTuple):
         width: int
         height: int
@@ -85,7 +84,6 @@ class IconGroupResource:
         bpp: int
         size: int
         id: int
-
     code_page: ClassVar[int]
     type: ClassVar[int]
     icons: list[IconGroupResource.Icon]
