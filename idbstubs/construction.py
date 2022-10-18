@@ -22,7 +22,7 @@ from .reps import (
 )
 from .special_cases import (
     ATTR_TYPE_OVERRIDES, CONDITIONALS, GENERIC, IGNORE_ERRORS, NO_MANGLING,
-    NO_STUBS, NOT_EXPOSED
+    NO_STUBS, NOT_EXPOSED, SIZE_NOT_LEN
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
@@ -35,9 +35,6 @@ from .util import flatten, is_dunder
 
 _logger: Final = logging.getLogger(__name__)
 _classes: Final[dict[str, Class]] = {}
-
-# Don't replace `size` with `__len__` for these
-SIZE_NOT_LEN: Final = ('EggGroupNode', 'WindowProperties')
 
 
 class NamespacedStubRep(StubRep, Protocol):

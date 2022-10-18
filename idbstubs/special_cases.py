@@ -58,6 +58,30 @@ NOT_EXPOSED: Final = TrackingSet({
 })
 
 
+# These types from interrogate map directly to a Python type
+TYPE_NAME_OVERRIDES: Final = TrackingMap({
+    '_object': '',
+    '_typeobject': 'type',
+    'PN_stdfloat []': 'array[float]',
+    'PN_stdfloat const []': 'array[float]',
+    'basic_string< char >': 'str',
+    'pvector< unsigned char >': 'bytes',
+    # TODO: Do something more correct with this.
+    'BitMaskNative': 'BitMask_uint32_t_32 | BitMask_uint64_t_64',
+})
+
+
+# If a function with one of these names returns "_object",
+# we can assume a default return type
+DEFAULT_RETURNS: Final = TrackingMap({
+    '__int__': 'int',
+    '__str__': 'str',
+    '__bytes__': 'bytes',
+    'get_data': 'bytes',
+    'get_subdata': 'bytes',
+})
+
+
 # These methods almost certainly behave as if they return `self`
 INPLACE_DUNDERS: Final = TrackingSet({
     '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
@@ -99,6 +123,10 @@ ATTRIBUTE_NAME_SHADOWS: Final = TrackingMap[str, Container[str]]({
     'panda3d.core.IStreamWrapper': ('istream',),
     'panda3d.core.OStreamWrapper': ('ostream',),
 })
+
+
+# Don't replace `size` with `__len__` for these
+SIZE_NOT_LEN: Final = TrackingSet(('EggGroupNode', 'WindowProperties'))
 
 
 # These types only exist under certain conditions

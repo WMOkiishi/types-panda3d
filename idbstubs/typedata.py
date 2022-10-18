@@ -10,10 +10,11 @@ from typing import Final
 import panda3d.interrogatedb as idb
 
 from .idbutil import (
-    TYPE_NAME_OVERRIDES, TypeIndex, get_constructors, get_derivations,
-    get_python_wrappers, type_is_exposed, type_is_unexposed_wrapper,
-    type_is_unscoped_enum, unwrap_type
+    TypeIndex, get_constructors, get_derivations, get_python_wrappers,
+    type_is_exposed, type_is_unexposed_wrapper, type_is_unscoped_enum,
+    unwrap_type
 )
+from .special_cases import TYPE_NAME_OVERRIDES
 from .translation import ATOMIC_TYPES, class_name_from_cpp_name
 from .util import flatten, unpack_union
 

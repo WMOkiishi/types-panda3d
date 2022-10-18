@@ -8,7 +8,7 @@ from typing import Final, TypeAlias
 
 import panda3d.interrogatedb as idb
 
-from .special_cases import NOT_EXPOSED
+from .special_cases import NOT_EXPOSED, TYPE_NAME_OVERRIDES
 
 _logger: Final = logging.getLogger(__name__)
 
@@ -18,18 +18,6 @@ FunctionIndex: TypeAlias = int
 FunctionWrapperIndex: TypeAlias = int
 MakeSeqIndex: TypeAlias = int
 ManifestIndex: TypeAlias = int
-
-# See `translated_type_name` in extract_docs.py
-TYPE_NAME_OVERRIDES: Final = {
-    '_object': '',
-    '_typeobject': 'type',
-    'PN_stdfloat []': 'array[float]',
-    'PN_stdfloat const []': 'array[float]',
-    'basic_string< char >': 'str',
-    'pvector< unsigned char >': 'bytes',
-    # TODO: Do something more correct with this.
-    'BitMaskNative': 'BitMask_uint32_t_32 | BitMask_uint64_t_64',
-}
 
 
 def type_is_unexposed_wrapper(t: TypeIndex, /) -> bool:

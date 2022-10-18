@@ -8,8 +8,8 @@ from .reps import (
     Alias, Class, File, Function, Parameter, Signature, TypeVariable
 )
 from .special_cases import (
-    ATTRIBUTE_NAME_SHADOWS, INPLACE_DUNDERS, PARAM_TYPE_OVERRIDES,
-    RETURN_TYPE_OVERRIDES
+    ATTRIBUTE_NAME_SHADOWS, DEFAULT_RETURNS, INPLACE_DUNDERS,
+    PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
 )
 from .typedata import (
     combine_types, get_param_type_replacement, process_dependency,
@@ -23,13 +23,6 @@ _absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
 VECTOR_NAME_REGEX: Final = re.compile(
     '((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
 )
-DEFAULT_RETURNS: Final = {
-    '__int__': 'int',
-    '__str__': 'str',
-    '__bytes__': 'bytes',
-    'get_data': 'bytes',
-    'get_subdata': 'bytes',
-}
 RETURN_SELF: Final = [
     '__floordiv__',
     '__pow__',
