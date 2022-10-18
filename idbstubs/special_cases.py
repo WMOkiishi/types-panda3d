@@ -11,28 +11,13 @@ def log_unused() -> None:
     """Log warnings for any unused entries
     from the collections in this module.
     """
-    for i in NO_STUBS.unused_items():
-        _logger.warning(f'Unused item in NO_STUBS: {i!r}')
-    for i in NOT_EXPOSED.unused_items():
-        _logger.warning(f'Unused item in NOT_EXPOSED: {i!r}')
-    for i in INPLACE_DUNDERS.unused_items():
-        _logger.warning(f'Unused item in INPLACE_DUNDERS: {i!r}')
-    for i in NO_MANGLING.unused_items():
-        _logger.warning(f'Unused item in NO_MANGLING: {i!r}')
-    for k in GENERIC.unused_keys():
-        _logger.warning(f'Unused key in GENERIC: {k!r}')
-    for k in ATTRIBUTE_NAME_SHADOWS.unused_keys():
-        _logger.warning(f'Unused key in ATTRIBUTE_NAME_SHADOWS: {k!r}')
-    for k in CONDITIONALS.unused_keys():
-        _logger.warning(f'Unused key in CONDITIONALS: {k!r}')
-    for k in ATTR_TYPE_OVERRIDES.unused_keys():
-        _logger.warning(f'Unused key in ATTR_TYPE_OVERRIDES: {k!r}')
-    for k in RETURN_TYPE_OVERRIDES.unused_keys():
-        _logger.warning(f'Unused key in RETURN_TYPE_OVERRIDES: {k!r}')
-    for k in PARAM_TYPE_OVERRIDES.unused_keys():
-        _logger.warning(f'Unused key in PARAM_TYPE_OVERRIDES: {k!r}')
-    for k in IGNORE_ERRORS.unused_keys():
-        _logger.warning(f'Unused key in IGNORE_ERRORS: {k!r}')
+    for name, obj in globals().items():
+        if isinstance(obj, TrackingSet):
+            for i in obj.unused_items():
+                _logger.warning(f'Unused item in {name}: {i!r}')
+        elif isinstance(obj, TrackingMap):
+            for k in obj.unused_keys():
+                _logger.warning(f'Unused key in {name}: {k!r}')
 
 
 # Don't write stubs for anything with these names
