@@ -4,6 +4,7 @@ from typing_extensions import Final, Literal
 import wx  # type: ignore[import]
 from direct.showbase.ShowBase import ShowBase
 from direct.task.Task import Task
+from wx.lib.agw.fourwaysplitter import FourWaySplitter  # type: ignore[import]
 from .ViewPort import Viewport
 from .WxAppShell import WxAppShell
 
@@ -19,12 +20,12 @@ class WxPandaShell(WxAppShell):
     fStartDirect: bool
     wxApp: wx.App
     menuView: wx.Menu
-    perspViewMenuItem = ...
+    perspViewMenuItem: wx.MenuItem
     mainFrame: wx.SplitterWindow
     leftFrame: wx.SplitterWindow
     baseFrame: wx.SplitterWindow
-    viewFrame = ...
-    rightFrame: Any
+    viewFrame: FourWaySplitter
+    rightFrame: wx.SplitterWindow
     topView: Viewport
     frontView: Viewport
     leftView: Viewport
@@ -34,7 +35,7 @@ class WxPandaShell(WxAppShell):
     rightBarUpPane: wx.Panel
     rightBarDownPane: wx.Panel
     evtLoop: wx.EventLoop
-    oldLoop = ...
+    oldLoop: wx.EventLoopBase
     currentView: Viewport | None
     def __init__(self, fStartDirect: bool = ...) -> None: ...
     def createMenu(self) -> None: ...

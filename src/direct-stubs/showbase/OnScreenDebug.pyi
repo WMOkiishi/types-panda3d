@@ -3,11 +3,12 @@ __all__ = ['OnScreenDebug']
 from typing import Any, ClassVar
 from typing_extensions import Literal
 
+from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import ConfigVariableBool
 
 class OnScreenDebug:
     enabled: ClassVar[ConfigVariableBool]
-    onScreenText = ...
+    onScreenText: OnscreenText | None
     frame: int
     text: str
     data: dict[str, tuple[int, Any]]

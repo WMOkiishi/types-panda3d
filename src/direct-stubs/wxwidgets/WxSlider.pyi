@@ -1,10 +1,13 @@
+from collections.abc import Callable
+from typing import Any
+
 import wx  # type: ignore[import]
 
 class WxSlider(wx.Slider):
     maxValue: float
     minValue: float
     textValue: wx.TextCtrl | None
-    updateCB = ...
+    updateCB: Callable[[Any], object] | None
     def __init__(
         self,
         parent,

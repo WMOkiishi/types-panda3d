@@ -459,7 +459,7 @@ class LerpFunctionNoStateInterval(Interval):
     fromData: float
     toData: float
     blendType: _BlendType
-    extraArgs = ...
+    extraArgs: list[Any]
     def __init__(
         self,
         function: Callable[..., object],
@@ -479,7 +479,7 @@ class LerpFunctionInterval(Interval):
     fromData: float
     toData: float
     blendType: _BlendType
-    extraArgs = ...
+    extraArgs: list[Any]
     def __init__(
         self,
         function: Callable[..., object],

@@ -4,7 +4,7 @@ from typing_extensions import Literal
 
 import Pmw  # type: ignore[import]
 from direct.showbase.DirectObject import DirectObject
-from direct.task.Task import TaskManager
+from direct.task.Task import Task, TaskManager
 from direct.tkwidgets.AppShell import AppShell
 
 class TaskManagerPanel(AppShell):
@@ -15,7 +15,7 @@ class TaskManagerPanel(AppShell):
 class TaskManagerWidget(DirectObject):
     parent: Misc | None
     taskMgr: TaskManager
-    currentTask = ...
+    currentTask: Task | None
     taskListBox: Pmw.ScrolledListBox
     removeButton: Button
     removeMatchingButton: Button
