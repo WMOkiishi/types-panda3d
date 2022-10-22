@@ -4,13 +4,10 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4d, Vec3d, Vec4d, Vec4f
-from panda3d.core import (
-    BamCacheRecord,
-    CollideMask,
-    ConfigVariableSearchPath,
-    DSearchPath,
-    Filename,
-    GlobPattern,
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import DSearchPath, Filename, GlobPattern, istream, ostream
+from panda3d.core._express import Namable, TypedReferenceCount
+from panda3d.core._linmath import (
     LColor,
     LMatrix3d,
     LMatrix4d,
@@ -24,12 +21,9 @@ from panda3d.core import (
     LVecBase3d,
     LVecBase4d,
     LVertexd,
-    Namable,
-    TypedReferenceCount,
-    TypeHandle,
-    istream,
-    ostream,
 )
+from panda3d.core._prc import ConfigVariableSearchPath
+from panda3d.core._putil import BamCacheRecord, CollideMask
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _EggRenderMode_AlphaMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]

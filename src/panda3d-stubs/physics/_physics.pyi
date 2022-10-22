@@ -4,19 +4,11 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import (
-    CollisionHandlerPusher,
-    LMatrix4,
-    LOrientation,
-    LPoint3,
-    LRotation,
-    LVector3,
-    NodePath,
-    PandaNode,
-    ReferenceCount,
-    TypedReferenceCount,
-    ostream,
-)
+from panda3d.core._collide import CollisionHandlerPusher
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import ReferenceCount, TypedReferenceCount
+from panda3d.core._linmath import LMatrix4, LOrientation, LPoint3, LRotation, LVector3
+from panda3d.core._pgraph import NodePath, PandaNode
 
 _LinearDistanceForce_FalloffType: TypeAlias = Literal[0, 1, 2]
 

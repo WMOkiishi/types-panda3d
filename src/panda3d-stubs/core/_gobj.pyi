@@ -4,19 +4,22 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f, Vec4i
-from panda3d.core import (
-    AnimInterface,
-    AsyncFuture,
-    AsyncTask,
-    BamCacheRecord,
-    BitArray,
-    BoundingVolume,
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolutil import Filename, istream, ostream
+from panda3d.core._event import AsyncFuture, AsyncTask
+from panda3d.core._express import (
     ConstPointerToArray_unsigned_char,
-    CopyOnWriteObject,
     CPTA_int,
     CPTA_uchar,
-    Filename,
-    GraphicsStateGuardianBase,
+    Namable,
+    PointerToArray_unsigned_char,
+    PTA_int,
+    PTA_uchar,
+    ReferenceCount,
+    TypedReferenceCount,
+)
+from panda3d.core._gsgbase import GraphicsStateGuardianBase
+from panda3d.core._linmath import (
     LColor,
     LMatrix3,
     LMatrix3d,
@@ -24,7 +27,6 @@ from panda3d.core import (
     LMatrix4,
     LMatrix4d,
     LMatrix4f,
-    LoaderOptions,
     LPoint3,
     LVecBase2,
     LVecBase2d,
@@ -40,24 +42,20 @@ from panda3d.core import (
     LVecBase4i,
     LVector2,
     LVector3,
-    Mutex,
-    Namable,
+)
+from panda3d.core._mathutil import BoundingVolume
+from panda3d.core._pipeline import Mutex, Thread
+from panda3d.core._pnmimage import PfmFile, PNMImage
+from panda3d.core._putil import (
+    AnimInterface,
+    BamCacheRecord,
+    BitArray,
+    CopyOnWriteObject,
+    LoaderOptions,
     ParamValueBase,
-    PfmFile,
-    PNMImage,
-    PointerToArray_unsigned_char,
-    PTA_int,
-    PTA_uchar,
-    ReferenceCount,
     SparseArray,
-    Thread,
-    TypedObject,
-    TypedReferenceCount,
     TypedWritableReferenceCount,
-    TypeHandle,
     UpdateSeq,
-    istream,
-    ostream,
 )
 
 _GeomEnums_AnimationType: TypeAlias = Literal[0, 1, 2]

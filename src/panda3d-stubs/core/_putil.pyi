@@ -5,15 +5,20 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f, Vec4i
-from panda3d.core import (
-    ConfigPage,
-    ConfigVariableSearchPath,
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolutil import Filename, istream, ostream
+from panda3d.core._express import (
     DatagramGenerator,
     DatagramIterator,
     DatagramSink,
-    Filename,
     FileReference,
     HashVal,
+    PointerToVoid,
+    ReferenceCount,
+    TypedReferenceCount,
+    VirtualFile,
+)
+from panda3d.core._linmath import (
     LMatrix3d,
     LMatrix3f,
     LMatrix4d,
@@ -27,16 +32,9 @@ from panda3d.core import (
     LVecBase4d,
     LVecBase4f,
     LVecBase4i,
-    PointerToVoid,
-    ReferenceCount,
-    Thread,
-    TypedObject,
-    TypedReferenceCount,
-    TypeHandle,
-    VirtualFile,
-    istream,
-    ostream,
 )
+from panda3d.core._pipeline import Thread
+from panda3d.core._prc import ConfigPage, ConfigVariableSearchPath
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]

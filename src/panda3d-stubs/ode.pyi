@@ -4,19 +4,12 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import (
-    BitMask32,
-    LMatrix3f,
-    LPoint3f,
-    LQuaternionf,
-    LVecBase3f,
-    LVecBase4f,
-    LVector3f,
-    NodePath,
-    TypedObject,
-    TypedReferenceCount,
-    ostream,
-)
+from panda3d.core._dtoolbase import TypedObject
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import TypedReferenceCount
+from panda3d.core._linmath import LMatrix3f, LPoint3f, LQuaternionf, LVecBase3f, LVecBase4f, LVector3f
+from panda3d.core._pgraph import NodePath
+from panda3d.core._putil import BitMask32
 
 class dxBody:
     DtoolClassDict: ClassVar[dict[str, Any]]

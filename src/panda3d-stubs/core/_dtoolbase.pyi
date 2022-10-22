@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d.core import ostream
+from panda3d.core._dtoolutil import ostream
 
 _TypeHandle_MemoryClass: TypeAlias = Literal[0, 1, 2, 3, 4]
 

@@ -361,8 +361,9 @@ class File:
                 for name in imported_names:
                     yield f'import {name}'
                 continue
-            if len(module) + sum(len(n)+2 for n in imported_names) < 117:
-                yield f"from {module} import {', '.join(imported_names)}"
+            single_line = f"from {module} import {', '.join(imported_names)}"
+            if len(single_line) <= 130:
+                yield single_line
             else:
                 yield f'from {module} import ('
                 for name in imported_names:

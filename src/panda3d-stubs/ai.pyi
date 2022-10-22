@@ -1,7 +1,9 @@
 from typing import Any, ClassVar, overload
 
 from panda3d._typing import Vec3f
-from panda3d.core import LVecBase3, NodePath, ReferenceCount
+from panda3d.core._express import ReferenceCount
+from panda3d.core._linmath import LVecBase3
+from panda3d.core._pgraph import NodePath
 
 class AIBehaviors:
     """This class implements all the steering behaviors of the AI framework, such

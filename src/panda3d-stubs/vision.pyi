@@ -2,7 +2,10 @@ from collections.abc import Sequence
 from typing import Any, ClassVar
 
 from panda3d._typing import Filepath
-from panda3d.core import MovieVideo, NodePath, Texture, ostream
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._gobj import Texture
+from panda3d.core._movies import MovieVideo
+from panda3d.core._pgraph import NodePath
 
 class ARToolKit:
     """ARToolKit is a software library for building Augmented Reality (AR)

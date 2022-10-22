@@ -4,23 +4,12 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f
-from panda3d.core import (
-    BoundingHexahedron,
-    LColorf,
-    LPoint2f,
-    LPoint3f,
-    LPoint4f,
-    LRGBColorf,
-    LVecBase2d,
-    LVecBase2f,
-    LVecBase2i,
-    ReferenceCount,
-    StackedPerlinNoise2,
-    TypedWritable,
-    TypeHandle,
-    istream,
-    ostream,
-)
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import istream, ostream
+from panda3d.core._express import ReferenceCount
+from panda3d.core._linmath import LColorf, LPoint2f, LPoint3f, LPoint4f, LRGBColorf, LVecBase2d, LVecBase2f, LVecBase2i
+from panda3d.core._mathutil import BoundingHexahedron, StackedPerlinNoise2
+from panda3d.core._putil import TypedWritable
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _PNMImageHeader_ColorType: TypeAlias = Literal[0, 1, 2, 3, 4]

@@ -2,23 +2,13 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import (
-    GeomNode,
-    LColor,
-    LPoint2,
-    LPoint3,
-    LTexCoord,
-    LVecBase2f,
-    LVector3,
-    NodePath,
-    PandaNode,
-    ReferenceCount,
-    Texture,
-    TypedReferenceCount,
-    TypeHandle,
-    ostream,
-)
-from panda3d.physics import Physical
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import ReferenceCount, TypedReferenceCount
+from panda3d.core._gobj import Texture
+from panda3d.core._linmath import LColor, LPoint2, LPoint3, LTexCoord, LVecBase2f, LVector3
+from panda3d.core._pgraph import GeomNode, NodePath, PandaNode
+from panda3d.physics._physics import Physical
 
 _BaseParticleEmitter_emissionType: TypeAlias = Literal[0, 1, 2]
 _BaseParticleRenderer_ParticleRendererAlphaMode: TypeAlias = Literal[0, 1, 2, 3, 4, 5]

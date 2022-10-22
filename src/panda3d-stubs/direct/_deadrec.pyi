@@ -2,7 +2,9 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f
-from panda3d.core import LPoint3, LVecBase3, NodePath, ostream
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._linmath import LPoint3, LVecBase3
+from panda3d.core._pgraph import NodePath
 
 _SmoothMover_SmoothMode: TypeAlias = Literal[0, 1]
 _SmoothMover_PredictionMode: TypeAlias = Literal[0, 1]

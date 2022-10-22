@@ -4,43 +4,17 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Mat4f, Vec3f, Vec4f
-from panda3d.core import (
-    BoundingBox,
-    BoundingSphere,
-    CallbackData,
-    CallbackObject,
-    CollideMask,
-    CollisionBox,
-    CollisionCapsule,
-    CollisionNode,
-    CollisionPlane,
-    CollisionSphere,
-    Geom,
-    GeomVertexFormat,
-    InternalName,
-    LMatrix3,
-    LMatrix4,
-    LPlane,
-    LPoint3,
-    LVecBase3,
-    LVecBase3i,
-    LVector3,
-    NodePath,
-    NodePathCollection,
-    NurbsCurveEvaluator,
-    NurbsSurfaceEvaluator,
-    PandaNode,
-    PNMImage,
-    PTA_int,
-    PTA_LVecBase3,
-    PTA_stdfloat,
-    Texture,
-    TransformState,
-    TypedObject,
-    TypedReferenceCount,
-    TypedWritableReferenceCount,
-    ostream,
-)
+from panda3d.core._collide import CollisionBox, CollisionCapsule, CollisionNode, CollisionPlane, CollisionSphere
+from panda3d.core._dtoolbase import TypedObject
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import PTA_int, PTA_stdfloat, TypedReferenceCount
+from panda3d.core._gobj import Geom, GeomVertexFormat, InternalName, Texture
+from panda3d.core._linmath import LMatrix3, LMatrix4, LPoint3, LVecBase3, LVecBase3i, LVector3
+from panda3d.core._mathutil import BoundingBox, BoundingSphere, LPlane, PTA_LVecBase3
+from panda3d.core._parametrics import NurbsCurveEvaluator, NurbsSurfaceEvaluator
+from panda3d.core._pgraph import NodePath, NodePathCollection, PandaNode, TransformState
+from panda3d.core._pnmimage import PNMImage
+from panda3d.core._putil import CallbackData, CallbackObject, CollideMask, TypedWritableReferenceCount
 
 _BulletUpAxis: TypeAlias = Literal[0, 1, 2]
 _BulletConstraint_ConstraintParam: TypeAlias = Literal[1, 2, 3, 4]

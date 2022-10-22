@@ -3,7 +3,7 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath
-from panda3d.core import istream, ostream
+from panda3d.core._dtoolutil import istream, ostream
 
 _TiXmlEncoding: TypeAlias = Literal[0, 1, 2]
 

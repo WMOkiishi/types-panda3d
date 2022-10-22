@@ -1,4 +1,4 @@
-from panda3d.core import TypedWritableReferenceCount
+from panda3d.core._putil import TypedWritableReferenceCount
 
 class GraphicsOutputBase(TypedWritableReferenceCount):
     """An abstract base class for GraphicsOutput, for all the usual reasons."""

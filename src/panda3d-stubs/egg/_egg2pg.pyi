@@ -1,8 +1,9 @@
 from typing_extensions import Literal, TypeAlias
 
 from panda3d._typing import Filepath
-from panda3d.core import BamCacheRecord, PandaNode
-from panda3d.egg import EggData
+from panda3d.core._pgraph import PandaNode
+from panda3d.core._putil import BamCacheRecord
+from panda3d.egg._egg import EggData
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 

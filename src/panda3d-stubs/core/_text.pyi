@@ -4,26 +4,13 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4f, Vec4f
-from panda3d.core import (
-    FreetypeFont,
-    Geom,
-    LColor,
-    LMatrix4,
-    LPoint3,
-    LVecBase2,
-    LVecBase2i,
-    LVecBase4,
-    LVector2,
-    Namable,
-    NodePath,
-    PandaNode,
-    RenderState,
-    TextEncoder,
-    Texture,
-    TypedReferenceCount,
-    TypeHandle,
-    ostream,
-)
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import TextEncoder, ostream
+from panda3d.core._express import Namable, TypedReferenceCount
+from panda3d.core._gobj import Geom, Texture
+from panda3d.core._linmath import LColor, LMatrix4, LPoint3, LVecBase2, LVecBase2i, LVecBase4, LVector2
+from panda3d.core._pgraph import NodePath, PandaNode, RenderState
+from panda3d.core._pnmtext import FreetypeFont
 
 _GeomEnums_UsageHint: TypeAlias = Literal[0, 1, 2, 3, 4]
 _SamplerState_FilterType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -2143,8 +2130,8 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     getCardAsSet = get_card_as_set
     getCardActual = get_card_actual
     getCardTransformed = get_card_transformed
-    setTransform = set_transform
-    getTransform = get_transform
+    setTransform = set_transform  # type: ignore[assignment]
+    getTransform = get_transform  # type: ignore[assignment]
     setCoordinateSystem = set_coordinate_system
     getCoordinateSystem = get_coordinate_system
     setUsageHint = set_usage_hint

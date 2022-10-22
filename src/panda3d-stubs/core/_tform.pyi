@@ -3,29 +3,15 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Mat4f, Vec3f, Vec4f
-from panda3d.core import (
-    ButtonHandle,
-    DataNode,
-    DisplayRegion,
-    EventHandler,
-    EventParameter,
-    GeomNode,
-    LMatrix4,
-    LPoint2,
-    LPoint3,
-    LVecBase2f,
-    LVecBase3,
-    LVecBase4,
-    ModifierButtons,
-    Namable,
-    NodePath,
-    PandaNode,
-    PointerEventList,
-    ReferenceCount,
-    TypedWritableReferenceCount,
-    TypeHandle,
-    ostream,
-)
+from panda3d.core._dgraph import DataNode
+from panda3d.core._display import DisplayRegion
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._event import EventHandler, EventParameter, PointerEventList
+from panda3d.core._express import Namable, ReferenceCount
+from panda3d.core._linmath import LMatrix4, LPoint2, LPoint3, LVecBase2f, LVecBase3, LVecBase4
+from panda3d.core._pgraph import GeomNode, NodePath, PandaNode
+from panda3d.core._putil import ButtonHandle, ModifierButtons, TypedWritableReferenceCount
 
 _TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 2]
 _Trackball_ControlMode: TypeAlias = Literal[0, 1, 2, 3, 4]

@@ -5,21 +5,9 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath
-from panda3d.core import (
-    ConfigVariableSearchPath,
-    DSearchPath,
-    Filename,
-    IStreamWrapper,
-    OStreamWrapper,
-    StreamReader,
-    StreamWrapper,
-    StreamWriter,
-    TypedObject,
-    TypeHandle,
-    iostream,
-    istream,
-    ostream,
-)
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolutil import DSearchPath, Filename, iostream, istream, ostream
+from panda3d.core._prc import ConfigVariableSearchPath, IStreamWrapper, OStreamWrapper, StreamReader, StreamWrapper, StreamWriter
 
 _ErrorUtilCode: TypeAlias = Literal[
     -80,

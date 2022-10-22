@@ -2,7 +2,8 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath
-from panda3d.core import Datagram, DatagramIterator, istream, ostream
+from panda3d.core._dtoolutil import istream, ostream
+from panda3d.core._express import Datagram, DatagramIterator
 
 _DCPackType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 _DCSubatomicType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]

@@ -2,7 +2,14 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import AnimControl, EventQueue, LVecBase2, NodePath, TextureStage, TypedReferenceCount, TypeHandle, ostream
+from panda3d.core._chan import AnimControl
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._event import EventQueue
+from panda3d.core._express import TypedReferenceCount
+from panda3d.core._gobj import TextureStage
+from panda3d.core._linmath import LVecBase2
+from panda3d.core._pgraph import NodePath
 
 _CInterval_State: TypeAlias = Literal[0, 1, 2, 3]
 _CInterval_EventType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]

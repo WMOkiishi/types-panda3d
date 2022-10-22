@@ -2,7 +2,9 @@ from _typeshed import Self
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 
-from panda3d.core import PStatCollectorForwardBase, Thread, ostream
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import PStatCollectorForwardBase
+from panda3d.core._pipeline import Thread
 
 class PStatClient:
     DtoolClassDict: ClassVar[dict[str, Any]]

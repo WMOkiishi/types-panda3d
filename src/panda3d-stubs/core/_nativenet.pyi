@@ -1,6 +1,7 @@
 from typing import Any, ClassVar, overload
 
-from panda3d.core import Datagram, TypedObject
+from panda3d.core._dtoolbase import TypedObject
+from panda3d.core._express import Datagram
 
 class Socket_Address:
     """A simple place to store and manipulate tcp and port address for

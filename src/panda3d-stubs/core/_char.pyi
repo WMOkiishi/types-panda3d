@@ -1,22 +1,11 @@
 from typing import overload
 
 from panda3d._typing import Mat4f, Vec3f
-from panda3d.core import (
-    LMatrix4,
-    MovingPartMatrix,
-    MovingPartScalar,
-    NodePathCollection,
-    PandaNode,
-    PartBundle,
-    PartBundleHandle,
-    PartBundleNode,
-    PartGroup,
-    RenderEffect,
-    TransformState,
-    VertexSlider,
-    VertexTransform,
-    ostream,
-)
+from panda3d.core._chan import MovingPartMatrix, MovingPartScalar, PartBundle, PartBundleHandle, PartBundleNode, PartGroup
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._gobj import VertexSlider, VertexTransform
+from panda3d.core._linmath import LMatrix4
+from panda3d.core._pgraph import NodePathCollection, PandaNode, RenderEffect, TransformState
 
 class CharacterJoint(MovingPartMatrix):
     """This represents one joint of the character's animation, containing an
@@ -262,7 +251,7 @@ class Character(PartBundleNode):
         """
     def force_update(self) -> None:
         """Recalculates the character even if we think it doesn't need it."""
-    getBundle = get_bundle
+    getBundle = get_bundle  # type: ignore[assignment]
     mergeBundles = merge_bundles
     setLodAnimation = set_lod_animation
     clearLodAnimation = clear_lod_animation

@@ -2,42 +2,18 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Vec3d, Vec3f, Vec4f
-from panda3d.core import (
-    AudioSound,
-    ClockObject,
-    CullTraverser,
-    DisplayRegion,
-    DrawMask,
-    GeomNode,
-    GraphicsOutput,
-    GraphicsStateGuardianBase,
-    InternalName,
-    LColor,
-    Lens,
-    LPoint3,
-    LVecBase2,
-    LVecBase2d,
-    LVecBase2f,
-    LVector3,
-    LVertex,
-    MovieVideo,
-    MovieVideoCursor,
-    Namable,
-    NodePath,
-    PandaNode,
-    PfmFile,
-    PNMFileType,
-    PNMImage,
-    RenderState,
-    SceneSetup,
-    TextNode,
-    Texture,
-    TextureStage,
-    TransformState,
-    TypedObject,
-    TypeHandle,
-    VertexTransform,
-)
+from panda3d.core._audio import AudioSound
+from panda3d.core._display import DisplayRegion, GraphicsOutput
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._express import Namable
+from panda3d.core._gobj import InternalName, Lens, Texture, TextureStage, VertexTransform
+from panda3d.core._gsgbase import GraphicsStateGuardianBase
+from panda3d.core._linmath import LColor, LPoint3, LVecBase2, LVecBase2d, LVecBase2f, LVector3, LVertex
+from panda3d.core._movies import MovieVideo, MovieVideoCursor
+from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderState, SceneSetup, TransformState
+from panda3d.core._pnmimage import PfmFile, PNMFileType, PNMImage
+from panda3d.core._putil import ClockObject, DrawMask
+from panda3d.core._text import TextNode
 
 _PfmVizzer_ColumnType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 _PfmVizzer_MeshFace: TypeAlias = Literal[1, 2, 3]

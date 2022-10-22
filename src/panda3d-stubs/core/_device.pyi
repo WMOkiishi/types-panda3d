@@ -4,18 +4,12 @@ from enum import Enum
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d.core import (
-    ButtonEventList,
-    ButtonHandle,
-    DataNode,
-    LMatrix4,
-    LOrientation,
-    LPoint3,
-    PointerData,
-    PointerEventList,
-    TypedReferenceCount,
-    ostream,
-)
+from panda3d.core._dgraph import DataNode
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._event import ButtonEventList, PointerEventList
+from panda3d.core._express import TypedReferenceCount
+from panda3d.core._linmath import LMatrix4, LOrientation, LPoint3
+from panda3d.core._putil import ButtonHandle, PointerData
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 

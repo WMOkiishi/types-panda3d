@@ -3,31 +3,14 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import (
-    AnimInterface,
-    CallbackData,
-    CallbackObject,
-    Camera,
-    CullTraverser,
-    CullTraverserData,
-    GeomVertexAnimationSpec,
-    GraphicsOutputBase,
-    GraphicsStateGuardianBase,
-    LColor,
-    Light,
-    LPoint3,
-    LVecBase2i,
-    LVecBase3,
-    LVecBase3i,
-    LVector3,
-    PandaNode,
-    RenderState,
-    ShaderAttrib,
-    Texture,
-    TypedReferenceCount,
-    TypeHandle,
-    ostream,
-)
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import TypedReferenceCount
+from panda3d.core._gobj import GeomVertexAnimationSpec, Texture
+from panda3d.core._gsgbase import GraphicsOutputBase, GraphicsStateGuardianBase
+from panda3d.core._linmath import LColor, LPoint3, LVecBase2i, LVecBase3, LVecBase3i, LVector3
+from panda3d.core._pgraph import Camera, CullTraverser, CullTraverserData, Light, PandaNode, RenderState, ShaderAttrib
+from panda3d.core._putil import AnimInterface, CallbackData, CallbackObject
 
 _SceneGraphAnalyzer_LodMode: TypeAlias = Literal[0, 1, 2, 3]
 

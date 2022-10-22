@@ -2,18 +2,11 @@ from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 
 from panda3d._typing import Filepath
-from panda3d.core import (
-    Datagram,
-    DatagramIterator,
-    Filename,
-    Namable,
-    SubfileInfo,
-    Texture,
-    TypedReferenceCount,
-    TypedWritableReferenceCount,
-    TypeHandle,
-    istream,
-)
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import Filename, istream
+from panda3d.core._express import Datagram, DatagramIterator, Namable, SubfileInfo, TypedReferenceCount
+from panda3d.core._gobj import Texture
+from panda3d.core._putil import TypedWritableReferenceCount
 
 class MovieAudio(TypedWritableReferenceCount, Namable):
     """A MovieAudio is actually any source that provides a sequence of audio

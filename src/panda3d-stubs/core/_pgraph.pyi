@@ -4,29 +4,28 @@ from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
-from panda3d.core import (
-    AsyncTask,
-    AsyncTaskManager,
-    BamEnums,
-    BamReader,
-    BamWriter,
-    BitMask32,
-    BoundingVolume,
-    CallbackData,
-    CollideMask,
-    DisplayRegion,
-    DrawMask,
-    Filename,
+from panda3d.core._display import DisplayRegion
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolutil import Filename, istream, ostream
+from panda3d.core._event import AsyncTask, AsyncTaskManager
+from panda3d.core._express import Namable, ReferenceCount, TypedReferenceCount
+from panda3d.core._gobj import (
     Geom,
-    GeometricBoundingVolume,
-    GraphicsStateGuardianBase,
     InternalName,
-    LColor,
     Lens,
+    Material,
+    SamplerState,
+    Shader,
+    ShaderBuffer,
+    Texture,
+    TextureCollection,
+    TextureStage,
+)
+from panda3d.core._gsgbase import GraphicsStateGuardianBase
+from panda3d.core._linmath import (
+    LColor,
     LMatrix3,
     LMatrix4,
-    LoaderOptions,
-    LPlane,
     LPoint3,
     LPoint3f,
     LQuaternion,
@@ -35,27 +34,24 @@ from panda3d.core import (
     LVecBase3,
     LVecBase4,
     LVector3,
-    Material,
-    Namable,
+)
+from panda3d.core._mathutil import BoundingVolume, GeometricBoundingVolume, LPlane
+from panda3d.core._pipeline import Thread
+from panda3d.core._putil import (
+    BamEnums,
+    BamReader,
+    BamWriter,
+    BitMask32,
+    CallbackData,
+    CollideMask,
+    DrawMask,
+    LoaderOptions,
     NodeCachedReferenceCount,
     ParamValueBase,
     PortalMask,
-    ReferenceCount,
-    SamplerState,
-    Shader,
-    ShaderBuffer,
-    Texture,
-    TextureCollection,
-    TextureStage,
-    Thread,
-    TypedObject,
-    TypedReferenceCount,
     TypedWritable,
     TypedWritableReferenceCount,
-    TypeHandle,
     UpdateSeq,
-    istream,
-    ostream,
 )
 
 _N = TypeVar('_N', bound=PandaNode, covariant=True)

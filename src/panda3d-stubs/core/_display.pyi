@@ -4,46 +4,20 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
 from panda3d._typing import Filepath, Vec4f
-from panda3d.core import (
-    AsyncFuture,
-    ButtonHandle,
-    ButtonMap,
-    CallbackData,
-    CallbackObject,
-    CullResult,
-    CullTraverser,
-    DataNode,
-    DrawMask,
-    Filename,
-    GraphicsOutputBase,
-    GraphicsStateGuardianBase,
-    InputDevice,
-    LColor,
-    Loader,
-    LPoint2i,
-    LVecBase2i,
-    LVecBase3i,
-    LVecBase4,
-    LVector2i,
-    MouseData,
-    NodePath,
-    PandaNode,
-    PNMImage,
-    PointerData,
-    PreparedGraphicsObjects,
-    ReferenceCount,
-    ReMutex,
-    SceneSetup,
-    ShaderAttrib,
-    ShaderGenerator,
-    Texture,
-    TextureAttrib,
-    TextureStage,
-    Thread,
-    TypedReferenceCount,
-    TypeHandle,
-    ostream,
-)
+from panda3d.core._device import InputDevice
+from panda3d.core._dgraph import DataNode
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import Filename, ostream
+from panda3d.core._event import AsyncFuture
+from panda3d.core._express import ReferenceCount, TypedReferenceCount
+from panda3d.core._gobj import PreparedGraphicsObjects, Texture, TextureStage
+from panda3d.core._gsgbase import GraphicsOutputBase, GraphicsStateGuardianBase
+from panda3d.core._linmath import LColor, LPoint2i, LVecBase2i, LVecBase3i, LVecBase4, LVector2i
+from panda3d.core._pgraph import CullResult, CullTraverser, Loader, NodePath, PandaNode, SceneSetup, ShaderAttrib, TextureAttrib
+from panda3d.core._pgraphnodes import ShaderGenerator
+from panda3d.core._pipeline import ReMutex, Thread
+from panda3d.core._pnmimage import PNMImage
+from panda3d.core._putil import ButtonHandle, ButtonMap, CallbackData, CallbackObject, DrawMask, MouseData, PointerData
 
 _GraphicsStateGuardian_ShaderModel: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _WindowProperties_MouseMode: TypeAlias = Literal[0, 1, 2]

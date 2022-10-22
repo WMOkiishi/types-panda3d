@@ -4,9 +4,10 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f, Vec4i
-from panda3d.core import (
-    Datagram,
-    DatagramIterator,
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import Datagram, DatagramIterator, PointerToVoid, TypedReferenceCount
+from panda3d.core._linmath import (
     LMatrix3d,
     LMatrix3f,
     LMatrix4d,
@@ -25,15 +26,11 @@ from panda3d.core import (
     LVecBase4f,
     LVector3d,
     LVector3f,
-    PointerToVoid,
-    TypedReferenceCount,
-    TypeHandle,
     UnalignedLMatrix4d,
     UnalignedLMatrix4f,
     UnalignedLVecBase4d,
     UnalignedLVecBase4f,
     UnalignedLVecBase4i,
-    ostream,
 )
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]

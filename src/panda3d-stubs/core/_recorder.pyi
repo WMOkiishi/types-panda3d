@@ -1,7 +1,11 @@
 from typing import Any, ClassVar, overload
 
 from panda3d._typing import Filepath
-from panda3d.core import Datagram, DataNode, Filename, ReferenceCount, SocketStream, TypedReferenceCount, TypeHandle
+from panda3d.core._dgraph import DataNode
+from panda3d.core._downloader import SocketStream
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import Filename
+from panda3d.core._express import Datagram, ReferenceCount, TypedReferenceCount
 
 class RecorderBase:
     """This is the base class to a number of objects that record particular kinds

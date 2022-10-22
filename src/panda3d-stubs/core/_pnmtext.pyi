@@ -2,7 +2,9 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Vec4f
-from panda3d.core import LColor, Namable, PNMImage
+from panda3d.core._express import Namable
+from panda3d.core._linmath import LColor
+from panda3d.core._pnmimage import PNMImage
 
 _FreetypeFont_WindingOrder: TypeAlias = Literal[0, 1, 2, 3]
 _PNMTextMaker_Alignment: TypeAlias = Literal[0, 1, 2]

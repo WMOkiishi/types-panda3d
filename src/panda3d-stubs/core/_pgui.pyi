@@ -3,29 +3,15 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import (
-    AudioSound,
-    ButtonHandle,
-    LColor,
-    LMatrix4,
-    LVecBase2,
-    LVecBase4,
-    LVector3,
-    MouseWatcher,
-    MouseWatcherGroup,
-    MouseWatcherParameter,
-    MouseWatcherRegion,
-    NodePath,
-    PandaNode,
-    TextGraphic,
-    TextNode,
-    TextProperties,
-    Texture,
-    TransformState,
-    TypedWritableReferenceCount,
-    TypeHandle,
-    ostream,
-)
+from panda3d.core._audio import AudioSound
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._gobj import Texture
+from panda3d.core._linmath import LColor, LMatrix4, LVecBase2, LVecBase4, LVector3
+from panda3d.core._pgraph import NodePath, PandaNode, TransformState
+from panda3d.core._putil import ButtonHandle, TypedWritableReferenceCount
+from panda3d.core._text import TextGraphic, TextNode, TextProperties
+from panda3d.core._tform import MouseWatcher, MouseWatcherGroup, MouseWatcherParameter, MouseWatcherRegion
 
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 
@@ -400,8 +386,8 @@ class PGItem(PandaNode):
     getFrame = get_frame
     hasFrame = has_frame
     clearFrame = clear_frame
-    setState = set_state
-    getState = get_state
+    setState = set_state  # type: ignore[assignment]
+    getState = get_state  # type: ignore[assignment]
     setActive = set_active
     getActive = get_active
     setFocus = set_focus

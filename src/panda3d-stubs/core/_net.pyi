@@ -1,16 +1,9 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 
-from panda3d.core import (
-    Datagram,
-    DatagramGenerator,
-    DatagramSink,
-    PointerToVoid,
-    ReferenceCount,
-    Socket_Address,
-    Socket_IP,
-    ostream,
-)
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import Datagram, DatagramGenerator, DatagramSink, PointerToVoid, ReferenceCount
+from panda3d.core._nativenet import Socket_Address, Socket_IP
 
 class PointerTo_Connection(PointerToBase_Connection):
     @overload

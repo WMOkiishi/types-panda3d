@@ -271,9 +271,6 @@ def process_dependencies(file: File) -> None:
 
         def import_from(module: str) -> None:
             if not module.startswith(current_dir):
-                if (end := module.find('._')) > 0:
-                    if module[end:] != '._typing':
-                        module = module[:end]
                 file.imports[module].append(name)
 
         processed = process_dependency(

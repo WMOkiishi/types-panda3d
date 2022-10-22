@@ -4,7 +4,8 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath
-from panda3d.core import ConfigVariableSearchPath, TypeHandle
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._prc import ConfigVariableSearchPath
 
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int

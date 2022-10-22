@@ -1,4 +1,5 @@
-from panda3d.core import ConfigVariableSearchPath, GraphicsWindow
+from panda3d.core._display import GraphicsWindow
+from panda3d.core._prc import ConfigVariableSearchPath
 
 def get_particle_path() -> ConfigVariableSearchPath: ...
 def throw_new_frame() -> None: ...

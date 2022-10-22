@@ -3,29 +3,14 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Literal
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core import (
-    BoundingVolume,
-    CollideMask,
-    CopyOnWriteObject,
-    Datagram,
-    DatagramIterator,
-    DriveInterface,
-    LensNode,
-    LParabola,
-    LPlane,
-    LPoint3,
-    LPoint3i,
-    LVecBase2f,
-    LVector3,
-    Namable,
-    NodePath,
-    PandaNode,
-    TypedObject,
-    TypedReferenceCount,
-    TypedWritableReferenceCount,
-    TypeHandle,
-    ostream,
-)
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import Datagram, DatagramIterator, Namable, TypedReferenceCount
+from panda3d.core._linmath import LPoint3, LPoint3i, LVecBase2f, LVector3
+from panda3d.core._mathutil import BoundingVolume, LParabola, LPlane
+from panda3d.core._pgraph import LensNode, NodePath, PandaNode
+from panda3d.core._putil import CollideMask, CopyOnWriteObject, TypedWritableReferenceCount
+from panda3d.core._tform import DriveInterface
 
 class CollisionSolid(CopyOnWriteObject):
     """The abstract base class for all things that can collide with other things

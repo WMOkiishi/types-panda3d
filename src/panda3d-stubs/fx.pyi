@@ -1,18 +1,12 @@
 from typing import Any, ClassVar, overload
 
 from panda3d._typing import Vec4f
-from panda3d.core import (
-    DisplayRegion,
-    GeomNode,
-    GraphicsEngine,
-    GraphicsOutput,
-    LColor,
-    Lens,
-    NodePath,
-    PandaNode,
-    PfmFile,
-    UpdateSeq,
-)
+from panda3d.core._display import DisplayRegion, GraphicsEngine, GraphicsOutput
+from panda3d.core._gobj import Lens
+from panda3d.core._linmath import LColor
+from panda3d.core._pgraph import GeomNode, NodePath, PandaNode
+from panda3d.core._pnmimage import PfmFile
+from panda3d.core._putil import UpdateSeq
 
 class CylindricalLens(Lens):
     """A cylindrical lens.  This is the kind of lens generally used for extremely

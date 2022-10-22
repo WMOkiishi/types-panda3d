@@ -2,7 +2,10 @@ from typing import overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Vec3f
-from panda3d.core import AsyncTask, Filename, MovieAudio, TypedReferenceCount, ostream
+from panda3d.core._dtoolutil import Filename, ostream
+from panda3d.core._event import AsyncTask
+from panda3d.core._express import TypedReferenceCount
+from panda3d.core._movies import MovieAudio
 
 _AudioSound_SoundStatus: TypeAlias = Literal[0, 1, 2]
 _AudioManager_SpeakerModeCategory: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]

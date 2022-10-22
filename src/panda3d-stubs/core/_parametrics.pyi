@@ -4,18 +4,11 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
-from panda3d.core import (
-    LMatrix4,
-    LPoint3,
-    LVecBase3,
-    LVecBase4,
-    LVector3,
-    NodePath,
-    PandaNode,
-    ReferenceCount,
-    TypeHandle,
-    ostream,
-)
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import ReferenceCount
+from panda3d.core._linmath import LMatrix4, LPoint3, LVecBase3, LVecBase4, LVector3
+from panda3d.core._pgraph import NodePath, PandaNode
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _RopeNode_RenderMode: TypeAlias = Literal[0, 1, 2, 3]

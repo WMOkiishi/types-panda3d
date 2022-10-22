@@ -1,4 +1,5 @@
-from panda3d.core import ClientBase, ostream
+from panda3d.core._device import ClientBase
+from panda3d.core._dtoolutil import ostream
 
 class VrpnClient(ClientBase):
     """A specific ClientBase that connects to a VRPN server and records

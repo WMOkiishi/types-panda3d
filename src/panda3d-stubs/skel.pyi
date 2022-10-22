@@ -1,6 +1,6 @@
 from typing import Any, ClassVar
 
-from panda3d.core import TypedObject
+from panda3d.core._dtoolbase import TypedObject
 
 class BasicSkel:
     """This is the most basic of the skeleton classes.  It stores an integer, and

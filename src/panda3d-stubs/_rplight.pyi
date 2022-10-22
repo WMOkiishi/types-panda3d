@@ -2,23 +2,14 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Mat4f, Vec3f, Vec4f, Vec4i
-from panda3d.core import (
-    BitMask32,
-    Camera,
-    GraphicsOutput,
-    LMatrix3,
-    LVecBase3,
-    LVecBase3i,
-    NodePath,
-    PTA_float,
-    PTA_LMatrix4,
-    PTA_LVecBase2,
-    PTA_uchar,
-    ReferenceCount,
-    Shader,
-    Texture,
-    ostream,
-)
+from panda3d.core._display import GraphicsOutput
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import PTA_float, PTA_uchar, ReferenceCount
+from panda3d.core._gobj import Shader, Texture
+from panda3d.core._linmath import LMatrix3, LVecBase3, LVecBase3i
+from panda3d.core._mathutil import PTA_LMatrix4, PTA_LVecBase2
+from panda3d.core._pgraph import Camera, NodePath
+from panda3d.core._putil import BitMask32
 
 _GPUCommand_CommandType: TypeAlias = Literal[0, 1, 2, 3, 4]
 _RPLight_LightType: TypeAlias = Literal[0, 1, 2]

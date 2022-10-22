@@ -1,6 +1,8 @@
 from typing import Any, ClassVar, overload
 
-from panda3d.core import PandaNode, Thread, ostream
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._pgraph import PandaNode
+from panda3d.core._pipeline import Thread
 
 class DataGraphTraverser:
     """This object supervises the traversal of the data graph and the moving of

@@ -1,7 +1,9 @@
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d.core import Namable, TypedReferenceCount, TypeHandle, ostream
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import ostream
+from panda3d.core._express import Namable, TypedReferenceCount
 
 _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]
 

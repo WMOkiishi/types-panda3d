@@ -3,19 +3,16 @@ from collections.abc import Awaitable, Callable, Generator, Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d.core import (
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolutil import GlobPattern, ostream
+from panda3d.core._express import Namable, TypedReferenceCount
+from panda3d.core._putil import (
     ButtonHandle,
     ClockObject,
-    GlobPattern,
     ModifierButtons,
-    Namable,
     ParamValueBase,
     PointerData,
-    TypedObject,
-    TypedReferenceCount,
     TypedWritableReferenceCount,
-    TypeHandle,
-    ostream,
 )
 
 _AsyncTask_State: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]

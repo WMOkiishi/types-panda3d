@@ -1,5 +1,6 @@
 from panda3d._typing import Mat4f, Vec4f
-from panda3d.core import GeomNode, TypedReferenceCount
+from panda3d.core._express import TypedReferenceCount
+from panda3d.core._pgraph import GeomNode
 
 class CMotionTrail(TypedReferenceCount):
     """The method used in creating the motion trail is based on taking samples of

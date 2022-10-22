@@ -1,9 +1,9 @@
 from _typeshed import StrOrBytesPath
 from typing_extensions import TypeAlias
 
-from panda3d.core import (
+from panda3d.core._downloader import URLSpec
+from panda3d.core._linmath import (
     ConfigVariableColor,
-    ConfigVariableFilename,
     LMatrix3d,
     LMatrix3f,
     LMatrix4d,
@@ -18,8 +18,8 @@ from panda3d.core import (
     UnalignedLVecBase4d,
     UnalignedLVecBase4f,
     UnalignedLVecBase4i,
-    URLSpec,
 )
+from panda3d.core._prc import ConfigVariableFilename
 
 Vec3d: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 Vec3f: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow

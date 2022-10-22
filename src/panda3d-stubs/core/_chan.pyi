@@ -4,27 +4,19 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
-from panda3d.core import (
-    AnimInterface,
-    BitArray,
+from panda3d.core._dtoolbase import TypeHandle
+from panda3d.core._dtoolutil import GlobPattern, ostream
+from panda3d.core._express import (
     ConstPointerToArray_float,
-    CopyOnWriteObject,
     CPTA_stdfloat,
-    GlobPattern,
-    LMatrix4,
-    Loader,
-    LoaderOptions,
-    ModelLoadRequest,
     Namable,
-    PandaNode,
     PointerToArray_float,
     ReferenceCount,
-    TransformState,
     TypedReferenceCount,
-    TypedWritableReferenceCount,
-    TypeHandle,
-    ostream,
 )
+from panda3d.core._linmath import LMatrix4
+from panda3d.core._pgraph import Loader, ModelLoadRequest, PandaNode, TransformState
+from panda3d.core._putil import AnimInterface, BitArray, CopyOnWriteObject, LoaderOptions, TypedWritableReferenceCount
 
 _PartBundle_BlendType: TypeAlias = Literal[0, 1, 2, 3]
 
