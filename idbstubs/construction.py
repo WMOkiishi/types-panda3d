@@ -515,8 +515,8 @@ def remove_redefinitions(class_: Class) -> None:
                 ) if doc_1 and doc_1 != doc_2:
                     continue
                 case (
-                    Attribute(doc=doc_1, read_only=True),
-                    Attribute(doc=doc_2, read_only=True)
+                    Attribute(doc=doc_1),
+                    Attribute(doc=doc_2)
                 ) if doc_1 and doc_1 != doc_2:
                     continue
                 case a, b if a == b:
