@@ -23,11 +23,9 @@ def log_unused() -> None:
 # Don't write stubs for anything with these names
 NO_STUBS: Final = TrackingSet({
     # Attribute access
-    '__getattr__', '__setattr__', '__delattr__',
+    '__dict__', '__getattr__', '__setattr__', '__delattr__',
     # Pickle stuff
     '__getstate__', '__setstate__', '__reduce__',
-    # Inherited from `object`; signature shouldn't change
-    '__dict__', '__repr__', '__str__',
 })
 
 
@@ -74,6 +72,7 @@ TYPE_NAME_OVERRIDES: Final = TrackingMap({
 # If a function with one of these names returns "_object",
 # we can assume a default return type
 DEFAULT_RETURNS: Final = TrackingMap({
+    '__repr__': 'str',
     '__int__': 'int',
     '__str__': 'str',
     '__bytes__': 'bytes',

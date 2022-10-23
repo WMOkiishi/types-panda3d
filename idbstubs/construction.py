@@ -34,7 +34,29 @@ from .typedata import (
 from .util import flatten, is_dunder
 
 _logger: Final = logging.getLogger(__name__)
-_classes: Final[dict[str, Class]] = {}
+_classes: Final[dict[str, Class]] = {
+    'object': Class(
+        'object',
+        body={
+            # TODO: would this cause issues?
+            # '__init__': Function(
+            #     '__init__',
+            #     [Signature([Parameter.as_self()], 'None')],
+            #     is_method=True,
+            # ),
+            '__repr__': Function(
+                '__repr__',
+                [Signature([Parameter.as_self()], 'str')],
+                is_method=True,
+            ),
+            '__str__': Function(
+                '__str__',
+                [Signature([Parameter.as_self()], 'str')],
+                is_method=True,
+            ),
+        }
+    )
+}
 
 
 class NamespacedStubRep(StubRep, Protocol):
