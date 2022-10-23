@@ -499,16 +499,16 @@ def remove_redefinitions(class_: Class) -> None:
     class_body = class_.body
     if not class_body:
         return
-    nested_names = set(class_body.keys())
+    nested_names = frozenset(class_body.keys())
     inherited = set[str]()
-    overridden = set[str]()
+    seen = set[str]()
     for base_class_name in get_mro(class_.name)[1:]:
         base_class = _classes.get(base_class_name)
         if base_class is None:
             continue
         base_class_body = base_class.body
-        intersection = nested_names & base_class_body.keys() - overridden
-        overridden |= intersection
+        intersection = nested_names & base_class_body.keys() - seen
+        seen |= intersection
         for name in intersection:
             match class_body[name], base_class_body[name]:
                 case Class() | Alias(of_local=True), _:
@@ -525,7 +525,6 @@ def remove_redefinitions(class_: Class) -> None:
                     continue
                 case a, b if a == b:
                     inherited.add(name)
-                    overridden.remove(name)
     new_nested_names = nested_names - inherited
     new_nested: dict[str, StubRep] = {}
     for rep in class_body.values():

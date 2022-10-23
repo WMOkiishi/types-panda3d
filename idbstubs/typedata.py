@@ -256,10 +256,11 @@ def get_module(name: str) -> str | None:
         return None
 
 
-@cache
 def get_mro(name: str, /) -> tuple[str, ...]:
     """Return a tuple of the names of the classes in the MRO of a class."""
     name = _aliases.get(name, name)
+    if name == 'object':
+        return ('object',)
     bases = list(_direct_inheritance.get(name, ()))
     # all_bases = (get_mro(base) for base in bases)
     # return (name, *merge_mros(all_bases), 'object')
@@ -278,7 +279,7 @@ def get_mro(name: str, /) -> tuple[str, ...]:
                 bases = new_bases
                 break
         else:
-            _logger.error('Could not construct MRO')
+            _logger.error(f'Could not construct MRO for {name}')
             return ()
     return (name, *linear_bases, 'object')
 
