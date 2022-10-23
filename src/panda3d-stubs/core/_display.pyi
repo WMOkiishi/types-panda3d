@@ -943,7 +943,6 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     top of a 3-d scene.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     dimensions: LVecBase4
     camera: NodePath
     active: bool
@@ -1298,8 +1297,6 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         construct created for the purpose of making it easy to analyze the results
         of the cull operation.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     upcastToDrawableRegion = upcast_to_DrawableRegion
     getNumRegions = get_num_regions
@@ -1351,7 +1348,6 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     getScreenshot = get_screenshot
     clearCullResult = clear_cull_result
     makeCullResultGraph = make_cull_result_graph
-    getClassType = get_class_type
 
 class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     """This is a base class for the various different classes that represent the
@@ -1369,7 +1365,6 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     convenience.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     active: bool
     one_shot: bool
     inverted: bool
@@ -1991,8 +1986,6 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         called on a ParasiteBuffer, it returns the host of that buffer; but when
         called on some other buffer, it returns the buffer itself.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_display_regions(self) -> tuple[DisplayRegion, ...]: ...
     def get_active_display_regions(self) -> tuple[DisplayRegion, ...]: ...
     upcastToGraphicsOutputBase = upcast_to_GraphicsOutputBase
@@ -2073,7 +2066,6 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     getSupportsRenderTexture = get_supports_render_texture
     flipReady = flip_ready
     getHost = get_host
-    getClassType = get_class_type
     getDisplayRegions = get_display_regions
     getActiveDisplayRegions = get_active_display_regions
 

@@ -26,7 +26,6 @@ class AnimGroup(TypedWritableReferenceCount, Namable):
     AnimBundle.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def children(self) -> Sequence[AnimGroup]: ...
     @overload
@@ -63,8 +62,6 @@ class AnimGroup(TypedWritableReferenceCount, Namable):
         """Writes a one-line description of the group."""
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes a brief description of the group and all of its descendants."""
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_children(self) -> tuple[AnimGroup, ...]: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
@@ -73,7 +70,6 @@ class AnimGroup(TypedWritableReferenceCount, Namable):
     getChildNamed = get_child_named
     findChild = find_child
     sortDescendants = sort_descendants
-    getClassType = get_class_type
     getChildren = get_children
 
 class AnimBundle(AnimGroup):
@@ -137,7 +133,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     of MovingParts.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     HMF_ok_part_extra: Final[Literal[1]]
     HMFOkPartExtra: Final[Literal[1]]
     HMF_ok_anim_extra: Final[Literal[2]]
@@ -233,8 +228,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
         """Writes a brief description of the group, showing its current value, and
         that of all of its descendants.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_children(self) -> tuple[PartGroup, ...]: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
@@ -253,7 +246,6 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     clearForcedChannel = clear_forced_channel
     getForcedChannel = get_forced_channel
     writeWithValue = write_with_value
-    getClassType = get_class_type
     getChildren = get_children
 
 class AnimControl(TypedReferenceCount, AnimInterface, Namable):
@@ -263,7 +255,6 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
     number and play rate.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedReferenceCount(self) -> TypedReferenceCount: ...
     def upcast_to_AnimInterface(self) -> AnimInterface: ...
     def upcast_to_Namable(self) -> Namable: ...
@@ -322,9 +313,6 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
         """
     def get_anim_model(self) -> PandaNode:
         """Retrieves the pointer set via set_anim_model().  See set_anim_model()."""
-    def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     upcastToAnimInterface = upcast_to_AnimInterface
     upcastToNamable = upcast_to_Namable
@@ -339,7 +327,6 @@ class AnimControl(TypedReferenceCount, AnimInterface, Namable):
     getBoundJoints = get_bound_joints
     setAnimModel = set_anim_model
     getAnimModel = get_anim_model
-    getClassType = get_class_type
 
 class AnimChannelBase(AnimGroup):
     """Parent class for all animation channels.  An AnimChannel is an arbitrary
@@ -347,9 +334,6 @@ class AnimChannelBase(AnimGroup):
     a table read from an egg file (but possibly computed or generated in any
     other way).
     """
-
-    def get_type(self) -> TypeHandle: ...
-    getType = get_type
 
 class AnimChannel_ACMatrixSwitchType(AnimChannelBase):
     def get_value(self, frame: int, value: Mat4f) -> None: ...

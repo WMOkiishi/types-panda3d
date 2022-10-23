@@ -53,15 +53,10 @@ class MouseRecorder(DataNode, RecorderBase):
     additional child nodes may be parented directly to it.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, name: str) -> None: ...
     def upcast_to_DataNode(self) -> DataNode: ...
     def upcast_to_RecorderBase(self) -> RecorderBase: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToDataNode = upcast_to_DataNode
     upcastToRecorderBase = upcast_to_RecorderBase
-    getClassType = get_class_type
 
 class RecorderController(TypedReferenceCount):
     """This object manages the process of recording the user's runtime inputs to a
@@ -212,7 +207,6 @@ class SocketStreamRecorder(RecorderBase, ReferenceCount):
     the socket if it is connected, or silently ignored if it is not.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self) -> None: ...
     @overload
@@ -243,8 +237,6 @@ class SocketStreamRecorder(RecorderBase, ReferenceCount):
         """See SocketStream::consider_flush()"""
     def flush(self) -> bool:
         """See SocketStream::flush()"""
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToRecorderBase = upcast_to_RecorderBase
     upcastToReferenceCount = upcast_to_ReferenceCount
     receiveDatagram = receive_datagram
@@ -255,4 +247,3 @@ class SocketStreamRecorder(RecorderBase, ReferenceCount):
     setCollectTcpInterval = set_collect_tcp_interval
     getCollectTcpInterval = get_collect_tcp_interval
     considerFlush = consider_flush
-    getClassType = get_class_type

@@ -89,7 +89,6 @@ class DCKeywordList:
 class DCField(DCPackerInterface, DCKeywordList):
     """A single field of a Distributed Class, either atomic or molecular."""
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_DCPackerInterface(self) -> DCPackerInterface: ...
     def upcast_to_DCKeywordList(self) -> DCKeywordList: ...
     def get_number(self) -> int:
@@ -98,7 +97,6 @@ class DCField(DCPackerInterface, DCKeywordList):
         """
     def get_class(self) -> DCClass:
         """Returns the DCClass pointer for the class that contains this field."""
-    def as_field(self) -> DCField: ...
     def as_atomic_field(self) -> DCAtomicField:
         """Returns the same field pointer converted to an atomic field pointer, if
         this is in fact an atomic field; otherwise, returns NULL.
@@ -194,7 +192,6 @@ class DCField(DCPackerInterface, DCKeywordList):
     upcastToDCKeywordList = upcast_to_DCKeywordList
     getNumber = get_number
     getClass = get_class
-    asField = as_field
     asAtomicField = as_atomic_field
     asMolecularField = as_molecular_field
     asParameter = as_parameter

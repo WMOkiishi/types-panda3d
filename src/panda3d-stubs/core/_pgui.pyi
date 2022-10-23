@@ -4,7 +4,6 @@ from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
 from panda3d.core._audio import AudioSound
-from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture
 from panda3d.core._linmath import LColor, LMatrix4, LVecBase2, LVecBase4, LVector3
@@ -124,7 +123,6 @@ class PGItem(PandaNode):
     PGTop node in order for this behavior to work.
     """
 
-    def set_name(self, name: str) -> None: ...
     @overload
     def set_frame(self, frame: Vec4f) -> None:
         """Sets the bounding rectangle of the item, in local coordinates.  This is the
@@ -381,7 +379,6 @@ class PGItem(PandaNode):
         activate or deactivate keyboard focus on a particular item.
         """
     def get_state_defs(self) -> tuple[NodePath, ...]: ...
-    setName = set_name
     setFrame = set_frame
     getFrame = get_frame
     hasFrame = has_frame
@@ -880,16 +877,11 @@ class PGMouseWatcherParameter(TypedWritableReferenceCount, MouseWatcherParameter
     TypedWritableReferenceCount so we can attach this thing to an event.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: PGMouseWatcherParameter) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_MouseWatcherParameter(self) -> MouseWatcherParameter: ...
-    def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToMouseWatcherParameter = upcast_to_MouseWatcherParameter
-    getClassType = get_class_type
 
 class PGMouseWatcherBackground(MouseWatcherRegion):
     """This is a special kind of MouseWatcherRegion that doesn't have a rectangle
@@ -972,7 +964,6 @@ class PGSliderBar(PGItem):
     DirectScrollBar.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGItem(self) -> PGItem: ...
     def setup_scroll_bar(self, vertical: bool, length: float, width: float, bevel: float) -> None:
@@ -1115,12 +1106,6 @@ class PGSliderBar(PGItem):
         """Returns the event name that will be thrown when the slider bar value is
         adjusted by the user or programmatically.
         """
-    def set_active(self, active: bool) -> None:
-        """Sets whether the PGItem is active for mouse watching.  This is not
-        necessarily related to the active/inactive appearance of the item, which is
-        controlled by set_state(), but it does affect whether it responds to mouse
-        events.
-        """
     def remanage(self) -> None:
         """Manages the position and size of the scroll bars and the thumb.  Normally
         this should not need to be called directly.
@@ -1129,8 +1114,6 @@ class PGSliderBar(PGItem):
         """Recomputes the position and size of the thumb.  Normally this should not
         need to be called directly.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToPGItem = upcast_to_PGItem
     setupScrollBar = setup_scroll_bar
     setupSlider = setup_slider
@@ -1163,8 +1146,6 @@ class PGSliderBar(PGItem):
     getRightButton = get_right_button
     getAdjustPrefix = get_adjust_prefix
     getAdjustEvent = get_adjust_event
-    setActive = set_active
-    getClassType = get_class_type
 
 class PGScrollFrame(PGVirtualFrame):
     """This is a special kind of frame that pretends to be much larger than it
@@ -1179,8 +1160,6 @@ class PGScrollFrame(PGVirtualFrame):
     scale or rotate).
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGVirtualFrame(self) -> PGVirtualFrame: ...
     def setup(self, width: float, height: float, left: float, right: float, bottom: float, top: float, slider_width: float, bevel: float) -> None:  # type: ignore[override]
         """Creates a PGScrollFrame with the indicated dimensions, and the indicated
@@ -1260,8 +1239,6 @@ class PGScrollFrame(PGVirtualFrame):
         """Forces the PGScrollFrame to recompute itself right now.  Normally this
         should not be required.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToPGVirtualFrame = upcast_to_PGVirtualFrame
     setVirtualFrame = set_virtual_frame
     getVirtualFrame = get_virtual_frame
@@ -1277,7 +1254,6 @@ class PGScrollFrame(PGVirtualFrame):
     setVerticalSlider = set_vertical_slider
     clearVerticalSlider = clear_vertical_slider
     getVerticalSlider = get_vertical_slider
-    getClassType = get_class_type
 
 class PGWaitBar(PGItem):
     """This is a particular kind of PGItem that draws a little bar that fills from

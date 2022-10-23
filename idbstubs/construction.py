@@ -29,7 +29,7 @@ from .translation import (
     method_name_from_cpp_name, snake_to_camel
 )
 from .typedata import (
-    TYPE_ALIASES, get_direct_type_name, get_linear_superclasses, get_type_name
+    TYPE_ALIASES, get_direct_type_name, get_mro, get_type_name
 )
 from .util import flatten, is_dunder
 
@@ -500,12 +500,16 @@ def remove_redefinitions(class_: Class) -> None:
     if not class_body:
         return
     nested_names = set(class_body.keys())
-    for base_class_name in get_linear_superclasses(class_.name):
+    inherited = set[str]()
+    overridden = set[str]()
+    for base_class_name in get_mro(class_.name)[1:]:
         base_class = _classes.get(base_class_name)
         if base_class is None:
             continue
         base_class_body = base_class.body
-        for name in nested_names & base_class_body.keys():
+        intersection = nested_names & base_class_body.keys() - overridden
+        overridden |= intersection
+        for name in intersection:
             match class_body[name], base_class_body[name]:
                 case Class() | Alias(of_local=True), _:
                     continue
@@ -520,14 +524,16 @@ def remove_redefinitions(class_: Class) -> None:
                 ) if doc_1 and doc_1 != doc_2:
                     continue
                 case a, b if a == b:
-                    nested_names.remove(name)
+                    inherited.add(name)
+                    overridden.remove(name)
+    new_nested_names = nested_names - inherited
     new_nested: dict[str, StubRep] = {}
     for rep in class_body.values():
         if isinstance(rep, Alias) and rep.of_local:
             name_to_check = rep.alias_of
         else:
             name_to_check = rep.name
-        if name_to_check in nested_names:
+        if name_to_check in new_nested_names:
             new_nested[rep.name] = rep
     class_.body = new_nested
 

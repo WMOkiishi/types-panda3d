@@ -1,7 +1,6 @@
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Namable, TypedReferenceCount
 
@@ -17,7 +16,6 @@ class Thread(TypedReferenceCount, Namable):
     referencing it.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     pipeline_stage: int
     @property
     def sync_name(self) -> str: ...
@@ -168,7 +166,6 @@ class Thread(TypedReferenceCount, Namable):
         it has run for enough this epoch.  This is especially important for the
         simple thread implementation, which relies on cooperative yields like this.
         """
-    def output(self, out: ostream) -> None: ...
     def output_blocker(self, out: ostream) -> None:
         """Writes a description of the mutex or condition variable that this thread is
         blocked on.  Writes nothing if there is no blocker, or if we are not in
@@ -224,8 +221,6 @@ class Thread(TypedReferenceCount, Namable):
         """Should be called by the main thread just before exiting the program, this
         blocks until any remaining thread cleanup has finished.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     upcastToNamable = upcast_to_Namable
     bindThread = bind_thread
@@ -252,7 +247,6 @@ class Thread(TypedReferenceCount, Namable):
     getCurrentTask = get_current_task
     setPythonIndex = set_python_index
     prepareForExit = prepare_for_exit
-    getClassType = get_class_type
 
 class MutexDirect:
     """This class implements a standard mutex by making direct calls to the

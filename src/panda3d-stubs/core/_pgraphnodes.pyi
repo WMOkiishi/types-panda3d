@@ -3,7 +3,6 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import TypedReferenceCount
 from panda3d.core._gobj import GeomVertexAnimationSpec, Texture
@@ -20,7 +19,6 @@ class LightNode(Light, PandaNode):  # type: ignore[misc]
     class.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_Light(self) -> Light: ...
     def upcast_to_PandaNode(self) -> PandaNode: ...
     def output(self, out: ostream) -> None:
@@ -28,19 +26,14 @@ class LightNode(Light, PandaNode):  # type: ignore[misc]
         inheritance.
         """
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToLight = upcast_to_Light
     upcastToPandaNode = upcast_to_PandaNode
-    getClassType = get_class_type
 
 class AmbientLight(LightNode):
     """A light source that seems to illuminate all points in space at once.  This
     kind of light need not actually be part of the scene graph, since it has no
     meaningful position.
     """
-
-    def __init__(self, name: str) -> None: ...
 
 class CallbackNode(PandaNode):
     """A special node that can issue arbitrary callbacks to user code, either
@@ -155,7 +148,6 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
     Camera serves no purpose unless shadows are enabled.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     shadow_buffer_size: LVecBase2i
     @property
     def shadow_caster(self) -> bool: ...
@@ -199,8 +191,6 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
         inheritance.
         """
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToLight = upcast_to_Light
     upcastToCamera = upcast_to_Camera
     hasSpecularColor = has_specular_color
@@ -210,7 +200,6 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
     getShadowBufferSize = get_shadow_buffer_size
     setShadowBufferSize = set_shadow_buffer_size
     getShadowBuffer = get_shadow_buffer
-    getClassType = get_class_type
 
 class DirectionalLight(LightLensNode):
     """A light shining from infinitely far away in a particular direction, like
@@ -521,29 +510,17 @@ class SequenceNode(SelectiveChildNode, AnimInterface):
     according to its frame rate.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     frame_rate: float
-    def __init__(self, name: str) -> None: ...
     def upcast_to_SelectiveChildNode(self) -> SelectiveChildNode: ...
     def upcast_to_AnimInterface(self) -> AnimInterface: ...
-    def get_num_frames(self) -> int:
-        """Returns the number of frames in the animation.  This is a property of the
-        animation and may not be directly adjusted by the user (although it may
-        change without warning with certain kinds of animations, since this is a
-        virtual method that may be overridden).
-        """
     def set_frame_rate(self, frame_rate: float) -> None:
         """Changes the advertised frame rate of the SequenceNode.  This can be used in
         conjunction with get_play_rate() to change the effective frame rate of the
         node.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToSelectiveChildNode = upcast_to_SelectiveChildNode
     upcastToAnimInterface = upcast_to_AnimInterface
-    getNumFrames = get_num_frames
     setFrameRate = set_frame_rate
-    getClassType = get_class_type
 
 class ShaderGenerator(TypedReferenceCount):
     """The ShaderGenerator is a device that effectively replaces the classic fixed

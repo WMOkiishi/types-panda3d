@@ -1380,7 +1380,6 @@ class NotifyCategory(ConfigFlags):
     if a finer grain of control is required.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     severity: _NotifySeverity
     @property
     def fullname(self) -> str: ...
@@ -1844,7 +1843,6 @@ class StreamWrapper(IStreamWrapper, OStreamWrapper):  # type: ignore[misc]
     pointer.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def iostream(self) -> iostream: ...  # noqa: F811
     def __init__(self, stream: core.iostream) -> None: ...

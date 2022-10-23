@@ -1,9 +1,9 @@
 from collections.abc import Sequence
-from typing import Any, ClassVar, overload
+from typing import overload
 from typing_extensions import Literal
 
 from panda3d._typing import Vec3f, Vec4f
-from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolbase import TypedObject
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Datagram, DatagramIterator, Namable, TypedReferenceCount
 from panda3d.core._linmath import LPoint3, LPoint3i, LVecBase2f, LVector3
@@ -1343,7 +1343,6 @@ class CollisionVisualizer(PandaNode, CollisionRecorder):
     achieve this.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     point_scale: float
     normal_scale: float
     @overload
@@ -1376,14 +1375,11 @@ class CollisionVisualizer(PandaNode, CollisionRecorder):
         """Removes all the visualization data from a previous traversal and resets the
         visualizer to empty.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToPandaNode = upcast_to_PandaNode
     upcastToCollisionRecorder = upcast_to_CollisionRecorder
     setPointScale = set_point_scale
     getPointScale = get_point_scale
     setNormalScale = set_normal_scale
     getNormalScale = get_normal_scale
-    getClassType = get_class_type
 
 CollisionTube = CollisionCapsule

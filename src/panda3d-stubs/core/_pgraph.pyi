@@ -1760,7 +1760,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         def __len__(self) -> int: ...
         def __iter__(self) -> Iterator[PandaNode]: ...  # Doesn't actually exist
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     state: RenderState
     effects: RenderEffects
     transform: TransformState
@@ -2364,7 +2363,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         true, this node may potentially be traversed by the render traverser.
         Stashed nodes don't count for this purpose, but hidden nodes do.
         """
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def ls(self, out: ostream, indent_level: int) -> None:
         """Lists all the nodes at and below the current path hierarchically."""
@@ -2535,8 +2533,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         for easier reference count management.  Note that the caller is still
         responsible for maintaining the reference count on the return value.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_parents(self) -> tuple[PandaNode, ...]: ...
     def get_children(self) -> tuple[PandaNode, ...]: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
@@ -2646,7 +2642,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     isAmbientLight = is_ambient_light
     getFancyBits = get_fancy_bits
     decodeFromBamStream = decode_from_bam_stream
-    getClassType = get_class_type
     getParents = get_parents
     getChildren = get_children
 
@@ -9155,7 +9150,6 @@ class Loader(TypedReferenceCount, Namable):
         getFileType = get_file_type
         getFiles = get_files
         getFileTypes = get_file_types
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload
@@ -9225,14 +9219,11 @@ class Loader(TypedReferenceCount, Namable):
         """Attempts to read a bam file from the indicated stream and return the scene
         graph defined there.
         """
-    def output(self, out: ostream) -> None: ...
     @staticmethod
     def get_global_ptr() -> Loader:
         """Returns a pointer to the global Loader.  This is the Loader that most code
         should use for loading models.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     upcastToNamable = upcast_to_Namable
     setTaskManager = set_task_manager
@@ -9248,7 +9239,6 @@ class Loader(TypedReferenceCount, Namable):
     saveAsync = save_async
     loadBamStream = load_bam_stream
     getGlobalPtr = get_global_ptr
-    getClassType = get_class_type
 
 class LoaderFileType(TypedObject):
     """This is the base class for a family of scene-graph file types that the

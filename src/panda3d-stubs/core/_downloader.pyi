@@ -123,7 +123,6 @@ class ISocketStream(istream, SSReader):
     whether more data may be available later.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     RS_initial: Final[Literal[0]]
     RSInitial: Final[Literal[0]]
     RS_reading: Final[Literal[1]]
@@ -134,12 +133,9 @@ class ISocketStream(istream, SSReader):
     RSError: Final[Literal[3]]
     def upcast_to_istream(self) -> istream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
-    def is_closed(self) -> bool: ...
-    def close(self) -> None: ...
     def get_read_state(self) -> _ISocketStream_ReadState: ...
     upcastToIstream = upcast_to_istream
     upcastToSSReader = upcast_to_SSReader
-    isClosed = is_closed
     getReadState = get_read_state
 
 class OSocketStream(ostream, SSWriter):
@@ -149,38 +145,23 @@ class OSocketStream(ostream, SSWriter):
     later.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_ostream(self) -> ostream: ...
     def upcast_to_SSWriter(self) -> SSWriter: ...
-    def is_closed(self) -> bool: ...
-    def close(self) -> None: ...
     def flush(self) -> bool:  # type: ignore[override]
         """Sends the most recently queued data now.  This only has meaning if
         set_collect_tcp() has been set to true.
         """
     upcastToOstream = upcast_to_ostream
     upcastToSSWriter = upcast_to_SSWriter
-    isClosed = is_closed
 
 class SocketStream(iostream, SSReader, SSWriter):  # type: ignore[misc]
     """A base class for iostreams that read and write to a (possibly non-blocking)
     socket.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_iostream(self) -> iostream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
     def upcast_to_SSWriter(self) -> SSWriter: ...
-    def is_closed(self) -> bool: ...
-    def close(self) -> None: ...
-    def set_tcp_header_size(self, tcp_header_size: int) -> None:
-        """Sets the header size for datagrams.  At the present, legal values for this
-        are 0, 2, or 4; this specifies the number of bytes to use encode the
-        datagram length at the start of each TCP datagram.  Sender and receiver
-        must independently agree on this.
-        """
-    def get_tcp_header_size(self) -> int:
-        """Returns the header size for datagrams.  See set_tcp_header_size()."""
     def flush(self) -> bool:  # type: ignore[override]
         """Sends the most recently queued data now.  This only has meaning if
         set_collect_tcp() has been set to true.
@@ -188,9 +169,6 @@ class SocketStream(iostream, SSReader, SSWriter):  # type: ignore[misc]
     upcastToIostream = upcast_to_iostream
     upcastToSSReader = upcast_to_SSReader
     upcastToSSWriter = upcast_to_SSWriter
-    isClosed = is_closed
-    setTcpHeaderSize = set_tcp_header_size
-    getTcpHeaderSize = get_tcp_header_size
 
 class URLSpec:
     """A container for a URL, e.g.  "http://server:port/path".

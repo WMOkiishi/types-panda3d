@@ -3,7 +3,7 @@ from collections.abc import Awaitable, Callable, Generator, Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolbase import TypedObject
 from panda3d.core._dtoolutil import GlobPattern, ostream
 from panda3d.core._express import Namable, TypedReferenceCount
 from panda3d.core._putil import (
@@ -217,7 +217,6 @@ class AsyncTask(AsyncFuture, Namable):
     define the functionality you wish to have the task perform.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     """The name of this task."""
     task_chain: str
@@ -361,7 +360,6 @@ class AsyncTask(AsyncFuture, Namable):
 
         It is only valid to call this if the task's status is not S_inactive.
         """
-    def set_name(self, name: str) -> None: ...
     def clear_name(self) -> None:
         """Resets the task's name to empty."""
     def get_name_prefix(self) -> str:
@@ -431,9 +429,6 @@ class AsyncTask(AsyncFuture, Namable):
         """Returns the average amount of time elapsed during each of the task's
         previous run cycles, in seconds.
         """
-    def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToAsyncFuture = upcast_to_AsyncFuture
     upcastToNamable = upcast_to_Namable
     getState = get_state
@@ -449,7 +444,6 @@ class AsyncTask(AsyncFuture, Namable):
     getElapsedTime = get_elapsed_time
     getStartFrame = get_start_frame
     getElapsedFrames = get_elapsed_frames
-    setName = set_name
     clearName = clear_name
     getNamePrefix = get_name_prefix
     getTaskId = get_task_id
@@ -463,7 +457,6 @@ class AsyncTask(AsyncFuture, Namable):
     getDt = get_dt
     getMaxDt = get_max_dt
     getAverageDt = get_average_dt
-    getClassType = get_class_type
 
 class AsyncTaskManager(TypedReferenceCount, Namable):
     """A class to manage a loose queue of isolated tasks, which can be performed
@@ -480,7 +473,6 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
     common configuration.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     clock: ClockObject
     @property
     def tasks(self) -> AsyncTaskCollection: ...
@@ -598,15 +590,12 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         task, on any task chain, to awaken.  Returns -1 if there are no sleeping
         tasks.
         """
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     @staticmethod
     def get_global_ptr() -> AsyncTaskManager:
         """Returns a pointer to the global AsyncTaskManager.  This is the
         AsyncTaskManager that most code should use for queueing tasks and suchlike.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_task_chains(self) -> tuple[AsyncTaskChain, ...]: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     upcastToNamable = upcast_to_Namable
@@ -630,7 +619,6 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
     getSleepingTasks = get_sleeping_tasks
     getNextWakeTime = get_next_wake_time
     getGlobalPtr = get_global_ptr
-    getClassType = get_class_type
     getTaskChains = get_task_chains
 
 class AsyncTaskCollection:
@@ -735,7 +723,6 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
     more than one thread).
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedReferenceCount(self) -> TypedReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def set_tick_clock(self, tick_clock: bool) -> None:
@@ -863,10 +850,7 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         task, on any task chain, to awaken.  Returns -1 if there are no sleeping
         tasks.
         """
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     upcastToNamable = upcast_to_Namable
     setTickClock = set_tick_clock
@@ -892,7 +876,6 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
     getActiveTasks = get_active_tasks
     getSleepingTasks = get_sleeping_tasks
     getNextWakeTime = get_next_wake_time
-    getClassType = get_class_type
 
 class AsyncTaskPause(AsyncTask):
     """A special kind of task that simple returns DS_pause, to pause for a
@@ -915,7 +898,6 @@ class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
     duration changes during playback.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: AsyncTaskSequence) -> None: ...
     @overload
@@ -934,14 +916,11 @@ class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
         """Returns the index of the task within the sequence that is currently being
         executed (or that will be executed at the next epoch).
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToAsyncTask = upcast_to_AsyncTask
     upcastToAsyncTaskCollection = upcast_to_AsyncTaskCollection
     setRepeatCount = set_repeat_count
     getRepeatCount = get_repeat_count
     getCurrentTaskIndex = get_current_task_index
-    getClassType = get_class_type
 
 class ButtonEvent:
     """Records a button event of some kind.  This is either a keyboard or mouse

@@ -136,7 +136,6 @@ class TextFont(TypedReferenceCount, Namable):
     for an actual implementation.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     line_height: float
     space_advance: float
     RM_texture: Final[Literal[0]]
@@ -181,8 +180,6 @@ class TextFont(TypedReferenceCount, Namable):
         of the advance.
         """
     def write(self, out: ostream, indent_level: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     upcastToNamable = upcast_to_Namable
     makeCopy = make_copy
@@ -193,7 +190,6 @@ class TextFont(TypedReferenceCount, Namable):
     setSpaceAdvance = set_space_advance
     getGlyph = get_glyph
     getKerning = get_kerning
-    getClassType = get_class_type
 
 class DynamicTextGlyph(TextGlyph):
     """A specialization on TextGlyph that is generated and stored by a
@@ -272,13 +268,12 @@ class DynamicTextPage(Texture):
     getYSize = get_y_size
     isEmpty = is_empty
 
-class DynamicTextFont(TextFont, FreetypeFont):
+class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
     """A DynamicTextFont is a special TextFont object that rasterizes its glyphs
     from a standard font file (e.g.  a TTF file) on the fly.  It requires the
     FreeType 2.0 library (or any higher, backward-compatible version).
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     point_size: float
     pixels_per_unit: float
     scale_factor: float
@@ -321,28 +316,6 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Disambiguates the get_name() method between that inherited from TextFont
         and that inherited from FreetypeFont.
         """
-    def set_point_size(self, point_size: float) -> bool:
-        """Sets the point size of the font.  This controls the apparent size of the
-        font onscreen.  By convention, a 10 point font is about 1 screen unit high.
-
-        This should only be called before any characters have been requested out of
-        the font, or immediately after calling clear().
-        """
-    def get_point_size(self) -> float:
-        """Returns the point size of the font."""
-    def set_pixels_per_unit(self, pixels_per_unit: float) -> bool:
-        """Set the resolution of the texture map, and hence the clarity of the
-        resulting font.  This sets the number of pixels in the texture map that are
-        used for each onscreen unit.
-
-        Setting this number larger results in an easier to read font, but at the
-        cost of more texture memory.
-
-        This should only be called before any characters have been requested out of
-        the font, or immediately after calling clear().
-        """
-    def get_pixels_per_unit(self) -> float:
-        """Returns the resolution of the texture map.  See set_pixels_per_unit()."""
     def set_scale_factor(self, scale_factor: float) -> bool:
         """Sets the factor by which the font is rendered larger by the FreeType
         library before being filtered down to its actual size in the texture as
@@ -354,35 +327,6 @@ class DynamicTextFont(TextFont, FreetypeFont):
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
-    def get_scale_factor(self) -> float:
-        """Returns the antialiasing scale factor.  See set_scale_factor()."""
-    def set_native_antialias(self, native_antialias: bool) -> None:
-        """Sets whether the Freetype library's built-in antialias mode is enabled.
-        There are two unrelated ways to achieve antialiasing: with Freetype's
-        native antialias mode, and with the use of a scale_factor greater than one.
-        By default, both modes are enabled.
-
-        At low resolutions, some fonts may do better with one mode or the other.
-        In general, Freetype's native antialiasing will produce less blurry
-        results, but may introduce more artifacts.
-        """
-    def get_native_antialias(self) -> bool:
-        """Returns whether Freetype's built-in antialias mode is enabled.  See
-        set_native_antialias().
-        """
-    def get_font_pixel_size(self) -> int:
-        """This is used to report whether the requested pixel size is being only
-        approximated by a fixed-pixel-size font.  This returns 0 in the normal
-        case, in which a scalable font is used, or the fixed-pixel-size font has
-        exactly the requested pixel size.
-
-        If this returns non-zero, it is the pixel size of the font that we are
-        using to approximate our desired size.
-        """
-    def get_line_height(self) -> float:
-        """Returns the number of units high each line of text is."""
-    def get_space_advance(self) -> float:
-        """Returns the number of units wide a space is."""
     def set_texture_margin(self, texture_margin: int) -> None:
         """Sets the number of pixels of padding that is added around the border of
         each glyph before adding it to the texture map.  This reduces the bleed in
@@ -544,25 +488,12 @@ class DynamicTextFont(TextFont, FreetypeFont):
         generated pages.  As long as the previously rendered text remains around,
         the old pages will also remain around.
         """
-    def write(self, out: ostream, indent_level: int) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_pages(self) -> tuple[DynamicTextPage, ...]: ...
     upcastToTextFont = upcast_to_TextFont
     upcastToFreetypeFont = upcast_to_FreetypeFont
     makeCopy = make_copy
     getName = get_name
-    setPointSize = set_point_size
-    getPointSize = get_point_size
-    setPixelsPerUnit = set_pixels_per_unit
-    getPixelsPerUnit = get_pixels_per_unit
     setScaleFactor = set_scale_factor
-    getScaleFactor = get_scale_factor
-    setNativeAntialias = set_native_antialias
-    getNativeAntialias = get_native_antialias
-    getFontPixelSize = get_font_pixel_size
-    getLineHeight = get_line_height
-    getSpaceAdvance = get_space_advance
     setTextureMargin = set_texture_margin
     getTextureMargin = get_texture_margin
     setPolyMargin = set_poly_margin
@@ -591,7 +522,6 @@ class DynamicTextFont(TextFont, FreetypeFont):
     getNumPages = get_num_pages
     getPage = get_page
     garbageCollect = garbage_collect
-    getClassType = get_class_type
     getPages = get_pages
 
 class FontPool:
@@ -1584,7 +1514,6 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     time you call generate() a new node is returned.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     max_rows: int
     frame_color: LColor
     card_color: LColor
@@ -1612,15 +1541,10 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     """Returns the underscore flag.  See set_underscore()."""
     underscore_height: float
     """Returns the vertical height of the underscore; see set_underscore_height()."""
-    align: _TextProperties_Alignment
-    indent: float
-    wordwrap: float
     preserve_trailing_whitespace: bool
     """Returns the preserve_trailing_whitespace flag.  See
     set_preserve_trailing_whitespace().
     """
-    text_color: LColor
-    shadow_color: LColor
     shadow: LVector2
     """Returns the offset of the shadow as set by set_shadow().  It is an error to
     call this if has_shadow() is false.
@@ -1853,72 +1777,12 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         """
     def get_flatten_flags(self) -> int:
         """Returns the flatten flags.  See set_flatten_flags()."""
-    def set_font(self, font: TextFont) -> None:
-        """Sets the font that will be used when making text.  If this is set to NULL,
-        the default font will be used, which can be set via set_default_font().
-        """
     def clear_font(self) -> None:
         """Resets the font to the default font."""
-    def set_small_caps(self, small_caps: bool) -> None:
-        """Sets the small_caps flag.  When this is set, lowercase letters are
-        generated as scaled-down versions of their uppercase equivalents.  This is
-        particularly useful to set for fonts that do not have lowercase letters.
-
-        It is also a good idea to set this for a (dynamic) font that has already
-        implemented lowercase letters as scaled-down versions of their uppercase
-        equivalents, since without this flag the texture memory may needlessly
-        duplicate equivalent glyphs for upper and lowercase letters.  Setting this
-        flag causes the texture memory to share the mixed-case letters.
-
-        The amount by which the lowercase letters are scaled is specified by
-        set_small_caps_scale().
-        """
-    def clear_small_caps(self) -> None: ...
-    def set_small_caps_scale(self, small_caps_scale: float) -> None:
-        """Sets the scale factor applied to lowercase letters from their uppercase
-        equivalents, when the small_caps flag is in effect.  See set_small_caps().
-        Normally, this will be a number less than one.
-        """
-    def clear_small_caps_scale(self) -> None: ...
-    def set_slant(self, slant: float) -> None: ...
-    def clear_slant(self) -> None: ...
-    def set_align(self, align_type: _TextProperties_Alignment) -> None: ...
-    def clear_align(self) -> None: ...
-    def set_indent(self, indent: float) -> None:
-        """Specifies the amount of extra space that is inserted before the first
-        character of each line.  This can be thought of as a left margin.
-        """
-    def clear_indent(self) -> None: ...
-    def set_wordwrap(self, wordwrap: float) -> None:
-        """Sets the text up to automatically wordwrap when it exceeds the indicated
-        width.  This can be thought of as a right margin or margin width.
-        """
     def clear_wordwrap(self) -> None:
         """Removes the wordwrap setting from the TextNode.  Text will be as wide as it
         is.
         """
-    @overload
-    def set_text_color(self, text_color: Vec4f) -> None: ...
-    @overload
-    def set_text_color(self, r: float, g: float, b: float, a: float) -> None: ...
-    def clear_text_color(self) -> None:
-        """Removes the text color specification; the text will be colored whatever it
-        was in the source font file.
-        """
-    @overload
-    def set_shadow_color(self, shadow_color: Vec4f) -> None: ...
-    @overload
-    def set_shadow_color(self, r: float, g: float, b: float, a: float) -> None: ...
-    def clear_shadow_color(self) -> None: ...
-    @overload
-    def set_shadow(self, shadow_offset: LVecBase2) -> None:
-        """Specifies that the text should be drawn with a shadow, by creating a second
-        copy of the text and offsetting it slightly behind the first.
-        """
-    @overload
-    def set_shadow(self, xoffset: float, yoffset: float) -> None: ...
-    def clear_shadow(self) -> None:
-        """Specifies that a shadow will not be drawn behind the text."""
     def set_bin(self, bin: str) -> None:
         """Names the GeomBin that the TextNode geometry should be assigned to.  If
         this is set, then a GeomBinTransition will be created to explicitly place
@@ -1927,10 +1791,6 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         The draw_order value will also be passed to each GeomBinTransition as
         appropriate; this is particularly useful if this names a GeomBinFixed, e.g.
         "fixed".
-        """
-    def clear_bin(self) -> None:
-        """Removes the effect of a previous call to set_bin().  Text will be drawn in
-        whatever bin it would like to be drawn in, with no explicit ordering.
         """
     def set_draw_order(self, draw_order: int) -> int:
         """Sets the drawing order of text created by the TextMaker.  This is actually
@@ -1943,24 +1803,11 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         The return value is the first unused draw_order number, e.g.  _draw_order +
         3.
         """
-    def clear_draw_order(self) -> None: ...
-    def set_tab_width(self, tab_width: float) -> None:
-        """Sets the width of each tab stop, in screen units.  A tab character embedded
-        in the text will advance the horizontal position to the next tab stop.
-        """
-    def clear_tab_width(self) -> None: ...
     def set_glyph_scale(self, glyph_scale: float) -> None:
         """Specifies the factor by which to scale each letter of the text as it is
         placed.  This can be used (possibly in conjunction with set_glyph_shift())
         to implement superscripting or subscripting.
         """
-    def clear_glyph_scale(self) -> None: ...
-    def set_glyph_shift(self, glyph_shift: float) -> None:
-        """Specifies a vertical amount to shift each letter of the text as it is
-        placed.  This can be used (possibly in conjunction with set_glyph_scale())
-        to implement superscripting or subscripting.
-        """
-    def clear_glyph_shift(self) -> None: ...
     def get_wordwrapped_text(self) -> str:
         """Returns a string that represents the contents of the text, as it has been
         formatted by wordwrap rules.
@@ -2027,7 +1874,6 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         In earlier versions, this did not contain any embedded special characters
         like \\1 or \\3; now it does.
         """
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def get_left(self) -> float:
         """Returns the leftmost extent of the text in local 2-d coordinates,
@@ -2085,8 +1931,6 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         you want to get a handle to geometry that represents the text.  This method
         is provided as a debugging aid only.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToPandaNode = upcast_to_PandaNode
     upcastToTextEncoder = upcast_to_TextEncoder
     upcastToTextProperties = upcast_to_TextProperties
@@ -2138,36 +1982,11 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     getUsageHint = get_usage_hint
     setFlattenFlags = set_flatten_flags
     getFlattenFlags = get_flatten_flags
-    setFont = set_font
     clearFont = clear_font
-    setSmallCaps = set_small_caps
-    clearSmallCaps = clear_small_caps
-    setSmallCapsScale = set_small_caps_scale
-    clearSmallCapsScale = clear_small_caps_scale
-    setSlant = set_slant
-    clearSlant = clear_slant
-    setAlign = set_align
-    clearAlign = clear_align
-    setIndent = set_indent
-    clearIndent = clear_indent
-    setWordwrap = set_wordwrap
     clearWordwrap = clear_wordwrap
-    setTextColor = set_text_color  # type: ignore[assignment]
-    clearTextColor = clear_text_color
-    setShadowColor = set_shadow_color  # type: ignore[assignment]
-    clearShadowColor = clear_shadow_color
-    setShadow = set_shadow  # type: ignore[assignment]
-    clearShadow = clear_shadow
     setBin = set_bin
-    clearBin = clear_bin
     setDrawOrder = set_draw_order
-    clearDrawOrder = clear_draw_order
-    setTabWidth = set_tab_width
-    clearTabWidth = clear_tab_width
     setGlyphScale = set_glyph_scale
-    clearGlyphScale = clear_glyph_scale
-    setGlyphShift = set_glyph_shift
-    clearGlyphShift = clear_glyph_shift
     getWordwrappedText = get_wordwrapped_text
     calcWidth = calc_width
     hasExactCharacter = has_exact_character
@@ -2185,4 +2004,3 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     getNumRows = get_num_rows
     forceUpdate = force_update
     getInternalGeom = get_internal_geom
-    getClassType = get_class_type

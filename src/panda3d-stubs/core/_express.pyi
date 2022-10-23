@@ -1037,7 +1037,7 @@ class FileReference(TypedReferenceCount):
         """Returns the filename of the reference."""
     getFilename = get_filename
 
-class TypedReferenceCount(TypedObject, ReferenceCount):
+class TypedReferenceCount(TypedObject, ReferenceCount):  # type: ignore[misc]
     """A base class for things which need to inherit from both TypedObject and
     from ReferenceCount.  It's convenient to define this intermediate base
     class instead of multiply inheriting from the two classes each time they
@@ -1047,14 +1047,10 @@ class TypedReferenceCount(TypedObject, ReferenceCount):
     See also TypedObject for detailed instructions.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedObject(self) -> TypedObject: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedObject = upcast_to_TypedObject
     upcastToReferenceCount = upcast_to_ReferenceCount
-    getClassType = get_class_type
 
 class Ramfile:
     """An in-memory buffer specifically designed for downloading files to memory."""

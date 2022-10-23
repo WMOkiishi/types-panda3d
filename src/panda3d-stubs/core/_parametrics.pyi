@@ -654,18 +654,14 @@ class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
     functions.  This class then becomes vestigial.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, pc: ParametricCurve = ...) -> None:
         """Constructs a NURBS curve equivalent to the indicated (possibly non-NURBS)
         curve.
         """
     def upcast_to_PiecewiseCurve(self) -> PiecewiseCurve: ...
     def upcast_to_NurbsCurveInterface(self) -> NurbsCurveInterface: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToPiecewiseCurve = upcast_to_PiecewiseCurve
     upcastToNurbsCurveInterface = upcast_to_NurbsCurveInterface
-    getClassType = get_class_type
 
 class NurbsCurveResult(ReferenceCount):
     """The result of a NurbsCurveEvaluator.  This object represents a curve in a

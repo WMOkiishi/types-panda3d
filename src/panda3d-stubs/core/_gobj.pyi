@@ -871,7 +871,6 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     into the data record simply by choosing a unique name.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     stride: int
     pad_to: int
     divisor: int
@@ -1079,8 +1078,6 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         the columns in memory, as understood by Python's struct module.  If pad is
         true, extra padding bytes are added to the end as 'x' characters as needed.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_columns(self) -> tuple[GeomVertexColumn, ...]: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToGeomEnums = upcast_to_GeomEnums
@@ -1105,7 +1102,6 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     countUnusedSpace = count_unused_space
     writeWithData = write_with_data
     getFormatString = get_format_string
-    getClassType = get_class_type
     getColumns = get_columns
 
 @final
@@ -1130,7 +1126,6 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     constructions.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     animation: GeomVertexAnimationSpec
     arrays: Sequence[GeomVertexArrayFormat]
     @property
@@ -1453,8 +1448,6 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         pair, a 4-component color, a 3-component normal, and a 3-component vertex
         position.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_arrays(self) -> tuple[GeomVertexArrayFormat, ...]: ...
     def get_columns(self) -> tuple[GeomVertexColumn, ...]: ...
     def get_points(self) -> tuple[InternalName, ...]: ...
@@ -1513,7 +1506,6 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     getV3c4t2 = get_v3c4t2
     getV3n3c4 = get_v3n3c4
     getV3n3c4t2 = get_v3n3c4t2
-    getClassType = get_class_type
     getArrays = get_arrays
     getColumns = get_columns
     getPoints = get_points
@@ -1526,7 +1518,6 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 class SimpleLru(Namable):
     """An implementation of a very simple LRU algorithm.  Also see AdaptiveLru."""
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str, max_size: int) -> None: ...
     def upcast_to_Namable(self) -> Namable: ...
     def get_total_size(self) -> int:
@@ -1560,7 +1551,6 @@ class SimpleLru(Namable):
         """Checks that the LRU is internally self-consistent.  Returns true if
         successful, false if there is some problem.
         """
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     upcastToNamable = upcast_to_Namable
     getTotalSize = get_total_size
@@ -1745,7 +1735,6 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
     cache file, if necessary.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     RC_resident: Final[Literal[0]]
     RCResident: Final[Literal[0]]
     RC_compressed: Final[Literal[1]]
@@ -1829,7 +1818,6 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
     @staticmethod
     def flush_threads() -> None:
         """Waits for all of the pending thread tasks to finish before returning."""
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...  # type: ignore[override]
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -1894,7 +1882,6 @@ class VertexDataBlock(SimpleAllocatorBlock, ReferenceCount):
     GeomVertexArrayData object.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_SimpleAllocatorBlock(self) -> SimpleAllocatorBlock: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
     def get_page(self) -> VertexDataPage:
@@ -1924,7 +1911,6 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
     actual vertex data.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     usage_hint: _GeomEnums_UsageHint
     @property
     def array_format(self) -> GeomVertexArrayFormat: ...
@@ -1939,7 +1925,6 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_SimpleLruPage(self) -> SimpleLruPage: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self: Self, copy: Self) -> Self: ...
     def compare_to(self, other: GeomVertexArrayData) -> int:
         """Returns 0 if the two arrays are equivalent, even if they are not the same
         pointer.
@@ -2007,7 +1992,6 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         """Returns a sequence number which is guaranteed to change at least every time
         the array vertex data is modified.
         """
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def request_resident(self, current_thread: Thread = ...) -> bool:
         """Returns true if the vertex data is currently resident in memory.  If this
@@ -2078,8 +2062,6 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         """Returns the global VertexDataBook that will be used to allocate vertex data
         buffers.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToCopyOnWriteObject = upcast_to_CopyOnWriteObject
     upcastToSimpleLruPage = upcast_to_SimpleLruPage
     upcastToGeomEnums = upcast_to_GeomEnums
@@ -2105,7 +2087,6 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
     getSmallLru = get_small_lru
     lruEpoch = lru_epoch
     getBook = get_book
-    getClassType = get_class_type
 
 class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
     """This data object is returned by GeomVertexArrayData::get_handle() or
@@ -2120,7 +2101,6 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
     and GeomVertexArrayDataPipelineWriter classes
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def object(self) -> GeomVertexArrayData: ...
     @property
@@ -2200,8 +2180,6 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
         """
     def mark_used(self) -> None:
         """Marks the array data recently-used."""
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToReferenceCount = upcast_to_ReferenceCount
     upcastToGeomEnums = upcast_to_GeomEnums
     getObject = get_object
@@ -2223,7 +2201,6 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
     getSubdata = get_subdata
     setSubdata = set_subdata
     markUsed = mark_used
-    getClassType = get_class_type
 
 class GeomCacheManager:
     """This is used to keep track of, and limit the size of, the cache of munged
@@ -2751,7 +2728,6 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     data at a high level.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     usage_hint: _GeomEnums_UsageHint
     format: GeomVertexFormat
@@ -3135,8 +3111,6 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_arrays(self) -> tuple[GeomVertexArrayData, ...]: ...
     upcastToCopyOnWriteObject = upcast_to_CopyOnWriteObject
     upcastToGeomEnums = upcast_to_GeomEnums
@@ -3186,7 +3160,6 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     describeVertex = describe_vertex
     clearCache = clear_cache
     clearCacheStage = clear_cache_stage
-    getClassType = get_class_type
     getArrays = get_arrays
 
 class AnimateVerticesRequest(AsyncTask):
@@ -3280,7 +3253,6 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
     strip of (n - 2) connected triangles from each sequence of n vertices.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def primitive_type(self) -> _GeomEnums_PrimitiveType: ...
     @property
@@ -3829,8 +3801,6 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         methods for more common usage.  We recommend you do not use this method
         directly.  If you do, be sure you know what you are doing!
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_vertex_list(self) -> tuple[int, ...]: ...
     upcastToCopyOnWriteObject = upcast_to_CopyOnWriteObject
     upcastToGeomEnums = upcast_to_GeomEnums
@@ -3898,7 +3868,6 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
     getNumVerticesPerPrimitive = get_num_vertices_per_primitive
     getMinNumVerticesPerPrimitive = get_min_num_vertices_per_primitive
     getNumUnusedVerticesPerPrimitive = get_num_unused_vertices_per_primitive
-    getClassType = get_class_type
     getVertexList = get_vertex_list
 
 class TextureStage(TypedWritableReferenceCount):
@@ -4322,7 +4291,6 @@ class Geom(CopyOnWriteObject, GeomEnums):
     in the same graphics state.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     primitives: Sequence[GeomPrimitive]
     bounds_type: _BoundingVolume_BoundsType
     @property
@@ -4736,8 +4704,6 @@ class Geom(CopyOnWriteObject, GeomEnums):
         a geom does not need to be explicitly prepared by the user before it may be
         rendered.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_primitives(self) -> tuple[GeomPrimitive, ...]: ...
     upcastToCopyOnWriteObject = upcast_to_CopyOnWriteObject
     upcastToGeomEnums = upcast_to_GeomEnums
@@ -4793,7 +4759,6 @@ class Geom(CopyOnWriteObject, GeomEnums):
     isPrepared = is_prepared
     releaseAll = release_all
     prepareNow = prepare_now
-    getClassType = get_class_type
     getPrimitives = get_primitives
 
 class GeomContext(SavedContext):
@@ -5801,7 +5766,7 @@ class GeomVertexWriter(GeomEnums):
     addData3i = add_data3i
     addData4i = add_data4i
 
-class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
+class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[misc]
     """This object provides the functionality of both a GeomVertexReader and a
     GeomVertexWriter, combined together into one convenient package.  It is
     designed for making a single pass over a GeomVertexData object, modifying
@@ -5814,7 +5779,6 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
     avoid accidentally dereferencing either array while recopying.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
@@ -5847,7 +5811,6 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
     def __init__(self, vertex_data: GeomVertexData, name: InternalName, current_thread: Thread = ...) -> None: ...
     def upcast_to_GeomVertexWriter(self) -> GeomVertexWriter: ...
     def upcast_to_GeomVertexReader(self) -> GeomVertexReader: ...
-    def assign(self: Self, copy: Self) -> Self: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the rewriter is processing."""
     def get_array_data(self) -> GeomVertexArrayData:
@@ -5864,10 +5827,6 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
         """Returns the per-row stride (bytes between consecutive rows) of the
         underlying vertex array.  This low-level information is normally not needed
         to use the GeomVertexRewriter directly.
-        """
-    def get_current_thread(self) -> Thread:
-        """Returns the Thread pointer of the currently-executing thread, as passed to
-        the constructor of this object.
         """
     @overload
     def set_column(self, name: InternalName) -> bool:
@@ -5906,23 +5865,12 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
     def set_column(self, array: int, column: GeomVertexColumn) -> bool: ...
     def clear(self) -> None:
         """Resets the GeomVertexRewriter to the initial state."""
-    def has_column(self) -> bool:
-        """Returns true if a valid data type has been successfully set, or false if
-        the data type does not exist.
-        """
     def get_array(self) -> int:
         """Returns the array index containing the data type that the rewriter is
         working on.
         """
     def get_column(self) -> GeomVertexColumn:
         """Returns the description of the data type that the rewriter is working on."""
-    def set_row_unsafe(self, row: int) -> None:
-        """Sets the start row to the indicated value, without internal checks.  This
-        is the same as set_row(), but it does not check for the possibility that
-        the array has been reallocated internally for some reason; use only when
-        you are confident that the array is unchanged and you really need every bit
-        of available performance.
-        """
     def set_row(self, row: int) -> None:
         """Sets the start, write, and write index to the indicated value.  The
         rewriter will begin traversing from the given row.
@@ -5935,19 +5883,15 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
         """Returns true if the reader or writer is currently at the end of the list of
         vertices, false otherwise.
         """
-    def output(self, out: ostream) -> None: ...
     upcastToGeomVertexWriter = upcast_to_GeomVertexWriter
     upcastToGeomVertexReader = upcast_to_GeomVertexReader
     getVertexData = get_vertex_data
     getArrayData = get_array_data
     getArrayHandle = get_array_handle
     getStride = get_stride
-    getCurrentThread = get_current_thread
     setColumn = set_column  # type: ignore[assignment]
-    hasColumn = has_column
     getArray = get_array
     getColumn = get_column
-    setRowUnsafe = set_row_unsafe
     setRow = set_row
     getStartRow = get_start_row
     isAtEnd = is_at_end
@@ -6206,7 +6150,6 @@ class Texture(TypedWritableReferenceCount, Namable):
     the system RAM image is automatically freed.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     clear_color: LColor
     filename: Filename
     alpha_filename: Filename
@@ -7961,8 +7904,6 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the QualityLevel value associated with the given string
         representation.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
     makeCopy = make_copy
@@ -8157,7 +8098,6 @@ class Texture(TypedWritableReferenceCount, Namable):
     stringCompressionMode = string_compression_mode
     formatQualityLevel = format_quality_level
     stringQualityLevel = string_quality_level
-    getClassType = get_class_type
 
 class Shader(TypedWritableReferenceCount):
     SL_none: Final[Literal[0]]
@@ -8339,7 +8279,6 @@ class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):
     @since 1.10.0
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def data_size_bytes(self) -> int: ...
     @property
@@ -8392,15 +8331,12 @@ class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):
         """Frees the context allocated on all objects for which the data has been
         declared.  Returns the number of contexts which have been freed.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
     upcastToGeomEnums = upcast_to_GeomEnums
     isPrepared = is_prepared
     prepareNow = prepare_now
     releaseAll = release_all
-    getClassType = get_class_type
 
 class PreparedGraphicsObjects(ReferenceCount):
     """A table of objects that are saved within the graphics context for reference
@@ -8913,17 +8849,13 @@ class IndexBufferContext(BufferContext, AdaptiveLruPage):
     OpenGL can create a buffer object.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_BufferContext(self) -> BufferContext: ...
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
     def get_data(self) -> GeomPrimitive:
         """Returns the pointer to the client-side array data object."""
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToBufferContext = upcast_to_BufferContext
     upcastToAdaptiveLruPage = upcast_to_AdaptiveLruPage
     getData = get_data
-    getClassType = get_class_type
 
 class Lens(TypedWritableReferenceCount):
     """A base class for any number of different kinds of lenses, linear and
@@ -9503,7 +9435,6 @@ class Material(TypedWritableReferenceCount, Namable):
     in perceptually linear in the range of 0-1.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     base_color: LColor
     ambient: LColor
     diffuse: LColor
@@ -9714,14 +9645,11 @@ class Material(TypedWritableReferenceCount, Namable):
         The sorting order is arbitrary and largely meaningless, except to
         differentiate different materials.
         """
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent: int) -> None: ...
     def is_attrib_locked(self) -> bool:
         """@deprecated This no longer has any meaning in 1.10."""
     def set_attrib_lock(self) -> None:
         """@deprecated This no longer has any meaning in 1.10."""
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
     getDefault = get_default
@@ -9764,7 +9692,6 @@ class Material(TypedWritableReferenceCount, Namable):
     compareTo = compare_to
     isAttribLocked = is_attrib_locked
     setAttribLock = set_attrib_lock
-    getClassType = get_class_type
 
 class MaterialPool:
     """The MaterialPool (there is only one in the universe) serves to unify
@@ -10033,7 +9960,6 @@ class TextureContext(BufferContext, AdaptiveLruPage):
     The texture stores all of these handles internally.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_BufferContext(self) -> BufferContext: ...
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
     def get_texture(self) -> Texture:
@@ -10081,8 +10007,6 @@ class TextureContext(BufferContext, AdaptiveLruPage):
         """Returns a sequence number which is guaranteed to change at least every time
         the texture's "simple" image data is modified.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToBufferContext = upcast_to_BufferContext
     upcastToAdaptiveLruPage = upcast_to_AdaptiveLruPage
     getTexture = get_texture
@@ -10096,7 +10020,6 @@ class TextureContext(BufferContext, AdaptiveLruPage):
     getPropertiesModified = get_properties_modified
     getImageModified = get_image_modified
     getSimpleImageModified = get_simple_image_modified
-    getClassType = get_class_type
 
 class ShaderContext(SavedContext):
     @property
@@ -10136,18 +10059,12 @@ class VideoTexture(Texture, AnimInterface):
     character.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def video_width(self) -> int: ...
     @property
     def video_height(self) -> int: ...
     def upcast_to_Texture(self) -> Texture: ...
     def upcast_to_AnimInterface(self) -> AnimInterface: ...
-    def get_keep_ram_image(self) -> bool:
-        """Returns the flag that indicates whether this Texture is eligible to have
-        its main RAM copy of the texture memory dumped when the texture is prepared
-        for rendering.  See set_keep_ram_image().
-        """
     def get_video_width(self) -> int:
         """Returns the width in texels of the source video stream.  This is not
         necessarily the width of the actual texture, since the texture may have
@@ -10158,14 +10075,10 @@ class VideoTexture(Texture, AnimInterface):
         necessarily the height of the actual texture, since the texture may have
         been expanded to raise it to a power of 2.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTexture = upcast_to_Texture
     upcastToAnimInterface = upcast_to_AnimInterface
-    getKeepRamImage = get_keep_ram_image
     getVideoWidth = get_video_width
     getVideoHeight = get_video_height
-    getClassType = get_class_type
 
 class VertexBufferContext(BufferContext, AdaptiveLruPage):
     """This is a special class object that holds all the information returned by a
@@ -10177,7 +10090,6 @@ class VertexBufferContext(BufferContext, AdaptiveLruPage):
     OpenGL can create a buffer object.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_BufferContext(self) -> BufferContext: ...
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
     def get_data(self) -> GeomVertexArrayData:
@@ -10194,15 +10106,12 @@ class VertexBufferContext(BufferContext, AdaptiveLruPage):
         """Returns true if the data has been modified since the last time
         mark_loaded() was called.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToBufferContext = upcast_to_BufferContext
     upcastToAdaptiveLruPage = upcast_to_AdaptiveLruPage
     getData = get_data
     changedSize = changed_size
     changedUsageHint = changed_usage_hint
     wasModified = was_modified
-    getClassType = get_class_type
 
 class TextureCollection:
     """Manages a list of Texture objects, as returned by

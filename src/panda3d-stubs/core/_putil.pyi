@@ -376,7 +376,6 @@ class TypedWritableReferenceCount(TypedWritable, ReferenceCount):
     See also TypedObject for detailed instructions.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_TypedWritable(self) -> TypedWritable: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
     @staticmethod
@@ -391,12 +390,9 @@ class TypedWritableReferenceCount(TypedWritable, ReferenceCount):
         management.  Note that the caller is still responsible for maintaining the
         reference count on the return value.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritable = upcast_to_TypedWritable
     upcastToReferenceCount = upcast_to_ReferenceCount
     decodeFromBamStream = decode_from_bam_stream
-    getClassType = get_class_type
 
 class BamCacheRecord(TypedWritableReferenceCount):
     """An instance of this class is written to the front of a Bam or Txo file to
@@ -404,7 +400,6 @@ class BamCacheRecord(TypedWritableReferenceCount):
     record contains information needed to test the validity of the cache.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     data: TypedWritable
     @property
     def source_pathname(self) -> Filename: ...
@@ -503,8 +498,6 @@ class BamCacheRecord(TypedWritableReferenceCount):
     def set_data(self, ptr: TypedWritable, dummy: int) -> None: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     makeCopy = make_copy
     getSourcePathname = get_source_pathname
@@ -520,7 +513,6 @@ class BamCacheRecord(TypedWritableReferenceCount):
     clearData = clear_data
     getData = get_data
     setData = set_data
-    getClassType = get_class_type
 
 class BamCache:
     """This class maintains a cache of Bam and/or Txo objects generated from model
@@ -2286,7 +2278,6 @@ class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
     meaning that Datagram sizes are always stored little-endian.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     data: bytes
     def __init__(self, data: bytes = ...) -> None:
         """`(self)`:

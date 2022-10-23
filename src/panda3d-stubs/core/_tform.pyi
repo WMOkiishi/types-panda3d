@@ -594,7 +594,6 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     MouseWatcher.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     frame: LVecBase4
     sort: int
     active: bool
@@ -663,10 +662,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
         """
     def get_suppress_flags(self) -> int:
         """Returns the current suppress_flags.  See set_suppress_flags()."""
-    def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
     setFrame = set_frame
@@ -680,7 +676,6 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     getKeyboard = get_keyboard
     setSuppressFlags = set_suppress_flags
     getSuppressFlags = get_suppress_flags
-    getClassType = get_class_type
 
 class MouseWatcherBase:
     """This represents a collection of MouseWatcherRegions that may be managed as
@@ -764,14 +759,10 @@ class MouseWatcherGroup(MouseWatcherBase, ReferenceCount):
     exists so that we can inherit from ReferenceCount.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def upcast_to_MouseWatcherBase(self) -> MouseWatcherBase: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToMouseWatcherBase = upcast_to_MouseWatcherBase
     upcastToReferenceCount = upcast_to_ReferenceCount
-    getClassType = get_class_type
 
 class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     """This TFormer maintains a list of rectangular regions on the screen that are
@@ -796,14 +787,9 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     empty.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_DataNode(self) -> DataNode: ...
     def upcast_to_MouseWatcherBase(self) -> MouseWatcherBase: ...
-    def remove_region(self, region: MouseWatcherRegion) -> bool:
-        """Removes the indicated region from the group.  Returns true if it was
-        successfully removed, or false if it wasn't there in the first place.
-        """
     def has_mouse(self) -> bool:
         """Returns true if the mouse is anywhere within the window, false otherwise.
         Also see is_mouse_open().
@@ -1126,12 +1112,9 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         with no keyboard or mouse activity and no calls to note_activity(), then
         any buttons held will be automatically released.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_groups(self) -> tuple[MouseWatcherGroup, ...]: ...
     upcastToDataNode = upcast_to_DataNode
     upcastToMouseWatcherBase = upcast_to_MouseWatcherBase
-    removeRegion = remove_region
     hasMouse = has_mouse
     isMouseOpen = is_mouse_open
     getMouse = get_mouse
@@ -1186,7 +1169,6 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     clearTrailNode = clear_trail_node
     clearTrailLog = clear_trail_log
     noteActivity = note_activity
-    getClassType = get_class_type
     getGroups = get_groups
 
 class MouseWatcherParameter:

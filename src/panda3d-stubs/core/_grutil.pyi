@@ -4,13 +4,12 @@ from typing_extensions import Final, Literal, TypeAlias
 from panda3d._typing import Filepath, Vec3d, Vec3f, Vec4f
 from panda3d.core._audio import AudioSound
 from panda3d.core._display import DisplayRegion, GraphicsOutput
-from panda3d.core._dtoolbase import TypedObject, TypeHandle
+from panda3d.core._dtoolbase import TypedObject
 from panda3d.core._express import Namable
 from panda3d.core._gobj import InternalName, Lens, Texture, TextureStage, VertexTransform
-from panda3d.core._gsgbase import GraphicsStateGuardianBase
 from panda3d.core._linmath import LColor, LPoint3, LVecBase2, LVecBase2d, LVecBase2f, LVector3, LVertex
 from panda3d.core._movies import MovieVideo, MovieVideoCursor
-from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderState, SceneSetup, TransformState
+from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderState, TransformState
 from panda3d.core._pnmimage import PfmFile, PNMFileType, PNMImage
 from panda3d.core._putil import ClockObject, DrawMask
 from panda3d.core._text import TextNode
@@ -1326,14 +1325,8 @@ class PipeOcclusionCullTraverser(CullTraverser):
     in grutil instead, for lack of any better ideas.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, host: GraphicsOutput) -> None: ...
     def upcast_to_CullTraverser(self) -> CullTraverser: ...
-    def set_scene(self, scene_setup: SceneSetup, gsg: GraphicsStateGuardianBase, dr_incomplete_render: bool) -> None: ...
-    def end_traverse(self) -> None:
-        """Should be called when the traverser has finished traversing its scene, this
-        gives it a chance to do any necessary finalization.
-        """
     def get_buffer(self) -> GraphicsOutput: ...
     def get_texture(self) -> Texture:
         """Returns a Texture that can be used to visualize the efforts of the
@@ -1347,16 +1340,11 @@ class PipeOcclusionCullTraverser(CullTraverser):
         """
     def get_occlusion_mask(self) -> DrawMask:
         """Returns the DrawMask for occlusion polygons.  See set_occlusion_mask()."""
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToCullTraverser = upcast_to_CullTraverser
-    setScene = set_scene
-    endTraverse = end_traverse
     getBuffer = get_buffer
     getTexture = get_texture
     setOcclusionMask = set_occlusion_mask
     getOcclusionMask = get_occlusion_mask
-    getClassType = get_class_type
 
 class PfmVizzer:
     """This class aids in the visualization and manipulation of PfmFile objects."""

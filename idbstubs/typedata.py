@@ -22,7 +22,7 @@ _logger: Final = logging.getLogger(__name__)
 
 _modules: dict[str, str] = {}
 _inheritance: dict[str, set[str]] = {}
-_linear_inheritance: dict[str, tuple[str, ...]] = {}
+_direct_inheritance: dict[str, tuple[str, ...]] = {}
 _coercions = defaultdict[TypeIndex, set[TypeIndex]](set)
 _aliases: dict[str, str] = {}
 _param_type_replacements: dict[str, str] = {}
@@ -147,8 +147,8 @@ def load_data() -> None:
             _inheritance[get_type_name(t)] = {
                 get_type_name(s) for s in base_classes
             }
-            _linear_inheritance[get_type_name(t)] = tuple(
-                get_type_name(s) for s in linear_superclasses(t)
+            _direct_inheritance[get_type_name(t)] = tuple(
+                get_type_name(s) for s in get_derivations(t)
             )
     for cast_to in tuple(_coercions):  # freeze keys
         cast_to_name = get_type_name(cast_to)
@@ -165,19 +165,6 @@ def recursive_superclasses(t: TypeIndex, /) -> frozenset[TypeIndex]:
         derivations.add(d)
         derivations |= recursive_superclasses(d)
     return frozenset(derivations)
-
-
-@cache
-def linear_superclasses(t: TypeIndex, /) -> tuple[TypeIndex, ...]:
-    """Return a tuple of the indices of the (recursive) superclasses for a
-    type, stopping either at the top of the hierarchy or at the first class
-    that inherits directly from multiple classes, whichever comes first.
-    """
-    bases = tuple(get_derivations(t))
-    if len(bases) != 1:
-        return ()
-    else:
-        return bases + linear_superclasses(bases[0])
 
 
 def explicit_cast_to(t: TypeIndex, /) -> Iterator[TypeIndex]:
@@ -269,13 +256,31 @@ def get_module(name: str) -> str | None:
         return None
 
 
-def get_linear_superclasses(name: str, /) -> tuple[str, ...]:
-    """Return a tuple of the names of the (recursive) superclasses for a type,
-    stopping either at the top of the hierarchy or at the first class that
-    inherits directly from multiple classes, whichever comes first.
-    """
+@cache
+def get_mro(name: str, /) -> tuple[str, ...]:
+    """Return a tuple of the names of the classes in the MRO of a class."""
     name = _aliases.get(name, name)
-    return _linear_inheritance.get(name, ())
+    bases = list(_direct_inheritance.get(name, ()))
+    # all_bases = (get_mro(base) for base in bases)
+    # return (name, *merge_mros(all_bases), 'object')
+    linear_bases: list[str] = []
+    while bases:
+        for base_1 in bases:
+            new_bases = list(_direct_inheritance.get(base_1, ()))
+            for base_2 in bases:
+                if base_1 == base_2:
+                    continue
+                if inherits_from(base_2, base_1):
+                    break
+                new_bases.append(base_2)
+            else:
+                linear_bases.append(base_1)
+                bases = new_bases
+                break
+        else:
+            _logger.error('Could not construct MRO')
+            return ()
+    return (name, *linear_bases, 'object')
 
 
 def process_dependency(

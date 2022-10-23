@@ -18,7 +18,6 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     indicates a particular movie.  The MovieAudioCursor is what allows access.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def filename(self) -> Filename: ...
     @overload
@@ -42,12 +41,9 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
         """Returns the movie's filename.  A movie is not guaranteed to have a
         filename, if not, then this function returns a null filename.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
     getFilename = get_filename
-    getClassType = get_class_type
 
 class FlacAudio(MovieAudio):
     """Reads FLAC audio files.  Ogg-encapsulated FLAC files are not supported.
@@ -216,7 +212,6 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
     indicates a particular movie.  The MovieVideoCursor is what allows access.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def filename(self) -> Filename: ...
     @property
@@ -248,13 +243,10 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
         """If the movie is to be loaded from a subfile on disk, this returns the
         subfile info.  Check info.is_empty() to see if this is valid data.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
     upcastToNamable = upcast_to_Namable
     getFilename = get_filename
     getSubfileInfo = get_subfile_info
-    getClassType = get_class_type
 
 class InkblotVideo(MovieVideo):
     """A cellular automaton that generates an amusing pattern of swirling colors."""

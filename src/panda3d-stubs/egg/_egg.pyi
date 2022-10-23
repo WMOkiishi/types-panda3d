@@ -123,20 +123,14 @@ class EggObject(TypedReferenceCount):
 class EggNamedObject(EggObject, Namable):
     """This is a fairly low-level base class--any egg object that has a name."""
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload
     def __init__(self, copy: EggNamedObject) -> None: ...
     def upcast_to_EggObject(self) -> EggObject: ...
     def upcast_to_Namable(self) -> Namable: ...
-    def assign(self: Self, copy: Self) -> Self: ...
-    def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToEggObject = upcast_to_EggObject
     upcastToNamable = upcast_to_Namable
-    getClassType = get_class_type
 
 class EggNode(EggNamedObject):
     """A base class for things that may be directly added into the egg hierarchy.
@@ -777,7 +771,6 @@ class EggVertexUV(EggNamedObject):
         Usually this is the same string that is input, but for historical reasons
         the texture coordinate name "default" is mapped to the empty string.
         """
-    def set_name(self, name: str) -> None: ...
     def get_num_dimensions(self) -> int:
         """Returns the number of components of the texture coordinate set.  This is
         either 2 (the normal case) or 3 (for a 3-d texture coordinate).
@@ -830,7 +823,6 @@ class EggVertexUV(EggNamedObject):
         imposes an arbitrary ordering useful to identify unique vertices.
         """
     filterName = filter_name
-    setName = set_name
     getNumDimensions = get_num_dimensions
     hasW = has_w
     getUv = get_uv
@@ -862,7 +854,6 @@ class EggVertexAux(EggNamedObject):
     def __init__(self, copy: EggVertexAux) -> None: ...
     @overload
     def __init__(self, name: str, aux: Vec4d) -> None: ...
-    def set_name(self, name: str) -> None: ...
     def get_aux(self) -> LVecBase4d:
         """Returns the auxiliary data quadruple."""
     def set_aux(self, aux: Vec4d) -> None:
@@ -877,7 +868,6 @@ class EggVertexAux(EggNamedObject):
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
-    setName = set_name
     getAux = get_aux
     setAux = set_aux
     makeAverage = make_average
@@ -888,7 +878,6 @@ class EggVertex(EggObject, EggAttributes):
     such as a normal.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: EggVertex = ...) -> None:
         """Copies all properties of the vertex except its vertex pool, index number,
         and group membership.
@@ -1164,8 +1153,6 @@ class EggVertex(EggObject, EggAttributes):
     def test_gref_integrity(self) -> None: ...
     def test_pref_integrity(self) -> None: ...
     def output(self, out: ostream) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToEggObject = upcast_to_EggObject
     upcastToEggAttributes = upcast_to_EggAttributes
     getPool = get_pool
@@ -1210,7 +1197,6 @@ class EggVertex(EggObject, EggAttributes):
     hasPref = has_pref
     testGrefIntegrity = test_gref_integrity
     testPrefIntegrity = test_pref_integrity
-    getClassType = get_class_type
 
 class EggVertexPool(EggNode):
     """A collection of vertices.  There may be any number of vertex pools in a
@@ -1790,7 +1776,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     <Instance>, and <Joint> type nodes.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     group_type: _EggGroup_GroupType
     billboard_type: _EggGroup_BillboardType
     billboard_center: LPoint3d
@@ -1959,7 +1944,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def upcast_to_EggGroupNode(self) -> EggGroupNode: ...
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
     def upcast_to_EggTransform(self) -> EggTransform: ...
-    def assign(self: Self, copy: Self) -> Self: ...
     def write(self, out: ostream, indent_level: int) -> None:  # type: ignore[override]
         """Writes the group and all of its children to the indicated output stream in
         Egg format.
@@ -1985,11 +1969,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     def write_render_mode(self, out: ostream, indent_level: int) -> None:
         """Writes the flags inherited from EggRenderMode and similar flags that
         control obscure render effects.
-        """
-    def is_joint(self) -> bool:
-        """Returns true if this particular node represents a <Joint> entry or not.
-        This is a handy thing to know since Joints are sorted to the end of their
-        sibling list when writing an egg file.  See EggGroupNode::write().
         """
     def determine_alpha_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
@@ -2032,22 +2011,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         some such object at this level or above this group that has a bin
         specified.  Returns a valid EggRenderMode pointer if one is found, or NULL
         otherwise.
-        """
-    def determine_indexed(self) -> bool:
-        """Walks back up the hierarchy, looking for an EggGroup at this level or above
-        that has the "indexed" scalar set.  Returns the value of the indexed scalar
-        if it is found, or false if it is not.
-
-        In other words, returns true if the "indexed" flag is in effect for the
-        indicated node, false otherwise.
-        """
-    def determine_decal(self) -> bool:
-        """Walks back up the hierarchy, looking for an EggGroup at this level or above
-        that has the "decal" flag set.  Returns the value of the decal flag if it
-        is found, or false if it is not.
-
-        In other words, returns true if the "decal" flag is in effect for the
-        indicated node, false otherwise.
         """
     def set_group_type(self, type: _EggGroup_GroupType) -> None: ...
     def get_group_type(self) -> _EggGroup_GroupType: ...
@@ -2310,8 +2273,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
         representation, or BO_none if the string does not match any known
         BlendOperand.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_object_types(self) -> tuple[str, ...]: ...
     def get_group_refs(self) -> tuple[EggGroup, ...]: ...
     upcastToEggGroupNode = upcast_to_EggGroupNode
@@ -2325,7 +2286,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     writeDecalFlags = write_decal_flags
     writeTags = write_tags
     writeRenderMode = write_render_mode
-    isJoint = is_joint
     determineAlphaMode = determine_alpha_mode
     determineDepthWriteMode = determine_depth_write_mode
     determineDepthTestMode = determine_depth_test_mode
@@ -2333,8 +2293,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     determineDepthOffset = determine_depth_offset
     determineDrawOrder = determine_draw_order
     determineBin = determine_bin
-    determineIndexed = determine_indexed
-    determineDecal = determine_decal
     setGroupType = set_group_type
     getGroupType = get_group_type
     isInstanceType = is_instance_type
@@ -2450,7 +2408,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     stringCollideFlags = string_collide_flags
     stringBlendMode = string_blend_mode
     stringBlendOperand = string_blend_operand
-    getClassType = get_class_type
     getObjectTypes = get_object_types
     getGroupRefs = get_group_refs
 
@@ -2562,7 +2519,6 @@ class EggFilenameNode(EggNode):
 class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     """Defines a texture map that may be applied to geometry."""
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     texture_type: _EggTexture_TextureType
     format: _EggTexture_Format
     compression_mode: _EggTexture_CompressionMode
@@ -2824,7 +2780,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     def upcast_to_EggFilenameNode(self) -> EggFilenameNode: ...
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
     def upcast_to_EggTransform(self) -> EggTransform: ...
-    def assign(self: Self, copy: Self) -> Self: ...
     def write(self, out: ostream, indent_level: int) -> None:  # type: ignore[override]
         """Writes the texture definition to the indicated output stream in Egg format."""
     def is_equivalent_to(self, other: EggTexture, eq: int) -> bool:
@@ -3269,8 +3224,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Returns the TexGen value associated with the given string representation,
         or ET_unspecified if the string does not match any known TexGen value.
         """
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     upcastToEggFilenameNode = upcast_to_EggFilenameNode
     upcastToEggRenderMode = upcast_to_EggRenderMode
     upcastToEggTransform = upcast_to_EggTransform
@@ -3389,7 +3342,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     stringCombineOperand = string_combine_operand
     stringTexGen = string_tex_gen
     stringQualityLevel = string_quality_level
-    getClassType = get_class_type
 
 class EggMaterial(EggNode):
     base: LColor
@@ -3553,7 +3505,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     pool.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     material: EggMaterial
     bface_flag: bool
     vertices: Sequence[EggVertex]
@@ -3578,30 +3529,11 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def upcast_to_EggNode(self) -> EggNode: ...
     def upcast_to_EggAttributes(self) -> EggAttributes: ...
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
-    def assign(self: Self, copy: Self) -> Self: ...
     def make_copy(self) -> EggPrimitive: ...
     def determine_alpha_mode(self) -> EggRenderMode:
         """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
         some such object at this level or above this primitive that has an
         alpha_mode other than AM_unspecified.  Returns a valid EggRenderMode
-        pointer if one is found, or NULL otherwise.
-        """
-    def determine_depth_write_mode(self) -> EggRenderMode:
-        """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
-        some such object at this level or above this node that has a
-        depth_write_mode other than DWM_unspecified.  Returns a valid EggRenderMode
-        pointer if one is found, or NULL otherwise.
-        """
-    def determine_depth_test_mode(self) -> EggRenderMode:
-        """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
-        some such object at this level or above this node that has a
-        depth_test_mode other than DTM_unspecified.  Returns a valid EggRenderMode
-        pointer if one is found, or NULL otherwise.
-        """
-    def determine_visibility_mode(self) -> EggRenderMode:
-        """Walks back up the hierarchy, looking for an EggGroup or EggPrimitive or
-        some such object at this level or above this node that has a
-        visibility_mode other than VM_unspecified.  Returns a valid EggRenderMode
         pointer if one is found, or NULL otherwise.
         """
     def determine_depth_offset(self) -> EggRenderMode:
@@ -3851,10 +3783,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
         """Returns the vertex pool associated with the vertices of the primitive, or
         NULL if the primitive has no vertices.
         """
-    def write(self, out: ostream, indent_level: int) -> None: ...
     def test_vref_integrity(self) -> None: ...
-    @staticmethod
-    def get_class_type() -> TypeHandle: ...
     def get_textures(self) -> tuple[EggTexture, ...]: ...
     def get_vertices(self) -> tuple[EggVertex, ...]: ...
     upcastToEggNode = upcast_to_EggNode
@@ -3862,9 +3791,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     upcastToEggRenderMode = upcast_to_EggRenderMode
     makeCopy = make_copy
     determineAlphaMode = determine_alpha_mode
-    determineDepthWriteMode = determine_depth_write_mode
-    determineDepthTestMode = determine_depth_test_mode
-    determineVisibilityMode = determine_visibility_mode
     determineDepthOffset = determine_depth_offset
     determineDrawOrder = determine_draw_order
     determineBin = determine_bin
@@ -3906,7 +3832,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     insertVertex = insert_vertex
     getPool = get_pool
     testVrefIntegrity = test_vref_integrity
-    getClassType = get_class_type
     getTextures = get_textures
     getVertices = get_vertices
 

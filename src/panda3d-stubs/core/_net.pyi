@@ -616,7 +616,6 @@ class DatagramGeneratorNet(DatagramGenerator, ConnectionReader, QueuedReturn_Dat
     block until one is.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None:
         """Creates a new DatagramGeneratorNet with the indicated number of threads to
         handle requests.  Normally num_threads should be either 0 or 1 to guarantee
@@ -660,7 +659,6 @@ class DatagramSinkNet(DatagramSink, ConnectionWriter):
     a TCP connection.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None:
         """Creates a new DatagramSinkNet with the indicated number of threads to
         handle writing.  Normally num_threads should be either 0 or 1 to guarantee
@@ -698,7 +696,6 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
     it established for later detection by the client code.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_ConnectionListener(self) -> ConnectionListener: ...
     def upcast_to_QueuedReturn_ConnectionListenerData(self) -> QueuedReturn_ConnectionListenerData: ...
@@ -763,8 +760,6 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
     to free up its resources.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self) -> None: ...
     def upcast_to_ConnectionManager(self) -> ConnectionManager: ...
     def upcast_to_QueuedReturn_PointerTo_Connection(self) -> QueuedReturn_PointerTo_Connection: ...
     def reset_connection_available(self) -> bool:
@@ -819,7 +814,6 @@ class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
     willing to poll for datagrams at its convenience.
     """
 
-    DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, manager: ConnectionManager, num_threads: int) -> None: ...
     def upcast_to_ConnectionReader(self) -> ConnectionReader: ...
     def upcast_to_QueuedReturn_NetDatagram(self) -> QueuedReturn_NetDatagram: ...
