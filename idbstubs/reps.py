@@ -355,7 +355,11 @@ class File:
             if prev_key not in (None, key):
                 yield ''
             imported_names = sorted(
-                self.imports[module], key=lambda s: s[0:1] + s[1:].lower()
+                self.imports[module],
+                key=lambda s: (
+                    0 if s.isupper() else 1 if s[0:1].isupper() else 2,
+                    s.lower()
+                )
             )
             if not module:
                 for name in imported_names:
