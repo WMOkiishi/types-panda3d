@@ -60,8 +60,7 @@ class ConstPointerToArray_ushort(PointerToArrayBase_ushort):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_ushort(PointerToBase_ReferenceCountedVector_ushort):
-    def __eq__(self, __other: object) -> bool:
-        """These are implemented in PointerToVoid, but expose them here."""
+    def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_ushort(PointerToVoid):

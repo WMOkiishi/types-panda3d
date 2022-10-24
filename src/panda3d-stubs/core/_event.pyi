@@ -630,14 +630,8 @@ class AsyncTaskCollection:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: AsyncTaskCollection = ...) -> None: ...
-    def __getitem__(self, index: int) -> AsyncTask:
-        """Returns the nth AsyncTask in the collection.  This is the same as
-        get_task(), but it may be a more convenient way to access it.
-        """
-    def __len__(self) -> int:
-        """Returns the number of tasks in the collection.  This is the same thing as
-        get_num_tasks().
-        """
+    def __getitem__(self, index: int) -> AsyncTask: ...
+    def __len__(self) -> int: ...
     def __iadd__(self: Self, other: AsyncTaskCollection) -> Self: ...
     def __add__(self, other: AsyncTaskCollection) -> AsyncTaskCollection: ...
     def __iter__(self) -> Iterator[AsyncTask]: ...  # Doesn't actually exist

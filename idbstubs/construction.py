@@ -207,7 +207,7 @@ def make_element_rep(
     elif idb.interrogate_element_is_mapping(e):
         type_name = f'Mapping[Any, {type_name}]' if type_name else 'Mapping'
     read_only = not idb.interrogate_element_setter(e)
-    if idb.interrogate_element_has_comment(e):
+    if idb.interrogate_element_has_comment(e) and not is_dunder(name):
         doc = comment_to_docstring(idb.interrogate_element_comment(e))
     else:
         doc = ''
@@ -266,6 +266,7 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
         is_method and is_dunder(name)
         or idb.interrogate_wrapper_parameter_is_this(first_wrapper, 0)
     )
+    omit_docstring = is_dunder(name) and name != '__init__'
     signatures: list[Signature] = []
     sigs_by_doc = defaultdict[str, list[str]](list)
     for w in get_python_wrappers(f):
@@ -274,7 +275,7 @@ def make_function_rep(f: FunctionIndex, /) -> Function:
         signature = make_signature_rep(w, is_constructor=is_constructor,
                                        ensure_self_param=not_static)
         signatures.append(signature)
-        if idb.interrogate_wrapper_has_comment(w):
+        if idb.interrogate_wrapper_has_comment(w) and not omit_docstring:
             sig_doc = comment_to_docstring(idb.interrogate_wrapper_comment(w))
             if sig_doc:
                 param_string = f"`({', '.join(str(p) for p in signature.parameters)})`"

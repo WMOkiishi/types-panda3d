@@ -69,8 +69,7 @@ class ConstPointerToArray_double(PointerToArrayBase_double):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_double(PointerToBase_ReferenceCountedVector_double):
-    def __eq__(self, __other: object) -> bool:
-        """These are implemented in PointerToVoid, but expose them here."""
+    def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_double(PointerToVoid):
@@ -114,8 +113,7 @@ class ConstPointerToArray_float(PointerToArrayBase_float):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_float(PointerToBase_ReferenceCountedVector_float):
-    def __eq__(self, __other: object) -> bool:
-        """These are implemented in PointerToVoid, but expose them here."""
+    def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_float(PointerToVoid):
@@ -140,8 +138,7 @@ class ConstPointerToArray_int(PointerToArrayBase_int):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_int(PointerToBase_ReferenceCountedVector_int):
-    def __eq__(self, __other: object) -> bool:
-        """These are implemented in PointerToVoid, but expose them here."""
+    def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_int(PointerToVoid):
@@ -166,8 +163,7 @@ class ConstPointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
     getNodeRefCount = get_node_ref_count
 
 class PointerToArrayBase_unsigned_char(PointerToBase_ReferenceCountedVector_unsigned_char):
-    def __eq__(self, __other: object) -> bool:
-        """These are implemented in PointerToVoid, but expose them here."""
+    def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
 
 class PointerToBase_ReferenceCountedVector_unsigned_char(PointerToVoid):
@@ -2342,10 +2338,8 @@ class VirtualFileList(ReferenceCount):
     """A list of VirtualFiles, as returned by VirtualFile::scan_directory()."""
 
     def __init__(self, __param0: VirtualFileList) -> None: ...
-    def __getitem__(self, n: int) -> VirtualFile:
-        """Returns the nth file in the list."""
-    def __len__(self) -> int:
-        """Returns the number of files in the list."""
+    def __getitem__(self, n: int) -> VirtualFile: ...
+    def __len__(self) -> int: ...
     def __iadd__(self: Self, other: VirtualFileList) -> Self: ...
     def __add__(self, other: VirtualFileList) -> VirtualFileList: ...
     def __iter__(self) -> Iterator[VirtualFile]: ...  # Doesn't actually exist
