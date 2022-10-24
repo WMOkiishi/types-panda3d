@@ -59,7 +59,7 @@ jobs:
       - name: Check the stubs with Mypy
         run: |
           cd tests
-          py -O test_stubtest.py
+          python -O test_stubtest.py
 
   pyright:
     runs-on: ${{ matrix.os }}
