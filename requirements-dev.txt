@@ -1,4 +1,3 @@
 attrs==22.1.0
 mypy==0.982
 pre-commit
-tox
