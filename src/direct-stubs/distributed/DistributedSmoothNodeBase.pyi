@@ -1,10 +1,11 @@
 from typing import ClassVar
 from typing_extensions import Literal
 
+from direct._typing import Unused
 from direct.showbase.PythonUtil import Enum
 
 class DummyTaskClass:
-    def setDelay(self, blah: object) -> None: ...
+    def setDelay(self, blah: Unused) -> None: ...
 
 DummyTask: DummyTaskClass
 

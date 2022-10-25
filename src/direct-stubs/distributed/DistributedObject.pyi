@@ -2,9 +2,9 @@ from collections.abc import Callable, Iterable, Sequence
 from typing import Any
 from typing_extensions import Final, Literal, TypeAlias
 
+from direct._typing import Unused
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
-from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase
 from .DoInterestManager import InterestHandle
 
@@ -69,4 +69,4 @@ class DistributedObject(DistributedObjectBase):
     def setLocation(self, parentId: int | None, zoneId: int | None) -> None: ...
     def isLocal(self) -> bool: ...
     def isGridParent(self) -> bool: ...
-    def execCommand(self, string, mwMgrId, avId, zoneId) -> None: ...
+    def execCommand(self, string: Unused, mwMgrId: Unused, avId: Unused, zoneId: Unused) -> None: ...

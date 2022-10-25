@@ -2,6 +2,7 @@ from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
+from .DoCollectionManager import DoCollectionManager
 
 class InterestWatcher(DirectObject):
     notify: ClassVar[Notifier]
@@ -14,7 +15,7 @@ class InterestWatcher(DirectObject):
         recurse: bool = ...,
         start: bool = ...,
         mustCollect: bool = ...,
-        doCollectionMgr=...,
+        doCollectionMgr: DoCollectionManager | None = ...,
     ) -> None: ...
     def startCollect(self, mustCollect: bool = ...) -> None: ...
     def stopCollect(self) -> None: ...

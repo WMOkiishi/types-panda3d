@@ -2,7 +2,6 @@ from typing_extensions import Final, Literal
 
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
-from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase
 
 ESNew: Final[Literal[1]]

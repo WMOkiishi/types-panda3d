@@ -1,5 +1,5 @@
 from typing import ClassVar
-from typing_extensions import Literal
+from typing_extensions import Final, Literal
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
@@ -14,6 +14,8 @@ MaxTimeDelta: float
 ClockDriftPerHour: float
 ClockDriftPerSecond: float
 P2PResyncDelay: float
+
+globalClockDelta: Final[ClockDelta]
 
 class ClockDelta(DirectObject):
     notify: ClassVar[Notifier]
@@ -35,5 +37,3 @@ class ClockDelta(DirectObject):
     def getRealNetworkTime(self, bits: int = ..., ticksPerSec: float = ...) -> int: ...
     def getFrameNetworkTime(self, bits: int = ..., ticksPerSec: float = ...) -> int: ...
     def localElapsedTime(self, networkTime, bits: int = ..., ticksPerSec: float = ...) -> float: ...
-
-globalClockDelta: ClockDelta
