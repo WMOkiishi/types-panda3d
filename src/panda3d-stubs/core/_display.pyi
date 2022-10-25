@@ -3261,16 +3261,16 @@ class GraphicsWindowInputDevice(InputDevice):
     keyboard events from the windowing system while the window is in focus.
     """
 
-    def button_down(self, button: ButtonHandle, time: float = ...) -> None:
+    def button_down(self, button: ButtonHandle | int, time: float = ...) -> None:
         """The following interface is for the various kinds of GraphicsWindows to
         record the data incoming on the device.
         """
-    def button_resume_down(self, button: ButtonHandle, time: float = ...) -> None:
+    def button_resume_down(self, button: ButtonHandle | int, time: float = ...) -> None:
         """Records that the indicated button was depressed earlier, and we only just
         detected the event after the fact.  This is mainly useful for tracking the
         state of modifier keys.
         """
-    def button_up(self, button: ButtonHandle, time: float = ...) -> None:
+    def button_up(self, button: ButtonHandle | int, time: float = ...) -> None:
         """Records that the indicated button has been released."""
     def keystroke(self, keycode: int, time: float = ...) -> None:
         """Records that the indicated keystroke has been generated."""
@@ -3286,9 +3286,9 @@ class GraphicsWindowInputDevice(InputDevice):
         we previously sent unpaired "down" events, so that the Panda application
         will believe all buttons are now released.
         """
-    def raw_button_down(self, button: ButtonHandle, time: float = ...) -> None:
+    def raw_button_down(self, button: ButtonHandle | int, time: float = ...) -> None:
         """Records that the indicated button has been depressed."""
-    def raw_button_up(self, button: ButtonHandle, time: float = ...) -> None:
+    def raw_button_up(self, button: ButtonHandle | int, time: float = ...) -> None:
         """Records that the indicated button has been released."""
     def get_pointer(self) -> PointerData:
         """Returns the PointerData associated with the input device's pointer.  This

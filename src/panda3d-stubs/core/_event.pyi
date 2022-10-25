@@ -536,7 +536,7 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         """
     def find_tasks(self, name: str) -> AsyncTaskCollection:
         """Returns the list of tasks found with the indicated name."""
-    def find_tasks_matching(self, pattern: GlobPattern) -> AsyncTaskCollection:
+    def find_tasks_matching(self, pattern: GlobPattern | str) -> AsyncTaskCollection:
         """Returns the list of tasks found whose name matches the indicated glob
         pattern, e.g.  "my_task_*".
         """

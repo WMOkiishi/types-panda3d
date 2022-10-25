@@ -227,7 +227,7 @@ class ButtonThrower(DataNode):
         events for the explicitly named buttons or not.  See
         set_throw_buttons_active().
         """
-    def add_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool:
+    def add_throw_button(self, mods: ModifierButtons, button: ButtonHandle | int) -> bool:
         """Adds a new button to the set of buttons that the ButtonThrower explicitly
         processes.
 
@@ -242,7 +242,7 @@ class ButtonThrower(DataNode):
         The return value is true if the button is added, or false if it was already
         in the set.
         """
-    def remove_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool:
+    def remove_throw_button(self, mods: ModifierButtons, button: ButtonHandle | int) -> bool:
         """Removes the indicated button from the set of buttons that the ButtonThrower
         explicitly processes.  See add_throw_button().
 
@@ -250,7 +250,7 @@ class ButtonThrower(DataNode):
         on the set.
         """
     @overload
-    def has_throw_button(self, button: ButtonHandle) -> bool:
+    def has_throw_button(self, button: ButtonHandle | int) -> bool:
         """`(self, button: ButtonHandle)`:
         Returns true if the indicated button, in conjunction with any nonspecified
         modifier buttons, is on the set of buttons that will be processed by the
@@ -263,7 +263,7 @@ class ButtonThrower(DataNode):
         processed by the ButtonThrower, false otherwise.  See add_throw_button().
         """
     @overload
-    def has_throw_button(self, mods: ModifierButtons, button: ButtonHandle) -> bool: ...
+    def has_throw_button(self, mods: ModifierButtons, button: ButtonHandle | int) -> bool: ...
     def clear_throw_buttons(self) -> None:
         """Empties the set of buttons that were added via add_throw_button().  See
         add_throw_button().
@@ -313,13 +313,13 @@ class MouseInterfaceNode(DataNode):
     """
 
     def __init__(self, __param0: MouseInterfaceNode) -> None: ...
-    def require_button(self, button: ButtonHandle, is_down: bool) -> None:
+    def require_button(self, button: ButtonHandle | int, is_down: bool) -> None:
         """Indicates that the indicated button must be in the required state (either
         up or down) in order for this particular MouseInterfaceNode to do anything.
         For instance, this may be called to make a Trackball object respect mouse
         input only when the control key is held down.
         """
-    def clear_button(self, button: ButtonHandle) -> None:
+    def clear_button(self, button: ButtonHandle | int) -> None:
         """Removes any requirement on the indicated button set by an earlier call to
         require_button().
         """
@@ -854,7 +854,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """
     @overload
     def get_over_region(self, x: float, y: float) -> MouseWatcherRegion: ...
-    def is_button_down(self, button: ButtonHandle) -> bool:
+    def is_button_down(self, button: ButtonHandle | int) -> bool:
         """Returns true if the indicated button is currently being held down, false
         otherwise.
         """

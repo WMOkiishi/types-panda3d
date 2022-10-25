@@ -162,7 +162,7 @@ class InputDevice(TypedReferenceCount):
     def _tracker_data(self) -> TrackerData: ...
     def has_feature(self, feature: InputDevice.Feature) -> bool:
         """Returns true if the device supports the indicated feature."""
-    def map_button(self, index: int, handle: ButtonHandle) -> None:
+    def map_button(self, index: int, handle: ButtonHandle | int) -> None:
         """Associates the indicated ButtonHandle with the button of the indicated index
         number.  When the given button index changes state, a corresponding
         ButtonEvent will be generated with the given ButtonHandle.  Pass
@@ -179,7 +179,7 @@ class InputDevice(TypedReferenceCount):
         It is not necessary to call this if you simply want to query the state of
         the various axes by index number.
         """
-    def find_button(self, handle: ButtonHandle) -> InputDevice.ButtonState:
+    def find_button(self, handle: ButtonHandle | int) -> InputDevice.ButtonState:
         """Returns the first ButtonState found with the given axis, or throw an assert
         if the button handle was not found in the list.
         """
@@ -369,7 +369,7 @@ class ButtonNode(DataNode):
         associated with a ButtonHandle even if their state is unknown.  This number
         may change as more buttons are discovered.
         """
-    def set_button_map(self, index: int, button: ButtonHandle) -> None:
+    def set_button_map(self, index: int, button: ButtonHandle | int) -> None:
         """Associates the indicated ButtonHandle with the button of the indicated
         index number.  When the given button index changes state, a corresponding
         ButtonEvent will be generated with the given ButtonHandle.  Pass
@@ -599,12 +599,12 @@ class VirtualMouse(DataNode):
         this is true, the mouse is within the window; if false, the mouse is not
         within the window (and set_mouse_pos() means nothing).
         """
-    def press_button(self, button: ButtonHandle) -> None:
+    def press_button(self, button: ButtonHandle | int) -> None:
         """Simulates a mouse or keyboard button being depressed.  This should be
         followed up by a call to release_button() sometime later (possibly
         immediately).
         """
-    def release_button(self, button: ButtonHandle) -> None:
+    def release_button(self, button: ButtonHandle | int) -> None:
         """Simulates the button being released.  This should follow a previous call to
         press_button().
         """

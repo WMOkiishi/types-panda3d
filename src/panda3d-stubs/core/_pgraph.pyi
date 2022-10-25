@@ -9146,13 +9146,13 @@ class Loader(TypedReferenceCount, Namable):
         false otherwise.
         @deprecated use task.cancel() to cancel the request instead.
         """
-    def load_sync(self, filename: Filepath, options: LoaderOptions = ...) -> PandaNode:
+    def load_sync(self, filename: Filepath, options: LoaderOptions | int = ...) -> PandaNode:
         """Loads the file immediately, waiting for it to complete.
 
         If search is true, the file is searched for along the model path;
         otherwise, only the exact filename is loaded.
         """
-    def make_async_request(self, filename: Filepath, options: LoaderOptions = ...) -> AsyncTask:
+    def make_async_request(self, filename: Filepath, options: LoaderOptions | int = ...) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to load_async() to start
         an asynchronous model load.
         """
@@ -9168,9 +9168,9 @@ class Loader(TypedReferenceCount, Namable):
         object and listen for that event.  When the model is ready, you may
         retrieve it via request->get_model().
         """
-    def save_sync(self, filename: Filepath, options: LoaderOptions, node: PandaNode) -> bool:
+    def save_sync(self, filename: Filepath, options: LoaderOptions | int, node: PandaNode) -> bool:
         """Saves the file immediately, waiting for it to complete."""
-    def make_async_save_request(self, filename: Filepath, options: LoaderOptions, node: PandaNode) -> AsyncTask:
+    def make_async_save_request(self, filename: Filepath, options: LoaderOptions | int, node: PandaNode) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to save_async() to start
         an asynchronous model save.
         """
@@ -9227,11 +9227,11 @@ class LoaderFileType(TypedObject):
         """Returns true if this file type can transparently load compressed files
         (with a .pz or .gz extension), false otherwise.
         """
-    def get_allow_disk_cache(self, options: LoaderOptions) -> bool:
+    def get_allow_disk_cache(self, options: LoaderOptions | int) -> bool:
         """Returns true if the loader flags allow retrieving the model from the on-
         disk bam cache (if it is enabled), false otherwise.
         """
-    def get_allow_ram_cache(self, options: LoaderOptions) -> bool:
+    def get_allow_ram_cache(self, options: LoaderOptions | int) -> bool:
         """Returns true if the loader flags allow retrieving the model from the in-
         memory ModelPool cache, false otherwise.
         """
@@ -9382,7 +9382,7 @@ class ModelLoadRequest(AsyncTask):
         to begin an asynchronous load.
         """
     @overload
-    def __init__(self, name: str, filename: Filepath, options: LoaderOptions, loader: Loader) -> None: ...
+    def __init__(self, name: str, filename: Filepath, options: LoaderOptions | int, loader: Loader) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelLoadRequest."""
     def get_options(self) -> LoaderOptions:
@@ -9596,7 +9596,7 @@ class ModelPool:
         return NULL.
         """
     @staticmethod
-    def load_model(filename: Filepath, options: LoaderOptions = ...) -> ModelRoot:
+    def load_model(filename: Filepath, options: LoaderOptions | int = ...) -> ModelRoot:
         """Loads the given filename up as a model, if it has not already been loaded,
         and returns the new model.  If a model with the same filename was
         previously loaded, returns that one instead (unless cache-check-timestamps
@@ -9694,7 +9694,7 @@ class ModelSaveRequest(AsyncTask):
         to begin an asynchronous save.
         """
     @overload
-    def __init__(self, name: str, filename: Filepath, options: LoaderOptions, node: PandaNode, loader: Loader) -> None: ...
+    def __init__(self, name: str, filename: Filepath, options: LoaderOptions | int, node: PandaNode, loader: Loader) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelSaveRequest."""
     def get_options(self) -> LoaderOptions:

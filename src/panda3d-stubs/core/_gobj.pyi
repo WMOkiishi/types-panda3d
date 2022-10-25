@@ -6642,7 +6642,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         color.
         """
     @overload
-    def read(self, fullpath: Filepath, options: LoaderOptions = ...) -> bool:
+    def read(self, fullpath: Filepath, options: LoaderOptions | int = ...) -> bool:
         """`(self, fullpath: Filename, alpha_fullpath: Filename, primary_file_num_channels: int, alpha_file_channel: int, options: LoaderOptions = ...)`:
         Combine a 3-component image with a grayscale image to get a 4-component
         image.
@@ -6719,11 +6719,11 @@ class Texture(TypedWritableReferenceCount, Namable):
         alpha_fullpath: Filepath,
         primary_file_num_channels: int,
         alpha_file_channel: int,
-        options: LoaderOptions = ...,
+        options: LoaderOptions | int = ...,
     ) -> bool: ...
     @overload
     def read(
-        self, fullpath: Filepath, z: int, n: int, read_pages: bool, read_mipmaps: bool, options: LoaderOptions = ...
+        self, fullpath: Filepath, z: int, n: int, read_pages: bool, read_mipmaps: bool, options: LoaderOptions | int = ...
     ) -> bool: ...
     @overload
     def read(
@@ -6737,7 +6737,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         read_pages: bool,
         read_mipmaps: bool,
         record: BamCacheRecord = ...,
-        options: LoaderOptions = ...,
+        options: LoaderOptions | int = ...,
     ) -> bool: ...
     @overload
     def write(self, fullpath: Filepath) -> bool:
@@ -6835,7 +6835,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         As with read_dds, the filename is just for reference.
         """
     @overload
-    def load(self, pnmimage: PNMImage, options: LoaderOptions = ...) -> bool:
+    def load(self, pnmimage: PNMImage, options: LoaderOptions | int = ...) -> bool:
         """`(self, pnmimage: PNMImage, options: LoaderOptions = ...)`; `(self, pfm: PfmFile, options: LoaderOptions = ...)`:
         Replaces the texture with the indicated image.
 
@@ -6843,11 +6843,11 @@ class Texture(TypedWritableReferenceCount, Namable):
         Stores the indicated image in the given page and mipmap level.  See read().
         """
     @overload
-    def load(self, pfm: PfmFile, options: LoaderOptions = ...) -> bool: ...
+    def load(self, pfm: PfmFile, options: LoaderOptions | int = ...) -> bool: ...
     @overload
-    def load(self, pnmimage: PNMImage, z: int, n: int, options: LoaderOptions = ...) -> bool: ...
+    def load(self, pnmimage: PNMImage, z: int, n: int, options: LoaderOptions | int = ...) -> bool: ...
     @overload
-    def load(self, pfm: PfmFile, z: int, n: int, options: LoaderOptions = ...) -> bool: ...
+    def load(self, pfm: PfmFile, z: int, n: int, options: LoaderOptions | int = ...) -> bool: ...
     def load_sub_image(self, pnmimage: PNMImage, x: int, y: int, z: int = ..., n: int = ...) -> bool:
         """Stores the indicated image in a region of the texture.  The texture
         properties remain unchanged.  This can be more efficient than updating an
@@ -10231,7 +10231,7 @@ class TexturePool:
     @overload
     @staticmethod
     def load_texture(
-        filename: Filepath, primary_file_num_channels: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...
+        filename: Filepath, primary_file_num_channels: int = ..., read_mipmaps: bool = ..., options: LoaderOptions | int = ...
     ) -> Texture:
         """`(filename: Filename, alpha_filename: Filename, primary_file_num_channels: int = ..., alpha_file_channel: int = ..., read_mipmaps: bool = ..., options: LoaderOptions = ...)`:
         Loads the given filename up into a texture, if it has not already been
@@ -10261,10 +10261,10 @@ class TexturePool:
         primary_file_num_channels: int = ...,
         alpha_file_channel: int = ...,
         read_mipmaps: bool = ...,
-        options: LoaderOptions = ...,
+        options: LoaderOptions | int = ...,
     ) -> Texture: ...
     @staticmethod
-    def load_3d_texture(filename_pattern: Filepath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_3d_texture(filename_pattern: Filepath, read_mipmaps: bool = ..., options: LoaderOptions | int = ...) -> Texture:
         """Loads a 3-D texture that is specified with a series of n pages, all
         numbered in sequence, and beginning with index 0.  The filename should
         include a sequence of one or more hash characters ("#") which will be
@@ -10275,7 +10275,9 @@ class TexturePool:
         and the second with the index number of each 3-d level.
         """
     @staticmethod
-    def load_2d_texture_array(filename_pattern: Filepath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_2d_texture_array(
+        filename_pattern: Filepath, read_mipmaps: bool = ..., options: LoaderOptions | int = ...
+    ) -> Texture:
         """Loads a 2-D texture array that is specified with a series of n pages, all
         numbered in sequence, and beginning with index 0.  The filename should
         include a sequence of one or more hash characters ("#") which will be
@@ -10286,7 +10288,7 @@ class TexturePool:
         and the second with the index number of each 2-d level.
         """
     @staticmethod
-    def load_cube_map(filename_pattern: Filepath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_cube_map(filename_pattern: Filepath, read_mipmaps: bool = ..., options: LoaderOptions | int = ...) -> Texture:
         """Loads a cube map texture that is specified with a series of 6 pages,
         numbered 0 through 5.  The filename should include a sequence of one or
         more hash characters ("#") which will be filled in with the index number of

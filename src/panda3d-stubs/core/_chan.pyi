@@ -667,7 +667,7 @@ class PartSubset:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: PartSubset = ...) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
-    def add_include_joint(self, name: GlobPattern) -> None:
+    def add_include_joint(self, name: GlobPattern | str) -> None:
         """Adds the named joint to the list of joints that will be explicitly included
         in the subset.  Any joint at or below a named node will be included in the
         subset (unless a lower node is also listed in the exclude list).
@@ -675,7 +675,7 @@ class PartSubset:
         Since the name is a GlobPattern, it may of course include filename globbing
         characters like * and ?.
         """
-    def add_exclude_joint(self, name: GlobPattern) -> None:
+    def add_exclude_joint(self, name: GlobPattern | str) -> None:
         """Adds the named joint to the list of joints that will be explicitly
         exlcluded from the subset.  Any joint at or below a named node will not be
         included in the subset (unless a lower node is also listed in the include
@@ -719,7 +719,7 @@ class BindAnimRequest(ModelLoadRequest):
         self,
         name: str,
         filename: Filepath,
-        options: LoaderOptions,
+        options: LoaderOptions | int,
         loader: Loader,
         control: AnimControl,
         hierarchy_match_flags: int,
@@ -1028,7 +1028,7 @@ class PartBundleHandle(ReferenceCount):
     @overload
     def __init__(self, bundle: PartBundle) -> None: ...
     @overload
-    def __init__(self, __param0: PartBundleHandle) -> None: ...
+    def __init__(self, __param0: PartBundle | PartBundleHandle) -> None: ...
     def get_bundle(self) -> PartBundle:
         """Returns the actual PartBundle embedded within the handle."""
     def set_bundle(self, bundle: PartBundle) -> None:

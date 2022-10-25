@@ -472,7 +472,7 @@ class EggGroupNode(EggNode):
         only adds new vertices with the normal removed.  Thus, it is a good idea to
         call remove_unused_vertices() after calling this.
         """
-    def recompute_tangent_binormal(self, uv_name: GlobPattern) -> bool:
+    def recompute_tangent_binormal(self, uv_name: GlobPattern | str) -> bool:
         """This function recomputes the tangent and binormal for the named texture
         coordinate set for all vertices at this level and below.  Use the empty
         string for the default texture coordinate set.

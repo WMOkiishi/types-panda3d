@@ -33,7 +33,11 @@ _implicit_cast_param_names = frozenset({
     'other',
     'value',
     'from',
+    'flags',
+    'index',
     'url',
+    'pattern',
+    'bundle',
 })
 
 BUILTIN_NAMES: Final = frozenset(dir(builtins))
