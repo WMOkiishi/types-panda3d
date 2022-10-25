@@ -50,3 +50,7 @@ warn_unused_ignores = true
 [tool.pyright]
 stubPath = "src"
 reportSelfClsParameterName = false
+# With the way the panda3d stub creation currently works, it's difficult
+# to work around the lack of type variable defaults, so just ignore
+# these warnings for now.
+reportInvalidTypeVarUse = false
