@@ -56,6 +56,51 @@ NOT_EXPOSED: Final = TrackingSet({
 })
 
 
+# Methods with these names are directly translated to particular Python names
+# (mostly) from `methodRenameDictionary` in interfaceMakerPythonNative.cxx
+METHOD_RENAMES: Final = TrackingMap({
+    'operator ==': '__eq__',
+    'operator !=': '__ne__',
+    'operator <<': '__lshift__',
+    'operator >>': '__rshift__',
+    'operator <': '__lt__',
+    'operator >': '__gt__',
+    'operator <=': '__le__',
+    'operator >=': '__ge__',
+    'operator =': 'assign',
+    'operator ()': '__call__',
+    'operator []': '__getitem__',
+    'operator [] =': '__setitem__',
+    'operator ++': 'increment',
+    'operator --': 'decrement',
+    'operator ^': '__xor__',
+    'operator %': '__mod__',
+    'operator &': '__and__',
+    'operator |': '__or__',
+    'operator +': '__add__',
+    'operator -': '__sub__',
+    'operator *': '__mul__',
+    'operator /': '__truediv__',
+    'operator +=': '__iadd__',
+    'operator -=': '__isub__',
+    'operator *=': '__imul__',
+    'operator /=': '__itruediv__',
+    'operator |=': '__ior__',
+    'operator &=': '__iand__',
+    'operator ^=': '__ixor__',
+    'operator <<=': '__ilshift__',
+    'operator >>=': '__irshift__',
+    'size': '__len__',
+    '__nonzero__': '__bool__',
+})
+UNARY_METHOD_RENAMES: Final = TrackingMap({
+    'operator ++': 'increment',
+    'operator --': 'decrement',
+    'operator ~': '__invert__',
+    'operator -': '__neg__',
+})
+
+
 # These types from interrogate map directly to a Python type
 TYPE_NAME_OVERRIDES: Final = TrackingMap({
     '_object': '',

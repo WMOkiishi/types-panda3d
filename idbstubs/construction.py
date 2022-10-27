@@ -18,8 +18,8 @@ from .reps import (
     StubRep
 )
 from .special_cases import (
-    CONDITIONALS, GENERIC, IGNORE_ERRORS, NO_MANGLING, NO_STUBS, NOT_EXPOSED,
-    SIZE_NOT_LEN
+    CONDITIONALS, GENERIC, IGNORE_ERRORS, METHOD_RENAMES, NO_MANGLING,
+    NO_STUBS, NOT_EXPOSED, SIZE_NOT_LEN, UNARY_METHOD_RENAMES
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
@@ -71,8 +71,13 @@ def get_function_name(f: FunctionIndex, /) -> str:
             return f'__{get_type_name(return_type)}__'
     name = idb.interrogate_function_name(f)
     if idb.interrogate_function_is_unary_op(f):
-        name += 'unary'
-    return method_name_from_cpp_name(name)
+        rename_dict = UNARY_METHOD_RENAMES
+    else:
+        rename_dict = METHOD_RENAMES
+    if (special_rename := rename_dict.get(name)) is not None:
+        return special_rename
+    else:
+        return method_name_from_cpp_name(name)
 
 
 def with_alias(
