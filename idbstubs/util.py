@@ -18,11 +18,6 @@ def is_dunder(s: str, /) -> bool:
     return s.startswith('__') and s.endswith('__')
 
 
-def is_sunder(s: str, /) -> bool:
-    """Return whether a given string starts and ends with exactly one underscore."""
-    return s.startswith('_') and s.endswith('_') and not is_dunder(s)
-
-
 def indent_lines(lines: Iterable[str], *, level: int = 4) -> Iterator[str]:
     """Yield each string from the iterable with four spaces prepended.
     Empty strings are yielded unchanged. The number of spaces prepended

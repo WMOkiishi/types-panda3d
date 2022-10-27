@@ -121,6 +121,7 @@ DEFAULT_RETURNS: Final = TrackingMap({
     '__int__': 'int',
     '__str__': 'str',
     '__bytes__': 'bytes',
+    '__fspath__': 'str',
     'get_data': 'bytes',
     'get_subdata': 'bytes',
 })
@@ -216,7 +217,6 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.CollisionBox.get_num_points': 'Literal[8]',
     'panda3d.core.Datagram.get_message': 'bytes',
     'panda3d.core.EventQueue.is_queue_full': 'Literal[False]',
-    'panda3d.core.Filename.__fspath__': 'str',
     'panda3d.core.Filename.scan_directory': 'list[str]',
     'panda3d.core.GlobPattern.match_files': 'list[str]',
     'panda3d.core.GraphicsStateGuardian.get_prepared_textures': 'list[Any]',

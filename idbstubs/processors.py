@@ -24,30 +24,30 @@ _absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
 VECTOR_NAME_REGEX: Final = re.compile(
     '((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
 )
-RETURN_SELF: Final = [
+RETURN_SELF: Final = frozenset({
     '__floordiv__',
     '__pow__',
     '__round__',
     '__floor__',
     '__ceil__',
-]
+})
 OBJECT: Final = Class(
     'object',
     body={
         # TODO: would this cause issues?
         # '__init__': Function(
         #     '__init__',
-        #     [Signature([Parameter.as_self()], 'None')],
+        #     [Signature([Parameter('self')], 'None')],
         #     is_method=True,
         # ),
         '__repr__': Function(
             '__repr__',
-            [Signature([Parameter.as_self()], 'str')],
+            [Signature([Parameter('self')], 'str')],
             is_method=True,
         ),
         '__str__': Function(
             '__str__',
-            [Signature([Parameter.as_self()], 'str')],
+            [Signature([Parameter('self')], 'str')],
             is_method=True,
         ),
     }
@@ -57,12 +57,8 @@ OBJECT: Final = Class(
 def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
     if p.named and q.named and p.name != q.name:
         return None
-    if p.is_self != q.is_self:
-        return None
     t, u = p.type, q.type
     if (t and not u) or (u and not t):
-        return None
-    if not t and not u and not p.is_self:
         return None
     t_subtypes_u, u_subtypes_t = subtype_relationship(t, u)
 
@@ -85,7 +81,6 @@ def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
         merged_type,
         is_optional=p.is_optional or q.is_optional,
         named=p.named or q.named,
-        is_self=p.is_self
     )
 
 
@@ -95,9 +90,6 @@ def merge_signatures(a: Signature, b: Signature, /) -> Signature | None:
     """
     if abs(a.min_arity() - b.min_arity()) > 1 or abs(a.max_arity() - b.max_arity()) > 1:
         # If the min or max arity differs by more than 1, the signatures can't be merged
-        return None
-    if not (a.return_type and b.return_type):
-        # Don't merge signatures if we're not sure what the return types are
         return None
     # Signatures with differing return types can only be merged if their parameters are identical
     w1_locked = w2_locked = a.return_type != b.return_type
@@ -129,8 +121,8 @@ def get_signature_depths(signatures: Sequence[Signature]) -> list[int]:
         if w1.min_arity() != w2.min_arity():
             continue
         w1_first = w2_first = True
-        w1_params = (p for p in w1.parameters if not (p.is_self or p.is_optional))
-        w2_params = (p for p in w2.parameters if not (p.is_self or p.is_optional))
+        w1_params = (p for p in w1.parameters if not p.is_optional)
+        w2_params = (p for p in w2.parameters if not p.is_optional)
         for p, q in zip(w1_params, w2_params):
             if not (w1_first or w2_first):
                 break
@@ -143,7 +135,7 @@ def get_signature_depths(signatures: Sequence[Signature]) -> list[int]:
             define_after[k].append(i)
     sig_depths = [0 for _ in signatures]
     for i, others in enumerate(define_after):
-        seen = {i}.union(others)
+        seen = {i, *others}
         while others:
             sig_depths[i] -= 1
             next_others: list[int] = []
@@ -201,16 +193,10 @@ def process_function(function: Function) -> None:
         else:
             return_override = return_overrides.get(i, default_return)
         if return_override is not None:
-            if sig.return_type:
-                _logger.debug(f'Changed return type of {function} from'
-                              f' {sig.return_type!r} to {return_override!r}')
             sig.return_type = return_override
         for j, param in enumerate(sig.parameters):
             param_override = param_overrides.get((i, j))
             if param_override is not None:
-                if param.type:
-                    _logger.debug(f'Changed type of parameter {param}'
-                                  f' in {function} to {param_override!r}')
                 param.type = param_override
     new_sigs = process_signatures(function.signatures)
     shadowed_names = ATTRIBUTE_NAME_SHADOWS.get('.'.join(function.namespace))
@@ -228,7 +214,7 @@ def process_function(function: Function) -> None:
             signatures=[
                 Signature(
                     parameters=[
-                        Parameter(is_self=True),
+                        Parameter(),
                         Parameter() as other_param,
                     ]
                 )
@@ -241,7 +227,7 @@ def process_function(function: Function) -> None:
             signatures=[
                 Signature(
                     parameters=[
-                        Parameter(is_self=True),
+                        Parameter(),
                         Parameter() as name_param,
                         Parameter() as value_param,
                     ]
@@ -258,7 +244,7 @@ def process_function(function: Function) -> None:
                 Signature(
                     return_type=return_type,
                     parameters=[
-                        Parameter(is_self=True) as self_param,
+                        Parameter() as self_param,
                         Parameter(type=param_type) as copy_param,
                     ]
                 ) as sig
@@ -296,7 +282,7 @@ def process_class(class_: Class) -> None:
                 signatures=[
                     Signature(
                         parameters=[
-                            Parameter(is_self=True),
+                            Parameter(),
                             Parameter(type='int'),
                         ],
                         return_type=item_type,
@@ -307,7 +293,7 @@ def process_class(class_: Class) -> None:
             iter_return_type = f'Iterator[{item_type}]' if item_type else 'Iterator'
             class_body['__iter__'] = Function(
                 '__iter__',
-                [Signature([Parameter.as_self()], iter_return_type)],
+                [Signature([Parameter('self')], iter_return_type)],
                 is_method=True,
                 namespace=(*class_.namespace, class_.name),
                 comment="Doesn't actually exist",
@@ -374,8 +360,8 @@ def process_vector_class(vector: Class) -> None:
     if suffix == 'i' and not kind.startswith('Unaligned'):
         class_body.pop('__truediv__', None)
         class_body.pop('__itruediv__', None)
-    for name in RETURN_SELF:
-        match class_body.get(name):
+    for name in RETURN_SELF & class_body.keys():
+        match class_body[name]:
             case Function(signatures=[
                 Signature(parameters=[
                     Parameter() as self_param, *_

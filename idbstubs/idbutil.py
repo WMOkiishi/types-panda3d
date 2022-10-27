@@ -134,8 +134,6 @@ def load_interrogate_database(
     idb.interrogate_add_search_directory(str(directory))
     for db in directory.glob('*.in'):
         idb.interrogate_request_database(db.name)
-    # Trigger a load of the database
-    # idb.interrogate_type_comment(0)
 
 
 def get_all_methods(t: TypeIndex, /) -> Iterator[FunctionIndex]:

@@ -84,12 +84,6 @@ class Parameter:
     type: str = ''
     is_optional: bool = field(default=False, kw_only=True)
     named: bool = field(default=True, kw_only=True)
-    is_self: bool = field(default=False, kw_only=True)
-
-    @classmethod
-    def as_self(cls) -> 'Parameter':
-        """Construct a representation of a `self` parameter."""
-        return cls('self', is_self=True)
 
     def __str__(self) -> str:
         s = self.name
@@ -409,7 +403,7 @@ class Module:
 
     def __iter__(self) -> Iterator[File]:
         if len(self.nested) == 1:
-            nested = tuple(self.nested.values())[0]
+            nested = next(iter(self.nested.values()))
             # Convert to a list because the type checker doesn't know about
             # attrs field converters.
             nested = list(nested)

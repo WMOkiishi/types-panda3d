@@ -211,11 +211,11 @@ def make_signature_rep(
         return_type = get_type_name(return_type_index)
     params: list[Parameter] = []
     if ensure_self_param:
-        params.append(Parameter.as_self())
+        params.append(Parameter('self'))
     for n in range(idb.interrogate_wrapper_number_of_parameters(w)):
         if idb.interrogate_wrapper_parameter_is_this(w, n):
             if not ensure_self_param:
-                params.append(Parameter.as_self())
+                params.append(Parameter('self'))
             continue
         params.append(Parameter(
             check_keyword(idb.interrogate_wrapper_parameter_name(w, n)),
@@ -306,7 +306,7 @@ def make_make_seq_rep(ms: MakeSeqIndex, /) -> Function:
     element_getter_wrapper = idb.interrogate_function_python_wrapper(element_getter, 0)
     return_type_index = idb.interrogate_wrapper_return_type(element_getter_wrapper)
     return_type = get_type_name(return_type_index)
-    signature = Signature([Parameter.as_self()], f'tuple[{return_type}, ...]')
+    signature = Signature([Parameter('self')], f'tuple[{return_type}, ...]')
     if idb.interrogate_make_seq_has_comment(ms):
         doc = comment_to_docstring(idb.interrogate_make_seq_comment(ms))
     else:
@@ -385,7 +385,7 @@ def make_class_rep(
     )
     for n in range(idb.interrogate_type_number_of_elements(t)):
         e = idb.interrogate_type_get_element(t, n)
-        if element_is_exposed(e) and not idb.interrogate_element_name(e) in NO_STUBS:
+        if element_is_exposed(e) and idb.interrogate_element_name(e) not in NO_STUBS:
             element = make_element_rep(e, this_namespace)
             class_body[element.name] = element
     if name.startswith('ParamValue_'):
