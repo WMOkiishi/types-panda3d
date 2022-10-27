@@ -143,9 +143,9 @@ ATTR_TYPE_OVERRIDES: Final = TrackingMap({
     'panda3d.egg.EggGroupNode.children': 'list[EggNode]',
 })
 PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
-    'panda3d.core.Filename.__init__': {(1, 1): 'StrOrBytesPath'},
+    'panda3d.core.Filename.__init__': {(2, 1): 'StrOrBytesPath'},
     'panda3d.core.NodePath.__init__': {
-        (0, 1): 'NodePath[_N]', (1, 1): '_N', (3, 2): '_N'
+        (1, 1): 'NodePath[_N]', (3, 1): '_N', (2, 2): '_N'
     },
     'panda3d.core.NodePath.any_path': {(0, 0): '_M'},
     'panda3d.core.NodePath.attach_new_node': {(0, 1): '_M'},

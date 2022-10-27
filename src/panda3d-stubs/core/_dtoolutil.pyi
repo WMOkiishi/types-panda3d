@@ -323,8 +323,7 @@ class TextEncoder:
         """Encodes a single Unicode character into a one-, two-, three-, or four-byte
         string, according to the given encoding system.
         """
-    @overload
-    def encode_wtext(self, wtext: str) -> bytes:
+    def encode_wtext(self, wtext: str, encoding: _TextEncoder_Encoding = ...) -> bytes:
         """`(self, wtext: str)`:
         Encodes a wide-text string into a single-char string, according to the
         current encoding.
@@ -333,12 +332,7 @@ class TextEncoder:
         Encodes a wide-text string into a single-char string, according to the
         given encoding.
         """
-    @overload
-    def encode_wtext(self, wtext: str, encoding: _TextEncoder_Encoding) -> bytes: ...
-    @overload
-    def decode_text(self, text: bytes) -> str: ...
-    @overload
-    def decode_text(self, text: bytes, encoding: _TextEncoder_Encoding) -> str: ...
+    def decode_text(self, text: bytes, encoding: _TextEncoder_Encoding = ...) -> str: ...
     setEncoding = set_encoding
     getEncoding = get_encoding
     setDefaultEncoding = set_default_encoding
@@ -394,7 +388,7 @@ class Filename:
     T_executable: Final[Literal[2]]
     TExecutable: Final[Literal[2]]
     @overload
-    def __init__(self) -> None:
+    def __init__(self, path: StrOrBytesPath = ...) -> None:
         """`(self)`:
         Creates an empty Filename.
 
@@ -402,8 +396,6 @@ class Filename:
         This constructor composes the filename out of a directory part and a
         basename part.  It will insert an intervening '/' if necessary.
         """
-    @overload
-    def __init__(self, path: StrOrBytesPath) -> None: ...
     @overload
     def __init__(self, dirname: Filepath, basename: Filepath) -> None: ...
     def __getitem__(self, n: int) -> str: ...

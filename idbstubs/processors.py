@@ -187,13 +187,15 @@ def account_for_casts(signature: Signature) -> None:
 
 
 def process_function(function: Function) -> None:
-    new_sigs = process_signatures(function.signatures)
     default_return = DEFAULT_RETURNS.get(function.name)
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
     param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name, {})
     if isinstance(return_overrides, str):
-        return_overrides = {i: return_overrides for i in range(len(new_sigs))}
-    for i, sig in enumerate(new_sigs):
+        return_overrides = {
+            i: return_overrides
+            for i in range(len(function.signatures))
+        }
+    for i, sig in enumerate(function.signatures):
         if sig.return_type:
             return_override = return_overrides.get(i)
         else:
@@ -210,6 +212,7 @@ def process_function(function: Function) -> None:
                     _logger.debug(f'Changed type of parameter {param}'
                                   f' in {function} to {param_override!r}')
                 param.type = param_override
+    new_sigs = process_signatures(function.signatures)
     shadowed_names = ATTRIBUTE_NAME_SHADOWS.get('.'.join(function.namespace))
     if shadowed_names is not None:
         for sig in new_sigs:
