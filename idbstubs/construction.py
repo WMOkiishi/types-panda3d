@@ -13,50 +13,22 @@ from .idbutil import (
     get_global_functions, get_global_getters, get_python_wrappers,
     type_is_exposed, unwrap_type, wrapper_is_exposed
 )
-from .processors import (
-    VECTOR_NAME_REGEX, process_function, process_vector_class
-)
 from .reps import (
     Alias, Attribute, Class, Function, Module, Package, Parameter, Signature,
     StubRep
 )
 from .special_cases import (
-    ATTR_TYPE_OVERRIDES, CONDITIONALS, GENERIC, IGNORE_ERRORS, NO_MANGLING,
-    NO_STUBS, NOT_EXPOSED, SIZE_NOT_LEN
+    CONDITIONALS, GENERIC, IGNORE_ERRORS, NO_MANGLING, NO_STUBS, NOT_EXPOSED,
+    SIZE_NOT_LEN
 )
 from .translation import (
     check_keyword, class_name_from_cpp_name, comment_to_docstring,
     method_name_from_cpp_name, snake_to_camel
 )
-from .typedata import (
-    TYPE_ALIASES, get_direct_type_name, get_mro, get_type_name
-)
+from .typedata import TYPE_ALIASES, get_direct_type_name, get_type_name
 from .util import flatten, is_dunder
 
 _logger: Final = logging.getLogger(__name__)
-_classes: Final[dict[str, Class]] = {
-    'object': Class(
-        'object',
-        body={
-            # TODO: would this cause issues?
-            # '__init__': Function(
-            #     '__init__',
-            #     [Signature([Parameter.as_self()], 'None')],
-            #     is_method=True,
-            # ),
-            '__repr__': Function(
-                '__repr__',
-                [Signature([Parameter.as_self()], 'str')],
-                is_method=True,
-            ),
-            '__str__': Function(
-                '__str__',
-                [Signature([Parameter.as_self()], 'str')],
-                is_method=True,
-            ),
-        }
-    )
-}
 
 
 class NamespacedStubRep(StubRep, Protocol):
@@ -199,9 +171,7 @@ def make_element_rep(
         namespace: Sequence[str] = ()) -> Attribute:
     """Return a representation of an element known to interrogate."""
     name = idb.interrogate_element_name(e)
-    type_name = ATTR_TYPE_OVERRIDES.get(idb.interrogate_element_scoped_name(e))
-    if type_name is None:
-        type_name = get_type_name(idb.interrogate_element_type(e))
+    type_name = get_type_name(idb.interrogate_element_type(e))
     if idb.interrogate_element_is_sequence(e):
         type_name = f'Sequence[{type_name}]' if type_name else 'Sequence'
     elif idb.interrogate_element_is_mapping(e):
@@ -420,34 +390,10 @@ def make_class_rep(
         class_body['value'] = Attribute('value', value, namespace=this_namespace)
     # Methods
     for method in get_type_methods(t):
-        method = process_function(method)
         if method.name in class_body:
             _logger.info(f'Discarding {method}; its name is already in use')
             continue
         class_body |= {rep.name: rep for rep in with_alias(method)}
-    match class_body:
-        case {
-            '__len__': _,
-            '__getitem__': Function(
-                signatures=[
-                    Signature(
-                        parameters=[
-                            Parameter(is_self=True),
-                            Parameter(type='int'),
-                        ],
-                        return_type=item_type,
-                    )
-                ]
-            )
-        }:
-            iter_return_type = f'Iterator[{item_type}]' if item_type else 'Iterator'
-            class_body['__iter__'] = Function(
-                '__iter__',
-                [Signature([Parameter.as_self()], iter_return_type)],
-                is_method=True,
-                namespace=this_namespace,
-                comment="Doesn't actually exist",
-            )
     # Nested types
     for n in range(idb.interrogate_type_number_of_nested_types(t)):
         s = idb.interrogate_type_get_nested_type(t, n)
@@ -465,7 +411,7 @@ def make_class_rep(
     else:
         doc = ''
     scoped_name = '.'.join(this_namespace)
-    class_ = Class(
+    return Class(
         name, derivations, class_body,
         is_final=idb.interrogate_type_is_final(t),
         conditional=CONDITIONALS.get(scoped_name, ''),
@@ -473,11 +419,6 @@ def make_class_rep(
         doc=doc,
         comment=get_comment(scoped_name),
     )
-    if VECTOR_NAME_REGEX.match(class_.name):
-        process_vector_class(class_)
-    if not idb.interrogate_type_is_nested(t):
-        _classes[class_.name] = class_
-    return class_
 
 
 def make_package_rep(package_name: str = 'panda3d') -> Package:
@@ -486,7 +427,7 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
     for f in chain(get_global_functions(), get_global_getters()):
         if not function_is_exposed(f):
             continue
-        function = process_function(make_function_rep(f))
+        function = make_function_rep(f)
         mod_name = idb.interrogate_function_module_name(f)
         lib_name = '_' + idb.interrogate_function_library_name(f).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += with_alias(function)
@@ -502,10 +443,6 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
             t, mod_name.split('.')
         )
 
-    # Process classes
-    for class_ in _classes.values():
-        remove_redefinitions(class_)
-
     # Make package
     modules: list[Module] = []
     for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
@@ -515,49 +452,6 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
             nested_by_lib, namespace=(package_name,)
         ))
     return Package(package_name, modules)
-
-
-def remove_redefinitions(class_: Class) -> None:
-    """Remove items in a class body that are implied by inheritance."""
-    class_body = class_.body
-    if not class_body:
-        return
-    nested_names = frozenset(class_body.keys())
-    inherited = set[str]()
-    seen = set[str]()
-    for base_class_name in get_mro(class_.name)[1:]:
-        base_class = _classes.get(base_class_name)
-        if base_class is None:
-            continue
-        base_class_body = base_class.body
-        intersection = nested_names & base_class_body.keys() - seen
-        seen |= intersection
-        for name in intersection:
-            match class_body[name], base_class_body[name]:
-                case Class() | Alias(of_local=True), _:
-                    continue
-                case (
-                    Function(doc=doc_1),
-                    Function(doc=doc_2)
-                ) if doc_1 and doc_1 != doc_2:
-                    continue
-                case (
-                    Attribute(doc=doc_1),
-                    Attribute(doc=doc_2)
-                ) if doc_1 and doc_1 != doc_2:
-                    continue
-                case a, b if a == b:
-                    inherited.add(name)
-    new_nested_names = nested_names - inherited
-    new_nested: dict[str, StubRep] = {}
-    for rep in class_body.values():
-        if isinstance(rep, Alias) and rep.of_local:
-            name_to_check = rep.alias_of
-        else:
-            name_to_check = rep.name
-        if name_to_check in new_nested_names:
-            new_nested[rep.name] = rep
-    class_.body = new_nested
 
 
 def make_typing_module() -> Module:

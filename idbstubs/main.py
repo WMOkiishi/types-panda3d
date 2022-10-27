@@ -7,7 +7,7 @@ from .construction import (
     get_all_manifests, make_package_rep, make_typing_module, with_alias
 )
 from .idbutil import load_interrogate_database
-from .processors import process_dependencies
+from .processors import process_dependencies, process_package
 from .reps import Module, StubRep
 from .typedata import load_data
 from .util import flatten
@@ -23,6 +23,7 @@ def main(
     _logger.debug('Gathering type information')
     load_data()
     package = make_package_rep(package_name)
+    process_package(package)
     package.add_module(make_typing_module())
     for module in package:
         _logger.info(f'Writing stubs for {module}')

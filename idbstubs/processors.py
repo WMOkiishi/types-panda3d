@@ -1,18 +1,19 @@
 import logging
 import re
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from itertools import combinations, zip_longest
 from typing import Final
 
 from .reps import (
-    Alias, Class, File, Function, Parameter, Signature, TypeVariable
+    Alias, Attribute, Class, File, Function, Package, Parameter, Signature,
+    StubRep, TypeVariable
 )
 from .special_cases import (
-    ATTRIBUTE_NAME_SHADOWS, DEFAULT_RETURNS, INPLACE_DUNDERS,
-    PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
+    ATTR_TYPE_OVERRIDES, ATTRIBUTE_NAME_SHADOWS, DEFAULT_RETURNS,
+    INPLACE_DUNDERS, PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
 )
 from .typedata import (
-    combine_types, get_param_type_replacement, process_dependency,
+    combine_types, get_mro, get_param_type_replacement, process_dependency,
     subtype_relationship
 )
 from .util import flatten
@@ -30,6 +31,27 @@ RETURN_SELF: Final = [
     '__floor__',
     '__ceil__',
 ]
+OBJECT: Final = Class(
+    'object',
+    body={
+        # TODO: would this cause issues?
+        # '__init__': Function(
+        #     '__init__',
+        #     [Signature([Parameter.as_self()], 'None')],
+        #     is_method=True,
+        # ),
+        '__repr__': Function(
+            '__repr__',
+            [Signature([Parameter.as_self()], 'str')],
+            is_method=True,
+        ),
+        '__str__': Function(
+            '__str__',
+            [Signature([Parameter.as_self()], 'str')],
+            is_method=True,
+        ),
+    }
+)
 
 
 def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
@@ -164,7 +186,7 @@ def account_for_casts(signature: Signature) -> None:
             param.type = replacement
 
 
-def process_function(function: Function) -> Function:
+def process_function(function: Function) -> None:
     new_sigs = process_signatures(function.signatures)
     default_return = DEFAULT_RETURNS.get(function.name)
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
@@ -250,7 +272,61 @@ def process_function(function: Function) -> Function:
             for sig in signatures:
                 sig.parameters[0].type = 'Self'
                 sig.return_type = 'Self'
-    return function
+
+
+def process_class(class_: Class) -> None:
+    for item in class_.body.values():
+        match item:
+            case Class():
+                process_class(item)
+            case Function():
+                process_function(item)
+            case Attribute():
+                type_override = ATTR_TYPE_OVERRIDES.get(item.scoped_name)
+                if type_override is not None:
+                    item.type = type_override
+    class_body = dict(class_.body)
+    match class_body:
+        case {
+            '__len__': _,
+            '__getitem__': Function(
+                signatures=[
+                    Signature(
+                        parameters=[
+                            Parameter(is_self=True),
+                            Parameter(type='int'),
+                        ],
+                        return_type=item_type,
+                    )
+                ]
+            )
+        }:
+            iter_return_type = f'Iterator[{item_type}]' if item_type else 'Iterator'
+            class_body['__iter__'] = Function(
+                '__iter__',
+                [Signature([Parameter.as_self()], iter_return_type)],
+                is_method=True,
+                namespace=(*class_.namespace, class_.name),
+                comment="Doesn't actually exist",
+            )
+    class_.body = class_body
+    if VECTOR_NAME_REGEX.match(class_.name):
+        process_vector_class(class_)
+
+
+def process_package(package: Package) -> None:
+    classes: dict[str, Class] = {'object': OBJECT}
+    for module in package:
+        for file in module:
+            for item in file.nested:
+                match item:
+                    case Class():
+                        process_class(item)
+                        classes[item.name] = item
+                    case Function():
+                        process_function(item)
+    for cls in classes.values():
+        remove_redefinitions(cls, classes)
 
 
 def process_dependencies(file: File) -> None:
@@ -308,3 +384,46 @@ def process_vector_class(vector: Class) -> None:
         case Function(signatures=[Signature() as sig]):
             sig.return_type = f'Literal[{dimension}]'
     vector.body = class_body
+
+
+def remove_redefinitions(class_: Class, classes: Mapping[str, Class]) -> None:
+    """Remove items in a class body that are implied by inheritance."""
+    class_body = class_.body
+    if not class_body:
+        return
+    nested_names = frozenset(class_body.keys())
+    inherited = set[str]()
+    seen = set[str]()
+    for base_class_name in get_mro(class_.name)[1:]:
+        base_class = classes.get(base_class_name)
+        if base_class is None:
+            continue
+        base_class_body = base_class.body
+        intersection = nested_names & base_class_body.keys() - seen
+        seen |= intersection
+        for name in intersection:
+            match class_body[name], base_class_body[name]:
+                case Class() | Alias(of_local=True), _:
+                    continue
+                case (
+                    Function(doc=doc_1),
+                    Function(doc=doc_2)
+                ) if doc_1 and doc_1 != doc_2:
+                    continue
+                case (
+                    Attribute(doc=doc_1),
+                    Attribute(doc=doc_2)
+                ) if doc_1 and doc_1 != doc_2:
+                    continue
+                case a, b if a == b:
+                    inherited.add(name)
+    new_nested_names = nested_names - inherited
+    new_nested: dict[str, StubRep] = {}
+    for rep in class_body.values():
+        if isinstance(rep, Alias) and rep.of_local:
+            name_to_check = rep.alias_of
+        else:
+            name_to_check = rep.name
+        if name_to_check in new_nested_names:
+            new_nested[rep.name] = rep
+    class_.body = new_nested

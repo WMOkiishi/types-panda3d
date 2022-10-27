@@ -136,11 +136,11 @@ CONDITIONALS: Final = TrackingMap({
 
 # These override type hints for various things
 ATTR_TYPE_OVERRIDES: Final = TrackingMap({
-    'BamReader::file_version': 'tuple[int, int]',
-    'EggGroupNode::children': 'list[EggNode]',
-    'PythonCallbackObject::function': 'Callable',
-    'StringStream::data': 'bytes',
-    'TextEncoder::text': 'str',
+    'panda3d.core.BamReader.file_version': 'tuple[int, int]',
+    'panda3d.core.PythonCallbackObject.function': 'Callable',
+    'panda3d.core.StringStream.data': 'bytes',
+    'panda3d.core.TextEncoder.text': 'str',
+    'panda3d.egg.EggGroupNode.children': 'list[EggNode]',
 })
 PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.Filename.__init__': {(1, 1): 'StrOrBytesPath'},
