@@ -1,7 +1,7 @@
 __all__ = ['AppShell']
 
+import tkinter
 from collections.abc import MutableMapping
-from tkinter import Button, Checkbutton, Entry, Frame, IntVar, Radiobutton, Toplevel, Widget
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
@@ -14,7 +14,7 @@ from .Floater import Floater
 from .Slider import Slider
 from .VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
 
-_W = TypeVar('_W', bound=Widget)
+_WidgetT = TypeVar('_WidgetT', bound=tkinter.Widget)
 _TkAnchor: TypeAlias = Literal['nw', 'n', 'ne', 'w', 'center', 'e', 'sw', 's', 'se']
 _TkFill: TypeAlias = Literal['none', 'x', 'y', 'both']
 _TkRelief: TypeAlias = Literal['raised', 'sunken', 'flat', 'ridge', 'solid', 'groove']
@@ -39,16 +39,16 @@ class AppShell(Pmw.MegaWidget, DirectObject):
     usestatusarea: ClassVar[bool]
     balloonState: ClassVar[str]
     panelCount: ClassVar[int]
-    parent: Toplevel
+    parent: tkinter.Toplevel
     id: str
     widgetDict: dict[str, Any]
     variableDict: dict[str, Any]
-    menuFrame: Frame
+    menuFrame: tkinter.Frame
     menuBar: Pmw.MenuBar
-    dateArea: Frame
+    dateArea: tkinter.Frame
     about: Pmw.AboutDialog
-    toggleBalloonVar: IntVar
-    def __init__(self, parent: Toplevel | None = ..., **kw) -> None: ...
+    toggleBalloonVar: tkinter.IntVar
+    def __init__(self, parent: tkinter.Toplevel | None = ..., **kw) -> None: ...
     def toggleBalloon(self) -> None: ...
     def showAbout(self) -> None: ...
     def quit(self) -> None: ...
@@ -56,7 +56,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
     def createInterface(self) -> None: ...
     def onDestroy(self, event) -> None: ...
     def createMenuBar(self) -> None: ...
-    def interior(self) -> Frame: ...
+    def interior(self) -> tkinter.Frame: ...
     def balloon(self) -> Pmw.Balloon: ...
     def buttonBox(self) -> Pmw.ButtonBox: ...
     def messageBar(self) -> Pmw.MessageBar: ...
@@ -73,14 +73,14 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         parent,
         category: str,
         text: str,
-        widgetClass: type[_W],
+        widgetClass: type[_WidgetT],
         help: str,
         command,
         side: _TkSide,
         fill: _TkFill,
         expand: int,
         kw: MutableMapping[str, Any],
-    ) -> _W: ...
+    ) -> _WidgetT: ...
     def newCreateLabeledEntry(
         self,
         parent,
@@ -94,7 +94,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         side: _TkSide = ...,
         fill: _TkFill = ...,
         expand: int = ...,
-    ) -> Entry: ...
+    ) -> tkinter.Entry: ...
     def newCreateButton(
         self,
         parent,
@@ -106,7 +106,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         fill: _TkFill = ...,
         expand: int = ...,
         **kw: Any,
-    ) -> Button: ...
+    ) -> tkinter.Button: ...
     def newCreateCheckbutton(
         self,
         parent,
@@ -120,7 +120,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         fill: _TkFill = ...,
         expand: int = ...,
         **kw: Any,
-    ) -> Checkbutton: ...
+    ) -> tkinter.Checkbutton: ...
     def newCreateRadiobutton(
         self,
         parent,
@@ -135,7 +135,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         fill: _TkFill = ...,
         expand: int = ...,
         **kw: Any,
-    ) -> Radiobutton: ...
+    ) -> tkinter.Radiobutton: ...
     def newCreateFloater(
         self,
         parent,

@@ -1,4 +1,4 @@
-from tkinter import Button, Checkbutton, IntVar, Misc, Toplevel
+import tkinter
 from typing import Any
 from typing_extensions import Literal
 
@@ -10,19 +10,19 @@ from direct.tkwidgets.AppShell import AppShell
 class TaskManagerPanel(AppShell):
     taskMgr: TaskManager
     taskMgrWidget: Any
-    def __init__(self, taskMgr: TaskManager, parent: Toplevel | None = ..., **kw) -> None: ...
+    def __init__(self, taskMgr: TaskManager, parent: tkinter.Toplevel | None = ..., **kw) -> None: ...
 
 class TaskManagerWidget(DirectObject):
-    parent: Misc | None
+    parent: tkinter.Misc | None
     taskMgr: TaskManager
     currentTask: Task | None
     taskListBox: Pmw.ScrolledListBox
-    removeButton: Button
-    removeMatchingButton: Button
-    taskMgrVerbose: IntVar
-    update: Button
-    dynamicUpdate: Checkbutton
-    def __init__(self, parent: Misc | None, taskMgr: TaskManager) -> None: ...
+    removeButton: tkinter.Button
+    removeMatchingButton: tkinter.Button
+    taskMgrVerbose: tkinter.IntVar
+    update: tkinter.Button
+    dynamicUpdate: tkinter.Checkbutton
+    def __init__(self, parent: tkinter.Misc | None, taskMgr: TaskManager) -> None: ...
     def popupMenu(self, event) -> Literal['break']: ...
     def setCurrentTask(self, event=...) -> None: ...
     def updateTaskListBox(self) -> None: ...

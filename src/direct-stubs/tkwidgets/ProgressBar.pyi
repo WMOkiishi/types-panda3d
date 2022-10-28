@@ -1,6 +1,6 @@
 __all__ = ['ProgressBar']
 
-from tkinter import Canvas, Frame
+import tkinter
 from typing import Any
 
 class ProgressBar:
@@ -18,8 +18,8 @@ class ProgressBar:
     labelText: str
     labelFormat: str
     value: int
-    frame: Frame
-    canvas: Canvas
+    frame: tkinter.Frame
+    canvas: tkinter.Canvas
     scale: int
     label: int
     def __init__(

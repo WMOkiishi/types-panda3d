@@ -77,7 +77,7 @@ direct.distributed.DistributedCamera.Fixture.id
 panda3d.core.WindowProperties.size
 
 # These methods are overriden by attributes on initialization
-direct.tkwidgets.EntryScale.EntryScale.entry
+(direct.tkwidgets.EntryScale.EntryScale.entry)?
 direct.tkwidgets.EntryScale.EntryScale.label
 direct.tkwidgets.EntryScale.EntryScale.scale
 direct.tkwidgets.VectorWidgets.VectorEntry.entryList

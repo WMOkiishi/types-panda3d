@@ -1,7 +1,7 @@
 __all__ = ['MopathRecorder']
 
+import tkinter
 from collections.abc import Callable, MutableMapping
-from tkinter import Button, Checkbutton, Entry, Frame, Label, Misc, Radiobutton, Scale, StringVar, Variable
 from typing import Any, ClassVar, SupportsFloat, SupportsInt
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -16,7 +16,8 @@ from direct.tkwidgets.EntryScale import EntryScale
 from direct.tkwidgets.Floater import Floater
 from direct.tkwidgets.Slider import Slider
 from direct.tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
-from panda3d.core import CurveFitter, GeomNode, LPoint3f, LRGBColor, NodePath
+from panda3d._typing import Vec3f
+from panda3d.core import CurveFitter, GeomNode, LPoint3f, LRGBColor, NodePath, ParametricCurveCollection
 
 _TkFill: TypeAlias = Literal['none', 'x', 'y', 'both']
 _TkRelief: TypeAlias = Literal['raised', 'sunken', 'flat', 'ridge', 'solid', 'groove']
@@ -40,24 +41,24 @@ class MopathRecorder(AppShell, DirectObject):
     tangentLines: LineNodePath
     nodePathDict: dict[str, NodePath]
     nodePathNames: list[str]
-    manipulandumId = ...
+    manipulandumId: int | None
     trace: LineNodePath
-    oldPlaybackNodePath = ...
-    pointSet: list
-    prePoints: list
-    postPoints: list
-    pointSetDict: dict
+    oldPlaybackNodePath: NodePath | None
+    pointSet: list[tuple[float, Vec3f, Vec3f]]
+    prePoints: list[tuple[float, Vec3f, Vec3f]]
+    postPoints: list[tuple[float, Vec3f, Vec3f]]
+    pointSetDict: dict[str, list[tuple[float, Vec3f, Vec3f]]]
     pointSetCount: int
     pointSetName: str
     samplingMode: str
-    preRecordFunc = ...
+    preRecordFunc: Callable[[], object] | None
     startStopHook: str
     keyframeHook: str
     lastPos: LPoint3f
     curveFitter: CurveFitter
     numTicks: int
     numSegs: int
-    curveCollection = ...
+    curveCollection: ParametricCurveCollection | None
     nurbsCurveDrawer = ...
     curveNodePath: NodePath[GeomNode]
     maxT: float
@@ -77,22 +78,22 @@ class MopathRecorder(AppShell, DirectObject):
     iRayCS: NodePath
     iRay: SelectionRay
     actionEvents: list[tuple[str, Callable[..., None]]]
-    undoButton: Button
-    redoButton: Button
+    undoButton: tkinter.Button
+    redoButton: tkinter.Button
     nodePathMenu: Pmw.ComboBox
-    nodePathMenuEntry = ...
-    nodePathMenuBG = ...
-    recordingType: StringVar
-    speedScale: Scale
-    speedVar: StringVar
-    speedEntry: Entry
+    nodePathMenuEntry: tkinter.Entry
+    nodePathMenuBG: str
+    recordingType: tkinter.StringVar
+    speedScale: tkinter.Scale
+    speedVar: tkinter.StringVar
+    speedEntry: tkinter.Entry
     mainNotebook: Pmw.NoteBook
-    resamplePage = ...
-    refinePage = ...
-    extendPage = ...
-    cropPage = ...
-    drawPage = ...
-    optionsPage = ...
+    resamplePage: tkinter.Frame
+    refinePage: tkinter.Frame
+    extendPage: tkinter.Frame
+    cropPage: tkinter.Frame
+    drawPage: tkinter.Frame
+    optionsPage: tkinter.Frame
     sf: Pmw.ScrolledFrame
     def __init__(self, parent: Unused = ..., **kw) -> None: ...
     def pushUndo(self, fResetRedo: bool = ...) -> None: ...
@@ -130,7 +131,7 @@ class MopathRecorder(AppShell, DirectObject):
     def setStartStopHook(self, event=...) -> None: ...
     def setKeyframeHook(self, event=...) -> None: ...
     def reset(self) -> None: ...
-    def setSamplingMode(self, mode) -> None: ...
+    def setSamplingMode(self, mode: str) -> None: ...
     def disableKeyframeButton(self) -> None: ...
     def enableKeyframeButton(self) -> None: ...
     def setRecordingType(self, type: str) -> None: ...
@@ -157,7 +158,7 @@ class MopathRecorder(AppShell, DirectObject):
     def startPlayback(self) -> None: ...
     def setSpeedScale(self, value: SupportsFloat) -> None: ...
     def setPlaybackSF(self, value: SupportsFloat) -> None: ...
-    def playbackTask(self, state): ...
+    def playbackTask(self, state) -> Literal[0, 1]: ...
     def stopPlayback(self) -> None: ...
     def jumpToStartOfPlayback(self) -> None: ...
     def jumpToEndOfPlayback(self) -> None: ...
@@ -188,7 +189,7 @@ class MopathRecorder(AppShell, DirectObject):
     def getVariable(self, category: str, text: str) -> Any: ...
     def createLabeledEntry(
         self,
-        parent: Misc | None,
+        parent: tkinter.Misc | None,
         category: str,
         text: str,
         balloonHelp,
@@ -198,10 +199,10 @@ class MopathRecorder(AppShell, DirectObject):
         side: _TkSide = ...,
         expand: int = ...,
         width: int = ...,
-    ) -> tuple[Frame, Label, Entry]: ...
+    ) -> tuple[tkinter.Frame, tkinter.Label, tkinter.Entry]: ...
     def createButton(
         self,
-        parent: Misc | None,
+        parent: tkinter.Misc | None,
         category: str,
         text: str,
         balloonHelp,
@@ -209,10 +210,10 @@ class MopathRecorder(AppShell, DirectObject):
         side: _TkSide = ...,
         expand: int = ...,
         fill: _TkFill = ...,
-    ) -> Button: ...
+    ) -> tkinter.Button: ...
     def createCheckbutton(
         self,
-        parent: Misc | None,
+        parent: tkinter.Misc | None,
         category: str,
         text: str,
         balloonHelp,
@@ -221,7 +222,7 @@ class MopathRecorder(AppShell, DirectObject):
         side: str = ...,
         fill: _TkFill = ...,
         expand: int = ...,
-    ) -> Checkbutton: ...
+    ) -> tkinter.Checkbutton: ...
     def createRadiobutton(
         self,
         parent,
@@ -229,12 +230,12 @@ class MopathRecorder(AppShell, DirectObject):
         category: str,
         text: str,
         balloonHelp,
-        variable: Variable | Literal[''],
+        variable: tkinter.Variable | Literal[''],
         value,
         command=...,
         fill: _TkFill = ...,
         expand: int = ...,
-    ) -> Radiobutton: ...
+    ) -> tkinter.Radiobutton: ...
     def createFloater(
         self,
         parent,
@@ -281,7 +282,7 @@ class MopathRecorder(AppShell, DirectObject):
     def createVector2Entry(self, parent, category: str, text: str, balloonHelp, command=..., **kw) -> Vector2Entry: ...
     def createVector3Entry(self, parent, category: str, text: str, balloonHelp, command=..., **kw) -> Vector3Entry: ...
     def createColorEntry(self, parent, category: str, text: str, balloonHelp, command=..., **kw) -> ColorEntry: ...
-    def createOptionMenu(self, parent, category: str, text: str, balloonHelp, items, command) -> StringVar: ...
+    def createOptionMenu(self, parent, category: str, text: str, balloonHelp, items, command) -> tkinter.StringVar: ...
     def createComboBox(
         self,
         parent,

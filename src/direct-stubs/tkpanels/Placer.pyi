@@ -1,7 +1,7 @@
 __all__ = ['Placer', 'place']
 
+import tkinter
 from collections.abc import Callable, MutableMapping
-from tkinter import Button, StringVar
 from typing_extensions import Literal
 
 import Pmw  # type: ignore[import]
@@ -9,7 +9,8 @@ from direct._typing import Unused
 from direct.tkwidgets.AppShell import AppShell
 from direct.tkwidgets.Dial import AngleDial
 from direct.tkwidgets.Floater import Floater
-from panda3d.core import LVecBase3f, LVector3f, NodePath
+from panda3d._typing import Vec3f
+from panda3d.core import LVector3f, NodePath
 
 class Placer(AppShell):
     tempCS: NodePath
@@ -28,20 +29,20 @@ class Placer(AppShell):
     undoEvents: list[tuple[str, Callable[..., None]]]
     movementMode: str
     nodePathMenu: Pmw.ComboBox
-    nodePathMenuEntry = ...
-    nodePathMenuBG = ...
+    nodePathMenuEntry: tkinter.Entry
+    nodePathMenuBG: str
     refNodePathMenu: Pmw.ComboBox
-    refNodePathMenuEntry = ...
-    undoButton: Button
-    redoButton: Button
+    refNodePathMenuEntry: tkinter.Entry
+    undoButton: tkinter.Button
+    redoButton: tkinter.Button
     posX: Floater
     posY: Floater
     posZ: Floater
     hprH: AngleDial
     hprP: AngleDial
     hprR: AngleDial
-    scalingMode: StringVar
-    scaleMenubutton = ...
+    scalingMode: tkinter.StringVar
+    scaleMenubutton: tkinter.Label
     scaleX: Floater
     scaleY: Floater
     scaleZ: Floater
@@ -63,9 +64,9 @@ class Placer(AppShell):
     def xformRelative(self, value: float, axis: Literal['x', 'y', 'z', 'h', 'p', 'r']) -> None: ...
     def xformOrbit(self, value: float, axis: Literal['x', 'y', 'z', 'h', 'p', 'r']) -> None: ...
     def xformScale(self, value: float, axis: Literal['sx', 'sy', 'sz']) -> None: ...
-    def updatePosWidgets(self, pos: LVecBase3f | tuple[float, float, float]) -> None: ...
-    def updateHprWidgets(self, hpr: LVecBase3f | tuple[float, float, float]) -> None: ...
-    def updateScaleWidgets(self, scale: LVecBase3f | tuple[float, float, float]) -> None: ...
+    def updatePosWidgets(self, pos: Vec3f | tuple[float, float, float]) -> None: ...
+    def updateHprWidgets(self, hpr: Vec3f | tuple[float, float, float]) -> None: ...
+    def updateScaleWidgets(self, scale: Vec3f | tuple[float, float, float]) -> None: ...
     def zeroAll(self) -> None: ...
     def zeroPos(self) -> None: ...
     def zeroHpr(self) -> None: ...

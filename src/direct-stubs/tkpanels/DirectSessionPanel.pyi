@@ -1,7 +1,7 @@
 __all__ = ['DirectSessionPanel']
 
+import tkinter
 from collections.abc import Callable, MutableMapping
-from tkinter import BooleanVar, Button, Checkbutton, Menubutton, Misc, Toplevel
 
 import Pmw  # type: ignore[import]
 from direct.directtools.DirectLights import DirectLight
@@ -12,6 +12,7 @@ from direct.tkwidgets.MemoryExplorer import MemoryExplorer
 from direct.tkwidgets.SceneGraphExplorer import SceneGraphExplorer
 from direct.tkwidgets.Slider import Slider
 from direct.tkwidgets.VectorWidgets import ColorEntry
+from panda3d._typing import Vec3f
 from panda3d.core import NodePath
 from .TaskManagerPanel import TaskManagerWidget
 
@@ -22,14 +23,14 @@ class DirectSessionPanel(AppShell):
     jbNodePathDict: dict[str, NodePath]
     jbNodePathNames: list[str]
     actionEvents: list[tuple[str, Callable[..., None]]]
-    directEnabled: BooleanVar
-    directGridEnabled: BooleanVar
-    directWidgetOnTop: BooleanVar
+    directEnabled: tkinter.BooleanVar
+    directGridEnabled: tkinter.BooleanVar
+    directWidgetOnTop: tkinter.BooleanVar
     nodePathMenu: Pmw.ComboBox
-    nodePathMenuEntry = ...
-    nodePathMenuBG = ...
-    undoButton: Button
-    redoButton: Button
+    nodePathMenuEntry: tkinter.Entry
+    nodePathMenuBG: str
+    undoButton: tkinter.Button
+    redoButton: tkinter.Button
     SGE: SceneGraphExplorer
     backgroundColor: ColorEntry
     drMenu: Pmw.ComboBox
@@ -37,20 +38,20 @@ class DirectSessionPanel(AppShell):
     farPlane: Floater
     hFov: Slider
     vFov: Slider
-    lockedFov: BooleanVar
-    lockedFovButton: Checkbutton
-    resetFovButton: Button
-    toggleBackfaceButton: Button
-    toggleLightsButton: Button
-    toggleTextureButton: Button
-    toggleWireframeButton: Button
-    lightsButton: Menubutton
+    lockedFov: tkinter.BooleanVar
+    lockedFovButton: tkinter.Checkbutton
+    resetFovButton: tkinter.Button
+    toggleBackfaceButton: tkinter.Button
+    toggleLightsButton: tkinter.Button
+    toggleTextureButton: tkinter.Button
+    toggleWireframeButton: tkinter.Button
+    lightsButton: tkinter.Menubutton
     lightNotebook: Pmw.NoteBook
-    enableLights: BooleanVar
-    enableLightsButton: Checkbutton
+    enableLights: tkinter.BooleanVar
+    enableLightsButton: tkinter.Checkbutton
     lightMenu: Pmw.ComboBox
-    lightActive: BooleanVar
-    lightActiveButton: Checkbutton
+    lightActive: tkinter.BooleanVar
+    lightActiveButton: tkinter.Checkbutton
     lightColor: ColorEntry
     dSpecularColor: ColorEntry
     pSpecularColor: ColorEntry
@@ -62,44 +63,44 @@ class DirectSessionPanel(AppShell):
     sLinearAttenuation: Slider
     sQuadraticAttenuation: Slider
     sExponent: Slider
-    enableGrid: BooleanVar
-    enableGridButton: Checkbutton
-    xyzSnap: BooleanVar
-    xyzSnapButton: Checkbutton
-    hprSnap: BooleanVar
-    hprSnapButton: Checkbutton
+    enableGrid: tkinter.BooleanVar
+    enableGridButton: tkinter.Checkbutton
+    xyzSnap: tkinter.BooleanVar
+    xyzSnapButton: tkinter.Checkbutton
+    hprSnap: tkinter.BooleanVar
+    hprSnapButton: tkinter.Checkbutton
     gridSpacing: Floater
     gridSize: Floater
     gridSnapAngle: AngleDial
-    enableJoybox: BooleanVar
-    enableJoyboxButton: Checkbutton
+    enableJoybox: tkinter.BooleanVar
+    enableJoyboxButton: tkinter.Checkbutton
     jbModeMenu: Pmw.ComboBox
     jbNodePathMenu: Pmw.ComboBox
-    jbNodePathMenuEntry = ...
-    jbNodePathMenuBG = ...
+    jbNodePathMenuEntry: tkinter.Entry
+    jbNodePathMenuBG: str
     jbXyzSF: Slider
     jbHprSF: Slider
     taskMgrPanel: TaskManagerWidget
     MemExp: MemoryExplorer
-    def __init__(self, parent: Toplevel | None = ..., **kw) -> None: ...
-    def createEnvPage(self, envPage: Misc | None) -> None: ...
-    def createLightsPage(self, lightsPage: Misc | None) -> None: ...
-    def createGridPage(self, gridPage: Misc | None) -> None: ...
-    def createDevicePage(self, devicePage: Misc | None): ...
+    def __init__(self, parent: tkinter.Toplevel | None = ..., **kw) -> None: ...
+    def createEnvPage(self, envPage: tkinter.Misc | None) -> None: ...
+    def createLightsPage(self, lightsPage: tkinter.Misc | None) -> None: ...
+    def createGridPage(self, gridPage: tkinter.Misc | None) -> None: ...
+    def createDevicePage(self, devicePage: tkinter.Misc | None): ...
     def createTasksPage(self, tasksPage) -> None: ...
     def createMemPage(self, memPage) -> None: ...
     def toggleDirect(self) -> None: ...
     def toggleDirectGrid(self) -> None: ...
     def toggleWidgetOnTop(self) -> None: ...
     def selectedNodePathHook(self, nodePath: NodePath) -> None: ...
-    def selectNodePathNamed(self, name) -> None: ...
+    def selectNodePathNamed(self, name: str) -> None: ...
     def addNodePath(self, nodePath: NodePath) -> None: ...
     def selectJBModeNamed(self, name: str) -> None: ...
     def selectJBNodePathNamed(self, name: str) -> None: ...
     def addJBNodePath(self, nodePath: NodePath) -> None: ...
     def addNodePathToDict(self, nodePath: NodePath, names: list[str], menu, dict: MutableMapping[str, NodePath]) -> None: ...
     def setBackgroundColor(self, r: float, g: float, b: float) -> None: ...
-    def setBackgroundColorVec(self, color) -> None: ...
+    def setBackgroundColorVec(self, color: Vec3f | tuple[float, float, float]) -> None: ...
     def selectDisplayRegionNamed(self, name: str) -> None: ...
     def setNear(self, near) -> None: ...
     def setFar(self, far) -> None: ...
@@ -114,8 +115,8 @@ class DirectSessionPanel(AppShell):
     def addLight(self, light) -> None: ...
     def toggleLights(self) -> None: ...
     def toggleActiveLight(self) -> None: ...
-    def setLightColor(self, color) -> None: ...
-    def setSpecularColor(self, color) -> None: ...
+    def setLightColor(self, color: Vec3f | tuple[float, float, float, float]) -> None: ...
+    def setSpecularColor(self, color: Vec3f | tuple[float, float, float, float]) -> None: ...
     def setConstantAttenuation(self, value) -> None: ...
     def setLinearAttenuation(self, value) -> None: ...
     def setQuadraticAttenuation(self, value) -> None: ...

@@ -1,12 +1,13 @@
 __all__ = ['ActorControl', 'AnimPanel']
 
+import tkinter
 from collections.abc import Callable
-from tkinter import Frame, IntVar, Label, Scale
 from types import CodeType
 from typing import ClassVar, SupportsFloat
 from typing_extensions import Final, Literal
 
 import Pmw  # type: ignore[import]
+from direct.directtools.DirectSession import DirectSession
 from direct.tkwidgets.AppShell import AppShell
 
 FRAMES: Final[Literal[0]]
@@ -14,13 +15,14 @@ SECONDS: Final[Literal[1]]
 
 class AnimPanel(AppShell):
     index: ClassVar[int]
-    session = ...
-    playList: list
+    session: DirectSession | None
+    playList: list[ActorControl]
     actorControlIndex: int
     destroyCallBack: Callable[[], object] | None
-    actorFrame: Frame | None
+    actorFrame: tkinter.Frame | None
     lastT: float
     fToggleAll: bool
+    actorControlList: list[ActorControl]
     def __init__(self, aList=..., parent=..., session=..., **kw) -> None: ...
     def createActorControls(self) -> None: ...
     def clearActorControls(self) -> None: ...
@@ -29,7 +31,7 @@ class AnimPanel(AppShell):
     def playActorControls(self) -> None: ...
     def play(self, task) -> Literal[1]: ...
     def stopActorControls(self) -> None: ...
-    def getActorControlAt(self, index): ...
+    def getActorControlAt(self, index: int) -> ActorControl: ...
     def enableActorControlAt(self, index: int) -> None: ...
     def toggleAllControls(self) -> None: ...
     def enableActorControls(self) -> None: ...
@@ -51,12 +53,12 @@ class ActorControl(Pmw.MegaWidget):
     currT: float
     fScaleCommand: bool
     fOneShot: bool
-    unitsVar: IntVar
+    unitsVar: tkinter.IntVar
     animMenu: Pmw.ComboBox
-    minLabel: Label
-    frameControl: Scale
-    maxLabel: Label
-    frameActiveVar: IntVar
+    minLabel: tkinter.Label
+    frameControl: tkinter.Scale
+    maxLabel: tkinter.Label
+    frameActiveVar: tkinter.IntVar
     playRate: float
     def __init__(self, parent=..., **kw) -> None: ...
     def updateDisplay(self) -> None: ...
