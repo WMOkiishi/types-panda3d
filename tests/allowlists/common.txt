@@ -46,7 +46,9 @@ panda3d\..+\.__iter__
 direct.showbase.PythonUtil.ScratchPad.__getattr__
 direct.stdpy.threading2?.local.__getattr__
 
-# These might not exist, depending on whether another script has been run
+# These are set dynamically and may or may not exist.
+(direct.directscripts.gendocs.__warningregistry__)?
+(direct.dist.FreezeTool.__warningregistry__)?
 (direct.showbase.ShowBaseGlobal.base)?
 (direct.wxwidgets.WxPandaShell.base)?
 
@@ -59,10 +61,6 @@ direct.task.Task.(Task|pause).__(deep)?copy__
 # These exist in every C++ module, but I don't know what they're for.
 panda3d\.\w+\.Dtool_BorrowThisReference
 panda3d\.\w+\.Dtool_PyNativeInterface
-
-# I'm not sure what's going on here
-(direct.directscripts.gendocs.__warningregistry__)?
-(direct.dist.FreezeTool.__warningregistry__)?
 
 # Stubtest doesn't understand these at runtime.
 panda3d.core.ExecutionEnvironment.args
