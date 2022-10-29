@@ -7,7 +7,7 @@ from typing_extensions import Final, TypeAlias
 from direct._typing import Unused
 from panda3d.core import Filename, Multifile
 
-_File = TypeVar('_File', bound=_OpenFile)
+_OpenFileT = TypeVar('_OpenFileT', bound=_OpenFile)
 _OpenFile: TypeAlias = StrOrBytesPath | int
 
 p3extend_frozen: Any | None
@@ -118,13 +118,13 @@ class Freezer:
     def generateCode(self, basename: str, compileToExe: bool = ...) -> str: ...
     def generateRuntimeFromStub(
         self,
-        target: _File,
+        target: _OpenFileT,
         stub_file: SupportsRead[bytes],
         use_console: bool,
         fields: Mapping[str, str | None] = ...,
         log_append: bool = ...,
         log_filename_strftime: bool = ...,
-    ) -> _File: ...
+    ) -> _OpenFileT: ...
     def makeModuleDef(self, mangledName: str, code: bytes) -> str: ...
     def makeModuleListEntry(self, mangledName: str, code: bytes, moduleName: str, module: object) -> str: ...
     def makeForbiddenModuleListEntry(self, moduleName: str) -> str: ...
