@@ -203,6 +203,7 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.StringStream.set_data': {(0, 1): 'bytes'},
     'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
     'panda3d.core.TextEncoder.set_text': {(0, 1): 'str', (1, 1): 'bytes'},
+    'panda3d.vision.ARToolKit.make': {(0, 0): 'NodePath[Camera]'},
 })
 RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.AsyncFuture.__await__': 'Generator[Awaitable, None, None]',

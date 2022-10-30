@@ -5,7 +5,7 @@ from panda3d._typing import Filepath
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture
 from panda3d.core._movies import MovieVideo
-from panda3d.core._pgraph import NodePath
+from panda3d.core._pgraph import Camera, NodePath
 
 class ARToolKit:
     """ARToolKit is a software library for building Augmented Reality (AR)
@@ -23,7 +23,7 @@ class ARToolKit:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ARToolKit) -> None: ...
     @staticmethod
-    def make(camera: NodePath, paramfile: Filepath, markersize: float) -> ARToolKit:
+    def make(camera: NodePath[Camera], paramfile: Filepath, markersize: float) -> ARToolKit:
         """Create a new ARToolKit instance.
 
         Camera must be the nodepath of a panda camera object.  The panda camera's
