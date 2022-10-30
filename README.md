@@ -1,17 +1,15 @@
 # Panda3D Type Stubs
 
 This package contains type stubs for the Python bindings of
-[Panda3D](https://www.panda3d.org/).
-
-It's a work in progress, but the stubs for the main `panda3d` package are
-close to complete. Stubs for the `direct` package are coming soon.
+[Panda3D](https://www.panda3d.org/), as well as for the included `direct`
+package. The stubs are still in development, but should be usable with a wide
+range of projects.
 
 ## How to Use the Package
 
-Go to the [latest release](https://github.com/WMOkiishi/types-panda3d/releases/latest)
-and download the `.whl` file. Then use `pip install <path to the .whl file>`
-in whatever environment you wish to install the stubs. If Panda3D is also installed,
-a type checker should then know what to do with the stubs.
+Run `python -m pip install --upgrade types-panda3d` in whatever environment you
+wish to install the stubs. If Panda3D is also installed, a type checker should
+then know what to do with the stubs.
 
 ## How to Help
 
