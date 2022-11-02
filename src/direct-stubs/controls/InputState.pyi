@@ -6,7 +6,7 @@ from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 
 class InputStateToken(metaclass=ABCMeta):
-    Inval: ClassVar[str]
+    Inval: Final[Literal['invalidatedToken']]
     def __init__(self, inputState: InputState) -> None: ...
     @abstractmethod
     def release(self) -> None: ...
