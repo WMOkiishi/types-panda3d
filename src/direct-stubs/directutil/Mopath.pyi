@@ -21,7 +21,7 @@ class Mopath(DirectObject):
     loop: bool
     xyzNurbsCurve: ParametricCurve | None
     hprNurbsCurve: ParametricCurve | None
-    tNurbsCurve: list
+    tNurbsCurve: list[ParametricCurve]
     node: PandaNode
     def __init__(
         self,

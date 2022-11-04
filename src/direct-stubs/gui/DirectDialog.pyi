@@ -20,7 +20,7 @@ def findDialog(uniqueName: str) -> DirectDialog: ...
 def cleanupDialog(uniqueName: str) -> None: ...
 
 class DirectDialog(DirectFrame):
-    AllDialogs: ClassVar[dict]
+    AllDialogs: ClassVar[dict[str, DirectDialog]]
     PanelIndex: ClassVar[int]
     numButtons: int
     buttonList: list[DirectButton]

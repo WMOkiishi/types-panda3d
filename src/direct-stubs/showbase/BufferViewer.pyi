@@ -26,7 +26,7 @@ class BufferViewer:
     win: GraphicsOutput
     engine: GraphicsEngine
     renderParent: NodePath
-    cards: list
+    cards: list[NodePath]
     cardindex: int
     cardmaker: CardMaker
     task: PythonTask | Literal[0]

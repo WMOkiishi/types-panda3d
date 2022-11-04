@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal
 
@@ -40,7 +40,7 @@ class DirectSession(DirectObject):
     grid: DirectGrid
     lights: DirectLights
     selected: SelectedNodePaths
-    ancestry: list
+    ancestry: Sequence[NodePath]
     ancestryIndex: int
     activeParent: NodePath | None
     selectedNPReadout: OnscreenText
@@ -61,7 +61,7 @@ class DirectSession(DirectObject):
     scale: LVecBase3f
     undoList: list[list[tuple[NodePath, TransformState]]]
     redoList: list[list[tuple[NodePath, TransformState]]]
-    actionEvents: list
+    actionEvents: list[Sequence[Any]]
     modifierEvents: list[str]
     specialKeys: list[str]
     keyEvents: list[str]

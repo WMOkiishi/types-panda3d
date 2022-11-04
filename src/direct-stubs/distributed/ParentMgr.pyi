@@ -1,13 +1,14 @@
-from typing import Any, ClassVar
+from typing import ClassVar
 
+from direct._typing import Incomplete
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import NodePath
 
 class ParentMgr:
     notify: ClassVar[Notifier]
-    token2nodepath: dict[Any, NodePath]
-    pendingParentToken2children: dict[Any, list[NodePath]]
-    pendingChild2parentToken: dict[NodePath, Any]
+    token2nodepath: dict[Incomplete, NodePath]
+    pendingParentToken2children: dict[Incomplete, list[NodePath]]
+    pendingChild2parentToken: dict[NodePath, Incomplete]
     def __init__(self) -> None: ...
     def destroy(self) -> None: ...
     def privRemoveReparentRequest(self, child: NodePath) -> None: ...

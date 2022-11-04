@@ -1,6 +1,6 @@
 __all__ = ['Viewport', 'ViewportManager']
 
-from typing import Any
+from typing import Any, ClassVar
 from typing_extensions import Final, Literal
 
 from direct.directtools.DirectGrid import DirectGrid
@@ -17,8 +17,8 @@ VPTOP: Final[Literal[12]]
 VPPERSPECTIVE: Final[Literal[13]]
 
 class ViewportManager:
-    viewports: list
-    gsg: Any
+    viewports: ClassVar[list[Viewport]]
+    gsg: ClassVar[Any]
     @staticmethod
     def initializeAll(*args, **kwargs) -> None: ...
     @staticmethod

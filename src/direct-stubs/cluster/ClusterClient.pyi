@@ -3,7 +3,7 @@ from types import CodeType
 from typing import Any, ClassVar, NoReturn, Union
 from typing_extensions import Literal, TypeAlias
 
-from direct._typing import Unused
+from direct._typing import Incomplete, Unused
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.showbase.DirectObject import DirectObject
@@ -36,7 +36,7 @@ class ClusterClient(DirectObject):
     daemon: Any
     qcm: QueuedConnectionManager
     serverList: list[DisplayConnection]
-    serverQueues: list[list[tuple]]
+    serverQueues: list[list[tuple[Incomplete, Incomplete, Incomplete]]]
     msgHandler: ClusterMsgHandler
     objectMappings: dict[str, NodePath]
     objectHasColor: dict[str, bool]

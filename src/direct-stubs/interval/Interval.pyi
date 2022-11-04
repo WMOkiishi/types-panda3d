@@ -1,5 +1,6 @@
 __all__ = ['Interval']
 
+from collections.abc import Callable
 from tkinter import Toplevel
 from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
@@ -19,7 +20,7 @@ class Interval(DirectObject):
     state: _State
     currT: float
     doneEvent: str
-    setTHooks: list
+    setTHooks: list[Callable[[int], object]]
     pstats: PStatCollector | None
     openEnded: bool
     t: float

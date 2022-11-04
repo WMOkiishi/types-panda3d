@@ -47,9 +47,9 @@ class PackageInstaller(DirectObject):
     packageLock: RLock
     packages: list[PackageInstaller.PendingPackage]
     state: Literal[0, 1, 2, 3]
-    needsDescFile: list
+    needsDescFile: list[PackageInstaller.PendingPackage]
     descFileTask: PythonTask | None
-    needsDownload: list
+    needsDownload: list[PackageInstaller.PendingPackage]
     downloadTask: PythonTask | None
     earlyDone: list[PackageInstaller.PendingPackage]
     done: list[PackageInstaller.PendingPackage]

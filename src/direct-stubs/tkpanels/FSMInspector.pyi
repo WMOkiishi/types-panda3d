@@ -12,7 +12,7 @@ _CanvasItemId: TypeAlias = int
 
 class FSMInspector(AppShell):
     fsm: ClassicFSM
-    states: list
+    states: list[str]
     stateInspectorDict: dict[str, StateInspector]
     name: str
     def __init__(self, fsm: ClassicFSM, **kw) -> None: ...

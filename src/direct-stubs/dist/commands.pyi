@@ -1,11 +1,13 @@
 from _typeshed import StrOrBytesPath
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Container, Iterable
 from typing import ClassVar, overload
 from typing_extensions import Final, TypeAlias
 
+from direct._typing import Incomplete
 from direct.p3d.DeploymentTools import Icon
 from setuptools import Command  # type: ignore[import]
 
+_FileHandler: TypeAlias = Callable[[build_apps, Incomplete, Incomplete], StrOrBytesPath]
 _OpenFile: TypeAlias = StrOrBytesPath | int
 
 def egg2bam(_build_cmd: object, srcpath: str, dstpath: str) -> str: ...
@@ -21,7 +23,7 @@ SITE_PY: Final[str]
 class build_apps(Command):
     description: ClassVar[str]
     user_options: ClassVar[list[tuple[str, str | None, str]]]
-    default_file_handlers: ClassVar[dict[str, Callable]]
+    default_file_handlers: ClassVar[dict[str, _FileHandler]]
     build_base: str
     gui_apps: dict[str, str]
     console_apps: dict[str, str]
@@ -45,9 +47,9 @@ class build_apps(Command):
     use_optimized_wheels: bool
     optimized_wheel_index: str
     pypi_extra_indexes: list[str]
-    file_handlers: dict[str, Callable]
+    file_handlers: dict[str, _FileHandler]
     exclude_dependencies: list[str]
-    package_data_dirs: dict
+    package_data_dirs: dict[str, Iterable[tuple[str, str, Container[str]]]]
     icon_object: dict[str, Icon]
     def initialize_options(self) -> None: ...
     def finalize_options(self) -> None: ...

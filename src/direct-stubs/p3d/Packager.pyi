@@ -4,7 +4,7 @@ from collections.abc import Container, Iterable, Sequence
 from typing import Any, ClassVar
 from typing_extensions import Literal
 
-from direct._typing import Unused
+from direct._typing import Incomplete, Unused
 from direct.directnotify.Notifier import Notifier
 from direct.dist.FreezeTool import Freezer
 from direct.showbase.Loader import Loader
@@ -124,7 +124,7 @@ class Packager:
         compressionLevel: int
         importedMapsDir: str
         mainModule: tuple[str, str] | None
-        signParams: list
+        signParams: list[tuple[Filepath, Filepath | None, Filepath | None, str | None]]
         requires: list[Packager.Package]
         packageSetVer: SeqValue
         configs: dict[str, Any]

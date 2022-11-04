@@ -3,7 +3,7 @@ from typing import ClassVar
 
 import wx  # type: ignore[import]
 import wx.glcanvas as wxgl  # type: ignore[import]
-from panda3d.core import ConfigVariableBool, GraphicsWindow, InputDevice
+from panda3d.core import ButtonHandle, ConfigVariableBool, GraphicsWindow, InputDevice
 
 class EmbeddedPandaWindow(wx.Window):
     win: GraphicsWindow
@@ -13,7 +13,7 @@ class EmbeddedPandaWindow(wx.Window):
 
 class OpenGLPandaWindow(wxgl.GLCanvas):
     removeCallbackWindow: ClassVar[ConfigVariableBool]
-    Keymap: ClassVar[dict]
+    Keymap: ClassVar[dict[int, ButtonHandle]]
     visible: bool
     win: GraphicsWindow
     hasCapture: bool

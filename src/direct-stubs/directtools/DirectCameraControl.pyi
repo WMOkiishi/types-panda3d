@@ -27,7 +27,7 @@ class DirectCameraControl(DirectObject):
     coaMarkerColorIval: MetaInterval | None
     fLockCOA: bool
     nullHitPointCount: int
-    cqEntries: list
+    cqEntries: list[CollisionEntry]
     coaMarkerRef: NodePath[PandaNode]
     camManipRef: NodePath[PandaNode]
     switchDirBelowZero: bool

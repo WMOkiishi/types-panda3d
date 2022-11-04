@@ -32,7 +32,7 @@ class FilterManager(DirectObject):
     camera: NodePath[Camera]
     caminit: RenderState
     camstate: RenderState
-    buffers: list
+    buffers: list[GraphicsOutput]
     sizes: list[tuple[float, float, float]]
     nextsort: int
     basex: int

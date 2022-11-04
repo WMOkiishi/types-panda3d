@@ -83,7 +83,7 @@ class Freezer:
     frozenDllMainCode: str
     mainInitCode: str
     storePythonSource: bool
-    extras: list
+    extras: list[tuple[str, str]]
     linkExtensionModules: bool
     previousModules: dict[str, Freezer.ModuleDef]
     modules: dict[str, Freezer.ModuleDef]

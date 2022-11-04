@@ -41,9 +41,9 @@ class ParticlePanel(AppShell):
     rendererGeomNode: tkinter.StringVar
     rendererGeomNodeEntry: tkinter.Entry
     rendererGeomSegmentFrame: tkinter.Frame
-    rendererSegmentWidgetList: list
+    rendererSegmentWidgetList: list[tkinter.Frame]
     rendererSpriteAnimationFrame: tkinter.Frame
-    rendererSpriteAnimationWidgetList: list
+    rendererSpriteAnimationWidgetList: list[tkinter.Frame]
     rendererSpriteTexture: tkinter.StringVar
     rendererSpriteFile: tkinter.StringVar
     rendererSpriteNode: tkinter.StringVar

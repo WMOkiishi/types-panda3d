@@ -2,7 +2,7 @@ __all__ = ['AppRunner', 'ArgumentError', 'dummyAppRunner']
 
 from collections.abc import Callable
 from typing import ClassVar
-from typing_extensions import Final, Literal
+from typing_extensions import Final, Literal, Never
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
@@ -50,11 +50,11 @@ class AppRunner(DirectObject):
     rootDir: Filename | None
     logDirectory: Filename | None
     superMirrorUrl = ...
-    installedPackages: list
-    downloadingPackages: list
+    installedPackages: list[Never]
+    downloadingPackages: list[Never]
     hosts: dict[str, HostInfo]
     altHost = ...
-    altHostMap: dict
+    altHostMap: dict[str, str]
     pandaHostUrl: str
     exceptionHandler: Callable[[], object] | None
     downloadTask: None

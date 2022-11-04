@@ -1,7 +1,7 @@
 from collections.abc import Callable, Iterable
 
 import wx  # type: ignore[import]
-from direct._typing import Unused
+from direct._typing import Incomplete, Unused
 from direct.wxwidgets.WxSlider import WxSlider
 from wx.lib.agw.cubecolourdialog import CubeColourDialog  # type: ignore[import]
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
@@ -58,7 +58,15 @@ class ObjectPropUIRadio(ObjectPropUI):
 class ObjectPropUICombo(ObjectPropUI):
     ui: wx.Choice
     eventType = ...
-    def __init__(self, parent, label, value, valueList, obj=..., callBack: Callable | None = ...) -> None: ...
+    def __init__(
+        self,
+        parent,
+        label,
+        value,
+        valueList,
+        obj=...,
+        callBack: Callable[[Incomplete, Incomplete, Incomplete], object] | None = ...,
+    ) -> None: ...
     def setItems(self, valueList) -> None: ...
 
 class ObjectPropUITime(wx.Panel):

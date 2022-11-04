@@ -5,10 +5,12 @@ from tarfile import TarInfo
 from typing import AnyStr, ClassVar
 from typing_extensions import Final, Literal
 
+from direct._typing import Incomplete
 from direct.directnotify.Notifier import Notifier
 from panda3d._typing import Filepath
 from panda3d.core import Filename, HTTPClient, PNMImage
 from .HostInfo import HostInfo
+from .PackageInfo import PackageInfo
 
 P3DEMBED_MAGIC: Final[Literal[0xFF3D3D00]]
 
@@ -21,11 +23,11 @@ class Standalone:
     notify: ClassVar[Notifier]
     p3dfile: Filename
     basename: str
-    tokens: Mapping
+    tokens: Mapping[str, str]
     tempDir: Filename
     host: HostInfo
     http: HTTPClient
-    def __init__(self, p3dfile: Filepath, tokens: Mapping = ...) -> None: ...
+    def __init__(self, p3dfile: Filepath, tokens: Mapping[str, str] = ...) -> None: ...
     def __del__(self) -> None: ...
     def buildAll(self, outputDir: str = ...) -> None: ...
     def build(self, output: Filename, platform: str | None = ..., extraTokens: Mapping[str, str] = ...) -> None: ...
@@ -35,7 +37,7 @@ class Standalone:
 class PackageTree:
     platform: str
     hosts: dict[str, HostInfo]
-    packages: dict
+    packages: dict[tuple[str, str | None], PackageInfo]
     hostUrl: str
     hostDir: Filename
     http: HTTPClient

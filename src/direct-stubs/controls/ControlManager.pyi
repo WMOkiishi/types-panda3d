@@ -4,7 +4,7 @@ from typing_extensions import Literal
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import ConfigVariableBool
-from .InputState import InputStateForceToken
+from .InputState import InputStateForceToken, InputStateToken, InputStateTokenGroup
 
 class _Controls(Protocol):
     def setWalkSpeed(self, forward: float, jump: float, reverse: float, rotate: float) -> object: ...
@@ -20,8 +20,8 @@ class ControlManager:
     notify: ClassVar[Notifier]
     wantWASD: ClassVar[ConfigVariableBool]
     passMessagesThrough: bool
-    inputStateTokens: list
-    WASDTurnTokens: list
+    inputStateTokens: list[InputStateToken]
+    WASDTurnTokens: list[InputStateTokenGroup]
     controls: dict[str, _Controls]
     currentControls: _Controls | None
     currentControlsName: str | None

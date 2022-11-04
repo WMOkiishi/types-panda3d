@@ -31,7 +31,7 @@ class DirectManipulationControl(DirectObject):
     mode: Literal['select', 'camera', 'move', None]
     worldSpaceManip: bool
     useSeparateScaleHandles: bool
-    actionEvents: list
+    actionEvents: list[Sequence[Any]]
     defaultSkipFlags: int
     optionalSkipFlags: int
     unmovableTagList: list[str]

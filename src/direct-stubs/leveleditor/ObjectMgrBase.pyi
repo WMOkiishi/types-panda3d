@@ -2,6 +2,7 @@ from collections.abc import Iterable
 from typing import SupportsInt, TypeVar
 
 from direct._typing import Unused
+from panda3d._typing import Vec3f
 from panda3d.core import NodePath, PandaNode
 from .LevelEditor import LevelEditor
 
@@ -26,7 +27,13 @@ class ObjectMgrBase:
     def reset(self) -> None: ...
     def genUniqueId(self) -> str: ...
     def addNewCurveFromFile(
-        self, curveInfo: Iterable, degree, uid=..., parent=..., fSelectObject: bool = ..., nodePath: Unused = ...
+        self,
+        curveInfo: Iterable[tuple[str, Vec3f]],
+        degree,
+        uid=...,
+        parent=...,
+        fSelectObject: bool = ...,
+        nodePath: Unused = ...,
     ) -> NodePath: ...
     def addNewCurve(
         self, curveInfo, degree, uid=..., parent=..., fSelectObject: bool = ..., nodePath: NodePath | None = ...

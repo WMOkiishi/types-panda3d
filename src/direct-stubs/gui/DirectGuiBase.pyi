@@ -7,7 +7,7 @@ from typing_extensions import Final, Literal, ParamSpec, TypeAlias
 
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
-from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGItem, PStatCollector
+from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGFrameStyle, PGItem, PStatCollector
 
 _T = TypeVar('_T')
 _P = ParamSpec('_P')
@@ -26,7 +26,7 @@ class DirectGuiBase(DirectObject):
         self,
         keywords: Mapping[str, Any],
         optionDefs: Iterable[tuple[str, Any, Callable[[], object] | None]],
-        dynamicGroups: Iterable = ...,
+        dynamicGroups: Iterable[str] = ...,
     ) -> None: ...
     def addoptions(
         self, optionDefs: Iterable[tuple[str, Any, Callable[[], object] | None]], optionkeywords: Mapping[str, Any]
@@ -80,10 +80,10 @@ class DirectGuiWidget(DirectGuiBase, NodePath[PGItem]):
     gridSpacing: ClassVar[float]
     guiEdit: ClassVar[bool]
     inactiveInitState: ClassVar[Literal['normal', 'disabled']]
-    guiDict: ClassVar[dict]
+    guiDict: ClassVar[dict[str, DirectGuiWidget]]
     guiItem: PGItem
-    stateNodePath: list
-    frameStyle: list
+    stateNodePath: list[NodePath[PGItem]]
+    frameStyle: list[PGFrameStyle]
     ll: LPoint3f
     ur: LPoint3f
     bounds: tuple[float, float, float, float]
