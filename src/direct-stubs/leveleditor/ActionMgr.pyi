@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from typing import Any, TypeVar
 
+from direct._typing import Obj
 from direct.showbase.PythonUtil import Functor
 from panda3d.core import LMatrix4f
 from .LevelEditor import LevelEditor
@@ -26,7 +27,7 @@ class ActionBase(Functor[_T]):
 
 class ActionAddNewObj(ActionBase):
     editor: LevelEditor
-    uid = ...
+    uid: str
     def __init__(self, editor: LevelEditor, *args: Any, **kargs: Any) -> None: ...
 
 class ActionDeleteObj(ActionBase):
@@ -39,18 +40,18 @@ class ActionDeleteObj(ActionBase):
 
 class ActionDeleteObjById(ActionBase):
     editor: LevelEditor
-    uid = ...
+    uid: str
     hierarchy: dict
     objInfos: dict
     objTransforms: dict
-    def __init__(self, editor: LevelEditor, uid) -> None: ...
+    def __init__(self, editor: LevelEditor, uid: str) -> None: ...
 
 class ActionChangeHierarchy(ActionBase):
     editor: LevelEditor
     oldGrandParentId = ...
     oldParentId = ...
     newParentId = ...
-    childName = ...
+    childName: str
     def __init__(self, editor: LevelEditor, oldGrandParentId, oldParentId, newParentId, childName, *args, **kargs) -> None: ...
 
 class ActionSelectObj(ActionBase):
@@ -60,33 +61,33 @@ class ActionSelectObj(ActionBase):
 
 class ActionTransformObj(ActionBase):
     editor: LevelEditor
-    uid = ...
+    uid: str
     origMat: LMatrix4f | None
     def __init__(self, editor: LevelEditor, *args, **kargs: Any) -> None: ...
 
 class ActionDeselectAll(ActionBase):
     editor: LevelEditor
-    selectedUIDs: list
+    selectedUIDs: list[str]
     def __init__(self, editor: LevelEditor, *args: Any, **kargs: Any) -> None: ...
 
 class ActionUpdateObjectProp(ActionBase[_T]):
     editor: LevelEditor
     fSelectObject: bool
-    obj = ...
-    propName = ...
+    obj: Obj
+    propName: str
     newVal = ...
     oldVal = ...
-    undoFunc = ...
+    undoFunc: Callable[[], object]
     def __init__(
         self,
         editor: LevelEditor,
         fSelectObject: bool,
-        obj,
-        propName,
+        obj: Obj,
+        propName: str,
         val,
         oldVal,
         function: Callable[..., _T],
-        undoFunc,
+        undoFunc: Callable[[], object],
         *args: Any,
         **kargs: Any,
     ) -> None: ...

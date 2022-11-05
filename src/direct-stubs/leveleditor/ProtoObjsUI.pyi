@@ -1,7 +1,12 @@
 from abc import ABCMeta, abstractmethod
+from collections.abc import Iterable
+from typing import Any, TypeVar
 
 import wx  # type: ignore[import]
+from direct._typing import Unused
 from .LevelEditor import LevelEditor
+
+_T = TypeVar('_T')
 
 class ProtoDropTarget(wx.PyDropTarget):
     ui = ...
@@ -10,17 +15,17 @@ class ProtoDropTarget(wx.PyDropTarget):
     textdo: wx.TextDataObject
     bmpdo: wx.BitmapDataObject
     def __init__(self, ui) -> None: ...
-    def OnData(self, x, y, d): ...
+    def OnData(self, x: Unused, y: Unused, d: _T) -> _T: ...
 
 class ProtoObjsUI(wx.Panel, metaclass=ABCMeta):
     editor: LevelEditor
     protoObjs = ...
-    supportedExts = ...
+    supportedExts: Iterable[str]
     llist: wx.ListCtrl
     opDelete: str
     menuItems: list[str]
     popupmenu: wx.Menu
-    def __init__(self, parent, editor: LevelEditor, protoObjs, supportedExts) -> None: ...
+    def __init__(self, parent: Any, editor: LevelEditor, protoObjs, supportedExts: Iterable[str]) -> None: ...
     def populate(self) -> None: ...
     @abstractmethod
     def addObj(self, filename) -> None: ...
