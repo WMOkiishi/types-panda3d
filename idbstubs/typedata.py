@@ -317,7 +317,7 @@ def inherits_from(a: str, b: str, /) -> bool:
         return True
     if (a, b) in (('bool', 'int'), ('int', 'float')):
         return True
-    if a == 'Filename' and b == 'StrOrBytesPath':
+    if a in ('Filename', 'str') and b == 'StrOrBytesPath':
         return True
     return b in _inheritance.get(a, set())
 
