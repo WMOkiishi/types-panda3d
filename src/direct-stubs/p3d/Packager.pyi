@@ -4,7 +4,7 @@ from collections.abc import Container, Iterable, Sequence
 from typing import Any, ClassVar
 from typing_extensions import Literal
 
-from direct._typing import Incomplete, Unused
+from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.dist.FreezeTool import Freezer
 from direct.showbase.Loader import Loader

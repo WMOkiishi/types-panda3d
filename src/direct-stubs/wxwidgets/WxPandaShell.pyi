@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, overload
+from typing import ClassVar, overload
 from typing_extensions import Final, Literal
 
 import wx  # type: ignore[import]

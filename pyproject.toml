@@ -27,9 +27,8 @@ where = ["src"]
 [tool.setuptools.package-data]
 "*" = ["*.pyi"]
 
-[tool.autoflake]
-in-place = true
-remove-all-unused-imports = true
+[tool.pycln]
+all = true
 
 [tool.isort]
 multi_line_output = 5

@@ -1,5 +1,5 @@
 import tkinter
-from typing import Any, SupportsFloat
+from typing import SupportsFloat
 from typing_extensions import Final
 
 import Pmw  # type: ignore[import]
