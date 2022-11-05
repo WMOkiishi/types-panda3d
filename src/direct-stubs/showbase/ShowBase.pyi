@@ -10,7 +10,7 @@ from direct.directtools.DirectSession import DirectSession
 from direct.p3d.AppRunner import AppRunner
 from direct.showutil.TexMemWatcher import TexMemWatcher
 from direct.task.Task import Task, TaskManager
-from panda3d._typing import Filepath, Vec4f
+from panda3d._typing import Filepath, Vec4Like
 from panda3d.core import (
     AudioManager,
     AudioSound,
@@ -281,11 +281,11 @@ class ShowBase(DirectObject):
         win: GraphicsOutput,
         sort: int = ...,
         scene: NodePath | None = ...,
-        displayRegion: Vec4f | tuple[float, float, float, float] = ...,
+        displayRegion: Vec4Like | tuple[float, float, float, float] = ...,
         stereo: bool | None = ...,
         aspectRatio: float | None = ...,
         clearDepth: bool = ...,
-        clearColor: Vec4f | None = ...,
+        clearColor: Vec4Like | None = ...,
         lens: Lens | None = ...,
         camName: str = ...,
         mask: BitMask32 | int | None = ...,
@@ -295,8 +295,8 @@ class ShowBase(DirectObject):
         self,
         win: GraphicsOutput,
         sort: int = ...,
-        displayRegion: Vec4f | tuple[float, float, float, float] = ...,
-        coords: Vec4f | tuple[float, float, float, float] = ...,
+        displayRegion: Vec4Like | tuple[float, float, float, float] = ...,
+        coords: Vec4Like | tuple[float, float, float, float] = ...,
         lens: Lens | None = ...,
         cameraName: str | None = ...,
     ) -> NodePath[Camera]: ...
@@ -304,8 +304,8 @@ class ShowBase(DirectObject):
         self,
         win: GraphicsOutput,
         sort: int = ...,
-        displayRegion: Vec4f | tuple[float, float, float, float] = ...,
-        coords: Vec4f | tuple[float, float, float, float] = ...,
+        displayRegion: Vec4Like | tuple[float, float, float, float] = ...,
+        coords: Vec4Like | tuple[float, float, float, float] = ...,
         lens: Lens | None = ...,
         cameraName: str | None = ...,
     ) -> NodePath[Camera]: ...

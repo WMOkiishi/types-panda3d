@@ -7,7 +7,7 @@ from direct._typing import Incomplete, Unused
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.showbase.DirectObject import DirectObject
-from panda3d._typing import Vec3f, Vec4f
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import (
     Connection,
     ConnectionWriter,
@@ -26,8 +26,8 @@ _NamedMovement: TypeAlias = tuple[
 ]
 _TaskCont: TypeAlias = Literal[1]
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
-_Vec3f: TypeAlias = Union[Vec3f, tuple[float, float, float]]
-_Vec4f: TypeAlias = Union[Vec4f, tuple[float, float, float, float]]
+_Vec3f: TypeAlias = Union[Vec3Like, tuple[float, float, float]]
+_Vec4f: TypeAlias = Union[Vec4Like, tuple[float, float, float, float]]
 
 class ClusterClient(DirectObject):
     notify: ClassVar[Notifier]

@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from direct._typing import Unused
 from direct.fsm.FSM import FSM
 from direct.interval import MetaInterval
-from panda3d._typing import Vec3f
+from panda3d._typing import Vec3Like
 from panda3d.core import LVecBase2f, NodePath, PerspectiveLens, RenderState
 from .DistributedObject import DistributedObject
 
@@ -13,7 +13,7 @@ class Fixture(NodePath, FSM):
     scaleIval: MetaInterval.Sequence | None
     recordingInProgress: bool
     dirty: bool
-    def __init__(self, id: int, parent: NodePath, pos: Vec3f, hpr: Vec3f, fov: LVecBase2f | float) -> None: ...
+    def __init__(self, id: int, parent: NodePath, pos: Vec3Like, hpr: Vec3Like, fov: LVecBase2f | float) -> None: ...
     def pack(self) -> str: ...
     def setId(self, id: int) -> None: ...
     def setFov(self, fov: LVecBase2f | float) -> None: ...

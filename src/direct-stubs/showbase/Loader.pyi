@@ -7,7 +7,7 @@ from typing_extensions import Literal, TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 from panda3d import core
-from panda3d._typing import Filepath, Vec4f
+from panda3d._typing import Filepath, Vec4Like
 from panda3d.core import (
     AsyncTask,
     AudioManager,
@@ -236,10 +236,10 @@ class Loader(DirectObject):
         minFilter: _FilterType | None = ...,
         magFilter: _FilterType | None = ...,
         anisotropicDegree: int | None = ...,
-        color: Vec4f | None = ...,
+        color: Vec4Like | None = ...,
         outlineWidth: float | None = ...,
         outlineFeather: float = ...,
-        outlineColor: Vec4f = ...,
+        outlineColor: Vec4Like = ...,
         renderMode: _TextFont_RenderMode | None = ...,
         okMissing: bool = ...,
     ) -> TextFont: ...

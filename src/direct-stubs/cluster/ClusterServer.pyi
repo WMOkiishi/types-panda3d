@@ -4,7 +4,7 @@ from typing_extensions import Literal, TypeAlias
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
-from panda3d._typing import Vec3f
+from panda3d._typing import Vec3Like
 from panda3d.core import (
     Camera,
     Connection,
@@ -23,7 +23,7 @@ _NamedMovement: TypeAlias = tuple[
     str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
 ]
 _TaskCont: TypeAlias = Literal[1]
-_Vec3f: TypeAlias = Union[Vec3f, tuple[float, float, float]]
+_Vec3f: TypeAlias = Union[Vec3Like, tuple[float, float, float]]
 
 class ClusterServer(DirectObject):
     notify: ClassVar[Notifier]

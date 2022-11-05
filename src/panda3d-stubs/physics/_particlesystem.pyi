@@ -1,7 +1,7 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3f, Vec4f
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import ReferenceCount, TypedReferenceCount
@@ -27,7 +27,7 @@ class BaseParticleEmitter(ReferenceCount):
     ET_CUSTOM: Final[Literal[2]]
     ETCUSTOM: Final[Literal[2]]
     def make_copy(self) -> BaseParticleEmitter: ...
-    def generate(self, pos: Vec3f, vel: Vec3f) -> None:
+    def generate(self, pos: Vec3Like, vel: Vec3Like) -> None:
         """parent generation function"""
     def set_emission_type(self, et: _BaseParticleEmitter_emissionType) -> None:
         """emission type assignment"""
@@ -35,11 +35,11 @@ class BaseParticleEmitter(ReferenceCount):
         """amplitude assignment"""
     def set_amplitude_spread(self, _as: float) -> None:
         """amplitude spread assignment"""
-    def set_offset_force(self, of: Vec3f) -> None:
+    def set_offset_force(self, of: Vec3Like) -> None:
         """this is a constant force applied to all particles"""
-    def set_explicit_launch_vector(self, elv: Vec3f) -> None:
+    def set_explicit_launch_vector(self, elv: Vec3Like) -> None:
         """assignment of explicit emission launch vector"""
-    def set_radiate_origin(self, ro: Vec3f) -> None:
+    def set_radiate_origin(self, ro: Vec3Like) -> None:
         """assignment of radiate emission origin point"""
     def get_emission_type(self) -> _BaseParticleEmitter_emissionType:
         """emission type query"""
@@ -233,9 +233,9 @@ class BoxEmitter(BaseParticleEmitter):
         `(self, copy: BoxEmitter)`:
         copy constructor
         """
-    def set_min_bound(self, vmin: Vec3f) -> None:
+    def set_min_bound(self, vmin: Vec3Like) -> None:
         """boundary assignment"""
-    def set_max_bound(self, vmax: Vec3f) -> None:
+    def set_max_bound(self, vmax: Vec3Like) -> None:
         """boundary assignment"""
     def get_min_bound(self) -> LPoint3:
         """boundary accessor"""
@@ -249,7 +249,7 @@ class BoxEmitter(BaseParticleEmitter):
 class ColorInterpolationFunctionConstant:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_color_a(self) -> LColor: ...
-    def set_color_a(self, c: Vec4f) -> None: ...
+    def set_color_a(self, c: Vec4Like) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     getColorA = get_color_a
@@ -258,7 +258,7 @@ class ColorInterpolationFunctionConstant:
 
 class ColorInterpolationFunctionLinear(ColorInterpolationFunctionConstant):
     def get_color_b(self) -> LColor: ...
-    def set_color_b(self, c: Vec4f) -> None: ...
+    def set_color_b(self, c: Vec4Like) -> None: ...
     getColorB = get_color_b
     setColorB = set_color_b
 
@@ -306,19 +306,24 @@ class ColorInterpolationManager(ReferenceCount):
     @overload
     def __init__(self, copy: ColorInterpolationManager = ...) -> None: ...
     @overload
-    def __init__(self, c: Vec4f) -> None: ...
+    def __init__(self, c: Vec4Like) -> None: ...
     def add_constant(
-        self, time_begin: float = ..., time_end: float = ..., color: Vec4f = ..., is_modulated: bool = ...
+        self, time_begin: float = ..., time_end: float = ..., color: Vec4Like = ..., is_modulated: bool = ...
     ) -> int: ...
     def add_linear(
-        self, time_begin: float = ..., time_end: float = ..., color_a: Vec4f = ..., color_b: Vec4f = ..., is_modulated: bool = ...
+        self,
+        time_begin: float = ...,
+        time_end: float = ...,
+        color_a: Vec4Like = ...,
+        color_b: Vec4Like = ...,
+        is_modulated: bool = ...,
     ) -> int: ...
     def add_stepwave(
         self,
         time_begin: float = ...,
         time_end: float = ...,
-        color_a: Vec4f = ...,
-        color_b: Vec4f = ...,
+        color_a: Vec4Like = ...,
+        color_b: Vec4Like = ...,
         width_a: float = ...,
         width_b: float = ...,
         is_modulated: bool = ...,
@@ -327,12 +332,12 @@ class ColorInterpolationManager(ReferenceCount):
         self,
         time_begin: float = ...,
         time_end: float = ...,
-        color_a: Vec4f = ...,
-        color_b: Vec4f = ...,
+        color_a: Vec4Like = ...,
+        color_b: Vec4Like = ...,
         period: float = ...,
         is_modulated: bool = ...,
     ) -> int: ...
-    def set_default_color(self, c: Vec4f) -> None: ...
+    def set_default_color(self, c: Vec4Like) -> None: ...
     def get_segment(self, seg_id: int) -> ColorInterpolationSegment: ...
     def get_segment_id_list(self) -> str: ...
     def clear_segment(self, seg_id: int) -> None: ...
@@ -435,9 +440,9 @@ class LineEmitter(BaseParticleEmitter):
 
     def __init__(self, copy: LineEmitter = ...) -> None:
         """constructor"""
-    def set_endpoint1(self, point: Vec3f) -> None:
+    def set_endpoint1(self, point: Vec3Like) -> None:
         """endpoint assignment"""
-    def set_endpoint2(self, point: Vec3f) -> None:
+    def set_endpoint2(self, point: Vec3Like) -> None:
         """endpoint assignment"""
     def get_endpoint1(self) -> LPoint3:
         """endpoint accessor"""
@@ -452,9 +457,9 @@ class LineParticleRenderer(BaseParticleRenderer):
     @overload
     def __init__(self, copy: LineParticleRenderer = ...) -> None: ...
     @overload
-    def __init__(self, head: Vec4f, tail: Vec4f, alpha_mode: _BaseParticleRenderer_ParticleRendererAlphaMode) -> None: ...
-    def set_head_color(self, c: Vec4f) -> None: ...
-    def set_tail_color(self, c: Vec4f) -> None: ...
+    def __init__(self, head: Vec4Like, tail: Vec4Like, alpha_mode: _BaseParticleRenderer_ParticleRendererAlphaMode) -> None: ...
+    def set_head_color(self, c: Vec4Like) -> None: ...
+    def set_tail_color(self, c: Vec4Like) -> None: ...
     def get_head_color(self) -> LColor: ...
     def get_tail_color(self) -> LColor: ...
     def set_line_scale_factor(self, sf: float) -> None:
@@ -617,7 +622,7 @@ class PointEmitter(BaseParticleEmitter):
         `(self, copy: PointEmitter)`:
         copy constructor
         """
-    def set_location(self, p: Vec3f) -> None:
+    def set_location(self, p: Vec3Like) -> None:
         """point setting"""
     def get_location(self) -> LPoint3: ...
     setLocation = set_location
@@ -646,8 +651,8 @@ class PointParticleRenderer(BaseParticleRenderer):
         point_size: float = ...,
         bt: _PointParticleRenderer_PointParticleBlendType = ...,
         bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ...,
-        sc: Vec4f = ...,
-        ec: Vec4f = ...,
+        sc: Vec4Like = ...,
+        ec: Vec4Like = ...,
     ) -> None:
         """`(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: LColor = ..., ec: LColor = ...)`:
         special constructor
@@ -658,8 +663,8 @@ class PointParticleRenderer(BaseParticleRenderer):
     @overload
     def __init__(self, copy: PointParticleRenderer) -> None: ...
     def set_point_size(self, point_size: float) -> None: ...
-    def set_start_color(self, sc: Vec4f) -> None: ...
-    def set_end_color(self, ec: Vec4f) -> None: ...
+    def set_start_color(self, sc: Vec4Like) -> None: ...
+    def set_end_color(self, ec: Vec4Like) -> None: ...
     def set_blend_type(self, bt: _PointParticleRenderer_PointParticleBlendType) -> None: ...
     def set_blend_method(self, bm: _BaseParticleRenderer_ParticleRendererBlendMethod) -> None: ...
     def get_point_size(self) -> float: ...
@@ -719,15 +724,15 @@ class SparkleParticleRenderer(BaseParticleRenderer):
     @overload
     def __init__(
         self,
-        center: Vec4f,
-        edge: Vec4f,
+        center: Vec4Like,
+        edge: Vec4Like,
         birth_radius: float,
         death_radius: float,
         life_scale: _SparkleParticleRenderer_SparkleParticleLifeScale,
         alpha_mode: _BaseParticleRenderer_ParticleRendererAlphaMode,
     ) -> None: ...
-    def set_center_color(self, c: Vec4f) -> None: ...
-    def set_edge_color(self, c: Vec4f) -> None: ...
+    def set_center_color(self, c: Vec4Like) -> None: ...
+    def set_edge_color(self, c: Vec4Like) -> None: ...
     def set_birth_radius(self, radius: float) -> None: ...
     def set_death_radius(self, radius: float) -> None: ...
     def set_life_scale(self, __param0: _SparkleParticleRenderer_SparkleParticleLifeScale) -> None: ...
@@ -913,7 +918,7 @@ class SpriteParticleRenderer(BaseParticleRenderer):
     def set_ur_uv(self, ur_uv: LVecBase2f, anim: int, frame: int) -> None: ...
     def set_size(self, width: float, height: float) -> None:
         """Sets the size of each particle in world units."""
-    def set_color(self, color: Vec4f) -> None: ...
+    def set_color(self, color: Vec4Like) -> None: ...
     def set_x_scale_flag(self, animate_x_ratio: bool) -> None: ...
     def set_y_scale_flag(self, animate_y_ratio: bool) -> None: ...
     def set_anim_angle_flag(self, animate_theta: bool) -> None: ...

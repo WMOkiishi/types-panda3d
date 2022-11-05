@@ -3,7 +3,7 @@ from collections.abc import Iterator, Mapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f, Vec4i
+from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Filepath, IntVec4Like, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import Filename, istream, ostream
 from panda3d.core._event import AsyncFuture, AsyncTask
@@ -2252,14 +2252,14 @@ class VertexTransform(TypedWritableReferenceCount):
 
     @property
     def modified(self) -> UpdateSeq: ...
-    def get_matrix(self, matrix: Mat4f) -> None: ...
-    def mult_matrix(self, result: Mat4f, previous: Mat4f) -> None:
+    def get_matrix(self, matrix: Mat4Like) -> None: ...
+    def mult_matrix(self, result: Mat4Like, previous: Mat4Like) -> None:
         """Premultiplies this transform's matrix with the indicated previous matrix,
         so that the result is the net composition of the given transform with this
         transform.  The result is stored in the parameter "result", which should
         not be the same matrix as previous.
         """
-    def accumulate_matrix(self, accum: Mat4f, weight: float) -> None:
+    def accumulate_matrix(self, accum: Mat4Like, weight: float) -> None:
         """Adds the value of this transform's matrix, modified by the indicated
         weight, into the indicated accumulation matrix.  This is used to compute
         the result of several blended transforms.
@@ -2466,20 +2466,20 @@ class TransformBlend:
         """Recomputes the internal representation of the blend value, if necessary.
         You should call this before calling get_blend() or transform_point().
         """
-    def get_blend(self, result: Mat4f, current_thread: Thread) -> None:
+    def get_blend(self, result: Mat4Like, current_thread: Thread) -> None:
         """Returns the current value of the blend, based on the current value of all
         of the nested transform objects and their associated weights.
 
         You should call update_blend() to ensure that the cache is up-to-date
         before calling this.
         """
-    def transform_point(self, point: Vec3d | Vec3f | Vec4d | Vec4f, current_thread: Thread) -> None:
+    def transform_point(self, point: DoubleVec3Like | DoubleVec4Like | Vec3Like | Vec4Like, current_thread: Thread) -> None:
         """Transforms the indicated point by the blend matrix.
 
         You should call update_blend() to ensure that the cache is up-to-date
         before calling this.
         """
-    def transform_vector(self, point: Vec3d | Vec3f, current_thread: Thread) -> None:
+    def transform_vector(self, point: DoubleVec3Like | Vec3Like, current_thread: Thread) -> None:
         """Transforms the indicated vector by the blend matrix.
 
         You should call update_blend() to ensure that the cache is up-to-date
@@ -2994,7 +2994,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         with all data types matched up name-by-name to the indicated new format.
         """
     @overload
-    def scale_color(self, color_scale: Vec4f) -> GeomVertexData:
+    def scale_color(self, color_scale: Vec4Like) -> GeomVertexData:
         """`(self, color_scale: LVecBase4)`:
         Returns a new GeomVertexData object with the color table modified in-place
         to apply the indicated scale.
@@ -3010,10 +3010,10 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """
     @overload
     def scale_color(
-        self, color_scale: Vec4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
+        self, color_scale: Vec4Like, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
     ) -> GeomVertexData: ...
     @overload
-    def set_color(self, color: Vec4f) -> GeomVertexData:
+    def set_color(self, color: Vec4Like) -> GeomVertexData:
         """`(self, color: LColor)`:
         Returns a new GeomVertexData object with the color data modified in-place
         with the new value.
@@ -3029,7 +3029,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """
     @overload
     def set_color(
-        self, color: Vec4f, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
+        self, color: Vec4Like, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
     ) -> GeomVertexData: ...
     def reverse_normals(self) -> GeomVertexData:
         """Returns a new GeomVertexData object with the normal data modified in-place,
@@ -3062,7 +3062,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         not necessary to call this.
         """
     @overload
-    def transform_vertices(self, mat: Mat4f, rows: BitArray | SparseArray = ...) -> None:
+    def transform_vertices(self, mat: Mat4Like, rows: BitArray | SparseArray = ...) -> None:
         """`(self, mat: LMatrix4)`:
         Applies the indicated transform matrix to all of the vertices in the
         GeomVertexData.  The transform is applied to all "point" and "vector" type
@@ -3079,7 +3079,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         "point" and "vector" type columns described in the format.
         """
     @overload
-    def transform_vertices(self, mat: Mat4f, begin_row: int, end_row: int) -> None: ...
+    def transform_vertices(self, mat: Mat4Like, begin_row: int, end_row: int) -> None: ...
     def replace_column(
         self, name: InternalName, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
     ) -> GeomVertexData:
@@ -4044,7 +4044,7 @@ class TextureStage(TypedWritableReferenceCount):
         pipeline.  This excludes texture stages such as normal mapping and the
         like.
         """
-    def set_color(self, color: Vec4f) -> None:
+    def set_color(self, color: Vec4Like) -> None:
         """Set the color for this stage"""
     def get_color(self) -> LColor:
         """return the color for this stage"""
@@ -4597,7 +4597,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         This does not also test the Geom's associated GeomVertexData.  That must be
         tested separately.
         """
-    def transform_vertices(self, mat: Mat4f) -> None:
+    def transform_vertices(self, mat: Mat4Like) -> None:
         """Applies the indicated transform to all of the vertices in the Geom.  If the
         Geom happens to share a vertex table with another Geom, this operation will
         duplicate the vertex table instead of breaking the other Geom; however, if
@@ -5363,7 +5363,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data2f(self, x: float, y: float) -> None: ...
     @overload
-    def set_data3f(self, data: Vec3f) -> None:
+    def set_data3f(self, data: Vec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5372,7 +5372,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data3f(self, x: float, y: float, z: float) -> None: ...
     @overload
-    def set_data4f(self, data: Vec4f) -> None:
+    def set_data4f(self, data: Vec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5386,7 +5386,7 @@ class GeomVertexWriter(GeomEnums):
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix4f(self, mat: Mat4f) -> None:
+    def set_matrix4f(self, mat: Mat4Like) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -5408,7 +5408,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data2d(self, x: float, y: float) -> None: ...
     @overload
-    def set_data3d(self, data: Vec3d) -> None:
+    def set_data3d(self, data: DoubleVec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5417,7 +5417,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data3d(self, x: float, y: float, z: float) -> None: ...
     @overload
-    def set_data4d(self, data: Vec4d) -> None:
+    def set_data4d(self, data: DoubleVec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5431,7 +5431,7 @@ class GeomVertexWriter(GeomEnums):
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix4d(self, mat: Mat4d) -> None:
+    def set_matrix4d(self, mat: DoubleMat4Like) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -5453,7 +5453,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data2(self, x: float, y: float) -> None: ...
     @overload
-    def set_data3(self, data: Vec3f) -> None:
+    def set_data3(self, data: Vec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5462,7 +5462,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data3(self, x: float, y: float, z: float) -> None: ...
     @overload
-    def set_data4(self, data: Vec4f) -> None:
+    def set_data4(self, data: Vec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5476,7 +5476,7 @@ class GeomVertexWriter(GeomEnums):
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix4(self, mat: Mat4f) -> None:
+    def set_matrix4(self, mat: Mat4Like) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -5507,7 +5507,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data3i(self, a: int, b: int, c: int) -> None: ...
     @overload
-    def set_data4i(self, data: Vec4i) -> None:
+    def set_data4i(self, data: IntVec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5533,7 +5533,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data2f(self, x: float, y: float) -> None: ...
     @overload
-    def add_data3f(self, data: Vec3f) -> None:
+    def add_data3f(self, data: Vec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5543,7 +5543,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data3f(self, x: float, y: float, z: float) -> None: ...
     @overload
-    def add_data4f(self, data: Vec4f) -> None:
+    def add_data4f(self, data: Vec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5559,7 +5559,7 @@ class GeomVertexWriter(GeomEnums):
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix4f(self, mat: Mat4f) -> None:
+    def add_matrix4f(self, mat: Mat4Like) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -5584,7 +5584,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data2d(self, x: float, y: float) -> None: ...
     @overload
-    def add_data3d(self, data: Vec3d) -> None:
+    def add_data3d(self, data: DoubleVec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5594,7 +5594,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data3d(self, x: float, y: float, z: float) -> None: ...
     @overload
-    def add_data4d(self, data: Vec4d) -> None:
+    def add_data4d(self, data: DoubleVec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5610,7 +5610,7 @@ class GeomVertexWriter(GeomEnums):
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix4d(self, mat: Mat4d) -> None:
+    def add_matrix4d(self, mat: DoubleMat4Like) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -5635,7 +5635,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data2(self, x: float, y: float) -> None: ...
     @overload
-    def add_data3(self, data: Vec3f) -> None:
+    def add_data3(self, data: Vec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5645,7 +5645,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data3(self, x: float, y: float, z: float) -> None: ...
     @overload
-    def add_data4(self, data: Vec4f) -> None:
+    def add_data4(self, data: Vec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5661,7 +5661,7 @@ class GeomVertexWriter(GeomEnums):
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix4(self, mat: Mat4f) -> None:
+    def add_matrix4(self, mat: Mat4Like) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
@@ -5696,7 +5696,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data3i(self, a: int, b: int, c: int) -> None: ...
     @overload
-    def add_data4i(self, data: Vec4i) -> None:
+    def add_data4i(self, data: IntVec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5987,7 +5987,7 @@ class SamplerState:
         explicitly enable anisotropic filtering, set it to a value higher than 1;
         larger numbers indicate greater degrees of filtering.
         """
-    def set_border_color(self, color: Vec4f) -> None:
+    def set_border_color(self, color: Vec4Like) -> None:
         """Specifies the solid color of the SamplerState's border.  Some OpenGL
         implementations use a border for tiling SamplerStates; in Panda, it is only
         used for specifying the clamp color.
@@ -6624,7 +6624,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns true if a color was previously set using set_clear_color."""
     def get_clear_color(self) -> LColor:
         """Returns the color that was previously set using set_clear_color."""
-    def set_clear_color(self, color: Vec4f) -> None:
+    def set_clear_color(self, color: Vec4Like) -> None:
         """Sets the color that will be used to fill the texture image in absence of
         any image data.  It is used when any of the setup_texture functions or
         clear_image is called and image data is not provided using read() or
@@ -7132,7 +7132,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_border_color(self, color: Vec4f) -> None:
+    def set_border_color(self, color: Vec4Like) -> None:
         """Specifies the solid color of the texture's border.  Some OpenGL
         implementations use a border for tiling textures; in Panda, it is only used
         for specifying the clamp color.
@@ -8905,7 +8905,7 @@ class Lens(TypedWritableReferenceCount):
     @property
     def nodal_point(self) -> LPoint3: ...
     def make_copy(self) -> Lens: ...
-    def extrude(self, point2d: LVecBase2f | Vec3f, near_point: Vec3f, far_point: Vec3f) -> bool:
+    def extrude(self, point2d: LVecBase2f | Vec3Like, near_point: Vec3Like, far_point: Vec3Like) -> bool:
         """`(self, point2d: LPoint2, near_point: LPoint3, far_point: LPoint3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
@@ -8926,13 +8926,13 @@ class Lens(TypedWritableReferenceCount):
 
         Returns true if the vector is defined, or false otherwise.
         """
-    def extrude_depth(self, point2d: Vec3f, point3d: Vec3f) -> bool:
+    def extrude_depth(self, point2d: Vec3Like, point3d: Vec3Like) -> bool:
         """Uses the depth component of the 3-d result from project() to compute the
         original point in 3-d space corresponding to a particular point on the
         lens.  This exactly reverses project(), assuming the point does fall
         legitimately within the lens.
         """
-    def extrude_vec(self, point2d: LVecBase2f | Vec3f, vec3d: Vec3f) -> bool:
+    def extrude_vec(self, point2d: LVecBase2f | Vec3Like, vec3d: Vec3Like) -> bool:
         """`(self, point2d: LPoint2, vec3d: LVector3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
@@ -8959,7 +8959,7 @@ class Lens(TypedWritableReferenceCount):
 
         Returns true if the vector is defined, or false otherwise.
         """
-    def project(self, point3d: Vec3f, point2d: LVecBase2f | Vec3f) -> bool:
+    def project(self, point3d: Vec3Like, point2d: LVecBase2f | Vec3Like) -> bool:
         """`(self, point3d: LPoint3, point2d: LPoint2)`:
         Given a 3-d point in space, determine the 2-d point this maps to, in the
         range (-1,1) in both dimensions, where (0,0) is the center of the lens and
@@ -9143,7 +9143,7 @@ class Lens(TypedWritableReferenceCount):
         created lens.  This is read from the Config.prc file.
         """
     @overload
-    def set_view_hpr(self, view_hpr: Vec3f) -> None:
+    def set_view_hpr(self, view_hpr: Vec3Like) -> None:
         """Sets the direction in which the lens is facing.  Normally, this is down the
         forward axis (usually the Y axis), but it may be rotated.  This is only one
         way of specifying the rotation; you may also specify an explicit vector in
@@ -9154,7 +9154,7 @@ class Lens(TypedWritableReferenceCount):
     def get_view_hpr(self) -> LVecBase3:
         """Returns the direction in which the lens is facing."""
     @overload
-    def set_view_vector(self, view_vector: Vec3f, up_vector: Vec3f) -> None:
+    def set_view_vector(self, view_vector: Vec3Like, up_vector: Vec3Like) -> None:
         """Specifies the direction in which the lens is facing by giving an axis to
         look along, and a perpendicular (or at least non-parallel) up axis.
 
@@ -9212,7 +9212,7 @@ class Lens(TypedWritableReferenceCount):
         """
     def get_convergence_distance(self) -> float:
         """See set_convergence_distance()."""
-    def set_view_mat(self, view_mat: Mat4f) -> None:
+    def set_view_mat(self, view_mat: Mat4Like) -> None:
         """Sets an arbitrary transformation on the lens.  This replaces the individual
         transformation components like set_view_hpr().
 
@@ -9242,7 +9242,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the keystone correction specified for the lens."""
     def clear_keystone(self) -> None:
         """Disables the lens keystone correction."""
-    def set_custom_film_mat(self, custom_film_mat: Mat4f) -> None:
+    def set_custom_film_mat(self, custom_film_mat: Mat4Like) -> None:
         """Specifies a custom matrix to transform the points on the film after they
         have been converted into nominal film space (-1 .. 1 in U and V).  This can
         be used to introduce arbitrary scales, rotations, or other linear
@@ -9254,7 +9254,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the custom_film_mat specified for the lens."""
     def clear_custom_film_mat(self) -> None:
         """Disables the lens custom_film_mat correction."""
-    def set_frustum_from_corners(self, ul: Vec3f, ur: Vec3f, ll: Vec3f, lr: Vec3f, flags: int) -> None:
+    def set_frustum_from_corners(self, ul: Vec3Like, ur: Vec3Like, ll: Vec3Like, lr: Vec3Like, flags: int) -> None:
         """Sets up the lens to use the frustum defined by the four indicated points.
         This is most useful for a PerspectiveLens, but it may be called for other
         kinds of lenses as well.
@@ -9468,7 +9468,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the base_color color setting, if it has been set.  If neither the
         base color nor the metallic have been set, this returns the diffuse color.
         """
-    def set_base_color(self, color: Vec4f) -> None:
+    def set_base_color(self, color: Vec4Like) -> None:
         """Specifies the base color of the material.  In conjunction with
         set_metallic, this is an alternate way to specify the color of a material.
         For dielectrics, this will determine the value of the diffuse color, and
@@ -9489,7 +9489,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the ambient color setting, if it has been set.  Returns (0,0,0,0)
         if the ambient color has not been set.
         """
-    def set_ambient(self, color: Vec4f) -> None:
+    def set_ambient(self, color: Vec4Like) -> None:
         """Specifies the ambient color setting of the material.  This will be the
         multiplied by any ambient lights in effect on the material to set its base
         color.
@@ -9509,7 +9509,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the diffuse color setting, if it has been set.  Returns (1,1,1,1)
         if the diffuse color has not been set.
         """
-    def set_diffuse(self, color: Vec4f) -> None:
+    def set_diffuse(self, color: Vec4Like) -> None:
         """Specifies the diffuse color setting of the material.  This will be
         multiplied by any lights in effect on the material to get the color in the
         parts of the object illuminated by the lights.
@@ -9529,7 +9529,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the specular color setting, if it has been set.  Returns (0,0,0,0)
         if the specular color has not been set.
         """
-    def set_specular(self, color: Vec4f) -> None:
+    def set_specular(self, color: Vec4Like) -> None:
         """Specifies the specular color setting of the material.  This will be
         multiplied by any lights in effect on the material to compute the color of
         specular highlights on the object.
@@ -9551,7 +9551,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the emission color setting, if it has been set.  Returns (0,0,0,0)
         if the emission color has not been set.
         """
-    def set_emission(self, color: Vec4f) -> None:
+    def set_emission(self, color: Vec4Like) -> None:
         """Specifies the emission color setting of the material.  This is the color of
         the object as it appears in the absence of any light whatsover, including
         ambient light.  It is as if the object is glowing by this color (although
@@ -9760,7 +9760,7 @@ class MatrixLens(Lens):
 
     user_mat: LMatrix4
     def __init__(self) -> None: ...
-    def set_user_mat(self, user_mat: Mat4f) -> None:
+    def set_user_mat(self, user_mat: Mat4Like) -> None:
         """Explicitly specifies the projection matrix.  This matrix should convert X
         and Y to the range [-film_size/2, film_size/2], where (-fs/2,-fs/2) is the
         lower left corner of the screen and (fs/2, fs/2) is the upper right.  Z
@@ -9775,7 +9775,7 @@ class MatrixLens(Lens):
         """Returns the explicit projection matrix as set by the user.  This does not
         include transforms on the lens or film (e.g.  a film offset or view hpr).
         """
-    def set_left_eye_mat(self, user_mat: Mat4f) -> None:
+    def set_left_eye_mat(self, user_mat: Mat4Like) -> None:
         """Sets a custom projection matrix for the left eye.  This is only used if the
         lens is attached to a stereo camera, in which case the left eye matrix will
         be used to draw the scene in the left eye (but the center matrix--the
@@ -9797,7 +9797,7 @@ class MatrixLens(Lens):
         """Returns the custom projection matrix for the left eye, if any, or the
         center matrix if there is no custom matrix set for the left eye.
         """
-    def set_right_eye_mat(self, user_mat: Mat4f) -> None:
+    def set_right_eye_mat(self, user_mat: Mat4Like) -> None:
         """Sets a custom projection matrix for the right eye.  This is only used if
         the lens is attached to a stereo camera, in which case the right eye matrix
         will be used to draw the scene in the right eye (but the center matrix--the
@@ -10047,7 +10047,7 @@ class UserVertexTransform(VertexTransform):
     def __init__(self, name: str) -> None: ...
     def get_name(self) -> str:
         """Returns the name passed to the constructor.  Completely arbitrary."""
-    def set_matrix(self, matrix: Mat4f) -> None:
+    def set_matrix(self, matrix: Mat4Like) -> None:
         """Stores the indicated matrix."""
     getName = get_name
     setMatrix = set_matrix
@@ -10437,7 +10437,7 @@ class TexturePeeker(ReferenceCount):
         """
     def has_pixel(self, x: int, y: int, z: int = ...) -> bool:
         """Returns whether a given coordinate is inside of the texture dimensions."""
-    def lookup(self, color: Vec4f, u: float, v: float, w: float = ...) -> None:
+    def lookup(self, color: Vec4Like, u: float, v: float, w: float = ...) -> None:
         """`(self, color: LColor, u: float, v: float)`:
         Fills "color" with the RGBA color of the texel at point (u, v).
 
@@ -10454,11 +10454,11 @@ class TexturePeeker(ReferenceCount):
         texture.  u, v, and w will wrap around regardless of the texture's wrap
         mode.
         """
-    def fetch_pixel(self, color: Vec4f, x: int, y: int, z: int = ...) -> None:
+    def fetch_pixel(self, color: Vec4Like, x: int, y: int, z: int = ...) -> None:
         """Works like TexturePeeker::lookup(), but instead of uv-coordinates, integer
         coordinates are used.
         """
-    def lookup_bilinear(self, color: Vec4f, u: float, v: float) -> bool:
+    def lookup_bilinear(self, color: Vec4Like, u: float, v: float) -> bool:
         """Performs a bilinear lookup to retrieve the color value stored at the uv
         coordinate (u, v).
 
@@ -10466,7 +10466,7 @@ class TexturePeeker(ReferenceCount):
         and false is returned.  Otherwise true is returned.
         """
     @overload
-    def filter_rect(self, color: Vec4f, min_u: float, min_v: float, max_u: float, max_v: float) -> None:
+    def filter_rect(self, color: Vec4Like, min_u: float, min_v: float, max_u: float, max_v: float) -> None:
         """Fills "color" with the average RGBA color of the texels within the
         rectangle defined by the specified coordinate range.
 
@@ -10475,7 +10475,7 @@ class TexturePeeker(ReferenceCount):
         """
     @overload
     def filter_rect(
-        self, color: Vec4f, min_u: float, min_v: float, min_w: float, max_u: float, max_v: float, max_w: float
+        self, color: Vec4Like, min_u: float, min_v: float, min_w: float, max_u: float, max_v: float, max_w: float
     ) -> None: ...
     getXSize = get_x_size
     getYSize = get_y_size

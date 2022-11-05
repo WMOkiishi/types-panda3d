@@ -1,7 +1,7 @@
 from typing import overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Vec3f
+from panda3d._typing import Filepath, Vec3Like
 from panda3d.core._dtoolutil import Filename, ostream
 from panda3d.core._event import AsyncTask
 from panda3d.core._express import TypedReferenceCount
@@ -363,15 +363,15 @@ class AudioManager(TypedReferenceCount):
     def write(self, out: ostream) -> None: ...
     def set_speaker_configuration(
         self,
-        speaker1: Vec3f,
-        speaker2: Vec3f = ...,
-        speaker3: Vec3f = ...,
-        speaker4: Vec3f = ...,
-        speaker5: Vec3f = ...,
-        speaker6: Vec3f = ...,
-        speaker7: Vec3f = ...,
-        speaker8: Vec3f = ...,
-        speaker9: Vec3f = ...,
+        speaker1: Vec3Like,
+        speaker2: Vec3Like = ...,
+        speaker3: Vec3Like = ...,
+        speaker4: Vec3Like = ...,
+        speaker5: Vec3Like = ...,
+        speaker6: Vec3Like = ...,
+        speaker7: Vec3Like = ...,
+        speaker8: Vec3Like = ...,
+        speaker9: Vec3Like = ...,
     ) -> None:
         """set_speaker_configuration is a Miles only method."""
     getSpeakerSetup = get_speaker_setup

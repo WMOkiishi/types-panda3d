@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from typing import overload
 from typing_extensions import Literal
 
-from panda3d._typing import Vec3f, Vec4f
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypedObject
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Datagram, DatagramIterator, Namable, TypedReferenceCount
@@ -40,7 +40,7 @@ class CollisionSolid(CopyOnWriteObject):
         it's useful for defining 'trigger' planes and spheres, that cause an effect
         when passed through.
         """
-    def set_effective_normal(self, effective_normal: Vec3f) -> None:
+    def set_effective_normal(self, effective_normal: Vec3Like) -> None:
         """Records a false normal for this CollisionSolid that will be reported by the
         collision system with all collisions into it, instead of its actual normal.
         This is useful as a workaround for the problem of an avatar wanting to
@@ -95,7 +95,7 @@ class CollisionBox(CollisionSolid):
     @property
     def dimensions(self) -> LVector3: ...
     @overload
-    def __init__(self, min: Vec3f, max: Vec3f) -> None:
+    def __init__(self, min: Vec3Like, max: Vec3Like) -> None:
         """`(self, min: LPoint3, max: LPoint3)`:
         Create the Box by Specifying the Diagonal Points
 
@@ -104,7 +104,7 @@ class CollisionBox(CollisionSolid):
         box from the Center.
         """
     @overload
-    def __init__(self, center: Vec3f, x: float, y: float, z: float) -> None: ...
+    def __init__(self, center: Vec3Like, x: float, y: float, z: float) -> None: ...
     def get_num_points(self) -> Literal[8]:
         """Returns 8: the number of vertices of a rectangular solid."""
     def get_point_aabb(self, n: int) -> LPoint3:
@@ -118,7 +118,7 @@ class CollisionBox(CollisionSolid):
     def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the rectangular solid."""
     @overload
-    def set_center(self, center: Vec3f) -> None: ...
+    def set_center(self, center: Vec3Like) -> None: ...
     @overload
     def set_center(self, x: float, y: float, z: float) -> None: ...
     def get_center(self) -> LPoint3: ...
@@ -148,16 +148,16 @@ class CollisionCapsule(CollisionSolid):
     point_b: LPoint3
     radius: float
     @overload
-    def __init__(self, a: Vec3f, db: Vec3f, radius: float) -> None: ...
+    def __init__(self, a: Vec3Like, db: Vec3Like, radius: float) -> None: ...
     @overload
     def __init__(self, ax: float, ay: float, az: float, bx: float, by: float, bz: float, radius: float) -> None: ...
     @overload
-    def set_point_a(self, a: Vec3f) -> None: ...
+    def set_point_a(self, a: Vec3Like) -> None: ...
     @overload
     def set_point_a(self, x: float, y: float, z: float) -> None: ...
     def get_point_a(self) -> LPoint3: ...
     @overload
-    def set_point_b(self, b: Vec3f) -> None: ...
+    def set_point_b(self, b: Vec3Like) -> None: ...
     @overload
     def set_point_b(self, x: float, y: float, z: float) -> None: ...
     def get_point_b(self) -> LPoint3: ...
@@ -488,19 +488,19 @@ class CollisionEntry(TypedWritableReferenceCount):
         respect_prev_transform flag was set true, meaning we should consider motion
         significant in evaluating collisions.
         """
-    def set_surface_point(self, point: Vec3f) -> None:
+    def set_surface_point(self, point: Vec3Like) -> None:
         """Stores the point, on the surface of the "into" object, at which a collision
         is detected.
 
         This point is specified in the coordinate space of the "into" object.
         """
-    def set_surface_normal(self, normal: Vec3f) -> None:
+    def set_surface_normal(self, normal: Vec3Like) -> None:
         """Stores the surface normal of the "into" object at the point of the
         intersection.
 
         This normal is specified in the coordinate space of the "into" object.
         """
-    def set_interior_point(self, point: Vec3f) -> None:
+    def set_interior_point(self, point: Vec3Like) -> None:
         """Stores the point, within the interior of the "into" object, which
         represents the depth to which the "from" object has penetrated.  This can
         also be described as the intersection point on the surface of the "from"
@@ -523,13 +523,13 @@ class CollisionEntry(TypedWritableReferenceCount):
         See get_interior_point().  Some types of collisions may not compute the
         interior point.
         """
-    def set_contact_pos(self, pos: Vec3f) -> None:
+    def set_contact_pos(self, pos: Vec3Like) -> None:
         """Stores the position of the "from" object at the instant at which the
         collision is first detected.
 
         This position is specified in the coordinate space of the "into" object.
         """
-    def set_contact_normal(self, normal: Vec3f) -> None:
+    def set_contact_normal(self, normal: Vec3Like) -> None:
         """Stores the surface normal of the "into" object at the contact pos.
 
         This normal is specified in the coordinate space of the "into" object.
@@ -570,7 +570,7 @@ class CollisionEntry(TypedWritableReferenceCount):
         The point will be converted into whichever coordinate space the caller
         specifies.
         """
-    def get_all(self, space: NodePath, surface_point: Vec3f, surface_normal: Vec3f, interior_point: Vec3f) -> bool:
+    def get_all(self, space: NodePath, surface_point: Vec3Like, surface_normal: Vec3Like, interior_point: Vec3Like) -> bool:
         """Simultaneously transforms the surface point, surface normal, and interior
         point of the collision into the indicated coordinate space.
 
@@ -590,7 +590,7 @@ class CollisionEntry(TypedWritableReferenceCount):
         The normal will be converted into whichever coordinate space the caller
         specifies.
         """
-    def get_all_contact_info(self, space: NodePath, contact_pos: Vec3f, contact_normal: Vec3f) -> bool:
+    def get_all_contact_info(self, space: NodePath, contact_pos: Vec3Like, contact_normal: Vec3Like) -> bool:
         """Simultaneously transforms the contact position and contact normal of the
         collision into the indicated coordinate space.
 
@@ -635,10 +635,10 @@ class CollisionPlane(CollisionSolid):
     @overload
     def __init__(self, copy: CollisionPlane) -> None: ...
     @overload
-    def __init__(self, plane: Vec4f) -> None: ...
+    def __init__(self, plane: Vec4Like) -> None: ...
     def get_normal(self) -> LVector3: ...
-    def dist_to_plane(self, point: Vec3f) -> float: ...
-    def set_plane(self, plane: Vec4f) -> None: ...
+    def dist_to_plane(self, point: Vec3Like) -> float: ...
+    def set_plane(self, plane: Vec4Like) -> None: ...
     def get_plane(self) -> LPlane: ...
     def flip(self) -> None:
         """Convenience method to flip the plane in-place."""
@@ -660,7 +660,7 @@ class CollisionFloorMesh(CollisionSolid):
         """This is only for the convenience of CollisionPolygon.  Normally, you should
         not attempt to create an uninitialized CollisionPlane.
         """
-    def add_vertex(self, vert: Vec3f) -> None:
+    def add_vertex(self, vert: Vec3Like) -> None:
         """store away a vertex to index against"""
     def add_triangle(self, pointA: int, pointB: int, pointC: int) -> None:
         """store a triangle for processing"""
@@ -686,13 +686,13 @@ class CollisionPolygon(CollisionPlane):
     def valid(self) -> bool: ...
     @property
     def concave(self) -> bool: ...
-    def __init__(self, a: Vec3f, b: Vec3f, c: Vec3f, d: Vec3f = ...) -> None: ...
+    def __init__(self, a: Vec3Like, b: Vec3Like, c: Vec3Like, d: Vec3Like = ...) -> None: ...
     def get_num_points(self) -> int:
         """Returns the number of vertices of the CollisionPolygon."""
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the CollisionPolygon, expressed in 3-D space."""
     @staticmethod
-    def verify_points(a: Vec3f, b: Vec3f, c: Vec3f, d: Vec3f = ...) -> bool:
+    def verify_points(a: Vec3Like, b: Vec3Like, c: Vec3Like, d: Vec3Like = ...) -> bool:
         """Verifies that the indicated set of points will define a valid
         CollisionPolygon: that is, at least three non-collinear points, with no
         points repeated.
@@ -1147,11 +1147,11 @@ class CollisionSphere(CollisionSolid):
     center: LPoint3
     radius: float
     @overload
-    def __init__(self, center: Vec3f, radius: float) -> None: ...
+    def __init__(self, center: Vec3Like, radius: float) -> None: ...
     @overload
     def __init__(self, cx: float, cy: float, cz: float, radius: float) -> None: ...
     @overload
-    def set_center(self, center: Vec3f) -> None: ...
+    def set_center(self, center: Vec3Like) -> None: ...
     @overload
     def set_center(self, x: float, y: float, z: float) -> None: ...
     def get_center(self) -> LPoint3: ...
@@ -1184,16 +1184,16 @@ class CollisionRay(CollisionSolid):
         set_from_lens().
         """
     @overload
-    def __init__(self, origin: Vec3f, direction: Vec3f) -> None: ...
+    def __init__(self, origin: Vec3Like, direction: Vec3Like) -> None: ...
     @overload
     def __init__(self, ox: float, oy: float, oz: float, dx: float, dy: float, dz: float) -> None: ...
     @overload
-    def set_origin(self, origin: Vec3f) -> None: ...
+    def set_origin(self, origin: Vec3Like) -> None: ...
     @overload
     def set_origin(self, x: float, y: float, z: float) -> None: ...
     def get_origin(self) -> LPoint3: ...
     @overload
-    def set_direction(self, direction: Vec3f) -> None: ...
+    def set_direction(self, direction: Vec3Like) -> None: ...
     @overload
     def set_direction(self, x: float, y: float, z: float) -> None: ...
     def get_direction(self) -> LVector3: ...
@@ -1233,7 +1233,7 @@ class CollisionLine(CollisionRay):
         or set_from_lens().
         """
     @overload
-    def __init__(self, origin: Vec3f, direction: Vec3f) -> None: ...
+    def __init__(self, origin: Vec3Like, direction: Vec3Like) -> None: ...
     @overload
     def __init__(self, ox: float, oy: float, oz: float, dx: float, dy: float, dz: float) -> None: ...
 
@@ -1297,16 +1297,16 @@ class CollisionSegment(CollisionSolid):
         set_origin()/set_direction() or set_from_lens().
         """
     @overload
-    def __init__(self, a: Vec3f, db: Vec3f) -> None: ...
+    def __init__(self, a: Vec3Like, db: Vec3Like) -> None: ...
     @overload
     def __init__(self, ax: float, ay: float, az: float, bx: float, by: float, bz: float) -> None: ...
     @overload
-    def set_point_a(self, a: Vec3f) -> None: ...
+    def set_point_a(self, a: Vec3Like) -> None: ...
     @overload
     def set_point_a(self, x: float, y: float, z: float) -> None: ...
     def get_point_a(self) -> LPoint3: ...
     @overload
-    def set_point_b(self, b: Vec3f) -> None: ...
+    def set_point_b(self, b: Vec3Like) -> None: ...
     @overload
     def set_point_b(self, x: float, y: float, z: float) -> None: ...
     def get_point_b(self) -> LPoint3: ...

@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
+from panda3d._typing import Filepath, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import ReferenceCount
@@ -78,10 +78,10 @@ class ParametricCurve(PandaNode):
 
         The search distance must not be negative.
         """
-    def get_point(self, t: float, point: Vec3f) -> bool: ...
-    def get_tangent(self, t: float, tangent: Vec3f) -> bool: ...
-    def get_pt(self, t: float, point: Vec3f, tangent: Vec3f) -> bool: ...
-    def get_2ndtangent(self, t: float, tangent2: Vec3f) -> bool: ...
+    def get_point(self, t: float, point: Vec3Like) -> bool: ...
+    def get_tangent(self, t: float, tangent: Vec3Like) -> bool: ...
+    def get_pt(self, t: float, point: Vec3Like, tangent: Vec3Like) -> bool: ...
+    def get_2ndtangent(self, t: float, tangent2: Vec3Like) -> bool: ...
     def adjust_point(self, t: float, px: float, py: float, pz: float) -> bool:
         """Recomputes the curve such that it passes through the point (px, py, pz) at
         time t, but keeps the same tangent value at that point.
@@ -260,7 +260,7 @@ class ParametricCurveCollection(ReferenceCount):
         will return the given max_t value.
         """
     @overload
-    def evaluate(self, t: float, result: Mat4f, cs: _CoordinateSystem = ...) -> bool:
+    def evaluate(self, t: float, result: Mat4Like, cs: _CoordinateSystem = ...) -> bool:
         """`(self, t: float, result: LMatrix4, cs: _CoordinateSystem = ...)`:
         Computes the transform matrix representing translation to the position
         indicated by the first XYZ curve in the collection and the rotation
@@ -283,18 +283,18 @@ class ParametricCurveCollection(ReferenceCount):
         or false otherwise.
         """
     @overload
-    def evaluate(self, t: float, xyz: Vec3f, hpr: Vec3f) -> bool: ...
+    def evaluate(self, t: float, xyz: Vec3Like, hpr: Vec3Like) -> bool: ...
     def evaluate_t(self, t: float) -> float:
         """Determines the value of t that should be passed to the XYZ and HPR curves,
         after applying the given value of t to all the timewarps.  Return -1.0f if
         the value of t exceeds one of the timewarps' ranges.
         """
-    def evaluate_xyz(self, t: float, xyz: Vec3f) -> bool:
+    def evaluate_xyz(self, t: float, xyz: Vec3Like) -> bool:
         """Computes only the XYZ part of the curves.  See evaluate()."""
-    def evaluate_hpr(self, t: float, hpr: Vec3f) -> bool:
+    def evaluate_hpr(self, t: float, hpr: Vec3Like) -> bool:
         """Computes only the HPR part of the curves.  See evaluate()."""
     @overload
-    def adjust_xyz(self, t: float, xyz: Vec3f) -> bool:
+    def adjust_xyz(self, t: float, xyz: Vec3Like) -> bool:
         """Adjust the XYZ curve at the indicated time to the new value.  The curve
         shape will change correspondingly.  Returns true if successful, false if
         unable to make the adjustment for some reason.
@@ -302,7 +302,7 @@ class ParametricCurveCollection(ReferenceCount):
     @overload
     def adjust_xyz(self, t: float, x: float, y: float, z: float) -> bool: ...
     @overload
-    def adjust_hpr(self, t: float, xyz: Vec3f) -> bool:
+    def adjust_hpr(self, t: float, xyz: Vec3Like) -> bool:
         """Adjust the HPR curve at the indicated time to the new value.  The curve
         shape will change correspondingly.  Returns true if successful, false if
         unable to make the adjustment for some reason.
@@ -376,11 +376,11 @@ class CurveFitter:
         """Removes all the data points previously added to the CurveFitter, and
         initializes it for a new curve.
         """
-    def add_xyz(self, t: float, xyz: Vec3f) -> None:
+    def add_xyz(self, t: float, xyz: Vec3Like) -> None:
         """Adds a single sample xyz."""
-    def add_hpr(self, t: float, hpr: Vec3f) -> None:
+    def add_hpr(self, t: float, hpr: Vec3Like) -> None:
         """Adds a single sample hpr."""
-    def add_xyz_hpr(self, t: float, xyz: Vec3f, hpr: Vec3f) -> None:
+    def add_xyz_hpr(self, t: float, xyz: Vec3Like, hpr: Vec3Like) -> None:
         """Adds a single sample xyz & hpr simultaneously."""
     def get_num_samples(self) -> int:
         """Returns the number of sample points that have been added."""
@@ -482,7 +482,7 @@ class HermiteCurve(PiecewiseCurve):
         The index number of the new CV is returned.
         """
     @overload
-    def append_cv(self, type: int, v: Vec3f) -> int:
+    def append_cv(self, type: int, v: Vec3Like) -> int:
         """Adds a new CV to the end of the curve.  The new CV is given initial in/out
         tangents of 0.  The return value is the index of the new CV.
         """
@@ -507,19 +507,19 @@ class HermiteCurve(PiecewiseCurve):
         HC_SMOOTH may adjust the out tangent to match the in tangent.
         """
     @overload
-    def set_cv_point(self, n: int, v: Vec3f) -> bool:
+    def set_cv_point(self, n: int, v: Vec3Like) -> bool:
         """Changes the given CV's position."""
     @overload
     def set_cv_point(self, n: int, x: float, y: float, z: float) -> bool: ...
     @overload
-    def set_cv_in(self, n: int, v: Vec3f) -> bool:
+    def set_cv_in(self, n: int, v: Vec3Like) -> bool:
         """Changes the given CV's in tangent.  Depending on the continuity type, this
         may also adjust the out tangent.
         """
     @overload
     def set_cv_in(self, n: int, x: float, y: float, z: float) -> bool: ...
     @overload
-    def set_cv_out(self, n: int, v: Vec3f) -> bool:
+    def set_cv_out(self, n: int, v: Vec3Like) -> bool:
         """Changes the given CV's out tangent.  Depending on the continuity type, this
         may also adjust the in tangent.
         """
@@ -539,17 +539,17 @@ class HermiteCurve(PiecewiseCurve):
     def get_cv_point(self, n: int) -> LVecBase3:
         """Returns the position of the given CV."""
     @overload
-    def get_cv_point(self, n: int, v: Vec3f) -> None: ...
+    def get_cv_point(self, n: int, v: Vec3Like) -> None: ...
     @overload
     def get_cv_in(self, n: int) -> LVecBase3:
         """Returns the in tangent of the given CV."""
     @overload
-    def get_cv_in(self, n: int, v: Vec3f) -> None: ...
+    def get_cv_in(self, n: int, v: Vec3Like) -> None: ...
     @overload
     def get_cv_out(self, n: int) -> LVecBase3:
         """Returns the out tangent of the given CV."""
     @overload
-    def get_cv_out(self, n: int, v: Vec3f) -> None: ...
+    def get_cv_out(self, n: int, v: Vec3Like) -> None: ...
     def get_cv_tstart(self, n: int) -> float:
         """Returns the starting point in parametric space of the given CV."""
     def get_cv_name(self, n: int) -> str:
@@ -588,13 +588,13 @@ class NurbsCurveInterface:
     def get_num_knots(self) -> int: ...
     def insert_cv(self, t: float) -> bool: ...
     @overload
-    def append_cv(self, v: Vec3f | Vec4f) -> int: ...
+    def append_cv(self, v: Vec3Like | Vec4Like) -> int: ...
     @overload
     def append_cv(self, x: float, y: float, z: float) -> int: ...
     def remove_cv(self, n: int) -> bool: ...
     def remove_all_cvs(self) -> None: ...
     @overload
-    def set_cv_point(self, n: int, v: Vec3f) -> bool:
+    def set_cv_point(self, n: int, v: Vec3Like) -> bool:
         """Repositions the indicated CV.  Returns true if successful, false otherwise."""
     @overload
     def set_cv_point(self, n: int, x: float, y: float, z: float) -> bool: ...
@@ -606,7 +606,7 @@ class NurbsCurveInterface:
         """
     def get_cv_weight(self, n: int) -> float:
         """Returns the weight of the indicated CV."""
-    def set_cv(self, n: int, v: Vec4f) -> bool: ...
+    def set_cv(self, n: int, v: Vec4Like) -> bool: ...
     def get_cv(self, n: int) -> LVecBase4: ...
     def set_knot(self, n: int, t: float) -> bool: ...
     def get_knot(self, n: int) -> float: ...
@@ -679,11 +679,11 @@ class NurbsCurveResult(ReferenceCount):
         """Returns the first legal value of t on the curve.  Usually this is 0.0."""
     def get_end_t(self) -> float:
         """Returns the last legal value of t on the curve."""
-    def eval_point(self, t: float, point: Vec3f) -> bool:
+    def eval_point(self, t: float, point: Vec3Like) -> bool:
         """Computes the point on the curve corresponding to the indicated value in
         parametric time.  Returns true if the t value is valid, false otherwise.
         """
-    def eval_tangent(self, t: float, tangent: Vec3f) -> bool:
+    def eval_tangent(self, t: float, tangent: Vec3Like) -> bool:
         """Computes the tangent to the curve at the indicated point in parametric
         time.  This tangent vector will not necessarily be normalized, and could be
         zero.  See also eval_point().
@@ -703,7 +703,7 @@ class NurbsCurveResult(ReferenceCount):
         number is usually not important unless you plan to call
         eval_segment_point().
         """
-    def eval_segment_point(self, segment: int, t: float, point: Vec3f) -> None:
+    def eval_segment_point(self, segment: int, t: float, point: Vec3Like) -> None:
         """Evaluates the point on the curve corresponding to the indicated value in
         parametric time within the indicated curve segment.  t should be in the
         range [0, 1].
@@ -715,7 +715,7 @@ class NurbsCurveResult(ReferenceCount):
         along the continuous curve, but when you care more about local continuity,
         you can use eval_segment_point() to evaluate the points along each segment.
         """
-    def eval_segment_tangent(self, segment: int, t: float, tangent: Vec3f) -> None:
+    def eval_segment_tangent(self, segment: int, t: float, tangent: Vec3Like) -> None:
         """As eval_segment_point, but computes the tangent to the curve at the
         indicated point.  The tangent vector will not necessarily be normalized,
         and could be zero, particularly at the endpoints.
@@ -810,7 +810,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         passed to the last call to reset().
         """
     @overload
-    def set_vertex(self, i: int, vertex: Vec4f) -> None:
+    def set_vertex(self, i: int, vertex: Vec4Like) -> None:
         """`(self, i: int, vertex: LVecBase3, weight: float = ...)`:
         Sets the nth control vertex of the curve.  This flavor sets the vertex as a
         3-d coordinate and a weight; the 3-d coordinate values are implicitly
@@ -823,7 +823,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         weight.
         """
     @overload
-    def set_vertex(self, i: int, vertex: Vec3f, weight: float = ...) -> None: ...
+    def set_vertex(self, i: int, vertex: Vec3Like, weight: float = ...) -> None: ...
     def get_vertex(self, i: int, rel_to: NodePath = ...) -> LVecBase4:
         """`(self, i: int)`:
         Returns the nth control vertex of the curve, relative to its indicated
@@ -914,7 +914,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         indicated matrix.
         """
     @overload
-    def evaluate(self, rel_to: NodePath, mat: Mat4f) -> NurbsCurveResult: ...
+    def evaluate(self, rel_to: NodePath, mat: Mat4Like) -> NurbsCurveResult: ...
     def output(self, out: ostream) -> None: ...
     def get_vertices(self) -> tuple[LVecBase4, ...]: ...
     def get_knots(self) -> tuple[float, ...]: ...
@@ -951,12 +951,12 @@ class NurbsSurfaceResult(ReferenceCount):
         """Returns the first legal value of v on the surface.  Usually this is 0.0."""
     def get_end_v(self) -> float:
         """Returns the last legal value of v on the surface."""
-    def eval_point(self, u: float, v: float, point: Vec3f) -> bool:
+    def eval_point(self, u: float, v: float, point: Vec3Like) -> bool:
         """Computes the point on the surface corresponding to the indicated value in
         parametric time.  Returns true if the u, v values are valid, false
         otherwise.
         """
-    def eval_normal(self, u: float, v: float, normal: Vec3f) -> bool:
+    def eval_normal(self, u: float, v: float, normal: Vec3Like) -> bool:
         """Computes the normal to the surface at the indicated point in parametric
         time.  This normal vector will not necessarily be normalized, and could be
         zero.  See also eval_point().
@@ -981,7 +981,7 @@ class NurbsSurfaceResult(ReferenceCount):
         the V direction.  This number is usually not important unless you plan to
         call eval_segment_point().
         """
-    def eval_segment_point(self, ui: int, vi: int, u: float, v: float, point: Vec3f) -> None:
+    def eval_segment_point(self, ui: int, vi: int, u: float, v: float, point: Vec3Like) -> None:
         """Evaluates the point on the surface corresponding to the indicated value in
         parametric time within the indicated surface segment.  u and v should be in
         the range [0, 1].
@@ -994,7 +994,7 @@ class NurbsSurfaceResult(ReferenceCount):
         continuity, you can use eval_segment_point() to evaluate the points along
         each segment.
         """
-    def eval_segment_normal(self, ui: int, vi: int, u: float, v: float, normal: Vec3f) -> None:
+    def eval_segment_normal(self, ui: int, vi: int, u: float, v: float, normal: Vec3Like) -> None:
         """As eval_segment_point, but computes the normal to the surface at the
         indicated point.  The normal vector will not necessarily be normalized, and
         could be zero.
@@ -1085,7 +1085,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         This is the number passed to the last call to reset().
         """
     @overload
-    def set_vertex(self, ui: int, vi: int, vertex: Vec4f) -> None:
+    def set_vertex(self, ui: int, vi: int, vertex: Vec4Like) -> None:
         """`(self, ui: int, vi: int, vertex: LVecBase3, weight: float = ...)`:
         Sets the nth control vertex of the surface.  This flavor sets the vertex as
         a 3-d coordinate and a weight; the 3-d coordinate values are implicitly
@@ -1098,7 +1098,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         weight.
         """
     @overload
-    def set_vertex(self, ui: int, vi: int, vertex: Vec3f, weight: float = ...) -> None: ...
+    def set_vertex(self, ui: int, vi: int, vertex: Vec3Like, weight: float = ...) -> None: ...
     def get_vertex(self, ui: int, vi: int, rel_to: NodePath = ...) -> LVecBase4:
         """`(self, ui: int, vi: int)`:
         Returns the nth control vertex of the surface, relative to its indicated
@@ -1313,7 +1313,7 @@ class RopeNode(PandaNode):
         """Returns the kind of normals to generate for the rope.  This is only
         applicable when the RenderMode is set to RM_tube.
         """
-    def set_tube_up(self, tube_up: Vec3f) -> None:
+    def set_tube_up(self, tube_up: Vec3Like) -> None:
         """Specifies a normal vector, generally perpendicular to the main axis of the
         starting point of the curve, that controls the "top" of the curve, when
         RenderMode is RM_tube.  This is used to orient the vertices that make up
@@ -1387,7 +1387,7 @@ class RopeNode(PandaNode):
         """
     def get_thickness(self) -> float:
         """Returns the thickness of the rope.  See set_thickness()."""
-    def set_matrix(self, matrix: Mat4f) -> None:
+    def set_matrix(self, matrix: Mat4Like) -> None:
         """Specifies an optional matrix which is used to transform each control vertex
         after it has been transformed into the RopeNode's coordinate space, but
         before the polygon vertices are generated.

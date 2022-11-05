@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d._typing import Filepath, Vec4f
+from panda3d._typing import Filepath, Vec4Like
 from panda3d.core._device import InputDevice
 from panda3d.core._dgraph import DataNode
 from panda3d.core._dtoolbase import TypeHandle
@@ -381,7 +381,7 @@ class DrawableRegion:
         """Returns the current setting of the flag that indicates whether the color
         buffer should be cleared every frame.  See set_clear_stencil_active().
         """
-    def set_clear_color(self, color: Vec4f) -> None:
+    def set_clear_color(self, color: Vec4Like) -> None:
         """Sets the clear color to the indicated value.  This is the value that will
         be used to clear the color buffer every frame, but only if
         get_clear_color_active() returns true.  If get_clear_color_active() returns
@@ -416,7 +416,7 @@ class DrawableRegion:
         """Sets the clear-active flag for any bitplane."""
     def get_clear_active(self, n: int) -> bool:
         """Gets the clear-active flag for any bitplane."""
-    def set_clear_value(self, n: int, clear_value: Vec4f) -> None:
+    def set_clear_value(self, n: int, clear_value: Vec4Like) -> None:
         """Sets the clear value for any bitplane."""
     def get_clear_value(self, n: int) -> LColor:
         """Returns the clear value for any bitplane."""
@@ -996,7 +996,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         GraphicsOutput.  This number will be in the range [0..1].
         """
     @overload
-    def set_dimensions(self, dimensions: Vec4f) -> None:
+    def set_dimensions(self, dimensions: Vec4Like) -> None:
         """`(self, dimensions: LVecBase4)`; `(self, l: float, r: float, b: float, t: float)`; `(self, i: int, l: float, r: float, b: float, t: float)`:
         Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
@@ -1011,7 +1011,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         away other changes you might have recently made in an upstream thread.
         """
     @overload
-    def set_dimensions(self, i: int, dimensions: Vec4f) -> None: ...
+    def set_dimensions(self, i: int, dimensions: Vec4Like) -> None: ...
     @overload
     def set_dimensions(self, l: float, r: float, b: float, t: float) -> None: ...
     @overload
@@ -1686,7 +1686,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """
     @overload
     def set_side_by_side_stereo(
-        self, side_by_side_stereo: bool, sbs_left_dimensions: Vec4f, sbs_right_dimensions: Vec4f
+        self, side_by_side_stereo: bool, sbs_left_dimensions: Vec4Like, sbs_right_dimensions: Vec4Like
     ) -> None: ...
     def get_side_by_side_stereo(self) -> bool:
         """Returns whether side-by-side stereo mode is in effect for this particular
@@ -1756,7 +1756,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         @returns a future that can be awaited.
         """
     @overload
-    def make_display_region(self, dimensions: Vec4f = ...) -> DisplayRegion:
+    def make_display_region(self, dimensions: Vec4Like = ...) -> DisplayRegion:
         """`(self)`:
         Creates a new DisplayRegion that covers the entire window.
 
@@ -1777,7 +1777,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     @overload
     def make_display_region(self, l: float, r: float, b: float, t: float) -> DisplayRegion: ...
     @overload
-    def make_mono_display_region(self, dimensions: Vec4f = ...) -> DisplayRegion:
+    def make_mono_display_region(self, dimensions: Vec4Like = ...) -> DisplayRegion:
         """`(self)`; `(self, l: float, r: float, b: float, t: float)`:
         Creates a new DisplayRegion that covers the entire window.
 
@@ -1800,7 +1800,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     @overload
     def make_mono_display_region(self, l: float, r: float, b: float, t: float) -> DisplayRegion: ...
     @overload
-    def make_stereo_display_region(self, dimensions: Vec4f = ...) -> StereoDisplayRegion:
+    def make_stereo_display_region(self, dimensions: Vec4Like = ...) -> StereoDisplayRegion:
         """`(self)`; `(self, l: float, r: float, b: float, t: float)`:
         Creates a new DisplayRegion that covers the entire window.
 

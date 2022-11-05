@@ -4,15 +4,15 @@ from typing_extensions import Final, Literal, TypeAlias
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
-from panda3d._typing import Vec3f, Vec4f
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import Datagram, DatagramIterator, LVecBase2f, NetDatagram, QueuedConnectionReader
 
 _NamedMovement: TypeAlias = tuple[
     str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
 ]
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
-_Vec3f: TypeAlias = Union[Vec3f, tuple[float, float, float]]
-_Vec4f: TypeAlias = Union[Vec4f, tuple[float, float, float, float]]
+_Vec3f: TypeAlias = Union[Vec3Like, tuple[float, float, float]]
+_Vec4f: TypeAlias = Union[Vec4Like, tuple[float, float, float, float]]
 
 CLUSTER_NONE: Final[Literal[0]]
 CLUSTER_CAM_OFFSET: Final[Literal[1]]

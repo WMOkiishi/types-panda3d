@@ -16,7 +16,7 @@ from direct.tkwidgets.EntryScale import EntryScale
 from direct.tkwidgets.Floater import Floater
 from direct.tkwidgets.Slider import Slider
 from direct.tkwidgets.VectorWidgets import ColorEntry, Vector2Entry, Vector3Entry
-from panda3d._typing import Vec3f
+from panda3d._typing import Vec3Like
 from panda3d.core import CurveFitter, GeomNode, LPoint3f, LRGBColor, NodePath, ParametricCurveCollection
 
 _TkFill: TypeAlias = Literal['none', 'x', 'y', 'both']
@@ -44,10 +44,10 @@ class MopathRecorder(AppShell, DirectObject):
     manipulandumId: int | None
     trace: LineNodePath
     oldPlaybackNodePath: NodePath | None
-    pointSet: list[tuple[float, Vec3f, Vec3f]]
-    prePoints: list[tuple[float, Vec3f, Vec3f]]
-    postPoints: list[tuple[float, Vec3f, Vec3f]]
-    pointSetDict: dict[str, list[tuple[float, Vec3f, Vec3f]]]
+    pointSet: list[tuple[float, Vec3Like, Vec3Like]]
+    prePoints: list[tuple[float, Vec3Like, Vec3Like]]
+    postPoints: list[tuple[float, Vec3Like, Vec3Like]]
+    pointSetDict: dict[str, list[tuple[float, Vec3Like, Vec3Like]]]
     pointSetCount: int
     pointSetName: str
     samplingMode: str

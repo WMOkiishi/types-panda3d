@@ -1,6 +1,6 @@
 from typing import overload
 
-from panda3d._typing import Mat4f, Vec3f
+from panda3d._typing import Mat4Like, Vec3Like
 from panda3d.core._chan import MovingPartMatrix, MovingPartScalar, PartBundle, PartBundleHandle, PartBundleNode, PartGroup
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import VertexSlider, VertexTransform
@@ -12,7 +12,7 @@ class CharacterJoint(MovingPartMatrix):
     animating transform matrix.
     """
 
-    def __init__(self, character: Character, root: PartBundle, parent: PartGroup, name: str, default_value: Mat4f) -> None: ...
+    def __init__(self, character: Character, root: PartBundle, parent: PartGroup, name: str, default_value: Mat4Like) -> None: ...
     def add_net_transform(self, node: PandaNode) -> bool:
         """Adds the indicated node to the list of nodes that will be updated each
         frame with the joint's net transform from the root.  Returns true if the
@@ -84,9 +84,9 @@ class CharacterJoint(MovingPartMatrix):
         Copies the joint's current transform into the indicated matrix.
         """
     @overload
-    def get_transform(self, transform: Mat4f) -> None: ...
+    def get_transform(self, transform: Mat4Like) -> None: ...
     def get_transform_state(self) -> TransformState: ...
-    def get_net_transform(self, transform: Mat4f) -> None:
+    def get_net_transform(self, transform: Mat4Like) -> None:
         """Copies the joint's current net transform (composed from the root of the
         character joint hierarchy) into the indicated matrix.
         """
@@ -192,7 +192,7 @@ class Character(PartBundleNode):
     def merge_bundles(
         self, old_bundle_handle: PartBundle | PartBundleHandle, other_bundle_handle: PartBundle | PartBundleHandle
     ) -> None: ...
-    def set_lod_animation(self, center: Vec3f, far_distance: float, near_distance: float, delay_factor: float) -> None:
+    def set_lod_animation(self, center: Vec3Like, far_distance: float, near_distance: float, delay_factor: float) -> None:
         """Activates a special mode in which the character animates less frequently as
         it gets further from the camera.  This is intended as a simple optimization
         to minimize the effort of computing animation for lots of characters that

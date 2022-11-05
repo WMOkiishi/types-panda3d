@@ -1,6 +1,6 @@
 from typing import Any, ClassVar, overload
 
-from panda3d._typing import Vec3f
+from panda3d._typing import Vec3Like
 from panda3d.core._express import ReferenceCount
 from panda3d.core._linmath import LVecBase3
 from panda3d.core._pgraph import NodePath
@@ -19,7 +19,7 @@ class AIBehaviors:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: AIBehaviors) -> None: ...
     @overload
-    def seek(self, pos: Vec3f, seek_wt: float = ...) -> None:
+    def seek(self, pos: Vec3Like, seek_wt: float = ...) -> None:
         """This function activates seek and makes an object of the Seek class.  This
         is the function we want the user to call for seek to be done.  This
         function is overloaded to accept a NodePath or an LVecBase3.
@@ -27,7 +27,7 @@ class AIBehaviors:
     @overload
     def seek(self, target_object: NodePath, seek_wt: float = ...) -> None: ...
     @overload
-    def flee(self, pos: Vec3f, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None:
+    def flee(self, pos: Vec3Like, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...) -> None:
         """This function activates flee_activate and creates an object of the Flee
         class.  This function is overloaded to accept a NodePath or an LVecBase3.
         """
@@ -64,7 +64,7 @@ class AIBehaviors:
         """This function activates path following.  This is the function we want the
         user to call for path following.
         """
-    def add_to_path(self, pos: Vec3f) -> None:
+    def add_to_path(self, pos: Vec3Like) -> None:
         """This function adds positions to the path to follow."""
     def start_follow(self, type: str = ...) -> None: ...
     def init_path_find(self, navmesh_filename: str) -> None:
@@ -72,7 +72,7 @@ class AIBehaviors:
         accepts the meshdata in .csv format.
         """
     @overload
-    def path_find_to(self, pos: Vec3f, type: str = ...) -> None:
+    def path_find_to(self, pos: Vec3Like, type: str = ...) -> None:
         """This function checks for the source and target in the navigation mesh for
         its availability and then finds the best path via the A* algorithm Then it
         calls the path follower to make the object follow the path.
@@ -151,7 +151,7 @@ class AINode:
     @overload
     def __init__(self, __param0: AINode) -> None: ...
     @overload
-    def __init__(self, grid_x: int, grid_y: int, pos: Vec3f, w: float, l: float, h: float) -> None: ...
+    def __init__(self, grid_x: int, grid_y: int, pos: Vec3Like, w: float, l: float, h: float) -> None: ...
     def contains(self, x: float, y: float) -> bool:
         """This is a handy function which returns true if the passed position is
         within the node's dimensions.

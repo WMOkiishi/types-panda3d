@@ -2,7 +2,7 @@ __all__ = ['ProjectileInterval']
 
 from typing import Any, ClassVar
 
-from panda3d._typing import Vec3f
+from panda3d._typing import Vec3Like
 from panda3d.core import CollisionNode, LParabolaf, NodePath
 from .Interval import Interval
 
@@ -13,20 +13,20 @@ class ProjectileInterval(Interval):
     collNode: CollisionNode | None
     implicitStartPos: bool
     trajectoryArgs: tuple[Any, ...]
-    startPos: Vec3f
+    startPos: Vec3Like
     zAcc: float
-    endPos: Vec3f | None
-    startVel: Vec3f
+    endPos: Vec3Like | None
+    startVel: Vec3Like
     parabola: LParabolaf
     def __init__(
         self,
         node: NodePath,
-        startPos: Vec3f | None = ...,
-        endPos: Vec3f | None = ...,
+        startPos: Vec3Like | None = ...,
+        endPos: Vec3Like | None = ...,
         duration: float | None = ...,
-        startVel: Vec3f | None = ...,
+        startVel: Vec3Like | None = ...,
         endZ: float | None = ...,
-        wayPoint: Vec3f | None = ...,
+        wayPoint: Vec3Like | None = ...,
         timeToWayPoint: float | None = ...,
         gravityMult: float | None = ...,
         name: str | None = ...,

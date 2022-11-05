@@ -3,7 +3,7 @@ from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3f, Vec4f
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core._collide import CollisionHandlerPusher
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import ReferenceCount, TypedReferenceCount
@@ -46,7 +46,7 @@ class PhysicsObject(TypedReferenceCount):
     def get_mass(self) -> float:
         """Get the mass in slugs (or kilograms)."""
     @overload
-    def set_position(self, pos: Vec3f) -> None:
+    def set_position(self, pos: Vec3Like) -> None:
         """`(self, pos: LPoint3)`:
         Vector position assignment.  This is also used as the center of mass.
 
@@ -57,18 +57,18 @@ class PhysicsObject(TypedReferenceCount):
     def set_position(self, x: float, y: float, z: float) -> None: ...
     def get_position(self) -> LPoint3:
         """Position Query"""
-    def reset_position(self, pos: Vec3f) -> None:
+    def reset_position(self, pos: Vec3Like) -> None:
         """use this to place an object in a completely new position, that has nothing
         to do with its last position.
         """
-    def set_last_position(self, pos: Vec3f) -> None:
+    def set_last_position(self, pos: Vec3Like) -> None:
         """Last position assignment"""
     def get_last_position(self) -> LPoint3:
         """Get the position of the physics object at the start of the most recent
         do_physics.
         """
     @overload
-    def set_velocity(self, vel: Vec3f) -> None:
+    def set_velocity(self, vel: Vec3Like) -> None:
         """`(self, vel: LVector3)`:
         Vector velocity assignment
 
@@ -81,34 +81,34 @@ class PhysicsObject(TypedReferenceCount):
         """Velocity Query per second"""
     def get_implicit_velocity(self) -> LVector3:
         """Velocity Query over the last dt"""
-    def add_torque(self, torque: Vec4f) -> None:
+    def add_torque(self, torque: Vec4Like) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
         """
-    def add_impulse(self, impulse: Vec3f) -> None:
+    def add_impulse(self, impulse: Vec3Like) -> None:
         """Adds an impulse force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the velocity, add a vector to it and set that value to
         be the new velocity.
         """
-    def add_impact(self, offset_from_center_of_mass: Vec3f, impulse: Vec3f) -> None:
+    def add_impact(self, offset_from_center_of_mass: Vec3Like, impulse: Vec3Like) -> None:
         """Adds an impulse and/or torque (i.e.  an instantanious change in velocity)
         based on how well the offset and impulse align with the center of mass (aka
         position). If you wanted to immitate this function you could work out the
         impulse and torque and call add_impulse and add_torque respectively.
         offset and force are in global (or parent) coordinates.
         """
-    def add_local_torque(self, torque: Vec4f) -> None:
+    def add_local_torque(self, torque: Vec4Like) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
         """
-    def add_local_impulse(self, impulse: Vec3f) -> None:
+    def add_local_impulse(self, impulse: Vec3Like) -> None:
         """Adds an impulse force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the velocity, add a vector to it and set that value to
         be the new velocity.
         """
-    def add_local_impact(self, offset_from_center_of_mass: Vec3f, impulse: Vec3f) -> None:
+    def add_local_impact(self, offset_from_center_of_mass: Vec3Like, impulse: Vec3Like) -> None:
         """Adds an impulse and/or torque (i.e.  an instantanious change in velocity)
         based on how well the offset and impulse align with the center of mass (aka
         position). If you wanted to immitate this function you could work out the
@@ -130,7 +130,7 @@ class PhysicsObject(TypedReferenceCount):
         """get current orientation."""
     def reset_orientation(self, orientation: LOrientation) -> None:
         """set the orientation while clearing the rotation velocity."""
-    def set_rotation(self, rotation: Vec4f) -> None:
+    def set_rotation(self, rotation: Vec4Like) -> None:
         """set rotation as a quaternion delta per second."""
     def get_rotation(self) -> LRotation:
         """get rotation per second."""
@@ -449,7 +449,7 @@ class ActorNode(PhysicalNode):
     @overload
     def __init__(self, copy: ActorNode) -> None: ...
     def get_physics_object(self) -> PhysicsObject: ...
-    def set_contact_vector(self, contact_vector: Vec3f) -> None: ...
+    def set_contact_vector(self, contact_vector: Vec3Like) -> None: ...
     def get_contact_vector(self) -> LVector3: ...
     def update_transform(self) -> None:
         """this sets the transform generated by the contained Physical, moving the
@@ -506,10 +506,10 @@ class AngularVectorForce(AngularForce):
         constructor
         """
     @overload
-    def __init__(self, quat: Vec4f) -> None: ...
+    def __init__(self, quat: Vec4Like) -> None: ...
     @overload
     def __init__(self, h: float, p: float, r: float) -> None: ...
-    def set_quat(self, quat: Vec4f) -> None: ...
+    def set_quat(self, quat: Vec4Like) -> None: ...
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     def get_local_quat(self) -> LRotation: ...
     setQuat = set_quat
@@ -577,7 +577,7 @@ class LinearControlForce(LinearForce):
     def get_physics_object(self) -> PhysicsObject:
         """piecewise encapsulating wrapper"""
     @overload
-    def set_vector(self, v: Vec3f) -> None:
+    def set_vector(self, v: Vec3Like) -> None:
         """`(self, v: LVector3)`:
         encapsulating wrapper
 
@@ -637,7 +637,7 @@ class LinearDistanceForce(LinearForce):
         """set the radius"""
     def set_falloff_type(self, ft: _LinearDistanceForce_FalloffType) -> None:
         """falloff_type encapsulating wrap"""
-    def set_force_center(self, p: Vec3f) -> None:
+    def set_force_center(self, p: Vec3Like) -> None:
         """set the force center"""
     def get_radius(self) -> float:
         """radius query"""
@@ -731,7 +731,7 @@ class LinearSinkForce(LinearDistanceForce):
         copy constructor
         """
     @overload
-    def __init__(self, p: Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
+    def __init__(self, p: Vec3Like, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., m: bool = ...) -> None: ...
 
 class LinearSourceForce(LinearDistanceForce):
     """Repellant force."""
@@ -745,7 +745,7 @@ class LinearSourceForce(LinearDistanceForce):
         copy constructor
         """
     @overload
-    def __init__(self, p: Vec3f, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
+    def __init__(self, p: Vec3Like, f: _LinearDistanceForce_FalloffType, r: float, a: float = ..., mass: bool = ...) -> None: ...
 
 class LinearUserDefinedForce(LinearForce):
     """A programmable force that takes an evaluator function."""
@@ -772,9 +772,9 @@ class LinearVectorForce(LinearForce):
     @overload
     def __init__(self, copy: LinearVectorForce) -> None: ...
     @overload
-    def __init__(self, vec: Vec3f, a: float = ..., mass: bool = ...) -> None: ...
+    def __init__(self, vec: Vec3Like, a: float = ..., mass: bool = ...) -> None: ...
     @overload
-    def set_vector(self, v: Vec3f) -> None:
+    def set_vector(self, v: Vec3Like) -> None:
         """`(self, v: LVector3)`:
         encapsulating wrapper
 

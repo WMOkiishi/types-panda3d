@@ -1,7 +1,7 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Mat4f, Vec3f, Vec4f, Vec4i
+from panda3d._typing import IntVec4Like, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._display import GraphicsOutput
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import PTA_float, PTA_uchar, ReferenceCount
@@ -60,7 +60,7 @@ class GPUCommand:
 
         @param v The float to append.
         """
-    def push_vec3(self, v: LVecBase3i | Vec3f) -> None:
+    def push_vec3(self, v: LVecBase3i | Vec3Like) -> None:
         """`(self, v: LVecBase3)`:
         @brief Appends a 3-component floating point vector to the GPUCommand.
         @details This appends a 3-component floating point vector to the command.
@@ -77,7 +77,7 @@ class GPUCommand:
 
         @param v Int-Vector to append.
         """
-    def push_vec4(self, v: Vec4f | Vec4i) -> None:
+    def push_vec4(self, v: IntVec4Like | Vec4Like) -> None:
         """`(self, v: LVecBase4)`:
         @brief Appends a 4-component floating point vector to the GPUCommand.
         @details This appends a 4-component floating point vector to the command.
@@ -102,7 +102,7 @@ class GPUCommand:
 
         @param v Matrix to append
         """
-    def push_mat4(self, v: Mat4f) -> None:
+    def push_mat4(self, v: Mat4Like) -> None:
         """@brief Appends a floating point 4x4 matrix to the GPUCommand.
         @details This appends a floating point 4x4 matrix to the GPUCommand, by
           pushing all components in row-order to the command. This occupies a space of
@@ -272,7 +272,7 @@ class RPLight(ReferenceCount):
           use `get_shadow_source(n)->set_needs_update(true)`.
         """
     @overload
-    def set_pos(self, pos: Vec3f) -> None:
+    def set_pos(self, pos: Vec3Like) -> None:
         """`(self, pos: LVecBase3)`:
         @brief Sets the position of the light
         @details This sets the position of the light in world space. It will cause
@@ -297,7 +297,7 @@ class RPLight(ReferenceCount):
         @return Light-position
         """
     @overload
-    def set_color(self, color: Vec3f) -> None:
+    def set_color(self, color: Vec3Like) -> None:
         """`(self, color: LVecBase3)`:
         @brief Sets the lights color
         @details This sets the lights color. The color should not include the brightness
@@ -786,7 +786,7 @@ class InternalLightManager:
 
           If the InternalLightManager was not initialized yet, an assertion is thrown.
         """
-    def set_camera_pos(self, pos: Vec3f) -> None:
+    def set_camera_pos(self, pos: Vec3Like) -> None:
         """@brief Sets the camera position
         @details This sets the camera position, which will be used to determine which
           shadow sources have to get updated
@@ -1051,7 +1051,7 @@ class PSSMCameraRig:
 
         @param bias Border bias
         """
-    def update(self, cam_node: NodePath, light_vector: Vec3f) -> None:
+    def update(self, cam_node: NodePath, light_vector: Vec3Like) -> None:
         """@brief Updates the PSSM camera rig
         @details This updates the rig with an updated camera position, and a given
           light vector. This should be called on a per-frame basis. It will reposition
@@ -1155,12 +1155,12 @@ class RPSpotLight(RPLight):
     def set_fov(self, fov: float) -> None: ...
     def get_fov(self) -> float: ...
     @overload
-    def set_direction(self, direction: Vec3f) -> None: ...
+    def set_direction(self, direction: Vec3Like) -> None: ...
     @overload
     def set_direction(self, dx: float, dy: float, dz: float) -> None: ...
     def get_direction(self) -> LVecBase3: ...
     @overload
-    def look_at(self, point: Vec3f) -> None: ...
+    def look_at(self, point: Vec3Like) -> None: ...
     @overload
     def look_at(self, x: float, y: float, z: float) -> None: ...
     setRadius = set_radius

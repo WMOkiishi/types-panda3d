@@ -1,7 +1,7 @@
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3f, Vec4f
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core._chan import AnimControl
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
@@ -455,7 +455,7 @@ class CConstrainHprInterval(CConstraintInterval):
         """
     @overload
     def __init__(
-        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, hprOffset: Vec3f = ...
+        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, hprOffset: Vec3Like = ...
     ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
@@ -487,8 +487,8 @@ class CConstrainPosHprInterval(CConstraintInterval):
         node: NodePath,
         target: NodePath,
         wrt: bool,
-        posOffset: Vec3f = ...,
-        hprOffset: Vec3f = ...,
+        posOffset: Vec3Like = ...,
+        hprOffset: Vec3Like = ...,
     ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
@@ -513,7 +513,7 @@ class CConstrainPosInterval(CConstraintInterval):
         """
     @overload
     def __init__(
-        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: Vec3f = ...
+        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: Vec3Like = ...
     ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
@@ -645,26 +645,26 @@ class CLerpNodePathInterval(CLerpInterval):
         If this is an empty node path, the lerped node is being moved in its own
         coordinate system.
         """
-    def set_start_pos(self, pos: Vec3f) -> None:
+    def set_start_pos(self, pos: Vec3Like) -> None:
         """Indicates the initial position of the lerped node.  This is meaningful only
         if set_end_pos() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual position at the
         time the lerp is performed.
         """
-    def set_end_pos(self, pos: Vec3f) -> None:
+    def set_end_pos(self, pos: Vec3Like) -> None:
         """Indicates that the position of the node should be lerped, and specifies the
         final position of the node.  This should be called before
         priv_initialize().  If this is not called, the node's position will not be
         affected by the lerp.
         """
-    def set_start_hpr(self, hpr: Vec3f) -> None:
+    def set_start_hpr(self, hpr: Vec3Like) -> None:
         """Indicates the initial rotation of the lerped node.  This is meaningful only
         if either set_end_hpr() or set_end_quat() is also called.  This parameter
         is optional; if unspecified, the value will be taken from the node's actual
         rotation at the time the lerp is performed.
         """
     @overload
-    def set_end_hpr(self, quat: Vec4f) -> None:
+    def set_end_hpr(self, quat: Vec4Like) -> None:
         """`(self, quat: LQuaternion)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
@@ -685,8 +685,8 @@ class CLerpNodePathInterval(CLerpInterval):
         the lerp.
         """
     @overload
-    def set_end_hpr(self, hpr: Vec3f) -> None: ...
-    def set_start_quat(self, quat: Vec4f) -> None:
+    def set_end_hpr(self, hpr: Vec3Like) -> None: ...
+    def set_start_quat(self, quat: Vec4Like) -> None:
         """Indicates the initial rotation of the lerped node.  This is meaningful only
         if either set_end_quat() or set_end_hpr() is also called.  This parameter
         is optional; if unspecified, the value will be taken from the node's actual
@@ -695,7 +695,7 @@ class CLerpNodePathInterval(CLerpInterval):
         The given quaternion needs to be normalized.
         """
     @overload
-    def set_end_quat(self, quat: Vec4f) -> None:
+    def set_end_quat(self, quat: Vec4Like) -> None:
         """`(self, quat: LQuaternion)`:
         Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
@@ -722,47 +722,47 @@ class CLerpNodePathInterval(CLerpInterval):
         spherical lerp.
         """
     @overload
-    def set_end_quat(self, hpr: Vec3f) -> None: ...
-    def set_start_scale(self, scale: Vec3f | float) -> None:
+    def set_end_quat(self, hpr: Vec3Like) -> None: ...
+    def set_start_scale(self, scale: Vec3Like | float) -> None:
         """Indicates the initial scale of the lerped node.  This is meaningful only if
         set_end_scale() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual scale at the
         time the lerp is performed.
         """
-    def set_end_scale(self, scale: Vec3f | float) -> None:
+    def set_end_scale(self, scale: Vec3Like | float) -> None:
         """Indicates that the scale of the node should be lerped, and specifies the
         final scale of the node.  This should be called before priv_initialize().
         If this is not called, the node's scale will not be affected by the lerp.
         """
-    def set_start_shear(self, shear: Vec3f) -> None:
+    def set_start_shear(self, shear: Vec3Like) -> None:
         """Indicates the initial shear of the lerped node.  This is meaningful only if
         set_end_shear() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual shear at the
         time the lerp is performed.
         """
-    def set_end_shear(self, shear: Vec3f) -> None:
+    def set_end_shear(self, shear: Vec3Like) -> None:
         """Indicates that the shear of the node should be lerped, and specifies the
         final shear of the node.  This should be called before priv_initialize().
         If this is not called, the node's shear will not be affected by the lerp.
         """
-    def set_start_color(self, color: Vec4f) -> None:
+    def set_start_color(self, color: Vec4Like) -> None:
         """Indicates the initial color of the lerped node.  This is meaningful only if
         set_end_color() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual color at the
         time the lerp is performed.
         """
-    def set_end_color(self, color: Vec4f) -> None:
+    def set_end_color(self, color: Vec4Like) -> None:
         """Indicates that the color of the node should be lerped, and specifies the
         final color of the node.  This should be called before priv_initialize().
         If this is not called, the node's color will not be affected by the lerp.
         """
-    def set_start_color_scale(self, color_scale: Vec4f) -> None:
+    def set_start_color_scale(self, color_scale: Vec4Like) -> None:
         """Indicates the initial color scale of the lerped node.  This is meaningful
         only if set_end_color_scale() is also called.  This parameter is optional;
         if unspecified, the value will be taken from the node's actual color scale
         at the time the lerp is performed.
         """
-    def set_end_color_scale(self, color_scale: Vec4f) -> None:
+    def set_end_color_scale(self, color_scale: Vec4Like) -> None:
         """Indicates that the color scale of the node should be lerped, and specifies
         the final color scale of the node.  This should be called before
         priv_initialize().  If this is not called, the node's color scale will not

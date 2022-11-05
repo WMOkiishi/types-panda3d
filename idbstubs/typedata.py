@@ -68,13 +68,13 @@ KNOWN_IMPORTS: Final = {
 
 # These exist entirely for readability and brevity
 TYPE_ALIASES: Final = {
-    'Vec3d': 'LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow',
-    'Vec3f': 'LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow',
-    'Vec4d': 'LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow',
-    'Vec4f': 'LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor',
-    'Vec4i': 'LVecBase4i | UnalignedLVecBase4i',
-    'Mat4d': 'LMatrix4d | UnalignedLMatrix4d',
-    'Mat4f': 'LMatrix4f | UnalignedLMatrix4f',
+    'Vec3Like': 'LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow',
+    'DoubleVec3Like': 'LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow',
+    'Vec4Like': 'LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor',
+    'DoubleVec4Like': 'LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow',
+    'IntVec4Like': 'LVecBase4i | UnalignedLVecBase4i',
+    'Mat4Like': 'LMatrix4f | UnalignedLMatrix4f',
+    'DoubleMat4Like': 'LMatrix4d | UnalignedLMatrix4d',
     'Filepath': 'StrOrBytesPath | ConfigVariableFilename',
     'URL': 'URLSpec | str',
 }

@@ -19,7 +19,7 @@ from collections.abc import Callable, Iterable
 from typing import Any, ClassVar
 
 from direct.showbase.DirectObject import DirectObject
-from panda3d._typing import Vec3f
+from panda3d._typing import Vec3Like
 from panda3d.core import NodePath
 from panda3d.direct import WaitInterval
 from .Interval import Interval
@@ -61,13 +61,13 @@ class WrtParentInterval(FunctionInterval):
 class PosInterval(FunctionInterval):
     posIntervalNum: ClassVar[int]
     def __init__(
-        self, nodePath: NodePath, pos: Vec3f, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
+        self, nodePath: NodePath, pos: Vec3Like, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
     ) -> None: ...
 
 class HprInterval(FunctionInterval):
     hprIntervalNum: ClassVar[int]
     def __init__(
-        self, nodePath: NodePath, hpr: Vec3f, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
+        self, nodePath: NodePath, hpr: Vec3Like, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
     ) -> None: ...
 
 class ScaleInterval(FunctionInterval):
@@ -75,7 +75,7 @@ class ScaleInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        scale: Vec3f | float,
+        scale: Vec3Like | float,
         duration: float = ...,
         name: str | None = ...,
         other: NodePath | None = ...,
@@ -86,8 +86,8 @@ class PosHprInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        pos: Vec3f,
-        hpr: Vec3f,
+        pos: Vec3Like,
+        hpr: Vec3Like,
         duration: float = ...,
         name: str | None = ...,
         other: NodePath | None = ...,
@@ -98,8 +98,8 @@ class HprScaleInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        hpr: Vec3f,
-        scale: Vec3f | float,
+        hpr: Vec3Like,
+        scale: Vec3Like | float,
         duration: float = ...,
         name: str | None = ...,
         other: NodePath | None = ...,
@@ -110,9 +110,9 @@ class PosHprScaleInterval(FunctionInterval):
     def __init__(
         self,
         nodePath: NodePath,
-        pos: Vec3f,
-        hpr: Vec3f,
-        scale: Vec3f | float,
+        pos: Vec3Like,
+        hpr: Vec3Like,
+        scale: Vec3Like | float,
         duration: float = ...,
         name: str | None = ...,
         other: NodePath | None = ...,

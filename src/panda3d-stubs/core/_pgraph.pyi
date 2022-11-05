@@ -3,7 +3,7 @@ from collections.abc import Iterator, Mapping, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d._typing import Filepath, Mat4f, Vec3f, Vec4f
+from panda3d._typing import Filepath, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._display import DisplayRegion
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import Filename, istream, ostream
@@ -146,37 +146,37 @@ class TransformState(NodeCachedReferenceCount):
         singular matrix.
         """
     @staticmethod
-    def make_pos(pos: Vec3f) -> TransformState:
+    def make_pos(pos: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_hpr(hpr: Vec3f) -> TransformState:
+    def make_hpr(hpr: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_quat(quat: Vec4f) -> TransformState:
+    def make_quat(quat: Vec4Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_pos_hpr(pos: Vec3f, hpr: Vec3f) -> TransformState:
+    def make_pos_hpr(pos: Vec3Like, hpr: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_scale(scale: Vec3f | float) -> TransformState:
+    def make_scale(scale: Vec3Like | float) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_shear(shear: Vec3f) -> TransformState:
+    def make_shear(shear: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_pos_hpr_scale(pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> TransformState:
+    def make_pos_hpr_scale(pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_pos_quat_scale(pos: Vec3f, quat: Vec4f, scale: Vec3f) -> TransformState:
+    def make_pos_quat_scale(pos: Vec3Like, quat: Vec4Like, scale: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_pos_hpr_scale_shear(pos: Vec3f, hpr: Vec3f, scale: Vec3f, shear: Vec3f) -> TransformState:
+    def make_pos_hpr_scale_shear(pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like, shear: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_pos_quat_scale_shear(pos: Vec3f, quat: Vec4f, scale: Vec3f, shear: Vec3f) -> TransformState:
+    def make_pos_quat_scale_shear(pos: Vec3Like, quat: Vec4Like, scale: Vec3Like, shear: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_mat(mat: Mat4f) -> TransformState:
+    def make_mat(mat: Mat4Like) -> TransformState:
         """Makes a new TransformState with the specified transformation matrix."""
     @staticmethod
     def make_pos2d(pos: LVecBase2) -> TransformState:
@@ -352,26 +352,26 @@ class TransformState(NodeCachedReferenceCount):
         """Returns the 3x3 matrix that describes the 2-d transform.  It is an error to
         call this if is_2d() returned false.
         """
-    def set_pos(self, pos: Vec3f) -> TransformState:
+    def set_pos(self, pos: Vec3Like) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its pos component replaced with the indicated value.
         """
-    def set_hpr(self, hpr: Vec3f) -> TransformState:
+    def set_hpr(self, hpr: Vec3Like) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its rotation component replaced with the indicated
         value, if possible.
         """
-    def set_quat(self, quat: Vec4f) -> TransformState:
+    def set_quat(self, quat: Vec4Like) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its rotation component replaced with the indicated
         value, if possible.
         """
-    def set_scale(self, scale: Vec3f) -> TransformState:
+    def set_scale(self, scale: Vec3Like) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its scale component replaced with the indicated value,
         if possible.
         """
-    def set_shear(self, shear: Vec3f) -> TransformState:
+    def set_shear(self, shear: Vec3Like) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its shear component replaced with the indicated value,
         if possible.
@@ -911,7 +911,7 @@ class RenderModeAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @staticmethod
     def make(
-        mode: _RenderModeAttrib_Mode, thickness: float = ..., perspective: bool = ..., wireframe_color: Vec4f = ...
+        mode: _RenderModeAttrib_Mode, thickness: float = ..., perspective: bool = ..., wireframe_color: Vec4Like = ...
     ) -> RenderAttrib:
         """Constructs a new RenderModeAttrib object that specifies whether to draw
         polygons in the normal, filled mode, or wireframe mode, or in some other
@@ -975,7 +975,7 @@ class TexMatrixAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @overload
     @staticmethod
-    def make(mat: Mat4f = ...) -> RenderAttrib:
+    def make(mat: Mat4Like = ...) -> RenderAttrib:
         """`()`:
         Constructs a TexMatrixAttrib that applies no stages at all.
 
@@ -3507,7 +3507,7 @@ class NodePath(Generic[_N]):
         set_prev_transform().
         """
     @overload
-    def set_pos(self, pos: Vec3f) -> None:
+    def set_pos(self, pos: Vec3Like) -> None:
         """`(self, pos: LVecBase3)`:
         Sets the translation component of the transform, leaving rotation and scale
         untouched.  This also resets the node's "previous" position, so that the
@@ -3526,7 +3526,7 @@ class NodePath(Generic[_N]):
         position, without passing any points in between.
         """
     @overload
-    def set_pos(self, other: NodePath, pos: Vec3f) -> None: ...
+    def set_pos(self, other: NodePath, pos: Vec3Like) -> None: ...
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
     @overload
@@ -3556,7 +3556,7 @@ class NodePath(Generic[_N]):
     @overload
     def set_z(self, other: NodePath, z: float) -> None: ...
     @overload
-    def set_fluid_pos(self, pos: Vec3f) -> None:
+    def set_fluid_pos(self, pos: Vec3Like) -> None:
         """`(self, pos: LVecBase3)`:
         Sets the translation component, without changing the "previous" position,
         so that the collision system will see the node as moving fluidly from its
@@ -3572,7 +3572,7 @@ class NodePath(Generic[_N]):
         previous position to its new position.
         """
     @overload
-    def set_fluid_pos(self, other: NodePath, pos: Vec3f) -> None: ...
+    def set_fluid_pos(self, other: NodePath, pos: Vec3Like) -> None: ...
     @overload
     def set_fluid_pos(self, x: float, y: float, z: float) -> None: ...
     @overload
@@ -3620,7 +3620,7 @@ class NodePath(Generic[_N]):
         will represent the change from the previous frame's position.
         """
     @overload
-    def set_hpr(self, hpr: Vec3f) -> None:
+    def set_hpr(self, hpr: Vec3Like) -> None:
         """`(self, hpr: LVecBase3)`; `(self, h: float, p: float, r: float)`:
         Sets the rotation component of the transform, leaving translation and scale
         untouched.
@@ -3629,7 +3629,7 @@ class NodePath(Generic[_N]):
         Sets the rotation component of the transform, relative to the other node.
         """
     @overload
-    def set_hpr(self, other: NodePath, hpr: Vec3f) -> None: ...
+    def set_hpr(self, other: NodePath, hpr: Vec3Like) -> None: ...
     @overload
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     @overload
@@ -3658,7 +3658,7 @@ class NodePath(Generic[_N]):
     def get_p(self, other: NodePath = ...) -> float: ...
     def get_r(self, other: NodePath = ...) -> float: ...
     @overload
-    def set_quat(self, quat: Vec4f) -> None:
+    def set_quat(self, quat: Vec4Like) -> None:
         """`(self, quat: LQuaternion)`:
         Sets the rotation component of the transform, leaving translation and scale
         untouched.
@@ -3667,7 +3667,7 @@ class NodePath(Generic[_N]):
         Sets the rotation component of the transform, relative to the other node.
         """
     @overload
-    def set_quat(self, other: NodePath, quat: Vec4f) -> None: ...
+    def set_quat(self, other: NodePath, quat: Vec4Like) -> None: ...
     def get_quat(self, other: NodePath = ...) -> LQuaternion:
         """`(self)`:
         Retrieves the rotation component of the transform.
@@ -3677,7 +3677,7 @@ class NodePath(Generic[_N]):
         node.
         """
     @overload
-    def set_scale(self, scale: Vec3f | float) -> None:
+    def set_scale(self, scale: Vec3Like | float) -> None:
         """`(self, scale: LVecBase3)`; `(self, scale: float)`:
         Sets the scale component of the transform, leaving translation and rotation
         untouched.
@@ -3686,7 +3686,7 @@ class NodePath(Generic[_N]):
         Sets the scale component of the transform, relative to the other node.
         """
     @overload
-    def set_scale(self, other: NodePath, scale: Vec3f | float) -> None: ...
+    def set_scale(self, other: NodePath, scale: Vec3Like | float) -> None: ...
     @overload
     def set_scale(self, sx: float, sy: float, sz: float) -> None: ...
     @overload
@@ -3729,7 +3729,7 @@ class NodePath(Generic[_N]):
     def get_sy(self, other: NodePath = ...) -> float: ...
     def get_sz(self, other: NodePath = ...) -> float: ...
     @overload
-    def set_shear(self, shear: Vec3f) -> None:
+    def set_shear(self, shear: Vec3Like) -> None:
         """`(self, shear: LVecBase3)`:
         Sets the shear component of the transform, leaving translation and rotation
         untouched.
@@ -3742,7 +3742,7 @@ class NodePath(Generic[_N]):
         and scale untouched.
         """
     @overload
-    def set_shear(self, other: NodePath, shear: Vec3f) -> None: ...
+    def set_shear(self, other: NodePath, shear: Vec3Like) -> None: ...
     @overload
     def set_shear(self, shxy: float, shxz: float, shyz: float) -> None: ...
     @overload
@@ -3773,7 +3773,7 @@ class NodePath(Generic[_N]):
     def get_shxz(self, other: NodePath = ...) -> float: ...
     def get_shyz(self, other: NodePath = ...) -> float: ...
     @overload
-    def set_pos_hpr(self, pos: Vec3f, hpr: Vec3f) -> None:
+    def set_pos_hpr(self, pos: Vec3Like, hpr: Vec3Like) -> None:
         """`(self, pos: LVecBase3, hpr: LVecBase3)`; `(self, x: float, y: float, z: float, h: float, p: float, r: float)`:
         Sets the translation and rotation component of the transform, leaving scale
         untouched.
@@ -3783,13 +3783,13 @@ class NodePath(Generic[_N]):
         the other node.
         """
     @overload
-    def set_pos_hpr(self, other: NodePath, pos: Vec3f, hpr: Vec3f) -> None: ...
+    def set_pos_hpr(self, other: NodePath, pos: Vec3Like, hpr: Vec3Like) -> None: ...
     @overload
     def set_pos_hpr(self, x: float, y: float, z: float, h: float, p: float, r: float) -> None: ...
     @overload
     def set_pos_hpr(self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float) -> None: ...
     @overload
-    def set_pos_quat(self, pos: Vec3f, quat: Vec4f) -> None:
+    def set_pos_quat(self, pos: Vec3Like, quat: Vec4Like) -> None:
         """`(self, pos: LVecBase3, quat: LQuaternion)`:
         Sets the translation and rotation component of the transform, leaving scale
         untouched.
@@ -3799,9 +3799,9 @@ class NodePath(Generic[_N]):
         the other node.
         """
     @overload
-    def set_pos_quat(self, other: NodePath, pos: Vec3f, quat: Vec4f) -> None: ...
+    def set_pos_quat(self, other: NodePath, pos: Vec3Like, quat: Vec4Like) -> None: ...
     @overload
-    def set_hpr_scale(self, hpr: Vec3f, scale: Vec3f) -> None:
+    def set_hpr_scale(self, hpr: Vec3Like, scale: Vec3Like) -> None:
         """`(self, hpr: LVecBase3, scale: LVecBase3)`; `(self, h: float, p: float, r: float, sx: float, sy: float, sz: float)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.
@@ -3812,13 +3812,13 @@ class NodePath(Generic[_N]):
         update a transform when both hpr and scale are to be changed.
         """
     @overload
-    def set_hpr_scale(self, other: NodePath, hpr: Vec3f, scale: Vec3f) -> None: ...
+    def set_hpr_scale(self, other: NodePath, hpr: Vec3Like, scale: Vec3Like) -> None: ...
     @overload
     def set_hpr_scale(self, h: float, p: float, r: float, sx: float, sy: float, sz: float) -> None: ...
     @overload
     def set_hpr_scale(self, other: NodePath, h: float, p: float, r: float, sx: float, sy: float, sz: float) -> None: ...
     @overload
-    def set_quat_scale(self, quat: Vec4f, scale: Vec3f) -> None:
+    def set_quat_scale(self, quat: Vec4Like, scale: Vec3Like) -> None:
         """`(self, quat: LQuaternion, scale: LVecBase3)`:
         Sets the rotation and scale components of the transform, leaving
         translation untouched.
@@ -3829,9 +3829,9 @@ class NodePath(Generic[_N]):
         to update a transform when both quat and scale are to be changed.
         """
     @overload
-    def set_quat_scale(self, other: NodePath, quat: Vec4f, scale: Vec3f) -> None: ...
+    def set_quat_scale(self, other: NodePath, quat: Vec4Like, scale: Vec3Like) -> None: ...
     @overload
-    def set_pos_hpr_scale(self, pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> None:
+    def set_pos_hpr_scale(self, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like) -> None:
         """`(self, pos: LVecBase3, hpr: LVecBase3, scale: LVecBase3)`:
         Replaces the translation, rotation, and scale components, implicitly
         setting shear to 0.
@@ -3849,7 +3849,7 @@ class NodePath(Generic[_N]):
         components.
         """
     @overload
-    def set_pos_hpr_scale(self, other: NodePath, pos: Vec3f, hpr: Vec3f, scale: Vec3f) -> None: ...
+    def set_pos_hpr_scale(self, other: NodePath, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like) -> None: ...
     @overload
     def set_pos_hpr_scale(
         self, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float
@@ -3859,7 +3859,7 @@ class NodePath(Generic[_N]):
         self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float
     ) -> None: ...
     @overload
-    def set_pos_quat_scale(self, pos: Vec3f, quat: Vec4f, scale: Vec3f) -> None:
+    def set_pos_quat_scale(self, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like) -> None:
         """`(self, pos: LVecBase3, quat: LQuaternion, scale: LVecBase3)`:
         Replaces the translation, rotation, and scale components, implicitly
         setting shear to 0.
@@ -3869,9 +3869,9 @@ class NodePath(Generic[_N]):
         components, relative to the other node, implicitly setting shear to 0.
         """
     @overload
-    def set_pos_quat_scale(self, other: NodePath, pos: Vec3f, quat: Vec4f, scale: Vec3f) -> None: ...
+    def set_pos_quat_scale(self, other: NodePath, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like) -> None: ...
     @overload
-    def set_pos_hpr_scale_shear(self, pos: Vec3f, hpr: Vec3f, scale: Vec3f, shear: Vec3f) -> None:
+    def set_pos_hpr_scale_shear(self, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like, shear: Vec3Like) -> None:
         """`(self, pos: LVecBase3, hpr: LVecBase3, scale: LVecBase3, shear: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components.
@@ -3881,9 +3881,11 @@ class NodePath(Generic[_N]):
         and shear components, relative to the other node.
         """
     @overload
-    def set_pos_hpr_scale_shear(self, other: NodePath, pos: Vec3f, hpr: Vec3f, scale: Vec3f, shear: Vec3f) -> None: ...
+    def set_pos_hpr_scale_shear(
+        self, other: NodePath, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like, shear: Vec3Like
+    ) -> None: ...
     @overload
-    def set_pos_quat_scale_shear(self, pos: Vec3f, quat: Vec4f, scale: Vec3f, shear: Vec3f) -> None:
+    def set_pos_quat_scale_shear(self, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like, shear: Vec3Like) -> None:
         """`(self, pos: LVecBase3, quat: LQuaternion, scale: LVecBase3, shear: LVecBase3)`:
         Completely replaces the transform with new translation, rotation, scale,
         and shear components.
@@ -3893,9 +3895,11 @@ class NodePath(Generic[_N]):
         and shear components, relative to the other node.
         """
     @overload
-    def set_pos_quat_scale_shear(self, other: NodePath, pos: Vec3f, quat: Vec4f, scale: Vec3f, shear: Vec3f) -> None: ...
+    def set_pos_quat_scale_shear(
+        self, other: NodePath, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like, shear: Vec3Like
+    ) -> None: ...
     @overload
-    def set_mat(self, mat: Mat4f) -> None:
+    def set_mat(self, mat: Mat4Like) -> None:
         """`(self, mat: LMatrix4)`:
         Directly sets an arbitrary 4x4 transform matrix.
 
@@ -3904,7 +3908,7 @@ class NodePath(Generic[_N]):
         local coordinate space, and applies it to the node.
         """
     @overload
-    def set_mat(self, other: NodePath, mat: Mat4f) -> None: ...
+    def set_mat(self, other: NodePath, mat: Mat4Like) -> None: ...
     def clear_mat(self) -> None:
         """Completely removes any transform from the referenced node."""
     def has_mat(self) -> bool:
@@ -3921,7 +3925,7 @@ class NodePath(Generic[_N]):
         relative to the other path's bottom node's coordinate space.
         """
     @overload
-    def look_at(self, point: Vec3f, up: Vec3f = ...) -> None:
+    def look_at(self, point: Vec3Like, up: Vec3Like = ...) -> None:
         """`(self, point: LPoint3, up: LVector3 = ...)`:
         Sets the hpr on this NodePath so that it rotates to face the indicated
         point in space.
@@ -3940,27 +3944,27 @@ class NodePath(Generic[_N]):
         scale on the node, although it will preserve any translation.
         """
     @overload
-    def look_at(self, other: NodePath, point: Vec3f = ..., up: Vec3f = ...) -> None: ...
+    def look_at(self, other: NodePath, point: Vec3Like = ..., up: Vec3Like = ...) -> None: ...
     @overload
     def look_at(self, x: float, y: float, z: float) -> None: ...
     @overload
     def look_at(self, other: NodePath, x: float, y: float, z: float) -> None: ...
     @overload
-    def heads_up(self, point: Vec3f, up: Vec3f = ...) -> None:
+    def heads_up(self, point: Vec3Like, up: Vec3Like = ...) -> None:
         """Behaves like look_at(), but with a strong preference to keeping the up
         vector oriented in the indicated "up" direction.
         """
     @overload
-    def heads_up(self, other: NodePath, point: Vec3f = ..., up: Vec3f = ...) -> None: ...
+    def heads_up(self, other: NodePath, point: Vec3Like = ..., up: Vec3Like = ...) -> None: ...
     @overload
     def heads_up(self, x: float, y: float, z: float) -> None: ...
     @overload
     def heads_up(self, other: NodePath, x: float, y: float, z: float) -> None: ...
-    def get_relative_point(self, other: NodePath, point: Vec3f) -> LPoint3:
+    def get_relative_point(self, other: NodePath, point: Vec3Like) -> LPoint3:
         """Given that the indicated point is in the coordinate system of the other
         node, returns the same point in this node's coordinate system.
         """
-    def get_relative_vector(self, other: NodePath, vec: Vec3f) -> LVector3:
+    def get_relative_vector(self, other: NodePath, vec: Vec3Like) -> LVector3:
         """Given that the indicated vector is in the coordinate system of the other
         node, returns the same vector in this node's coordinate system.
         """
@@ -3969,7 +3973,7 @@ class NodePath(Generic[_N]):
         coordinate frame's origin, and that of the other node's origin.
         """
     @overload
-    def set_color(self, color: Vec4f, priority: int = ...) -> None:
+    def set_color(self, color: Vec4Like, priority: int = ...) -> None:
         """Applies a scene-graph color to the referenced node.  This color will apply
         to all geometry at this level and below (that does not specify a new color
         or a set_color_off()).
@@ -4006,7 +4010,7 @@ class NodePath(Generic[_N]):
         removes the overhead associated with having a color scale at all.
         """
     @overload
-    def set_color_scale(self, scale: Vec4f, priority: int = ...) -> None:
+    def set_color_scale(self, scale: Vec4Like, priority: int = ...) -> None:
         """`(self, scale: LVecBase4, priority: int = ...)`:
         Sets the color scale component of the transform, leaving translation and
         rotation untouched.
@@ -4017,7 +4021,7 @@ class NodePath(Generic[_N]):
     @overload
     def set_color_scale(self, sx: float, sy: float, sz: float, sa: float, priority: int = ...) -> None: ...
     @overload
-    def compose_color_scale(self, scale: Vec4f, priority: int = ...) -> None:
+    def compose_color_scale(self, scale: Vec4Like, priority: int = ...) -> None:
         """`(self, scale: LVecBase4, priority: int = ...)`:
         multiplies the color scale component of the transform, with previous color
         scale leaving translation and rotation untouched.
@@ -4194,7 +4198,7 @@ class NodePath(Generic[_N]):
         set_clip_plane_off() on this node with the indicated clip_plane.
         """
     @overload
-    def set_scissor(self, a: Vec3f, b: Vec3f) -> None:
+    def set_scissor(self, a: Vec3Like, b: Vec3Like) -> None:
         """`(self, a: LPoint3, b: LPoint3)`:
         Sets up a scissor region on the nodes rendered at this level and below.
         The two points are understood to be relative to this node.  When these
@@ -4229,13 +4233,13 @@ class NodePath(Generic[_N]):
         corner.
         """
     @overload
-    def set_scissor(self, other: NodePath, a: Vec3f, b: Vec3f) -> None: ...
+    def set_scissor(self, other: NodePath, a: Vec3Like, b: Vec3Like) -> None: ...
     @overload
-    def set_scissor(self, a: Vec3f, b: Vec3f, c: Vec3f, d: Vec3f) -> None: ...
+    def set_scissor(self, a: Vec3Like, b: Vec3Like, c: Vec3Like, d: Vec3Like) -> None: ...
     @overload
     def set_scissor(self, left: float, right: float, bottom: float, top: float) -> None: ...
     @overload
-    def set_scissor(self, other: NodePath, a: Vec3f, b: Vec3f, c: Vec3f, d: Vec3f) -> None: ...
+    def set_scissor(self, other: NodePath, a: Vec3Like, b: Vec3Like, c: Vec3Like, d: Vec3Like) -> None: ...
     def clear_scissor(self) -> None:
         """Removes the scissor region that was defined at this node level by a
         previous call to set_scissor().
@@ -4525,7 +4529,7 @@ class NodePath(Generic[_N]):
     @overload
     def set_tex_rotate(self, other: NodePath, stage: TextureStage, r: float) -> None: ...
     @overload
-    def set_tex_scale(self, stage: TextureStage, scale: LVecBase2 | Vec3f | float) -> None:
+    def set_tex_scale(self, stage: TextureStage, scale: LVecBase2 | Vec3Like | float) -> None:
         """`(self, other: NodePath, stage: TextureStage, scale: LVecBase2)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float)`; `(self, stage: TextureStage, scale: LVecBase2)`; `(self, stage: TextureStage, su: float, sv: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UV's for the given stage.
@@ -4551,7 +4555,7 @@ class NodePath(Generic[_N]):
         This call is appropriate for 2-d or 3-d texture coordinates.
         """
     @overload
-    def set_tex_scale(self, other: NodePath, stage: TextureStage, scale: LVecBase2 | Vec3f | float) -> None: ...
+    def set_tex_scale(self, other: NodePath, stage: TextureStage, scale: LVecBase2 | Vec3Like | float) -> None: ...
     @overload
     def set_tex_scale(self, stage: TextureStage, su: float, sv: float, sw: float = ...) -> None: ...
     @overload
@@ -4583,27 +4587,27 @@ class NodePath(Generic[_N]):
     @overload
     def get_tex_scale(self, other: NodePath, stage: TextureStage) -> LVecBase2: ...
     @overload
-    def set_tex_pos(self, stage: TextureStage, uvw: Vec3f) -> None:
+    def set_tex_pos(self, stage: TextureStage, uvw: Vec3Like) -> None:
         """Sets a texture matrix on the current node to apply the indicated offset to
         UVW's for the given stage.
 
         This call is appropriate for 3-d texture coordinates.
         """
     @overload
-    def set_tex_pos(self, other: NodePath, stage: TextureStage, uvw: Vec3f) -> None: ...
+    def set_tex_pos(self, other: NodePath, stage: TextureStage, uvw: Vec3Like) -> None: ...
     @overload
     def set_tex_pos(self, stage: TextureStage, u: float, v: float, w: float) -> None: ...
     @overload
     def set_tex_pos(self, other: NodePath, stage: TextureStage, u: float, v: float, w: float) -> None: ...
     @overload
-    def set_tex_hpr(self, stage: TextureStage, hpr: Vec3f) -> None:
+    def set_tex_hpr(self, stage: TextureStage, hpr: Vec3Like) -> None:
         """Sets a texture matrix on the current node to apply the indicated rotation,
         as a 3-D HPR, to UVW's for the given stage.
 
         This call is appropriate for 3-d texture coordinates.
         """
     @overload
-    def set_tex_hpr(self, other: NodePath, stage: TextureStage, hpr: Vec3f) -> None: ...
+    def set_tex_hpr(self, other: NodePath, stage: TextureStage, hpr: Vec3Like) -> None: ...
     @overload
     def set_tex_hpr(self, stage: TextureStage, h: float, p: float, r: float) -> None: ...
     @overload
@@ -4648,7 +4652,7 @@ class NodePath(Generic[_N]):
         """
     @overload
     def set_tex_gen(
-        self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3f, priority: int = ...
+        self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3Like, priority: int = ...
     ) -> None: ...
     def clear_tex_gen(self, stage: TextureStage = ...) -> None:
         """`(self)`:
@@ -4879,7 +4883,7 @@ class NodePath(Generic[_N]):
         """Sets up the geometry at this level and below (unless overridden) to render
         in filled (i.e.  not wireframe) mode.
         """
-    def set_render_mode_filled_wireframe(self, wireframe_color: Vec4f, priority: int = ...) -> None:
+    def set_render_mode_filled_wireframe(self, wireframe_color: Vec4Like, priority: int = ...) -> None:
         """Sets up the geometry at this level and below (unless overridden) to render
         in filled, but overlay the wireframe on top with a fixed color.  This is
         useful for debug visualizations.
@@ -5360,7 +5364,9 @@ class NodePath(Generic[_N]):
         """Writes a description of the bounding volume containing the bottom node and
         all of its descendants to the indicated output stream.
         """
-    def calc_tight_bounds(self, min_point: Vec3f, max_point: Vec3f, other: NodePath = ..., current_thread: Thread = ...) -> bool:
+    def calc_tight_bounds(
+        self, min_point: Vec3Like, max_point: Vec3Like, other: NodePath = ..., current_thread: Thread = ...
+    ) -> bool:
         """Calculates the minimum and maximum vertices of all Geoms at this NodePath's
         bottom node and below.  This is a tight bounding box; it will generally be
         tighter than the bounding volume returned by get_bounds() (but it is more
@@ -5985,7 +5991,7 @@ class NodePathCollection:
         on, then only the bits that are set in bits_to_change are modified,
         allowing this call to change only a subset of the bits in the subgraph.
         """
-    def calc_tight_bounds(self, min_point: Vec3f, max_point: Vec3f) -> bool:
+    def calc_tight_bounds(self, min_point: Vec3Like, max_point: Vec3Like) -> bool:
         """Calculates the minimum and maximum vertices of all Geoms at these
         NodePath's bottom nodes and below This is a tight bounding box; it will
         generally be tighter than the bounding volume returned by get_bounds() (but
@@ -6032,19 +6038,19 @@ class NodePathCollection:
     @overload
     def set_texture_off(self, stage: TextureStage, priority: int = ...) -> None: ...
     @overload
-    def set_color(self, color: Vec4f, priority: int = ...) -> None:
+    def set_color(self, color: Vec4Like, priority: int = ...) -> None:
         """Colors all NodePaths in the collection"""
     @overload
     def set_color(self, r: float, g: float, b: float, a: float = ..., priority: int = ...) -> None: ...
     @overload
-    def set_color_scale(self, scale: Vec4f, priority: int = ...) -> None:
+    def set_color_scale(self, scale: Vec4Like, priority: int = ...) -> None:
         """Applies color scales to all NodePaths in the collection.  The existing
         color scale is replaced.
         """
     @overload
     def set_color_scale(self, r: float, g: float, b: float, a: float = ..., priority: int = ...) -> None: ...
     @overload
-    def compose_color_scale(self, scale: Vec4f, priority: int = ...) -> None:
+    def compose_color_scale(self, scale: Vec4Like, priority: int = ...) -> None:
         """Applies color scales to all NodePaths in the collection.  The existing
         color scale, if any, is multiplied by the specified color scale.
         """
@@ -6480,12 +6486,12 @@ class BillboardEffect(RenderEffect):
 
     @staticmethod
     def make(
-        up_vector: Vec3f,
+        up_vector: Vec3Like,
         eye_relative: bool,
         axial_rotate: bool,
         offset: float,
         look_at: NodePath,
-        look_at_point: Vec3f,
+        look_at_point: Vec3Like,
         fixed_depth: bool = ...,
     ) -> RenderEffect:
         """Constructs a new BillboardEffect object with the indicated properties."""
@@ -6600,12 +6606,12 @@ class LensNode(PandaNode):
     def deactivate_lens(self, index: int) -> bool:
         """An alternate way to call set_lens_active(index, false)."""
     @overload
-    def is_in_view(self, pos: Vec3f) -> bool:
+    def is_in_view(self, pos: Vec3Like) -> bool:
         """Returns true if the given point is within the bounds of the lens of the
         LensNode (i.e.  if the camera can see the point).
         """
     @overload
-    def is_in_view(self, index: int, pos: Vec3f) -> bool: ...
+    def is_in_view(self, index: int, pos: Vec3Like) -> bool: ...
     def show_frustum(self) -> None:
         """Enables the drawing of the lens's frustum to aid in visualization.  This
         actually creates a GeomNode which is parented to the LensNode.
@@ -6894,8 +6900,8 @@ class PlaneNode(PandaNode):
     CEVisible: Final[Literal[1]]
     CE_collision: Final[Literal[2]]
     CECollision: Final[Literal[2]]
-    def __init__(self, name: str, plane: Vec4f = ...) -> None: ...
-    def set_plane(self, plane: Vec4f) -> None:
+    def __init__(self, name: str, plane: Vec4Like = ...) -> None: ...
+    def set_plane(self, plane: Vec4Like) -> None:
         """Sets the particular plane represented by the PlaneNode."""
     def get_plane(self) -> LPlane:
         """Returns the plane represented by the PlaneNode."""
@@ -7135,7 +7141,7 @@ class ColorAttrib(RenderAttrib):
         rendered according to its own vertex color.
         """
     @staticmethod
-    def make_flat(color: Vec4f) -> RenderAttrib:
+    def make_flat(color: Vec4Like) -> RenderAttrib:
         """Constructs a new ColorAttrib object that indicates geometry should be
         rendered in the indicated color.
         """
@@ -7276,7 +7282,7 @@ class ColorBlendAttrib(RenderAttrib):
     @overload
     @staticmethod
     def make(
-        mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: Vec4f = ...
+        mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: Vec4Like = ...
     ) -> RenderAttrib: ...
     @overload
     @staticmethod
@@ -7287,7 +7293,7 @@ class ColorBlendAttrib(RenderAttrib):
         alpha_mode: _ColorBlendAttrib_Mode,
         alpha_a: _ColorBlendAttrib_Operand,
         alpha_b: _ColorBlendAttrib_Operand,
-        color: Vec4f = ...,
+        color: Vec4Like = ...,
     ) -> RenderAttrib: ...
     @staticmethod
     def make_default() -> RenderAttrib:
@@ -7351,7 +7357,7 @@ class ColorScaleAttrib(RenderAttrib):
     def make_identity() -> RenderAttrib:
         """Constructs an identity scale attrib."""
     @staticmethod
-    def make(scale: Vec4f) -> RenderAttrib:
+    def make(scale: Vec4Like) -> RenderAttrib:
         """Constructs a new ColorScaleAttrib object that indicates geometry should be
         scaled by the indicated factor.
         """
@@ -7390,7 +7396,7 @@ class ColorScaleAttrib(RenderAttrib):
         """
     def get_scale(self) -> LVecBase4:
         """Returns the scale to be applied to colors."""
-    def set_scale(self, scale: Vec4f) -> RenderAttrib:
+    def set_scale(self, scale: Vec4Like) -> RenderAttrib:
         """Returns a new ColorScaleAttrib, just like this one, but with the scale
         changed to the indicated value.
         """
@@ -7854,7 +7860,7 @@ class CullBinManager(CullBinEnums):
 
         This method is not available in release builds.
         """
-    def set_bin_flash_color(self, bin_index: int, color: Vec4f) -> None:
+    def set_bin_flash_color(self, bin_index: int, color: Vec4Like) -> None:
         """Changes the flash color for the given bin index.
 
         This method is not available in release builds.
@@ -8184,7 +8190,7 @@ class Fog(PandaNode):
     def get_color(self) -> LColor:
         """Returns the color of the fog."""
     @overload
-    def set_color(self, color: Vec4f) -> None:
+    def set_color(self, color: Vec4Like) -> None:
         """`(self, color: LColor)`:
         Sets the color of the fog.  The alpha component is not used.
 
@@ -8209,7 +8215,7 @@ class Fog(PandaNode):
         the mode is M_linear.
         """
     @overload
-    def set_linear_onset_point(self, linear_onset_point: Vec3f) -> None:
+    def set_linear_onset_point(self, linear_onset_point: Vec3Like) -> None:
         """Specifies the point in space at which the fog begins.  This is only used if
         the mode is M_linear.
         """
@@ -8220,7 +8226,7 @@ class Fog(PandaNode):
         This is only used if the mode is M_linear.
         """
     @overload
-    def set_linear_opaque_point(self, linear_opaque_point: Vec3f) -> None:
+    def set_linear_opaque_point(self, linear_opaque_point: Vec3Like) -> None:
         """Specifies the point in space at which the fog completely obscures geometry.
         This is only used if the mode is M_linear.
         """
@@ -8682,7 +8688,7 @@ class Light:
         """
     def get_color(self) -> LColor:
         """Returns the basic color of the light."""
-    def set_color(self, color: Vec4f) -> None:
+    def set_color(self, color: Vec4Like) -> None:
         """Sets the basic color of the light."""
     def has_color_temperature(self) -> bool:
         """Returns true if the color was specified as a temperature in kelvins, and
@@ -9928,7 +9934,7 @@ class TexGenAttrib(RenderAttrib):
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
-    def add_stage(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3f = ...) -> RenderAttrib:
+    def add_stage(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3Like = ...) -> RenderAttrib:
         """`(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode)`:
         Returns a new TexGenAttrib just like this one, with the indicated
         generation mode for the given stage.  If this stage already exists, its
@@ -10012,7 +10018,7 @@ class OccluderNode(PandaNode):
         """
     def get_min_coverage(self) -> float:
         """Returns the minimum screen coverage."""
-    def set_vertices(self, v0: Vec3f, v1: Vec3f, v2: Vec3f, v3: Vec3f) -> None:
+    def set_vertices(self, v0: Vec3Like, v1: Vec3Like, v2: Vec3Like, v3: Vec3Like) -> None:
         """Replaces the four vertices of the occluder polygon.  The vertices should be
         defined in a counterclockwise orientation when looking at the face of the
         occluder.
@@ -10023,7 +10029,7 @@ class OccluderNode(PandaNode):
         """
     def get_vertex(self, n: int) -> LPoint3:
         """Returns the nth vertex of the occluder polygon."""
-    def set_vertex(self, n: int, v: Vec3f) -> None:
+    def set_vertex(self, n: int, v: Vec3Like) -> None:
         """Sets the nth vertex of the occluder polygon."""
     def get_vertices(self) -> tuple[LPoint3, ...]: ...
     setDoubleSided = set_double_sided
@@ -10098,14 +10104,14 @@ class PolylightNode(PandaNode):
     def disable(self) -> None:
         """Disable this light"""
     @overload
-    def set_pos(self, position: Vec3f) -> None:
+    def set_pos(self, position: Vec3Like) -> None:
         """Set this light's position"""
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
     def get_pos(self) -> LPoint3:
         """Returns position as a LPoint3"""
     @overload
-    def set_color(self, color: Vec4f) -> None:
+    def set_color(self, color: Vec4Like) -> None:
         """`(self, color: LColor)`:
         Set the light's color...
 
@@ -10253,7 +10259,7 @@ class PolylightEffect(RenderEffect):
         """Constructs a new PolylightEffect object."""
     @overload
     @staticmethod
-    def make(weight: float, contrib: _PolylightEffect_ContribType, effect_center: Vec3f) -> RenderEffect: ...
+    def make(weight: float, contrib: _PolylightEffect_ContribType, effect_center: Vec3Like) -> RenderEffect: ...
     def add_light(self, newlight: NodePath) -> RenderEffect:
         """Add a PolylightNode object to this effect and return a new effect"""
     def remove_light(self, newlight: NodePath) -> RenderEffect:
@@ -10270,7 +10276,7 @@ class PolylightEffect(RenderEffect):
         lightgroup which is static and cant be accessed Here, we just pass that to
         the make
         """
-    def set_effect_center(self, ec: Vec3f) -> RenderEffect:
+    def set_effect_center(self, ec: Vec3Like) -> RenderEffect:
         """Set weight and return a new effect... the reason this couldnt be done
         through make was because that would return a new effect without the
         lightgroup which is static and cant be accessed Here, we just pass that to
@@ -10391,7 +10397,7 @@ class ShaderAttrib(RenderAttrib):
         If sampler is not NULL, the sampler state to use for this texture is
         assigned to it.
         """
-    def get_shader_input_matrix(self, id: InternalName, matrix: Mat4f) -> LMatrix4:
+    def get_shader_input_matrix(self, id: InternalName, matrix: Mat4Like) -> LMatrix4:
         """Returns the ShaderInput as a matrix.  Assertion fails if there is none, or
         if it is not a matrix or NodePath.
         """
@@ -10539,7 +10545,7 @@ class ScissorEffect(RenderEffect):
     """
 
     @staticmethod
-    def make_screen(frame: Vec4f, clip: bool = ...) -> RenderEffect:
+    def make_screen(frame: Vec4Like, clip: bool = ...) -> RenderEffect:
         """Constructs a new screen-relative ScissorEffect.  The frame defines a left,
         right, bottom, top region, relative to the DisplayRegion.  See
         ScissorAttrib.
@@ -10566,11 +10572,11 @@ class ScissorEffect(RenderEffect):
         """
     @overload
     @staticmethod
-    def make_node(a: Vec3f, b: Vec3f, node: NodePath = ...) -> RenderEffect: ...
+    def make_node(a: Vec3Like, b: Vec3Like, node: NodePath = ...) -> RenderEffect: ...
     @overload
     @staticmethod
-    def make_node(a: Vec3f, b: Vec3f, c: Vec3f, d: Vec3f, node: NodePath = ...) -> RenderEffect: ...
-    def add_point(self, point: Vec3f, node: NodePath = ...) -> RenderEffect:
+    def make_node(a: Vec3Like, b: Vec3Like, c: Vec3Like, d: Vec3Like, node: NodePath = ...) -> RenderEffect: ...
+    def add_point(self, point: Vec3Like, node: NodePath = ...) -> RenderEffect:
         """Returns a new ScissorEffect with the indicated point added.  It is only
         valid to call this on a "node" type ScissorEffect.  The full set of points,
         projected into screen space, defines the bounding volume of the rectangular
@@ -10866,7 +10872,7 @@ class PortalNode(PandaNode):
         portal and setup from Python
         """
     @overload
-    def __init__(self, name: str, pos: Vec3f, scale: float = ...) -> None: ...
+    def __init__(self, name: str, pos: Vec3Like, scale: float = ...) -> None: ...
     def set_portal_mask(self, mask: PortalMask) -> None:
         """Simultaneously sets both the "from" and "into" PortalMask values to the
         same thing.
@@ -10905,7 +10911,7 @@ class PortalNode(PandaNode):
         """Returns the current state of the portal_geom flag.  See set_portal_geom()."""
     def clear_vertices(self) -> None:
         """Resets the vertices of the portal to the empty list."""
-    def add_vertex(self, vertex: Vec3f) -> None:
+    def add_vertex(self, vertex: Vec3Like) -> None:
         """Adds a new vertex to the portal polygon.  The vertices should be defined in
         a counterclockwise orientation when viewing through the portal.
         """
@@ -10987,7 +10993,7 @@ class ScissorAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
-    def make(frame: Vec4f) -> RenderAttrib:
+    def make(frame: Vec4Like) -> RenderAttrib:
         """Constructs a ScissorAttrib that restricts rendering to the indicated frame
         within the current DisplayRegion.  (0,0) is the lower-left corner of the
         DisplayRegion, and (1,1) is the upper-right corner.

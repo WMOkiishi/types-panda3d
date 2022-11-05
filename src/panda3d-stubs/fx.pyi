@@ -1,6 +1,6 @@
 from typing import Any, ClassVar, overload
 
-from panda3d._typing import Vec4f
+from panda3d._typing import Vec4Like
 from panda3d.core._display import DisplayRegion, GraphicsEngine, GraphicsOutput
 from panda3d.core._gobj import Lens
 from panda3d.core._linmath import LColor
@@ -170,7 +170,7 @@ class ProjectionScreen(PandaNode):
         """Returns true if vertex-based vignetting is on, false otherwise.  See
         set_vignette_on().
         """
-    def set_vignette_color(self, vignette_color: Vec4f) -> None:
+    def set_vignette_color(self, vignette_color: Vec4Like) -> None:
         """Specifies the color the screen will be painted at the portions outside of
         the lens' frustum; i.e.  where the lens can't see it or illuminate it.
         This color is only used if the vignette_on flag is true; see
@@ -180,7 +180,7 @@ class ProjectionScreen(PandaNode):
         """Returns the color the screen will be painted at the portions outside of the
         lens' frustum.  See set_vignette_color().
         """
-    def set_frame_color(self, frame_color: Vec4f) -> None:
+    def set_frame_color(self, frame_color: Vec4Like) -> None:
         """Specifies the color the screen will be painted at the portions outside of
         the lens' frustum; i.e.  where the lens can't see it or illuminate it.
         This color is only used if the vignette_on flag is true; see

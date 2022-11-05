@@ -2,7 +2,7 @@ from _typeshed import Self
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3f, Vec4f
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core._audio import AudioSound
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture
@@ -37,7 +37,7 @@ class PGFrameStyle:
     def get_type(self) -> _PGFrameStyle_Type:
         """Returns the basic type of frame."""
     @overload
-    def set_color(self, color: Vec4f) -> None:
+    def set_color(self, color: Vec4Like) -> None:
         """Sets the dominant color of the frame."""
     @overload
     def set_color(self, r: float, g: float, b: float, a: float) -> None: ...
@@ -90,7 +90,7 @@ class PGFrameStyle:
         the size of the visible frame representation within the actual frame
         border.
         """
-    def get_internal_frame(self, frame: Vec4f) -> LVecBase4:
+    def get_internal_frame(self, frame: Vec4Like) -> LVecBase4:
         """Computes the size of the internal frame, given the indicated external
         frame, appropriate for this kind of frame style.  This simply subtracts the
         border width for those frame styles that include a border.
@@ -124,7 +124,7 @@ class PGItem(PandaNode):
     """
 
     @overload
-    def set_frame(self, frame: Vec4f) -> None:
+    def set_frame(self, frame: Vec4Like) -> None:
         """Sets the bounding rectangle of the item, in local coordinates.  This is the
         region on screen within which the mouse will be considered to be within the
         item.  Normally, it should correspond to the bounding rectangle of the
@@ -915,7 +915,7 @@ class PGVirtualFrame(PGItem):
     def setup(self, width: float, height: float) -> None:
         """Creates a PGVirtualFrame with the indicated dimensions."""
     @overload
-    def set_clip_frame(self, clip_frame: Vec4f) -> None:
+    def set_clip_frame(self, clip_frame: Vec4Like) -> None:
         """Sets the bounding rectangle of the clip frame.  This is the size of the
         small window through which we can see the virtual canvas.  Normally, this
         is the same size as the actual frame or smaller (typically it is smaller by
@@ -983,7 +983,7 @@ class PGSliderBar(PGItem):
         This is functionally the same as a scroll bar, but it has a distinctive
         look.
         """
-    def set_axis(self, axis: Vec3f) -> None:
+    def set_axis(self, axis: Vec3Like) -> None:
         """Specifies the axis of the slider bar's motion.  This should be only one of
         four vectors: (1, 0, 0), (0, 0, 1), (-1, 0, 0), or (0, 0, -1).
 
@@ -1166,7 +1166,7 @@ class PGScrollFrame(PGVirtualFrame):
         virtual frame.
         """
     @overload
-    def set_virtual_frame(self, virtual_frame: Vec4f) -> None:
+    def set_virtual_frame(self, virtual_frame: Vec4Like) -> None:
         """Sets the bounding rectangle of the virtual frame.  This is the size of the
         large, virtual canvas which we can see only a portion of at any given time.
         """

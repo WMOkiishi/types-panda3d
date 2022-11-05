@@ -3,7 +3,7 @@ from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Mat4d, Mat4f, Vec3d, Vec3f, Vec4d, Vec4f
+from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Filepath, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import istream, ostream
 from panda3d.core._express import ReferenceCount
@@ -411,7 +411,7 @@ class PfmFile(PNMImageHeader):
         the mask.
         """
     @overload
-    def store_mask(self, pnmimage: PNMImage, min_point: Vec4f, max_point: Vec4f) -> bool: ...
+    def store_mask(self, pnmimage: PNMImage, min_point: Vec4Like, max_point: Vec4Like) -> bool: ...
     def is_valid(self) -> bool: ...
     def get_scale(self) -> float:
         """The "scale" is reported in the pfm header and is probably meaningless."""
@@ -444,7 +444,7 @@ class PfmFile(PNMImageHeader):
         """Returns the 3-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-    def set_point(self, x: int, y: int, point: Vec3d | Vec3f) -> None:
+    def set_point(self, x: int, y: int, point: DoubleVec3Like | Vec3Like) -> None:
         """Replaces the 3-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
@@ -454,7 +454,7 @@ class PfmFile(PNMImageHeader):
         """Returns the 3-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-    def set_point3(self, x: int, y: int, point: Vec3d | Vec3f) -> None:
+    def set_point3(self, x: int, y: int, point: DoubleVec3Like | Vec3Like) -> None:
         """Replaces the 3-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
@@ -464,13 +464,13 @@ class PfmFile(PNMImageHeader):
         """Returns the 4-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-    def set_point4(self, x: int, y: int, point: Vec4d | Vec4f) -> None:
+    def set_point4(self, x: int, y: int, point: DoubleVec4Like | Vec4Like) -> None:
         """Replaces the 4-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
     def modify_point4(self, x: int, y: int) -> LPoint4f:
         """Returns a modifiable 4-component point value at the indicated point."""
-    def fill(self, value: LVecBase2f | Vec3f | Vec4f | float) -> None:
+    def fill(self, value: LVecBase2f | Vec3Like | Vec4Like | float) -> None:
         """Fills the table with all of the same value."""
     def fill_nan(self) -> None:
         """Fills the table with all NaN."""
@@ -490,24 +490,24 @@ class PfmFile(PNMImageHeader):
         """Fills the indicated channel with NaN, but only where the table already has
         a data point.  Leaves empty points unchanged.
         """
-    def calc_average_point(self, result: Vec3f, x: float, y: float, radius: float) -> bool:
+    def calc_average_point(self, result: Vec3Like, x: float, y: float, radius: float) -> bool:
         """Computes the unweighted average point of all points within the box centered
         at (x, y) with the indicated Manhattan-distance radius.  Missing points are
         assigned the value of their nearest neighbor.  Returns true if successful,
         or false if the point value cannot be determined.
         """
-    def calc_bilinear_point(self, result: Vec3f, x: float, y: float) -> bool:
+    def calc_bilinear_point(self, result: Vec3Like, x: float, y: float) -> bool:
         """Computes the weighted average of the four nearest points to the floating-
         point index (x, y).  Returns true if the point has any contributors, false
         if the point is unknown.
         """
-    def calc_min_max(self, min_points: Vec3f, max_points: Vec3f) -> bool:
+    def calc_min_max(self, min_points: Vec3Like, max_points: Vec3Like) -> bool:
         """Calculates the minimum and maximum x, y, and z depth component values,
         representing the bounding box of depth values, and places them in the
         indicated vectors.  Returns true if successful, false if the mesh contains
         no points.
         """
-    def calc_autocrop(self, range: Vec4d | Vec4f) -> bool:
+    def calc_autocrop(self, range: DoubleVec4Like | Vec4Like) -> bool:
         """Computes the minimum range of x and y across the PFM file that include all
         points.  If there are no points with no_data_value in the grid--that is,
         all points are included--then this will return (0, get_x_size(), 0,
@@ -541,11 +541,11 @@ class PfmFile(PNMImageHeader):
 
         This is a special case of set_no_data_value().
         """
-    def set_no_data_value(self, no_data_value: Vec4d | Vec4f) -> None:
+    def set_no_data_value(self, no_data_value: DoubleVec4Like | Vec4Like) -> None:
         """Sets the special value that means "no data" when it appears in the pfm
         file.
         """
-    def set_no_data_threshold(self, no_data_value: Vec4d | Vec4f) -> None:
+    def set_no_data_threshold(self, no_data_value: DoubleVec4Like | Vec4Like) -> None:
         """Sets the special threshold value.  Points that are below this value in all
         components are considered "no value".
         """
@@ -597,7 +597,7 @@ class PfmFile(PNMImageHeader):
         axes are exchanged.  These parameters can be used to select any combination
         of 90-degree or 180-degree rotations and flips.
         """
-    def xform(self, transform: Mat4d | Mat4f) -> None:
+    def xform(self, transform: DoubleMat4Like | Mat4Like) -> None:
         """Applies the indicated transform matrix to all points in-place."""
     def forward_distort(self, dist: PfmFile, scale_factor: float = ...) -> None:
         """Applies the distortion indicated in the supplied dist map to the current
@@ -666,13 +666,13 @@ class PfmFile(PNMImageHeader):
         """Replaces this PfmFile with a new PfmFile of size x_size x y_size x 3,
         containing the x y 0 values in the range 0 .. 1 according to the x y index.
         """
-    def pull_spot(self, delta: Vec4f, xc: float, yc: float, xr: float, yr: float, exponent: float) -> int:
+    def pull_spot(self, delta: Vec4Like, xc: float, yc: float, xr: float, yr: float, exponent: float) -> int:
         """Applies delta * t to the point values within radius (xr, yr) distance of
         (xc, yc).  The t value is scaled from 1.0 at the center to 0.0 at radius
         (xr, yr), and this scale follows the specified exponent.  Returns the
         number of points affected.
         """
-    def calc_tight_bounds(self, min_point: Vec3f, max_point: Vec3f) -> bool:
+    def calc_tight_bounds(self, min_point: Vec3Like, max_point: Vec3Like) -> bool:
         """Calculates the minimum and maximum vertices of all points within the table.
         Assumes the table contains 3-D points.
 
@@ -694,7 +694,7 @@ class PfmFile(PNMImageHeader):
         center, point_dist and sample_radius are in UV space, i.e.  in the range
         0..1.
         """
-    def compute_sample_point(self, result: Vec3f, x: float, y: float, sample_radius: float) -> None:
+    def compute_sample_point(self, result: Vec3Like, x: float, y: float, sample_radius: float) -> None:
         """Computes the average of all the point within sample_radius (manhattan
         distance) and the indicated point.
 
@@ -887,12 +887,12 @@ class PNMBrush(ReferenceCount):
         pen or a fill brush to make borderless or unfilled shapes, respectively.
         """
     @staticmethod
-    def make_pixel(color: Vec4f, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
+    def make_pixel(color: Vec4Like, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
         """Returns a new brush that paints a single pixel of the indicated color on a
         border, or paints a solid color in an interior.
         """
     @staticmethod
-    def make_spot(color: Vec4f, radius: float, fuzzy: bool, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
+    def make_spot(color: Vec4Like, radius: float, fuzzy: bool, effect: _PNMBrush_BrushEffect = ...) -> PNMBrush:
         """Returns a new brush that paints a spot of the indicated color and radius.
         If fuzzy is true, the spot is fuzzy; otherwise, it is hard-edged.
         """
@@ -948,7 +948,7 @@ class PNMImage(PNMImageHeader):
         def __init__(self, __param0: PNMImage.Row) -> None: ...
         def __len__(self) -> int: ...
         def __getitem__(self, x: int) -> LColorf: ...
-        def __setitem__(self, x: int, v: Vec4f) -> None: ...
+        def __setitem__(self, x: int, v: Vec4Like) -> None: ...
         def __iter__(self) -> Iterator[LColorf]: ...  # Doesn't actually exist
         def get_xel_val(self, x: int) -> xel:
             """Fetch the pixel at the given column in the row."""
@@ -995,22 +995,22 @@ class PNMImage(PNMImageHeader):
     ) -> None: ...
     def __getitem__(self, y: int) -> PNMImage.CRow | PNMImage.Row: ...
     def __invert__(self) -> PNMImage: ...
-    def __add__(self, other: PNMImage | Vec4f) -> PNMImage: ...
-    def __sub__(self, other: PNMImage | Vec4f) -> PNMImage: ...
+    def __add__(self, other: PNMImage | Vec4Like) -> PNMImage: ...
+    def __sub__(self, other: PNMImage | Vec4Like) -> PNMImage: ...
     @overload
-    def __mul__(self, other: PNMImage | Vec4f) -> PNMImage: ...
+    def __mul__(self, other: PNMImage | Vec4Like) -> PNMImage: ...
     @overload
     def __mul__(self, multiplier: float) -> PNMImage: ...
-    def __iadd__(self: Self, other: PNMImage | Vec4f) -> Self: ...
-    def __isub__(self: Self, other: PNMImage | Vec4f) -> Self: ...
+    def __iadd__(self: Self, other: PNMImage | Vec4Like) -> Self: ...
+    def __isub__(self: Self, other: PNMImage | Vec4Like) -> Self: ...
     @overload
-    def __imul__(self: Self, other: PNMImage | Vec4f) -> Self: ...
+    def __imul__(self: Self, other: PNMImage | Vec4Like) -> Self: ...
     @overload
     def __imul__(self: Self, multiplier: float) -> Self: ...
     def clamp_val(self, input_value: int) -> int:
         """A handy function to clamp values to [0..get_maxval()]."""
     @overload
-    def to_val(self, input_value: Vec3f) -> xel:
+    def to_val(self, input_value: Vec3Like) -> xel:
         """A handy function to scale non-alpha values from [0..1] to
         [0..get_maxval()].  Do not use this for alpha values, see to_alpha_val.
         """
@@ -1379,7 +1379,7 @@ class PNMImage(PNMImageHeader):
         linearized float in the range 0..1.
         """
     @overload
-    def set_xel(self, x: int, y: int, value: Vec3f) -> None:
+    def set_xel(self, x: int, y: int, value: Vec3Like) -> None:
         """`(self, x: int, y: int, value: LRGBColorf)`; `(self, x: int, y: int, r: float, g: float, b: float)`:
         Changes the RGB color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
@@ -1397,7 +1397,7 @@ class PNMImage(PNMImageHeader):
         linearized float in the range 0..1.
         """
     @overload
-    def set_xel_a(self, x: int, y: int, value: Vec4f) -> None:
+    def set_xel_a(self, x: int, y: int, value: Vec4Like) -> None:
         """Changes the RGBA color at the indicated pixel.  Each component is a
         linearized float in the range 0..1.
         """
@@ -1471,7 +1471,7 @@ class PNMImage(PNMImageHeader):
     @overload
     def get_bright(self, x: int, y: int, rc: float, gc: float, bc: float, ac: float = ...) -> float: ...
     @overload
-    def blend(self, x: int, y: int, val: Vec3f, alpha: float) -> None:
+    def blend(self, x: int, y: int, val: Vec3Like, alpha: float) -> None:
         """Smoothly blends the indicated pixel value in with whatever was already in
         the image, based on the given alpha value.  An alpha of 1.0 is fully opaque
         and completely replaces whatever was there previously; alpha of 0.0 is
@@ -1644,7 +1644,7 @@ class PNMImage(PNMImageHeader):
         min_val are set to 0, and values above max_val are set to 1. Does not
         affect the alpha channel, if any.
         """
-    def render_spot(self, fg: Vec4f, bg: Vec4f, min_radius: float, max_radius: float) -> None:
+    def render_spot(self, fg: Vec4Like, bg: Vec4Like, min_radius: float, max_radius: float) -> None:
         """Renders a solid-color circle, with a fuzzy edge, into the center of the
         PNMImage.  If the PNMImage is non-square, this actually renders an ellipse.
 
@@ -1653,7 +1653,7 @@ class PNMImage(PNMImageHeader):
         (but still antialiased); otherwise, the pixels between min_radius and
         max_radius are smoothly blended between fg and bg colors.
         """
-    def expand_border(self, left: int, right: int, bottom: int, top: int, color: Vec4f) -> None:
+    def expand_border(self, left: int, right: int, bottom: int, top: int, color: Vec4Like) -> None:
         """Expands the image by the indicated number of pixels on each edge.  The new
         pixels are set to the indicated color.
 
@@ -1716,7 +1716,7 @@ class PNMImage(PNMImageHeader):
         """
     @overload
     def perlin_noise_fill(self, sx: float, sy: float, table_size: int = ..., seed: int = ...) -> None: ...
-    def remix_channels(self, conv: Mat4f) -> None:
+    def remix_channels(self, conv: Mat4Like) -> None:
         """Transforms every pixel using the operation (Ro,Go,Bo) =
         conv.xform_point(Ri,Gi,Bi); Input must be a color image.
         """

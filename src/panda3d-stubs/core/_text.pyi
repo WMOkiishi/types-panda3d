@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Mat4f, Vec4f
+from panda3d._typing import Filepath, Mat4Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import TextEncoder, ostream
 from panda3d.core._express import Namable, TypedReferenceCount
@@ -95,7 +95,7 @@ class TextGlyph(TypedReferenceCount):
         You may still call get_geom() even if this returns true, which will
         synthesize a Geom for this quad.
         """
-    def get_quad(self, dimensions: Vec4f, texcoords: Vec4f) -> bool:
+    def get_quad(self, dimensions: Vec4Like, texcoords: Vec4Like) -> bool:
         """Assuming that this glyph is representable as a textured quad, returns its
         dimensions and UV range.  Returns false if it is not representable as a
         quad, or if it is whitespace.
@@ -401,7 +401,7 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
         """Returns the way the glyphs on this particular font are generated.  See
         set_render_mode().
         """
-    def set_fg(self, fg: Vec4f) -> None:
+    def set_fg(self, fg: Vec4Like) -> None:
         """Changes the color of the foreground pixels of the font as they are rendered
         into the font texture.  The default is (1, 1, 1, 1), or opaque white, which
         allows text created with the font to be colored individually.  Normally,
@@ -415,7 +415,7 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
         """Returns the color of the foreground pixels of the font as they are rendered
         into the font texture.  See set_fg().
         """
-    def set_bg(self, bg: Vec4f) -> None:
+    def set_bg(self, bg: Vec4Like) -> None:
         """Changes the color of the background pixels of the font as they are rendered
         into the font texture.  The default is (1, 1, 1, 0), or transparent white,
         which allows text created with the font to be colored individually.  (Note
@@ -433,7 +433,7 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
         """Returns the color of the background pixels of the font as they are rendered
         into the font texture.  See set_bg().
         """
-    def set_outline(self, outline_color: Vec4f, outline_width: float, outline_feather: float) -> None:
+    def set_outline(self, outline_color: Vec4Like, outline_width: float, outline_feather: float) -> None:
         """Sets up the font to have an outline around each font letter.  This is
         achieved via a Gaussian post-process as each letter is generated; there is
         some runtime cost for this effect, but it is minimal as each letter is
@@ -782,7 +782,7 @@ class TextProperties:
         set_preserve_trailing_whitespace().
         """
     @overload
-    def set_text_color(self, text_color: Vec4f) -> None: ...
+    def set_text_color(self, text_color: Vec4Like) -> None: ...
     @overload
     def set_text_color(self, r: float, g: float, b: float, a: float) -> None: ...
     def clear_text_color(self) -> None:
@@ -792,7 +792,7 @@ class TextProperties:
     def has_text_color(self) -> bool: ...
     def get_text_color(self) -> LColor: ...
     @overload
-    def set_shadow_color(self, shadow_color: Vec4f) -> None: ...
+    def set_shadow_color(self, shadow_color: Vec4Like) -> None: ...
     @overload
     def set_shadow_color(self, r: float, g: float, b: float, a: float) -> None: ...
     def clear_shadow_color(self) -> None:
@@ -1029,7 +1029,7 @@ class TextGraphic:
     @overload
     def __init__(self, __param0: TextGraphic = ...) -> None: ...
     @overload
-    def __init__(self, model: NodePath, frame: Vec4f) -> None: ...
+    def __init__(self, model: NodePath, frame: Vec4Like) -> None: ...
     @overload
     def __init__(self, model: NodePath, left: float, right: float, bottom: float, top: float) -> None: ...
     def get_model(self) -> NodePath:
@@ -1051,7 +1051,7 @@ class TextGraphic:
         nearby text.
         """
     @overload
-    def set_frame(self, frame: Vec4f) -> None:
+    def set_frame(self, frame: Vec4Like) -> None:
         """Specifies the (left, right, bottom, top) bounding frame for the graphic.
         See get_frame().
         """
@@ -1609,7 +1609,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         constraint, or false if it all fit.
         """
     @overload
-    def set_frame_color(self, frame_color: Vec4f) -> None: ...
+    def set_frame_color(self, frame_color: Vec4Like) -> None: ...
     @overload
     def set_frame_color(self, r: float, g: float, b: float, a: float) -> None: ...
     def get_frame_color(self) -> LColor: ...
@@ -1619,7 +1619,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     def get_card_border_uv_portion(self) -> float: ...
     def has_card_border(self) -> bool: ...
     @overload
-    def set_card_color(self, card_color: Vec4f) -> None: ...
+    def set_card_color(self, card_color: Vec4Like) -> None: ...
     @overload
     def set_card_color(self, r: float, g: float, b: float, a: float) -> None: ...
     def get_card_color(self) -> LColor: ...
@@ -1724,7 +1724,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
         seen by the rest of the world.  Also see get_upper_left_3d() and
         get_lower_right_3d().
         """
-    def set_transform(self, transform: Mat4f) -> None:  # type: ignore[override]
+    def set_transform(self, transform: Mat4Like) -> None:  # type: ignore[override]
         """Sets an additional transform that is applied to the entire text paragraph."""
     def get_transform(self) -> LMatrix4: ...  # type: ignore[override]
     def set_coordinate_system(self, cs: _CoordinateSystem) -> None:

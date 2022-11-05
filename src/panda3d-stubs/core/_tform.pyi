@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Mat4f, Vec3f, Vec4f
+from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dgraph import DataNode
 from panda3d.core._display import DisplayRegion
 from panda3d.core._dtoolbase import TypeHandle
@@ -438,7 +438,7 @@ class DriveInterface(MouseInterfaceNode):
     def get_y(self) -> float: ...
     def get_z(self) -> float: ...
     @overload
-    def set_pos(self, vec: Vec3f) -> None:
+    def set_pos(self, vec: Vec3Like) -> None:
         """Directly sets the driver's position."""
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
@@ -451,7 +451,7 @@ class DriveInterface(MouseInterfaceNode):
     def get_p(self) -> float: ...
     def get_r(self) -> float: ...
     @overload
-    def set_hpr(self, hpr: Vec3f) -> None:
+    def set_hpr(self, hpr: Vec3Like) -> None:
         """Directly sets the driver's orientation."""
     @overload
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
@@ -491,7 +491,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the current setting of the stop_this_frame flag.  See
         set_stop_this_frame().
         """
-    def set_mat(self, mat: Mat4f) -> None:
+    def set_mat(self, mat: Mat4Like) -> None:
         """Stores the indicated transform in the DriveInterface."""
     def get_mat(self) -> LMatrix4:
         """Returns the current transform."""
@@ -612,13 +612,13 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     @overload
     def __init__(self, __param0: MouseWatcherRegion) -> None: ...
     @overload
-    def __init__(self, name: str, frame: Vec4f) -> None: ...
+    def __init__(self, name: str, frame: Vec4Like) -> None: ...
     @overload
     def __init__(self, name: str, left: float, right: float, bottom: float, top: float) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     @overload
-    def set_frame(self, frame: Vec4f) -> None: ...
+    def set_frame(self, frame: Vec4Like) -> None: ...
     @overload
     def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
     def get_frame(self) -> LVecBase4: ...
@@ -726,7 +726,7 @@ class MouseWatcherBase:
         MouseWatcherBase.  The supplied NodePath should be the root of the 2-d
         scene graph for the window.
         """
-    def set_color(self, color: Vec4f) -> None:
+    def set_color(self, color: Vec4Like) -> None:
         """Specifies the color used to draw the region rectangles for the regions
         visualized by show_regions().
         """
@@ -812,7 +812,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         returns the current Y position of the mouse within the window.
         """
     @overload
-    def set_frame(self, frame: Vec4f) -> None:
+    def set_frame(self, frame: Vec4Like) -> None:
         """`(self, frame: LVecBase4)`:
         Sets the frame of the MouseWatcher.  This determines the coordinate space
         in which the MouseWatcherRegions should be expected to live.  Normally,
@@ -1285,7 +1285,7 @@ class Trackball(MouseInterfaceNode):
     def get_y(self) -> float: ...
     def get_z(self) -> float: ...
     @overload
-    def set_pos(self, vec: Vec3f) -> None:
+    def set_pos(self, vec: Vec3Like) -> None:
         """Directly set the offset from the rotational origin."""
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
@@ -1298,7 +1298,7 @@ class Trackball(MouseInterfaceNode):
     def get_p(self) -> float: ...
     def get_r(self) -> float: ...
     @overload
-    def set_hpr(self, hpr: Vec3f) -> None:
+    def set_hpr(self, hpr: Vec3Like) -> None:
         """Directly set the mover's orientation."""
     @overload
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
@@ -1313,7 +1313,7 @@ class Trackball(MouseInterfaceNode):
         """Moves the center of rotation by the given amount."""
     def get_origin(self) -> LPoint3:
         """Returns the current center of rotation."""
-    def set_origin(self, origin: Vec3f) -> None:
+    def set_origin(self, origin: Vec3Like) -> None:
         """Directly sets the center of rotation."""
     def set_control_mode(self, control_mode: _Trackball_ControlMode) -> None:
         """Sets the control mode.  Normally this is CM_default, which means each mouse
@@ -1352,7 +1352,7 @@ class Trackball(MouseInterfaceNode):
         """Returns the coordinate system of the Trackball.  See
         set_coordinate_system().
         """
-    def set_mat(self, mat: Mat4f) -> None:
+    def set_mat(self, mat: Mat4Like) -> None:
         """Stores the indicated transform in the trackball.  This is a transform in
         global space, regardless of the rel_to node.
         """

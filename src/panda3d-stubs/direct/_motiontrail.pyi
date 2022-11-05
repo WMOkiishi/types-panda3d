@@ -1,4 +1,4 @@
-from panda3d._typing import Mat4f, Vec4f
+from panda3d._typing import Mat4Like, Vec4Like
 from panda3d.core._express import TypedReferenceCount
 from panda3d.core._pgraph import GeomNode
 
@@ -41,7 +41,7 @@ class CMotionTrail(TypedReferenceCount):
         """Enable/disable the motion trail."""
     def set_geom_node(self, geom_node: GeomNode) -> None:
         """Set the GeomNode."""
-    def add_vertex(self, vertex: Vec4f, start_color: Vec4f, end_color: Vec4f, v: float) -> None:
+    def add_vertex(self, vertex: Vec4Like, start_color: Vec4Like, end_color: Vec4Like, v: float) -> None:
         """Add a vertex."""
     def set_parameters(
         self,
@@ -72,7 +72,7 @@ class CMotionTrail(TypedReferenceCount):
         """
     def check_for_update(self, current_time: float) -> int:
         """Check if a sample can be submitted."""
-    def update_motion_trail(self, current_time: float, transform: Mat4f) -> None:
+    def update_motion_trail(self, current_time: float, transform: Mat4Like) -> None:
         """See class header comments."""
     resetVertexList = reset_vertex_list
     setGeomNode = set_geom_node
