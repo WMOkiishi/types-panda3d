@@ -21,12 +21,12 @@ from panda3d.core._linmath import (
 )
 from panda3d.core._prc import ConfigVariableFilename
 
-DoubleVec3Like: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 Vec3Like: TypeAlias = LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow
-DoubleVec4Like: TypeAlias = LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow
+DoubleVec3Like: TypeAlias = LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow
 Vec4Like: TypeAlias = LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor
+DoubleVec4Like: TypeAlias = LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow
 IntVec4Like: TypeAlias = LVecBase4i | UnalignedLVecBase4i
-DoubleMat4Like: TypeAlias = LMatrix4d | UnalignedLMatrix4d
 Mat4Like: TypeAlias = LMatrix4f | UnalignedLMatrix4f
+DoubleMat4Like: TypeAlias = LMatrix4d | UnalignedLMatrix4d
 Filepath: TypeAlias = StrOrBytesPath | ConfigVariableFilename
 URL: TypeAlias = URLSpec | str
