@@ -4,6 +4,7 @@ from collections.abc import Callable, Generator
 from typing import Any, ClassVar
 
 from direct.directnotify.Notifier import Notifier
+
 from .Job import Job
 
 GarbageCycleCountAnnounceEvent: str

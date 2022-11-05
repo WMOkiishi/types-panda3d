@@ -6,6 +6,7 @@ from typing_extensions import Final, Literal
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
+
 from .State import State
 
 class ClassicFSM(DirectObject):

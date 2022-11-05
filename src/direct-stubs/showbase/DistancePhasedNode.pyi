@@ -1,6 +1,7 @@
 from collections.abc import Mapping
 
 from panda3d.core import CollideMask, CollisionNode, CollisionTraverser, NodePath
+
 from .DirectObject import DirectObject
 from .PhasedObject import PhasedObject
 

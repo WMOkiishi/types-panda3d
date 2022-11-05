@@ -2,6 +2,7 @@ __all__ = ['Slider', 'SliderWidget', 'rgbPanel']
 
 import Pmw  # type: ignore[import]
 from direct._typing import Unused
+
 from .Valuator import Valuator, rgbPanel as rgbPanel
 
 class Slider(Valuator):

@@ -2,6 +2,7 @@ from typing import Any
 
 import wx  # type: ignore[import]
 from direct._typing import Unused
+
 from .LevelEditor import LevelEditor
 from .PaletteTreeCtrl import PaletteTreeCtrl
 

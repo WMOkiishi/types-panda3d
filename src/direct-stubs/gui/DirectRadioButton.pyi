@@ -4,6 +4,7 @@ from collections.abc import Iterable
 from typing import Any
 
 from panda3d.core import LColor, NodePath
+
 from .DirectButton import DirectButton
 from .DirectLabel import DirectLabel
 

@@ -6,6 +6,7 @@ from direct._typing import Unused
 from direct.wxwidgets.ViewPort import Viewport
 from direct.wxwidgets.WxPandaShell import WxPandaShell
 from direct.wxwidgets.WxSlider import WxSlider
+
 from .AnimControlUI import AnimControlUI
 from .CurveAnimUI import CurveAnimUI
 from .GraphEditorUI import GraphEditorUI

@@ -2,6 +2,7 @@ from typing import Any, ClassVar, NoReturn, SupportsInt, SupportsRound
 from typing_extensions import Literal
 
 from panda3d.core import ConfigVariableBool, StreamWriter
+
 from .Logger import Logger
 
 class Notifier:

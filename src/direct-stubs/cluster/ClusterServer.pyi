@@ -17,6 +17,7 @@ from panda3d.core import (
     QueuedConnectionManager,
     QueuedConnectionReader,
 )
+
 from .ClusterMsgs import ClusterMsgHandler
 
 _NamedMovement: TypeAlias = tuple[

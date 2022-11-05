@@ -7,6 +7,7 @@ from direct.interval.ActorInterval import ActorInterval
 from direct.interval.LerpInterval import LerpFunc
 from direct.showutil.Rope import Rope
 from panda3d.core import LVecBase3f, NodePath
+
 from .LevelEditor import LevelEditor
 
 _T = TypeVar('_T', contravariant=True)

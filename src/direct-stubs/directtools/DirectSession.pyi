@@ -12,6 +12,7 @@ from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
 from direct.tkpanels.DirectSessionPanel import DirectSessionPanel
 from panda3d.core import Camera, DisplayRegion, Lens, LVecBase3f, NodePath, TextFont, TransformState
+
 from .DirectCameraControl import DirectCameraControl
 from .DirectGrid import DirectGrid
 from .DirectLights import DirectLights

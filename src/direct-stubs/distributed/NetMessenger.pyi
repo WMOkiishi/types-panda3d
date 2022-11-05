@@ -3,6 +3,7 @@ from typing import Any
 from typing_extensions import Final, Literal, TypedDict
 
 from direct.showbase.Messenger import Messenger
+
 from .ClientRepository import ClientRepository
 
 MESSAGE_TYPES: Final[

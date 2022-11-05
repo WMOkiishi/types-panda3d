@@ -3,6 +3,7 @@ from typing import Any, ClassVar, TypeVar, overload
 
 from direct._typing import SimpleCallback
 from direct.directnotify.Notifier import Notifier
+
 from .Job import Job
 
 _T = TypeVar('_T')

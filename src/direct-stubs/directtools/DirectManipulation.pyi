@@ -6,6 +6,7 @@ from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
 from panda3d.core import LPoint3f, LVecBase3f, LVector3f, NodePath
+
 from .DirectGeometry import LineNodePath
 
 class DirectManipulationControl(DirectObject):

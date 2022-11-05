@@ -9,6 +9,7 @@ from direct._typing import Incomplete
 from direct.directnotify.Notifier import Notifier
 from panda3d._typing import Filepath
 from panda3d.core import Filename, HTTPClient, PNMImage
+
 from .HostInfo import HostInfo
 from .PackageInfo import PackageInfo
 

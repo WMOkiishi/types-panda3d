@@ -1,4 +1,5 @@
 from panda3d.direct import WaitInterval as WaitInterval
+
 from .ActorInterval import *
 from .FunctionInterval import *
 from .IndirectInterval import *

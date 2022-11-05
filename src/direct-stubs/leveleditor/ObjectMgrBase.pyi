@@ -5,6 +5,7 @@ from direct._typing import Incomplete, Obj, Unused
 from direct.actor import Actor
 from panda3d._typing import Mat4Like, Vec3Like
 from panda3d.core import LMatrix4f, NodePath, PandaNode
+
 from .LevelEditor import LevelEditor
 
 _N = TypeVar('_N', bound=PandaNode)

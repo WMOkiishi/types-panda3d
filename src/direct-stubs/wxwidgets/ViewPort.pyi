@@ -6,6 +6,7 @@ from typing_extensions import Final, Literal
 from direct.directtools.DirectGrid import DirectGrid
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ButtonThrower, Camera, CollisionNode, Lens, LPoint3f, NodePath
+
 from .WxPandaWindow import WxPandaWindow
 
 HORIZONTAL: Final[Any]

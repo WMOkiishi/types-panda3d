@@ -3,6 +3,7 @@ from typing_extensions import Literal
 
 from direct._typing import Unused
 from panda3d.core import NodePath
+
 from .ClientRepository import ClientRepository
 from .DistributedNode import DistributedNode
 from .DistributedSmoothNodeBase import DistributedSmoothNodeBase

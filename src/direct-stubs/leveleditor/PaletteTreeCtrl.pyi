@@ -1,6 +1,7 @@
 from collections.abc import Mapping, MutableSet
 
 import wx  # type: ignore[import]
+
 from .ObjectPaletteUI import ObjectPaletteUI
 from .ProtoPaletteUI import ProtoPaletteUI
 

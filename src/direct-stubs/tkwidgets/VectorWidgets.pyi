@@ -3,6 +3,7 @@ __all__ = ['ColorEntry', 'VectorEntry', 'Vector2Entry', 'Vector3Entry', 'Vector4
 import tkinter
 
 import Pmw  # type: ignore[import]
+
 from .Valuator import ValuatorGroupPanel
 
 class VectorEntry(Pmw.MegaWidget):

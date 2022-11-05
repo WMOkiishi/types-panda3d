@@ -6,6 +6,7 @@ from typing import ClassVar
 from direct.directnotify.Notifier import Notifier
 from panda3d._typing import Filepath
 from panda3d.core import TiXmlDocument, TiXmlElement, TiXmlNode
+
 from .FileSpec import FileSpec
 from .SeqValue import SeqValue
 

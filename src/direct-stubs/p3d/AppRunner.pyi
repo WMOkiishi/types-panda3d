@@ -7,6 +7,7 @@ from typing_extensions import Final, Literal, Never
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ConfigPage, Filename, HTTPClient, URLSpec, WindowHandle, WindowProperties
+
 from .FileSpec import FileSpec
 from .HostInfo import HostInfo
 from .InstalledHostData import InstalledHostData

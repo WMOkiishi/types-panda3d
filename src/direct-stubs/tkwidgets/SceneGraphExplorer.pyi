@@ -6,6 +6,7 @@ from typing_extensions import Final, Literal
 import Pmw  # type: ignore[import]
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath
+
 from .Tree import TreeItem
 
 DEFAULT_MENU_ITEMS: Final[list[str]]

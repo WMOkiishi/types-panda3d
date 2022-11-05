@@ -1,6 +1,7 @@
 __all__ = ['InstalledHostData']
 
 from panda3d.core import Filename
+
 from .HostInfo import HostInfo
 from .InstalledPackageData import InstalledPackageData
 from .ScanDirectoryNode import ScanDirectoryNode

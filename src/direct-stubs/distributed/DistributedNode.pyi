@@ -1,6 +1,7 @@
 from typing_extensions import Literal
 
 from panda3d.core import NodePath
+
 from .ClientRepository import ClientRepository
 from .DistributedObject import DistributedObject
 from .GridParent import GridParent

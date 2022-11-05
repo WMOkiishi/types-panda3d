@@ -8,6 +8,7 @@ from typing_extensions import Final, Literal, SupportsIndex, TypeAlias, TypeGuar
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import PStatCollector, ostream
 from panda3d.direct import CInterval, CMetaInterval
+
 from .Interval import Interval
 
 _Interval: TypeAlias = Interval | CInterval

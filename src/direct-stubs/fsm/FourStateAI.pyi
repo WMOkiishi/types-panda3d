@@ -8,6 +8,7 @@ from typing_extensions import Literal, TypeAlias
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import AsyncTask
+
 from .ClassicFSM import ClassicFSM
 from .State import State
 

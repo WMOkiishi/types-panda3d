@@ -17,6 +17,7 @@ from panda3d.core import (
     UniqueIdAllocator,
 )
 from panda3d.direct import DCClass, DCFile
+
 from .DistributedObjectBase import DistributedObjectBase
 
 class ServerRepository:

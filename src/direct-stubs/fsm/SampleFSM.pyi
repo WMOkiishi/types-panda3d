@@ -6,6 +6,7 @@ from typing import overload
 from typing_extensions import Literal, TypeVarTuple, Unpack
 
 from direct._typing import Unused
+
 from .FSM import FSM
 
 _T = TypeVarTuple('_T')  # type: ignore[misc]

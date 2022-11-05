@@ -3,6 +3,7 @@ from typing_extensions import Final, Literal
 
 from direct._typing import Unused
 from panda3d.core import ConfigVariableBool, LVector3f
+
 from .CartesianGridBase import CartesianGridBase
 from .DistributedNode import DistributedNode
 from .DoInterestManager import InterestHandle

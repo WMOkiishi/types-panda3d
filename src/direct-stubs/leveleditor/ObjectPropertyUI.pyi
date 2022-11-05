@@ -7,6 +7,7 @@ from direct.wxwidgets.WxSlider import WxSlider
 from wx.lib.agw.cubecolourdialog import CubeColourDialog  # type: ignore[import]
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
 from wx.lib.scrolledpanel import ScrolledPanel  # type: ignore[import]
+
 from .LevelEditor import LevelEditor
 
 Key: PyEmbeddedImage

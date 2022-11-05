@@ -4,6 +4,7 @@ from typing import Any, TypeVar
 
 import wx  # type: ignore[import]
 from direct._typing import Unused
+
 from .LevelEditor import LevelEditor
 
 _T = TypeVar('_T')

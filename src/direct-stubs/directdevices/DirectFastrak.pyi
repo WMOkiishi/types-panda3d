@@ -6,6 +6,7 @@ from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import LVector3f
+
 from .DirectDeviceManager import DirectTracker
 
 _TaskCont: TypeAlias = Literal[1]

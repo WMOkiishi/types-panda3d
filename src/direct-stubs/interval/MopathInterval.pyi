@@ -5,6 +5,7 @@ from typing_extensions import Literal
 
 from direct.directutil.Mopath import Mopath
 from panda3d.core import NodePath
+
 from .LerpInterval import LerpFunctionInterval
 
 class MopathInterval(LerpFunctionInterval):

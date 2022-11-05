@@ -6,6 +6,7 @@ import wx  # type: ignore[import]
 from direct._typing import Obj, Unused
 from panda3d.core import LVecBase2f
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
+
 from .LevelEditor import LevelEditor
 
 _Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]

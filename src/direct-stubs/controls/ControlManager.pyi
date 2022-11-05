@@ -4,6 +4,7 @@ from typing_extensions import Literal
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import ConfigVariableBool
+
 from .InputState import InputStateForceToken, InputStateToken, InputStateTokenGroup
 
 class _Controls(Protocol):

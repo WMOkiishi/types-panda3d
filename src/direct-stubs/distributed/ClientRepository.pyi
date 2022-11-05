@@ -1,5 +1,6 @@
 from direct._typing import Unused
 from panda3d.core import DatagramIterator, UniqueIdAllocator
+
 from .ClientRepositoryBase import ClientRepositoryBase
 from .DistributedObjectBase import DistributedObjectBase
 

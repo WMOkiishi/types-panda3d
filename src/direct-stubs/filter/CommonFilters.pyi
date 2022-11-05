@@ -3,6 +3,7 @@ from typing_extensions import Final, Literal
 
 from direct.task.Task import Task
 from panda3d.core import Camera, GraphicsOutput, NodePath, Texture
+
 from .filterBloomI import BLOOM_I as BLOOM_I
 from .filterBloomX import BLOOM_X as BLOOM_X
 from .filterBloomY import BLOOM_Y as BLOOM_Y

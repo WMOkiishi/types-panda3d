@@ -3,6 +3,7 @@ __all__ = ['AngleDial', 'Dial', 'DialWidget']
 from typing_extensions import Final, Literal
 
 import Pmw  # type: ignore[import]
+
 from .Valuator import Valuator
 
 TWO_PI: Final[float]

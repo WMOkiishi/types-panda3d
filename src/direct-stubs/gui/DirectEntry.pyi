@@ -5,6 +5,7 @@ from typing_extensions import Final, Literal
 
 from direct._typing import Unused
 from panda3d.core import ConfigVariableBool, NodePath, TextFont
+
 from .DirectFrame import DirectFrame
 from .OnscreenText import OnscreenText
 

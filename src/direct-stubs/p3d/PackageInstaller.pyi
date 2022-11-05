@@ -7,6 +7,7 @@ from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from direct.stdpy.threading import Lock, RLock
 from panda3d.core import PythonTask
+
 from .AppRunner import AppRunner
 from .HostInfo import HostInfo
 from .PackageInfo import PackageInfo

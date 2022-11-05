@@ -4,6 +4,7 @@ from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import CollideMask, CollisionHandlerFloor, CollisionNode, CollisionRay, CollisionTraverser, NodePath
+
 from .DirectObject import DirectObject
 
 class ShadowPlacer(DirectObject):

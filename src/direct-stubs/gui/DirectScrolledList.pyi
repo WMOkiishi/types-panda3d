@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import NodePath
+
 from .DirectButton import DirectButton
 from .DirectFrame import DirectFrame
 

@@ -4,6 +4,7 @@ from typing_extensions import Final, Literal
 
 import wx  # type: ignore[import]
 from direct._typing import Obj, Unused
+
 from .LevelEditor import LevelEditor
 
 CLOSE_STDIN: Final[str]

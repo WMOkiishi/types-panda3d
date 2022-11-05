@@ -3,6 +3,7 @@ __all__ = ['DirectScrolledFrame']
 from typing import Any
 
 from panda3d.core import NodePath
+
 from .DirectFrame import DirectFrame
 from .DirectScrollBar import DirectScrollBar
 

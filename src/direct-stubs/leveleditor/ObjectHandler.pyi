@@ -3,6 +3,7 @@ from typing_extensions import SupportsIndex
 from direct._typing import Obj
 from direct.actor.Actor import Actor
 from panda3d.core import NodePath
+
 from .LevelEditor import LevelEditor
 
 class ObjectHandler:

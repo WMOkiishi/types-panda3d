@@ -4,6 +4,7 @@ from typing import ClassVar
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.direct import LerpBlendType
+
 from .Interval import Interval
 
 _BlendType: TypeAlias = Literal['easeIn', 'easeOut', 'easeInOut', 'noBlend']

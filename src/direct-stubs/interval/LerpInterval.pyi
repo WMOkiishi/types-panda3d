@@ -31,6 +31,7 @@ from typing_extensions import Literal, TypeAlias
 from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import ConfigVariableColor, LQuaternionf, LVecBase2f, NodePath
 from panda3d.direct import CLerpNodePathInterval
+
 from .Interval import Interval
 
 _T = TypeVar('_T')

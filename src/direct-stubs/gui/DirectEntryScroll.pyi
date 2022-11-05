@@ -4,6 +4,7 @@ from typing import Any
 
 from direct._typing import Unused
 from panda3d.core import NodePath
+
 from .DirectFrame import DirectFrame
 
 class DirectEntryScroll(DirectFrame):

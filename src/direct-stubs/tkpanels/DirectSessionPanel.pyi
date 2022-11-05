@@ -14,6 +14,7 @@ from direct.tkwidgets.Slider import Slider
 from direct.tkwidgets.VectorWidgets import ColorEntry
 from panda3d._typing import Vec3Like
 from panda3d.core import NodePath
+
 from .TaskManagerPanel import TaskManagerWidget
 
 class DirectSessionPanel(AppShell):

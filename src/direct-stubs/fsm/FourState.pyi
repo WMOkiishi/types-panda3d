@@ -5,6 +5,7 @@ from typing import ClassVar, Protocol
 from typing_extensions import Literal, TypeAlias
 
 from direct.directnotify.Notifier import Notifier
+
 from .ClassicFSM import ClassicFSM
 from .State import State
 

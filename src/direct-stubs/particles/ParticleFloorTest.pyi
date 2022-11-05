@@ -1,5 +1,6 @@
 # undocumented
 from panda3d.core import NodePath, PandaNode
+
 from .ParticleEffect import ParticleEffect
 from .Particles import Particles
 

@@ -21,6 +21,7 @@ from panda3d.core import (
     TextFont,
     Texture,
 )
+
 from .DirectObject import DirectObject
 from .ShowBase import ShowBase
 

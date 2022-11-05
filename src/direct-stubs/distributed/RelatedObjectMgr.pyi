@@ -4,6 +4,7 @@ from typing_extensions import TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
+
 from .ClientRepositoryBase import ClientRepositoryBase
 from .DistributedObjectBase import DistributedObjectBase
 

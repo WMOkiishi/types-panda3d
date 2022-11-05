@@ -2,6 +2,7 @@ from typing import Any, TypeVar
 
 import wx  # type: ignore[import]
 from direct._typing import Incomplete
+
 from .LevelEditor import LevelEditor
 from .PaletteTreeCtrl import PaletteTreeCtrl
 from .ProtoPalette import ProtoPalette

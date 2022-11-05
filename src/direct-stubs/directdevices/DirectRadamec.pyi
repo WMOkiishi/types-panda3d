@@ -4,6 +4,7 @@ from typing_extensions import Final, Literal, TypeAlias
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
+
 from .DirectDeviceManager import DirectAnalogs
 
 _TaskCont: TypeAlias = Literal[1]

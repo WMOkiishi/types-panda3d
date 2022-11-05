@@ -2,6 +2,7 @@ from typing import ClassVar
 from typing_extensions import Literal
 
 from direct._typing import Unused
+
 from .DistributedObject import DistributedObject
 
 class TimeManager(DistributedObject):

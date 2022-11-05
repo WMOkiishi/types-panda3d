@@ -4,6 +4,7 @@ import tkinter
 from typing_extensions import Final, Literal
 
 import Pmw  # type: ignore[import]
+
 from .Valuator import Valuator
 
 FLOATER_WIDTH: Final[Literal[22]]

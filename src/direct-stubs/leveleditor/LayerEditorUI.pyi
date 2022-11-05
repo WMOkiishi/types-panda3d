@@ -1,4 +1,5 @@
 import wx  # type: ignore[import]
+
 from .LevelEditor import LevelEditor
 
 class LayerEditorUI(wx.Panel):

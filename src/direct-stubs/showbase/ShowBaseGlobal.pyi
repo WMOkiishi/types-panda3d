@@ -14,6 +14,7 @@ from panda3d.core import (
     VirtualFileSystem,
     ostream as ostream_type,
 )
+
 from .ShowBase import ShowBase
 
 _T = TypeVar('_T')

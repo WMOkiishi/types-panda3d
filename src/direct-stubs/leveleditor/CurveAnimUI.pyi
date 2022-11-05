@@ -4,6 +4,7 @@ import wx  # type: ignore[import]
 from direct._typing import Obj, Unused
 from direct.interval import MetaInterval
 from panda3d.core import NodePath
+
 from .LevelEditor import LevelEditor
 from .ObjectPaletteBase import ObjectCurve
 

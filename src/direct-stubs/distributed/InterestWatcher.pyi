@@ -3,6 +3,7 @@ from typing import ClassVar
 from direct._typing import Incomplete
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
+
 from .DoCollectionManager import DoCollectionManager
 
 class InterestWatcher(DirectObject):

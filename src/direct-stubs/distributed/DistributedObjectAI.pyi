@@ -4,6 +4,7 @@ from typing_extensions import Literal
 from direct._typing import Incomplete, Unused
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
+
 from .ClientRepository import ClientRepository
 from .DistributedObjectBase import DistributedObjectBase
 

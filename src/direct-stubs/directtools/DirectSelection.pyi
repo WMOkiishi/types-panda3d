@@ -17,6 +17,7 @@ from panda3d.core import (
     NodePath,
     TransformState,
 )
+
 from .DirectGeometry import LineNodePath
 
 COA_ORIGIN: Final[Literal[0]]

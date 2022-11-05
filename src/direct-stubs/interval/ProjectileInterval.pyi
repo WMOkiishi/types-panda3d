@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from panda3d._typing import Vec3Like
 from panda3d.core import CollisionNode, LParabolaf, NodePath
+
 from .Interval import Interval
 
 class ProjectileInterval(Interval):

@@ -5,6 +5,7 @@ from typing_extensions import Final, Literal, Never, TypeAlias
 from direct._typing import Incomplete, Unused
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
+
 from .DistributedObjectBase import DistributedObjectBase
 from .DoInterestManager import InterestHandle
 

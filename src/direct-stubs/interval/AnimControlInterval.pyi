@@ -3,6 +3,7 @@ __all__ = ['AnimControlInterval']
 from typing import ClassVar
 
 from panda3d.core import AnimControl, AnimControlCollection
+
 from .Interval import Interval
 
 class AnimControlInterval(Interval):

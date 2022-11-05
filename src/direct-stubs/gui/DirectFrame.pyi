@@ -5,6 +5,7 @@ from typing import Any, ClassVar, Union
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import NodePath, Texture
+
 from .DirectGuiBase import DirectGuiWidget
 
 _MaybeGeom: TypeAlias = NodePath | str | None

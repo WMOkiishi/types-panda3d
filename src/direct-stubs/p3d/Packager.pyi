@@ -20,6 +20,7 @@ from panda3d.core import (
     TiXmlElement,
     TiXmlNode,
 )
+
 from .FileSpec import FileSpec
 from .SeqValue import SeqValue
 

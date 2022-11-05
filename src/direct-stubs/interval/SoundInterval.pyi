@@ -3,6 +3,7 @@ __all__ = ['SoundInterval']
 from typing import ClassVar
 
 from panda3d.core import AudioSound, NodePath
+
 from .Interval import Interval
 
 class SoundInterval(Interval):

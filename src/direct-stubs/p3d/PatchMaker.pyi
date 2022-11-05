@@ -6,6 +6,7 @@ from typing_extensions import TypeAlias
 
 from panda3d._typing import Filepath
 from panda3d.core import Filename, TiXmlDocument, TiXmlElement
+
 from .FileSpec import FileSpec
 
 _Key: TypeAlias = tuple[str | None, str | None, str | None, str | None, FileSpec | None]

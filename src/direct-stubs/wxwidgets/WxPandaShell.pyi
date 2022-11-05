@@ -5,6 +5,7 @@ import wx  # type: ignore[import]
 from direct.showbase.ShowBase import ShowBase
 from direct.task.Task import Task
 from wx.lib.agw.fourwaysplitter import FourWaySplitter  # type: ignore[import]
+
 from .ViewPort import Viewport
 from .WxAppShell import WxAppShell
 

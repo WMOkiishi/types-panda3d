@@ -6,6 +6,7 @@ from direct._typing import Unused
 from direct.gui.OnscreenText import OnscreenText
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ButtonRegistry, NodePath
+
 from .DirectDeviceManager import DirectAnalogs, DirectButtons
 
 _TaskCont: TypeAlias = Literal[1]

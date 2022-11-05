@@ -7,6 +7,7 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.showbase.DirectObject import DirectObject
 from direct.wxwidgets.ViewPort import Viewport
 from panda3d.core import BitMask32, NodePath
+
 from .ActionMgr import ActionMgr
 from .CurveEditor import CurveEditor
 from .FileMgr import FileMgr

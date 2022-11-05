@@ -1,6 +1,7 @@
 from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
+
 from .Job import Job
 
 class JobManager:

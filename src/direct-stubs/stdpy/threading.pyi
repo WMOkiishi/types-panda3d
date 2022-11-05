@@ -25,6 +25,7 @@ from typing_extensions import Final, Never
 
 from direct._typing import Unused
 from panda3d import core
+
 from .thread import error as ThreadError
 
 TIMEOUT_MAX: Final[float]

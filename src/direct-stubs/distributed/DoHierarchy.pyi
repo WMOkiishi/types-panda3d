@@ -2,6 +2,7 @@ from collections.abc import Callable
 from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
+
 from .DistributedObjectBase import DistributedObjectBase
 
 class DoHierarchy:

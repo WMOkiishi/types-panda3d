@@ -7,6 +7,7 @@ from direct.showbase.DirectObject import DirectObject
 from direct.showutil.Rope import Rope
 from direct.task.Task import Task
 from panda3d.core import LVecBase3f, LVecBase4f, NodePath, NurbsCurveEvaluator
+
 from .LevelEditor import LevelEditor
 
 _Order: TypeAlias = Literal[1, 2, 3, 4]

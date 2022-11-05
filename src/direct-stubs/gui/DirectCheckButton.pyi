@@ -3,6 +3,7 @@ __all__ = ['DirectCheckButton']
 from typing import Any
 
 from panda3d.core import LColor, NodePath
+
 from .DirectButton import DirectButton
 
 class DirectCheckButton(DirectButton):

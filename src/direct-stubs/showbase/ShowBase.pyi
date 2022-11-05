@@ -49,6 +49,7 @@ from panda3d.core import (
     WindowProperties,
 )
 from panda3d.physics import ParticleSystemManager, PhysicsManager
+
 from .BufferViewer import BufferViewer
 from .BulletinBoard import BulletinBoard
 from .DirectObject import DirectObject

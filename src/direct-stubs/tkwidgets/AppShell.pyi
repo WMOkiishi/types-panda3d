@@ -8,6 +8,7 @@ from typing_extensions import Literal, TypeAlias
 import Pmw  # type: ignore[import]
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
+
 from .Dial import Dial
 from .EntryScale import EntryScale
 from .Floater import Floater

@@ -9,6 +9,7 @@ from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import Datagram, DatagramIterator, HTTPChannel, HTTPClient, PythonTask, RecorderController
 from panda3d.direct import CConnectionRepository
+
 from .DoCollectionManager import DoCollectionManager
 from .DoInterestManager import DoInterestManager
 

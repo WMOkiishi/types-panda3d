@@ -1,6 +1,7 @@
 __all__ = ['InstalledPackageData']
 
 from panda3d.core import Filename
+
 from .PackageInfo import PackageInfo
 from .ScanDirectoryNode import ScanDirectoryNode
 

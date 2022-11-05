@@ -3,6 +3,7 @@ from typing import TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, TypeGuard
 
 from panda3d.core import DatagramIterator
+
 from .DistributedObject import DistributedObject
 
 _D = TypeVar('_D', bound=DistributedObject)

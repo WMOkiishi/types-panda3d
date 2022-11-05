@@ -4,6 +4,7 @@ from typing import Any, TypeVar
 from direct._typing import Obj
 from direct.showbase.PythonUtil import Functor
 from panda3d.core import LMatrix4f
+
 from .LevelEditor import LevelEditor
 
 _T = TypeVar('_T')

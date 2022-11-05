@@ -5,6 +5,7 @@ from direct.fsm.FSM import FSM
 from direct.interval import MetaInterval
 from panda3d._typing import Vec3Like
 from panda3d.core import LVecBase2f, NodePath, PerspectiveLens, RenderState
+
 from .DistributedObject import DistributedObject
 
 class Fixture(NodePath, FSM):

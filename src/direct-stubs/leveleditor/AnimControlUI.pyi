@@ -3,6 +3,7 @@ from typing import Any
 import wx  # type: ignore[import]
 from direct._typing import Unused
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
+
 from .LevelEditor import LevelEditor
 
 FirstFrame: PyEmbeddedImage

@@ -5,6 +5,7 @@ from typing_extensions import Final, Literal
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import PythonTask
+
 from .ClientRepository import ClientRepository
 
 ASYNC_REQUEST_DEFAULT_TIMEOUT_IN_SECONDS: Final[float]

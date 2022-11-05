@@ -3,6 +3,7 @@ from typing_extensions import Literal
 
 from direct._typing import Unused
 from panda3d.core import AsyncTask
+
 from .CartesianGridBase import CartesianGridBase
 from .ClientRepository import ClientRepository
 from .DistributedNodeAI import DistributedNodeAI

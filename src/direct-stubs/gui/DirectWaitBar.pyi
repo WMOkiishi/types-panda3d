@@ -3,6 +3,7 @@ __all__ = ['DirectWaitBar']
 from typing import Any
 
 from panda3d.core import NodePath, PGFrameStyle
+
 from .DirectFrame import DirectFrame
 
 class DirectWaitBar(DirectFrame):

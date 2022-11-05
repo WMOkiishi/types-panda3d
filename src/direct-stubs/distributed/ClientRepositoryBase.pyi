@@ -6,6 +6,7 @@ from typing_extensions import Literal, TypeAlias
 from direct._typing import Unused
 from panda3d.core import Datagram, DatagramIterator, NodePath, RecorderController
 from panda3d.direct import DCClass
+
 from .ConnectionRepository import ConnectionRepository
 from .CRCache import CRCache
 from .CRDataCache import CRDataCache
