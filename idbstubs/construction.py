@@ -135,12 +135,9 @@ def get_all_manifests() -> Iterator[Attribute]:
     """Yield representations of all manifests known to interrogate."""
     for n in range(idb.interrogate_number_of_manifests()):
         m = idb.interrogate_get_manifest(n)
-        if idb.interrogate_manifest_has_int_value(m):
-            value = idb.interrogate_manifest_get_int_value(m)
-        else:
-            value = idb.interrogate_manifest_definition(m)
         name = idb.interrogate_manifest_name(m)
-        yield Attribute(name, f'Final[{type(value).__name__}]', namespace=('panda3d', 'core'))
+        type_name = 'int' if idb.interrogate_manifest_has_int_value(m) else 'str'
+        yield Attribute(name, f'Final[{type_name}]', namespace=('panda3d', 'core'))
 
 
 def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
