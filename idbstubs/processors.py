@@ -25,11 +25,16 @@ VECTOR_NAME_REGEX: Final = re.compile(
     '((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
 )
 RETURN_SELF: Final = frozenset({
+    '__neg__',
+    '__mul__',
+    '__truediv__',
     '__floordiv__',
     '__pow__',
     '__round__',
     '__floor__',
     '__ceil__',
+    'normalized',
+    'project',
 })
 OBJECT: Final = Class(
     'object',
@@ -360,16 +365,23 @@ def process_vector_class(vector: Class) -> None:
     if suffix == 'i' and not kind.startswith('Unaligned'):
         class_body.pop('__truediv__', None)
         class_body.pop('__itruediv__', None)
+    replaceable_names = {vector.name, ''}
     for name in RETURN_SELF & class_body.keys():
         match class_body[name]:
             case Function(signatures=[
-                Signature(parameters=[
-                    Parameter() as self_param, *_
-                ]) as sig
-            ]):
+                Signature(
+                    parameters=[
+                        Parameter() as self_param, *_
+                    ],
+                    return_type=return_type,
+                ) as sig
+            ]) if return_type in replaceable_names:
                 self_param.type = 'Self'
                 sig.return_type = 'Self'
     match class_body.get('__len__'):
+        case Function(signatures=[Signature() as sig]):
+            sig.return_type = f'Literal[{dimension}]'
+    match class_body.get('get_num_components'):
         case Function(signatures=[Signature() as sig]):
             sig.return_type = f'Literal[{dimension}]'
     vector.body = class_body
