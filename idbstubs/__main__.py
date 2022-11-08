@@ -31,7 +31,7 @@ def cli() -> None:
     logger.setLevel(logging.DEBUG)
     file_handler = logging.FileHandler(log_path, mode='w')
     file_handler.setFormatter(
-        logging.Formatter('%(levelname)s - %(name)s - %(message)s')
+        logging.Formatter('[%(asctime)s] %(levelname)s - %(name)s - %(message)s')
     )
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(
