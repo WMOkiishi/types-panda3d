@@ -1,7 +1,6 @@
 import logging
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Sequence
-from itertools import chain
 from typing import Final, Protocol, TypeVar, cast
 
 import panda3d.interrogatedb as idb
@@ -17,8 +16,10 @@ from .idbutil import (
     function_is_exposed,
     get_all_methods,
     get_derivations,
+    get_elements,
     get_global_functions,
-    get_global_getters,
+    get_global_types,
+    get_nested_types,
     get_python_wrappers,
     type_is_exposed,
     unwrap_type,
@@ -400,8 +401,7 @@ def make_class_rep(
     class_body['DtoolClassDict'] = Attribute(
         'DtoolClassDict', 'ClassVar[dict[str, Any]]', namespace=this_namespace
     )
-    for n in range(idb.interrogate_type_number_of_elements(t)):
-        e = idb.interrogate_type_get_element(t, n)
+    for e in get_elements(t):
         if element_is_exposed(e) and idb.interrogate_element_name(e) not in NO_STUBS:
             element = make_element_rep(e, this_namespace)
             class_body[element.name] = element
@@ -417,12 +417,7 @@ def make_class_rep(
             continue
         class_body |= {rep.name: rep for rep in with_alias(method)}
     # Nested types
-    for n in range(idb.interrogate_type_number_of_nested_types(t)):
-        s = idb.interrogate_type_get_nested_type(t, n)
-        if idb.interrogate_type_is_typedef(s):
-            # Nested typedefs are not exposed to Python.
-            # We can't lump this into `type_is_exposed` because it only matters for definitions.
-            continue
+    for s in get_nested_types(t):
         if not type_is_exposed(s):
             continue
         type_reps = make_type_reps(s, this_namespace)
@@ -446,7 +441,7 @@ def make_class_rep(
 def make_package_rep(package_name: str = 'panda3d') -> Package:
     nested_by_mod_by_lib = defaultdict[str, defaultdict[str, list[StubRep]]](lambda: defaultdict(list))
     # Gather global functions
-    for f in chain(get_global_functions(), get_global_getters()):
+    for f in get_global_functions():
         if not function_is_exposed(f):
             continue
         function = make_function_rep(f)
@@ -455,10 +450,7 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
         nested_by_mod_by_lib[mod_name][lib_name] += with_alias(function)
 
     # Gather global types
-    for n in range(idb.interrogate_number_of_global_types()):
-        t = idb.interrogate_get_global_type(n)
-        if idb.interrogate_type_is_nested(t):
-            continue
+    for t in get_global_types():
         mod_name = idb.interrogate_type_module_name(t)
         lib_name = '_' + idb.interrogate_type_library_name(t).removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(

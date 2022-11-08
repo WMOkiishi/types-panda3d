@@ -21,7 +21,7 @@ ManifestIndex: TypeAlias = int
 
 
 def type_is_unexposed_wrapper(t: TypeIndex, /) -> bool:
-    """Return whether the type is a wrapper or a non-global typedef."""
+    """Return whether a type is a wrapper or non-global typedef."""
     return (
         idb.interrogate_type_is_wrapped(t)
         or (
@@ -32,7 +32,7 @@ def type_is_unexposed_wrapper(t: TypeIndex, /) -> bool:
 
 
 def type_is_wrapped_or_typedef(t: TypeIndex, /) -> bool:
-    """Return whether the type is a wrapper or typedef."""
+    """Return whether a type is a wrapper or typedef."""
     return (
         idb.interrogate_type_is_wrapped(t)
         or idb.interrogate_type_is_typedef(t)
@@ -49,6 +49,9 @@ def unwrap_type(t: TypeIndex, /) -> TypeIndex:
 
 
 def type_is_unscoped_enum(t: TypeIndex, /) -> bool:
+    """Return whether the given type is an enumerated type
+    exposed to Python simply as integer constants.
+    """
     return bool(
         idb.interrogate_type_is_enum(t)
         and idb.interrogate_type_name(t)
@@ -57,21 +60,16 @@ def type_is_unscoped_enum(t: TypeIndex, /) -> bool:
 
 
 def function_is_exposed(f: FunctionIndex, /) -> bool:
+    """Return whether a function is exposed to Python."""
     if idb.interrogate_function_name(f) == 'operator new':
         return False
     if idb.interrogate_function_scoped_name(f) in NOT_EXPOSED:
         return False
-    wrapper_count = idb.interrogate_function_number_of_python_wrappers(f)
-    if not wrapper_count:
-        return False
-    for n in range(wrapper_count):
-        wrapper = idb.interrogate_function_python_wrapper(f, n)
-        if wrapper_is_exposed(wrapper):
-            return True
-    return False
+    return any(wrapper_is_exposed(w) for w in get_python_wrappers(f))
 
 
 def wrapper_is_exposed(w: FunctionWrapperIndex, /) -> bool:
+    """Return whether a function wrapper is exposed to Python."""
     return_type = idb.interrogate_wrapper_return_type(w)
     if not type_is_exposed(return_type):
         return False
@@ -85,6 +83,7 @@ def wrapper_is_exposed(w: FunctionWrapperIndex, /) -> bool:
 
 
 def element_is_exposed(e: ElementIndex, /) -> bool:
+    """Return whether an element is exposed to Python."""
     if not type_is_exposed(idb.interrogate_element_type(e)):
         return False
     if idb.interrogate_element_scoped_name(e) in NOT_EXPOSED:
@@ -94,7 +93,7 @@ def element_is_exposed(e: ElementIndex, /) -> bool:
 
 @cache
 def type_is_exposed(t: TypeIndex, /) -> bool:
-    """Return True if a type is exposed to Python; return False otherwise."""
+    """Return whether a type is exposed to Python."""
     if type_is_wrapped_or_typedef(t):
         return type_is_exposed(idb.interrogate_type_wrapped_type(t))
     name = idb.interrogate_type_name(t)
@@ -136,7 +135,37 @@ def load_interrogate_database(
         idb.interrogate_request_database(db.name)
 
 
+def get_global_types() -> Iterator[TypeIndex]:
+    """Yield the indices of all top-level types known to interrogate."""
+    for n in range(idb.interrogate_number_of_global_types()):
+        t = idb.interrogate_get_global_type(n)
+        if not idb.interrogate_type_is_nested(t):
+            yield t
+
+
+def get_global_functions() -> Iterator[FunctionIndex]:
+    """Yield the indices of all top-level functions known to interrogate."""
+    for n in range(idb.interrogate_number_of_global_functions()):
+        yield idb.interrogate_get_global_function(n)
+    for n in range(idb.interrogate_number_of_globals()):
+        g = idb.interrogate_get_global(n)
+        yield idb.interrogate_element_getter(g)
+
+
+def get_python_wrappers(f: FunctionIndex, /) -> Iterator[FunctionWrapperIndex]:
+    """Yield the indices of a function's Python wrappers."""
+    for n in range(idb.interrogate_function_number_of_python_wrappers(f)):
+        yield idb.interrogate_function_python_wrapper(f, n)
+
+
+def get_constructors(t: TypeIndex, /) -> Iterator[FunctionIndex]:
+    """Yield the indices of a type's constructors."""
+    for n in range(idb.interrogate_type_number_of_constructors(t)):
+        yield idb.interrogate_type_get_constructor(t, n)
+
+
 def get_all_methods(t: TypeIndex, /) -> Iterator[FunctionIndex]:
+    """Yield the indices of a type's methods."""
     # constructors
     for n in range(idb.interrogate_type_number_of_constructors(t)):
         yield idb.interrogate_type_get_constructor(t, n)
@@ -154,27 +183,26 @@ def get_all_methods(t: TypeIndex, /) -> Iterator[FunctionIndex]:
         yield idb.interrogate_type_get_method(t, n)
 
 
-def get_global_getters() -> Iterator[FunctionIndex]:
-    for n in range(idb.interrogate_number_of_globals()):
-        g = idb.interrogate_get_global(n)
-        yield idb.interrogate_element_getter(g)
+def get_elements(t: TypeIndex, /) -> Iterator[ElementIndex]:
+    """Yield the indices of a type's elements (attributes)
+    that are exposed to Python.
+    """
+    for n in range(idb.interrogate_type_number_of_elements(t)):
+        yield idb.interrogate_type_get_element(t, n)
 
 
-def get_global_functions() -> Iterator[FunctionIndex]:
-    for n in range(idb.interrogate_number_of_global_functions()):
-        yield idb.interrogate_get_global_function(n)
+def get_nested_types(t: TypeIndex, /) -> Iterator[TypeIndex]:
+    """Yield the indices of the types nested within another type,
+    excluding typedefs (which are not exposed to Python).
+    """
+    for n in range(idb.interrogate_type_number_of_nested_types(t)):
+        s = idb.interrogate_type_get_nested_type(t, n)
+        # Nested typedefs are not exposed to Python.
+        if not idb.interrogate_type_is_typedef(s):
+            yield s
 
 
-def get_python_wrappers(i: FunctionIndex) -> Iterator[FunctionWrapperIndex]:
-    for n in range(idb.interrogate_function_number_of_python_wrappers(i)):
-        yield idb.interrogate_function_python_wrapper(i, n)
-
-
-def get_constructors(i: TypeIndex) -> Iterator[FunctionIndex]:
-    for n in range(idb.interrogate_type_number_of_constructors(i)):
-        yield idb.interrogate_type_get_constructor(i, n)
-
-
-def get_derivations(i: TypeIndex) -> Iterator[TypeIndex]:
-    for n in range(idb.interrogate_type_number_of_derivations(i)):
-        yield idb.interrogate_type_get_derivation(i, n)
+def get_derivations(t: TypeIndex, /) -> Iterator[TypeIndex]:
+    """Yield the indices of a type's direct base classes."""
+    for n in range(idb.interrogate_type_number_of_derivations(t)):
+        yield idb.interrogate_type_get_derivation(t, n)
