@@ -8,7 +8,11 @@ from typing import Any, Protocol
 from attrs import Factory, define, evolve, field
 
 from .util import (
-    docstring_lines, flatten, indent_lines, is_dunder, names_within
+    docstring_lines,
+    flatten,
+    indent_lines,
+    is_dunder,
+    names_within,
 )
 
 

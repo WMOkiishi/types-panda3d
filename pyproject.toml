@@ -31,7 +31,8 @@ where = ["src"]
 all = true
 
 [tool.isort]
-multi_line_output = 5
+multi_line_output = 3
+include_trailing_comma = true
 combine_as_imports = true
 extra_standard_library = ["typing_extensions"]
 

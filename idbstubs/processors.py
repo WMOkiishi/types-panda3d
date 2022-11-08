@@ -5,16 +5,31 @@ from itertools import combinations, zip_longest
 from typing import Final
 
 from .reps import (
-    Alias, Attribute, Class, File, Function, Package, Parameter, Signature,
-    StubRep, TypeVariable
+    Alias,
+    Attribute,
+    Class,
+    File,
+    Function,
+    Package,
+    Parameter,
+    Signature,
+    StubRep,
+    TypeVariable,
 )
 from .special_cases import (
-    ATTR_TYPE_OVERRIDES, ATTRIBUTE_NAME_SHADOWS, DEFAULT_RETURNS,
-    INPLACE_DUNDERS, PARAM_TYPE_OVERRIDES, RETURN_TYPE_OVERRIDES
+    ATTR_TYPE_OVERRIDES,
+    ATTRIBUTE_NAME_SHADOWS,
+    DEFAULT_RETURNS,
+    INPLACE_DUNDERS,
+    PARAM_TYPE_OVERRIDES,
+    RETURN_TYPE_OVERRIDES,
 )
 from .typedata import (
-    combine_types, get_mro, get_param_type_replacement, process_dependency,
-    subtype_relationship
+    combine_types,
+    get_mro,
+    get_param_type_replacement,
+    process_dependency,
+    subtype_relationship,
 )
 from .util import flatten
 

@@ -8,22 +8,50 @@ import panda3d.interrogatedb as idb
 from attrs import evolve
 
 from .idbutil import (
-    ElementIndex, FunctionIndex, FunctionWrapperIndex, MakeSeqIndex, TypeIndex,
-    element_is_exposed, function_is_exposed, get_all_methods, get_derivations,
-    get_global_functions, get_global_getters, get_python_wrappers,
-    type_is_exposed, unwrap_type, wrapper_is_exposed
+    ElementIndex,
+    FunctionIndex,
+    FunctionWrapperIndex,
+    MakeSeqIndex,
+    TypeIndex,
+    element_is_exposed,
+    function_is_exposed,
+    get_all_methods,
+    get_derivations,
+    get_global_functions,
+    get_global_getters,
+    get_python_wrappers,
+    type_is_exposed,
+    unwrap_type,
+    wrapper_is_exposed,
 )
 from .reps import (
-    Alias, Attribute, Class, Function, Module, Package, Parameter, Signature,
-    StubRep
+    Alias,
+    Attribute,
+    Class,
+    Function,
+    Module,
+    Package,
+    Parameter,
+    Signature,
+    StubRep,
 )
 from .special_cases import (
-    CONDITIONALS, GENERIC, IGNORE_ERRORS, METHOD_RENAMES, NO_MANGLING,
-    NO_STUBS, NOT_EXPOSED, SIZE_NOT_LEN, UNARY_METHOD_RENAMES
+    CONDITIONALS,
+    GENERIC,
+    IGNORE_ERRORS,
+    METHOD_RENAMES,
+    NO_MANGLING,
+    NO_STUBS,
+    NOT_EXPOSED,
+    SIZE_NOT_LEN,
+    UNARY_METHOD_RENAMES,
 )
 from .translation import (
-    check_keyword, class_name_from_cpp_name, comment_to_docstring,
-    method_name_from_cpp_name, snake_to_camel
+    check_keyword,
+    class_name_from_cpp_name,
+    comment_to_docstring,
+    method_name_from_cpp_name,
+    snake_to_camel,
 )
 from .typedata import TYPE_ALIASES, get_direct_type_name, get_type_name
 from .util import flatten, is_dunder

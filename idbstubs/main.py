@@ -4,7 +4,10 @@ from pathlib import Path
 from typing import Final
 
 from .construction import (
-    get_all_manifests, make_package_rep, make_typing_module, with_alias
+    get_all_manifests,
+    make_package_rep,
+    make_typing_module,
+    with_alias,
 )
 from .idbutil import load_interrogate_database
 from .processors import process_dependencies, process_package
