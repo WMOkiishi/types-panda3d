@@ -146,9 +146,6 @@ def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
     """Yield representations of all exposed methods
     for a type known to interrogate.
     """
-    lt_function: Function | None = None
-    seen_eq = False
-    seen_le = False
     for f in get_all_methods(t):
         if not function_is_exposed(f):
             continue
@@ -173,15 +170,7 @@ def get_type_methods(t: TypeIndex, /) -> Iterator[Function]:
         elif method.name == '__len__':
             if idb.interrogate_type_name(t) in SIZE_NOT_LEN:
                 method.name = 'size'
-        elif method.name == '__lt__':
-            lt_function = method
-        elif method.name == '__eq__':
-            seen_eq = True
-        elif method.name == '__le__':
-            seen_le = True
         yield method
-    if lt_function is not None and seen_eq and not seen_le:
-        yield evolve(lt_function, name='__le__')
     for n in range(idb.interrogate_type_number_of_make_seqs(t)):
         yield make_make_seq_rep(idb.interrogate_type_get_make_seq(t, n))
 
