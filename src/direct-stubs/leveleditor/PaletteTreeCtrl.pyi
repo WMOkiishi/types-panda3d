@@ -1,11 +1,12 @@
 from collections.abc import Mapping, MutableSet
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 
 from .ObjectPaletteUI import ObjectPaletteUI
 from .ProtoPaletteUI import ProtoPaletteUI
 
-class PaletteTreeCtrl(wx.TreeCtrl):
+class PaletteTreeCtrl(wx.TreeCtrl, metaclass=sip.wrapper):
     rootName: str
     root: wx.TreeItemId
     paletteUI: ObjectPaletteUI | ProtoPaletteUI

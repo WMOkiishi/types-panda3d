@@ -3,6 +3,7 @@ __all__ = ['Viewport', 'ViewportManager']
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal
 
+import wx.siplib as sip  # type: ignore[import]
 from direct.directtools.DirectGrid import DirectGrid
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ButtonThrower, Camera, CollisionNode, Lens, LPoint3f, NodePath
@@ -27,7 +28,7 @@ class ViewportManager:
     @staticmethod
     def layoutAll(*args, **kwargs) -> None: ...
 
-class Viewport(WxPandaWindow, DirectObject):
+class Viewport(WxPandaWindow, DirectObject, metaclass=sip.wrapper):
     CREATENEW: Final[Literal[99]]
     VPLEFT: Final[Literal[10]]
     VPFRONT: Final[Literal[11]]

@@ -1,8 +1,9 @@
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 
 from .LevelEditor import LevelEditor
 
-class LayerEditorUI(wx.Panel):
+class LayerEditorUI(wx.Panel, metaclass=sip.wrapper):
     editor: LevelEditor
     editorTxt: str
     saveData: list[str]

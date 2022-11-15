@@ -2,12 +2,13 @@ from abc import ABCMeta, abstractmethod
 from typing import Any
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Obj, Unused
 from panda3d.core import NodePath
 
 from .LevelEditor import LevelEditor
 
-class SceneGraphUIDropTarget(wx.TextDropTarget):
+class SceneGraphUIDropTarget(wx.TextDropTarget, metaclass=sip.wrapper):
     editor: LevelEditor
     def __init__(self, editor: LevelEditor) -> None: ...
     def OnDropText(self, x, y, text: str) -> None: ...

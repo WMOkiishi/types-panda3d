@@ -1,8 +1,9 @@
 from typing import ClassVar
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 
-class WxAppShell(wx.Frame):
+class WxAppShell(wx.Frame, metaclass=sip.wrapper):
     appversion: ClassVar[str]
     appname: ClassVar[str]
     copyright: ClassVar[str]

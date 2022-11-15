@@ -2,6 +2,7 @@ from typing import ClassVar, overload
 from typing_extensions import Final, Literal
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct.showbase.ShowBase import ShowBase
 from direct.task.Task import Task
 from wx.lib.agw.fourwaysplitter import FourWaySplitter  # type: ignore[import]
@@ -16,7 +17,7 @@ ID_FRONT_VIEW: Final[Literal[403]]
 ID_LEFT_VIEW: Final[Literal[404]]
 ID_PERSP_VIEW: Final[Literal[405]]
 
-class WxPandaShell(WxAppShell):
+class WxPandaShell(WxAppShell, metaclass=sip.wrapper):
     MENU_TEXTS: ClassVar[dict[int, tuple[str, str | None]]]
     fStartDirect: bool
     wxApp: wx.App

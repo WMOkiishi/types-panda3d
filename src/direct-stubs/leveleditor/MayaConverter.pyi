@@ -3,6 +3,7 @@ from typing import Any
 from typing_extensions import Final, Literal
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Obj, Unused
 
 from .LevelEditor import LevelEditor
@@ -21,7 +22,7 @@ class Process:
     def CloseInp(self) -> None: ...
     def Kill(self, ks: str = ...) -> tuple[Literal[1], None] | tuple[Literal[0], tuple[Any, Any, Any]]: ...
 
-class MayaConverter(wx.Dialog):
+class MayaConverter(wx.Dialog, metaclass=sip.wrapper):
     editor: LevelEditor
     obj: Obj
     isAnim: bool

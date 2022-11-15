@@ -1,10 +1,11 @@
 from typing import Any
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Unused
 from wx.lib.scrolledpanel import ScrolledPanel  # type: ignore[import]
 
-class EditHotKeyDialog(wx.Dialog):
+class EditHotKeyDialog(wx.Dialog, metaclass=sip.wrapper):
     currKey: str
     panel: wx.Panel
     label: wx.StaticText
@@ -17,12 +18,12 @@ class EditHotKeyDialog(wx.Dialog):
     def onChangeSpecialKey(self, evt) -> None: ...
     def onApply(self, evt: Unused) -> None: ...
 
-class HotKeyPanel(ScrolledPanel):
+class HotKeyPanel(ScrolledPanel, metaclass=sip.wrapper):
     parent: Any
     def __init__(self, parent: Any) -> None: ...
     def updateUI(self) -> None: ...
     def onEdit(self, evt: Unused, key: str) -> None: ...
 
-class HotKeyUI(wx.Dialog):
+class HotKeyUI(wx.Dialog, metaclass=sip.wrapper):
     parent: Any
     def __init__(self, parent: Any, id, title) -> None: ...

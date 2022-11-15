@@ -1,12 +1,13 @@
 from typing import Any
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Unused
 
 from .LevelEditor import LevelEditor
 from .PaletteTreeCtrl import PaletteTreeCtrl
 
-class ObjectPaletteUI(wx.Panel):
+class ObjectPaletteUI(wx.Panel, metaclass=sip.wrapper):
     editor: LevelEditor
     palette: Any
     tree: PaletteTreeCtrl

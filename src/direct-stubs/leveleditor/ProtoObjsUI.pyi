@@ -3,13 +3,14 @@ from collections.abc import Iterable
 from typing import Any, TypeVar
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Unused
 
 from .LevelEditor import LevelEditor
 
 _T = TypeVar('_T')
 
-class ProtoDropTarget(wx.PyDropTarget):
+class ProtoDropTarget(wx.PyDropTarget, metaclass=sip.wrapper):
     ui = ...
     do: wx.DataObjectComposite
     filedo: wx.FileDataObject

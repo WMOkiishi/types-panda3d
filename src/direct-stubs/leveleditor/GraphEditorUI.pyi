@@ -3,6 +3,7 @@ from typing import Any, SupportsFloat, Union
 from typing_extensions import TypeAlias
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Obj, Unused
 from panda3d.core import LVecBase2f
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
@@ -17,7 +18,7 @@ ZoomOut: PyEmbeddedImage
 OneTangent: PyEmbeddedImage
 TwoTangents: PyEmbeddedImage
 
-class GraphEditorWindow(wx.Window):
+class GraphEditorWindow(wx.Window, metaclass=sip.wrapper):
     w: int
     h: int
     zoom: float
@@ -70,7 +71,7 @@ class GraphEditorWindow(wx.Window):
     def selectHandler(self) -> None: ...
     def onAnimation(self) -> None: ...
 
-class GraphEditorUI(wx.Dialog):
+class GraphEditorUI(wx.Dialog, metaclass=sip.wrapper):
     editor: LevelEditor
     object: Obj
     xRange: int

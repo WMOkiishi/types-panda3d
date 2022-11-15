@@ -2,6 +2,7 @@ from collections.abc import Callable, Iterable
 from typing import Any
 
 import wx  # type: ignore[import]
+import wx.sipblib as sip  # type: ignore[import]
 from direct._typing import Incomplete, Unused
 from direct.wxwidgets.WxSlider import WxSlider
 from wx.lib.agw.cubecolourdialog import CubeColourDialog  # type: ignore[import]
@@ -12,12 +13,12 @@ from .LevelEditor import LevelEditor
 
 Key: PyEmbeddedImage
 
-class AnimFileDrop(wx.FileDropTarget):
+class AnimFileDrop(wx.FileDropTarget, metaclass=sip.wrapper):
     editor: LevelEditor
     def __init__(self, editor: LevelEditor) -> None: ...
     def OnDropFiles(self, x: Unused, y: Unused, filenames: Iterable[str]) -> None: ...
 
-class ObjectPropUI(wx.Panel):
+class ObjectPropUI(wx.Panel, metaclass=sip.wrapper):
     parent: Any
     labelPane: wx.Panel
     label: wx.StaticText
@@ -30,34 +31,34 @@ class ObjectPropUI(wx.Panel):
     def getValue(self): ...
     def bindFunc(self, inFunc, outFunc, valFunc=...) -> None: ...
 
-class ObjectPropUIEntry(ObjectPropUI):
+class ObjectPropUIEntry(ObjectPropUI, metaclass=sip.wrapper):
     ui: wx.TextCtrl
     eventType = ...
     def __init__(self, parent, label) -> None: ...
     def setValue(self, value: object) -> None: ...
 
-class ObjectPropUISlider(ObjectPropUI):
+class ObjectPropUISlider(ObjectPropUI, metaclass=sip.wrapper):
     ui: WxSlider
     def __init__(self, parent: Any, label, value, minValue: float, maxValue: float) -> None: ...
 
-class ObjectPropUISpinner(ObjectPropUI):
+class ObjectPropUISpinner(ObjectPropUI, metaclass=sip.wrapper):
     ui: wx.SpinCtrl
     eventType = ...
     def __init__(self, parent: Any, label, value, minValue, maxValue) -> None: ...
 
-class ObjectPropUICheck(ObjectPropUI):
+class ObjectPropUICheck(ObjectPropUI, metaclass=sip.wrapper):
     ui: wx.CheckBox
     eventType = ...
     def __init__(self, parent: Any, label, value) -> None: ...
 
-class ObjectPropUIRadio(ObjectPropUI):
+class ObjectPropUIRadio(ObjectPropUI, metaclass=sip.wrapper):
     ui: wx.RadioBox
     eventType = ...
     def __init__(self, parent: Any, label, value, valueList) -> None: ...
     def setValue(self, value) -> None: ...
     def getValue(self): ...
 
-class ObjectPropUICombo(ObjectPropUI):
+class ObjectPropUICombo(ObjectPropUI, metaclass=sip.wrapper):
     ui: wx.Choice
     eventType = ...
     def __init__(
@@ -71,7 +72,7 @@ class ObjectPropUICombo(ObjectPropUI):
     ) -> None: ...
     def setItems(self, valueList) -> None: ...
 
-class ObjectPropUITime(wx.Panel):
+class ObjectPropUITime(wx.Panel, metaclass=sip.wrapper):
     parent: Any
     labelPane: wx.Panel
     label: wx.StaticText
@@ -86,12 +87,12 @@ class ObjectPropUITime(wx.Panel):
     def getValue(self) -> float: ...
     def bindFunc(self, inFunc, outFunc, valFunc=...) -> None: ...
 
-class ColorPicker(CubeColourDialog):
+class ColorPicker(CubeColourDialog, metaclass=sip.wrapper):
     updateCB = ...
     def __init__(self, parent: Any, colourData=..., style=..., alpha: int = ..., updateCB=..., exitCB=...) -> None: ...
     def SetPanelColours(self) -> None: ...
 
-class ObjectPropertyUI(ScrolledPanel):
+class ObjectPropertyUI(ScrolledPanel, metaclass=sip.wrapper):
     editor: LevelEditor
     colorPicker: ColorPicker | None
     lastColorPickerPos: wx.Point | None

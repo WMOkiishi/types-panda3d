@@ -2,8 +2,9 @@ from collections.abc import Callable
 from typing import Any
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 
-class WxSlider(wx.Slider):
+class WxSlider(wx.Slider, metaclass=sip.wrapper):
     maxValue: float
     minValue: float
     textValue: wx.TextCtrl | None

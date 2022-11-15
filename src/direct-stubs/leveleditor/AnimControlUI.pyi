@@ -1,6 +1,7 @@
 from typing import Any
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Unused
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
 
@@ -18,7 +19,7 @@ Key: PyEmbeddedImage
 Stop: PyEmbeddedImage
 DeleteKey: PyEmbeddedImage
 
-class TimeSlider(wx.Window):
+class TimeSlider(wx.Window, metaclass=sip.wrapper):
     points: list[tuple[tuple[float, int], tuple[float, int]]]
     numbers: list[int]
     curFrame: int
@@ -40,7 +41,7 @@ class TimeSlider(wx.Window):
     def OnLeftUp(self, evt) -> None: ...
     def OnMotion(self, evt) -> None: ...
 
-class TimeRange(wx.Window):
+class TimeRange(wx.Window, metaclass=sip.wrapper):
     startFrame: int
     endFrame: int
     sliderStartFrame: int
@@ -70,7 +71,7 @@ class TimeRange(wx.Window):
     def OnMotion(self, evt) -> None: ...
     def MainPanelUpdate(self) -> None: ...
 
-class AnimControlUI(wx.Dialog):
+class AnimControlUI(wx.Dialog, metaclass=sip.wrapper):
     editor: LevelEditor
     parallel: list
     keys: list[int]

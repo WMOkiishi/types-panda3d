@@ -1,6 +1,7 @@
 from typing import Any
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Obj, Unused
 from direct.interval import MetaInterval
 from panda3d.core import NodePath
@@ -8,7 +9,7 @@ from panda3d.core import NodePath
 from .LevelEditor import LevelEditor
 from .ObjectPaletteBase import ObjectCurve
 
-class CurveAnimUI(wx.Dialog):
+class CurveAnimUI(wx.Dialog, metaclass=sip.wrapper):
     editor: LevelEditor
     nodePath: NodePath
     curve: Obj[NodePath, ObjectCurve] | None

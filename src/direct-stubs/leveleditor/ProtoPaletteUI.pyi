@@ -1,6 +1,7 @@
 from typing import Any, TypeVar
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Incomplete
 
 from .LevelEditor import LevelEditor
@@ -9,7 +10,7 @@ from .ProtoPalette import ProtoPalette
 
 _T = TypeVar('_T')
 
-class UniversalDropTarget(wx.PyDropTarget):
+class UniversalDropTarget(wx.PyDropTarget, metaclass=sip.wrapper):
     editor: LevelEditor
     do: wx.DataObjectComposite
     filedo: wx.FileDataObject
@@ -18,7 +19,7 @@ class UniversalDropTarget(wx.PyDropTarget):
     def __init__(self, editor: LevelEditor) -> None: ...
     def OnData(self, x, y, d: _T) -> _T: ...
 
-class ProtoPaletteUI(wx.Panel):
+class ProtoPaletteUI(wx.Panel, metaclass=sip.wrapper):
     editor: LevelEditor
     palette: ProtoPalette
     tree: PaletteTreeCtrl

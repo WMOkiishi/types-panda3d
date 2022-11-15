@@ -2,6 +2,7 @@ from typing import Any, SupportsFloat
 from typing_extensions import Final, Literal
 
 import wx  # type: ignore[import]
+import wx.siplib as sip  # type: ignore[import]
 from direct._typing import Unused
 from direct.wxwidgets.ViewPort import Viewport
 from direct.wxwidgets.WxPandaShell import WxPandaShell
@@ -33,13 +34,13 @@ ID_CURVE_ANIM: Final[Literal[603]]
 ID_ANIM: Final[Literal[701]]
 ID_GRAPH: Final[Literal[702]]
 
-class PandaTextDropTarget(wx.TextDropTarget):
+class PandaTextDropTarget(wx.TextDropTarget, metaclass=sip.wrapper):
     editor: LevelEditor
     view: Viewport
     def __init__(self, editor: LevelEditor, view: Viewport) -> None: ...
     def OnDropText(self, x: float, y: float, text: str) -> bool | None: ...
 
-class LevelEditorUIBase(WxPandaShell):
+class LevelEditorUIBase(WxPandaShell, metaclass=sip.wrapper):
     editor: LevelEditor
     contextMenu: ViewportMenu
     menuEdit: wx.Menu
@@ -90,19 +91,19 @@ class LevelEditorUIBase(WxPandaShell):
     def buildContextMenu(self, nodePath: Unused): ...
     def replaceObject(self, evt, all: bool = ...) -> None: ...
 
-class GridSizeUI(wx.Dialog):
+class GridSizeUI(wx.Dialog, metaclass=sip.wrapper):
     parent: Any
     gridSizeSlider: WxSlider
     gridSpacingSlider: WxSlider
     def __init__(self, parent: Any, id, title: str, gridSize: SupportsFloat, gridSpacing: SupportsFloat) -> None: ...
     def onApply(self, evt: Unused) -> None: ...
 
-class ViewportMenu(wx.Menu):
+class ViewportMenu(wx.Menu, metaclass=sip.wrapper):
     def __init__(self) -> None: ...
     def addItem(self, name, parent: Any | None = ..., call=..., id=...) -> None: ...
     def addMenu(self, name, parent: Any | None = ..., id=...) -> wx.Menu: ...
 
-class CurveDegreeUI(wx.Dialog):
+class CurveDegreeUI(wx.Dialog, metaclass=sip.wrapper):
     parent: Any
     degree: wx.RadioBox
     def __init__(self, parent: Any, id, title: str) -> None: ...
