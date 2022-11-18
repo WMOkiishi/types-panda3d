@@ -61,8 +61,7 @@ _logger: Final = logging.getLogger(__name__)
 
 
 class NamespacedStubRep(StubRep, Protocol):
-    @property
-    def namespace(self) -> Sequence[str]: ...
+    namespace: Sequence[str]
 
 
 SR = TypeVar('SR', bound=NamespacedStubRep)

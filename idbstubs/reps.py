@@ -17,8 +17,7 @@ from .util import (
 
 
 class StubRep(Protocol):
-    @property
-    def name(self) -> str: ...
+    name: str
     def get_dependencies(self) -> Iterator[str]: ...
     def definition(self) -> Iterator[str]: ...
 
