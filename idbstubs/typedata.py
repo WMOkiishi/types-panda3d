@@ -215,23 +215,14 @@ def make_param_type_replacement(cast_to: TypeIndex) -> str:
     cast_from, next_layer = {cast_to}, _coercions[cast_to]
     while cast_layer := next_layer - cast_from:
         cast_from |= cast_layer
-        next_layer = frozenset(flatten(
+        next_layer = set(flatten(
             _coercions[i]
             for i in cast_layer
         ))
-    for a, b in combinations(tuple(cast_from), 2):
-        if b in recursive_superclasses(a):
-            cast_from.discard(a)
-        elif a in recursive_superclasses(b):
-            cast_from.discard(b)
     cast_from_names = {get_type_name(i) for i in cast_from}
     if idb.interrogate_type_name(cast_to) == 'Filename':
         cast_from_names.remove('Filename')
         cast_from_names.add('StrOrBytesPath')
-    for alias, alias_of in _type_alias_data:
-        if cast_from_names >= alias_of:
-            cast_from_names -= alias_of
-            cast_from_names.add(alias)
     return combine_types(*cast_from_names)
 
 
@@ -317,7 +308,9 @@ def process_dependency(
 
 
 def inherits_from(a: str, b: str, /) -> bool:
-    """Return whether `a` is narrower than `b`."""
+    """Return whether `a` is narrower than `b`.
+    Does not work with union types; use `subtype_relationship` instead.
+    """
     a, b = _aliases.get(a, a), _aliases.get(b, b)
     if 'Any' in (a, b):
         return False
@@ -332,16 +325,28 @@ def inherits_from(a: str, b: str, /) -> bool:
     return b in _inheritance.get(a, set())
 
 
+def expand_type(s: str, /) -> set[str]:
+    """Return a set of type names whose union is equivalent
+    to the type represented by the given string.
+    """
+    parts, new_parts = set[str](), {s}
+    while parts != new_parts:
+        parts, new_parts = new_parts, set[str]()
+        for part in parts:
+            part = TYPE_ALIASES.get(part, part)
+            new_parts.update(unpack_union(part))
+    return parts
+
+
 def subtype_relationship(a: str, b: str, /) -> tuple[bool, bool]:
     """Return a tuple of two Boolean values, representing whether
     `a` is a subtype of `b` and vice versa, respectively.
     """
-    a, b = TYPE_ALIASES.get(a, a), TYPE_ALIASES.get(b, b)
-    l1 = [_aliases.get(i, i) for i in unpack_union(a)]
-    l2 = [_aliases.get(i, i) for i in unpack_union(b)]
-    found_broader_in_b = dict.fromkeys(l1, False)
-    found_broader_in_a = dict.fromkeys(l2, False)
-    for i, j in product(l1, l2):
+    expanded_a = expand_type(a)
+    expanded_b = expand_type(b)
+    found_broader_in_b = dict.fromkeys(expanded_a, False)
+    found_broader_in_a = dict.fromkeys(expanded_b, False)
+    for i, j in product(expanded_a, expanded_b):
         if not found_broader_in_b[i] and inherits_from(i, j):
             found_broader_in_b[i] = True
         if not found_broader_in_a[j] and inherits_from(j, i):
@@ -351,8 +356,20 @@ def subtype_relationship(a: str, b: str, /) -> tuple[bool, bool]:
 
 
 def combine_types(*types: str) -> str:
-    combined = set(flatten(unpack_union(t) for t in types))
-    for i in tuple(combined):
-        if any(inherits_from(i, j) for j in combined if i != j):
-            combined.remove(i)
+    """Return a string representing a type equivalent to the union
+    of the types represented by the given strings.
+    """
+    combined = set[str]()
+    for t in types:
+        combined |= expand_type(t)
+    for a, b in combinations(combined, 2):
+        a_subtypes_b, b_subtypes_a = subtype_relationship(a, b)
+        if a_subtypes_b:
+            combined.discard(a)
+        elif b_subtypes_a:
+            combined.discard(b)
+    for alias, alias_of in _type_alias_data:
+        if combined >= alias_of:
+            combined -= alias_of
+            combined.add(alias)
     return ' | '.join(sorted(combined, key=lambda s: (s == 'None', s)))
