@@ -240,8 +240,13 @@ def get_param_type_replacement(type_name: str) -> str | None:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
     """
-    type_name = _aliases.get(type_name, type_name)
-    replacement = _param_type_replacements.get(type_name)
+    alias_of = _aliases.get(type_name)
+    if alias_of is None:
+        replacement = _param_type_replacements.get(type_name)
+    else:
+        replacement = _param_type_replacements.get(alias_of)
+        if replacement is not None:
+            replacement = replacement.replace(alias_of, type_name)
     if replacement is not None:
         _logger.debug(f'Replaced parameter type {type_name!r}'
                       f' with {replacement!r}')

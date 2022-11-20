@@ -6,14 +6,7 @@ from typing_extensions import Final, Literal, TypeAlias
 from panda3d._typing import Filepath, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import GlobPattern, ostream
-from panda3d.core._express import (
-    ConstPointerToArray_float,
-    CPTA_stdfloat,
-    Namable,
-    PointerToArray_float,
-    ReferenceCount,
-    TypedReferenceCount,
-)
+from panda3d.core._express import CPTA_stdfloat, Namable, PointerToArray_float, ReferenceCount, TypedReferenceCount
 from panda3d.core._linmath import LMatrix4
 from panda3d.core._pgraph import Loader, ModelLoadRequest, PandaNode, TransformState
 from panda3d.core._putil import AnimInterface, BitArray, CopyOnWriteObject, LoaderOptions, TypedWritableReferenceCount
@@ -414,7 +407,7 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     @staticmethod
     def is_valid_id(table_id: str) -> bool:
         """Returns true if the given letter is one of the nine valid table id's."""
-    def set_table(self, table_id: str, table: ConstPointerToArray_float | PointerToArray_float) -> None:
+    def set_table(self, table_id: str, table: CPTA_stdfloat | PointerToArray_float) -> None:
         """Assigns the indicated table.  table_id is one of 'i', 'j', 'k', for scale,
         'a', 'b', 'c' for shear, 'h', 'p', 'r', for rotation, and 'x', 'y', 'z',
         for translation.  The new table must have either zero, one, or
@@ -470,7 +463,7 @@ class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
 
     table: CPTA_stdfloat
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
-    def set_table(self, table: ConstPointerToArray_float | PointerToArray_float) -> None:
+    def set_table(self, table: CPTA_stdfloat | PointerToArray_float) -> None:
         """Assigns the data table."""
     def get_table(self) -> CPTA_stdfloat:
         """Returns a pointer to the table's data, if it exists, or NULL if it does

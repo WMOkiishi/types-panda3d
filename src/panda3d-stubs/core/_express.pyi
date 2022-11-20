@@ -714,7 +714,7 @@ class Datagram(TypedObject):
         This is assignment by reference: subsequent changes to the Datagram will
         also change the source PTA_uchar.
         """
-    def copy_array(self, data: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char) -> None:
+    def copy_array(self, data: CPTA_uchar | PointerToArray_unsigned_char) -> None:
         """Replaces the data in the Datagram with a copy of the data in the indicated
         CPTA_uchar.  Unlike set_array(), a complete copy is made of the data;
         subsequent changes to the Datagram will *not* change the source CPTA_uchar.

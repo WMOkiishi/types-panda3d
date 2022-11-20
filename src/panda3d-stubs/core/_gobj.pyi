@@ -8,7 +8,6 @@ from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import Filename, istream, ostream
 from panda3d.core._event import AsyncFuture, AsyncTask
 from panda3d.core._express import (
-    ConstPointerToArray_unsigned_char,
     CPTA_int,
     CPTA_uchar,
     Namable,
@@ -7533,9 +7532,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This variant is particularly useful to set an external pointer from a
         language like Python, which doesn't support void pointers directly.
         """
-    def set_ram_mipmap_image(
-        self, n: int, image: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char, page_size: int = ...
-    ) -> None:
+    def set_ram_mipmap_image(self, n: int, image: CPTA_uchar | PointerToArray_unsigned_char, page_size: int = ...) -> None:
         """Replaces the current system-RAM image for the indicated mipmap level with
         the new data.  If compression is not CM_off, it indicates that the new data
         is already pre-compressed in the indicated format.
@@ -7580,9 +7577,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         parameters of the full texture.  The simple image is only supported for
         ordinary 2-d textures.
         """
-    def set_simple_ram_image(
-        self, image: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char, x_size: int, y_size: int
-    ) -> None:
+    def set_simple_ram_image(self, image: CPTA_uchar | PointerToArray_unsigned_char, x_size: int, y_size: int) -> None:
         """Replaces the internal "simple" texture image.  This can be used as an
         option to display while the main texture image is being loaded from disk.
         It is normally a very small image, 16x16 or smaller (and maybe even 1x1),
