@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
+from typing_extensions import Literal
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Datagram, DatagramGenerator, DatagramSink, PointerToVoid, ReferenceCount
@@ -264,7 +265,7 @@ class ConnectionReader:
         """
     def get_raw_mode(self) -> bool:
         """Returns the current setting of the raw mode flag.  See set_raw_mode()."""
-    def set_tcp_header_size(self, tcp_header_size: int) -> None:
+    def set_tcp_header_size(self, tcp_header_size: Literal[0, 2, 4]) -> None:
         """Sets the header size of TCP packets.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver
@@ -586,7 +587,7 @@ class ConnectionWriter:
         """
     def get_raw_mode(self) -> bool:
         """Returns the current setting of the raw mode flag.  See set_raw_mode()."""
-    def set_tcp_header_size(self, tcp_header_size: int) -> None:
+    def set_tcp_header_size(self, tcp_header_size: Literal[0, 2, 4]) -> None:
         """Sets the header size of TCP packets.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver

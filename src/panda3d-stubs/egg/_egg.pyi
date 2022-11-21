@@ -2972,7 +2972,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Returns the texcoord name that has been specified for this texture, or the
         empty string if no texcoord name has explicitly been specified.
         """
-    def set_rgb_scale(self, rgb_scale: int) -> None:
+    def set_rgb_scale(self, rgb_scale: Literal[1, 2, 4]) -> None:
         """Sets an additional factor that will scale all three r, g, b components
         after the texture has been applied.  This is used only when a combine mode
         is in effect.
@@ -2991,7 +2991,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Returns the rgb_scale value that has been specified for the texture, or 1
         if no rgb_scale value has been specified.
         """
-    def set_alpha_scale(self, alpha_scale: int) -> None:
+    def set_alpha_scale(self, alpha_scale: Literal[1, 2, 4]) -> None:
         """Sets an additional factor that will scale the alpha component after the
         texture has been applied.  This is used only when a combine mode is in
         effect.
