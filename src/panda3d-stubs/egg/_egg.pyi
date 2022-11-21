@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Iterator, Sequence
+from collections.abc import Iterator, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -3501,7 +3501,6 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
 
     material: EggMaterial
     bface_flag: bool
-    vertices: Sequence[EggVertex]
     S_unknown: Final[Literal[0]]
     SUnknown: Final[Literal[0]]
     S_overall: Final[Literal[1]]
@@ -3518,6 +3517,8 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     def connected_shading(self) -> _EggPrimitive_Shading: ...
     @property
     def textures(self) -> Sequence[EggTexture]: ...
+    @property
+    def vertices(self) -> MutableSequence[EggVertex]: ...
     @property
     def pool(self) -> EggVertexPool: ...
     def upcast_to_EggNode(self) -> EggNode: ...
@@ -3835,7 +3836,8 @@ class EggCompositePrimitive(EggPrimitive):
     color and/or normal.
     """
 
-    components: Sequence[EggAttributes]
+    @property
+    def components(self) -> MutableSequence[EggAttributes]: ...
     def get_num_components(self) -> int:
         """Returns the number of individual component triangles within the composite.
         Each one of these might have a different set of attributes.
@@ -4309,11 +4311,12 @@ class EggNurbsCurve(EggCurve):
     """A parametric NURBS curve."""
 
     order: int
-    knots: Sequence[float]
     @property
     def degree(self) -> int: ...
     @property
     def closed(self) -> bool: ...
+    @property
+    def knots(self) -> MutableSequence[float]: ...
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload

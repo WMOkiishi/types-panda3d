@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Iterator, Mapping, MutableMapping, Sequence
+from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
@@ -1069,7 +1069,7 @@ class RenderState(NodeCachedReferenceCount):
     """
 
     @property
-    def attribs(self) -> Mapping[Any, RenderAttrib]: ...
+    def attribs(self) -> Mapping[TypeHandle, RenderAttrib]: ...
     def compare_to(self, other: RenderState) -> int:
         """Provides an arbitrary ordering among all unique RenderStates, so we can
         store the essentially different ones in a big set and throw away the rest.
@@ -1756,7 +1756,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     state: RenderState
     effects: RenderEffects
     transform: TransformState
-    tags: MutableMapping[str, str]
     overall_hidden: bool
     into_collide_mask: CollideMask
     final: bool
@@ -1784,6 +1783,8 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     FBCullCallback: Final[Literal[64]]
     @property
     def prev_transform(self) -> TransformState: ...
+    @property
+    def tags(self) -> MutableMapping[str, str]: ...
     @property
     def python_tags(self) -> dict[Any, Any]: ...
     @property
@@ -6712,10 +6713,12 @@ class Camera(LensNode):
     initial_state: RenderState
     tag_state_key: str
     lod_scale: float
-    tag_states: Mapping[Any, RenderState]
-    aux_scene_data: Mapping[Any, AuxSceneData]
     @property
     def display_regions(self) -> Sequence[DisplayRegion]: ...
+    @property
+    def tag_states(self) -> MutableMapping[str, RenderState]: ...
+    @property
+    def aux_scene_data(self) -> MutableMapping[NodePath, AuxSceneData]: ...
     @overload
     def __init__(self, copy: Camera) -> None: ...
     @overload
@@ -9736,9 +9739,9 @@ class TextureAttrib(RenderAttrib):
     @property
     def on_stages(self) -> Sequence[TextureStage]: ...
     @property
-    def textures(self) -> Mapping[Any, Texture]: ...
+    def textures(self) -> Mapping[TextureStage, Texture]: ...
     @property
-    def samplers(self) -> Mapping[Any, SamplerState]: ...
+    def samplers(self) -> Mapping[TextureStage, SamplerState]: ...
     @property
     def off_stages(self) -> Sequence[TextureStage]: ...
     @property
@@ -9997,7 +10000,8 @@ class OccluderNode(PandaNode):
 
     double_sided: bool
     min_coverage: float
-    vertices: Sequence[LPoint3]
+    @property
+    def vertices(self) -> MutableSequence[LPoint3]: ...
     def __init__(self, name: str) -> None:
         """The default constructor creates a default occlusion polygon in the XZ plane
         (or XY plane in a y-up coordinate system).  Use the normal Panda set_pos(),

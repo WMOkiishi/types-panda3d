@@ -1,4 +1,4 @@
-from collections.abc import Sequence
+from collections.abc import MutableSequence, Sequence
 from typing import overload
 from typing_extensions import Literal
 
@@ -187,8 +187,9 @@ class CollisionNode(PandaNode):
     """
 
     from_collide_mask: CollideMask
-    solids: Sequence[CollisionSolid]
     collider_sort: int
+    @property
+    def solids(self) -> MutableSequence[CollisionSolid]: ...
     @property
     def default_collide_mask(self) -> CollideMask: ...
     def set_collide_mask(self, mask: CollideMask) -> None:

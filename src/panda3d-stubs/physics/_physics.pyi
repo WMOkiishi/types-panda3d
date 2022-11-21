@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Iterator, Sequence
+from collections.abc import Iterator, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -400,7 +400,8 @@ class Physical(TypedReferenceCount):
 class PhysicalNode(PandaNode):
     """Graph node that encapsulated a series of physical objects"""
 
-    physicals: Sequence[Physical]
+    @property
+    def physicals(self) -> MutableSequence[Physical]: ...
     def __init__(self, name: str) -> None:
         """default constructor"""
     def clear(self) -> None: ...
@@ -522,7 +523,8 @@ class ForceNode(PandaNode):
     rotating space station.  or something.
     """
 
-    forces: Sequence[BaseForce]
+    @property
+    def forces(self) -> MutableSequence[BaseForce]: ...
     def __init__(self, name: str) -> None:
         """default constructor"""
     def clear(self) -> None: ...

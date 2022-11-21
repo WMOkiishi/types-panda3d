@@ -192,10 +192,29 @@ def make_element_rep(
     name = idb.interrogate_element_name(e)
     type_name = get_type_name(idb.interrogate_element_type(e))
     if idb.interrogate_element_is_sequence(e):
-        type_name = f'Sequence[{type_name}]' if type_name else 'Sequence'
+        if idb.interrogate_element_has_setter(e):
+            seq_type = 'MutableSequence'
+        else:
+            seq_type = 'Sequence'
+        type_name = f'{seq_type}[{type_name}]' if type_name else seq_type
+        read_only = True
     elif idb.interrogate_element_is_mapping(e):
-        type_name = f'Mapping[Any, {type_name}]' if type_name else 'Mapping'
-    read_only = not idb.interrogate_element_setter(e)
+        getter = idb.interrogate_element_getter(e)
+        wrapper = idb.interrogate_function_python_wrapper(getter, 0)
+        if idb.interrogate_wrapper_parameter_is_this(wrapper, 0):
+            t = idb.interrogate_wrapper_parameter_type(wrapper, 1)
+        else:
+            t = idb.interrogate_wrapper_parameter_type(wrapper, 0)
+        from_type = get_type_name(t) or 'Any'
+        to_type = type_name or 'Any'
+        if idb.interrogate_element_has_setter(e):
+            map_type = 'MutableMapping'
+        else:
+            map_type = 'Mapping'
+        type_name = f'{map_type}[{from_type}, {to_type}]'
+        read_only = True
+    else:
+        read_only = not idb.interrogate_element_has_setter(e)
     if idb.interrogate_element_has_comment(e) and not is_dunder(name):
         doc = comment_to_docstring(idb.interrogate_element_comment(e))
     else:

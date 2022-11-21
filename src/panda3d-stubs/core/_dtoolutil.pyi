@@ -1,5 +1,5 @@
 from _typeshed import Self, StrOrBytesPath
-from collections.abc import Iterator, Mapping, Sequence
+from collections.abc import Iterator, MutableMapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -1324,9 +1324,10 @@ class ExecutionEnvironment:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    environment_variables: Mapping[Any, str]
     binary_name: str
     dtool_name: str
+    @property
+    def environment_variables(self) -> MutableMapping[str, str]: ...
     @property
     def args(self) -> Sequence[str]: ...
     @property

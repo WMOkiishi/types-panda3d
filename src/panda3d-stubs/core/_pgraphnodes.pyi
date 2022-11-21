@@ -1,4 +1,4 @@
-from collections.abc import Sequence
+from collections.abc import MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -103,7 +103,8 @@ class ComputeNode(PandaNode):
     on the assigned compute shader.
     """
 
-    dispatches: Sequence[LVecBase3i]
+    @property
+    def dispatches(self) -> MutableSequence[LVecBase3i]: ...
     def __init__(self, name: str) -> None:
         """Creates a ComputeNode with the given name.  Use add_dispatch and  also
         assign a shader using a ShaderAttrib.

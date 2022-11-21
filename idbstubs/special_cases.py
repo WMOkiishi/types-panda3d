@@ -183,11 +183,9 @@ CONDITIONALS: Final = TrackingMap({
 # These override type hints for various things
 ATTR_TYPE_OVERRIDES: Final = TrackingMap({
     'panda3d.core.BamReader.file_version': 'tuple[int, int]',
-    'panda3d.core.NodePath.net_tags': 'Mapping[str, str]',
     'panda3d.core.NodePath.python_tags': 'dict[Any, Any] | None',
     'panda3d.core.NodePath.tags': 'MutableMapping[str, str] | None',
     'panda3d.core.PandaNode.python_tags': 'dict[Any, Any]',
-    'panda3d.core.PandaNode.tags': 'MutableMapping[str, str]',
     'panda3d.core.PythonCallbackObject.function': 'Callable',
     'panda3d.core.StringStream.data': 'bytes',
     'panda3d.core.TextEncoder.text': 'str',

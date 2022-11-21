@@ -1,5 +1,5 @@
 from array import array
-from collections.abc import Sequence
+from collections.abc import MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -160,7 +160,8 @@ class ParametricCurveCollection(ReferenceCount):
     for a given unit of time.
     """
 
-    curves: Sequence[ParametricCurve]
+    @property
+    def curves(self) -> MutableSequence[ParametricCurve]: ...
     @property
     def xyz_curve(self) -> ParametricCurve: ...
     @property
@@ -1046,8 +1047,10 @@ class NurbsSurfaceEvaluator(ReferenceCount):
 
     u_order: int
     v_order: int
-    u_knots: Sequence[float]
-    v_knots: Sequence[float]
+    @property
+    def u_knots(self) -> MutableSequence[float]: ...
+    @property
+    def v_knots(self) -> MutableSequence[float]: ...
     def __init__(self, __param0: NurbsSurfaceEvaluator = ...) -> None: ...
     def set_u_order(self, u_order: int) -> None:
         """Sets the order of the surface in the U direction.  This resets the knot

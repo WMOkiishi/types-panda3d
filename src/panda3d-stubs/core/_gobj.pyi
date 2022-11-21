@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Iterator, Mapping, Sequence
+from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
@@ -1126,15 +1126,16 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     """
 
     animation: GeomVertexAnimationSpec
-    arrays: Sequence[GeomVertexArrayFormat]
     @property
     def registered(self) -> bool: ...
+    @property
+    def arrays(self) -> MutableSequence[GeomVertexArrayFormat]: ...
     @property
     def points(self) -> Sequence[InternalName]: ...
     @property
     def vectors(self) -> Sequence[InternalName]: ...
     @property
-    def columns(self) -> Mapping[Any, GeomVertexColumn]:
+    def columns(self) -> Mapping[InternalName, GeomVertexColumn]:
         """We also define this as a mapping interface, for lookups by name."""
     @overload
     def __init__(self, array_format: GeomVertexArrayFormat = ...) -> None: ...
@@ -2301,11 +2302,12 @@ class TransformTable(TypedWritableReferenceCount):
     compute its dynamic vertices on the CPU.
     """
 
-    transforms: Sequence[VertexTransform]
     @property
     def registered(self) -> bool: ...
     @property
     def modified(self) -> UpdateSeq: ...
+    @property
+    def transforms(self) -> MutableSequence[VertexTransform]: ...
     def __init__(self, copy: TransformTable = ...) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def is_registered(self) -> bool:
@@ -2373,9 +2375,10 @@ class TransformBlend:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    transforms: Sequence[VertexTransform]
     @property
-    def weights(self) -> Mapping[Any, float]: ...
+    def transforms(self) -> MutableSequence[VertexTransform]: ...
+    @property
+    def weights(self) -> Mapping[VertexTransform, float]: ...
     @property
     def modified(self) -> UpdateSeq: ...
     @overload
@@ -2523,8 +2526,9 @@ class TransformBlendTable(CopyOnWriteObject):
     dynamic vertices on the graphics card.
     """
 
-    blends: Sequence[TransformBlend]
     rows: SparseArray
+    @property
+    def blends(self) -> MutableSequence[TransformBlend]: ...
     @property
     def modified(self) -> UpdateSeq: ...
     @property
@@ -2729,9 +2733,10 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     name: str
     usage_hint: _GeomEnums_UsageHint
     format: GeomVertexFormat
-    arrays: Sequence[GeomVertexArrayData]
     transform_table: TransformTable
     slider_table: SliderTable
+    @property
+    def arrays(self) -> MutableSequence[GeomVertexArrayData]: ...
     @property
     def num_bytes(self) -> int: ...
     @property
@@ -4288,7 +4293,6 @@ class Geom(CopyOnWriteObject, GeomEnums):
     in the same graphics state.
     """
 
-    primitives: Sequence[GeomPrimitive]
     bounds_type: _BoundingVolume_BoundsType
     @property
     def primitive_type(self) -> _GeomEnums_PrimitiveType: ...
@@ -4296,6 +4300,8 @@ class Geom(CopyOnWriteObject, GeomEnums):
     def shade_model(self) -> _GeomEnums_ShadeModel: ...
     @property
     def geom_rendering(self) -> int: ...
+    @property
+    def primitives(self) -> MutableSequence[GeomPrimitive]: ...
     @property
     def num_bytes(self) -> int: ...
     @property
@@ -6171,7 +6177,6 @@ class Texture(TypedWritableReferenceCount, Namable):
     quality_level: _Texture_QualityLevel
     keep_ram_image: bool
     auto_texture_scale: _AutoTextureScale
-    aux_data: Mapping[Any, TypedReferenceCount]
     loaded_from_image: bool
     loaded_from_txo: bool
     match_framebuffer_format: bool
@@ -6432,6 +6437,8 @@ class Texture(TypedWritableReferenceCount, Namable):
     def image_modified(self) -> UpdateSeq: ...
     @property
     def simple_image_modified(self) -> UpdateSeq: ...
+    @property
+    def aux_data(self) -> MutableMapping[str, TypedReferenceCount]: ...
     @property
     def orig_file_x_size(self) -> int: ...
     @property

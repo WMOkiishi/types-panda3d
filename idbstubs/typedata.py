@@ -55,6 +55,7 @@ KNOWN_IMPORTS: Final = {
     'Iterator': 'collections.abc',
     'Mapping': 'collections.abc',
     'MutableMapping': 'collections.abc',
+    'MutableSequence': 'collections.abc',
     'Sequence': 'collections.abc',
     'Enum': 'enum',
     'Any': 'typing',

@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Mapping, Sequence
+from collections.abc import MutableMapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -402,7 +402,8 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     scale, rotate, translate.
     """
 
-    tables: Mapping[Any, CPTA_stdfloat]
+    @property
+    def tables(self) -> MutableMapping[str, CPTA_stdfloat]: ...
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     @staticmethod
     def is_valid_id(table_id: str) -> bool:
