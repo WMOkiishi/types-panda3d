@@ -84,20 +84,20 @@ class AudioSound(TypedReferenceCount):
     def get_loop_count(self) -> int: ...
     def set_time(self, start_time: float = ...) -> None:
         """Control time position within the sound, in seconds.  This is similar (in
-        * concept) to the seek position within a file.  The value starts at 0.0 (the
-        * default) and ends at the value given by the length() method.
-        *
-        * The current time position will not change while the sound is playing; you
-        * must call play() again to effect the change.  To play the same sound from
-        * a time offset a second time, explicitly set the time position again.  When
-        * looping, the second and later loops will start from the beginning of the
-        * sound.
-        *
-        * If a sound is playing, calling get_time() repeatedly will return different
-        * results over time.  e.g.
-        * @code
-        * PN_stdfloat percent_complete = s.get_time() / s.length();
-        * @endcode
+        concept) to the seek position within a file.  The value starts at 0.0 (the
+        default) and ends at the value given by the length() method.
+
+        The current time position will not change while the sound is playing; you
+        must call play() again to effect the change.  To play the same sound from
+        a time offset a second time, explicitly set the time position again.  When
+        looping, the second and later loops will start from the beginning of the
+        sound.
+
+        If a sound is playing, calling get_time() repeatedly will return different
+        results over time.  e.g.
+        @code
+        PN_stdfloat percent_complete = s.get_time() / s.length();
+        @endcode
         """
     def get_time(self) -> float: ...
     def set_volume(self, volume: float = ...) -> None:

@@ -162,13 +162,13 @@ class TiXmlNode(TiXmlBase):
     def SetValue(self, _value: str) -> None:
         """`(self, _value: str)`:
         Changes the value of the node. Defined as:
-                @verbatim
-                Document:   filename of the xml file
-                Element:    name of the element
-                Comment:    the comment text
-                Unknown:    the tag contents
-                Text:       the text string
-                @endverbatim
+        @verbatim
+        Document:   filename of the xml file
+        Element:    name of the element
+        Comment:    the comment text
+        Unknown:    the tag contents
+        Text:       the text string
+        @endverbatim
 
         `(self, _value: str)`:
         STL std::string form.
@@ -184,7 +184,7 @@ class TiXmlNode(TiXmlBase):
 
         `(self, _value: str)`:
         < The first child of this node with the matching 'value'. Will be null if none found.
-        /// The first child of this node with the matching 'value'. Will be null if none found.
+         The first child of this node with the matching 'value'. Will be null if none found.
 
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
@@ -208,20 +208,20 @@ class TiXmlNode(TiXmlBase):
     def IterateChildren(self, previous: TiXmlNode) -> TiXmlNode:
         """`(self, previous: TiXmlNode)`:
         An alternate way to walk the children of a node.
-                One way to iterate over nodes is:
-                @verbatim
-                    for( child = parent->FirstChild(); child; child = child->NextSibling() )
-                @endverbatim
+        One way to iterate over nodes is:
+        @verbatim
+            for( child = parent->FirstChild(); child; child = child->NextSibling() )
+        @endverbatim
 
-                IterateChildren does the same thing with the syntax:
-                @verbatim
-                    child = 0;
-                    while( child = parent->IterateChildren( child ) )
-                @endverbatim
+        IterateChildren does the same thing with the syntax:
+        @verbatim
+            child = 0;
+            while( child = parent->IterateChildren( child ) )
+        @endverbatim
 
-                IterateChildren takes the previous child as input and finds
-                the next one. If the previous child is null, it returns the
-                first. IterateChildren will return null when done.
+        IterateChildren takes the previous child as input and finds
+        the next one. If the previous child is null, it returns the
+        first. IterateChildren will return null when done.
 
         `(self, value: str, previous: TiXmlNode)`:
         This flavor of IterateChildren searches for children with a particular 'value'
@@ -278,8 +278,8 @@ class TiXmlNode(TiXmlBase):
     def NextSiblingElement(self, _next: str = ...) -> TiXmlElement:
         """`(self)`; `(self, __param0: str)`:
         Convenience function to get through elements.
-                Calls NextSibling and ToElement. Will skip all non-Element
-                nodes. Returns 0 if there is not another element.
+        Calls NextSibling and ToElement. Will skip all non-Element
+        nodes. Returns 0 if there is not another element.
 
         `(self, _value: str)`; `(self, _value: str)`:
         < STL std::string form.
@@ -368,8 +368,8 @@ class TiXmlDocument(TiXmlNode):
     def LoadFile(self, encoding: _TiXmlEncoding = ...) -> bool:
         """`(self, encoding: _TiXmlEncoding = ...)`:
         Load a file using the current document value.
-                Returns true if successful. Will delete any existing
-                document data before loading.
+        Returns true if successful. Will delete any existing
+        document data before loading.
 
         `(self, filename: str, encoding: _TiXmlEncoding = ...)`:
         Load a file using the given filename. Returns true if successful.
@@ -476,7 +476,7 @@ class TiXmlElement(TiXmlNode):
     def SetAttribute(self, name: str, _value: int | str) -> None:
         """`(self, name: str, _value: str)`; `(self, name: str, value: int)`:
         Sets an attribute of name to a given value. The attribute
-                will be created if it does not exist, or changed if it does.
+        will be created if it does not exist, or changed if it does.
 
         `(self, name: str, _value: int)`:
         < STL std::string form.
@@ -489,7 +489,7 @@ class TiXmlElement(TiXmlNode):
     def SetDoubleAttribute(self, name: str, value: float) -> None:
         """`(self, name: str, value: float)`:
         Sets an attribute of name to a given value. The attribute
-                will be created if it does not exist, or changed if it does.
+        will be created if it does not exist, or changed if it does.
 
         `(self, name: str, value: float)`:
         < STL std::string form.
@@ -713,8 +713,8 @@ class TiXmlText(TiXmlNode):
     def __init__(self, initValue: str) -> None:
         """`(self, initValue: str)`:
         Constructor for text element. By default, it is treated as
-                normal, encoded text. If you want it be output as a CDATA text
-                element, set the parameter _cdata to 'true'
+        normal, encoded text. If you want it be output as a CDATA text
+        element, set the parameter _cdata to 'true'
 
         `(self, initValue: str)`:
         Constructor.
@@ -856,11 +856,11 @@ class TiXmlHandle:
     def Child(self, index: int) -> TiXmlHandle:
         """`(self, value: str, index: int)`:
         Return a handle to the "index" child with the given name.
-                The first child is 0, the second 1, etc.
+        The first child is 0, the second 1, etc.
 
         `(self, index: int)`:
         Return a handle to the "index" child.
-                The first child is 0, the second 1, etc.
+        The first child is 0, the second 1, etc.
         """
     @overload
     def Child(self, value: str, index: int) -> TiXmlHandle: ...
@@ -870,13 +870,13 @@ class TiXmlHandle:
     def ChildElement(self, index: int) -> TiXmlHandle:
         """`(self, value: str, index: int)`:
         Return a handle to the "index" child element with the given name.
-                The first child element is 0, the second 1, etc. Note that only TiXmlElements
-                are indexed: other types are not counted.
+        The first child element is 0, the second 1, etc. Note that only TiXmlElements
+        are indexed: other types are not counted.
 
         `(self, index: int)`:
         Return a handle to the "index" child element.
-                The first child element is 0, the second 1, etc. Note that only TiXmlElements
-                are indexed: other types are not counted.
+        The first child element is 0, the second 1, etc. Note that only TiXmlElements
+        are indexed: other types are not counted.
         """
     @overload
     def ChildElement(self, value: str, index: int) -> TiXmlHandle: ...

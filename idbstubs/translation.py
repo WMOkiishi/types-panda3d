@@ -9,6 +9,7 @@ ATOMIC_TYPES: Final = {
 }
 
 DISALLOWED_CHARS: Final = frozenset('!@#$%^&*()<>,.-=+~{}? ')
+COMMENT_INDENTS: Final = frozenset('/* ')
 
 
 def snake_to_camel(name: str, /, capitalize: bool = False) -> str:
@@ -76,15 +77,19 @@ def method_name_from_cpp_name(cpp_name: str, mangle: bool = False) -> str:
 
 def comment_to_docstring(comment: str) -> str:
     docstring_lines: list[str] = []
-    comment = comment.strip('\n /*')
-    if not comment:
-        return ''
+    indentation: str | None = None
     for line in comment.splitlines():
-        if line == ' *':
-            docstring_lines.append('')
-        else:
-            line = line.removeprefix(' * ').removeprefix('// ')
-            line = line.rstrip()
-            line = '\\\\'.join(line.split('\\'))
-            docstring_lines.append(line)
-    return '\n'.join(docstring_lines)
+        if frozenset(line) <= COMMENT_INDENTS:
+            line = ''
+        elif line.startswith('/*'):
+            line = line[2:].removeprefix('* ')
+        elif indentation is None:
+            for i, char in enumerate(line):
+                if char not in COMMENT_INDENTS:
+                    indentation, line = line[:i], line[i:]
+                    break
+        elif indentation:
+            line = line.removeprefix(indentation)
+        line = line.removesuffix('*/')
+        docstring_lines.append(line.rstrip())
+    return '\n'.join(docstring_lines).strip().replace('\\', '\\\\')
