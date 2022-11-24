@@ -1,13 +1,12 @@
 __all__ = ['BlackOnWhite', 'NameConfirm', 'OnscreenText', 'Plain', 'ScreenPrompt', 'ScreenTitle']
 
-from typing import Any, Union, overload
+from typing import Any, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from direct._typing import Unused
+from direct._typing import Unused, Vec4OrTuple
 from panda3d.core import LColor, NodePath, TextFont, TextNode
 
 _Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
-_Color: TypeAlias = Union[LColor, tuple[float, float, float, float]]
 _OrderedPair: TypeAlias = tuple[float, float]
 
 Plain: Final[Literal[1]]
@@ -42,11 +41,11 @@ class OnscreenText(NodePath[TextNode]):
         pos: _OrderedPair = ...,
         roll: float = ...,
         scale: float | _OrderedPair | None = ...,
-        fg: _Color | None = ...,
-        bg: _Color | None = ...,
-        shadow: _Color | None = ...,
+        fg: Vec4OrTuple | None = ...,
+        bg: Vec4OrTuple | None = ...,
+        shadow: Vec4OrTuple | None = ...,
         shadowOffset: _OrderedPair = ...,
-        frame: _Color | None = ...,
+        frame: Vec4OrTuple | None = ...,
         align: _Alignment | None = ...,
         wordwrap: float | None = ...,
         drawOrder: int | None = ...,
@@ -99,10 +98,10 @@ class OnscreenText(NodePath[TextNode]):
     def updateTransformMat(self) -> None: ...
     def setWordwrap(self, wordwrap: float) -> None: ...
     def getWordwrap(self) -> float: ...
-    def setFg(self, fg: _Color) -> None: ...
-    def setBg(self, bg: _Color) -> None: ...
-    def setShadow(self, shadow: _Color) -> None: ...
-    def setFrame(self, frame: _Color) -> None: ...
+    def setFg(self, fg: Vec4OrTuple) -> None: ...
+    def setBg(self, bg: Vec4OrTuple) -> None: ...
+    def setShadow(self, shadow: Vec4OrTuple) -> None: ...
+    def setFrame(self, frame: Vec4OrTuple) -> None: ...
     def configure(self, option: Unused = ..., **kw: Any) -> None: ...
     def __setitem__(self, key: str, value: Any) -> None: ...
     def setAlign(self, align: float) -> None: ...

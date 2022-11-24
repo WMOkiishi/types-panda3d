@@ -1,16 +1,12 @@
 from collections.abc import Sequence
-from typing import Any, SupportsFloat, Union
-from typing_extensions import TypeAlias
+from typing import Any, SupportsFloat
 
 import wx  # type: ignore[import]
 import wx.siplib as sip  # type: ignore[import]
-from direct._typing import Obj, Unused
-from panda3d.core import LVecBase2f
+from direct._typing import Obj, Unused, Vec2OrTuple
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
 
 from .LevelEditor import LevelEditor
-
-_Vec2f: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 
 property: list[str]
 ZoomIn: PyEmbeddedImage
@@ -65,7 +61,7 @@ class GraphEditorWindow(wx.Window, metaclass=sip.wrapper):
     def setNewKey(self, list: Sequence) -> None: ...
     def setSelection(self) -> None: ...
     def setSelectionBase(self, list: Sequence) -> None: ...
-    def inside(self, point0: _Vec2f, point1: _Vec2f, point: _Vec2f) -> bool: ...
+    def inside(self, point0: Vec2OrTuple, point1: Vec2OrTuple, point: Vec2OrTuple) -> bool: ...
     def recalculateSlope(self) -> None: ...
     def recalculateSlopeBase(self, list: Sequence) -> None: ...
     def selectHandler(self) -> None: ...

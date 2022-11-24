@@ -1,3 +1,4 @@
+from direct._typing import Vec3OrTuple, Vec4OrTuple
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3Like
 from panda3d.core import LPoint3f, NodePath
@@ -22,7 +23,7 @@ class DirectGrid(NodePath, DirectObject):
         self,
         gridSize: float = ...,
         gridSpacing: float = ...,
-        planeColor: tuple[float, float, float] | tuple[float, float, float, float] = ...,
+        planeColor: Vec3OrTuple | Vec4OrTuple = ...,
         parent: NodePath | None = ...,
     ) -> None: ...
     def enable(self, parent: NodePath | None = ...) -> None: ...

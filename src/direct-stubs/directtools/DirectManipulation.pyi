@@ -5,6 +5,7 @@ from typing_extensions import Literal
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
+from panda3d._typing import Vec3Like
 from panda3d.core import LPoint3f, LVecBase3f, LVector3f, NodePath
 
 from .DirectGeometry import LineNodePath
@@ -148,4 +149,4 @@ class ObjectHandles(NodePath, DirectObject):
     def getMouseIntersectPt(self) -> LPoint3f: ...
     def getWidgetIntersectPt(self, nodePath: NodePath, plane: Literal['x', 'y', 'z']) -> LVector3f: ...
 
-def drawBox(lines: LineNodePath, center: Sequence[float], sideLength: float) -> None: ...
+def drawBox(lines: LineNodePath, center: Vec3Like, sideLength: float) -> None: ...
