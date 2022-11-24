@@ -64,6 +64,7 @@ panda3d\.\w+\.Dtool_PyNativeInterface
 
 # Stubtest doesn't understand these at runtime.
 panda3d.core.ExecutionEnvironment.args
+panda3d.core.ExecutionEnvironment.environment_variables
 panda3d.core.MicrophoneAudio.options
 panda3d.vision.WebcamVideo.options
 
