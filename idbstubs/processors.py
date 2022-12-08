@@ -36,8 +36,9 @@ from .util import flatten
 _logger: Final = logging.getLogger(__name__)
 _absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
 
+PTA_NAME_REGEX: Final = re.compile(r'(?:Const)?PointerToArray_(\w+)')
 VECTOR_NAME_REGEX: Final = re.compile(
-    '((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
+    r'((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
 )
 RETURN_SELF: Final = frozenset({
     '__neg__',
@@ -199,7 +200,6 @@ def account_for_casts(signature: Signature) -> None:
 
 
 def process_function(function: Function) -> None:
-    default_return = DEFAULT_RETURNS.get(function.name)
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
     param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name, {})
     if isinstance(return_overrides, str):
@@ -208,10 +208,9 @@ def process_function(function: Function) -> None:
             for i in range(len(function.signatures))
         }
     for i, sig in enumerate(function.signatures):
-        if sig.return_type:
-            return_override = return_overrides.get(i)
-        else:
-            return_override = return_overrides.get(i, default_return)
+        return_override = return_overrides.get(i)
+        if return_override is None and not sig.return_type:
+            return_override = DEFAULT_RETURNS.get(function.name)
         if return_override is not None:
             sig.return_type = return_override
         for j, param in enumerate(sig.parameters):
@@ -319,7 +318,9 @@ def process_class(class_: Class) -> None:
                 comment="Doesn't actually exist",
             )
     class_.body = class_body
-    if VECTOR_NAME_REGEX.match(class_.name):
+    if PTA_NAME_REGEX.match(class_.name):
+        process_pointer_to_array_class(class_)
+    elif VECTOR_NAME_REGEX.match(class_.name):
         process_vector_class(class_)
 
 
@@ -364,6 +365,46 @@ def process_dependencies(file: File) -> None:
         )
         if not processed:
             _logger.warning(f'Unknown type {name!r} in {current_dir!r}')
+
+
+def process_pointer_to_array_class(pta: Class) -> None:
+    """Process a representation of a Panda3D vector class whose name
+    matches `PTA_NAME_REGEX`, applying various special cases.
+    """
+    match pta.body.get('set_data'):
+        case Function(
+            signatures=[
+                Signature(
+                    parameters=[
+                        Parameter(),
+                        Parameter(name='data', type='') as param,
+                    ]
+                )
+            ]
+        ):
+            param.type = 'bytes'
+    match pta.body.get('get_data'):
+        case Function(signatures=[Signature(return_type='') as sig]):
+            sig.return_type = 'bytes'
+    match pta.body.get('get_subdata'):
+        case Function(signatures=[Signature(return_type='') as sig]):
+            sig.return_type = 'bytes'
+    match pta.body:
+        case {
+            '__getitem__': Function(
+                signatures=[Signature(return_type=array_of)]
+            ),
+            '__init__': Function(signatures=signatures),
+        } if array_of:
+            for sig in signatures:
+                match sig:
+                    case Signature(
+                        parameters=[
+                            Parameter(),
+                            Parameter(name='source') as param,
+                        ]
+                    ):
+                        param.type = f'Sequence[{array_of}]'
 
 
 def process_vector_class(vector: Class) -> None:

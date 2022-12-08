@@ -118,12 +118,8 @@ TYPE_NAME_OVERRIDES: Final = TrackingMap({
 # we can assume a default return type
 DEFAULT_RETURNS: Final = TrackingMap({
     '__repr__': 'str',
-    '__int__': 'int',
-    '__str__': 'str',
     '__bytes__': 'bytes',
     '__fspath__': 'str',
-    'get_data': 'bytes',
-    'get_subdata': 'bytes',
 })
 
 
@@ -285,6 +281,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.PythonTask.get_args': 'tuple[Any, ...]',
     'panda3d.core.PythonTask.get_function': 'Callable',
     'panda3d.core.PythonTask.get_upon_death': 'Callable',
+    'panda3d.core.Ramfile.get_data': 'bytes',
     'panda3d.core.Ramfile.read': 'bytes',
     'panda3d.core.Ramfile.readline': 'bytes',
     'panda3d.core.Ramfile.readlines': 'list[bytes]',
@@ -296,6 +293,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.StreamReader.extract_bytes': 'bytes',
     'panda3d.core.StreamReader.readline': 'bytes',
     'panda3d.core.StreamReader.readlines': 'list[bytes]',
+    'panda3d.core.StringStream.get_data': 'bytes',
     'panda3d.core.TextEncoder.decode_text': 'str',
     'panda3d.core.TextEncoder.encode_wchar': 'bytes',
     'panda3d.core.TextEncoder.encode_wtext': 'bytes',
@@ -307,6 +305,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.VirtualFile.read_file': 'bytes',
     'panda3d.core.pixel.__len__': 'Literal[3]',
     'panda3d.egg.EggGroupNode.get_children': 'list[EggNode]',
+    'panda3d.ode.OdeBody.get_data': 'bytes',
     'panda3d.ode.OdeGeom.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
     'panda3d.ode.OdeSpace.get_AA_bounds': 'tuple[LPoint3f, LPoint3f]',
 })
