@@ -256,6 +256,16 @@ def make_signature_rep(
             is_optional=idb.interrogate_wrapper_parameter_is_optional(w, n),
             named=idb.interrogate_wrapper_parameter_has_name(w, n),
         ))
+    match params:
+        case [Parameter(name='args') as args]:
+            args.name = '*' + args.name
+        case [
+            *_,
+            Parameter(name='args') as args,
+            Parameter(name='kwargs' | 'kwds') as kwargs,
+        ]:
+            args.name = '*' + args.name
+            kwargs.name = '**' + kwargs.name
     return Signature(params, return_type)
 
 
