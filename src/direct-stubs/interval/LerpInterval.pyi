@@ -29,7 +29,7 @@ from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
 from panda3d._typing import Vec3Like, Vec4Like
-from panda3d.core import ConfigVariableColor, LQuaternionf, LVecBase2f, NodePath
+from panda3d.core import ConfigVariableColor, LQuaternionf, LVecBase2f, NodePath, TextureStage
 from panda3d.direct import CLerpNodePathInterval
 
 from .Interval import Interval
@@ -418,7 +418,7 @@ class LerpTexOffsetInterval(LerpNodePathInterval):
         startTexOffset: LVecBase2f | None = ...,
         other: NodePath | None = ...,
         blendType: _BlendType = ...,
-        textureStage=...,
+        textureStage: TextureStage | None = ...,
         bakeInStart: bool = ...,
         name: str | None = ...,
         override: int | None = ...,
@@ -433,7 +433,7 @@ class LerpTexRotateInterval(LerpNodePathInterval):
         startTexRotate: float | None = ...,
         other: NodePath | None = ...,
         blendType: _BlendType = ...,
-        textureStage=...,
+        textureStage: TextureStage | None = ...,
         bakeInStart: bool = ...,
         name: str | None = ...,
         override: int | None = ...,
@@ -448,7 +448,7 @@ class LerpTexScaleInterval(LerpNodePathInterval):
         startTexScale: LVecBase2f | None = ...,
         other: NodePath | None = ...,
         blendType: _BlendType = ...,
-        textureStage=...,
+        textureStage: TextureStage | None = ...,
         bakeInStart: bool = ...,
         name: str | None = ...,
         override: int | None = ...,

@@ -2,6 +2,7 @@ from typing import ClassVar
 
 from direct._typing import Incomplete
 from direct.directnotify.Notifier import Notifier
+from direct.distributed.DoInterestManager import DoInterestManager
 from direct.showbase.DirectObject import DirectObject
 
 from .DoCollectionManager import DoCollectionManager
@@ -11,7 +12,7 @@ class InterestWatcher(DirectObject):
     closingParent2zones: dict[Incomplete, set[Incomplete]]
     def __init__(
         self,
-        interestMgr,
+        interestMgr: DoInterestManager,
         name: str,
         doneEvent: str | None = ...,
         recurse: bool = ...,

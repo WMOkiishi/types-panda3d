@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath, SupportsRead
 from collections.abc import Container, Iterable, Mapping, Sequence
 from modulefinder import Module, ModuleFinder
-from typing import Any, TypeVar
+from typing import IO, Any, TypeVar
 from typing_extensions import Final, TypeAlias
 
 from direct._typing import Unused
@@ -139,4 +139,6 @@ class PandaModuleFinder(ModuleFinder):
         *,
         suffixes: Iterable[tuple[str, str, int]] = ...,
     ) -> None: ...
-    def find_module(self, name: str, path: str | None = ..., parent: Module | None = ...): ...
+    def find_module(  # type: ignore[override]
+        self, name: str, path: str | None = ..., parent: Module | None = ...
+    ) -> tuple[IO | None, str | list[str] | None, tuple[str, str, int]]: ...

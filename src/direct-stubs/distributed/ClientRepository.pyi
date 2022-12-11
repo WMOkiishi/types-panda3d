@@ -1,5 +1,7 @@
+from collections.abc import Sequence
+
 from direct._typing import Unused
-from panda3d.core import DatagramIterator, UniqueIdAllocator
+from panda3d.core import Datagram, DatagramIterator, UniqueIdAllocator
 
 from .ClientRepositoryBase import ClientRepositoryBase
 from .DistributedObjectBase import DistributedObjectBase
@@ -26,11 +28,11 @@ class ClientRepository(ClientRepositoryBase):
         className: str | None = ...,
         distObj: DistributedObjectBase | None = ...,
         zoneId: int = ...,
-        optionalFields=...,
+        optionalFields: Sequence[str] | None = ...,
         doId: int | None = ...,
         reserveDoId: bool = ...,
-    ): ...
-    def formatGenerate(self, distObj: DistributedObjectBase, extraFields): ...
+    ) -> DistributedObjectBase: ...
+    def formatGenerate(self, distObj: DistributedObjectBase, extraFields: Sequence[str] | None) -> Datagram: ...
     def sendDeleteMsg(self, doId: int) -> None: ...
     def sendDisconnect(self) -> None: ...
     def setInterestZones(self, interestZoneIds: list[int]) -> None: ...
