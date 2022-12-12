@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -930,7 +931,7 @@ class DCClass(DCDeclaration):
     def ai_format_generate(
         self, distobj, do_id: int, parent_id: int, zone_id: int, district_channel_id: int, from_channel_id: int, optional_fields
     ) -> Datagram: ...
-    def client_format_generate_CMU(self, distobj, do_id: int, zone_id: int, optional_fields) -> Datagram:
+    def client_format_generate_CMU(self, distobj, do_id: int, zone_id: int, optional_fields: Sequence[str] | None) -> Datagram:
         """Generates a datagram containing the message necessary to generate a new
         distributed object from the client.  This requires querying the object for
         the initial value of its required fields.

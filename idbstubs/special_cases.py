@@ -188,6 +188,7 @@ ATTR_TYPE_OVERRIDES: Final = TrackingMap({
     'panda3d.egg.EggGroupNode.children': 'list[EggNode]',
 })
 PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
+    'panda3d.core.AsyncFuture.gather': {(0, 0): 'AsyncFuture'},
     'panda3d.core.ConnectionReader.set_tcp_header_size': {
         (0, 1): 'Literal[0, 2, 4]'
     },
@@ -207,6 +208,7 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.NodePath.has_net_python_tag': {(0, 1): 'Any'},
     'panda3d.core.NodePath.has_python_tag': {(0, 1): 'Any'},
     'panda3d.core.NodePath.set_python_tag': {(0, 1): 'Any', (0, 2): 'Any'},
+    'panda3d.core.NodePathCollection.__init__': {(2, 1): 'Sequence[NodePath]'},
     'panda3d.core.PandaNode.clear_python_tag': {(0, 1): 'Any'},
     'panda3d.core.PandaNode.get_python_tag': {(0, 1): 'Any'},
     'panda3d.core.PandaNode.has_python_tag': {(0, 1): 'Any'},
@@ -220,12 +222,16 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.SSReader.set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'panda3d.core.SSWriter.set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'panda3d.core.StringStream.set_data': {(0, 1): 'bytes'},
+    'panda3d.core.TextEncoder.append_text': {(0, 1): 'str'},
     'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
     'panda3d.core.TextEncoder.set_text': {(0, 1): 'str', (1, 1): 'bytes'},
     'panda3d.core.TextureStage.set_alpha_scale': {(0, 1): 'Literal[1, 2, 4]'},
     'panda3d.core.TextureStage.set_rgb_scale': {(0, 1): 'Literal[1, 2, 4]'},
     'panda3d.direct.CConnectionRepository.set_tcp_header_size': {
         (0, 1): 'Literal[0, 2, 4]'
+    },
+    'panda3d.direct.DCClass.client_format_generate_CMU': {
+        (0, 4): 'Sequence[str] | None'
     },
     'panda3d.egg.EggTexture.set_alpha_scale': {(0, 1): 'Literal[1, 2, 4]'},
     'panda3d.egg.EggTexture.set_rgb_scale': {(0, 1): 'Literal[1, 2, 4]'},
