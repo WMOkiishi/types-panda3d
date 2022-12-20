@@ -1,10 +1,10 @@
 __all__ = ['PackageMerger', 'PackageMergerError']
 
+from _typeshed import StrOrBytesPath
 from collections.abc import Container
 from typing import ClassVar
 
 from direct.directnotify.Notifier import Notifier
-from panda3d._typing import Filepath
 from panda3d.core import TiXmlDocument, TiXmlElement, TiXmlNode
 
 from .FileSpec import FileSpec
@@ -14,7 +14,7 @@ class PackageMergerError(Exception): ...
 
 class PackageMerger:
     class PackageEntry:
-        sourceDir: Filepath
+        sourceDir: StrOrBytesPath
         packageName: str
         platform: str
         version: str
@@ -24,7 +24,7 @@ class PackageMerger:
         packageSeq: SeqValue
         packageSetVer: SeqValue
         importDescFile = ...
-        def __init__(self, xpackage: TiXmlElement, sourceDir: Filepath) -> None: ...
+        def __init__(self, xpackage: TiXmlElement, sourceDir: StrOrBytesPath) -> None: ...
         def getKey(self) -> tuple[str, str, str]: ...
         def isNewer(self, other: PackageMerger.PackageEntry) -> bool: ...
         def loadXml(self, xpackage: TiXmlElement) -> None: ...
@@ -32,12 +32,12 @@ class PackageMerger:
         def validatePackageContents(self) -> None: ...
 
     notify: ClassVar[Notifier]
-    installDir: Filepath
+    installDir: StrOrBytesPath
     xhost: TiXmlNode | None
     contents: dict[tuple[str, str, str], PackageMerger.PackageEntry]
     maxAge: int | None
     contentsSeq: SeqValue
     contentsDoc: TiXmlDocument
-    def __init__(self, installDir: Filepath) -> None: ...
-    def merge(self, sourceDir: Filepath, packageNames: Container[str] | None = ...) -> None: ...
+    def __init__(self, installDir: StrOrBytesPath) -> None: ...
+    def merge(self, sourceDir: StrOrBytesPath, packageNames: Container[str] | None = ...) -> None: ...
     def close(self) -> None: ...

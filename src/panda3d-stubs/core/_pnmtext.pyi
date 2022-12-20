@@ -1,7 +1,8 @@
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Vec4Like
+from panda3d._typing import Vec4Like
 from panda3d.core._express import Namable
 from panda3d.core._linmath import LColor
 from panda3d.core._pnmimage import PNMImage
@@ -209,7 +210,7 @@ class PNMTextMaker(FreetypeFont):
         memory buffer instead of from a named file.
         """
     @overload
-    def __init__(self, font_filename: Filepath, face_index: int) -> None: ...
+    def __init__(self, font_filename: StrOrBytesPath, face_index: int) -> None: ...
     @overload
     def __init__(self, font_data: str, data_length: int, face_index: int) -> None: ...
     def is_valid(self) -> bool:

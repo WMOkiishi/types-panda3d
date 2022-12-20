@@ -1,8 +1,8 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath
 from panda3d.core._dtoolutil import istream, ostream
 from panda3d.core._express import Datagram, DatagramIterator
 
@@ -1003,7 +1003,7 @@ class DCFile:
         config.prc variable, and loads them into the DCFile namespace.
         """
     @overload
-    def read(self, filename: Filepath) -> bool:
+    def read(self, filename: StrOrBytesPath) -> bool:
         """`(self, filename: Filename)`:
         Opens and reads the indicated .dc file by name.  The distributed classes
         defined in the file will be appended to the set of distributed classes
@@ -1025,7 +1025,7 @@ class DCFile:
     @overload
     def read(self, _in: istream, filename: str = ...) -> bool: ...
     @overload
-    def write(self, filename: Filepath, brief: bool) -> bool:
+    def write(self, filename: StrOrBytesPath, brief: bool) -> bool:
         """`(self, filename: Filename, brief: bool)`:
         Opens the indicated filename for output and writes a parseable description
         of all the known distributed classes to the file.

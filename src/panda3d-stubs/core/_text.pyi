@@ -1,9 +1,9 @@
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Mat4Like, Vec4Like
+from panda3d._typing import Mat4Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import TextEncoder, ostream
 from panda3d.core._express import Namable, TypedReferenceCount
@@ -305,7 +305,7 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
         from some source other than a filename on disk.
         """
     @overload
-    def __init__(self, font_filename: Filepath, face_index: int = ...) -> None: ...
+    def __init__(self, font_filename: StrOrBytesPath, face_index: int = ...) -> None: ...
     @overload
     def __init__(self, font_data: str, data_length: int, face_index: int) -> None: ...
     def upcast_to_TextFont(self) -> TextFont: ...

@@ -1,7 +1,7 @@
+from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar
 
-from panda3d._typing import Filepath
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture
 from panda3d.core._movies import MovieVideo
@@ -23,7 +23,7 @@ class ARToolKit:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ARToolKit) -> None: ...
     @staticmethod
-    def make(camera: NodePath[Camera], paramfile: Filepath, markersize: float) -> ARToolKit:
+    def make(camera: NodePath[Camera], paramfile: StrOrBytesPath, markersize: float) -> ARToolKit:
         """Create a new ARToolKit instance.
 
         Camera must be the nodepath of a panda camera object.  The panda camera's
@@ -38,7 +38,7 @@ class ARToolKit:
         black and white by thresholding them.  The threshold is set to 0.5 by
         default, but you can tweak it here.
         """
-    def attach_pattern(self, pattern: Filepath, path: NodePath) -> None:
+    def attach_pattern(self, pattern: StrOrBytesPath, path: NodePath) -> None:
         """Associates the specified glyph with the specified NodePath.  Each time you
         call analyze, ARToolKit will update the NodePath's transform.  If the node
         is not visible, its scale will be set to zero.

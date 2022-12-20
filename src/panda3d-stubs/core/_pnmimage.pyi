@@ -1,9 +1,9 @@
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Filepath, Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import istream, ostream
 from panda3d.core._express import ReferenceCount
@@ -290,7 +290,7 @@ class PNMImageHeader:
         type cannot be inferred from the filename extension.
         """
     @overload
-    def read_header(self, filename: Filepath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
+    def read_header(self, filename: StrOrBytesPath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ..., report_unknown_type: bool = ...)`:
         Opens up the image file and tries to read its header information to
         determine its size, number of channels, etc.  If successful, updates the
@@ -352,7 +352,7 @@ class PfmFile(PNMImageHeader):
     @overload
     def clear(self, x_size: int, y_size: int, num_channels: int) -> None: ...
     @overload
-    def read(self, fullpath: Filepath) -> bool:
+    def read(self, fullpath: StrOrBytesPath) -> bool:
         """`(self, fullpath: Filename)`:
         Reads the PFM data from the indicated file, returning true on success,
         false on failure.
@@ -368,9 +368,9 @@ class PfmFile(PNMImageHeader):
         it will be quietly converted to a floating-point type.
         """
     @overload
-    def read(self, _in: istream, fullpath: Filepath = ...) -> bool: ...
+    def read(self, _in: istream, fullpath: StrOrBytesPath = ...) -> bool: ...
     @overload
-    def write(self, fullpath: Filepath) -> bool:
+    def write(self, fullpath: StrOrBytesPath) -> bool:
         """`(self, fullpath: Filename)`:
         Writes the PFM data to the indicated file, returning true on success, false
         on failure.
@@ -384,7 +384,7 @@ class PfmFile(PNMImageHeader):
         false on failure.
         """
     @overload
-    def write(self, out: ostream, fullpath: Filepath = ...) -> bool: ...
+    def write(self, out: ostream, fullpath: StrOrBytesPath = ...) -> bool: ...
     def load(self, pnmimage: PNMImage) -> bool:
         """Fills the PfmFile with the data from the indicated PNMImage, converted to
         floating-point values.
@@ -980,7 +980,7 @@ class PNMImage(PNMImageHeader):
     @overload
     def __init__(self, copy: PNMImage = ...) -> None: ...
     @overload
-    def __init__(self, filename: Filepath, type: PNMFileType = ...) -> None: ...
+    def __init__(self, filename: StrOrBytesPath, type: PNMFileType = ...) -> None: ...
     @overload
     def __init__(
         self,
@@ -1137,7 +1137,7 @@ class PNMImage(PNMImageHeader):
     def get_color_space(self) -> _ColorSpace:
         """Returns the color space in which the image is encoded."""
     @overload
-    def read(self, filename: Filepath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
+    def read(self, filename: StrOrBytesPath, type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ..., report_unknown_type: bool = ...)`:
         Reads the indicated image filename.  If type is non-NULL, it is a
         suggestion for the type of file it is.  Returns true if successful, false
@@ -1158,7 +1158,7 @@ class PNMImage(PNMImageHeader):
     @overload
     def read(self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...) -> bool: ...
     @overload
-    def write(self, filename: Filepath, type: PNMFileType = ...) -> bool:
+    def write(self, filename: StrOrBytesPath, type: PNMFileType = ...) -> bool:
         """`(self, filename: Filename, type: PNMFileType = ...)`:
         Writes the image to the indicated filename.  If type is non-NULL, it is a
         suggestion for the type of image file to write.

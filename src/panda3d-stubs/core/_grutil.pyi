@@ -1,7 +1,8 @@
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import DoubleVec3Like, Filepath, Vec3Like, Vec4Like
+from panda3d._typing import DoubleVec3Like, Vec3Like, Vec4Like
 from panda3d.core._audio import AudioSound
 from panda3d.core._display import DisplayRegion, GraphicsOutput
 from panda3d.core._dtoolbase import TypedObject
@@ -257,7 +258,7 @@ class GeoMipTerrain(TypedObject):
         not a power of two plus one, it is scaled up using a gaussian filter.
         """
     @overload
-    def set_heightfield(self, filename: Filepath, type: PNMFileType = ...) -> bool: ...
+    def set_heightfield(self, filename: StrOrBytesPath, type: PNMFileType = ...) -> bool: ...
     def color_map(self) -> PNMImage:
         """Returns a reference to the color map (a PNMImage) contained inside
         GeoMipTerrain.  You can use the reference to alter the color map.
@@ -271,7 +272,7 @@ class GeoMipTerrain(TypedObject):
     @overload
     def set_color_map(self, path: str) -> bool: ...
     @overload
-    def set_color_map(self, filename: Filepath, type: PNMFileType = ...) -> bool: ...
+    def set_color_map(self, filename: StrOrBytesPath, type: PNMFileType = ...) -> bool: ...
     def has_color_map(self) -> bool:
         """Returns whether a color map has been set."""
     def clear_color_map(self) -> None:
@@ -499,7 +500,7 @@ class HeightfieldTesselator(Namable):
         """Returns a reference to the heightfield (a PNMImage) contained inside the
         HeightfieldTesselator.  You can use the reference to alter the heightfield.
         """
-    def set_heightfield(self, filename: Filepath, type: PNMFileType = ...) -> bool:
+    def set_heightfield(self, filename: StrOrBytesPath, type: PNMFileType = ...) -> bool:
         """Loads the specified greyscale image file into the heightfield."""
     def set_poly_count(self, n: int) -> None:
         """Sets the polygon-count target.  The tesselator usually manages to come

@@ -1,9 +1,9 @@
 __all__ = ['Audio3DManager']
 
+from _typeshed import StrOrBytesPath
 from typing_extensions import Literal
 
 from direct._typing import Unused
-from panda3d._typing import Filepath
 from panda3d.core import AudioManager, AudioSound, LVecBase3f, NodePath
 
 class Audio3DManager:
@@ -20,7 +20,7 @@ class Audio3DManager:
         root: NodePath | None = ...,
         taskPriority: int = ...,
     ) -> None: ...
-    def load_sfx(self, name: Filepath) -> AudioSound: ...
+    def load_sfx(self, name: StrOrBytesPath) -> AudioSound: ...
     def set_distance_factor(self, factor: float) -> None: ...
     def get_distance_factor(self) -> float: ...
     def set_doppler_factor(self, factor: float) -> None: ...

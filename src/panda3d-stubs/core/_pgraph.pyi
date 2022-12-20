@@ -1,9 +1,9 @@
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d._typing import Filepath, Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._display import DisplayRegion
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import Filename, istream, ostream
@@ -5513,7 +5513,7 @@ class NodePath(Generic[_N]):
         """Changes the name of the referenced node."""
     def get_name(self) -> str:
         """Returns the name of the referenced node."""
-    def write_bam_file(self, filename: Filepath) -> bool:
+    def write_bam_file(self, filename: StrOrBytesPath) -> bool:
         """Writes the contents of this node and below out to a bam file with the
         indicated filename.  This file may then be read in again, as is, at some
         later point.  Returns true if successful, false on some kind of error.
@@ -6366,7 +6366,7 @@ class BamFile(BamEnums):
     def writer(self) -> BamWriter: ...
     def __init__(self) -> None: ...
     @overload
-    def open_read(self, bam_filename: Filepath, report_errors: bool = ...) -> bool:
+    def open_read(self, bam_filename: StrOrBytesPath, report_errors: bool = ...) -> bool:
         """`(self, bam_filename: Filename, report_errors: bool = ...)`:
         Attempts to open the indicated filename for reading.  Returns true if
         successful, false on error.
@@ -6412,7 +6412,7 @@ class BamFile(BamEnums):
         printed and NULL is returned.
         """
     @overload
-    def open_write(self, bam_filename: Filepath, report_errors: bool = ...) -> bool:
+    def open_write(self, bam_filename: StrOrBytesPath, report_errors: bool = ...) -> bool:
         """`(self, bam_filename: Filename, report_errors: bool = ...)`:
         Attempts to open the indicated file for writing.  If another file by the
         same name already exists, it will be silently removed.  Returns true if
@@ -9163,13 +9163,13 @@ class Loader(TypedReferenceCount, Namable):
         false otherwise.
         @deprecated use task.cancel() to cancel the request instead.
         """
-    def load_sync(self, filename: Filepath, options: LoaderOptions | int = ...) -> PandaNode:
+    def load_sync(self, filename: StrOrBytesPath, options: LoaderOptions | int = ...) -> PandaNode:
         """Loads the file immediately, waiting for it to complete.
 
         If search is true, the file is searched for along the model path;
         otherwise, only the exact filename is loaded.
         """
-    def make_async_request(self, filename: Filepath, options: LoaderOptions | int = ...) -> AsyncTask:
+    def make_async_request(self, filename: StrOrBytesPath, options: LoaderOptions | int = ...) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to load_async() to start
         an asynchronous model load.
         """
@@ -9185,9 +9185,9 @@ class Loader(TypedReferenceCount, Namable):
         object and listen for that event.  When the model is ready, you may
         retrieve it via request->get_model().
         """
-    def save_sync(self, filename: Filepath, options: LoaderOptions | int, node: PandaNode) -> bool:
+    def save_sync(self, filename: StrOrBytesPath, options: LoaderOptions | int, node: PandaNode) -> bool:
         """Saves the file immediately, waiting for it to complete."""
-    def make_async_save_request(self, filename: Filepath, options: LoaderOptions | int, node: PandaNode) -> AsyncTask:
+    def make_async_save_request(self, filename: StrOrBytesPath, options: LoaderOptions | int, node: PandaNode) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to save_async() to start
         an asynchronous model save.
         """
@@ -9399,7 +9399,7 @@ class ModelLoadRequest(AsyncTask):
         to begin an asynchronous load.
         """
     @overload
-    def __init__(self, name: str, filename: Filepath, options: LoaderOptions | int, loader: Loader) -> None: ...
+    def __init__(self, name: str, filename: StrOrBytesPath, options: LoaderOptions | int, loader: Loader) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelLoadRequest."""
     def get_options(self) -> LoaderOptions:
@@ -9517,7 +9517,7 @@ class ModelRoot(ModelNode):
     @overload
     def __init__(self, name: str) -> None: ...
     @overload
-    def __init__(self, fullpath: Filepath, timestamp: int) -> None: ...
+    def __init__(self, fullpath: StrOrBytesPath, timestamp: int) -> None: ...
     def get_model_ref_count(self) -> int:
         """Returns the number of copies that exist of this particular ModelRoot node.
         Each time ModelRoot::copy_subgraph() or make_copy() is called (or some
@@ -9530,7 +9530,7 @@ class ModelRoot(ModelNode):
         on disk.  This is mainly useful for reference purposes, but is also used to
         index the ModelRoot into the ModelPool.
         """
-    def set_fullpath(self, fullpath: Filepath) -> None:
+    def set_fullpath(self, fullpath: StrOrBytesPath) -> None:
         """Sets the full pathname of the model represented by this node, as found on
         disk.  This is mainly useful for reference purposes, but is also used to
         index the ModelRoot into the ModelPool.
@@ -9589,12 +9589,12 @@ class ModelPool:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_model(filename: Filepath) -> bool:
+    def has_model(filename: StrOrBytesPath) -> bool:
         """Returns true if the model has ever been loaded, false otherwise.  Note that
         this does not guarantee that the model is still up-to-date.
         """
     @staticmethod
-    def verify_model(filename: Filepath) -> bool:
+    def verify_model(filename: StrOrBytesPath) -> bool:
         """Loads the given filename up as a model, if it has not already been loaded,
         and returns true to indicate success, or false to indicate failure.  If
         this returns true, it is probable that a subsequent call to load_model()
@@ -9606,14 +9606,14 @@ class ModelPool:
         invalid model.
         """
     @staticmethod
-    def get_model(filename: Filepath, verify: bool) -> ModelRoot:
+    def get_model(filename: StrOrBytesPath, verify: bool) -> ModelRoot:
         """Returns the model that has already been previously loaded, or NULL
         otherwise.  If verify is true, it will check if the file is still up-to-
         date (and hasn't been modified in the meantime), and if not, will still
         return NULL.
         """
     @staticmethod
-    def load_model(filename: Filepath, options: LoaderOptions | int = ...) -> ModelRoot:
+    def load_model(filename: StrOrBytesPath, options: LoaderOptions | int = ...) -> ModelRoot:
         """Loads the given filename up as a model, if it has not already been loaded,
         and returns the new model.  If a model with the same filename was
         previously loaded, returns that one instead (unless cache-check-timestamps
@@ -9635,10 +9635,10 @@ class ModelPool:
         """
     @overload
     @staticmethod
-    def add_model(filename: Filepath, model: ModelRoot) -> None: ...
+    def add_model(filename: StrOrBytesPath, model: ModelRoot) -> None: ...
     @overload
     @staticmethod
-    def release_model(filename: Filepath) -> None:
+    def release_model(filename: StrOrBytesPath) -> None:
         """`(filename: Filename)`:
         Removes the indicated model from the pool, indicating it will never be
         loaded again; the model may then be freed.  If this function is never
@@ -9711,7 +9711,9 @@ class ModelSaveRequest(AsyncTask):
         to begin an asynchronous save.
         """
     @overload
-    def __init__(self, name: str, filename: Filepath, options: LoaderOptions | int, node: PandaNode, loader: Loader) -> None: ...
+    def __init__(
+        self, name: str, filename: StrOrBytesPath, options: LoaderOptions | int, node: PandaNode, loader: Loader
+    ) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelSaveRequest."""
     def get_options(self) -> LoaderOptions:
@@ -11230,30 +11232,30 @@ class ShaderPool:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_shader(filename: Filepath) -> bool:
+    def has_shader(filename: StrOrBytesPath) -> bool:
         """Returns true if the shader has ever been loaded, false otherwise."""
     @staticmethod
-    def verify_shader(filename: Filepath) -> bool:
+    def verify_shader(filename: StrOrBytesPath) -> bool:
         """Loads the given filename up into a shader, if it has not already been
         loaded, and returns true to indicate success, or false to indicate failure.
         If this returns true, it is guaranteed that a subsequent call to
         load_shader() with the same shader name will return a valid Shader pointer.
         """
     @staticmethod
-    def load_shader(filename: Filepath) -> Shader:
+    def load_shader(filename: StrOrBytesPath) -> Shader:
         """Loads the given filename up into a shader, if it has not already been
         loaded, and returns the new shader.  If a shader with the same filename was
         previously loaded, returns that one instead.  If the shader file cannot be
         found, returns NULL.
         """
     @staticmethod
-    def add_shader(filename: Filepath, shader: Shader) -> None:
+    def add_shader(filename: StrOrBytesPath, shader: Shader) -> None:
         """Adds the indicated already-loaded shader to the pool.  The shader will
         always replace any previously-loaded shader in the pool that had the same
         filename.
         """
     @staticmethod
-    def release_shader(filename: Filepath) -> None:
+    def release_shader(filename: StrOrBytesPath) -> None:
         """Removes the indicated shader from the pool, indicating it will never be
         loaded again; the shader may then be freed.  If this function is never
         called, a reference count will be maintained on every shader every loaded,

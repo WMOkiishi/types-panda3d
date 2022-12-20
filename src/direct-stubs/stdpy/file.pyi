@@ -1,19 +1,18 @@
 __all__ = ['execfile', 'exists', 'getmtime', 'getsize', 'isdir', 'isfile', 'join', 'lexists', 'listdir', 'open', 'walk']
 
-from _typeshed import ReadableBuffer
+from _typeshed import ReadableBuffer, StrOrBytesPath
 from collections.abc import Generator, Iterable, Mapping
 from io import IOBase
 from posixpath import join as join
 from typing import Any, TypeVar
 
 from direct._typing import Unused
-from panda3d._typing import Filepath
 from panda3d.core import VirtualFile, istream, ostream
 
-_FilepathT = TypeVar('_FilepathT', bound=Filepath)
+_StrOrBytesPathT = TypeVar('_StrOrBytesPathT', bound=StrOrBytesPath)
 
 def open(
-    file: Filepath | VirtualFile | istream | ostream,
+    file: StrOrBytesPath | VirtualFile | istream | ostream,
     mode: str = ...,
     buffering: int = ...,
     encoding: str | None = ...,
@@ -33,8 +32,8 @@ class StreamIOWrapper(IOBase):
 
 def listdir(path: str) -> list[str]: ...
 def walk(
-    top: _FilepathT, topdown: bool = ..., onerror: object = ..., followlinks: bool = ...
-) -> Generator[tuple[_FilepathT, list[str], list[str]], None, None]: ...
+    top: _StrOrBytesPathT, topdown: bool = ..., onerror: object = ..., followlinks: bool = ...
+) -> Generator[tuple[_StrOrBytesPathT, list[str], list[str]], None, None]: ...
 def isfile(path: str) -> bool: ...
 def isdir(path: str) -> bool: ...
 def exists(path: str) -> bool: ...

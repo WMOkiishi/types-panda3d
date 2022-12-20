@@ -1,5 +1,6 @@
 __all__ = ['ShowBase', 'WindowControls']
 
+from _typeshed import StrOrBytesPath
 from types import ModuleType
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
@@ -10,7 +11,7 @@ from direct.directtools.DirectSession import DirectSession
 from direct.p3d.AppRunner import AppRunner
 from direct.showutil.TexMemWatcher import TexMemWatcher
 from direct.task.Task import Task, TaskManager
-from panda3d._typing import Filepath, Vec4Like
+from panda3d._typing import Vec4Like
 from panda3d.core import (
     AudioManager,
     AudioSound,
@@ -335,8 +336,8 @@ class ShowBase(DirectObject):
     def enable_sound_effects(self, bEnableSoundEffects: bool) -> None: ...
     def disable_all_audio(self) -> None: ...
     def enable_all_audio(self) -> None: ...
-    def loadSfx(self, name: Filepath) -> Any: ...
-    def loadMusic(self, name: Filepath) -> Any: ...
+    def loadSfx(self, name: StrOrBytesPath) -> Any: ...
+    def loadMusic(self, name: StrOrBytesPath) -> Any: ...
     def playSfx(
         self,
         sfx: AudioSound,

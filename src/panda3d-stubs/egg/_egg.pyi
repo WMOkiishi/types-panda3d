@@ -1,9 +1,9 @@
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Iterator, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Filepath, Vec4Like
+from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import DSearchPath, Filename, GlobPattern, istream, ostream
 from panda3d.core._express import Namable, TypedReferenceCount
@@ -427,7 +427,7 @@ class EggGroupNode(EggNode):
         looks up filenames along the specified search path; it does not
         automatically search the model_path for missing files.
         """
-    def force_filenames(self, directory: Filepath) -> None:
+    def force_filenames(self, directory: StrOrBytesPath) -> None:
         """Similar to resolve_filenames, but each non-absolute filename encountered is
         arbitrarily taken to be in the indicated directory, whether or not the so-
         named filename exists.
@@ -2491,7 +2491,7 @@ class EggFilenameNode(EggNode):
         """Returns the default extension for this filename type."""
     def get_filename(self) -> Filename:
         """Returns a nonmodifiable reference to the filename."""
-    def set_filename(self, filename: Filepath) -> None: ...
+    def set_filename(self, filename: StrOrBytesPath) -> None: ...
     def get_fullpath(self) -> Filename:
         """Returns the full pathname to the file, if it is known; otherwise, returns
         the same thing as get_filename().
@@ -2502,7 +2502,7 @@ class EggFilenameNode(EggNode):
         filename) if it is known, for egg structures that are generated in-memory
         and then immediately converted to a scene graph.
         """
-    def set_fullpath(self, fullpath: Filepath) -> None:
+    def set_fullpath(self, fullpath: StrOrBytesPath) -> None:
         """Records the full pathname to the file, for the benefit of get_fullpath()."""
     getDefaultExtension = get_default_extension
     getFilename = get_filename
@@ -2770,7 +2770,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     @overload
     def __init__(self, copy: EggTexture) -> None: ...
     @overload
-    def __init__(self, tref_name: str, filename: Filepath) -> None: ...
+    def __init__(self, tref_name: str, filename: StrOrBytesPath) -> None: ...
     def upcast_to_EggFilenameNode(self) -> EggFilenameNode: ...
     def upcast_to_EggRenderMode(self) -> EggRenderMode: ...
     def upcast_to_EggTransform(self) -> EggTransform: ...
@@ -3010,7 +3010,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         """Returns the alpha_scale value that has been specified for the texture, or 1
         if no alpha_scale value has been specified.
         """
-    def set_alpha_filename(self, filename: Filepath) -> None:
+    def set_alpha_filename(self, filename: StrOrBytesPath) -> None:
         """Specifies a separate file that will be loaded in with the 1- or 3-component
         texture and applied as the alpha channel.  This is useful when loading
         textures from file formats that do not support alpha, for instance jpg.
@@ -3025,7 +3025,7 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
         to call this unless has_alpha_filename() returns true.  See
         set_alpha_filename().
         """
-    def set_alpha_fullpath(self, fullpath: Filepath) -> None:
+    def set_alpha_fullpath(self, fullpath: StrOrBytesPath) -> None:
         """Records the full pathname to the file, for the benefit of
         get_alpha_fullpath().
         """
@@ -3888,7 +3888,7 @@ class EggData(EggGroupNode):
     egg_timestamp: int
     def __init__(self, copy: EggData = ...) -> None: ...
     @staticmethod
-    def resolve_egg_filename(egg_filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
+    def resolve_egg_filename(egg_filename: StrOrBytesPath, searchpath: ConfigVariableSearchPath | DSearchPath = ...) -> bool:
         """Looks for the indicated filename, first along the indicated searchpath, and
         then along the model_path.  If found, updates the filename to the full path
         and returns true; otherwise, returns false.
@@ -3912,7 +3912,7 @@ class EggData(EggGroupNode):
         there is no such filename, you may set it to the empty string.
         """
     @overload
-    def read(self, filename: Filepath, display_name: str = ...) -> bool: ...
+    def read(self, filename: StrOrBytesPath, display_name: str = ...) -> bool: ...
     def merge(self, other: EggData) -> None:
         """Appends the other egg structure to the end of this one.  The other egg
         structure is invalidated.
@@ -3940,7 +3940,7 @@ class EggData(EggGroupNode):
         keep arbitrarily.  Returns the number of materials removed.
         """
     @overload
-    def write_egg(self, filename: Filepath) -> bool:
+    def write_egg(self, filename: StrOrBytesPath) -> bool:
         """The main interface for writing complete egg files."""
     @overload
     def write_egg(self, out: ostream) -> bool: ...
@@ -3967,7 +3967,7 @@ class EggData(EggGroupNode):
         """
     def get_coordinate_system(self) -> _CoordinateSystem:
         """Returns the coordinate system in which the egg file is defined."""
-    def set_egg_filename(self, egg_filename: Filepath) -> None:
+    def set_egg_filename(self, egg_filename: StrOrBytesPath) -> None:
         """Sets the filename--especially the directory part--in which the egg file is
         considered to reside.  This is also implicitly set by read().
         """
@@ -4829,7 +4829,7 @@ class EggTextureCollection:
         """Returns the texture with the indicated TRef name, or NULL if no texture
         matches.
         """
-    def find_filename(self, filename: Filepath) -> EggTexture:
+    def find_filename(self, filename: StrOrBytesPath) -> EggTexture:
         """Returns the texture with the indicated filename, or NULL if no texture
         matches.
         """

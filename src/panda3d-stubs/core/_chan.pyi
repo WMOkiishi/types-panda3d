@@ -1,9 +1,9 @@
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import MutableMapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import GlobPattern, ostream
 from panda3d.core._express import CPTA_stdfloat, Namable, PointerToArray_float, ReferenceCount, TypedReferenceCount
@@ -712,7 +712,7 @@ class BindAnimRequest(ModelLoadRequest):
     def __init__(
         self,
         name: str,
-        filename: Filepath,
+        filename: StrOrBytesPath,
         options: LoaderOptions | int,
         loader: Loader,
         control: AnimControl,
@@ -876,7 +876,7 @@ class PartBundle(PartGroup):
         goes to zero).
         """
     def load_bind_anim(
-        self, loader: Loader, filename: Filepath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool
+        self, loader: Loader, filename: StrOrBytesPath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool
     ) -> AnimControl:
         """Binds an animation to the bundle.  The animation is loaded from the disk
         via the indicated Loader object.  In other respects, this behaves similarly

@@ -1,7 +1,8 @@
+from _typeshed import StrOrBytesPath
 from typing import overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Vec3Like
+from panda3d._typing import Vec3Like
 from panda3d.core._dtoolutil import Filename, ostream
 from panda3d.core._event import AsyncTask
 from panda3d.core._express import TypedReferenceCount
@@ -267,12 +268,12 @@ class AudioManager(TypedReferenceCount):
         even when the objects are not valid.
         """
     @overload
-    def get_sound(self, file_name: Filepath, positional: bool = ..., mode: int = ...) -> AudioSound:
+    def get_sound(self, file_name: StrOrBytesPath, positional: bool = ..., mode: int = ...) -> AudioSound:
         """Get a sound:"""
     @overload
     def get_sound(self, source: MovieAudio, positional: bool = ..., mode: int = ...) -> AudioSound: ...
     def get_null_sound(self) -> AudioSound: ...
-    def uncache_sound(self, file_name: Filepath) -> None:
+    def uncache_sound(self, file_name: StrOrBytesPath) -> None:
         """Tell the AudioManager there is no need to keep this one cached.  This
         doesn't break any connection between AudioSounds that have already given
         by get_sound() from this manager.  It's only affecting whether the

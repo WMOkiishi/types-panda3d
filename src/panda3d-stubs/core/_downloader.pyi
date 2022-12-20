@@ -1,9 +1,9 @@
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Iterator
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import URL, Filepath
+from panda3d._typing import URL
 from panda3d.core._dtoolutil import iostream, istream, ostream
 from panda3d.core._express import (
     Buffer,
@@ -196,7 +196,7 @@ class URLSpec:
     @overload
     def __init__(self, url: str, server_name_expected: bool = ...) -> None: ...
     @overload
-    def __init__(self, url: URL, path: Filepath) -> None: ...
+    def __init__(self, url: URL, path: StrOrBytesPath) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -719,7 +719,7 @@ class HTTPClient(ReferenceCount):
         cookies appropriate to the indicated URL along with an HTTP request.  This
         also removes expired cookies.
         """
-    def set_client_certificate_filename(self, filename: Filepath) -> None:
+    def set_client_certificate_filename(self, filename: StrOrBytesPath) -> None:
         """Sets the filename of the pem-formatted file that will be read for the
         client public and private keys if an SSL server requests a certificate.
         Either this or set_client_certificate_pem() may be used to specify a client
@@ -743,7 +743,7 @@ class HTTPClient(ReferenceCount):
         automatically if the server requests a certificate, but it may be useful to
         determine ahead of time if the certificate can be loaded correctly.
         """
-    def add_preapproved_server_certificate_filename(self, url: URL, filename: Filepath) -> bool:
+    def add_preapproved_server_certificate_filename(self, url: URL, filename: StrOrBytesPath) -> bool:
         """Adds the certificate defined in the indicated PEM filename as a "pre-
         approved" certificate for the indicated server, defined by the hostname and
         port (only) from the given URL.
@@ -812,7 +812,7 @@ class HTTPClient(ReferenceCount):
         the known versions and returns the appropriate enumerated value, or
         HV_other if the version is unknown.
         """
-    def load_certificates(self, filename: Filepath) -> bool:
+    def load_certificates(self, filename: StrOrBytesPath) -> bool:
         """Reads the certificate(s) (delimited by -----BEGIN CERTIFICATE----- and
         -----END CERTIFICATE-----) from the indicated file and makes them known as
         trusted public keys for validating future connections.  Returns true on
@@ -1642,7 +1642,7 @@ class HTTPChannel(TypedReferenceCount):
         interface instead of deleting it explicitly, to help work around compiler
         issues.
         """
-    def download_to_file(self, filename: Filepath, subdocument_resumes: bool = ...) -> bool:
+    def download_to_file(self, filename: StrOrBytesPath, subdocument_resumes: bool = ...) -> bool:
         """Specifies the name of a file to download the resulting document to.  This
         should be called immediately after get_document() or begin_get_document()
         or related functions.
@@ -1839,7 +1839,7 @@ class Decompressor:
     @property
     def progress(self) -> float: ...
     def __init__(self, __param0: Decompressor = ...) -> None: ...
-    def initiate(self, source_file: Filepath, dest_file: Filepath = ...) -> int:
+    def initiate(self, source_file: StrOrBytesPath, dest_file: StrOrBytesPath = ...) -> int:
         """`(self, source_file: Filename)`:
         Begins a background decompression of the named file (whose filename must
         end in ".pz") to a new file without the .pz extension.  The source file is
@@ -1855,7 +1855,7 @@ class Decompressor:
         EU_success when we're all done.  Any other return value indicates an error.
         """
     @overload
-    def decompress(self, source_file: Filepath) -> bool:
+    def decompress(self, source_file: StrOrBytesPath) -> bool:
         """`(self, source_file: Filename)`:
         Performs a foreground decompression of the named file; does not return
         until the decompression is complete.
@@ -1897,13 +1897,13 @@ class DownloadDb:
         Create a download db with these client and server dbs
         """
     @overload
-    def __init__(self, server_file: Filepath | Ramfile, client_file: Filepath) -> None: ...
+    def __init__(self, server_file: Ramfile | StrOrBytesPath, client_file: StrOrBytesPath) -> None: ...
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream) -> None: ...
     def write_version_map(self, out: ostream) -> None: ...
-    def write_client_db(self, file: Filepath) -> bool:
+    def write_client_db(self, file: StrOrBytesPath) -> bool:
         """Write a database file"""
-    def write_server_db(self, file: Filepath) -> bool: ...
+    def write_server_db(self, file: StrOrBytesPath) -> bool: ...
     def get_client_num_multifiles(self) -> int: ...
     def get_server_num_multifiles(self) -> int: ...
     def get_client_multifile_name(self, index: int) -> str: ...
@@ -1945,33 +1945,33 @@ class DownloadDb:
         """Used on the server side makefiles to create a new clean server db"""
     def server_add_multifile(self, mfname: str, phase: float, size: int, status: int) -> None: ...
     def server_add_file(self, mfname: str, fname: str) -> None: ...
-    def add_version(self, name: Filepath, hash: HashVal, version: int) -> None:
+    def add_version(self, name: StrOrBytesPath, hash: HashVal, version: int) -> None:
         """Appends a new version of the file onto the end of the list, or changes the
         hash associated with a version previously added.
 
         Note: version numbers start at 1
         """
-    def insert_new_version(self, name: Filepath, hash: HashVal) -> None:
+    def insert_new_version(self, name: StrOrBytesPath, hash: HashVal) -> None:
         """Inserts a new version 1 copy of the file, sliding all the other versions up
         by one.
         """
-    def has_version(self, name: Filepath) -> bool:
+    def has_version(self, name: StrOrBytesPath) -> bool:
         """Returns true if the indicated file has version information, false
         otherwise.  Some files recorded in the database may not bother to track
         versions.
         """
-    def get_num_versions(self, name: Filepath) -> int:
+    def get_num_versions(self, name: StrOrBytesPath) -> int:
         """Returns the number of versions stored for the indicated file."""
-    def set_num_versions(self, name: Filepath, num_versions: int) -> None:
+    def set_num_versions(self, name: StrOrBytesPath, num_versions: int) -> None:
         """Reduces the number of versions of a particular file stored in the ddb by
         throwing away all versions higher than the indicated index.
         """
-    def get_version(self, name: Filepath, hash: HashVal) -> int:
+    def get_version(self, name: StrOrBytesPath, hash: HashVal) -> int:
         """Returns the version number of this particular file, determined by looking
         up the hash generated from the file.  Returns -1 if the version number
         cannot be determined.
         """
-    def get_hash(self, name: Filepath, version: int) -> HashVal:
+    def get_hash(self, name: StrOrBytesPath, version: int) -> HashVal:
         """Returns the MD5 hash associated with the indicated version of the indicated
         file.
         """
@@ -2033,11 +2033,11 @@ class Extractor:
     @property
     def progress(self) -> float: ...
     def __init__(self) -> None: ...
-    def set_multifile(self, multifile_name: Filepath) -> bool:
+    def set_multifile(self, multifile_name: StrOrBytesPath) -> bool:
         """Specifies the filename of the Multifile that the Extractor will read.
         Returns true on success, false if the mulifile name is invalid.
         """
-    def set_extract_dir(self, extract_dir: Filepath) -> None:
+    def set_extract_dir(self, extract_dir: StrOrBytesPath) -> None:
         """Specifies the directory into which all extracted subfiles will be written.
         Relative paths of subfiles within the Multifile will be written as relative
         paths to this directory.
@@ -2046,7 +2046,7 @@ class Extractor:
         """Interrupts the Extractor in the middle of its business and makes it ready
         to accept a new list of subfiles to extract.
         """
-    def request_subfile(self, subfile_name: Filepath) -> bool:
+    def request_subfile(self, subfile_name: StrOrBytesPath) -> bool:
         """Requests a particular subfile to be extracted when step() or run() is
         called.  Returns true if the subfile exists, false otherwise.
         """
@@ -2096,7 +2096,7 @@ class MultiplexStream(ostream):
         """
     def add_standard_output(self) -> None:
         """Adds the standard output channel."""
-    def add_file(self, file: Filepath) -> bool:
+    def add_file(self, file: StrOrBytesPath) -> bool:
         """Adds the given file to the multiplex output.  The file is opened in append
         mode with line buffering.  Returns false if the file cannot be opened.
         """
@@ -2150,7 +2150,7 @@ class Patcher:
     def __init__(self, __param0: Patcher = ...) -> None: ...
     @overload
     def __init__(self, buffer: Buffer) -> None: ...
-    def initiate(self, patch: Filepath, infile: Filepath) -> int: ...
+    def initiate(self, patch: StrOrBytesPath, infile: StrOrBytesPath) -> int: ...
     def run(self) -> int: ...
     def get_progress(self) -> float: ...
     getProgress = get_progress
@@ -2178,8 +2178,8 @@ class StringStream(iostream):
     getData = get_data
     setData = set_data
 
-def check_crc(name: Filepath) -> int: ...
-def check_adler(name: Filepath) -> int: ...
+def check_crc(name: StrOrBytesPath) -> int: ...
+def check_adler(name: StrOrBytesPath) -> int: ...
 
 checkCrc = check_crc
 checkAdler = check_adler

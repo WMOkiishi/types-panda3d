@@ -1,6 +1,6 @@
+from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
 
-from panda3d._typing import Filepath
 from panda3d.core._dgraph import DataNode
 from panda3d.core._downloader import SocketStream
 from panda3d.core._dtoolbase import TypeHandle
@@ -64,11 +64,11 @@ class RecorderController(TypedReferenceCount):
     """
 
     def __init__(self) -> None: ...
-    def begin_record(self, filename: Filepath) -> bool:
+    def begin_record(self, filename: StrOrBytesPath) -> bool:
         """Begins recording data to the indicated filename.  All of the recorders in
         use should already have been added.
         """
-    def begin_playback(self, filename: Filepath) -> bool:
+    def begin_playback(self, filename: StrOrBytesPath) -> bool:
         """Begins playing back data from the indicated filename.  All of the recorders
         in use should already have been added, although this may define additional
         recorders if they are present in the file (these new recorders will not be

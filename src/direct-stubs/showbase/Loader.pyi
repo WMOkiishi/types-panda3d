@@ -1,13 +1,13 @@
 __all__ = ['Loader']
 
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Callable, Iterable, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 from panda3d import core
-from panda3d._typing import Filepath, Vec4Like
+from panda3d._typing import Vec4Like
 from panda3d.core import (
     AsyncTask,
     AudioManager,
@@ -246,8 +246,8 @@ class Loader(DirectObject):
     ) -> TextFont: ...
     def load_texture(
         self,
-        texturePath: Filepath,
-        alphaPath: Filepath | None = ...,
+        texturePath: StrOrBytesPath,
+        alphaPath: StrOrBytesPath | None = ...,
         readMipmaps: bool = ...,
         okMissing: bool = ...,
         minfilter: _FilterType | None = ...,
@@ -258,7 +258,7 @@ class Loader(DirectObject):
     ) -> Texture: ...
     def load_3d_texture(
         self,
-        texturePattern: Filepath,
+        texturePattern: StrOrBytesPath,
         readMipmaps: bool = ...,
         okMissing: bool = ...,
         minfilter: _FilterType | None = ...,
@@ -270,7 +270,7 @@ class Loader(DirectObject):
     ) -> Texture: ...
     def load2DTextureArray(
         self,
-        texturePattern: Filepath,
+        texturePattern: StrOrBytesPath,
         readMipmaps: bool = ...,
         okMissing: bool = ...,
         minfilter: _FilterType | None = ...,
@@ -282,7 +282,7 @@ class Loader(DirectObject):
     ) -> Texture: ...
     def load_cube_map(
         self,
-        texturePattern: Filepath,
+        texturePattern: StrOrBytesPath,
         readMipmaps: bool = ...,
         okMissing: bool = ...,
         minfilter: _FilterType | None = ...,
@@ -294,14 +294,14 @@ class Loader(DirectObject):
     def unload_texture(self, texture: Texture) -> None: ...
     def load_sfx(
         self,
-        soundPath: Filepath | list[Filepath] | set[Filepath] | tuple[Filepath, ...],
+        soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
         positional: bool = ...,
         callback: Callable[..., object] | None = ...,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback | None: ...
     def load_music(
         self,
-        soundPath: Filepath | list[Filepath] | set[Filepath] | tuple[Filepath, ...],
+        soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
         positional: bool = ...,
         callback: Callable[..., object] | None = ...,
         extraArgs: Iterable[Any] = ...,
@@ -309,14 +309,14 @@ class Loader(DirectObject):
     def load_sound(
         self,
         manager: AudioManager,
-        soundPath: Filepath | list[Filepath] | set[Filepath] | tuple[Filepath, ...],
+        soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
         positional: bool = ...,
         callback: Callable[..., object] | None = ...,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback: ...
     def unload_sfx(self, sfx: AudioSound) -> None: ...
-    def load_shader(self, shaderPath: Filepath, okMissing: bool = ...) -> Shader: ...
-    def unload_shader(self, shaderPath: Filepath | None) -> None: ...
+    def load_shader(self, shaderPath: StrOrBytesPath, okMissing: bool = ...) -> Shader: ...
+    def unload_shader(self, shaderPath: StrOrBytesPath | None) -> None: ...
     def async_flatten_strong(
         self,
         model: NodePath | Iterable[NodePath],

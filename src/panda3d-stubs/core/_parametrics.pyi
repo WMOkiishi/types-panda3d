@@ -1,9 +1,10 @@
+from _typeshed import StrOrBytesPath
 from array import array
 from collections.abc import MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath, Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import ReferenceCount
@@ -106,7 +107,7 @@ class ParametricCurve(PandaNode):
         support stitching.
         """
     @overload
-    def write_egg(self, filename: Filepath, cs: _CoordinateSystem = ...) -> bool:
+    def write_egg(self, filename: StrOrBytesPath, cs: _CoordinateSystem = ...) -> bool:
         """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
         Writes an egg description of the nurbs curve to the specified output file.
         Returns true if the file is successfully written.
@@ -116,7 +117,7 @@ class ParametricCurve(PandaNode):
         stream.  Returns true if the file is successfully written.
         """
     @overload
-    def write_egg(self, out: ostream, filename: Filepath, cs: _CoordinateSystem) -> bool: ...
+    def write_egg(self, out: ostream, filename: StrOrBytesPath, cs: _CoordinateSystem) -> bool: ...
     isValid = is_valid
     getMaxT = get_max_t
     setCurveType = set_curve_type
@@ -330,7 +331,7 @@ class ParametricCurveCollection(ReferenceCount):
         to the indicated output stream.
         """
     @overload
-    def write_egg(self, filename: Filepath, cs: _CoordinateSystem = ...) -> bool:
+    def write_egg(self, filename: StrOrBytesPath, cs: _CoordinateSystem = ...) -> bool:
         """`(self, filename: Filename, cs: _CoordinateSystem = ...)`:
         Writes an egg description of all the nurbs curves in the collection to the
         specified output file.  Returns true if the file is successfully written.
@@ -340,7 +341,7 @@ class ParametricCurveCollection(ReferenceCount):
         specified output stream.  Returns true if the file is successfully written.
         """
     @overload
-    def write_egg(self, out: ostream, filename: Filepath, cs: _CoordinateSystem) -> bool: ...
+    def write_egg(self, out: ostream, filename: StrOrBytesPath, cs: _CoordinateSystem) -> bool: ...
     def get_curves(self) -> tuple[ParametricCurve, ...]: ...
     def get_timewarp_curves(self) -> tuple[ParametricCurve, ...]: ...
     addCurve = add_curve

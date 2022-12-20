@@ -1,10 +1,9 @@
 import sys
-from _typeshed import Self
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import DSearchPath, Filename, iostream, istream, ostream
 from panda3d.core._prc import ConfigVariableSearchPath, IStreamWrapper, OStreamWrapper, StreamReader, StreamWrapper, StreamWriter
@@ -981,7 +980,7 @@ class DatagramSink:
     def file_pos(self) -> int: ...
     def put_datagram(self, data: Datagram) -> bool: ...
     @overload
-    def copy_datagram(self, result: SubfileInfo, filename: Filepath) -> bool:
+    def copy_datagram(self, result: SubfileInfo, filename: StrOrBytesPath) -> bool:
         """`(self, result: SubfileInfo, filename: Filename)`:
         Copies the file data from the entire indicated file (via the vfs) as the
         next datagram.  This is intended to support potentially very large
@@ -1035,7 +1034,7 @@ class FileReference(TypedReferenceCount):
     @overload
     def __init__(self, __param0: FileReference) -> None: ...
     @overload
-    def __init__(self, filename: Filepath) -> None: ...
+    def __init__(self, filename: StrOrBytesPath) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename of the reference."""
     getFilename = get_filename
@@ -1149,7 +1148,7 @@ class HashVal:
     def read_datagram(self, source: DatagramIterator) -> None: ...
     def write_stream(self, destination: StreamWriter) -> None: ...
     def read_stream(self, source: StreamReader) -> None: ...
-    def hash_file(self, filename: Filepath) -> bool:
+    def hash_file(self, filename: StrOrBytesPath) -> bool:
         """Generates the hash value from the indicated file.  Returns true on success,
         false if the file cannot be read.  This method is only defined if we have
         the OpenSSL library (which provides md5 functionality) available.
@@ -1339,7 +1338,7 @@ class Multifile(ReferenceCount):
     def magic_number(self) -> str: ...
     def __init__(self) -> None: ...
     @overload
-    def open_read(self, multifile_name: Filepath, offset: int = ...) -> bool:
+    def open_read(self, multifile_name: StrOrBytesPath, offset: int = ...) -> bool:
         """`(self, multifile_name: Filename, offset: int = ...)`:
         Opens the named Multifile on disk for reading.  The Multifile index is read
         in, and the list of subfiles becomes available; individual subfiles may
@@ -1359,7 +1358,7 @@ class Multifile(ReferenceCount):
     @overload
     def open_read(self, multifile_stream: IStreamWrapper, owns_pointer: bool = ..., offset: int = ...) -> bool: ...
     @overload
-    def open_write(self, multifile_name: Filepath) -> bool:
+    def open_write(self, multifile_name: StrOrBytesPath) -> bool:
         """`(self, multifile_name: Filename)`:
         Opens the named Multifile on disk for writing.  If there already exists a
         file by that name, it is truncated.  The Multifile is then prepared for
@@ -1380,7 +1379,7 @@ class Multifile(ReferenceCount):
     @overload
     def open_write(self, multifile_stream: ostream, owns_pointer: bool = ...) -> bool: ...
     @overload
-    def open_read_write(self, multifile_name: Filepath) -> bool:
+    def open_read_write(self, multifile_name: StrOrBytesPath) -> bool:
         """`(self, multifile_name: Filename)`:
         Opens the named Multifile on disk for reading and writing.  If there
         already exists a file by that name, its index is read.  Subfiles may be
@@ -1408,7 +1407,7 @@ class Multifile(ReferenceCount):
         """
     def get_multifile_name(self) -> Filename:
         """Returns the filename of the Multifile, if it is available."""
-    def set_multifile_name(self, multifile_name: Filepath) -> None:
+    def set_multifile_name(self, multifile_name: StrOrBytesPath) -> None:
         """Replaces the filename of the Multifile.  This is primarily used for
         documentation purposes only; changing this name does not open the indicated
         file.  See open_read() or open_write() for that.
@@ -1552,7 +1551,7 @@ class Multifile(ReferenceCount):
     def get_encryption_iteration_count(self) -> int:
         """Returns the value that was specified by set_encryption_iteration_count()."""
     @overload
-    def add_subfile(self, subfile_name: str, filename: Filepath, compression_level: int) -> str:
+    def add_subfile(self, subfile_name: str, filename: StrOrBytesPath, compression_level: int) -> str:
         """`(self, subfile_name: str, filename: Filename, compression_level: int)`:
         Adds a file on disk as a subfile to the Multifile.  The file named by
         filename will be read and added to the Multifile at the next call to
@@ -1583,7 +1582,7 @@ class Multifile(ReferenceCount):
         """
     @overload
     def add_subfile(self, subfile_name: str, subfile_data: istream, compression_level: int) -> str: ...
-    def update_subfile(self, subfile_name: str, filename: Filepath, compression_level: int) -> str:
+    def update_subfile(self, subfile_name: str, filename: StrOrBytesPath, compression_level: int) -> str:
         """Adds a file on disk to the subfile.  If a subfile already exists with the
         same name, its contents are compared byte-for-byte to the disk file, and it
         is replaced only if it is different; otherwise, the multifile is left
@@ -1594,7 +1593,7 @@ class Multifile(ReferenceCount):
         called, the text flag will be set on the subfile.
         """
     @overload
-    def add_signature(self, composite: Filepath, password: str = ...) -> bool:
+    def add_signature(self, composite: StrOrBytesPath, password: str = ...) -> bool:
         """`(self, certificate: Filename, chain: Filename, pkey: Filename, password: str = ...)`:
         Adds a new signature to the Multifile.  This signature associates the
         indicated certificate with the current contents of the Multifile.  When the
@@ -1634,7 +1633,9 @@ class Multifile(ReferenceCount):
         certificates in the file are taken to be part of the chain.
         """
     @overload
-    def add_signature(self, certificate: Filepath, chain: Filepath, pkey: Filepath, password: str = ...) -> bool: ...
+    def add_signature(
+        self, certificate: StrOrBytesPath, chain: StrOrBytesPath, pkey: StrOrBytesPath, password: str = ...
+    ) -> bool: ...
     def get_num_signatures(self) -> int:
         """Returns the number of matching signatures found on the Multifile.  These
         signatures may be iterated via get_signature() and related methods.
@@ -1827,11 +1828,11 @@ class Multifile(ReferenceCount):
         interface instead of deleting it explicitly, to help work around compiler
         issues.
         """
-    def extract_subfile(self, index: int, filename: Filepath) -> bool:
+    def extract_subfile(self, index: int, filename: StrOrBytesPath) -> bool:
         """Extracts the nth subfile into a file with the given name."""
     def extract_subfile_to(self, index: int, out: ostream) -> bool:
         """Extracts the nth subfile to the indicated ostream."""
-    def compare_subfile(self, index: int, filename: Filepath) -> bool:
+    def compare_subfile(self, index: int, filename: StrOrBytesPath) -> bool:
         """Performs a byte-for-byte comparison of the indicated file on disk with the
         nth subfile.  Returns true if the files are equivalent, or false if they
         are different (or the file is missing).
@@ -1968,7 +1969,7 @@ class OpenSSLWrapper:
         in certificates loaded from ca_bundle_data.c.  You can add new certificates
         by calling load_certificates().
         """
-    def load_certificates(self, filename: Filepath) -> int:
+    def load_certificates(self, filename: StrOrBytesPath) -> int:
         """Reads the PEM-formatted certificate(s) (delimited by -----BEGIN
         CERTIFICATE----- and -----END CERTIFICATE-----) from the indicated file and
         adds them to the global store object, retrieved via get_x509_store().
@@ -2026,7 +2027,7 @@ class SubfileInfo:
     @overload
     def __init__(self, file: FileReference, start: int, size: int) -> None: ...
     @overload
-    def __init__(self, filename: Filepath, start: int, size: int) -> None: ...
+    def __init__(self, filename: StrOrBytesPath, start: int, size: int) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def is_empty(self) -> bool:
         """Returns true if this SubfileInfo doesn't define any file, false if it has
@@ -2264,7 +2265,7 @@ class VirtualFileMountRamdisk(VirtualFileMount):
 class VirtualFileMountSystem(VirtualFileMount):
     """Maps an actual OS directory into the VirtualFileSystem."""
 
-    def __init__(self, physical_filename: Filepath) -> None: ...
+    def __init__(self, physical_filename: StrOrBytesPath) -> None: ...
     def get_physical_filename(self) -> Filename:
         """Returns the name of the source file on the OS filesystem of the directory
         or file that is mounted.
@@ -2294,7 +2295,7 @@ class TemporaryFile(FileReference):
     """
 
     @overload
-    def __init__(self, filename: Filepath) -> None: ...
+    def __init__(self, filename: StrOrBytesPath) -> None: ...
     @overload
     def __init__(self, __param0: TemporaryFile) -> None: ...
 
@@ -2374,7 +2375,7 @@ class VirtualFileSystem:
     def mounts(self) -> Sequence[PointerTo_VirtualFileMount]: ...
     def __init__(self) -> None: ...
     @overload
-    def mount(self, multifile: Multifile, mount_point: Filepath, flags: int) -> bool:
+    def mount(self, multifile: Multifile, mount_point: StrOrBytesPath, flags: int) -> bool:
         """`(self, physical_filename: Filename, mount_point: Filename, flags: int, password: str = ...)`:
         Mounts the indicated system file or directory at the given mount point.  If
         the named file is a directory, mounts the directory.  If the named file is
@@ -2404,10 +2405,10 @@ class VirtualFileSystem:
         a VirtualFileMount object specifically.
         """
     @overload
-    def mount(self, mount: VirtualFileMount, mount_point: Filepath, flags: int) -> bool: ...
+    def mount(self, mount: VirtualFileMount, mount_point: StrOrBytesPath, flags: int) -> bool: ...
     @overload
-    def mount(self, physical_filename: Filepath, mount_point: Filepath, flags: int, password: str = ...) -> bool: ...
-    def mount_loop(self, virtual_filename: Filepath, mount_point: Filepath, flags: int, password: str = ...) -> bool:
+    def mount(self, physical_filename: StrOrBytesPath, mount_point: StrOrBytesPath, flags: int, password: str = ...) -> bool: ...
+    def mount_loop(self, virtual_filename: StrOrBytesPath, mount_point: StrOrBytesPath, flags: int, password: str = ...) -> bool:
         """This is similar to mount(), but it receives the name of a Multifile that
         already appears within the virtual file system.  It can be used to mount a
         Multifile that is itself hosted within a virtually-mounted Multifile.
@@ -2420,7 +2421,7 @@ class VirtualFileSystem:
         copies of the data, for recursively mounting a multifile like this.
         """
     @overload
-    def unmount(self, physical_filename: Filepath) -> int:
+    def unmount(self, physical_filename: StrOrBytesPath) -> int:
         """`(self, physical_filename: Filename)`:
         Unmounts all appearances of the indicated directory name or multifile name
         from the file system.  Returns the number of appearances unmounted.
@@ -2437,7 +2438,7 @@ class VirtualFileSystem:
     def unmount(self, multifile: Multifile) -> int: ...
     @overload
     def unmount(self, mount: VirtualFileMount) -> int: ...
-    def unmount_point(self, mount_point: Filepath) -> int:
+    def unmount_point(self, mount_point: StrOrBytesPath) -> int:
         """Unmounts all systems attached to the given mount point from the file
         system.  Returns the number of appearances unmounted.
         """
@@ -2449,25 +2450,25 @@ class VirtualFileSystem:
         """Returns the number of individual mounts in the system."""
     def get_mount(self, n: int) -> VirtualFileMount:
         """Returns the nth mount in the system."""
-    def chdir(self, new_directory: Filepath) -> bool:
+    def chdir(self, new_directory: StrOrBytesPath) -> bool:
         """Changes the current directory.  This is used to resolve relative pathnames
         in get_file() and/or find_file().  Returns true if successful, false
         otherwise.
         """
     def get_cwd(self) -> Filename:
         """Returns the current directory name.  See chdir()."""
-    def make_directory(self, filename: Filepath) -> bool:
+    def make_directory(self, filename: StrOrBytesPath) -> bool:
         """Attempts to create a directory within the file system.  Returns true on
         success, false on failure (for instance, because the parent directory does
         not exist, or is read-only).  If the directory already existed prior to
         this call, returns true.
         """
-    def make_directory_full(self, filename: Filepath) -> bool:
+    def make_directory_full(self, filename: StrOrBytesPath) -> bool:
         """Attempts to create a directory within the file system.  Will also create
         any intervening directories needed.  Returns true on success, false on
         failure.
         """
-    def get_file(self, filename: Filepath, status_only: bool = ...) -> VirtualFile:
+    def get_file(self, filename: StrOrBytesPath, status_only: bool = ...) -> VirtualFile:
         """Looks up the file by the indicated name in the file system.  Returns a
         VirtualFile pointer representing the file if it is found, or NULL if it is
         not.
@@ -2478,25 +2479,25 @@ class VirtualFileSystem:
         instance HTTP, for which opening a file to determine its status is
         substantially less expensive than opening it to read its contents.
         """
-    def create_file(self, filename: Filepath) -> VirtualFile:
+    def create_file(self, filename: StrOrBytesPath) -> VirtualFile:
         """Attempts to create a file by the indicated name in the filesystem, if
         possible, and returns it.  If a file by this name already exists, returns
         the same thing as get_file().  If the filename is located within a read-
         only directory, or the directory doesn't exist, returns NULL.
         """
     def find_file(
-        self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, status_only: bool = ...
+        self, filename: StrOrBytesPath, searchpath: ConfigVariableSearchPath | DSearchPath, status_only: bool = ...
     ) -> VirtualFile:
         """Uses the indicated search path to find the file within the file system.
         Returns the first occurrence of the file found, or NULL if the file cannot
         be found.
         """
-    def delete_file(self, filename: Filepath) -> bool:
+    def delete_file(self, filename: StrOrBytesPath) -> bool:
         """Attempts to delete the indicated file or directory.  This can remove a
         single file or an empty directory.  It will not remove a nonempty
         directory.  Returns true on success, false on failure.
         """
-    def rename_file(self, orig_filename: Filepath, new_filename: Filepath) -> bool:
+    def rename_file(self, orig_filename: StrOrBytesPath, new_filename: StrOrBytesPath) -> bool:
         """Attempts to move or rename the indicated file or directory.  If the
         original file is an ordinary file, it will quietly replace any already-
         existing file in the new filename (but not a directory).  If the original
@@ -2507,19 +2508,19 @@ class VirtualFileSystem:
         but if it is not within the same mount point then the rename operation is
         automatically performed as a two-step copy-and-delete operation.
         """
-    def copy_file(self, orig_filename: Filepath, new_filename: Filepath) -> bool:
+    def copy_file(self, orig_filename: StrOrBytesPath, new_filename: StrOrBytesPath) -> bool:
         """Attempts to copy the contents of the indicated file to the indicated file.
         Returns true on success, false on failure.
         """
     def resolve_filename(
-        self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, default_extension: str = ...
+        self, filename: StrOrBytesPath, searchpath: ConfigVariableSearchPath | DSearchPath, default_extension: str = ...
     ) -> bool:
         """Searches the given search path for the filename.  If it is found, updates
         the filename to the full pathname found and returns true; otherwise,
         returns false.
         """
     def find_all_files(
-        self, filename: Filepath, searchpath: ConfigVariableSearchPath | DSearchPath, results: DSearchPath.Results
+        self, filename: StrOrBytesPath, searchpath: ConfigVariableSearchPath | DSearchPath, results: DSearchPath.Results
     ) -> int:
         """Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
@@ -2528,25 +2529,25 @@ class VirtualFileSystem:
         It is the responsibility of the the caller to clear the results list first;
         otherwise, the newly-found files will be appended to the list.
         """
-    def exists(self, filename: Filepath) -> bool:
+    def exists(self, filename: StrOrBytesPath) -> bool:
         """Convenience function; returns true if the named file exists."""
-    def is_directory(self, filename: Filepath) -> bool:
+    def is_directory(self, filename: StrOrBytesPath) -> bool:
         """Convenience function; returns true if the named file exists and is a
         directory.
         """
-    def is_regular_file(self, filename: Filepath) -> bool:
+    def is_regular_file(self, filename: StrOrBytesPath) -> bool:
         """Convenience function; returns true if the named file exists and is a
         regular file.
         """
-    def scan_directory(self, filename: Filepath) -> VirtualFileList:
+    def scan_directory(self, filename: StrOrBytesPath) -> VirtualFileList:
         """If the file represents a directory (that is, is_directory() returns true),
         this returns the list of files within the directory at the current time.
         Returns NULL if the file is not a directory or if the directory cannot be
         read.
         """
-    def ls(self, filename: Filepath) -> None:
+    def ls(self, filename: StrOrBytesPath) -> None:
         """Convenience function; lists the files within the indicated directory."""
-    def ls_all(self, filename: Filepath) -> None:
+    def ls_all(self, filename: StrOrBytesPath) -> None:
         """Convenience function; lists the files within the indicated directory, and
         all files below, recursively.
         """
@@ -2562,7 +2563,7 @@ class VirtualFileSystem:
         filesystem to root; i.e.  it is equivalent to the OS filesystem.  This may
         be subsequently adjusted by the user.
         """
-    def read_file(self, filename: Filepath, auto_unwrap: bool):
+    def read_file(self, filename: StrOrBytesPath, auto_unwrap: bool):
         """Convenience function; returns the entire contents of the indicated file as
         a string.
 
@@ -2571,7 +2572,7 @@ class VirtualFileSystem:
         than vfs-implicit-pz, which will automatically decompress a file if the
         extension .pz is *not* given.
         """
-    def open_read_file(self, filename: Filepath, auto_unwrap: bool) -> istream:
+    def open_read_file(self, filename: StrOrBytesPath, auto_unwrap: bool) -> istream:
         """Convenience function; returns a newly allocated istream if the file exists
         and can be read, or NULL otherwise.  Does not return an invalid istream.
 
@@ -2587,8 +2588,8 @@ class VirtualFileSystem:
         interface instead of deleting it explicitly, to help work around compiler
         issues.
         """
-    def write_file(self, filename: Filepath, data, auto_wrap: bool): ...
-    def open_write_file(self, filename: Filepath, auto_wrap: bool, truncate: bool) -> ostream:
+    def write_file(self, filename: StrOrBytesPath, data, auto_wrap: bool): ...
+    def open_write_file(self, filename: StrOrBytesPath, auto_wrap: bool, truncate: bool) -> ostream:
         """Convenience function; returns a newly allocated ostream if the file exists
         and can be written, or NULL otherwise.  Does not return an invalid ostream.
 
@@ -2596,7 +2597,7 @@ class VirtualFileSystem:
         compressed while writing.  If truncate is true, the file is truncated to
         zero length before writing.
         """
-    def open_append_file(self, filename: Filepath) -> ostream:
+    def open_append_file(self, filename: StrOrBytesPath) -> ostream:
         """Works like open_write_file(), but the file is opened in append mode.  Like
         open_write_file, the returned pointer should eventually be passed to
         close_write_file().
@@ -2608,12 +2609,12 @@ class VirtualFileSystem:
         interface instead of deleting it explicitly, to help work around compiler
         issues.
         """
-    def open_read_write_file(self, filename: Filepath, truncate: bool) -> iostream:
+    def open_read_write_file(self, filename: StrOrBytesPath, truncate: bool) -> iostream:
         """Convenience function; returns a newly allocated iostream if the file exists
         and can be written, or NULL otherwise.  Does not return an invalid
         iostream.
         """
-    def open_read_append_file(self, filename: Filepath) -> iostream:
+    def open_read_append_file(self, filename: StrOrBytesPath) -> iostream:
         """Works like open_read_write_file(), but the file is opened in append mode.
         Like open_read_write_file, the returned pointer should eventually be passed
         to close_read_write_file().
@@ -2761,20 +2762,20 @@ class Patchfile:
         `(self, buffer: Buffer)`:
         Create patch file with buffer to patch
         """
-    def build(self, file_orig: Filepath, file_new: Filepath, patch_name: Filepath) -> bool:
+    def build(self, file_orig: StrOrBytesPath, file_new: StrOrBytesPath, patch_name: StrOrBytesPath) -> bool:
         """This implementation uses the "greedy differencing algorithm" described in
         the masters thesis "Differential Compression: A Generalized Solution for
         Binary Files" by Randal C. Burns (p.13). For an original file of size M and
         a new file of size N, this algorithm is O(M) in space and O(M*N) (worst-
         case) in time.  return false on error
         """
-    def read_header(self, patch_file: Filepath) -> int:
+    def read_header(self, patch_file: StrOrBytesPath) -> int:
         """Opens the patch file for reading, and gets the header information from the
         file but does not begin to do any real work.  This can be used to query the
         data stored in the patch.
         """
     @overload
-    def initiate(self, patch_file: Filepath, file: Filepath) -> int:
+    def initiate(self, patch_file: StrOrBytesPath, file: StrOrBytesPath) -> int:
         """`(self, patch_file: Filename, file: Filename)`:
         Set up to apply the patch to the file (original file and patch are
         destroyed in the process).
@@ -2784,7 +2785,7 @@ class Patchfile:
         file nor the patch file are destroyed.
         """
     @overload
-    def initiate(self, patch_file: Filepath, orig_file: Filepath, target_file: Filepath) -> int: ...
+    def initiate(self, patch_file: StrOrBytesPath, orig_file: StrOrBytesPath, target_file: StrOrBytesPath) -> int: ...
     def run(self) -> int:
         """Perform one buffer's worth of patching.
         Returns one of the following values:
@@ -2796,7 +2797,7 @@ class Patchfile:
         @li @c EU_error_write_file_rename : could not rename file
         """
     @overload
-    def apply(self, patch_file: Filepath, file: Filepath) -> bool:
+    def apply(self, patch_file: StrOrBytesPath, file: StrOrBytesPath) -> bool:
         """`(self, patch_file: Filename, file: Filename)`:
         Patches the entire file in one call returns true on success and false on
         error
@@ -2810,7 +2811,7 @@ class Patchfile:
         This version will not delete any files.
         """
     @overload
-    def apply(self, patch_file: Filepath, orig_file: Filepath, target_file: Filepath) -> bool: ...
+    def apply(self, patch_file: StrOrBytesPath, orig_file: StrOrBytesPath, target_file: StrOrBytesPath) -> bool: ...
     def get_progress(self) -> float:
         """Returns a value in the range 0..1, representing the amount of progress
         through the patchfile, during a session.
@@ -3043,8 +3044,8 @@ EUErrorZlib: Final[Literal[-80]]
 
 def compress_string(source: str, compression_level: int) -> str: ...
 def decompress_string(source: str) -> str: ...
-def compress_file(source: Filepath, dest: Filepath, compression_level: int) -> bool: ...
-def decompress_file(source: Filepath, dest: Filepath) -> bool: ...
+def compress_file(source: StrOrBytesPath, dest: StrOrBytesPath, compression_level: int) -> bool: ...
+def decompress_file(source: StrOrBytesPath, dest: StrOrBytesPath) -> bool: ...
 def compress_stream(source: istream, dest: ostream, compression_level: int) -> bool: ...
 def decompress_stream(source: istream, dest: ostream) -> bool: ...
 def copy_stream(source: istream, dest: ostream) -> bool: ...
@@ -3053,9 +3054,14 @@ def encrypt_string(
 ) -> str: ...
 def decrypt_string(source: str, password: str) -> str: ...
 def encrypt_file(
-    source: Filepath, dest: Filepath, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...
+    source: StrOrBytesPath,
+    dest: StrOrBytesPath,
+    password: str,
+    algorithm: str = ...,
+    key_length: int = ...,
+    iteration_count: int = ...,
 ) -> bool: ...
-def decrypt_file(source: Filepath, dest: Filepath, password: str) -> bool: ...
+def decrypt_file(source: StrOrBytesPath, dest: StrOrBytesPath, password: str) -> bool: ...
 def encrypt_stream(
     source: istream, dest: ostream, password: str, algorithm: str = ..., key_length: int = ..., iteration_count: int = ...
 ) -> bool: ...

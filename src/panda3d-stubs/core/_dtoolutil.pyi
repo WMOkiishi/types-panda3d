@@ -3,7 +3,6 @@ from collections.abc import Iterator, MutableMapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Filepath
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._prc import ConfigVariableSearchPath
 
@@ -397,24 +396,24 @@ class Filename:
         basename part.  It will insert an intervening '/' if necessary.
         """
     @overload
-    def __init__(self, dirname: Filepath, basename: Filepath) -> None: ...
+    def __init__(self, dirname: StrOrBytesPath, basename: StrOrBytesPath) -> None: ...
     def __getitem__(self, n: int) -> str: ...
     def __fspath__(self) -> str: ...
     def __iadd__(self: Self, other: str) -> Self: ...
     def __add__(self, other: str) -> Filename: ...
-    def __truediv__(self, other: Filepath) -> Filename: ...
+    def __truediv__(self, other: StrOrBytesPath) -> Filename: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: str) -> bool: ...
     def __bool__(self) -> bool: ...
     @staticmethod
-    def text_filename(filename: Filepath) -> Filename:
+    def text_filename(filename: StrOrBytesPath) -> Filename:
         """Static constructors to explicitly create a filename that refers to a text
         or binary file.  This is in lieu of calling set_text() or set_binary() or
         set_type().
         """
     @staticmethod
-    def binary_filename(filename: Filepath) -> Filename: ...
+    def binary_filename(filename: StrOrBytesPath) -> Filename: ...
     @staticmethod
     def dso_filename(filename: str) -> Filename: ...
     @staticmethod
@@ -484,7 +483,7 @@ class Filename:
     def assign(self, filename: str) -> Filename:
         """Assignment is via the = operator."""
     @overload
-    def assign(self, copy: Filepath) -> Filename: ...
+    def assign(self, copy: StrOrBytesPath) -> Filename: ...
     def c_str(self) -> str: ...
     def empty(self) -> bool: ...
     def length(self) -> int: ...
@@ -632,7 +631,7 @@ class Filename:
         qualified (they are explicitly relative to the current directory, and do
         not refer to a filename on a search path somewhere).
         """
-    def make_absolute(self, start_directory: Filepath = ...) -> None:
+    def make_absolute(self, start_directory: StrOrBytesPath = ...) -> None:
         """`(self)`:
         Converts the filename to a fully-qualified pathname from the root (if it is
         a relative pathname), and then standardizes it (see standardize()).
@@ -734,7 +733,7 @@ class Filename:
         """
     def is_executable(self) -> bool:
         """Returns true if the filename exists and is executable"""
-    def compare_timestamps(self, other: Filepath, this_missing_is_old: bool = ..., other_missing_is_old: bool = ...) -> int:
+    def compare_timestamps(self, other: StrOrBytesPath, this_missing_is_old: bool = ..., other_missing_is_old: bool = ...) -> int:
         """Returns a number less than zero if the file named by this object is older
         than the given file, zero if they have the same timestamp, or greater than
         zero if this one is newer.
@@ -766,7 +765,7 @@ class Filename:
         the filename to the full pathname found and returns true; otherwise,
         returns false.
         """
-    def make_relative_to(self, directory: Filepath, allow_backups: bool = ...) -> bool:
+    def make_relative_to(self, directory: StrOrBytesPath, allow_backups: bool = ...) -> bool:
         """Adjusts this filename, which must be a fully-specified pathname beginning
         with a slash, to make it a relative filename, relative to the fully-
         specified directory indicated (which must also begin with, and may or may
@@ -881,12 +880,12 @@ class Filename:
         Returns true if successful, false if failure (for instance, because the
         file did not exist, or because permissions were inadequate).
         """
-    def rename_to(self, other: Filepath) -> bool:
+    def rename_to(self, other: StrOrBytesPath) -> bool:
         """Renames the file to the indicated new filename.  If the new filename is in
         a different directory, this will perform a move.  Returns true if
         successful, false on failure.
         """
-    def copy_to(self, other: Filepath) -> bool:
+    def copy_to(self, other: StrOrBytesPath) -> bool:
         """Copies the file to the indicated new filename, by reading the contents and
         writing it to the new file.  Returns true if successful, false on failure.
         The copy is always binary, regardless of the filename settings.
@@ -910,7 +909,7 @@ class Filename:
         """The inverse of mkdir(): this removes the directory named by this Filename,
         if it is in fact a directory.
         """
-    def compare_to(self, other: Filepath) -> int: ...
+    def compare_to(self, other: StrOrBytesPath) -> int: ...
     def get_hash(self) -> int:
         """Returns a hash code that attempts to be mostly unique for different
         Filenames.
@@ -1246,15 +1245,15 @@ class DSearchPath:
     @overload
     def __init__(self, copy: ConfigVariableSearchPath | DSearchPath = ...) -> None: ...
     @overload
-    def __init__(self, directory: Filepath) -> None: ...
+    def __init__(self, directory: StrOrBytesPath) -> None: ...
     @overload
     def __init__(self, path: str, separator: str = ...) -> None: ...
     def assign(self, copy: ConfigVariableSearchPath | DSearchPath) -> DSearchPath: ...
     def clear(self) -> None:
         """Removes all the directories from the search list."""
-    def append_directory(self, directory: Filepath) -> None:
+    def append_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the end of the search list."""
-    def prepend_directory(self, directory: Filepath) -> None:
+    def prepend_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
     def append_path(self, path: ConfigVariableSearchPath | DSearchPath) -> None:
@@ -1273,13 +1272,13 @@ class DSearchPath:
         """Returns the number of directories on the search list."""
     def get_directory(self, n: int) -> Filename:
         """Returns the nth directory on the search list."""
-    def find_file(self, filename: Filepath) -> Filename:
+    def find_file(self, filename: StrOrBytesPath) -> Filename:
         """Searches all the directories in the search list for the indicated file, in
         order.  Returns the full matching pathname of the first match if found, or
         the empty string if not found.
         """
     @overload
-    def find_all_files(self, filename: Filepath) -> DSearchPath.Results:
+    def find_all_files(self, filename: StrOrBytesPath) -> DSearchPath.Results:
         """`(self, filename: Filename)`:
         This variant of find_all_files() returns the new Results object, instead of
         filling on in on the parameter list.  This is a little more convenient to
@@ -1294,9 +1293,9 @@ class DSearchPath:
         otherwise, the newly-found files will be appended to the list.
         """
     @overload
-    def find_all_files(self, filename: Filepath, results: DSearchPath.Results) -> int: ...
+    def find_all_files(self, filename: StrOrBytesPath, results: DSearchPath.Results) -> int: ...
     @staticmethod
-    def search_path(filename: Filepath, path: str, separator: str = ...) -> Filename:
+    def search_path(filename: StrOrBytesPath, path: str, separator: str = ...) -> Filename:
         """A quick-and-easy way to search a searchpath for a file when you don't feel
         like building or keeping around a DSearchPath object.  This simply
         constructs a temporary DSearchPath based on the indicated path string, and
@@ -1450,7 +1449,7 @@ class GlobPattern:
         """Returns the set of characters that are not matched by * or ?."""
     def matches(self, candidate: str) -> bool:
         """Returns true if the candidate string matches the pattern, false otherwise."""
-    def matches_file(self, candidate: Filepath) -> bool:
+    def matches_file(self, candidate: StrOrBytesPath) -> bool:
         """Treats the GlobPattern as a filename pattern, and returns true if the given
         filename matches the pattern.  Unlike matches(), this will not match slash
         characters for single asterisk characters, and it will ignore path
@@ -1467,7 +1466,7 @@ class GlobPattern:
         with one or more glob characters, this can be used to optimized searches
         through sorted indices.
         """
-    def match_files(self, cwd: Filepath = ...) -> list[str]: ...
+    def match_files(self, cwd: StrOrBytesPath = ...) -> list[str]: ...
     setPattern = set_pattern
     getPattern = get_pattern
     setCaseSensitive = set_case_sensitive

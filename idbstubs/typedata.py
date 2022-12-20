@@ -82,7 +82,6 @@ TYPE_ALIASES: Final = {
     'IntVec4Like': 'LVecBase4i | UnalignedLVecBase4i',
     'Mat4Like': 'LMatrix4f | UnalignedLMatrix4f',
     'DoubleMat4Like': 'LMatrix4d | UnalignedLMatrix4d',
-    'Filepath': 'StrOrBytesPath | ConfigVariableFilename',
     'URL': 'URLSpec | str',
 }
 _type_alias_data = [
@@ -224,6 +223,7 @@ def make_param_type_replacement(cast_to: TypeIndex) -> str:
     cast_from_names = {get_type_name(i) for i in cast_from}
     if idb.interrogate_type_name(cast_to) == 'Filename':
         cast_from_names.remove('Filename')
+        cast_from_names.discard('ConfigVariableFilename')
         cast_from_names.add('StrOrBytesPath')
     return combine_types(*cast_from_names)
 
@@ -322,7 +322,7 @@ def inherits_from(a: str, b: str, /) -> bool:
         return True
     if (a, b) in (('bool', 'int'), ('int', 'float')):
         return True
-    if a in ('Filename', 'str') and b == 'StrOrBytesPath':
+    if a in ('Filename', 'ConfigVariableFilename', 'str') and b == 'StrOrBytesPath':
         return True
     return b in _inheritance.get(a, set())
 
