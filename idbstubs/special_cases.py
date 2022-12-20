@@ -373,7 +373,6 @@ IGNORE_ERRORS: Final = TrackingMap({
     'panda3d.core.Triangulator3.get_vertices': 'override',
     'panda3d.core.Triangulator3.getVertices': 'assignment',
     'panda3d.core.Triangulator3.vertices': 'override',
-    'panda3d.core.TypedReferenceCount': 'misc',
     'panda3d.core.VertexDataPage.alloc': 'override',
     'panda3d.core.VertexDataPage.write': 'override',
     'panda3d.core.iostream': 'misc',
