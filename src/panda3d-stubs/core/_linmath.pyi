@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Iterator, Sequence
+from collections.abc import Iterator, MutableSequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -2939,9 +2939,9 @@ class LMatrix3f:
     num_components: Final[Literal[9]]
     is_int: Final[Literal[0]]
     @property
-    def rows(self) -> Sequence[LVecBase3f]: ...
+    def rows(self) -> MutableSequence[LVecBase3f]: ...
     @property
-    def cols(self) -> Sequence[LVecBase3f]: ...
+    def cols(self) -> MutableSequence[LVecBase3f]: ...
     @overload
     def __init__(self, other: LMatrix3f = ...) -> None:
         """Constructs the matrix from three individual rows."""
@@ -3343,9 +3343,9 @@ class LMatrix4f:
     num_components: Final[Literal[16]]
     is_int: Final[Literal[0]]
     @property
-    def rows(self) -> Sequence[LVecBase4f]: ...
+    def rows(self) -> MutableSequence[LVecBase4f]: ...
     @property
-    def cols(self) -> Sequence[LVecBase4f]: ...
+    def cols(self) -> MutableSequence[LVecBase4f]: ...
     @overload
     def __init__(self, upper3: LMatrix3f = ...) -> None:
         """`(self, upper3: LMatrix3f)`:
@@ -3855,9 +3855,9 @@ class LMatrix3d:
     num_components: Final[Literal[9]]
     is_int: Final[Literal[0]]
     @property
-    def rows(self) -> Sequence[LVecBase3d]: ...
+    def rows(self) -> MutableSequence[LVecBase3d]: ...
     @property
-    def cols(self) -> Sequence[LVecBase3d]: ...
+    def cols(self) -> MutableSequence[LVecBase3d]: ...
     @overload
     def __init__(self, other: LMatrix3d = ...) -> None:
         """Constructs the matrix from three individual rows."""
@@ -4259,9 +4259,9 @@ class LMatrix4d:
     num_components: Final[Literal[16]]
     is_int: Final[Literal[0]]
     @property
-    def rows(self) -> Sequence[LVecBase4d]: ...
+    def rows(self) -> MutableSequence[LVecBase4d]: ...
     @property
-    def cols(self) -> Sequence[LVecBase4d]: ...
+    def cols(self) -> MutableSequence[LVecBase4d]: ...
     @overload
     def __init__(self, upper3: LMatrix3d = ...) -> None:
         """`(self, upper3: LMatrix3d)`:

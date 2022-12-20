@@ -541,12 +541,7 @@ class Notify:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: Notify = ...) -> None: ...
-    def set_ostream_ptr(self, ostream_ptr: ostream, delete_later: bool) -> None:
-        """Changes the ostream that all subsequent Notify messages will be written to.
-        If the previous ostream was set with delete_later = true, this will delete
-        the previous ostream.  If ostream_ptr is NULL, this resets the default to
-        cerr.
-        """
+    def set_ostream_ptr(self, ostream_ptr, delete_later: bool) -> None: ...
     def get_ostream_ptr(self) -> ostream:
         """Returns the system-wide ostream for all Notify messages."""
     def clear_assert_handler(self) -> None:
@@ -1065,6 +1060,7 @@ class ConfigVariableFilename(ConfigVariable):
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: Filepath) -> bool: ...
+    def __fspath__(self) -> str: ...
     def operator_typecast(self) -> Filename: ...
     def assign(self, value: Filepath) -> ConfigVariableFilename: ...
     def c_str(self) -> str:
@@ -1119,6 +1115,7 @@ class ConfigVariableFilename(ConfigVariable):
     getDefaultValue = get_default_value
     getWord = get_word
     setWord = set_word
+    Fspath = __fspath__
 
 class ConfigVariableInt(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as an integer

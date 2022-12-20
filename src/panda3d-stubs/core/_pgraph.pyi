@@ -1758,6 +1758,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     transform: TransformState
     overall_hidden: bool
     into_collide_mask: CollideMask
+    bounds_type: _BoundingVolume_BoundsType
     final: bool
     UC_parents: Final[Literal[1]]
     UCParents: Final[Literal[1]]
@@ -1797,8 +1798,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def draw_show_mask(self) -> DrawMask: ...
     @property
     def legal_collide_mask(self) -> CollideMask: ...
-    @property
-    def bounds_type(self) -> _BoundingVolume_BoundsType: ...
     @property
     def nested_vertices(self) -> int: ...
     @property
@@ -2387,7 +2386,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         default behavior later.
         """
     def set_bound(self, volume: BoundingVolume) -> None:
-        """Deprecated.  Use set_bounds() instead."""
+        """@deprecated Use set_bounds() instead."""
     def clear_bounds(self) -> None:
         """Reverses the effect of a previous call to set_bounds(), and allows the
         node's bounding volume to be automatically computed once more based on the
@@ -4416,11 +4415,17 @@ class NodePath(Generic[_N]):
         Returns the texture that has been set on the indicated stage for this
         particular node, or NULL if no texture has been set for this stage.
         """
-    def replace_texture(self, tex: Texture, new_tex: Texture) -> None:
-        """Recursively searches the scene graph for references to the given texture,
+    def replace_texture(self, tex: Texture, new_tex: Texture | None) -> None:
+        """`(self, tex: Texture, new_tex: Texture)`:
+        Recursively searches the scene graph for references to the given texture,
         and replaces them with the new texture.
 
+        As of Panda3D 1.10.13, new_tex may be null to remove the texture.
+
         @since 1.10.4
+
+        `(self, tex: Texture, new_tex: None)`:
+        Let interrogate know this also accepts None
         """
     def get_texture_sampler(self, stage: TextureStage = ...) -> SamplerState:
         """`(self)`:
@@ -4835,11 +4840,17 @@ class NodePath(Generic[_N]):
 
         See also find_material().
         """
-    def replace_material(self, mat: Material, new_mat: Material) -> None:
-        """Recursively searches the scene graph for references to the given material,
+    def replace_material(self, mat: Material, new_mat: Material | None) -> None:
+        """`(self, mat: Material, new_mat: Material)`:
+        Recursively searches the scene graph for references to the given material,
         and replaces them with the new material.
 
+        As of Panda3D 1.10.13, new_mat may be null to remove the material.
+
         @since 1.10.0
+
+        `(self, mat: Material, new_mat: None)`:
+        Let interrogate know this also accepts None
         """
     def set_fog(self, fog: Fog, priority: int = ...) -> None:
         """Sets the geometry at this level and below to render using the indicated
@@ -9866,11 +9877,17 @@ class TextureAttrib(RenderAttrib):
         TextureAttribs that happen to have the same name as the given object
         replaced with the object.
         """
-    def replace_texture(self, tex: Texture, new_tex: Texture) -> RenderAttrib:
-        """Returns a new TextureAttrib, just like this one, but with all references to
+    def replace_texture(self, tex: Texture, new_tex: Texture | None) -> RenderAttrib:
+        """`(self, tex: Texture, new_tex: Texture)`:
+        Returns a new TextureAttrib, just like this one, but with all references to
         the given texture replaced with the new texture.
 
+        As of Panda3D 1.10.13, new_tex may be null to remove the texture.
+
         @since 1.10.4
+
+        `(self, tex: Texture, new_tex: None)`:
+        Let interrogate know this also accepts None
         """
     @staticmethod
     def get_class_slot() -> int: ...

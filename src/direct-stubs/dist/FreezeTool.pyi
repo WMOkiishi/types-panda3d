@@ -88,9 +88,15 @@ class Freezer:
     previousModules: dict[str, Freezer.ModuleDef]
     modules: dict[str, Freezer.ModuleDef]
     mf: PandaModuleFinder | None
+    optimize: int
     moduleSuffixes: list[tuple[str, str, int]]
     def __init__(
-        self, previous: Freezer | None = ..., debugLevel: Unused = ..., platform: str | None = ..., path: list[str] | None = ...
+        self,
+        previous: Freezer | None = ...,
+        debugLevel: Unused = ...,
+        platform: str | None = ...,
+        path: list[str] | None = ...,
+        optimize: int | None = ...,
     ) -> None: ...
     def excludeFrom(self, freezer: Freezer) -> None: ...
     def excludeModule(self, moduleName: str, forbid: bool = ..., allowChildren: bool = ..., fromSource: Any = ...) -> None: ...

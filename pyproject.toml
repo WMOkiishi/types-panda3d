@@ -6,7 +6,7 @@ description = "Type stubs for the Panda3D Python bindings"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.7"
-dependencies = ["panda3d==1.10.12"]
+dependencies = ["panda3d==1.10.13"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

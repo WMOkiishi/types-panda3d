@@ -4226,7 +4226,7 @@ class TextureStage(TypedWritableReferenceCount):
         The sorting order is arbitrary and largely meaningless, except to
         differentiate different stages.
         """
-    def write(self, out: ostream) -> None:
+    def write(self, out: ostream, indent_level: int = ...) -> None:
         """Writes the details of this stage"""
     def output(self, out: ostream) -> None:
         """Just a single line output"""
@@ -6450,6 +6450,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         empty 2-d texture; follow up with one of the variants of setup_texture() if
         this is not what you want.
         """
+    def __deepcopy__(self, memo) -> Texture: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def make_copy(self) -> Texture:
