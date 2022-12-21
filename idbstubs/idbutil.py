@@ -4,20 +4,21 @@ from functools import cache
 from importlib.util import find_spec
 from os import PathLike
 from pathlib import Path
-from typing import Final, TypeAlias
+from typing import Final
 
 import panda3d.interrogatedb as idb
 
+from .idb_interface import (
+    ElementIndex,
+    FunctionIndex,
+    FunctionWrapperIndex,
+    IDBFunction,
+    IDBType,
+    TypeIndex,
+)
 from .special_cases import NOT_EXPOSED, TYPE_NAME_OVERRIDES
 
 _logger: Final = logging.getLogger(__name__)
-
-TypeIndex: TypeAlias = int
-ElementIndex: TypeAlias = int
-FunctionIndex: TypeAlias = int
-FunctionWrapperIndex: TypeAlias = int
-MakeSeqIndex: TypeAlias = int
-ManifestIndex: TypeAlias = int
 
 
 def type_is_unexposed_wrapper(t: TypeIndex, /) -> bool:
@@ -164,42 +165,12 @@ def get_constructors(t: TypeIndex, /) -> Iterator[FunctionIndex]:
         yield idb.interrogate_type_get_constructor(t, n)
 
 
-def get_all_methods(t: TypeIndex, /) -> Iterator[FunctionIndex]:
-    """Yield the indices of a type's methods."""
-    # constructors
-    for n in range(idb.interrogate_type_number_of_constructors(t)):
-        yield idb.interrogate_type_get_constructor(t, n)
-    # type casts
-    for n in range(idb.interrogate_type_number_of_casts(t)):
-        yield idb.interrogate_type_get_cast(t, n)
-    # upcasts and downcasts
-    for n in range(idb.interrogate_type_number_of_derivations(t)):
-        if idb.interrogate_type_derivation_has_upcast(t, n):
-            yield idb.interrogate_type_get_upcast(t, n)
-        if idb.interrogate_type_derivation_has_downcast(t, n):
-            yield idb.interrogate_type_get_downcast(t, n)
-    # regular methods
-    for n in range(idb.interrogate_type_number_of_methods(t)):
-        yield idb.interrogate_type_get_method(t, n)
-
-
-def get_elements(t: TypeIndex, /) -> Iterator[ElementIndex]:
-    """Yield the indices of a type's elements (attributes)
-    that are exposed to Python.
-    """
-    for n in range(idb.interrogate_type_number_of_elements(t)):
-        yield idb.interrogate_type_get_element(t, n)
-
-
-def get_nested_types(t: TypeIndex, /) -> Iterator[TypeIndex]:
-    """Yield the indices of the types nested within another type,
-    excluding typedefs (which are not exposed to Python).
-    """
-    for n in range(idb.interrogate_type_number_of_nested_types(t)):
-        s = idb.interrogate_type_get_nested_type(t, n)
-        # Nested typedefs are not exposed to Python.
-        if not idb.interrogate_type_is_typedef(s):
-            yield s
+def get_all_methods(idb_type: IDBType) -> Iterator[IDBFunction]:
+    """Yield all of a type's methods."""
+    yield from idb_type.constructors
+    yield from idb_type.casts
+    yield from idb_type.up_down_casts
+    yield from idb_type.methods
 
 
 def get_derivations(t: TypeIndex, /) -> Iterator[TypeIndex]:

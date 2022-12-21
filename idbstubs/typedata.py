@@ -9,8 +9,8 @@ from typing import Final
 
 import panda3d.interrogatedb as idb
 
+from .idb_interface import TypeIndex
 from .idbutil import (
-    TypeIndex,
     get_constructors,
     get_derivations,
     get_python_wrappers,
