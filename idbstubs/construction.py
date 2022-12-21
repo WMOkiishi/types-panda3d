@@ -92,10 +92,9 @@ def get_function_name(function: IDBFunction) -> str:
         if len(function.wrappers) != 1:
             scoped_name = function.scoped_name
             _logger.warning(f'Typecast {scoped_name!r} has multiple wrappers')
-        first_wrapper = function.wrappers[0]
-        return_type = IDBType(unwrap_type(first_wrapper.return_type.index))
+        return_type = unwrap_type(function.wrappers[0].return_type)
         if return_type.is_atomic:
-            return f'__{get_type_name(return_type.index)}__'
+            return f'__{get_type_name(return_type)}__'
     if function.is_unary_op:
         rename_dict = UNARY_METHOD_RENAMES
     else:
@@ -141,7 +140,7 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
     for a type known to interrogate.
     """
     for idb_function in get_all_methods(idb_type):
-        if not function_is_exposed(idb_function.index):
+        if not function_is_exposed(idb_function):
             continue
         method = make_function_rep(idb_function)
         if method.name in NO_STUBS:
@@ -171,8 +170,8 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
 def make_typedef_rep(idb_type: IDBType) -> Alias:
     """Return a representation of a typedef known to interrogate."""
     wrapped_type = idb_type.wrapped_type
-    name = get_direct_type_name(idb_type.index)
-    typedef_of = get_type_name(wrapped_type.index)
+    name = get_direct_type_name(idb_type)
+    typedef_of = get_type_name(wrapped_type)
     of_local = idb_type.library_name == wrapped_type.library_name
     return Alias(name, typedef_of, of_local=of_local)
 
@@ -181,7 +180,7 @@ def make_element_rep(
         element: IDBElement,
         namespace: Sequence[str] = ()) -> Attribute:
     """Return a representation of an element known to interrogate."""
-    type_name = get_type_name(element.type.index)
+    type_name = get_type_name(element.type)
     if element.is_sequence:
         if element.has_setter:
             seq_type = 'MutableSequence'
@@ -192,9 +191,9 @@ def make_element_rep(
     elif element.is_mapping:
         getter_wrapper = element.getter.wrappers[0]
         if getter_wrapper.parameters[0].is_this:
-            t = getter_wrapper.parameters[1].type.index
+            t = getter_wrapper.parameters[1].type
         else:
-            t = getter_wrapper.parameters[0].type.index
+            t = getter_wrapper.parameters[0].type
         from_type = get_type_name(t) or 'Any'
         to_type = type_name or 'Any'
         if element.has_setter:
@@ -230,7 +229,7 @@ def make_signature_rep(
     if is_constructor:
         return_type = 'None'
     else:
-        return_type = get_type_name(wrapper.return_type.index)
+        return_type = get_type_name(wrapper.return_type)
     params: list[Parameter] = []
     if ensure_self_param:
         params.append(Parameter('self'))
@@ -241,7 +240,7 @@ def make_signature_rep(
             continue
         params.append(Parameter(
             check_keyword(param.name),
-            get_type_name(param.type.index),
+            get_type_name(param.type),
             is_optional=param.is_optional,
             named=param.has_name,
         ))
@@ -275,7 +274,7 @@ def make_function_rep(function: IDBFunction) -> Function:
     signatures: list[Signature] = []
     sigs_by_doc = defaultdict[str, list[str]](list)
     for wrapper in function.wrappers:
-        if not wrapper_is_exposed(wrapper.index):
+        if not wrapper_is_exposed(wrapper):
             continue
         signature = make_signature_rep(
             wrapper,
@@ -335,7 +334,7 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
         *(class_name_from_cpp_name(s) for s in
           make_seq.scoped_name.split('::')[:-1])
     )
-    return_type = get_type_name(element_getter.wrappers[0].return_type.index)
+    return_type = get_type_name(element_getter.wrappers[0].return_type)
     signature = Signature([Parameter('self')], f'tuple[{return_type}, ...]')
     return Function(
         make_seq.seq_name,
@@ -375,7 +374,7 @@ def make_scoped_enum_rep(
         idb_type: IDBType,
         namespace: Sequence[str] = ()) -> Class:
     """Return a representation of a scoped enum known to interrogate."""
-    name = get_direct_type_name(idb_type.index)
+    name = get_direct_type_name(idb_type)
     this_namespace = (*namespace, name)
     value_elements = {
         value.name: Attribute(value.name, 'int', namespace=this_namespace)
@@ -389,13 +388,13 @@ def make_class_rep(
         idb_type: IDBType,
         namespace: Sequence[str] = ()) -> Class:
     """Return a representation of a class known to interrogate."""
-    name = get_direct_type_name(idb_type.index)
+    name = get_direct_type_name(idb_type)
     class_body: dict[str, StubRep] = {}
     this_namespace = (*namespace, name)
     derivations = [
-        get_type_name(derivation.index)
+        get_type_name(derivation)
         for derivation in idb_type.derivations
-        if type_is_exposed(derivation.index)
+        if type_is_exposed(derivation)
     ]
     if (type_vars := GENERIC.get(name)) is not None:
         derivations.append(f'Generic[{type_vars}]')
@@ -404,7 +403,7 @@ def make_class_rep(
         'DtoolClassDict', 'ClassVar[dict[str, Any]]', namespace=this_namespace
     )
     for elem in idb_type.elements:
-        if element_is_exposed(elem.index) and elem.name not in NO_STUBS:
+        if element_is_exposed(elem) and elem.name not in NO_STUBS:
             element = make_element_rep(elem, this_namespace)
             class_body[element.name] = element
     if name.startswith('ParamValue_'):
@@ -420,7 +419,7 @@ def make_class_rep(
         class_body |= {rep.name: rep for rep in with_alias(method)}
     # Nested types
     for nested_type in idb_type.nested_types:
-        if not type_is_exposed(nested_type.index):
+        if not type_is_exposed(nested_type):
             continue
         type_reps = make_type_reps(nested_type, this_namespace)
         class_body |= {rep.name: rep for rep in type_reps}
@@ -438,18 +437,16 @@ def make_class_rep(
 def make_package_rep(package_name: str = 'panda3d') -> Package:
     nested_by_mod_by_lib = defaultdict[str, defaultdict[str, list[StubRep]]](lambda: defaultdict(list))
     # Gather global functions
-    for f in get_global_functions():
-        if not function_is_exposed(f):
+    for idb_function in get_global_functions():
+        if not function_is_exposed(idb_function):
             continue
-        idb_function = IDBFunction(f)
         function_rep = make_function_rep(idb_function)
         mod_name = idb_function.module_name
         lib_name = '_' + idb_function.library_name.removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += with_alias(function_rep)
 
     # Gather global types
-    for t in get_global_types():
-        idb_type = IDBType(t)
+    for idb_type in get_global_types():
         mod_name = idb_type.module_name
         lib_name = '_' + idb_type.library_name.removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(

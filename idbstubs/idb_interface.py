@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
-from typing import TypeAlias
+from typing import Literal, TypeAlias
 
 import attrs
 import panda3d.interrogatedb as idb
@@ -12,6 +12,7 @@ FunctionIndex: TypeAlias = int
 FunctionWrapperIndex: TypeAlias = int
 MakeSeqIndex: TypeAlias = int
 ManifestIndex: TypeAlias = int
+AtomicToken: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
 @attrs.define
@@ -170,6 +171,10 @@ class IDBElement:
         return idb.interrogate_element_name(self.index)
 
     @property
+    def scoped_name(self) -> str:
+        return idb.interrogate_element_scoped_name(self.index)
+
+    @property
     def comment(self) -> str:
         return idb.interrogate_element_comment(self.index)
 
@@ -212,7 +217,7 @@ class IDBEnumValue:
         return idb.interrogate_type_enum_value(self.type_index, self.index)
 
 
-@attrs.define
+@attrs.define(frozen=True)
 class IDBType:
     index: TypeIndex
 
@@ -230,9 +235,16 @@ class IDBType:
             for n in range(len(self)):
                 yield self[n]
 
+    def __str__(self) -> str:
+        return f'{self.name!r} ({self.index})'
+
     @property
     def name(self) -> str:
         return idb.interrogate_type_name(self.index)
+
+    @property
+    def scoped_name(self) -> str:
+        return idb.interrogate_type_scoped_name(self.index)
 
     @property
     def comment(self) -> str:
@@ -247,8 +259,20 @@ class IDBType:
         return idb.interrogate_type_library_name(self.index)
 
     @property
+    def is_global(self) -> bool:
+        return idb.interrogate_type_is_global(self.index)
+
+    @property
+    def is_nested(self) -> bool:
+        return idb.interrogate_type_is_nested(self.index)
+
+    @property
     def is_atomic(self) -> bool:
         return idb.interrogate_type_is_atomic(self.index)
+
+    @property
+    def atomic_token(self) -> AtomicToken:
+        return idb.interrogate_type_atomic_token(self.index)
 
     @property
     def is_wrapped(self) -> bool:
@@ -263,6 +287,10 @@ class IDBType:
         return IDBType(idb.interrogate_type_wrapped_type(self.index))
 
     @property
+    def is_array(self) -> bool:
+        return idb.interrogate_type_is_array(self.index)
+
+    @property
     def is_enum(self) -> bool:
         return idb.interrogate_type_is_enum(self.index)
 
@@ -273,6 +301,14 @@ class IDBType:
     @property
     def enum_values(self) -> EnumValueList:
         return IDBType.EnumValueList(self.index)
+
+    @property
+    def is_fully_defined(self) -> bool:
+        return idb.interrogate_type_is_fully_defined(self.index)
+
+    @property
+    def is_unpublished(self) -> bool:
+        return idb.interrogate_type_is_unpublished(self.index)
 
     @property
     def is_final(self) -> bool:

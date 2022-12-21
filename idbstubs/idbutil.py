@@ -8,112 +8,90 @@ from typing import Final
 
 import panda3d.interrogatedb as idb
 
-from .idb_interface import (
-    ElementIndex,
-    FunctionIndex,
-    FunctionWrapperIndex,
-    IDBFunction,
-    IDBType,
-    TypeIndex,
-)
+from .idb_interface import IDBElement, IDBFunction, IDBFunctionWrapper, IDBType
 from .special_cases import NOT_EXPOSED, TYPE_NAME_OVERRIDES
 
 _logger: Final = logging.getLogger(__name__)
 
 
-def type_is_unexposed_wrapper(t: TypeIndex, /) -> bool:
+def type_is_unexposed_wrapper(idb_type: IDBType) -> bool:
     """Return whether a type is a wrapper or non-global typedef."""
     return (
-        idb.interrogate_type_is_wrapped(t)
-        or (
-            idb.interrogate_type_is_typedef(t)
-            and not idb.interrogate_type_is_global(t)
-        )
+        idb_type.is_wrapped
+        or (idb_type.is_typedef and not idb_type.is_global)
     )
 
 
-def type_is_wrapped_or_typedef(t: TypeIndex, /) -> bool:
-    """Return whether a type is a wrapper or typedef."""
-    return (
-        idb.interrogate_type_is_wrapped(t)
-        or idb.interrogate_type_is_typedef(t)
-    )
-
-
-def unwrap_type(t: TypeIndex, /) -> TypeIndex:
-    """Traverse wrapped types and return the index of the first type
+def unwrap_type(idb_type: IDBType) -> IDBType:
+    """Traverse wrapped types and return the first type
     that is neither a wrapper nor a typedef.
     """
-    while type_is_wrapped_or_typedef(t):
-        t = idb.interrogate_type_wrapped_type(t)
-    return t
+    while idb_type.is_wrapped or idb_type.is_typedef:
+        idb_type = idb_type.wrapped_type
+    return idb_type
 
 
-def type_is_unscoped_enum(t: TypeIndex, /) -> bool:
+def type_is_unscoped_enum(idb_type: IDBType) -> bool:
     """Return whether the given type is an enumerated type
     exposed to Python simply as integer constants.
     """
     return bool(
-        idb.interrogate_type_is_enum(t)
-        and idb.interrogate_type_name(t)
-        and not idb.interrogate_type_is_scoped_enum(t)
+        idb_type.is_enum and idb_type.name
+        and not idb_type.is_scoped_enum
     )
 
 
-def function_is_exposed(f: FunctionIndex, /) -> bool:
+def function_is_exposed(function: IDBFunction) -> bool:
     """Return whether a function is exposed to Python."""
-    if idb.interrogate_function_name(f) == 'operator new':
+    if function.name == 'operator new':
         return False
-    if idb.interrogate_function_scoped_name(f) in NOT_EXPOSED:
+    if function.scoped_name in NOT_EXPOSED:
         return False
-    return any(wrapper_is_exposed(w) for w in get_python_wrappers(f))
+    return any(wrapper_is_exposed(w) for w in function.wrappers)
 
 
-def wrapper_is_exposed(w: FunctionWrapperIndex, /) -> bool:
+def wrapper_is_exposed(wrapper: IDBFunctionWrapper) -> bool:
     """Return whether a function wrapper is exposed to Python."""
-    return_type = idb.interrogate_wrapper_return_type(w)
-    if not type_is_exposed(return_type):
+    if not type_is_exposed(wrapper.return_type):
         return False
-    for n in range(idb.interrogate_wrapper_number_of_parameters(w)):
-        if idb.interrogate_wrapper_parameter_is_this(w, n):
+    for parameter in wrapper.parameters:
+        if parameter.is_this:
             continue
-        param_type = idb.interrogate_wrapper_parameter_type(w, n)
-        if not type_is_exposed(param_type):
+        if not type_is_exposed(parameter.type):
             return False
     return True
 
 
-def element_is_exposed(e: ElementIndex, /) -> bool:
+def element_is_exposed(element: IDBElement) -> bool:
     """Return whether an element is exposed to Python."""
-    if not type_is_exposed(idb.interrogate_element_type(e)):
+    if not type_is_exposed(element.type):
         return False
-    if idb.interrogate_element_scoped_name(e) in NOT_EXPOSED:
+    if element.scoped_name in NOT_EXPOSED:
         return False
     return True
 
 
 @cache
-def type_is_exposed(t: TypeIndex, /) -> bool:
+def type_is_exposed(idb_type: IDBType) -> bool:
     """Return whether a type is exposed to Python."""
-    if type_is_wrapped_or_typedef(t):
-        return type_is_exposed(idb.interrogate_type_wrapped_type(t))
-    name = idb.interrogate_type_name(t)
-    if idb.interrogate_type_is_atomic(t) or name in TYPE_NAME_OVERRIDES:
+    if idb_type.is_wrapped or idb_type.is_typedef:
+        return type_is_exposed(idb_type.wrapped_type)
+    if idb_type.is_atomic or idb_type.name in TYPE_NAME_OVERRIDES:
         return True
-    if idb.interrogate_type_is_array(t):
+    if idb_type.is_array:
         # TODO: What's going on with compose_matrix and decompose_matrix?
         return False
-    if name.startswith(('PointerTo< ', 'ConstPointerTo< ')):
+    if idb_type.name.startswith(('PointerTo< ', 'ConstPointerTo< ')):
         return True
-    if idb.interrogate_type_is_unpublished(t):
-        _logger.debug(f'Type {name!r} ({t}) is unpublished')
+    if idb_type.is_unpublished:
+        _logger.debug(f'Type {idb_type} is unpublished')
         return False
-    if idb.interrogate_type_is_nested(t):
-        if not idb.interrogate_type_is_fully_defined(t):
-            _logger.info(f'Nested type {name!r} ({t}) is not fully defined')
+    if idb_type.is_nested:
+        if not idb_type.is_fully_defined:
+            _logger.info(f'Nested type {idb_type} is not fully defined')
             return False
-    elif not idb.interrogate_type_is_global(t):
-        _logger.info(f'Type {name!r} ({t}) is neither global nor nested')
+    elif not idb_type.is_global:
+        _logger.info(f'Type {idb_type} is neither global nor nested')
         return False
     return True
 
@@ -136,33 +114,21 @@ def load_interrogate_database(
         idb.interrogate_request_database(db.name)
 
 
-def get_global_types() -> Iterator[TypeIndex]:
-    """Yield the indices of all top-level types known to interrogate."""
+def get_global_types() -> Iterator[IDBType]:
+    """Yield all top-level types known to interrogate."""
     for n in range(idb.interrogate_number_of_global_types()):
         t = idb.interrogate_get_global_type(n)
         if not idb.interrogate_type_is_nested(t):
-            yield t
+            yield IDBType(t)
 
 
-def get_global_functions() -> Iterator[FunctionIndex]:
-    """Yield the indices of all top-level functions known to interrogate."""
+def get_global_functions() -> Iterator[IDBFunction]:
+    """Yield all top-level functions known to interrogate."""
     for n in range(idb.interrogate_number_of_global_functions()):
-        yield idb.interrogate_get_global_function(n)
+        yield IDBFunction(idb.interrogate_get_global_function(n))
     for n in range(idb.interrogate_number_of_globals()):
         g = idb.interrogate_get_global(n)
-        yield idb.interrogate_element_getter(g)
-
-
-def get_python_wrappers(f: FunctionIndex, /) -> Iterator[FunctionWrapperIndex]:
-    """Yield the indices of a function's Python wrappers."""
-    for n in range(idb.interrogate_function_number_of_python_wrappers(f)):
-        yield idb.interrogate_function_python_wrapper(f, n)
-
-
-def get_constructors(t: TypeIndex, /) -> Iterator[FunctionIndex]:
-    """Yield the indices of a type's constructors."""
-    for n in range(idb.interrogate_type_number_of_constructors(t)):
-        yield idb.interrogate_type_get_constructor(t, n)
+        yield IDBFunction(idb.interrogate_element_getter(g))
 
 
 def get_all_methods(idb_type: IDBType) -> Iterator[IDBFunction]:
@@ -171,9 +137,3 @@ def get_all_methods(idb_type: IDBType) -> Iterator[IDBFunction]:
     yield from idb_type.casts
     yield from idb_type.up_down_casts
     yield from idb_type.methods
-
-
-def get_derivations(t: TypeIndex, /) -> Iterator[TypeIndex]:
-    """Yield the indices of a type's direct base classes."""
-    for n in range(idb.interrogate_type_number_of_derivations(t)):
-        yield idb.interrogate_type_get_derivation(t, n)

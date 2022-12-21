@@ -9,11 +9,8 @@ from typing import Final
 
 import panda3d.interrogatedb as idb
 
-from .idb_interface import TypeIndex
+from .idb_interface import IDBType
 from .idbutil import (
-    get_constructors,
-    get_derivations,
-    get_python_wrappers,
     type_is_exposed,
     type_is_unexposed_wrapper,
     type_is_unscoped_enum,
@@ -28,7 +25,7 @@ _logger: Final = logging.getLogger(__name__)
 _modules: dict[str, str] = {}
 _inheritance: dict[str, set[str]] = {}
 _direct_inheritance: dict[str, tuple[str, ...]] = {}
-_coercions = defaultdict[TypeIndex, set[TypeIndex]](set)
+_coercions = defaultdict[IDBType, set[IDBType]](set)
 _aliases: dict[str, str] = {}
 _param_type_replacements: dict[str, str] = {}
 _enum_definitions: dict[str, str] = {}
@@ -98,67 +95,64 @@ TYPE_VARIABLES: Final[dict[str, tuple[tuple[str, ...], str]]] = {
 
 
 @cache
-def get_direct_type_name(t: TypeIndex, /) -> str:
-    name = idb.interrogate_type_name(t)
-    return class_name_from_cpp_name(name)
+def get_direct_type_name(idb_type: IDBType) -> str:
+    return class_name_from_cpp_name(idb_type.name)
 
 
 @cache
-def get_type_name(t: TypeIndex, /) -> str:
+def get_type_name(idb_type: IDBType) -> str:
     """Return the Python name for a type. If the type is a non-scoped enum,
     the name returned is an alias name, prefixed by an underscore.
     """
-    if type_is_unexposed_wrapper(t):
-        return get_type_name(idb.interrogate_type_wrapped_type(t))
-    if idb.interrogate_type_is_atomic(t):
-        atomic_token = idb.interrogate_type_atomic_token(t)
-        return ATOMIC_TYPES[atomic_token]
+    if type_is_unexposed_wrapper(idb_type):
+        return get_type_name(idb_type.wrapped_type)
+    if idb_type.is_atomic:
+        return ATOMIC_TYPES[idb_type.atomic_token]
     # We can't use `str.removeprefix` because of `ParamValue< std::string >`
-    name = idb.interrogate_type_scoped_name(t).replace('std::', '')
+    name = idb_type.scoped_name.replace('std::', '')
     if (override := TYPE_NAME_OVERRIDES.get(name)) is not None:
         return override
-    if not idb.interrogate_type_is_fully_defined(t):
+    if not idb_type.is_fully_defined:
         if name.startswith('PointerTo< '):
             name = name[11:-2]
         elif name.startswith('ConstPointerTo< '):
             name = name[16:-2]
     name_iter = (class_name_from_cpp_name(s) for s in name.split('::'))
-    if idb.interrogate_type_is_enum(t):
-        if not idb.interrogate_type_is_scoped_enum(t):
-            return '_' + '_'.join(name_iter)
+    if idb_type.is_enum and not idb_type.is_scoped_enum:
+        return '_' + '_'.join(name_iter)
     return '.'.join(name_iter)
 
 
 def load_data() -> None:
     for n in range(idb.interrogate_number_of_types()):
-        t = idb.interrogate_get_type(n)
-        if idb.interrogate_type_is_wrapped(t):
+        idb_type = IDBType(idb.interrogate_get_type(n))
+        type_name = get_type_name(idb_type)
+        if idb_type.is_wrapped:
             continue
-        if type_is_unscoped_enum(t):
-            value_count = idb.interrogate_type_number_of_enum_values(t)
-            values = sorted(idb.interrogate_type_enum_value(t, n) for n in range(value_count))
+        if type_is_unscoped_enum(idb_type):
+            values = sorted(e.value for e in idb_type.enum_values)
             values_str = ', '.join(str(v) for v in values)
-            _enum_definitions[get_type_name(t)] = f'Literal[{values_str}]' if values else 'int'
+            _enum_definitions[type_name] = f'Literal[{values_str}]' if values else 'int'
             continue
-        if idb.interrogate_type_is_global(t) and not idb.interrogate_type_is_nested(t):
-            mod_name = idb.interrogate_type_module_name(t)
-            lib_name = idb.interrogate_type_library_name(t).removeprefix('libp3')
-            _modules[get_type_name(t)] = mod_name + '._' + lib_name
-        if idb.interrogate_type_is_typedef(t):
-            if idb.interrogate_type_is_global(t):
-                _aliases[get_type_name(t)] = get_type_name(unwrap_type(t))
+        if idb_type.is_global and not idb_type.is_nested:
+            mod_name = idb_type.module_name
+            lib_name = idb_type.library_name.removeprefix('libp3')
+            _modules[type_name] = mod_name + '._' + lib_name
+        if idb_type.is_typedef:
+            if idb_type.is_global:
+                _aliases[type_name] = get_type_name(unwrap_type(idb_type))
             # Don't record coercion or inheritance information for typedefs
             continue
-        for cast_to in explicit_cast_to(t):
-            _coercions[cast_to].add(t)
-        if cast_from := set(implicit_cast_from(t)):
-            _coercions[t].update(cast_from)
-        if base_classes := recursive_superclasses(t):
-            _inheritance[get_type_name(t)] = {
+        for cast_to in explicit_cast_to(idb_type):
+            _coercions[cast_to].add(idb_type)
+        if cast_from := set(implicit_cast_from(idb_type)):
+            _coercions[idb_type].update(cast_from)
+        if base_classes := recursive_superclasses(idb_type):
+            _inheritance[type_name] = {
                 get_type_name(s) for s in base_classes
             }
-            _direct_inheritance[get_type_name(t)] = tuple(
-                get_type_name(s) for s in get_derivations(t)
+            _direct_inheritance[type_name] = tuple(
+                get_type_name(s) for s in idb_type.derivations
             )
     for cast_to in tuple(_coercions):  # freeze keys
         cast_to_name = get_type_name(cast_to)
@@ -168,48 +162,42 @@ def load_data() -> None:
 
 
 @cache
-def recursive_superclasses(t: TypeIndex, /) -> frozenset[TypeIndex]:
-    t = unwrap_type(t)
-    derivations = set[TypeIndex]()
-    for d in get_derivations(t):
-        derivations.add(d)
-        derivations |= recursive_superclasses(d)
+def recursive_superclasses(idb_type: IDBType) -> frozenset[IDBType]:
+    derivations = set[IDBType]()
+    for derivation in unwrap_type(idb_type).derivations:
+        derivations.add(derivation)
+        derivations |= recursive_superclasses(derivation)
     return frozenset(derivations)
 
 
-def explicit_cast_to(t: TypeIndex, /) -> Iterator[TypeIndex]:
-    for i in range(idb.interrogate_type_number_of_casts(t)):
-        f = idb.interrogate_type_get_cast(t, i)
-        for j in range(idb.interrogate_function_number_of_python_wrappers(f)):
-            w = idb.interrogate_function_python_wrapper(f, j)
-            cast_to = unwrap_type(idb.interrogate_wrapper_return_type(w))
-            if idb.interrogate_type_is_atomic(cast_to):
-                continue
-            if type_is_exposed(cast_to):
+def explicit_cast_to(idb_type: IDBType) -> Iterator[IDBType]:
+    for cast in idb_type.casts:
+        for wrapper in cast.wrappers:
+            cast_to = unwrap_type(wrapper.return_type)
+            if type_is_exposed(cast_to) and not cast_to.is_atomic:
                 yield cast_to
 
 
-def implicit_cast_from(t: TypeIndex, /) -> Iterator[TypeIndex]:
-    """Yield the indices of the types that can be implicitly cast
+def implicit_cast_from(idb_type: IDBType) -> Iterator[IDBType]:
+    """Yield the types that can be implicitly cast
     to the type with the given index.
     """
-    for w in flatten(map(get_python_wrappers, get_constructors(t))):
-        max_arity = idb.interrogate_wrapper_number_of_parameters(w)
-        min_arity = sum(not idb.interrogate_wrapper_parameter_is_optional(w, n)
-                        for n in range(max_arity))
-        if min_arity > 1 or max_arity < 1:
-            continue
-        if (idb.interrogate_wrapper_parameter_name(w, 0)
-                not in _implicit_cast_param_names):
-            continue
-        cast_from = unwrap_type(idb.interrogate_wrapper_parameter_type(w, 0))
-        if t in recursive_superclasses(cast_from):
-            continue
-        if type_is_exposed(cast_from):
-            yield cast_from
+    for constructor in idb_type.constructors:
+        for wrapper in constructor.wrappers:
+            max_arity = len(wrapper.parameters)
+            min_arity = sum(not p.is_optional for p in wrapper.parameters)
+            if min_arity > 1 or max_arity < 1:
+                continue
+            if wrapper.parameters[0].name not in _implicit_cast_param_names:
+                continue
+            cast_from = unwrap_type(wrapper.parameters[0].type)
+            if idb_type in recursive_superclasses(cast_from):
+                continue
+            if type_is_exposed(cast_from):
+                yield cast_from
 
 
-def make_param_type_replacement(cast_to: TypeIndex) -> str:
+def make_param_type_replacement(cast_to: IDBType) -> str:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
     """
@@ -221,7 +209,7 @@ def make_param_type_replacement(cast_to: TypeIndex) -> str:
             for i in cast_layer
         ))
     cast_from_names = {get_type_name(i) for i in cast_from}
-    if idb.interrogate_type_name(cast_to) == 'Filename':
+    if cast_to.name == 'Filename':
         cast_from_names.remove('Filename')
         cast_from_names.discard('ConfigVariableFilename')
         cast_from_names.add('StrOrBytesPath')
