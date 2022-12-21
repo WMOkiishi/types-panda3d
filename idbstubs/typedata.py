@@ -7,9 +7,7 @@ from itertools import combinations, product
 from sys import stdlib_module_names
 from typing import Final
 
-import panda3d.interrogatedb as idb
-
-from .idb_interface import IDBType
+from .idb_interface import IDBType, get_all_types
 from .idbutil import (
     type_is_exposed,
     type_is_unexposed_wrapper,
@@ -124,8 +122,7 @@ def get_type_name(idb_type: IDBType) -> str:
 
 
 def load_data() -> None:
-    for n in range(idb.interrogate_number_of_types()):
-        idb_type = IDBType(idb.interrogate_get_type(n))
+    for idb_type in get_all_types():
         type_name = get_type_name(idb_type)
         if idb_type.is_wrapped:
             continue

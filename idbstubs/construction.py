@@ -1,9 +1,9 @@
+import itertools
 import logging
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Sequence
 from typing import Final, Protocol, TypeVar, cast
 
-import panda3d.interrogatedb as idb
 from attrs import evolve
 
 from .idb_interface import (
@@ -11,15 +11,15 @@ from .idb_interface import (
     IDBFunction,
     IDBFunctionWrapper,
     IDBMakeSeq,
-    IDBManifest,
     IDBType,
+    get_global_functions,
+    get_global_types,
+    get_globals,
+    get_manifests,
 )
 from .idbutil import (
     element_is_exposed,
     function_is_exposed,
-    get_all_methods,
-    get_global_functions,
-    get_global_types,
     type_is_exposed,
     unwrap_type,
     wrapper_is_exposed,
@@ -127,10 +127,9 @@ def with_alias(
     return rep,
 
 
-def get_all_manifests() -> Iterator[Attribute]:
+def make_manifest_reps() -> Iterator[Attribute]:
     """Yield representations of all manifests known to interrogate."""
-    for n in range(idb.interrogate_number_of_manifests()):
-        manifest = IDBManifest(idb.interrogate_get_manifest(n))
+    for manifest in get_manifests():
         type_name = 'Final[int]' if manifest.has_int_value else 'Final[str]'
         yield Attribute(manifest.name, type_name, namespace=('panda3d', 'core'))
 
@@ -139,7 +138,12 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
     """Yield representations of all exposed methods
     for a type known to interrogate.
     """
-    for idb_function in get_all_methods(idb_type):
+    for idb_function in itertools.chain(
+        idb_type.constructors,
+        idb_type.casts,
+        idb_type.up_down_casts,
+        idb_type.methods,
+    ):
         if not function_is_exposed(idb_function):
             continue
         method = make_function_rep(idb_function)
@@ -437,7 +441,10 @@ def make_class_rep(
 def make_package_rep(package_name: str = 'panda3d') -> Package:
     nested_by_mod_by_lib = defaultdict[str, defaultdict[str, list[StubRep]]](lambda: defaultdict(list))
     # Gather global functions
-    for idb_function in get_global_functions():
+    for idb_function in itertools.chain(
+        get_global_functions(),
+        (g.getter for g in get_globals()),
+    ):
         if not function_is_exposed(idb_function):
             continue
         function_rep = make_function_rep(idb_function)
@@ -447,6 +454,8 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
 
     # Gather global types
     for idb_type in get_global_types():
+        if idb_type.is_nested:
+            continue
         mod_name = idb_type.module_name
         lib_name = '_' + idb_type.library_name.removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(

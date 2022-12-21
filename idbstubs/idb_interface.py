@@ -356,3 +356,33 @@ class IDBType:
     def nested_types(self) -> Iterator[IDBType]:
         for n in range(idb.interrogate_type_number_of_nested_types(self.index)):
             yield IDBType(idb.interrogate_type_get_nested_type(self.index, n))
+
+
+def get_manifests() -> Iterator[IDBManifest]:
+    """Yield all manifests known to interrogate."""
+    for n in range(idb.interrogate_number_of_manifests()):
+        yield IDBManifest(idb.interrogate_get_manifest(n))
+
+
+def get_globals() -> Iterator[IDBElement]:
+    """Yield all globals known to interrogate."""
+    for n in range(idb.interrogate_number_of_globals()):
+        yield IDBElement(idb.interrogate_get_global(n))
+
+
+def get_all_types() -> Iterator[IDBType]:
+    """Yield all types known to interrogate."""
+    for n in range(idb.interrogate_number_of_types()):
+        yield IDBType(idb.interrogate_get_type(n))
+
+
+def get_global_types() -> Iterator[IDBType]:
+    """Yield all global types known to interrogate."""
+    for n in range(idb.interrogate_number_of_global_types()):
+        yield IDBType(idb.interrogate_get_global_type(n))
+
+
+def get_global_functions() -> Iterator[IDBFunction]:
+    """Yield all global functions known to interrogate."""
+    for n in range(idb.interrogate_number_of_global_functions()):
+        yield IDBFunction(idb.interrogate_get_global_function(n))

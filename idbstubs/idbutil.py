@@ -1,5 +1,4 @@
 import logging
-from collections.abc import Iterator
 from functools import cache
 from importlib.util import find_spec
 from os import PathLike
@@ -112,28 +111,3 @@ def load_interrogate_database(
     idb.interrogate_add_search_directory(str(directory))
     for db in directory.glob('*.in'):
         idb.interrogate_request_database(db.name)
-
-
-def get_global_types() -> Iterator[IDBType]:
-    """Yield all top-level types known to interrogate."""
-    for n in range(idb.interrogate_number_of_global_types()):
-        t = idb.interrogate_get_global_type(n)
-        if not idb.interrogate_type_is_nested(t):
-            yield IDBType(t)
-
-
-def get_global_functions() -> Iterator[IDBFunction]:
-    """Yield all top-level functions known to interrogate."""
-    for n in range(idb.interrogate_number_of_global_functions()):
-        yield IDBFunction(idb.interrogate_get_global_function(n))
-    for n in range(idb.interrogate_number_of_globals()):
-        g = idb.interrogate_get_global(n)
-        yield IDBFunction(idb.interrogate_element_getter(g))
-
-
-def get_all_methods(idb_type: IDBType) -> Iterator[IDBFunction]:
-    """Yield all of a type's methods."""
-    yield from idb_type.constructors
-    yield from idb_type.casts
-    yield from idb_type.up_down_casts
-    yield from idb_type.methods
