@@ -1,3 +1,4 @@
+from _typeshed import Self
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -33,6 +34,8 @@ class SmoothMover:
     PM_on: Final[Literal[1]]
     PMOn: Final[Literal[1]]
     def __init__(self, __param0: SmoothMover = ...) -> None: ...
+    def __copy__(self: Self) -> Self: ...
+    def __deepcopy__(self: Self, __memo: object) -> Self: ...
     @overload
     def set_pos(self, pos: Vec3Like) -> bool:
         """Specifies the position of the SmoothMover at a particular time in the past.

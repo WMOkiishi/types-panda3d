@@ -1,3 +1,4 @@
+from _typeshed import Self
 from typing import Any, ClassVar, overload
 
 from panda3d._typing import Vec4Like
@@ -292,6 +293,8 @@ class NonlinearImager:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: NonlinearImager = ...) -> None: ...
+    def __copy__(self: Self) -> Self: ...
+    def __deepcopy__(self: Self, __memo: object) -> Self: ...
     @overload
     def add_screen(self, screen: ProjectionScreen) -> int:
         """`(self, screen: NodePath, name: str)`:

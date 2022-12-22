@@ -1,4 +1,4 @@
-from _typeshed import StrOrBytesPath
+from _typeshed import Self, StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 
@@ -80,6 +80,8 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         """
     @overload
     def __init__(self, __param0: MovieAudio | MovieAudioCursor) -> None: ...
+    def __copy__(self: Self) -> Self: ...
+    def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def get_source(self) -> MovieAudio:
         """Returns the MovieAudio which this cursor references."""
     def audio_rate(self) -> int:
@@ -272,6 +274,8 @@ class MovieVideoCursor(TypedWritableReferenceCount):
     class Buffer(TypedReferenceCount):
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, __param0: MovieVideoCursor.Buffer) -> None: ...
+        def __copy__(self: Self) -> Self: ...
+        def __deepcopy__(self: Self, __memo: object) -> Self: ...
         def compare_timestamp(self, other: MovieVideoCursor.Buffer) -> int:
             """Used to sort different buffers to ensure they correspond to the same source
             frame, particularly important when synchronizing the different pages of a
@@ -291,6 +295,8 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         getTimestamp = get_timestamp
         getClassType = get_class_type
     def __init__(self, __param0: MovieVideoCursor) -> None: ...
+    def __copy__(self: Self) -> Self: ...
+    def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def get_source(self) -> MovieVideo:
         """Get the MovieVideo which this cursor references."""
     def size_x(self) -> int:

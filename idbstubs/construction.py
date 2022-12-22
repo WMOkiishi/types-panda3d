@@ -20,6 +20,7 @@ from .idb_interface import (
 from .idbutil import (
     element_is_exposed,
     function_is_exposed,
+    type_has_copy_constructor,
     type_is_exposed,
     unwrap_type,
     wrapper_is_exposed,
@@ -138,6 +139,7 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
     """Yield representations of all exposed methods
     for a type known to interrogate.
     """
+    got_copy = got_deepcopy = False
     for idb_function in itertools.chain(
         idb_type.constructors,
         idb_type.casts,
@@ -166,7 +168,30 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
             continue
         elif method.name == '__len__' and idb_type.name in SIZE_NOT_LEN:
             method.name = 'size'
+        elif method.name == '__copy__':
+            got_copy = True
+        elif method.name == '__deepcopy__':
+            got_deepcopy = True
         yield method
+    if type_has_copy_constructor(idb_type):
+        if not got_copy:
+            yield Function(
+                '__copy__',
+                [Signature([Parameter('self', 'Self')], 'Self')],
+                is_method=True,
+            )
+        if not got_deepcopy:
+            yield Function(
+                '__deepcopy__',
+                [Signature(
+                    [
+                        Parameter('self', 'Self'),
+                        Parameter('memo', 'object', named=False),
+                    ],
+                    'Self',
+                )],
+                is_method=True,
+            )
     for make_seq in idb_type.make_seqs:
         yield make_make_seq_rep(make_seq)
 

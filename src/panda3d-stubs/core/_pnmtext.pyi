@@ -1,4 +1,4 @@
-from _typeshed import StrOrBytesPath
+from _typeshed import Self, StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -139,6 +139,8 @@ class PNMTextGlyph:
     def __init__(self, __param0: PNMTextGlyph) -> None: ...
     @overload
     def __init__(self, advance: float) -> None: ...
+    def __copy__(self: Self) -> Self: ...
+    def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def get_advance(self) -> int:
         """Returns the number of pixels by which the pen should be advanced after
         rendering this glyph.

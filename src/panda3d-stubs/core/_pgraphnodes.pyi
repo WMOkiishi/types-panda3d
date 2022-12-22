@@ -1,3 +1,4 @@
+from _typeshed import Self
 from collections.abc import MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
@@ -563,6 +564,8 @@ class ShaderGenerator(TypedReferenceCount):
         """
     @overload
     def __init__(self, __param0: GraphicsStateGuardianBase | ShaderGenerator) -> None: ...
+    def __copy__(self: Self) -> Self: ...
+    def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def synthesize_shader(self, rs: RenderAttrib | RenderState, anim: GeomVertexAnimationSpec) -> ShaderAttrib:
         """This is the routine that implements the next-gen fixed function pipeline by
         synthesizing a shader.  It also takes care of setting up any buffers needed
@@ -747,6 +750,8 @@ class SceneGraphAnalyzer:
     LM_none: Final[Literal[3]]
     LMNone: Final[Literal[3]]
     def __init__(self, __param0: SceneGraphAnalyzer = ...) -> None: ...
+    def __copy__(self: Self) -> Self: ...
+    def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def set_lod_mode(self, lod_mode: _SceneGraphAnalyzer_LodMode) -> None:
         """Specifies the mode in which LODNodes are analyzed."""
     def get_lod_mode(self, lod_mode: _SceneGraphAnalyzer_LodMode) -> _SceneGraphAnalyzer_LodMode:

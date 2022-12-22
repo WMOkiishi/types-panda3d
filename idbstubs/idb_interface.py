@@ -77,6 +77,10 @@ class IDBFunctionWrapper:
         return idb.interrogate_wrapper_comment(self.index)
 
     @property
+    def is_copy_constructor(self) -> bool:
+        return idb.interrogate_wrapper_is_copy_constructor(self.index)
+
+    @property
     def is_coerce_constructor(self) -> bool:
         return idb.interrogate_wrapper_is_coerce_constructor(self.index)
 
