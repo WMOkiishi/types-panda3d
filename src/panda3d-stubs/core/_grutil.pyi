@@ -1431,7 +1431,7 @@ class PfmVizzer:
         """
     def get_vis_inverse(self) -> bool:
         """Returns the vis_inverse flag.  See set_vis_inverse()."""
-    def set_flat_texcoord_name(self, flat_texcoord_name: InternalName) -> None:
+    def set_flat_texcoord_name(self, flat_texcoord_name: InternalName | str) -> None:
         """If the flat_texcoord_name is specified, it is the name of an additional
         vertex column that will be created for the "flat" texture coordinates, i.e.
         the original 0..1 values that correspond to the 2-D index position of each
@@ -1505,7 +1505,7 @@ class PfmVizzer:
         self,
         source: _PfmVizzer_ColumnType,
         target: _PfmVizzer_ColumnType,
-        name: InternalName,
+        name: InternalName | str,
         transform: TransformState = ...,
         lens: Lens = ...,
         undist_lut: PfmFile = ...,

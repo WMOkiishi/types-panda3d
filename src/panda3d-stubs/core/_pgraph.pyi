@@ -2780,14 +2780,14 @@ class ShaderInput:
     @overload
     def __init__(self, __param0: ShaderInput) -> None: ...
     @overload
-    def __init__(self, name: InternalName, priority: int = ...) -> None: ...
+    def __init__(self, name: InternalName | str, priority: int = ...) -> None: ...
     @overload
-    def __init__(self, name: InternalName, value, priority: int = ...) -> None: ...
+    def __init__(self, name: InternalName | str, value, priority: int = ...) -> None: ...
     @overload
-    def __init__(self, name: InternalName, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
+    def __init__(self, name: InternalName | str, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
     @overload
     def __init__(
-        self, name: InternalName, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
+        self, name: InternalName | str, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
     ) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -2829,9 +2829,9 @@ class InternalNameCollection:
     def __add__(self, other: InternalNameCollection) -> InternalNameCollection: ...
     def __iter__(self) -> Iterator[InternalName]: ...  # Doesn't actually exist
     def assign(self: Self, copy: Self) -> Self: ...
-    def add_name(self, name: InternalName) -> None:
+    def add_name(self, name: InternalName | str) -> None:
         """Adds a new InternalName to the collection."""
-    def remove_name(self, name: InternalName) -> bool:
+    def remove_name(self, name: InternalName | str) -> bool:
         """Removes the indicated InternalName from the collection.  Returns true if
         the name was removed, false if it was not a member of the collection.
         """
@@ -2849,7 +2849,7 @@ class InternalNameCollection:
         If a InternalName appears multiple times, the first appearance is retained;
         subsequent appearances are removed.
         """
-    def has_name(self, name: InternalName) -> bool:
+    def has_name(self, name: InternalName | str) -> bool:
         """Returns true if the indicated InternalName appears in this collection,
         false otherwise.
         """
@@ -4455,26 +4455,26 @@ class NodePath(Generic[_N]):
     @overload
     def set_shader_input(self, input: ShaderInput) -> None: ...
     @overload
-    def set_shader_input(self, __param0: InternalName, __param1, priority: int = ...) -> None: ...
+    def set_shader_input(self, __param0: InternalName | str, __param1, priority: int = ...) -> None: ...
     @overload
-    def set_shader_input(self, id: InternalName, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
+    def set_shader_input(self, id: InternalName | str, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
     @overload
     def set_shader_input(
-        self, id: InternalName, n1: float, n2: float, n3: float = ..., n4: float = ..., priority: int = ...
+        self, id: InternalName | str, n1: float, n2: float, n3: float = ..., n4: float = ..., priority: int = ...
     ) -> None: ...
     @overload
     def set_shader_input(
-        self, id: InternalName, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
+        self, id: InternalName | str, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
     ) -> None: ...
     def set_shader_inputs(self, *args, **kwargs) -> None: ...
-    def clear_shader_input(self, id: InternalName) -> None: ...
+    def clear_shader_input(self, id: InternalName | str) -> None: ...
     def set_instance_count(self, instance_count: int) -> None:
         """Sets the geometry instance count, or 0 if geometry instancing should be
         disabled.  Do not confuse with instanceTo which only applies to animation
         instancing.
         """
     def get_shader(self) -> Shader: ...
-    def get_shader_input(self, id: InternalName) -> ShaderInput: ...
+    def get_shader_input(self, id: InternalName | str) -> ShaderInput: ...
     def get_instance_count(self) -> int:
         """Returns the geometry instance count, or 0 if disabled.  See
         set_instance_count.
@@ -4719,7 +4719,7 @@ class NodePath(Generic[_N]):
         that use the named texture coordinate set, false otherwise.  Pass the empty
         string for the default texture coordinate set.
         """
-    def has_vertex_column(self, name: InternalName) -> bool:
+    def has_vertex_column(self, name: InternalName | str) -> bool:
         """Returns true if there are at least some vertices at this node and below
         that contain a reference to the indicated vertex data column name, false
         otherwise.
@@ -10381,7 +10381,7 @@ class ShaderAttrib(RenderAttrib):
     def set_shader_input(self, input: ShaderInput) -> RenderAttrib:
         """Shader Inputs"""
     @overload
-    def set_shader_input(self, __param0: InternalName, __param1, priority: int = ...) -> RenderAttrib: ...
+    def set_shader_input(self, __param0: InternalName | str, __param1, priority: int = ...) -> RenderAttrib: ...
     def set_shader_inputs(self, *args, **kwargs) -> RenderAttrib: ...
     def set_instance_count(self, instance_count: int) -> RenderAttrib:
         """Sets the geometry instance count.  Do not confuse this with instanceTo,
@@ -10394,7 +10394,7 @@ class ShaderAttrib(RenderAttrib):
     def clear_all_shader_inputs(self) -> RenderAttrib:
         """Clears all the shader inputs on the attrib."""
     def get_flag(self, flag: int) -> bool: ...
-    def has_shader_input(self, id: InternalName) -> bool:
+    def has_shader_input(self, id: InternalName | str) -> bool:
         """Returns true if there is a ShaderInput of the given name."""
     def get_shader(self) -> Shader:
         """Returns the shader object associated with the node.  If get_override
@@ -10405,26 +10405,26 @@ class ShaderAttrib(RenderAttrib):
         """Returns the ShaderInput of the given name.  If no such name is found, this
         function does not return NULL --- it returns the "blank" ShaderInput.
         """
-    def get_shader_input_nodepath(self, id: InternalName) -> NodePath:
+    def get_shader_input_nodepath(self, id: InternalName | str) -> NodePath:
         """Returns the ShaderInput as a nodepath.  Assertion fails if there is none,
         or if it is not a nodepath.
         """
-    def get_shader_input_vector(self, id: InternalName) -> LVecBase4:
+    def get_shader_input_vector(self, id: InternalName | str) -> LVecBase4:
         """Returns the ShaderInput as a vector.  Assertion fails if there is none, or
         if it is not a vector.
         """
-    def get_shader_input_texture(self, id: InternalName, sampler: SamplerState = ...) -> Texture:
+    def get_shader_input_texture(self, id: InternalName | str, sampler: SamplerState = ...) -> Texture:
         """Returns the ShaderInput as a texture.  Assertion fails if there is none, or
         if it is not a texture.
 
         If sampler is not NULL, the sampler state to use for this texture is
         assigned to it.
         """
-    def get_shader_input_matrix(self, id: InternalName, matrix: Mat4Like) -> LMatrix4:
+    def get_shader_input_matrix(self, id: InternalName | str, matrix: Mat4Like) -> LMatrix4:
         """Returns the ShaderInput as a matrix.  Assertion fails if there is none, or
         if it is not a matrix or NodePath.
         """
-    def get_shader_input_buffer(self, id: InternalName) -> ShaderBuffer:
+    def get_shader_input_buffer(self, id: InternalName | str) -> ShaderBuffer:
         """Returns the ShaderInput as a ShaderBuffer.  Assertion fails if there is
         none, or if it is not a ShaderBuffer.
         """
@@ -10761,7 +10761,7 @@ class SceneGraphReducer:
 
         Returns the number of nodes removed from the graph.
         """
-    def remove_column(self, root: PandaNode, column: InternalName) -> int:
+    def remove_column(self, root: PandaNode, column: InternalName | str) -> int:
         """Removes the indicated data column from any GeomVertexDatas found at the
         indicated root and below.  Returns the number of GeomNodes modified.
         """

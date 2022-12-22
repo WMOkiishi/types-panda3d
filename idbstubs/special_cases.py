@@ -185,6 +185,7 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
         (0, 1): 'Literal[0, 2, 4]'
     },
     'panda3d.core.Filename.__init__': {(2, 1): 'StrOrBytesPath'},
+    'panda3d.core.InternalName.make': {(0, 0): 'str'},
     'panda3d.core.IStreamWrapper.__init__': {(0, 1): 'core.istream'},
     'panda3d.core.NodePath.__init__': {
         (1, 1): 'NodePath[_N]', (3, 1): '_N', (2, 2): '_N'
@@ -348,6 +349,7 @@ NO_COERCION: Final = TrackingMap({
 })
 EXTRA_COERCION: Final = TrackingMap({
     'Filename': {'StrOrBytesPath'},
+    'InternalName': {'str'},
 })
 
 

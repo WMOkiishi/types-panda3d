@@ -496,7 +496,7 @@ class InternalName(TypedWritableReferenceCount):
     def basename(self) -> str: ...
     @overload
     @staticmethod
-    def make(str) -> InternalName:
+    def make(str: str) -> InternalName:
         """`(str)`:
         These versions are exposed to Python, which have additional logic to map
         from Python interned strings.
@@ -659,7 +659,7 @@ class InternalName(TypedWritableReferenceCount):
         in which case the nth transform is the nth entry in the table.
         """
     @staticmethod
-    def get_morph(column: InternalName, slider: str) -> InternalName:
+    def get_morph(column: InternalName | str, slider: str) -> InternalName:
         """Returns an InternalName derived from the given base column name and the
         given slider name, which is the column header for the offset vector that
         should be applied to the base column name when the named morph slider is
@@ -736,7 +736,7 @@ class GeomVertexColumn(GeomEnums):
     @overload
     def __init__(
         self,
-        name: InternalName,
+        name: InternalName | str,
         num_components: int,
         numeric_type: _GeomEnums_NumericType,
         contents: _GeomEnums_Contents,
@@ -809,7 +809,7 @@ class GeomVertexColumn(GeomEnums):
         """Returns true if the data store of this column is exactly the same as that
         of the other, irrespective of name or start position within the record.
         """
-    def set_name(self, name: InternalName) -> None:
+    def set_name(self, name: InternalName | str) -> None:
         """Replaces the name of an existing column.  This is only legal on an
         unregistered format (i.e.  when constructing the format initially).
         """
@@ -883,16 +883,20 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     def __init__(self, copy: GeomVertexArrayFormat = ...) -> None: ...
     @overload
     def __init__(
-        self, name0: InternalName, num_components0: int, numeric_type0: _GeomEnums_NumericType, contents0: _GeomEnums_Contents
+        self,
+        name0: InternalName | str,
+        num_components0: int,
+        numeric_type0: _GeomEnums_NumericType,
+        contents0: _GeomEnums_Contents,
     ) -> None: ...
     @overload
     def __init__(
         self,
-        name0: InternalName,
+        name0: InternalName | str,
         num_components0: int,
         numeric_type0: _GeomEnums_NumericType,
         contents0: _GeomEnums_Contents,
-        name1: InternalName,
+        name1: InternalName | str,
         num_components1: int,
         numeric_type1: _GeomEnums_NumericType,
         contents1: _GeomEnums_Contents,
@@ -900,15 +904,15 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     @overload
     def __init__(
         self,
-        name0: InternalName,
+        name0: InternalName | str,
         num_components0: int,
         numeric_type0: _GeomEnums_NumericType,
         contents0: _GeomEnums_Contents,
-        name1: InternalName,
+        name1: InternalName | str,
         num_components1: int,
         numeric_type1: _GeomEnums_NumericType,
         contents1: _GeomEnums_Contents,
-        name2: InternalName,
+        name2: InternalName | str,
         num_components2: int,
         numeric_type2: _GeomEnums_NumericType,
         contents2: _GeomEnums_Contents,
@@ -916,19 +920,19 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     @overload
     def __init__(
         self,
-        name0: InternalName,
+        name0: InternalName | str,
         num_components0: int,
         numeric_type0: _GeomEnums_NumericType,
         contents0: _GeomEnums_Contents,
-        name1: InternalName,
+        name1: InternalName | str,
         num_components1: int,
         numeric_type1: _GeomEnums_NumericType,
         contents1: _GeomEnums_Contents,
-        name2: InternalName,
+        name2: InternalName | str,
         num_components2: int,
         numeric_type2: _GeomEnums_NumericType,
         contents2: _GeomEnums_Contents,
-        name3: InternalName,
+        name3: InternalName | str,
         num_components3: int,
         numeric_type3: _GeomEnums_NumericType,
         contents3: _GeomEnums_Contents,
@@ -1015,14 +1019,14 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     @overload
     def add_column(
         self,
-        name: InternalName,
+        name: InternalName | str,
         num_components: int,
         numeric_type: _GeomEnums_NumericType,
         contents: _GeomEnums_Contents,
         start: int = ...,
         column_alignment: int = ...,
     ) -> int: ...
-    def remove_column(self, name: InternalName) -> None:
+    def remove_column(self, name: InternalName | str) -> None:
         """Removes the column with the indicated name, if any.  This leaves a gap in
         the byte structure.
         """
@@ -1043,7 +1047,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     def get_num_columns(self) -> int:
         """Returns the number of different columns in the array."""
     @overload
-    def get_column(self, name: InternalName) -> GeomVertexColumn:
+    def get_column(self, name: InternalName | str) -> GeomVertexColumn:
         """`(self, name: InternalName)`:
         Returns the specification with the indicated name, or NULL if the name is
         not used.
@@ -1059,7 +1063,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     def get_column(self, i: int) -> GeomVertexColumn: ...
     @overload
     def get_column(self, start_byte: int, num_bytes: int) -> GeomVertexColumn: ...
-    def has_column(self, name: InternalName) -> bool:
+    def has_column(self, name: InternalName | str) -> bool:
         """Returns true if the array has the named column, false otherwise."""
     def is_data_subset_of(self, other: GeomVertexArrayFormat) -> bool:
         """Returns true if all of the fields in this array format are also present and
@@ -1249,7 +1253,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         all arrays.
         """
     @overload
-    def get_array_with(self, name: InternalName) -> int:
+    def get_array_with(self, name: InternalName | str) -> int:
         """`(self, name: InternalName)`:
         Returns the index number of the array with the indicated column, or -1 if
         no arrays contained that name.
@@ -1270,7 +1274,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     @overload
     def get_array_with(self, i: int) -> int: ...
     @overload
-    def get_column(self, name: InternalName) -> GeomVertexColumn:
+    def get_column(self, name: InternalName | str) -> GeomVertexColumn:
         """`(self, name: InternalName)`:
         Returns the specification with the indicated name, or NULL if the name is
         not used.  Use get_array_with() to determine which array this column is
@@ -1281,11 +1285,11 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         """
     @overload
     def get_column(self, i: int) -> GeomVertexColumn: ...
-    def has_column(self, name: InternalName) -> bool:
+    def has_column(self, name: InternalName | str) -> bool:
         """Returns true if the format has the named column, false otherwise."""
     def get_column_name(self, i: int) -> InternalName:
         """Returns the name of the ith column, across all arrays."""
-    def remove_column(self, name: InternalName, keep_empty_array: bool = ...) -> None:
+    def remove_column(self, name: InternalName | str, keep_empty_array: bool = ...) -> None:
         """Removes the named column from the format, from whichever array it exists
         in.  If there are other columns remaining in the array, the array is left
         with a gap where the column used to be; if this was the only column in the
@@ -1941,7 +1945,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def has_column(self, name: InternalName) -> bool:
+    def has_column(self, name: InternalName | str) -> bool:
         """Returns true if the array has the named column, false otherwise.  This is
         really just a shortcut for asking the same thing from the format.
         """
@@ -2661,12 +2665,12 @@ class SliderTable(TypedWritableReferenceCount):
         """Returns the nth slider in the table."""
     def get_slider_rows(self, n: int) -> SparseArray:
         """Returns the set of rows (vertices) governed by the nth slider in the table."""
-    def find_sliders(self, name: InternalName) -> SparseArray:
+    def find_sliders(self, name: InternalName | str) -> SparseArray:
         """Returns a list of slider indices that represent the list of sliders with
         the indicated name, or an empty SparseArray if no slider in the table has
         that name.
         """
-    def has_slider(self, name: InternalName) -> bool:
+    def has_slider(self, name: InternalName | str) -> bool:
         """Returns true if the table has at least one slider by the indicated name,
         false otherwise.
         """
@@ -2797,7 +2801,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         must have the same number of arrays with the same stride in each one.  No
         checking is performed that the data remains sensible.
         """
-    def has_column(self, name: InternalName) -> bool:
+    def has_column(self, name: InternalName | str) -> bool:
         """Returns true if the data has the named column, false otherwise.  This is
         really just a shortcut for asking the same thing from the format.
         """
@@ -3084,7 +3088,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     @overload
     def transform_vertices(self, mat: Mat4Like, begin_row: int, end_row: int) -> None: ...
     def replace_column(
-        self, name: InternalName, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
+        self, name: InternalName | str, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents
     ) -> GeomVertexData:
         """Returns a new GeomVertexData object, suitable for modification, with the
         indicated data type replaced with a new table filled with undefined values.
@@ -4021,7 +4025,7 @@ class TextureStage(TypedWritableReferenceCount):
         of multi-texturing.
         """
     @overload
-    def set_texcoord_name(self, name: InternalName) -> None:
+    def set_texcoord_name(self, name: InternalName | str) -> None:
         """Indicate which set of UV's this texture stage will use.  Geometry may have
         any number of associated UV sets, each of which must have a unique name.
         """
@@ -4943,7 +4947,7 @@ class GeomVertexReader(GeomEnums):
     @overload
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
-    def __init__(self, vertex_data: GeomVertexData, name: InternalName, current_thread: Thread = ...) -> None: ...
+    def __init__(self, vertex_data: GeomVertexData, name: InternalName | str, current_thread: Thread = ...) -> None: ...
     def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader | Thread) -> GeomVertexReader: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the reader is processing.  This may
@@ -4980,7 +4984,7 @@ class GeomVertexReader(GeomEnums):
     def get_force(self) -> bool:
         """Returns the value of the force flag.  See set_force()."""
     @overload
-    def set_column(self, name: InternalName) -> bool:
+    def set_column(self, name: InternalName | str) -> bool:
         """`(self, name: InternalName)`:
         Sets up the reader to use the data type with the indicated name.
 
@@ -5248,7 +5252,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
-    def __init__(self, vertex_data: GeomVertexData, name: InternalName, current_thread: Thread = ...) -> None: ...
+    def __init__(self, vertex_data: GeomVertexData, name: InternalName | str, current_thread: Thread = ...) -> None: ...
     def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter | Thread) -> GeomVertexWriter: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the writer is processing.  This may
@@ -5273,7 +5277,7 @@ class GeomVertexWriter(GeomEnums):
         the constructor of this object.
         """
     @overload
-    def set_column(self, name: InternalName) -> bool:
+    def set_column(self, name: InternalName | str) -> bool:
         """`(self, name: InternalName)`:
         Sets up the writer to use the data type with the indicated name.
 
@@ -5811,7 +5815,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[mi
     @overload
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
-    def __init__(self, vertex_data: GeomVertexData, name: InternalName, current_thread: Thread = ...) -> None: ...
+    def __init__(self, vertex_data: GeomVertexData, name: InternalName | str, current_thread: Thread = ...) -> None: ...
     def upcast_to_GeomVertexWriter(self) -> GeomVertexWriter: ...
     def upcast_to_GeomVertexReader(self) -> GeomVertexReader: ...
     def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter | Thread) -> GeomVertexRewriter: ...  # type: ignore[override]
@@ -5833,7 +5837,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[mi
         to use the GeomVertexRewriter directly.
         """
     @overload
-    def set_column(self, name: InternalName) -> bool:
+    def set_column(self, name: InternalName | str) -> bool:
         """`(self, name: InternalName)`:
         Sets up the rewriter to use the data type with the indicated name.
 
@@ -6887,7 +6891,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         Returns true on success, false on failure (in which case, the Texture may
         or may not still be valid).
         """
-    def load_related(self, suffix: InternalName) -> Texture:
+    def load_related(self, suffix: InternalName | str) -> Texture:
         """Loads a texture whose filename is derived by concatenating a suffix to the
         filename of this texture.  May return NULL, for example, if this texture
         doesn't have a filename.
