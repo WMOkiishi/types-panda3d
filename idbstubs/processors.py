@@ -1,8 +1,11 @@
 import logging
 import re
+from collections import Counter
 from collections.abc import Mapping, Sequence
 from itertools import combinations, zip_longest
 from typing import Final
+
+import attrs
 
 from .reps import (
     Alias,
@@ -25,12 +28,12 @@ from .special_cases import (
 )
 from .typedata import (
     combine_types,
+    expand_type,
     get_mro,
     get_param_type_replacement,
     process_dependency,
     subtype_relationship,
 )
-from .util import flatten
 
 _logger: Final = logging.getLogger(__name__)
 _absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
@@ -129,55 +132,125 @@ def merge_signatures(a: Signature, b: Signature, /) -> Signature | None:
     return Signature(merged_params, merged_return)
 
 
-def get_signature_depths(signatures: Sequence[Signature]) -> list[int]:
-    """Return a list of integers such that if the given signatures are ordered
-    according to the integer appearing at the same index, a type checker will
-    understand which to use.
+def sort_signatures(signatures: Sequence[Signature]) -> list[Signature]:
+    """Return the signatures from the given sequence sorted so that
+    a type-checker may choose the first matching one.
     """
-    # A list of lists of the indices of the signatures that should be defined
-    # after the signature at the outermost index
-    define_after: list[list[int]] = [[] for _ in signatures]
-    for (i, w1), (k, w2) in combinations(enumerate(signatures), 2):
-        if w1.min_arity() != w2.min_arity():
+    # `define_after` maps a signature index to a set of the indices
+    #  of all signatures that should be defined after it.
+    define_after: dict[int, set[int]] = {n: set() for n in range(len(signatures))}
+    for (i, sig_1), (j, sig_2) in combinations(enumerate(signatures), 2):
+        if sig_1.min_arity() != sig_2.min_arity():
+            # This should technically check if the number of parameters
+            # can overlap, but this works well enough in practice.
             continue
-        w1_first = w2_first = True
-        w1_params = (p for p in w1.parameters if not p.is_optional)
-        w2_params = (p for p in w2.parameters if not p.is_optional)
-        for p, q in zip(w1_params, w2_params):
-            if not (w1_first or w2_first):
+        if sig_1.return_type == sig_2.return_type:
+            # Ambiguity doesn't matter if they return the same type.
+            continue
+        sig_1_first = sig_2_first = True
+        for p, q in zip(
+            (p for p in sig_1.parameters if not p.is_optional),
+            (p for p in sig_2.parameters if not p.is_optional),
+            strict=True,
+        ):
+            if not (sig_1_first or sig_2_first):
+                # These signatures don't overlap.
                 break
             p_subtypes_q, q_subtypes_p = subtype_relationship(p.type, q.type)
-            w1_first &= p_subtypes_q
-            w2_first &= q_subtypes_p
-        if w1_first:
-            define_after[i].append(k)
-        elif w2_first:
-            define_after[k].append(i)
-    sig_depths = [0 for _ in signatures]
-    for i, others in enumerate(define_after):
-        seen = {i, *others}
+            sig_1_first &= p_subtypes_q
+            sig_2_first &= q_subtypes_p
+        if sig_1_first:
+            define_after[i].add(j)
+        elif sig_2_first:
+            define_after[j].add(i)
+    # Count how many "layers" of signatures each one needs to appear before.
+    sig_depths = Counter[int](range(len(signatures)))
+    for i, others in define_after.items():
+        seen = {i} | others
         while others:
-            sig_depths[i] -= 1
-            next_others: list[int] = []
-            for k in flatten(define_after[j] for j in others if j not in seen):
-                if k in seen:
+            sig_depths[i] += 1
+            next_others = set[int]()
+            for j in others:
+                if j in seen:
                     continue
-                seen.add(k)
-                next_others.append(k)
+                batch = define_after[j] - seen
+                seen |= batch
+                next_others |= batch
             others = next_others
-    return sig_depths
+    return [signatures[i] for i, n in sig_depths.most_common()]
+
+
+def insert_casts(signatures: Sequence[Signature]) -> list[Signature]:
+    """Broaden the parameter types of a sequence of signatures
+    without introducing ambiguity.
+    """
+    # Store all possible parameter type expansions in a two-layer mapping.
+    param_types: dict[int, dict[int, str | None]] = {
+        i: {
+            j: get_param_type_replacement(param.type)
+            for j, param in enumerate(sig.parameters)
+        }
+        for i, sig in enumerate(signatures)
+    }
+    for (i, sig_1), (j, sig_2) in combinations(enumerate(signatures), 2):
+        if sig_1.min_arity() != sig_2.min_arity():
+            # This should technically check if the number of parameters
+            # can overlap, but this works well enough in practice.
+            continue
+        r1_subtypes_r2, r2_subtypes_r1 = subtype_relationship(
+            sig_1.return_type, sig_2.return_type
+        )
+        if r1_subtypes_r2 and r2_subtypes_r1:
+            # The return types are identical; ambiguity doesn't matter.
+            continue
+        exclusive_1_params: dict[int, str] = {}
+        exclusive_2_params: dict[int, str] = {}
+        sig_1_narrower = sig_2_narrower = True
+        for k, (p, q) in enumerate(zip(
+            (p for p in sig_1.parameters if not p.is_optional),
+            (p for p in sig_2.parameters if not p.is_optional),
+            strict=True,
+        )):
+            if not (sig_1_narrower or sig_2_narrower):
+                # These signatures don't overlap.
+                break
+            s, t = p.type, q.type
+            if not r1_subtypes_r2:
+                s = param_types[i][k] or s
+            if not r2_subtypes_r1:
+                t = param_types[j][k] or t
+            s_subtypes_t, t_subtypes_s = subtype_relationship(s, t)
+            sig_1_narrower &= s_subtypes_t
+            sig_2_narrower &= t_subtypes_s
+            if t_subtypes_s and not s_subtypes_t:
+                exclusive_1_params[k] = combine_types(
+                    *(expand_type(s) - expand_type(q.type))
+                )
+            if s_subtypes_t and not t_subtypes_s:
+                exclusive_2_params[k] = combine_types(
+                    *(expand_type(t) - expand_type(p.type))
+                )
+        # If one of the signature's parameter types are always narrower
+        # than the other's, don't broaden the narrower types, and remove
+        # them from the broader types if they appear explicitly.
+        if sig_1_narrower:
+            param_types[i] |= {k: None for k in range(sig_1.min_arity())}
+            param_types[j] |= exclusive_2_params
+        elif sig_2_narrower:
+            param_types[j] |= {k: None for k in range(sig_2.min_arity())}
+            param_types[i] |= exclusive_1_params
+    return [
+        attrs.evolve(sig, parameters=[
+            attrs.evolve(param, type=param_types[i][j] or param.type)
+            for j, param in enumerate(sig.parameters)
+        ]) for i, sig in enumerate(signatures)
+    ]
 
 
 def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
     """Sort and compress the given sequence of function signatures."""
-    depths = get_signature_depths(signatures)
-    sorted_signatures: list[Signature] = []
-    for i, depth in sorted(enumerate(depths), key=lambda x: x[1]):
-        signature = signatures[i]
-        if depth == 0:
-            account_for_casts(signature)
-        sorted_signatures.append(signature)
-
+    with_casts = insert_casts(signatures)
+    sorted_signatures = sort_signatures(with_casts)
     merged_signatures: list[Signature] = []
     for new in sorted(sorted_signatures, key=Signature.get_arity):
         for i, old in enumerate(merged_signatures):
@@ -189,13 +262,6 @@ def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
             # The signature couldn't be merged with any already in merged_signatures
             merged_signatures.append(new.copy())
     return merged_signatures
-
-
-def account_for_casts(signature: Signature) -> None:
-    for param in signature.parameters:
-        replacement = get_param_type_replacement(param.type)
-        if replacement is not None:
-            param.type = replacement
 
 
 def process_function(function: Function) -> None:

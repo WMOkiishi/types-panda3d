@@ -234,6 +234,12 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.vision.ARToolKit.make': {(0, 0): 'NodePath[Camera]'},
 })
 RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
+    'panda3d.core.__mul__': {
+        16: 'LVecBase2d',
+        17: 'LVecBase2f',
+        19: 'LVecBase3d',
+        21: 'LVecBase3f',
+    },
     'panda3d.core.AsyncFuture.__await__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.__iter__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.gather': 'AsyncFuture',

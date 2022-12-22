@@ -350,7 +350,7 @@ class TiXmlDocument(TiXmlNode):
     """
 
     @overload
-    def __init__(self, documentName: str = ...) -> None:
+    def __init__(self, copy: TiXmlDocument | str = ...) -> None:
         """`(self)`:
         Create an empty document, that has no name.
 
@@ -361,7 +361,7 @@ class TiXmlDocument(TiXmlNode):
         Constructor.
         """
     @overload
-    def __init__(self, copy: TiXmlDocument | str) -> None: ...
+    def __init__(self, documentName: str) -> None: ...
     def assign(self, copy: TiXmlDocument | str) -> TiXmlDocument: ...
     @overload
     def LoadFile(self, encoding: _TiXmlEncoding = ...) -> bool:
@@ -455,7 +455,7 @@ class TiXmlElement(TiXmlNode):
     """
 
     @overload
-    def __init__(self, in_value: str) -> None:
+    def __init__(self, __param0: TiXmlElement | str) -> None:
         """`(self, in_value: str)`:
         Construct an element.
 
@@ -463,7 +463,7 @@ class TiXmlElement(TiXmlNode):
         std::string constructor.
         """
     @overload
-    def __init__(self, __param0: TiXmlElement | str) -> None: ...
+    def __init__(self, in_value: str) -> None: ...
     @overload
     def __init__(self, _value: str) -> None: ...
     def assign(self, base: TiXmlElement | str) -> TiXmlElement: ...
@@ -709,7 +709,7 @@ class TiXmlText(TiXmlNode):
     """
 
     @overload
-    def __init__(self, initValue: str) -> None:
+    def __init__(self, copy: TiXmlText | str) -> None:
         """`(self, initValue: str)`:
         Constructor for text element. By default, it is treated as
         normal, encoded text. If you want it be output as a CDATA text
@@ -719,7 +719,7 @@ class TiXmlText(TiXmlNode):
         Constructor.
         """
     @overload
-    def __init__(self, copy: TiXmlText | str) -> None: ...
+    def __init__(self, initValue: str) -> None: ...
     def assign(self, base: TiXmlText | str) -> TiXmlText: ...
     def CDATA(self) -> bool:
         """Queries whether this represents text using a CDATA section."""
