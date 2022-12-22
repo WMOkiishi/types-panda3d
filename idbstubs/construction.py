@@ -49,12 +49,12 @@ from .special_cases import (
 )
 from .translation import (
     check_keyword,
-    class_name_from_cpp_name,
     comment_to_docstring,
-    method_name_from_cpp_name,
+    make_class_name,
+    make_method_name,
     snake_to_camel,
 )
-from .typedata import TYPE_ALIASES, get_direct_type_name, get_type_name
+from .typedata import TYPE_ALIASES, get_type_name
 from .util import flatten, is_dunder
 
 _logger: Final = logging.getLogger(__name__)
@@ -103,7 +103,7 @@ def get_function_name(function: IDBFunction) -> str:
     if (special_rename := rename_dict.get(function.name)) is not None:
         return special_rename
     else:
-        return method_name_from_cpp_name(function.name)
+        return make_method_name(function.name)
 
 
 def with_alias(
@@ -197,7 +197,7 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
 def make_typedef_rep(idb_type: IDBType) -> Alias:
     """Return a representation of a typedef known to interrogate."""
     wrapped_type = idb_type.wrapped_type
-    name = get_direct_type_name(idb_type)
+    name = make_class_name(idb_type.name)
     typedef_of = get_type_name(wrapped_type)
     of_local = idb_type.library_name == wrapped_type.library_name
     return Alias(name, typedef_of, of_local=of_local)
@@ -291,7 +291,7 @@ def make_function_rep(function: IDBFunction) -> Function:
     scoped_name = function.scoped_name
     namespace = (
         function.module_name,
-        *(class_name_from_cpp_name(s) for s in scoped_name.split('::')[:-1])
+        *(make_class_name(s) for s in scoped_name.split('::')[:-1])
     )
     is_static_method = (
         function.is_method and not is_dunder(name)
@@ -357,8 +357,7 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     element_getter = make_seq.element_getter
     namespace = (
         element_getter.module_name,
-        *(class_name_from_cpp_name(s) for s in
-          make_seq.scoped_name.split('::')[:-1])
+        *(make_class_name(s) for s in make_seq.scoped_name.split('::')[:-1])
     )
     return_type = get_type_name(element_getter.wrappers[0].return_type)
     signature = Signature([Parameter('self')], f'tuple[{return_type}, ...]')
@@ -399,7 +398,7 @@ def make_scoped_enum_rep(
         idb_type: IDBType,
         namespace: Sequence[str] = ()) -> Class:
     """Return a representation of a scoped enum known to interrogate."""
-    name = get_direct_type_name(idb_type)
+    name = make_class_name(idb_type.name)
     this_namespace = (*namespace, name)
     value_elements = {
         value.name: Attribute(value.name, 'int', namespace=this_namespace)
@@ -413,7 +412,7 @@ def make_class_rep(
         idb_type: IDBType,
         namespace: Sequence[str] = ()) -> Class:
     """Return a representation of a class known to interrogate."""
-    name = get_direct_type_name(idb_type)
+    name = make_class_name(idb_type.name)
     class_body: dict[str, StubRep] = {}
     this_namespace = (*namespace, name)
     derivations = [

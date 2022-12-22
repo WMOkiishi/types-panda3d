@@ -1,4 +1,5 @@
 import keyword
+import string
 from typing import Final
 
 # from `AtomicToken` in interrogate_interface.h
@@ -8,7 +9,7 @@ ATOMIC_TYPES: Final = {
     7: 'str',  8: 'int',   9: 'None'
 }
 
-DISALLOWED_CHARS: Final = frozenset('!@#$%^&*()<>,.-=+~{}? ')
+ID_CHARS: Final = frozenset({'_', *string.ascii_letters, *string.digits})
 COMMENT_INDENTS: Final = frozenset('/* ')
 
 
@@ -30,49 +31,31 @@ def check_keyword(name: str, /) -> str:
     return name
 
 
-def class_name_from_cpp_name(cpp_name: str, mangle: bool = False) -> str:
+def make_class_name(cpp_name: str) -> str:
     """Convert a C++ class name to a Python class name
     according to the default Interrogate rules.
     """
-    # Mimics classNameFromCppName from interfaceMakerPythonNative.cxx
+    # Based on classNameFromCppName from interfaceMakerPythonNative.cxx
     py_name_parts: list[str] = []
-    next_cap = mangle
     underscore = False
     for char in cpp_name:
-        if mangle and (char == '_' or char == ' '):
-            next_cap = True
-        elif char in DISALLOWED_CHARS:
-            underscore = not mangle
-        elif next_cap:
-            py_name_parts.append(char.upper())
-            next_cap = False
-        elif underscore:
-            py_name_parts.append('_' + char)
+        if char not in ID_CHARS:
+            underscore = True
+            continue
+        if underscore:
+            py_name_parts.append('_')
             underscore = False
-        else:
-            py_name_parts.append(char)
+        py_name_parts.append(char)
     return check_keyword(''.join(py_name_parts))
 
 
-def method_name_from_cpp_name(cpp_name: str, mangle: bool = False) -> str:
+def make_method_name(cpp_name: str) -> str:
     """Convert a C++ function/method name to a Python function/method name
     according to the default Interrogate rules.
     """
-    # Mimics methodNameFromCppName from interfaceMakerPythonNative.cxx
-    py_name_parts: list[str] = []
-    next_cap = False
-    for char in cpp_name:
-        if mangle and (char == '_' or char == ' '):
-            next_cap = True
-        elif char in DISALLOWED_CHARS:
-            if not mangle:
-                py_name_parts.append('_')
-        elif next_cap:
-            py_name_parts.append(char.upper())
-            next_cap = False
-        else:
-            py_name_parts.append(char)
-    return check_keyword(''.join(py_name_parts))
+    # Based on methodNameFromCppName from interfaceMakerPythonNative.cxx
+    py_name = ''.join(c if c in ID_CHARS else '_' for c in cpp_name)
+    return check_keyword(py_name)
 
 
 def comment_to_docstring(comment: str) -> str:

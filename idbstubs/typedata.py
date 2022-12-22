@@ -16,7 +16,7 @@ from .idbutil import (
     unwrap_type,
 )
 from .special_cases import EXTRA_COERCION, NO_COERCION, TYPE_NAME_OVERRIDES
-from .translation import ATOMIC_TYPES, class_name_from_cpp_name
+from .translation import ATOMIC_TYPES, make_class_name
 from .util import unpack_union
 
 _logger: Final = logging.getLogger(__name__)
@@ -81,11 +81,6 @@ TYPE_VARIABLES: Final[dict[str, tuple[tuple[str, ...], str]]] = {
 
 
 @cache
-def get_direct_type_name(idb_type: IDBType) -> str:
-    return class_name_from_cpp_name(idb_type.name)
-
-
-@cache
 def get_type_name(idb_type: IDBType) -> str:
     """Return the Python name for a type. If the type is a non-scoped enum,
     the name returned is an alias name, prefixed by an underscore.
@@ -103,7 +98,7 @@ def get_type_name(idb_type: IDBType) -> str:
             name = name[11:-2]
         elif name.startswith('ConstPointerTo< '):
             name = name[16:-2]
-    name_iter = (class_name_from_cpp_name(s) for s in name.split('::'))
+    name_iter = (make_class_name(s) for s in name.split('::'))
     if idb_type.is_enum and not idb_type.is_scoped_enum:
         return '_' + '_'.join(name_iter)
     return '.'.join(name_iter)
