@@ -146,7 +146,6 @@ class Signature:
 class Function:
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
-    is_method: bool = field(default=False, kw_only=True)
     is_static: bool = field(default=False, kw_only=True)
     namespace: Sequence[str] = field(
         default=(), converter=tuple, kw_only=True, eq=False)
@@ -164,13 +163,12 @@ class Function:
         decorators: list[str] = []
         if len(self.signatures) > 1:
             decorators.append('overload')
-        if self.is_method and self.is_static:
+        if self.is_static:
             decorators.append('staticmethod')
         return decorators
 
     def __str__(self) -> str:
-        kind = 'Method' if self.is_method else 'Function'
-        return f'{kind} {self.scoped_name!r}'
+        return f'Function {self.scoped_name!r}'
 
     def get_dependencies(self) -> Iterator[str]:
         return chain(

@@ -178,7 +178,6 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
             yield Function(
                 '__copy__',
                 [Signature([Parameter('self', 'Self')], 'Self')],
-                is_method=True,
             )
         if not got_deepcopy:
             yield Function(
@@ -190,7 +189,6 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
                     ],
                     'Self',
                 )],
-                is_method=True,
             )
     for make_seq in idb_type.make_seqs:
         yield make_make_seq_rep(make_seq)
@@ -295,9 +293,9 @@ def make_function_rep(function: IDBFunction) -> Function:
         function.module_name,
         *(class_name_from_cpp_name(s) for s in scoped_name.split('::')[:-1])
     )
-    not_static = (
-        function.is_method and is_dunder(name)
-        or function.wrappers[0].parameters[0].is_this
+    is_static_method = (
+        function.is_method and not is_dunder(name)
+        and not function.wrappers[0].parameters[0].is_this
     )
     omit_docstring = is_dunder(name) and name != '__init__'
     signatures: list[Signature] = []
@@ -308,7 +306,7 @@ def make_function_rep(function: IDBFunction) -> Function:
         signature = make_signature_rep(
             wrapper,
             is_constructor=function.is_constructor,
-            ensure_self_param=not_static,
+            ensure_self_param=function.is_method and not is_static_method,
         )
         signatures.append(signature)
         if not omit_docstring:
@@ -326,8 +324,7 @@ def make_function_rep(function: IDBFunction) -> Function:
     return Function(
         name,
         signatures,
-        is_method=function.is_method,
-        is_static=not not_static,
+        is_static=is_static_method,
         namespace=namespace,
         doc=doc,
         comment=get_comment(name, namespace),
@@ -368,7 +365,6 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     return Function(
         make_seq.seq_name,
         [signature],
-        is_method=True,
         namespace=namespace,
         doc=comment_to_docstring(make_seq.comment),
         comment=get_comment(make_seq.seq_name, namespace),

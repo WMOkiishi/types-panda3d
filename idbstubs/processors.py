@@ -66,12 +66,10 @@ OBJECT: Final = Class(
         '__repr__': Function(
             '__repr__',
             [Signature([Parameter('self')], 'str')],
-            is_method=True,
         ),
         '__str__': Function(
             '__str__',
             [Signature([Parameter('self')], 'str')],
-            is_method=True,
         ),
     }
 )
@@ -369,7 +367,6 @@ def process_class(class_: Class) -> None:
             class_body['__iter__'] = Function(
                 '__iter__',
                 [Signature([Parameter('self')], iter_return_type)],
-                is_method=True,
                 namespace=(*class_.namespace, class_.name),
                 comment="Doesn't actually exist",
             )
