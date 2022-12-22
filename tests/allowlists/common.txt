@@ -80,11 +80,6 @@ direct.tkwidgets.VectorWidgets.VectorEntry.menu
 panda3d.bullet.BulletPersistentManifold.__get_manifold_point
 panda3d.bullet.BulletWorld.__get_manifold
 
-# Stubtest doesn't understand these at runtime.
-panda3d.core.ExecutionEnvironment.args
-panda3d.core.MicrophoneAudio.options
-panda3d.vision.WebcamVideo.options
-
 
 # ====================================
 # Variables imported with star imports
