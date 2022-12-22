@@ -1248,7 +1248,11 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     def __init__(self, name: str, description: str = ..., flags: int = ...) -> None: ...
     @overload
     def __init__(
-        self, name: str, default_value: ConfigVariableSearchPath | DSearchPath | str, description: str, flags: int = ...
+        self,
+        name: str,
+        default_value: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath,
+        description: str,
+        flags: int = ...,
     ) -> None: ...
     def operator_typecast_DSearchPath(self) -> DSearchPath: ...
     def get_value(self) -> DSearchPath: ...
@@ -1266,13 +1270,13 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     def prepend_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
-    def append_path(self, path: ConfigVariableSearchPath | DSearchPath) -> None:
+    def append_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """
     @overload
     def append_path(self, path: str, separator: str = ...) -> None: ...
-    def prepend_path(self, path: ConfigVariableSearchPath | DSearchPath) -> None:
+    def prepend_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
         """

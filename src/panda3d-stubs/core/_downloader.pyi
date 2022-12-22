@@ -434,7 +434,7 @@ class HTTPDate:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: HTTPDate = ...) -> None:
+    def __init__(self, copy: HTTPDate | int | str = ...) -> None:
         """Decodes the string into a sensible date.  Returns 0 (!is_valid()) if the
         string cannot be correctly decoded.
         """
@@ -444,16 +444,16 @@ class HTTPDate:
     def __init__(self, time: int) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def __lt__(self, other: HTTPDate) -> bool: ...
-    def __gt__(self, other: HTTPDate) -> bool: ...
+    def __lt__(self, other: HTTPDate | int | str) -> bool: ...
+    def __gt__(self, other: HTTPDate | int | str) -> bool: ...
     def __iadd__(self: Self, seconds: int) -> Self: ...
     def __isub__(self: Self, seconds: int) -> Self: ...  # type: ignore[misc]
     def __add__(self, seconds: int) -> HTTPDate: ...
     @overload
-    def __sub__(self, other: HTTPDate) -> int: ...
+    def __sub__(self, other: HTTPDate | int | str) -> int: ...
     @overload
     def __sub__(self, seconds: int) -> HTTPDate: ...
-    def assign(self: Self, copy: Self) -> Self: ...
+    def assign(self, copy: HTTPDate | int | str) -> HTTPDate: ...
     @staticmethod
     def now() -> HTTPDate:
         """Returns an HTTPDate that represents the current time and date."""
@@ -464,7 +464,7 @@ class HTTPDate:
     def get_string(self) -> str: ...
     def get_time(self) -> int:
         """Returns the date as a C time_t value."""
-    def compare_to(self, other: HTTPDate) -> int:
+    def compare_to(self, other: HTTPDate | int | str) -> int:
         """Returns a number less than zero if this HTTPDate sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
         """
@@ -524,7 +524,7 @@ class HTTPCookie:
         """Returns the prefix of the URL paths on the server for which this cookie
         will be sent.
         """
-    def set_expires(self, expires: HTTPDate) -> None: ...
+    def set_expires(self, expires: HTTPDate | int | str) -> None: ...
     def clear_expires(self) -> None:
         """Removes the expiration date on the cookie."""
     def has_expires(self) -> bool:
@@ -550,7 +550,7 @@ class HTTPCookie:
         assigns the values of the cookie appropriate.  Returns true if the header
         is parsed correctly, false if something is not understood.
         """
-    def is_expired(self, now: HTTPDate = ...) -> bool:
+    def is_expired(self, now: HTTPDate | int | str = ...) -> bool:
         """Returns true if the cookie's expiration date is before the indicated date,
         false otherwise.
         """
@@ -944,7 +944,7 @@ class HTTPEntityTag:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: HTTPEntityTag = ...) -> None:
+    def __init__(self, copy: HTTPEntityTag | str = ...) -> None:
         """`(self, weak: bool, tag: str)`:
         This constructor accepts an explicit weak flag and a literal (not quoted)
         tag string.
@@ -959,8 +959,8 @@ class HTTPEntityTag:
     def __init__(self, weak: bool, tag: str) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def __lt__(self, other: HTTPEntityTag) -> bool: ...
-    def assign(self: Self, copy: Self) -> Self: ...
+    def __lt__(self, other: HTTPEntityTag | str) -> bool: ...
+    def assign(self, copy: HTTPEntityTag | str) -> HTTPEntityTag: ...
     def is_weak(self) -> bool:
         """Returns true if the entity tag is marked as "weak". A consistent weak
         entity tag does not guarantee that its resource has not changed in any way,
@@ -973,15 +973,15 @@ class HTTPEntityTag:
         """Returns the entity tag formatted for sending to an HTTP server (the tag is
         quoted, with a conditional W prefix).
         """
-    def strong_equiv(self, other: HTTPEntityTag) -> bool:
+    def strong_equiv(self, other: HTTPEntityTag | str) -> bool:
         """Returns true if the two tags have "strong" equivalence: they are the same
         tag, and both are "strong".
         """
-    def weak_equiv(self, other: HTTPEntityTag) -> bool:
+    def weak_equiv(self, other: HTTPEntityTag | str) -> bool:
         """Returns true if the two tags have "weak" equivalence: they are the same
         tag, and one or both may be "weak".
         """
-    def compare_to(self, other: HTTPEntityTag) -> int:
+    def compare_to(self, other: HTTPEntityTag | str) -> int:
         """Returns a number less than zero if this HTTPEntityTag sorts before the
         other one, greater than zero if it sorts after, or zero if they are
         equivalent.
@@ -1040,7 +1040,7 @@ class DocumentSpec:
         """
     def get_url(self) -> URLSpec:
         """Retrieves the URL of the DocumentSpec."""
-    def set_tag(self, tag: HTTPEntityTag) -> None:
+    def set_tag(self, tag: HTTPEntityTag | str) -> None:
         """Changes the identity tag associated with the DocumentSpec."""
     def has_tag(self) -> bool:
         """Returns true if an identity tag is associated with the DocumentSpec."""
@@ -1053,7 +1053,7 @@ class DocumentSpec:
         """
     def clear_tag(self) -> None:
         """Removes the identity tag associated with the DocumentSpec, if there is one."""
-    def set_date(self, date: HTTPDate) -> None:
+    def set_date(self, date: HTTPDate | int | str) -> None:
         """Changes the last-modified date associated with the DocumentSpec."""
     def has_date(self) -> bool:
         """Returns true if a last-modified date is associated with the DocumentSpec."""

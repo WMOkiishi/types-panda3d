@@ -861,27 +861,27 @@ class DCClass(DCDeclaration):
         """Returns the owner class object that was previously associated with this
         DistributedClass.  This will return a new reference to the object.
         """
-    def receive_update(self, distobj, di: DatagramIterator) -> None:
+    def receive_update(self, distobj, di: Datagram | DatagramIterator) -> None:
         """Extracts the update message out of the packer and applies it to the
         indicated object by calling the appropriate method.
         """
-    def receive_update_broadcast_required(self, distobj, di: DatagramIterator) -> None:
+    def receive_update_broadcast_required(self, distobj, di: Datagram | DatagramIterator) -> None:
         """Processes a big datagram that includes all of the "required" fields that
         are sent along with a normal "generate with required" message.  This is all
         of the atomic fields that are marked "broadcast required".
         """
-    def receive_update_broadcast_required_owner(self, distobj, di: DatagramIterator) -> None:
+    def receive_update_broadcast_required_owner(self, distobj, di: Datagram | DatagramIterator) -> None:
         """Processes a big datagram that includes all of the "required" fields that
         are sent along with a normal "generate with required" message.  This is all
         of the atomic fields that are marked "broadcast ownrecv". Should be used
         for 'owner-view' objects.
         """
-    def receive_update_all_required(self, distobj, di: DatagramIterator) -> None:
+    def receive_update_all_required(self, distobj, di: Datagram | DatagramIterator) -> None:
         """Processes a big datagram that includes all of the "required" fields that
         are sent when an avatar is created.  This is all of the atomic fields that
         are marked "required", whether they are broadcast or not.
         """
-    def receive_update_other(self, distobj, di: DatagramIterator) -> None:
+    def receive_update_other(self, distobj, di: Datagram | DatagramIterator) -> None:
         """Processes a datagram that lists some additional fields that are broadcast
         in one chunk.
         """

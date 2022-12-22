@@ -689,7 +689,7 @@ class RenderAttribRegistry:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def get_slot(self, type_handle: TypeHandle) -> int:
+    def get_slot(self, type_handle: TypeHandle | type) -> int:
         """Returns the slot number assigned to the indicated TypeHandle, or 0 if no
         slot number has been assigned.
         """
@@ -1070,7 +1070,7 @@ class RenderState(NodeCachedReferenceCount):
 
     @property
     def attribs(self) -> Mapping[TypeHandle, RenderAttrib]: ...
-    def compare_to(self, other: RenderState) -> int:
+    def compare_to(self, other: RenderAttrib | RenderState) -> int:
         """Provides an arbitrary ordering among all unique RenderStates, so we can
         store the essentially different ones in a big set and throw away the rest.
 
@@ -1078,14 +1078,14 @@ class RenderState(NodeCachedReferenceCount):
         equivalent RenderState objects are guaranteed to share the same pointer;
         thus, a pointer comparison is always sufficient.
         """
-    def compare_sort(self, other: RenderState) -> int:
+    def compare_sort(self, other: RenderAttrib | RenderState) -> int:
         """Returns -1, 0, or 1 according to the relative sorting of these two
         RenderStates, with regards to rendering performance, so that "heavier"
         RenderAttribs (as defined by RenderAttribRegistry::get_slot_sort()) are
         more likely to be grouped together.  This is not related to the sorting
         order defined by compare_to.
         """
-    def compare_mask(self, other: RenderState, compare_mask: BitMask32) -> int:
+    def compare_mask(self, other: RenderAttrib | RenderState, compare_mask: BitMask32 | int) -> int:
         """This version of compare_to takes a slot mask that indicates which
         attributes to include in the comparison.  Unlike compare_to, this method
         compares the attributes by pointer.
@@ -1145,7 +1145,7 @@ class RenderState(NodeCachedReferenceCount):
         attrib5: RenderAttrib,
         override: int = ...,
     ) -> RenderState: ...
-    def compose(self, other: RenderState) -> RenderState:
+    def compose(self, other: RenderAttrib | RenderState) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state with the other state.
 
@@ -1154,7 +1154,7 @@ class RenderState(NodeCachedReferenceCount):
         exist.  Should one of them destruct, the cached entry will be removed, and
         its pointer will be allowed to destruct as well.
         """
-    def invert_compose(self, other: RenderState) -> RenderState:
+    def invert_compose(self, other: RenderAttrib | RenderState) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state's inverse with the other state.
 
@@ -1180,7 +1180,7 @@ class RenderState(NodeCachedReferenceCount):
         replaced unconditionally.
         """
     @overload
-    def remove_attrib(self, type: TypeHandle) -> RenderState:
+    def remove_attrib(self, type: TypeHandle | type) -> RenderState:
         """Returns a new RenderState object that represents the same as the source
         state, with the indicated RenderAttrib removed.
         """
@@ -1193,14 +1193,14 @@ class RenderState(NodeCachedReferenceCount):
         it is set to zero.
         """
     @overload
-    def has_attrib(self, type: TypeHandle) -> bool:
+    def has_attrib(self, type: TypeHandle | type) -> bool:
         """Returns true if an attrib of the indicated type is present, false
         otherwise.
         """
     @overload
     def has_attrib(self, slot: int) -> bool: ...
     @overload
-    def get_attrib(self, type: TypeHandle) -> RenderAttrib:
+    def get_attrib(self, type: TypeHandle | type) -> RenderAttrib:
         """`(self, type: TypeHandle)`:
         Looks for a RenderAttrib of the indicated type in the state, and returns it
         if it is found, or NULL if it is not.
@@ -1216,7 +1216,7 @@ class RenderState(NodeCachedReferenceCount):
         attrib for that slot if there is no such RenderAttrib in the state.
         """
     @overload
-    def get_override(self, type: TypeHandle) -> int:
+    def get_override(self, type: TypeHandle | type) -> int:
         """Looks for a RenderAttrib of the indicated type in the state, and returns
         its override value if it is found, or 0 if it is not.
         """
@@ -1627,10 +1627,10 @@ class RenderEffects(TypedWritableReferenceCount):
     instead of modifying a RenderEffects object, create a new one.
     """
 
-    def __lt__(self, other: RenderEffects) -> bool: ...
+    def __lt__(self, other: RenderEffect | RenderEffects) -> bool: ...
     def __len__(self) -> int: ...
     @overload
-    def __getitem__(self, type: TypeHandle) -> RenderEffect: ...
+    def __getitem__(self, type: TypeHandle | type) -> RenderEffect: ...
     @overload
     def __getitem__(self, n: int) -> RenderEffect: ...
     def is_empty(self) -> bool:
@@ -1640,7 +1640,7 @@ class RenderEffects(TypedWritableReferenceCount):
         @deprecated in Python, use len(effects) instead, or effects.size() in C++.
         """
     @overload
-    def get_effect(self, type: TypeHandle) -> RenderEffect:
+    def get_effect(self, type: TypeHandle | type) -> RenderEffect:
         """`(self, type: TypeHandle)`:
         Looks for a RenderEffect of the indicated type in the state, and returns it
         if it is found, or NULL if it is not.
@@ -1650,7 +1650,7 @@ class RenderEffects(TypedWritableReferenceCount):
         """
     @overload
     def get_effect(self, n: int) -> RenderEffect: ...
-    def find_effect(self, type: TypeHandle) -> int:
+    def find_effect(self, type: TypeHandle | type) -> int:
         """Searches for an effect with the indicated type in the state, and returns
         its index if it is found, or -1 if it is not.
         """
@@ -1683,7 +1683,7 @@ class RenderEffects(TypedWritableReferenceCount):
         state, with the new RenderEffect added.  If there is already a RenderEffect
         with the same type, it is replaced.
         """
-    def remove_effect(self, type: TypeHandle) -> RenderEffects:
+    def remove_effect(self, type: TypeHandle | type) -> RenderEffects:
         """Returns a new RenderEffects object that represents the same as the source
         state, with the indicated RenderEffect removed.
         """
@@ -2015,7 +2015,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         already an attribute of the same type, it is replaced.
         """
     @overload
-    def get_attrib(self, type: TypeHandle) -> RenderAttrib:
+    def get_attrib(self, type: TypeHandle | type) -> RenderAttrib:
         """Returns the render attribute of the indicated type, if it is defined on the
         node, or NULL if it is not.  This checks only what is set on this
         particular node level, and has nothing to do with what render attributes
@@ -2024,14 +2024,14 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     @overload
     def get_attrib(self, slot: int) -> RenderAttrib: ...
     @overload
-    def has_attrib(self, type: TypeHandle) -> bool:
+    def has_attrib(self, type: TypeHandle | type) -> bool:
         """Returns true if there is a render attribute of the indicated type defined
         on this node, or false if there is not.
         """
     @overload
     def has_attrib(self, slot: int) -> bool: ...
     @overload
-    def clear_attrib(self, type: TypeHandle) -> None:
+    def clear_attrib(self, type: TypeHandle | type) -> None:
         """Removes the render attribute of the given type from this node.  This node,
         and the subgraph below, will now inherit the indicated render attribute
         from the nodes above this one.
@@ -2042,17 +2042,17 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Adds the indicated render effect to the scene graph on this node.  If there
         was already an effect of the same type, it is replaced.
         """
-    def get_effect(self, type: TypeHandle) -> RenderEffect:
+    def get_effect(self, type: TypeHandle | type) -> RenderEffect:
         """Returns the render effect of the indicated type, if it is defined on the
         node, or NULL if it is not.
         """
-    def has_effect(self, type: TypeHandle) -> bool:
+    def has_effect(self, type: TypeHandle | type) -> bool:
         """Returns true if there is a render effect of the indicated type defined on
         this node, or false if there is not.
         """
-    def clear_effect(self, type: TypeHandle) -> None:
+    def clear_effect(self, type: TypeHandle | type) -> None:
         """Removes the render effect of the given type from this node."""
-    def set_state(self, state: RenderState, current_thread: Thread = ...) -> None:
+    def set_state(self, state: RenderAttrib | RenderState, current_thread: Thread = ...) -> None:
         """Sets the complete RenderState that will be applied to all nodes at this
         level and below.  (The actual state that will be applied to lower nodes is
         based on the composition of RenderStates from above this node as well).
@@ -2070,7 +2070,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         below will once again inherit their render state unchanged from the nodes
         above this level.
         """
-    def set_effects(self, effects: RenderEffects, current_thread: Thread = ...) -> None:
+    def set_effects(self, effects: RenderEffect | RenderEffects, current_thread: Thread = ...) -> None:
         """Sets the complete RenderEffects that will be applied this node.  This
         completely replaces whatever has been set on this node via repeated calls
         to set_attrib().
@@ -2247,7 +2247,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         This actually works by twiddling the reserved _overall_bit in the node's
         draw mask, which has special meaning.
         """
-    def adjust_draw_mask(self, show_mask: DrawMask, hide_mask: DrawMask, clear_mask: DrawMask) -> None:
+    def adjust_draw_mask(self, show_mask: DrawMask | int, hide_mask: DrawMask | int, clear_mask: DrawMask | int) -> None:
         """Adjusts the hide/show bits of this particular node.
 
         These three parameters can be used to adjust the _draw_control_mask and
@@ -2305,7 +2305,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         indicates that at least one child should be visible, while a 0 bit
         indicates that all children are hidden.
         """
-    def set_into_collide_mask(self, mask: CollideMask) -> None:
+    def set_into_collide_mask(self, mask: CollideMask | int) -> None:
         """Sets the "into" CollideMask.
 
         This specifies the set of bits that must be shared with a CollisionNode's
@@ -2335,7 +2335,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Returns a ClipPlaneAttrib which represents the union of all of the clip
         planes that have been turned *off* at this level and below.
         """
-    def prepare_scene(self, gsg: GraphicsStateGuardianBase, node_state: RenderState) -> None:
+    def prepare_scene(self, gsg: GraphicsStateGuardianBase, node_state: RenderAttrib | RenderState) -> None:
         """Walks through the scene graph beginning at this node, and does whatever
         initialization is required to render the scene properly with the indicated
         GSG.  It is not strictly necessary to call this, since the GSG will
@@ -3380,7 +3380,7 @@ class NodePath(Generic[_N]):
     @overload
     def get_state(self, other: NodePath, current_thread: Thread = ...) -> RenderState: ...
     @overload
-    def set_state(self, state: RenderState, current_thread: Thread = ...) -> None:
+    def set_state(self, state: RenderAttrib | RenderState, current_thread: Thread = ...) -> None:
         """`(self, other: NodePath, state: RenderState, current_thread: Thread = ...)`:
         Sets the state object on this node, relative to the other node.  This
         computes a new state object that will have the indicated value when seen
@@ -3390,7 +3390,7 @@ class NodePath(Generic[_N]):
         Changes the complete state object on this node.
         """
     @overload
-    def set_state(self, other: NodePath, state: RenderState, current_thread: Thread = ...) -> None: ...
+    def set_state(self, other: NodePath, state: RenderAttrib | RenderState, current_thread: Thread = ...) -> None: ...
     def get_net_state(self, current_thread: Thread = ...) -> RenderState:
         """Returns the net state on this node from the root."""
     def set_attrib(self, attrib: RenderAttrib, priority: int = ...) -> None:
@@ -3398,17 +3398,17 @@ class NodePath(Generic[_N]):
         attribute will now apply to this node and everything below.  If there was
         already an attribute of the same type, it is replaced.
         """
-    def get_attrib(self, type: TypeHandle) -> RenderAttrib:
+    def get_attrib(self, type: TypeHandle | type) -> RenderAttrib:
         """Returns the render attribute of the indicated type, if it is defined on the
         node, or NULL if it is not.  This checks only what is set on this
         particular node level, and has nothing to do with what render attributes
         may be inherited from parent nodes.
         """
-    def has_attrib(self, type: TypeHandle) -> bool:
+    def has_attrib(self, type: TypeHandle | type) -> bool:
         """Returns true if there is a render attribute of the indicated type defined
         on this node, or false if there is not.
         """
-    def clear_attrib(self, type: TypeHandle) -> None:
+    def clear_attrib(self, type: TypeHandle | type) -> None:
         """Removes the render attribute of the given type from this node.  This node,
         and the subgraph below, will now inherit the indicated render attribute
         from the nodes above this one.
@@ -3417,17 +3417,17 @@ class NodePath(Generic[_N]):
         """Adds the indicated render effect to the scene graph on this node.  If there
         was already an effect of the same type, it is replaced.
         """
-    def get_effect(self, type: TypeHandle) -> RenderEffect:
+    def get_effect(self, type: TypeHandle | type) -> RenderEffect:
         """Returns the render effect of the indicated type, if it is defined on the
         node, or NULL if it is not.
         """
-    def has_effect(self, type: TypeHandle) -> bool:
+    def has_effect(self, type: TypeHandle | type) -> bool:
         """Returns true if there is a render effect of the indicated type defined on
         this node, or false if there is not.
         """
-    def clear_effect(self, type: TypeHandle) -> None:
+    def clear_effect(self, type: TypeHandle | type) -> None:
         """Removes the render effect of the given type from this node."""
-    def set_effects(self, effects: RenderEffects) -> None:
+    def set_effects(self, effects: RenderEffect | RenderEffects) -> None:
         """Sets the complete RenderEffects that will be applied this node.  This
         completely replaces whatever has been set on this node via repeated calls
         to set_attrib().
@@ -4450,7 +4450,7 @@ class NodePath(Generic[_N]):
     def set_shader_auto(self, priority: int = ...) -> None:
         """overloaded for auto shader customization"""
     @overload
-    def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> None: ...
+    def set_shader_auto(self, shader_switch: BitMask32 | int, priority: int = ...) -> None: ...
     def clear_shader(self) -> None: ...
     @overload
     def set_shader_input(self, input: ShaderInput) -> None: ...
@@ -5207,7 +5207,7 @@ class NodePath(Generic[_N]):
         overridden by a high-level state change above.  If the priority would drop
         below zero, it is set to zero.
         """
-    def show(self, camera_mask: DrawMask = ...) -> None:
+    def show(self, camera_mask: DrawMask | int = ...) -> None:
         """`(self)`:
         Undoes the effect of a previous hide() on this node: makes the referenced
         node (and the entire subgraph below this node) visible to all cameras.
@@ -5221,7 +5221,7 @@ class NodePath(Generic[_N]):
         This undoes the effect of a previous hide() call.  It will not reveal the
         node if a parent node has been hidden.  However, see show_through().
         """
-    def show_through(self, camera_mask: DrawMask = ...) -> None:
+    def show_through(self, camera_mask: DrawMask | int = ...) -> None:
         """`(self)`:
         Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
@@ -5238,7 +5238,7 @@ class NodePath(Generic[_N]):
         parent's hide().  (However, it will not show through a parent's hide() call
         if the no-parameter form of hide() was used.)
         """
-    def hide(self, camera_mask: DrawMask = ...) -> None:
+    def hide(self, camera_mask: DrawMask | int = ...) -> None:
         """`(self)`:
         Makes the referenced node (and the entire subgraph below this node)
         invisible to all cameras.  It remains part of the scene graph, its bounding
@@ -5255,11 +5255,11 @@ class NodePath(Generic[_N]):
         those nodes for which show() has been called, but it will not hide
         descendent nodes for which show_through() has been called.
         """
-    def is_hidden(self, camera_mask: DrawMask = ...) -> bool:
+    def is_hidden(self, camera_mask: DrawMask | int = ...) -> bool:
         """Returns true if the referenced node is hidden from the indicated camera(s)
         either directly, or because some ancestor is hidden.
         """
-    def get_hidden_ancestor(self, camera_mask: DrawMask = ..., current_thread: Thread = ...) -> NodePath:
+    def get_hidden_ancestor(self, camera_mask: DrawMask | int = ..., current_thread: Thread = ...) -> NodePath:
         """Returns the NodePath at or above the referenced node that is hidden to the
         indicated camera(s), or an empty NodePath if no ancestor of the referenced
         node is hidden (and the node should be visible).
@@ -5297,7 +5297,9 @@ class NodePath(Generic[_N]):
         If you want to return what the into_collide_mask of this node itself is,
         without regard to its children, use node()->get_into_collide_mask().
         """
-    def set_collide_mask(self, new_mask: CollideMask, bits_to_change: CollideMask = ..., node_type: TypeHandle = ...) -> None:
+    def set_collide_mask(
+        self, new_mask: CollideMask | int, bits_to_change: CollideMask | int = ..., node_type: TypeHandle | type = ...
+    ) -> None:
         """Recursively applies the indicated CollideMask to the into_collide_masks for
         all nodes at this level and below.  If node_type is not TypeHandle::none(),
         then only nodes matching (or inheriting from) the indicated PandaNode
@@ -5993,7 +5995,9 @@ class NodePathCollection:
         If you want to return what the into_collide_mask of this node itself is,
         without regard to its children, use node()->get_into_collide_mask().
         """
-    def set_collide_mask(self, new_mask: CollideMask, bits_to_change: CollideMask = ..., node_type: TypeHandle = ...) -> None:
+    def set_collide_mask(
+        self, new_mask: CollideMask | int, bits_to_change: CollideMask | int = ..., node_type: TypeHandle | type = ...
+    ) -> None:
         """Recursively applies the indicated CollideMask to the into_collide_masks for
         all nodes at this level and below.
 
@@ -6174,7 +6178,7 @@ class AttribNodeRegistry:
         the registry, or -1 if there is no such node in the registry.
         """
     @overload
-    def find_node(self, type: TypeHandle, name: str) -> int: ...
+    def find_node(self, type: TypeHandle | type, name: str) -> int: ...
     def clear(self) -> None:
         """Removes all nodes from the registry."""
     def output(self, out: ostream) -> None: ...
@@ -6653,7 +6657,7 @@ class WeakNodePath:
     @overload
     def __init__(self, node_path: NodePath) -> None: ...
     @overload
-    def __init__(self, copy: WeakNodePath) -> None: ...
+    def __init__(self, copy: NodePath | WeakNodePath) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -6661,7 +6665,7 @@ class WeakNodePath:
     @overload
     def assign(self, node_path: NodePath) -> WeakNodePath: ...
     @overload
-    def assign(self, copy: WeakNodePath) -> WeakNodePath: ...
+    def assign(self, copy: NodePath | WeakNodePath) -> WeakNodePath: ...
     def clear(self) -> None:
         """Sets this NodePath to the empty NodePath.  It will no longer point to any
         node.
@@ -6756,7 +6760,7 @@ class Camera(LensNode):
         """Returns the number of display regions associated with the camera."""
     def get_display_region(self, n: int) -> DisplayRegion:
         """Returns the nth display region associated with the camera."""
-    def set_camera_mask(self, mask: DrawMask) -> None:
+    def set_camera_mask(self, mask: DrawMask | int) -> None:
         """Changes the set of bits that represent the subset of the scene graph the
         camera will render.
 
@@ -6802,7 +6806,7 @@ class Camera(LensNode):
         """Returns the point from which the LOD distances will be measured, if it was
         set by set_lod_center(), or the empty NodePath otherwise.
         """
-    def set_initial_state(self, state: RenderState) -> None:
+    def set_initial_state(self, state: RenderAttrib | RenderState) -> None:
         """Sets the initial state which is applied to all nodes in the scene, as if it
         were set at the top of the scene graph.
         """
@@ -6821,7 +6825,7 @@ class Camera(LensNode):
         """
     def get_lod_scale(self) -> float:
         """Returns the multiplier for LOD distances."""
-    def set_tag_state(self, tag_state: str, state: RenderState) -> None:
+    def set_tag_state(self, tag_state: str, state: RenderAttrib | RenderState) -> None:
         """Associates a particular state transition with the indicated tag value.
         When a node is encountered during traversal with the tag key specified by
         set_tag_state_key(), if the value of that tag matches tag_state, then the
@@ -7589,7 +7593,7 @@ class GeomNode(PandaNode):
         which the Geom is rendered will also be affected by RenderStates that
         appear on the scene graph in nodes above this GeomNode.
         """
-    def set_geom_state(self, n: int, state: RenderState) -> None:
+    def set_geom_state(self, n: int, state: RenderAttrib | RenderState) -> None:
         """Changes the RenderState associated with the nth geom of the node.  This is
         just the RenderState directly associated with the Geom; the actual state in
         which the Geom is rendered will also be affected by RenderStates that
@@ -7600,7 +7604,7 @@ class GeomNode(PandaNode):
         all the way to pipeline stage 0, which may step on changes that were made
         independently in pipeline stage 0. Use with caution.
         """
-    def add_geom(self, geom: Geom, state: RenderState = ...) -> None:
+    def add_geom(self, geom: Geom, state: RenderAttrib | RenderState = ...) -> None:
         """Adds a new Geom to the node.  The geom is given the indicated state (which
         may be RenderState::make_empty(), to completely inherit its state from the
         scene graph).
@@ -8018,13 +8022,13 @@ class CullTraverserData:
         """Returns the net transform: the relative transform from root of the scene
         graph to the current node.
         """
-    def is_in_view(self, camera_mask: DrawMask) -> bool:
+    def is_in_view(self, camera_mask: DrawMask | int) -> bool:
         """Returns true if the current node is within the view frustum, false
         otherwise.  If the node's bounding volume falls completely within the view
         frustum, this will also reset the view frustum pointer, saving some work
         for future nodes.
         """
-    def is_this_node_hidden(self, camera_mask: DrawMask) -> bool:
+    def is_this_node_hidden(self, camera_mask: DrawMask | int) -> bool:
         """Returns true if this particular node is hidden, even though we might be
         traversing past this node to find a child node that has had show_through()
         called for it.  If this returns true, the node should not be rendered.
@@ -8096,7 +8100,7 @@ class SceneSetup(TypedReferenceCount):
         lens' bounding volume, but it may be overridden with
         Camera::set_cull_bounds().
         """
-    def set_initial_state(self, initial_state: RenderState) -> None:
+    def set_initial_state(self, initial_state: RenderAttrib | RenderState) -> None:
         """Sets the initial state which is applied to all nodes in the scene, as if it
         were set at the top of the scene graph.
         """
@@ -8361,7 +8365,7 @@ class CullTraverser(TypedReferenceCount):
         """Returns the tag state key that has been specified for the scene's camera,
         if any.
         """
-    def set_camera_mask(self, camera_mask: DrawMask) -> None:
+    def set_camera_mask(self, camera_mask: DrawMask | int) -> None:
         """Changes the visibility mask for the camera viewing the scene.  This is
         normally set automatically at the time setup_scene() is called; you should
         change this only if you want to render some set of objects different from
@@ -10371,7 +10375,7 @@ class ShaderAttrib(RenderAttrib):
         etc., on or off
         """
     @overload
-    def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> RenderAttrib: ...
+    def set_shader_auto(self, shader_switch: BitMask32 | int, priority: int = ...) -> RenderAttrib: ...
     def clear_shader(self) -> RenderAttrib: ...
     @overload
     def set_shader_input(self, input: ShaderInput) -> RenderAttrib:
@@ -10822,7 +10826,7 @@ class SceneGraphReducer:
         GeomPrimitives, to remove holes in the GeomVertexDatas.  It is normally not
         necessary to call this explicitly.
         """
-    def premunge(self, root: PandaNode, initial_state: RenderState) -> None:
+    def premunge(self, root: PandaNode, initial_state: RenderAttrib | RenderState) -> None:
         """Walks the scene graph rooted at this node and below, and uses the indicated
         GSG to premunge every Geom found to optimize it for eventual rendering on
         the indicated GSG.  If there is no GSG indicated for the SceneGraphReducer,
@@ -10892,16 +10896,16 @@ class PortalNode(PandaNode):
         """
     @overload
     def __init__(self, name: str, pos: Vec3Like, scale: float = ...) -> None: ...
-    def set_portal_mask(self, mask: PortalMask) -> None:
+    def set_portal_mask(self, mask: PortalMask | int) -> None:
         """Simultaneously sets both the "from" and "into" PortalMask values to the
         same thing.
         """
-    def set_from_portal_mask(self, mask: PortalMask) -> None:
+    def set_from_portal_mask(self, mask: PortalMask | int) -> None:
         """Sets the "from" PortalMask.  In order for a portal to be detected from this
         object into another object, the intersection of this object's "from" mask
         and the other object's "into" mask must be nonzero.
         """
-    def set_into_portal_mask(self, mask: PortalMask) -> None:
+    def set_into_portal_mask(self, mask: PortalMask | int) -> None:
         """Sets the "into" PortalMask.  In order for a portal to be detected from
         another object into this object, the intersection of the other object's
         "from" mask and this object's "into" mask must be nonzero.

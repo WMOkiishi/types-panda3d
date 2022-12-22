@@ -192,16 +192,16 @@ class CollisionNode(PandaNode):
     def solids(self) -> MutableSequence[CollisionSolid]: ...
     @property
     def default_collide_mask(self) -> CollideMask: ...
-    def set_collide_mask(self, mask: CollideMask) -> None:
+    def set_collide_mask(self, mask: CollideMask | int) -> None:
         """Simultaneously sets both the "from" and "into" CollideMask values to the
         same thing.
         """
-    def set_from_collide_mask(self, mask: CollideMask) -> None:
+    def set_from_collide_mask(self, mask: CollideMask | int) -> None:
         """Sets the "from" CollideMask.  In order for a collision to be detected from
         this object into another object, the intersection of this object's "from"
         mask and the other object's "into" mask must be nonzero.
         """
-    def set_into_collide_mask(self, mask: CollideMask) -> None:
+    def set_into_collide_mask(self, mask: CollideMask | int) -> None:
         """Sets the "into" CollideMask.  In order for a collision to be detected from
         another object into this object, the intersection of the other object's
         "from" mask and this object's "into" mask must be nonzero.
@@ -634,7 +634,7 @@ class CollisionPlane(CollisionSolid):
     @property
     def normal(self) -> LVector3: ...
     @overload
-    def __init__(self, copy: CollisionPlane) -> None: ...
+    def __init__(self, copy: CollisionPlane | Vec4Like) -> None: ...
     @overload
     def __init__(self, plane: Vec4Like) -> None: ...
     def get_normal(self) -> LVector3: ...
@@ -841,7 +841,7 @@ class CollisionHandlerEvent(CollisionHandler):
         """Same as clear() except "out" events are thrown."""
     def write_datagram(self, destination: Datagram) -> None:
         """Serializes this object, to implement pickle support."""
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Restores the object state from the given datagram, previously obtained using
         __getstate__.
         """

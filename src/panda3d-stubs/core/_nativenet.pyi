@@ -209,8 +209,8 @@ class Socket_fdset:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: Socket_fdset = ...) -> None:
         """The constructor"""
-    def setForSocket(self, incon: Socket_IP) -> None: ...
-    def IsSetFor(self, incon: Socket_IP) -> bool:
+    def setForSocket(self, incon: Socket_IP | int) -> None: ...
+    def IsSetFor(self, incon: Socket_IP | int) -> bool:
         """check to see if a socket object has been marked for reading"""
     def WaitForRead(self, zeroFds: bool, sleep_time: int = ...) -> int: ...
     def WaitForWrite(self, zeroFds: bool, sleep_time: int = ...) -> int:

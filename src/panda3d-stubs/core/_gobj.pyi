@@ -1140,10 +1140,10 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     @overload
     def __init__(self, array_format: GeomVertexArrayFormat = ...) -> None: ...
     @overload
-    def __init__(self, copy: GeomVertexFormat) -> None: ...
+    def __init__(self, copy: GeomVertexArrayFormat | GeomVertexFormat) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self: Self, copy: Self) -> Self: ...
+    def assign(self, copy: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexFormat: ...
     def unref(self) -> bool:
         """This method overrides ReferenceCount::unref() to unregister the object when
         its reference count goes to zero.
@@ -1188,7 +1188,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         This may only be called after the format has been registered.  The return
         value will have been already registered.
         """
-    def get_union_format(self, other: GeomVertexFormat) -> GeomVertexFormat:
+    def get_union_format(self, other: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexFormat:
         """Returns a new GeomVertexFormat that includes all of the columns defined in
         either this GeomVertexFormat or the other one.  If any column is defined in
         both formats with different sizes (for instance, texcoord2 vs.  texcoord3),
@@ -2565,7 +2565,7 @@ class TransformBlendTable(CopyOnWriteObject):
         applied to any one vertex simultaneously.  This is the same limit reflected
         by GraphicsStateGuardian::get_max_vertex_transforms().
         """
-    def set_rows(self, rows: BitArray | SparseArray) -> None:
+    def set_rows(self, rows: BitArray | SparseArray | int) -> None:
         """Specifies the subset of rows (vertices) in the associated GeomVertexData
         that this TransformBlendTable actually affects.
         """
@@ -2680,13 +2680,13 @@ class SliderTable(TypedWritableReferenceCount):
         """
     def set_slider(self, n: int, slider: VertexSlider) -> None:
         """Replaces the nth slider.  Only valid for unregistered tables."""
-    def set_slider_rows(self, n: int, rows: BitArray | SparseArray) -> None:
+    def set_slider_rows(self, n: int, rows: BitArray | SparseArray | int) -> None:
         """Replaces the rows affected by the nth slider.  Only valid for unregistered
         tables.
         """
     def remove_slider(self, n: int) -> None:
         """Removes the nth slider.  Only valid for unregistered tables."""
-    def add_slider(self, slider: VertexSlider, rows: BitArray | SparseArray) -> int:
+    def add_slider(self, slider: VertexSlider, rows: BitArray | SparseArray | int) -> int:
         """Adds a new slider to the table, and returns the index number of the new
         slider.  Only valid for unregistered tables.
         """
@@ -2742,13 +2742,13 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     @property
     def modified(self) -> UpdateSeq: ...
     @overload
-    def __init__(self, copy: GeomVertexData, format: GeomVertexFormat = ...) -> None:
+    def __init__(self, copy: GeomVertexData, format: GeomVertexArrayFormat | GeomVertexFormat = ...) -> None:
         """This constructor copies all of the basic properties of the source
         VertexData, like usage_hint and animation tables, but does not copy the
         actual data, and it allows you to specify a different format.
         """
     @overload
-    def __init__(self, name: str, format: GeomVertexFormat, usage_hint: _GeomEnums_UsageHint) -> None: ...
+    def __init__(self, name: str, format: GeomVertexArrayFormat | GeomVertexFormat, usage_hint: _GeomEnums_UsageHint) -> None: ...
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
     def assign(self: Self, copy: Self) -> Self: ...
@@ -2782,14 +2782,14 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """
     def get_format(self) -> GeomVertexFormat:
         """Returns a pointer to the GeomVertexFormat structure that defines this data."""
-    def set_format(self, format: GeomVertexFormat) -> None:
+    def set_format(self, format: GeomVertexArrayFormat | GeomVertexFormat) -> None:
         """Changes the format of the vertex data.  If the data is not empty, this will
         implicitly change every row to match the new format.
 
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def unclean_set_format(self, format: GeomVertexFormat) -> None:
+    def unclean_set_format(self, format: GeomVertexArrayFormat | GeomVertexFormat) -> None:
         """Changes the format of the vertex data, without reformatting the data to
         match.  The data is exactly the same after this operation, but will be
         reinterpreted according to the new format.  This assumes that the new
@@ -2992,7 +2992,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def convert_to(self, new_format: GeomVertexFormat) -> GeomVertexData:
+    def convert_to(self, new_format: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexData:
         """Returns a new GeomVertexData that represents the same contents as this one,
         with all data types matched up name-by-name to the indicated new format.
         """
@@ -3065,7 +3065,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         not necessary to call this.
         """
     @overload
-    def transform_vertices(self, mat: Mat4Like, rows: BitArray | SparseArray = ...) -> None:
+    def transform_vertices(self, mat: Mat4Like, rows: BitArray | SparseArray | int = ...) -> None:
         """`(self, mat: LMatrix4)`:
         Applies the indicated transform matrix to all of the vertices in the
         GeomVertexData.  The transform is applied to all "point" and "vector" type
@@ -3714,7 +3714,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         methods for more common usage.  We recommend you do not use this method
         directly.  If you do, be sure you know what you are doing!
         """
-    def set_ends(self, ends: PTA_int) -> None:
+    def set_ends(self, ends: PTA_int | TypeHandle | type) -> None:
         """Completely replaces the primitive ends array with a new table.  Chances are
         good that you should also replace the vertices list with set_vertices() at
         the same time.
@@ -4935,7 +4935,7 @@ class GeomVertexReader(GeomEnums):
         use it.
         """
     @overload
-    def __init__(self, copy: GeomVertexReader) -> None: ...
+    def __init__(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader | Thread) -> None: ...
     @overload
     def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None: ...
     @overload
@@ -4944,7 +4944,7 @@ class GeomVertexReader(GeomEnums):
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
     def __init__(self, vertex_data: GeomVertexData, name: InternalName, current_thread: Thread = ...) -> None: ...
-    def assign(self: Self, copy: Self) -> Self: ...
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader | Thread) -> GeomVertexReader: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the reader is processing.  This may
         return NULL if the reader was constructed with just an array pointer.
@@ -5240,7 +5240,7 @@ class GeomVertexWriter(GeomEnums):
         use it.
         """
     @overload
-    def __init__(self, copy: GeomVertexWriter) -> None: ...
+    def __init__(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter | Thread) -> None: ...
     @overload
     def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None: ...
     @overload
@@ -5249,7 +5249,7 @@ class GeomVertexWriter(GeomEnums):
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
     def __init__(self, vertex_data: GeomVertexData, name: InternalName, current_thread: Thread = ...) -> None: ...
-    def assign(self: Self, copy: Self) -> Self: ...
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter | Thread) -> GeomVertexWriter: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the writer is processing.  This may
         return NULL if the writer was constructed with just an array pointer.
@@ -5803,7 +5803,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[mi
         use it.
         """
     @overload
-    def __init__(self, copy: GeomVertexRewriter) -> None: ...
+    def __init__(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter | Thread) -> None: ...
     @overload
     def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None: ...
     @overload
@@ -5814,6 +5814,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[mi
     def __init__(self, vertex_data: GeomVertexData, name: InternalName, current_thread: Thread = ...) -> None: ...
     def upcast_to_GeomVertexWriter(self) -> GeomVertexWriter: ...
     def upcast_to_GeomVertexReader(self) -> GeomVertexReader: ...
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter | Thread) -> GeomVertexRewriter: ...  # type: ignore[override]
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the rewriter is processing."""
     def get_array_data(self) -> GeomVertexArrayData:
@@ -7540,7 +7541,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         This variant is particularly useful to set an external pointer from a
         language like Python, which doesn't support void pointers directly.
         """
-    def set_ram_mipmap_image(self, n: int, image: CPTA_uchar | PointerToArray_unsigned_char, page_size: int = ...) -> None:
+    def set_ram_mipmap_image(
+        self, n: int, image: CPTA_uchar | PointerToArray_unsigned_char | TypeHandle | type, page_size: int = ...
+    ) -> None:
         """Replaces the current system-RAM image for the indicated mipmap level with
         the new data.  If compression is not CM_off, it indicates that the new data
         is already pre-compressed in the indicated format.
@@ -7585,7 +7588,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         parameters of the full texture.  The simple image is only supported for
         ordinary 2-d textures.
         """
-    def set_simple_ram_image(self, image: CPTA_uchar | PointerToArray_unsigned_char, x_size: int, y_size: int) -> None:
+    def set_simple_ram_image(
+        self, image: CPTA_uchar | PointerToArray_unsigned_char | TypeHandle | type, x_size: int, y_size: int
+    ) -> None:
         """Replaces the internal "simple" texture image.  This can be used as an
         option to display while the main texture image is being loaded from disk.
         It is normally a very small image, 16x16 or smaller (and maybe even 1x1),

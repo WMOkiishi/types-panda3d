@@ -760,7 +760,9 @@ class Filename:
         """
     def get_file_size(self) -> int:
         """Returns the size of the file in bytes, or 0 if there is an error."""
-    def resolve_filename(self, searchpath: ConfigVariableSearchPath | DSearchPath, default_extension: str = ...) -> bool:
+    def resolve_filename(
+        self, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath, default_extension: str = ...
+    ) -> bool:
         """Searches the given search path for the filename.  If it is found, updates
         the filename to the full pathname found and returns true; otherwise,
         returns false.
@@ -782,7 +784,7 @@ class Filename:
 
         Returns true if the file was adjusted, false if it was not.
         """
-    def find_on_searchpath(self, searchpath: ConfigVariableSearchPath | DSearchPath) -> int:
+    def find_on_searchpath(self, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> int:
         """Performs the reverse of the resolve_filename() operation: assuming that the
         current filename is fully-specified pathname (i.e.  beginning with '/'),
         look on the indicated search path for a directory under which the file can
@@ -1243,12 +1245,12 @@ class DSearchPath:
     @property
     def directories(self) -> Sequence[Filename]: ...
     @overload
-    def __init__(self, copy: ConfigVariableSearchPath | DSearchPath = ...) -> None: ...
+    def __init__(self, copy: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath = ...) -> None: ...
     @overload
     def __init__(self, directory: StrOrBytesPath) -> None: ...
     @overload
     def __init__(self, path: str, separator: str = ...) -> None: ...
-    def assign(self, copy: ConfigVariableSearchPath | DSearchPath) -> DSearchPath: ...
+    def assign(self, copy: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> DSearchPath: ...
     def clear(self) -> None:
         """Removes all the directories from the search list."""
     def append_directory(self, directory: StrOrBytesPath) -> None:
@@ -1256,13 +1258,13 @@ class DSearchPath:
     def prepend_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
-    def append_path(self, path: ConfigVariableSearchPath | DSearchPath) -> None:
+    def append_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """
     @overload
     def append_path(self, path: str, separator: str = ...) -> None: ...
-    def prepend_path(self, path: ConfigVariableSearchPath | DSearchPath) -> None:
+    def prepend_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
         """

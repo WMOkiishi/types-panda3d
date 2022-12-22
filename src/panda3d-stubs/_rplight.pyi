@@ -3,6 +3,7 @@ from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import IntVec4Like, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._display import GraphicsOutput
+from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import PTA_float, PTA_uchar, ReferenceCount
 from panda3d.core._gobj import Shader, Texture
@@ -33,7 +34,7 @@ class GPUCommand:
     CMD_remove_sources: Final[Literal[4]]
     CMDRemoveSources: Final[Literal[4]]
     @overload
-    def __init__(self, __param0: GPUCommand) -> None:
+    def __init__(self, __param0: GPUCommand | _GPUCommand_CommandType) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
         @details This will construct a new GPUCommand of the given command type.
           The command type should be of GPUCommand::CommandType, and determines
@@ -120,7 +121,7 @@ class GPUCommand:
           e.g. val = (float)i;
         @return The integer representation flag
         """
-    def write_to(self, dest: PTA_uchar, command_index: int) -> None:
+    def write_to(self, dest: PTA_uchar | TypeHandle | type, command_index: int) -> None:
         """@brief Writes the GPU command to a given target.
         @details This method writes all the data of the GPU command to a given target.
           The target should be a pointer to memory being big enough to hold the
@@ -164,7 +165,7 @@ class GPUCommandList:
         @details This constructs a new GPUCommandList. By default, there are no commands
           in the list.
         """
-    def add_command(self, cmd: GPUCommand) -> None:
+    def add_command(self, cmd: GPUCommand | _GPUCommand_CommandType) -> None:
         """@brief Pushes a GPUCommand to the command list.
         @details This adds a new GPUCommand to the list of commands to be processed.
 
@@ -176,7 +177,7 @@ class GPUCommandList:
           list, and are waiting to get processed.
         @return Amount of commands
         """
-    def write_commands_to(self, dest: PTA_uchar, limit: int = ...) -> int:
+    def write_commands_to(self, dest: PTA_uchar | TypeHandle | type, limit: int = ...) -> int:
         """@brief Writes the first n-commands to a destination.
         @details This takes the first #limit commands, and writes them to the
           destination using GPUCommand::write_to. See GPUCommand::write_to for
@@ -206,19 +207,19 @@ class IESDataset:
         """@brief Constructs a new empty dataset.
         @details This constructs a new IESDataset with no data set.
         """
-    def set_vertical_angles(self, vertical_angles: PTA_float) -> None:
+    def set_vertical_angles(self, vertical_angles: PTA_float | TypeHandle | type) -> None:
         """@brief Sets the vertical angles of the dataset.
         @details This sets the list of vertical angles of the dataset.
 
         @param vertical_angles Vector of all vertical angles.
         """
-    def set_horizontal_angles(self, horizontal_angles: PTA_float) -> None:
+    def set_horizontal_angles(self, horizontal_angles: PTA_float | TypeHandle | type) -> None:
         """@brief Sets the horizontal angles of the dataset.
         @details This sets the list of horizontal angles of the dataset.
 
         @param horizontal_angles Vector of all horizontal angles.
         """
-    def set_candela_values(self, candela_values: PTA_float) -> None:
+    def set_candela_values(self, candela_values: PTA_float | TypeHandle | type) -> None:
         """@brief Sets the candela values.
         @details This sets the candela values of the dataset. They should be an
           interleaved 2D array with the dimensions vertical_angles x horizontal_angles.
@@ -477,7 +478,7 @@ class ShadowAtlas:
     @property
     def coverage(self) -> float: ...
     @overload
-    def __init__(self, __param0: ShadowAtlas) -> None:
+    def __init__(self, __param0: ShadowAtlas | int) -> None:
         """@brief Constructs a new shadow atlas.
         @details This constructs a new shadow atlas with the given size and tile size.
 
@@ -535,7 +536,7 @@ class TagStateManager:
         @param main_cam_node The main scene camera
         """
     @overload
-    def __init__(self, __param0: TagStateManager) -> None: ...
+    def __init__(self, __param0: NodePath | TagStateManager) -> None: ...
     def apply_state(self, state: str, np: NodePath, shader: Shader, name: str, sort: int) -> None:
         """@brief Applies a given state for a pass to a NodePath
         @details This applies a shader to the given NodePath which is used when the
@@ -633,7 +634,7 @@ class ShadowManager(ReferenceCount):
 
         @param scene_parent The target scene
         """
-    def set_tag_state_manager(self, tag_mgr: TagStateManager) -> None:
+    def set_tag_state_manager(self, tag_mgr: NodePath | TagStateManager) -> None:
         """@brief Sets the handle to the TagStageManager.
         @details This sets the handle to the TagStateManager used by the pipeline.
           Usually this is RenderPipeline.get_tag_mgr().
@@ -958,7 +959,7 @@ class PSSMCameraRig:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: PSSMCameraRig) -> None:
+    def __init__(self, __param0: PSSMCameraRig | int) -> None:
         """@brief Constructs a new PSSM camera rig
         @details This constructs a new camera rig, with a given amount of splits.
           The splits can not be changed later on. Splits are also called Cascades.

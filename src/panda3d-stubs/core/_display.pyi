@@ -10,7 +10,7 @@ from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import Filename, ostream
 from panda3d.core._event import AsyncFuture
 from panda3d.core._express import ReferenceCount, TypedReferenceCount
-from panda3d.core._gobj import PreparedGraphicsObjects, Texture, TextureStage
+from panda3d.core._gobj import PreparedGraphicsObjects, Shader, Texture, TextureStage
 from panda3d.core._gsgbase import GraphicsOutputBase, GraphicsStateGuardianBase
 from panda3d.core._linmath import LColor, LPoint2i, LVecBase2i, LVecBase3i, LVecBase4, LVector2i
 from panda3d.core._pgraph import CullResult, CullTraverser, Loader, NodePath, PandaNode, SceneSetup, ShaderAttrib, TextureAttrib
@@ -526,7 +526,7 @@ class WindowHandle(TypedReferenceCount):
         getClassType = get_class_type
     os_handle: WindowHandle.OSHandle
     @overload
-    def __init__(self, copy: WindowHandle) -> None: ...
+    def __init__(self, copy: WindowHandle | WindowHandle.OSHandle) -> None: ...
     @overload
     def __init__(self, os_handle: WindowHandle.OSHandle) -> None: ...
     def get_os_handle(self) -> WindowHandle.OSHandle:
@@ -814,7 +814,7 @@ class WindowProperties:
     def clear_z_order(self) -> None:
         """Removes the z_order specification from the properties."""
     @overload
-    def set_parent_window(self, parent_window: WindowHandle = ...) -> None:
+    def set_parent_window(self, parent_window: WindowHandle | WindowHandle.OSHandle = ...) -> None:
         """`(self, parent_window: WindowHandle = ...)`:
         Specifies the window that this window should be attached to.  If this is
         NULL or unspecified, the window will be created as a toplevel window on the
@@ -1903,7 +1903,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         name: str,
         size: int,
         camera_rig: NodePath,
-        camera_mask: DrawMask = ...,
+        camera_mask: DrawMask | int = ...,
         to_ram: bool = ...,
         fbp: FrameBufferProperties = ...,
     ) -> GraphicsOutput:
@@ -2277,7 +2277,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """Returns the Loader object that will be used by this GSG to load textures
         when necessary, if get_incomplete_render() is true.
         """
-    def set_shader_generator(self, shader_generator: ShaderGenerator) -> None:
+    def set_shader_generator(self, shader_generator: GraphicsStateGuardianBase | ShaderGenerator) -> None:
         """Sets the ShaderGenerator object that will be used by this GSG to generate
         shaders when necessary.
         """
@@ -2501,7 +2501,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         implement) set color and/or color scale using materials and/or ambient
         lights, or false if we need to actually munge the color.
         """
-    def get_alpha_scale_via_texture(self, tex_attrib: TextureAttrib = ...) -> bool:
+    def get_alpha_scale_via_texture(self, tex_attrib: Texture | TextureAttrib = ...) -> bool:
         """`(self)`:
         Returns true if this particular GSG can implement (or would prefer to
         implement) an alpha scale via an additional Texture layer, or false if we
@@ -2680,7 +2680,7 @@ class GraphicsEngine(ReferenceCount):
     def render_lock(self) -> ReMutex: ...
     @property
     def windows(self) -> Sequence[GraphicsOutput]: ...
-    def set_threading_model(self, threading_model: GraphicsThreadingModel) -> None:
+    def set_threading_model(self, threading_model: GraphicsThreadingModel | str) -> None:
         """Specifies how future objects created via make_gsg(), make_buffer(), and
         make_output() will be threaded.  This does not affect any already-created
         objects.
@@ -2860,7 +2860,7 @@ class GraphicsEngine(ReferenceCount):
 
         The return value is true if the operation is successful, false otherwise.
         """
-    def dispatch_compute(self, work_groups: LVecBase3i, sattr: ShaderAttrib, gsg: GraphicsStateGuardian) -> None:
+    def dispatch_compute(self, work_groups: LVecBase3i, sattr: Shader | ShaderAttrib, gsg: GraphicsStateGuardian) -> None:
         """Asks the indicated GraphicsStateGuardian to dispatch the compute shader in
         the given ShaderAttrib using the given work group counts.  This can act as
         an interface for running a one-off compute shader, without having to store
@@ -2935,8 +2935,8 @@ class GraphicsThreadingModel:
         in scene graph order; state sorting and alpha sorting is lost.
         """
     @overload
-    def __init__(self, copy: GraphicsThreadingModel) -> None: ...
-    def assign(self: Self, copy: Self) -> Self: ...
+    def __init__(self, copy: GraphicsThreadingModel | str) -> None: ...
+    def assign(self, copy: GraphicsThreadingModel | str) -> GraphicsThreadingModel: ...
     def get_model(self) -> str:
         """Returns the string that describes the threading model.  See the
         constructor.
@@ -3261,16 +3261,16 @@ class GraphicsWindowInputDevice(InputDevice):
     keyboard events from the windowing system while the window is in focus.
     """
 
-    def button_down(self, button: ButtonHandle | int, time: float = ...) -> None:
+    def button_down(self, button: ButtonHandle | int | str, time: float = ...) -> None:
         """The following interface is for the various kinds of GraphicsWindows to
         record the data incoming on the device.
         """
-    def button_resume_down(self, button: ButtonHandle | int, time: float = ...) -> None:
+    def button_resume_down(self, button: ButtonHandle | int | str, time: float = ...) -> None:
         """Records that the indicated button was depressed earlier, and we only just
         detected the event after the fact.  This is mainly useful for tracking the
         state of modifier keys.
         """
-    def button_up(self, button: ButtonHandle | int, time: float = ...) -> None:
+    def button_up(self, button: ButtonHandle | int | str, time: float = ...) -> None:
         """Records that the indicated button has been released."""
     def keystroke(self, keycode: int, time: float = ...) -> None:
         """Records that the indicated keystroke has been generated."""
@@ -3286,9 +3286,9 @@ class GraphicsWindowInputDevice(InputDevice):
         we previously sent unpaired "down" events, so that the Panda application
         will believe all buttons are now released.
         """
-    def raw_button_down(self, button: ButtonHandle | int, time: float = ...) -> None:
+    def raw_button_down(self, button: ButtonHandle | int | str, time: float = ...) -> None:
         """Records that the indicated button has been depressed."""
-    def raw_button_up(self, button: ButtonHandle | int, time: float = ...) -> None:
+    def raw_button_up(self, button: ButtonHandle | int | str, time: float = ...) -> None:
         """Records that the indicated button has been released."""
     def get_pointer(self) -> PointerData:
         """Returns the PointerData associated with the input device's pointer.  This
@@ -3779,7 +3779,7 @@ class GraphicsPipeSelection:
         user's information.
         """
     @overload
-    def make_pipe(self, type: TypeHandle) -> GraphicsPipe:
+    def make_pipe(self, type: TypeHandle | type) -> GraphicsPipe:
         """`(self, type: TypeHandle)`:
         Creates a new GraphicsPipe of the indicated type (or a type more specific
         than the indicated type, if necessary) and returns it.  Returns NULL if the

@@ -1,3 +1,4 @@
+import builtins
 from collections.abc import Sequence
 from typing import Any, ClassVar
 from typing_extensions import Final, Literal, TypeAlias, final
@@ -72,17 +73,17 @@ class TypeHandle:
     def parent_classes(self) -> Sequence[TypeHandle]: ...
     @property
     def child_classes(self) -> Sequence[TypeHandle]: ...
-    def __init__(self, __param0: TypeHandle = ...) -> None: ...
+    def __init__(self, __param0: TypeHandle | type = ...) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def __lt__(self, other: TypeHandle) -> bool: ...
-    def __le__(self, other: TypeHandle) -> bool: ...
-    def __gt__(self, other: TypeHandle) -> bool: ...
-    def __ge__(self, other: TypeHandle) -> bool: ...
+    def __lt__(self, other: TypeHandle | type) -> bool: ...
+    def __le__(self, other: TypeHandle | type) -> bool: ...
+    def __gt__(self, other: TypeHandle | type) -> bool: ...
+    def __ge__(self, other: TypeHandle | type) -> bool: ...
     @staticmethod
     def make(classobj: type) -> TypeHandle: ...
-    def compare_to(self, other: TypeHandle) -> int:
+    def compare_to(self, other: TypeHandle | type) -> int:
         """Sorts TypeHandles arbitrarily (according to <, >, etc.).  Returns a number
         less than 0 if this type sorts before the other one, greater than zero if
         it sorts after, 0 if they are equivalent.
@@ -96,7 +97,7 @@ class TypeHandle:
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
         """
-    def is_derived_from(self, parent: TypeHandle, object: TypedObject = ...) -> bool:
+    def is_derived_from(self, parent: TypeHandle | type, object: TypedObject = ...) -> bool:
         """Returns true if this type is derived from the indicated type, false
         otherwise.
 
@@ -131,7 +132,7 @@ class TypeHandle:
         """Returns the nth child class of this type.  The index should be in the range
         0 <= index < get_num_child_classes().
         """
-    def get_parent_towards(self, ancestor: TypeHandle, object: TypedObject = ...) -> TypeHandle:
+    def get_parent_towards(self, ancestor: TypeHandle | type, object: TypedObject = ...) -> TypeHandle:
         """Returns the parent class that is in a direct line of inheritance to the
         indicated ancestor class.  This is useful in the presence of multiple
         inheritance to try to determine what properties an unknown type may have.
@@ -200,18 +201,18 @@ class TypeRegistry:
         is returned if the typename was not seen before; otherwise the same
         TypeHandle that was last used for this typename is returned.
         """
-    def record_derivation(self, child: TypeHandle, parent: TypeHandle) -> None:
+    def record_derivation(self, child: TypeHandle | type, parent: TypeHandle | type) -> None:
         """Records that the type referenced by child inherits directly from the type
         referenced by parent.  In the event of multiple inheritance, this should be
         called once for each parent class.
         """
-    def record_alternate_name(self, type: TypeHandle, name: str) -> None:
+    def record_alternate_name(self, type: TypeHandle | type, name: str) -> None:
         """Indicates an alternate name for the same type.  This is particularly useful
         when a type has changed names, since the type is stored in a Bam file by
         name; setting the original name as the alternate will allow the type to be
         correctly read from old Bam files.
         """
-    def record_python_type(self, type: TypeHandle, python_type) -> None:
+    def record_python_type(self, type: TypeHandle | type, python_type) -> None:
         """Records the given Python type pointer in the type registry for the benefit
         of interrogate, which expects this to contain a Dtool_PyTypedObject.
         """
@@ -224,14 +225,14 @@ class TypeRegistry:
         returned by TypeHandle::get_index()). Returns its TypeHandle if it exists,
         or TypeHandle::none() if there is no such type.
         """
-    def get_name(self, type: TypeHandle, object: TypedObject) -> str:
+    def get_name(self, type: TypeHandle | type, object: TypedObject) -> str:
         """Returns the name of the indicated type.
 
         The "object" pointer is an optional pointer to the TypedObject class that
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
         """
-    def is_derived_from(self, child: TypeHandle, base: TypeHandle, child_object: TypedObject) -> bool:
+    def is_derived_from(self, child: TypeHandle | type, base: TypeHandle | type, child_object: TypedObject) -> bool:
         """Returns true if the first type is derived from the second type, false
         otherwise.
 
@@ -254,7 +255,7 @@ class TypeRegistry:
         """
     def get_root_class(self, n: int) -> TypeHandle:
         """Returns the nth root class in the system.  See get_num_root_classes()."""
-    def get_num_parent_classes(self, child: TypeHandle, child_object: TypedObject) -> int:
+    def get_num_parent_classes(self, child: TypeHandle | type, child_object: TypedObject) -> int:
         """Returns the number of parent classes that the indicated type is known to
         have.  This may then be used to index into get_parent_class().  The result
         will be 0 if this class does not inherit from any other classes, 1 if
@@ -265,11 +266,11 @@ class TypeRegistry:
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
         """
-    def get_parent_class(self, child: TypeHandle, index: int) -> TypeHandle:
+    def get_parent_class(self, child: TypeHandle | type, index: int) -> TypeHandle:
         """Returns the nth parent class of this type.  The index should be in the
         range 0 <= index < get_num_parent_classes().
         """
-    def get_num_child_classes(self, child: TypeHandle, child_object: TypedObject) -> int:
+    def get_num_child_classes(self, child: TypeHandle | type, child_object: TypedObject) -> int:
         """Returns the number of child classes that the indicated type is known to
         have.  This may then be used to index into get_child_class().
 
@@ -277,11 +278,11 @@ class TypeRegistry:
         owns this TypeHandle.  It is only used in case the TypeHandle is
         inadvertantly undefined.
         """
-    def get_child_class(self, child: TypeHandle, index: int) -> TypeHandle:
+    def get_child_class(self, child: TypeHandle | type, index: int) -> TypeHandle:
         """Returns the nth child class of this type.  The index should be in the range
         0 <= index < get_num_child_classes().
         """
-    def get_parent_towards(self, child: TypeHandle, base: TypeHandle, child_object: TypedObject) -> TypeHandle:
+    def get_parent_towards(self, child: TypeHandle | type, base: TypeHandle | type, child_object: TypedObject) -> TypeHandle:
         """Returns the parent of the indicated child class that is in a direct line of
         inheritance to the indicated ancestor class.  This is useful in the
         presence of multiple inheritance to try to determine what properties an
@@ -404,9 +405,9 @@ class TypedObject:
         a unique number for each different type.  This is equivalent to
         get_type().get_index().
         """
-    def is_of_type(self, handle: TypeHandle) -> bool:
+    def is_of_type(self, handle: TypeHandle | builtins.type) -> bool:
         """Returns true if the current object is or derives from the indicated type."""
-    def is_exact_type(self, handle: TypeHandle) -> bool:
+    def is_exact_type(self, handle: TypeHandle | builtins.type) -> bool:
         """Returns true if the current object is the indicated type exactly."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...

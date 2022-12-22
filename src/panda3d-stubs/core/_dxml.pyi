@@ -361,8 +361,8 @@ class TiXmlDocument(TiXmlNode):
         Constructor.
         """
     @overload
-    def __init__(self, copy: TiXmlDocument) -> None: ...
-    def assign(self: Self, copy: Self) -> Self: ...
+    def __init__(self, copy: TiXmlDocument | str) -> None: ...
+    def assign(self, copy: TiXmlDocument | str) -> TiXmlDocument: ...
     @overload
     def LoadFile(self, encoding: _TiXmlEncoding = ...) -> bool:
         """`(self, encoding: _TiXmlEncoding = ...)`:
@@ -463,10 +463,10 @@ class TiXmlElement(TiXmlNode):
         std::string constructor.
         """
     @overload
-    def __init__(self, __param0: TiXmlElement) -> None: ...
+    def __init__(self, __param0: TiXmlElement | str) -> None: ...
     @overload
     def __init__(self, _value: str) -> None: ...
-    def assign(self: Self, base: Self) -> Self: ...
+    def assign(self, base: TiXmlElement | str) -> TiXmlElement: ...
     def Attribute(self, name: str) -> str:
         """Given an attribute name, Attribute() returns the value
         for the attribute of that name, or null if none exists.
@@ -569,7 +569,7 @@ class TiXmlVisitor:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: TiXmlVisitor = ...) -> None: ...
     @overload
-    def VisitEnter(self, __param0: TiXmlDocument) -> bool:
+    def VisitEnter(self, __param0: TiXmlDocument | str) -> bool:
         """`(self, __param0: TiXmlDocument)`:
         doc
 
@@ -577,15 +577,15 @@ class TiXmlVisitor:
         firstAttribute
         """
     @overload
-    def VisitEnter(self, __param0: TiXmlElement, __param1: TiXmlAttribute) -> bool: ...
-    def VisitExit(self, __param0: TiXmlDocument | TiXmlElement) -> bool:
+    def VisitEnter(self, __param0: TiXmlElement | str, __param1: TiXmlAttribute) -> bool: ...
+    def VisitExit(self, __param0: TiXmlDocument | TiXmlElement | str) -> bool:
         """`(self, __param0: TiXmlDocument)`:
         doc
 
         `(self, __param0: TiXmlElement)`:
         element
         """
-    def Visit(self, __param0: TiXmlComment | TiXmlDeclaration | TiXmlText | TiXmlUnknown) -> bool:
+    def Visit(self, __param0: TiXmlComment | TiXmlDeclaration | TiXmlText | TiXmlUnknown | str) -> bool:
         """`(self, __param0: TiXmlComment)`:
         comment
 
@@ -658,7 +658,7 @@ class TiXmlAttribute(TiXmlBase):
         """Get the next sibling attribute in the DOM. Returns null at end."""
     def Previous(self) -> TiXmlAttribute:
         """Get the previous sibling attribute in the DOM. Returns null at beginning."""
-    def SetDocument(self, doc: TiXmlDocument) -> None:
+    def SetDocument(self, doc: TiXmlDocument | str) -> None:
         """[internal use]
         Set the document pointer so the attribute can report errors.
         """
@@ -690,7 +690,7 @@ class TiXmlComment(TiXmlNode):
     """An XML comment."""
 
     @overload
-    def __init__(self, __param0: TiXmlComment = ...) -> None:
+    def __init__(self, __param0: TiXmlComment | str = ...) -> None:
         """`(self)`:
         Constructs an empty comment.
 
@@ -699,7 +699,7 @@ class TiXmlComment(TiXmlNode):
         """
     @overload
     def __init__(self, _value: str) -> None: ...
-    def assign(self: Self, base: Self) -> Self: ...
+    def assign(self, base: TiXmlComment | str) -> TiXmlComment: ...
 
 class TiXmlText(TiXmlNode):
     """XML text. A text node can have 2 ways to output the next. "normal" output
@@ -719,8 +719,8 @@ class TiXmlText(TiXmlNode):
         Constructor.
         """
     @overload
-    def __init__(self, copy: TiXmlText) -> None: ...
-    def assign(self: Self, base: Self) -> Self: ...
+    def __init__(self, copy: TiXmlText | str) -> None: ...
+    def assign(self, base: TiXmlText | str) -> TiXmlText: ...
     def CDATA(self) -> bool:
         """Queries whether this represents text using a CDATA section."""
     def SetCDATA(self, _cdata: bool) -> None:
@@ -821,7 +821,7 @@ class TiXmlHandle:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, ref: TiXmlHandle) -> None:
+    def __init__(self, ref: TiXmlHandle | TiXmlNode) -> None:
         """`(self, ref: TiXmlHandle)`:
         Copy constructor
 
@@ -830,7 +830,7 @@ class TiXmlHandle:
         """
     @overload
     def __init__(self, _node: TiXmlNode) -> None: ...
-    def assign(self: Self, ref: Self) -> Self: ...
+    def assign(self, ref: TiXmlHandle | TiXmlNode) -> TiXmlHandle: ...
     @overload
     def FirstChild(self, value: str = ...) -> TiXmlHandle:
         """`(self)`:
@@ -964,7 +964,7 @@ def read_xml_stream(_in: istream) -> TiXmlDocument:
     @returns the document, or NULL on error.
     """
 
-def write_xml_stream(out: ostream, doc: TiXmlDocument) -> None: ...
+def write_xml_stream(out: ostream, doc: TiXmlDocument | str) -> None: ...
 def print_xml(xnode: TiXmlNode) -> None: ...
 def print_xml_to_file(filename: StrOrBytesPath, xnode: TiXmlNode) -> None: ...
 def get_TIXML_MAJOR_VERSION() -> int: ...

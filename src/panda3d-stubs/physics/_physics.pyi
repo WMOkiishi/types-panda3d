@@ -3,11 +3,11 @@ from collections.abc import Iterator, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3Like, Vec4Like
+from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._collide import CollisionHandlerPusher
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import ReferenceCount, TypedReferenceCount
-from panda3d.core._linmath import LMatrix4, LOrientation, LPoint3, LRotation, LVector3
+from panda3d.core._linmath import LMatrix3f, LMatrix4, LOrientation, LPoint3, LRotation, LVector3
 from panda3d.core._pgraph import NodePath, PandaNode
 
 _LinearDistanceForce_FalloffType: TypeAlias = Literal[0, 1, 2]
@@ -81,7 +81,7 @@ class PhysicsObject(TypedReferenceCount):
         """Velocity Query per second"""
     def get_implicit_velocity(self) -> LVector3:
         """Velocity Query over the last dt"""
-    def add_torque(self, torque: Vec4Like) -> None:
+    def add_torque(self, torque: LMatrix3f | Mat4Like | Vec4Like) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
@@ -98,7 +98,7 @@ class PhysicsObject(TypedReferenceCount):
         impulse and torque and call add_impulse and add_torque respectively.
         offset and force are in global (or parent) coordinates.
         """
-    def add_local_torque(self, torque: Vec4Like) -> None:
+    def add_local_torque(self, torque: LMatrix3f | Mat4Like | Vec4Like) -> None:
         """Adds an torque force (i.e.  an instantanious change in velocity).  This is
         a quicker way to get the angular velocity, add a vector to it and set that
         value to be the new angular velocity.
@@ -125,12 +125,12 @@ class PhysicsObject(TypedReferenceCount):
         """
     def get_oriented(self) -> bool:
         """See set_oriented()."""
-    def set_orientation(self, orientation: LOrientation) -> None: ...
+    def set_orientation(self, orientation: Vec4Like) -> None: ...
     def get_orientation(self) -> LOrientation:
         """get current orientation."""
-    def reset_orientation(self, orientation: LOrientation) -> None:
+    def reset_orientation(self, orientation: Vec4Like) -> None:
         """set the orientation while clearing the rotation velocity."""
-    def set_rotation(self, rotation: Vec4Like) -> None:
+    def set_rotation(self, rotation: LMatrix3f | Mat4Like | Vec4Like) -> None:
         """set rotation as a quaternion delta per second."""
     def get_rotation(self) -> LRotation:
         """get rotation per second."""
@@ -507,10 +507,10 @@ class AngularVectorForce(AngularForce):
         constructor
         """
     @overload
-    def __init__(self, quat: Vec4Like) -> None: ...
+    def __init__(self, quat: LMatrix3f | Mat4Like | Vec4Like) -> None: ...
     @overload
     def __init__(self, h: float, p: float, r: float) -> None: ...
-    def set_quat(self, quat: Vec4Like) -> None: ...
+    def set_quat(self, quat: LMatrix3f | Mat4Like | Vec4Like) -> None: ...
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
     def get_local_quat(self) -> LRotation: ...
     setQuat = set_quat

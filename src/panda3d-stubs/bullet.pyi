@@ -5,10 +5,10 @@ from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._collide import CollisionBox, CollisionCapsule, CollisionNode, CollisionPlane, CollisionSphere
-from panda3d.core._dtoolbase import TypedObject
+from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import PTA_int, PTA_stdfloat, TypedReferenceCount
-from panda3d.core._gobj import Geom, GeomVertexFormat, InternalName, Texture
+from panda3d.core._gobj import Geom, GeomVertexArrayFormat, GeomVertexFormat, InternalName, Texture
 from panda3d.core._linmath import LMatrix3, LMatrix4, LPoint3, LVecBase3, LVecBase3i, LVector3
 from panda3d.core._mathutil import BoundingBox, BoundingSphere, LPlane, PTA_LVecBase3
 from panda3d.core._parametrics import NurbsCurveEvaluator, NurbsSurfaceEvaluator
@@ -177,7 +177,7 @@ class BulletBodyNode(PandaNode):
     def is_kinematic(self) -> bool: ...
     def set_static(self, value: bool) -> None: ...
     def set_kinematic(self, value: bool) -> None: ...
-    def set_into_collide_mask(self, mask: CollideMask) -> None:
+    def set_into_collide_mask(self, mask: CollideMask | int) -> None:
         """Contacts"""
     def notify_collisions(self, value: bool) -> None: ...
     def notifies_collisions(self) -> bool: ...
@@ -1028,12 +1028,18 @@ class BulletSoftBodyNode(BulletBodyNode):
     @overload
     @staticmethod
     def make_tri_mesh(
-        info: BulletSoftBodyWorldInfo, points: PTA_LVecBase3, indices: PTA_int, randomizeConstraints: bool = ...
+        info: BulletSoftBodyWorldInfo,
+        points: PTA_LVecBase3 | TypeHandle | type,
+        indices: PTA_int | TypeHandle | type,
+        randomizeConstraints: bool = ...,
     ) -> BulletSoftBodyNode: ...
     @overload
     @staticmethod
     def make_tet_mesh(
-        info: BulletSoftBodyWorldInfo, points: PTA_LVecBase3, indices: PTA_int, tetralinks: bool = ...
+        info: BulletSoftBodyWorldInfo,
+        points: PTA_LVecBase3 | TypeHandle | type,
+        indices: PTA_int | TypeHandle | type,
+        tetralinks: bool = ...,
     ) -> BulletSoftBodyNode: ...
     @overload
     @staticmethod
@@ -1742,15 +1748,15 @@ class BulletWorld(TypedReferenceCount):
     def get_num_constraints(self) -> int:
         """Constraint"""
     def get_constraint(self, idx: int) -> BulletConstraint: ...
-    def ray_test_closest(self, from_pos: Vec3Like, to_pos: Vec3Like, mask: CollideMask = ...) -> BulletClosestHitRayResult:
+    def ray_test_closest(self, from_pos: Vec3Like, to_pos: Vec3Like, mask: CollideMask | int = ...) -> BulletClosestHitRayResult:
         """Raycast and other queries"""
-    def ray_test_all(self, from_pos: Vec3Like, to_pos: Vec3Like, mask: CollideMask = ...) -> BulletAllHitsRayResult: ...
+    def ray_test_all(self, from_pos: Vec3Like, to_pos: Vec3Like, mask: CollideMask | int = ...) -> BulletAllHitsRayResult: ...
     def sweep_test_closest(
         self,
         shape: BulletShape,
         from_ts: TransformState,
         to_ts: TransformState,
-        mask: CollideMask = ...,
+        mask: CollideMask | int = ...,
         penetration: float = ...,
     ) -> BulletClosestHitSweepResult:
         """Performs a sweep test against all other shapes that match the given group
@@ -1914,7 +1920,7 @@ class BulletPersistentManifold:
 class BulletConvexHullShape(BulletShape):
     def __init__(self, copy: BulletConvexHullShape = ...) -> None: ...
     def add_point(self, p: Vec3Like) -> None: ...
-    def add_array(self, points: PTA_LVecBase3) -> None: ...
+    def add_array(self, points: PTA_LVecBase3 | TypeHandle | type) -> None: ...
     def add_geom(self, geom: Geom, ts: TransformState = ...) -> None: ...
     addPoint = add_point
     addArray = add_array
@@ -1928,7 +1934,7 @@ class BulletConvexPointCloudShape(BulletShape):
     @overload
     def __init__(self, geom: Geom, scale: Vec3Like = ...) -> None: ...
     @overload
-    def __init__(self, points: PTA_LVecBase3, scale: Vec3Like = ...) -> None: ...
+    def __init__(self, points: PTA_LVecBase3 | TypeHandle | type, scale: Vec3Like = ...) -> None: ...
     def get_num_points(self) -> int: ...
     getNumPoints = get_num_points
 
@@ -2153,15 +2159,17 @@ class BulletHelper:
     @staticmethod
     def get_sb_flip() -> InternalName: ...
     @staticmethod
-    def add_sb_index_column(format: GeomVertexFormat) -> GeomVertexFormat:
+    def add_sb_index_column(format: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexFormat:
         """Geom vertex data"""
     @staticmethod
-    def add_sb_flip_column(format: GeomVertexFormat) -> GeomVertexFormat: ...
+    def add_sb_flip_column(format: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexFormat: ...
     @staticmethod
-    def make_geom_from_faces(node: BulletSoftBodyNode, format: GeomVertexFormat = ..., two_sided: bool = ...) -> Geom:
+    def make_geom_from_faces(
+        node: BulletSoftBodyNode, format: GeomVertexArrayFormat | GeomVertexFormat = ..., two_sided: bool = ...
+    ) -> Geom:
         """Geom utils"""
     @staticmethod
-    def make_geom_from_links(node: BulletSoftBodyNode, format: GeomVertexFormat = ...) -> Geom: ...
+    def make_geom_from_links(node: BulletSoftBodyNode, format: GeomVertexArrayFormat | GeomVertexFormat = ...) -> Geom: ...
     @staticmethod
     def make_texcoords_for_patch(geom: Geom, resx: int, resy: int) -> None: ...
     fromCollisionSolids = from_collision_solids
@@ -2312,7 +2320,7 @@ class BulletMultiSphereShape(BulletShape):
     @overload
     def __init__(self, copy: BulletMultiSphereShape) -> None: ...
     @overload
-    def __init__(self, points: PTA_LVecBase3, radii: PTA_stdfloat) -> None: ...
+    def __init__(self, points: PTA_LVecBase3 | TypeHandle | type, radii: PTA_stdfloat | TypeHandle | type) -> None: ...
     def assign(self: Self, copy: Self) -> Self: ...
     def get_sphere_count(self) -> int: ...
     def get_sphere_pos(self, index: int) -> LPoint3: ...
@@ -2339,7 +2347,7 @@ class BulletPlaneShape(BulletShape):
     def get_plane_normal(self) -> LVector3: ...
     def get_plane_constant(self) -> float: ...
     @staticmethod
-    def make_from_solid(solid: CollisionPlane) -> BulletPlaneShape: ...
+    def make_from_solid(solid: CollisionPlane | Vec4Like) -> BulletPlaneShape: ...
     getPlane = get_plane
     getPlaneNormal = get_plane_normal
     getPlaneConstant = get_plane_constant
@@ -2511,7 +2519,12 @@ class BulletTriangleMesh(TypedWritableReferenceCount):
         the tolerance specified by set_welding_distance().  This comes at a
         significant performance cost, especially for large meshes.
         """
-    def add_array(self, points: PTA_LVecBase3, indices: PTA_int, remove_duplicate_vertices: bool = ...) -> None:
+    def add_array(
+        self,
+        points: PTA_LVecBase3 | TypeHandle | type,
+        indices: PTA_int | TypeHandle | type,
+        remove_duplicate_vertices: bool = ...,
+    ) -> None:
         """Adds triangle information from an array of points and indices referring to
         these points.  This is more efficient than adding triangles one at a time.
 

@@ -140,7 +140,7 @@ class LVecBase2f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -149,7 +149,7 @@ class LVecBase2f:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -306,7 +306,7 @@ class LVecBase2d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -315,7 +315,7 @@ class LVecBase2d:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -450,7 +450,7 @@ class LVecBase2i:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -459,7 +459,7 @@ class LVecBase2i:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -902,7 +902,7 @@ class LVecBase3f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -911,7 +911,7 @@ class LVecBase3f:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -1118,7 +1118,7 @@ class LVecBase3d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -1127,7 +1127,7 @@ class LVecBase3d:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -1300,7 +1300,7 @@ class LVecBase3i:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -1309,7 +1309,7 @@ class LVecBase3i:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -2051,7 +2051,7 @@ class LVecBase4f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -2060,7 +2060,7 @@ class LVecBase4f:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -2297,7 +2297,7 @@ class LVecBase4d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -2306,7 +2306,7 @@ class LVecBase4d:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -2521,7 +2521,7 @@ class LVecBase4i:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, source: DatagramIterator) -> None:
+    def read_datagram_fixed(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -2530,7 +2530,7 @@ class LVecBase4i:
         appropriate when you want to write the vector using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the vector from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -3247,7 +3247,7 @@ class LMatrix3f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, scan: DatagramIterator) -> None:
+    def read_datagram_fixed(self, scan: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -3256,7 +3256,7 @@ class LMatrix3f:
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -3687,7 +3687,7 @@ class LMatrix4f:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, scan: DatagramIterator) -> None:
+    def read_datagram_fixed(self, scan: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -3696,7 +3696,7 @@ class LMatrix4f:
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -4163,7 +4163,7 @@ class LMatrix3d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, scan: DatagramIterator) -> None:
+    def read_datagram_fixed(self, scan: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -4172,7 +4172,7 @@ class LMatrix3d:
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -4605,7 +4605,7 @@ class LMatrix4d:
         write a fixed-width value to the datagram, especially when you are not
         writing a bam file.
         """
-    def read_datagram_fixed(self, scan: DatagramIterator) -> None:
+    def read_datagram_fixed(self, scan: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_float32() or get_float64().
         See write_datagram_fixed().
         """
@@ -4614,7 +4614,7 @@ class LMatrix4d:
         appropriate when you want to write the matrix using the standard width
         setting, especially when you are writing a bam file.
         """
-    def read_datagram(self, source: DatagramIterator) -> None:
+    def read_datagram(self, source: Datagram | DatagramIterator) -> None:
         """Reads the matrix from the Datagram using get_stdfloat()."""
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -5386,7 +5386,9 @@ def invert(a: DoubleVec4Like) -> LQuaterniond: ...
 @overload
 def invert(a: Vec4Like) -> LQuaternionf: ...
 def generic_write_datagram(dest: Datagram, value: DoubleMat4Like | LMatrix3d | LMatrix3f | Mat4Like) -> None: ...
-def generic_read_datagram(result: DoubleMat4Like | LMatrix3d | LMatrix3f | Mat4Like, source: DatagramIterator) -> None: ...
+def generic_read_datagram(
+    result: DoubleMat4Like | LMatrix3d | LMatrix3f | Mat4Like, source: Datagram | DatagramIterator
+) -> None: ...
 @overload
 def compose_matrix(mat: LMatrix3d, scale: DoubleVec3Like, hpr: DoubleVec3Like, cs: _CoordinateSystem = ...) -> None: ...
 @overload

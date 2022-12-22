@@ -55,7 +55,7 @@ class FlacAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: FlacAudio) -> None: ...
+    def __init__(self, __param0: FlacAudio | StrOrBytesPath) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -79,7 +79,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         construct a subclass of this class.
         """
     @overload
-    def __init__(self, __param0: MovieAudioCursor) -> None: ...
+    def __init__(self, __param0: MovieAudio | MovieAudioCursor) -> None: ...
     def get_source(self) -> MovieAudio:
         """Returns the MovieAudio which this cursor references."""
     def audio_rate(self) -> int:
@@ -200,7 +200,7 @@ class FlacAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: FlacAudio, stream: istream) -> None: ...
+    def __init__(self, src: FlacAudio | StrOrBytesPath, stream: istream) -> None: ...
 
 class MovieVideo(TypedWritableReferenceCount, Namable):
     """A MovieVideo is actually any source that provides a sequence of video
@@ -411,7 +411,7 @@ class InkblotVideoCursor(MovieVideoCursor):
     def __init__(self, src: InkblotVideo) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: InkblotVideoCursor) -> None: ...
+    def __init__(self, __param0: InkblotVideo | InkblotVideoCursor) -> None: ...
 
 class MicrophoneAudio(MovieAudio):
     """Class MicrophoneAudio provides the means to read raw audio samples from a
@@ -455,7 +455,7 @@ class OpusAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: OpusAudio) -> None: ...
+    def __init__(self, __param0: OpusAudio | StrOrBytesPath) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -474,7 +474,7 @@ class OpusAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: OpusAudio, stream: istream) -> None: ...
+    def __init__(self, src: OpusAudio | StrOrBytesPath, stream: istream) -> None: ...
 
 class UserDataAudio(MovieAudio):
     """A UserDataAudio is a way for the user to manually supply raw audio samples.
@@ -503,7 +503,7 @@ class UserDataAudio(MovieAudio):
         but it may be convenient to deal with samples in python.
         """
     @overload
-    def append(self, src: DatagramIterator, len: int = ...) -> None: ...
+    def append(self, src: Datagram | DatagramIterator, len: int = ...) -> None: ...
     def done(self) -> None:
         """Promises not to append any more samples, ie, this marks the end of the
         audio stream.
@@ -517,7 +517,7 @@ class UserDataAudioCursor(MovieAudioCursor):
     @overload
     def __init__(self, src: UserDataAudio) -> None: ...
     @overload
-    def __init__(self, __param0: UserDataAudioCursor) -> None: ...
+    def __init__(self, __param0: UserDataAudio | UserDataAudioCursor) -> None: ...
 
 class VorbisAudio(MovieAudio):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
@@ -528,7 +528,7 @@ class VorbisAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: VorbisAudio) -> None: ...
+    def __init__(self, __param0: StrOrBytesPath | VorbisAudio) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -544,7 +544,7 @@ class VorbisAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: VorbisAudio, stream: istream) -> None: ...
+    def __init__(self, src: StrOrBytesPath | VorbisAudio, stream: istream) -> None: ...
 
 class WavAudio(MovieAudio):
     """A native PCM .wav loader.  Supported formats are linear PCM, IEEE float,
@@ -555,7 +555,7 @@ class WavAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: WavAudio) -> None: ...
+    def __init__(self, __param0: StrOrBytesPath | WavAudio) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -571,4 +571,4 @@ class WavAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: WavAudio, stream: istream) -> None: ...
+    def __init__(self, src: StrOrBytesPath | WavAudio, stream: istream) -> None: ...

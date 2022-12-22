@@ -221,6 +221,8 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.TextEncoder.set_text': {(0, 1): 'str', (1, 1): 'bytes'},
     'panda3d.core.TextureStage.set_alpha_scale': {(0, 1): 'Literal[1, 2, 4]'},
     'panda3d.core.TextureStage.set_rgb_scale': {(0, 1): 'Literal[1, 2, 4]'},
+    'panda3d.core.TypedObject.is_exact_type': {(0, 1): 'TypeHandle | builtins.type'},
+    'panda3d.core.TypedObject.is_of_type': {(0, 1): 'TypeHandle | builtins.type'},
     'panda3d.direct.CConnectionRepository.set_tcp_header_size': {
         (0, 1): 'Literal[0, 2, 4]'
     },
@@ -316,6 +318,33 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
 })
 
 
+NO_COERCION: Final = TrackingMap({
+    'ConfigVariableBool': {'str'},
+    'ConfigVariableColor': {'str'},
+    'ConfigVariableDouble': {'str'},
+    'ConfigVariableFilename': {'str'},
+    'ConfigVariableInt': {'str'},
+    'ConfigVariableInt64': {'str'},
+    'ConfigVariableList': {'str'},
+    'ConfigVariableString': {'str'},
+    'LMatrix4d': {'LMatrix3d'},
+    'LMatrix4f': {'LMatrix3f'},
+    'LOrientationf': {'LMatrix3f', 'LMatrix4f'},
+    'LOrientationd': {'LMatrix3d', 'LMatrix4d'},
+    'LVecBase4d': {'LVecBase3d', 'LVector3d', 'LPoint3d'},
+    'LVecBase4f': {'LVecBase3f', 'LVector3f', 'LPoint3f'},
+    'LVecBase4i': {'LVecBase3i', 'LVector3i', 'LPoint3i'},
+    'MovieVideo': {'str'},
+    'OdeBody': {'OdeWorld'},
+    'pixel': {'int'},
+    'PNMImageHeader.PixelSpec': {'int'},
+    'Shader': {'str'},
+})
+EXTRA_COERCION: Final = TrackingMap({
+    'Filename': {'StrOrBytesPath'},
+})
+
+
 # This adds comments to ignore Mypy errors
 IGNORE_ERRORS: Final = TrackingMap({
     'panda3d.core.AsyncTaskSequence': 'misc',
@@ -323,6 +352,7 @@ IGNORE_ERRORS: Final = TrackingMap({
     'panda3d.core.DatagramBuffer': 'misc',
     'panda3d.core.DynamicTextFont': 'misc',
     'panda3d.core.GeomVertexRewriter': 'misc',
+    'panda3d.core.GeomVertexRewriter.assign': 'override',
     'panda3d.core.GeomVertexRewriter.setColumn': 'assignment',
     'panda3d.core.GeometricBoundingVolume.contains': 'override',
     'panda3d.core.GeometricBoundingVolume.extend_by': 'override',

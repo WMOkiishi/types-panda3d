@@ -104,7 +104,7 @@ class CConnectionRepository:
         """Fills the datagram object with the datagram most recently retrieved by
         check_datagram().
         """
-    def get_datagram_iterator(self, di: DatagramIterator) -> None:
+    def get_datagram_iterator(self, di: Datagram | DatagramIterator) -> None:
         """Fills the DatagramIterator object with the iterator for the datagram most
         recently retrieved by check_datagram().  This iterator has already read
         past the datagram header and the message type, and is positioned at the

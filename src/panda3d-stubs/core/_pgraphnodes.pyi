@@ -8,7 +8,16 @@ from panda3d.core._express import TypedReferenceCount
 from panda3d.core._gobj import GeomVertexAnimationSpec, Texture
 from panda3d.core._gsgbase import GraphicsOutputBase, GraphicsStateGuardianBase
 from panda3d.core._linmath import LColor, LPoint3, LVecBase2i, LVecBase3, LVecBase3i, LVector3
-from panda3d.core._pgraph import Camera, CullTraverser, CullTraverserData, Light, PandaNode, RenderState, ShaderAttrib
+from panda3d.core._pgraph import (
+    Camera,
+    CullTraverser,
+    CullTraverserData,
+    Light,
+    PandaNode,
+    RenderAttrib,
+    RenderState,
+    ShaderAttrib,
+)
 from panda3d.core._putil import AnimInterface, CallbackData, CallbackObject
 
 _SceneGraphAnalyzer_LodMode: TypeAlias = Literal[0, 1, 2, 3]
@@ -553,8 +562,8 @@ class ShaderGenerator(TypedReferenceCount):
         shader generator belongs.
         """
     @overload
-    def __init__(self, __param0: ShaderGenerator) -> None: ...
-    def synthesize_shader(self, rs: RenderState, anim: GeomVertexAnimationSpec) -> ShaderAttrib:
+    def __init__(self, __param0: GraphicsStateGuardianBase | ShaderGenerator) -> None: ...
+    def synthesize_shader(self, rs: RenderAttrib | RenderState, anim: GeomVertexAnimationSpec) -> ShaderAttrib:
         """This is the routine that implements the next-gen fixed function pipeline by
         synthesizing a shader.  It also takes care of setting up any buffers needed
         to produce the requested effects.

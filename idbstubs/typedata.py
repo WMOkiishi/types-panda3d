@@ -1,7 +1,8 @@
 import builtins
+import itertools
 import logging
 from collections import defaultdict
-from collections.abc import Callable, Iterator, Sequence
+from collections.abc import Callable, Iterator, Mapping, Sequence, Set
 from functools import cache
 from itertools import combinations, product
 from sys import stdlib_module_names
@@ -14,31 +15,18 @@ from .idbutil import (
     type_is_unscoped_enum,
     unwrap_type,
 )
-from .special_cases import TYPE_NAME_OVERRIDES
+from .special_cases import EXTRA_COERCION, NO_COERCION, TYPE_NAME_OVERRIDES
 from .translation import ATOMIC_TYPES, class_name_from_cpp_name
-from .util import flatten, unpack_union
+from .util import unpack_union
 
 _logger: Final = logging.getLogger(__name__)
 
 _modules: dict[str, str] = {}
 _inheritance: dict[str, set[str]] = {}
 _direct_inheritance: dict[str, tuple[str, ...]] = {}
-_coercions = defaultdict[IDBType, set[IDBType]](set)
 _aliases: dict[str, str] = {}
 _param_type_replacements: dict[str, str] = {}
 _enum_definitions: dict[str, str] = {}
-_implicit_cast_param_names = frozenset({
-    'param0',
-    'copy',
-    'other',
-    'value',
-    'from',
-    'flags',
-    'index',
-    'url',
-    'pattern',
-    'bundle',
-})
 
 BUILTIN_NAMES: Final = frozenset(dir(builtins))
 KNOWN_IMPORTS: Final = {
@@ -122,6 +110,7 @@ def get_type_name(idb_type: IDBType) -> str:
 
 
 def load_data() -> None:
+    coercions = defaultdict[str, set[str]](set)
     for idb_type in get_all_types():
         type_name = get_type_name(idb_type)
         if idb_type.is_wrapped:
@@ -141,9 +130,10 @@ def load_data() -> None:
             # Don't record coercion or inheritance information for typedefs
             continue
         for cast_to in explicit_cast_to(idb_type):
-            _coercions[cast_to].add(idb_type)
-        if cast_from := set(implicit_cast_from(idb_type)):
-            _coercions[idb_type].update(cast_from)
+            coercions[get_type_name(cast_to)].add(type_name)
+        coercions[type_name].update(
+            get_type_name(t) for t in implicit_cast_from(idb_type)
+        )
         if base_classes := recursive_superclasses(idb_type):
             _inheritance[type_name] = {
                 get_type_name(s) for s in base_classes
@@ -151,10 +141,11 @@ def load_data() -> None:
             _direct_inheritance[type_name] = tuple(
                 get_type_name(s) for s in idb_type.derivations
             )
-    for cast_to in tuple(_coercions):  # freeze keys
-        cast_to_name = get_type_name(cast_to)
-        cast_from_name = make_param_type_replacement(cast_to)
-        if cast_to_name != cast_from_name:
+    for cast_to_name in tuple(coercions):  # freeze keys
+        cast_from_name = combine_types(
+            *get_all_coercible(cast_to_name, coercion_map=coercions)
+        )
+        if cast_from_name and cast_to_name != cast_from_name:
             _param_type_replacements[cast_to_name] = cast_from_name
 
 
@@ -179,38 +170,47 @@ def implicit_cast_from(idb_type: IDBType) -> Iterator[IDBType]:
     """Yield the types that can be implicitly cast
     to the type with the given index.
     """
-    for constructor in idb_type.constructors:
-        for wrapper in constructor.wrappers:
+    for function in itertools.chain(idb_type.constructors, idb_type.methods):
+        for wrapper in function.wrappers:
+            if not wrapper.is_coerce_constructor:
+                continue
             max_arity = len(wrapper.parameters)
             min_arity = sum(not p.is_optional for p in wrapper.parameters)
             if min_arity > 1 or max_arity < 1:
                 continue
-            if wrapper.parameters[0].name not in _implicit_cast_param_names:
+            if wrapper.parameters[0].name == 'fill_value':
                 continue
             cast_from = unwrap_type(wrapper.parameters[0].type)
+            if cast_from.name == '_object':
+                continue
             if idb_type in recursive_superclasses(cast_from):
                 continue
             if type_is_exposed(cast_from):
                 yield cast_from
 
 
-def make_param_type_replacement(cast_to: IDBType) -> str:
-    """Return a type expressing all types that can be
-    automatically coerced to the given type.
+def get_all_coercible(
+        cast_to: str,
+        *, coercion_map: Mapping[str, Set[str]],
+        skip: Set[str] = frozenset()) -> set[str]:
+    """Based on `coercion_map`, return a set of the names of the types
+    that can be automatically coerced to the type with the given name.
+
+    `skip` is used to prevent cyclical recursion, as well as to ignore
+    certain coercions, dictated by `special_cases.NO_COERCION`.
     """
-    cast_from, next_layer = {cast_to}, _coercions[cast_to]
-    while cast_layer := next_layer - cast_from:
-        cast_from |= cast_layer
-        next_layer = set(flatten(
-            _coercions[i]
-            for i in cast_layer
-        ))
-    cast_from_names = {get_type_name(i) for i in cast_from}
-    if cast_to.name == 'Filename':
-        cast_from_names.remove('Filename')
-        cast_from_names.discard('ConfigVariableFilename')
-        cast_from_names.add('StrOrBytesPath')
-    return combine_types(*cast_from_names)
+    if (remove := NO_COERCION.get(cast_to)) is not None:
+        # Don't mutate `skip`
+        skip = skip | remove
+    direct_cast_from = coercion_map[cast_to] - skip
+    cast_from = {cast_to} | direct_cast_from
+    for name in direct_cast_from:
+        cast_from |= get_all_coercible(
+            name, coercion_map=coercion_map, skip=skip | cast_from
+        )
+    if (add := EXTRA_COERCION.get(cast_to)) is not None:
+        cast_from |= add
+    return cast_from
 
 
 @cache

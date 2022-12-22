@@ -10,11 +10,12 @@ from panda3d.core._express import Namable
 from panda3d.core._gobj import InternalName, Lens, Texture, TextureStage, VertexTransform
 from panda3d.core._linmath import LColor, LPoint3, LVecBase2, LVecBase2d, LVecBase2f, LVector3, LVertex
 from panda3d.core._movies import MovieVideo, MovieVideoCursor
-from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderState, TransformState
+from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderAttrib, RenderState, TransformState
 from panda3d.core._pnmimage import PfmFile, PNMFileType, PNMImage
 from panda3d.core._putil import ClockObject, DrawMask
 from panda3d.core._text import TextNode
 
+_ClockObject_Mode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _PfmVizzer_ColumnType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 _PfmVizzer_MeshFace: TypeAlias = Literal[1, 2, 3]
 
@@ -207,7 +208,7 @@ class FrameRateMeter(TextNode):
         """
     def get_text_pattern(self) -> str:
         """Returns the sprintf() pattern that is used to format the text."""
-    def set_clock_object(self, clock_object: ClockObject) -> None:
+    def set_clock_object(self, clock_object: ClockObject | _ClockObject_Mode) -> None:
         """Sets the clock that is used to determine the frame rate.  The default is
         the application's global clock (ClockObject::get_global_clock()).
         """
@@ -1034,7 +1035,7 @@ class MultitexReducer:
         flattening by the MultitexReducer.
         """
     @overload
-    def scan(self, node: PandaNode, state: RenderState, transform: TransformState) -> None: ...
+    def scan(self, node: PandaNode, state: RenderAttrib | RenderState, transform: TransformState) -> None: ...
     def set_target(self, stage: TextureStage) -> None: ...
     def set_use_geom(self, use_geom: bool) -> None: ...
     def set_allow_tex_mat(self, allow_tex_mat: bool) -> None: ...
@@ -1348,7 +1349,7 @@ class PipeOcclusionCullTraverser(CullTraverser):
         """Returns a Texture that can be used to visualize the efforts of the
         occlusion cull.
         """
-    def set_occlusion_mask(self, occlusion_mask: DrawMask) -> None:
+    def set_occlusion_mask(self, occlusion_mask: DrawMask | int) -> None:
         """Specifies the DrawMask that should be set on occlusion polygons for this
         scene.  This identifies the polygons that are to be treated as occluders.
         Polygons that do not have this draw mask set will not be considered

@@ -35,7 +35,7 @@ class NetAddress:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: NetAddress = ...) -> None:
+    def __init__(self, __param0: NetAddress | Socket_Address = ...) -> None:
         """`(self)`:
         Constructs an unspecified address.
 
@@ -101,7 +101,7 @@ class NetAddress:
 class Connection(ReferenceCount):
     """Represents a single TCP or UDP socket for input or output."""
 
-    def __init__(self, manager: ConnectionManager, socket: Socket_IP) -> None:
+    def __init__(self, manager: ConnectionManager, socket: Socket_IP | int) -> None:
         """Creates a connection.  Normally this constructor should not be used
         directly by user code; use one of the methods in ConnectionManager to make
         a new connection.
@@ -312,7 +312,7 @@ class NetDatagram(Datagram):
         """Retrieves the socket from which the datagram was read, or to which it is
         scheduled to be written.
         """
-    def set_address(self, address: NetAddress) -> None:
+    def set_address(self, address: NetAddress | Socket_Address) -> None:
         """Specifies the host to which the datagram should be sent."""
     def get_address(self) -> NetAddress:
         """Retrieves the host from which the datagram was read, or to which it is
@@ -396,7 +396,7 @@ class ConnectionManager:
     @overload
     def open_UDP_connection(self, hostname: str, port: int, for_broadcast: bool = ...) -> Connection: ...
     @overload
-    def open_TCP_server_rendezvous(self, address: NetAddress, backlog: int) -> Connection:
+    def open_TCP_server_rendezvous(self, address: NetAddress | Socket_Address, backlog: int) -> Connection:
         """`(self, address: NetAddress, backlog: int)`:
         Creates a socket to be used as a rendezvous socket for a server to listen
         for TCP connections.  The socket returned by this call should only be added
@@ -434,7 +434,7 @@ class ConnectionManager:
     @overload
     def open_TCP_server_rendezvous(self, hostname: str, port: int, backlog: int) -> Connection: ...
     @overload
-    def open_TCP_client_connection(self, address: NetAddress, timeout_ms: int) -> Connection:
+    def open_TCP_client_connection(self, address: NetAddress | Socket_Address, timeout_ms: int) -> Connection:
         """`(self, address: NetAddress, timeout_ms: int)`:
         Attempts to establish a TCP client connection to a server at the indicated
         address.  If the connection is not established within timeout_ms
@@ -562,7 +562,9 @@ class ConnectionWriter:
         instead, it will wait until there is space available.
         """
     @overload
-    def send(self, datagram: Datagram, connection: Connection, address: NetAddress, block: bool = ...) -> bool: ...
+    def send(
+        self, datagram: Datagram, connection: Connection, address: NetAddress | Socket_Address, block: bool = ...
+    ) -> bool: ...
     def is_valid_for_udp(self, datagram: Datagram) -> bool:
         """Returns true if the datagram is small enough to be sent over a UDP packet,
         false otherwise.
@@ -705,7 +707,7 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
         information may then be retrieved via get_new_connection().
         """
     @overload
-    def get_new_connection(self, new_connection: Connection | PointerTo_Connection | None) -> bool:
+    def get_new_connection(self, new_connection: Connection | PointerTo_Connection) -> bool:
         """`(self, new_connection: PointerTo_Connection)`:
         This flavor of get_new_connection() simply returns a new connection,
         assuming the user doesn't care about the rendezvous socket that originated
@@ -728,9 +730,9 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
     @overload
     def get_new_connection(
         self,
-        rendezvous: Connection | PointerTo_Connection | None,
-        address: NetAddress,
-        new_connection: Connection | PointerTo_Connection | None,
+        rendezvous: Connection | PointerTo_Connection,
+        address: NetAddress | Socket_Address,
+        new_connection: Connection | PointerTo_Connection,
     ) -> bool: ...
     upcastToConnectionListener = upcast_to_ConnectionListener
     upcastToQueuedReturnConnectionListenerData = upcast_to_QueuedReturn_ConnectionListenerData
@@ -775,7 +777,7 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
         reset by this call.  (There is no harm in calling close_connection() more
         than once on a given socket.)
         """
-    def get_reset_connection(self, connection: Connection | PointerTo_Connection | None) -> bool:
+    def get_reset_connection(self, connection: Connection | PointerTo_Connection) -> bool:
         """If a previous call to reset_connection_available() returned true, this
         function will return information about the newly reset connection.
 

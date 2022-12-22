@@ -408,7 +408,7 @@ class AnimChannelMatrixXfmTable(AnimChannel_ACMatrixSwitchType):
     @staticmethod
     def is_valid_id(table_id: str) -> bool:
         """Returns true if the given letter is one of the nine valid table id's."""
-    def set_table(self, table_id: str, table: CPTA_stdfloat | PointerToArray_float) -> None:
+    def set_table(self, table_id: str, table: CPTA_stdfloat | PointerToArray_float | TypeHandle | type) -> None:
         """Assigns the indicated table.  table_id is one of 'i', 'j', 'k', for scale,
         'a', 'b', 'c' for shear, 'h', 'p', 'r', for rotation, and 'x', 'y', 'z',
         for translation.  The new table must have either zero, one, or
@@ -464,7 +464,7 @@ class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
 
     table: CPTA_stdfloat
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
-    def set_table(self, table: CPTA_stdfloat | PointerToArray_float) -> None:
+    def set_table(self, table: CPTA_stdfloat | PointerToArray_float | TypeHandle | type) -> None:
         """Assigns the data table."""
     def get_table(self) -> CPTA_stdfloat:
         """Returns a pointer to the table's data, if it exists, or NULL if it does
