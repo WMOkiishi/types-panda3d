@@ -7,7 +7,7 @@ on:
       - main
       - master
     paths:
-      - 'src/**'
+      - 'idbstubs/**'
       - 'tests/*'
       - '.github/workflows/typecheck_scripts.yml'
       - 'requirements-dev.txt'
