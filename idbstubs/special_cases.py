@@ -188,7 +188,10 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.InternalName.make': {(0, 0): 'str'},
     'panda3d.core.IStreamWrapper.__init__': {(0, 1): 'core.istream'},
     'panda3d.core.NodePath.__init__': {
-        (1, 1): 'NodePath[_N]', (3, 1): '_N', (2, 2): '_N'
+        (0, 0): 'NodePath[Never]',
+        (1, 1): 'NodePath[_N]',
+        (3, 1): '_N',
+        (2, 2): '_N',
     },
     'panda3d.core.NodePath.any_path': {(0, 0): '_M'},
     'panda3d.core.NodePath.attach_new_node': {(0, 1): '_M'},

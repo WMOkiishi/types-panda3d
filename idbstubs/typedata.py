@@ -47,6 +47,7 @@ KNOWN_IMPORTS: Final = {
     'final': 'typing_extensions',  # Introduced in 3.8
     'Generic': 'typing',
     'Literal': 'typing_extensions',  # Introduced in 3.8
+    'Never': 'typing_extensions',  # Introduced in 3.11
     'NoReturn': 'typing',
     'overload': 'typing',
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10

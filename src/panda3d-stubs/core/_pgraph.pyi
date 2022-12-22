@@ -1,7 +1,7 @@
 from _typeshed import Self, StrOrBytesPath
 from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
-from typing_extensions import Final, Literal, TypeAlias, final
+from typing_extensions import Final, Literal, Never, TypeAlias, final
 
 from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._display import DisplayRegion
@@ -3062,7 +3062,7 @@ class NodePath(Generic[_N]):
     @property
     def python_tags(self) -> dict[Any, Any] | None: ...
     @overload
-    def __init__(self, copy: NodePath[_N] = ...) -> None:
+    def __init__(self: NodePath[Never]) -> None:
         """`(self)`:
         This constructs an empty NodePath with no nodes.
 
@@ -3081,6 +3081,8 @@ class NodePath(Generic[_N]):
         This constructs a new NodePath with a single node.  An ordinary, unattached
         PandaNode is created with the indicated name.
         """
+    @overload
+    def __init__(self, copy: NodePath[_N]) -> None: ...
     @overload
     def __init__(self, node: _N, current_thread: Thread = ...) -> None: ...
     @overload

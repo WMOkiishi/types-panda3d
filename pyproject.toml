@@ -53,7 +53,3 @@ reportSelfClsParameterName = false
 # We use illusory modules to break up large modules, as well as to
 # store often-used typing constructors.
 reportMissingModuleSource = false
-# With the way the panda3d stub creation currently works, it's difficult
-# to work around the lack of type variable defaults, so just ignore
-# these warnings for now.
-reportInvalidTypeVarUse = false
