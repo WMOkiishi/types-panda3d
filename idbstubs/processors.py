@@ -18,7 +18,6 @@ from .reps import (
 )
 from .special_cases import (
     ATTR_TYPE_OVERRIDES,
-    ATTRIBUTE_NAME_SHADOWS,
     DEFAULT_RETURNS,
     INPLACE_DUNDERS,
     PARAM_TYPE_OVERRIDES,
@@ -217,16 +216,7 @@ def process_function(function: Function) -> None:
             param_override = param_overrides.get((i, j))
             if param_override is not None:
                 param.type = param_override
-    new_sigs = process_signatures(function.signatures)
-    shadowed_names = ATTRIBUTE_NAME_SHADOWS.get('.'.join(function.namespace))
-    if shadowed_names is not None:
-        for sig in new_sigs:
-            for param in sig.parameters:
-                if param.type in shadowed_names:
-                    param.type = 'core.' + param.type
-            if sig.return_type in shadowed_names:
-                sig.return_type = 'core.' + sig.return_type
-    function.signatures = new_sigs
+    function.signatures = process_signatures(function.signatures)
     match function:
         case Function(
             name='__eq__' | '__ne__',

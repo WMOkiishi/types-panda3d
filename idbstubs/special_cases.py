@@ -1,5 +1,4 @@
 import logging
-from collections.abc import Container
 from typing import Final
 
 from .util import TrackingMap, TrackingSet
@@ -156,16 +155,6 @@ GENERIC: Final = TrackingMap({
 })
 
 
-# These types have attributes sharing names with other types
-ATTRIBUTE_NAME_SHADOWS: Final = TrackingMap[str, Container[str]]({
-    'panda3d.core.StreamReader': ('istream',),
-    'panda3d.core.StreamWriter': ('ostream',),
-    'panda3d.core.StreamWrapper': ('iostream',),
-    'panda3d.core.IStreamWrapper': ('istream',),
-    'panda3d.core.OStreamWrapper': ('ostream',),
-})
-
-
 # Don't replace `size` with `__len__` for these
 SIZE_NOT_LEN: Final = TrackingSet(('EggGroupNode', 'WindowProperties'))
 
@@ -196,6 +185,7 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
         (0, 1): 'Literal[0, 2, 4]'
     },
     'panda3d.core.Filename.__init__': {(2, 1): 'StrOrBytesPath'},
+    'panda3d.core.IStreamWrapper.__init__': {(0, 1): 'core.istream'},
     'panda3d.core.NodePath.__init__': {
         (1, 1): 'NodePath[_N]', (3, 1): '_N', (2, 2): '_N'
     },
@@ -209,6 +199,7 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.NodePath.has_python_tag': {(0, 1): 'Any'},
     'panda3d.core.NodePath.set_python_tag': {(0, 1): 'Any', (0, 2): 'Any'},
     'panda3d.core.NodePathCollection.__init__': {(2, 1): 'Sequence[NodePath]'},
+    'panda3d.core.OStreamWrapper.__init__': {(0, 1): 'core.ostream'},
     'panda3d.core.PandaNode.clear_python_tag': {(0, 1): 'Any'},
     'panda3d.core.PandaNode.get_python_tag': {(0, 1): 'Any'},
     'panda3d.core.PandaNode.has_python_tag': {(0, 1): 'Any'},
@@ -221,6 +212,9 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'panda3d.core.SocketStream.set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'panda3d.core.SSReader.set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'panda3d.core.SSWriter.set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
+    'panda3d.core.StreamReader.__init__': {(1, 1): 'core.istream'},
+    'panda3d.core.StreamWrapper.__init__': {(0, 1): 'core.iostream'},
+    'panda3d.core.StreamWriter.__init__': {(1, 1): 'core.ostream'},
     'panda3d.core.StringStream.set_data': {(0, 1): 'bytes'},
     'panda3d.core.TextEncoder.append_text': {(0, 1): 'str'},
     'panda3d.core.TextEncoder.decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
@@ -253,6 +247,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.Filename.scan_directory': 'list[str]',
     'panda3d.core.GlobPattern.match_files': 'list[str]',
     'panda3d.core.GraphicsStateGuardian.get_prepared_textures': 'list[Any]',
+    'panda3d.core.IStreamWrapper.get_istream': 'core.istream',
     'panda3d.core.LMatrix3f.__len__': 'Literal[3]',
     'panda3d.core.LMatrix3f.Row.__len__': 'Literal[3]',
     'panda3d.core.LMatrix3f.CRow.__len__': 'Literal[3]',
@@ -278,6 +273,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.NodePath.node': '_N',
     'panda3d.core.NodePathCollection.get_tight_bounds': 'tuple[LPoint3f, LPoint3f] | None',
     'panda3d.core.OccluderNode.get_num_vertices': 'Literal[4]',
+    'panda3d.core.OStreamWrapper.get_ostream': 'core.ostream',
     'panda3d.core.PandaNode.get_python_tag': 'Any | None',
     'panda3d.core.PandaNode.get_python_tag_keys': 'list[Any] | tuple[()]',
     'panda3d.core.PandaNode.get_python_tags': 'dict[Any, Any]',
@@ -297,8 +293,11 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'panda3d.core.RenderState.get_unused_states': 'list[RenderState]',
     'panda3d.core.SparseArray.has_max_num_bits': 'Literal[False]',
     'panda3d.core.StreamReader.extract_bytes': 'bytes',
+    'panda3d.core.StreamReader.get_istream': 'core.istream',
     'panda3d.core.StreamReader.readline': 'bytes',
     'panda3d.core.StreamReader.readlines': 'list[bytes]',
+    'panda3d.core.StreamWriter.get_ostream': 'core.ostream',
+    'panda3d.core.StreamWrapper.get_iostream': 'core.iostream',
     'panda3d.core.StringStream.get_data': 'bytes',
     'panda3d.core.TextEncoder.decode_text': 'str',
     'panda3d.core.TextEncoder.encode_wchar': 'bytes',
