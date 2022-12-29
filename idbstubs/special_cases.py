@@ -25,6 +25,8 @@ NO_STUBS: Final = TrackingSet({
     '__dict__', '__getattr__', '__setattr__', '__delattr__',
     # Pickle stuff
     '__getstate__', '__setstate__', '__reduce__',
+    # The signatures for these don't change.
+    '__repr__', '__str__',
 })
 
 
@@ -51,7 +53,6 @@ NOT_EXPOSED: Final = TrackingSet({
     'LMatrix4d::get_data',
     'UnalignedLMatrix4f::get_data',
     'UnalignedLMatrix4d::get_data',
-    'Filename::operator /',
 })
 
 
@@ -71,9 +72,9 @@ METHOD_RENAMES: Final = TrackingMap({
     'operator []': '__getitem__',
     'operator [] =': '__setitem__',
     'operator ++': 'increment',
-    'operator --': 'decrement',
+    # 'operator --': 'decrement',
     'operator ^': '__xor__',
-    'operator %': '__mod__',
+    # 'operator %': '__mod__',
     'operator &': '__and__',
     'operator |': '__or__',
     'operator +': '__add__',
@@ -94,7 +95,7 @@ METHOD_RENAMES: Final = TrackingMap({
 })
 UNARY_METHOD_RENAMES: Final = TrackingMap({
     'operator ++': 'increment',
-    'operator --': 'decrement',
+    # 'operator --': 'decrement',
     'operator ~': '__invert__',
     'operator -': '__neg__',
 })
@@ -116,36 +117,43 @@ TYPE_NAME_OVERRIDES: Final = TrackingMap({
 # If a function with one of these names returns "_object",
 # we can assume a default return type
 DEFAULT_RETURNS: Final = TrackingMap({
-    '__repr__': 'str',
+    '__await__': 'Iterator',
     '__bytes__': 'bytes',
     '__fspath__': 'str',
+    '__iter__': 'Iterator',
 })
 
 
 # These methods almost certainly behave as if they return `self`
-INPLACE_DUNDERS: Final = TrackingSet({
-    '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
-    '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
-    '__imod__', '__ipow__',
+RETURN_SELF: Final = TrackingSet({
+    '__iand__',
+    '__ior__',
+    '__ixor__',
+    '__ilshift__',
+    '__irshift__',
+    '__iadd__',
+    '__isub__',
+    '__imul__',
+    '__itruediv__',
+    '__ifloordiv__',
+    '__ipow__',
 })
 
 
 # Camel-case aliases are not generated for these names
-NO_MANGLING: Final = TrackingSet(INPLACE_DUNDERS | {
+NO_MANGLING: Final = TrackingSet({
     '_del',
     '__init__', '__call__', '__iter__', '__await__',
-    '__getattribute__', '__getattr__', '__setattr__', '__delattr__',
-    '__getitem__', '__setitem__', '__delitem__',
+    '__getitem__', '__setitem__',
     '__eq__', '__ne__', '__lt__', '__le__', '__ge__', '__gt__',
-    '__neg__', '__pos__', '__invert__',
+    '__neg__', '__invert__',
     '__and__', '__or__', '__xor__', '__lshift__', '__rshift__',
-    '__rand__', '__ror__', '__rxor__', '__rlshift__', '__rrshift__',
+    '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
     '__add__', '__sub__', '__mul__', '__truediv__', '__floordiv__',
-    '__radd__', '__rsub__', '__rmul__', '__rtruediv__', '__rfloordiv__',
-    '__mod__', '__rmod__', '__pow__', '__rpow__',
-    '__repr__', '__str__', '__float__', '__int__', '__bool__', '__len__',
-    '__copy__', '__deepcopy__', '__getstate__', '__setstate__',
-    '__reduce__', '__reduce_ex__', '__reduce_persist__',
+    '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
+    '__ipow__', '__pow__',
+    '__float__', '__int__', '__bool__', '__len__',
+    '__copy__', '__deepcopy__', '__reduce_persist__',
 })
 
 
@@ -244,8 +252,6 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
         19: 'LVecBase3d',
         21: 'LVecBase3f',
     },
-    'panda3d.core.AsyncFuture.__await__': 'Generator[Awaitable, None, None]',
-    'panda3d.core.AsyncFuture.__iter__': 'Generator[Awaitable, None, None]',
     'panda3d.core.AsyncFuture.gather': 'AsyncFuture',
     'panda3d.core.BamReader.get_file_version': 'tuple[int, int]',
     'panda3d.core.BoundingBox.get_num_planes': 'Literal[6]',
@@ -358,7 +364,6 @@ EXTRA_COERCION: Final = TrackingMap({
 
 # This adds comments to ignore Mypy errors
 IGNORE_ERRORS: Final = TrackingMap({
-    'panda3d.core.AsyncTaskSequence': 'misc',
     'panda3d.core.Character.getBundle': 'assignment',
     'panda3d.core.DatagramBuffer': 'misc',
     'panda3d.core.DynamicTextFont': 'misc',

@@ -22,8 +22,8 @@ from .reps import (
 from .special_cases import (
     ATTR_TYPE_OVERRIDES,
     DEFAULT_RETURNS,
-    INPLACE_DUNDERS,
     PARAM_TYPE_OVERRIDES,
+    RETURN_SELF,
     RETURN_TYPE_OVERRIDES,
 )
 from .typedata import (
@@ -42,7 +42,7 @@ PTA_NAME_REGEX: Final = re.compile(r'(?:Const)?PointerToArray_(\w+)')
 VECTOR_NAME_REGEX: Final = re.compile(
     r'((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
 )
-RETURN_SELF: Final = frozenset({
+RETURN_SELF_IN_VECTORS: Final = frozenset({
     '__neg__',
     '__mul__',
     '__truediv__',
@@ -54,25 +54,6 @@ RETURN_SELF: Final = frozenset({
     'normalized',
     'project',
 })
-OBJECT: Final = Class(
-    'object',
-    body={
-        # TODO: would this cause issues?
-        # '__init__': Function(
-        #     '__init__',
-        #     [Signature([Parameter('self')], 'None')],
-        #     is_method=True,
-        # ),
-        '__repr__': Function(
-            '__repr__',
-            [Signature([Parameter('self')], 'str')],
-        ),
-        '__str__': Function(
-            '__str__',
-            [Signature([Parameter('self')], 'str')],
-        ),
-    }
-)
 
 
 def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
@@ -296,21 +277,6 @@ def process_function(function: Function) -> None:
             other_param.type = 'object'
             other_param.named = False
         case Function(
-            name='__setattr__',
-            signatures=[
-                Signature(
-                    parameters=[
-                        Parameter(),
-                        Parameter() as name_param,
-                        Parameter() as value_param,
-                    ]
-                ) as sig
-            ]
-        ):
-            name_param.type = 'str'
-            value_param.type = 'Any'
-            sig.return_type = 'None'
-        case Function(
             name='assign',
             namespace=[*_, class_name],
             signatures=[
@@ -330,7 +296,7 @@ def process_function(function: Function) -> None:
             name=name,
             namespace=[*_, class_name],
             signatures=[Signature(return_type=return_type), *_] as signatures,
-        ) if name in INPLACE_DUNDERS and return_type in (class_name, ''):
+        ) if name in RETURN_SELF and return_type in (class_name, ''):
             for sig in signatures:
                 sig.parameters[0].type = 'Self'
                 sig.return_type = 'Self'
@@ -378,7 +344,7 @@ def process_class(class_: Class) -> None:
 
 
 def process_package(package: Package) -> None:
-    classes: dict[str, Class] = {'object': OBJECT}
+    classes: dict[str, Class] = {}
     for module in package:
         for file in module:
             for item in file.nested:
@@ -475,7 +441,7 @@ def process_vector_class(vector: Class) -> None:
         class_body.pop('__truediv__', None)
         class_body.pop('__itruediv__', None)
     replaceable_names = {vector.name, ''}
-    for name in RETURN_SELF & class_body.keys():
+    for name in RETURN_SELF_IN_VECTORS & class_body.keys():
         match class_body[name]:
             case Function(signatures=[
                 Signature(

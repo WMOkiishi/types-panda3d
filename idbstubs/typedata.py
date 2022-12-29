@@ -31,9 +31,7 @@ _enum_definitions: dict[str, str] = {}
 BUILTIN_NAMES: Final = frozenset(dir(builtins))
 KNOWN_IMPORTS: Final = {
     'array': 'array',
-    'Awaitable': 'collections.abc',
     'Callable': 'collections.abc',
-    'Generator': 'collections.abc',
     'Iterable': 'collections.abc',
     'Iterator': 'collections.abc',
     'Mapping': 'collections.abc',

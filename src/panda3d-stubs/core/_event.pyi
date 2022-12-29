@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import Awaitable, Callable, Generator, Iterator, Sequence
+from collections.abc import Callable, Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
@@ -176,8 +176,8 @@ class AsyncFuture(TypedReferenceCount):
     done_event: str
     def __init__(self, __param0: AsyncFuture = ...) -> None:
         """Initializes the future in the pending state."""
-    def __await__(self) -> Generator[Awaitable, None, None]: ...
-    def __iter__(self) -> Generator[Awaitable, None, None]: ...
+    def __await__(self) -> Iterator: ...
+    def __iter__(self) -> Iterator: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def done(self) -> bool:
@@ -893,7 +893,7 @@ class AsyncTaskPause(AsyncTask):
     @overload
     def __init__(self, delay: float) -> None: ...
 
-class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
+class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
     """A special kind of task that serves as a list of tasks internally.  Each
     task on the list is executed in sequence, one per epoch.
 
