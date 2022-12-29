@@ -143,7 +143,6 @@ def load_data() -> None:
             _param_type_replacements[cast_to_name] = cast_from_name
 
 
-@cache
 def recursive_superclasses(idb_type: IDBType) -> frozenset[IDBType]:
     derivations = set[IDBType]()
     for derivation in unwrap_type(idb_type).derivations:
@@ -207,7 +206,6 @@ def get_all_coercible(
     return cast_from
 
 
-@cache
 def get_param_type_replacement(type_name: str) -> str | None:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
@@ -219,18 +217,9 @@ def get_param_type_replacement(type_name: str) -> str | None:
         replacement = _param_type_replacements.get(alias_of)
         if replacement is not None:
             replacement = replacement.replace(alias_of, type_name)
-    if replacement is not None:
-        _logger.debug(f'Replaced parameter type {type_name!r}'
-                      f' with {replacement!r}')
     return replacement
 
 
-@cache
-def get_alias_def(name: str) -> str | None:
-    return _enum_definitions.get(name)
-
-
-@cache
 def get_module(name: str) -> str | None:
     if (module := KNOWN_IMPORTS.get(name)) is not None:
         return module
@@ -277,7 +266,7 @@ def process_dependency(
         if_type_var: Callable[[Sequence[str], str], object]) -> bool:
     if name in BUILTIN_NAMES:
         pass
-    elif (alias_def := get_alias_def(name)) is not None:
+    elif (alias_def := _enum_definitions.get(name)) is not None:
         if_alias(alias_def)
     elif (type_var_params := TYPE_VARIABLES.get(name)) is not None:
         if_type_var(*type_var_params)
