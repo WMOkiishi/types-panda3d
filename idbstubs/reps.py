@@ -214,7 +214,7 @@ class Attribute:
         return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
-        return f'Element {self.name!r} ({self.type})'
+        return f'Attribute {self.name!r} ({self.type})'
 
     def get_dependencies(self) -> Iterator[str]:
         return names_within(self.type)

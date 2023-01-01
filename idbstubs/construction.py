@@ -203,10 +203,10 @@ def make_typedef_rep(idb_type: IDBType) -> Alias:
     return Alias(name, typedef_of, of_local=of_local)
 
 
-def make_element_rep(
+def make_attribute_rep(
         element: IDBElement,
         namespace: Sequence[str] = ()) -> Attribute:
-    """Return a representation of an element known to interrogate."""
+    """Return an attribute representation of an element known to interrogate."""
     type_name = get_type_name(element.type)
     if element.is_sequence:
         if element.has_setter:
@@ -400,12 +400,11 @@ def make_scoped_enum_rep(
     """Return a representation of a scoped enum known to interrogate."""
     name = make_class_name(idb_type.name)
     this_namespace = (*namespace, name)
-    value_elements = {
+    values = {
         value.name: Attribute(value.name, 'int', namespace=this_namespace)
         for value in idb_type.enum_values
     }
-    return Class(name, ['Enum'], value_elements,
-                 is_final=idb_type.is_final, namespace=namespace)
+    return Class(name, ['Enum'], values, is_final=idb_type.is_final, namespace=namespace)
 
 
 def make_class_rep(
@@ -422,14 +421,14 @@ def make_class_rep(
     ]
     if (type_vars := GENERIC.get(name)) is not None:
         derivations.append(f'Generic[{type_vars}]')
-    # Elements
+    # Attributes
     class_body['DtoolClassDict'] = Attribute(
         'DtoolClassDict', 'ClassVar[dict[str, Any]]', namespace=this_namespace
     )
     for elem in idb_type.elements:
         if element_is_exposed(elem) and elem.name not in NO_STUBS:
-            element = make_element_rep(elem, this_namespace)
-            class_body[element.name] = element
+            attribute = make_attribute_rep(elem, this_namespace)
+            class_body[attribute.name] = attribute
     if name.startswith('ParamValue_'):
         value = name[11:]
         if value in ('string', 'wstring'):
