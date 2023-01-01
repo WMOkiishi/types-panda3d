@@ -19,13 +19,7 @@ from .reps import (
     StubRep,
     TypeVariable,
 )
-from .special_cases import (
-    ATTR_TYPE_OVERRIDES,
-    DEFAULT_RETURNS,
-    PARAM_TYPE_OVERRIDES,
-    RETURN_SELF,
-    RETURN_TYPE_OVERRIDES,
-)
+from .special_cases import RETURN_SELF
 from .typedata import (
     combine_types,
     expand_type,
@@ -244,23 +238,6 @@ def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
 
 
 def process_function(function: Function) -> None:
-    return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
-    param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name, {})
-    if isinstance(return_overrides, str):
-        return_overrides = {
-            i: return_overrides
-            for i in range(len(function.signatures))
-        }
-    for i, sig in enumerate(function.signatures):
-        return_override = return_overrides.get(i)
-        if return_override is None and not sig.return_type:
-            return_override = DEFAULT_RETURNS.get(function.name)
-        if return_override is not None:
-            sig.return_type = return_override
-        for j, param in enumerate(sig.parameters):
-            param_override = param_overrides.get((i, j))
-            if param_override is not None:
-                param.type = param_override
     function.signatures = process_signatures(function.signatures)
     match function:
         case Function(
@@ -309,10 +286,6 @@ def process_class(class_: Class) -> None:
                 process_class(item)
             case Function():
                 process_function(item)
-            case Attribute():
-                type_override = ATTR_TYPE_OVERRIDES.get(item.scoped_name)
-                if type_override is not None:
-                    item.type = type_override
     class_body = dict(class_.body)
     match class_body:
         case {

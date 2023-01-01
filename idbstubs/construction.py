@@ -37,13 +37,17 @@ from .reps import (
     StubRep,
 )
 from .special_cases import (
+    ATTR_TYPE_OVERRIDES,
     CONDITIONALS,
+    DEFAULT_RETURNS,
     GENERIC,
     IGNORE_ERRORS,
     METHOD_RENAMES,
     NO_MANGLING,
     NO_STUBS,
     NOT_EXPOSED,
+    PARAM_TYPE_OVERRIDES,
+    RETURN_TYPE_OVERRIDES,
     SIZE_NOT_LEN,
     UNARY_METHOD_RENAMES,
 )
@@ -237,7 +241,7 @@ def make_attribute_rep(
         doc = ''
     return Attribute(
         check_keyword(element.name),
-        type_name,
+        ATTR_TYPE_OVERRIDES.get(element.scoped_name, type_name),
         read_only=read_only,
         namespace=namespace,
         doc=doc,
@@ -300,7 +304,11 @@ def make_function_rep(function: IDBFunction) -> Function:
     omit_docstring = is_dunder(name) and name != '__init__'
     signatures: list[Signature] = []
     sigs_by_doc = defaultdict[str, list[str]](list)
-    for wrapper in function.wrappers:
+    param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name)
+    return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
+    if isinstance(return_overrides, str):
+        return_overrides = {i: return_overrides for i in range(len(function.wrappers))}
+    for i, wrapper in enumerate(function.wrappers):
         if not wrapper_is_exposed(wrapper):
             continue
         signature = make_signature_rep(
@@ -308,12 +316,22 @@ def make_function_rep(function: IDBFunction) -> Function:
             is_constructor=function.is_constructor,
             ensure_self_param=function.is_method and not is_static_method,
         )
-        signatures.append(signature)
         if not omit_docstring:
             sig_doc = comment_to_docstring(wrapper.comment)
             if sig_doc:
                 param_string = f"`({', '.join(str(p) for p in signature.parameters)})`"
                 sigs_by_doc[sig_doc].append(param_string)
+        if param_overrides:
+            for j, param in enumerate(signature.parameters):
+                param_override = param_overrides.get((i, j))
+                if param_override is not None:
+                    param.type = param_override
+        return_override = return_overrides.get(i)
+        if return_override is None and not signature.return_type:
+            return_override = DEFAULT_RETURNS.get(function.name)
+        if return_override is not None:
+            signature.return_type = return_override
+        signatures.append(signature)
     if len(sigs_by_doc) <= 1:
         doc = ''.join(sigs_by_doc)
     else:
