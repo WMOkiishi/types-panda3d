@@ -310,7 +310,7 @@ class NetDatagram(Datagram):
 
     def __init__(self, copy: Datagram = ...) -> None:
         """Constructs an empty datagram."""
-    def assign(self, copy: Datagram) -> NetDatagram: ...
+    def assign(self: Self, copy: Datagram) -> Self: ...
     def set_connection(self, connection: Connection) -> None:
         """Specifies the socket to which the datagram should be written."""
     def get_connection(self) -> Connection:

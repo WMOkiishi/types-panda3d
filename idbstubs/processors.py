@@ -256,19 +256,12 @@ def process_function(function: Function) -> None:
         case Function(
             name='assign',
             namespace=[*_, class_name],
-            signatures=[
-                Signature(
-                    return_type=return_type,
-                    parameters=[
-                        Parameter() as self_param,
-                        Parameter(type=param_type) as copy_param,
-                    ]
-                ) as sig
-            ]
-        ) if class_name == param_type == return_type:
-            self_param.type = 'Self'
-            copy_param.type = 'Self'
+            signatures=[Signature([self_param, copy_param], return_type) as sig],
+        ) if return_type == class_name:
             sig.return_type = 'Self'
+            self_param.type = 'Self'
+            if copy_param.type == class_name:
+                copy_param.type = 'Self'
         case Function(
             name=name,
             namespace=[*_, class_name],
