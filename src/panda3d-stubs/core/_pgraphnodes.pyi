@@ -1,5 +1,5 @@
 from _typeshed import Self
-from collections.abc import MutableSequence, Sequence
+from collections.abc import Callable, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
@@ -52,7 +52,7 @@ class CallbackNode(PandaNode):
 
     cull_callback: CallbackObject
     draw_callback: CallbackObject
-    def set_cull_callback(self, object: CallbackObject) -> None:
+    def set_cull_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this node is visited
         during the cull traversal.  This callback will be made during the cull
         thread.
@@ -78,7 +78,7 @@ class CallbackNode(PandaNode):
         """Removes the callback set by an earlier call to set_cull_callback()."""
     def get_cull_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_cull_callback()."""
-    def set_draw_callback(self, object: CallbackObject) -> None:
+    def set_draw_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this node is visited
         during the draw traversal.  This callback will be made during the draw
         thread.

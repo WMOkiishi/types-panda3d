@@ -186,6 +186,7 @@ ATTR_TYPE_OVERRIDES: Final = TrackingMap({
 })
 PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'AsyncFuture::gather': {(0, 0): 'AsyncFuture'},
+    'CallbackObject::make': {(0, 0): 'Callable'},
     'ConnectionReader::set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'ConnectionWriter::set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'Filename::Filename': {(2, 1): 'StrOrBytesPath'},
@@ -250,6 +251,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'BoundingBox::get_num_points': 'Literal[8]',
     'BoundingHexahedron::get_num_planes': 'Literal[6]',
     'BoundingHexahedron::get_num_points': 'Literal[8]',
+    'CallbackObject::make': 'PythonCallbackObject',
     'CollisionBox::get_num_planes': 'Literal[6]',
     'CollisionBox::get_num_points': 'Literal[8]',
     'Datagram::get_message': 'bytes',
@@ -351,6 +353,7 @@ NO_COERCION: Final = TrackingMap({
 EXTRA_COERCION: Final = TrackingMap({
     'Filename': {'StrOrBytesPath'},
     'InternalName': {'str'},
+    'CallbackObject': {'Callable'},
 })
 
 

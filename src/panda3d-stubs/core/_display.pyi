@@ -1,5 +1,5 @@
 from _typeshed import Self, StrOrBytesPath
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
@@ -1195,7 +1195,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Returns whether or not scissor testing is enabled for this region.  The
         default is true, except for the overlay display region.
         """
-    def set_cull_callback(self, object: CallbackObject) -> None:
+    def set_cull_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when the DisplayRegion is
         visited during the cull traversal.  This callback will be made during the
         cull thread.
@@ -1220,7 +1220,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Removes the callback set by an earlier call to set_cull_callback()."""
     def get_cull_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_cull_callback()."""
-    def set_draw_callback(self, object: CallbackObject) -> None:
+    def set_draw_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when the contents of
         DisplayRegion is drawn during the draw traversal.  This callback will be
         made during the draw thread.
@@ -3641,7 +3641,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
     RCTBeginFlip: Final[Literal[2]]
     RCT_end_flip: Final[Literal[3]]
     RCTEndFlip: Final[Literal[3]]
-    def set_events_callback(self, object: CallbackObject) -> None:
+    def set_events_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this window is polled
         for window events, including mouse and keyboard events, as well as window
         resize events and other system-generated events.
@@ -3656,7 +3656,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         """Removes the callback set by an earlier call to set_events_callback()."""
     def get_events_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_events_callback()."""
-    def set_properties_callback(self, object: CallbackObject) -> None:
+    def set_properties_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this window receives a
         property change request from user code (e.g.  via request_properties).
 
@@ -3673,7 +3673,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         """Removes the callback set by an earlier call to set_properties_callback()."""
     def get_properties_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_properties_callback()."""
-    def set_render_callback(self, object: CallbackObject) -> None:
+    def set_render_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this window is invoked
         (in the draw thread) to render its contents, and/or flip the graphics
         buffers.
