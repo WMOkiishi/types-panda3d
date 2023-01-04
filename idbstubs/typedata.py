@@ -2,7 +2,14 @@ import builtins
 import itertools
 import logging
 from collections import defaultdict
-from collections.abc import Callable, Iterator, Mapping, Sequence, Set
+from collections.abc import (
+    Callable,
+    Iterable,
+    Iterator,
+    Mapping,
+    Sequence,
+    Set,
+)
 from functools import cache
 from itertools import combinations, product
 from sys import stdlib_module_names
@@ -137,7 +144,7 @@ def load_data() -> None:
             )
     for cast_to_name in tuple(coercions):  # freeze keys
         cast_from_name = combine_types(
-            *get_all_coercible(cast_to_name, coercion_map=coercions)
+            get_all_coercible(cast_to_name, coercion_map=coercions)
         )
         if cast_from_name and cast_to_name != cast_from_name:
             _param_type_replacements[cast_to_name] = cast_from_name
@@ -325,7 +332,7 @@ def subtype_relationship(a: str, b: str, /) -> tuple[bool, bool]:
             all(found_broader_in_a.values()))
 
 
-def combine_types(*types: str) -> str:
+def combine_types(types: Iterable[str]) -> str:
     """Return a string representing a type equivalent to the union
     of the types represented by the given strings.
     """

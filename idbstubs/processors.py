@@ -70,7 +70,7 @@ def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
     elif t_subtypes_u:
         merged_type = u
     else:
-        merged_type = combine_types(t, u)
+        merged_type = combine_types((t, u))
 
     return Parameter(
         p.name if p.named else q.name,
@@ -101,7 +101,7 @@ def merge_signatures(a: Signature, b: Signature, /) -> Signature | None:
         w1_locked |= q_changed
         w2_locked |= p_changed
         merged_params.append(pq)
-    merged_return = combine_types(a.return_type, b.return_type)
+    merged_return = combine_types((a.return_type, b.return_type))
     return Signature(merged_params, merged_return)
 
 
@@ -197,11 +197,11 @@ def insert_casts(signatures: Sequence[Signature]) -> list[Signature]:
             sig_2_narrower &= t_subtypes_s
             if t_subtypes_s and not s_subtypes_t:
                 exclusive_1_params[k] = combine_types(
-                    *(expand_type(s) - expand_type(q.type))
+                    expand_type(s) - expand_type(q.type)
                 )
             if s_subtypes_t and not t_subtypes_s:
                 exclusive_2_params[k] = combine_types(
-                    *(expand_type(t) - expand_type(p.type))
+                    expand_type(t) - expand_type(p.type)
                 )
         # If one of the signature's parameter types are always narrower
         # than the other's, don't broaden the narrower types, and remove
