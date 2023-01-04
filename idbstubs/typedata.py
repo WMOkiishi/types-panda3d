@@ -213,7 +213,7 @@ def get_all_coercible(
     return cast_from
 
 
-def get_param_type_replacement(type_name: str) -> str | None:
+def get_param_type_replacement(type_name: str) -> str:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
     """
@@ -224,7 +224,7 @@ def get_param_type_replacement(type_name: str) -> str | None:
         replacement = _param_type_replacements.get(alias_of)
         if replacement is not None:
             replacement = replacement.replace(alias_of, type_name)
-    return replacement
+    return type_name if replacement is None else replacement
 
 
 def get_module(name: str) -> str | None:

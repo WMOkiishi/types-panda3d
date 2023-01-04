@@ -153,17 +153,17 @@ def sort_signatures(signatures: Sequence[Signature]) -> list[Signature]:
     return [signatures[i] for i, n in sig_depths.most_common()]
 
 
-def insert_casts(signatures: Sequence[Signature]) -> list[Signature]:
-    """Broaden the parameter types of a sequence of signatures
+def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
+    """Expand the parameter types of a sequence of signatures
     without introducing ambiguity.
     """
     # Store all possible parameter type expansions in a two-layer mapping.
-    param_types: dict[int, dict[int, str | None]] = {
+    param_types: dict[int, dict[str, str]] = {
         i: {
-            j: get_param_type_replacement(param.type)
-            for j, param in enumerate(sig.parameters)
+            param.name: get_param_type_replacement(param.type)
+            for param in signature.parameters
         }
-        for i, sig in enumerate(signatures)
+        for i, signature in enumerate(signatures)
     }
     for (i, sig_1), (j, sig_2) in combinations(enumerate(signatures), 2):
         if sig_1.min_arity() != sig_2.min_arity():
@@ -176,53 +176,55 @@ def insert_casts(signatures: Sequence[Signature]) -> list[Signature]:
         if r1_subtypes_r2 and r2_subtypes_r1:
             # The return types are identical; ambiguity doesn't matter.
             continue
-        exclusive_1_params: dict[int, str] = {}
-        exclusive_2_params: dict[int, str] = {}
+        new_types_1: dict[str, str] = {}
+        new_types_2: dict[str, str] = {}
         sig_1_narrower = sig_2_narrower = True
-        for k, (p, q) in enumerate(zip(
-            (p for p in sig_1.parameters if not p.is_optional),
-            (p for p in sig_2.parameters if not p.is_optional),
-            strict=True,
-        )):
+        for param_1, param_2 in zip(sig_1.parameters, sig_2.parameters):
             if not (sig_1_narrower or sig_2_narrower):
                 # These signatures don't overlap.
                 break
-            s, t = p.type, q.type
-            if not r1_subtypes_r2:
-                s = param_types[i][k] or s
-            if not r2_subtypes_r1:
-                t = param_types[j][k] or t
-            s_subtypes_t, t_subtypes_s = subtype_relationship(s, t)
-            sig_1_narrower &= s_subtypes_t
-            sig_2_narrower &= t_subtypes_s
-            if t_subtypes_s and not s_subtypes_t:
-                exclusive_1_params[k] = combine_types(
-                    expand_type(s) - expand_type(q.type)
+            type_1 = param_types[i][param_1.name]
+            type_2 = param_types[j][param_2.name]
+            t1_subtypes_t2, t2_subtypes_t1 = subtype_relationship(type_1, type_2)
+            # If the expanded types are the same, try not expanding one of them.
+            if t1_subtypes_t2 and t2_subtypes_t1:
+                if r1_subtypes_r2:
+                    type_1 = param_1.type
+                if r2_subtypes_r1:
+                    type_2 = param_2.type
+                t1_subtypes_t2, t2_subtypes_t1 = subtype_relationship(type_1, type_2)
+            sig_1_narrower &= t1_subtypes_t2
+            sig_2_narrower &= t2_subtypes_t1
+            # If one of the parameter types is narrower than the other, don't
+            # expand the narrower one, and remove it from the broader type.
+            if t2_subtypes_t1 and not t1_subtypes_t2:
+                new_types_2[param_2.name] = type_2
+                new_types_1[param_1.name] = combine_types(
+                    expand_type(type_1) - expand_type(type_2)
                 )
-            if s_subtypes_t and not t_subtypes_s:
-                exclusive_2_params[k] = combine_types(
-                    expand_type(t) - expand_type(p.type)
+            if t1_subtypes_t2 and not t2_subtypes_t1:
+                new_types_1[param_1.name] = type_1
+                new_types_2[param_2.name] = combine_types(
+                    expand_type(type_2) - expand_type(type_1)
                 )
         # If one of the signature's parameter types are always narrower
-        # than the other's, don't broaden the narrower types, and remove
-        # them from the broader types if they appear explicitly.
-        if sig_1_narrower:
-            param_types[i] |= {k: None for k in range(sig_1.min_arity())}
-            param_types[j] |= exclusive_2_params
-        elif sig_2_narrower:
-            param_types[j] |= {k: None for k in range(sig_2.min_arity())}
-            param_types[i] |= exclusive_1_params
-    return [
-        attrs.evolve(sig, parameters=[
-            attrs.evolve(param, type=param_types[i][j] or param.type)
-            for j, param in enumerate(sig.parameters)
-        ]) for i, sig in enumerate(signatures)
-    ]
+        # than the other's, apply the changes to their types.
+        if sig_1_narrower or sig_2_narrower:
+            param_types[i] |= new_types_1
+            param_types[j] |= new_types_2
+    new_signatures: list[Signature] = []
+    for i, signature in enumerate(signatures):
+        new_parameters = [
+            attrs.evolve(param, type=param_types[i][param.name])
+            for param in signature.parameters
+        ]
+        new_signatures.append(attrs.evolve(signature, parameters=new_parameters))
+    return new_signatures
 
 
 def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
     """Sort and compress the given sequence of function signatures."""
-    with_casts = insert_casts(signatures)
+    with_casts = expand_input(signatures)
     sorted_signatures = sort_signatures(with_casts)
     merged_signatures: list[Signature] = []
     for new in sorted(sorted_signatures, key=Signature.get_arity):
