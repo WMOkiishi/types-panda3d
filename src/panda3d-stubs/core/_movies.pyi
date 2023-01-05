@@ -55,7 +55,7 @@ class FlacAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: FlacAudio | StrOrBytesPath) -> None: ...
+    def __init__(self, __param0: FlacAudio) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -79,7 +79,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         construct a subclass of this class.
         """
     @overload
-    def __init__(self, __param0: MovieAudio | MovieAudioCursor) -> None: ...
+    def __init__(self, __param0: MovieAudioCursor) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def get_source(self) -> MovieAudio:
@@ -417,7 +417,7 @@ class InkblotVideoCursor(MovieVideoCursor):
     def __init__(self, src: InkblotVideo) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: InkblotVideo | InkblotVideoCursor) -> None: ...
+    def __init__(self, __param0: InkblotVideoCursor) -> None: ...
 
 class MicrophoneAudio(MovieAudio):
     """Class MicrophoneAudio provides the means to read raw audio samples from a
@@ -461,7 +461,7 @@ class OpusAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: OpusAudio | StrOrBytesPath) -> None: ...
+    def __init__(self, __param0: OpusAudio) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -523,7 +523,7 @@ class UserDataAudioCursor(MovieAudioCursor):
     @overload
     def __init__(self, src: UserDataAudio) -> None: ...
     @overload
-    def __init__(self, __param0: UserDataAudio | UserDataAudioCursor) -> None: ...
+    def __init__(self, __param0: UserDataAudioCursor) -> None: ...
 
 class VorbisAudio(MovieAudio):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
@@ -534,7 +534,7 @@ class VorbisAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: StrOrBytesPath | VorbisAudio) -> None: ...
+    def __init__(self, __param0: VorbisAudio) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -561,7 +561,7 @@ class WavAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: StrOrBytesPath | WavAudio) -> None: ...
+    def __init__(self, __param0: WavAudio) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""

@@ -155,7 +155,7 @@ def sort_signatures(signatures: Sequence[Signature]) -> list[Signature]:
 
 def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
     """Expand the parameter types of a sequence of signatures
-    without introducing ambiguity.
+    without introducing ambiguity or redundancy.
     """
     # Store all possible parameter type expansions in a two-layer mapping.
     param_types: dict[int, dict[str, str]] = {
@@ -173,9 +173,6 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
         r1_subtypes_r2, r2_subtypes_r1 = subtype_relationship(
             sig_1.return_type, sig_2.return_type
         )
-        if r1_subtypes_r2 and r2_subtypes_r1:
-            # The return types are identical; ambiguity doesn't matter.
-            continue
         new_types_1: dict[str, str] = {}
         new_types_2: dict[str, str] = {}
         sig_1_narrower = sig_2_narrower = True
@@ -193,6 +190,12 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
                 if r2_subtypes_r1:
                     type_2 = param_2.type
                 t1_subtypes_t2, t2_subtypes_t1 = subtype_relationship(type_1, type_2)
+                # Re-expand the broader parameter if we un-expanded both.
+                if r1_subtypes_r2 and r2_subtypes_r1:
+                    if t1_subtypes_t2:
+                        type_2 = param_types[j][param_2.name]
+                    if t2_subtypes_t1:
+                        type_1 = param_types[i][param_1.name]
             sig_1_narrower &= t1_subtypes_t2
             sig_2_narrower &= t2_subtypes_t1
             # If one of the parameter types is narrower than the other, don't

@@ -35,7 +35,7 @@ class GPUCommand:
     CMD_remove_sources: Final[Literal[4]]
     CMDRemoveSources: Final[Literal[4]]
     @overload
-    def __init__(self, __param0: GPUCommand | _GPUCommand_CommandType) -> None:
+    def __init__(self, __param0: GPUCommand) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
         @details This will construct a new GPUCommand of the given command type.
           The command type should be of GPUCommand::CommandType, and determines
@@ -485,7 +485,7 @@ class ShadowAtlas:
     @property
     def coverage(self) -> float: ...
     @overload
-    def __init__(self, __param0: ShadowAtlas | int) -> None:
+    def __init__(self, __param0: ShadowAtlas) -> None:
         """@brief Constructs a new shadow atlas.
         @details This constructs a new shadow atlas with the given size and tile size.
 
@@ -545,7 +545,7 @@ class TagStateManager:
         @param main_cam_node The main scene camera
         """
     @overload
-    def __init__(self, __param0: NodePath | TagStateManager) -> None: ...
+    def __init__(self, __param0: TagStateManager) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def apply_state(self, state: str, np: NodePath, shader: Shader, name: str, sort: int) -> None:
@@ -974,7 +974,7 @@ class PSSMCameraRig:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: PSSMCameraRig | int) -> None:
+    def __init__(self, __param0: PSSMCameraRig) -> None:
         """@brief Constructs a new PSSM camera rig
         @details This constructs a new camera rig, with a given amount of splits.
           The splits can not be changed later on. Splits are also called Cascades.

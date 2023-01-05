@@ -295,7 +295,7 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
     @property
     def pages(self) -> Sequence[DynamicTextPage]: ...
     @overload
-    def __init__(self, copy: DynamicTextFont | StrOrBytesPath) -> None:
+    def __init__(self, copy: DynamicTextFont) -> None:
         """`(self, font_filename: Filename, face_index: int = ...)`:
         The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load

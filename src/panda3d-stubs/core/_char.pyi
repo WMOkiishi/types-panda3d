@@ -192,9 +192,7 @@ class Character(PartBundleNode):
         skeleton, for instance, different LOD's of the same model.
         """
     @overload
-    def merge_bundles(
-        self, old_bundle_handle: PartBundle | PartBundleHandle, other_bundle_handle: PartBundle | PartBundleHandle
-    ) -> None: ...
+    def merge_bundles(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle) -> None: ...
     def set_lod_animation(self, center: Vec3Like, far_distance: float, near_distance: float, delay_factor: float) -> None:
         """Activates a special mode in which the character animates less frequently as
         it gets further from the camera.  This is intended as a simple optimization

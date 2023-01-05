@@ -38,7 +38,7 @@ class NetAddress:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: NetAddress | Socket_Address = ...) -> None:
+    def __init__(self, __param0: NetAddress = ...) -> None:
         """`(self)`:
         Constructs an unspecified address.
 

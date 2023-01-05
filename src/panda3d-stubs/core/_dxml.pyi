@@ -352,7 +352,7 @@ class TiXmlDocument(TiXmlNode):
     """
 
     @overload
-    def __init__(self, copy: TiXmlDocument | str = ...) -> None:
+    def __init__(self, copy: TiXmlDocument = ...) -> None:
         """`(self)`:
         Create an empty document, that has no name.
 
@@ -459,7 +459,7 @@ class TiXmlElement(TiXmlNode):
     """
 
     @overload
-    def __init__(self, __param0: TiXmlElement | str) -> None:
+    def __init__(self, __param0: TiXmlElement) -> None:
         """`(self, in_value: str)`:
         Construct an element.
 
@@ -700,7 +700,7 @@ class TiXmlComment(TiXmlNode):
     """An XML comment."""
 
     @overload
-    def __init__(self, __param0: TiXmlComment | str = ...) -> None:
+    def __init__(self, __param0: TiXmlComment = ...) -> None:
         """`(self)`:
         Constructs an empty comment.
 
@@ -721,7 +721,7 @@ class TiXmlText(TiXmlNode):
     """
 
     @overload
-    def __init__(self, copy: TiXmlText | str) -> None:
+    def __init__(self, copy: TiXmlText) -> None:
         """`(self, initValue: str)`:
         Constructor for text element. By default, it is treated as
         normal, encoded text. If you want it be output as a CDATA text
@@ -837,7 +837,7 @@ class TiXmlHandle:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, ref: TiXmlHandle | TiXmlNode) -> None:
+    def __init__(self, ref: TiXmlHandle) -> None:
         """`(self, ref: TiXmlHandle)`:
         Copy constructor
 

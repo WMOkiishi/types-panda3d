@@ -189,7 +189,7 @@ class URLSpec:
     @property
     def ssl(self) -> bool: ...
     @overload
-    def __init__(self, __param0: URL = ...) -> None:
+    def __init__(self, __param0: URLSpec = ...) -> None:
         """Creates a URLSpec by appending a path to the end of the old URLSpec,
         inserting an intervening forward slash if necessary.
         """
@@ -438,7 +438,7 @@ class HTTPDate:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: HTTPDate | int | str = ...) -> None:
+    def __init__(self, copy: HTTPDate = ...) -> None:
         """Decodes the string into a sensible date.  Returns 0 (!is_valid()) if the
         string cannot be correctly decoded.
         """
@@ -954,7 +954,7 @@ class HTTPEntityTag:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: HTTPEntityTag | str = ...) -> None:
+    def __init__(self, copy: HTTPEntityTag = ...) -> None:
         """`(self, weak: bool, tag: str)`:
         This constructor accepts an explicit weak flag and a literal (not quoted)
         tag string.
@@ -1036,7 +1036,7 @@ class DocumentSpec:
     CC_no_cache: Final[Literal[2]]
     CCNoCache: Final[Literal[2]]
     @overload
-    def __init__(self, copy: DocumentSpec | URL = ...) -> None: ...
+    def __init__(self, copy: DocumentSpec = ...) -> None: ...
     @overload
     def __init__(self, url: URL) -> None: ...
     def __eq__(self, __other: object) -> bool: ...

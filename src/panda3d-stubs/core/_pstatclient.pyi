@@ -424,7 +424,7 @@ class PStatThread:
     @property
     def index(self) -> int: ...
     @overload
-    def __init__(self, copy: PStatThread | Thread) -> None:
+    def __init__(self, copy: PStatThread) -> None:
         """`(self, client: PStatClient, index: int)`:
         Normally, this constructor is called only from PStatClient.  Use one of the
         constructors below to create your own Thread.
