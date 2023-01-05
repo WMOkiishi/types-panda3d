@@ -341,6 +341,8 @@ NO_COERCION: Final = TrackingMap({
     'LMatrix4f': {'LMatrix3f'},
     'LOrientationf': {'LMatrix3f', 'LMatrix4f'},
     'LOrientationd': {'LMatrix3d', 'LMatrix4d'},
+    'LRotationf': {'LMatrix3f', 'LMatrix4f'},
+    'LRotationd': {'LMatrix3d', 'LMatrix4d'},
     'LVecBase4d': {'LVecBase3d', 'LVector3d', 'LPoint3d'},
     'LVecBase4f': {'LVecBase3f', 'LVector3f', 'LPoint3f'},
     'LVecBase4i': {'LVecBase3i', 'LVector3i', 'LPoint3i'},
