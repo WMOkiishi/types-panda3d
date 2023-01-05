@@ -197,15 +197,16 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
             sig_2_narrower &= t2_subtypes_t1
             # If one of the parameter types is narrower than the other, don't
             # expand the narrower one, and remove it from the broader type.
+            # Don't remove the "base" type from the broader parameter, though.
             if t2_subtypes_t1 and not t1_subtypes_t2:
                 new_types_2[param_2.name] = type_2
                 new_types_1[param_1.name] = combine_types(
-                    expand_type(type_1) - expand_type(type_2)
+                    expand_type(type_1) - (expand_type(type_2) - {param_1.type})
                 )
             if t1_subtypes_t2 and not t2_subtypes_t1:
                 new_types_1[param_1.name] = type_1
                 new_types_2[param_2.name] = combine_types(
-                    expand_type(type_2) - expand_type(type_1)
+                    expand_type(type_2) - (expand_type(type_1) - {param_2.type})
                 )
         # If one of the signature's parameter types are always narrower
         # than the other's, apply the changes to their types.
