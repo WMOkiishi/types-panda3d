@@ -53,13 +53,7 @@ class Alias:
     alias_of: str
     is_type_alias: bool = field(default=False, kw_only=True)
     of_local: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(
-        default=(), converter=tuple, kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
-
-    @property
-    def scoped_name(self) -> str:
-        return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
         if self.is_type_alias:
@@ -147,14 +141,8 @@ class Function:
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
     is_static: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(
-        default=(), converter=tuple, kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
-
-    @property
-    def scoped_name(self) -> str:
-        return '.'.join((*self.namespace, self.name))
 
     def decorators(self) -> list[str]:
         """Return a list of the names of the decorators that should be
@@ -168,7 +156,7 @@ class Function:
         return decorators
 
     def __str__(self) -> str:
-        return f'Function {self.scoped_name!r}'
+        return f'Function {self.name!r}'
 
     def get_dependencies(self) -> Iterator[str]:
         return chain(
@@ -204,14 +192,8 @@ class Attribute:
     name: str
     type: str
     read_only: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(
-        default=(), converter=tuple, kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
-
-    @property
-    def scoped_name(self) -> str:
-        return '.'.join((*self.namespace, self.name))
 
     def __str__(self) -> str:
         return f'Attribute {self.name!r} ({self.type})'
@@ -251,18 +233,12 @@ class Class:
     derivations: Sequence[str] = field(default=(), converter=tuple)
     body: Mapping[str, StubRep] = Factory(dict)
     is_final: bool = field(default=False, kw_only=True)
-    namespace: Sequence[str] = field(
-        default=(), converter=tuple, kw_only=True, eq=False)
     conditional: str = field(default='', kw_only=True, eq=False)
     doc: str = field(default='', kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
 
-    @property
-    def scoped_name(self) -> str:
-        return '.'.join((*self.namespace, self.name))
-
     def __str__(self) -> str:
-        return f'Class {self.scoped_name!r}'
+        return f'Class {self.name!r}'
 
     def is_empty(self) -> bool:
         """Return whether the class has any body (including a docstring)."""

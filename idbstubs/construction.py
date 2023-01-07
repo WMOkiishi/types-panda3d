@@ -106,10 +106,10 @@ def make_manifest_reps() -> Iterator[Attribute]:
     """Yield representations of all manifests known to interrogate."""
     for manifest in get_manifests():
         type_name = 'Final[int]' if manifest.has_int_value else 'Final[str]'
-        yield Attribute(manifest.name, type_name, namespace=('panda3d', 'core'))
+        yield Attribute(manifest.name, type_name)
         alias_name = make_alias_name(manifest.name)
         if alias_name != manifest.name:
-            yield Attribute(alias_name, type_name, namespace=('panda3d', 'core'))
+            yield Attribute(alias_name, type_name)
 
 
 def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
@@ -180,9 +180,7 @@ def make_typedef_rep(idb_type: IDBType) -> Alias:
     return Alias(name, typedef_of, of_local=of_local)
 
 
-def make_attribute_rep(
-        element: IDBElement,
-        namespace: Sequence[str] = ()) -> Attribute:
+def make_attribute_rep(element: IDBElement) -> Attribute:
     """Return an attribute representation of an element known to interrogate."""
     type_name = get_type_name(element.type)
     if element.is_sequence:
@@ -216,7 +214,6 @@ def make_attribute_rep(
         check_keyword(element.name),
         ATTR_TYPE_OVERRIDES.get(element.scoped_name, type_name),
         read_only=read_only,
-        namespace=namespace,
         doc=doc,
         comment=get_comment(element.scoped_name),
     )
@@ -265,11 +262,6 @@ def make_function_rep(function: IDBFunction) -> Function:
     """Return a representation of a function known to interrogate."""
     is_constructor = function.is_constructor
     name = '__init__' if is_constructor else get_function_name(function)
-    scoped_name = function.scoped_name
-    namespace = (
-        function.module_name,
-        *(make_class_name(s) for s in scoped_name.split('::')[:-1])
-    )
     is_static_method = (
         function.is_method and not is_dunder(name)
         and not function.wrappers[0].parameters[0].is_this
@@ -316,25 +308,22 @@ def make_function_rep(function: IDBFunction) -> Function:
         name,
         signatures,
         is_static=is_static_method,
-        namespace=namespace,
         doc=doc,
         comment=get_comment(function.scoped_name),
     )
 
 
-def make_type_reps(
-        idb_type: IDBType,
-        namespace: Sequence[str] = ()) -> Iterator[StubRep]:
+def make_type_reps(idb_type: IDBType) -> Iterator[StubRep]:
     if idb_type.is_enum:
         if idb_type.is_scoped_enum:
-            yield make_scoped_enum_rep(idb_type, namespace)
+            yield make_scoped_enum_rep(idb_type)
         else:
-            yield from make_enum_value_reps(idb_type, namespace)
+            yield from make_enum_value_reps(idb_type)
         return
     if idb_type.is_typedef:
         class_ = make_typedef_rep(idb_type)
     else:
-        class_ = make_class_rep(idb_type, namespace)
+        class_ = make_class_rep(idb_type)
         if class_.name == 'BitMaskNative':
             return
     yield class_
@@ -346,16 +335,11 @@ def make_type_reps(
 def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     """Return a representation of a MakeSeq known to interrogate."""
     element_getter = make_seq.element_getter
-    namespace = (
-        element_getter.module_name,
-        *(make_class_name(s) for s in make_seq.scoped_name.split('::')[:-1])
-    )
     return_type = get_type_name(element_getter.wrappers[0].return_type)
     signature = Signature([Parameter('self')], f'tuple[{return_type}, ...]')
     return Function(
         make_seq.seq_name,
         [signature],
-        namespace=namespace,
         doc=comment_to_docstring(make_seq.comment),
         comment=get_comment(make_seq.scoped_name),
     )
@@ -371,41 +355,33 @@ def make_enum_alias_rep(idb_type: IDBType) -> Alias:
     return Alias(idb_type.name, definition, is_type_alias=True)
 
 
-def make_enum_value_reps(
-        idb_type: IDBType,
-        namespace: Sequence[str] = ()) -> Iterator[Attribute]:
+def make_enum_value_reps(idb_type: IDBType) -> Iterator[Attribute]:
     """Return variable representations for an enum type known to interrogate."""
     for enum_value in idb_type.enum_values:
         if enum_value.scoped_name in NOT_EXPOSED:
             continue
         value_name = enum_value.name
         type_string = f'Final[Literal[{enum_value.value}]]'
-        yield Attribute(value_name, type_string, namespace=namespace)
+        yield Attribute(value_name, type_string)
         alias_name = make_alias_name(value_name, capitalize=True)
         if idb_type.name and alias_name != value_name:
-            yield Attribute(alias_name, type_string, namespace=namespace)
+            yield Attribute(alias_name, type_string)
 
 
-def make_scoped_enum_rep(
-        idb_type: IDBType,
-        namespace: Sequence[str] = ()) -> Class:
+def make_scoped_enum_rep(idb_type: IDBType) -> Class:
     """Return a representation of a scoped enum known to interrogate."""
     name = make_class_name(idb_type.name)
-    this_namespace = (*namespace, name)
     values = {
-        value.name: Attribute(value.name, 'int', namespace=this_namespace)
+        value.name: Attribute(value.name, 'int')
         for value in idb_type.enum_values
     }
-    return Class(name, ['Enum'], values, is_final=idb_type.is_final, namespace=namespace)
+    return Class(name, ['Enum'], values, is_final=idb_type.is_final)
 
 
-def make_class_rep(
-        idb_type: IDBType,
-        namespace: Sequence[str] = ()) -> Class:
+def make_class_rep(idb_type: IDBType) -> Class:
     """Return a representation of a class known to interrogate."""
     name = make_class_name(idb_type.name)
     class_body: dict[str, StubRep] = {}
-    this_namespace = (*namespace, name)
     derivations = [
         get_type_name(derivation)
         for derivation in idb_type.derivations
@@ -415,17 +391,17 @@ def make_class_rep(
         derivations.append(f'Generic[{type_vars}]')
     # Attributes
     class_body['DtoolClassDict'] = Attribute(
-        'DtoolClassDict', 'ClassVar[dict[str, Any]]', namespace=this_namespace
+        'DtoolClassDict', 'ClassVar[dict[str, Any]]'
     )
     for elem in idb_type.elements:
         if element_is_exposed(elem) and elem.name not in NO_STUBS:
-            attribute = make_attribute_rep(elem, this_namespace)
+            attribute = make_attribute_rep(elem)
             class_body[attribute.name] = attribute
     if name.startswith('ParamValue_'):
         value = name[11:]
         if value in ('string', 'wstring'):
             value = 'str'
-        class_body['value'] = Attribute('value', value, namespace=this_namespace)
+        class_body['value'] = Attribute('value', value)
     # Methods
     for method in get_type_methods(idb_type):
         if method.name in class_body:
@@ -438,9 +414,9 @@ def make_class_rep(
                 if (
                     method.comment == 'type: ignore[override]'
                     # It is unclear why Mypy takes issue with these two.
-                    or method.scoped_name in (
-                        'panda3d.core.Character.get_bundle',
-                        'panda3d.core.GeomVertexRewriter.set_column',
+                    or (name, method.name) in (
+                        ('Character', 'get_bundle'),
+                        ('GeomVertexRewriter', 'set_column'),
                     )
                 ):
                     comment = 'type: ignore[assignment]'
@@ -456,13 +432,12 @@ def make_class_rep(
     for nested_type in idb_type.nested_types:
         if not type_is_exposed(nested_type):
             continue
-        type_reps = make_type_reps(nested_type, this_namespace)
+        type_reps = make_type_reps(nested_type)
         class_body |= {rep.name: rep for rep in type_reps}
     return Class(
         name, derivations, class_body,
         is_final=idb_type.is_final,
-        conditional=CONDITIONALS.get('.'.join(this_namespace), ''),
-        namespace=namespace,
+        conditional=CONDITIONALS.get(idb_type.scoped_name, ''),
         doc=comment_to_docstring(idb_type.comment),
         comment=get_comment(idb_type.scoped_name),
     )
@@ -494,9 +469,7 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
             continue
         mod_name = idb_type.module_name
         lib_name = '_' + idb_type.library_name.removeprefix('libp3')
-        nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(
-            idb_type, mod_name.split('.')
-        )
+        nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(idb_type)
 
     # Make package
     modules: list[Module] = []

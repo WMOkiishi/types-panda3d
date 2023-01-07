@@ -169,7 +169,7 @@ SIZE_NOT_LEN: Final = TrackingSet(('EggGroupNode', 'WindowProperties'))
 
 # These types only exist under certain conditions
 CONDITIONALS: Final = TrackingMap({
-    'panda3d.core.WindowsRegistry': "sys.platform == 'win32'",
+    'WindowsRegistry': "sys.platform == 'win32'",
 })
 
 

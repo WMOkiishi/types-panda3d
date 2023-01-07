@@ -243,7 +243,7 @@ def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
     return merged_signatures
 
 
-def process_function(function: Function) -> None:
+def process_function(function: Function, *, class_name: str | None = None) -> None:
     function.signatures = process_signatures(function.signatures)
     match function:
         case Function(
@@ -261,7 +261,6 @@ def process_function(function: Function) -> None:
             other_param.named = False
         case Function(
             name='assign',
-            namespace=[*_, class_name],
             signatures=[Signature([self_param, copy_param], return_type) as sig],
         ) if return_type == class_name:
             sig.return_type = 'Self'
@@ -270,7 +269,6 @@ def process_function(function: Function) -> None:
                 copy_param.type = 'Self'
         case Function(
             name=name,
-            namespace=[*_, class_name],
             signatures=[Signature(return_type=return_type), *_] as signatures,
         ) if name in RETURN_SELF and return_type in (class_name, ''):
             for sig in signatures:
@@ -284,7 +282,7 @@ def process_class(class_: Class) -> None:
             case Class():
                 process_class(item)
             case Function():
-                process_function(item)
+                process_function(item, class_name=class_.name)
     class_body = dict(class_.body)
     match class_body:
         case {
@@ -305,7 +303,6 @@ def process_class(class_: Class) -> None:
             class_body['__iter__'] = Function(
                 '__iter__',
                 [Signature([Parameter('self')], iter_return_type)],
-                namespace=(*class_.namespace, class_.name),
                 comment="Doesn't actually exist",
             )
     class_.body = class_body
