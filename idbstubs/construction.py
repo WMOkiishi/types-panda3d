@@ -2,7 +2,7 @@ import itertools
 import logging
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Sequence
-from typing import Final, Protocol, TypeVar, cast
+from typing import Final, cast
 
 from attrs import evolve
 
@@ -43,7 +43,7 @@ from .special_cases import (
     GENERIC,
     IGNORE_ERRORS,
     METHOD_RENAMES,
-    NO_MANGLING,
+    NO_ALIAS,
     NO_STUBS,
     NOT_EXPOSED,
     PARAM_TYPE_OVERRIDES,
@@ -54,21 +54,14 @@ from .special_cases import (
 from .translation import (
     check_keyword,
     comment_to_docstring,
+    make_alias_name,
     make_class_name,
     make_method_name,
-    snake_to_camel,
 )
 from .typedata import TYPE_ALIASES, get_type_name
-from .util import flatten, is_dunder
+from .util import is_dunder
 
 _logger: Final = logging.getLogger(__name__)
-
-
-class NamespacedStubRep(StubRep, Protocol):
-    namespace: Sequence[str]
-
-
-SR = TypeVar('SR', bound=NamespacedStubRep)
 
 
 def get_comment(name: str, namespace: Iterable[str] = ()) -> str:
@@ -110,33 +103,14 @@ def get_function_name(function: IDBFunction) -> str:
         return make_method_name(function.name)
 
 
-def with_alias(
-        rep: SR, /,
-        capitalize: bool = False) -> tuple[SR] | tuple[SR, SR | Alias]:
-    """Return a tuple of the given `StubRep` and,
-    if it would be unique, a camel-case alias.
-    """
-    name = rep.name
-    if name not in NO_MANGLING:
-        alias_name = check_keyword(snake_to_camel(name, capitalize))
-        if alias_name != name:
-            if isinstance(rep, Attribute) and not rep.read_only:
-                return rep, evolve(rep, name=alias_name)
-            else:
-                return rep, Alias(
-                    alias_name,
-                    name,
-                    of_local=True,
-                    comment=get_comment(alias_name, rep.namespace),
-                )
-    return rep,
-
-
 def make_manifest_reps() -> Iterator[Attribute]:
     """Yield representations of all manifests known to interrogate."""
     for manifest in get_manifests():
         type_name = 'Final[int]' if manifest.has_int_value else 'Final[str]'
         yield Attribute(manifest.name, type_name, namespace=('panda3d', 'core'))
+        alias_name = make_alias_name(manifest.name)
+        if alias_name != manifest.name:
+            yield Attribute(alias_name, type_name, namespace=('panda3d', 'core'))
 
 
 def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
@@ -351,23 +325,23 @@ def make_function_rep(function: IDBFunction) -> Function:
 
 def make_type_reps(
         idb_type: IDBType,
-        namespace: Sequence[str] = ()) -> Iterable[StubRep]:
+        namespace: Sequence[str] = ()) -> Iterator[StubRep]:
     if idb_type.is_enum:
         if idb_type.is_scoped_enum:
-            return make_scoped_enum_rep(idb_type, namespace),
+            yield make_scoped_enum_rep(idb_type, namespace)
         else:
-            value_reps = make_enum_value_reps(idb_type, namespace)
-            if idb_type.name:
-                return flatten(with_alias(v, True) for v in value_reps)
-            else:
-                return value_reps
+            yield from make_enum_value_reps(idb_type, namespace)
+        return
     if idb_type.is_typedef:
         class_ = make_typedef_rep(idb_type)
     else:
         class_ = make_class_rep(idb_type, namespace)
         if class_.name == 'BitMaskNative':
-            return ()
-    return with_alias(class_, True)
+            return
+    yield class_
+    alias_name = make_alias_name(class_.name, capitalize=True)
+    if alias_name != class_.name:
+        yield Alias(alias_name, class_.name, of_local=True)
 
 
 def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
@@ -400,16 +374,17 @@ def make_enum_alias_rep(idb_type: IDBType) -> Alias:
 
 def make_enum_value_reps(
         idb_type: IDBType,
-        namespace: Sequence[str] = ()) -> list[Attribute]:
+        namespace: Sequence[str] = ()) -> Iterator[Attribute]:
     """Return variable representations for an enum type known to interrogate."""
-    value_reps: list[Attribute] = []
     for enum_value in idb_type.enum_values:
         if enum_value.scoped_name in NOT_EXPOSED:
             continue
         value_name = enum_value.name
         type_string = f'Final[Literal[{enum_value.value}]]'
-        value_reps.append(Attribute(value_name, type_string, namespace=namespace))
-    return value_reps
+        yield Attribute(value_name, type_string, namespace=namespace)
+        alias_name = make_alias_name(value_name, capitalize=True)
+        if idb_type.name and alias_name != value_name:
+            yield Attribute(alias_name, type_string, namespace=namespace)
 
 
 def make_scoped_enum_rep(
@@ -457,7 +432,16 @@ def make_class_rep(
         if method.name in class_body:
             _logger.info(f'Discarding {method}; its name is already in use')
             continue
-        class_body |= {rep.name: rep for rep in with_alias(method)}
+        class_body[method.name] = method
+        if method.name not in NO_ALIAS:
+            alias_name = make_alias_name(method.name)
+            if alias_name != method.name:
+                class_body[alias_name] = Alias(
+                    alias_name,
+                    method.name,
+                    of_local=True,
+                    comment=get_comment(alias_name, this_namespace),
+                )
     # Nested types
     for nested_type in idb_type.nested_types:
         if not type_is_exposed(nested_type):
@@ -487,7 +471,13 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
         function_rep = make_function_rep(idb_function)
         mod_name = idb_function.module_name
         lib_name = '_' + idb_function.library_name.removeprefix('libp3')
-        nested_by_mod_by_lib[mod_name][lib_name] += with_alias(function_rep)
+        nested_by_mod_by_lib[mod_name][lib_name].append(function_rep)
+        if function_rep.name not in NO_ALIAS:
+            alias_name = make_alias_name(function_rep.name)
+            if alias_name != function_rep.name:
+                nested_by_mod_by_lib[mod_name][lib_name].append(
+                    Alias(alias_name, function_rep.name, of_local=True)
+                )
 
     # Gather global types
     for idb_type in get_global_types():

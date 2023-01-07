@@ -140,8 +140,8 @@ RETURN_SELF: Final = TrackingSet({
 })
 
 
-# Camel-case aliases are not generated for these names
-NO_MANGLING: Final = TrackingSet({
+# Camel-case aliases are not generated for functions with these names.
+NO_ALIAS: Final = TrackingSet({
     '_del',
     '__init__', '__call__', '__iter__', '__await__',
     '__getitem__', '__setitem__',

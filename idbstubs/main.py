@@ -7,13 +7,11 @@ from .construction import (
     make_manifest_reps,
     make_package_rep,
     make_typing_module,
-    with_alias,
 )
 from .idbutil import load_interrogate_database
 from .processors import process_dependencies, process_package
 from .reps import Module, StubRep
 from .typedata import load_data
-from .util import flatten
 
 _logger: Final = logging.getLogger(__name__)
 
@@ -33,7 +31,7 @@ def main(
         if len(module.nested) > 1:
             init_nested: list[StubRep] = []
             if module.name == 'core':
-                init_nested += flatten(with_alias(m) for m in make_manifest_reps())
+                init_nested += make_manifest_reps()
             module.nested['__init__'] = init_nested
         write_module_stubs(module, output_dir)
     (Path(output_dir) / f'{package.name}-stubs' / '__init__.pyi').write_text('')

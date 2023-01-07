@@ -13,7 +13,7 @@ ID_CHARS: Final = frozenset({'_', *string.ascii_letters, *string.digits})
 COMMENT_INDENTS: Final = frozenset('/* ')
 
 
-def snake_to_camel(name: str, /, capitalize: bool = False) -> str:
+def make_alias_name(name: str, /, *, capitalize: bool = False) -> str:
     """Convert a string from snake to camel case."""
     return ''.join(
         s[:1].upper() + s[1:] if capitalize or i != 0 else s
