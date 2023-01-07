@@ -1,7 +1,7 @@
 import itertools
 import logging
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Iterator, Sequence
 from typing import Final, cast
 
 from attrs import evolve
@@ -64,13 +64,12 @@ from .util import is_dunder
 _logger: Final = logging.getLogger(__name__)
 
 
-def get_comment(name: str, namespace: Iterable[str] = ()) -> str:
-    scoped_name = '.'.join((*namespace, name))
+def get_comment(scoped_name: str) -> str:
     # Sneak in some "noqa" comments
-    if scoped_name == 'panda3d.core.StreamWrapper.iostream':
+    if scoped_name == 'StreamWrapper::iostream':
         return 'noqa: F811'
     elif (
-        scoped_name.startswith('panda3d.core.CallbackGraphicsWindow')
+        scoped_name.startswith('CallbackGraphicsWindow')
         and scoped_name.endswith((
             'EventsCallbackData',
             'PropertiesCallbackData',
@@ -219,7 +218,7 @@ def make_attribute_rep(
         read_only=read_only,
         namespace=namespace,
         doc=doc,
-        comment=get_comment(element.name, namespace),
+        comment=get_comment(element.scoped_name),
     )
 
 
@@ -319,7 +318,7 @@ def make_function_rep(function: IDBFunction) -> Function:
         is_static=is_static_method,
         namespace=namespace,
         doc=doc,
-        comment=get_comment(name, namespace),
+        comment=get_comment(function.scoped_name),
     )
 
 
@@ -358,7 +357,7 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
         [signature],
         namespace=namespace,
         doc=comment_to_docstring(make_seq.comment),
-        comment=get_comment(make_seq.seq_name, namespace),
+        comment=get_comment(make_seq.scoped_name),
     )
 
 
@@ -436,11 +435,22 @@ def make_class_rep(
         if method.name not in NO_ALIAS:
             alias_name = make_alias_name(method.name)
             if alias_name != method.name:
+                if (
+                    method.comment == 'type: ignore[override]'
+                    # It is unclear why Mypy takes issue with these two.
+                    or method.scoped_name in (
+                        'panda3d.core.Character.get_bundle',
+                        'panda3d.core.GeomVertexRewriter.set_column',
+                    )
+                ):
+                    comment = 'type: ignore[assignment]'
+                else:
+                    comment = ''
                 class_body[alias_name] = Alias(
                     alias_name,
                     method.name,
                     of_local=True,
-                    comment=get_comment(alias_name, this_namespace),
+                    comment=comment,
                 )
     # Nested types
     for nested_type in idb_type.nested_types:
@@ -448,14 +458,13 @@ def make_class_rep(
             continue
         type_reps = make_type_reps(nested_type, this_namespace)
         class_body |= {rep.name: rep for rep in type_reps}
-    scoped_name = '.'.join(this_namespace)
     return Class(
         name, derivations, class_body,
         is_final=idb_type.is_final,
-        conditional=CONDITIONALS.get(scoped_name, ''),
+        conditional=CONDITIONALS.get('.'.join(this_namespace), ''),
         namespace=namespace,
         doc=comment_to_docstring(idb_type.comment),
-        comment=get_comment(scoped_name),
+        comment=get_comment(idb_type.scoped_name),
     )
 
 
