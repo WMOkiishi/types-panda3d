@@ -178,7 +178,7 @@ def implicit_cast_from(idb_type: IDBType) -> Iterator[IDBType]:
             min_arity = sum(not p.is_optional for p in wrapper.parameters)
             if min_arity > 1 or max_arity < 1:
                 continue
-            if wrapper.parameters[0].name == 'fill_value':
+            if wrapper.parameters[0].name in ('fill_value', 'type_handle'):
                 continue
             cast_from = unwrap_type(wrapper.parameters[0].type)
             if cast_from.name == '_object':

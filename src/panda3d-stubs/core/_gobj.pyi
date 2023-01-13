@@ -3732,7 +3732,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         methods for more common usage.  We recommend you do not use this method
         directly.  If you do, be sure you know what you are doing!
         """
-    def set_ends(self, ends: PTA_int | TypeHandle | type) -> None:
+    def set_ends(self, ends: PTA_int) -> None:
         """Completely replaces the primitive ends array with a new table.  Chances are
         good that you should also replace the vertices list with set_vertices() at
         the same time.
@@ -7563,9 +7563,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This variant is particularly useful to set an external pointer from a
         language like Python, which doesn't support void pointers directly.
         """
-    def set_ram_mipmap_image(
-        self, n: int, image: CPTA_uchar | PointerToArray_unsigned_char | TypeHandle | type, page_size: int = ...
-    ) -> None:
+    def set_ram_mipmap_image(self, n: int, image: CPTA_uchar | PointerToArray_unsigned_char, page_size: int = ...) -> None:
         """Replaces the current system-RAM image for the indicated mipmap level with
         the new data.  If compression is not CM_off, it indicates that the new data
         is already pre-compressed in the indicated format.
@@ -7610,9 +7608,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         parameters of the full texture.  The simple image is only supported for
         ordinary 2-d textures.
         """
-    def set_simple_ram_image(
-        self, image: CPTA_uchar | PointerToArray_unsigned_char | TypeHandle | type, x_size: int, y_size: int
-    ) -> None:
+    def set_simple_ram_image(self, image: CPTA_uchar | PointerToArray_unsigned_char, x_size: int, y_size: int) -> None:
         """Replaces the internal "simple" texture image.  This can be used as an
         option to display while the main texture image is being loaded from disk.
         It is normally a very small image, 16x16 or smaller (and maybe even 1x1),

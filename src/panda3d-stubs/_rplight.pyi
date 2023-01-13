@@ -4,7 +4,6 @@ from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import IntVec4Like, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._display import GraphicsOutput
-from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import PTA_float, PTA_uchar, ReferenceCount
 from panda3d.core._gobj import Shader, Texture
@@ -124,7 +123,7 @@ class GPUCommand:
           e.g. val = (float)i;
         @return The integer representation flag
         """
-    def write_to(self, dest: PTA_uchar | TypeHandle | type, command_index: int) -> None:
+    def write_to(self, dest: PTA_uchar, command_index: int) -> None:
         """@brief Writes the GPU command to a given target.
         @details This method writes all the data of the GPU command to a given target.
           The target should be a pointer to memory being big enough to hold the
@@ -182,7 +181,7 @@ class GPUCommandList:
           list, and are waiting to get processed.
         @return Amount of commands
         """
-    def write_commands_to(self, dest: PTA_uchar | TypeHandle | type, limit: int = ...) -> int:
+    def write_commands_to(self, dest: PTA_uchar, limit: int = ...) -> int:
         """@brief Writes the first n-commands to a destination.
         @details This takes the first #limit commands, and writes them to the
           destination using GPUCommand::write_to. See GPUCommand::write_to for
@@ -214,19 +213,19 @@ class IESDataset:
         """
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
-    def set_vertical_angles(self, vertical_angles: PTA_float | TypeHandle | type) -> None:
+    def set_vertical_angles(self, vertical_angles: PTA_float) -> None:
         """@brief Sets the vertical angles of the dataset.
         @details This sets the list of vertical angles of the dataset.
 
         @param vertical_angles Vector of all vertical angles.
         """
-    def set_horizontal_angles(self, horizontal_angles: PTA_float | TypeHandle | type) -> None:
+    def set_horizontal_angles(self, horizontal_angles: PTA_float) -> None:
         """@brief Sets the horizontal angles of the dataset.
         @details This sets the list of horizontal angles of the dataset.
 
         @param horizontal_angles Vector of all horizontal angles.
         """
-    def set_candela_values(self, candela_values: PTA_float | TypeHandle | type) -> None:
+    def set_candela_values(self, candela_values: PTA_float) -> None:
         """@brief Sets the candela values.
         @details This sets the candela values of the dataset. They should be an
           interleaved 2D array with the dimensions vertical_angles x horizontal_angles.
