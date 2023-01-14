@@ -223,7 +223,11 @@ def get_param_type_replacement(type_name: str) -> str:
     else:
         replacement = _param_type_replacements.get(alias_of)
         if replacement is not None:
-            replacement = replacement.replace(alias_of, type_name)
+            replacement_types = set(unpack_union(replacement))
+            if alias_of in replacement_types:
+                replacement_types.discard(alias_of)
+                replacement_types.add(type_name)
+                replacement = combine_types(replacement_types)
     return type_name if replacement is None else replacement
 
 
