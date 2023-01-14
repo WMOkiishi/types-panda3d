@@ -242,32 +242,25 @@ def get_module(name: str) -> str | None:
         return None
 
 
-def get_mro(name: str, /) -> tuple[str, ...]:
-    """Return a tuple of the names of the classes in the MRO of a class."""
+def get_mro(name: str, /) -> list[str]:
+    """Return a list of the names of the classes in the MRO of a class."""
     name = _aliases.get(name, name)
-    if name == 'object':
-        return ('object',)
-    bases = list(_direct_inheritance.get(name, ()))
-    # all_bases = (get_mro(base) for base in bases)
-    # return (name, *merge_mros(all_bases), 'object')
+    bases = [name]
     linear_bases: list[str] = []
     while bases:
-        for base_1 in bases:
-            new_bases = list(_direct_inheritance.get(base_1, ()))
-            for base_2 in bases:
-                if base_1 == base_2:
-                    continue
-                if inherits_from(base_2, base_1):
-                    break
-                new_bases.append(base_2)
-            else:
-                linear_bases.append(base_1)
-                bases = new_bases
-                break
+        for next_base in bases:
+            other_bases = [b for b in bases if b != next_base]
+            if any(inherits_from(other_base, next_base) for other_base in other_bases):
+                continue
+            # This base works as the next one.
+            linear_bases.append(next_base)
+            bases = list(_direct_inheritance.get(next_base, ())) + other_bases
+            break
         else:
+            # Each base inherits from one of the others.
             _logger.error(f'Could not construct MRO for {name}')
-            return ()
-    return (name, *linear_bases, 'object')
+            return []
+    return linear_bases
 
 
 def process_dependency(
