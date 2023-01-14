@@ -113,18 +113,16 @@ def sort_signatures(signatures: Sequence[Signature]) -> list[Signature]:
     #  of all signatures that should be defined after it.
     define_after: dict[int, set[int]] = {n: set() for n in range(len(signatures))}
     for (i, sig_1), (j, sig_2) in combinations(enumerate(signatures), 2):
-        if sig_1.min_arity() != sig_2.min_arity():
-            # This should technically check if the number of parameters
-            # can overlap, but this works well enough in practice.
+        if not sig_1.has_arity_overlap(sig_2):
             continue
         if sig_1.return_type == sig_2.return_type:
             # Ambiguity doesn't matter if they return the same type.
             continue
         sig_1_first = sig_2_first = True
-        for p, q in zip(
-            (p for p in sig_1.parameters if not p.is_optional),
-            (p for p in sig_2.parameters if not p.is_optional),
-            strict=True,
+        for p, q in zip_longest(
+            sig_1.parameters,
+            sig_2.parameters,
+            fillvalue=_absent_param,
         ):
             if not (sig_1_first or sig_2_first):
                 # These signatures don't overlap.
@@ -166,9 +164,7 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
         for i, signature in enumerate(signatures)
     }
     for (i, sig_1), (j, sig_2) in combinations(enumerate(signatures), 2):
-        if sig_1.min_arity() != sig_2.min_arity():
-            # This should technically check if the number of parameters
-            # can overlap, but this works well enough in practice.
+        if not sig_1.has_arity_overlap(sig_2):
             continue
         r1_subtypes_r2, r2_subtypes_r1 = subtype_relationship(
             sig_1.return_type, sig_2.return_type

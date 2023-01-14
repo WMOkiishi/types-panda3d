@@ -113,6 +113,12 @@ class Signature:
             changes['parameters'] = tuple((evolve(p) for p in self.parameters))
         return evolve(self, **changes)
 
+    def has_arity_overlap(self, other: 'Signature') -> bool:
+        return not (
+            self.min_arity() > other.max_arity()
+            or self.max_arity() < other.min_arity()
+        )
+
     def min_arity(self) -> int:
         """Return the minimum number of arguments the signature will accept."""
         return sum(not p.is_optional for p in self.parameters)
