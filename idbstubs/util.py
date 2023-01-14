@@ -55,34 +55,25 @@ def names_within(s: str, /) -> Iterator[str]:
             yield node.id
 
 
-def unpack_union(s: str, /) -> list[str]:
-    """Return a list of the individual types within
+def unpack_union(s: str, /) -> Iterator[str]:
+    """Yield the individual types within
     a string representation of a type union.
     """
     if '|' not in s:
-        return [s]
+        yield s
+        return
     try:
-        parsed = ast.parse(s)
+        parsed = ast.parse(s, mode='eval')
     except SyntaxError:
         _logger.exception(f'Could not parse {s!r}')
-        return []
-
-    def iter_ast_union(u: ast.BinOp, /) -> Iterator[str]:
-        for expr in u.left, u.right:
-            match expr:
-                case ast.BinOp(op=ast.BitOr()):
-                    yield from iter_ast_union(expr)
-                case _:
-                    yield ast.unparse(expr)
-
-    type_list: list[str] = []
-    match parsed.body:
-        case [ast.Expr(value=ast.BinOp(op=ast.BitOr()) as op)]:
-            type_list += iter_ast_union(op)
-        case _:
-            type_list.append(s)
-
-    return type_list
+        return
+    stack = [parsed.body]
+    for expr in stack:
+        match expr:
+            case ast.BinOp(op=ast.BitOr()):
+                stack += expr.left, expr.right
+            case _:
+                yield ast.unparse(expr)
 
 
 class TrackingSet(Set[T]):
