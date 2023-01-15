@@ -303,6 +303,8 @@ def expand_type(s: str, /) -> set[str]:
     """Return a set of type names whose union is equivalent
     to the type represented by the given string.
     """
+    if not s:
+        return set()
     parts, new_parts = set[str](), {s}
     while parts != new_parts:
         parts, new_parts = new_parts, set[str]()
