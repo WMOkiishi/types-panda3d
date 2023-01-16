@@ -31,7 +31,7 @@ class EventParameter:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: EventParameter = ...) -> None:
+    def __init__(self, copy: EventParameter | None = ...) -> None:
         """`(self, ptr: TypedReferenceCount)`:
         Defines an EventParameter that stores a pointer to a TypedReferenceCount
         object.  Note that a TypedReferenceCount is not the same kind of pointer as
@@ -67,8 +67,6 @@ class EventParameter:
     def __init__(self, ptr: TypedReferenceCount | TypedWritableReferenceCount) -> None: ...
     @overload
     def __init__(self, value: float | str) -> None: ...
-    @overload
-    def __init__(self, __param0: None) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def assign(

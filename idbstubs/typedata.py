@@ -331,6 +331,35 @@ def subtype_relationship(a: str, b: str, /) -> tuple[bool, bool]:
             all(found_broader_in_a.values()))
 
 
+def type_difference(a: str, b: str, /) -> str:
+    """Return a string representing the difference between
+    the types represented by the given strings.
+    """
+    expanded_a = expand_type(a)
+    expanded_b = expand_type(b)
+    result = set(expanded_a)
+    for t in expanded_a:
+        for u in expanded_b:
+            if inherits_from(t, u):
+                result.remove(t)
+                break
+    if not result:
+        result.add('Never')
+    return combine_types(result)
+
+
+def types_intersect(a: str, b: str, /) -> bool:
+    """Return whether the types represented by
+    the given strings have an intersection.
+    """
+    if not a or not b:
+        return True
+    return any(
+        inherits_from(t, u) or inherits_from(u, t)
+        for t, u in product(expand_type(a), expand_type(b))
+    )
+
+
 def combine_types(types: Iterable[str]) -> str:
     """Return a string representing a type equivalent to the union
     of the types represented by the given strings.

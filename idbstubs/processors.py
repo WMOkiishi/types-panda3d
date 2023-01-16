@@ -22,11 +22,12 @@ from .reps import (
 from .special_cases import RETURN_SELF
 from .typedata import (
     combine_types,
-    expand_type,
     get_mro,
     get_param_type_replacement,
     process_dependency,
     subtype_relationship,
+    type_difference,
+    types_intersect,
 )
 
 _logger: Final = logging.getLogger(__name__)
@@ -171,13 +172,11 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
         )
         new_types_1: dict[str, str] = {}
         new_types_2: dict[str, str] = {}
-        sig_1_narrower = sig_2_narrower = True
         for param_1, param_2 in zip(sig_1.parameters, sig_2.parameters):
-            if not (sig_1_narrower or sig_2_narrower):
-                # These signatures don't overlap.
-                break
             type_1 = param_types[i][param_1.name]
             type_2 = param_types[j][param_2.name]
+            if not types_intersect(type_1, type_2):
+                break
             t1_subtypes_t2, t2_subtypes_t1 = subtype_relationship(type_1, type_2)
             # If the expanded types are the same, try not expanding one of them.
             if t1_subtypes_t2 and t2_subtypes_t1:
@@ -188,28 +187,41 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
                 t1_subtypes_t2, t2_subtypes_t1 = subtype_relationship(type_1, type_2)
                 # Re-expand the broader parameter if we un-expanded both.
                 if r1_subtypes_r2 and r2_subtypes_r1:
-                    if t1_subtypes_t2:
+                    if not t2_subtypes_t1:
                         type_2 = param_types[j][param_2.name]
-                    if t2_subtypes_t1:
+                    if not t1_subtypes_t2:
                         type_1 = param_types[i][param_1.name]
-            sig_1_narrower &= t1_subtypes_t2
-            sig_2_narrower &= t2_subtypes_t1
-            # If one of the parameter types is narrower than the other, don't
-            # expand the narrower one, and remove it from the broader type.
-            # Don't remove the "base" type from the broader parameter, though.
-            if t2_subtypes_t1 and not t1_subtypes_t2:
-                new_types_2[param_2.name] = type_2
-                new_types_1[param_1.name] = combine_types(
-                    expand_type(type_1) - (expand_type(type_2) - {param_1.type})
-                )
-            if t1_subtypes_t2 and not t2_subtypes_t1:
-                new_types_1[param_1.name] = type_1
-                new_types_2[param_2.name] = combine_types(
-                    expand_type(type_2) - (expand_type(type_1) - {param_2.type})
-                )
-        # If one of the signature's parameter types are always narrower
-        # than the other's, apply the changes to their types.
-        if sig_1_narrower or sig_2_narrower:
+            if not t1_subtypes_t2:
+                if t2_subtypes_t1:
+                    # Make sure type_2 remains narrower than type_1.
+                    new_types_2[param_2.name] = type_2
+                    remove_from_1 = type_2
+                else:
+                    # When neither type fully subtypes the other, both will
+                    # have parts removed. To avoid removing some types from
+                    # both, just remove the types we know will be included
+                    # in the other parameter.
+                    remove_from_1 = param_2.type
+                # Avoid unnecessary overlap between the parameter types.
+                # Skip this if the other parameter isn't named, though,
+                # as in practice it can usually be merged later on.
+                if param_2.named:
+                    new_types_1[param_1.name] = combine_types((
+                        param_1.type, type_difference(type_1, remove_from_1)
+                    ))
+            # This is the same as above, but with the parameters swapped.
+            if not t2_subtypes_t1:
+                if t1_subtypes_t2:
+                    new_types_1[param_1.name] = type_1
+                    remove_from_2 = type_1
+                else:
+                    remove_from_2 = param_1.type
+                if param_1.named:
+                    new_types_2[param_2.name] = combine_types((
+                        param_2.type, type_difference(type_2, remove_from_2)
+                    ))
+        # If the signatures intersect, apply the changes to their types.
+        else:
             param_types[i] |= new_types_1
             param_types[j] |= new_types_2
     new_signatures: list[Signature] = []
