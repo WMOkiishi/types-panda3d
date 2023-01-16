@@ -10,7 +10,7 @@ from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import PTA_int, PTA_stdfloat, TypedReferenceCount
 from panda3d.core._gobj import Geom, GeomVertexArrayFormat, GeomVertexFormat, InternalName, Texture
 from panda3d.core._linmath import LMatrix3, LMatrix4, LPoint3, LVecBase3, LVecBase3i, LVector3
-from panda3d.core._mathutil import BoundingBox, BoundingSphere, LPlane, PTA_LVecBase3
+from panda3d.core._mathutil import BoundingBox, BoundingSphere, LPlane, LPlanef, PTA_LVecBase3
 from panda3d.core._parametrics import NurbsCurveEvaluator, NurbsSurfaceEvaluator
 from panda3d.core._pgraph import NodePath, NodePathCollection, PandaNode, TransformState
 from panda3d.core._pnmimage import PNMImage
@@ -2389,7 +2389,7 @@ class BulletPlaneShape(BulletShape):
     def get_plane_normal(self) -> LVector3: ...
     def get_plane_constant(self) -> float: ...
     @staticmethod
-    def make_from_solid(solid: CollisionPlane | Vec4Like) -> BulletPlaneShape: ...
+    def make_from_solid(solid: CollisionPlane | LPlanef) -> BulletPlaneShape: ...
     getPlane = get_plane
     getPlaneNormal = get_plane_normal
     getPlaneConstant = get_plane_constant

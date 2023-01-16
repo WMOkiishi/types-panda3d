@@ -66,12 +66,12 @@ KNOWN_IMPORTS: Final = {
 TYPE_ALIASES: Final = {
     'Vec3Like': 'LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow',
     'DoubleVec3Like': 'LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow',
-    'Vec4Like': 'LVecBase4f | UnalignedLVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor',
-    'DoubleVec4Like': 'LVecBase4d | UnalignedLVecBase4d | LMatrix4d.Row | LMatrix4d.CRow',
-    'IntVec4Like': 'LVecBase4i | UnalignedLVecBase4i',
+    'Vec4Like': 'LVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor',
+    'DoubleVec4Like': 'LVecBase4d | LMatrix4d.Row | LMatrix4d.CRow',
     'Mat4Like': 'LMatrix4f | UnalignedLMatrix4f',
     'DoubleMat4Like': 'LMatrix4d | UnalignedLMatrix4d',
     'URL': 'URLSpec | str',
+    'SearchPathLike': 'ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str'
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))
@@ -112,6 +112,7 @@ def get_type_name(idb_type: IDBType) -> str:
 
 def load_data() -> None:
     coercions = defaultdict[str, set[str]](set)
+    typecasts = defaultdict[str, set[str]](set)
     for idb_type in get_all_types():
         type_name = get_type_name(idb_type)
         if idb_type.is_wrapped:
@@ -131,7 +132,7 @@ def load_data() -> None:
             # Don't record coercion or inheritance information for typedefs
             continue
         for cast_to in explicit_cast_to(idb_type):
-            coercions[get_type_name(cast_to)].add(type_name)
+            typecasts[get_type_name(cast_to)].add(type_name)
         coercions[type_name].update(
             get_type_name(t) for t in implicit_cast_from(idb_type)
         )
@@ -142,9 +143,13 @@ def load_data() -> None:
             _direct_inheritance[type_name] = tuple(
                 get_type_name(s) for s in idb_type.derivations
             )
-    for cast_to_name in tuple(coercions):  # freeze keys
+    for cast_to_name in tuple(coercions.keys() | typecasts.keys()):  # freeze keys
         cast_from_name = combine_types(
-            get_all_coercible(cast_to_name, coercion_map=coercions)
+            get_all_coercible(
+                cast_to_name,
+                coercion_map=coercions,
+                typecast_map=typecasts,
+            )
         )
         if cast_from_name and cast_to_name != cast_from_name:
             _param_type_replacements[cast_to_name] = cast_from_name
@@ -192,22 +197,15 @@ def implicit_cast_from(idb_type: IDBType) -> Iterator[IDBType]:
 def get_all_coercible(
         cast_to: str,
         *, coercion_map: Mapping[str, Set[str]],
-        skip: Set[str] = frozenset()) -> set[str]:
+        typecast_map: Mapping[str, Set[str]]) -> set[str]:
     """Based on `coercion_map`, return a set of the names of the types
     that can be automatically coerced to the type with the given name.
-
-    `skip` is used to prevent cyclical recursion, as well as to ignore
-    certain coercions, dictated by `special_cases.NO_COERCION`.
     """
+    cast_from = {cast_to} | coercion_map[cast_to]
+    for name in tuple(cast_from):  # freeze entries
+        cast_from |= typecast_map[name]
     if (remove := NO_COERCION.get(cast_to)) is not None:
-        # Don't mutate `skip`
-        skip = skip | remove
-    direct_cast_from = coercion_map[cast_to] - skip
-    cast_from = {cast_to} | direct_cast_from
-    for name in direct_cast_from:
-        cast_from |= get_all_coercible(
-            name, coercion_map=coercion_map, skip=skip | cast_from
-        )
+        cast_from -= remove
     if (add := EXTRA_COERCION.get(cast_to)) is not None:
         cast_from |= add
     return cast_from

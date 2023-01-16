@@ -4,9 +4,10 @@ from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
+from panda3d._typing import SearchPathLike
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import DSearchPath, Filename, iostream, istream, ostream
-from panda3d.core._prc import ConfigVariableSearchPath, IStreamWrapper, OStreamWrapper, StreamReader, StreamWrapper, StreamWriter
+from panda3d.core._prc import ConfigVariableFilename, IStreamWrapper, OStreamWrapper, StreamReader, StreamWrapper, StreamWriter
 
 _ErrorUtilCode: TypeAlias = Literal[
     -80,
@@ -1048,7 +1049,7 @@ class FileReference(TypedReferenceCount):
     """
 
     @overload
-    def __init__(self, __param0: FileReference) -> None: ...
+    def __init__(self, __param0: ConfigVariableFilename | FileReference) -> None: ...
     @overload
     def __init__(self, filename: StrOrBytesPath) -> None: ...
     def __copy__(self: Self) -> Self: ...
@@ -2051,7 +2052,7 @@ class SubfileInfo:
     @overload
     def __init__(self, copy: SubfileInfo = ...) -> None: ...
     @overload
-    def __init__(self, file: FileReference, start: int, size: int) -> None: ...
+    def __init__(self, file: ConfigVariableFilename | FileReference, start: int, size: int) -> None: ...
     @overload
     def __init__(self, filename: StrOrBytesPath, start: int, size: int) -> None: ...
     def __copy__(self: Self) -> Self: ...
@@ -2515,12 +2516,7 @@ class VirtualFileSystem:
         the same thing as get_file().  If the filename is located within a read-
         only directory, or the directory doesn't exist, returns NULL.
         """
-    def find_file(
-        self,
-        filename: StrOrBytesPath,
-        searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath,
-        status_only: bool = ...,
-    ) -> VirtualFile:
+    def find_file(self, filename: StrOrBytesPath, searchpath: SearchPathLike, status_only: bool = ...) -> VirtualFile:
         """Uses the indicated search path to find the file within the file system.
         Returns the first occurrence of the file found, or NULL if the file cannot
         be found.
@@ -2545,22 +2541,12 @@ class VirtualFileSystem:
         """Attempts to copy the contents of the indicated file to the indicated file.
         Returns true on success, false on failure.
         """
-    def resolve_filename(
-        self,
-        filename: StrOrBytesPath,
-        searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath,
-        default_extension: str = ...,
-    ) -> bool:
+    def resolve_filename(self, filename: StrOrBytesPath, searchpath: SearchPathLike, default_extension: str = ...) -> bool:
         """Searches the given search path for the filename.  If it is found, updates
         the filename to the full pathname found and returns true; otherwise,
         returns false.
         """
-    def find_all_files(
-        self,
-        filename: StrOrBytesPath,
-        searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath,
-        results: DSearchPath.Results,
-    ) -> int:
+    def find_all_files(self, filename: StrOrBytesPath, searchpath: SearchPathLike, results: DSearchPath.Results) -> int:
         """Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
         found, if any.  Returns the number of matches found.

@@ -7,7 +7,7 @@ from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core._collide import CollisionHandlerPusher
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import ReferenceCount, TypedReferenceCount
-from panda3d.core._linmath import LMatrix4, LOrientation, LPoint3, LRotation, LVector3
+from panda3d.core._linmath import LMatrix4, LOrientation, LPoint3, LQuaternionf, LRotation, LVector3
 from panda3d.core._pgraph import NodePath, PandaNode
 
 _LinearDistanceForce_FalloffType: TypeAlias = Literal[0, 1, 2]
@@ -127,10 +127,10 @@ class PhysicsObject(TypedReferenceCount):
         """
     def get_oriented(self) -> bool:
         """See set_oriented()."""
-    def set_orientation(self, orientation: Vec4Like) -> None: ...
+    def set_orientation(self, orientation: LQuaternionf) -> None: ...
     def get_orientation(self) -> LOrientation:
         """get current orientation."""
-    def reset_orientation(self, orientation: Vec4Like) -> None:
+    def reset_orientation(self, orientation: LQuaternionf) -> None:
         """set the orientation while clearing the rotation velocity."""
     def set_rotation(self, rotation: Vec4Like) -> None:
         """set rotation as a quaternion delta per second."""

@@ -3,9 +3,9 @@ from collections.abc import Iterator, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Vec4Like
+from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, SearchPathLike, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
-from panda3d.core._dtoolutil import DSearchPath, Filename, GlobPattern, istream, ostream
+from panda3d.core._dtoolutil import Filename, GlobPattern, istream, ostream
 from panda3d.core._express import Namable, TypedReferenceCount
 from panda3d.core._linmath import (
     LColor,
@@ -22,7 +22,6 @@ from panda3d.core._linmath import (
     LVecBase4d,
     LVertexd,
 )
-from panda3d.core._prc import ConfigVariableSearchPath
 from panda3d.core._putil import BamCacheRecord, CollideMask
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
@@ -426,7 +425,7 @@ class EggGroupNode(EggNode):
         """Returns true if any nodes at this level and below include a reference to a
         file via an absolute pathname, or false if all references are relative.
         """
-    def resolve_filenames(self, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
+    def resolve_filenames(self, searchpath: SearchPathLike) -> None:
         """Walks the tree and attempts to resolve any filenames encountered.  This
         looks up filenames along the specified search path; it does not
         automatically search the model_path for missing files.
@@ -3898,9 +3897,7 @@ class EggData(EggGroupNode):
     egg_timestamp: int
     def __init__(self, copy: EggData = ...) -> None: ...
     @staticmethod
-    def resolve_egg_filename(
-        egg_filename: StrOrBytesPath, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath = ...
-    ) -> bool:
+    def resolve_egg_filename(egg_filename: StrOrBytesPath, searchpath: SearchPathLike = ...) -> bool:
         """Looks for the indicated filename, first along the indicated searchpath, and
         then along the model_path.  If found, updates the filename to the full path
         and returns true; otherwise, returns false.
@@ -3930,7 +3927,7 @@ class EggData(EggGroupNode):
         structure is invalidated.
         """
     @overload
-    def load_externals(self, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath = ...) -> bool:
+    def load_externals(self, searchpath: SearchPathLike = ...) -> bool:
         """Loads up all the egg files referenced by <File> entries within the egg
         structure, and inserts their contents in place of the <File> entries.
         Searches for files in the searchpath, if not found directly, and writes
@@ -3938,9 +3935,7 @@ class EggData(EggGroupNode):
         externals were loaded successfully, false otherwise.
         """
     @overload
-    def load_externals(
-        self, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath, record: BamCacheRecord
-    ) -> bool: ...
+    def load_externals(self, searchpath: SearchPathLike, record: BamCacheRecord) -> bool: ...
     def collapse_equivalent_textures(self) -> int:
         """Removes duplicate references to the same texture image with the same
         properties.  Considers two texture references with identical properties,

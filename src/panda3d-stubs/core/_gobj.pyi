@@ -3,7 +3,7 @@ from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, 
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, IntVec4Like, Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import Filename, istream, ostream
 from panda3d.core._event import AsyncFuture, AsyncTask
@@ -2581,7 +2581,7 @@ class TransformBlendTable(CopyOnWriteObject):
         applied to any one vertex simultaneously.  This is the same limit reflected
         by GraphicsStateGuardian::get_max_vertex_transforms().
         """
-    def set_rows(self, rows: BitArray | SparseArray | int) -> None:
+    def set_rows(self, rows: BitArray | SparseArray) -> None:
         """Specifies the subset of rows (vertices) in the associated GeomVertexData
         that this TransformBlendTable actually affects.
         """
@@ -2698,13 +2698,13 @@ class SliderTable(TypedWritableReferenceCount):
         """
     def set_slider(self, n: int, slider: VertexSlider) -> None:
         """Replaces the nth slider.  Only valid for unregistered tables."""
-    def set_slider_rows(self, n: int, rows: BitArray | SparseArray | int) -> None:
+    def set_slider_rows(self, n: int, rows: BitArray | SparseArray) -> None:
         """Replaces the rows affected by the nth slider.  Only valid for unregistered
         tables.
         """
     def remove_slider(self, n: int) -> None:
         """Removes the nth slider.  Only valid for unregistered tables."""
-    def add_slider(self, slider: VertexSlider, rows: BitArray | SparseArray | int) -> int:
+    def add_slider(self, slider: VertexSlider, rows: BitArray | SparseArray) -> int:
         """Adds a new slider to the table, and returns the index number of the new
         slider.  Only valid for unregistered tables.
         """
@@ -3083,7 +3083,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         not necessary to call this.
         """
     @overload
-    def transform_vertices(self, mat: Mat4Like, rows: BitArray | SparseArray | int = ...) -> None:
+    def transform_vertices(self, mat: Mat4Like, rows: BitArray | SparseArray = ...) -> None:
         """`(self, mat: LMatrix4)`:
         Applies the indicated transform matrix to all of the vertices in the
         GeomVertexData.  The transform is applied to all "point" and "vector" type
@@ -5530,7 +5530,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data3i(self, a: int, b: int, c: int) -> None: ...
     @overload
-    def set_data4i(self, data: IntVec4Like) -> None:
+    def set_data4i(self, data: LVecBase4i) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5719,7 +5719,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data3i(self, a: int, b: int, c: int) -> None: ...
     @overload
-    def add_data4i(self, data: IntVec4Like) -> None:
+    def add_data4i(self, data: LVecBase4i) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 

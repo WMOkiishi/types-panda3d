@@ -11,6 +11,7 @@ from panda3d.core._gobj import Geom, Texture
 from panda3d.core._linmath import LColor, LMatrix4, LPoint3, LVecBase2, LVecBase2i, LVecBase4, LVector2
 from panda3d.core._pgraph import NodePath, PandaNode, RenderState
 from panda3d.core._pnmtext import FreetypeFont
+from panda3d.core._prc import ConfigVariableFilename
 
 _GeomEnums_UsageHint: TypeAlias = Literal[0, 1, 2, 3, 4]
 _SamplerState_FilterType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -295,7 +296,7 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
     @property
     def pages(self) -> Sequence[DynamicTextPage]: ...
     @overload
-    def __init__(self, copy: DynamicTextFont) -> None:
+    def __init__(self, copy: ConfigVariableFilename | DynamicTextFont) -> None:
         """`(self, font_filename: Filename, face_index: int = ...)`:
         The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load

@@ -4,6 +4,7 @@ from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d import core
+from panda3d._typing import SearchPathLike
 from panda3d.core._dtoolutil import DSearchPath, Filename, iostream, istream, ostream
 
 _ConfigFlags_ValueType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -1251,13 +1252,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     @overload
     def __init__(self, name: str, description: str = ..., flags: int = ...) -> None: ...
     @overload
-    def __init__(
-        self,
-        name: str,
-        default_value: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath,
-        description: str,
-        flags: int = ...,
-    ) -> None: ...
+    def __init__(self, name: str, default_value: SearchPathLike, description: str, flags: int = ...) -> None: ...
     def operator_typecast_DSearchPath(self) -> DSearchPath: ...
     def get_value(self) -> DSearchPath: ...
     def get_default_value(self) -> DSearchPath: ...
@@ -1274,13 +1269,13 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     def prepend_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
-    def append_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
+    def append_path(self, path: ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename) -> None:
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """
     @overload
     def append_path(self, path: str, separator: str = ...) -> None: ...
-    def prepend_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
+    def prepend_path(self, path: SearchPathLike) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
         """

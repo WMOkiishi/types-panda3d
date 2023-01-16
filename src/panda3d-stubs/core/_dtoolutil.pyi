@@ -3,8 +3,9 @@ from collections.abc import Iterator, MutableMapping, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
+from panda3d._typing import SearchPathLike
 from panda3d.core._dtoolbase import TypeHandle
-from panda3d.core._prc import ConfigVariableSearchPath
+from panda3d.core._prc import ConfigVariableFilename, ConfigVariableSearchPath
 
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int
@@ -762,9 +763,7 @@ class Filename:
         """
     def get_file_size(self) -> int:
         """Returns the size of the file in bytes, or 0 if there is an error."""
-    def resolve_filename(
-        self, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath, default_extension: str = ...
-    ) -> bool:
+    def resolve_filename(self, searchpath: SearchPathLike, default_extension: str = ...) -> bool:
         """Searches the given search path for the filename.  If it is found, updates
         the filename to the full pathname found and returns true; otherwise,
         returns false.
@@ -786,7 +785,7 @@ class Filename:
 
         Returns true if the file was adjusted, false if it was not.
         """
-    def find_on_searchpath(self, searchpath: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> int:
+    def find_on_searchpath(self, searchpath: SearchPathLike) -> int:
         """Performs the reverse of the resolve_filename() operation: assuming that the
         current filename is fully-specified pathname (i.e.  beginning with '/'),
         look on the indicated search path for a directory under which the file can
@@ -1249,14 +1248,14 @@ class DSearchPath:
     @property
     def directories(self) -> Sequence[Filename]: ...
     @overload
-    def __init__(self, copy: ConfigVariableSearchPath | DSearchPath = ...) -> None: ...
+    def __init__(self, copy: ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath = ...) -> None: ...
     @overload
     def __init__(self, directory: StrOrBytesPath) -> None: ...
     @overload
     def __init__(self, path: str, separator: str = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
-    def assign(self: Self, copy: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> Self: ...
+    def assign(self: Self, copy: SearchPathLike) -> Self: ...
     def clear(self) -> None:
         """Removes all the directories from the search list."""
     def append_directory(self, directory: StrOrBytesPath) -> None:
@@ -1264,13 +1263,13 @@ class DSearchPath:
     def prepend_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
-    def append_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
+    def append_path(self, path: ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename) -> None:
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """
     @overload
     def append_path(self, path: str, separator: str = ...) -> None: ...
-    def prepend_path(self, path: ConfigVariableSearchPath | DSearchPath | StrOrBytesPath) -> None:
+    def prepend_path(self, path: SearchPathLike) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
         """

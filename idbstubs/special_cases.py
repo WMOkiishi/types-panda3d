@@ -343,9 +343,12 @@ NO_COERCION: Final = TrackingMap({
     'LOrientationd': {'LMatrix3d', 'LMatrix4d'},
     'LRotationf': {'LMatrix3f', 'LMatrix4f'},
     'LRotationd': {'LMatrix3d', 'LMatrix4d'},
-    'LVecBase4d': {'LVecBase3d', 'LVector3d', 'LPoint3d'},
-    'LVecBase4f': {'LVecBase3f', 'LVector3f', 'LPoint3f'},
-    'LVecBase4i': {'LVecBase3i', 'LVector3i', 'LPoint3i'},
+    # We ignore coercion from unaligned vectors because it throws off
+    # some of the overload-processing logic. They're not useful
+    # from Python anyway.
+    'LVecBase4d': {'LVector3d', 'LPoint3d', 'UnalignedLVecBase4d'},
+    'LVecBase4f': {'LVector3f', 'LPoint3f', 'UnalignedLVecBase4f'},
+    'LVecBase4i': {'LVector3i', 'LPoint3i', 'UnalignedLVecBase4i'},
     'MovieVideo': {'str'},
     'OdeBody': {'OdeWorld'},
     'pixel': {'int'},
