@@ -1058,7 +1058,7 @@ class FileReference(TypedReferenceCount):
         """Returns the filename of the reference."""
     getFilename = get_filename
 
-class TypedReferenceCount(TypedObject, ReferenceCount):
+class TypedReferenceCount(TypedObject, ReferenceCount):  # type: ignore[misc]
     """A base class for things which need to inherit from both TypedObject and
     from ReferenceCount.  It's convenient to define this intermediate base
     class instead of multiply inheriting from the two classes each time they

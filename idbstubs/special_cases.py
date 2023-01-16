@@ -404,6 +404,7 @@ IGNORE_ERRORS: Final = TrackingMap({
     'Triangulator3::get_vertex': 'override',
     'Triangulator3::get_vertices': 'override',
     'Triangulator3::vertices': 'override',
+    'TypedReferenceCount': 'misc',
     'VertexDataPage::alloc': 'override',
     'VertexDataPage::write': 'override',
     'std::iostream': 'misc',
