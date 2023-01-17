@@ -21,11 +21,11 @@ class AppRunner(DirectObject):
     notify: ClassVar[Notifier]
     ConfigBasename: ClassVar[str]
     maxDiskUsage: ClassVar[int]
-    P3DVCNone: Final[Literal[0]]
-    P3DVCNormal: Final[Literal[1]]
-    P3DVCForce: Final[Literal[2]]
-    P3DVCNever: Final[Literal[3]]
-    P3D_CONTENTS_DEFAULT_MAX_AGE: Final[Literal[5]]
+    P3DVCNone: Final = 0
+    P3DVCNormal: Final = 1
+    P3DVCForce: Final = 2
+    P3DVCNever: Final = 3
+    P3D_CONTENTS_DEFAULT_MAX_AGE: Final = 5
     dummy: bool
     allowPythonDev: bool
     guiApp: bool

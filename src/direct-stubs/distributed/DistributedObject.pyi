@@ -12,12 +12,12 @@ from .DoInterestManager import InterestHandle
 
 _State: TypeAlias = Literal[1, 2, 3, 4, 5, 6]
 
-ESNew: Final[Literal[1]]
-ESDeleted: Final[Literal[2]]
-ESDisabling: Final[Literal[3]]
-ESDisabled: Final[Literal[4]]
-ESGenerating: Final[Literal[5]]
-ESGenerated: Final[Literal[6]]
+ESNew: Final = 1
+ESDeleted: Final = 2
+ESDisabling: Final = 3
+ESDisabled: Final = 4
+ESGenerating: Final = 5
+ESGenerated: Final = 6
 ESNum2Str: Final[dict[_State, str]]
 
 class DistributedObject(DistributedObjectBase):

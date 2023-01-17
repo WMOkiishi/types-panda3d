@@ -12,11 +12,11 @@ from .WxPandaWindow import WxPandaWindow
 
 HORIZONTAL: Final[Any]
 VERTICAL: Final[Any]
-CREATENEW: Final[Literal[99]]
-VPLEFT: Final[Literal[10]]
-VPFRONT: Final[Literal[11]]
-VPTOP: Final[Literal[12]]
-VPPERSPECTIVE: Final[Literal[13]]
+CREATENEW: Final = 99
+VPLEFT: Final = 10
+VPFRONT: Final = 11
+VPTOP: Final = 12
+VPPERSPECTIVE: Final = 13
 
 class ViewportManager:
     viewports: ClassVar[list[Viewport]]
@@ -29,11 +29,11 @@ class ViewportManager:
     def layoutAll(*args, **kwargs) -> None: ...
 
 class Viewport(WxPandaWindow, DirectObject, metaclass=sip.wrapper):
-    CREATENEW: Final[Literal[99]]
-    VPLEFT: Final[Literal[10]]
-    VPFRONT: Final[Literal[11]]
-    VPTOP: Final[Literal[12]]
-    VPPERSPECTIVE: Final[Literal[13]]
+    CREATENEW: Final = 99
+    VPLEFT: Final = 10
+    VPFRONT: Final = 11
+    VPTOP: Final = 12
+    VPPERSPECTIVE: Final = 13
     name: str
     camera: NodePath | None
     lens: Lens | None

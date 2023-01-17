@@ -6,7 +6,7 @@ import Pmw  # type: ignore[import]
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath
 
-DEFAULT_BT_WIDTH: Final[float]
+DEFAULT_BT_WIDTH: Final = 50.0
 
 class MemoryExplorer(Pmw.MegaWidget, DirectObject):
     nodePath: NodePath

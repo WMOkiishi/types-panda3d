@@ -5,8 +5,12 @@ from typing_extensions import Final, Literal
 
 import Pmw  # type: ignore[import]
 
-VALUATOR_MINI: Final[Literal['mini']]
-VALUATOR_FULL: Final[Literal['full']]
+VALUATOR_MINI: Final = 'mini'
+VALUATOR_FULL: Final = 'full'
+FLOATER: Final = 'floater'
+DIAL: Final = 'dial'
+ANGLEDIAL: Final = 'angledial'
+SLIDER: Final = 'slider'
 
 class Valuator(Pmw.MegaWidget):
     sfBase: ClassVar[float]
@@ -32,11 +36,6 @@ class Valuator(Pmw.MegaWidget):
     def packValuator(self) -> None: ...
     def addValuatorMenuEntries(self) -> None: ...
     def addValuatorPropertiesToDialog(self) -> None: ...
-
-FLOATER: Final[Literal['floater']]
-DIAL: Final[Literal['dial']]
-ANGLEDIAL: Final[Literal['angledial']]
-SLIDER: Final[Literal['slider']]
 
 class ValuatorGroup(Pmw.MegaWidget):
     def __init__(self, parent=..., **kw) -> None: ...

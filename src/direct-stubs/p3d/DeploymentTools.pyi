@@ -12,7 +12,7 @@ from panda3d.core import Filename, HTTPClient, PNMImage
 from .HostInfo import HostInfo
 from .PackageInfo import PackageInfo
 
-P3DEMBED_MAGIC: Final[Literal[0xFF3D3D00]]
+P3DEMBED_MAGIC: Final = 0xFF3D3D00
 
 def archiveFilter(info): ...
 

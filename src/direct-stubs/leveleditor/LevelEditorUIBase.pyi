@@ -1,5 +1,5 @@
 from typing import Any, SupportsFloat
-from typing_extensions import Final, Literal
+from typing_extensions import Final
 
 import wx  # type: ignore[import]
 import wx.siplib as sip  # type: ignore[import]
@@ -13,26 +13,26 @@ from .CurveAnimUI import CurveAnimUI
 from .GraphEditorUI import GraphEditorUI
 from .LevelEditor import LevelEditor
 
-ID_NEW: Final[Literal[101]]
-ID_OPEN: Final[Literal[102]]
-ID_SAVE: Final[Literal[103]]
-ID_SAVE_AS: Final[Literal[104]]
-ID_EXPORT_TO_MAYA: Final[Literal[105]]
-ID_DUPLICATE: Final[Literal[201]]
-ID_MAKE_LIVE: Final[Literal[202]]
-ID_UNDO: Final[Literal[203]]
-ID_REDO: Final[Literal[204]]
-ID_SHOW_GRID: Final[Literal[301]]
-ID_GRID_SIZE: Final[Literal[302]]
-ID_GRID_SNAP: Final[Literal[303]]
-ID_SHOW_PANDA_OBJECT: Final[Literal[304]]
-ID_HOT_KEYS: Final[Literal[305]]
-ID_PARENT_TO_SELECTED: Final[Literal[306]]
-ID_CREATE_CURVE: Final[Literal[601]]
-ID_EDIT_CURVE: Final[Literal[602]]
-ID_CURVE_ANIM: Final[Literal[603]]
-ID_ANIM: Final[Literal[701]]
-ID_GRAPH: Final[Literal[702]]
+ID_NEW: Final = 101
+ID_OPEN: Final = 102
+ID_SAVE: Final = 103
+ID_SAVE_AS: Final = 104
+ID_EXPORT_TO_MAYA: Final = 105
+ID_DUPLICATE: Final = 201
+ID_MAKE_LIVE: Final = 202
+ID_UNDO: Final = 203
+ID_REDO: Final = 204
+ID_SHOW_GRID: Final = 301
+ID_GRID_SIZE: Final = 302
+ID_GRID_SNAP: Final = 303
+ID_SHOW_PANDA_OBJECT: Final = 304
+ID_HOT_KEYS: Final = 305
+ID_PARENT_TO_SELECTED: Final = 306
+ID_CREATE_CURVE: Final = 601
+ID_EDIT_CURVE: Final = 602
+ID_CURVE_ANIM: Final = 603
+ID_ANIM: Final = 701
+ID_GRAPH: Final = 702
 
 class PandaTextDropTarget(wx.TextDropTarget, metaclass=sip.wrapper):
     editor: LevelEditor

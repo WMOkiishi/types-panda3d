@@ -2,14 +2,14 @@ __all__ = ['MiniTask', 'MiniTaskManager']
 
 from collections.abc import Callable
 from typing import Generic, TypeVar
-from typing_extensions import Final, Literal, ParamSpec
+from typing_extensions import Final, ParamSpec
 
 _P = ParamSpec('_P')
 _T = TypeVar('_T')
 
 class MiniTask(Generic[_P, _T]):
-    done: Final[Literal[0]]
-    cont: Final[Literal[1]]
+    done: Final = 0
+    cont: Final = 1
     name: str
     __call__: Callable[_P, _T]
     def __init__(self, callback: Callable[_P, _T]) -> None: ...

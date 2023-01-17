@@ -8,7 +8,7 @@ from .PythonUtil import ScratchPad
 
 class Job(DirectObject, metaclass=ABCMeta):
     Done: Final[object]
-    Continue: Final[None]
+    Continue: Final = None
     Sleep: Final[object]
     Priorities: ClassVar[ScratchPad[int]]
     def __init__(self, name: str) -> None: ...

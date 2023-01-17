@@ -20,7 +20,7 @@ from .DirectManipulation import DirectManipulationControl
 from .DirectSelection import SelectedNodePaths, SelectionRay
 
 class DirectSession(DirectObject):
-    DIRECTdisablePost: Final[Literal['disableDIRECT']]
+    DIRECTdisablePost: Final = 'disableDIRECT'
     group: NodePath
     font: TextFont
     fEnabled: bool

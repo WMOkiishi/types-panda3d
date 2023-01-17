@@ -10,8 +10,8 @@ import Pmw  # type: ignore[import]
 from direct.directtools.DirectSession import DirectSession
 from direct.tkwidgets.AppShell import AppShell
 
-FRAMES: Final[Literal[0]]
-SECONDS: Final[Literal[1]]
+FRAMES: Final = 0
+SECONDS: Final = 1
 
 class AnimPanel(AppShell):
     index: ClassVar[int]

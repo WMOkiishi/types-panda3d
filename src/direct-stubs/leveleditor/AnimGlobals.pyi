@@ -1,23 +1,23 @@
-from typing_extensions import Final, Literal
+from typing_extensions import Final
 
-UID: Final[Literal[0]]
-PROP_NAME: Final[Literal[1]]
-FRAME: Final[Literal[0]]
-VALUE: Final[Literal[1]]
-INSLOPE: Final[Literal[2]]
-OUTSLOPE: Final[Literal[3]]
-NODE: Final[Literal[0]]
-CURVE: Final[Literal[1]]
-TIME: Final[Literal[2]]
-KEY: Final[Literal[0]]
-I: Final[Literal[1]]
-KEYFRAME: Final[Literal[2]]
-IN_TANGENT: Final[Literal[3]]
-OUT_TANGENT: Final[Literal[4]]
-IN_SLOPE: Final[Literal[5]]
-OUT_SLOPE: Final[Literal[6]]
-LOCAL_VALUE: Final[Literal[0]]
-SELECT: Final[Literal[1]]
-X: Final[Literal[0]]
-Y: Final[Literal[1]]
-Z: Final[Literal[2]]
+UID: Final = 0
+PROP_NAME: Final = 1
+FRAME: Final = 0
+VALUE: Final = 1
+INSLOPE: Final = 2
+OUTSLOPE: Final = 3
+NODE: Final = 0
+CURVE: Final = 1
+TIME: Final = 2
+KEY: Final = 0
+I: Final = 1
+KEYFRAME: Final = 2
+IN_TANGENT: Final = 3
+OUT_TANGENT: Final = 4
+IN_SLOPE: Final = 5
+OUT_SLOPE: Final = 6
+LOCAL_VALUE: Final = 0
+SELECT: Final = 1
+X: Final = 0
+Y: Final = 1
+Z: Final = 2

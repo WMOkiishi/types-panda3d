@@ -11,11 +11,11 @@ from .ViewPort import Viewport
 from .WxAppShell import WxAppShell
 
 base: ShowBase
-ID_FOUR_VIEW: Final[Literal[401]]
-ID_TOP_VIEW: Final[Literal[402]]
-ID_FRONT_VIEW: Final[Literal[403]]
-ID_LEFT_VIEW: Final[Literal[404]]
-ID_PERSP_VIEW: Final[Literal[405]]
+ID_FOUR_VIEW: Final = 401
+ID_TOP_VIEW: Final = 402
+ID_FRONT_VIEW: Final = 403
+ID_LEFT_VIEW: Final = 404
+ID_PERSP_VIEW: Final = 405
 
 class WxPandaShell(WxAppShell, metaclass=sip.wrapper):
     MENU_TEXTS: ClassVar[dict[int, tuple[str, str | None]]]

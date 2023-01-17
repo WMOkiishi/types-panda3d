@@ -9,9 +9,9 @@ from .Valuator import Valuator
 TWO_PI: Final[float]
 ONEPOINTFIVE_PI: Final[float]
 POINTFIVE_PI: Final[float]
-INNER_SF: Final[float]
-DIAL_FULL_SIZE: Final[Literal[45]]
-DIAL_MINI_SIZE: Final[Literal[30]]
+INNER_SF: Final = 0.2
+DIAL_FULL_SIZE: Final = 45
+DIAL_MINI_SIZE: Final = 30
 
 class Dial(Valuator):
     def setBase(self) -> None: ...

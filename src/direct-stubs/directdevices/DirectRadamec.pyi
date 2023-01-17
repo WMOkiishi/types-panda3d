@@ -9,10 +9,10 @@ from .DirectDeviceManager import DirectAnalogs
 
 _TaskCont: TypeAlias = Literal[1]
 
-RAD_PAN: Final[Literal[0]]
-RAD_TILT: Final[Literal[1]]
-RAD_ZOOM: Final[Literal[2]]
-RAD_FOCUS: Final[Literal[3]]
+RAD_PAN: Final = 0
+RAD_TILT: Final = 1
+RAD_ZOOM: Final = 2
+RAD_FOCUS: Final = 3
 
 class DirectRadamec(DirectObject):
     radamecCount: ClassVar[int]

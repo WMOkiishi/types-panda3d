@@ -9,11 +9,11 @@ from panda3d.core import LColor, NodePath, TextFont, TextNode
 _Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _OrderedPair: TypeAlias = tuple[float, float]
 
-Plain: Final[Literal[1]]
-ScreenTitle: Final[Literal[2]]
-ScreenPrompt: Final[Literal[3]]
-NameConfirm: Final[Literal[4]]
-BlackOnWhite: Final[Literal[5]]
+Plain: Final = 1
+ScreenTitle: Final = 2
+ScreenPrompt: Final = 3
+NameConfirm: Final = 4
+BlackOnWhite: Final = 5
 
 class OnscreenText(NodePath[TextNode]):
     textNode: TextNode

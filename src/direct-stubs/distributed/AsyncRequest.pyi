@@ -8,9 +8,9 @@ from panda3d.core import PythonTask
 
 from .ClientRepository import ClientRepository
 
-ASYNC_REQUEST_DEFAULT_TIMEOUT_IN_SECONDS: Final[float]
-ASYNC_REQUEST_INFINITE_RETRIES: Final[Literal[-1]]
-ASYNC_REQUEST_DEFAULT_NUM_RETRIES: Final[Literal[0]]
+ASYNC_REQUEST_DEFAULT_TIMEOUT_IN_SECONDS: Final = 8.0
+ASYNC_REQUEST_INFINITE_RETRIES: Final = -1
+ASYNC_REQUEST_DEFAULT_NUM_RETRIES: Final = 0
 
 class AsyncRequest(DirectObject):
     notify: ClassVar[Notifier]

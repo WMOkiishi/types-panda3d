@@ -1,12 +1,12 @@
 from abc import ABCMeta, abstractmethod
 from typing import ClassVar
-from typing_extensions import Final, Literal
+from typing_extensions import Final
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 
 class InputStateToken(metaclass=ABCMeta):
-    Inval: Final[Literal['invalidatedToken']]
+    Inval: Final = 'invalidatedToken'
     def __init__(self, inputState: InputState) -> None: ...
     @abstractmethod
     def release(self) -> None: ...
@@ -29,11 +29,11 @@ class InputStateTokenGroup:
 
 class InputState(DirectObject):
     notify: ClassVar[Notifier]
-    WASD: Final[Literal['WASD']]
-    QE: Final[Literal['QE']]
-    ArrowKeys: Final[Literal['ArrowKeys']]
-    Keyboard: Final[Literal['Keyboard']]
-    Mouse: Final[Literal['Mouse']]
+    WASD: Final = 'WASD'
+    QE: Final = 'QE'
+    ArrowKeys: Final = 'ArrowKeys'
+    Keyboard: Final = 'Keyboard'
+    Mouse: Final = 'Mouse'
     def __init__(self) -> None: ...
     def delete(self) -> None: ...
     def is_set(self, name: str, inputSource: str | None = ...) -> bool: ...

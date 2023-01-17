@@ -11,10 +11,10 @@ from .DirectDeviceManager import DirectTracker
 
 _TaskCont: TypeAlias = Literal[1]
 
-NULL_AXIS: Final[Literal[-1]]
-FAST_X: Final[Literal[0]]
-FAST_Y: Final[Literal[1]]
-FAST_Z: Final[Literal[2]]
+NULL_AXIS: Final = -1
+FAST_X: Final = 0
+FAST_Y: Final = 1
+FAST_Z: Final = 2
 
 class DirectFastrak(DirectObject):
     fastrakCount: ClassVar[int]

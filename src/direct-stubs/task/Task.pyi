@@ -24,17 +24,17 @@ from panda3d.core import (
 
 def print_exc_plus() -> None: ...
 
-done: Final[Literal[0]]
-cont: Final[Literal[1]]
-again: Final[Literal[2]]
-pickup: Final[Literal[3]]
-exit: Final[Literal[4]]
+done: Final = 0
+cont: Final = 1
+again: Final = 2
+pickup: Final = 3
+exit: Final = 4
 
 class Task(PythonTask):  # type: ignore[misc]
-    cont: Final[Literal[1]]
-    again: Final[Literal[2]]
-    pickup: Final[Literal[3]]
-    exit: Final[Literal[4]]
+    cont: Final = 1
+    again: Final = 2
+    pickup: Final = 3
+    exit: Final = 4
     pause: type[AsyncTaskPause]
     @staticmethod
     def sequence(*taskList: AsyncTask) -> AsyncTaskSequence: ...

@@ -11,10 +11,10 @@ from .State import State
 
 class ClassicFSM(DirectObject):
     notify: ClassVar[Notifier]
-    ALLOW: Final[Literal[0]]
-    DISALLOW: Final[Literal[1]]
-    DISALLOW_VERBOSE: Final[Literal[2]]
-    ERROR: Final[Literal[3]]
+    ALLOW: Final = 0
+    DISALLOW: Final = 1
+    DISALLOW_VERBOSE: Final = 2
+    ERROR: Final = 3
     onUndefTransition: Literal[0, 1, 2, 3]
     inspecting: bool
     def __init__(

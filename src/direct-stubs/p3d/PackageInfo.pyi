@@ -29,10 +29,10 @@ class PackageInfo:
     uncompressFactor: float
     unpackFactor: float
     patchFactor: float
-    stepComplete: Final[Literal[1]]
-    stepFailed: Final[Literal[2]]
-    restartDownload: Final[Literal[3]]
-    stepContinue: Final[Literal[4]]
+    stepComplete: Final = 1
+    stepFailed: Final = 2
+    restartDownload: Final = 3
+    stepContinue: Final = 4
     UsageBasename: ClassVar[str]
     host: HostInfo
     packageName: str

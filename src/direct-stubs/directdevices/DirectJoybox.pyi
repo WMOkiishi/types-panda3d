@@ -11,25 +11,25 @@ from .DirectDeviceManager import DirectAnalogs, DirectButtons
 
 _TaskCont: TypeAlias = Literal[1]
 
-L_STICK: Final[Literal[0]]
-L_UPPER: Final[Literal[1]]
-L_LOWER: Final[Literal[2]]
-R_STICK: Final[Literal[3]]
-R_UPPER: Final[Literal[4]]
-R_LOWER: Final[Literal[5]]
-NULL_AXIS: Final[Literal[-1]]
-L_LEFT_RIGHT: Final[Literal[0]]
-L_FWD_BACK: Final[Literal[1]]
-L_TWIST: Final[Literal[2]]
-L_SLIDE: Final[Literal[3]]
-R_LEFT_RIGHT: Final[Literal[4]]
-R_FWD_BACK: Final[Literal[5]]
-R_TWIST: Final[Literal[6]]
-R_SLIDE: Final[Literal[7]]
+L_STICK: Final = 0
+L_UPPER: Final = 1
+L_LOWER: Final = 2
+R_STICK: Final = 3
+R_UPPER: Final = 4
+R_LOWER: Final = 5
+NULL_AXIS: Final = -1
+L_LEFT_RIGHT: Final = 0
+L_FWD_BACK: Final = 1
+L_TWIST: Final = 2
+L_SLIDE: Final = 3
+R_LEFT_RIGHT: Final = 4
+R_FWD_BACK: Final = 5
+R_TWIST: Final = 6
+R_SLIDE: Final = 7
 JOYBOX_MIN: Final[float]
 JOYBOX_MAX: Final[float]
 JOYBOX_RANGE: Final[float]
-JOYBOX_TREAD_SEPERATION: Final[float]
+JOYBOX_TREAD_SEPERATION: Final = 1.0
 
 class DirectJoybox(DirectObject):
     joyboxCount: ClassVar[int]

@@ -19,19 +19,19 @@ panel: Any | None
 
 INITOPT: Final[list[Literal['initopt']]]
 
-LMB: Final[Literal[0]]
-MMB: Final[Literal[1]]
-RMB: Final[Literal[2]]
+LMB: Final = 0
+MMB: Final = 1
+RMB: Final = 2
 
-NORMAL: Final[Literal['normal']]
-DISABLED: Final[Literal['disabled']]
+NORMAL: Final = 'normal'
+DISABLED: Final = 'disabled'
 
-FLAT: Final[Literal[1]]
-RAISED: Final[Literal[2]]
-SUNKEN: Final[Literal[3]]
-GROOVE: Final[Literal[4]]
-RIDGE: Final[Literal[5]]
-TEXTUREBORDER: Final[Literal[6]]
+FLAT: Final = 1
+RAISED: Final = 2
+SUNKEN: Final = 3
+GROOVE: Final = 4
+RIDGE: Final = 5
+TEXTUREBORDER: Final = 6
 
 class _FrameStyleDict(TypedDict):
     flat: Literal[1]
@@ -43,18 +43,18 @@ class _FrameStyleDict(TypedDict):
 
 FrameStyleDict: Final[_FrameStyleDict]
 
-HORIZONTAL: Final[Literal['horizontal']]
-VERTICAL: Final[Literal['vertical']]
-VERTICAL_INVERTED: Final[Literal['vertical_inverted']]
+HORIZONTAL: Final = 'horizontal'
+VERTICAL: Final = 'vertical'
+VERTICAL_INVERTED: Final = 'vertical_inverted'
 
-DIALOG_NO: Final[Literal[0]]
-DIALOG_OK: Final[Literal[1]]
-DIALOG_YES: Final[Literal[1]]
-DIALOG_RETRY: Final[Literal[1]]
-DIALOG_CANCEL: Final[Literal[-1]]
+DIALOG_NO: Final = 0
+DIALOG_OK: Final = 1
+DIALOG_YES: Final = 1
+DIALOG_RETRY: Final = 1
+DIALOG_CANCEL: Final = -1
 
-DESTROY: Final[Literal['destroy-']]
-PRINT: Final[Literal['print-']]
+DESTROY: Final = 'destroy-'
+PRINT: Final = 'print-'
 ENTER: Final[str]
 EXIT: Final[str]
 WITHIN: Final[str]
@@ -76,19 +76,19 @@ ERASE: Final[str]
 CURSORMOVE: Final[str]
 ADJUST: Final[str]
 
-IMAGE_SORT_INDEX: Final[Literal[10]]
-GEOM_SORT_INDEX: Final[Literal[20]]
-TEXT_SORT_INDEX: Final[Literal[30]]
-FADE_SORT_INDEX: Final[Literal[1000]]
-NO_FADE_SORT_INDEX: Final[Literal[2000]]
-BACKGROUND_SORT_INDEX: Final[Literal[-100]]
-MIDGROUND_SORT_INDEX: Final[Literal[0]]
-FOREGROUND_SORT_INDEX: Final[Literal[100]]
+IMAGE_SORT_INDEX: Final = 10
+GEOM_SORT_INDEX: Final = 20
+TEXT_SORT_INDEX: Final = 30
+FADE_SORT_INDEX: Final = 1000
+NO_FADE_SORT_INDEX: Final = 2000
+BACKGROUND_SORT_INDEX: Final = -100
+MIDGROUND_SORT_INDEX: Final = 0
+FOREGROUND_SORT_INDEX: Final = 100
 
-BUTTON_READY_STATE: Final[Literal[0]]
-BUTTON_DEPRESSED_STATE: Final[Literal[1]]
-BUTTON_ROLLOVER_STATE: Final[Literal[2]]
-BUTTON_INACTIVE_STATE: Final[Literal[3]]
+BUTTON_READY_STATE: Final = 0
+BUTTON_DEPRESSED_STATE: Final = 1
+BUTTON_ROLLOVER_STATE: Final = 2
+BUTTON_INACTIVE_STATE: Final = 3
 
 def get_default_rollover_sound() -> Any | None: ...
 def set_default_rollover_sound(newSound: Any) -> None: ...

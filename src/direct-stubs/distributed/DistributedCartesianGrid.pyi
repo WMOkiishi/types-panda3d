@@ -12,7 +12,7 @@ from .GridParent import GridParent
 class _HasGridParent(Protocol):
     gridParent: GridParent | None
 
-GRID_Z_OFFSET: Final[float]
+GRID_Z_OFFSET: Final = 0.0
 
 class DistributedCartesianGrid(DistributedNode, CartesianGridBase):
     VisualizeGrid: ClassVar[ConfigVariableBool]

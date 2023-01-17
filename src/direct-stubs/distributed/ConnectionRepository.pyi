@@ -16,9 +16,9 @@ from .DoInterestManager import DoInterestManager
 class ConnectionRepository(DoInterestManager, DoCollectionManager, CConnectionRepository):
     taskPriority: ClassVar[int]
     taskChain: ClassVar[str | None]
-    CM_HTTP: Final[Literal[0]]
-    CM_NET: Final[Literal[1]]
-    CM_NATIVE: Final[Literal[2]]
+    CM_HTTP: Final = 0
+    CM_NET: Final = 1
+    CM_NATIVE: Final = 2
     gcNotify: ClassVar[Notifier]
     GarbageCollectTaskName: ClassVar[str]
     GarbageThresholdTaskName: ClassVar[str]

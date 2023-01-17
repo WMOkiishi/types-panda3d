@@ -8,9 +8,9 @@ from direct._typing import Obj, Unused
 
 from .LevelEditor import LevelEditor
 
-CLOSE_STDIN: Final[str]
-FROM_MAYA_TO_EGG: Final[Literal[0]]
-FROM_BAM_TO_MAYA: Final[Literal[1]]
+CLOSE_STDIN: Final = '<CLOSE STDIN>'
+FROM_MAYA_TO_EGG: Final = 0
+FROM_BAM_TO_MAYA: Final = 1
 
 class StartupError(Exception): ...
 

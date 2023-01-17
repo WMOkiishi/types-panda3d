@@ -14,9 +14,9 @@ from .Interval import Interval
 _Interval: TypeAlias = Interval | CInterval
 _RelativeStart: TypeAlias = Literal[0, 1, 2]
 
-PREVIOUS_END: Final[Literal[0]]
-PREVIOUS_START: Final[Literal[1]]
-TRACK_START: Final[Literal[2]]
+PREVIOUS_END: Final = 0
+PREVIOUS_START: Final = 1
+TRACK_START: Final = 2
 
 class MetaInterval(CMetaInterval):
     notify: ClassVar[Notifier]

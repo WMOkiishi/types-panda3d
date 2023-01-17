@@ -1,5 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing_extensions import Final, Literal
+from typing_extensions import Final
 
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3Like, Vec4Like
@@ -21,8 +21,8 @@ from panda3d.core import (
 
 from .DirectGeometry import LineNodePath
 
-COA_ORIGIN: Final[Literal[0]]
-COA_CENTER: Final[Literal[1]]
+COA_ORIGIN: Final = 0
+COA_CENTER: Final = 1
 
 class DirectNodePath(NodePath):
     bbox: DirectBoundingBox

@@ -9,8 +9,8 @@ from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
 from panda3d.core import AsyncTask, CollisionEntry, LPoint3f, LVector3f, NodePath, PandaNode
 
-CAM_MOVE_DURATION: Final[float]
-COA_MARKER_SF: Final[float]
+CAM_MOVE_DURATION: Final = 1.2
+COA_MARKER_SF: Final = 0.0075
 Y_AXIS: Final[LVector3f]
 
 _TaskCont: TypeAlias = Literal[1]

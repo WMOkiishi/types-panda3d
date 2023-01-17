@@ -6,15 +6,15 @@ from panda3d.core import NodePath
 
 _BounceType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-SX_BOUNCE: Final[Literal[0]]
-SY_BOUNCE: Final[Literal[1]]
-SZ_BOUNCE: Final[Literal[2]]
-TX_BOUNCE: Final[Literal[3]]
-TY_BOUNCE: Final[Literal[4]]
-TZ_BOUNCE: Final[Literal[5]]
-H_BOUNCE: Final[Literal[6]]
-P_BOUNCE: Final[Literal[7]]
-R_BOUNCE: Final[Literal[8]]
+SX_BOUNCE: Final = 0
+SY_BOUNCE: Final = 1
+SZ_BOUNCE: Final = 2
+TX_BOUNCE: Final = 3
+TY_BOUNCE: Final = 4
+TZ_BOUNCE: Final = 5
+H_BOUNCE: Final = 6
+P_BOUNCE: Final = 7
+R_BOUNCE: Final = 8
 
 def createScaleXBounce(
     nodeObj: NodePath, numBounces: int, startValues: Sequence[float], totalTime: float, amplitude: float

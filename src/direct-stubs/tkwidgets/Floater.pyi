@@ -7,8 +7,8 @@ import Pmw  # type: ignore[import]
 
 from .Valuator import Valuator
 
-FLOATER_WIDTH: Final[Literal[22]]
-FLOATER_HEIGHT: Final[Literal[18]]
+FLOATER_WIDTH: Final = 22
+FLOATER_HEIGHT: Final = 18
 
 class Floater(Valuator): ...
 

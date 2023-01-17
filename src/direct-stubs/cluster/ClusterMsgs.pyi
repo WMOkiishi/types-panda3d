@@ -10,18 +10,18 @@ _NamedMovement: TypeAlias = tuple[
     str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
 ]
 
-CLUSTER_NONE: Final[Literal[0]]
-CLUSTER_CAM_OFFSET: Final[Literal[1]]
-CLUSTER_CAM_FRUSTUM: Final[Literal[2]]
-CLUSTER_CAM_MOVEMENT: Final[Literal[3]]
-CLUSTER_SWAP_READY: Final[Literal[4]]
-CLUSTER_SWAP_NOW: Final[Literal[5]]
-CLUSTER_COMMAND_STRING: Final[Literal[6]]
-CLUSTER_SELECTED_MOVEMENT: Final[Literal[7]]
-CLUSTER_TIME_DATA: Final[Literal[8]]
-CLUSTER_NAMED_OBJECT_MOVEMENT: Final[Literal[9]]
-CLUSTER_NAMED_MOVEMENT_DONE: Final[Literal[10]]
-CLUSTER_EXIT: Final[Literal[100]]
+CLUSTER_NONE: Final = 0
+CLUSTER_CAM_OFFSET: Final = 1
+CLUSTER_CAM_FRUSTUM: Final = 2
+CLUSTER_CAM_MOVEMENT: Final = 3
+CLUSTER_SWAP_READY: Final = 4
+CLUSTER_SWAP_NOW: Final = 5
+CLUSTER_COMMAND_STRING: Final = 6
+CLUSTER_SELECTED_MOVEMENT: Final = 7
+CLUSTER_TIME_DATA: Final = 8
+CLUSTER_NAMED_OBJECT_MOVEMENT: Final = 9
+CLUSTER_NAMED_MOVEMENT_DONE: Final = 10
+CLUSTER_EXIT: Final = 100
 CLUSTER_DAEMON_PORT: int
 CLUSTER_SERVER_PORT: int
 SERVER_STARTUP_STRING: str

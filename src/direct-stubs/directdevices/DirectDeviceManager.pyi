@@ -5,10 +5,10 @@ from direct.showbase.DirectObject import DirectObject
 from panda3d.core import AnalogNode, ButtonNode, ClientBase, DialNode, NodePath, TrackerNode
 from panda3d.vrpn import VrpnClient
 
-ANALOG_MIN: Final[float]
-ANALOG_MAX: Final[float]
-ANALOG_DEADBAND: Final[float]
-ANALOG_CENTER: Final[float]
+ANALOG_MIN: Final = -0.95
+ANALOG_MAX: Final = 0.95
+ANALOG_DEADBAND: Final = 0.125
+ANALOG_CENTER: Final = 0.0
 
 class DirectDeviceManager(VrpnClient, DirectObject):
     server: str

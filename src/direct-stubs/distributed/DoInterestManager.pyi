@@ -1,7 +1,7 @@
 from _typeshed import Self
 from collections.abc import Callable
 from typing import ClassVar, Protocol
-from typing_extensions import Final, Literal
+from typing_extensions import Final
 
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.DistributedObject import DistributedObject
@@ -11,7 +11,7 @@ from panda3d.core import ConfigVariableBool, DatagramIterator
 class _HasNum(Protocol):
     num: int
 
-NO_CONTEXT: Final[Literal[0]]
+NO_CONTEXT: Final = 0
 
 class InterestState:
     StateActive: ClassVar[str]
