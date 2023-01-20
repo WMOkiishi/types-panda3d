@@ -371,8 +371,12 @@ def combine_types(types: Iterable[str]) -> str:
             combined.discard(a)
         elif b_subtypes_a:
             combined.discard(b)
+    aliases_to_add = set[str]()
+    types_to_remove = set[str]()
     for alias, alias_of in _type_alias_data:
         if combined >= alias_of:
-            combined -= alias_of
-            combined.add(alias)
+            aliases_to_add.add(alias)
+            types_to_remove |= alias_of
+    combined -= types_to_remove
+    combined |= aliases_to_add
     return ' | '.join(sorted(combined, key=lambda s: (s == 'None', s)))
