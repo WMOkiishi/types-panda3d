@@ -290,133 +290,133 @@ class GeomEnums:
     related classes.
     """
 
+    UH_client: Final = 0
+    UHClient: Final = 0
+    UH_stream: Final = 1
+    UHStream: Final = 1
+    UH_dynamic: Final = 2
+    UHDynamic: Final = 2
+    UH_static: Final = 3
+    UHStatic: Final = 3
+    UH_unspecified: Final = 4
+    UHUnspecified: Final = 4
+    GR_indexed_point: Final = 1
+    GRIndexedPoint: Final = 1
+    GR_indexed_other: Final = 65536
+    GRIndexedOther: Final = 65536
+    GR_indexed_bits: Final = 65537
+    GRIndexedBits: Final = 65537
+    GR_point: Final = 2
+    GRPoint: Final = 2
+    GR_point_uniform_size: Final = 4
+    GRPointUniformSize: Final = 4
+    GR_per_point_size: Final = 8
+    GRPerPointSize: Final = 8
+    GR_point_perspective: Final = 16
+    GRPointPerspective: Final = 16
+    GR_point_aspect_ratio: Final = 32
+    GRPointAspectRatio: Final = 32
+    GR_point_scale: Final = 64
+    GRPointScale: Final = 64
+    GR_point_rotate: Final = 128
+    GRPointRotate: Final = 128
+    GR_point_sprite: Final = 256
+    GRPointSprite: Final = 256
+    GR_point_sprite_tex_matrix: Final = 512
+    GRPointSpriteTexMatrix: Final = 512
+    GR_point_bits: Final = 1022
+    GRPointBits: Final = 1022
+    GR_triangle_strip: Final = 1024
+    GRTriangleStrip: Final = 1024
+    GR_triangle_fan: Final = 2048
+    GRTriangleFan: Final = 2048
+    GR_line_strip: Final = 4096
+    GRLineStrip: Final = 4096
+    GR_composite_bits: Final = 7168
+    GRCompositeBits: Final = 7168
+    GR_strip_cut_index: Final = 131072
+    GRStripCutIndex: Final = 131072
+    GR_flat_first_vertex: Final = 8192
+    GRFlatFirstVertex: Final = 8192
+    GR_flat_last_vertex: Final = 16384
+    GRFlatLastVertex: Final = 16384
+    GR_shade_model_bits: Final = 24576
+    GRShadeModelBits: Final = 24576
+    GR_render_mode_wireframe: Final = 262144
+    GRRenderModeWireframe: Final = 262144
+    GR_render_mode_point: Final = 524288
+    GRRenderModePoint: Final = 524288
+    GR_adjacency: Final = 1048576
+    GRAdjacency: Final = 1048576
+    SM_uniform: Final = 0
+    SMUniform: Final = 0
+    SM_smooth: Final = 1
+    SMSmooth: Final = 1
+    SM_flat_first_vertex: Final = 2
+    SMFlatFirstVertex: Final = 2
+    SM_flat_last_vertex: Final = 3
+    SMFlatLastVertex: Final = 3
+    PT_none: Final = 0
+    PTNone: Final = 0
+    PT_polygons: Final = 1
+    PTPolygons: Final = 1
+    PT_lines: Final = 2
+    PTLines: Final = 2
+    PT_points: Final = 3
+    PTPoints: Final = 3
+    PT_patches: Final = 4
+    PTPatches: Final = 4
+    NT_uint8: Final = 0
+    NTUint8: Final = 0
+    NT_uint16: Final = 1
+    NTUint16: Final = 1
+    NT_uint32: Final = 2
+    NTUint32: Final = 2
+    NT_packed_dcba: Final = 3
+    NTPackedDcba: Final = 3
+    NT_packed_dabc: Final = 4
+    NTPackedDabc: Final = 4
+    NT_float32: Final = 5
+    NTFloat32: Final = 5
+    NT_float64: Final = 6
+    NTFloat64: Final = 6
+    NT_stdfloat: Final = 7
+    NTStdfloat: Final = 7
+    NT_int8: Final = 8
+    NTInt8: Final = 8
+    NT_int16: Final = 9
+    NTInt16: Final = 9
+    NT_int32: Final = 10
+    NTInt32: Final = 10
+    NT_packed_ufloat: Final = 11
+    NTPackedUfloat: Final = 11
+    C_other: Final = 0
+    COther: Final = 0
+    C_point: Final = 1
+    CPoint: Final = 1
+    C_clip_point: Final = 2
+    CClipPoint: Final = 2
+    C_vector: Final = 3
+    CVector: Final = 3
+    C_texcoord: Final = 4
+    CTexcoord: Final = 4
+    C_color: Final = 5
+    CColor: Final = 5
+    C_index: Final = 6
+    CIndex: Final = 6
+    C_morph_delta: Final = 7
+    CMorphDelta: Final = 7
+    C_matrix: Final = 8
+    CMatrix: Final = 8
+    C_normal: Final = 9
+    CNormal: Final = 9
+    AT_none: Final = 0
+    ATNone: Final = 0
+    AT_panda: Final = 1
+    ATPanda: Final = 1
+    AT_hardware: Final = 2
+    ATHardware: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
-    UH_client: Final[Literal[0]]
-    UHClient: Final[Literal[0]]
-    UH_stream: Final[Literal[1]]
-    UHStream: Final[Literal[1]]
-    UH_dynamic: Final[Literal[2]]
-    UHDynamic: Final[Literal[2]]
-    UH_static: Final[Literal[3]]
-    UHStatic: Final[Literal[3]]
-    UH_unspecified: Final[Literal[4]]
-    UHUnspecified: Final[Literal[4]]
-    GR_indexed_point: Final[Literal[1]]
-    GRIndexedPoint: Final[Literal[1]]
-    GR_indexed_other: Final[Literal[65536]]
-    GRIndexedOther: Final[Literal[65536]]
-    GR_indexed_bits: Final[Literal[65537]]
-    GRIndexedBits: Final[Literal[65537]]
-    GR_point: Final[Literal[2]]
-    GRPoint: Final[Literal[2]]
-    GR_point_uniform_size: Final[Literal[4]]
-    GRPointUniformSize: Final[Literal[4]]
-    GR_per_point_size: Final[Literal[8]]
-    GRPerPointSize: Final[Literal[8]]
-    GR_point_perspective: Final[Literal[16]]
-    GRPointPerspective: Final[Literal[16]]
-    GR_point_aspect_ratio: Final[Literal[32]]
-    GRPointAspectRatio: Final[Literal[32]]
-    GR_point_scale: Final[Literal[64]]
-    GRPointScale: Final[Literal[64]]
-    GR_point_rotate: Final[Literal[128]]
-    GRPointRotate: Final[Literal[128]]
-    GR_point_sprite: Final[Literal[256]]
-    GRPointSprite: Final[Literal[256]]
-    GR_point_sprite_tex_matrix: Final[Literal[512]]
-    GRPointSpriteTexMatrix: Final[Literal[512]]
-    GR_point_bits: Final[Literal[1022]]
-    GRPointBits: Final[Literal[1022]]
-    GR_triangle_strip: Final[Literal[1024]]
-    GRTriangleStrip: Final[Literal[1024]]
-    GR_triangle_fan: Final[Literal[2048]]
-    GRTriangleFan: Final[Literal[2048]]
-    GR_line_strip: Final[Literal[4096]]
-    GRLineStrip: Final[Literal[4096]]
-    GR_composite_bits: Final[Literal[7168]]
-    GRCompositeBits: Final[Literal[7168]]
-    GR_strip_cut_index: Final[Literal[131072]]
-    GRStripCutIndex: Final[Literal[131072]]
-    GR_flat_first_vertex: Final[Literal[8192]]
-    GRFlatFirstVertex: Final[Literal[8192]]
-    GR_flat_last_vertex: Final[Literal[16384]]
-    GRFlatLastVertex: Final[Literal[16384]]
-    GR_shade_model_bits: Final[Literal[24576]]
-    GRShadeModelBits: Final[Literal[24576]]
-    GR_render_mode_wireframe: Final[Literal[262144]]
-    GRRenderModeWireframe: Final[Literal[262144]]
-    GR_render_mode_point: Final[Literal[524288]]
-    GRRenderModePoint: Final[Literal[524288]]
-    GR_adjacency: Final[Literal[1048576]]
-    GRAdjacency: Final[Literal[1048576]]
-    SM_uniform: Final[Literal[0]]
-    SMUniform: Final[Literal[0]]
-    SM_smooth: Final[Literal[1]]
-    SMSmooth: Final[Literal[1]]
-    SM_flat_first_vertex: Final[Literal[2]]
-    SMFlatFirstVertex: Final[Literal[2]]
-    SM_flat_last_vertex: Final[Literal[3]]
-    SMFlatLastVertex: Final[Literal[3]]
-    PT_none: Final[Literal[0]]
-    PTNone: Final[Literal[0]]
-    PT_polygons: Final[Literal[1]]
-    PTPolygons: Final[Literal[1]]
-    PT_lines: Final[Literal[2]]
-    PTLines: Final[Literal[2]]
-    PT_points: Final[Literal[3]]
-    PTPoints: Final[Literal[3]]
-    PT_patches: Final[Literal[4]]
-    PTPatches: Final[Literal[4]]
-    NT_uint8: Final[Literal[0]]
-    NTUint8: Final[Literal[0]]
-    NT_uint16: Final[Literal[1]]
-    NTUint16: Final[Literal[1]]
-    NT_uint32: Final[Literal[2]]
-    NTUint32: Final[Literal[2]]
-    NT_packed_dcba: Final[Literal[3]]
-    NTPackedDcba: Final[Literal[3]]
-    NT_packed_dabc: Final[Literal[4]]
-    NTPackedDabc: Final[Literal[4]]
-    NT_float32: Final[Literal[5]]
-    NTFloat32: Final[Literal[5]]
-    NT_float64: Final[Literal[6]]
-    NTFloat64: Final[Literal[6]]
-    NT_stdfloat: Final[Literal[7]]
-    NTStdfloat: Final[Literal[7]]
-    NT_int8: Final[Literal[8]]
-    NTInt8: Final[Literal[8]]
-    NT_int16: Final[Literal[9]]
-    NTInt16: Final[Literal[9]]
-    NT_int32: Final[Literal[10]]
-    NTInt32: Final[Literal[10]]
-    NT_packed_ufloat: Final[Literal[11]]
-    NTPackedUfloat: Final[Literal[11]]
-    C_other: Final[Literal[0]]
-    COther: Final[Literal[0]]
-    C_point: Final[Literal[1]]
-    CPoint: Final[Literal[1]]
-    C_clip_point: Final[Literal[2]]
-    CClipPoint: Final[Literal[2]]
-    C_vector: Final[Literal[3]]
-    CVector: Final[Literal[3]]
-    C_texcoord: Final[Literal[4]]
-    CTexcoord: Final[Literal[4]]
-    C_color: Final[Literal[5]]
-    CColor: Final[Literal[5]]
-    C_index: Final[Literal[6]]
-    CIndex: Final[Literal[6]]
-    C_morph_delta: Final[Literal[7]]
-    CMorphDelta: Final[Literal[7]]
-    C_matrix: Final[Literal[8]]
-    CMatrix: Final[Literal[8]]
-    C_normal: Final[Literal[9]]
-    CNormal: Final[Literal[9]]
-    AT_none: Final[Literal[0]]
-    ATNone: Final[Literal[0]]
-    AT_panda: Final[Literal[1]]
-    ATPanda: Final[Literal[1]]
-    AT_hardware: Final[Literal[2]]
-    ATHardware: Final[Literal[2]]
     def __init__(self, __param0: GeomEnums = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -1745,14 +1745,14 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
     cache file, if necessary.
     """
 
-    RC_resident: Final[Literal[0]]
-    RCResident: Final[Literal[0]]
-    RC_compressed: Final[Literal[1]]
-    RCCompressed: Final[Literal[1]]
-    RC_disk: Final[Literal[2]]
-    RCDisk: Final[Literal[2]]
-    RC_end_of_list: Final[Literal[3]]
-    RCEndOfList: Final[Literal[3]]
+    RC_resident: Final = 0
+    RCResident: Final = 0
+    RC_compressed: Final = 1
+    RCCompressed: Final = 1
+    RC_disk: Final = 2
+    RCDisk: Final = 2
+    RC_end_of_list: Final = 3
+    RCEndOfList: Final = 3
     @property
     def save_file(self) -> VertexDataSaveFile: ...
     def upcast_to_SimpleAllocator(self) -> SimpleAllocator: ...
@@ -3899,6 +3899,82 @@ class TextureStage(TypedWritableReferenceCount):
     calls to activate them.
     """
 
+    M_modulate: Final = 0
+    MModulate: Final = 0
+    M_decal: Final = 1
+    MDecal: Final = 1
+    M_blend: Final = 2
+    MBlend: Final = 2
+    M_replace: Final = 3
+    MReplace: Final = 3
+    M_add: Final = 4
+    MAdd: Final = 4
+    M_combine: Final = 5
+    MCombine: Final = 5
+    M_blend_color_scale: Final = 6
+    MBlendColorScale: Final = 6
+    M_modulate_glow: Final = 7
+    MModulateGlow: Final = 7
+    M_modulate_gloss: Final = 8
+    MModulateGloss: Final = 8
+    M_normal: Final = 9
+    MNormal: Final = 9
+    M_normal_height: Final = 10
+    MNormalHeight: Final = 10
+    M_glow: Final = 11
+    MGlow: Final = 11
+    M_gloss: Final = 12
+    MGloss: Final = 12
+    M_height: Final = 13
+    MHeight: Final = 13
+    M_selector: Final = 14
+    MSelector: Final = 14
+    M_normal_gloss: Final = 15
+    MNormalGloss: Final = 15
+    M_emission: Final = 16
+    MEmission: Final = 16
+    CM_undefined: Final = 0
+    CMUndefined: Final = 0
+    CM_replace: Final = 1
+    CMReplace: Final = 1
+    CM_modulate: Final = 2
+    CMModulate: Final = 2
+    CM_add: Final = 3
+    CMAdd: Final = 3
+    CM_add_signed: Final = 4
+    CMAddSigned: Final = 4
+    CM_interpolate: Final = 5
+    CMInterpolate: Final = 5
+    CM_subtract: Final = 6
+    CMSubtract: Final = 6
+    CM_dot3_rgb: Final = 7
+    CMDot3Rgb: Final = 7
+    CM_dot3_rgba: Final = 8
+    CMDot3Rgba: Final = 8
+    CS_undefined: Final = 0
+    CSUndefined: Final = 0
+    CS_texture: Final = 1
+    CSTexture: Final = 1
+    CS_constant: Final = 2
+    CSConstant: Final = 2
+    CS_primary_color: Final = 3
+    CSPrimaryColor: Final = 3
+    CS_previous: Final = 4
+    CSPrevious: Final = 4
+    CS_constant_color_scale: Final = 5
+    CSConstantColorScale: Final = 5
+    CS_last_saved_result: Final = 6
+    CSLastSavedResult: Final = 6
+    CO_undefined: Final = 0
+    COUndefined: Final = 0
+    CO_src_color: Final = 1
+    COSrcColor: Final = 1
+    CO_one_minus_src_color: Final = 2
+    COOneMinusSrcColor: Final = 2
+    CO_src_alpha: Final = 3
+    COSrcAlpha: Final = 3
+    CO_one_minus_src_alpha: Final = 4
+    COOneMinusSrcAlpha: Final = 4
     name: str
     sort: int
     priority: int
@@ -3909,82 +3985,6 @@ class TextureStage(TypedWritableReferenceCount):
     alpha_scale: int
     saved_result: bool
     tex_view_offset: int
-    M_modulate: Final[Literal[0]]
-    MModulate: Final[Literal[0]]
-    M_decal: Final[Literal[1]]
-    MDecal: Final[Literal[1]]
-    M_blend: Final[Literal[2]]
-    MBlend: Final[Literal[2]]
-    M_replace: Final[Literal[3]]
-    MReplace: Final[Literal[3]]
-    M_add: Final[Literal[4]]
-    MAdd: Final[Literal[4]]
-    M_combine: Final[Literal[5]]
-    MCombine: Final[Literal[5]]
-    M_blend_color_scale: Final[Literal[6]]
-    MBlendColorScale: Final[Literal[6]]
-    M_modulate_glow: Final[Literal[7]]
-    MModulateGlow: Final[Literal[7]]
-    M_modulate_gloss: Final[Literal[8]]
-    MModulateGloss: Final[Literal[8]]
-    M_normal: Final[Literal[9]]
-    MNormal: Final[Literal[9]]
-    M_normal_height: Final[Literal[10]]
-    MNormalHeight: Final[Literal[10]]
-    M_glow: Final[Literal[11]]
-    MGlow: Final[Literal[11]]
-    M_gloss: Final[Literal[12]]
-    MGloss: Final[Literal[12]]
-    M_height: Final[Literal[13]]
-    MHeight: Final[Literal[13]]
-    M_selector: Final[Literal[14]]
-    MSelector: Final[Literal[14]]
-    M_normal_gloss: Final[Literal[15]]
-    MNormalGloss: Final[Literal[15]]
-    M_emission: Final[Literal[16]]
-    MEmission: Final[Literal[16]]
-    CM_undefined: Final[Literal[0]]
-    CMUndefined: Final[Literal[0]]
-    CM_replace: Final[Literal[1]]
-    CMReplace: Final[Literal[1]]
-    CM_modulate: Final[Literal[2]]
-    CMModulate: Final[Literal[2]]
-    CM_add: Final[Literal[3]]
-    CMAdd: Final[Literal[3]]
-    CM_add_signed: Final[Literal[4]]
-    CMAddSigned: Final[Literal[4]]
-    CM_interpolate: Final[Literal[5]]
-    CMInterpolate: Final[Literal[5]]
-    CM_subtract: Final[Literal[6]]
-    CMSubtract: Final[Literal[6]]
-    CM_dot3_rgb: Final[Literal[7]]
-    CMDot3Rgb: Final[Literal[7]]
-    CM_dot3_rgba: Final[Literal[8]]
-    CMDot3Rgba: Final[Literal[8]]
-    CS_undefined: Final[Literal[0]]
-    CSUndefined: Final[Literal[0]]
-    CS_texture: Final[Literal[1]]
-    CSTexture: Final[Literal[1]]
-    CS_constant: Final[Literal[2]]
-    CSConstant: Final[Literal[2]]
-    CS_primary_color: Final[Literal[3]]
-    CSPrimaryColor: Final[Literal[3]]
-    CS_previous: Final[Literal[4]]
-    CSPrevious: Final[Literal[4]]
-    CS_constant_color_scale: Final[Literal[5]]
-    CSConstantColorScale: Final[Literal[5]]
-    CS_last_saved_result: Final[Literal[6]]
-    CSLastSavedResult: Final[Literal[6]]
-    CO_undefined: Final[Literal[0]]
-    COUndefined: Final[Literal[0]]
-    CO_src_color: Final[Literal[1]]
-    COSrcColor: Final[Literal[1]]
-    CO_one_minus_src_color: Final[Literal[2]]
-    COOneMinusSrcColor: Final[Literal[2]]
-    CO_src_alpha: Final[Literal[3]]
-    COSrcAlpha: Final[Literal[3]]
-    CO_one_minus_src_alpha: Final[Literal[4]]
-    COOneMinusSrcAlpha: Final[Literal[4]]
     @property
     def tangent_name(self) -> InternalName: ...
     @property
@@ -5926,6 +5926,36 @@ class SamplerState:
     different places.
     """
 
+    FT_nearest: Final = 0
+    FTNearest: Final = 0
+    FT_linear: Final = 1
+    FTLinear: Final = 1
+    FT_nearest_mipmap_nearest: Final = 2
+    FTNearestMipmapNearest: Final = 2
+    FT_linear_mipmap_nearest: Final = 3
+    FTLinearMipmapNearest: Final = 3
+    FT_nearest_mipmap_linear: Final = 4
+    FTNearestMipmapLinear: Final = 4
+    FT_linear_mipmap_linear: Final = 5
+    FTLinearMipmapLinear: Final = 5
+    FT_shadow: Final = 6
+    FTShadow: Final = 6
+    FT_default: Final = 7
+    FTDefault: Final = 7
+    FT_invalid: Final = 8
+    FTInvalid: Final = 8
+    WM_clamp: Final = 0
+    WMClamp: Final = 0
+    WM_repeat: Final = 1
+    WMRepeat: Final = 1
+    WM_mirror: Final = 2
+    WMMirror: Final = 2
+    WM_mirror_once: Final = 3
+    WMMirrorOnce: Final = 3
+    WM_border_color: Final = 4
+    WMBorderColor: Final = 4
+    WM_invalid: Final = 5
+    WMInvalid: Final = 5
     DtoolClassDict: ClassVar[dict[str, Any]]
     wrap_u: _SamplerState_WrapMode
     wrap_v: _SamplerState_WrapMode
@@ -5937,36 +5967,6 @@ class SamplerState:
     min_lod: float
     max_lod: float
     lod_bias: float
-    FT_nearest: Final[Literal[0]]
-    FTNearest: Final[Literal[0]]
-    FT_linear: Final[Literal[1]]
-    FTLinear: Final[Literal[1]]
-    FT_nearest_mipmap_nearest: Final[Literal[2]]
-    FTNearestMipmapNearest: Final[Literal[2]]
-    FT_linear_mipmap_nearest: Final[Literal[3]]
-    FTLinearMipmapNearest: Final[Literal[3]]
-    FT_nearest_mipmap_linear: Final[Literal[4]]
-    FTNearestMipmapLinear: Final[Literal[4]]
-    FT_linear_mipmap_linear: Final[Literal[5]]
-    FTLinearMipmapLinear: Final[Literal[5]]
-    FT_shadow: Final[Literal[6]]
-    FTShadow: Final[Literal[6]]
-    FT_default: Final[Literal[7]]
-    FTDefault: Final[Literal[7]]
-    FT_invalid: Final[Literal[8]]
-    FTInvalid: Final[Literal[8]]
-    WM_clamp: Final[Literal[0]]
-    WMClamp: Final[Literal[0]]
-    WM_repeat: Final[Literal[1]]
-    WMRepeat: Final[Literal[1]]
-    WM_mirror: Final[Literal[2]]
-    WMMirror: Final[Literal[2]]
-    WM_mirror_once: Final[Literal[3]]
-    WMMirrorOnce: Final[Literal[3]]
-    WM_border_color: Final[Literal[4]]
-    WMBorderColor: Final[Literal[4]]
-    WM_invalid: Final[Literal[5]]
-    WMInvalid: Final[Literal[5]]
     @property
     def effective_minfilter(self) -> _SamplerState_FilterType: ...
     @property
@@ -6175,6 +6175,212 @@ class Texture(TypedWritableReferenceCount, Namable):
     the system RAM image is automatically freed.
     """
 
+    TT_1d_texture: Final = 0
+    TT1dTexture: Final = 0
+    TT_2d_texture: Final = 1
+    TT2dTexture: Final = 1
+    TT_3d_texture: Final = 2
+    TT3dTexture: Final = 2
+    TT_2d_texture_array: Final = 3
+    TT2dTextureArray: Final = 3
+    TT_cube_map: Final = 4
+    TTCubeMap: Final = 4
+    TT_buffer_texture: Final = 5
+    TTBufferTexture: Final = 5
+    TT_cube_map_array: Final = 6
+    TTCubeMapArray: Final = 6
+    TT_1d_texture_array: Final = 7
+    TT1dTextureArray: Final = 7
+    T_unsigned_byte: Final = 0
+    TUnsignedByte: Final = 0
+    T_unsigned_short: Final = 1
+    TUnsignedShort: Final = 1
+    T_float: Final = 2
+    TFloat: Final = 2
+    T_unsigned_int_24_8: Final = 3
+    TUnsignedInt248: Final = 3
+    T_int: Final = 4
+    TInt: Final = 4
+    T_byte: Final = 5
+    TByte: Final = 5
+    T_short: Final = 6
+    TShort: Final = 6
+    T_half_float: Final = 7
+    THalfFloat: Final = 7
+    T_unsigned_int: Final = 8
+    TUnsignedInt: Final = 8
+    F_depth_stencil: Final = 1
+    FDepthStencil: Final = 1
+    F_color_index: Final = 2
+    FColorIndex: Final = 2
+    F_red: Final = 3
+    FRed: Final = 3
+    F_green: Final = 4
+    FGreen: Final = 4
+    F_blue: Final = 5
+    FBlue: Final = 5
+    F_alpha: Final = 6
+    FAlpha: Final = 6
+    F_rgb: Final = 7
+    FRgb: Final = 7
+    F_rgb5: Final = 8
+    FRgb5: Final = 8
+    F_rgb8: Final = 9
+    FRgb8: Final = 9
+    F_rgb12: Final = 10
+    FRgb12: Final = 10
+    F_rgb332: Final = 11
+    FRgb332: Final = 11
+    F_rgba: Final = 12
+    FRgba: Final = 12
+    F_rgbm: Final = 13
+    FRgbm: Final = 13
+    F_rgba4: Final = 14
+    FRgba4: Final = 14
+    F_rgba5: Final = 15
+    FRgba5: Final = 15
+    F_rgba8: Final = 16
+    FRgba8: Final = 16
+    F_rgba12: Final = 17
+    FRgba12: Final = 17
+    F_luminance: Final = 18
+    FLuminance: Final = 18
+    F_luminance_alpha: Final = 19
+    FLuminanceAlpha: Final = 19
+    F_luminance_alphamask: Final = 20
+    FLuminanceAlphamask: Final = 20
+    F_rgba16: Final = 21
+    FRgba16: Final = 21
+    F_rgba32: Final = 22
+    FRgba32: Final = 22
+    F_depth_component: Final = 23
+    FDepthComponent: Final = 23
+    F_depth_component16: Final = 24
+    FDepthComponent16: Final = 24
+    F_depth_component24: Final = 25
+    FDepthComponent24: Final = 25
+    F_depth_component32: Final = 26
+    FDepthComponent32: Final = 26
+    F_r16: Final = 27
+    FR16: Final = 27
+    F_rg16: Final = 28
+    FRg16: Final = 28
+    F_rgb16: Final = 29
+    FRgb16: Final = 29
+    F_srgb: Final = 30
+    FSrgb: Final = 30
+    F_srgb_alpha: Final = 31
+    FSrgbAlpha: Final = 31
+    F_sluminance: Final = 32
+    FSluminance: Final = 32
+    F_sluminance_alpha: Final = 33
+    FSluminanceAlpha: Final = 33
+    F_r32i: Final = 34
+    FR32i: Final = 34
+    F_r32: Final = 35
+    FR32: Final = 35
+    F_rg32: Final = 36
+    FRg32: Final = 36
+    F_rgb32: Final = 37
+    FRgb32: Final = 37
+    F_r8i: Final = 38
+    FR8i: Final = 38
+    F_rg8i: Final = 39
+    FRg8i: Final = 39
+    F_rgb8i: Final = 40
+    FRgb8i: Final = 40
+    F_rgba8i: Final = 41
+    FRgba8i: Final = 41
+    F_r11_g11_b10: Final = 42
+    FR11G11B10: Final = 42
+    F_rgb9_e5: Final = 43
+    FRgb9E5: Final = 43
+    F_rgb10_a2: Final = 44
+    FRgb10A2: Final = 44
+    F_rg: Final = 45
+    FRg: Final = 45
+    F_r16i: Final = 46
+    FR16i: Final = 46
+    F_rg16i: Final = 47
+    FRg16i: Final = 47
+    F_rgb16i: Final = 48
+    FRgb16i: Final = 48
+    F_rgba16i: Final = 49
+    FRgba16i: Final = 49
+    F_rg32i: Final = 50
+    FRg32i: Final = 50
+    F_rgb32i: Final = 51
+    FRgb32i: Final = 51
+    F_rgba32i: Final = 52
+    FRgba32i: Final = 52
+    FT_nearest: Final = 0
+    FTNearest: Final = 0
+    FT_linear: Final = 1
+    FTLinear: Final = 1
+    FT_nearest_mipmap_nearest: Final = 2
+    FTNearestMipmapNearest: Final = 2
+    FT_linear_mipmap_nearest: Final = 3
+    FTLinearMipmapNearest: Final = 3
+    FT_nearest_mipmap_linear: Final = 4
+    FTNearestMipmapLinear: Final = 4
+    FT_linear_mipmap_linear: Final = 5
+    FTLinearMipmapLinear: Final = 5
+    FT_shadow: Final = 6
+    FTShadow: Final = 6
+    FT_default: Final = 7
+    FTDefault: Final = 7
+    FT_invalid: Final = 8
+    FTInvalid: Final = 8
+    WM_clamp: Final = 0
+    WMClamp: Final = 0
+    WM_repeat: Final = 1
+    WMRepeat: Final = 1
+    WM_mirror: Final = 2
+    WMMirror: Final = 2
+    WM_mirror_once: Final = 3
+    WMMirrorOnce: Final = 3
+    WM_border_color: Final = 4
+    WMBorderColor: Final = 4
+    WM_invalid: Final = 5
+    WMInvalid: Final = 5
+    CM_default: Final = 0
+    CMDefault: Final = 0
+    CM_off: Final = 1
+    CMOff: Final = 1
+    CM_on: Final = 2
+    CMOn: Final = 2
+    CM_fxt1: Final = 3
+    CMFxt1: Final = 3
+    CM_dxt1: Final = 4
+    CMDxt1: Final = 4
+    CM_dxt2: Final = 5
+    CMDxt2: Final = 5
+    CM_dxt3: Final = 6
+    CMDxt3: Final = 6
+    CM_dxt4: Final = 7
+    CMDxt4: Final = 7
+    CM_dxt5: Final = 8
+    CMDxt5: Final = 8
+    CM_pvr1_2bpp: Final = 9
+    CMPvr12bpp: Final = 9
+    CM_pvr1_4bpp: Final = 10
+    CMPvr14bpp: Final = 10
+    CM_rgtc: Final = 11
+    CMRgtc: Final = 11
+    CM_etc1: Final = 12
+    CMEtc1: Final = 12
+    CM_etc2: Final = 13
+    CMEtc2: Final = 13
+    CM_eac: Final = 14
+    CMEac: Final = 14
+    QL_default: Final = 0
+    QLDefault: Final = 0
+    QL_fastest: Final = 1
+    QLFastest: Final = 1
+    QL_normal: Final = 2
+    QLNormal: Final = 2
+    QL_best: Final = 3
+    QLBest: Final = 3
     clear_color: LColor
     filename: Filename
     alpha_filename: Filename
@@ -6204,212 +6410,6 @@ class Texture(TypedWritableReferenceCount, Namable):
     loaded_from_txo: bool
     match_framebuffer_format: bool
     post_load_store_cache: bool
-    TT_1d_texture: Final[Literal[0]]
-    TT1dTexture: Final[Literal[0]]
-    TT_2d_texture: Final[Literal[1]]
-    TT2dTexture: Final[Literal[1]]
-    TT_3d_texture: Final[Literal[2]]
-    TT3dTexture: Final[Literal[2]]
-    TT_2d_texture_array: Final[Literal[3]]
-    TT2dTextureArray: Final[Literal[3]]
-    TT_cube_map: Final[Literal[4]]
-    TTCubeMap: Final[Literal[4]]
-    TT_buffer_texture: Final[Literal[5]]
-    TTBufferTexture: Final[Literal[5]]
-    TT_cube_map_array: Final[Literal[6]]
-    TTCubeMapArray: Final[Literal[6]]
-    TT_1d_texture_array: Final[Literal[7]]
-    TT1dTextureArray: Final[Literal[7]]
-    T_unsigned_byte: Final[Literal[0]]
-    TUnsignedByte: Final[Literal[0]]
-    T_unsigned_short: Final[Literal[1]]
-    TUnsignedShort: Final[Literal[1]]
-    T_float: Final[Literal[2]]
-    TFloat: Final[Literal[2]]
-    T_unsigned_int_24_8: Final[Literal[3]]
-    TUnsignedInt248: Final[Literal[3]]
-    T_int: Final[Literal[4]]
-    TInt: Final[Literal[4]]
-    T_byte: Final[Literal[5]]
-    TByte: Final[Literal[5]]
-    T_short: Final[Literal[6]]
-    TShort: Final[Literal[6]]
-    T_half_float: Final[Literal[7]]
-    THalfFloat: Final[Literal[7]]
-    T_unsigned_int: Final[Literal[8]]
-    TUnsignedInt: Final[Literal[8]]
-    F_depth_stencil: Final[Literal[1]]
-    FDepthStencil: Final[Literal[1]]
-    F_color_index: Final[Literal[2]]
-    FColorIndex: Final[Literal[2]]
-    F_red: Final[Literal[3]]
-    FRed: Final[Literal[3]]
-    F_green: Final[Literal[4]]
-    FGreen: Final[Literal[4]]
-    F_blue: Final[Literal[5]]
-    FBlue: Final[Literal[5]]
-    F_alpha: Final[Literal[6]]
-    FAlpha: Final[Literal[6]]
-    F_rgb: Final[Literal[7]]
-    FRgb: Final[Literal[7]]
-    F_rgb5: Final[Literal[8]]
-    FRgb5: Final[Literal[8]]
-    F_rgb8: Final[Literal[9]]
-    FRgb8: Final[Literal[9]]
-    F_rgb12: Final[Literal[10]]
-    FRgb12: Final[Literal[10]]
-    F_rgb332: Final[Literal[11]]
-    FRgb332: Final[Literal[11]]
-    F_rgba: Final[Literal[12]]
-    FRgba: Final[Literal[12]]
-    F_rgbm: Final[Literal[13]]
-    FRgbm: Final[Literal[13]]
-    F_rgba4: Final[Literal[14]]
-    FRgba4: Final[Literal[14]]
-    F_rgba5: Final[Literal[15]]
-    FRgba5: Final[Literal[15]]
-    F_rgba8: Final[Literal[16]]
-    FRgba8: Final[Literal[16]]
-    F_rgba12: Final[Literal[17]]
-    FRgba12: Final[Literal[17]]
-    F_luminance: Final[Literal[18]]
-    FLuminance: Final[Literal[18]]
-    F_luminance_alpha: Final[Literal[19]]
-    FLuminanceAlpha: Final[Literal[19]]
-    F_luminance_alphamask: Final[Literal[20]]
-    FLuminanceAlphamask: Final[Literal[20]]
-    F_rgba16: Final[Literal[21]]
-    FRgba16: Final[Literal[21]]
-    F_rgba32: Final[Literal[22]]
-    FRgba32: Final[Literal[22]]
-    F_depth_component: Final[Literal[23]]
-    FDepthComponent: Final[Literal[23]]
-    F_depth_component16: Final[Literal[24]]
-    FDepthComponent16: Final[Literal[24]]
-    F_depth_component24: Final[Literal[25]]
-    FDepthComponent24: Final[Literal[25]]
-    F_depth_component32: Final[Literal[26]]
-    FDepthComponent32: Final[Literal[26]]
-    F_r16: Final[Literal[27]]
-    FR16: Final[Literal[27]]
-    F_rg16: Final[Literal[28]]
-    FRg16: Final[Literal[28]]
-    F_rgb16: Final[Literal[29]]
-    FRgb16: Final[Literal[29]]
-    F_srgb: Final[Literal[30]]
-    FSrgb: Final[Literal[30]]
-    F_srgb_alpha: Final[Literal[31]]
-    FSrgbAlpha: Final[Literal[31]]
-    F_sluminance: Final[Literal[32]]
-    FSluminance: Final[Literal[32]]
-    F_sluminance_alpha: Final[Literal[33]]
-    FSluminanceAlpha: Final[Literal[33]]
-    F_r32i: Final[Literal[34]]
-    FR32i: Final[Literal[34]]
-    F_r32: Final[Literal[35]]
-    FR32: Final[Literal[35]]
-    F_rg32: Final[Literal[36]]
-    FRg32: Final[Literal[36]]
-    F_rgb32: Final[Literal[37]]
-    FRgb32: Final[Literal[37]]
-    F_r8i: Final[Literal[38]]
-    FR8i: Final[Literal[38]]
-    F_rg8i: Final[Literal[39]]
-    FRg8i: Final[Literal[39]]
-    F_rgb8i: Final[Literal[40]]
-    FRgb8i: Final[Literal[40]]
-    F_rgba8i: Final[Literal[41]]
-    FRgba8i: Final[Literal[41]]
-    F_r11_g11_b10: Final[Literal[42]]
-    FR11G11B10: Final[Literal[42]]
-    F_rgb9_e5: Final[Literal[43]]
-    FRgb9E5: Final[Literal[43]]
-    F_rgb10_a2: Final[Literal[44]]
-    FRgb10A2: Final[Literal[44]]
-    F_rg: Final[Literal[45]]
-    FRg: Final[Literal[45]]
-    F_r16i: Final[Literal[46]]
-    FR16i: Final[Literal[46]]
-    F_rg16i: Final[Literal[47]]
-    FRg16i: Final[Literal[47]]
-    F_rgb16i: Final[Literal[48]]
-    FRgb16i: Final[Literal[48]]
-    F_rgba16i: Final[Literal[49]]
-    FRgba16i: Final[Literal[49]]
-    F_rg32i: Final[Literal[50]]
-    FRg32i: Final[Literal[50]]
-    F_rgb32i: Final[Literal[51]]
-    FRgb32i: Final[Literal[51]]
-    F_rgba32i: Final[Literal[52]]
-    FRgba32i: Final[Literal[52]]
-    FT_nearest: Final[Literal[0]]
-    FTNearest: Final[Literal[0]]
-    FT_linear: Final[Literal[1]]
-    FTLinear: Final[Literal[1]]
-    FT_nearest_mipmap_nearest: Final[Literal[2]]
-    FTNearestMipmapNearest: Final[Literal[2]]
-    FT_linear_mipmap_nearest: Final[Literal[3]]
-    FTLinearMipmapNearest: Final[Literal[3]]
-    FT_nearest_mipmap_linear: Final[Literal[4]]
-    FTNearestMipmapLinear: Final[Literal[4]]
-    FT_linear_mipmap_linear: Final[Literal[5]]
-    FTLinearMipmapLinear: Final[Literal[5]]
-    FT_shadow: Final[Literal[6]]
-    FTShadow: Final[Literal[6]]
-    FT_default: Final[Literal[7]]
-    FTDefault: Final[Literal[7]]
-    FT_invalid: Final[Literal[8]]
-    FTInvalid: Final[Literal[8]]
-    WM_clamp: Final[Literal[0]]
-    WMClamp: Final[Literal[0]]
-    WM_repeat: Final[Literal[1]]
-    WMRepeat: Final[Literal[1]]
-    WM_mirror: Final[Literal[2]]
-    WMMirror: Final[Literal[2]]
-    WM_mirror_once: Final[Literal[3]]
-    WMMirrorOnce: Final[Literal[3]]
-    WM_border_color: Final[Literal[4]]
-    WMBorderColor: Final[Literal[4]]
-    WM_invalid: Final[Literal[5]]
-    WMInvalid: Final[Literal[5]]
-    CM_default: Final[Literal[0]]
-    CMDefault: Final[Literal[0]]
-    CM_off: Final[Literal[1]]
-    CMOff: Final[Literal[1]]
-    CM_on: Final[Literal[2]]
-    CMOn: Final[Literal[2]]
-    CM_fxt1: Final[Literal[3]]
-    CMFxt1: Final[Literal[3]]
-    CM_dxt1: Final[Literal[4]]
-    CMDxt1: Final[Literal[4]]
-    CM_dxt2: Final[Literal[5]]
-    CMDxt2: Final[Literal[5]]
-    CM_dxt3: Final[Literal[6]]
-    CMDxt3: Final[Literal[6]]
-    CM_dxt4: Final[Literal[7]]
-    CMDxt4: Final[Literal[7]]
-    CM_dxt5: Final[Literal[8]]
-    CMDxt5: Final[Literal[8]]
-    CM_pvr1_2bpp: Final[Literal[9]]
-    CMPvr12bpp: Final[Literal[9]]
-    CM_pvr1_4bpp: Final[Literal[10]]
-    CMPvr14bpp: Final[Literal[10]]
-    CM_rgtc: Final[Literal[11]]
-    CMRgtc: Final[Literal[11]]
-    CM_etc1: Final[Literal[12]]
-    CMEtc1: Final[Literal[12]]
-    CM_etc2: Final[Literal[13]]
-    CMEtc2: Final[Literal[13]]
-    CM_eac: Final[Literal[14]]
-    CMEac: Final[Literal[14]]
-    QL_default: Final[Literal[0]]
-    QLDefault: Final[Literal[0]]
-    QL_fastest: Final[Literal[1]]
-    QLFastest: Final[Literal[1]]
-    QL_normal: Final[Literal[2]]
-    QLNormal: Final[Literal[2]]
-    QL_best: Final[Literal[3]]
-    QLBest: Final[Literal[3]]
     @property
     def num_pages(self) -> int: ...
     @property
@@ -8123,52 +8123,52 @@ class Texture(TypedWritableReferenceCount, Namable):
     stringQualityLevel = string_quality_level
 
 class Shader(TypedWritableReferenceCount):
-    SL_none: Final[Literal[0]]
-    SLNone: Final[Literal[0]]
-    SL_Cg: Final[Literal[1]]
-    SLCg: Final[Literal[1]]
-    SL_GLSL: Final[Literal[2]]
-    SLGLSL: Final[Literal[2]]
-    SL_HLSL: Final[Literal[3]]
-    SLHLSL: Final[Literal[3]]
-    SL_SPIR_V: Final[Literal[4]]
-    SLSPIRV: Final[Literal[4]]
-    ST_none: Final[Literal[0]]
-    STNone: Final[Literal[0]]
-    ST_vertex: Final[Literal[1]]
-    STVertex: Final[Literal[1]]
-    ST_fragment: Final[Literal[2]]
-    STFragment: Final[Literal[2]]
-    ST_geometry: Final[Literal[3]]
-    STGeometry: Final[Literal[3]]
-    ST_tess_control: Final[Literal[4]]
-    STTessControl: Final[Literal[4]]
-    ST_tess_evaluation: Final[Literal[5]]
-    STTessEvaluation: Final[Literal[5]]
-    ST_compute: Final[Literal[6]]
-    STCompute: Final[Literal[6]]
-    ST_COUNT: Final[Literal[7]]
-    STCOUNT: Final[Literal[7]]
-    AS_normal: Final[Literal[1]]
-    ASNormal: Final[Literal[1]]
-    AS_glow: Final[Literal[2]]
-    ASGlow: Final[Literal[2]]
-    AS_gloss: Final[Literal[4]]
-    ASGloss: Final[Literal[4]]
-    AS_ramp: Final[Literal[8]]
-    ASRamp: Final[Literal[8]]
-    AS_shadow: Final[Literal[16]]
-    ASShadow: Final[Literal[16]]
-    bit_AutoShaderNormal: Final[Literal[0]]
-    BitAutoShaderNormal: Final[Literal[0]]
-    bit_AutoShaderGlow: Final[Literal[1]]
-    BitAutoShaderGlow: Final[Literal[1]]
-    bit_AutoShaderGloss: Final[Literal[2]]
-    BitAutoShaderGloss: Final[Literal[2]]
-    bit_AutoShaderRamp: Final[Literal[3]]
-    BitAutoShaderRamp: Final[Literal[3]]
-    bit_AutoShaderShadow: Final[Literal[4]]
-    BitAutoShaderShadow: Final[Literal[4]]
+    SL_none: Final = 0
+    SLNone: Final = 0
+    SL_Cg: Final = 1
+    SLCg: Final = 1
+    SL_GLSL: Final = 2
+    SLGLSL: Final = 2
+    SL_HLSL: Final = 3
+    SLHLSL: Final = 3
+    SL_SPIR_V: Final = 4
+    SLSPIRV: Final = 4
+    ST_none: Final = 0
+    STNone: Final = 0
+    ST_vertex: Final = 1
+    STVertex: Final = 1
+    ST_fragment: Final = 2
+    STFragment: Final = 2
+    ST_geometry: Final = 3
+    STGeometry: Final = 3
+    ST_tess_control: Final = 4
+    STTessControl: Final = 4
+    ST_tess_evaluation: Final = 5
+    STTessEvaluation: Final = 5
+    ST_compute: Final = 6
+    STCompute: Final = 6
+    ST_COUNT: Final = 7
+    STCOUNT: Final = 7
+    AS_normal: Final = 1
+    ASNormal: Final = 1
+    AS_glow: Final = 2
+    ASGlow: Final = 2
+    AS_gloss: Final = 4
+    ASGloss: Final = 4
+    AS_ramp: Final = 8
+    ASRamp: Final = 8
+    AS_shadow: Final = 16
+    ASShadow: Final = 16
+    bit_AutoShaderNormal: Final = 0
+    BitAutoShaderNormal: Final = 0
+    bit_AutoShaderGlow: Final = 1
+    BitAutoShaderGlow: Final = 1
+    bit_AutoShaderGloss: Final = 2
+    BitAutoShaderGloss: Final = 2
+    bit_AutoShaderRamp: Final = 3
+    BitAutoShaderRamp: Final = 3
+    bit_AutoShaderShadow: Final = 4
+    BitAutoShaderShadow: Final = 4
     def __init__(self, __param0: Shader) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -8892,6 +8892,26 @@ class Lens(TypedWritableReferenceCount):
     a lens.
     """
 
+    SC_mono: Final = 0
+    SCMono: Final = 0
+    SC_left: Final = 1
+    SCLeft: Final = 1
+    SC_right: Final = 2
+    SCRight: Final = 2
+    SC_stereo: Final = 3
+    SCStereo: Final = 3
+    FC_roll: Final = 1
+    FCRoll: Final = 1
+    FC_camera_plane: Final = 2
+    FCCameraPlane: Final = 2
+    FC_off_axis: Final = 4
+    FCOffAxis: Final = 4
+    FC_aspect_ratio: Final = 8
+    FCAspectRatio: Final = 8
+    FC_shear: Final = 16
+    FCShear: Final = 16
+    FC_keystone: Final = 32
+    FCKeystone: Final = 32
     change_event: str
     coordinate_system: _CoordinateSystem
     film_size: LVecBase2
@@ -8907,26 +8927,6 @@ class Lens(TypedWritableReferenceCount):
     convergence_distance: float
     view_mat: LMatrix4
     keystone: LVecBase2
-    SC_mono: Final[Literal[0]]
-    SCMono: Final[Literal[0]]
-    SC_left: Final[Literal[1]]
-    SCLeft: Final[Literal[1]]
-    SC_right: Final[Literal[2]]
-    SCRight: Final[Literal[2]]
-    SC_stereo: Final[Literal[3]]
-    SCStereo: Final[Literal[3]]
-    FC_roll: Final[Literal[1]]
-    FCRoll: Final[Literal[1]]
-    FC_camera_plane: Final[Literal[2]]
-    FCCameraPlane: Final[Literal[2]]
-    FC_off_axis: Final[Literal[4]]
-    FCOffAxis: Final[Literal[4]]
-    FC_aspect_ratio: Final[Literal[8]]
-    FCAspectRatio: Final[Literal[8]]
-    FC_shear: Final[Literal[16]]
-    FCShear: Final[Literal[16]]
-    FC_keystone: Final[Literal[32]]
-    FCKeystone: Final[Literal[32]]
     @property
     def nodal_point(self) -> LPoint3: ...
     def __copy__(self: Self) -> Self: ...
@@ -10530,14 +10530,14 @@ class TextureStagePool:
     method for more information.
     """
 
+    M_none: Final = 0
+    MNone: Final = 0
+    M_name: Final = 1
+    MName: Final = 1
+    M_unique: Final = 2
+    MUnique: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
     mode: _TextureStagePool_Mode
-    M_none: Final[Literal[0]]
-    MNone: Final[Literal[0]]
-    M_name: Final[Literal[1]]
-    MName: Final[Literal[1]]
-    M_unique: Final[Literal[2]]
-    MUnique: Final[Literal[2]]
     @staticmethod
     def get_stage(temp: TextureStage) -> TextureStage:
         """Returns a TextureStage pointer that represents the same TextureStage

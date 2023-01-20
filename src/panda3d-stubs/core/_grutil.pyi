@@ -241,14 +241,14 @@ class GeoMipTerrain(TypedObject):
     https://flipcode.com/articles/article_geomipmaps.pdf
     """
 
-    AFM_off: Final[Literal[0]]
-    AFMOff: Final[Literal[0]]
-    AFM_light: Final[Literal[1]]
-    AFMLight: Final[Literal[1]]
-    AFM_medium: Final[Literal[2]]
-    AFMMedium: Final[Literal[2]]
-    AFM_strong: Final[Literal[3]]
-    AFMStrong: Final[Literal[3]]
+    AFM_off: Final = 0
+    AFMOff: Final = 0
+    AFM_light: Final = 1
+    AFMLight: Final = 1
+    AFM_medium: Final = 2
+    AFMMedium: Final = 2
+    AFM_strong: Final = 3
+    AFMStrong: Final = 3
     def __init__(self, name: str) -> None: ...
     def heightfield(self) -> PNMImage:
         """Returns a reference to the heightfield (a PNMImage) contained inside
@@ -1372,33 +1372,33 @@ class PipeOcclusionCullTraverser(CullTraverser):
 class PfmVizzer:
     """This class aids in the visualization and manipulation of PfmFile objects."""
 
+    CT_texcoord2: Final = 0
+    CTTexcoord2: Final = 0
+    CT_texcoord3: Final = 1
+    CTTexcoord3: Final = 1
+    CT_vertex1: Final = 2
+    CTVertex1: Final = 2
+    CT_vertex2: Final = 3
+    CTVertex2: Final = 3
+    CT_vertex3: Final = 4
+    CTVertex3: Final = 4
+    CT_normal3: Final = 5
+    CTNormal3: Final = 5
+    CT_blend1: Final = 6
+    CTBlend1: Final = 6
+    CT_aux_vertex1: Final = 7
+    CTAuxVertex1: Final = 7
+    CT_aux_vertex2: Final = 8
+    CTAuxVertex2: Final = 8
+    CT_aux_vertex3: Final = 9
+    CTAuxVertex3: Final = 9
+    MF_front: Final = 1
+    MFFront: Final = 1
+    MF_back: Final = 2
+    MFBack: Final = 2
+    MF_both: Final = 3
+    MFBoth: Final = 3
     DtoolClassDict: ClassVar[dict[str, Any]]
-    CT_texcoord2: Final[Literal[0]]
-    CTTexcoord2: Final[Literal[0]]
-    CT_texcoord3: Final[Literal[1]]
-    CTTexcoord3: Final[Literal[1]]
-    CT_vertex1: Final[Literal[2]]
-    CTVertex1: Final[Literal[2]]
-    CT_vertex2: Final[Literal[3]]
-    CTVertex2: Final[Literal[3]]
-    CT_vertex3: Final[Literal[4]]
-    CTVertex3: Final[Literal[4]]
-    CT_normal3: Final[Literal[5]]
-    CTNormal3: Final[Literal[5]]
-    CT_blend1: Final[Literal[6]]
-    CTBlend1: Final[Literal[6]]
-    CT_aux_vertex1: Final[Literal[7]]
-    CTAuxVertex1: Final[Literal[7]]
-    CT_aux_vertex2: Final[Literal[8]]
-    CTAuxVertex2: Final[Literal[8]]
-    CT_aux_vertex3: Final[Literal[9]]
-    CTAuxVertex3: Final[Literal[9]]
-    MF_front: Final[Literal[1]]
-    MFFront: Final[Literal[1]]
-    MF_back: Final[Literal[2]]
-    MFBack: Final[Literal[2]]
-    MF_both: Final[Literal[3]]
-    MFBoth: Final[Literal[3]]
     @overload
     def __init__(self, pfm: PfmFile) -> None:
         """The PfmVizzer constructor receives a reference to a PfmFile which it will

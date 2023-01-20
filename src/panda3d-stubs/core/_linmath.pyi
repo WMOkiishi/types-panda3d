@@ -20,11 +20,11 @@ class MathNumbers:
 class LVecBase2f:
     """This is the base class for all two-component vectors and points."""
 
+    num_components: Final = 2
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
-    num_components: Final[Literal[2]]
-    is_int: Final[Literal[0]]
     @overload
     def __init__(self, __param0: LVecBase2f = ...) -> None: ...
     @overload
@@ -188,11 +188,11 @@ class LVecBase2f:
 class LVecBase2d:
     """This is the base class for all two-component vectors and points."""
 
+    num_components: Final = 2
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
-    num_components: Final[Literal[2]]
-    is_int: Final[Literal[0]]
     @overload
     def __init__(self, __param0: LVecBase2d = ...) -> None: ...
     @overload
@@ -356,11 +356,11 @@ class LVecBase2d:
 class LVecBase2i:
     """This is the base class for all two-component vectors and points."""
 
+    num_components: Final = 2
+    is_int: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: int
     y: int
-    num_components: Final[Literal[2]]
-    is_int: Final[Literal[1]]
     @overload
     def __init__(self, __param0: LVecBase2i = ...) -> None: ...
     @overload
@@ -747,12 +747,12 @@ class LPoint2i(LVecBase2i):
 class LVecBase3f:
     """This is the base class for all three-component vectors and points."""
 
+    num_components: Final = 3
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
     z: float
-    num_components: Final[Literal[3]]
-    is_int: Final[Literal[0]]
     @property
     def xy(self) -> LVecBase2f: ...
     @property
@@ -965,12 +965,12 @@ class LVecBase3f:
 class LVecBase3d:
     """This is the base class for all three-component vectors and points."""
 
+    num_components: Final = 3
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
     z: float
-    num_components: Final[Literal[3]]
-    is_int: Final[Literal[0]]
     @property
     def xy(self) -> LVecBase2d: ...
     @property
@@ -1183,12 +1183,12 @@ class LVecBase3d:
 class LVecBase3i:
     """This is the base class for all three-component vectors and points."""
 
+    num_components: Final = 3
+    is_int: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: int
     y: int
     z: int
-    num_components: Final[Literal[3]]
-    is_int: Final[Literal[1]]
     @property
     def xy(self) -> LVecBase2i: ...
     @property
@@ -1910,12 +1910,12 @@ class LPoint3i(LVecBase3i):
 class LVecBase4f:
     """This is the base class for all three-component vectors and points."""
 
+    num_components: Final = 4
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
     z: float
-    num_components: Final[Literal[4]]
-    is_int: Final[Literal[0]]
     @property
     def xyz(self) -> LVecBase3f: ...
     @property
@@ -2128,9 +2128,9 @@ class UnalignedLVecBase4f:
     it.
     """
 
+    num_components: Final = 4
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[4]]
-    is_int: Final[Literal[0]]
     @overload
     def __init__(self, copy: Vec4Like = ...) -> None: ...
     @overload
@@ -2162,12 +2162,12 @@ class UnalignedLVecBase4f:
 class LVecBase4d:
     """This is the base class for all three-component vectors and points."""
 
+    num_components: Final = 4
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: float
     y: float
     z: float
-    num_components: Final[Literal[4]]
-    is_int: Final[Literal[0]]
     @property
     def xyz(self) -> LVecBase3d: ...
     @property
@@ -2380,9 +2380,9 @@ class UnalignedLVecBase4d:
     it.
     """
 
+    num_components: Final = 4
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[4]]
-    is_int: Final[Literal[0]]
     @overload
     def __init__(self, copy: DoubleVec4Like = ...) -> None: ...
     @overload
@@ -2414,12 +2414,12 @@ class UnalignedLVecBase4d:
 class LVecBase4i:
     """This is the base class for all three-component vectors and points."""
 
+    num_components: Final = 4
+    is_int: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
     x: int
     y: int
     z: int
-    num_components: Final[Literal[4]]
-    is_int: Final[Literal[1]]
     @property
     def xyz(self) -> LVecBase3i: ...
     @property
@@ -2610,9 +2610,9 @@ class UnalignedLVecBase4i:
     it.
     """
 
+    num_components: Final = 4
+    is_int: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[4]]
-    is_int: Final[Literal[1]]
     @overload
     def __init__(self, copy: LVecBase4i = ...) -> None: ...
     @overload
@@ -2971,9 +2971,9 @@ class LMatrix3f:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
+    num_components: Final = 9
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[9]]
-    is_int: Final[Literal[0]]
     @property
     def rows(self) -> MutableSequence[LVecBase3f]: ...
     @property
@@ -3381,9 +3381,9 @@ class LMatrix4f:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
+    num_components: Final = 16
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[16]]
-    is_int: Final[Literal[0]]
     @property
     def rows(self) -> MutableSequence[LVecBase4f]: ...
     @property
@@ -3815,8 +3815,8 @@ class UnalignedLMatrix4f:
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
 
+    num_components: Final = 16
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[16]]
     @overload
     def __init__(self, copy: Mat4Like = ...) -> None: ...
     @overload
@@ -3901,9 +3901,9 @@ class LMatrix3d:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
+    num_components: Final = 9
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[9]]
-    is_int: Final[Literal[0]]
     @property
     def rows(self) -> MutableSequence[LVecBase3d]: ...
     @property
@@ -4311,9 +4311,9 @@ class LMatrix4d:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
+    num_components: Final = 16
+    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[16]]
-    is_int: Final[Literal[0]]
     @property
     def rows(self) -> MutableSequence[LVecBase4d]: ...
     @property
@@ -4747,8 +4747,8 @@ class UnalignedLMatrix4d:
     alignment, and then copy it to a proper LMatrix4 to get actual use from it.
     """
 
+    num_components: Final = 16
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_components: Final[Literal[16]]
     @overload
     def __init__(self, copy: DoubleMat4Like = ...) -> None: ...
     @overload
@@ -5358,18 +5358,18 @@ class ConfigVariableColor(ConfigVariable):
     getValue = get_value
     getDefaultValue = get_default_value
 
-CS_default: Final[Literal[0]]
-CSDefault: Final[Literal[0]]
-CS_zup_right: Final[Literal[1]]
-CSZupRight: Final[Literal[1]]
-CS_yup_right: Final[Literal[2]]
-CSYupRight: Final[Literal[2]]
-CS_zup_left: Final[Literal[3]]
-CSZupLeft: Final[Literal[3]]
-CS_yup_left: Final[Literal[4]]
-CSYupLeft: Final[Literal[4]]
-CS_invalid: Final[Literal[5]]
-CSInvalid: Final[Literal[5]]
+CS_default: Final = 0
+CSDefault: Final = 0
+CS_zup_right: Final = 1
+CSZupRight: Final = 1
+CS_yup_right: Final = 2
+CSYupRight: Final = 2
+CS_zup_left: Final = 3
+CSZupLeft: Final = 3
+CS_yup_left: Final = 4
+CSYupLeft: Final = 4
+CS_invalid: Final = 5
+CSInvalid: Final = 5
 
 @overload
 def __mul__(v: LPoint2d, m: LMatrix3d) -> LPoint2d: ...

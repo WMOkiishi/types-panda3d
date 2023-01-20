@@ -17,15 +17,15 @@ class FreetypeFont(Namable):
     FreeType.
     """
 
+    WO_default: Final = 0
+    WODefault: Final = 0
+    WO_left: Final = 1
+    WOLeft: Final = 1
+    WO_right: Final = 2
+    WORight: Final = 2
+    WO_invalid: Final = 3
+    WOInvalid: Final = 3
     winding_order: _FreetypeFont_WindingOrder
-    WO_default: Final[Literal[0]]
-    WODefault: Final[Literal[0]]
-    WO_left: Final[Literal[1]]
-    WOLeft: Final[Literal[1]]
-    WO_right: Final[Literal[2]]
-    WORight: Final[Literal[2]]
-    WO_invalid: Final[Literal[3]]
-    WOInvalid: Final[Literal[3]]
     def set_point_size(self, point_size: float) -> bool:
         """Sets the point size of the font.  This controls the apparent size of the
         font onscreen.  By convention, a 10 point font is about 1 screen unit high.
@@ -194,12 +194,12 @@ class PNMTextMaker(FreetypeFont):
     rendered onscreen via the Panda render traversal.
     """
 
-    A_left: Final[Literal[0]]
-    ALeft: Final[Literal[0]]
-    A_right: Final[Literal[1]]
-    ARight: Final[Literal[1]]
-    A_center: Final[Literal[2]]
-    ACenter: Final[Literal[2]]
+    A_left: Final = 0
+    ALeft: Final = 0
+    A_right: Final = 1
+    ARight: Final = 1
+    A_center: Final = 2
+    ACenter: Final = 2
     @overload
     def __init__(self, copy: FreetypeFont) -> None:
         """`(self, font_filename: Filename, face_index: int)`:

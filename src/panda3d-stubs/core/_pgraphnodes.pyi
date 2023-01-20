@@ -740,15 +740,15 @@ class SceneGraphAnalyzer:
     statistics on it.
     """
 
+    LM_lowest: Final = 0
+    LMLowest: Final = 0
+    LM_highest: Final = 1
+    LMHighest: Final = 1
+    LM_all: Final = 2
+    LMAll: Final = 2
+    LM_none: Final = 3
+    LMNone: Final = 3
     DtoolClassDict: ClassVar[dict[str, Any]]
-    LM_lowest: Final[Literal[0]]
-    LMLowest: Final[Literal[0]]
-    LM_highest: Final[Literal[1]]
-    LMHighest: Final[Literal[1]]
-    LM_all: Final[Literal[2]]
-    LMAll: Final[Literal[2]]
-    LM_none: Final[Literal[3]]
-    LMNone: Final[Literal[3]]
     def __init__(self, __param0: SceneGraphAnalyzer = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -825,7 +825,7 @@ class SceneGraphAnalyzer:
     getNumShortNormals = get_num_short_normals
     getTotalNormalLength = get_total_normal_length
 
-LNT_pop: Final[Literal[0]]
-LNTPop: Final[Literal[0]]
-LNT_fade: Final[Literal[1]]
-LNTFade: Final[Literal[1]]
+LNT_pop: Final = 0
+LNTPop: Final = 0
+LNT_fade: Final = 1
+LNTFade: Final = 1

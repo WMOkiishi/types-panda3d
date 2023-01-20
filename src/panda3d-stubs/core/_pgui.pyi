@@ -15,21 +15,21 @@ from panda3d.core._tform import MouseWatcher, MouseWatcherGroup, MouseWatcherPar
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 
 class PGFrameStyle:
+    T_none: Final = 0
+    TNone: Final = 0
+    T_flat: Final = 1
+    TFlat: Final = 1
+    T_bevel_out: Final = 2
+    TBevelOut: Final = 2
+    T_bevel_in: Final = 3
+    TBevelIn: Final = 3
+    T_groove: Final = 4
+    TGroove: Final = 4
+    T_ridge: Final = 5
+    TRidge: Final = 5
+    T_texture_border: Final = 6
+    TTextureBorder: Final = 6
     DtoolClassDict: ClassVar[dict[str, Any]]
-    T_none: Final[Literal[0]]
-    TNone: Final[Literal[0]]
-    T_flat: Final[Literal[1]]
-    TFlat: Final[Literal[1]]
-    T_bevel_out: Final[Literal[2]]
-    TBevelOut: Final[Literal[2]]
-    T_bevel_in: Final[Literal[3]]
-    TBevelIn: Final[Literal[3]]
-    T_groove: Final[Literal[4]]
-    TGroove: Final[Literal[4]]
-    T_ridge: Final[Literal[5]]
-    TRidge: Final[Literal[5]]
-    T_texture_border: Final[Literal[6]]
-    TTextureBorder: Final[Literal[6]]
     def __init__(self, copy: PGFrameStyle = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -440,14 +440,14 @@ class PGButton(PGItem):
     events sensibly.
     """
 
-    S_ready: Final[Literal[0]]
-    SReady: Final[Literal[0]]
-    S_depressed: Final[Literal[1]]
-    SDepressed: Final[Literal[1]]
-    S_rollover: Final[Literal[2]]
-    SRollover: Final[Literal[2]]
-    S_inactive: Final[Literal[3]]
-    SInactive: Final[Literal[3]]
+    S_ready: Final = 0
+    SReady: Final = 0
+    S_depressed: Final = 1
+    SDepressed: Final = 1
+    S_rollover: Final = 2
+    SRollover: Final = 2
+    S_inactive: Final = 3
+    SInactive: Final = 3
     @property
     def click_prefix(self) -> str: ...
     @overload
@@ -559,12 +559,12 @@ class PGEntry(PGItem):
     TextNode.
     """
 
-    S_focus: Final[Literal[0]]
-    SFocus: Final[Literal[0]]
-    S_no_focus: Final[Literal[1]]
-    SNoFocus: Final[Literal[1]]
-    S_inactive: Final[Literal[2]]
-    SInactive: Final[Literal[2]]
+    S_focus: Final = 0
+    SFocus: Final = 0
+    S_no_focus: Final = 1
+    SNoFocus: Final = 1
+    S_inactive: Final = 2
+    SInactive: Final = 2
     def setup(self, width: float, num_lines: int) -> None:
         """Sets up the entry for normal use.  The width is the maximum width of
         characters that will be typed, and num_lines is the integer number of lines

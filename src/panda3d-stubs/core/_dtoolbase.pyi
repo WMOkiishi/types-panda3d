@@ -55,17 +55,17 @@ class TypeHandle:
     retrieved for run-time display.
     """
 
+    MC_singleton: Final = 0
+    MCSingleton: Final = 0
+    MC_array: Final = 1
+    MCArray: Final = 1
+    MC_deleted_chain_active: Final = 2
+    MCDeletedChainActive: Final = 2
+    MC_deleted_chain_inactive: Final = 3
+    MCDeletedChainInactive: Final = 3
+    MC_limit: Final = 4
+    MCLimit: Final = 4
     DtoolClassDict: ClassVar[dict[str, Any]]
-    MC_singleton: Final[Literal[0]]
-    MCSingleton: Final[Literal[0]]
-    MC_array: Final[Literal[1]]
-    MCArray: Final[Literal[1]]
-    MC_deleted_chain_active: Final[Literal[2]]
-    MCDeletedChainActive: Final[Literal[2]]
-    MC_deleted_chain_inactive: Final[Literal[3]]
-    MCDeletedChainInactive: Final[Literal[3]]
-    MC_limit: Final[Literal[4]]
-    MCLimit: Final[Literal[4]]
     @property
     def index(self) -> int: ...
     @property

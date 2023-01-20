@@ -30,24 +30,24 @@ class TiXmlBase:
     @endverbatim
     """
 
+    TIXML_NO_ERROR: Final = 0
+    TIXML_ERROR: Final = 1
+    TIXML_ERROR_OPENING_FILE: Final = 2
+    TIXML_ERROR_PARSING_ELEMENT: Final = 3
+    TIXML_ERROR_FAILED_TO_READ_ELEMENT_NAME: Final = 4
+    TIXML_ERROR_READING_ELEMENT_VALUE: Final = 5
+    TIXML_ERROR_READING_ATTRIBUTES: Final = 6
+    TIXML_ERROR_PARSING_EMPTY: Final = 7
+    TIXML_ERROR_READING_END_TAG: Final = 8
+    TIXML_ERROR_PARSING_UNKNOWN: Final = 9
+    TIXML_ERROR_PARSING_COMMENT: Final = 10
+    TIXML_ERROR_PARSING_DECLARATION: Final = 11
+    TIXML_ERROR_DOCUMENT_EMPTY: Final = 12
+    TIXML_ERROR_EMBEDDED_NULL: Final = 13
+    TIXML_ERROR_PARSING_CDATA: Final = 14
+    TIXML_ERROR_DOCUMENT_TOP_ONLY: Final = 15
+    TIXML_ERROR_STRING_COUNT: Final = 16
     DtoolClassDict: ClassVar[dict[str, Any]]
-    TIXML_NO_ERROR: Final[Literal[0]]
-    TIXML_ERROR: Final[Literal[1]]
-    TIXML_ERROR_OPENING_FILE: Final[Literal[2]]
-    TIXML_ERROR_PARSING_ELEMENT: Final[Literal[3]]
-    TIXML_ERROR_FAILED_TO_READ_ELEMENT_NAME: Final[Literal[4]]
-    TIXML_ERROR_READING_ELEMENT_VALUE: Final[Literal[5]]
-    TIXML_ERROR_READING_ATTRIBUTES: Final[Literal[6]]
-    TIXML_ERROR_PARSING_EMPTY: Final[Literal[7]]
-    TIXML_ERROR_READING_END_TAG: Final[Literal[8]]
-    TIXML_ERROR_PARSING_UNKNOWN: Final[Literal[9]]
-    TIXML_ERROR_PARSING_COMMENT: Final[Literal[10]]
-    TIXML_ERROR_PARSING_DECLARATION: Final[Literal[11]]
-    TIXML_ERROR_DOCUMENT_EMPTY: Final[Literal[12]]
-    TIXML_ERROR_EMBEDDED_NULL: Final[Literal[13]]
-    TIXML_ERROR_PARSING_CDATA: Final[Literal[14]]
-    TIXML_ERROR_DOCUMENT_TOP_ONLY: Final[Literal[15]]
-    TIXML_ERROR_STRING_COUNT: Final[Literal[16]]
     @staticmethod
     def SetCondenseWhiteSpace(condense: bool) -> None:
         """The world does not agree on whether white space should be kept or
@@ -127,20 +127,20 @@ class TiXmlNode(TiXmlBase):
     can be queried, and it can be cast to its more defined type.
     """
 
-    TINYXML_DOCUMENT: Final[Literal[0]]
-    TINYXMLDOCUMENT: Final[Literal[0]]
-    TINYXML_ELEMENT: Final[Literal[1]]
-    TINYXMLELEMENT: Final[Literal[1]]
-    TINYXML_COMMENT: Final[Literal[2]]
-    TINYXMLCOMMENT: Final[Literal[2]]
-    TINYXML_UNKNOWN: Final[Literal[3]]
-    TINYXMLUNKNOWN: Final[Literal[3]]
-    TINYXML_TEXT: Final[Literal[4]]
-    TINYXMLTEXT: Final[Literal[4]]
-    TINYXML_DECLARATION: Final[Literal[5]]
-    TINYXMLDECLARATION: Final[Literal[5]]
-    TINYXML_TYPECOUNT: Final[Literal[6]]
-    TINYXMLTYPECOUNT: Final[Literal[6]]
+    TINYXML_DOCUMENT: Final = 0
+    TINYXMLDOCUMENT: Final = 0
+    TINYXML_ELEMENT: Final = 1
+    TINYXMLELEMENT: Final = 1
+    TINYXML_COMMENT: Final = 2
+    TINYXMLCOMMENT: Final = 2
+    TINYXML_UNKNOWN: Final = 3
+    TINYXMLUNKNOWN: Final = 3
+    TINYXML_TEXT: Final = 4
+    TINYXMLTEXT: Final = 4
+    TINYXML_DECLARATION: Final = 5
+    TINYXMLDECLARATION: Final = 5
+    TINYXML_TYPECOUNT: Final = 6
+    TINYXMLTYPECOUNT: Final = 6
     def Value(self) -> str:
         """The meaning of 'value' changes for the specific type of
         TiXmlNode.
@@ -970,12 +970,12 @@ class TiXmlPrinter(TiXmlVisitor):
     def Str(self) -> str:
         """Return the result."""
 
-TIXML_ENCODING_UNKNOWN: Final[Literal[0]]
-TIXMLENCODINGUNKNOWN: Final[Literal[0]]
-TIXML_ENCODING_UTF8: Final[Literal[1]]
-TIXMLENCODINGUTF8: Final[Literal[1]]
-TIXML_ENCODING_LEGACY: Final[Literal[2]]
-TIXMLENCODINGLEGACY: Final[Literal[2]]
+TIXML_ENCODING_UNKNOWN: Final = 0
+TIXMLENCODINGUNKNOWN: Final = 0
+TIXML_ENCODING_UTF8: Final = 1
+TIXMLENCODINGUTF8: Final = 1
+TIXML_ENCODING_LEGACY: Final = 2
+TIXMLENCODINGLEGACY: Final = 2
 
 def read_xml_stream(_in: istream) -> TiXmlDocument:
     """Reads an XML document from the indicated stream.

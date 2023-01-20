@@ -2399,9 +2399,9 @@ class VirtualFileSystem:
     Multifiles as their own subdirectory hierarchies.
     """
 
+    MF_read_only: Final = 2
+    MFReadOnly: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
-    MF_read_only: Final[Literal[2]]
-    MFReadOnly: Final[Literal[2]]
     @property
     def mounts(self) -> Sequence[PointerTo_VirtualFileMount]: ...
     def __init__(self) -> None: ...
@@ -2948,17 +2948,17 @@ if sys.platform == 'win32':
         retrieval).
         """
 
+        rl_machine: Final = 0
+        RlMachine: Final = 0
+        rl_user: Final = 1
+        RlUser: Final = 1
+        T_none: Final = 0
+        TNone: Final = 0
+        T_int: Final = 1
+        TInt: Final = 1
+        T_string: Final = 2
+        TString: Final = 2
         DtoolClassDict: ClassVar[dict[str, Any]]
-        rl_machine: Final[Literal[0]]
-        RlMachine: Final[Literal[0]]
-        rl_user: Final[Literal[1]]
-        RlUser: Final[Literal[1]]
-        T_none: Final[Literal[0]]
-        TNone: Final[Literal[0]]
-        T_int: Final[Literal[1]]
-        TInt: Final[Literal[1]]
-        T_string: Final[Literal[2]]
-        TString: Final[Literal[2]]
         def __init__(self, __param0: WindowsRegistry = ...) -> None: ...
         def __copy__(self: Self) -> Self: ...
         def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -2998,80 +2998,80 @@ if sys.platform == 'win32':
         getStringValue = get_string_value
         getIntValue = get_int_value
 
-EU_http_redirect: Final[Literal[7]]
-EUHttpRedirect: Final[Literal[7]]
-EU_eof: Final[Literal[6]]
-EUEof: Final[Literal[6]]
-EU_network_no_data: Final[Literal[5]]
-EUNetworkNoData: Final[Literal[5]]
-EU_write_ram: Final[Literal[4]]
-EUWriteRam: Final[Literal[4]]
-EU_write: Final[Literal[3]]
-EUWrite: Final[Literal[3]]
-EU_ok: Final[Literal[2]]
-EUOk: Final[Literal[2]]
-EU_success: Final[Literal[1]]
-EUSuccess: Final[Literal[1]]
-EU_error_abort: Final[Literal[-1]]
-EUErrorAbort: Final[Literal[-1]]
-EU_error_file_empty: Final[Literal[-2]]
-EUErrorFileEmpty: Final[Literal[-2]]
-EU_error_file_invalid: Final[Literal[-3]]
-EUErrorFileInvalid: Final[Literal[-3]]
-EU_error_invalid_checksum: Final[Literal[-4]]
-EUErrorInvalidChecksum: Final[Literal[-4]]
-EU_error_network_dead: Final[Literal[-30]]
-EUErrorNetworkDead: Final[Literal[-30]]
-EU_error_network_unreachable: Final[Literal[-31]]
-EUErrorNetworkUnreachable: Final[Literal[-31]]
-EU_error_network_disconnected: Final[Literal[-32]]
-EUErrorNetworkDisconnected: Final[Literal[-32]]
-EU_error_network_timeout: Final[Literal[-33]]
-EUErrorNetworkTimeout: Final[Literal[-33]]
-EU_error_network_no_data: Final[Literal[-34]]
-EUErrorNetworkNoData: Final[Literal[-34]]
-EU_error_network_disconnected_locally: Final[Literal[-40]]
-EUErrorNetworkDisconnectedLocally: Final[Literal[-40]]
-EU_error_network_buffer_overflow: Final[Literal[-41]]
-EUErrorNetworkBufferOverflow: Final[Literal[-41]]
-EU_error_network_disk_quota_exceeded: Final[Literal[-42]]
-EUErrorNetworkDiskQuotaExceeded: Final[Literal[-42]]
-EU_error_network_remote_host_disconnected: Final[Literal[-50]]
-EUErrorNetworkRemoteHostDisconnected: Final[Literal[-50]]
-EU_error_network_remote_host_down: Final[Literal[-51]]
-EUErrorNetworkRemoteHostDown: Final[Literal[-51]]
-EU_error_network_remote_host_unreachable: Final[Literal[-52]]
-EUErrorNetworkRemoteHostUnreachable: Final[Literal[-52]]
-EU_error_network_remote_host_not_found: Final[Literal[-53]]
-EUErrorNetworkRemoteHostNotFound: Final[Literal[-53]]
-EU_error_network_remote_host_no_response: Final[Literal[-54]]
-EUErrorNetworkRemoteHostNoResponse: Final[Literal[-54]]
-EU_error_write_out_of_files: Final[Literal[-60]]
-EUErrorWriteOutOfFiles: Final[Literal[-60]]
-EU_error_write_out_of_memory: Final[Literal[-61]]
-EUErrorWriteOutOfMemory: Final[Literal[-61]]
-EU_error_write_sharing_violation: Final[Literal[-62]]
-EUErrorWriteSharingViolation: Final[Literal[-62]]
-EU_error_write_disk_full: Final[Literal[-63]]
-EUErrorWriteDiskFull: Final[Literal[-63]]
-EU_error_write_disk_not_found: Final[Literal[-64]]
-EUErrorWriteDiskNotFound: Final[Literal[-64]]
-EU_error_write_disk_sector_not_found: Final[Literal[-65]]
-EUErrorWriteDiskSectorNotFound: Final[Literal[-65]]
-EU_error_write_disk_fault: Final[Literal[-66]]
-EUErrorWriteDiskFault: Final[Literal[-66]]
-EU_error_write_file_rename: Final[Literal[-67]]
-EUErrorWriteFileRename: Final[Literal[-67]]
-EU_error_http_server_timeout: Final[Literal[-70]]
-EUErrorHttpServerTimeout: Final[Literal[-70]]
-EU_error_http_gateway_timeout: Final[Literal[-71]]
-EUErrorHttpGatewayTimeout: Final[Literal[-71]]
-EU_error_http_service_unavailable: Final[Literal[-72]]
-EUErrorHttpServiceUnavailable: Final[Literal[-72]]
-EU_error_http_proxy_authentication: Final[Literal[-73]]
-EUErrorHttpProxyAuthentication: Final[Literal[-73]]
-EU_error_zlib: Final[Literal[-80]]
-EUErrorZlib: Final[Literal[-80]]
+EU_http_redirect: Final = 7
+EUHttpRedirect: Final = 7
+EU_eof: Final = 6
+EUEof: Final = 6
+EU_network_no_data: Final = 5
+EUNetworkNoData: Final = 5
+EU_write_ram: Final = 4
+EUWriteRam: Final = 4
+EU_write: Final = 3
+EUWrite: Final = 3
+EU_ok: Final = 2
+EUOk: Final = 2
+EU_success: Final = 1
+EUSuccess: Final = 1
+EU_error_abort: Final = -1
+EUErrorAbort: Final = -1
+EU_error_file_empty: Final = -2
+EUErrorFileEmpty: Final = -2
+EU_error_file_invalid: Final = -3
+EUErrorFileInvalid: Final = -3
+EU_error_invalid_checksum: Final = -4
+EUErrorInvalidChecksum: Final = -4
+EU_error_network_dead: Final = -30
+EUErrorNetworkDead: Final = -30
+EU_error_network_unreachable: Final = -31
+EUErrorNetworkUnreachable: Final = -31
+EU_error_network_disconnected: Final = -32
+EUErrorNetworkDisconnected: Final = -32
+EU_error_network_timeout: Final = -33
+EUErrorNetworkTimeout: Final = -33
+EU_error_network_no_data: Final = -34
+EUErrorNetworkNoData: Final = -34
+EU_error_network_disconnected_locally: Final = -40
+EUErrorNetworkDisconnectedLocally: Final = -40
+EU_error_network_buffer_overflow: Final = -41
+EUErrorNetworkBufferOverflow: Final = -41
+EU_error_network_disk_quota_exceeded: Final = -42
+EUErrorNetworkDiskQuotaExceeded: Final = -42
+EU_error_network_remote_host_disconnected: Final = -50
+EUErrorNetworkRemoteHostDisconnected: Final = -50
+EU_error_network_remote_host_down: Final = -51
+EUErrorNetworkRemoteHostDown: Final = -51
+EU_error_network_remote_host_unreachable: Final = -52
+EUErrorNetworkRemoteHostUnreachable: Final = -52
+EU_error_network_remote_host_not_found: Final = -53
+EUErrorNetworkRemoteHostNotFound: Final = -53
+EU_error_network_remote_host_no_response: Final = -54
+EUErrorNetworkRemoteHostNoResponse: Final = -54
+EU_error_write_out_of_files: Final = -60
+EUErrorWriteOutOfFiles: Final = -60
+EU_error_write_out_of_memory: Final = -61
+EUErrorWriteOutOfMemory: Final = -61
+EU_error_write_sharing_violation: Final = -62
+EUErrorWriteSharingViolation: Final = -62
+EU_error_write_disk_full: Final = -63
+EUErrorWriteDiskFull: Final = -63
+EU_error_write_disk_not_found: Final = -64
+EUErrorWriteDiskNotFound: Final = -64
+EU_error_write_disk_sector_not_found: Final = -65
+EUErrorWriteDiskSectorNotFound: Final = -65
+EU_error_write_disk_fault: Final = -66
+EUErrorWriteDiskFault: Final = -66
+EU_error_write_file_rename: Final = -67
+EUErrorWriteFileRename: Final = -67
+EU_error_http_server_timeout: Final = -70
+EUErrorHttpServerTimeout: Final = -70
+EU_error_http_gateway_timeout: Final = -71
+EUErrorHttpGatewayTimeout: Final = -71
+EU_error_http_service_unavailable: Final = -72
+EUErrorHttpServiceUnavailable: Final = -72
+EU_error_http_proxy_authentication: Final = -73
+EUErrorHttpProxyAuthentication: Final = -73
+EU_error_zlib: Final = -80
+EUErrorZlib: Final = -80
 
 def compress_string(source: str, compression_level: int) -> str: ...
 def decompress_string(source: str) -> str: ...

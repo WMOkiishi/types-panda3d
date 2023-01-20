@@ -211,18 +211,18 @@ class PNMImageHeader:
         getPixel = get_pixel
         getCount = get_count
         getPixels = get_pixels
+    CT_invalid: Final = 0
+    CTInvalid: Final = 0
+    CT_grayscale: Final = 1
+    CTGrayscale: Final = 1
+    CT_two_channel: Final = 2
+    CTTwoChannel: Final = 2
+    CT_color: Final = 3
+    CTColor: Final = 3
+    CT_four_channel: Final = 4
+    CTFourChannel: Final = 4
     DtoolClassDict: ClassVar[dict[str, Any]]
     comment: str
-    CT_invalid: Final[Literal[0]]
-    CTInvalid: Final[Literal[0]]
-    CT_grayscale: Final[Literal[1]]
-    CTGrayscale: Final[Literal[1]]
-    CT_two_channel: Final[Literal[2]]
-    CTTwoChannel: Final[Literal[2]]
-    CT_color: Final[Literal[3]]
-    CTColor: Final[Literal[3]]
-    CT_four_channel: Final[Literal[4]]
-    CTFourChannel: Final[Literal[4]]
     @property
     def num_channels(self) -> int: ...
     @property
@@ -883,14 +883,14 @@ class PNMBrush(ReferenceCount):
     tiled through the interior.
     """
 
-    BE_set: Final[Literal[0]]
-    BESet: Final[Literal[0]]
-    BE_blend: Final[Literal[1]]
-    BEBlend: Final[Literal[1]]
-    BE_darken: Final[Literal[2]]
-    BEDarken: Final[Literal[2]]
-    BE_lighten: Final[Literal[3]]
-    BELighten: Final[Literal[3]]
+    BE_set: Final = 0
+    BESet: Final = 0
+    BE_blend: Final = 1
+    BEBlend: Final = 1
+    BE_darken: Final = 2
+    BEDarken: Final = 2
+    BE_lighten: Final = 3
+    BELighten: Final = 3
     @staticmethod
     def make_transparent() -> PNMBrush:
         """Returns a new brush that does not paint anything.  Can be used as either a

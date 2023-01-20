@@ -643,12 +643,12 @@ class LinearCylinderVortexForce(LinearForce):
 class LinearDistanceForce(LinearForce):
     """Pure virtual class for sinks and sources"""
 
-    FT_ONE_OVER_R: Final[Literal[0]]
-    FTONEOVERR: Final[Literal[0]]
-    FT_ONE_OVER_R_SQUARED: Final[Literal[1]]
-    FTONEOVERRSQUARED: Final[Literal[1]]
-    FT_ONE_OVER_R_CUBED: Final[Literal[2]]
-    FTONEOVERRCUBED: Final[Literal[2]]
+    FT_ONE_OVER_R: Final = 0
+    FTONEOVERR: Final = 0
+    FT_ONE_OVER_R_SQUARED: Final = 1
+    FTONEOVERRSQUARED: Final = 1
+    FT_ONE_OVER_R_CUBED: Final = 2
+    FTONEOVERRCUBED: Final = 2
     def set_radius(self, r: float) -> None:
         """set the radius"""
     def set_falloff_type(self, ft: _LinearDistanceForce_FalloffType) -> None:

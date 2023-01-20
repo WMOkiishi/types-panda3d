@@ -76,6 +76,21 @@ class Alias:
 
 
 @define
+class Constant:
+    name: str
+    value: int | float | complex | str | bytes | None
+
+    def __str__(self) -> str:
+        return f'{self.name}: Final = {self.value!r}'
+
+    def get_dependencies(self) -> Iterator[str]:
+        yield 'Final'
+
+    def definition(self) -> Iterator[str]:
+        yield str(self)
+
+
+@define
 class Parameter:
     name: str
     type: str = ''
@@ -419,6 +434,7 @@ _rep_matchers: list[Callable[[StubRep], bool]] = [
     lambda r: isinstance(r, Alias) and r.is_type_alias,
     lambda r: isinstance(r, Class),
     lambda r: isinstance(r, Alias) and not r.of_local,
+    lambda r: isinstance(r, Constant),
     lambda r: isinstance(r, Attribute) and not r.read_only,
     lambda r: isinstance(r, Attribute),
     lambda r: isinstance(r, Function) and is_dunder(r.name),

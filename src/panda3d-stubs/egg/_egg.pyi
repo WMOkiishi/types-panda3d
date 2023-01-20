@@ -366,16 +366,16 @@ class EggGroupNode(EggNode):
     iterators and begin()/end().
     """
 
-    T_polygon: Final[Literal[1]]
-    TPolygon: Final[Literal[1]]
-    T_convex: Final[Literal[2]]
-    TConvex: Final[Literal[2]]
-    T_composite: Final[Literal[4]]
-    TComposite: Final[Literal[4]]
-    T_recurse: Final[Literal[8]]
-    TRecurse: Final[Literal[8]]
-    T_flat_shaded: Final[Literal[16]]
-    TFlatShaded: Final[Literal[16]]
+    T_polygon: Final = 1
+    TPolygon: Final = 1
+    T_convex: Final = 2
+    TConvex: Final = 2
+    T_composite: Final = 4
+    TComposite: Final = 4
+    T_recurse: Final = 8
+    TRecurse: Final = 8
+    T_flat_shaded: Final = 16
+    TFlatShaded: Final = 16
     @property
     def children(self) -> list[EggNode]: ...
     @overload
@@ -1377,45 +1377,45 @@ class EggRenderMode:
     And making EggObject a virtual base class is just no fun.
     """
 
+    AM_unspecified: Final = 0
+    AMUnspecified: Final = 0
+    AM_off: Final = 1
+    AMOff: Final = 1
+    AM_on: Final = 2
+    AMOn: Final = 2
+    AM_blend: Final = 3
+    AMBlend: Final = 3
+    AM_blend_no_occlude: Final = 4
+    AMBlendNoOcclude: Final = 4
+    AM_ms: Final = 5
+    AMMs: Final = 5
+    AM_ms_mask: Final = 6
+    AMMsMask: Final = 6
+    AM_binary: Final = 7
+    AMBinary: Final = 7
+    AM_dual: Final = 8
+    AMDual: Final = 8
+    AM_premultiplied: Final = 9
+    AMPremultiplied: Final = 9
+    DWM_unspecified: Final = 0
+    DWMUnspecified: Final = 0
+    DWM_off: Final = 1
+    DWMOff: Final = 1
+    DWM_on: Final = 2
+    DWMOn: Final = 2
+    DTM_unspecified: Final = 0
+    DTMUnspecified: Final = 0
+    DTM_off: Final = 1
+    DTMOff: Final = 1
+    DTM_on: Final = 2
+    DTMOn: Final = 2
+    VM_unspecified: Final = 0
+    VMUnspecified: Final = 0
+    VM_hidden: Final = 1
+    VMHidden: Final = 1
+    VM_normal: Final = 2
+    VMNormal: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
-    AM_unspecified: Final[Literal[0]]
-    AMUnspecified: Final[Literal[0]]
-    AM_off: Final[Literal[1]]
-    AMOff: Final[Literal[1]]
-    AM_on: Final[Literal[2]]
-    AMOn: Final[Literal[2]]
-    AM_blend: Final[Literal[3]]
-    AMBlend: Final[Literal[3]]
-    AM_blend_no_occlude: Final[Literal[4]]
-    AMBlendNoOcclude: Final[Literal[4]]
-    AM_ms: Final[Literal[5]]
-    AMMs: Final[Literal[5]]
-    AM_ms_mask: Final[Literal[6]]
-    AMMsMask: Final[Literal[6]]
-    AM_binary: Final[Literal[7]]
-    AMBinary: Final[Literal[7]]
-    AM_dual: Final[Literal[8]]
-    AMDual: Final[Literal[8]]
-    AM_premultiplied: Final[Literal[9]]
-    AMPremultiplied: Final[Literal[9]]
-    DWM_unspecified: Final[Literal[0]]
-    DWMUnspecified: Final[Literal[0]]
-    DWM_off: Final[Literal[1]]
-    DWMOff: Final[Literal[1]]
-    DWM_on: Final[Literal[2]]
-    DWMOn: Final[Literal[2]]
-    DTM_unspecified: Final[Literal[0]]
-    DTMUnspecified: Final[Literal[0]]
-    DTM_off: Final[Literal[1]]
-    DTMOff: Final[Literal[1]]
-    DTM_on: Final[Literal[2]]
-    DTMOn: Final[Literal[2]]
-    VM_unspecified: Final[Literal[0]]
-    VMUnspecified: Final[Literal[0]]
-    VM_hidden: Final[Literal[1]]
-    VMHidden: Final[Literal[1]]
-    VM_normal: Final[Literal[2]]
-    VMNormal: Final[Literal[2]]
     def __init__(self, copy: EggRenderMode = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -1580,33 +1580,33 @@ class EggTransform:
     matrix, or a 2-d transform, described by a 3x3 matrix.
     """
 
+    CT_invalid: Final = 0
+    CTInvalid: Final = 0
+    CT_translate2d: Final = 1
+    CTTranslate2d: Final = 1
+    CT_translate3d: Final = 2
+    CTTranslate3d: Final = 2
+    CT_rotate2d: Final = 3
+    CTRotate2d: Final = 3
+    CT_rotx: Final = 4
+    CTRotx: Final = 4
+    CT_roty: Final = 5
+    CTRoty: Final = 5
+    CT_rotz: Final = 6
+    CTRotz: Final = 6
+    CT_rotate3d: Final = 7
+    CTRotate3d: Final = 7
+    CT_scale2d: Final = 8
+    CTScale2d: Final = 8
+    CT_scale3d: Final = 9
+    CTScale3d: Final = 9
+    CT_uniform_scale: Final = 10
+    CTUniformScale: Final = 10
+    CT_matrix3: Final = 11
+    CTMatrix3: Final = 11
+    CT_matrix4: Final = 12
+    CTMatrix4: Final = 12
     DtoolClassDict: ClassVar[dict[str, Any]]
-    CT_invalid: Final[Literal[0]]
-    CTInvalid: Final[Literal[0]]
-    CT_translate2d: Final[Literal[1]]
-    CTTranslate2d: Final[Literal[1]]
-    CT_translate3d: Final[Literal[2]]
-    CTTranslate3d: Final[Literal[2]]
-    CT_rotate2d: Final[Literal[3]]
-    CTRotate2d: Final[Literal[3]]
-    CT_rotx: Final[Literal[4]]
-    CTRotx: Final[Literal[4]]
-    CT_roty: Final[Literal[5]]
-    CTRoty: Final[Literal[5]]
-    CT_rotz: Final[Literal[6]]
-    CTRotz: Final[Literal[6]]
-    CT_rotate3d: Final[Literal[7]]
-    CTRotate3d: Final[Literal[7]]
-    CT_scale2d: Final[Literal[8]]
-    CTScale2d: Final[Literal[8]]
-    CT_scale3d: Final[Literal[9]]
-    CTScale3d: Final[Literal[9]]
-    CT_uniform_scale: Final[Literal[10]]
-    CTUniformScale: Final[Literal[10]]
-    CT_matrix3: Final[Literal[11]]
-    CTMatrix3: Final[Literal[11]]
-    CT_matrix4: Final[Literal[12]]
-    CTMatrix4: Final[Literal[12]]
     def __init__(self, copy: EggTransform = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -1779,6 +1779,134 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     <Instance>, and <Joint> type nodes.
     """
 
+    GT_invalid: Final = -1
+    GTInvalid: Final = -1
+    GT_group: Final = 0
+    GTGroup: Final = 0
+    GT_instance: Final = 1
+    GTInstance: Final = 1
+    GT_joint: Final = 2
+    GTJoint: Final = 2
+    DC_unspecified: Final = 0
+    DCUnspecified: Final = 0
+    DC_none: Final = 16
+    DCNone: Final = 16
+    DC_local: Final = 32
+    DCLocal: Final = 32
+    DC_net: Final = 48
+    DCNet: Final = 48
+    DC_no_touch: Final = 64
+    DCNoTouch: Final = 64
+    DC_default: Final = 80
+    DCDefault: Final = 80
+    BT_none: Final = 0
+    BTNone: Final = 0
+    BT_axis: Final = 32
+    BTAxis: Final = 32
+    BT_point_camera_relative: Final = 64
+    BTPointCameraRelative: Final = 64
+    BT_point_world_relative: Final = 128
+    BTPointWorldRelative: Final = 128
+    CST_none: Final = 0
+    CSTNone: Final = 0
+    CST_plane: Final = 65536
+    CSTPlane: Final = 65536
+    CST_polygon: Final = 131072
+    CSTPolygon: Final = 131072
+    CST_polyset: Final = 196608
+    CSTPolyset: Final = 196608
+    CST_sphere: Final = 262144
+    CSTSphere: Final = 262144
+    CST_tube: Final = 327680
+    CSTTube: Final = 327680
+    CST_inv_sphere: Final = 393216
+    CSTInvSphere: Final = 393216
+    CST_box: Final = 458752
+    CSTBox: Final = 458752
+    CST_floor_mesh: Final = 524288
+    CSTFloorMesh: Final = 524288
+    CF_none: Final = 0
+    CFNone: Final = 0
+    CF_descend: Final = 1048576
+    CFDescend: Final = 1048576
+    CF_event: Final = 2097152
+    CFEvent: Final = 2097152
+    CF_keep: Final = 4194304
+    CFKeep: Final = 4194304
+    CF_solid: Final = 8388608
+    CFSolid: Final = 8388608
+    CF_center: Final = 16777216
+    CFCenter: Final = 16777216
+    CF_turnstile: Final = 33554432
+    CFTurnstile: Final = 33554432
+    CF_level: Final = 67108864
+    CFLevel: Final = 67108864
+    CF_intangible: Final = 134217728
+    CFIntangible: Final = 134217728
+    DT_none: Final = 0
+    DTNone: Final = 0
+    DT_structured: Final = 268435456
+    DTStructured: Final = 268435456
+    DT_sync: Final = 536870912
+    DTSync: Final = 536870912
+    DT_nosync: Final = 805306368
+    DTNosync: Final = 805306368
+    DT_default: Final = 1073741824
+    DTDefault: Final = 1073741824
+    BM_unspecified: Final = 0
+    BMUnspecified: Final = 0
+    BM_none: Final = 1
+    BMNone: Final = 1
+    BM_add: Final = 2
+    BMAdd: Final = 2
+    BM_subtract: Final = 3
+    BMSubtract: Final = 3
+    BM_inv_subtract: Final = 4
+    BMInvSubtract: Final = 4
+    BM_min: Final = 5
+    BMMin: Final = 5
+    BM_max: Final = 6
+    BMMax: Final = 6
+    BO_unspecified: Final = 0
+    BOUnspecified: Final = 0
+    BO_zero: Final = 1
+    BOZero: Final = 1
+    BO_one: Final = 2
+    BOOne: Final = 2
+    BO_incoming_color: Final = 3
+    BOIncomingColor: Final = 3
+    BO_one_minus_incoming_color: Final = 4
+    BOOneMinusIncomingColor: Final = 4
+    BO_fbuffer_color: Final = 5
+    BOFbufferColor: Final = 5
+    BO_one_minus_fbuffer_color: Final = 6
+    BOOneMinusFbufferColor: Final = 6
+    BO_incoming_alpha: Final = 7
+    BOIncomingAlpha: Final = 7
+    BO_one_minus_incoming_alpha: Final = 8
+    BOOneMinusIncomingAlpha: Final = 8
+    BO_fbuffer_alpha: Final = 9
+    BOFbufferAlpha: Final = 9
+    BO_one_minus_fbuffer_alpha: Final = 10
+    BOOneMinusFbufferAlpha: Final = 10
+    BO_constant_color: Final = 11
+    BOConstantColor: Final = 11
+    BO_one_minus_constant_color: Final = 12
+    BOOneMinusConstantColor: Final = 12
+    BO_constant_alpha: Final = 13
+    BOConstantAlpha: Final = 13
+    BO_one_minus_constant_alpha: Final = 14
+    BOOneMinusConstantAlpha: Final = 14
+    BO_incoming_color_saturate: Final = 15
+    BOIncomingColorSaturate: Final = 15
+    BO_color_scale: Final = 16
+    BOColorScale: Final = 16
+    BO_one_minus_color_scale: Final = 17
+    BOOneMinusColorScale: Final = 17
+    BO_alpha_scale: Final = 18
+    BOAlphaScale: Final = 18
+    BO_one_minus_alpha_scale: Final = 19
+    BOOneMinusAlphaScale: Final = 19
     group_type: _EggGroup_GroupType
     billboard_type: _EggGroup_BillboardType
     billboard_center: LPoint3d
@@ -1810,134 +1938,6 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     scroll_v: float
     scroll_w: float
     scroll_r: float
-    GT_invalid: Final[Literal[-1]]
-    GTInvalid: Final[Literal[-1]]
-    GT_group: Final[Literal[0]]
-    GTGroup: Final[Literal[0]]
-    GT_instance: Final[Literal[1]]
-    GTInstance: Final[Literal[1]]
-    GT_joint: Final[Literal[2]]
-    GTJoint: Final[Literal[2]]
-    DC_unspecified: Final[Literal[0]]
-    DCUnspecified: Final[Literal[0]]
-    DC_none: Final[Literal[16]]
-    DCNone: Final[Literal[16]]
-    DC_local: Final[Literal[32]]
-    DCLocal: Final[Literal[32]]
-    DC_net: Final[Literal[48]]
-    DCNet: Final[Literal[48]]
-    DC_no_touch: Final[Literal[64]]
-    DCNoTouch: Final[Literal[64]]
-    DC_default: Final[Literal[80]]
-    DCDefault: Final[Literal[80]]
-    BT_none: Final[Literal[0]]
-    BTNone: Final[Literal[0]]
-    BT_axis: Final[Literal[32]]
-    BTAxis: Final[Literal[32]]
-    BT_point_camera_relative: Final[Literal[64]]
-    BTPointCameraRelative: Final[Literal[64]]
-    BT_point_world_relative: Final[Literal[128]]
-    BTPointWorldRelative: Final[Literal[128]]
-    CST_none: Final[Literal[0]]
-    CSTNone: Final[Literal[0]]
-    CST_plane: Final[Literal[65536]]
-    CSTPlane: Final[Literal[65536]]
-    CST_polygon: Final[Literal[131072]]
-    CSTPolygon: Final[Literal[131072]]
-    CST_polyset: Final[Literal[196608]]
-    CSTPolyset: Final[Literal[196608]]
-    CST_sphere: Final[Literal[262144]]
-    CSTSphere: Final[Literal[262144]]
-    CST_tube: Final[Literal[327680]]
-    CSTTube: Final[Literal[327680]]
-    CST_inv_sphere: Final[Literal[393216]]
-    CSTInvSphere: Final[Literal[393216]]
-    CST_box: Final[Literal[458752]]
-    CSTBox: Final[Literal[458752]]
-    CST_floor_mesh: Final[Literal[524288]]
-    CSTFloorMesh: Final[Literal[524288]]
-    CF_none: Final[Literal[0]]
-    CFNone: Final[Literal[0]]
-    CF_descend: Final[Literal[1048576]]
-    CFDescend: Final[Literal[1048576]]
-    CF_event: Final[Literal[2097152]]
-    CFEvent: Final[Literal[2097152]]
-    CF_keep: Final[Literal[4194304]]
-    CFKeep: Final[Literal[4194304]]
-    CF_solid: Final[Literal[8388608]]
-    CFSolid: Final[Literal[8388608]]
-    CF_center: Final[Literal[16777216]]
-    CFCenter: Final[Literal[16777216]]
-    CF_turnstile: Final[Literal[33554432]]
-    CFTurnstile: Final[Literal[33554432]]
-    CF_level: Final[Literal[67108864]]
-    CFLevel: Final[Literal[67108864]]
-    CF_intangible: Final[Literal[134217728]]
-    CFIntangible: Final[Literal[134217728]]
-    DT_none: Final[Literal[0]]
-    DTNone: Final[Literal[0]]
-    DT_structured: Final[Literal[268435456]]
-    DTStructured: Final[Literal[268435456]]
-    DT_sync: Final[Literal[536870912]]
-    DTSync: Final[Literal[536870912]]
-    DT_nosync: Final[Literal[805306368]]
-    DTNosync: Final[Literal[805306368]]
-    DT_default: Final[Literal[1073741824]]
-    DTDefault: Final[Literal[1073741824]]
-    BM_unspecified: Final[Literal[0]]
-    BMUnspecified: Final[Literal[0]]
-    BM_none: Final[Literal[1]]
-    BMNone: Final[Literal[1]]
-    BM_add: Final[Literal[2]]
-    BMAdd: Final[Literal[2]]
-    BM_subtract: Final[Literal[3]]
-    BMSubtract: Final[Literal[3]]
-    BM_inv_subtract: Final[Literal[4]]
-    BMInvSubtract: Final[Literal[4]]
-    BM_min: Final[Literal[5]]
-    BMMin: Final[Literal[5]]
-    BM_max: Final[Literal[6]]
-    BMMax: Final[Literal[6]]
-    BO_unspecified: Final[Literal[0]]
-    BOUnspecified: Final[Literal[0]]
-    BO_zero: Final[Literal[1]]
-    BOZero: Final[Literal[1]]
-    BO_one: Final[Literal[2]]
-    BOOne: Final[Literal[2]]
-    BO_incoming_color: Final[Literal[3]]
-    BOIncomingColor: Final[Literal[3]]
-    BO_one_minus_incoming_color: Final[Literal[4]]
-    BOOneMinusIncomingColor: Final[Literal[4]]
-    BO_fbuffer_color: Final[Literal[5]]
-    BOFbufferColor: Final[Literal[5]]
-    BO_one_minus_fbuffer_color: Final[Literal[6]]
-    BOOneMinusFbufferColor: Final[Literal[6]]
-    BO_incoming_alpha: Final[Literal[7]]
-    BOIncomingAlpha: Final[Literal[7]]
-    BO_one_minus_incoming_alpha: Final[Literal[8]]
-    BOOneMinusIncomingAlpha: Final[Literal[8]]
-    BO_fbuffer_alpha: Final[Literal[9]]
-    BOFbufferAlpha: Final[Literal[9]]
-    BO_one_minus_fbuffer_alpha: Final[Literal[10]]
-    BOOneMinusFbufferAlpha: Final[Literal[10]]
-    BO_constant_color: Final[Literal[11]]
-    BOConstantColor: Final[Literal[11]]
-    BO_one_minus_constant_color: Final[Literal[12]]
-    BOOneMinusConstantColor: Final[Literal[12]]
-    BO_constant_alpha: Final[Literal[13]]
-    BOConstantAlpha: Final[Literal[13]]
-    BO_one_minus_constant_alpha: Final[Literal[14]]
-    BOOneMinusConstantAlpha: Final[Literal[14]]
-    BO_incoming_color_saturate: Final[Literal[15]]
-    BOIncomingColorSaturate: Final[Literal[15]]
-    BO_color_scale: Final[Literal[16]]
-    BOColorScale: Final[Literal[16]]
-    BO_one_minus_color_scale: Final[Literal[17]]
-    BOOneMinusColorScale: Final[Literal[17]]
-    BO_alpha_scale: Final[Literal[18]]
-    BOAlphaScale: Final[Literal[18]]
-    BO_one_minus_alpha_scale: Final[Literal[19]]
-    BOOneMinusAlphaScale: Final[Literal[19]]
     @property
     def object_types(self) -> Sequence[str]: ...
     @overload
@@ -2522,6 +2522,228 @@ class EggFilenameNode(EggNode):
 class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     """Defines a texture map that may be applied to geometry."""
 
+    E_basename: Final = 1
+    EBasename: Final = 1
+    E_extension: Final = 2
+    EExtension: Final = 2
+    E_dirname: Final = 4
+    EDirname: Final = 4
+    E_complete_filename: Final = 7
+    ECompleteFilename: Final = 7
+    E_transform: Final = 8
+    ETransform: Final = 8
+    E_attributes: Final = 16
+    EAttributes: Final = 16
+    E_tref_name: Final = 32
+    ETrefName: Final = 32
+    TT_unspecified: Final = 0
+    TTUnspecified: Final = 0
+    TT_1d_texture: Final = 1
+    TT1dTexture: Final = 1
+    TT_2d_texture: Final = 2
+    TT2dTexture: Final = 2
+    TT_3d_texture: Final = 3
+    TT3dTexture: Final = 3
+    TT_cube_map: Final = 4
+    TTCubeMap: Final = 4
+    F_unspecified: Final = 0
+    FUnspecified: Final = 0
+    F_rgba: Final = 1
+    FRgba: Final = 1
+    F_rgbm: Final = 2
+    FRgbm: Final = 2
+    F_rgba12: Final = 3
+    FRgba12: Final = 3
+    F_rgba8: Final = 4
+    FRgba8: Final = 4
+    F_rgba4: Final = 5
+    FRgba4: Final = 5
+    F_rgba5: Final = 6
+    FRgba5: Final = 6
+    F_rgb: Final = 7
+    FRgb: Final = 7
+    F_rgb12: Final = 8
+    FRgb12: Final = 8
+    F_rgb8: Final = 9
+    FRgb8: Final = 9
+    F_rgb5: Final = 10
+    FRgb5: Final = 10
+    F_rgb332: Final = 11
+    FRgb332: Final = 11
+    F_red: Final = 12
+    FRed: Final = 12
+    F_green: Final = 13
+    FGreen: Final = 13
+    F_blue: Final = 14
+    FBlue: Final = 14
+    F_alpha: Final = 15
+    FAlpha: Final = 15
+    F_luminance: Final = 16
+    FLuminance: Final = 16
+    F_luminance_alpha: Final = 17
+    FLuminanceAlpha: Final = 17
+    F_luminance_alphamask: Final = 18
+    FLuminanceAlphamask: Final = 18
+    F_srgb: Final = 19
+    FSrgb: Final = 19
+    F_srgb_alpha: Final = 20
+    FSrgbAlpha: Final = 20
+    CM_default: Final = 0
+    CMDefault: Final = 0
+    CM_off: Final = 1
+    CMOff: Final = 1
+    CM_on: Final = 2
+    CMOn: Final = 2
+    CM_fxt1: Final = 3
+    CMFxt1: Final = 3
+    CM_dxt1: Final = 4
+    CMDxt1: Final = 4
+    CM_dxt2: Final = 5
+    CMDxt2: Final = 5
+    CM_dxt3: Final = 6
+    CMDxt3: Final = 6
+    CM_dxt4: Final = 7
+    CMDxt4: Final = 7
+    CM_dxt5: Final = 8
+    CMDxt5: Final = 8
+    WM_unspecified: Final = 0
+    WMUnspecified: Final = 0
+    WM_clamp: Final = 1
+    WMClamp: Final = 1
+    WM_repeat: Final = 2
+    WMRepeat: Final = 2
+    WM_mirror: Final = 3
+    WMMirror: Final = 3
+    WM_mirror_once: Final = 4
+    WMMirrorOnce: Final = 4
+    WM_border_color: Final = 5
+    WMBorderColor: Final = 5
+    FT_unspecified: Final = 0
+    FTUnspecified: Final = 0
+    FT_nearest: Final = 1
+    FTNearest: Final = 1
+    FT_linear: Final = 2
+    FTLinear: Final = 2
+    FT_nearest_mipmap_nearest: Final = 3
+    FTNearestMipmapNearest: Final = 3
+    FT_linear_mipmap_nearest: Final = 4
+    FTLinearMipmapNearest: Final = 4
+    FT_nearest_mipmap_linear: Final = 5
+    FTNearestMipmapLinear: Final = 5
+    FT_linear_mipmap_linear: Final = 6
+    FTLinearMipmapLinear: Final = 6
+    ET_unspecified: Final = 0
+    ETUnspecified: Final = 0
+    ET_modulate: Final = 1
+    ETModulate: Final = 1
+    ET_decal: Final = 2
+    ETDecal: Final = 2
+    ET_blend: Final = 3
+    ETBlend: Final = 3
+    ET_replace: Final = 4
+    ETReplace: Final = 4
+    ET_add: Final = 5
+    ETAdd: Final = 5
+    ET_blend_color_scale: Final = 6
+    ETBlendColorScale: Final = 6
+    ET_modulate_glow: Final = 7
+    ETModulateGlow: Final = 7
+    ET_modulate_gloss: Final = 8
+    ETModulateGloss: Final = 8
+    ET_normal: Final = 9
+    ETNormal: Final = 9
+    ET_normal_height: Final = 10
+    ETNormalHeight: Final = 10
+    ET_glow: Final = 11
+    ETGlow: Final = 11
+    ET_gloss: Final = 12
+    ETGloss: Final = 12
+    ET_height: Final = 13
+    ETHeight: Final = 13
+    ET_selector: Final = 14
+    ETSelector: Final = 14
+    ET_normal_gloss: Final = 15
+    ETNormalGloss: Final = 15
+    ET_emission: Final = 16
+    ETEmission: Final = 16
+    CM_unspecified: Final = 0
+    CMUnspecified: Final = 0
+    CM_replace: Final = 1
+    CMReplace: Final = 1
+    CM_modulate: Final = 2
+    CMModulate: Final = 2
+    CM_add: Final = 3
+    CMAdd: Final = 3
+    CM_add_signed: Final = 4
+    CMAddSigned: Final = 4
+    CM_interpolate: Final = 5
+    CMInterpolate: Final = 5
+    CM_subtract: Final = 6
+    CMSubtract: Final = 6
+    CM_dot3_rgb: Final = 7
+    CMDot3Rgb: Final = 7
+    CM_dot3_rgba: Final = 8
+    CMDot3Rgba: Final = 8
+    CC_rgb: Final = 0
+    CCRgb: Final = 0
+    CC_alpha: Final = 1
+    CCAlpha: Final = 1
+    CC_num_channels: Final = 2
+    CCNumChannels: Final = 2
+    CI_num_indices: Final = 3
+    CINumIndices: Final = 3
+    CS_unspecified: Final = 0
+    CSUnspecified: Final = 0
+    CS_texture: Final = 1
+    CSTexture: Final = 1
+    CS_constant: Final = 2
+    CSConstant: Final = 2
+    CS_primary_color: Final = 3
+    CSPrimaryColor: Final = 3
+    CS_previous: Final = 4
+    CSPrevious: Final = 4
+    CS_constant_color_scale: Final = 5
+    CSConstantColorScale: Final = 5
+    CS_last_saved_result: Final = 6
+    CSLastSavedResult: Final = 6
+    CO_unspecified: Final = 0
+    COUnspecified: Final = 0
+    CO_src_color: Final = 1
+    COSrcColor: Final = 1
+    CO_one_minus_src_color: Final = 2
+    COOneMinusSrcColor: Final = 2
+    CO_src_alpha: Final = 3
+    COSrcAlpha: Final = 3
+    CO_one_minus_src_alpha: Final = 4
+    COOneMinusSrcAlpha: Final = 4
+    TG_unspecified: Final = 0
+    TGUnspecified: Final = 0
+    TG_eye_sphere_map: Final = 1
+    TGEyeSphereMap: Final = 1
+    TG_world_cube_map: Final = 2
+    TGWorldCubeMap: Final = 2
+    TG_eye_cube_map: Final = 3
+    TGEyeCubeMap: Final = 3
+    TG_world_normal: Final = 4
+    TGWorldNormal: Final = 4
+    TG_eye_normal: Final = 5
+    TGEyeNormal: Final = 5
+    TG_world_position: Final = 6
+    TGWorldPosition: Final = 6
+    TG_eye_position: Final = 7
+    TGEyePosition: Final = 7
+    TG_point_sprite: Final = 8
+    TGPointSprite: Final = 8
+    QL_unspecified: Final = 0
+    QLUnspecified: Final = 0
+    QL_default: Final = 1
+    QLDefault: Final = 1
+    QL_fastest: Final = 2
+    QLFastest: Final = 2
+    QL_normal: Final = 3
+    QLNormal: Final = 3
+    QL_best: Final = 4
+    QLBest: Final = 4
     texture_type: _EggTexture_TextureType
     format: _EggTexture_Format
     compression_mode: _EggTexture_CompressionMode
@@ -2552,228 +2774,6 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     min_lod: float
     max_lod: float
     lod_bias: float
-    E_basename: Final[Literal[1]]
-    EBasename: Final[Literal[1]]
-    E_extension: Final[Literal[2]]
-    EExtension: Final[Literal[2]]
-    E_dirname: Final[Literal[4]]
-    EDirname: Final[Literal[4]]
-    E_complete_filename: Final[Literal[7]]
-    ECompleteFilename: Final[Literal[7]]
-    E_transform: Final[Literal[8]]
-    ETransform: Final[Literal[8]]
-    E_attributes: Final[Literal[16]]
-    EAttributes: Final[Literal[16]]
-    E_tref_name: Final[Literal[32]]
-    ETrefName: Final[Literal[32]]
-    TT_unspecified: Final[Literal[0]]
-    TTUnspecified: Final[Literal[0]]
-    TT_1d_texture: Final[Literal[1]]
-    TT1dTexture: Final[Literal[1]]
-    TT_2d_texture: Final[Literal[2]]
-    TT2dTexture: Final[Literal[2]]
-    TT_3d_texture: Final[Literal[3]]
-    TT3dTexture: Final[Literal[3]]
-    TT_cube_map: Final[Literal[4]]
-    TTCubeMap: Final[Literal[4]]
-    F_unspecified: Final[Literal[0]]
-    FUnspecified: Final[Literal[0]]
-    F_rgba: Final[Literal[1]]
-    FRgba: Final[Literal[1]]
-    F_rgbm: Final[Literal[2]]
-    FRgbm: Final[Literal[2]]
-    F_rgba12: Final[Literal[3]]
-    FRgba12: Final[Literal[3]]
-    F_rgba8: Final[Literal[4]]
-    FRgba8: Final[Literal[4]]
-    F_rgba4: Final[Literal[5]]
-    FRgba4: Final[Literal[5]]
-    F_rgba5: Final[Literal[6]]
-    FRgba5: Final[Literal[6]]
-    F_rgb: Final[Literal[7]]
-    FRgb: Final[Literal[7]]
-    F_rgb12: Final[Literal[8]]
-    FRgb12: Final[Literal[8]]
-    F_rgb8: Final[Literal[9]]
-    FRgb8: Final[Literal[9]]
-    F_rgb5: Final[Literal[10]]
-    FRgb5: Final[Literal[10]]
-    F_rgb332: Final[Literal[11]]
-    FRgb332: Final[Literal[11]]
-    F_red: Final[Literal[12]]
-    FRed: Final[Literal[12]]
-    F_green: Final[Literal[13]]
-    FGreen: Final[Literal[13]]
-    F_blue: Final[Literal[14]]
-    FBlue: Final[Literal[14]]
-    F_alpha: Final[Literal[15]]
-    FAlpha: Final[Literal[15]]
-    F_luminance: Final[Literal[16]]
-    FLuminance: Final[Literal[16]]
-    F_luminance_alpha: Final[Literal[17]]
-    FLuminanceAlpha: Final[Literal[17]]
-    F_luminance_alphamask: Final[Literal[18]]
-    FLuminanceAlphamask: Final[Literal[18]]
-    F_srgb: Final[Literal[19]]
-    FSrgb: Final[Literal[19]]
-    F_srgb_alpha: Final[Literal[20]]
-    FSrgbAlpha: Final[Literal[20]]
-    CM_default: Final[Literal[0]]
-    CMDefault: Final[Literal[0]]
-    CM_off: Final[Literal[1]]
-    CMOff: Final[Literal[1]]
-    CM_on: Final[Literal[2]]
-    CMOn: Final[Literal[2]]
-    CM_fxt1: Final[Literal[3]]
-    CMFxt1: Final[Literal[3]]
-    CM_dxt1: Final[Literal[4]]
-    CMDxt1: Final[Literal[4]]
-    CM_dxt2: Final[Literal[5]]
-    CMDxt2: Final[Literal[5]]
-    CM_dxt3: Final[Literal[6]]
-    CMDxt3: Final[Literal[6]]
-    CM_dxt4: Final[Literal[7]]
-    CMDxt4: Final[Literal[7]]
-    CM_dxt5: Final[Literal[8]]
-    CMDxt5: Final[Literal[8]]
-    WM_unspecified: Final[Literal[0]]
-    WMUnspecified: Final[Literal[0]]
-    WM_clamp: Final[Literal[1]]
-    WMClamp: Final[Literal[1]]
-    WM_repeat: Final[Literal[2]]
-    WMRepeat: Final[Literal[2]]
-    WM_mirror: Final[Literal[3]]
-    WMMirror: Final[Literal[3]]
-    WM_mirror_once: Final[Literal[4]]
-    WMMirrorOnce: Final[Literal[4]]
-    WM_border_color: Final[Literal[5]]
-    WMBorderColor: Final[Literal[5]]
-    FT_unspecified: Final[Literal[0]]
-    FTUnspecified: Final[Literal[0]]
-    FT_nearest: Final[Literal[1]]
-    FTNearest: Final[Literal[1]]
-    FT_linear: Final[Literal[2]]
-    FTLinear: Final[Literal[2]]
-    FT_nearest_mipmap_nearest: Final[Literal[3]]
-    FTNearestMipmapNearest: Final[Literal[3]]
-    FT_linear_mipmap_nearest: Final[Literal[4]]
-    FTLinearMipmapNearest: Final[Literal[4]]
-    FT_nearest_mipmap_linear: Final[Literal[5]]
-    FTNearestMipmapLinear: Final[Literal[5]]
-    FT_linear_mipmap_linear: Final[Literal[6]]
-    FTLinearMipmapLinear: Final[Literal[6]]
-    ET_unspecified: Final[Literal[0]]
-    ETUnspecified: Final[Literal[0]]
-    ET_modulate: Final[Literal[1]]
-    ETModulate: Final[Literal[1]]
-    ET_decal: Final[Literal[2]]
-    ETDecal: Final[Literal[2]]
-    ET_blend: Final[Literal[3]]
-    ETBlend: Final[Literal[3]]
-    ET_replace: Final[Literal[4]]
-    ETReplace: Final[Literal[4]]
-    ET_add: Final[Literal[5]]
-    ETAdd: Final[Literal[5]]
-    ET_blend_color_scale: Final[Literal[6]]
-    ETBlendColorScale: Final[Literal[6]]
-    ET_modulate_glow: Final[Literal[7]]
-    ETModulateGlow: Final[Literal[7]]
-    ET_modulate_gloss: Final[Literal[8]]
-    ETModulateGloss: Final[Literal[8]]
-    ET_normal: Final[Literal[9]]
-    ETNormal: Final[Literal[9]]
-    ET_normal_height: Final[Literal[10]]
-    ETNormalHeight: Final[Literal[10]]
-    ET_glow: Final[Literal[11]]
-    ETGlow: Final[Literal[11]]
-    ET_gloss: Final[Literal[12]]
-    ETGloss: Final[Literal[12]]
-    ET_height: Final[Literal[13]]
-    ETHeight: Final[Literal[13]]
-    ET_selector: Final[Literal[14]]
-    ETSelector: Final[Literal[14]]
-    ET_normal_gloss: Final[Literal[15]]
-    ETNormalGloss: Final[Literal[15]]
-    ET_emission: Final[Literal[16]]
-    ETEmission: Final[Literal[16]]
-    CM_unspecified: Final[Literal[0]]
-    CMUnspecified: Final[Literal[0]]
-    CM_replace: Final[Literal[1]]
-    CMReplace: Final[Literal[1]]
-    CM_modulate: Final[Literal[2]]
-    CMModulate: Final[Literal[2]]
-    CM_add: Final[Literal[3]]
-    CMAdd: Final[Literal[3]]
-    CM_add_signed: Final[Literal[4]]
-    CMAddSigned: Final[Literal[4]]
-    CM_interpolate: Final[Literal[5]]
-    CMInterpolate: Final[Literal[5]]
-    CM_subtract: Final[Literal[6]]
-    CMSubtract: Final[Literal[6]]
-    CM_dot3_rgb: Final[Literal[7]]
-    CMDot3Rgb: Final[Literal[7]]
-    CM_dot3_rgba: Final[Literal[8]]
-    CMDot3Rgba: Final[Literal[8]]
-    CC_rgb: Final[Literal[0]]
-    CCRgb: Final[Literal[0]]
-    CC_alpha: Final[Literal[1]]
-    CCAlpha: Final[Literal[1]]
-    CC_num_channels: Final[Literal[2]]
-    CCNumChannels: Final[Literal[2]]
-    CI_num_indices: Final[Literal[3]]
-    CINumIndices: Final[Literal[3]]
-    CS_unspecified: Final[Literal[0]]
-    CSUnspecified: Final[Literal[0]]
-    CS_texture: Final[Literal[1]]
-    CSTexture: Final[Literal[1]]
-    CS_constant: Final[Literal[2]]
-    CSConstant: Final[Literal[2]]
-    CS_primary_color: Final[Literal[3]]
-    CSPrimaryColor: Final[Literal[3]]
-    CS_previous: Final[Literal[4]]
-    CSPrevious: Final[Literal[4]]
-    CS_constant_color_scale: Final[Literal[5]]
-    CSConstantColorScale: Final[Literal[5]]
-    CS_last_saved_result: Final[Literal[6]]
-    CSLastSavedResult: Final[Literal[6]]
-    CO_unspecified: Final[Literal[0]]
-    COUnspecified: Final[Literal[0]]
-    CO_src_color: Final[Literal[1]]
-    COSrcColor: Final[Literal[1]]
-    CO_one_minus_src_color: Final[Literal[2]]
-    COOneMinusSrcColor: Final[Literal[2]]
-    CO_src_alpha: Final[Literal[3]]
-    COSrcAlpha: Final[Literal[3]]
-    CO_one_minus_src_alpha: Final[Literal[4]]
-    COOneMinusSrcAlpha: Final[Literal[4]]
-    TG_unspecified: Final[Literal[0]]
-    TGUnspecified: Final[Literal[0]]
-    TG_eye_sphere_map: Final[Literal[1]]
-    TGEyeSphereMap: Final[Literal[1]]
-    TG_world_cube_map: Final[Literal[2]]
-    TGWorldCubeMap: Final[Literal[2]]
-    TG_eye_cube_map: Final[Literal[3]]
-    TGEyeCubeMap: Final[Literal[3]]
-    TG_world_normal: Final[Literal[4]]
-    TGWorldNormal: Final[Literal[4]]
-    TG_eye_normal: Final[Literal[5]]
-    TGEyeNormal: Final[Literal[5]]
-    TG_world_position: Final[Literal[6]]
-    TGWorldPosition: Final[Literal[6]]
-    TG_eye_position: Final[Literal[7]]
-    TGEyePosition: Final[Literal[7]]
-    TG_point_sprite: Final[Literal[8]]
-    TGPointSprite: Final[Literal[8]]
-    QL_unspecified: Final[Literal[0]]
-    QLUnspecified: Final[Literal[0]]
-    QL_default: Final[Literal[1]]
-    QLDefault: Final[Literal[1]]
-    QL_fastest: Final[Literal[2]]
-    QLFastest: Final[Literal[2]]
-    QL_normal: Final[Literal[3]]
-    QLNormal: Final[Literal[3]]
-    QL_best: Final[Literal[4]]
-    QLBest: Final[Literal[4]]
     @property
     def multitexture_sort(self) -> int: ...
     @overload
@@ -3347,6 +3347,10 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     stringQualityLevel = string_quality_level
 
 class EggMaterial(EggNode):
+    E_attributes: Final = 1
+    EAttributes: Final = 1
+    E_mref_name: Final = 2
+    EMrefName: Final = 2
     base: LColor
     diff: LColor
     amb: LColor
@@ -3357,10 +3361,6 @@ class EggMaterial(EggNode):
     metallic: float
     ior: float
     local: bool
-    E_attributes: Final[Literal[1]]
-    EAttributes: Final[Literal[1]]
-    E_mref_name: Final[Literal[2]]
-    EMrefName: Final[Literal[2]]
     @overload
     def __init__(self, copy: EggMaterial) -> None: ...
     @overload
@@ -3508,16 +3508,16 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     pool.
     """
 
+    S_unknown: Final = 0
+    SUnknown: Final = 0
+    S_overall: Final = 1
+    SOverall: Final = 1
+    S_per_face: Final = 2
+    SPerFace: Final = 2
+    S_per_vertex: Final = 3
+    SPerVertex: Final = 3
     material: EggMaterial
     bface_flag: bool
-    S_unknown: Final[Literal[0]]
-    SUnknown: Final[Literal[0]]
-    S_overall: Final[Literal[1]]
-    SOverall: Final[Literal[1]]
-    S_per_face: Final[Literal[2]]
-    SPerFace: Final[Literal[2]]
-    S_per_vertex: Final[Literal[3]]
-    SPerVertex: Final[Literal[3]]
     @property
     def sort_name(self) -> str: ...
     @property
@@ -4053,14 +4053,14 @@ class EggCoordinateSystem(EggNode):
 class EggCurve(EggPrimitive):
     """A parametric curve of some kind.  See EggNurbsCurve."""
 
-    CT_none: Final[Literal[0]]
-    CTNone: Final[Literal[0]]
-    CT_xyz: Final[Literal[1]]
-    CTXyz: Final[Literal[1]]
-    CT_hpr: Final[Literal[2]]
-    CTHpr: Final[Literal[2]]
-    CT_t: Final[Literal[3]]
-    CTT: Final[Literal[3]]
+    CT_none: Final = 0
+    CTNone: Final = 0
+    CT_xyz: Final = 1
+    CTXyz: Final = 1
+    CT_hpr: Final = 2
+    CTHpr: Final = 2
+    CT_t: Final = 3
+    CTT: Final = 3
     def set_subdiv(self, subdiv: int) -> None:
         """Sets the number of subdivisions that will be requested across the curve.
         (This doesn't necessary guarantee that this number of subdivisions will be
@@ -4642,30 +4642,30 @@ class EggPolysetMaker(EggBinMaker):
     specialization of this class.
     """
 
-    BN_none: Final[Literal[0]]
-    BNNone: Final[Literal[0]]
-    BN_polyset: Final[Literal[1]]
-    BNPolyset: Final[Literal[1]]
-    P_has_texture: Final[Literal[1]]
-    PHasTexture: Final[Literal[1]]
-    P_texture: Final[Literal[2]]
-    PTexture: Final[Literal[2]]
-    P_has_material: Final[Literal[4]]
-    PHasMaterial: Final[Literal[4]]
-    P_material: Final[Literal[8]]
-    PMaterial: Final[Literal[8]]
-    P_has_poly_color: Final[Literal[16]]
-    PHasPolyColor: Final[Literal[16]]
-    P_poly_color: Final[Literal[32]]
-    PPolyColor: Final[Literal[32]]
-    P_has_poly_normal: Final[Literal[64]]
-    PHasPolyNormal: Final[Literal[64]]
-    P_has_vertex_normal: Final[Literal[128]]
-    PHasVertexNormal: Final[Literal[128]]
-    P_has_vertex_color: Final[Literal[256]]
-    PHasVertexColor: Final[Literal[256]]
-    P_bface: Final[Literal[512]]
-    PBface: Final[Literal[512]]
+    BN_none: Final = 0
+    BNNone: Final = 0
+    BN_polyset: Final = 1
+    BNPolyset: Final = 1
+    P_has_texture: Final = 1
+    PHasTexture: Final = 1
+    P_texture: Final = 2
+    PTexture: Final = 2
+    P_has_material: Final = 4
+    PHasMaterial: Final = 4
+    P_material: Final = 8
+    PMaterial: Final = 8
+    P_has_poly_color: Final = 16
+    PHasPolyColor: Final = 16
+    P_poly_color: Final = 32
+    PPolyColor: Final = 32
+    P_has_poly_normal: Final = 64
+    PHasPolyNormal: Final = 64
+    P_has_vertex_normal: Final = 128
+    PHasVertexNormal: Final = 128
+    P_has_vertex_color: Final = 256
+    PHasVertexColor: Final = 256
+    P_bface: Final = 512
+    PBface: Final = 512
     def __init__(self) -> None: ...
     def set_properties(self, properties: int) -> None:
         """Sets the set of properties that determines which polygons are allowed to be
@@ -4719,12 +4719,12 @@ class EggTable(EggGroupNode):
     another <Table> or <Bundle>, establishing a hierarchy of tables.
     """
 
-    TT_invalid: Final[Literal[0]]
-    TTInvalid: Final[Literal[0]]
-    TT_table: Final[Literal[1]]
-    TTTable: Final[Literal[1]]
-    TT_bundle: Final[Literal[2]]
-    TTBundle: Final[Literal[2]]
+    TT_invalid: Final = 0
+    TTInvalid: Final = 0
+    TT_table: Final = 1
+    TTTable: Final = 1
+    TT_bundle: Final = 2
+    TTBundle: Final = 2
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload

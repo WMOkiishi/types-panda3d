@@ -457,17 +457,17 @@ class BulletConeShape(BulletShape):
     getHeight = get_height
 
 class BulletConstraint(TypedReferenceCount):
+    CP_erp: Final = 1
+    CPErp: Final = 1
+    CP_stop_erp: Final = 2
+    CPStopErp: Final = 2
+    CP_cfm: Final = 3
+    CPCfm: Final = 3
+    CP_stop_cfm: Final = 4
+    CPStopCfm: Final = 4
     debug_draw_size: float
     breaking_threshold: float
     enabled: bool
-    CP_erp: Final[Literal[1]]
-    CPErp: Final[Literal[1]]
-    CP_stop_erp: Final[Literal[2]]
-    CPStopErp: Final[Literal[2]]
-    CP_cfm: Final[Literal[3]]
-    CPCfm: Final[Literal[3]]
-    CP_stop_cfm: Final[Literal[4]]
-    CPStopCfm: Final[Literal[4]]
     @property
     def rigid_body_a(self) -> BulletRigidBodyNode: ...
     @property
@@ -1104,6 +1104,30 @@ class BulletSoftBodyNode(BulletBodyNode):
     getNodes = get_nodes
 
 class BulletSoftBodyConfig:
+    CF_rigid_vs_soft_mask: Final = 15
+    CFRigidVsSoftMask: Final = 15
+    CF_sdf_rigid_soft: Final = 1
+    CFSdfRigidSoft: Final = 1
+    CF_cluster_rigid_soft: Final = 2
+    CFClusterRigidSoft: Final = 2
+    CF_soft_vs_soft_mask: Final = 48
+    CFSoftVsSoftMask: Final = 48
+    CF_vertex_face_soft_soft: Final = 16
+    CFVertexFaceSoftSoft: Final = 16
+    CF_cluster_soft_soft: Final = 32
+    CFClusterSoftSoft: Final = 32
+    CF_cluster_self: Final = 64
+    CFClusterSelf: Final = 64
+    AM_vertex_point: Final = 0
+    AMVertexPoint: Final = 0
+    AM_vertex_two_sided: Final = 1
+    AMVertexTwoSided: Final = 1
+    AM_vertex_one_sided: Final = 2
+    AMVertexOneSided: Final = 2
+    AM_face_two_sided: Final = 3
+    AMFaceTwoSided: Final = 3
+    AM_face_one_sided: Final = 4
+    AMFaceOneSided: Final = 4
     DtoolClassDict: ClassVar[dict[str, Any]]
     aero_model: _BulletSoftBodyConfig_AeroModel
     velocities_correction_factor: float
@@ -1130,30 +1154,6 @@ class BulletSoftBodyConfig:
     velocities_solver_iterations: int
     drift_solver_iterations: int
     cluster_solver_iterations: int
-    CF_rigid_vs_soft_mask: Final[Literal[15]]
-    CFRigidVsSoftMask: Final[Literal[15]]
-    CF_sdf_rigid_soft: Final[Literal[1]]
-    CFSdfRigidSoft: Final[Literal[1]]
-    CF_cluster_rigid_soft: Final[Literal[2]]
-    CFClusterRigidSoft: Final[Literal[2]]
-    CF_soft_vs_soft_mask: Final[Literal[48]]
-    CFSoftVsSoftMask: Final[Literal[48]]
-    CF_vertex_face_soft_soft: Final[Literal[16]]
-    CFVertexFaceSoftSoft: Final[Literal[16]]
-    CF_cluster_soft_soft: Final[Literal[32]]
-    CFClusterSoftSoft: Final[Literal[32]]
-    CF_cluster_self: Final[Literal[64]]
-    CFClusterSelf: Final[Literal[64]]
-    AM_vertex_point: Final[Literal[0]]
-    AMVertexPoint: Final[Literal[0]]
-    AM_vertex_two_sided: Final[Literal[1]]
-    AMVertexTwoSided: Final[Literal[1]]
-    AM_vertex_one_sided: Final[Literal[2]]
-    AMVertexOneSided: Final[Literal[2]]
-    AM_face_two_sided: Final[Literal[3]]
-    AMFaceTwoSided: Final[Literal[3]]
-    AM_face_one_sided: Final[Literal[4]]
-    AMFaceOneSided: Final[Literal[4]]
     def __init__(self, __param0: BulletSoftBodyConfig) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -1702,19 +1702,19 @@ class BulletWheelRaycastInfo:
     getGroundObject = get_ground_object
 
 class BulletWorld(TypedReferenceCount):
+    BA_sweep_and_prune: Final = 0
+    BASweepAndPrune: Final = 0
+    BA_dynamic_aabb_tree: Final = 1
+    BADynamicAabbTree: Final = 1
+    FA_mask: Final = 0
+    FAMask: Final = 0
+    FA_groups_mask: Final = 1
+    FAGroupsMask: Final = 1
+    FA_callback: Final = 2
+    FACallback: Final = 2
     gravity: LVector3
     debug_node: BulletDebugNode
     force_update_all_aabbs: bool
-    BA_sweep_and_prune: Final[Literal[0]]
-    BASweepAndPrune: Final[Literal[0]]
-    BA_dynamic_aabb_tree: Final[Literal[1]]
-    BADynamicAabbTree: Final[Literal[1]]
-    FA_mask: Final[Literal[0]]
-    FAMask: Final[Literal[0]]
-    FA_groups_mask: Final[Literal[1]]
-    FAGroupsMask: Final[Literal[1]]
-    FA_callback: Final[Literal[2]]
-    FACallback: Final[Literal[2]]
     @property
     def world_info(self) -> BulletSoftBodyWorldInfo: ...
     @property
@@ -2633,12 +2633,12 @@ class BulletTriangleMeshShape(BulletShape):
     isStatic = is_static
     isDynamic = is_dynamic
 
-X_up: Final[Literal[0]]
-XUp: Final[Literal[0]]
-Y_up: Final[Literal[1]]
-YUp: Final[Literal[1]]
-Z_up: Final[Literal[2]]
-ZUp: Final[Literal[2]]
+X_up: Final = 0
+XUp: Final = 0
+Y_up: Final = 1
+YUp: Final = 1
+Z_up: Final = 2
+ZUp: Final = 2
 
 def get_default_up_axis() -> _BulletUpAxis: ...
 def get_bullet_version() -> int:

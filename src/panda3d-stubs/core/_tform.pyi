@@ -599,19 +599,19 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     MouseWatcher.
     """
 
+    SF_mouse_button: Final = 1
+    SFMouseButton: Final = 1
+    SF_other_button: Final = 2
+    SFOtherButton: Final = 2
+    SF_any_button: Final = 3
+    SFAnyButton: Final = 3
+    SF_mouse_position: Final = 4
+    SFMousePosition: Final = 4
     frame: LVecBase4
     sort: int
     active: bool
     keyboard: bool
     suppress_flags: int
-    SF_mouse_button: Final[Literal[1]]
-    SFMouseButton: Final[Literal[1]]
-    SF_other_button: Final[Literal[2]]
-    SFOtherButton: Final[Literal[2]]
-    SF_any_button: Final[Literal[3]]
-    SFAnyButton: Final[Literal[3]]
-    SF_mouse_position: Final[Literal[4]]
-    SFMousePosition: Final[Literal[4]]
     @property
     def area(self) -> float: ...
     @overload
@@ -1259,16 +1259,16 @@ class Trackball(MouseInterfaceNode):
     cameras) in the world.
     """
 
-    CM_default: Final[Literal[0]]
-    CMDefault: Final[Literal[0]]
-    CM_truck: Final[Literal[1]]
-    CMTruck: Final[Literal[1]]
-    CM_pan: Final[Literal[2]]
-    CMPan: Final[Literal[2]]
-    CM_dolly: Final[Literal[3]]
-    CMDolly: Final[Literal[3]]
-    CM_roll: Final[Literal[4]]
-    CMRoll: Final[Literal[4]]
+    CM_default: Final = 0
+    CMDefault: Final = 0
+    CM_truck: Final = 1
+    CMTruck: Final = 1
+    CM_pan: Final = 2
+    CMPan: Final = 2
+    CM_dolly: Final = 3
+    CMDolly: Final = 3
+    CM_roll: Final = 4
+    CMRoll: Final = 4
     @overload
     def __init__(self, __param0: Trackball) -> None: ...
     @overload

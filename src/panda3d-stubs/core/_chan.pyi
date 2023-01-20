@@ -126,12 +126,12 @@ class PartGroup(TypedWritableReferenceCount, Namable):
     of MovingParts.
     """
 
-    HMF_ok_part_extra: Final[Literal[1]]
-    HMFOkPartExtra: Final[Literal[1]]
-    HMF_ok_anim_extra: Final[Literal[2]]
-    HMFOkAnimExtra: Final[Literal[2]]
-    HMF_ok_wrong_root_name: Final[Literal[4]]
-    HMFOkWrongRootName: Final[Literal[4]]
+    HMF_ok_part_extra: Final = 1
+    HMFOkPartExtra: Final = 1
+    HMF_ok_anim_extra: Final = 2
+    HMFOkAnimExtra: Final = 2
+    HMF_ok_wrong_root_name: Final = 4
+    HMFOkWrongRootName: Final = 4
     @property
     def children(self) -> Sequence[PartGroup]: ...
     def __init__(self, parent: PartGroup, name: str) -> None:
@@ -729,18 +729,18 @@ class PartBundle(PartGroup):
     moving parts that make up an animatable object.
     """
 
+    BT_linear: Final = 0
+    BTLinear: Final = 0
+    BT_normalized_linear: Final = 1
+    BTNormalizedLinear: Final = 1
+    BT_componentwise: Final = 2
+    BTComponentwise: Final = 2
+    BT_componentwise_quat: Final = 3
+    BTComponentwiseQuat: Final = 3
     blend_type: _PartBundle_BlendType
     anim_blend_flag: bool
     frame_blend_flag: bool
     root_xform: LMatrix4
-    BT_linear: Final[Literal[0]]
-    BTLinear: Final[Literal[0]]
-    BT_normalized_linear: Final[Literal[1]]
-    BTNormalizedLinear: Final[Literal[1]]
-    BT_componentwise: Final[Literal[2]]
-    BTComponentwise: Final[Literal[2]]
-    BT_componentwise_quat: Final[Literal[3]]
-    BTComponentwiseQuat: Final[Literal[3]]
     @property
     def nodes(self) -> Sequence[PartBundleNode]: ...
     def __init__(self, name: str = ...) -> None:

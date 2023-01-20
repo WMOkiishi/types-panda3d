@@ -723,33 +723,33 @@ class BamEnums:
     and BamWriter.
     """
 
+    BE_bigendian: Final = 0
+    BEBigendian: Final = 0
+    BE_littleendian: Final = 1
+    BELittleendian: Final = 1
+    BE_native: Final = 1
+    BENative: Final = 1
+    BOC_push: Final = 0
+    BOCPush: Final = 0
+    BOC_pop: Final = 1
+    BOCPop: Final = 1
+    BOC_adjunct: Final = 2
+    BOCAdjunct: Final = 2
+    BOC_remove: Final = 3
+    BOCRemove: Final = 3
+    BOC_file_data: Final = 4
+    BOCFileData: Final = 4
+    BTM_unchanged: Final = 0
+    BTMUnchanged: Final = 0
+    BTM_fullpath: Final = 1
+    BTMFullpath: Final = 1
+    BTM_relative: Final = 2
+    BTMRelative: Final = 2
+    BTM_basename: Final = 3
+    BTMBasename: Final = 3
+    BTM_rawdata: Final = 4
+    BTMRawdata: Final = 4
     DtoolClassDict: ClassVar[dict[str, Any]]
-    BE_bigendian: Final[Literal[0]]
-    BEBigendian: Final[Literal[0]]
-    BE_littleendian: Final[Literal[1]]
-    BELittleendian: Final[Literal[1]]
-    BE_native: Final[Literal[1]]
-    BENative: Final[Literal[1]]
-    BOC_push: Final[Literal[0]]
-    BOCPush: Final[Literal[0]]
-    BOC_pop: Final[Literal[1]]
-    BOCPop: Final[Literal[1]]
-    BOC_adjunct: Final[Literal[2]]
-    BOCAdjunct: Final[Literal[2]]
-    BOC_remove: Final[Literal[3]]
-    BOCRemove: Final[Literal[3]]
-    BOC_file_data: Final[Literal[4]]
-    BOCFileData: Final[Literal[4]]
-    BTM_unchanged: Final[Literal[0]]
-    BTMUnchanged: Final[Literal[0]]
-    BTM_fullpath: Final[Literal[1]]
-    BTMFullpath: Final[Literal[1]]
-    BTM_relative: Final[Literal[2]]
-    BTMRelative: Final[Literal[2]]
-    BTM_basename: Final[Literal[3]]
-    BTMBasename: Final[Literal[3]]
-    BTM_rawdata: Final[Literal[4]]
-    BTMRawdata: Final[Literal[4]]
     def __init__(self, __param0: BamEnums = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -757,47 +757,47 @@ class BamEnums:
 class LoaderOptions:
     """Specifies parameters that may be passed to the loader."""
 
+    LF_search: Final = 1
+    LFSearch: Final = 1
+    LF_report_errors: Final = 2
+    LFReportErrors: Final = 2
+    LF_convert_skeleton: Final = 4
+    LFConvertSkeleton: Final = 4
+    LF_convert_channels: Final = 8
+    LFConvertChannels: Final = 8
+    LF_convert_anim: Final = 12
+    LFConvertAnim: Final = 12
+    LF_no_disk_cache: Final = 16
+    LFNoDiskCache: Final = 16
+    LF_no_ram_cache: Final = 32
+    LFNoRamCache: Final = 32
+    LF_no_cache: Final = 48
+    LFNoCache: Final = 48
+    LF_cache_only: Final = 64
+    LFCacheOnly: Final = 64
+    LF_allow_instance: Final = 128
+    LFAllowInstance: Final = 128
+    TF_preload: Final = 4
+    TFPreload: Final = 4
+    TF_preload_simple: Final = 8
+    TFPreloadSimple: Final = 8
+    TF_allow_1d: Final = 16
+    TFAllow1d: Final = 16
+    TF_generate_mipmaps: Final = 32
+    TFGenerateMipmaps: Final = 32
+    TF_multiview: Final = 64
+    TFMultiview: Final = 64
+    TF_integer: Final = 128
+    TFInteger: Final = 128
+    TF_float: Final = 256
+    TFFloat: Final = 256
+    TF_allow_compression: Final = 512
+    TFAllowCompression: Final = 512
     DtoolClassDict: ClassVar[dict[str, Any]]
     flags: int
     texture_flags: int
     texture_num_views: int
     auto_texture_scale: _AutoTextureScale
-    LF_search: Final[Literal[1]]
-    LFSearch: Final[Literal[1]]
-    LF_report_errors: Final[Literal[2]]
-    LFReportErrors: Final[Literal[2]]
-    LF_convert_skeleton: Final[Literal[4]]
-    LFConvertSkeleton: Final[Literal[4]]
-    LF_convert_channels: Final[Literal[8]]
-    LFConvertChannels: Final[Literal[8]]
-    LF_convert_anim: Final[Literal[12]]
-    LFConvertAnim: Final[Literal[12]]
-    LF_no_disk_cache: Final[Literal[16]]
-    LFNoDiskCache: Final[Literal[16]]
-    LF_no_ram_cache: Final[Literal[32]]
-    LFNoRamCache: Final[Literal[32]]
-    LF_no_cache: Final[Literal[48]]
-    LFNoCache: Final[Literal[48]]
-    LF_cache_only: Final[Literal[64]]
-    LFCacheOnly: Final[Literal[64]]
-    LF_allow_instance: Final[Literal[128]]
-    LFAllowInstance: Final[Literal[128]]
-    TF_preload: Final[Literal[4]]
-    TFPreload: Final[Literal[4]]
-    TF_preload_simple: Final[Literal[8]]
-    TFPreloadSimple: Final[Literal[8]]
-    TF_allow_1d: Final[Literal[16]]
-    TFAllow1d: Final[Literal[16]]
-    TF_generate_mipmaps: Final[Literal[32]]
-    TFGenerateMipmaps: Final[Literal[32]]
-    TF_multiview: Final[Literal[64]]
-    TFMultiview: Final[Literal[64]]
-    TF_integer: Final[Literal[128]]
-    TFInteger: Final[Literal[128]]
-    TF_float: Final[Literal[256]]
-    TFFloat: Final[Literal[256]]
-    TF_allow_compression: Final[Literal[512]]
-    TFAllowCompression: Final[Literal[512]]
     @overload
     def __init__(self, flags: int = ...) -> None: ...
     @overload
@@ -1508,8 +1508,8 @@ class BitArray:
     number of bits.  You can use it very much as you would use a BitMask.
     """
 
+    num_bits_per_word: Final = 64
     DtoolClassDict: ClassVar[dict[str, Any]]
-    num_bits_per_word: Final[Literal[64]]
     @overload
     def __init__(self, _from: BitArray | SparseArray = ...) -> None: ...
     @overload
@@ -2016,6 +2016,22 @@ class ClockObject(ReferenceCount):
     current frame.
     """
 
+    M_normal: Final = 0
+    MNormal: Final = 0
+    M_non_real_time: Final = 1
+    MNonRealTime: Final = 1
+    M_forced: Final = 2
+    MForced: Final = 2
+    M_degrade: Final = 3
+    MDegrade: Final = 3
+    M_slave: Final = 4
+    MSlave: Final = 4
+    M_limited: Final = 5
+    MLimited: Final = 5
+    M_integer: Final = 6
+    MInteger: Final = 6
+    M_integer_limited: Final = 7
+    MIntegerLimited: Final = 7
     mode: _ClockObject_Mode
     frame_time: float
     real_time: float
@@ -2024,22 +2040,6 @@ class ClockObject(ReferenceCount):
     max_dt: float
     degrade_factor: float
     average_frame_rate_interval: float
-    M_normal: Final[Literal[0]]
-    MNormal: Final[Literal[0]]
-    M_non_real_time: Final[Literal[1]]
-    MNonRealTime: Final[Literal[1]]
-    M_forced: Final[Literal[2]]
-    MForced: Final[Literal[2]]
-    M_degrade: Final[Literal[3]]
-    MDegrade: Final[Literal[3]]
-    M_slave: Final[Literal[4]]
-    MSlave: Final[Literal[4]]
-    M_limited: Final[Literal[5]]
-    MLimited: Final[Literal[5]]
-    M_integer: Final[Literal[6]]
-    MInteger: Final[Literal[6]]
-    M_integer_limited: Final[Literal[7]]
-    MIntegerLimited: Final[Literal[7]]
     @property
     def long_time(self) -> float: ...
     @property
@@ -3049,10 +3049,10 @@ class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     automatically.
     """
 
-    R_node: Final[Literal[1]]
-    RNode: Final[Literal[1]]
-    R_cache: Final[Literal[2]]
-    RCache: Final[Literal[2]]
+    R_node: Final = 1
+    RNode: Final = 1
+    R_cache: Final = 2
+    RCache: Final = 2
     def get_node_ref_count(self) -> int:
         """Returns the current reference count."""
     def node_ref(self) -> None:
@@ -3512,24 +3512,24 @@ class UniqueIdAllocator:
     initialReserveId = initial_reserve_id
     fractionUsed = fraction_used
 
-ATS_none: Final[Literal[0]]
-ATSNone: Final[Literal[0]]
-ATS_down: Final[Literal[1]]
-ATSDown: Final[Literal[1]]
-ATS_up: Final[Literal[2]]
-ATSUp: Final[Literal[2]]
-ATS_pad: Final[Literal[3]]
-ATSPad: Final[Literal[3]]
-ATS_unspecified: Final[Literal[4]]
-ATSUnspecified: Final[Literal[4]]
-CS_unspecified: Final[Literal[0]]
-CSUnspecified: Final[Literal[0]]
-CS_linear: Final[Literal[1]]
-CSLinear: Final[Literal[1]]
-CS_sRGB: Final[Literal[2]]
-CSSRGB: Final[Literal[2]]
-CS_scRGB: Final[Literal[3]]
-CSScRGB: Final[Literal[3]]
+ATS_none: Final = 0
+ATSNone: Final = 0
+ATS_down: Final = 1
+ATSDown: Final = 1
+ATS_up: Final = 2
+ATSUp: Final = 2
+ATS_pad: Final = 3
+ATSPad: Final = 3
+ATS_unspecified: Final = 4
+ATSUnspecified: Final = 4
+CS_unspecified: Final = 0
+CSUnspecified: Final = 0
+CS_linear: Final = 1
+CSLinear: Final = 1
+CS_sRGB: Final = 2
+CSSRGB: Final = 2
+CS_scRGB: Final = 3
+CSScRGB: Final = 3
 
 def parse_color_space_string(str: str) -> _ColorSpace: ...
 def format_color_space(cs: _ColorSpace) -> str: ...

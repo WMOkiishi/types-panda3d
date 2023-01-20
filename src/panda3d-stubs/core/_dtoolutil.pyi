@@ -25,13 +25,13 @@ class ios_base:
     problem.
     """
 
+    beg: Final = 0
+    Beg: Final = 0
+    cur: Final = 1
+    Cur: Final = 1
+    end: Final = 2
+    End: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
-    beg: Final[Literal[0]]
-    Beg: Final[Literal[0]]
-    cur: Final[Literal[1]]
-    Cur: Final[Literal[1]]
-    end: Final[Literal[2]]
-    End: Final[Literal[2]]
 
 class fstream(iostream):
     def __init__(self) -> None: ...
@@ -125,17 +125,17 @@ class TextEncoder:
     functionality.
     """
 
+    E_iso8859: Final = 0
+    EIso8859: Final = 0
+    E_utf8: Final = 1
+    EUtf8: Final = 1
+    E_utf16be: Final = 2
+    EUtf16be: Final = 2
+    E_unicode: Final = 2
+    EUnicode: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
     default_encoding: _TextEncoder_Encoding
     text: str
-    E_iso8859: Final[Literal[0]]
-    EIso8859: Final[Literal[0]]
-    E_utf8: Final[Literal[1]]
-    EUtf8: Final[Literal[1]]
-    E_utf16be: Final[Literal[2]]
-    EUtf16be: Final[Literal[2]]
-    E_unicode: Final[Literal[2]]
-    EUnicode: Final[Literal[2]]
     def __init__(self, copy: TextEncoder = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -382,13 +382,13 @@ class Filename:
     open an fstream for reading or writing.
     """
 
+    T_general: Final = 0
+    TGeneral: Final = 0
+    T_dso: Final = 1
+    TDso: Final = 1
+    T_executable: Final = 2
+    TExecutable: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
-    T_general: Final[Literal[0]]
-    TGeneral: Final[Literal[0]]
-    T_dso: Final[Literal[1]]
-    TDso: Final[Literal[1]]
-    T_executable: Final[Literal[2]]
-    TExecutable: Final[Literal[2]]
     @overload
     def __init__(self, path: StrOrBytesPath = ...) -> None:
         """`(self)`:

@@ -29,6 +29,7 @@ from .reps import (
     Alias,
     Attribute,
     Class,
+    Constant,
     Function,
     Module,
     Package,
@@ -355,17 +356,16 @@ def make_enum_alias_rep(idb_type: IDBType) -> Alias:
     return Alias(idb_type.name, definition, is_type_alias=True)
 
 
-def make_enum_value_reps(idb_type: IDBType) -> Iterator[Attribute]:
+def make_enum_value_reps(idb_type: IDBType) -> Iterator[Constant]:
     """Return variable representations for an enum type known to interrogate."""
     for enum_value in idb_type.enum_values:
         if enum_value.scoped_name in NOT_EXPOSED:
             continue
         value_name = enum_value.name
-        type_string = f'Final[Literal[{enum_value.value}]]'
-        yield Attribute(value_name, type_string)
+        yield Constant(value_name, enum_value.value)
         alias_name = make_alias_name(value_name, capitalize=True)
         if idb_type.name and alias_name != value_name:
-            yield Attribute(alias_name, type_string)
+            yield Constant(alias_name, enum_value.value)
 
 
 def make_scoped_enum_rep(idb_type: IDBType) -> Class:

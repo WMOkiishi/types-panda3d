@@ -119,12 +119,12 @@ class InputDevice(TypedReferenceCount):
         def __copy__(self: Self) -> Self: ...
         def __deepcopy__(self: Self, __memo: object) -> Self: ...
 
-    S_unknown: Final[Literal[0]]
-    SUnknown: Final[Literal[0]]
-    S_up: Final[Literal[1]]
-    SUp: Final[Literal[1]]
-    S_down: Final[Literal[2]]
-    SDown: Final[Literal[2]]
+    S_unknown: Final = 0
+    SUnknown: Final = 0
+    S_up: Final = 1
+    SUp: Final = 1
+    S_down: Final = 2
+    SDown: Final = 2
     @property
     def name(self) -> str:
         """The human-readable name of this input device."""

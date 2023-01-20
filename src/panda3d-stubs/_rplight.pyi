@@ -22,17 +22,17 @@ class GPUCommand:
       "packet". It stores a limited amount of floating point components.
     """
 
+    CMD_invalid: Final = 0
+    CMDInvalid: Final = 0
+    CMD_store_light: Final = 1
+    CMDStoreLight: Final = 1
+    CMD_remove_light: Final = 2
+    CMDRemoveLight: Final = 2
+    CMD_store_source: Final = 3
+    CMDStoreSource: Final = 3
+    CMD_remove_sources: Final = 4
+    CMDRemoveSources: Final = 4
     DtoolClassDict: ClassVar[dict[str, Any]]
-    CMD_invalid: Final[Literal[0]]
-    CMDInvalid: Final[Literal[0]]
-    CMD_store_light: Final[Literal[1]]
-    CMDStoreLight: Final[Literal[1]]
-    CMD_remove_light: Final[Literal[2]]
-    CMDRemoveLight: Final[Literal[2]]
-    CMD_store_source: Final[Literal[3]]
-    CMDStoreSource: Final[Literal[3]]
-    CMD_remove_sources: Final[Literal[4]]
-    CMDRemoveSources: Final[Literal[4]]
     @overload
     def __init__(self, __param0: GPUCommand) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
@@ -254,6 +254,12 @@ class RPLight(ReferenceCount):
       It also defines some interface functions which subclasses have to implement.
     """
 
+    LT_empty: Final = 0
+    LTEmpty: Final = 0
+    LT_point_light: Final = 1
+    LTPointLight: Final = 1
+    LT_spot_light: Final = 2
+    LTSpotLight: Final = 2
     pos: LVecBase3
     color: LVecBase3
     energy: float
@@ -261,12 +267,6 @@ class RPLight(ReferenceCount):
     shadow_map_resolution: int
     ies_profile: int
     near_plane: float
-    LT_empty: Final[Literal[0]]
-    LTEmpty: Final[Literal[0]]
-    LT_point_light: Final[Literal[1]]
-    LTPointLight: Final[Literal[1]]
-    LT_spot_light: Final[Literal[2]]
-    LTSpotLight: Final[Literal[2]]
     @property
     def light_type(self) -> _RPLight_LightType: ...
     def invalidate_shadows(self) -> None:

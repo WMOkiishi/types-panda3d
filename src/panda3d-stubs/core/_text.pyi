@@ -137,22 +137,22 @@ class TextFont(TypedReferenceCount, Namable):
     for an actual implementation.
     """
 
+    RM_texture: Final = 0
+    RMTexture: Final = 0
+    RM_wireframe: Final = 1
+    RMWireframe: Final = 1
+    RM_polygon: Final = 2
+    RMPolygon: Final = 2
+    RM_extruded: Final = 3
+    RMExtruded: Final = 3
+    RM_solid: Final = 4
+    RMSolid: Final = 4
+    RM_distance_field: Final = 5
+    RMDistanceField: Final = 5
+    RM_invalid: Final = 6
+    RMInvalid: Final = 6
     line_height: float
     space_advance: float
-    RM_texture: Final[Literal[0]]
-    RMTexture: Final[Literal[0]]
-    RM_wireframe: Final[Literal[1]]
-    RMWireframe: Final[Literal[1]]
-    RM_polygon: Final[Literal[2]]
-    RMPolygon: Final[Literal[2]]
-    RM_extruded: Final[Literal[3]]
-    RMExtruded: Final[Literal[3]]
-    RM_solid: Final[Literal[4]]
-    RMSolid: Final[Literal[4]]
-    RM_distance_field: Final[Literal[5]]
-    RMDistanceField: Final[Literal[5]]
-    RM_invalid: Final[Literal[6]]
-    RMInvalid: Final[Literal[6]]
     @property
     def valid(self) -> bool: ...
     def __bool__(self) -> bool: ...
@@ -626,6 +626,22 @@ class TextProperties:
     subsequent text within the block.
     """
 
+    A_left: Final = 0
+    ALeft: Final = 0
+    A_right: Final = 1
+    ARight: Final = 1
+    A_center: Final = 2
+    ACenter: Final = 2
+    A_boxed_left: Final = 3
+    ABoxedLeft: Final = 3
+    A_boxed_right: Final = 4
+    ABoxedRight: Final = 4
+    A_boxed_center: Final = 5
+    ABoxedCenter: Final = 5
+    D_ltr: Final = 0
+    DLtr: Final = 0
+    D_rtl: Final = 1
+    DRtl: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
     font: TextFont
     small_caps: bool
@@ -647,22 +663,6 @@ class TextProperties:
     glyph_shift: float
     text_scale: float
     direction: _TextProperties_Direction
-    A_left: Final[Literal[0]]
-    ALeft: Final[Literal[0]]
-    A_right: Final[Literal[1]]
-    ARight: Final[Literal[1]]
-    A_center: Final[Literal[2]]
-    ACenter: Final[Literal[2]]
-    A_boxed_left: Final[Literal[3]]
-    ABoxedLeft: Final[Literal[3]]
-    A_boxed_right: Final[Literal[4]]
-    ABoxedRight: Final[Literal[4]]
-    A_boxed_center: Final[Literal[5]]
-    ABoxedCenter: Final[Literal[5]]
-    D_ltr: Final[Literal[0]]
-    DLtr: Final[Literal[0]]
-    D_rtl: Final[Literal[1]]
-    DRtl: Final[Literal[1]]
     def __init__(self, copy: TextProperties = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -1522,6 +1522,16 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     time you call generate() a new node is returned.
     """
 
+    FF_none: Final = 0
+    FFNone: Final = 0
+    FF_light: Final = 1
+    FFLight: Final = 1
+    FF_medium: Final = 2
+    FFMedium: Final = 2
+    FF_strong: Final = 4
+    FFStrong: Final = 4
+    FF_dynamic_merge: Final = 8
+    FFDynamicMerge: Final = 8
     max_rows: int
     frame_color: LColor
     card_color: LColor
@@ -1573,16 +1583,6 @@ class TextNode(PandaNode, TextEncoder, TextProperties):
     """
     text_scale: float
     """Returns the scale factor of the text as specified by set_text_scale()."""
-    FF_none: Final[Literal[0]]
-    FFNone: Final[Literal[0]]
-    FF_light: Final[Literal[1]]
-    FFLight: Final[Literal[1]]
-    FF_medium: Final[Literal[2]]
-    FFMedium: Final[Literal[2]]
-    FF_strong: Final[Literal[4]]
-    FFStrong: Final[Literal[4]]
-    FF_dynamic_merge: Final[Literal[8]]
-    FFDynamicMerge: Final[Literal[8]]
     def __init__(self, name: str, copy: TextProperties = ...) -> None:
         """It's sort of a copy constructor: it copies the indicated TextProperties,
         without copying a complete TextNode.

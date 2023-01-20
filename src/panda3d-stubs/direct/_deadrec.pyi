@@ -24,15 +24,15 @@ class SmoothMover:
     operating in the same mode together.
     """
 
+    SM_off: Final = 0
+    SMOff: Final = 0
+    SM_on: Final = 1
+    SMOn: Final = 1
+    PM_off: Final = 0
+    PMOff: Final = 0
+    PM_on: Final = 1
+    PMOn: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
-    SM_off: Final[Literal[0]]
-    SMOff: Final[Literal[0]]
-    SM_on: Final[Literal[1]]
-    SMOn: Final[Literal[1]]
-    PM_off: Final[Literal[0]]
-    PMOff: Final[Literal[0]]
-    PM_on: Final[Literal[1]]
-    PMOn: Final[Literal[1]]
     def __init__(self, __param0: SmoothMover = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...

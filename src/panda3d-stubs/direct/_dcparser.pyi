@@ -1268,69 +1268,69 @@ class DCTypedef(DCDeclaration):
     isBogusTypedef = is_bogus_typedef
     isImplicitTypedef = is_implicit_typedef
 
-ST_int8: Final[Literal[0]]
-STInt8: Final[Literal[0]]
-ST_int16: Final[Literal[1]]
-STInt16: Final[Literal[1]]
-ST_int32: Final[Literal[2]]
-STInt32: Final[Literal[2]]
-ST_int64: Final[Literal[3]]
-STInt64: Final[Literal[3]]
-ST_uint8: Final[Literal[4]]
-STUint8: Final[Literal[4]]
-ST_uint16: Final[Literal[5]]
-STUint16: Final[Literal[5]]
-ST_uint32: Final[Literal[6]]
-STUint32: Final[Literal[6]]
-ST_uint64: Final[Literal[7]]
-STUint64: Final[Literal[7]]
-ST_float64: Final[Literal[8]]
-STFloat64: Final[Literal[8]]
-ST_string: Final[Literal[9]]
-STString: Final[Literal[9]]
-ST_blob: Final[Literal[10]]
-STBlob: Final[Literal[10]]
-ST_blob32: Final[Literal[11]]
-STBlob32: Final[Literal[11]]
-ST_int16array: Final[Literal[12]]
-STInt16array: Final[Literal[12]]
-ST_int32array: Final[Literal[13]]
-STInt32array: Final[Literal[13]]
-ST_uint16array: Final[Literal[14]]
-STUint16array: Final[Literal[14]]
-ST_uint32array: Final[Literal[15]]
-STUint32array: Final[Literal[15]]
-ST_int8array: Final[Literal[16]]
-STInt8array: Final[Literal[16]]
-ST_uint8array: Final[Literal[17]]
-STUint8array: Final[Literal[17]]
-ST_uint32uint8array: Final[Literal[18]]
-STUint32uint8array: Final[Literal[18]]
-ST_char: Final[Literal[19]]
-STChar: Final[Literal[19]]
-ST_invalid: Final[Literal[20]]
-STInvalid: Final[Literal[20]]
-PT_invalid: Final[Literal[0]]
-PTInvalid: Final[Literal[0]]
-PT_double: Final[Literal[1]]
-PTDouble: Final[Literal[1]]
-PT_int: Final[Literal[2]]
-PTInt: Final[Literal[2]]
-PT_uint: Final[Literal[3]]
-PTUint: Final[Literal[3]]
-PT_int64: Final[Literal[4]]
-PTInt64: Final[Literal[4]]
-PT_uint64: Final[Literal[5]]
-PTUint64: Final[Literal[5]]
-PT_string: Final[Literal[6]]
-PTString: Final[Literal[6]]
-PT_blob: Final[Literal[7]]
-PTBlob: Final[Literal[7]]
-PT_array: Final[Literal[8]]
-PTArray: Final[Literal[8]]
-PT_field: Final[Literal[9]]
-PTField: Final[Literal[9]]
-PT_class: Final[Literal[10]]
-PTClass: Final[Literal[10]]
-PT_switch: Final[Literal[11]]
-PTSwitch: Final[Literal[11]]
+ST_int8: Final = 0
+STInt8: Final = 0
+ST_int16: Final = 1
+STInt16: Final = 1
+ST_int32: Final = 2
+STInt32: Final = 2
+ST_int64: Final = 3
+STInt64: Final = 3
+ST_uint8: Final = 4
+STUint8: Final = 4
+ST_uint16: Final = 5
+STUint16: Final = 5
+ST_uint32: Final = 6
+STUint32: Final = 6
+ST_uint64: Final = 7
+STUint64: Final = 7
+ST_float64: Final = 8
+STFloat64: Final = 8
+ST_string: Final = 9
+STString: Final = 9
+ST_blob: Final = 10
+STBlob: Final = 10
+ST_blob32: Final = 11
+STBlob32: Final = 11
+ST_int16array: Final = 12
+STInt16array: Final = 12
+ST_int32array: Final = 13
+STInt32array: Final = 13
+ST_uint16array: Final = 14
+STUint16array: Final = 14
+ST_uint32array: Final = 15
+STUint32array: Final = 15
+ST_int8array: Final = 16
+STInt8array: Final = 16
+ST_uint8array: Final = 17
+STUint8array: Final = 17
+ST_uint32uint8array: Final = 18
+STUint32uint8array: Final = 18
+ST_char: Final = 19
+STChar: Final = 19
+ST_invalid: Final = 20
+STInvalid: Final = 20
+PT_invalid: Final = 0
+PTInvalid: Final = 0
+PT_double: Final = 1
+PTDouble: Final = 1
+PT_int: Final = 2
+PTInt: Final = 2
+PT_uint: Final = 3
+PTUint: Final = 3
+PT_int64: Final = 4
+PTInt64: Final = 4
+PT_uint64: Final = 5
+PTUint64: Final = 5
+PT_string: Final = 6
+PTString: Final = 6
+PT_blob: Final = 7
+PTBlob: Final = 7
+PT_array: Final = 8
+PTArray: Final = 8
+PT_field: Final = 9
+PTField: Final = 9
+PT_class: Final = 10
+PTClass: Final = 10
+PT_switch: Final = 11
+PTSwitch: Final = 11

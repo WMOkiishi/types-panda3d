@@ -21,12 +21,12 @@ _SparkleParticleRenderer_SparkleParticleLifeScale: TypeAlias = Literal[0, 1]
 _SpriteAnim_SourceType: TypeAlias = Literal[0, 1]
 
 class BaseParticleEmitter(ReferenceCount):
-    ET_EXPLICIT: Final[Literal[0]]
-    ETEXPLICIT: Final[Literal[0]]
-    ET_RADIATE: Final[Literal[1]]
-    ETRADIATE: Final[Literal[1]]
-    ET_CUSTOM: Final[Literal[2]]
-    ETCUSTOM: Final[Literal[2]]
+    ET_EXPLICIT: Final = 0
+    ETEXPLICIT: Final = 0
+    ET_RADIATE: Final = 1
+    ETRADIATE: Final = 1
+    ET_CUSTOM: Final = 2
+    ETCUSTOM: Final = 2
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def make_copy(self) -> BaseParticleEmitter: ...
@@ -169,24 +169,24 @@ class BaseParticleFactory(ReferenceCount):
 class BaseParticleRenderer(ReferenceCount):
     """Pure virtual particle renderer base class"""
 
-    PR_ALPHA_NONE: Final[Literal[0]]
-    PRALPHANONE: Final[Literal[0]]
-    PR_ALPHA_OUT: Final[Literal[1]]
-    PRALPHAOUT: Final[Literal[1]]
-    PR_ALPHA_IN: Final[Literal[2]]
-    PRALPHAIN: Final[Literal[2]]
-    PR_ALPHA_IN_OUT: Final[Literal[3]]
-    PRALPHAINOUT: Final[Literal[3]]
-    PR_ALPHA_USER: Final[Literal[4]]
-    PRALPHAUSER: Final[Literal[4]]
-    PR_NOT_INITIALIZED_YET: Final[Literal[5]]
-    PRNOTINITIALIZEDYET: Final[Literal[5]]
-    PP_NO_BLEND: Final[Literal[0]]
-    PPNOBLEND: Final[Literal[0]]
-    PP_BLEND_LINEAR: Final[Literal[1]]
-    PPBLENDLINEAR: Final[Literal[1]]
-    PP_BLEND_CUBIC: Final[Literal[2]]
-    PPBLENDCUBIC: Final[Literal[2]]
+    PR_ALPHA_NONE: Final = 0
+    PRALPHANONE: Final = 0
+    PR_ALPHA_OUT: Final = 1
+    PRALPHAOUT: Final = 1
+    PR_ALPHA_IN: Final = 2
+    PRALPHAIN: Final = 2
+    PR_ALPHA_IN_OUT: Final = 3
+    PRALPHAINOUT: Final = 3
+    PR_ALPHA_USER: Final = 4
+    PRALPHAUSER: Final = 4
+    PR_NOT_INITIALIZED_YET: Final = 5
+    PRNOTINITIALIZEDYET: Final = 5
+    PP_NO_BLEND: Final = 0
+    PPNOBLEND: Final = 0
+    PP_BLEND_LINEAR: Final = 1
+    PPBLENDLINEAR: Final = 1
+    PP_BLEND_CUBIC: Final = 2
+    PPBLENDCUBIC: Final = 2
     def get_render_node(self) -> GeomNode:
         """Query the geomnode pointer"""
     def get_render_node_path(self) -> NodePath:
@@ -651,12 +651,12 @@ class PointParticleFactory(BaseParticleFactory):
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
 
 class PointParticleRenderer(BaseParticleRenderer):
-    PP_ONE_COLOR: Final[Literal[0]]
-    PPONECOLOR: Final[Literal[0]]
-    PP_BLEND_LIFE: Final[Literal[1]]
-    PPBLENDLIFE: Final[Literal[1]]
-    PP_BLEND_VEL: Final[Literal[2]]
-    PPBLENDVEL: Final[Literal[2]]
+    PP_ONE_COLOR: Final = 0
+    PPONECOLOR: Final = 0
+    PP_BLEND_LIFE: Final = 1
+    PPBLENDLIFE: Final = 1
+    PP_BLEND_VEL: Final = 2
+    PPBLENDVEL: Final = 2
     @overload
     def __init__(
         self,
@@ -724,10 +724,10 @@ class RectangleEmitter(BaseParticleEmitter):
 class SparkleParticleRenderer(BaseParticleRenderer):
     """pretty sparkly things."""
 
-    SP_NO_SCALE: Final[Literal[0]]
-    SPNOSCALE: Final[Literal[0]]
-    SP_SCALE: Final[Literal[1]]
-    SPSCALE: Final[Literal[1]]
+    SP_NO_SCALE: Final = 0
+    SPNOSCALE: Final = 0
+    SP_SCALE: Final = 1
+    SPSCALE: Final = 1
     @overload
     def __init__(self, copy: SparkleParticleRenderer = ...) -> None:
         """`(self)`:
@@ -804,10 +804,10 @@ class SpriteAnim(ReferenceCount):
     and their respective UVs and source types.
     """
 
-    ST_texture: Final[Literal[0]]
-    STTexture: Final[Literal[0]]
-    ST_from_node: Final[Literal[1]]
-    STFromNode: Final[Literal[1]]
+    ST_texture: Final = 0
+    STTexture: Final = 0
+    ST_from_node: Final = 1
+    STFromNode: Final = 1
     def __init__(self, __param0: SpriteAnim) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...

@@ -1,7 +1,7 @@
 from _typeshed import Self
 from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal
+from typing_extensions import Final
 
 from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypedObject
@@ -153,30 +153,30 @@ class OdeJointFeedback:
     getTorque2 = get_torque2
 
 class OdeJoint(TypedObject):
-    JT_none: Final[Literal[0]]
-    JTNone: Final[Literal[0]]
-    JT_ball: Final[Literal[1]]
-    JTBall: Final[Literal[1]]
-    JT_hinge: Final[Literal[2]]
-    JTHinge: Final[Literal[2]]
-    JT_slider: Final[Literal[3]]
-    JTSlider: Final[Literal[3]]
-    JT_contact: Final[Literal[4]]
-    JTContact: Final[Literal[4]]
-    JT_universal: Final[Literal[5]]
-    JTUniversal: Final[Literal[5]]
-    JT_hinge2: Final[Literal[6]]
-    JTHinge2: Final[Literal[6]]
-    JT_fixed: Final[Literal[7]]
-    JTFixed: Final[Literal[7]]
-    JT_null: Final[Literal[8]]
-    JTNull: Final[Literal[8]]
-    JT_a_motor: Final[Literal[9]]
-    JTAMotor: Final[Literal[9]]
-    JT_l_motor: Final[Literal[10]]
-    JTLMotor: Final[Literal[10]]
-    JT_plane2d: Final[Literal[11]]
-    JTPlane2d: Final[Literal[11]]
+    JT_none: Final = 0
+    JTNone: Final = 0
+    JT_ball: Final = 1
+    JTBall: Final = 1
+    JT_hinge: Final = 2
+    JTHinge: Final = 2
+    JT_slider: Final = 3
+    JTSlider: Final = 3
+    JT_contact: Final = 4
+    JTContact: Final = 4
+    JT_universal: Final = 5
+    JTUniversal: Final = 5
+    JT_hinge2: Final = 6
+    JTHinge2: Final = 6
+    JT_fixed: Final = 7
+    JTFixed: Final = 7
+    JT_null: Final = 8
+    JTNull: Final = 8
+    JT_a_motor: Final = 9
+    JTAMotor: Final = 9
+    JT_l_motor: Final = 10
+    JTLMotor: Final = 10
+    JT_plane2d: Final = 11
+    JTPlane2d: Final = 11
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def destroy(self) -> None: ...
@@ -668,26 +668,26 @@ class OdeSpace(TypedObject):
     getCollisionEvent = get_collision_event
 
 class OdeGeom(TypedObject):
-    GC_sphere: Final[Literal[0]]
-    GCSphere: Final[Literal[0]]
-    GC_box: Final[Literal[1]]
-    GCBox: Final[Literal[1]]
-    GC_capped_cylinder: Final[Literal[2]]
-    GCCappedCylinder: Final[Literal[2]]
-    GC_cylinder: Final[Literal[3]]
-    GCCylinder: Final[Literal[3]]
-    GC_plane: Final[Literal[4]]
-    GCPlane: Final[Literal[4]]
-    GC_ray: Final[Literal[5]]
-    GCRay: Final[Literal[5]]
-    GC_tri_mesh: Final[Literal[8]]
-    GCTriMesh: Final[Literal[8]]
-    GC_simple_space: Final[Literal[10]]
-    GCSimpleSpace: Final[Literal[10]]
-    GC_hash_space: Final[Literal[11]]
-    GCHashSpace: Final[Literal[11]]
-    GC_quad_tree_space: Final[Literal[12]]
-    GCQuadTreeSpace: Final[Literal[12]]
+    GC_sphere: Final = 0
+    GCSphere: Final = 0
+    GC_box: Final = 1
+    GCBox: Final = 1
+    GC_capped_cylinder: Final = 2
+    GCCappedCylinder: Final = 2
+    GC_cylinder: Final = 3
+    GCCylinder: Final = 3
+    GC_plane: Final = 4
+    GCPlane: Final = 4
+    GC_ray: Final = 5
+    GCRay: Final = 5
+    GC_tri_mesh: Final = 8
+    GCTriMesh: Final = 8
+    GC_simple_space: Final = 10
+    GCSimpleSpace: Final = 10
+    GC_hash_space: Final = 11
+    GCHashSpace: Final = 11
+    GC_quad_tree_space: Final = 12
+    GCQuadTreeSpace: Final = 12
     def __bool__(self) -> bool: ...
     def destroy(self) -> None: ...
     def is_empty(self) -> bool:
@@ -906,32 +906,32 @@ class OdeCollisionEntry(TypedReferenceCount):
     getContactGeoms = get_contact_geoms
 
 class OdeSurfaceParameters(TypedObject):
-    MF_contact_mu2: Final[Literal[1]]
-    MFContactMu2: Final[Literal[1]]
-    MF_contactFDir1: Final[Literal[2]]
-    MFContactFDir1: Final[Literal[2]]
-    MF_contactBounce: Final[Literal[4]]
-    MFContactBounce: Final[Literal[4]]
-    MF_contactSoftERP: Final[Literal[8]]
-    MFContactSoftERP: Final[Literal[8]]
-    MF_contactSoftCFM: Final[Literal[16]]
-    MFContactSoftCFM: Final[Literal[16]]
-    MF_contactMotion1: Final[Literal[32]]
-    MFContactMotion1: Final[Literal[32]]
-    MF_contactMotion2: Final[Literal[64]]
-    MFContactMotion2: Final[Literal[64]]
-    MF_contactSlip1: Final[Literal[128]]
-    MFContactSlip1: Final[Literal[128]]
-    MF_contactSlip2: Final[Literal[256]]
-    MFContactSlip2: Final[Literal[256]]
-    MF_contactApprox0: Final[Literal[0]]
-    MFContactApprox0: Final[Literal[0]]
-    MF_contactApprox1_1: Final[Literal[4096]]
-    MFContactApprox11: Final[Literal[4096]]
-    MF_contactApprox1_2: Final[Literal[8192]]
-    MFContactApprox12: Final[Literal[8192]]
-    MF_contactApprox1: Final[Literal[12288]]
-    MFContactApprox1: Final[Literal[12288]]
+    MF_contact_mu2: Final = 1
+    MFContactMu2: Final = 1
+    MF_contactFDir1: Final = 2
+    MFContactFDir1: Final = 2
+    MF_contactBounce: Final = 4
+    MFContactBounce: Final = 4
+    MF_contactSoftERP: Final = 8
+    MFContactSoftERP: Final = 8
+    MF_contactSoftCFM: Final = 16
+    MFContactSoftCFM: Final = 16
+    MF_contactMotion1: Final = 32
+    MFContactMotion1: Final = 32
+    MF_contactMotion2: Final = 64
+    MFContactMotion2: Final = 64
+    MF_contactSlip1: Final = 128
+    MFContactSlip1: Final = 128
+    MF_contactSlip2: Final = 256
+    MFContactSlip2: Final = 256
+    MF_contactApprox0: Final = 0
+    MFContactApprox0: Final = 0
+    MF_contactApprox1_1: Final = 4096
+    MFContactApprox11: Final = 4096
+    MF_contactApprox1_2: Final = 8192
+    MFContactApprox12: Final = 8192
+    MF_contactApprox1: Final = 12288
+    MFContactApprox1: Final = 12288
     def __init__(self, mode: int = ..., mu: float = ...) -> None: ...
     def set_mode(self, mode: int) -> None: ...
     def set_mu(self, mu: float) -> None: ...
@@ -1368,10 +1368,10 @@ class OdeSphereGeom(OdeGeom):
     getPointDepth = get_point_depth
 
 class OdeTriMeshData(TypedReferenceCount):
-    DT_face_normals: Final[Literal[0]]
-    DTFaceNormals: Final[Literal[0]]
-    DT_last_transformation: Final[Literal[1]]
-    DTLastTransformation: Final[Literal[1]]
+    DT_face_normals: Final = 0
+    DTFaceNormals: Final = 0
+    DT_last_transformation: Final = 1
+    DTLastTransformation: Final = 1
     def __init__(self, model: NodePath, use_normals: bool = ...) -> None: ...
     def destroy(self) -> None: ...
     def write(self, out: ostream = ..., indent: int = ...) -> None: ...

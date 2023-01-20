@@ -224,6 +224,36 @@ class AsyncTask(AsyncFuture, Namable):
     define the functionality you wish to have the task perform.
     """
 
+    DS_done: Final = 0
+    DSDone: Final = 0
+    DS_cont: Final = 1
+    DSCont: Final = 1
+    DS_again: Final = 2
+    DSAgain: Final = 2
+    DS_pickup: Final = 3
+    DSPickup: Final = 3
+    DS_exit: Final = 4
+    DSExit: Final = 4
+    DS_pause: Final = 5
+    DSPause: Final = 5
+    DS_interrupt: Final = 6
+    DSInterrupt: Final = 6
+    DS_await: Final = 7
+    DSAwait: Final = 7
+    S_inactive: Final = 0
+    SInactive: Final = 0
+    S_active: Final = 1
+    SActive: Final = 1
+    S_servicing: Final = 2
+    SServicing: Final = 2
+    S_servicing_removed: Final = 3
+    SServicingRemoved: Final = 3
+    S_sleeping: Final = 4
+    SSleeping: Final = 4
+    S_active_nested: Final = 5
+    SActiveNested: Final = 5
+    S_awaiting: Final = 6
+    SAwaiting: Final = 6
     name: str
     """The name of this task."""
     task_chain: str
@@ -233,36 +263,6 @@ class AsyncTask(AsyncFuture, Namable):
     """Returns the event name that will be triggered when the future finishes.
     See set_done_event().
     """
-    DS_done: Final[Literal[0]]
-    DSDone: Final[Literal[0]]
-    DS_cont: Final[Literal[1]]
-    DSCont: Final[Literal[1]]
-    DS_again: Final[Literal[2]]
-    DSAgain: Final[Literal[2]]
-    DS_pickup: Final[Literal[3]]
-    DSPickup: Final[Literal[3]]
-    DS_exit: Final[Literal[4]]
-    DSExit: Final[Literal[4]]
-    DS_pause: Final[Literal[5]]
-    DSPause: Final[Literal[5]]
-    DS_interrupt: Final[Literal[6]]
-    DSInterrupt: Final[Literal[6]]
-    DS_await: Final[Literal[7]]
-    DSAwait: Final[Literal[7]]
-    S_inactive: Final[Literal[0]]
-    SInactive: Final[Literal[0]]
-    S_active: Final[Literal[1]]
-    SActive: Final[Literal[1]]
-    S_servicing: Final[Literal[2]]
-    SServicing: Final[Literal[2]]
-    S_servicing_removed: Final[Literal[3]]
-    SServicingRemoved: Final[Literal[3]]
-    S_sleeping: Final[Literal[4]]
-    SSleeping: Final[Literal[4]]
-    S_active_nested: Final[Literal[5]]
-    SActiveNested: Final[Literal[5]]
-    S_awaiting: Final[Literal[6]]
-    SAwaiting: Final[Literal[6]]
     @property
     def state(self) -> _AsyncTask_State: ...
     @property
@@ -949,25 +949,25 @@ class ButtonEvent:
     of Panda3D.
     """
 
+    T_down: Final = 0
+    TDown: Final = 0
+    T_resume_down: Final = 1
+    TResumeDown: Final = 1
+    T_up: Final = 2
+    TUp: Final = 2
+    T_repeat: Final = 3
+    TRepeat: Final = 3
+    T_keystroke: Final = 4
+    TKeystroke: Final = 4
+    T_candidate: Final = 5
+    TCandidate: Final = 5
+    T_move: Final = 6
+    TMove: Final = 6
+    T_raw_down: Final = 7
+    TRawDown: Final = 7
+    T_raw_up: Final = 8
+    TRawUp: Final = 8
     DtoolClassDict: ClassVar[dict[str, Any]]
-    T_down: Final[Literal[0]]
-    TDown: Final[Literal[0]]
-    T_resume_down: Final[Literal[1]]
-    TResumeDown: Final[Literal[1]]
-    T_up: Final[Literal[2]]
-    TUp: Final[Literal[2]]
-    T_repeat: Final[Literal[3]]
-    TRepeat: Final[Literal[3]]
-    T_keystroke: Final[Literal[4]]
-    TKeystroke: Final[Literal[4]]
-    T_candidate: Final[Literal[5]]
-    TCandidate: Final[Literal[5]]
-    T_move: Final[Literal[6]]
-    TMove: Final[Literal[6]]
-    T_raw_down: Final[Literal[7]]
-    TRawDown: Final[Literal[7]]
-    T_raw_up: Final[Literal[8]]
-    TRawUp: Final[Literal[8]]
     @property
     def button(self) -> ButtonHandle: ...
     @property

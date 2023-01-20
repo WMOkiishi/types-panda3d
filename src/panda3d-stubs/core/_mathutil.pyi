@@ -889,26 +889,26 @@ class BoundingVolume(TypedReferenceCount):
     of any sort.
     """
 
-    IF_no_intersection: Final[Literal[0]]
-    IFNoIntersection: Final[Literal[0]]
-    IF_possible: Final[Literal[1]]
-    IFPossible: Final[Literal[1]]
-    IF_some: Final[Literal[2]]
-    IFSome: Final[Literal[2]]
-    IF_all: Final[Literal[4]]
-    IFAll: Final[Literal[4]]
-    IF_dont_understand: Final[Literal[8]]
-    IFDontUnderstand: Final[Literal[8]]
-    BT_default: Final[Literal[0]]
-    BTDefault: Final[Literal[0]]
-    BT_best: Final[Literal[1]]
-    BTBest: Final[Literal[1]]
-    BT_sphere: Final[Literal[2]]
-    BTSphere: Final[Literal[2]]
-    BT_box: Final[Literal[3]]
-    BTBox: Final[Literal[3]]
-    BT_fastest: Final[Literal[4]]
-    BTFastest: Final[Literal[4]]
+    IF_no_intersection: Final = 0
+    IFNoIntersection: Final = 0
+    IF_possible: Final = 1
+    IFPossible: Final = 1
+    IF_some: Final = 2
+    IFSome: Final = 2
+    IF_all: Final = 4
+    IFAll: Final = 4
+    IF_dont_understand: Final = 8
+    IFDontUnderstand: Final = 8
+    BT_default: Final = 0
+    BTDefault: Final = 0
+    BT_best: Final = 1
+    BTBest: Final = 1
+    BT_sphere: Final = 2
+    BTSphere: Final = 2
+    BT_box: Final = 3
+    BTBox: Final = 3
+    BT_fastest: Final = 4
+    BTFastest: Final = 4
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def make_copy(self) -> BoundingVolume: ...
@@ -1536,8 +1536,8 @@ class IntersectionBoundingVolume(GeometricBoundingVolume):
     getComponents = get_components
 
 class Mersenne:
+    max_value: Final = 2147483647
     DtoolClassDict: ClassVar[dict[str, Any]]
-    max_value: Final[Literal[2147483647]]
     @overload
     def __init__(self, __param0: Mersenne) -> None:
         """initializes mt[N] with a seed"""

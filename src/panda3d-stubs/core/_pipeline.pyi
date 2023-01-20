@@ -695,11 +695,11 @@ class PythonThread(Thread):
     def __init__(self, function, args, name: str, sync_name: str) -> None: ...
     def join(self): ...
 
-TP_low: Final[Literal[0]]
-TPLow: Final[Literal[0]]
-TP_normal: Final[Literal[1]]
-TPNormal: Final[Literal[1]]
-TP_high: Final[Literal[2]]
-TPHigh: Final[Literal[2]]
-TP_urgent: Final[Literal[3]]
-TPUrgent: Final[Literal[3]]
+TP_low: Final = 0
+TPLow: Final = 0
+TP_normal: Final = 1
+TPNormal: Final = 1
+TP_high: Final = 2
+TPHigh: Final = 2
+TP_urgent: Final = 3
+TPUrgent: Final = 3

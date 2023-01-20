@@ -123,14 +123,14 @@ class ISocketStream(istream, SSReader):
     whether more data may be available later.
     """
 
-    RS_initial: Final[Literal[0]]
-    RSInitial: Final[Literal[0]]
-    RS_reading: Final[Literal[1]]
-    RSReading: Final[Literal[1]]
-    RS_complete: Final[Literal[2]]
-    RSComplete: Final[Literal[2]]
-    RS_error: Final[Literal[3]]
-    RSError: Final[Literal[3]]
+    RS_initial: Final = 0
+    RSInitial: Final = 0
+    RS_reading: Final = 1
+    RSReading: Final = 1
+    RS_complete: Final = 2
+    RSComplete: Final = 2
+    RS_error: Final = 3
+    RSError: Final = 3
     def upcast_to_istream(self) -> istream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
     def get_read_state(self) -> _ISocketStream_ReadState: ...
@@ -400,31 +400,31 @@ class HTTPEnum:
     types used by various classes within the HTTPClient family.
     """
 
+    HV_09: Final = 0
+    HV09: Final = 0
+    HV_10: Final = 1
+    HV10: Final = 1
+    HV_11: Final = 2
+    HV11: Final = 2
+    HV_other: Final = 3
+    HVOther: Final = 3
+    M_options: Final = 0
+    MOptions: Final = 0
+    M_get: Final = 1
+    MGet: Final = 1
+    M_head: Final = 2
+    MHead: Final = 2
+    M_post: Final = 3
+    MPost: Final = 3
+    M_put: Final = 4
+    MPut: Final = 4
+    M_delete: Final = 5
+    MDelete: Final = 5
+    M_trace: Final = 6
+    MTrace: Final = 6
+    M_connect: Final = 7
+    MConnect: Final = 7
     DtoolClassDict: ClassVar[dict[str, Any]]
-    HV_09: Final[Literal[0]]
-    HV09: Final[Literal[0]]
-    HV_10: Final[Literal[1]]
-    HV10: Final[Literal[1]]
-    HV_11: Final[Literal[2]]
-    HV11: Final[Literal[2]]
-    HV_other: Final[Literal[3]]
-    HVOther: Final[Literal[3]]
-    M_options: Final[Literal[0]]
-    MOptions: Final[Literal[0]]
-    M_get: Final[Literal[1]]
-    MGet: Final[Literal[1]]
-    M_head: Final[Literal[2]]
-    MHead: Final[Literal[2]]
-    M_post: Final[Literal[3]]
-    MPost: Final[Literal[3]]
-    M_put: Final[Literal[4]]
-    MPut: Final[Literal[4]]
-    M_delete: Final[Literal[5]]
-    MDelete: Final[Literal[5]]
-    M_trace: Final[Literal[6]]
-    MTrace: Final[Literal[6]]
-    M_connect: Final[Literal[7]]
-    MConnect: Final[Literal[7]]
     def __init__(self, __param0: HTTPEnum = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -599,12 +599,12 @@ class HTTPClient(ReferenceCount):
     HTTPClient::get_global_ptr().
     """
 
-    VS_no_verify: Final[Literal[0]]
-    VSNoVerify: Final[Literal[0]]
-    VS_no_date_check: Final[Literal[1]]
-    VSNoDateCheck: Final[Literal[1]]
-    VS_normal: Final[Literal[2]]
-    VSNormal: Final[Literal[2]]
+    VS_no_verify: Final = 0
+    VSNoVerify: Final = 0
+    VS_no_date_check: Final = 1
+    VSNoDateCheck: Final = 1
+    VS_normal: Final = 2
+    VSNormal: Final = 2
     def __init__(self, copy: HTTPClient = ...) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -1015,26 +1015,26 @@ class DocumentSpec:
     particular one if available, for instance to refresh a cached document.
     """
 
+    RM_any: Final = 0
+    RMAny: Final = 0
+    RM_equal: Final = 1
+    RMEqual: Final = 1
+    RM_newer: Final = 2
+    RMNewer: Final = 2
+    RM_equal_or_newer: Final = 3
+    RMEqualOrNewer: Final = 3
+    CC_allow_cache: Final = 0
+    CCAllowCache: Final = 0
+    CC_revalidate: Final = 1
+    CCRevalidate: Final = 1
+    CC_no_cache: Final = 2
+    CCNoCache: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
     url: URLSpec
     tag: HTTPEntityTag
     date: HTTPDate
     request_mode: _DocumentSpec_RequestMode
     cache_control: _DocumentSpec_CacheControl
-    RM_any: Final[Literal[0]]
-    RMAny: Final[Literal[0]]
-    RM_equal: Final[Literal[1]]
-    RMEqual: Final[Literal[1]]
-    RM_newer: Final[Literal[2]]
-    RMNewer: Final[Literal[2]]
-    RM_equal_or_newer: Final[Literal[3]]
-    RMEqualOrNewer: Final[Literal[3]]
-    CC_allow_cache: Final[Literal[0]]
-    CCAllowCache: Final[Literal[0]]
-    CC_revalidate: Final[Literal[1]]
-    CCRevalidate: Final[Literal[1]]
-    CC_no_cache: Final[Literal[2]]
-    CCNoCache: Final[Literal[2]]
     @overload
     def __init__(self, copy: DocumentSpec = ...) -> None: ...
     @overload
@@ -1164,46 +1164,46 @@ class HTTPChannel(TypedReferenceCount):
     retrieved.
     """
 
-    SC_incomplete: Final[Literal[0]]
-    SCIncomplete: Final[Literal[0]]
-    SC_internal_error: Final[Literal[1]]
-    SCInternalError: Final[Literal[1]]
-    SC_no_connection: Final[Literal[2]]
-    SCNoConnection: Final[Literal[2]]
-    SC_timeout: Final[Literal[3]]
-    SCTimeout: Final[Literal[3]]
-    SC_lost_connection: Final[Literal[4]]
-    SCLostConnection: Final[Literal[4]]
-    SC_non_http_response: Final[Literal[5]]
-    SCNonHttpResponse: Final[Literal[5]]
-    SC_invalid_http: Final[Literal[6]]
-    SCInvalidHttp: Final[Literal[6]]
-    SC_socks_invalid_version: Final[Literal[7]]
-    SCSocksInvalidVersion: Final[Literal[7]]
-    SC_socks_no_acceptable_login_method: Final[Literal[8]]
-    SCSocksNoAcceptableLoginMethod: Final[Literal[8]]
-    SC_socks_refused: Final[Literal[9]]
-    SCSocksRefused: Final[Literal[9]]
-    SC_socks_no_connection: Final[Literal[10]]
-    SCSocksNoConnection: Final[Literal[10]]
-    SC_ssl_internal_failure: Final[Literal[11]]
-    SCSslInternalFailure: Final[Literal[11]]
-    SC_ssl_no_handshake: Final[Literal[12]]
-    SCSslNoHandshake: Final[Literal[12]]
-    SC_http_error_watermark: Final[Literal[13]]
-    SCHttpErrorWatermark: Final[Literal[13]]
-    SC_ssl_invalid_server_certificate: Final[Literal[14]]
-    SCSslInvalidServerCertificate: Final[Literal[14]]
-    SC_ssl_self_signed_server_certificate: Final[Literal[15]]
-    SCSslSelfSignedServerCertificate: Final[Literal[15]]
-    SC_ssl_unexpected_server: Final[Literal[16]]
-    SCSslUnexpectedServer: Final[Literal[16]]
-    SC_download_open_error: Final[Literal[17]]
-    SCDownloadOpenError: Final[Literal[17]]
-    SC_download_write_error: Final[Literal[18]]
-    SCDownloadWriteError: Final[Literal[18]]
-    SC_download_invalid_range: Final[Literal[19]]
-    SCDownloadInvalidRange: Final[Literal[19]]
+    SC_incomplete: Final = 0
+    SCIncomplete: Final = 0
+    SC_internal_error: Final = 1
+    SCInternalError: Final = 1
+    SC_no_connection: Final = 2
+    SCNoConnection: Final = 2
+    SC_timeout: Final = 3
+    SCTimeout: Final = 3
+    SC_lost_connection: Final = 4
+    SCLostConnection: Final = 4
+    SC_non_http_response: Final = 5
+    SCNonHttpResponse: Final = 5
+    SC_invalid_http: Final = 6
+    SCInvalidHttp: Final = 6
+    SC_socks_invalid_version: Final = 7
+    SCSocksInvalidVersion: Final = 7
+    SC_socks_no_acceptable_login_method: Final = 8
+    SCSocksNoAcceptableLoginMethod: Final = 8
+    SC_socks_refused: Final = 9
+    SCSocksRefused: Final = 9
+    SC_socks_no_connection: Final = 10
+    SCSocksNoConnection: Final = 10
+    SC_ssl_internal_failure: Final = 11
+    SCSslInternalFailure: Final = 11
+    SC_ssl_no_handshake: Final = 12
+    SCSslNoHandshake: Final = 12
+    SC_http_error_watermark: Final = 13
+    SCHttpErrorWatermark: Final = 13
+    SC_ssl_invalid_server_certificate: Final = 14
+    SCSslInvalidServerCertificate: Final = 14
+    SC_ssl_self_signed_server_certificate: Final = 15
+    SCSslSelfSignedServerCertificate: Final = 15
+    SC_ssl_unexpected_server: Final = 16
+    SCSslUnexpectedServer: Final = 16
+    SC_download_open_error: Final = 17
+    SCDownloadOpenError: Final = 17
+    SC_download_write_error: Final = 18
+    SCDownloadWriteError: Final = 18
+    SC_download_invalid_range: Final = 19
+    SCDownloadInvalidRange: Final = 19
     def __init__(self, __param0: HTTPChannel) -> None: ...
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
@@ -1897,15 +1897,15 @@ class DownloadDb:
     representing the files the server has available.
     """
 
+    Status_incomplete: Final = 0
+    StatusIncomplete: Final = 0
+    Status_complete: Final = 1
+    StatusComplete: Final = 1
+    Status_decompressed: Final = 2
+    StatusDecompressed: Final = 2
+    Status_extracted: Final = 3
+    StatusExtracted: Final = 3
     DtoolClassDict: ClassVar[dict[str, Any]]
-    Status_incomplete: Final[Literal[0]]
-    StatusIncomplete: Final[Literal[0]]
-    Status_complete: Final[Literal[1]]
-    StatusComplete: Final[Literal[1]]
-    Status_decompressed: Final[Literal[2]]
-    StatusDecompressed: Final[Literal[2]]
-    Status_extracted: Final[Literal[3]]
-    StatusExtracted: Final[Literal[3]]
     @overload
     def __init__(self, __param0: DownloadDb = ...) -> None:
         """`(self)`:

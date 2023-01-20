@@ -1254,6 +1254,26 @@ class RopeNode(PandaNode):
     replace the whole ParametricCurve class hierarchy.
     """
 
+    RM_thread: Final = 0
+    RMThread: Final = 0
+    RM_tape: Final = 1
+    RMTape: Final = 1
+    RM_billboard: Final = 2
+    RMBillboard: Final = 2
+    RM_tube: Final = 3
+    RMTube: Final = 3
+    UV_none: Final = 0
+    UVNone: Final = 0
+    UV_parametric: Final = 1
+    UVParametric: Final = 1
+    UV_distance: Final = 2
+    UVDistance: Final = 2
+    UV_distance2: Final = 3
+    UVDistance2: Final = 3
+    NM_none: Final = 0
+    NMNone: Final = 0
+    NM_vertex: Final = 1
+    NMVertex: Final = 1
     curve: NurbsCurveEvaluator
     render_mode: _RopeNode_RenderMode
     uv_mode: _RopeNode_UVMode
@@ -1267,26 +1287,6 @@ class RopeNode(PandaNode):
     use_vertex_thickness: bool
     thickness: float
     matrix: LMatrix4
-    RM_thread: Final[Literal[0]]
-    RMThread: Final[Literal[0]]
-    RM_tape: Final[Literal[1]]
-    RMTape: Final[Literal[1]]
-    RM_billboard: Final[Literal[2]]
-    RMBillboard: Final[Literal[2]]
-    RM_tube: Final[Literal[3]]
-    RMTube: Final[Literal[3]]
-    UV_none: Final[Literal[0]]
-    UVNone: Final[Literal[0]]
-    UV_parametric: Final[Literal[1]]
-    UVParametric: Final[Literal[1]]
-    UV_distance: Final[Literal[2]]
-    UVDistance: Final[Literal[2]]
-    UV_distance2: Final[Literal[3]]
-    UVDistance2: Final[Literal[3]]
-    NM_none: Final[Literal[0]]
-    NMNone: Final[Literal[0]]
-    NM_vertex: Final[Literal[1]]
-    NMVertex: Final[Literal[1]]
     @property
     def vertex_color_dimension(self) -> int: ...
     @property

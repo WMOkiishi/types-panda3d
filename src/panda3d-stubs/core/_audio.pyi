@@ -68,9 +68,9 @@ class FilterProperties(TypedReferenceCount):
     addCompress = add_compress
 
 class AudioSound(TypedReferenceCount):
-    BAD: Final[Literal[0]]
-    READY: Final[Literal[1]]
-    PLAYING: Final[Literal[2]]
+    BAD: Final = 0
+    READY: Final = 1
+    PLAYING: Final = 2
     def play(self) -> None:
         """For best compatibility, set the loop_count, volume, and balance, prior to
         calling play().  You may set them while they're playing, but it's
@@ -209,50 +209,50 @@ class AudioSound(TypedReferenceCount):
     configureFilters = configure_filters
 
 class AudioManager(TypedReferenceCount):
-    SPEAKERMODE_raw: Final[Literal[0]]
-    SPEAKERMODERaw: Final[Literal[0]]
-    SPEAKERMODE_mono: Final[Literal[1]]
-    SPEAKERMODEMono: Final[Literal[1]]
-    SPEAKERMODE_stereo: Final[Literal[2]]
-    SPEAKERMODEStereo: Final[Literal[2]]
-    SPEAKERMODE_quad: Final[Literal[3]]
-    SPEAKERMODEQuad: Final[Literal[3]]
-    SPEAKERMODE_surround: Final[Literal[4]]
-    SPEAKERMODESurround: Final[Literal[4]]
-    SPEAKERMODE_5point1: Final[Literal[5]]
-    SPEAKERMODE5point1: Final[Literal[5]]
-    SPEAKERMODE_7point1: Final[Literal[6]]
-    SPEAKERMODE7point1: Final[Literal[6]]
-    SPEAKERMODE_max: Final[Literal[7]]
-    SPEAKERMODEMax: Final[Literal[7]]
-    SPEAKERMODE_COUNT: Final[Literal[8]]
-    SPEAKERMODECOUNT: Final[Literal[8]]
-    SPK_none: Final[Literal[0]]
-    SPKNone: Final[Literal[0]]
-    SPK_frontleft: Final[Literal[1]]
-    SPKFrontleft: Final[Literal[1]]
-    SPK_frontright: Final[Literal[2]]
-    SPKFrontright: Final[Literal[2]]
-    SPK_center: Final[Literal[3]]
-    SPKCenter: Final[Literal[3]]
-    SPK_sub: Final[Literal[4]]
-    SPKSub: Final[Literal[4]]
-    SPK_backleft: Final[Literal[5]]
-    SPKBackleft: Final[Literal[5]]
-    SPK_backright: Final[Literal[6]]
-    SPKBackright: Final[Literal[6]]
-    SPK_sideleft: Final[Literal[7]]
-    SPKSideleft: Final[Literal[7]]
-    SPK_sideright: Final[Literal[8]]
-    SPKSideright: Final[Literal[8]]
-    SPK_COUNT: Final[Literal[9]]
-    SPKCOUNT: Final[Literal[9]]
-    SM_heuristic: Final[Literal[0]]
-    SMHeuristic: Final[Literal[0]]
-    SM_sample: Final[Literal[1]]
-    SMSample: Final[Literal[1]]
-    SM_stream: Final[Literal[2]]
-    SMStream: Final[Literal[2]]
+    SPEAKERMODE_raw: Final = 0
+    SPEAKERMODERaw: Final = 0
+    SPEAKERMODE_mono: Final = 1
+    SPEAKERMODEMono: Final = 1
+    SPEAKERMODE_stereo: Final = 2
+    SPEAKERMODEStereo: Final = 2
+    SPEAKERMODE_quad: Final = 3
+    SPEAKERMODEQuad: Final = 3
+    SPEAKERMODE_surround: Final = 4
+    SPEAKERMODESurround: Final = 4
+    SPEAKERMODE_5point1: Final = 5
+    SPEAKERMODE5point1: Final = 5
+    SPEAKERMODE_7point1: Final = 6
+    SPEAKERMODE7point1: Final = 6
+    SPEAKERMODE_max: Final = 7
+    SPEAKERMODEMax: Final = 7
+    SPEAKERMODE_COUNT: Final = 8
+    SPEAKERMODECOUNT: Final = 8
+    SPK_none: Final = 0
+    SPKNone: Final = 0
+    SPK_frontleft: Final = 1
+    SPKFrontleft: Final = 1
+    SPK_frontright: Final = 2
+    SPKFrontright: Final = 2
+    SPK_center: Final = 3
+    SPKCenter: Final = 3
+    SPK_sub: Final = 4
+    SPKSub: Final = 4
+    SPK_backleft: Final = 5
+    SPKBackleft: Final = 5
+    SPK_backright: Final = 6
+    SPKBackright: Final = 6
+    SPK_sideleft: Final = 7
+    SPKSideleft: Final = 7
+    SPK_sideright: Final = 8
+    SPKSideright: Final = 8
+    SPK_COUNT: Final = 9
+    SPKCOUNT: Final = 9
+    SM_heuristic: Final = 0
+    SMHeuristic: Final = 0
+    SM_sample: Final = 1
+    SMSample: Final = 1
+    SM_stream: Final = 2
+    SMStream: Final = 2
     @property
     def dls_pathname(self) -> Filename: ...
     def get_speaker_setup(self) -> int: ...
