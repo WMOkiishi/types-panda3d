@@ -5,7 +5,7 @@ from types import ModuleType
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
-from direct._typing import SimpleCallback, Unused, Vec4OrTuple
+from direct._typing import SimpleCallback, Unused
 from direct.directnotify.Notifier import Notifier
 from direct.directtools.DirectSession import DirectSession
 from direct.p3d.AppRunner import AppRunner
@@ -283,7 +283,7 @@ class ShowBase(DirectObject):
         win: GraphicsOutput,
         sort: int = ...,
         scene: NodePath | None = ...,
-        displayRegion: Vec4OrTuple = ...,
+        displayRegion: Vec4Like = ...,
         stereo: bool | None = ...,
         aspectRatio: float | None = ...,
         clearDepth: bool = ...,
@@ -297,8 +297,8 @@ class ShowBase(DirectObject):
         self,
         win: GraphicsOutput,
         sort: int = ...,
-        displayRegion: Vec4OrTuple = ...,
-        coords: Vec4OrTuple = ...,
+        displayRegion: Vec4Like = ...,
+        coords: Vec4Like = ...,
         lens: Lens | None = ...,
         cameraName: str | None = ...,
     ) -> NodePath[Camera]: ...
@@ -306,8 +306,8 @@ class ShowBase(DirectObject):
         self,
         win: GraphicsOutput,
         sort: int = ...,
-        displayRegion: Vec4OrTuple = ...,
-        coords: Vec4OrTuple = ...,
+        displayRegion: Vec4Like = ...,
+        coords: Vec4Like = ...,
         lens: Lens | None = ...,
         cameraName: str | None = ...,
     ) -> NodePath[Camera]: ...

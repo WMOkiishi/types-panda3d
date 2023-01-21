@@ -1,11 +1,11 @@
 from collections.abc import Sequence
 from typing_extensions import Literal, TypeAlias
 
-from direct._typing import Vec3OrTuple, Vec4OrTuple
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import ConfigVariableBool, LPoint3f, NodePath, NurbsCurveEvaluator, RopeNode
 
 _Order: TypeAlias = Literal[1, 2, 3, 4]
-_Vert: TypeAlias = Vec3OrTuple | Vec4OrTuple
+_Vert: TypeAlias = Vec3Like | Vec4Like
 
 class Rope(NodePath):
     showRope: bool | ConfigVariableBool

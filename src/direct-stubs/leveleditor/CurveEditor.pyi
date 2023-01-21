@@ -1,17 +1,17 @@
 from collections.abc import Sequence
 from typing_extensions import Literal, TypeAlias
 
-from direct._typing import Vec3OrTuple, Vec4OrTuple
 from direct.directtools.DirectSelection import DirectNodePath
 from direct.showbase.DirectObject import DirectObject
 from direct.showutil.Rope import Rope
 from direct.task.Task import Task
+from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import NodePath, NurbsCurveEvaluator
 
 from .LevelEditor import LevelEditor
 
 _Order: TypeAlias = Literal[1, 2, 3, 4]
-_Vert: TypeAlias = Vec3OrTuple | Vec4OrTuple
+_Vert: TypeAlias = Vec3Like | Vec4Like
 
 class CurveEditor(DirectObject):
     editor: LevelEditor
