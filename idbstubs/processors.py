@@ -214,6 +214,11 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
                 if t1_subtypes_t2:
                     new_types_1[param_1.name] = type_1
                     remove_from_2 = type_1
+                elif not (r1_subtypes_r2 or r2_subtypes_r1):
+                    # This part is different from above: if there's not a
+                    # subtype relationship between the return types, Mypy
+                    # requires we don't have overlapping signatures.
+                    remove_from_2 = type_1
                 else:
                     remove_from_2 = param_1.type
                 if param_1.named:
