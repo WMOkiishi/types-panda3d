@@ -3,7 +3,7 @@ from collections.abc import Iterator, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, SearchPathLike, Vec4Like
+from panda3d._typing import DoubleMat4Like, DoubleVec2Like, DoubleVec3Like, DoubleVec4Like, SearchPathLike, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import Filename, GlobPattern, istream, ostream
 from panda3d.core._express import Namable, TypedReferenceCount
@@ -599,7 +599,7 @@ class EggGroupNode(EggNode):
         group or below have either face or vertex normals defined, false otherwise.
         """
     @staticmethod
-    def is_right(v1: LVecBase2d, v2: LVecBase2d) -> bool:
+    def is_right(v1: DoubleVec2Like, v2: DoubleVec2Like) -> bool:
         """Returns true if the 2-d v1 is to the right of v2."""
     getFirstChild = get_first_child
     getNextChild = get_next_child
@@ -769,7 +769,7 @@ class EggVertexUV(EggNamedObject):
     @overload
     def __init__(self, name: str, uvw: DoubleVec3Like) -> None: ...
     @overload
-    def __init__(self, name: str, uv: LVecBase2d) -> None: ...
+    def __init__(self, name: str, uv: DoubleVec2Like) -> None: ...
     @staticmethod
     def filter_name(name: str) -> str:
         """Returns the actual name that should be set for a given name string.
@@ -791,7 +791,7 @@ class EggVertexUV(EggNamedObject):
         is also legal to call if get_num_dimensions() is 2 (but the last dimension
         will be zero).
         """
-    def set_uv(self, texCoord: LVecBase2d) -> None:
+    def set_uv(self, texCoord: DoubleVec2Like) -> None:
         """Sets the texture coordinate pair.  This makes the texture coordinate a 2-d
         texture coordinate, which is the usual case.
         """
@@ -906,7 +906,7 @@ class EggVertex(EggObject, EggAttributes):
         EggVertexPool::get_forward_vertex(). Presumably, when the vertex pool is
         later filled in, this vertex will be replaced with real data.
         """
-    def set_pos(self, pos: DoubleVec3Like | DoubleVec4Like | LVecBase2d | float) -> None:
+    def set_pos(self, pos: DoubleVec2Like | DoubleVec3Like | DoubleVec4Like | float) -> None:
         """`(self, pos: LPoint2d)`:
         Sets the vertex position.  This variant sets the vertex to a two-
         dimensional value.
@@ -982,7 +982,7 @@ class EggVertex(EggObject, EggAttributes):
         this if has_uv(name) returned false.
         """
     @overload
-    def set_uv(self, texCoord: LVecBase2d) -> None:
+    def set_uv(self, texCoord: DoubleVec2Like) -> None:
         """`(self, texCoord: LTexCoordd)`:
         Replaces the unnamed UV coordinate pair on the vertex with the indicated
         value.
@@ -997,7 +997,7 @@ class EggVertex(EggObject, EggAttributes):
         morphs.
         """
     @overload
-    def set_uv(self, name: str, texCoord: LVecBase2d) -> None: ...
+    def set_uv(self, name: str, texCoord: DoubleVec2Like) -> None: ...
     def clear_uv(self, name: str = ...) -> None:
         """`(self)`:
         Removes all UV coordinate pairs from the vertex.
@@ -1295,7 +1295,7 @@ class EggVertexPool(EggNode):
         usual case, however, the vertex pointer passed in is the one that is saved
         in the vertex pool and returned from this method.
         """
-    def make_new_vertex(self, pos: DoubleVec3Like | DoubleVec4Like | LVecBase2d | float = ...) -> EggVertex:
+    def make_new_vertex(self, pos: DoubleVec2Like | DoubleVec3Like | DoubleVec4Like | float = ...) -> EggVertex:
         """`(self)`:
         Allocates and returns a new vertex from the pool.  This is one of three
         ways to add new vertices to a vertex pool.
@@ -1613,7 +1613,7 @@ class EggTransform:
     def assign(self: Self, copy: Self) -> Self: ...
     def clear_transform(self) -> None:
         """Resets the transform to empty, identity."""
-    def add_translate2d(self, translate: LVecBase2d) -> None:
+    def add_translate2d(self, translate: DoubleVec2Like) -> None:
         """Appends a 2-d translation operation to the current transform."""
     def add_translate3d(self, translate: DoubleVec3Like) -> None:
         """Appends a 3-d translation operation to the current transform."""
@@ -1645,7 +1645,7 @@ class EggTransform:
         """
     @overload
     def add_rotate3d(self, angle: float, axis: DoubleVec3Like) -> None: ...
-    def add_scale2d(self, scale: LVecBase2d) -> None:
+    def add_scale2d(self, scale: DoubleVec2Like) -> None:
         """Appends a possibly non-uniform scale to the current transform."""
     def add_scale3d(self, scale: DoubleVec3Like) -> None:
         """Appends a possibly non-uniform scale to the current transform."""

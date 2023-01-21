@@ -3,7 +3,7 @@ from collections.abc import Callable, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3Like, Vec4Like
+from panda3d._typing import IntVec2Like, IntVec3Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import TypedReferenceCount
 from panda3d.core._gobj import GeomVertexAnimationSpec, Texture
@@ -120,7 +120,7 @@ class ComputeNode(PandaNode):
         assign a shader using a ShaderAttrib.
         """
     @overload
-    def add_dispatch(self, num_groups: LVecBase3i) -> None:
+    def add_dispatch(self, num_groups: IntVec3Like) -> None:
         """Adds a dispatch command with the given number of work groups in the X, Y,
         and Z dimensions.  Any of these values may be set to 1 if the respective
         dimension should not be used.
@@ -131,9 +131,9 @@ class ComputeNode(PandaNode):
         """Returns the number of times add_dispatch has been called on this object."""
     def get_dispatch(self, i: int) -> LVecBase3i:
         """Returns the group counts of the nth dispatch associated with this object."""
-    def set_dispatch(self, i: int, num_groups: LVecBase3i) -> None:
+    def set_dispatch(self, i: int, num_groups: IntVec3Like) -> None:
         """Sets the group counts of the nth dispatch associated with this object."""
-    def insert_dispatch(self, i: int, num_groups: LVecBase3i) -> None:
+    def insert_dispatch(self, i: int, num_groups: IntVec3Like) -> None:
         """Inserts a dispatch command with the given number of work groups in the X,
         Y, and Z dimensions at the given position in the list of dispatch commands.
         Any of these values may be set to 1 if the respective dimension should not
@@ -190,7 +190,7 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
         """Returns the sort of the shadow buffer to be created for this light source."""
     def get_shadow_buffer_size(self) -> LVecBase2i:
         """Returns the size of the shadow buffer to be created for this light source."""
-    def set_shadow_buffer_size(self, size: LVecBase2i) -> None:
+    def set_shadow_buffer_size(self, size: IntVec2Like) -> None:
         """Sets the size of the shadow buffer to be created for this light source."""
     def get_shadow_buffer(self, gsg: GraphicsStateGuardianBase) -> GraphicsOutputBase:
         """Returns the buffer that has been constructed for a given GSG, or NULL if no

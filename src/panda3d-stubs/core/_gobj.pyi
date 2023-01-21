@@ -3,7 +3,19 @@ from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, 
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import (
+    DoubleMat4Like,
+    DoubleVec2Like,
+    DoubleVec3Like,
+    DoubleVec4Like,
+    IntVec2Like,
+    IntVec3Like,
+    IntVec4Like,
+    Mat4Like,
+    Vec2Like,
+    Vec3Like,
+    Vec4Like,
+)
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import Filename, istream, ostream
 from panda3d.core._event import AsyncFuture, AsyncTask
@@ -5377,7 +5389,7 @@ class GeomVertexWriter(GeomEnums):
         It is an error for the write row to advance past the end of data.
         """
     @overload
-    def set_data2f(self, data: LVecBase2f) -> None:
+    def set_data2f(self, data: Vec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5422,7 +5434,7 @@ class GeomVertexWriter(GeomEnums):
         It is an error for the write row to advance past the end of data.
         """
     @overload
-    def set_data2d(self, data: LVecBase2d) -> None:
+    def set_data2d(self, data: DoubleVec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5467,7 +5479,7 @@ class GeomVertexWriter(GeomEnums):
         It is an error for the write row to advance past the end of data.
         """
     @overload
-    def set_data2(self, data: LVecBase2) -> None:
+    def set_data2(self, data: Vec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5512,7 +5524,7 @@ class GeomVertexWriter(GeomEnums):
         It is an error for the write row to advance past the end of data.
         """
     @overload
-    def set_data2i(self, data: LVecBase2i) -> None:
+    def set_data2i(self, data: IntVec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5521,7 +5533,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data2i(self, a: int, b: int) -> None: ...
     @overload
-    def set_data3i(self, data: LVecBase3i) -> None:
+    def set_data3i(self, data: IntVec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5530,7 +5542,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def set_data3i(self, a: int, b: int, c: int) -> None: ...
     @overload
-    def set_data4i(self, data: LVecBase4i) -> None:
+    def set_data4i(self, data: IntVec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -5546,7 +5558,7 @@ class GeomVertexWriter(GeomEnums):
         to the data.
         """
     @overload
-    def add_data2f(self, data: LVecBase2f) -> None:
+    def add_data2f(self, data: Vec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5597,7 +5609,7 @@ class GeomVertexWriter(GeomEnums):
         to the data.
         """
     @overload
-    def add_data2d(self, data: LVecBase2d) -> None:
+    def add_data2d(self, data: DoubleVec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5648,7 +5660,7 @@ class GeomVertexWriter(GeomEnums):
         to the data.
         """
     @overload
-    def add_data2(self, data: LVecBase2) -> None:
+    def add_data2(self, data: Vec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5699,7 +5711,7 @@ class GeomVertexWriter(GeomEnums):
         to the data.
         """
     @overload
-    def add_data2i(self, data: LVecBase2i) -> None:
+    def add_data2i(self, data: IntVec2Like) -> None:
         """Sets the write row to a particular 2-component value, and advances the
         write row.
 
@@ -5709,7 +5721,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data2i(self, a: int, b: int) -> None: ...
     @overload
-    def add_data3i(self, data: LVecBase3i) -> None:
+    def add_data3i(self, data: IntVec3Like) -> None:
         """Sets the write row to a particular 3-component value, and advances the
         write row.
 
@@ -5719,7 +5731,7 @@ class GeomVertexWriter(GeomEnums):
     @overload
     def add_data3i(self, a: int, b: int, c: int) -> None: ...
     @overload
-    def add_data4i(self, data: LVecBase4i) -> None:
+    def add_data4i(self, data: IntVec4Like) -> None:
         """Sets the write row to a particular 4-component value, and advances the
         write row.
 
@@ -8932,7 +8944,7 @@ class Lens(TypedWritableReferenceCount):
     def __copy__(self: Self) -> Self: ...
     def __deepcopy__(self: Self, __memo: object) -> Self: ...
     def make_copy(self) -> Lens: ...
-    def extrude(self, point2d: LVecBase2f | Vec3Like, near_point: Vec3Like, far_point: Vec3Like) -> bool:
+    def extrude(self, point2d: Vec2Like | Vec3Like, near_point: Vec3Like, far_point: Vec3Like) -> bool:
         """`(self, point2d: LPoint2, near_point: LPoint3, far_point: LPoint3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
@@ -8959,7 +8971,7 @@ class Lens(TypedWritableReferenceCount):
         lens.  This exactly reverses project(), assuming the point does fall
         legitimately within the lens.
         """
-    def extrude_vec(self, point2d: LVecBase2f | Vec3Like, vec3d: Vec3Like) -> bool:
+    def extrude_vec(self, point2d: Vec2Like | Vec3Like, vec3d: Vec3Like) -> bool:
         """`(self, point2d: LPoint2, vec3d: LVector3)`:
         Given a 2-d point in the range (-1,1) in both dimensions, where (0,0) is
         the center of the lens and (-1,-1) is the lower-left corner, compute the
@@ -8986,7 +8998,7 @@ class Lens(TypedWritableReferenceCount):
 
         Returns true if the vector is defined, or false otherwise.
         """
-    def project(self, point3d: Vec3Like, point2d: LVecBase2f | Vec3Like) -> bool:
+    def project(self, point3d: Vec3Like, point2d: Vec2Like | Vec3Like) -> bool:
         """`(self, point3d: LPoint3, point2d: LPoint2)`:
         Given a 3-d point in space, determine the 2-d point this maps to, in the
         range (-1,1) in both dimensions, where (0,0) is the center of the lens and
@@ -9034,7 +9046,7 @@ class Lens(TypedWritableReferenceCount):
     def clear(self) -> None:
         """Resets all lens parameters to their initial default settings."""
     @overload
-    def set_film_size(self, film_size: LVecBase2) -> None:
+    def set_film_size(self, film_size: Vec2Like) -> None:
         """`(self, film_size: LVecBase2)`; `(self, width: float, height: float)`:
         Sets the size and shape of the "film" within the lens.  This both
         establishes the units used by calls like set_focal_length(), and
@@ -9063,7 +9075,7 @@ class Lens(TypedWritableReferenceCount):
         set_film_size().
         """
     @overload
-    def set_film_offset(self, film_offset: LVecBase2) -> None:
+    def set_film_offset(self, film_offset: Vec2Like) -> None:
         """Sets the horizontal and vertical offset amounts of this Lens.  These are
         both in the same units specified in set_film_size().
 
@@ -9100,7 +9112,7 @@ class Lens(TypedWritableReferenceCount):
         what you expect to happen.
         """
     @overload
-    def set_fov(self, fov: LVecBase2 | float) -> None:
+    def set_fov(self, fov: Vec2Like | float) -> None:
         """`(self, fov: LVecBase2)`:
         Sets the field of view of the lens in both dimensions.  This establishes
         both the field of view and the aspect ratio of the lens.  This is one way
@@ -9253,7 +9265,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the direction in which the lens is facing."""
     def clear_view_mat(self) -> None:
         """Resets the lens transform to identity."""
-    def set_keystone(self, keystone: LVecBase2) -> None:
+    def set_keystone(self, keystone: Vec2Like) -> None:
         """Indicates the ratio of keystone correction to perform on the lens, in each
         of three axes.  This will build a special non-affine scale factor into the
         projection matrix that will compensate for keystoning of a projected image;

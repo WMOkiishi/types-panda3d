@@ -2,13 +2,13 @@ from _typeshed import Self, StrOrBytesPath
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import DoubleVec3Like, Vec3Like, Vec4Like
+from panda3d._typing import DoubleVec2Like, DoubleVec3Like, Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._audio import AudioSound
 from panda3d.core._display import DisplayRegion, GraphicsOutput
 from panda3d.core._dtoolbase import TypedObject
 from panda3d.core._express import Namable
 from panda3d.core._gobj import InternalName, Lens, Texture, TextureStage, VertexTransform
-from panda3d.core._linmath import LColor, LPoint3, LVecBase2, LVecBase2d, LVecBase2f, LVector3, LVertex
+from panda3d.core._linmath import LColor, LPoint3, LVecBase2, LVector3, LVertex
 from panda3d.core._movies import MovieVideo, MovieVideoCursor
 from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderAttrib, RenderState, TransformState
 from panda3d.core._pnmimage import PfmFile, PNMFileType, PNMImage
@@ -43,11 +43,11 @@ class CardMaker(Namable):
         to show the non-pad region of the texture.
         """
     @overload
-    def set_uv_range(self, ll: LVecBase2f, ur: LVecBase2f) -> None: ...
+    def set_uv_range(self, ll: Vec2Like, ur: Vec2Like) -> None: ...
     @overload
     def set_uv_range(self, x: Vec4Like, y: Vec4Like, z: Vec4Like) -> None: ...
     @overload
-    def set_uv_range(self, ll: LVecBase2f, lr: LVecBase2f, ur: LVecBase2f, ul: LVecBase2f) -> None: ...
+    def set_uv_range(self, ll: Vec2Like, lr: Vec2Like, ur: Vec2Like, ul: Vec2Like) -> None: ...
     @overload
     def set_uv_range(self, ll: Vec3Like, lr: Vec3Like, ur: Vec3Like, ul: Vec3Like) -> None: ...
     def set_uv_range_cube(self, face: int) -> None:
@@ -332,7 +332,7 @@ class GeoMipTerrain(TypedObject):
         future updates, it doesn't flatten the current terrain.
         """
     @overload
-    def set_focal_point(self, fp: DoubleVec3Like | LVecBase2d | LVecBase2f | Vec3Like) -> None:
+    def set_focal_point(self, fp: DoubleVec2Like | DoubleVec3Like | Vec2Like | Vec3Like) -> None:
         """`(self, fp: LPoint2d)`:
         The focal point is the point at which the terrain will have the highest
         quality (lowest level of detail). Parts farther away from the focal point
@@ -700,13 +700,13 @@ class MeshDrawer(TypedObject):
         self,
         v1: Vec3Like,
         c1: Vec4Like,
-        uv1: LVecBase2f,
+        uv1: Vec2Like,
         v2: Vec3Like,
         c2: Vec4Like,
-        uv2: LVecBase2f,
+        uv2: Vec2Like,
         v3: Vec3Like,
         c3: Vec4Like,
-        uv3: LVecBase2f,
+        uv3: Vec2Like,
     ) -> None:
         """Draws a triangle with the given parameters."""
     def particle(self, pos: Vec3Like, frame: Vec4Like, size: float, color: Vec4Like, rotation: float) -> None:
@@ -801,16 +801,16 @@ class MeshDrawer2D(TypedObject):
         self,
         v1: Vec3Like,
         c1: Vec4Like,
-        uv1: LVecBase2f,
+        uv1: Vec2Like,
         v2: Vec3Like,
         c2: Vec4Like,
-        uv2: LVecBase2f,
+        uv2: Vec2Like,
         v3: Vec3Like,
         c3: Vec4Like,
-        uv3: LVecBase2f,
+        uv3: Vec2Like,
         v4: Vec3Like,
         c4: Vec4Like,
-        uv4: LVecBase2f,
+        uv4: Vec2Like,
     ) -> None:
         """Draws a 2D rectangle.  Ignores the clipping rectangle."""
     def rectangle_raw(
@@ -1188,7 +1188,7 @@ class ShaderTerrainMesh(PandaNode):
         @return Target triangle width
         """
     @overload
-    def uv_to_world(self, coord: LVecBase2f) -> LPoint3:
+    def uv_to_world(self, coord: Vec2Like) -> LPoint3:
         """`(self, coord: LTexCoord)`:
         @brief Transforms a texture coordinate to world space
         @details This transforms a texture coordinatefrom uv-space (0 to 1) to world

@@ -3,11 +3,11 @@ from collections.abc import Iterator, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import DoubleMat4Like, DoubleVec3Like, DoubleVec4Like, Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import DoubleMat4Like, DoubleVec2Like, DoubleVec3Like, DoubleVec4Like, Mat4Like, Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import istream, ostream
 from panda3d.core._express import ReferenceCount
-from panda3d.core._linmath import LColorf, LPoint2f, LPoint3f, LPoint4f, LRGBColorf, LVecBase2d, LVecBase2f, LVecBase2i
+from panda3d.core._linmath import LColorf, LPoint2f, LPoint3f, LPoint4f, LRGBColorf, LVecBase2i
 from panda3d.core._mathutil import BoundingHexahedron, StackedPerlinNoise2
 from panda3d.core._putil import TypedWritable
 
@@ -444,7 +444,7 @@ class PfmFile(PNMImageHeader):
         """Returns the 2-component point value at the indicated point.  In a 1-channel
         image, the channel value is in the x component.
         """
-    def set_point2(self, x: int, y: int, point: LVecBase2d | LVecBase2f) -> None:
+    def set_point2(self, x: int, y: int, point: DoubleVec2Like | Vec2Like) -> None:
         """Replaces the 2-component point value at the indicated point.  In a
         1-channel image, the channel value is in the x component.
         """
@@ -480,7 +480,7 @@ class PfmFile(PNMImageHeader):
         """
     def modify_point4(self, x: int, y: int) -> LPoint4f:
         """Returns a modifiable 4-component point value at the indicated point."""
-    def fill(self, value: LVecBase2f | Vec3Like | Vec4Like | float) -> None:
+    def fill(self, value: Vec2Like | Vec3Like | Vec4Like | float) -> None:
         """Fills the table with all of the same value."""
     def fill_nan(self) -> None:
         """Fills the table with all NaN."""
@@ -689,7 +689,7 @@ class PfmFile(PNMImageHeader):
         The return value is true if any points in the table, or false if none are.
         """
     def compute_planar_bounds(
-        self, center: LVecBase2d | LVecBase2f, point_dist: float, sample_radius: float, points_only: bool
+        self, center: DoubleVec2Like | Vec2Like, point_dist: float, sample_radius: float, points_only: bool
     ) -> BoundingHexahedron:
         """Computes the minmax bounding volume of the points in 3-D space, assuming
         the points represent a mostly-planar surface.

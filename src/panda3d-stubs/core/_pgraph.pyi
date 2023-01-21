@@ -3,7 +3,7 @@ from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, 
 from typing import Any, ClassVar, Generic, TypeVar, overload
 from typing_extensions import Final, Literal, Never, TypeAlias, final
 
-from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import Mat4Like, Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._display import DisplayRegion
 from panda3d.core._dtoolbase import TypedObject, TypeHandle
 from panda3d.core._dtoolutil import Filename, istream, ostream
@@ -179,25 +179,25 @@ class TransformState(NodeCachedReferenceCount):
     def make_mat(mat: Mat4Like) -> TransformState:
         """Makes a new TransformState with the specified transformation matrix."""
     @staticmethod
-    def make_pos2d(pos: LVecBase2) -> TransformState:
+    def make_pos2d(pos: Vec2Like) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
     def make_rotate2d(rotate: float) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
-    def make_pos_rotate2d(pos: LVecBase2, rotate: float) -> TransformState:
+    def make_pos_rotate2d(pos: Vec2Like, rotate: float) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
-    def make_scale2d(scale: LVecBase2 | float) -> TransformState:
+    def make_scale2d(scale: Vec2Like | float) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
     def make_shear2d(shear: float) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
-    def make_pos_rotate_scale2d(pos: LVecBase2, rotate: float, scale: LVecBase2) -> TransformState:
+    def make_pos_rotate_scale2d(pos: Vec2Like, rotate: float, scale: Vec2Like) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
-    def make_pos_rotate_scale_shear2d(pos: LVecBase2, rotate: float, scale: LVecBase2, shear: float) -> TransformState:
+    def make_pos_rotate_scale_shear2d(pos: Vec2Like, rotate: float, scale: Vec2Like, shear: float) -> TransformState:
         """Makes a new two-dimensional TransformState with the specified components."""
     @staticmethod
     def make_mat3(mat: LMatrix3) -> TransformState:
@@ -376,7 +376,7 @@ class TransformState(NodeCachedReferenceCount):
         TransformState with its shear component replaced with the indicated value,
         if possible.
         """
-    def set_pos2d(self, pos: LVecBase2) -> TransformState:
+    def set_pos2d(self, pos: Vec2Like) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its pos component replaced with the indicated value.
         """
@@ -385,7 +385,7 @@ class TransformState(NodeCachedReferenceCount):
         TransformState with its rotation component replaced with the indicated
         value, if possible.
         """
-    def set_scale2d(self, scale: LVecBase2) -> TransformState:
+    def set_scale2d(self, scale: Vec2Like) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its scale component replaced with the indicated value,
         if possible.
@@ -4521,14 +4521,14 @@ class NodePath(Generic[_N]):
     @overload
     def get_tex_transform(self, other: NodePath, stage: TextureStage) -> TransformState: ...
     @overload
-    def set_tex_offset(self, stage: TextureStage, uv: LVecBase2) -> None:
+    def set_tex_offset(self, stage: TextureStage, uv: Vec2Like) -> None:
         """Sets a texture matrix on the current node to apply the indicated offset to
         UV's for the given stage.
 
         This call is appropriate for ordinary 2-d texture coordinates.
         """
     @overload
-    def set_tex_offset(self, other: NodePath, stage: TextureStage, uv: LVecBase2) -> None: ...
+    def set_tex_offset(self, other: NodePath, stage: TextureStage, uv: Vec2Like) -> None: ...
     @overload
     def set_tex_offset(self, stage: TextureStage, u: float, v: float) -> None: ...
     @overload
@@ -4543,7 +4543,7 @@ class NodePath(Generic[_N]):
     @overload
     def set_tex_rotate(self, other: NodePath, stage: TextureStage, r: float) -> None: ...
     @overload
-    def set_tex_scale(self, stage: TextureStage, scale: LVecBase2 | Vec3Like | float) -> None:
+    def set_tex_scale(self, stage: TextureStage, scale: Vec2Like | Vec3Like | float) -> None:
         """`(self, other: NodePath, stage: TextureStage, scale: LVecBase2)`; `(self, other: NodePath, stage: TextureStage, su: float, sv: float)`; `(self, stage: TextureStage, scale: LVecBase2)`; `(self, stage: TextureStage, su: float, sv: float)`:
         Sets a texture matrix on the current node to apply the indicated scale to
         UV's for the given stage.
@@ -4569,7 +4569,7 @@ class NodePath(Generic[_N]):
         This call is appropriate for 2-d or 3-d texture coordinates.
         """
     @overload
-    def set_tex_scale(self, other: NodePath, stage: TextureStage, scale: LVecBase2 | Vec3Like | float) -> None: ...
+    def set_tex_scale(self, other: NodePath, stage: TextureStage, scale: Vec2Like | Vec3Like | float) -> None: ...
     @overload
     def set_tex_scale(self, stage: TextureStage, su: float, sv: float, sw: float = ...) -> None: ...
     @overload

@@ -3,12 +3,12 @@ from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Mat4Like, Vec4Like
+from panda3d._typing import IntVec2Like, Mat4Like, Vec2Like, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import TextEncoder, ostream
 from panda3d.core._express import Namable, TypedReferenceCount
 from panda3d.core._gobj import Geom, Texture
-from panda3d.core._linmath import LColor, LMatrix4, LPoint3, LVecBase2, LVecBase2i, LVecBase4, LVector2
+from panda3d.core._linmath import LColor, LMatrix4, LPoint3, LVecBase2i, LVecBase4, LVector2
 from panda3d.core._pgraph import NodePath, PandaNode, RenderState
 from panda3d.core._pnmtext import FreetypeFont
 from panda3d.core._prc import ConfigVariableFilename
@@ -351,7 +351,7 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
         in the generated polygons.  See set_poly_margin().
         """
     @overload
-    def set_page_size(self, page_size: LVecBase2i) -> None:
+    def set_page_size(self, page_size: IntVec2Like) -> None:
         """Sets the x, y size of the textures that are created for the
         DynamicTextFont.
         """
@@ -804,7 +804,7 @@ class TextProperties:
     def has_shadow_color(self) -> bool: ...
     def get_shadow_color(self) -> LColor: ...
     @overload
-    def set_shadow(self, shadow_offset: LVecBase2) -> None:
+    def set_shadow(self, shadow_offset: Vec2Like) -> None:
         """Specifies that the text should be drawn with a shadow, by creating a second
         copy of the text and offsetting it slightly behind the first.
         """

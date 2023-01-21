@@ -3,7 +3,7 @@ from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias, final
 
-from panda3d._typing import Vec4Like
+from panda3d._typing import IntVec2Like, IntVec3Like, Vec4Like
 from panda3d.core._device import InputDevice
 from panda3d.core._dgraph import DataNode
 from panda3d.core._dtoolbase import TypeHandle
@@ -12,7 +12,7 @@ from panda3d.core._event import AsyncFuture
 from panda3d.core._express import ReferenceCount, TypedReferenceCount
 from panda3d.core._gobj import PreparedGraphicsObjects, Shader, Texture, TextureStage
 from panda3d.core._gsgbase import GraphicsOutputBase, GraphicsStateGuardianBase
-from panda3d.core._linmath import LColor, LPoint2i, LVecBase2i, LVecBase3i, LVecBase4, LVector2i
+from panda3d.core._linmath import LColor, LPoint2i, LVecBase2i, LVecBase4, LVector2i
 from panda3d.core._pgraph import CullResult, CullTraverser, Loader, NodePath, PandaNode, SceneSetup, ShaderAttrib, TextureAttrib
 from panda3d.core._pgraphnodes import ShaderGenerator
 from panda3d.core._pipeline import ReMutex, Thread
@@ -632,7 +632,7 @@ class WindowProperties:
     def is_any_specified(self) -> bool:
         """Returns true if any properties have been specified, false otherwise."""
     @overload
-    def set_origin(self, origin: LVecBase2i) -> None:
+    def set_origin(self, origin: IntVec2Like) -> None:
         """Specifies the origin on the screen (in pixels, relative to the top-left
         corner) at which the window should appear.  This is the origin of the top-
         left corner of the useful part of the window, not including decorations.
@@ -656,7 +656,7 @@ class WindowProperties:
     def clear_origin(self) -> None:
         """Removes the origin specification from the properties."""
     @overload
-    def set_size(self, size: LVecBase2i) -> None:
+    def set_size(self, size: IntVec2Like) -> None:
         """Specifies the requested size of the window, in pixels.  This is the size of
         the useful part of the window, not including decorations.
         """
@@ -2866,7 +2866,7 @@ class GraphicsEngine(ReferenceCount):
 
         The return value is true if the operation is successful, false otherwise.
         """
-    def dispatch_compute(self, work_groups: LVecBase3i, sattr: Shader | ShaderAttrib, gsg: GraphicsStateGuardian) -> None:
+    def dispatch_compute(self, work_groups: IntVec3Like, sattr: Shader | ShaderAttrib, gsg: GraphicsStateGuardian) -> None:
         """Asks the indicated GraphicsStateGuardian to dispatch the compute shader in
         the given ShaderAttrib using the given work group counts.  This can act as
         an interface for running a one-off compute shader, without having to store

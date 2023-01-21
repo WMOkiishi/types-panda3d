@@ -3,14 +3,13 @@ from collections.abc import Iterator
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3Like, Vec4Like
+from panda3d._typing import Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._chan import AnimControl
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._event import EventQueue
 from panda3d.core._express import TypedReferenceCount
 from panda3d.core._gobj import TextureStage
-from panda3d.core._linmath import LVecBase2
 from panda3d.core._pgraph import NodePath
 
 _CInterval_State: TypeAlias = Literal[0, 1, 2, 3]
@@ -777,13 +776,13 @@ class CLerpNodePathInterval(CLerpInterval):
         and/or tex_scale.  If this is not set, the default is the default texture
         stage.
         """
-    def set_start_tex_offset(self, tex_offset: LVecBase2) -> None:
+    def set_start_tex_offset(self, tex_offset: Vec2Like) -> None:
         """Indicates the initial UV offset of the lerped node.  This is meaningful
         only if set_end_tex_offset() is also called.  This parameter is optional;
         if unspecified, the value will be taken from the node's actual UV offset at
         the time the lerp is performed.
         """
-    def set_end_tex_offset(self, tex_offset: LVecBase2) -> None:
+    def set_end_tex_offset(self, tex_offset: Vec2Like) -> None:
         """Indicates that the UV offset of the node should be lerped, and specifies
         the final UV offset of the node.  This should be called before
         priv_initialize().  If this is not called, the node's UV offset will not be
@@ -801,13 +800,13 @@ class CLerpNodePathInterval(CLerpInterval):
         priv_initialize().  If this is not called, the node's UV rotate will not be
         affected by the lerp.
         """
-    def set_start_tex_scale(self, tex_scale: LVecBase2) -> None:
+    def set_start_tex_scale(self, tex_scale: Vec2Like) -> None:
         """Indicates the initial UV scale of the lerped node.  This is meaningful only
         if set_end_tex_scale() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual UV scale at the
         time the lerp is performed.
         """
-    def set_end_tex_scale(self, tex_scale: LVecBase2) -> None:
+    def set_end_tex_scale(self, tex_scale: Vec2Like) -> None:
         """Indicates that the UV scale of the node should be lerped, and specifies the
         final UV scale of the node.  This should be called before
         priv_initialize().  If this is not called, the node's UV scale will not be

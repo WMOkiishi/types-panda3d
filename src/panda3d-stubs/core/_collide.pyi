@@ -3,11 +3,11 @@ from collections.abc import MutableSequence, Sequence
 from typing import overload
 from typing_extensions import Literal
 
-from panda3d._typing import Vec3Like, Vec4Like
+from panda3d._typing import Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypedObject
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Datagram, DatagramIterator, Namable, TypedReferenceCount
-from panda3d.core._linmath import LPoint3, LPoint3i, LVecBase2f, LVector3
+from panda3d.core._linmath import LPoint3, LPoint3i, LVector3
 from panda3d.core._mathutil import BoundingVolume, LParabola, LPlane
 from panda3d.core._pgraph import LensNode, NodePath, PandaNode
 from panda3d.core._putil import CollideMask, CopyOnWriteObject, TypedWritableReferenceCount
@@ -1204,7 +1204,7 @@ class CollisionRay(CollisionSolid):
     def set_direction(self, x: float, y: float, z: float) -> None: ...
     def get_direction(self) -> LVector3: ...
     @overload
-    def set_from_lens(self, camera: LensNode, point: LVecBase2f) -> bool:
+    def set_from_lens(self, camera: LensNode, point: Vec2Like) -> bool:
         """`(self, camera: LensNode, point: LPoint2)`:
         Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionRay so that it begins at the LensNode's near plane and extends to
@@ -1317,7 +1317,7 @@ class CollisionSegment(CollisionSolid):
     def set_point_b(self, x: float, y: float, z: float) -> None: ...
     def get_point_b(self) -> LPoint3: ...
     @overload
-    def set_from_lens(self, camera: LensNode, point: LVecBase2f) -> bool:
+    def set_from_lens(self, camera: LensNode, point: Vec2Like) -> bool:
         """`(self, camera: LensNode, point: LPoint2)`:
         Accepts a LensNode and a 2-d point in the range [-1,1].  Sets the
         CollisionSegment so that it begins at the LensNode's near plane and extends

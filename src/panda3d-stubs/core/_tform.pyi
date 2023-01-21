@@ -3,14 +3,14 @@ from collections.abc import Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
+from panda3d._typing import Mat4Like, Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._dgraph import DataNode
 from panda3d.core._display import DisplayRegion
 from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._event import EventHandler, EventParameter, PointerEventList
 from panda3d.core._express import Namable, ReferenceCount, TypedReferenceCount
-from panda3d.core._linmath import LMatrix4, LPoint2, LPoint3, LVecBase2f, LVecBase3, LVecBase4
+from panda3d.core._linmath import LMatrix4, LPoint2, LPoint3, LVecBase3, LVecBase4
 from panda3d.core._pgraph import GeomNode, NodePath, PandaNode
 from panda3d.core._putil import ButtonHandle, ModifierButtons, TypedWritableReferenceCount
 
@@ -838,12 +838,12 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     def get_frame(self) -> LVecBase4:
         """Returns the frame of the MouseWatcher.  See set_frame()."""
     @overload
-    def is_over_region(self, pos: LVecBase2f = ...) -> bool:
+    def is_over_region(self, pos: Vec2Like = ...) -> bool:
         """Returns true if the mouse is over any rectangular region, false otherwise."""
     @overload
     def is_over_region(self, x: float, y: float) -> bool: ...
     @overload
-    def get_over_region(self, pos: LVecBase2f = ...) -> MouseWatcherRegion:
+    def get_over_region(self, pos: Vec2Like = ...) -> MouseWatcherRegion:
         """`(self)`:
         Returns the smallest region the mouse is currently over, or NULL if it is
         over no region.

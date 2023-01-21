@@ -57,6 +57,7 @@ KNOWN_IMPORTS: Final = {
     'overload': 'typing',
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10
     'TypeVar': 'typing',
+    'Union': 'typing',
     'Self': '_typeshed',
     'StrOrBytesPath': '_typeshed',
     'core': 'panda3d',
@@ -64,10 +65,15 @@ KNOWN_IMPORTS: Final = {
 
 # These exist entirely for readability and brevity
 TYPE_ALIASES: Final = {
-    'Vec3Like': 'LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow',
-    'DoubleVec3Like': 'LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow',
-    'Vec4Like': 'LVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | ConfigVariableColor',
-    'DoubleVec4Like': 'LVecBase4d | LMatrix4d.Row | LMatrix4d.CRow',
+    'Vec2Like': 'LVecBase2f | tuple[float, float]',
+    'DoubleVec2Like': 'LVecBase2d | tuple[float, float]',
+    'IntVec2Like': 'LVecBase2i | tuple[int, int]',
+    'Vec3Like': 'LVecBase3f | LMatrix3f.Row | LMatrix3f.CRow | tuple[float, float, float]',
+    'DoubleVec3Like': 'LVecBase3d | LMatrix3d.Row | LMatrix3d.CRow | tuple[float, float, float]',
+    'IntVec3Like': 'LVecBase3i | tuple[int, int, int]',
+    'Vec4Like': 'LVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | tuple[float, float, float, float] | ConfigVariableColor',
+    'DoubleVec4Like': 'LVecBase4d | LMatrix4d.Row | LMatrix4d.CRow | tuple[float, float, float, float]',
+    'IntVec4Like': 'LVecBase4i | tuple[int, int, int, int]',
     'Mat4Like': 'LMatrix4f | UnalignedLMatrix4f',
     'DoubleMat4Like': 'LMatrix4d | UnalignedLMatrix4d',
     'URL': 'URLSpec | str',
@@ -202,10 +208,10 @@ def get_all_coercible(
     that can be automatically coerced to the type with the given name.
     """
     cast_from = {cast_to} | coercion_map[cast_to]
-    for name in tuple(cast_from):  # freeze entries
-        cast_from |= typecast_map[name]
     if (remove := NO_COERCION.get(cast_to)) is not None:
         cast_from -= remove
+    for name in tuple(cast_from):  # freeze entries
+        cast_from |= typecast_map[name]
     if (add := EXTRA_COERCION.get(cast_to)) is not None:
         cast_from |= add
     return cast_from

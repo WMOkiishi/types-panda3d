@@ -483,8 +483,10 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
 
 
 def make_typing_module() -> Module:
-    aliases = [
-        Alias(name, definition, is_type_alias=True)
-        for name, definition in TYPE_ALIASES.items()
-    ]
+    aliases: list[Alias] = []
+    for name, definition in TYPE_ALIASES.items():
+        if 'tuple[' in definition:
+            # Get around a Mypy bug.
+            definition = f"Union[{', '.join(definition.split(' | '))}]"
+        aliases.append(Alias(name, definition, is_type_alias=True))
     return Module('_typing', {'typing': aliases}, namespace=('panda3d',))

@@ -2,7 +2,7 @@ from _typeshed import Self
 from typing import Any, ClassVar, overload
 from typing_extensions import Final, Literal, TypeAlias
 
-from panda3d._typing import Vec3Like, Vec4Like
+from panda3d._typing import Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._audio import AudioSound
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture
@@ -56,7 +56,7 @@ class PGFrameStyle:
     def clear_texture(self) -> None:
         """Removes the texture from the frame."""
     @overload
-    def set_width(self, width: LVecBase2) -> None:
+    def set_width(self, width: Vec2Like) -> None:
         """Sets the width parameter, which has meaning only for certain frame types.
         For instance, this is the width of the bevel for T_bevel_in or T_bevel_out.
         The units are in screen units.
@@ -69,7 +69,7 @@ class PGFrameStyle:
         T_bevel_out.  The units are in screen units.
         """
     @overload
-    def set_uv_width(self, uv_width: LVecBase2) -> None:
+    def set_uv_width(self, uv_width: Vec2Like) -> None:
         """Sets the uv_width parameter, which indicates the amount of the texture that
         is consumed by the inner bevel--the width in texture space of the amount
         indicated by set_width.
@@ -79,7 +79,7 @@ class PGFrameStyle:
     def get_uv_width(self) -> LVecBase2:
         """See set_uv_width()."""
     @overload
-    def set_visible_scale(self, visible_scale: LVecBase2) -> None:
+    def set_visible_scale(self, visible_scale: Vec2Like) -> None:
         """Sets a scale factor on the visible representation of the frame, in the X
         and Y directions.  If this scale factor is other than 1, it will affect the
         size of the visible frame representation within the actual frame border.
