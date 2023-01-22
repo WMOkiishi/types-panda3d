@@ -110,12 +110,15 @@ class Signature:
     parameters: Sequence[Parameter] = field(converter=tuple)
     return_type: str
 
+    @property
+    def param_string(self) -> str:
+        return ', '.join(str(p) for p in self.parameters)
+
     def __str__(self) -> str:
-        param_string = ', '.join(map(str, self.parameters))
         if self.return_type:
-            return f'({param_string}) -> {self.return_type}'
+            return f'({self.param_string}) -> {self.return_type}'
         else:
-            return f'({param_string})'
+            return f'({self.param_string})'
 
     def copy(self, **changes: Any) -> 'Signature':
         if 'parameters' not in changes:
@@ -149,6 +152,26 @@ class Signature:
             names_within(self.return_type),
             flatten(p.get_dependencies() for p in self.parameters),
         )
+
+    def definition(
+            self,
+            *, prefix: str = '',
+            postfix: str = '',
+            indent_level: int = 0) -> Iterator[str]:
+        indent = get_indent(indent_level)
+        next_indent = get_indent(indent_level + 1)
+        sig_def = f'{indent}{prefix}{self}:{postfix}'
+        if len(sig_def) <= 130:
+            yield sig_def
+        else:
+            yield f'{indent}{prefix}('
+            param_string = next_indent + self.param_string
+            if len(param_string) <= 130:
+                yield param_string
+            else:
+                for param in self.parameters:
+                    yield f'{next_indent}{param},'
+            yield f'{indent}) -> {self.return_type}:{postfix}'
 
 
 @define
@@ -191,13 +214,15 @@ class Function:
                     comment_printed = True
                 else:
                     yield f'{indent}@{decorator}'
-            sig_def = f'{indent}def {self.name}{signature}:'
-            if doc_printed or not self.doc:
-                sig_def += ' ...'
+            sig_def = list(signature.definition(
+                prefix=f'def {self.name}',
+                postfix=' ...' if doc_printed or not self.doc else '',
+                indent_level=indent_level,
+            ))
             if self.comment and not comment_printed:
-                sig_def += f'  # {self.comment}'
+                sig_def[0] += f'  # {self.comment}'
                 comment_printed = True
-            yield sig_def
+            yield from sig_def
             if not doc_printed:
                 yield from docstring_lines(self.doc, indent_level=indent_level+1)
                 doc_printed = True
