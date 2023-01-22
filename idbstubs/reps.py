@@ -389,18 +389,16 @@ class File:
 
     def lines(self) -> Iterator[str]:
         yield from self.import_lines()
-        if self.imports and self.nested:
-            yield ''
-        prev_was_class = False
-        first_item = True
+        need_blank_line = bool(self.imports and self.nested)
+        prev_was_function = False
         for item in self.nested:
             is_class = isinstance(item, Class) and not item.is_empty()
-            if (is_class or prev_was_class) and not first_item:
+            is_function = isinstance(item, Function)
+            if need_blank_line or is_class or prev_was_function != is_function:
                 yield ''
-            prev_was_class = is_class
             yield from item.definition()
-            if first_item:
-                first_item = False
+            need_blank_line = is_class or (is_function and item.doc)
+            prev_was_function = is_function
 
     def get_dependencies(self) -> Iterator[str]:
         return flatten(i.get_dependencies() for i in self.nested)
