@@ -1269,7 +1269,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
     def prepend_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
-    def append_path(self, path: ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename) -> None:
+    def append_path(self, path: SearchPathLike) -> None:
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """

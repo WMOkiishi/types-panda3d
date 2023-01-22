@@ -339,6 +339,8 @@ def type_difference(a: str, b: str, /) -> str:
     """Return a string representing the difference between
     the types represented by the given strings.
     """
+    if not (a and b):
+        return a
     expanded_a = expand_type(a)
     expanded_b = expand_type(b)
     result = set(expanded_a)

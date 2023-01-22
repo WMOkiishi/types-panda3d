@@ -5,7 +5,6 @@ from typing_extensions import Final, Literal, TypeAlias
 
 from panda3d._typing import SearchPathLike
 from panda3d.core._dtoolbase import TypeHandle
-from panda3d.core._prc import ConfigVariableFilename, ConfigVariableSearchPath
 
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int
@@ -1248,7 +1247,7 @@ class DSearchPath:
     @property
     def directories(self) -> Sequence[Filename]: ...
     @overload
-    def __init__(self, copy: ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath = ...) -> None: ...
+    def __init__(self, copy: SearchPathLike = ...) -> None: ...
     @overload
     def __init__(self, directory: StrOrBytesPath) -> None: ...
     @overload
@@ -1263,7 +1262,7 @@ class DSearchPath:
     def prepend_directory(self, directory: StrOrBytesPath) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
-    def append_path(self, path: ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename) -> None:
+    def append_path(self, path: SearchPathLike) -> None:
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """
