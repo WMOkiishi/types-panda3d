@@ -7,19 +7,13 @@ from typing import Any, Protocol
 
 from attrs import Factory, define, evolve, field
 
-from .util import (
-    docstring_lines,
-    flatten,
-    indent_lines,
-    is_dunder,
-    names_within,
-)
+from .util import docstring_lines, flatten, get_indent, is_dunder, names_within
 
 
 class StubRep(Protocol):
     name: str
     def get_dependencies(self) -> Iterator[str]: ...
-    def definition(self) -> Iterator[str]: ...
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]: ...
 
 
 @define
@@ -43,8 +37,8 @@ class TypeVariable:
         yield 'TypeVar'
         yield from flatten(names_within(i) for i in self.bounds)
 
-    def definition(self) -> Iterator[str]:
-        yield str(self)
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]:
+        yield get_indent(indent_level) + str(self)
 
 
 @define
@@ -68,11 +62,11 @@ class Alias:
             ('TypeAlias',) if self.is_type_alias else (),
         )
 
-    def definition(self) -> Iterator[str]:
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         if self.comment:
-            yield f'{self}  # {self.comment}'
+            yield f'{get_indent(indent_level)}{self}  # {self.comment}'
         else:
-            yield str(self)
+            yield get_indent(indent_level) + str(self)
 
 
 @define
@@ -86,8 +80,8 @@ class Constant:
     def get_dependencies(self) -> Iterator[str]:
         yield 'Final'
 
-    def definition(self) -> Iterator[str]:
-        yield str(self)
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]:
+        yield get_indent(indent_level) + str(self)
 
 
 @define
@@ -185,18 +179,19 @@ class Function:
             self.decorators(),
         )
 
-    def definition(self) -> Iterator[str]:
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         decorators = self.decorators()
         doc_printed = False
         comment_printed = False
+        indent = get_indent(indent_level)
         for signature in self.signatures:
             for decorator in decorators:
                 if self.comment and not comment_printed:
-                    yield f'@{decorator}  # {self.comment}'
+                    yield f'{indent}@{decorator}  # {self.comment}'
                     comment_printed = True
                 else:
-                    yield '@' + decorator
-            sig_def = f'def {self.name}{signature}:'
+                    yield f'{indent}@{decorator}'
+            sig_def = f'{indent}def {self.name}{signature}:'
             if doc_printed or not self.doc:
                 sig_def += ' ...'
             if self.comment and not comment_printed:
@@ -204,7 +199,7 @@ class Function:
                 comment_printed = True
             yield sig_def
             if not doc_printed:
-                yield from indent_lines(docstring_lines(self.doc))
+                yield from docstring_lines(self.doc, indent_level=indent_level+1)
                 doc_printed = True
 
 
@@ -222,30 +217,30 @@ class Attribute:
     def get_dependencies(self) -> Iterator[str]:
         return names_within(self.type)
 
-    def definition(self) -> Iterator[str]:
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]:
+        indent = get_indent(indent_level)
         if self.read_only:
-            yield '@property'
+            yield indent + '@property'
             if self.type:
-                function_def = f'def {self.name}(self) -> {self.type}:'
+                function_def = f'{indent}def {self.name}(self) -> {self.type}:'
             else:
-                function_def = f'def {self.name}(self):'
+                function_def = f'{indent}def {self.name}(self):'
             if not self.doc:
                 function_def += ' ...'
             if self.comment:
                 function_def += '  # ' + self.comment
             yield function_def
-            doc_indent_level = 4
+            doc_indent_level = indent_level + 1
         else:
             if self.type:
-                attribute_def = f'{self.name}: {self.type}'
+                attribute_def = f'{indent}{self.name}: {self.type}'
             else:
-                attribute_def = f'{self.name} = ...'
+                attribute_def = f'{indent}{self.name} = ...'
             if self.comment:
-                attribute_def += '  # ' + self.comment
+                attribute_def += f'  # {self.comment}'
             yield attribute_def
-            doc_indent_level = 0
-        yield from indent_lines(docstring_lines(self.doc),
-                                level=doc_indent_level)
+            doc_indent_level = indent_level
+        yield from docstring_lines(self.doc, indent_level=doc_indent_level)
 
 
 @define
@@ -273,14 +268,14 @@ class Class:
             flatten(i.get_dependencies() for i in self.body.values()),
         )
 
-    def definition(self) -> Iterator[str]:
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         if self.conditional:
-            yield f'if {self.conditional}:'
-            yield from indent_lines(evolve(self, conditional='').definition())
-            return
+            yield f'{get_indent(indent_level)}if {self.conditional}:'
+            indent_level += 1
+        indent = get_indent(indent_level)
         if self.is_final:
-            yield '@final'
-        declaration = f'class {self.name}'
+            yield indent + '@final'
+        declaration = f'{indent}class {self.name}'
         if self.derivations:
             declaration += f"({', '.join(self.derivations)})"
         declaration += ':'
@@ -293,7 +288,7 @@ class Class:
         if self.comment:
             declaration += f'  # {self.comment}'
         yield declaration
-        yield from indent_lines(docstring_lines(self.doc))
+        yield from docstring_lines(self.doc, indent_level=indent_level+1)
         sorted_nested = sorted(self.body.values(), key=_sort_rep)
         need_blank_line = bool(self.doc)
         for item in sorted_nested:
@@ -301,7 +296,7 @@ class Class:
             if is_class or need_blank_line:
                 yield ''
             need_blank_line = is_class
-            yield from indent_lines(item.definition())
+            yield from item.definition(indent_level=indent_level+1)
 
 
 @define

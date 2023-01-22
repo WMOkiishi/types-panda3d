@@ -18,26 +18,24 @@ def is_dunder(s: str, /) -> bool:
     return s.startswith('__') and s.endswith('__')
 
 
-def indent_lines(lines: Iterable[str], *, level: int = 4) -> Iterator[str]:
-    """Yield each string from the iterable with four spaces prepended.
-    Empty strings are yielded unchanged. The number of spaces prepended
-    can be changed by passing a keyword-only `level` argument.
-    """
-    indentation = ' ' * level
-    for line in lines:
-        yield (indentation + line) if line else ''
+def get_indent(level: int = 1, tab: str = '    ') -> str:
+    return tab * level
 
 
-def docstring_lines(doc: str) -> Iterator[str]:
+def docstring_lines(doc: str, *, indent_level: int = 0) -> Iterator[str]:
     """Yield the lines of a docstring (including quotes)
     with the given contents (excluding quotes).
     """
+    indent = get_indent(indent_level)
     if not doc:
         return
     elif '\n' in doc:
-        yield from f'"""{doc}\n"""'.splitlines()
+        for line in f'"""{doc}\n"""'.splitlines():
+            if line:
+                line = indent + line
+            yield line
     else:
-        yield f'"""{doc}"""'
+        yield f'{indent}"""{doc}"""'
 
 
 def names_within(s: str, /) -> Iterator[str]:
