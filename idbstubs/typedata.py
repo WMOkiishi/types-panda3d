@@ -74,8 +74,8 @@ TYPE_ALIASES: Final = {
     'Vec4Like': 'LVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | tuple[float, float, float, float] | ConfigVariableColor',
     'DoubleVec4Like': 'LVecBase4d | LMatrix4d.Row | LMatrix4d.CRow | tuple[float, float, float, float]',
     'IntVec4Like': 'LVecBase4i | tuple[int, int, int, int]',
-    'Mat4Like': 'LMatrix4f | UnalignedLMatrix4f',
-    'DoubleMat4Like': 'LMatrix4d | UnalignedLMatrix4d',
+    'Mat4Like': 'LMatrix3f | LMatrix4f | UnalignedLMatrix4f',
+    'DoubleMat4Like': 'LMatrix3d | LMatrix4d | UnalignedLMatrix4d',
     'URL': 'URLSpec | str',
     'SearchPathLike': 'ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str'
 }
