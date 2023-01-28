@@ -51,7 +51,7 @@ class LevelEditorBase(DirectObject):
         fSelectTag: bool = ...,
         fResetAncestry: bool = ...,
         fLEPane: bool = ...,
-        fUndo: int = ...,
+        fUndo: bool = ...,
     ) -> None: ...
     def selectedNodePathHook(
         self, nodePath: NodePath, fMultiSelect: bool = ..., fSelectTag: bool = ..., fLEPane: bool = ...
