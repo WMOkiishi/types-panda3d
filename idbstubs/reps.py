@@ -178,32 +178,24 @@ class Signature:
 class Function:
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
-    is_static: bool = field(default=False, kw_only=True)
+    decorators: Sequence[str] = field(default=(), kw_only=True, converter=tuple)
     doc: str = field(default='', kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
-
-    def decorators(self) -> list[str]:
-        """Return a list of the names of the decorators that should be
-        applied to this function's signatures.
-        """
-        decorators: list[str] = []
-        if len(self.signatures) > 1:
-            decorators.append('overload')
-        if self.is_static:
-            decorators.append('staticmethod')
-        return decorators
 
     def __str__(self) -> str:
         return f'Function {self.name!r}'
 
     def get_dependencies(self) -> Iterator[str]:
-        return chain(
-            flatten(s.get_dependencies() for s in self.signatures),
-            self.decorators(),
-        )
+        if len(self.signatures) > 1:
+            yield 'overload'
+        yield from self.decorators
+        for signature in self.signatures:
+            yield from signature.get_dependencies()
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
-        decorators = self.decorators()
+        decorators = self.decorators
+        if len(self.signatures) > 1:
+            decorators = ('overload', *decorators)
         doc_printed = False
         comment_printed = False
         indent = get_indent(indent_level)
