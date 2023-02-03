@@ -124,9 +124,13 @@ def load_data() -> None:
         if idb_type.is_wrapped:
             continue
         if type_is_unscoped_enum(idb_type):
-            values = sorted(e.value for e in idb_type.enum_values)
-            values_str = ', '.join(str(v) for v in values)
-            _enum_definitions[type_name] = f'Literal[{values_str}]' if values else 'int'
+            if 0 < len(idb_type.enum_values) < 25:
+                values = sorted(e.value for e in idb_type.enum_values)
+                values_str = ', '.join(str(v) for v in values)
+                definition = f'Literal[{values_str}]'
+            else:
+                definition = 'int'
+            _enum_definitions[type_name] = definition
             continue
         if idb_type.is_global and not idb_type.is_nested:
             mod_name = idb_type.module_name
