@@ -7,7 +7,7 @@ from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import Datagram, DatagramIterator, LVecBase2f, NetDatagram, QueuedConnectionReader
 
 _NamedMovement: TypeAlias = tuple[
-    str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
+    str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool
 ]
 
 CLUSTER_NONE: Final = 0

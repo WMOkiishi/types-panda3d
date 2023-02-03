@@ -8,11 +8,7 @@ from .ClientRepository import ClientRepository
 
 MESSAGE_TYPES: Final[
     tuple[
-        Literal['avatarOnline'],
-        Literal['avatarOffline'],
-        Literal['create'],
-        Literal['needUberdogCreates'],
-        Literal['transferDo'],
+        Literal['avatarOnline'], Literal['avatarOffline'], Literal['create'], Literal['needUberdogCreates'], Literal['transferDo']
     ]
 ]
 

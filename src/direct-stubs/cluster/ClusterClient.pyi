@@ -23,7 +23,7 @@ from panda3d.core import (
 from .ClusterMsgs import ClusterMsgHandler
 
 _NamedMovement: TypeAlias = tuple[
-    str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool,
+    str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool
 ]
 _TaskCont: TypeAlias = Literal[1]
 
