@@ -346,16 +346,6 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     )
 
 
-def make_enum_alias_rep(idb_type: IDBType) -> Alias:
-    """Return a representation of a type alias
-    for an enum type known to interrogate.
-    """
-    values = sorted(e.value for e in idb_type.enum_values)
-    values_str = ', '.join(str(v) for v in values)
-    definition = f'Literal[{values_str}]' if values else 'int'
-    return Alias(idb_type.name, definition, is_type_alias=True)
-
-
 def make_enum_value_reps(idb_type: IDBType) -> Iterator[Constant]:
     """Return variable representations for an enum type known to interrogate."""
     for enum_value in idb_type.enum_values:
