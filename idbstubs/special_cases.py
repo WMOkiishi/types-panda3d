@@ -117,7 +117,7 @@ TYPE_NAME_OVERRIDES: Final = TrackingMap({
 # If a function with one of these names returns "_object",
 # we can assume a default return type
 DEFAULT_RETURNS: Final = TrackingMap({
-    '__await__': 'Iterator',
+    '__await__': 'Generator[Any, None, Any]',
     '__bytes__': 'bytes',
     '__fspath__': 'str',
     '__iter__': 'Iterator',
