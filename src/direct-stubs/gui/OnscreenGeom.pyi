@@ -11,24 +11,24 @@ from panda3d.core import NodePath, TransformState
 class OnscreenGeom(DirectObject, NodePath):
     def __init__(
         self,
-        geom: NodePath | str | None = ...,
-        pos: Vec3Like | None = ...,
-        hpr: Vec3Like | None = ...,
-        scale: Vec3Like | float | None = ...,
-        color: Vec4Like | None = ...,
-        parent: NodePath | None = ...,
-        sort: int = ...,
+        geom: NodePath | str | None = None,
+        pos: Vec3Like | None = None,
+        hpr: Vec3Like | None = None,
+        scale: Vec3Like | float | None = None,
+        color: Vec4Like | None = None,
+        parent: NodePath | None = None,
+        sort: int = 0,
     ) -> None: ...
     def setGeom(
         self,
         geom: NodePath | str | None,
         parent: NodePath = ...,
-        transform: TransformState | None = ...,
-        sort: int = ...,
-        color: Vec4Like | None = ...,
+        transform: TransformState | None = None,
+        sort: int = 0,
+        color: Vec4Like | None = None,
     ) -> None: ...
     def getGeom(self: Self) -> Self: ...
-    def configure(self, option: Unused = ..., **kw: Any) -> None: ...
+    def configure(self, option: Unused = None, **kw: Any) -> None: ...
     def __setitem__(self, key: str, value: Any) -> None: ...
     def __getitem__(self, option: str) -> Any: ...
     cget = __getitem__

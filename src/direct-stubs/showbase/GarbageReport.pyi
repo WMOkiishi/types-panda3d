@@ -14,7 +14,7 @@ class FakeObject: ...
 class FakeDelObject:
     def __del__(self) -> None: ...
 
-def _createGarbage(num: int = ...) -> None: ...
+def _createGarbage(num: int = 1) -> None: ...
 
 class GarbageReport(Job):
     notify: ClassVar[Notifier]
@@ -31,17 +31,17 @@ class GarbageReport(Job):
     def __init__(
         self,
         name: str,
-        log: bool = ...,
-        verbose: bool = ...,
-        fullReport: bool = ...,
-        findCycles: bool = ...,
-        threaded: bool = ...,
-        doneCallback: Callable[[GarbageReport], object] | None = ...,
-        autoDestroy: bool = ...,
-        priority: int | None = ...,
-        safeMode: bool = ...,
-        delOnly: bool = ...,
-        collect: bool = ...,
+        log: bool = True,
+        verbose: bool = False,
+        fullReport: bool = False,
+        findCycles: bool = True,
+        threaded: bool = False,
+        doneCallback: Callable[[GarbageReport], object] | None = None,
+        autoDestroy: bool = False,
+        priority: int | None = None,
+        safeMode: bool = False,
+        delOnly: bool = False,
+        collect: bool = True,
     ) -> None: ...
     def run(self) -> Generator[Any | None, None, None]: ...
     def getNumCycles(self) -> int: ...
@@ -52,4 +52,4 @@ class GarbageReport(Job):
 class GarbageLogger(GarbageReport): ...
 
 def checkForGarbageLeaks() -> int: ...
-def b_checkForGarbageLeaks(wantReply: bool = ...) -> int: ...
+def b_checkForGarbageLeaks(wantReply: bool = False) -> int: ...

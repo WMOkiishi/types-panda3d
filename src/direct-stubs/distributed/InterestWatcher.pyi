@@ -14,13 +14,13 @@ class InterestWatcher(DirectObject):
         self,
         interestMgr: DoInterestManager,
         name: str,
-        doneEvent: str | None = ...,
-        recurse: bool = ...,
-        start: bool = ...,
-        mustCollect: bool = ...,
-        doCollectionMgr: DoCollectionManager | None = ...,
+        doneEvent: str | None = None,
+        recurse: bool = True,
+        start: bool = True,
+        mustCollect: bool = False,
+        doCollectionMgr: DoCollectionManager | None = None,
     ) -> None: ...
-    def startCollect(self, mustCollect: bool = ...) -> None: ...
+    def startCollect(self, mustCollect: bool = False) -> None: ...
     def stopCollect(self) -> None: ...
     def destroy(self) -> None: ...
     def getName(self) -> str: ...

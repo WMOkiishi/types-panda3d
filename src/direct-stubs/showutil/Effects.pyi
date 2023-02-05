@@ -49,5 +49,5 @@ def createBounce(
     startValues: Sequence[float],
     totalTime: float,
     amplitude: float,
-    bounceType: _BounceType = ...,
+    bounceType: _BounceType = 2,
 ) -> MetaInterval.Sequence: ...

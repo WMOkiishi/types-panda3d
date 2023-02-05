@@ -24,22 +24,22 @@ class ProgressBar:
     label: int
     def __init__(
         self,
-        master=...,
-        orientation: str = ...,
-        min: int = ...,
-        max: int = ...,
-        width: int = ...,
-        height: int = ...,
+        master=None,
+        orientation: str = 'horizontal',
+        min: int = 0,
+        max: int = 100,
+        width: int = 100,
+        height: int = 18,
         doLabel: bool = ...,
-        appearance: str = ...,
-        fillColor: str = ...,
-        background: str = ...,
-        labelColor: str = ...,
-        labelFont: str = ...,
-        labelText: str = ...,
-        labelFormat: str = ...,
-        value: int = ...,
-        bd: int = ...,
+        appearance: str = 'sunken',
+        fillColor: str = 'blue',
+        background: str = 'gray',
+        labelColor: str = 'yellow',
+        labelFont: str = 'Verdana',
+        labelText: str = '',
+        labelFormat: str = '%d%%',
+        value: int = 50,
+        bd: int = 2,
     ) -> None: ...
-    def updateProgress(self, newValue: int, newMax: int | None = ...) -> None: ...
+    def updateProgress(self, newValue: int, newMax: int | None = None) -> None: ...
     def update(self) -> None: ...

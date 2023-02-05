@@ -37,7 +37,7 @@ class FilterManager(DirectObject):
     nextsort: int
     basex: int
     basey: int
-    def __init__(self, win: GraphicsOutput, cam: NodePath[Camera], forcex: int = ..., forcey: int = ...) -> None: ...
+    def __init__(self, win: GraphicsOutput, cam: NodePath[Camera], forcex: int = 0, forcey: int = 0) -> None: ...
     def get_clears(self, region: DrawableRegion) -> list[tuple[bool, LColor]]: ...
     def set_clears(self, region: DrawableRegion, clears: Sequence[tuple[bool, Vec4Like]]) -> None: ...
     def set_stacked_clears(
@@ -47,25 +47,25 @@ class FilterManager(DirectObject):
     def get_scaled_size(self, mul: float, div: float, align: float) -> tuple[int, int]: ...
     def render_scene_into(
         self,
-        depthtex: Texture | None = ...,
-        colortex: Texture | None = ...,
-        auxtex: Texture | None = ...,
-        auxbits: int = ...,
-        textures: Mapping[str, Texture] | None = ...,
-        fbprops: FrameBufferProperties | None = ...,
-        clamping: bool | None = ...,
+        depthtex: Texture | None = None,
+        colortex: Texture | None = None,
+        auxtex: Texture | None = None,
+        auxbits: int = 0,
+        textures: Mapping[str, Texture] | None = None,
+        fbprops: FrameBufferProperties | None = None,
+        clamping: bool | None = None,
     ) -> NodePath | None: ...
     def render_quad_into(
         self,
-        name: str = ...,
-        mul: float = ...,
-        div: float = ...,
-        align: float = ...,
-        depthtex: Texture | None = ...,
-        colortex: Texture | None = ...,
-        auxtex0: Texture | None = ...,
-        auxtex1: Texture | None = ...,
-        fbprops: FrameBufferProperties | None = ...,
+        name: str = 'filter-stage',
+        mul: float = 1,
+        div: float = 1,
+        align: float = 1,
+        depthtex: Texture | None = None,
+        colortex: Texture | None = None,
+        auxtex0: Texture | None = None,
+        auxtex1: Texture | None = None,
+        fbprops: FrameBufferProperties | None = None,
     ) -> NodePath | None: ...
     def create_buffer(
         self,
@@ -73,8 +73,8 @@ class FilterManager(DirectObject):
         xsize: int,
         ysize: int,
         texgroup: tuple[Texture, Texture, Texture, Texture],
-        depthbits: bool = ...,
-        fbprops: FrameBufferProperties | None = ...,
+        depthbits: bool = True,
+        fbprops: FrameBufferProperties | None = None,
     ) -> GraphicsOutput: ...
     def window_event(self, win: Unused) -> None: ...
     def resize_buffers(self) -> None: ...

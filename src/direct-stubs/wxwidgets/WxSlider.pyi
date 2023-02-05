@@ -18,9 +18,9 @@ class WxSlider(wx.Slider, metaclass=sip.wrapper):
         maxValue: float,
         pos=...,
         size=...,
-        style=...,
+        style=4,
         validator=...,
-        name: str = ...,
+        name: str = 'slider',
         textSize: tuple[int, int] = ...,
     ) -> None: ...
     def GetValue(self) -> float: ...

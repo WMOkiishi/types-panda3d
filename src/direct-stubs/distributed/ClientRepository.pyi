@@ -25,12 +25,12 @@ class ClientRepository(ClientRepositoryBase):
     def storeObjectLocation(self, object: DistributedObjectBase, parentId: int, zoneId: int) -> None: ...  # type: ignore[override]
     def createDistributedObject(
         self,
-        className: str | None = ...,
-        distObj: DistributedObjectBase | None = ...,
-        zoneId: int = ...,
-        optionalFields: Sequence[str] | None = ...,
-        doId: int | None = ...,
-        reserveDoId: bool = ...,
+        className: str | None = None,
+        distObj: DistributedObjectBase | None = None,
+        zoneId: int = 0,
+        optionalFields: Sequence[str] | None = None,
+        doId: int | None = None,
+        reserveDoId: bool = False,
     ) -> DistributedObjectBase: ...
     def formatGenerate(self, distObj: DistributedObjectBase, extraFields: Sequence[str] | None) -> Datagram: ...
     def sendDeleteMsg(self, doId: int) -> None: ...

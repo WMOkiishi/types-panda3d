@@ -12,9 +12,9 @@ class TestInterval(Interval):
     def __init__(
         self,
         particleEffect: ParticleEffect,
-        duration: float = ...,
-        parent: NodePath | None = ...,
-        renderParent: NodePath | None = ...,
-        name: str | None = ...,
+        duration: float = 0.0,
+        parent: NodePath | None = None,
+        renderParent: NodePath | None = None,
+        name: str | None = None,
     ) -> None: ...
     def __del__(self) -> None: ...

@@ -21,9 +21,9 @@ class ClassicFSM(DirectObject):
         self,
         name: str,
         states: Iterable[State] = ...,
-        initialStateName: str | None = ...,
-        finalStateName: str | None = ...,
-        onUndefTransition: Literal[0, 1, 2, 3] = ...,
+        initialStateName: str | None = None,
+        finalStateName: str | None = None,
+        onUndefTransition: Literal[0, 1, 2, 3] = 2,
     ) -> None: ...
     def enterInitialState(self, argList: Iterable[Any] = ...) -> None: ...
     def getName(self) -> str: ...

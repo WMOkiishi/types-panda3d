@@ -21,10 +21,10 @@ class IndirectInterval(Interval):
     def __init__(
         self,
         interval: Interval,
-        startT: float = ...,
-        endT: float | None = ...,
-        playRate: float = ...,
-        duration: float | None = ...,
-        blendType: _BlendType = ...,
-        name: str | None = ...,
+        startT: float = 0,
+        endT: float | None = None,
+        playRate: float = 1,
+        duration: float | None = None,
+        blendType: _BlendType = 'noBlend',
+        name: str | None = None,
     ) -> None: ...

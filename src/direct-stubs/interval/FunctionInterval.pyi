@@ -40,35 +40,35 @@ class FunctionInterval(Interval):
         **kw: Any,
     ) -> None: ...
     @staticmethod
-    def makeUniqueName(func: object, suffix: str = ...) -> str: ...
+    def makeUniqueName(func: object, suffix: str = '') -> str: ...
 
 class EventInterval(FunctionInterval):
     def __init__(self, event: str, sentArgs: list[Any] = ...) -> None: ...
 
 class AcceptInterval(FunctionInterval):
-    def __init__(self, dirObj: DirectObject, event: str, function: Callable[..., object], name: str | None = ...) -> None: ...
+    def __init__(self, dirObj: DirectObject, event: str, function: Callable[..., object], name: str | None = None) -> None: ...
 
 class IgnoreInterval(FunctionInterval):
-    def __init__(self, dirObj: DirectObject, event: str, name: str | None = ...) -> None: ...
+    def __init__(self, dirObj: DirectObject, event: str, name: str | None = None) -> None: ...
 
 class ParentInterval(FunctionInterval):
     parentIntervalNum: ClassVar[int]
-    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = ...) -> None: ...
+    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = None) -> None: ...
 
 class WrtParentInterval(FunctionInterval):
     wrtParentIntervalNum: ClassVar[int]
-    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = ...) -> None: ...
+    def __init__(self, nodePath: NodePath, parent: NodePath, name: str | None = None) -> None: ...
 
 class PosInterval(FunctionInterval):
     posIntervalNum: ClassVar[int]
     def __init__(
-        self, nodePath: NodePath, pos: Vec3Like, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
+        self, nodePath: NodePath, pos: Vec3Like, duration: float = 0.0, name: str | None = None, other: NodePath | None = None
     ) -> None: ...
 
 class HprInterval(FunctionInterval):
     hprIntervalNum: ClassVar[int]
     def __init__(
-        self, nodePath: NodePath, hpr: Vec3Like, duration: float = ..., name: str | None = ..., other: NodePath | None = ...
+        self, nodePath: NodePath, hpr: Vec3Like, duration: float = 0.0, name: str | None = None, other: NodePath | None = None
     ) -> None: ...
 
 class ScaleInterval(FunctionInterval):
@@ -77,9 +77,9 @@ class ScaleInterval(FunctionInterval):
         self,
         nodePath: NodePath,
         scale: Vec3Like | float,
-        duration: float = ...,
-        name: str | None = ...,
-        other: NodePath | None = ...,
+        duration: float = 0.0,
+        name: str | None = None,
+        other: NodePath | None = None,
     ) -> None: ...
 
 class PosHprInterval(FunctionInterval):
@@ -89,9 +89,9 @@ class PosHprInterval(FunctionInterval):
         nodePath: NodePath,
         pos: Vec3Like,
         hpr: Vec3Like,
-        duration: float = ...,
-        name: str | None = ...,
-        other: NodePath | None = ...,
+        duration: float = 0.0,
+        name: str | None = None,
+        other: NodePath | None = None,
     ) -> None: ...
 
 class HprScaleInterval(FunctionInterval):
@@ -101,9 +101,9 @@ class HprScaleInterval(FunctionInterval):
         nodePath: NodePath,
         hpr: Vec3Like,
         scale: Vec3Like | float,
-        duration: float = ...,
-        name: str | None = ...,
-        other: NodePath | None = ...,
+        duration: float = 0.0,
+        name: str | None = None,
+        other: NodePath | None = None,
     ) -> None: ...
 
 class PosHprScaleInterval(FunctionInterval):
@@ -114,9 +114,9 @@ class PosHprScaleInterval(FunctionInterval):
         pos: Vec3Like,
         hpr: Vec3Like,
         scale: Vec3Like | float,
-        duration: float = ...,
-        name: str | None = ...,
-        other: NodePath | None = ...,
+        duration: float = 0.0,
+        name: str | None = None,
+        other: NodePath | None = None,
     ) -> None: ...
 
 class Func(FunctionInterval):

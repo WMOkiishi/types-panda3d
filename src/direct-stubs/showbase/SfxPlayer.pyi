@@ -12,17 +12,17 @@ class SfxPlayer:
     def __init__(self) -> None: ...
     def setCutoffDistance(self, d: float) -> None: ...
     def getCutoffDistance(self) -> float: ...
-    def getLocalizedVolume(self, node: NodePath, listenerNode: NodePath | None = ..., cutoff: float | None = ...) -> float: ...
+    def getLocalizedVolume(self, node: NodePath, listenerNode: NodePath | None = None, cutoff: float | None = None) -> float: ...
     def playSfx(
         self,
         sfx: AudioSound,
         looping: bool = ...,
         interrupt: bool = ...,
-        volume: float | None = ...,
-        time: float = ...,
-        node: NodePath | None = ...,
-        listenerNode: NodePath | None = ...,
-        cutoff: float | None = ...,
+        volume: float | None = None,
+        time: float = 0.0,
+        node: NodePath | None = None,
+        listenerNode: NodePath | None = None,
+        cutoff: float | None = None,
     ) -> None: ...
     def setFinalVolume(
         self,
@@ -30,5 +30,5 @@ class SfxPlayer:
         node: NodePath | None,
         volume: float | None,
         listenerNode: NodePath | None,
-        cutoff: float | None = ...,
+        cutoff: float | None = None,
     ) -> None: ...

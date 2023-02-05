@@ -56,9 +56,9 @@ class NonPhysicsWalker(DirectObject):
         self,
         collisionTraverser: CollisionTraverser,
         avatarNodePath: NodePath,
-        avatarRadius: float = ...,
-        floorOffset: float = ...,
-        reach: float = ...,
+        avatarRadius: float = 1.4,
+        floorOffset: float = 1.0,
+        reach: float = 1.0,
     ) -> None: ...
     def deleteCollisions(self) -> None: ...
     def setTag(self, key: str, value: str) -> None: ...
