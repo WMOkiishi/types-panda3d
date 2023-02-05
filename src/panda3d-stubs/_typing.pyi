@@ -1,4 +1,5 @@
-from typing import Union
+from collections.abc import Coroutine, Generator
+from typing import Any, TypeVar, Union
 from typing_extensions import TypeAlias
 
 from panda3d.core._downloader import URLSpec
@@ -23,6 +24,7 @@ from panda3d.core._linmath import (
 )
 from panda3d.core._prc import ConfigVariableFilename, ConfigVariableSearchPath
 
+_T_co = TypeVar('_T_co', covariant=True)
 Vec2Like: TypeAlias = Union[LVecBase2f, tuple[float, float]]
 DoubleVec2Like: TypeAlias = Union[LVecBase2d, tuple[float, float]]
 IntVec2Like: TypeAlias = Union[LVecBase2i, tuple[int, int]]
@@ -36,3 +38,4 @@ Mat4Like: TypeAlias = LMatrix3f | LMatrix4f | UnalignedLMatrix4f
 DoubleMat4Like: TypeAlias = LMatrix3d | LMatrix4d | UnalignedLMatrix4d
 URL: TypeAlias = URLSpec | str
 SearchPathLike: TypeAlias = ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str
+TaskCoroutine: TypeAlias = Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]

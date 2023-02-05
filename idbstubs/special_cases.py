@@ -215,9 +215,14 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'PandaNode::set_python_tag': {(0, 1): 'Any', (0, 2): 'Any'},
     'PythonCallbackObject::PythonCallbackObject': {(0, 1): 'Callable'},
     'PythonCallbackObject::set_function': {(0, 1): 'Callable'},
-    'PythonTask::PythonTask': {(0, 1): 'Callable'},
-    'PythonTask::set_function': {(0, 1): 'Callable'},
-    'PythonTask::set_upon_death': {(0, 1): 'Callable'},
+    'PythonTask::PythonTask': {
+        (0, 1): 'Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any] | None'
+    },
+    'PythonTask::set_args': {(0, 1): 'Sequence[Any] | None'},
+    'PythonTask::set_function': {
+        (0, 1): 'Callable[..., int | TaskCoroutine[int | None] | None] | None'
+    },
+    'PythonTask::set_upon_death': {(0, 1): 'Callable[[], object] | None'},
     'SocketStream::set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'SSReader::set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
     'SSWriter::set_tcp_header_size': {(0, 1): 'Literal[0, 2, 4]'},
@@ -293,8 +298,8 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'PNMImageHeader::PixelSpec::size': 'Literal[4]',
     'PythonCallbackObject::get_function': 'Callable',
     'PythonTask::get_args': 'tuple[Any, ...]',
-    'PythonTask::get_function': 'Callable',
-    'PythonTask::get_upon_death': 'Callable',
+    'PythonTask::get_function': 'Callable[..., int | TaskCoroutine[int | None] | None] | None',
+    'PythonTask::get_upon_death': 'Callable[[], object] | None',
     'Ramfile::get_data': 'bytes',
     'Ramfile::read': 'bytes',
     'Ramfile::readline': 'bytes',

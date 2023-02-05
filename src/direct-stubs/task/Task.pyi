@@ -9,6 +9,7 @@ from direct.directnotify.Notifier import Notifier
 from direct.fsm.StatePush import StateVar
 from direct.showbase.ProfileSession import ProfileSession
 from direct.tkpanels.TaskManagerPanel import TaskManagerPanel
+from panda3d._typing import TaskCoroutine
 from panda3d.core import (
     AsyncFuture,
     AsyncTask,
@@ -91,7 +92,7 @@ class TaskManager:
     def do_method_later(
         self,
         delayTime: float,
-        funcOrTask: AsyncTask,
+        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
         name: str | None,
         extraArgs: Sequence[Any] | None = ...,
         sort: int | None = ...,
@@ -100,29 +101,43 @@ class TaskManager:
         uponDeath: Callable[..., object] | None = ...,
         appendTask: bool = ...,
         owner: _TaskOwner | None = ...,
-    ) -> AsyncTask: ...
+    ) -> PythonTask: ...
     @overload
     def do_method_later(
         self,
         delayTime: float,
-        funcOrTask: Callable,
+        funcOrTask: AsyncTask,
         name: str | None,
-        extraArgs: Sequence[Any] | None = ...,
+        extraArgs: None = ...,
         sort: int | None = ...,
         priority: int | None = ...,
         taskChain: str | None = ...,
         uponDeath: Callable[..., object] | None = ...,
         appendTask: bool = ...,
         owner: _TaskOwner | None = ...,
-    ) -> PythonTask: ...
+    ) -> AsyncTask: ...
     doMethodLater = do_method_later
+    @overload
+    def add(
+        self,
+        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
+        name: str | None = ...,
+        sort: int | None = ...,
+        extraArgs: Sequence[Any] | None = ...,
+        priority: int | None = ...,
+        uponDeath: Callable[..., object] | None = ...,
+        appendTask: bool = ...,
+        taskChain: str | None = ...,
+        owner: _TaskOwner | None = ...,
+        delay: float | None = ...,
+    ) -> PythonTask: ...
     @overload
     def add(
         self,
         funcOrTask: AsyncTask,
         name: str | None = ...,
         sort: int | None = ...,
-        extraArgs: Sequence[Any] | None = ...,
+        extraArgs: None = ...,
         priority: int | None = ...,
         uponDeath: Callable[..., object] | None = ...,
         appendTask: bool = ...,
@@ -130,20 +145,6 @@ class TaskManager:
         owner: _TaskOwner | None = ...,
         delay: float | None = ...,
     ) -> AsyncTask: ...
-    @overload
-    def add(
-        self,
-        funcOrTask: Callable,
-        name: str | None = ...,
-        sort: int | None = ...,
-        extraArgs: Sequence[Any] | None = ...,
-        priority: int | None = ...,
-        uponDeath: Callable[..., object] | None = ...,
-        appendTask: bool = ...,
-        taskChain: str | None = ...,
-        owner: _TaskOwner | None = ...,
-        delay: float | None = ...,
-    ) -> PythonTask: ...
     @overload
     def remove(self, taskOrName: str | AsyncTask) -> bool: ...
     @overload

@@ -39,6 +39,8 @@ BUILTIN_NAMES: Final = frozenset(dir(builtins))
 KNOWN_IMPORTS: Final = {
     'array': 'array',
     'Callable': 'collections.abc',
+    'Coroutine': 'collections.abc',
+    'Generator': 'collections.abc',
     'Iterable': 'collections.abc',
     'Iterator': 'collections.abc',
     'Mapping': 'collections.abc',
@@ -77,7 +79,8 @@ TYPE_ALIASES: Final = {
     'Mat4Like': 'LMatrix3f | LMatrix4f | UnalignedLMatrix4f',
     'DoubleMat4Like': 'LMatrix3d | LMatrix4d | UnalignedLMatrix4d',
     'URL': 'URLSpec | str',
-    'SearchPathLike': 'ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str'
+    'SearchPathLike': 'ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str',
+    'TaskCoroutine': 'Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]',
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))
@@ -89,6 +92,7 @@ for _alias_name in TYPE_ALIASES:
 TYPE_VARIABLES: Final[dict[str, tuple[tuple[str, ...], str]]] = {
     '_N': (('PandaNode',), 'covariant'),
     '_M': (('PandaNode',), 'invariant'),
+    '_T_co': ((), 'covariant'),
 }
 
 
