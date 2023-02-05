@@ -25,8 +25,14 @@ from typing import Any
 
 from direct._typing import Unused
 
-from .thread import TIMEOUT_MAX as TIMEOUT_MAX, allocate_lock as Lock, error as ThreadError, get_ident as get_ident
-from .threading import local as local, stack_size as stack_size
+from .thread import (
+    TIMEOUT_MAX as TIMEOUT_MAX,
+    allocate_lock as Lock,
+    error as ThreadError,
+    get_ident as get_ident,
+    stack_size as stack_size,
+)
+from .threading import local as local
 
 def setprofile(func: Callable[..., Any]) -> None: ...
 def settrace(func: Callable[..., Any]) -> None: ...
