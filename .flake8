@@ -20,16 +20,15 @@
 #   Y042: Type alias names should use CamelCase rather than snake_case.
 #         Some of the enum aliases use snake_case to match the name of a class.
 
-# The direct stubs don't conform to these rules:
+# Ignored until some Mypy bugs are fixed:
 #   Y037: Use PEP 604 syntax instead of 'typing.Union' and 'typing.Optional'.
-#         This will be changed once some Mypy bugs are fixed.
 
 
 [flake8]
 extend-ignore = E501
 per-file-ignores =
     src/direct-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, F822, Y037
-    src/panda3d-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, Y021, Y042
+    src/panda3d-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, Y021, Y042, Y037
 
 extend-exclude = venv
 
