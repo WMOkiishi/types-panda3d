@@ -35,6 +35,6 @@ jobs:
         uses: jakebailey/pyright-action@v1
         with:
           extra-args: idbstubs tests
-          version: 1.1.288
+          version: 1.1.292
           python-platform: ${{ matrix.python-platform }}
           python-version: ${{ matrix.python-version }}
