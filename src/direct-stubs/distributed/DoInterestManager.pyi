@@ -1,7 +1,6 @@
-from _typeshed import Self
 from collections.abc import Callable
 from typing import ClassVar, Protocol
-from typing_extensions import Final
+from typing_extensions import Final, Self
 
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.DistributedObject import DistributedObject
@@ -45,7 +44,7 @@ class InterestState:
 class InterestHandle:
     def __init__(self, id: int) -> None: ...
     def asInt(self) -> int: ...
-    def __eq__(self: Self, other: Self | int) -> bool: ...  # type: ignore[override]
+    def __eq__(self, other: Self | int) -> bool: ...  # type: ignore[override]
 
 class DoInterestManager(DirectObject):
     notify: ClassVar[Notifier]

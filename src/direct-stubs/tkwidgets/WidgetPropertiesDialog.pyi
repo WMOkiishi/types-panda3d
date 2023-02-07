@@ -1,10 +1,9 @@
 __all__ = ['WidgetPropertiesDialog']
 
 import tkinter
-from _typeshed import Self
 from collections.abc import Iterable
 from typing import Any
-from typing_extensions import TypeAlias
+from typing_extensions import Self, TypeAlias
 
 import Pmw  # type: ignore[import]
 
@@ -23,7 +22,7 @@ class WidgetPropertiesDialog(tkinter.Toplevel):
         parent: tkinter.Misc | None = None,
         title: str = 'Widget Properties',
     ) -> None: ...
-    def body(self: Self, master: tkinter.Misc | None) -> Pmw.EntryField | Self: ...
+    def body(self, master: tkinter.Misc | None) -> Pmw.EntryField | Self: ...
     def modified(self, widget, entry, property: str, type, fNone: bool) -> None: ...
     def buttonbox(self) -> None: ...
     def realOrNone(self, val: str): ...

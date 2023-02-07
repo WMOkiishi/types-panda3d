@@ -1,7 +1,7 @@
-from _typeshed import Self, SupportsWrite
+from _typeshed import SupportsWrite
 from collections.abc import Callable, Collection, Container, Generator, Iterable, Mapping, MutableSequence, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
-from typing_extensions import Never, TypeAlias
+from typing_extensions import Never, Self, TypeAlias
 
 from direct._typing import AnyReal, SimpleCallback
 from direct.tkwidgets.Valuator import ValuatorGroupPanel
@@ -132,7 +132,7 @@ def uniqueName(name: object) -> str: ...
 
 class EnumIter:
     def __init__(self, enum: Enum) -> None: ...
-    def __iter__(self: Self) -> Self: ...
+    def __iter__(self) -> Self: ...
     def __next__(self) -> int: ...
     next = __next__
 
