@@ -68,11 +68,6 @@ def main() -> int:
         'direct.directbase.ThreeUpStart',
         'direct.directbase.TestStart',
         'direct.directutil.MemoryLeakHelpers',
-        'direct.p3d.packp3d',
-        'direct.p3d.pdeploy',
-        'direct.p3d.pmerge',
-        'direct.p3d.ppackage',
-        'direct.p3d.ppatcher',
     })
     sys.argv += args
     return mypy.stubtest.main()

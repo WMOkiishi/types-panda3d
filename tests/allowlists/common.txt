@@ -4,6 +4,7 @@ direct.directdevices.DirectJoybox
 direct.directutil.DirectMySQLdb
 direct.directutil.DirectMySQLdbConnection
 direct.showbase.ProfileSession
+direct.p3d.p(ackp3d|deploy|merge|package|patcher)
 
 # Variables not meant to be exported
 direct.cluster.ClusterClient.ClientConfigs
