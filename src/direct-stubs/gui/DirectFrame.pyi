@@ -9,7 +9,7 @@ from panda3d.core import NodePath, Texture
 from .DirectGuiBase import DirectGuiWidget
 
 _MaybeGeom: TypeAlias = NodePath | str | None
-_MaybeImage: TypeAlias = Union[NodePath, Texture, tuple[str, str], str, None]
+_MaybeImage: TypeAlias = NodePath | Texture | tuple[str, str] | str | None
 
 class DirectFrame(DirectGuiWidget):
     DefDynGroups: ClassVar[tuple[Literal['text'], Literal['geom'], Literal['image']]]

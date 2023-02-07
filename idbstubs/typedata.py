@@ -59,7 +59,6 @@ KNOWN_IMPORTS: Final = {
     'overload': 'typing',
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10
     'TypeVar': 'typing',
-    'Union': 'typing',
     'Self': '_typeshed',
     'StrOrBytesPath': '_typeshed',
     'core': 'panda3d',
