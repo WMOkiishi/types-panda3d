@@ -2,6 +2,48 @@
 direct.leveleditor.testData
 direct.wxwidgets.WxPandaStart
 
+# Metaclass issues
+direct.leveleditor.AnimControlUI.AnimControlUI
+direct.leveleditor.AnimControlUI.TimeRange
+direct.leveleditor.AnimControlUI.TimeSlider
+direct.leveleditor.CurveAnimUI.CurveAnimUI
+direct.leveleditor.GraphEditorUI.GraphEditorUI
+direct.leveleditor.GraphEditorUI.GraphEditorWindow
+direct.leveleditor.HotKeyUI.EditHotKeyDialog
+direct.leveleditor.HotKeyUI.HotKeyPanel
+direct.leveleditor.HotKeyUI.HotKeyUI
+direct.leveleditor.LayerEditorUI.LayerEditorUI
+direct.leveleditor.LevelEditorUI.LevelEditorUI
+direct.leveleditor.LevelEditorUIBase.CurveDegreeUI
+direct.leveleditor.LevelEditorUIBase.GridSizeUI
+direct.leveleditor.LevelEditorUIBase.LevelEditorUIBase
+direct.leveleditor.LevelEditorUIBase.PandaTextDropTarget
+direct.leveleditor.LevelEditorUIBase.ViewportMenu
+direct.leveleditor.MayaConverter.MayaConverter
+direct.leveleditor.ObjectPaletteUI.ObjectPaletteUI
+direct.leveleditor.ObjectPropertyUI.AnimFileDrop
+direct.leveleditor.ObjectPropertyUI.ColorPicker
+direct.leveleditor.ObjectPropertyUI.ObjectPropUI
+direct.leveleditor.ObjectPropertyUI.ObjectPropUICheck
+direct.leveleditor.ObjectPropertyUI.ObjectPropUICombo
+direct.leveleditor.ObjectPropertyUI.ObjectPropUIEntry
+direct.leveleditor.ObjectPropertyUI.ObjectPropUIRadio
+direct.leveleditor.ObjectPropertyUI.ObjectPropUISlider
+direct.leveleditor.ObjectPropertyUI.ObjectPropUISpinner
+direct.leveleditor.ObjectPropertyUI.ObjectPropUITime
+direct.leveleditor.ObjectPropertyUI.ObjectPropertyUI
+direct.leveleditor.PaletteTreeCtrl.PaletteTreeCtrl
+direct.leveleditor.ProtoObjsUI.ProtoDropTarget
+direct.leveleditor.ProtoPaletteUI.ProtoPaletteUI
+direct.leveleditor.ProtoPaletteUI.UniversalDropTarget
+direct.leveleditor.SceneGraphUIBase.SceneGraphUIDropTarget
+direct.wxwidgets.ViewPort.Viewport
+direct.wxwidgets.WxAppShell.WxAppShell
+direct.wxwidgets.WxPandaShell.WxPandaShell
+direct.wxwidgets.WxPandaWindow.EmbeddedPandaWindow
+direct.wxwidgets.WxPandaWindow.OpenGLPandaWindow
+direct.wxwidgets.WxSlider.WxSlider
+
 
 # ====================================
 # Variables imported with star imports
@@ -9,7 +51,9 @@ direct.wxwidgets.WxPandaStart
 
 # From wx.lib.agw.cubecolourdialog
 direct.leveleditor.LevelEditorUIBase.(pi|colourAttributes|colourMaxValues|HTMLCodes)  # Through direct.leveleditor.ObjectPropertyUI
+direct.leveleditor.LevelEditorUIBase.(Vertex|Top|Left|Right|checkColour|HSVWheelImage|RGBCubeImage)  # Through direct.leveleditor.ObjectPropertyUI
 direct.leveleditor.ObjectPropertyUI.(pi|colourAttributes|colourMaxValues|HTMLCodes|[A-Z_]+)
+direct.leveleditor.ObjectPropertyUI.(Vertex|Top|Left|Right|checkColour|HSVWheelImage|RGBCubeImage)
 
 # From direct.directtools.DirectGlobals
 direct.leveleditor.CurveEditor.[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
@@ -17,9 +61,18 @@ direct.leveleditor.LevelEditorBase.[A-Z_]+  # Through direct.leveleditor.CurveEd
 direct.leveleditor.LevelEditorUIBase.(?!ID_)[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
 direct.wxwidgets.WxPandaShell.[A-Z_]+
 
+# From direct.interval.IntervalManager (through direct.interval.IntervalGlobal)
+direct.leveleditor.AnimControlUI.ivalMgr
+direct.leveleditor.AnimMgr.ivalMgr  # Through direct.leveleditor.AnimMgrBase
+direct.leveleditor.AnimMgrBase.ivalMgr
+direct.leveleditor.CurveAnimUI.ivalMgr
+direct.leveleditor.LevelEditorUIBase.ivalMgr  # Through direct.leveleditor.CurveAnimUI
+
 # Other
 direct.leveleditor.LevelEditor.(?!LevelEditor$)\w+  # From various through direct.leveleditor.LevelEditorBase/LevelEditorUI
 direct.leveleditor.LevelEditorBase.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)  # From direct.gui.DirectGui
 direct.leveleditor.LevelEditorUI.(?!LevelEditorUI$)\w+  # From various through direct.leveleditor.LevelEditorUIBase
+direct.leveleditor.LevelEditorUIBase.(First|Last|Next|Pre)(Key)?Frame  # From direct.leveleditor.AnimControlUI
+direct.leveleditor.LevelEditorUIBase.(PrePlay|Play|Key|Stop|DeleteKey)  # From direct.leveleditor.AnimControlUI
 direct.leveleditor.LevelEditorUIBase.ID_(FOUR|FRONT|LEFT|PERSP|TOP)_VIEW  # From direct.wxwidgets.WxPandaShell
-direct.leveleditor.LevelEditorUIBase.property  # From direct.leveleditor.GraphEditorUI
+direct.leveleditor.LevelEditorUIBase.(property|ZoomIn|ZoomOut|OneTangent|TwoTangents)  # From direct.leveleditor.GraphEditorUI

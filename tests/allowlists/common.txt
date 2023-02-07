@@ -7,14 +7,8 @@ direct.showbase.ProfileSession
 
 # Variables not meant to be exported
 direct.cluster.ClusterClient.ClientConfigs
-direct.controls.GravityWalker.CollisionHandlerRayStart
-direct.controls.NonPhysicsWalker.CollisionHandlerRayStart
-direct.controls.PhysicsWalker.CollisionHandlerRayStart
-direct.directtools.DirectSession.COA_ORIGIN
-direct.distributed.DistributedSmoothNode.cont
 direct.distributed.NetMessenger.i
 direct.particles.ForceGroup.physicsMgr
-direct.particles.GlobalForceGroup.physicsMgr
 
 # For some reason, Mypy checks the arguments for __init__ differently than
 # other methods.
@@ -109,6 +103,11 @@ direct.cluster.ClusterServer.(MsgName2Id|MsgId2Names|[A-Z_23]+)
 direct.directdevices.DirectFastrak.ANALOG_(MIN|MAX|DEADBAND|CENTER)
 direct.directdevices.DirectRadamec.ANALOG_(MIN|MAX|DEADBAND|CENTER)
 
+# From direct.directnotify.DirectNotifyGlobal
+direct.controls.TwoDWalker.directNotify  # Through direct.controls.GravityWalker
+direct.distributed.SampleObject.directNotify
+direct.showbase.PhasedObject.directNotify
+
 # From direct.directtools.DirectGlobals
 direct.directtools.DirectCameraControl.(?!CAM|COA|Y_AXIS)[A-Z_]+
 direct.directtools.DirectGeometry.[A-Z_]+
@@ -120,10 +119,10 @@ direct.directtools.DirectUtil.(?!ROUND|CLAMP)[A-Z_]+
 direct.directutil.Mopath.[A-Z_]+  # Through direct.directtools.DirectGeometry
 
 # From direct.distributed.ClockDelta
-direct.distributed.ClientRepositoryBase.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
-direct.distributed.DistributedSmoothNode.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
-direct.distributed.DistributedSmoothNodeBase.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
-direct.distributed.TimeManagerAI.(NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
+direct.distributed.ClientRepositoryBase.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
+direct.distributed.DistributedSmoothNode.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
+direct.distributed.DistributedSmoothNodeBase.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
+direct.distributed.TimeManagerAI.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
 
 # From direct.distributed.MsgTypes
 direct.distributed.ClientRepositoryBase.(MsgName2Id|MsgId2Names|[A-Z_23]+)
@@ -134,7 +133,14 @@ direct.distributed.PyDatagram.(MsgName2Id|MsgId2Names|[A-Z_23]+)
 direct.distributed.ClientRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
 direct.distributed.ServerRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
 
+# From direct.showbase.InputStateGlobal (through direct.interval.IntervalGlobal)
+direct.directtools.DirectSession.ivalMgr
+direct.distributed.DistributedCamera.ivalMgr
+direct.distributed.DistributedCartesianGrid.ivalMgr
+direct.showutil.Effects.ivalMgr
+
 # Other
 direct.controls.TwoDWalker.CollisionHandlerRayStart  # From direct.controls.GravityWalker
+direct.controls.TwoDWalker.inputState  # From direct.showbase.InputStateGlobal through direct.controls.GravityWalker
 direct.distributed.DoInterestManager.(rad(90|180|270|360)|GoldenRatio)  # From direct.showbase.PythonUtil
 direct.gui.DirectCheckBox.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)  # From direct.gui.DirectGui
