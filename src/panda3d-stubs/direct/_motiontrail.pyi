@@ -1,4 +1,4 @@
-from _typeshed import Self
+from typing_extensions import Self
 
 from panda3d._typing import Mat4Like, Vec4Like
 from panda3d.core._express import TypedReferenceCount
@@ -35,8 +35,8 @@ class CMotionTrail(TypedReferenceCount):
 
     def __init__(self, __param0: CMotionTrail = ...) -> None:
         """Constructor"""
-    def __copy__(self: Self) -> Self: ...
-    def __deepcopy__(self: Self, __memo: object) -> Self: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
     def reset(self) -> None:
         """Reset the frame sample history."""
     def reset_vertex_list(self) -> None:

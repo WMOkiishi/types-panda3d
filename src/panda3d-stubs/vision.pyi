@@ -1,6 +1,7 @@
-from _typeshed import Self, StrOrBytesPath
+from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar
+from typing_extensions import Self
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture
@@ -22,8 +23,8 @@ class ARToolKit:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: ARToolKit) -> None: ...
-    def __copy__(self: Self) -> Self: ...
-    def __deepcopy__(self: Self, __memo: object) -> Self: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
     @staticmethod
     def make(camera: NodePath[Camera], paramfile: StrOrBytesPath, markersize: float) -> ARToolKit:
         """Create a new ARToolKit instance.

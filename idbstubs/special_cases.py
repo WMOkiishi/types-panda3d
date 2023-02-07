@@ -403,8 +403,11 @@ EXTRA_COERCION: Final = TrackingMap({
 
 # This adds comments to ignore Mypy errors
 IGNORE_ERRORS: Final = TrackingMap({
+    'AsyncTask': 'misc',
+    'AsyncTaskSequence': 'misc',
     'DatagramBuffer': 'misc',
     'DynamicTextFont': 'misc',
+    'GeomVertexArrayData': 'misc',
     'GeomVertexRewriter': 'misc',
     'GeomVertexRewriter::operator =': 'override',
     'GeometricBoundingVolume::contains': 'override',
@@ -431,10 +434,12 @@ IGNORE_ERRORS: Final = TrackingMap({
     'PGItem::get_state': 'override',
     'PGItem::set_state': 'override',
     'PGScrollFrame::setup': 'override',
+    'ShaderBuffer': 'misc',
     'Socket_UDP::SendTo': 'override',
     'SocketStream': 'misc',
     'SocketStream::flush': 'override',
     'StreamWrapper': 'misc',
+    'TextNode': 'misc',
     'TextNode::get_transform': 'override',
     'TextNode::set_transform': 'override',
     'TextNode::transform': 'assignment',
@@ -449,8 +454,13 @@ IGNORE_ERRORS: Final = TrackingMap({
     'std::iostream': 'misc',
     'EggData::recompute_polygon_normals': 'override',
     'EggData::recompute_vertex_normals': 'override',
+    'EggGroup': 'misc',
     'EggGroup::write': 'override',
+    'EggNamedObject': 'misc',
+    'EggPrimitive': 'misc',
+    'EggTexture': 'misc',
     'EggTexture::write': 'override',
+    'EggVertex': 'misc',
     'EggVertex::compare_to': 'override',
     'EggVertex::sorts_less_than': 'override',
 })

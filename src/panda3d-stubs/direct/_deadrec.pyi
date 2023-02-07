@@ -1,6 +1,5 @@
-from _typeshed import Self
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias
 
 from panda3d._typing import Vec3Like
 from panda3d.core._dtoolutil import ostream
@@ -34,8 +33,8 @@ class SmoothMover:
     PMOn: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: SmoothMover = ...) -> None: ...
-    def __copy__(self: Self) -> Self: ...
-    def __deepcopy__(self: Self, __memo: object) -> Self: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
     @overload
     def set_pos(self, pos: Vec3Like) -> bool:
         """Specifies the position of the SmoothMover at a particular time in the past.

@@ -1,5 +1,5 @@
-from _typeshed import Self
 from typing import Any, ClassVar
+from typing_extensions import Self
 
 from panda3d.core._dtoolbase import TypedObject
 
@@ -13,8 +13,8 @@ class BasicSkel:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: BasicSkel = ...) -> None: ...
-    def __copy__(self: Self) -> Self: ...
-    def __deepcopy__(self: Self, __memo: object) -> Self: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
     def set_value(self, n: int) -> None:
         """These inline functions allow you to get and set _value."""
     def get_value(self) -> int:

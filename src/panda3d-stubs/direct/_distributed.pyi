@@ -1,6 +1,5 @@
-from _typeshed import Self
 from typing import Any, ClassVar
-from typing_extensions import Literal
+from typing_extensions import Literal, Self
 
 from panda3d._typing import URL
 from panda3d.core._downloader import HTTPChannel, SocketStream
@@ -258,8 +257,8 @@ class CDistributedSmoothNodeBase:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: CDistributedSmoothNodeBase = ...) -> None: ...
-    def __copy__(self: Self) -> Self: ...
-    def __deepcopy__(self: Self, __memo: object) -> Self: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
     def set_repository(self, repository: CConnectionRepository, is_ai: bool, ai_id: int) -> None:
         """Tells the C++ instance definition about the AI or Client repository, used
         for sending datagrams.

@@ -57,9 +57,9 @@ KNOWN_IMPORTS: Final = {
     'Never': 'typing_extensions',  # Introduced in 3.11
     'NoReturn': 'typing',
     'overload': 'typing',
+    'Self': 'typing_extensions',  # Introduced in 3.11
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10
     'TypeVar': 'typing',
-    'Self': '_typeshed',
     'StrOrBytesPath': '_typeshed',
     'core': 'panda3d',
 }

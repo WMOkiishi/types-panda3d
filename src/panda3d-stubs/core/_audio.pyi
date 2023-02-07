@@ -1,6 +1,6 @@
-from _typeshed import Self, StrOrBytesPath
+from _typeshed import StrOrBytesPath
 from typing import overload
-from typing_extensions import Final, Literal, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias
 
 from panda3d._typing import Vec3Like
 from panda3d.core._dtoolutil import Filename, ostream
@@ -13,8 +13,8 @@ _AudioManager_SpeakerModeCategory: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8
 
 class FilterProperties(TypedReferenceCount):
     def __init__(self, __param0: FilterProperties = ...) -> None: ...
-    def __copy__(self: Self) -> Self: ...
-    def __deepcopy__(self: Self, __memo: object) -> Self: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
     def clear(self) -> None:
         """Removes all DSP postprocessing."""
     def add_lowpass(self, cutoff_freq: float, resonance_q: float) -> None:

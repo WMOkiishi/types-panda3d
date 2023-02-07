@@ -153,18 +153,12 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
         yield method
     if type_has_copy_constructor(idb_type):
         if not got_copy:
-            yield Function(
-                '__copy__',
-                [Signature([Parameter('self', 'Self')], 'Self')],
-            )
+            yield Function('__copy__', [Signature([Parameter('self')], 'Self')])
         if not got_deepcopy:
             yield Function(
                 '__deepcopy__',
                 [Signature(
-                    [
-                        Parameter('self', 'Self'),
-                        Parameter('memo', 'object', named=False),
-                    ],
+                    [Parameter('self'), Parameter('memo', 'object', named=False)],
                     'Self',
                 )],
             )

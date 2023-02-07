@@ -274,10 +274,9 @@ def process_function(function: Function, *, class_name: str | None = None) -> No
             other_param.named = False
         case Function(
             name='assign',
-            signatures=[Signature([self_param, copy_param], return_type) as sig],
+            signatures=[Signature([_, copy_param], return_type) as sig],
         ) if return_type == class_name:
             sig.return_type = 'Self'
-            self_param.type = 'Self'
             if copy_param.type == class_name:
                 copy_param.type = 'Self'
         case Function(
@@ -285,7 +284,6 @@ def process_function(function: Function, *, class_name: str | None = None) -> No
             signatures=[Signature(return_type=return_type), *_] as signatures,
         ) if name in RETURN_SELF and return_type in (class_name, ''):
             for sig in signatures:
-                sig.parameters[0].type = 'Self'
                 sig.return_type = 'Self'
 
 
@@ -426,14 +424,8 @@ def process_vector_class(vector: Class) -> None:
     for name in RETURN_SELF_IN_VECTORS & class_body.keys():
         match class_body[name]:
             case Function(signatures=[
-                Signature(
-                    parameters=[
-                        Parameter() as self_param, *_
-                    ],
-                    return_type=return_type,
-                ) as sig
+                Signature(return_type=return_type) as sig
             ]) if return_type in replaceable_names:
-                self_param.type = 'Self'
                 sig.return_type = 'Self'
     match class_body.get('__len__'):
         case Function(signatures=[Signature() as sig]):
