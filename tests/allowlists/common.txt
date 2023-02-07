@@ -134,6 +134,10 @@ direct.distributed.PyDatagram.(MsgName2Id|MsgId2Names|[A-Z_23]+)
 direct.distributed.ClientRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
 direct.distributed.ServerRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
 
+# From direct.interval.IntervalManager (through direct.interval.IntervalGlobal)
+direct.leveleditor.AnimMgr.ivalMgr  # Through direct.leveleditor.AnimMgrBase
+direct.leveleditor.AnimMgrBase.ivalMgr
+
 # From direct.showbase.InputStateGlobal (through direct.interval.IntervalGlobal)
 direct.directtools.DirectSession.ivalMgr
 direct.distributed.DistributedCamera.ivalMgr

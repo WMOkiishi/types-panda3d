@@ -44,6 +44,11 @@ direct.wxwidgets.WxPandaWindow.EmbeddedPandaWindow
 direct.wxwidgets.WxPandaWindow.OpenGLPandaWindow
 direct.wxwidgets.WxSlider.WxSlider
 
+# These are required for the GitHub workflow, but not on my machine. I don't know why.
+(direct.leveleditor.CurveEditor.base)?
+(direct.leveleditor.LevelEditorBase.base)?
+(direct.leveleditor.LevelEditorUIBase.base)?
+
 
 # ====================================
 # Variables imported with star imports
@@ -63,8 +68,6 @@ direct.wxwidgets.WxPandaShell.[A-Z_]+
 
 # From direct.interval.IntervalManager (through direct.interval.IntervalGlobal)
 direct.leveleditor.AnimControlUI.ivalMgr
-direct.leveleditor.AnimMgr.ivalMgr  # Through direct.leveleditor.AnimMgrBase
-direct.leveleditor.AnimMgrBase.ivalMgr
 direct.leveleditor.CurveAnimUI.ivalMgr
 direct.leveleditor.LevelEditorUIBase.ivalMgr  # Through direct.leveleditor.CurveAnimUI
 
