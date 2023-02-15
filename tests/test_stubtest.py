@@ -56,7 +56,7 @@ def main() -> int:
         allowlists.append(version_allowlist)
     if platform_allowlist.exists():
         allowlists.append(platform_allowlist)
-    args = ['panda3d', 'direct']
+    args = ['panda3d', 'direct', '--mypy-config-file', '../pyproject.toml']
     for allowlist in allowlists:
         args += [
             '--allowlist',

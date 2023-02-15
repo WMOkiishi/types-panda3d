@@ -9,7 +9,7 @@ from direct._typing import Unused
 
 from .FSM import FSM
 
-_T = TypeVarTuple('_T')  # type: ignore[misc]
+_T = TypeVarTuple('_T')
 
 class ClassicStyle(FSM):
     def enterRed(self) -> None: ...
@@ -24,19 +24,19 @@ class NewStyle(FSM):
     @overload
     def filterRed(self, request: Literal['advance'], args: Unused) -> Literal['Green']: ...  # type: ignore[misc]
     @overload
-    def filterRed(self, request: str, args: tuple[Unpack[_T]]) -> tuple[str, Unpack[_T]] | None: ...  # type: ignore[misc]
+    def filterRed(self, request: str, args: tuple[Unpack[_T]]) -> tuple[str, Unpack[_T]] | None: ...
     def exitRed(self) -> None: ...
     def enterYellow(self) -> None: ...
     @overload
     def filterYellow(self, request: Literal['advance'], args: Unused) -> Literal['Red']: ...  # type: ignore[misc]
     @overload
-    def filterYellow(self, request: str, args: tuple[Unpack[_T]]) -> tuple[str, Unpack[_T]] | None: ...  # type: ignore[misc]
+    def filterYellow(self, request: str, args: tuple[Unpack[_T]]) -> tuple[str, Unpack[_T]] | None: ...
     def exitYellow(self) -> None: ...
     def enterGreen(self) -> None: ...
     @overload
     def filterGreen(self, request: Literal['advance'], args: Unused) -> Literal['Yellow']: ...  # type: ignore[misc]
     @overload
-    def filterGreen(self, request: str, args: tuple[Unpack[_T]]) -> tuple[str, Unpack[_T]] | None: ...  # type: ignore[misc]
+    def filterGreen(self, request: str, args: tuple[Unpack[_T]]) -> tuple[str, Unpack[_T]] | None: ...
     def exitGreen(self) -> None: ...
 
 class ToonEyes(FSM):
