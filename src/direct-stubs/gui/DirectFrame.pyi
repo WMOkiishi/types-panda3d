@@ -1,7 +1,7 @@
 __all__ = ['DirectFrame']
 
 from collections.abc import Sequence
-from typing import Any, ClassVar, Union
+from typing import Any, ClassVar
 from typing_extensions import Literal, TypeAlias
 
 from panda3d.core import NodePath, Texture

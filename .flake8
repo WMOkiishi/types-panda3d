@@ -24,7 +24,7 @@
 [flake8]
 extend-ignore = E501
 per-file-ignores =
-    src/direct-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, F822, Y037
+    src/direct-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, F822
     src/panda3d-stubs/*.pyi: E301, E302, E305, E701, E741, F401, F403, Y021, Y042
 
 extend-exclude = venv
