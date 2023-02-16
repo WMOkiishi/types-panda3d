@@ -241,12 +241,12 @@ def make_signature_rep(
             named=param.has_name,
         ))
     match params:
-        case [Parameter(name='args') as args]:
+        case [Parameter('args') as args]:
             args.name = '*' + args.name
         case [
             *_,
-            Parameter(name='args') as args,
-            Parameter(name='kwargs' | 'kwds') as kwargs,
+            Parameter('args') as args,
+            Parameter('kwargs' | 'kwds') as kwargs,
         ]:
             args.name = '*' + args.name
             kwargs.name = '**' + kwargs.name

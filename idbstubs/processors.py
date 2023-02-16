@@ -259,29 +259,17 @@ def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
 def process_function(function: Function, *, class_name: str | None = None) -> None:
     function.signatures = process_signatures(function.signatures)
     match function:
-        case Function(
-            name='__eq__' | '__ne__',
-            signatures=[
-                Signature(
-                    parameters=[
-                        Parameter(),
-                        Parameter() as other_param,
-                    ]
-                )
-            ]
-        ):
+        case Function('__eq__' | '__ne__', [Signature([_, other_param])]):
             other_param.type = 'object'
             other_param.named = False
         case Function(
-            name='assign',
-            signatures=[Signature([_, copy_param], return_type) as sig],
+            'assign', [Signature([_, copy_param], return_type) as sig]
         ) if return_type == class_name:
             sig.return_type = 'Self'
             if copy_param.type == class_name:
                 copy_param.type = 'Self'
         case Function(
-            name=name,
-            signatures=[Signature(return_type=return_type), *_] as signatures,
+            name, [Signature(return_type=return_type), *_] as signatures
         ) if name in RETURN_SELF and return_type in (class_name, ''):
             for sig in signatures:
                 sig.return_type = 'Self'
@@ -299,15 +287,7 @@ def process_class(class_: Class) -> None:
         case {
             '__len__': _,
             '__getitem__': Function(
-                signatures=[
-                    Signature(
-                        parameters=[
-                            Parameter(),
-                            Parameter(type='int'),
-                        ],
-                        return_type=item_type,
-                    )
-                ]
+                signatures=[Signature([_, Parameter(type='int')], item_type)]
             )
         }:
             iter_return_type = f'Iterator[{item_type}]' if item_type else 'Iterator'
@@ -372,14 +352,7 @@ def process_pointer_to_array_class(pta: Class) -> None:
     """
     match pta.body.get('set_data'):
         case Function(
-            signatures=[
-                Signature(
-                    parameters=[
-                        Parameter(),
-                        Parameter(name='data', type='') as param,
-                    ]
-                )
-            ]
+            signatures=[Signature([_, Parameter('data', '') as param])]
         ):
             param.type = 'bytes'
     match pta.body.get('get_data'):
@@ -390,19 +363,12 @@ def process_pointer_to_array_class(pta: Class) -> None:
             sig.return_type = 'bytes'
     match pta.body:
         case {
-            '__getitem__': Function(
-                signatures=[Signature(return_type=array_of)]
-            ),
+            '__getitem__': Function(signatures=[Signature(return_type=array_of)]),
             '__init__': Function(signatures=signatures),
         } if array_of:
             for sig in signatures:
                 match sig:
-                    case Signature(
-                        parameters=[
-                            Parameter(),
-                            Parameter(name='source') as param,
-                        ]
-                    ):
+                    case Signature([_, Parameter('source') as param]):
                         param.type = f'Sequence[{array_of}]'
 
 
@@ -428,10 +394,10 @@ def process_vector_class(vector: Class) -> None:
             ]) if return_type in replaceable_names:
                 sig.return_type = 'Self'
     match class_body.get('__len__'):
-        case Function(signatures=[Signature() as sig]):
+        case Function(signatures=[sig]):
             sig.return_type = f'Literal[{dimension}]'
     match class_body.get('get_num_components'):
-        case Function(signatures=[Signature() as sig]):
+        case Function(signatures=[sig]):
             sig.return_type = f'Literal[{dimension}]'
     vector.body = class_body
 
