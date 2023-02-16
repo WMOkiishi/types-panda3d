@@ -48,6 +48,7 @@ from .special_cases import (
     NO_STUBS,
     NOT_EXPOSED,
     PARAM_TYPE_OVERRIDES,
+    RETURN_SELF,
     RETURN_TYPE_OVERRIDES,
     SIZE_NOT_LEN,
     UNARY_METHOD_RENAMES,
@@ -266,6 +267,8 @@ def make_function_rep(function: IDBFunction) -> Function:
     sigs_by_doc = defaultdict[str, list[str]](list)
     param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name)
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
+    if function.is_method and function.name in RETURN_SELF and not return_overrides:
+        return_overrides = 'Self'
     if isinstance(return_overrides, str):
         return_overrides = {i: return_overrides for i in range(len(function.wrappers))}
     for i, wrapper in enumerate(function.wrappers):

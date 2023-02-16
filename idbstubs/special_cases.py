@@ -126,15 +126,16 @@ DEFAULT_RETURNS: Final = TrackingMap({
 
 # These methods almost certainly behave as if they return `self`
 RETURN_SELF: Final = TrackingSet({
-    '__iand__',
-    '__ior__',
-    '__ixor__',
-    '__ilshift__',
-    '__irshift__',
-    '__iadd__',
-    '__isub__',
-    '__imul__',
-    '__itruediv__',
+    'operator =',
+    'operator &=',
+    'operator |=',
+    'operator ^=',
+    'operator <<=',
+    'operator >>=',
+    'operator +=',
+    'operator -=',
+    'operator *=',
+    'operator /=',
     '__ifloordiv__',
     '__ipow__',
 })

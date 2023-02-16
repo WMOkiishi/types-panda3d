@@ -19,7 +19,6 @@ from .reps import (
     StubRep,
     TypeVariable,
 )
-from .special_cases import RETURN_SELF
 from .typedata import (
     combine_types,
     get_mro,
@@ -263,16 +262,9 @@ def process_function(function: Function, *, class_name: str | None = None) -> No
             other_param.type = 'object'
             other_param.named = False
         case Function(
-            'assign', [Signature([_, copy_param], return_type) as sig]
-        ) if return_type == class_name:
-            sig.return_type = 'Self'
-            if copy_param.type == class_name:
-                copy_param.type = 'Self'
-        case Function(
-            name, [Signature(return_type=return_type), *_] as signatures
-        ) if name in RETURN_SELF and return_type in (class_name, ''):
-            for sig in signatures:
-                sig.return_type = 'Self'
+            'assign', [Signature([_, copy_param])]
+        ) if copy_param.type == class_name:
+            copy_param.type = 'Self'
 
 
 def process_class(class_: Class) -> None:
