@@ -7,8 +7,8 @@ indentLevel: int
 
 def newimport(
     name: str,
-    globals: Mapping[str, Any] | None = ...,
-    locals: Mapping[str, Any] | None = ...,
+    globals: Mapping[str, Any] | None = None,
+    locals: Mapping[str, Any] | None = None,
     fromlist: Sequence[str] = ...,
-    level: int = ...,
+    level: int = 0,
 ) -> Any: ...

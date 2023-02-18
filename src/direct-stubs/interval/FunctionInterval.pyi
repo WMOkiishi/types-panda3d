@@ -34,8 +34,8 @@ class FunctionInterval(Interval):
         self,
         function: Callable[..., object],
         *,
-        name: str | None = ...,
-        openEnded: bool = ...,
+        name: str | None = None,
+        openEnded: bool = True,
         extraArgs: Iterable[Any] = ...,
         **kw: Any,
     ) -> None: ...
@@ -121,7 +121,7 @@ class PosHprScaleInterval(FunctionInterval):
 
 class Func(FunctionInterval):
     def __init__(
-        self, function: Callable[..., object], *extraArgs: Any, name: str | None = ..., openEnded: bool = ..., **kw: Any
+        self, function: Callable[..., object], *extraArgs: Any, name: str | None = None, openEnded: bool = True, **kw: Any
     ) -> None: ...
 
 class Wait(WaitInterval):

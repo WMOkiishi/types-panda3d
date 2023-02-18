@@ -159,17 +159,17 @@ class Packager:
         def addFile(
             self,
             filename: Filename,
-            newName: str | None = ...,
-            delteTemp: bool = ...,
-            explicit: bool = ...,
-            compress: bool | None = ...,
-            extract: bool | None = ...,
-            text: str | None = ...,
-            unprocessed: bool | None = ...,
-            executable: bool | None = ...,
-            dependencyDir: str | None = ...,
-            platformSpecific: bool | None = ...,
-            required: bool = ...,
+            newName: str | None = None,
+            delteTemp: bool = False,
+            explicit: bool = False,
+            compress: bool | None = None,
+            extract: bool | None = None,
+            text: str | None = None,
+            unprocessed: bool | None = None,
+            executable: bool | None = None,
+            dependencyDir: str | None = None,
+            platformSpecific: bool | None = None,
+            required: bool = False,
         ) -> Packager.PackFile: ...
         def excludeFile(self, filename: Filename) -> None: ...
         def addExtensionModules(self) -> None: ...

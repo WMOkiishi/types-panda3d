@@ -295,15 +295,15 @@ class Loader(DirectObject):
     def load_sfx(
         self,
         soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
-        positional: bool = ...,
-        callback: Callable[..., object] | None = ...,
+        positional: bool = False,
+        callback: Callable[..., object] | None = None,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback | None: ...
     def load_music(
         self,
         soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
-        positional: bool = ...,
-        callback: Callable[..., object] | None = ...,
+        positional: bool = False,
+        callback: Callable[..., object] | None = None,
         extraArgs: Iterable[Any] = ...,
     ) -> _Callback | None: ...
     def load_sound(
