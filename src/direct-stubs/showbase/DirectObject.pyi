@@ -23,7 +23,7 @@ class DirectObject:
     def add_task(
         self,
         funcOrTask: AsyncTask,
-        name: str | None,
+        name: str | None = None,
         sort: int | None = ...,
         extraArgs: Sequence[Any] | None = ...,
         priority: int | None = ...,
@@ -37,7 +37,7 @@ class DirectObject:
     def add_task(
         self,
         funcOrTask: Callable[..., object],
-        name: str | None,
+        name: str | None = None,
         sort: int | None = ...,
         extraArgs: Sequence[Any] | None = ...,
         priority: int | None = ...,

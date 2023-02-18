@@ -248,6 +248,8 @@ class ShowBase(DirectObject):
         unexposedDraw: bool | None = ...,
         callbackWindowDict: dict[str, SimpleCallback] | None = ...,
         requireWindow: bool | None = ...,
+        *,
+        startDirect: bool = True,
     ) -> bool: ...
     def open_main_window(
         self,

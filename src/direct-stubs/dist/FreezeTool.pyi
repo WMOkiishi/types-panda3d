@@ -146,6 +146,7 @@ class PandaModuleFinder(ModuleFinder):
         replace_paths: Sequence[tuple[str, str]] | None = ...,
         *,
         suffixes: Iterable[tuple[str, str, int]] = ...,
+        optimize: int = -1,
     ) -> None: ...
     def find_module(  # type: ignore[override]
         self, name: str, path: str | None = None, parent: Module | None = None
