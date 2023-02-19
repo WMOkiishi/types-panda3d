@@ -4,6 +4,7 @@ from collections.abc import Callable, Sequence
 from typing import Any, overload
 from typing_extensions import TypeAlias
 
+from panda3d._typing import TaskCoroutine
 from panda3d.core import AsyncTask, PythonTask
 
 # Ideally, this should just be Sequence[Any], but the code here and in Messenger
@@ -22,7 +23,7 @@ class DirectObject:
     @overload
     def add_task(
         self,
-        funcOrTask: AsyncTask,
+        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
         name: str | None = None,
         sort: int | None = None,
         extraArgs: Sequence[Any] | None = None,
@@ -32,20 +33,33 @@ class DirectObject:
         taskChain: str | None = None,
         *,
         delay: float | None = None,
-    ) -> AsyncTask: ...
+    ) -> PythonTask: ...
     @overload
     def add_task(
         self,
-        funcOrTask: Callable[..., object],
+        funcOrTask: AsyncTask,
         name: str | None = None,
         sort: int | None = None,
-        extraArgs: Sequence[Any] | None = None,
+        extraArgs: None = None,
         priority: int | None = None,
         appendTask: bool = False,
         uponDeath: Callable[..., object] | None = None,
         taskChain: str | None = None,
         *,
         delay: float | None = None,
+    ) -> AsyncTask: ...
+    @overload
+    def do_method_later(
+        self,
+        delayTime: float,
+        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
+        name: str | None,
+        extraArgs: Sequence[Any] | None = None,
+        sort: int | None = None,
+        priority: int | None = None,
+        taskChain: str | None = None,
+        uponDeath: Callable[..., object] | None = None,
+        appendTask: bool = False,
     ) -> PythonTask: ...
     @overload
     def do_method_later(
@@ -53,26 +67,13 @@ class DirectObject:
         delayTime: float,
         funcOrTask: AsyncTask,
         name: str | None,
-        extraArgs: Sequence[Any] | None = None,
+        extraArgs: None = None,
         sort: int | None = None,
         priority: int | None = None,
         taskChain: str | None = None,
         uponDeath: Callable[..., object] | None = None,
         appendTask: bool = False,
     ) -> AsyncTask: ...
-    @overload
-    def do_method_later(
-        self,
-        delayTime: float,
-        funcOrTask: Callable[..., object],
-        name: str | None,
-        extraArgs: Sequence[Any] | None = None,
-        sort: int | None = None,
-        priority: int | None = None,
-        taskChain: str | None = None,
-        uponDeath: Callable[..., object] | None = None,
-        appendTask: bool = False,
-    ) -> PythonTask: ...
     def remove_task(self, taskOrName: AsyncTask | str) -> None: ...
     def remove_all_tasks(self) -> None: ...
     def detect_leaks(self) -> None: ...
