@@ -1,3 +1,4 @@
 from typing import Any
+from typing_extensions import TypeAlias
 
-DirectMySQLdbConnection: Any
+DirectMySQLdbConnection: TypeAlias = Any
