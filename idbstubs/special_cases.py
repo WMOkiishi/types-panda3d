@@ -197,6 +197,7 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
         (0, 0): 'NodePath[Never]',
         (1, 1): 'NodePath[_N]',
         (3, 1): '_N',
+        (4, 0): 'NodePath[PandaNode]',
         (2, 2): '_N',
     },
     'NodePath::any_path': {(0, 0): '_M'},
