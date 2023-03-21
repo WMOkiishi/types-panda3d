@@ -38,6 +38,4 @@ jobs:
           pip install -r requirements-tests.txt
           pip install .
       - name: Run stubtest
-        run: |
-          cd tests
-          python -O test_stubtest.py
+        run: python -O tests/test_stubtest.py

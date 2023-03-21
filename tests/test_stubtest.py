@@ -8,31 +8,29 @@ from importlib.util import spec_from_loader
 from pathlib import Path
 from types import ModuleType
 
+import attrs
 import mypy.stubtest
 
 
+@attrs.define
 class NonExecutingLoader(Loader):
     """This `Loader` skips execution of the module's contents."""
-    __slots__ = ()
 
     def exec_module(self, module: ModuleType) -> None:
         pass
 
 
+@attrs.define
 class PathFilter(MetaPathFinder):
     """This `MetaPathFinder` can be used to prevent
     certain scripts from running when loaded.
     """
-    __slots__ = 'modules'
     modules: Container[str]
-
-    def __init__(self, modules: Container[str]) -> None:
-        self.modules = modules
 
     def find_spec(
             self,
             fullname: str,
-            path: Sequence[str | bytes] | None,
+            path: Sequence[str] | None,
             target: ModuleType | None = None) -> ModuleSpec | None:
         if fullname in self.modules:
             return spec_from_loader(fullname, NonExecutingLoader())
@@ -40,35 +38,29 @@ class PathFilter(MetaPathFinder):
             return None
 
 
-def prevent_running(names: Container[str], *, index: int = 2) -> None:
-    """Prevent scripts with names in `names` from running when imported."""
-    sys.meta_path.insert(index, PathFilter(names))
-
-
 def main() -> int:
-    allowlists = [Path('allowlists', 'common.txt')]
-    version_allowlist = Path(
-        'allowlists',
-        f'py{sys.version_info.major}{sys.version_info.minor}.txt'
-    )
-    platform_allowlist = Path('allowlists', f'{sys.platform}.txt')
-    if version_allowlist.exists():
-        allowlists.append(version_allowlist)
-    if platform_allowlist.exists():
-        allowlists.append(platform_allowlist)
-    args = ['panda3d', 'direct', '--mypy-config-file', '../pyproject.toml']
-    for allowlist in allowlists:
-        args += [
-            '--allowlist',
-            str(allowlist),
-        ]
-    print('Stubtest arguments:', ' '.join(args), file=sys.stderr)
+    root = Path(__file__).parent.parent
+    allowlist_names = [
+        'common',
+        f'py{sys.version_info.major}{sys.version_info.minor}',
+        sys.platform,
+    ]
+    args = [
+        'panda3d', 'direct',
+        '--mypy-config-file',
+        str(root / 'pyproject.toml'),
+    ]
+    for name in allowlist_names:
+        path = root / 'tests' / 'allowlists' / f'{name}.txt'
+        if path.exists():
+            args += ['--allowlist', str(path)]
+            print('Using allowlist', repr(str(path)), file=sys.stderr)
     # These scripts run on import, interfering with the tests
-    prevent_running({
+    sys.meta_path.insert(2, PathFilter({
         'direct.directbase.ThreeUpStart',
         'direct.directbase.TestStart',
         'direct.directutil.MemoryLeakHelpers',
-    })
+    }))
     sys.argv += args
     return mypy.stubtest.main()
 
