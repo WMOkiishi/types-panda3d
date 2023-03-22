@@ -87,7 +87,7 @@ class Thread:
         group: None = None,
         target: Callable[..., object] | None = None,
         name: object = None,
-        args: Iterable[Any] = ...,
+        args: Iterable[Any] = (),
         kwargs: Mapping[str, Any] | None = None,
         verbose: bool | None = None,
         daemon: bool | None = None,
@@ -108,7 +108,7 @@ def Timer(
 
 class _Timer(Thread):
     def __init__(
-        self, interval: float | None, function: Callable[..., Any], args: Iterable[Any] = ..., kwargs: Mapping[str, Any] = ...
+        self, interval: float | None, function: Callable[..., Any], args: Iterable[Any] = [], kwargs: Mapping[str, Any] = {}
     ) -> None: ...
     def cancel(self) -> None: ...
 

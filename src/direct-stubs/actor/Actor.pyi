@@ -224,7 +224,7 @@ class Actor(DirectObject, NodePath):
         self,
         partName: str,
         includeJoints: Iterable[str],
-        excludeJoints: Iterable[str] = ...,
+        excludeJoints: Iterable[str] = [],
         parent: str = 'modelRoot',
         overlapping: bool = False,
     ) -> None: ...

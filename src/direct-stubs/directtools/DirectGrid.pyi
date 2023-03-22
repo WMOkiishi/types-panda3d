@@ -22,7 +22,7 @@ class DirectGrid(NodePath, DirectObject):
         self,
         gridSize: float = 100.0,
         gridSpacing: float = 5.0,
-        planeColor: Vec3Like | Vec4Like = ...,
+        planeColor: Vec3Like | Vec4Like = (0.5, 0.5, 0.5, 0.5),
         parent: NodePath | None = None,
     ) -> None: ...
     def enable(self, parent: NodePath | None = None) -> None: ...

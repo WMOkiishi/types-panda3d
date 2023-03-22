@@ -468,7 +468,7 @@ class LerpFunctionNoStateInterval(Interval):
         fromData: float = 0,
         toData: float = 1,
         blendType: _BlendType = 'noBlend',
-        extraArgs: list[Any] = ...,
+        extraArgs: list[Any] = [],
         name: str | None = None,
     ) -> None: ...
 
@@ -488,7 +488,7 @@ class LerpFunctionInterval(Interval):
         fromData: float = 0,
         toData: float = 1,
         blendType: _BlendType = 'noBlend',
-        extraArgs: list[Any] = ...,
+        extraArgs: list[Any] = [],
         name: str | None = None,
     ) -> None: ...
 

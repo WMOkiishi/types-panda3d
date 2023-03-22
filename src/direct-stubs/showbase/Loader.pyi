@@ -75,7 +75,7 @@ class Loader(DirectObject):
         allowInstance: bool = False,
         okMissing: Literal[True] | None = None,
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> NodePath | None: ...
@@ -89,7 +89,7 @@ class Loader(DirectObject):
         *,
         okMissing: Literal[False],
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> NodePath: ...
@@ -102,7 +102,7 @@ class Loader(DirectObject):
         allowInstance: bool,
         okMissing: Literal[False],
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> NodePath: ...
@@ -115,7 +115,7 @@ class Loader(DirectObject):
         allowInstance: bool = False,
         okMissing: Literal[True] | None = None,
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath | None]: ...
@@ -129,7 +129,7 @@ class Loader(DirectObject):
         *,
         okMissing: Literal[False],
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath]: ...
@@ -142,7 +142,7 @@ class Loader(DirectObject):
         allowInstance: bool,
         okMissing: Literal[False],
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath]: ...
@@ -156,7 +156,7 @@ class Loader(DirectObject):
         okMissing: bool | None = None,
         *,
         callback: Callable[..., object],
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[False] | None = None,
     ) -> _Callback: ...
@@ -169,7 +169,7 @@ class Loader(DirectObject):
         allowInstance: bool,
         okMissing: bool | None,
         callback: Callable[..., object],
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: float | None = None,
         blocking: Literal[False] | None = None,
     ) -> _Callback: ...
@@ -186,7 +186,7 @@ class Loader(DirectObject):
         node: NodePath | PandaNode,
         loaderOptions: LoaderOptions | None = None,
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> bool: ...
@@ -197,7 +197,7 @@ class Loader(DirectObject):
         node: NodePath | PandaNode,
         loaderOptions: LoaderOptions | None = None,
         callback: None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: int | None = None,
         blocking: bool | None = None,
     ) -> list[bool]: ...
@@ -209,7 +209,7 @@ class Loader(DirectObject):
         loaderOptions: LoaderOptions | None = None,
         *,
         callback: Callable[..., object],
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: int | None = None,
         blocking: Literal[False] | None = None,
     ) -> _Callback: ...
@@ -220,7 +220,7 @@ class Loader(DirectObject):
         node: NodePath | PandaNode,
         loaderOptions: LoaderOptions | None,
         callback: Callable[..., object],
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
         priority: int | None = None,
         blocking: Literal[False] | None = None,
     ) -> _Callback: ...
@@ -312,7 +312,7 @@ class Loader(DirectObject):
         soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
         positional: bool = False,
         callback: Callable[..., object] | None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
     ) -> _Callback: ...
     def unload_sfx(self, sfx: AudioSound) -> None: ...
     def load_shader(self, shaderPath: StrOrBytesPath, okMissing: bool = False) -> Shader: ...
@@ -322,7 +322,7 @@ class Loader(DirectObject):
         model: NodePath | Iterable[NodePath],
         inPlace: bool = True,
         callback: Callable[..., object] | None = None,
-        extraArgs: Iterable[Any] = ...,
+        extraArgs: Iterable[Any] = [],
     ) -> _Callback: ...
     loadModel = load_model
     unloadModel = unload_model

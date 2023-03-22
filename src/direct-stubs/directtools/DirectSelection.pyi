@@ -147,13 +147,13 @@ class SelectionSegment(SelectionQueue):
     numColliders: int
     def __init__(self, parentNP: NodePath | None = None, numSegments: int = 1) -> None: ...
     def pickGeom(
-        self, targetNodePath: NodePath | None = None, endPointList: Sequence[tuple[Vec3Like, Vec3Like]] = ..., skipFlags: int = 5
+        self, targetNodePath: NodePath | None = None, endPointList: Sequence[tuple[Vec3Like, Vec3Like]] = [], skipFlags: int = 5
     ) -> CollisionEntry: ...
     def pickBitMask(
         self,
         bitMask: BitMask32 = ...,
         targetNodePath: NodePath | None = None,
-        endPointList: Sequence[tuple[Vec3Like, Vec3Like]] = ...,
+        endPointList: Sequence[tuple[Vec3Like, Vec3Like]] = [],
         skipFlags: int = 5,
     ) -> CollisionEntry: ...
 

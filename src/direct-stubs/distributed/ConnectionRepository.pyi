@@ -40,9 +40,9 @@ class ConnectionRepository(DoInterestManager, DoCollectionManager, CConnectionRe
         self,
         serverList: Sequence[str],
         successCallback: Callable[..., object] | None = None,
-        successArgs: Iterable[Any] = ...,
+        successArgs: Iterable[Any] = [],
         failureCallback: Callable[..., object] | None = None,
-        failureArgs: Iterable[Any] = ...,
+        failureArgs: Iterable[Any] = [],
     ) -> None: ...
     def httpConnectCallback(
         self,

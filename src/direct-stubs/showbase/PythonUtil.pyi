@@ -230,11 +230,11 @@ class PStatScope:
 
 def pstatcollect(scope: PStatScope, level: str | None = None) -> Callable[[_T], _T]: ...
 def report(
-    types: Container[str] = ...,
+    types: Container[str] = [],
     prefix: str = '',
     xform: Callable[[Any], object] | None = None,
     notifyFunc: Callable[[str], object] | None = None,
-    dConfigParam: str | list[str] | tuple[str, ...] = ...,
+    dConfigParam: str | list[str] | tuple[str, ...] = [],
 ) -> Callable[[_T], _T]: ...
 def getBase(): ...
 def getRepository(): ...

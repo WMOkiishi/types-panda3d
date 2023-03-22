@@ -25,5 +25,5 @@ class NetMessenger(Messenger):
     air: ClientRepository
     channels: Sequence[int]
     def __init__(self, air: ClientRepository, channels: Sequence[int]) -> None: ...
-    def send(self, message: str, sentArgs: Any = ...) -> None: ...  # type: ignore[override]
+    def send(self, message: str, sentArgs: Any = []) -> None: ...  # type: ignore[override]
     def handle(self, pickleData: bytes) -> None: ...

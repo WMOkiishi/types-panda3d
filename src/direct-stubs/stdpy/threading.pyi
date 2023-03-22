@@ -53,8 +53,8 @@ class Thread(ThreadBase):
         group: None = None,
         target: Callable[..., object] | None = None,
         name: str | None = None,
-        args: Iterable[Any] = ...,
-        kwargs: Mapping[str, Any] = ...,
+        args: Iterable[Any] = (),
+        kwargs: Mapping[str, Any] = {},
         daemon: bool | None = None,
     ) -> None: ...
     def __del__(self) -> None: ...
@@ -119,7 +119,7 @@ class Timer(Thread):
     kwargs: Mapping[str, Any]
     finished: Event
     def __init__(
-        self, interval: float, function: Callable[..., object], args: Iterable[Any] = ..., kwargs: Mapping[str, Any] = ...
+        self, interval: float, function: Callable[..., object], args: Iterable[Any] = [], kwargs: Mapping[str, Any] = {}
     ) -> None: ...
     def cancel(self) -> None: ...
 

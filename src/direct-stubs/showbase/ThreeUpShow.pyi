@@ -12,7 +12,7 @@ class ThreeUpShow(ShowBase):
         win: GraphicsOutput,
         sort: Unused = 0,
         scene: Unused = None,
-        displayRegion: Unused = ...,
+        displayRegion: Unused = (0, 1, 0, 1),
         stereo: Unused = None,
         aspectRatio: Unused = None,
         clearDepth: Unused = 0,
