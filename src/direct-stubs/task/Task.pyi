@@ -9,7 +9,7 @@ from direct.directnotify.Notifier import Notifier
 from direct.fsm.StatePush import StateVar
 from direct.showbase.ProfileSession import ProfileSession
 from direct.tkpanels.TaskManagerPanel import TaskManagerPanel
-from panda3d._typing import TaskCoroutine
+from panda3d._typing import TaskCoroutine, TaskFunction
 from panda3d.core import (
     AsyncFuture,
     AsyncTask,
@@ -92,7 +92,7 @@ class TaskManager:
     def do_method_later(
         self,
         delayTime: float,
-        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
+        funcOrTask: PythonTask | TaskFunction | TaskCoroutine[Any],
         name: str | None,
         extraArgs: Sequence[Any] | None = None,
         sort: int | None = None,
@@ -120,7 +120,7 @@ class TaskManager:
     @overload
     def add(
         self,
-        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
+        funcOrTask: PythonTask | TaskFunction | TaskCoroutine[Any],
         name: str | None = None,
         sort: int | None = None,
         extraArgs: Sequence[Any] | None = None,

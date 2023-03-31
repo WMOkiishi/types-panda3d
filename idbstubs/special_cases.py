@@ -215,13 +215,9 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'PandaNode::set_python_tag': {(0, 1): 'Any', (0, 2): 'Any'},
     'PythonCallbackObject::PythonCallbackObject': {(0, 1): 'Callable'},
     'PythonCallbackObject::set_function': {(0, 1): 'Callable'},
-    'PythonTask::PythonTask': {
-        (0, 1): 'Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any] | None'
-    },
+    'PythonTask::PythonTask': {(0, 1): 'TaskFunction | TaskCoroutine[Any] | None'},
     'PythonTask::set_args': {(0, 1): 'Sequence[Any] | None'},
-    'PythonTask::set_function': {
-        (0, 1): 'Callable[..., int | TaskCoroutine[int | None] | None] | None'
-    },
+    'PythonTask::set_function': {(0, 1): 'TaskFunction | None'},
     'PythonTask::set_upon_death': {(0, 1): 'Callable[[], object] | None'},
     'StreamReader::StreamReader': {(1, 1): 'core.istream'},
     'StreamWrapper::StreamWrapper': {(0, 1): 'core.iostream'},
@@ -270,7 +266,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
     'PandaNode::get_tag_keys': 'tuple[str, ...]',
     'PythonCallbackObject::get_function': 'Callable',
     'PythonTask::get_args': 'tuple[Any, ...]',
-    'PythonTask::get_function': 'Callable[..., int | TaskCoroutine[int | None] | None] | None',
+    'PythonTask::get_function': 'TaskFunction | None',
     'PythonTask::get_upon_death': 'Callable[[], object] | None',
     'Ramfile::get_data': 'bytes',
     'Ramfile::read': 'bytes',

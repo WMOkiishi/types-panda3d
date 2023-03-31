@@ -80,6 +80,7 @@ TYPE_ALIASES: Final = {
     'URL': 'URLSpec | str',
     'SearchPathLike': 'ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str',
     'TaskCoroutine': 'Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]',
+    'TaskFunction': 'Callable[..., int | TaskCoroutine[int | None] | None]',
 }
 _type_alias_data = [
     (k, frozenset(v.split(' | ')))

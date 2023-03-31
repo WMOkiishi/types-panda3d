@@ -1,4 +1,4 @@
-from collections.abc import Coroutine, Generator
+from collections.abc import Callable, Coroutine, Generator
 from typing import Any, TypeVar
 from typing_extensions import TypeAlias
 
@@ -39,3 +39,4 @@ DoubleMat4Like: TypeAlias = LMatrix3d | LMatrix4d | UnalignedLMatrix4d
 URL: TypeAlias = URLSpec | str
 SearchPathLike: TypeAlias = ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str
 TaskCoroutine: TypeAlias = Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]
+TaskFunction: TypeAlias = Callable[..., int | TaskCoroutine[int | None] | None]

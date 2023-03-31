@@ -4,7 +4,7 @@ from collections.abc import Callable, Sequence
 from typing import Any, overload
 from typing_extensions import TypeAlias
 
-from panda3d._typing import TaskCoroutine
+from panda3d._typing import TaskCoroutine, TaskFunction
 from panda3d.core import AsyncTask, PythonTask
 
 # Ideally, this should just be Sequence[Any], but the code here and in Messenger
@@ -23,7 +23,7 @@ class DirectObject:
     @overload
     def add_task(
         self,
-        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
+        funcOrTask: PythonTask | TaskFunction | TaskCoroutine[Any],
         name: str | None = None,
         sort: int | None = None,
         extraArgs: Sequence[Any] | None = None,
@@ -52,7 +52,7 @@ class DirectObject:
     def do_method_later(
         self,
         delayTime: float,
-        funcOrTask: PythonTask | Callable[..., int | TaskCoroutine[int | None] | None] | TaskCoroutine[Any],
+        funcOrTask: PythonTask | TaskFunction | TaskCoroutine[Any],
         name: str | None,
         extraArgs: Sequence[Any] | None = None,
         sort: int | None = None,
