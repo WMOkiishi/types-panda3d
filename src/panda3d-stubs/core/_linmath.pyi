@@ -2982,6 +2982,7 @@ class LMatrix3f:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
+
     num_components: Final = 9
     is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3392,6 +3393,7 @@ class LMatrix4f:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
+
     num_components: Final = 16
     is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -3912,6 +3914,7 @@ class LMatrix3d:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
+
     num_components: Final = 9
     is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -4322,6 +4325,7 @@ class LMatrix4d:
         def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
+
     num_components: Final = 16
     is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]

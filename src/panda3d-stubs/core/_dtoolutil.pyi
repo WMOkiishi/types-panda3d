@@ -1243,6 +1243,7 @@ class DSearchPath:
         def write(self, out: ostream, indent_level: int = ...) -> None: ...
         getNumFiles = get_num_files
         getFile = get_file
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def directories(self) -> Sequence[Filename]: ...

@@ -9172,6 +9172,7 @@ class Loader(TypedReferenceCount, Namable):
         getFileType = get_file_type
         getFiles = get_files
         getFileTypes = get_file_types
+
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload

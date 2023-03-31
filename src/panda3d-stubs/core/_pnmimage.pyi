@@ -211,6 +211,7 @@ class PNMImageHeader:
         getPixel = get_pixel
         getCount = get_count
         getPixels = get_pixels
+
     CT_invalid: Final = 0
     CTInvalid: Final = 0
     CT_grayscale: Final = 1
@@ -993,6 +994,7 @@ class PNMImage(PNMImageHeader):
             """Fetch the alpha value at the given column in the row."""
         getXelVal = get_xel_val
         getAlphaVal = get_alpha_val
+
     @overload
     def __init__(self, copy: PNMImage = ...) -> None: ...
     @overload

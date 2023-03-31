@@ -528,6 +528,7 @@ class WindowHandle(TypedReferenceCount):
         def get_class_type() -> TypeHandle: ...
         getIntHandle = get_int_handle
         getClassType = get_class_type
+
     os_handle: WindowHandle.OSHandle
     @overload
     def __init__(self, copy: WindowHandle) -> None: ...
@@ -3633,6 +3634,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         setRenderFlag = set_render_flag
         getRenderFlag = get_render_flag
         getClassType = get_class_type
+
     RCT_begin_frame: Final = 0
     RCTBeginFrame: Final = 0
     RCT_end_frame: Final = 1

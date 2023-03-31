@@ -37,6 +37,7 @@ combine_as_imports = true
 extra_standard_library = ["typing_extensions"]
 
 [tool.black]
+preview = true
 line_length = 130
 target_version = ["py310"]
 force_exclude = "/(tests|idbstubs)/"

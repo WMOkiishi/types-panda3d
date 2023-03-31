@@ -365,6 +365,7 @@ class ConnectionManager:
         getBroadcast = get_broadcast
         hasP2p = has_p2p
         getP2p = get_p2p
+
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def host_name(self) -> str: ...
