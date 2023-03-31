@@ -1,15 +1,15 @@
 from typing import ClassVar
-from typing_extensions import Final, Literal
+from typing_extensions import Final
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ClockObject
 
-NetworkTimeBits: Literal[16]
+NetworkTimeBits: Final = 16
 NetworkTimePrecision: float
-NetworkTimeMask: Literal[65535]
-NetworkTimeSignedMask: Literal[32767]
-NetworkTimeTopBits: Literal[16]
+NetworkTimeMask: Final = 65535
+NetworkTimeSignedMask: Final = 32767
+NetworkTimeTopBits: Final = 16
 MaxTimeDelta: float
 ClockDriftPerHour: float
 ClockDriftPerSecond: float

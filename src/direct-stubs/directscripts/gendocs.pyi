@@ -1,7 +1,7 @@
 from collections.abc import Container, Iterable, MutableSequence, Sequence
 from re import Pattern
 from typing import overload
-from typing_extensions import Final, Literal, Never
+from typing_extensions import Final, Never
 
 SECHEADER: Final[Pattern[str]]
 JUNKHEADER: Final[Pattern[str]]
@@ -124,9 +124,7 @@ class ParseTreeInfo:
     prototype: str
     def __init__(self, tree, name: str, file) -> None: ...
     @overload
-    def match(self, pattern: list[str], data: str, vars: dict | None) -> tuple[Literal[True], dict]: ...
-    @overload
-    def match(self, pattern: str, data: str, vars: dict | None = None) -> tuple[bool, dict]: ...
+    def match(self, pattern: str | list[str], data: str, vars: dict | None = None) -> tuple[bool, dict]: ...
     @overload
     def match(self, pattern: tuple[str, ...], data: Sequence[str], vars: dict | None = None) -> tuple[bool, dict]: ...
     def extract_info(self, tree: Sequence[str]) -> None: ...

@@ -10,7 +10,6 @@ from panda3d.core import NodePath, NurbsCurveEvaluator
 
 from .LevelEditor import LevelEditor
 
-_Order: TypeAlias = Literal[1, 2, 3, 4]
 _Vert: TypeAlias = Vec3Like | Vec4Like
 
 class CurveEditor(DirectObject):
@@ -20,7 +19,7 @@ class CurveEditor(DirectObject):
     curve: list[_Vert]
     curveControl: list[tuple[int, NodePath]]
     currentRope: Rope | None
-    degree: _Order
+    degree: int
     selected: DirectNodePath
     currentCurve: NurbsCurveEvaluator
     def __init__(self, editor: LevelEditor) -> None: ...

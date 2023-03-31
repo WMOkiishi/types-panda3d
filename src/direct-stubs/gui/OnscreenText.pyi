@@ -34,7 +34,7 @@ class OnscreenText(NodePath[TextNode]):
     shadow: LColor
     frame: LColor
     align: _Alignment
-    unicodeText: Literal[True]
+    unicodeText: bool
     def __init__(
         self,
         text: str = '',
