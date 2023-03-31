@@ -1,5 +1,5 @@
 from typing import Any, ClassVar
-from typing_extensions import Literal, Self
+from typing_extensions import Self
 
 from panda3d._typing import URL
 from panda3d.core._downloader import HTTPChannel, SocketStream
@@ -55,7 +55,7 @@ class CConnectionRepository:
         """
     def get_handle_datagrams_internally(self) -> bool:
         """Returns the handle_datagrams_internally flag."""
-    def set_tcp_header_size(self, tcp_header_size: Literal[0, 2, 4]) -> None:
+    def set_tcp_header_size(self, tcp_header_size: int) -> None:
         """Sets the header size of TCP packets.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver

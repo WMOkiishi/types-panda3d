@@ -370,7 +370,7 @@ def process_vector_class(vector: Class) -> None:
     """
     name_match = VECTOR_NAME_REGEX.match(vector.name)
     assert name_match is not None
-    kind, dimension, suffix = name_match[1], name_match[2], name_match[3]
+    kind, _, suffix = name_match[1], name_match[2], name_match[3]
     class_body = dict(vector.body)
     if kind.endswith('VecBase'):
         class_body.pop('get_data', None)
@@ -385,12 +385,6 @@ def process_vector_class(vector: Class) -> None:
                 Signature(return_type=return_type) as sig
             ]) if return_type in replaceable_names:
                 sig.return_type = 'Self'
-    match class_body.get('__len__'):
-        case Function(signatures=[sig]):
-            sig.return_type = f'Literal[{dimension}]'
-    match class_body.get('get_num_components'):
-        case Function(signatures=[sig]):
-            sig.return_type = f'Literal[{dimension}]'
     vector.body = class_body
 
 

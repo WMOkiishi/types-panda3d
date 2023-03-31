@@ -1,6 +1,6 @@
 from collections.abc import MutableSequence, Sequence
 from typing import overload
-from typing_extensions import Literal, Self
+from typing_extensions import Self
 
 from panda3d._typing import Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypedObject
@@ -105,13 +105,13 @@ class CollisionBox(CollisionSolid):
         """
     @overload
     def __init__(self, center: Vec3Like, x: float, y: float, z: float) -> None: ...
-    def get_num_points(self) -> Literal[8]:
+    def get_num_points(self) -> int:
         """Returns 8: the number of vertices of a rectangular solid."""
     def get_point_aabb(self, n: int) -> LPoint3:
         """Returns the nth vertex of the Axis Aligned Bounding Box."""
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the OBB."""
-    def get_num_planes(self) -> Literal[6]:
+    def get_num_planes(self) -> int:
         """Returns 6: the number of faces of a rectangular solid."""
     def set_plane(self, n: int) -> LPlane:
         """Creates the nth face of the rectangular solid."""

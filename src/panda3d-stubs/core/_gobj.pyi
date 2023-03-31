@@ -4029,7 +4029,7 @@ class TextureStage(TypedWritableReferenceCount):
         """Set the color for this stage"""
     def get_color(self) -> LColor:
         """return the color for this stage"""
-    def set_rgb_scale(self, rgb_scale: Literal[1, 2, 4]) -> None:
+    def set_rgb_scale(self, rgb_scale: int) -> None:
         """Sets an additional factor that will scale all three r, g, b components
         after the texture has been applied.  This is used only when the mode is
         CM_combine.
@@ -4038,7 +4038,7 @@ class TextureStage(TypedWritableReferenceCount):
         """
     def get_rgb_scale(self) -> int:
         """See set_rgb_scale()."""
-    def set_alpha_scale(self, alpha_scale: Literal[1, 2, 4]) -> None:
+    def set_alpha_scale(self, alpha_scale: int) -> None:
         """Sets an additional factor that will scale the alpha component after the
         texture has been applied.  This is used only when the mode is CM_combine.
 

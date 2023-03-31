@@ -1342,11 +1342,11 @@ class BoundingBox(FiniteBoundingVolume):
         """
     @overload
     def __init__(self, min: Vec3Like, max: Vec3Like) -> None: ...
-    def get_num_points(self) -> Literal[8]:
+    def get_num_points(self) -> int:
         """Returns 8: the number of vertices of a rectangular solid."""
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the rectangular solid."""
-    def get_num_planes(self) -> Literal[6]:
+    def get_num_planes(self) -> int:
         """Returns 6: the number of faces of a rectangular solid."""
     def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the rectangular solid."""
@@ -1437,11 +1437,11 @@ class BoundingHexahedron(FiniteBoundingVolume):
         nur: Vec3Like,
         nul: Vec3Like,
     ) -> None: ...
-    def get_num_points(self) -> Literal[8]:
+    def get_num_points(self) -> int:
         """Returns 8: the number of vertices of a hexahedron."""
     def get_point(self, n: int) -> LPoint3:
         """Returns the nth vertex of the hexahedron."""
-    def get_num_planes(self) -> Literal[6]:
+    def get_num_planes(self) -> int:
         """Returns 6: the number of faces of a hexahedron."""
     def get_plane(self, n: int) -> LPlane:
         """Returns the nth face of the hexahedron."""

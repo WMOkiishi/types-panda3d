@@ -37,7 +37,7 @@ class SSReader:
         """
     def is_closed(self) -> bool: ...
     def close(self) -> None: ...
-    def set_tcp_header_size(self, tcp_header_size: Literal[0, 2, 4]) -> None:
+    def set_tcp_header_size(self, tcp_header_size: int) -> None:
         """Sets the header size for datagrams.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver
@@ -90,7 +90,7 @@ class SSWriter:
         before sending all of the recently received packets at once.  This only has
         meaning if "collect-tcp" mode is enabled; see set_collect_tcp().
         """
-    def set_tcp_header_size(self, tcp_header_size: Literal[0, 2, 4]) -> None:
+    def set_tcp_header_size(self, tcp_header_size: int) -> None:
         """Sets the header size for datagrams.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver

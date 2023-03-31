@@ -10082,7 +10082,7 @@ class OccluderNode(PandaNode):
         defined in a counterclockwise orientation when looking at the face of the
         occluder.
         """
-    def get_num_vertices(self) -> Literal[4]:
+    def get_num_vertices(self) -> int:
         """Returns the number of vertices in the occluder polygon.  This should always
         return 4.
         """
