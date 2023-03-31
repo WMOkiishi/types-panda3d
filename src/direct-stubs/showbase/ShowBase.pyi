@@ -1,11 +1,12 @@
 __all__ = ['ShowBase', 'WindowControls']
 
 from _typeshed import StrOrBytesPath
+from collections.abc import Callable
 from types import ModuleType
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, TypeAlias
 
-from direct._typing import SimpleCallback, Unused
+from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.directtools.DirectSession import DirectSession
 from direct.p3d.AppRunner import AppRunner
@@ -88,8 +89,8 @@ class ShowBase(DirectObject):
     wantTk: bool
     wantWx: bool
     wantDirect: bool
-    exitFunc: SimpleCallback | None
-    finalExitCallbacks: list[SimpleCallback]
+    exitFunc: Callable[[], object] | None
+    finalExitCallbacks: list[Callable[[], object]]
     windowType: _WindowType
     requireWindow: bool
     win: GraphicsEngine
@@ -226,7 +227,7 @@ class ShowBase(DirectObject):
         scene: NodePath | None = None,
         stereo: bool | None = None,
         unexposedDraw: bool | None = None,
-        callbackWindowDict: dict[str, SimpleCallback] | None = None,
+        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
         requireWindow: bool | None = None,
     ) -> GraphicsWindow: ...
     def close_window(self, win: GraphicsOutput, keepCamera: bool = False, removeWindow: bool = True) -> None: ...
@@ -246,7 +247,7 @@ class ShowBase(DirectObject):
         scene: NodePath | None = None,
         stereo: bool | None = None,
         unexposedDraw: bool | None = None,
-        callbackWindowDict: dict[str, SimpleCallback] | None = None,
+        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
         requireWindow: bool | None = None,
         *,
         startDirect: bool = True,
@@ -267,7 +268,7 @@ class ShowBase(DirectObject):
         scene: NodePath | None = None,
         stereo: bool | None = None,
         unexposedDraw: bool | None = None,
-        callbackWindowDict: dict[str, SimpleCallback] | None = None,
+        callbackWindowDict: dict[str, Callable[[], object]] | None = None,
         requireWindow: bool | None = None,
     ) -> bool: ...
     def set_sleep(self, amount: float) -> None: ...
@@ -512,7 +513,7 @@ class WindowControls:
     camera2d: NodePath | None
     mouseWatcher: MouseWatcher | None
     mouseKeyboard: NodePath | None
-    closeCommand: SimpleCallback
+    closeCommand: Callable[[], object]
     grid: Any
     def __init__(
         self,
@@ -522,6 +523,6 @@ class WindowControls:
         cam2d: NodePath | None = None,
         mouseWatcher: MouseWatcher | None = None,
         mouseKeyboard: NodePath | None = None,
-        closeCmd: SimpleCallback = ...,
+        closeCmd: Callable[[], object] = ...,
         grid: Any = None,
     ) -> None: ...

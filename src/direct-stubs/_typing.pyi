@@ -1,4 +1,4 @@
-from collections.abc import Callable, Mapping
+from collections.abc import Mapping
 from typing import Any, TypeVar
 from typing_extensions import TypeAlias
 
@@ -13,5 +13,4 @@ AnyReal = TypeVar('AnyReal', int, float)  # noqa: Y001
 
 Incomplete: TypeAlias = Any
 Obj: TypeAlias = tuple[str, _NodePathT, _ObjectGenT, Any, Any, Mapping[str, Any], Vec4Like]
-SimpleCallback: TypeAlias = Callable[[], object]
 Unused: TypeAlias = object
