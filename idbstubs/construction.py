@@ -50,7 +50,6 @@ from .special_cases import (
     PARAM_TYPE_OVERRIDES,
     RETURN_SELF,
     RETURN_TYPE_OVERRIDES,
-    SIZE_NOT_LEN,
     UNARY_METHOD_RENAMES,
 )
 from .translation import (
@@ -87,6 +86,8 @@ def get_comment(scoped_name: str) -> str:
 
 def get_function_name(function: IDBFunction) -> str:
     """Return the Python name for a function."""
+    if function.is_constructor:
+        return '__init__'
     if function.is_operator_typecast:
         if len(function.wrappers) != 1:
             scoped_name = function.scoped_name
@@ -118,7 +119,7 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
     """Yield representations of all exposed methods
     for a type known to interrogate.
     """
-    got_copy = got_deepcopy = False
+    method_names = {method.name for method in idb_type.methods}
     for idb_function in itertools.chain(
         idb_type.constructors,
         idb_type.casts,
@@ -145,17 +146,16 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
             if setitem_sigs:
                 yield evolve(method, name='__setitem__', signatures=setitem_sigs)
             continue
-        elif method.name == '__len__' and idb_type.name in SIZE_NOT_LEN:
+        elif method.name == '__len__' and (
+            'operator []' not in method_names
+            and '__getitem__' not in method_names
+        ):
             method.name = 'size'
-        elif method.name == '__copy__':
-            got_copy = True
-        elif method.name == '__deepcopy__':
-            got_deepcopy = True
         yield method
-    if type_has_copy_constructor(idb_type):
-        if not got_copy:
+    if type_has_copy_constructor(idb_type) or 'make_copy' in method_names:
+        if '__copy__' not in method_names:
             yield Function('__copy__', [Signature([Parameter('self')], 'Self')])
-        if not got_deepcopy:
+        if '__deepcopy__' not in method_names:
             yield Function(
                 '__deepcopy__',
                 [Signature(
@@ -217,14 +217,15 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
 
 def make_signature_rep(
         wrapper: IDBFunctionWrapper,
-        *, is_constructor: bool = False,
-        ensure_self_param: bool = False) -> Signature:
+        function: IDBFunction | None = None,
+        *, ensure_self_param: bool = False) -> Signature:
     """Return a representation of the signature
     of a function wrapper known to interrogate.
     """
-    ensure_self_param = ensure_self_param or is_constructor
-    if is_constructor:
+    if function is not None and function.is_constructor:
         return_type = 'None'
+    elif function is not None and function.is_method and function.name in RETURN_SELF:
+        return_type = 'Self'
     else:
         return_type = get_type_name(wrapper.return_type)
     params: list[Parameter] = []
@@ -256,34 +257,29 @@ def make_signature_rep(
 
 def make_function_rep(function: IDBFunction) -> Function:
     """Return a representation of a function known to interrogate."""
-    is_constructor = function.is_constructor
-    name = '__init__' if is_constructor else get_function_name(function)
+    name = get_function_name(function)
     is_static_method = (
         function.is_method and not is_dunder(name)
         and not function.wrappers[0].parameters[0].is_this
     )
-    omit_docstring = is_dunder(name) and name != '__init__'
+    omit_docstring = is_dunder(name) and not function.is_constructor
     signatures: list[Signature] = []
     sigs_by_doc = defaultdict[str, list[str]](list)
     param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name)
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
-    if function.is_method and function.name in RETURN_SELF and not return_overrides:
-        return_overrides = 'Self'
     if isinstance(return_overrides, str):
         return_overrides = {i: return_overrides for i in range(len(function.wrappers))}
     for i, wrapper in enumerate(function.wrappers):
         if not wrapper_is_exposed(wrapper):
             continue
         signature = make_signature_rep(
-            wrapper,
-            is_constructor=function.is_constructor,
+            wrapper, function,
             ensure_self_param=function.is_method and not is_static_method,
         )
         if not omit_docstring:
             sig_doc = comment_to_docstring(wrapper.comment)
             if sig_doc:
-                param_string = f"`({', '.join(str(p) for p in signature.parameters)})`"
-                sigs_by_doc[sig_doc].append(param_string)
+                sigs_by_doc[sig_doc].append(f'`({signature.param_string})`')
         if param_overrides:
             for j, param in enumerate(signature.parameters):
                 param_override = param_overrides.get((i, j))

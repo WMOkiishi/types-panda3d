@@ -48,9 +48,6 @@ def type_has_copy_constructor(idb_type: IDBType) -> bool:
         for wrapper in function.wrappers:
             if wrapper.is_copy_constructor:
                 return True
-    for function in idb_type.methods:
-        if function.name == 'make_copy':
-            return True
     return False
 
 

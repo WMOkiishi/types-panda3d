@@ -164,10 +164,6 @@ GENERIC: Final = TrackingMap({
 })
 
 
-# Don't replace `size` with `__len__` for these
-SIZE_NOT_LEN: Final = TrackingSet(('EggGroupNode', 'WindowProperties'))
-
-
 # These types only exist under certain conditions
 CONDITIONALS: Final = TrackingMap({
     'WindowsRegistry': "sys.platform == 'win32'",
