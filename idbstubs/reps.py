@@ -263,7 +263,7 @@ class Attribute:
 @define
 class Class:
     name: str
-    derivations: Sequence[str] = field(default=(), converter=tuple)
+    bases: Sequence[str] = field(default=(), converter=tuple)
     body: Mapping[str, StubRep] = Factory(dict)
     is_final: bool = field(default=False, kw_only=True)
     conditional: str = field(default='', kw_only=True, eq=False)
@@ -281,7 +281,7 @@ class Class:
         return chain(
             names_within(self.conditional),
             ('final',) if self.is_final else (),
-            flatten(names_within(d) for d in self.derivations),
+            flatten(names_within(b) for b in self.bases),
             flatten(i.get_dependencies() for i in self.body.values()),
         )
 
@@ -293,8 +293,8 @@ class Class:
         if self.is_final:
             yield indent + '@final'
         declaration = f'{indent}class {self.name}'
-        if self.derivations:
-            declaration += f"({', '.join(self.derivations)})"
+        if self.bases:
+            declaration += f"({', '.join(self.bases)})"
         declaration += ':'
         if self.is_empty():
             if self.comment:

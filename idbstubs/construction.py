@@ -365,13 +365,13 @@ def make_class_rep(idb_type: IDBType) -> Class:
     """Return a representation of a class known to interrogate."""
     name = make_class_name(idb_type.name)
     class_body: dict[str, StubRep] = {}
-    derivations = [
+    bases = [
         get_type_name(derivation)
         for derivation in idb_type.derivations
         if type_is_exposed(derivation)
     ]
     if (type_vars := GENERIC.get(name)) is not None:
-        derivations.append(f'Generic[{type_vars}]')
+        bases.append(f'Generic[{type_vars}]')
     # Attributes
     class_body['DtoolClassDict'] = Attribute(
         'DtoolClassDict', 'ClassVar[dict[str, Any]]'
@@ -418,7 +418,7 @@ def make_class_rep(idb_type: IDBType) -> Class:
         type_reps = make_type_reps(nested_type)
         class_body |= {rep.name: rep for rep in type_reps}
     return Class(
-        name, derivations, class_body,
+        name, bases, class_body,
         is_final=idb_type.is_final,
         conditional=CONDITIONALS.get(idb_type.scoped_name, ''),
         doc=comment_to_docstring(idb_type.comment),
