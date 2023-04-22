@@ -22,6 +22,16 @@ def get_indent(level: int = 1, tab: str = '    ') -> str:
     return tab * level
 
 
+def with_comment(line: str, comment: str) -> str:
+    """Return `line` with `comment` appended as a comment.
+    If `comment` is empty, return `line` unchanged.
+    """
+    if comment:
+        return f'{line}  # {comment}'
+    else:
+        return line
+
+
 def docstring_lines(doc: str, *, indent_level: int = 0) -> Iterator[str]:
     """Yield the lines of a docstring (including quotes)
     with the given contents (excluding quotes).

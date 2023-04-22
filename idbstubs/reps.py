@@ -1,13 +1,18 @@
 from collections import defaultdict
-from collections.abc import Callable, Iterator, Mapping, Sequence
-from itertools import chain
+from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
 from sys import stdlib_module_names
 from typing import Any, Protocol
 
 from attrs import Factory, define, evolve, field
 
-from .util import docstring_lines, flatten, get_indent, is_dunder, names_within
+from .util import (
+    docstring_lines,
+    get_indent,
+    is_dunder,
+    names_within,
+    with_comment,
+)
 
 
 class StubRep(Protocol):
@@ -35,7 +40,8 @@ class TypeVariable:
 
     def get_dependencies(self) -> Iterator[str]:
         yield 'TypeVar'
-        yield from flatten(names_within(i) for i in self.bounds)
+        for bound in self.bounds:
+            yield from names_within(bound)
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         yield get_indent(indent_level) + str(self)
@@ -57,16 +63,14 @@ class Alias:
 
     def get_dependencies(self) -> Iterator[str]:
         """Yield the names of types referenced by the alias."""
-        return chain(
-            () if self.of_local else names_within(self.alias_of),
-            ('TypeAlias',) if self.is_type_alias else (),
-        )
+        if not self.of_local:
+            yield from names_within(self.alias_of)
+        if self.is_type_alias:
+            yield 'TypeAlias'
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
-        if self.comment:
-            yield f'{get_indent(indent_level)}{self}  # {self.comment}'
-        else:
-            yield get_indent(indent_level) + str(self)
+        line = get_indent(indent_level) + str(self)
+        yield with_comment(line, self.comment)
 
 
 @define
@@ -148,18 +152,20 @@ class Signature:
         return min_arity, max_arity
 
     def get_dependencies(self) -> Iterator[str]:
-        return chain(
-            names_within(self.return_type),
-            flatten(p.get_dependencies() for p in self.parameters),
-        )
+        yield from names_within(self.return_type)
+        for parameter in self.parameters:
+            yield from parameter.get_dependencies()
 
     def definition(
             self,
             *, prefix: str = '',
             postfix: str = '',
-            indent_level: int = 0) -> Iterator[str]:
+            indent_level: int = 0,
+            decorators: Iterable[str] = ()) -> Iterator[str]:
         indent = get_indent(indent_level)
         next_indent = get_indent(indent_level + 1)
+        for decorator in decorators:
+            yield f'{indent}@{decorator}'
         sig_def = f'{indent}{prefix}{self}:{postfix}'
         if len(sig_def) <= 130:
             yield sig_def
@@ -196,28 +202,23 @@ class Function:
         decorators = self.decorators
         if len(self.signatures) > 1:
             decorators = ('overload', *decorators)
-        doc_printed = False
-        comment_printed = False
-        indent = get_indent(indent_level)
+        doc_needed = bool(self.doc)
+        comment_needed = bool(self.comment)
         for signature in self.signatures:
-            for decorator in decorators:
-                if self.comment and not comment_printed:
-                    yield f'{indent}@{decorator}  # {self.comment}'
-                    comment_printed = True
-                else:
-                    yield f'{indent}@{decorator}'
-            sig_def = list(signature.definition(
+            definition_lines = signature.definition(
                 prefix=f'def {self.name}',
-                postfix=' ...' if doc_printed or not self.doc else '',
+                postfix='' if doc_needed else ' ...',
                 indent_level=indent_level,
-            ))
-            if self.comment and not comment_printed:
-                sig_def[0] += f'  # {self.comment}'
-                comment_printed = True
-            yield from sig_def
-            if not doc_printed:
+                decorators=decorators,
+            )
+            if comment_needed:
+                first_line = next(definition_lines)
+                yield with_comment(first_line, self.comment)
+                comment_needed = False
+            yield from definition_lines
+            if doc_needed:
                 yield from docstring_lines(self.doc, indent_level=indent_level+1)
-                doc_printed = True
+                doc_needed = False
 
 
 @define
@@ -244,18 +245,14 @@ class Attribute:
                 function_def = f'{indent}def {self.name}(self):'
             if not self.doc:
                 function_def += ' ...'
-            if self.comment:
-                function_def += '  # ' + self.comment
-            yield function_def
+            yield with_comment(function_def, self.comment)
             doc_indent_level = indent_level + 1
         else:
             if self.type:
                 attribute_def = f'{indent}{self.name}: {self.type}'
             else:
                 attribute_def = f'{indent}{self.name} = ...'
-            if self.comment:
-                attribute_def += f'  # {self.comment}'
-            yield attribute_def
+            yield with_comment(attribute_def, self.comment)
             doc_indent_level = indent_level
         yield from docstring_lines(self.doc, indent_level=doc_indent_level)
 
@@ -278,12 +275,13 @@ class Class:
         return not (self.doc or self.body)
 
     def get_dependencies(self) -> Iterator[str]:
-        return chain(
-            names_within(self.conditional),
-            ('final',) if self.is_final else (),
-            flatten(names_within(b) for b in self.bases),
-            flatten(i.get_dependencies() for i in self.body.values()),
-        )
+        yield from names_within(self.conditional)
+        if self.is_final:
+            yield 'final'
+        for base in self.bases:
+            yield from names_within(base)
+        for item in self.body.values():
+            yield from item.get_dependencies()
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         if self.conditional:
@@ -297,14 +295,10 @@ class Class:
             declaration += f"({', '.join(self.bases)})"
         declaration += ':'
         if self.is_empty():
-            if self.comment:
-                yield f'{declaration} ...  # {self.comment}'
-            else:
-                yield declaration + ' ...'
+            declaration += ' ...'
+            yield with_comment(declaration, self.comment)
             return
-        if self.comment:
-            declaration += f'  # {self.comment}'
-        yield declaration
+        yield with_comment(declaration, self.comment)
         yield from docstring_lines(self.doc, indent_level=indent_level+1)
         sorted_nested = sorted(self.body.values(), key=_sort_rep)
         need_blank_line = bool(self.doc)
@@ -393,7 +387,8 @@ class File:
             prev_was_function = is_function
 
     def get_dependencies(self) -> Iterator[str]:
-        return flatten(i.get_dependencies() for i in self.nested)
+        for item in self.nested:
+            yield from item.get_dependencies()
 
 
 @define
