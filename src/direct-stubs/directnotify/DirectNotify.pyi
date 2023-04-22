@@ -5,7 +5,6 @@ from .Logger import Logger
 from .Notifier import Notifier
 
 class _SupportsNotify(Protocol):
-    __name__: ClassVar[str]
     notify: ClassVar[Notifier]
 
 class DirectNotify:

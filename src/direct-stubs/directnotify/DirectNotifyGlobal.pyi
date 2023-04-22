@@ -7,7 +7,6 @@ from .DirectNotify import DirectNotify
 from .Notifier import Notifier
 
 class _SupportsNotify(Protocol):
-    __name__: ClassVar[str]
     notify: ClassVar[Notifier]
 
 directNotify: Final[DirectNotify]
