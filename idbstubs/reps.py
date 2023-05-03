@@ -1,3 +1,4 @@
+import builtins
 from collections import defaultdict
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
@@ -8,6 +9,7 @@ from attrs import Factory, define, evolve, field
 
 from .util import (
     docstring_lines,
+    flatten,
     get_indent,
     is_dunder,
     names_within,
@@ -274,12 +276,15 @@ class Class:
         """Return whether the class has any body (including a docstring)."""
         return not (self.doc or self.body)
 
+    def get_base_dependencies(self) -> Iterator[str]:
+        for base in self.bases:
+            yield from names_within(base)
+
     def get_dependencies(self) -> Iterator[str]:
         yield from names_within(self.conditional)
         if self.is_final:
             yield 'final'
-        for base in self.bases:
-            yield from names_within(base)
+        yield from self.get_base_dependencies()
         for item in self.body.values():
             yield from item.get_dependencies()
 
@@ -333,7 +338,34 @@ class File:
         return f'Stub File {self.scoped_name!r}'
 
     def sort_items(self) -> None:
-        self.nested.sort(key=_sort_rep)
+        seen = set(dir(builtins))
+        seen.update(flatten(self.imports.values()))
+        queued_subclasses = defaultdict[str, list[Class]](list)
+        sorted_nested: list[StubRep] = []
+
+        for item in sorted(self.nested, key=_sort_rep):
+            if isinstance(item, Class):
+                queued = False
+                for dep in item.get_base_dependencies():
+                    if dep not in seen:
+                        queued_subclasses[dep].append(item)
+                        queued = True
+                if queued:
+                    continue
+            seen.add(item.name)
+            sorted_nested.append(item)
+
+            new_names = [item.name]
+            for name in new_names:
+                for subclass in queued_subclasses[name]:
+                    for dep in subclass.get_base_dependencies():
+                        if dep not in seen:
+                            break
+                    else:
+                        seen.add(subclass.name)
+                        sorted_nested.append(subclass)
+                        new_names.append(subclass.name)
+        self.nested = sorted_nested
 
     def import_lines(self) -> Iterator[str]:
         this_package = self.namespace[0] if self.namespace else None

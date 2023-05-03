@@ -6,6 +6,10 @@ from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Datagram, DatagramGenerator, DatagramSink, PointerToVoid, ReferenceCount
 from panda3d.core._nativenet import Socket_Address, Socket_IP
 
+class PointerToBase_Connection(PointerToVoid):
+    def clear(self) -> None: ...
+    def output(self, out: ostream) -> None: ...
+
 class PointerTo_Connection(PointerToBase_Connection):
     @overload
     def __init__(self, ptr: Connection = ...) -> None: ...
@@ -25,10 +29,6 @@ class PointerTo_Connection(PointerToBase_Connection):
     def assign(self, ptr: Connection) -> Self: ...
     @overload
     def assign(self, copy: Connection) -> Self: ...
-
-class PointerToBase_Connection(PointerToVoid):
-    def clear(self) -> None: ...
-    def output(self, out: ostream) -> None: ...
 
 class NetAddress:
     """Represents a network address to which UDP packets may be sent or to which a
@@ -620,6 +620,19 @@ class ConnectionWriter:
     setTcpHeaderSize = set_tcp_header_size
     getTcpHeaderSize = get_tcp_header_size
 
+class QueuedReturn_Datagram:
+    DtoolClassDict: ClassVar[dict[str, Any]]
+    def set_max_queue_size(self, max_size: int) -> None: ...
+    def get_max_queue_size(self) -> int: ...
+    def get_current_queue_size(self) -> int: ...
+    def get_overflow_flag(self) -> bool: ...
+    def reset_overflow_flag(self) -> None: ...
+    setMaxQueueSize = set_max_queue_size
+    getMaxQueueSize = get_max_queue_size
+    getCurrentQueueSize = get_current_queue_size
+    getOverflowFlag = get_overflow_flag
+    resetOverflowFlag = reset_overflow_flag
+
 class DatagramGeneratorNet(DatagramGenerator, ConnectionReader, QueuedReturn_Datagram):
     """This class provides datagrams one-at-a-time as read directly from the net,
     via a TCP connection.  If a datagram is not available, get_datagram() will
@@ -650,19 +663,6 @@ class DatagramGeneratorNet(DatagramGenerator, ConnectionReader, QueuedReturn_Dat
     getDatagram = get_datagram
     isEof = is_eof
     isError = is_error
-
-class QueuedReturn_Datagram:
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def set_max_queue_size(self, max_size: int) -> None: ...
-    def get_max_queue_size(self) -> int: ...
-    def get_current_queue_size(self) -> int: ...
-    def get_overflow_flag(self) -> bool: ...
-    def reset_overflow_flag(self) -> None: ...
-    setMaxQueueSize = set_max_queue_size
-    getMaxQueueSize = get_max_queue_size
-    getCurrentQueueSize = get_current_queue_size
-    getOverflowFlag = get_overflow_flag
-    resetOverflowFlag = reset_overflow_flag
 
 class DatagramSinkNet(DatagramSink, ConnectionWriter):
     """This class accepts datagrams one-at-a-time and sends them over the net, via
@@ -700,6 +700,19 @@ class DatagramSinkNet(DatagramSink, ConnectionWriter):
     getTarget = get_target
     putDatagram = put_datagram
     isError = is_error
+
+class QueuedReturn_ConnectionListenerData:
+    DtoolClassDict: ClassVar[dict[str, Any]]
+    def set_max_queue_size(self, max_size: int) -> None: ...
+    def get_max_queue_size(self) -> int: ...
+    def get_current_queue_size(self) -> int: ...
+    def get_overflow_flag(self) -> bool: ...
+    def reset_overflow_flag(self) -> None: ...
+    setMaxQueueSize = set_max_queue_size
+    getMaxQueueSize = get_max_queue_size
+    getCurrentQueueSize = get_current_queue_size
+    getOverflowFlag = get_overflow_flag
+    resetOverflowFlag = reset_overflow_flag
 
 class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListenerData):
     """This flavor of ConnectionListener will queue up all of the TCP connections
@@ -746,7 +759,7 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
     newConnectionAvailable = new_connection_available
     getNewConnection = get_new_connection
 
-class QueuedReturn_ConnectionListenerData:
+class QueuedReturn_PointerTo_Connection:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_max_queue_size(self, max_size: int) -> None: ...
     def get_max_queue_size(self) -> int: ...
@@ -804,7 +817,7 @@ class QueuedConnectionManager(ConnectionManager, QueuedReturn_PointerTo_Connecti
     resetConnectionAvailable = reset_connection_available
     getResetConnection = get_reset_connection
 
-class QueuedReturn_PointerTo_Connection:
+class QueuedReturn_NetDatagram:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def set_max_queue_size(self, max_size: int) -> None: ...
     def get_max_queue_size(self) -> int: ...
@@ -850,19 +863,6 @@ class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
     upcastToQueuedReturnNetDatagram = upcast_to_QueuedReturn_NetDatagram
     dataAvailable = data_available
     getData = get_data
-
-class QueuedReturn_NetDatagram:
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def set_max_queue_size(self, max_size: int) -> None: ...
-    def get_max_queue_size(self) -> int: ...
-    def get_current_queue_size(self) -> int: ...
-    def get_overflow_flag(self) -> bool: ...
-    def reset_overflow_flag(self) -> None: ...
-    setMaxQueueSize = set_max_queue_size
-    getMaxQueueSize = get_max_queue_size
-    getCurrentQueueSize = get_current_queue_size
-    getOverflowFlag = get_overflow_flag
-    resetOverflowFlag = reset_overflow_flag
 
 class RecentConnectionReader(ConnectionReader):
     """This flavor of ConnectionReader will read from its sockets and retain only

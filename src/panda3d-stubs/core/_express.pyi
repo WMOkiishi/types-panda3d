@@ -13,6 +13,33 @@ _ErrorUtilCode: TypeAlias = int
 _WindowsRegistry_RegLevel: TypeAlias = Literal[0, 1]
 _WindowsRegistry_Type: TypeAlias = Literal[0, 1, 2]
 
+class PointerToVoid:
+    """This is the non-template part of the base class for PointerTo and
+    ConstPointerTo.  It is necessary so we can keep a pointer to a non-template
+    class within the ReferenceCount object, to implement weak reference
+    pointers--we need to have something to clean up when the ReferenceCount
+    object destructs.
+
+    This is the base class for PointerToBase<T>.
+    """
+
+    DtoolClassDict: ClassVar[dict[str, Any]]
+    def is_null(self) -> bool:
+        """Returns true if the PointerTo is a NULL pointer, false otherwise.  (Direct
+        comparison to a NULL pointer also works.)
+        """
+    def get_hash(self) -> int: ...
+    isNull = is_null
+    getHash = get_hash
+
+class PointerToBase_ReferenceCountedVector_double(PointerToVoid):
+    def clear(self) -> None: ...
+    def output(self, out: ostream) -> None: ...
+
+class PointerToArrayBase_double(PointerToBase_ReferenceCountedVector_double):
+    def __eq__(self, __other: object) -> bool: ...
+    def __ne__(self, __other: object) -> bool: ...
+
 class ConstPointerToArray_double(PointerToArrayBase_double):
     def __init__(self, copy: ConstPointerToArray_double | PointerToArray_double) -> None: ...
     def __len__(self) -> int: ...
@@ -32,32 +59,13 @@ class ConstPointerToArray_double(PointerToArrayBase_double):
     getRefCount = get_ref_count
     getNodeRefCount = get_node_ref_count
 
-class PointerToArrayBase_double(PointerToBase_ReferenceCountedVector_double):
-    def __eq__(self, __other: object) -> bool: ...
-    def __ne__(self, __other: object) -> bool: ...
-
-class PointerToBase_ReferenceCountedVector_double(PointerToVoid):
+class PointerToBase_ReferenceCountedVector_float(PointerToVoid):
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
 
-class PointerToVoid:
-    """This is the non-template part of the base class for PointerTo and
-    ConstPointerTo.  It is necessary so we can keep a pointer to a non-template
-    class within the ReferenceCount object, to implement weak reference
-    pointers--we need to have something to clean up when the ReferenceCount
-    object destructs.
-
-    This is the base class for PointerToBase<T>.
-    """
-
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def is_null(self) -> bool:
-        """Returns true if the PointerTo is a NULL pointer, false otherwise.  (Direct
-        comparison to a NULL pointer also works.)
-        """
-    def get_hash(self) -> int: ...
-    isNull = is_null
-    getHash = get_hash
+class PointerToArrayBase_float(PointerToBase_ReferenceCountedVector_float):
+    def __eq__(self, __other: object) -> bool: ...
+    def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_float(PointerToArrayBase_float):
     def __init__(self, copy: ConstPointerToArray_float | PointerToArray_float) -> None: ...
@@ -78,13 +86,13 @@ class ConstPointerToArray_float(PointerToArrayBase_float):
     getRefCount = get_ref_count
     getNodeRefCount = get_node_ref_count
 
-class PointerToArrayBase_float(PointerToBase_ReferenceCountedVector_float):
-    def __eq__(self, __other: object) -> bool: ...
-    def __ne__(self, __other: object) -> bool: ...
-
-class PointerToBase_ReferenceCountedVector_float(PointerToVoid):
+class PointerToBase_ReferenceCountedVector_int(PointerToVoid):
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
+
+class PointerToArrayBase_int(PointerToBase_ReferenceCountedVector_int):
+    def __eq__(self, __other: object) -> bool: ...
+    def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_int(PointerToArrayBase_int):
     def __init__(self, copy: ConstPointerToArray_int | PointerToArray_int) -> None: ...
@@ -105,13 +113,13 @@ class ConstPointerToArray_int(PointerToArrayBase_int):
     getRefCount = get_ref_count
     getNodeRefCount = get_node_ref_count
 
-class PointerToArrayBase_int(PointerToBase_ReferenceCountedVector_int):
-    def __eq__(self, __other: object) -> bool: ...
-    def __ne__(self, __other: object) -> bool: ...
-
-class PointerToBase_ReferenceCountedVector_int(PointerToVoid):
+class PointerToBase_ReferenceCountedVector_unsigned_char(PointerToVoid):
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
+
+class PointerToArrayBase_unsigned_char(PointerToBase_ReferenceCountedVector_unsigned_char):
+    def __eq__(self, __other: object) -> bool: ...
+    def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
     def __init__(self, copy: ConstPointerToArray_unsigned_char | PointerToArray_unsigned_char) -> None: ...
@@ -131,14 +139,6 @@ class ConstPointerToArray_unsigned_char(PointerToArrayBase_unsigned_char):
     getSubdata = get_subdata
     getRefCount = get_ref_count
     getNodeRefCount = get_node_ref_count
-
-class PointerToArrayBase_unsigned_char(PointerToBase_ReferenceCountedVector_unsigned_char):
-    def __eq__(self, __other: object) -> bool: ...
-    def __ne__(self, __other: object) -> bool: ...
-
-class PointerToBase_ReferenceCountedVector_unsigned_char(PointerToVoid):
-    def clear(self) -> None: ...
-    def output(self, out: ostream) -> None: ...
 
 class PointerToArray_double(PointerToArrayBase_double):
     @overload
@@ -1005,21 +1005,6 @@ class DatagramSink:
     getFile = get_file
     getFilePos = get_file_pos
 
-class FileReference(TypedReferenceCount):
-    """Keeps a reference-counted pointer to a file on disk.  As long as the
-    FileReference is held, someone presumably has a use for this file.
-    """
-
-    @overload
-    def __init__(self, __param0: ConfigVariableFilename | FileReference) -> None: ...
-    @overload
-    def __init__(self, filename: StrOrBytesPath) -> None: ...
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
-    def get_filename(self) -> Filename:
-        """Returns the filename of the reference."""
-    getFilename = get_filename
-
 class TypedReferenceCount(TypedObject, ReferenceCount):  # type: ignore[misc]
     """A base class for things which need to inherit from both TypedObject and
     from ReferenceCount.  It's convenient to define this intermediate base
@@ -1034,6 +1019,21 @@ class TypedReferenceCount(TypedObject, ReferenceCount):  # type: ignore[misc]
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
     upcastToTypedObject = upcast_to_TypedObject
     upcastToReferenceCount = upcast_to_ReferenceCount
+
+class FileReference(TypedReferenceCount):
+    """Keeps a reference-counted pointer to a file on disk.  As long as the
+    FileReference is held, someone presumably has a use for this file.
+    """
+
+    @overload
+    def __init__(self, __param0: ConfigVariableFilename | FileReference) -> None: ...
+    @overload
+    def __init__(self, filename: StrOrBytesPath) -> None: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
+    def get_filename(self) -> Filename:
+        """Returns the filename of the reference."""
+    getFilename = get_filename
 
 class Ramfile:
     """An in-memory buffer specifically designed for downloading files to memory."""
@@ -2647,6 +2647,10 @@ class VirtualFileSystem:
     closeReadWriteFile = close_read_write_file
     getMounts = get_mounts
 
+class PointerToBase_VirtualFileMount(PointerToVoid):
+    def clear(self) -> None: ...
+    def output(self, out: ostream) -> None: ...
+
 class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
     @overload
     def __init__(self, copy: VirtualFileMount = ...) -> None: ...
@@ -2666,10 +2670,6 @@ class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
     def assign(self, copy: VirtualFileMount) -> Self: ...
     @overload
     def assign(self, ptr: VirtualFileMount) -> Self: ...
-
-class PointerToBase_VirtualFileMount(PointerToVoid):
-    def clear(self) -> None: ...
-    def output(self, out: ostream) -> None: ...
 
 class TrueClock:
     """An interface to whatever real-time clock we might have available in the

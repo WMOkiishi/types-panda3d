@@ -1065,23 +1065,23 @@ class MovingPartBase(PartGroup):
     getBound = get_bound
     outputValue = output_value
 
-class MovingPartMatrix(MovingPart_ACMatrixSwitchType):
-    """This is a particular kind of MovingPart that accepts a matrix each frame."""
-
 class MovingPart_ACMatrixSwitchType(MovingPartBase):
     def get_value(self) -> LMatrix4: ...
     def get_default_value(self) -> LMatrix4: ...
     getValue = get_value
     getDefaultValue = get_default_value
 
-class MovingPartScalar(MovingPart_ACScalarSwitchType):
-    """This is a particular kind of MovingPart that accepts a scalar each frame."""
+class MovingPartMatrix(MovingPart_ACMatrixSwitchType):
+    """This is a particular kind of MovingPart that accepts a matrix each frame."""
 
 class MovingPart_ACScalarSwitchType(MovingPartBase):
     def get_value(self) -> float: ...
     def get_default_value(self) -> float: ...
     getValue = get_value
     getDefaultValue = get_default_value
+
+class MovingPartScalar(MovingPart_ACScalarSwitchType):
+    """This is a particular kind of MovingPart that accepts a scalar each frame."""
 
 def auto_bind(root_node: PandaNode, controls: AnimControlCollection, hierarchy_match_flags: int = ...) -> None: ...
 

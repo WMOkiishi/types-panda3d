@@ -81,44 +81,6 @@ class TiXmlBase:
     def Column(self) -> int:
         """< See Row()"""
 
-class TiXmlDeclaration(TiXmlNode):
-    """In correct XML the declaration is the first entry in the file.
-    @verbatim
-        <?xml version="1.0" standalone="yes"?>
-    @endverbatim
-
-    TinyXml will happily read or write files without a declaration,
-    however. There are 3 possible attributes to the declaration:
-    version, encoding, and standalone.
-
-    Note: In this version of the code, the attributes are
-    handled as special cases, not generic attributes, simply
-    because there can only be at most 3 and they are always the same.
-    """
-
-    @overload
-    def __init__(self, copy: TiXmlDeclaration = ...) -> None:
-        """`(self)`:
-        Construct an empty declaration.
-
-        `(self, _version: str, _encoding: str, _standalone: str)`:
-        Construct.
-
-        `(self, _version: str, _encoding: str, _standalone: str)`:
-        Constructor.
-        """
-    @overload
-    def __init__(self, _version: str, _encoding: str, _standalone: str) -> None: ...
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
-    def Version(self) -> str:
-        """Version. Will return an empty string if none was found."""
-    def Encoding(self) -> str:
-        """Encoding. Will return an empty string if none was found."""
-    def Standalone(self) -> str:
-        """Is this a standalone document?"""
-
 class TiXmlNode(TiXmlBase):
     """The parent class for everything in the Document Object Model.
     (Except for attributes).
@@ -344,6 +306,44 @@ class TiXmlNode(TiXmlBase):
         const char* xmlcstr = printer.CStr();
         @endverbatim
         """
+
+class TiXmlDeclaration(TiXmlNode):
+    """In correct XML the declaration is the first entry in the file.
+    @verbatim
+        <?xml version="1.0" standalone="yes"?>
+    @endverbatim
+
+    TinyXml will happily read or write files without a declaration,
+    however. There are 3 possible attributes to the declaration:
+    version, encoding, and standalone.
+
+    Note: In this version of the code, the attributes are
+    handled as special cases, not generic attributes, simply
+    because there can only be at most 3 and they are always the same.
+    """
+
+    @overload
+    def __init__(self, copy: TiXmlDeclaration = ...) -> None:
+        """`(self)`:
+        Construct an empty declaration.
+
+        `(self, _version: str, _encoding: str, _standalone: str)`:
+        Construct.
+
+        `(self, _version: str, _encoding: str, _standalone: str)`:
+        Constructor.
+        """
+    @overload
+    def __init__(self, _version: str, _encoding: str, _standalone: str) -> None: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
+    def assign(self, copy: Self) -> Self: ...
+    def Version(self) -> str:
+        """Version. Will return an empty string if none was found."""
+    def Encoding(self) -> str:
+        """Encoding. Will return an empty string if none was found."""
+    def Standalone(self) -> str:
+        """Is this a standalone document?"""
 
 class TiXmlDocument(TiXmlNode):
     """Always the top level node. A document binds together all the
