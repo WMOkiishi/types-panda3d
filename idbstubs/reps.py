@@ -339,39 +339,43 @@ class File:
         this_package = self.namespace[0] if self.namespace else None
         extended_stdlib = stdlib_module_names | {'_typeshed', 'typing_extensions'}
 
-        def grouping_function(module: str) -> int:
+        stdlib_modules, other_modules, local_modules = set[str](), set[str](), set[str]()
+        for module in self.imports:
             if not module or module.split('.')[0] in extended_stdlib:
-                return 0
+                stdlib_modules.add(module)
             elif this_package and module.startswith(this_package):
-                return 2
+                local_modules.add(module)
             else:
-                return 1
+                other_modules.add(module)
 
-        keyed_modules = sorted((grouping_function(m), m) for m in self.imports)
-        prev_key = None
-        for key, module in keyed_modules:
-            if prev_key not in (None, key):
-                yield ''
-            imported_names = sorted(
-                self.imports[module],
-                key=lambda s: (
-                    0 if s.isupper() else 1 if s[0:1].isupper() else 2,
-                    s.lower()
-                )
-            )
-            if not module:
-                for name in imported_names:
-                    yield f'import {name}'
-                continue
-            single_line = f"from {module} import {', '.join(imported_names)}"
-            if len(single_line) <= 130:
-                yield single_line
+        def import_sort_key(name: str) -> tuple[int, str]:
+            if name.isupper():
+                return 0, name.casefold()
+            elif name[0:1].isupper():
+                return 1, name.casefold()
             else:
-                yield f'from {module} import ('
-                for name in imported_names:
-                    yield f'    {name},'
-                yield ')'
-            prev_key = key
+                return 2, name.casefold()
+
+        need_blank_line = False
+        for modules in (stdlib_modules, other_modules, local_modules):
+            if modules:
+                if need_blank_line:
+                    yield ''
+                need_blank_line = True
+            for module in sorted(modules):
+                imported_names = sorted(self.imports[module], key=import_sort_key)
+                if not module:
+                    for name in imported_names:
+                        yield f'import {name}'
+                    continue
+                single_line = f"from {module} import {', '.join(imported_names)}"
+                if len(single_line) <= 130:
+                    yield single_line
+                else:
+                    yield f'from {module} import ('
+                    for name in imported_names:
+                        yield f'    {name},'
+                    yield ')'
 
     def lines(self) -> Iterator[str]:
         yield from self.import_lines()
