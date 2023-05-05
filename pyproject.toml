@@ -53,5 +53,7 @@ enable_incomplete_feature = ["TypeVarTuple", "Unpack"]
 stubPath = "src"
 reportSelfClsParameterName = false
 # We use illusory modules to break up large modules, as well as to
-# store often-used typing constructors.
+# store often-used typing constructs.
 reportMissingModuleSource = false
+# Pmw throws Pyright off.
+useLibraryCodeForTypes = false

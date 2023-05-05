@@ -84,6 +84,7 @@ class IconGroupResource:
         bpp: int
         size: int
         id: int
+
     code_page: ClassVar[int]
     type: ClassVar[int]
     icons: list[IconGroupResource.Icon]

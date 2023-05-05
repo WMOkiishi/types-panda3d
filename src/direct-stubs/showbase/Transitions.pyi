@@ -26,7 +26,7 @@ class Transitions:
     imagePos: LVecBase3f
     alphaOff: LColor
     alphaOn: LColor
-    lerpFunc: type[LerpColorScaleInterval] | type[LerpColorInterval]
+    lerpFunc: type[LerpColorScaleInterval | LerpColorInterval]
     irisTaskName: str
     fadeTaskName: str
     letterboxTaskName: str
