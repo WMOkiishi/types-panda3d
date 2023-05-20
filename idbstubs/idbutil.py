@@ -13,44 +13,6 @@ from .special_cases import NOT_EXPOSED, TYPE_NAME_OVERRIDES
 _logger: Final = logging.getLogger(__name__)
 
 
-def type_is_unexposed_wrapper(idb_type: IDBType) -> bool:
-    """Return whether a type is a wrapper or non-global typedef."""
-    return (
-        idb_type.is_wrapped
-        or (idb_type.is_typedef and not idb_type.is_global)
-    )
-
-
-def unwrap_type(idb_type: IDBType) -> IDBType:
-    """Traverse wrapped types and return the first type
-    that is neither a wrapper nor a typedef.
-    """
-    while idb_type.is_wrapped or idb_type.is_typedef:
-        idb_type = idb_type.wrapped_type
-    return idb_type
-
-
-def type_is_unscoped_enum(idb_type: IDBType) -> bool:
-    """Return whether the given type is an enumerated type
-    exposed to Python simply as integer constants.
-    """
-    return bool(
-        idb_type.is_enum and idb_type.name
-        and not idb_type.is_scoped_enum
-    )
-
-
-def type_has_copy_constructor(idb_type: IDBType) -> bool:
-    """Return whether the given type has a "copy constructor",
-    meaning it has a `__copy__` method.
-    """
-    for function in idb_type.constructors:
-        for wrapper in function.wrappers:
-            if wrapper.is_copy_constructor:
-                return True
-    return False
-
-
 def function_is_exposed(function: IDBFunction) -> bool:
     """Return whether a function is exposed to Python."""
     if function.name == 'operator new':
@@ -86,21 +48,20 @@ def type_is_exposed(idb_type: IDBType) -> bool:
     """Return whether a type is exposed to Python."""
     if idb_type.is_wrapped or idb_type.is_typedef:
         return type_is_exposed(idb_type.wrapped_type)
-    if idb_type.is_atomic or idb_type.name in TYPE_NAME_OVERRIDES:
+    if idb_type.is_global or idb_type.is_atomic:
         return True
-    if idb_type.is_array:
-        # TODO: What's going on with compose_matrix and decompose_matrix?
-        return False
-    if idb_type.name.startswith(('PointerTo< ', 'ConstPointerTo< ')):
+    if idb_type.name in TYPE_NAME_OVERRIDES:
         return True
     if idb_type.is_unpublished:
         _logger.debug(f'Type {idb_type} is unpublished')
         return False
-    if idb_type.is_nested:
-        if not idb_type.is_fully_defined:
+    if not idb_type.is_fully_defined:
+        if idb_type.is_nested:
             _logger.info(f'Nested type {idb_type} is not fully defined')
             return False
-    elif not idb_type.is_global:
+        if idb_type.name.startswith(('PointerTo< ', 'ConstPointerTo< ')):
+            return True
+    if not idb_type.is_nested:
         _logger.info(f'Type {idb_type} is neither global nor nested')
         return False
     return True

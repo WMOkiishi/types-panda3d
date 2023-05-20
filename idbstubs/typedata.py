@@ -16,12 +16,7 @@ from sys import stdlib_module_names
 from typing import Final
 
 from .idb_interface import IDBType, get_all_types
-from .idbutil import (
-    type_is_exposed,
-    type_is_unexposed_wrapper,
-    type_is_unscoped_enum,
-    unwrap_type,
-)
+from .idbutil import type_is_exposed
 from .special_cases import EXTRA_COERCION, NO_COERCION, TYPE_NAME_OVERRIDES
 from .translation import ATOMIC_TYPES, make_class_name
 from .util import unpack_union
@@ -101,7 +96,8 @@ def get_type_name(idb_type: IDBType) -> str:
     """Return the Python name for a type. If the type is a non-scoped enum,
     the name returned is an alias name, prefixed by an underscore.
     """
-    if type_is_unexposed_wrapper(idb_type):
+    if idb_type.is_wrapped or (idb_type.is_typedef and not idb_type.is_global):
+        # Wrapped types and local typedefs aren't exposed to Python.
         return get_type_name(idb_type.wrapped_type)
     if idb_type.is_atomic:
         return ATOMIC_TYPES[idb_type.atomic_token]
@@ -127,7 +123,7 @@ def load_data() -> None:
         type_name = get_type_name(idb_type)
         if idb_type.is_wrapped:
             continue
-        if type_is_unscoped_enum(idb_type):
+        if idb_type.is_enum and not idb_type.is_scoped_enum:
             if 0 < len(idb_type.enum_values) < 25:
                 values = sorted(e.value for e in idb_type.enum_values)
                 values_str = ', '.join(str(v) for v in values)
@@ -142,7 +138,7 @@ def load_data() -> None:
             _modules[type_name] = mod_name + '._' + lib_name
         if idb_type.is_typedef:
             if idb_type.is_global:
-                _aliases[type_name] = get_type_name(unwrap_type(idb_type))
+                _aliases[type_name] = get_type_name(idb_type.unwrap())
             # Don't record coercion or inheritance information for typedefs
             continue
         for cast_to in explicit_cast_to(idb_type):
@@ -171,7 +167,7 @@ def load_data() -> None:
 
 def recursive_superclasses(idb_type: IDBType) -> frozenset[IDBType]:
     derivations = set[IDBType]()
-    for derivation in unwrap_type(idb_type).derivations:
+    for derivation in idb_type.unwrap().derivations:
         derivations.add(derivation)
         derivations |= recursive_superclasses(derivation)
     return frozenset(derivations)
@@ -180,7 +176,7 @@ def recursive_superclasses(idb_type: IDBType) -> frozenset[IDBType]:
 def explicit_cast_to(idb_type: IDBType) -> Iterator[IDBType]:
     for cast in idb_type.casts:
         for wrapper in cast.wrappers:
-            cast_to = unwrap_type(wrapper.return_type)
+            cast_to = wrapper.return_type.unwrap()
             if type_is_exposed(cast_to) and not cast_to.is_atomic:
                 yield cast_to
 
@@ -199,7 +195,7 @@ def implicit_cast_from(idb_type: IDBType) -> Iterator[IDBType]:
                 continue
             if wrapper.parameters[0].name in ('fill_value', 'type_handle'):
                 continue
-            cast_from = unwrap_type(wrapper.parameters[0].type)
+            cast_from = wrapper.parameters[0].type.unwrap()
             if cast_from.name == '_object':
                 continue
             if idb_type in recursive_superclasses(cast_from):
@@ -229,18 +225,16 @@ def get_param_type_replacement(type_name: str) -> str:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
     """
-    alias_of = _aliases.get(type_name)
-    if alias_of is None:
-        replacement = _param_type_replacements.get(type_name)
-    else:
-        replacement = _param_type_replacements.get(alias_of)
-        if replacement is not None:
-            replacement_types = set(unpack_union(replacement))
-            if alias_of in replacement_types:
-                replacement_types.discard(alias_of)
-                replacement_types.add(type_name)
-                replacement = combine_types(replacement_types)
-    return type_name if replacement is None else replacement
+    alias_of = _aliases.get(type_name, type_name)
+    replacement = _param_type_replacements.get(alias_of)
+    if replacement is None:
+        return type_name
+    replacement_types = set(unpack_union(replacement))
+    if alias_of not in replacement_types:
+        return replacement
+    replacement_types.discard(alias_of)
+    replacement_types.add(type_name)
+    return combine_types(replacement_types)
 
 
 def get_module(name: str) -> str | None:

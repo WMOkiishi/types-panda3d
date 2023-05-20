@@ -365,6 +365,25 @@ class IDBType:
         for n in range(idb.interrogate_type_number_of_nested_types(self.index)):
             yield IDBType(idb.interrogate_type_get_nested_type(self.index, n))
 
+    def unwrap(self) -> IDBType:
+        """Traverse wrapped types and return the first type
+        that is neither a wrapper nor a typedef.
+        """
+        i = self.index
+        while idb.interrogate_type_is_wrapped(i) or idb.interrogate_type_is_typedef(i):
+            i = idb.interrogate_type_wrapped_type(i)
+        return IDBType(i)
+
+    def check_for_copy_constructor(self) -> bool:
+        """Return whether the type has a "copy constructor",
+        meaning it has a `__copy__` method.
+        """
+        for function in self.constructors:
+            for wrapper in function.wrappers:
+                if wrapper.is_copy_constructor:
+                    return True
+        return False
+
 
 def get_manifests() -> Iterator[IDBManifest]:
     """Yield all manifests known to interrogate."""

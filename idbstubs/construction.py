@@ -20,9 +20,7 @@ from .idb_interface import (
 from .idbutil import (
     element_is_exposed,
     function_is_exposed,
-    type_has_copy_constructor,
     type_is_exposed,
-    unwrap_type,
     wrapper_is_exposed,
 )
 from .reps import (
@@ -92,7 +90,7 @@ def get_function_name(function: IDBFunction) -> str:
         if len(function.wrappers) != 1:
             scoped_name = function.scoped_name
             _logger.warning(f'Typecast {scoped_name!r} has multiple wrappers')
-        return_type = unwrap_type(function.wrappers[0].return_type)
+        return_type = function.wrappers[0].return_type.unwrap()
         if return_type.is_atomic:
             return f'__{get_type_name(return_type)}__'
     if function.is_unary_op:
@@ -152,7 +150,7 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
         ):
             method.name = 'size'
         yield method
-    if type_has_copy_constructor(idb_type) or 'make_copy' in method_names:
+    if idb_type.check_for_copy_constructor() or 'make_copy' in method_names:
         if '__copy__' not in method_names:
             yield Function('__copy__', [Signature([Parameter('self')], 'Self')])
         if '__deepcopy__' not in method_names:
