@@ -77,10 +77,6 @@ TYPE_ALIASES: Final = {
     'TaskCoroutine': 'Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]',
     'TaskFunction': 'Callable[..., int | TaskCoroutine[int | None] | None]',
 }
-_type_alias_data = [
-    (k, frozenset(v.split(' | ')))
-    for k, v in TYPE_ALIASES.items()
-]
 for _alias_name in TYPE_ALIASES:
     KNOWN_IMPORTS[_alias_name] = 'panda3d._typing'
 
@@ -153,12 +149,14 @@ def load_data() -> None:
             _direct_inheritance[type_name] = tuple(
                 get_type_name(s) for s in idb_type.derivations
             )
+    union_aliases = [(k, frozenset(unpack_union(v))) for k, v in TYPE_ALIASES.items()]
     for cast_to_name in tuple(coercions.keys() | typecasts.keys()):  # freeze keys
         cast_from_name = combine_types(
             get_all_coercible(
                 cast_to_name,
                 coercion_map=coercions,
                 typecast_map=typecasts,
+                union_aliases=union_aliases,
             )
         )
         if cast_from_name and cast_to_name != cast_from_name:
@@ -207,7 +205,8 @@ def implicit_cast_from(idb_type: IDBType) -> Iterator[IDBType]:
 def get_all_coercible(
         cast_to: str,
         *, coercion_map: Mapping[str, Set[str]],
-        typecast_map: Mapping[str, Set[str]]) -> set[str]:
+        typecast_map: Mapping[str, Set[str]],
+        union_aliases: Iterable[tuple[str, Set[str]]] = ()) -> set[str]:
     """Based on `coercion_map`, return a set of the names of the types
     that can be automatically coerced to the type with the given name.
     """
@@ -218,6 +217,10 @@ def get_all_coercible(
         cast_from |= typecast_map[name]
     if (add := EXTRA_COERCION.get(cast_to)) is not None:
         cast_from |= add
+    for alias, alias_of in union_aliases:
+        if cast_from >= alias_of:
+            cast_from -= alias_of
+            cast_from.add(alias)
     return cast_from
 
 
@@ -374,19 +377,11 @@ def combine_types(types: Iterable[str]) -> str:
     """
     combined = set[str]()
     for t in types:
-        combined |= expand_type(t)
+        combined.update(unpack_union(t))
     for a, b in combinations(combined, 2):
         a_subtypes_b, b_subtypes_a = subtype_relationship(a, b)
         if a_subtypes_b:
             combined.discard(a)
         elif b_subtypes_a:
             combined.discard(b)
-    aliases_to_add = set[str]()
-    types_to_remove = set[str]()
-    for alias, alias_of in _type_alias_data:
-        if combined >= alias_of:
-            aliases_to_add.add(alias)
-            types_to_remove |= alias_of
-    combined -= types_to_remove
-    combined |= aliases_to_add
     return ' | '.join(sorted(combined, key=lambda s: (s == 'None', s)))
