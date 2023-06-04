@@ -11,10 +11,10 @@ from collections.abc import (
     Set,
 )
 from functools import cache
-from itertools import combinations, product
 from sys import stdlib_module_names
 from typing import Final
 
+from . import typecmp as tc
 from .idb_interface import IDBType, get_all_types
 from .idbutil import type_is_exposed
 from .special_cases import EXTRA_COERCION, NO_COERCION, TYPE_NAME_OVERRIDES
@@ -24,9 +24,6 @@ from .util import unpack_union
 _logger: Final = logging.getLogger(__name__)
 
 _modules: dict[str, str] = {}
-_inheritance: dict[str, set[str]] = {}
-_direct_inheritance: dict[str, tuple[str, ...]] = {}
-_aliases: dict[str, str] = {}
 _param_type_replacements: dict[str, str] = {}
 _enum_definitions: dict[str, str] = {}
 
@@ -112,6 +109,23 @@ def get_type_name(idb_type: IDBType) -> str:
     return '.'.join(name_iter)
 
 
+@cache
+def make_type(idb_type: IDBType) -> tc.Type:
+    type_name = get_type_name(idb_type)
+    if idb_type.is_typedef:
+        typ = tc.AliasType(
+            type_name, make_type(idb_type.wrapped_type),
+        )
+    else:
+        bases: list[tc.ClassType] = []
+        for derivation in idb_type.derivations:
+            base = make_type(derivation)
+            assert isinstance(base, tc.ClassType)
+            bases.append(base)
+        typ = tc.ClassType(type_name, bases)
+    return typ
+
+
 def load_data() -> None:
     coercions = defaultdict[str, set[str]](set)
     typecasts = defaultdict[str, set[str]](set)
@@ -129,26 +143,27 @@ def load_data() -> None:
             _enum_definitions[type_name] = definition
             continue
         if idb_type.is_global and not idb_type.is_nested:
+            tc.register(make_type(idb_type))
             mod_name = idb_type.module_name
             lib_name = idb_type.library_name.removeprefix('libp3')
             _modules[type_name] = mod_name + '._' + lib_name
-        if idb_type.is_typedef:
-            if idb_type.is_global:
-                _aliases[type_name] = get_type_name(idb_type.unwrap())
-            # Don't record coercion or inheritance information for typedefs
-            continue
         for cast_to in explicit_cast_to(idb_type):
             typecasts[get_type_name(cast_to)].add(type_name)
         coercions[type_name].update(
             get_type_name(t) for t in implicit_cast_from(idb_type)
         )
-        if base_classes := recursive_superclasses(idb_type):
-            _inheritance[type_name] = {
-                get_type_name(s) for s in base_classes
-            }
-            _direct_inheritance[type_name] = tuple(
-                get_type_name(s) for s in idb_type.derivations
-            )
+    for k, v in TYPE_ALIASES.items():
+        alias = tc.AliasType(k, tc.get(v))
+        tc.register(alias)
+    tc.register(
+        tc.ProtocolType(
+            'StrOrBytesPath', frozenset((
+                tc.get('str'),
+                tc.get('Filename'),
+                tc.get('ConfigVariableFilename'),
+            ))
+        )
+    )
     union_aliases = [(k, frozenset(unpack_union(v))) for k, v in TYPE_ALIASES.items()]
     for cast_to_name in tuple(coercions.keys() | typecasts.keys()):  # freeze keys
         cast_from_name = combine_types(
@@ -224,20 +239,23 @@ def get_all_coercible(
     return cast_from
 
 
-def get_param_type_replacement(type_name: str) -> str:
+def get_param_type_replacement(type_name: str) -> tc.Type:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
     """
-    alias_of = _aliases.get(type_name, type_name)
+    typ = tc.get(type_name)
+    while isinstance(typ, tc.AliasType):
+        typ = typ.alias_of
+    alias_of = str(typ)
     replacement = _param_type_replacements.get(alias_of)
     if replacement is None:
-        return type_name
+        return tc.get(type_name)
     replacement_types = set(unpack_union(replacement))
     if alias_of not in replacement_types:
-        return replacement
+        return tc.get(replacement)
     replacement_types.discard(alias_of)
     replacement_types.add(type_name)
-    return combine_types(replacement_types)
+    return tc.unify_types(tc.get(t) for t in replacement_types)
 
 
 def get_module(name: str) -> str | None:
@@ -253,17 +271,19 @@ def get_module(name: str) -> str | None:
 
 def get_mro(name: str, /) -> list[str]:
     """Return a list of the names of the classes in the MRO of a class."""
-    name = _aliases.get(name, name)
-    bases = [name]
+    typ = tc.get(name)
+    if not isinstance(typ, tc.ClassType):
+        return [name]
+    bases = [typ]
     linear_bases: list[str] = []
     while bases:
         for next_base in bases:
             other_bases = [b for b in bases if b != next_base]
-            if any(inherits_from(other_base, next_base) for other_base in other_bases):
+            if any(other_base <= next_base for other_base in other_bases):
                 continue
             # This base works as the next one.
-            linear_bases.append(next_base)
-            bases = list(_direct_inheritance.get(next_base, ())) + other_bases
+            linear_bases.append(str(next_base))
+            bases = [*next_base.bases, *other_bases]
             break
         else:
             # Each base inherits from one of the others.
@@ -290,98 +310,8 @@ def process_dependency(
     return True
 
 
-def inherits_from(a: str, b: str, /) -> bool:
-    """Return whether `a` is narrower than `b`.
-    Does not work with union types; use `subtype_relationship` instead.
-    """
-    a, b = _aliases.get(a, a), _aliases.get(b, b)
-    if 'Any' in (a, b):
-        return False
-    if a == b:
-        return True
-    if b == 'object' or a in ('Never', 'NoReturn'):
-        return True
-    if (a, b) in (('bool', 'int'), ('int', 'float')):
-        return True
-    if a in ('Filename', 'ConfigVariableFilename', 'str') and b == 'StrOrBytesPath':
-        return True
-    return b in _inheritance.get(a, set())
-
-
-def expand_type(s: str, /) -> set[str]:
-    """Return a set of type names whose union is equivalent
-    to the type represented by the given string.
-    """
-    if not s:
-        return set()
-    parts, new_parts = set[str](), {s}
-    while parts != new_parts:
-        parts, new_parts = new_parts, set[str]()
-        for part in parts:
-            part = TYPE_ALIASES.get(part, part)
-            new_parts.update(unpack_union(part))
-    return parts
-
-
-def subtype_relationship(a: str, b: str, /) -> tuple[bool, bool]:
-    """Return a tuple of two Boolean values, representing whether
-    `a` is a subtype of `b` and vice versa, respectively.
-    """
-    expanded_a = expand_type(a)
-    expanded_b = expand_type(b)
-    found_broader_in_b = dict.fromkeys(expanded_a, False)
-    found_broader_in_a = dict.fromkeys(expanded_b, False)
-    for i, j in product(expanded_a, expanded_b):
-        if not found_broader_in_b[i] and inherits_from(i, j):
-            found_broader_in_b[i] = True
-        if not found_broader_in_a[j] and inherits_from(j, i):
-            found_broader_in_a[j] = True
-    return (all(found_broader_in_b.values()),
-            all(found_broader_in_a.values()))
-
-
-def type_difference(a: str, b: str, /) -> str:
-    """Return a string representing the difference between
-    the types represented by the given strings.
-    """
-    if not (a and b):
-        return a
-    expanded_a = expand_type(a)
-    expanded_b = expand_type(b)
-    result = set(expanded_a)
-    for t in expanded_a:
-        for u in expanded_b:
-            if inherits_from(t, u):
-                result.remove(t)
-                break
-    if not result:
-        result.add('Never')
-    return combine_types(result)
-
-
-def types_intersect(a: str, b: str, /) -> bool:
-    """Return whether the types represented by
-    the given strings have an intersection.
-    """
-    if not a or not b:
-        return True
-    return any(
-        inherits_from(t, u) or inherits_from(u, t)
-        for t, u in product(expand_type(a), expand_type(b))
-    )
-
-
 def combine_types(types: Iterable[str]) -> str:
     """Return a string representing a type equivalent to the union
     of the types represented by the given strings.
     """
-    combined = set[str]()
-    for t in types:
-        combined.update(unpack_union(t))
-    for a, b in combinations(combined, 2):
-        a_subtypes_b, b_subtypes_a = subtype_relationship(a, b)
-        if a_subtypes_b:
-            combined.discard(a)
-        elif b_subtypes_a:
-            combined.discard(b)
-    return ' | '.join(sorted(combined, key=lambda s: (s == 'None', s)))
+    return str(tc.unify_types(tc.get(t) for t in types))
