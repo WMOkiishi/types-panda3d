@@ -1,7 +1,7 @@
 import logging
 import re
 from collections import Counter
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from itertools import combinations, zip_longest
 from typing import Final
 
@@ -304,8 +304,8 @@ def process_dependencies(file: File) -> None:
             alias = Alias(name, definition, is_type_alias=True)
             file.nested.append(alias)
 
-        def as_type_var(bounds: Sequence[str], variance: str) -> None:
-            type_var = TypeVariable(name, bounds, variance)
+        def as_type_var(parameters: Iterable[str]) -> None:
+            type_var = TypeVariable(name, parameters)
             file.nested.append(type_var)
 
         def import_from(module: str) -> None:

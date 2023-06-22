@@ -26,27 +26,17 @@ class StubRep(Protocol):
 @define
 class TypeVariable:
     name: str
-    bounds: Sequence[str] = field(default=(), converter=tuple)
-    variance: str = ''
+    parameters: Iterable[str] = field(default=(), converter=tuple)
 
     def __str__(self) -> str:
-        parameters = [repr(self.name)]
-        if self.bounds:
-            if len(self.bounds) == 1:
-                parameters.append(f'bound={self.bounds[0]}')
-            else:
-                parameters += self.bounds
-        if self.variance and self.variance != 'invariant':
-            parameters.append(f'{self.variance}=True')
-        return f"{self.name} = TypeVar({', '.join(parameters)})"
+        parameters = [repr(self.name), *self.parameters]
+        return f"TypeVar({', '.join(parameters)})"
 
     def get_dependencies(self) -> Iterator[str]:
-        yield 'TypeVar'
-        for bound in self.bounds:
-            yield from names_within(bound)
+        yield from names_within(str(self))
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
-        yield get_indent(indent_level) + str(self)
+        yield f'{get_indent(indent_level)}{self.name} = {self}'
 
 
 @define

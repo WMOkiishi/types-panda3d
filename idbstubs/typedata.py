@@ -2,14 +2,7 @@ import builtins
 import itertools
 import logging
 from collections import defaultdict
-from collections.abc import (
-    Callable,
-    Iterable,
-    Iterator,
-    Mapping,
-    Sequence,
-    Set,
-)
+from collections.abc import Callable, Iterable, Iterator, Mapping, Set
 from functools import cache
 from sys import stdlib_module_names
 from typing import Final
@@ -77,10 +70,10 @@ TYPE_ALIASES: Final = {
 for _alias_name in TYPE_ALIASES:
     KNOWN_IMPORTS[_alias_name] = 'panda3d._typing'
 
-TYPE_VARIABLES: Final[dict[str, tuple[tuple[str, ...], str]]] = {
-    '_N': (('PandaNode',), 'covariant'),
-    '_M': (('PandaNode',), 'invariant'),
-    '_T_co': ((), 'covariant'),
+TYPE_VARIABLES: Final[dict[str, tuple[str, ...]]] = {
+    '_N': ('bound=PandaNode', 'default=PandaNode', 'covariant=True'),
+    '_M': ('bound=PandaNode', 'default=PandaNode'),
+    '_T_co': ('covariant=True',),
 }
 
 
@@ -296,13 +289,13 @@ def process_dependency(
         name: str,
         *, if_alias: Callable[[str], object],
         if_import: Callable[[str], object],
-        if_type_var: Callable[[Sequence[str], str], object]) -> bool:
+        if_type_var: Callable[[Iterable[str]], object]) -> bool:
     if name in BUILTIN_NAMES:
         pass
     elif (alias_def := _enum_definitions.get(name)) is not None:
         if_alias(alias_def)
     elif (type_var_params := TYPE_VARIABLES.get(name)) is not None:
-        if_type_var(*type_var_params)
+        if_type_var(type_var_params)
     elif (module := get_module(name)) is not None:
         if_import(module)
     else:

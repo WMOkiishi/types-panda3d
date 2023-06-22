@@ -54,8 +54,8 @@ from panda3d.core._putil import (
     UpdateSeq,
 )
 
-_N = TypeVar('_N', bound=PandaNode, covariant=True)
-_M = TypeVar('_M', bound=PandaNode)
+_N = TypeVar('_N', bound=PandaNode, default=PandaNode, covariant=True)
+_M = TypeVar('_M', bound=PandaNode, default=PandaNode)
 _RenderModeAttrib_Mode: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 _RenderAttrib_PandaCompareFunc: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8]
 _BoundingVolume_BoundsType: TypeAlias = Literal[0, 1, 2, 3, 4]
