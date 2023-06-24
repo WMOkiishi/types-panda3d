@@ -200,10 +200,7 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
         read_only = True
     else:
         read_only = not element.has_setter
-    if not is_dunder(element.name):
-        doc = comment_to_docstring(element.comment)
-    else:
-        doc = ''
+    doc = comment_to_docstring(element.comment)
     return Attribute(
         check_keyword(element.name),
         ATTR_TYPE_OVERRIDES.get(element.scoped_name, type_name),
@@ -260,7 +257,6 @@ def make_function_rep(function: IDBFunction) -> Function:
         function.is_method and not is_dunder(name)
         and not function.wrappers[0].parameters[0].is_this
     )
-    omit_docstring = is_dunder(name) and not function.is_constructor
     signatures: list[Signature] = []
     sigs_by_doc = defaultdict[str, list[str]](list)
     param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name)
@@ -274,10 +270,8 @@ def make_function_rep(function: IDBFunction) -> Function:
             wrapper, function,
             ensure_self_param=function.is_method and not is_static_method,
         )
-        if not omit_docstring:
-            sig_doc = comment_to_docstring(wrapper.comment)
-            if sig_doc:
-                sigs_by_doc[sig_doc].append(f'`({signature.param_string})`')
+        if sig_doc := comment_to_docstring(wrapper.comment):
+            sigs_by_doc[sig_doc].append(f'`({signature.param_string})`')
         if param_overrides:
             for j, param in enumerate(signature.parameters):
                 param_override = param_overrides.get((i, j))

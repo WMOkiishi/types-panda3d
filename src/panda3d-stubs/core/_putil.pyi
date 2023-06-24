@@ -60,7 +60,8 @@ class PointerToBase_ReferenceCountedVector_ushort(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_ushort(PointerToBase_ReferenceCountedVector_ushort):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_ushort(PointerToArrayBase_ushort):

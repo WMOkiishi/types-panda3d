@@ -51,7 +51,8 @@ class PointerToBase_ReferenceCountedVector_LMatrix3d(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LMatrix3d(PointerToBase_ReferenceCountedVector_LMatrix3d):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LMatrix3d(PointerToArrayBase_LMatrix3d):
@@ -78,7 +79,8 @@ class PointerToBase_ReferenceCountedVector_LMatrix3f(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LMatrix3f(PointerToBase_ReferenceCountedVector_LMatrix3f):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LMatrix3f(PointerToArrayBase_LMatrix3f):
@@ -105,7 +107,8 @@ class PointerToBase_ReferenceCountedVector_LVecBase2d(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LVecBase2d(PointerToBase_ReferenceCountedVector_LVecBase2d):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LVecBase2d(PointerToArrayBase_LVecBase2d):
@@ -132,7 +135,8 @@ class PointerToBase_ReferenceCountedVector_LVecBase2f(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LVecBase2f(PointerToBase_ReferenceCountedVector_LVecBase2f):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LVecBase2f(PointerToArrayBase_LVecBase2f):
@@ -159,7 +163,8 @@ class PointerToBase_ReferenceCountedVector_LVecBase2i(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LVecBase2i(PointerToBase_ReferenceCountedVector_LVecBase2i):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LVecBase2i(PointerToArrayBase_LVecBase2i):
@@ -186,7 +191,8 @@ class PointerToBase_ReferenceCountedVector_LVecBase3d(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LVecBase3d(PointerToBase_ReferenceCountedVector_LVecBase3d):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LVecBase3d(PointerToArrayBase_LVecBase3d):
@@ -213,7 +219,8 @@ class PointerToBase_ReferenceCountedVector_LVecBase3f(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LVecBase3f(PointerToBase_ReferenceCountedVector_LVecBase3f):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LVecBase3f(PointerToArrayBase_LVecBase3f):
@@ -240,7 +247,8 @@ class PointerToBase_ReferenceCountedVector_LVecBase3i(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_LVecBase3i(PointerToBase_ReferenceCountedVector_LVecBase3i):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_LVecBase3i(PointerToArrayBase_LVecBase3i):
@@ -267,7 +275,8 @@ class PointerToBase_ReferenceCountedVector_UnalignedLMatrix4d(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_UnalignedLMatrix4d(PointerToBase_ReferenceCountedVector_UnalignedLMatrix4d):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_UnalignedLMatrix4d(PointerToArrayBase_UnalignedLMatrix4d):
@@ -294,7 +303,8 @@ class PointerToBase_ReferenceCountedVector_UnalignedLMatrix4f(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_UnalignedLMatrix4f(PointerToBase_ReferenceCountedVector_UnalignedLMatrix4f):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_UnalignedLMatrix4f(PointerToArrayBase_UnalignedLMatrix4f):
@@ -321,7 +331,8 @@ class PointerToBase_ReferenceCountedVector_UnalignedLVecBase4d(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_UnalignedLVecBase4d(PointerToBase_ReferenceCountedVector_UnalignedLVecBase4d):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_UnalignedLVecBase4d(PointerToArrayBase_UnalignedLVecBase4d):
@@ -348,7 +359,8 @@ class PointerToBase_ReferenceCountedVector_UnalignedLVecBase4f(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_UnalignedLVecBase4f(PointerToBase_ReferenceCountedVector_UnalignedLVecBase4f):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_UnalignedLVecBase4f(PointerToArrayBase_UnalignedLVecBase4f):
@@ -375,7 +387,8 @@ class PointerToBase_ReferenceCountedVector_UnalignedLVecBase4i(PointerToVoid):
     def output(self, out: ostream) -> None: ...
 
 class PointerToArrayBase_UnalignedLVecBase4i(PointerToBase_ReferenceCountedVector_UnalignedLVecBase4i):
-    def __eq__(self, __other: object) -> bool: ...
+    def __eq__(self, __other: object) -> bool:
+        """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, __other: object) -> bool: ...
 
 class ConstPointerToArray_UnalignedLVecBase4i(PointerToArrayBase_UnalignedLVecBase4i):
