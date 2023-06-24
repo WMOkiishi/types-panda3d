@@ -6,7 +6,7 @@ from typing_extensions import Literal, TypeAlias, TypeGuard
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
-from panda3d.core import CardMaker, GeomNode, GraphicsEngine, GraphicsOutput, NodePath, PythonTask, Texture
+from panda3d.core import CardMaker, GeomNode, GraphicsEngine, GraphicsOutput, NodePath, PythonTask, Texture, WindowProperties
 
 _Layout: TypeAlias = Literal['vline', 'hline', 'vgrid', 'hgrid', 'cycle']
 _Position: TypeAlias = Literal['llcorner', 'lrcorner', 'ulcorner', 'urcorner']
@@ -23,7 +23,7 @@ class BufferViewer:
     exclude: _Texture | list[_Texture]
     cullbin: str
     cullsort: int
-    win: GraphicsOutput
+    win: GraphicsOutput | WindowProperties
     engine: GraphicsEngine
     renderParent: NodePath
     cards: list[NodePath]
@@ -31,7 +31,7 @@ class BufferViewer:
     cardmaker: CardMaker
     task: PythonTask | Literal[0]
     dirty: bool
-    def __init__(self, win: GraphicsOutput, parent: NodePath) -> None: ...
+    def __init__(self, win: GraphicsOutput | WindowProperties, parent: NodePath) -> None: ...
     def refreshReadout(self) -> None: ...
     def isValidTextureSet(self, x: object) -> TypeGuard[_Texture | list[_Texture]]: ...
     def isEnabled(self) -> bool: ...

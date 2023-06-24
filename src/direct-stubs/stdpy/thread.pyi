@@ -1,4 +1,4 @@
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Callable, Iterable, Mapping
 from typing import Any, NoReturn
 from typing_extensions import Final
 
@@ -23,7 +23,7 @@ class LockType:
     acquire = __enter__
 
 def start_new_thread(
-    function: Callable[..., object], args: Sequence[Any], kwargs: Mapping[str, Any] = {}, name: str | None = None
+    function: Callable[..., object], args: Iterable[Any], kwargs: Mapping[str, Any] = {}, name: str | None = None
 ) -> int: ...
 def interrupt_main() -> None: ...
 def exit() -> NoReturn: ...

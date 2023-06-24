@@ -1,7 +1,7 @@
 __all__ = ['Loader']
 
 from _typeshed import StrOrBytesPath
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Collection, Iterable, Sequence
 from typing import Any, ClassVar, overload
 from typing_extensions import Literal, Self, TypeAlias
 
@@ -40,14 +40,14 @@ class _ResultAwaiter:
     def __next__(self) -> AsyncTask: ...
 
 class _Callback:
-    objects: list[Any]
+    objects: list[Any | None]
     gotList: bool
-    callback: Callable[..., object]
+    callback: Callable[..., object] | None
     extraArgs: Iterable[Any]
     requests: set[AsyncTask] | None
     requestList: list[AsyncTask] | None
     def __init__(
-        self, loader: Loader, numObjects: int, gotList: bool, callback: Callable[..., object], extraArgs: Iterable[Any]
+        self, loader: Loader, numObjects: int, gotList: bool, callback: Callable[..., object] | None, extraArgs: Iterable[Any]
     ) -> None: ...
     def gotObject(self, index: int, object: Any) -> None: ...
     def cancel(self) -> None: ...
@@ -90,7 +90,7 @@ class Loader(DirectObject):
         okMissing: Literal[False],
         callback: None = None,
         extraArgs: Iterable[Any] = [],
-        priority: float | None = None,
+        priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> NodePath: ...
     @overload
@@ -103,7 +103,7 @@ class Loader(DirectObject):
         okMissing: Literal[False],
         callback: None = None,
         extraArgs: Iterable[Any] = [],
-        priority: float | None = None,
+        priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> NodePath: ...
     @overload
@@ -116,7 +116,7 @@ class Loader(DirectObject):
         okMissing: Literal[True] | None = None,
         callback: None = None,
         extraArgs: Iterable[Any] = [],
-        priority: float | None = None,
+        priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath | None]: ...
     @overload
@@ -130,7 +130,7 @@ class Loader(DirectObject):
         okMissing: Literal[False],
         callback: None = None,
         extraArgs: Iterable[Any] = [],
-        priority: float | None = None,
+        priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath]: ...
     @overload
@@ -143,7 +143,7 @@ class Loader(DirectObject):
         okMissing: Literal[False],
         callback: None = None,
         extraArgs: Iterable[Any] = [],
-        priority: float | None = None,
+        priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath]: ...
     @overload
@@ -157,7 +157,7 @@ class Loader(DirectObject):
         *,
         callback: Callable[..., object],
         extraArgs: Iterable[Any] = [],
-        priority: float | None = None,
+        priority: int | None = None,
         blocking: Literal[False] | None = None,
     ) -> _Callback: ...
     @overload
@@ -170,7 +170,7 @@ class Loader(DirectObject):
         okMissing: bool | None,
         callback: Callable[..., object],
         extraArgs: Iterable[Any] = [],
-        priority: float | None = None,
+        priority: int | None = None,
         blocking: Literal[False] | None = None,
     ) -> _Callback: ...
     def cancelRequest(self, cb: _Callback) -> None: ...
@@ -319,7 +319,7 @@ class Loader(DirectObject):
     def unload_shader(self, shaderPath: StrOrBytesPath | None) -> None: ...
     def async_flatten_strong(
         self,
-        model: NodePath | Iterable[NodePath],
+        model: NodePath | Collection[NodePath],
         inPlace: bool = True,
         callback: Callable[..., object] | None = None,
         extraArgs: Iterable[Any] = [],

@@ -13,8 +13,8 @@ class AnimControlInterval(Interval):
     constrainedLoop: bool
     playRate: float
     frameRate: float
-    startFrame: int
-    endFrame: int
+    startFrame: float
+    endFrame: float
     reverse: bool
     numFrames: int
     implicitDuration: bool
@@ -25,10 +25,10 @@ class AnimControlInterval(Interval):
         loop: bool = ...,
         constrainedLoop: bool = ...,
         duration: float | None = None,
-        startTime: int | None = None,
-        endTime: int | None = None,
-        startFrame: int | None = None,
-        endFrame: int | None = None,
+        startTime: float | None = None,
+        endTime: float | None = None,
+        startFrame: float | None = None,
+        endFrame: float | None = None,
         playRate: float = 1.0,
         name: str | None = None,
     ) -> None: ...

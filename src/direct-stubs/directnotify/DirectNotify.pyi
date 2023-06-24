@@ -1,5 +1,7 @@
 from tkinter import Toplevel
-from typing import Any, ClassVar, Protocol
+from typing import ClassVar, Protocol
+
+from panda3d.core import StreamWriter
 
 from .Logger import Logger
 from .Notifier import Notifier
@@ -9,7 +11,7 @@ class _SupportsNotify(Protocol):
 
 class DirectNotify:
     logger: Logger
-    streamWriter: Any
+    streamWriter: StreamWriter | None
     def __init__(self) -> None: ...
     def getCategories(self) -> list[str]: ...
     def getCategory(self, categoryName: str) -> Notifier | None: ...

@@ -57,7 +57,7 @@ class MetaInterval(CMetaInterval):
     ) -> None: ...
     def add_track(
         self,
-        trackList: Iterable[tuple[_Interval, ...] | list[_Interval]],
+        trackList: Iterable[tuple[float, _Interval] | tuple[float, _Interval, _RelativeStart]],
         name: str,
         relTime: float,
         relTo: _RelativeStart,
@@ -90,4 +90,4 @@ class Parallel(MetaInterval): ...
 class ParallelEndTogether(MetaInterval): ...
 
 class Track(MetaInterval):
-    def validateComponent(self, tupleObj: object) -> TypeGuard[_Interval]: ...
+    def validateComponent(self, tupleObj: object) -> TypeGuard[tuple[_Interval, ...] | list[_Interval]]: ...  # type: ignore[override]
