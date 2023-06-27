@@ -80,7 +80,10 @@ class AliasType(Type):
         return self.alias_of <= superclass
 
     def __sub__(self, other: Type) -> Type:
-        return self.alias_of - other
+        result = self.alias_of - other
+        if result == self.alias_of:
+            return self
+        return result
 
 
 @attrs.frozen
