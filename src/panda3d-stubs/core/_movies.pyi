@@ -23,7 +23,7 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     @property
     def filename(self) -> Filename: ...
     @overload
-    def __init__(self, __param0: MovieAudio) -> None: ...
+    def __init__(self, param0: MovieAudio, /) -> None: ...
     @overload
     def __init__(self, name: str = ...) -> None:
         """This constructor returns a null audio stream --- a stream of total silence,
@@ -57,7 +57,7 @@ class FlacAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: ConfigVariableFilename | FlacAudio) -> None: ...
+    def __init__(self, param0: ConfigVariableFilename | FlacAudio, /) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -81,9 +81,9 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         construct a subclass of this class.
         """
     @overload
-    def __init__(self, __param0: MovieAudioCursor) -> None: ...
+    def __init__(self, param0: MovieAudioCursor, /) -> None: ...
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def get_source(self) -> MovieAudio:
         """Returns the MovieAudio which this cursor references."""
     def audio_rate(self) -> int:
@@ -202,7 +202,7 @@ class FlacAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, __param0: FlacAudioCursor) -> None: ...
+    def __init__(self, param0: FlacAudioCursor, /) -> None: ...
 
 class MovieVideo(TypedWritableReferenceCount, Namable):
     """A MovieVideo is actually any source that provides a sequence of video
@@ -219,7 +219,7 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
     @property
     def subfile_info(self) -> SubfileInfo: ...
     @overload
-    def __init__(self, __param0: MovieVideo) -> None: ...
+    def __init__(self, param0: MovieVideo, /) -> None: ...
     @overload
     def __init__(self, name: str = ...) -> None:
         """This constructor returns a null video stream --- a stream of plain blue and
@@ -254,7 +254,7 @@ class InkblotVideo(MovieVideo):
     """A cellular automaton that generates an amusing pattern of swirling colors."""
 
     @overload
-    def __init__(self, __param0: InkblotVideo) -> None: ...
+    def __init__(self, param0: InkblotVideo, /) -> None: ...
     @overload
     def __init__(self, x: int, y: int, fps: int) -> None:
         """xxx"""
@@ -273,9 +273,9 @@ class MovieVideoCursor(TypedWritableReferenceCount):
 
     class Buffer(TypedReferenceCount):
         DtoolClassDict: ClassVar[dict[str, Any]]
-        def __init__(self, __param0: MovieVideoCursor.Buffer) -> None: ...
+        def __init__(self, param0: MovieVideoCursor.Buffer, /) -> None: ...
         def __copy__(self) -> Self: ...
-        def __deepcopy__(self, __memo: object) -> Self: ...
+        def __deepcopy__(self, memo: object, /) -> Self: ...
         def compare_timestamp(self, other: MovieVideoCursor.Buffer) -> int:
             """Used to sort different buffers to ensure they correspond to the same source
             frame, particularly important when synchronizing the different pages of a
@@ -295,9 +295,9 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         getTimestamp = get_timestamp
         getClassType = get_class_type
 
-    def __init__(self, __param0: MovieVideoCursor) -> None: ...
+    def __init__(self, param0: MovieVideoCursor, /) -> None: ...
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def get_source(self) -> MovieVideo:
         """Get the MovieVideo which this cursor references."""
     def size_x(self) -> int:
@@ -418,7 +418,7 @@ class InkblotVideoCursor(MovieVideoCursor):
     def __init__(self, src: InkblotVideo) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: InkblotVideoCursor) -> None: ...
+    def __init__(self, param0: InkblotVideoCursor, /) -> None: ...
 
 class MicrophoneAudio(MovieAudio):
     """Class MicrophoneAudio provides the means to read raw audio samples from a
@@ -462,7 +462,7 @@ class OpusAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: ConfigVariableFilename | OpusAudio) -> None: ...
+    def __init__(self, param0: ConfigVariableFilename | OpusAudio, /) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -481,7 +481,7 @@ class OpusAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, __param0: OpusAudioCursor) -> None: ...
+    def __init__(self, param0: OpusAudioCursor, /) -> None: ...
 
 class UserDataAudio(MovieAudio):
     """A UserDataAudio is a way for the user to manually supply raw audio samples.
@@ -492,7 +492,7 @@ class UserDataAudio(MovieAudio):
     """
 
     @overload
-    def __init__(self, __param0: UserDataAudio) -> None: ...
+    def __init__(self, param0: UserDataAudio, /) -> None: ...
     @overload
     def __init__(self, rate: int, channels: int, remove_after_read: bool = ...) -> None:
         """This constructor returns a UserDataAudio --- a means to supply raw audio
@@ -522,7 +522,7 @@ class UserDataAudioCursor(MovieAudioCursor):
     @overload
     def __init__(self, src: UserDataAudio) -> None: ...
     @overload
-    def __init__(self, __param0: UserDataAudioCursor) -> None: ...
+    def __init__(self, param0: UserDataAudioCursor, /) -> None: ...
 
 class VorbisAudio(MovieAudio):
     """Interfaces with the libvorbisfile library to implement decoding of Ogg
@@ -533,7 +533,7 @@ class VorbisAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: ConfigVariableFilename | VorbisAudio) -> None: ...
+    def __init__(self, param0: ConfigVariableFilename | VorbisAudio, /) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -549,7 +549,7 @@ class VorbisAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, __param0: VorbisAudioCursor) -> None: ...
+    def __init__(self, param0: VorbisAudioCursor, /) -> None: ...
 
 class WavAudio(MovieAudio):
     """A native PCM .wav loader.  Supported formats are linear PCM, IEEE float,
@@ -560,7 +560,7 @@ class WavAudio(MovieAudio):
     def __init__(self, name: StrOrBytesPath) -> None:
         """xxx"""
     @overload
-    def __init__(self, __param0: ConfigVariableFilename | WavAudio) -> None: ...
+    def __init__(self, param0: ConfigVariableFilename | WavAudio, /) -> None: ...
     @staticmethod
     def make(name: StrOrBytesPath) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
@@ -576,4 +576,4 @@ class WavAudioCursor(MovieAudioCursor):
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, __param0: WavAudioCursor) -> None: ...
+    def __init__(self, param0: WavAudioCursor, /) -> None: ...

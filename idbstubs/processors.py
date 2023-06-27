@@ -220,6 +220,8 @@ def process_function(function: Function, *, class_name: str | None = None) -> No
             'assign', [Signature([_, copy_param])]
         ) if str(copy_param.type) == class_name:
             copy_param.type = 'Self'
+        case Function('__deepcopy__', [Signature([_, Parameter(named=True) as memo])]):
+            memo.named = False
 
 
 def process_class(class_: Class) -> None:

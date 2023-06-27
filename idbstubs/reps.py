@@ -108,8 +108,6 @@ class Parameter:
 
     def __str__(self) -> str:
         s = self.name
-        if not self.named:
-            s = '__' + s.lstrip('_')
         if self.type:
             s += f': {self.type}'
         if self.is_optional:
@@ -128,7 +126,16 @@ class Signature:
     deprecation_note: str | None = field(default=None, kw_only=True, eq=False)
 
     def __str__(self) -> str:
-        param_string = ', '.join(str(p) for p in self.parameters)
+        strings: list[str] = []
+        prev_was_unnamed = False
+        for param in self.parameters:
+            if param.named and prev_was_unnamed:
+                strings.append('/')
+            strings.append(str(param))
+            prev_was_unnamed = not param.named
+        if prev_was_unnamed:
+            strings.append('/')
+        param_string = ', '.join(strings)
         if self.return_type:
             return f'({param_string}) -> {self.return_type}'
         else:

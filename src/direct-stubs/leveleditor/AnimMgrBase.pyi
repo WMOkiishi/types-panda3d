@@ -14,7 +14,7 @@ from .LevelEditor import LevelEditor
 _T = TypeVar('_T', contravariant=True)
 
 class _SupportsAppend(Protocol[_T]):
-    def append(self, __item: _T) -> object: ...
+    def append(self, item: _T, /) -> object: ...
 
 class AnimMgrBase:
     editor: LevelEditor

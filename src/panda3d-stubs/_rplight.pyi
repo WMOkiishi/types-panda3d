@@ -35,7 +35,7 @@ class GPUCommand:
     CMDRemoveSources: Final = 4
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: GPUCommand) -> None: ...
+    def __init__(self, param0: GPUCommand, /) -> None: ...
     @overload
     def __init__(self, command_type: _GPUCommand_CommandType) -> None:
         """@brief Constructs a new GPUCommand with the given command type.
@@ -46,7 +46,7 @@ class GPUCommand:
         @param command_type The type of the GPUCommand
         """
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def push_int(self, v: int) -> None:
         """@brief Appends an integer to the GPUCommand.
         @details This adds an integer to the back of the GPUCommand. Depending on the
@@ -161,13 +161,13 @@ class GPUCommandList:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def num_commands(self) -> int: ...
-    def __init__(self, __param0: GPUCommandList = ...) -> None:
+    def __init__(self, param0: GPUCommandList = ..., /) -> None:
         """@brief Constructs a new GPUCommandList
         @details This constructs a new GPUCommandList. By default, there are no commands
           in the list.
         """
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def add_command(self, cmd: GPUCommand | _GPUCommand_CommandType) -> None:
         """@brief Pushes a GPUCommand to the command list.
         @details This adds a new GPUCommand to the list of commands to be processed.
@@ -206,12 +206,12 @@ class IESDataset:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def __init__(self, __param0: IESDataset = ...) -> None:
+    def __init__(self, param0: IESDataset = ..., /) -> None:
         """@brief Constructs a new empty dataset.
         @details This constructs a new IESDataset with no data set.
         """
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def set_vertical_angles(self, vertical_angles: PTA_float) -> None:
         """@brief Sets the vertical angles of the dataset.
         @details This sets the list of vertical angles of the dataset.
@@ -479,7 +479,7 @@ class ShadowAtlas:
     @property
     def coverage(self) -> float: ...
     @overload
-    def __init__(self, __param0: ShadowAtlas) -> None: ...
+    def __init__(self, param0: ShadowAtlas, /) -> None: ...
     @overload
     def __init__(self, size: int, tile_size: int = ...) -> None:
         """@brief Constructs a new shadow atlas.
@@ -501,7 +501,7 @@ class ShadowAtlas:
         @param tile_size tile-size in pixels, or 1 to use no tiles.
         """
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def get_num_used_tiles(self) -> int:
         """@brief Returns the amount of used tiles
         @details Returns the amount of used tiles in the atlas
@@ -539,9 +539,9 @@ class TagStateManager:
         @param main_cam_node The main scene camera
         """
     @overload
-    def __init__(self, __param0: TagStateManager) -> None: ...
+    def __init__(self, param0: TagStateManager, /) -> None: ...
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def apply_state(self, state: str, np: NodePath, shader: Shader, name: str, sort: int) -> None:
         """@brief Applies a given state for a pass to a NodePath
         @details This applies a shader to the given NodePath which is used when the
@@ -596,7 +596,7 @@ class ShadowManager(ReferenceCount):
     def num_update_slots_left(self) -> int: ...
     @property
     def atlas(self) -> ShadowAtlas: ...
-    def __init__(self, __param0: ShadowManager = ...) -> None:
+    def __init__(self, param0: ShadowManager = ..., /) -> None:
         """@brief Constructs a new shadow atlas
         @details This constructs a new shadow atlas. There are a set of properties
           which should be set before calling ShadowManager::init, see the set-Methods.
@@ -604,7 +604,7 @@ class ShadowManager(ReferenceCount):
           ShadowManager::update should get called on a per frame basis.
         """
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def set_max_updates(self, max_updates: int) -> None:
         """@brief Sets the maximum amount of updates per frame.
         @details This controls the maximum amount of updated ShadowSources per frame.
@@ -741,14 +741,14 @@ class InternalLightManager:
     def num_lights(self) -> int: ...
     @property
     def num_shadow_sources(self) -> int: ...
-    def __init__(self, __param0: InternalLightManager = ...) -> None:
+    def __init__(self, param0: InternalLightManager = ..., /) -> None:
         """@brief Constructs the light manager
         @details This constructs the light manager, initializing the light and shadow
           storage. You should set a command list and shadow manager before calling
           InternalLightManager::update. s
         """
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def add_light(self, light: RPLight) -> None:
         """@brief Adds a new light.
         @details This adds a new light to the list of lights. This will throw an
@@ -968,7 +968,7 @@ class PSSMCameraRig:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: PSSMCameraRig) -> None: ...
+    def __init__(self, param0: PSSMCameraRig, /) -> None: ...
     @overload
     def __init__(self, num_splits: int) -> None:
         """@brief Constructs a new PSSM camera rig
@@ -980,7 +980,7 @@ class PSSMCameraRig:
         @param num_splits Amount of PSSM splits
         """
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def set_pssm_distance(self, distance: float) -> None:
         """@brief Sets the maximum pssm distance.
         @details This sets the maximum distance in world space until which shadows

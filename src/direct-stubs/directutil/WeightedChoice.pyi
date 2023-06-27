@@ -2,7 +2,7 @@ from collections.abc import Iterable, Sequence
 from typing import Protocol
 
 class _RNG(Protocol):
-    def randrange(self, __start: int) -> int: ...
+    def randrange(self, start: int, /) -> int: ...
 
 class WeightedChoice:
     total: int

@@ -70,10 +70,10 @@ class CInterval(TypedReferenceCount):
     def stopped(self) -> bool: ...
     @property
     def playing(self) -> bool: ...
-    def __init__(self, __param0: CInterval) -> None: ...
+    def __init__(self, param0: CInterval, /) -> None: ...
     def __await__(self) -> Generator[Any, None, Any]: ...
     def __copy__(self) -> Self: ...
-    def __deepcopy__(self, __memo: object) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
     def get_name(self) -> str:
         """Returns the interval's name."""
     def get_duration(self) -> float:
@@ -438,7 +438,7 @@ class CConstraintInterval(CInterval):
     """
 
     bogus_variable: bool
-    def __init__(self, __param0: CConstraintInterval) -> None: ...
+    def __init__(self, param0: CConstraintInterval, /) -> None: ...
 
 class CConstrainHprInterval(CConstraintInterval):
     """A constraint interval that will constrain the orientation of one node to
@@ -446,7 +446,7 @@ class CConstrainHprInterval(CConstraintInterval):
     """
 
     @overload
-    def __init__(self, __param0: CConstrainHprInterval) -> None: ...
+    def __init__(self, param0: CConstrainHprInterval, /) -> None: ...
     @overload
     def __init__(
         self,
@@ -477,7 +477,7 @@ class CConstrainPosHprInterval(CConstraintInterval):
     """
 
     @overload
-    def __init__(self, __param0: CConstrainPosHprInterval) -> None: ...
+    def __init__(self, param0: CConstrainPosHprInterval, /) -> None: ...
     @overload
     def __init__(
         self,
@@ -510,7 +510,7 @@ class CConstrainPosInterval(CConstraintInterval):
     """
 
     @overload
-    def __init__(self, __param0: CConstrainPosInterval) -> None: ...
+    def __init__(self, param0: CConstrainPosInterval, /) -> None: ...
     @overload
     def __init__(
         self,
@@ -541,7 +541,7 @@ class CConstrainTransformInterval(CConstraintInterval):
     """
 
     @overload
-    def __init__(self, __param0: CConstrainTransformInterval) -> None: ...
+    def __init__(self, param0: CConstrainTransformInterval, /) -> None: ...
     @overload
     def __init__(self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool) -> None:
         """Constructs a constraint interval that will constrain the transform of one
@@ -574,7 +574,7 @@ class CLerpInterval(CInterval):
     BTEaseInOut: Final = 3
     BT_invalid: Final = 4
     BTInvalid: Final = 4
-    def __init__(self, __param0: CLerpInterval) -> None: ...
+    def __init__(self, param0: CLerpInterval, /) -> None: ...
     def get_blend_type(self) -> _CLerpInterval_BlendType:
         """Returns the blend type specified for the interval.  This controls how the
         linear interpolation behaves near the beginning and end of the lerp period.
@@ -598,7 +598,7 @@ class CLerpAnimEffectInterval(CLerpInterval):
     """
 
     @overload
-    def __init__(self, __param0: CLerpAnimEffectInterval) -> None: ...
+    def __init__(self, param0: CLerpAnimEffectInterval, /) -> None: ...
     @overload
     def __init__(self, name: str, duration: float, blend_type: _CLerpInterval_BlendType) -> None: ...
     def add_control(self, control: AnimControl, name: str, begin_effect: float, end_effect: float) -> None:
@@ -617,7 +617,7 @@ class CLerpNodePathInterval(CLerpInterval):
     """
 
     @overload
-    def __init__(self, __param0: CLerpNodePathInterval) -> None: ...
+    def __init__(self, param0: CLerpNodePathInterval, /) -> None: ...
     @overload
     def __init__(
         self,
@@ -876,7 +876,7 @@ class CMetaInterval(CInterval):
     DT_pop_level: Final = 3
     DTPopLevel: Final = 3
     @overload
-    def __init__(self, __param0: CMetaInterval) -> None: ...
+    def __init__(self, param0: CMetaInterval, /) -> None: ...
     @overload
     def __init__(self, name: str) -> None: ...
     def set_precision(self, precision: float) -> None:
@@ -1025,12 +1025,12 @@ class HideInterval(CInterval):
     """An interval that calls NodePath::hide()."""
 
     @overload
-    def __init__(self, __param0: HideInterval) -> None: ...
+    def __init__(self, param0: HideInterval, /) -> None: ...
     @overload
     def __init__(self, node: NodePath, name: str = ...) -> None: ...
 
 class LerpBlendType(TypedReferenceCount):
-    def __call__(self, __param0: float) -> float: ...
+    def __call__(self, param0: float, /) -> float: ...
     @staticmethod
     def get_class_type() -> TypeHandle:
         """now for typehandle stuff"""
@@ -1054,7 +1054,7 @@ class ShowInterval(CInterval):
     @overload
     def __init__(self, node: NodePath, name: str = ...) -> None: ...
     @overload
-    def __init__(self, __param0: ShowInterval) -> None: ...
+    def __init__(self, param0: ShowInterval, /) -> None: ...
 
 class WaitInterval(CInterval):
     """This interval does absolutely nothing, and is mainly useful for marking
@@ -1062,7 +1062,7 @@ class WaitInterval(CInterval):
     """
 
     @overload
-    def __init__(self, __param0: WaitInterval) -> None: ...
+    def __init__(self, param0: WaitInterval, /) -> None: ...
     @overload
     def __init__(self, duration: float) -> None:
         """All Wait intervals have the same name.  No one really cares if their names
