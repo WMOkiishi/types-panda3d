@@ -1,6 +1,6 @@
 __all__ = ['DistributedActor']
 
-from typing_extensions import Literal
+from typing import Literal
 
 from direct.distributed.ClientRepository import ClientRepository
 from direct.distributed.DistributedNode import DistributedNode

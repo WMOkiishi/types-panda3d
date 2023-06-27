@@ -1,5 +1,6 @@
 from collections.abc import Sequence
-from typing_extensions import Literal, TypeAlias
+from typing import Literal
+from typing_extensions import TypeAlias
 
 from direct.directtools.DirectSelection import DirectNodePath
 from direct.showbase.DirectObject import DirectObject

@@ -1,6 +1,5 @@
 from collections.abc import Iterable, Sequence
-from typing import Any, ClassVar
-from typing_extensions import Final, Literal
+from typing import Any, ClassVar, Final, Literal
 
 from direct._typing import Unused
 from direct.directdevices.DirectDeviceManager import DirectDeviceManager

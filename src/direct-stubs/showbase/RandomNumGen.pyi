@@ -1,8 +1,7 @@
 __all__ = ['RandomNumGen', 'randHash']
 
 from collections.abc import MutableSequence, Sequence
-from typing import Any, ClassVar, SupportsInt, TypeVar
-from typing_extensions import SupportsIndex
+from typing import Any, ClassVar, SupportsIndex, SupportsInt, TypeVar
 
 from direct.directnotify.Notifier import Notifier
 

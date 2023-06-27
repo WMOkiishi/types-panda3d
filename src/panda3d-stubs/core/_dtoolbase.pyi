@@ -1,7 +1,7 @@
 import builtins
 from collections.abc import Sequence
-from typing import Any, ClassVar
-from typing_extensions import Final, Literal, Self, TypeAlias, final
+from typing import Any, ClassVar, Final, Literal, final
+from typing_extensions import Self, TypeAlias
 
 from panda3d.core._dtoolutil import ostream
 

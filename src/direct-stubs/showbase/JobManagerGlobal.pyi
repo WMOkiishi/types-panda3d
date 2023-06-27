@@ -1,6 +1,6 @@
 __all__ = ['jobMgr']
 
-from typing_extensions import Final
+from typing import Final
 
 from .JobManager import JobManager
 

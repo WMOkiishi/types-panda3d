@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, deprecated, final
+from typing import Any, ClassVar, Final, Literal, final, overload
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import (
     DoubleMat4Like,

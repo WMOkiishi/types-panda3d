@@ -1,6 +1,5 @@
 from collections.abc import Callable
-from typing import ClassVar, Protocol
-from typing_extensions import Final
+from typing import ClassVar, Final, Protocol
 
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.DistributedObject import DistributedObject

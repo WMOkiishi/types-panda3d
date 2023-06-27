@@ -1,4 +1,4 @@
-from typing_extensions import Final, Literal
+from typing import Final, Literal
 
 OBJ_UID: Final = 0
 OBJ_NP: Final = 1

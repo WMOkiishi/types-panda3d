@@ -1,6 +1,6 @@
 from collections.abc import Callable
-from typing import Any, ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing import Any, ClassVar, Literal
+from typing_extensions import TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject

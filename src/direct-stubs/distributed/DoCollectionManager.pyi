@@ -1,7 +1,7 @@
 import re
 from collections.abc import Callable
-from typing import TypeVar, overload
-from typing_extensions import Final, TypeAlias, TypeGuard
+from typing import Final, TypeVar, overload
+from typing_extensions import TypeAlias, TypeGuard
 
 from panda3d.core import DatagramIterator
 

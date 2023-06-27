@@ -40,10 +40,10 @@ KNOWN_IMPORTS: Final = {
     'Any': 'typing',
     'ClassVar': 'typing',
     'deprecated': 'typing_extensions',
-    'Final': 'typing_extensions',  # Introduced in 3.8
-    'final': 'typing_extensions',  # Introduced in 3.8
+    'Final': 'typing',
+    'final': 'typing',
     'Generic': 'typing',
-    'Literal': 'typing_extensions',  # Introduced in 3.8
+    'Literal': 'typing',
     'Never': 'typing_extensions',  # Introduced in 3.11
     'NoReturn': 'typing',
     'overload': 'typing',

@@ -1,7 +1,7 @@
 from _typeshed import Incomplete
 from collections.abc import Callable, Iterable, Sequence
-from typing import Any
-from typing_extensions import Final, Literal, Never, TypeAlias
+from typing import Any, Final, Literal
+from typing_extensions import Never, TypeAlias
 
 from direct._typing import Unused
 from direct.distributed.CachedDOData import CachedDOData

@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
-from typing import overload
-from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
+from typing import Final, Literal, overload
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import Vec3Like
 from panda3d.core._dtoolutil import Filename, ostream

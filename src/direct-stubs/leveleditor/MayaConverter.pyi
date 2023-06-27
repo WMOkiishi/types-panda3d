@@ -1,6 +1,5 @@
 from collections.abc import Callable
-from typing import Any
-from typing_extensions import Final, Literal
+from typing import Any, Final, Literal
 
 import wx  # type: ignore
 import wx.siplib as sip  # type: ignore

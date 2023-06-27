@@ -1,8 +1,8 @@
 from _typeshed import Incomplete
 from collections.abc import Container, Iterable, Sequence
 from types import CodeType
-from typing import Any, ClassVar, NoReturn
-from typing_extensions import Literal, TypeAlias
+from typing import Any, ClassVar, Literal, NoReturn
+from typing_extensions import TypeAlias
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier

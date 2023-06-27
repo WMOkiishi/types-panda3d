@@ -1,8 +1,8 @@
 __all__ = ['FourState']
 
 from collections.abc import Sequence
-from typing import ClassVar, Protocol
-from typing_extensions import Literal, TypeAlias
+from typing import ClassVar, Literal, Protocol
+from typing_extensions import TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 

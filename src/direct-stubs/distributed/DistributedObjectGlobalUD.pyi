@@ -1,6 +1,5 @@
 from types import CodeType
-from typing import Any
-from typing_extensions import Literal
+from typing import Any, Literal
 
 from direct._typing import Unused
 

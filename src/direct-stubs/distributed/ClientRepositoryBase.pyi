@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable
-from typing import Any, TypeVar
-from typing_extensions import Literal, TypeAlias
+from typing import Any, Literal, TypeVar
+from typing_extensions import TypeAlias
 
 from direct._typing import Unused
 from panda3d.core import Datagram, DatagramIterator, NodePath, RecorderController

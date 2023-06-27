@@ -1,6 +1,6 @@
 from collections.abc import Generator
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias
+from typing import Any, ClassVar, Final, Literal, overload
+from typing_extensions import Self, TypeAlias
 
 from panda3d._typing import Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._chan import AnimControl

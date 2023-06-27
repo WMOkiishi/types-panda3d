@@ -1,5 +1,4 @@
-from typing import Any, ClassVar
-from typing_extensions import Literal
+from typing import Any, ClassVar, Literal
 
 from direct._typing import Unused
 from panda3d.core import AsyncTask

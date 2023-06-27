@@ -1,7 +1,6 @@
 __all__ = ['Viewport', 'ViewportManager']
 
-from typing import Any, ClassVar
-from typing_extensions import Final, Literal
+from typing import Any, ClassVar, Final, Literal
 
 import wx.siplib as sip  # type: ignore
 from direct.directtools.DirectGrid import DirectGrid

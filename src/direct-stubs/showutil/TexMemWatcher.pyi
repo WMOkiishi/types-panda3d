@@ -1,6 +1,6 @@
 from collections.abc import Sequence
-from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing import ClassVar, Literal
+from typing_extensions import TypeAlias
 
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject

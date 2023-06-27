@@ -1,3 +1,3 @@
-from typing_extensions import Final
+from typing import Final
 
 BLOOM_I: Final[str]

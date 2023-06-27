@@ -1,7 +1,6 @@
 __all__ = ['MopathInterval']
 
-from typing import ClassVar
-from typing_extensions import Literal
+from typing import ClassVar, Literal
 
 from direct.directutil.Mopath import Mopath
 from panda3d.core import NodePath

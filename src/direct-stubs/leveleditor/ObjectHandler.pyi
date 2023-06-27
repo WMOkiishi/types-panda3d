@@ -1,4 +1,4 @@
-from typing_extensions import SupportsIndex
+from typing import SupportsIndex
 
 from direct._typing import Obj
 from direct.actor.Actor import Actor

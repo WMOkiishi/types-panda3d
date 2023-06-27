@@ -1,5 +1,4 @@
-from typing import ClassVar, Protocol
-from typing_extensions import Final, Literal
+from typing import ClassVar, Final, Literal, Protocol
 
 from direct._typing import Unused
 from panda3d.core import ConfigVariableBool, LVector3f

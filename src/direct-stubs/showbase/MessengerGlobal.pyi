@@ -1,6 +1,6 @@
 __all__ = ['messenger']
 
-from typing_extensions import Final
+from typing import Final
 
 from .Messenger import Messenger
 

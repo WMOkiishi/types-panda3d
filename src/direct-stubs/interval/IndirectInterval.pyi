@@ -1,7 +1,7 @@
 __all__ = ['IndirectInterval']
 
-from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing import ClassVar, Literal
+from typing_extensions import TypeAlias
 
 from panda3d.direct import LerpBlendType
 

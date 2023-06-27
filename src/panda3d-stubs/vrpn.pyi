@@ -1,4 +1,4 @@
-from typing_extensions import Final
+from typing import Final
 
 from panda3d.core._device import ClientBase
 from panda3d.core._dtoolutil import ostream

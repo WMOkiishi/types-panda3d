@@ -1,6 +1,6 @@
 __all__ = ['bulletinBoard']
 
-from typing_extensions import Final
+from typing import Final
 
 from .BulletinBoard import BulletinBoard
 

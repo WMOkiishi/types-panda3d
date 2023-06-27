@@ -1,8 +1,8 @@
 __all__ = ['MiniTask', 'MiniTaskManager']
 
 from collections.abc import Callable
-from typing import Generic, TypeVar
-from typing_extensions import Final, ParamSpec
+from typing import Final, Generic, TypeVar
+from typing_extensions import ParamSpec
 
 _P = ParamSpec('_P')
 _T = TypeVar('_T')

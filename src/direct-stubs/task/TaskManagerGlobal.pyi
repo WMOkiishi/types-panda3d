@@ -1,6 +1,6 @@
 __all__ = ['taskMgr']
 
-from typing_extensions import Final
+from typing import Final
 
 from .Task import TaskManager
 

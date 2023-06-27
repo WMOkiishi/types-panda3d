@@ -1,7 +1,7 @@
 __all__ = ['ActorInterval', 'LerpAnimInterval']
 
-from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing import ClassVar, Literal
+from typing_extensions import TypeAlias
 
 from direct.actor.Actor import Actor
 from panda3d.core import AnimControl

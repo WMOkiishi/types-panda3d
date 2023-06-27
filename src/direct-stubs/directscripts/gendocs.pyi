@@ -1,7 +1,7 @@
 from collections.abc import Container, Iterable, MutableSequence, Sequence
 from re import Pattern
-from typing import overload
-from typing_extensions import Final, Never
+from typing import Final, overload
+from typing_extensions import Never
 
 SECHEADER: Final[Pattern[str]]
 JUNKHEADER: Final[Pattern[str]]

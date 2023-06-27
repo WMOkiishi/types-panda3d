@@ -2,8 +2,8 @@ __all__ = ['State']
 
 import typing
 from collections.abc import Callable, Iterable
-from typing import ClassVar
-from typing_extensions import Final, Literal, TypeAlias
+from typing import ClassVar, Final, Literal
+from typing_extensions import TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject

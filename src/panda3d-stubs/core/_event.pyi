@@ -1,6 +1,6 @@
 from collections.abc import Callable, Generator, Iterator, Sequence
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, deprecated, final
+from typing import Any, ClassVar, Final, Literal, final, overload
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import TaskCoroutine, TaskFunction
 from panda3d.core._dtoolbase import TypedObject

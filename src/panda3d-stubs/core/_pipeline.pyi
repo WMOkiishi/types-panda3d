@@ -1,5 +1,5 @@
-from typing import Any, ClassVar
-from typing_extensions import Final, Literal, TypeAlias
+from typing import Any, ClassVar, Final, Literal
+from typing_extensions import TypeAlias
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Namable, TypedReferenceCount

@@ -1,5 +1,6 @@
 from collections.abc import Sequence
-from typing_extensions import Final, Literal, TypeAlias
+from typing import Final, Literal
+from typing_extensions import TypeAlias
 
 from direct.interval import MetaInterval
 from panda3d.core import NodePath

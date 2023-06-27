@@ -1,5 +1,4 @@
-from typing import overload
-from typing_extensions import Literal
+from typing import Literal, overload
 
 from direct._typing import AnyReal, Unused
 from panda3d._typing import Vec2Like

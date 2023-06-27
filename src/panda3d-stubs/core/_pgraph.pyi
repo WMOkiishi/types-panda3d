@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
-from typing import Any, ClassVar, Generic, TypeVar, overload
-from typing_extensions import Final, Literal, Never, Self, TypeAlias, deprecated, final
+from typing import Any, ClassVar, Final, Generic, Literal, TypeVar, final, overload
+from typing_extensions import Never, Self, TypeAlias, deprecated
 
 from panda3d._typing import Mat4Like, Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._display import DisplayRegion

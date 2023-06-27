@@ -2,8 +2,8 @@ __all__ = ['Interval']
 
 from collections.abc import Callable
 from tkinter import Toplevel
-from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing import ClassVar, Literal
+from typing_extensions import TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject

@@ -1,4 +1,4 @@
-from typing_extensions import Final
+from typing import Final
 
 USE_DISK: Final = 0x01
 ChunkSize: Final = 100

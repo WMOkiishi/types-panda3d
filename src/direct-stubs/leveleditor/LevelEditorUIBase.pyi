@@ -1,5 +1,4 @@
-from typing import Any, SupportsFloat
-from typing_extensions import Final
+from typing import Any, Final, SupportsFloat
 
 import wx  # type: ignore
 import wx.siplib as sip  # type: ignore

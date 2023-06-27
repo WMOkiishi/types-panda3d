@@ -1,6 +1,6 @@
 from collections.abc import Callable, Sequence
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
+from typing import Any, ClassVar, Final, Literal, overload
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._collide import CollisionBox, CollisionCapsule, CollisionNode, CollisionPlane, CollisionSphere

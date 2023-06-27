@@ -3,8 +3,8 @@ __all__ = ['ShowBase', 'WindowControls']
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable
 from types import ModuleType
-from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias, deprecated
+from typing import Any, ClassVar, Literal, overload
+from typing_extensions import TypeAlias, deprecated
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier

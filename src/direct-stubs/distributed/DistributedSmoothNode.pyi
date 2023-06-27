@@ -1,5 +1,4 @@
-from typing import SupportsFloat
-from typing_extensions import Literal
+from typing import Literal, SupportsFloat
 
 from direct._typing import Unused
 from panda3d.core import NodePath

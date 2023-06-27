@@ -1,7 +1,7 @@
 __all__ = ['Transitions']
 
-from typing import ClassVar
-from typing_extensions import Literal, TypeAlias
+from typing import ClassVar, Literal
+from typing_extensions import TypeAlias
 
 from direct.gui.DirectFrame import DirectFrame
 from direct.interval import MetaInterval

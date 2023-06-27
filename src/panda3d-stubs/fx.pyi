@@ -1,5 +1,5 @@
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Self, deprecated
+from typing import Any, ClassVar, Final, overload
+from typing_extensions import Self, deprecated
 
 from panda3d._typing import Vec4Like
 from panda3d.core._display import DisplayRegion, GraphicsEngine, GraphicsOutput

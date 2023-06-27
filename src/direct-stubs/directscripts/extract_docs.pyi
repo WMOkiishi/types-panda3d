@@ -1,5 +1,5 @@
 from _typeshed import SupportsWrite
-from typing_extensions import Final
+from typing import Final
 
 LICENSE: Final[list[str]]
 MAINPAGE: Final[str]

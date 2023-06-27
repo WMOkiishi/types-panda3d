@@ -1,7 +1,6 @@
 __all__ = ['getBlend']
 
-from typing import overload
-from typing_extensions import Literal
+from typing import Literal, overload
 
 from panda3d.direct import EaseInBlendType, EaseInOutBlendType, EaseOutBlendType, NoBlendType
 

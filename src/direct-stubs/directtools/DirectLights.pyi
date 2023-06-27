@@ -1,5 +1,4 @@
-from typing import TypeVar, overload
-from typing_extensions import Literal
+from typing import Literal, TypeVar, overload
 
 from panda3d.core import AmbientLight, DirectionalLight, NodePath, PandaNode, PointLight, Spotlight
 

@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from collections.abc import Generator
-from typing import Any, ClassVar
-from typing_extensions import Final
+from typing import Any, ClassVar, Final
 
 from .DirectObject import DirectObject
 from .PythonUtil import ScratchPad

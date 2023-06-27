@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Sequence
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, deprecated, final
+from typing import Any, ClassVar, Final, Literal, final, overload
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import IntVec2Like, IntVec3Like, Vec4Like
 from panda3d.core._device import InputDevice

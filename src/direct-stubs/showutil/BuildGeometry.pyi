@@ -1,5 +1,5 @@
-from typing import SupportsFloat
-from typing_extensions import Literal, SupportsIndex, TypeAlias
+from typing import Literal, SupportsFloat, SupportsIndex
+from typing_extensions import TypeAlias
 
 from direct._typing import Unused
 from panda3d.core import Geom, GeomNode, LColor, NodePath

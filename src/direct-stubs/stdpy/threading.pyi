@@ -20,8 +20,8 @@ __all__ = [
 ]
 
 from collections.abc import Callable, Iterable, Mapping
-from typing import Any, NoReturn
-from typing_extensions import Final, Never
+from typing import Any, Final, NoReturn
+from typing_extensions import Never
 
 from direct._typing import Unused
 from panda3d import core

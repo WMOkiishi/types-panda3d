@@ -2,8 +2,8 @@ __all__ = ['PEFile']
 
 from _typeshed import ReadableBuffer, StrOrBytesPath, SupportsRead, SupportsWrite, WriteableBuffer
 from collections.abc import Generator, Iterator, Sequence
-from typing import IO, ClassVar, NamedTuple, overload
-from typing_extensions import Literal, TypeAlias
+from typing import IO, ClassVar, Literal, NamedTuple, overload
+from typing_extensions import TypeAlias
 
 from direct.p3d.DeploymentTools import Icon
 

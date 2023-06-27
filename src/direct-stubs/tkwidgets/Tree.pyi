@@ -3,8 +3,7 @@ __all__ = ['TreeItem', 'TreeNode']
 import tkinter
 from abc import ABCMeta, abstractmethod
 from collections.abc import Mapping
-from typing import Any
-from typing_extensions import Final
+from typing import Any, Final
 
 ICONDIR: Final[str]
 

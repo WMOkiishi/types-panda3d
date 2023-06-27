@@ -2,7 +2,7 @@ __all__ = ['Placer', 'place']
 
 import tkinter
 from collections.abc import Callable, MutableMapping
-from typing_extensions import Literal
+from typing import Literal
 
 import Pmw  # type: ignore[import-untyped]
 from direct._typing import Unused

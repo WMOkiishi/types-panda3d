@@ -1,7 +1,7 @@
 # undocumented
 __all__: list[str] = []
 
-from typing_extensions import Literal
+from typing import Literal
 
 from direct._typing import Unused
 

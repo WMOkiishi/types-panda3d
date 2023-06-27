@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
+from typing import Any, ClassVar, Final, Literal, overload
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d.core._dtoolutil import istream, ostream
 

@@ -1,4 +1,4 @@
-from typing_extensions import Final, Literal
+from typing import Final, Literal
 
 from panda3d.core import BitMask32, LPoint3f, LVector3f, NodePath
 

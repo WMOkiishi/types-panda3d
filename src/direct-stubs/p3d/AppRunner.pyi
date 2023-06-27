@@ -1,8 +1,8 @@
 __all__ = ['AppRunner', 'ArgumentError', 'dummyAppRunner']
 
 from collections.abc import Callable
-from typing import ClassVar
-from typing_extensions import Final, Literal, Never
+from typing import ClassVar, Final, Literal
+from typing_extensions import Never
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject

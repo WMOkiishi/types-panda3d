@@ -1,7 +1,6 @@
 __all__ = ['OnScreenDebug']
 
-from typing import Any, ClassVar
-from typing_extensions import Literal
+from typing import Any, ClassVar, Literal
 
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import ConfigVariableBool

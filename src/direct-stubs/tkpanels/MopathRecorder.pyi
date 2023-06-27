@@ -2,8 +2,8 @@ __all__ = ['MopathRecorder']
 
 import tkinter
 from collections.abc import Callable, MutableMapping
-from typing import Any, ClassVar, SupportsFloat, SupportsInt
-from typing_extensions import Final, Literal, TypeAlias
+from typing import Any, ClassVar, Final, Literal, SupportsFloat, SupportsInt
+from typing_extensions import TypeAlias
 
 import Pmw  # type: ignore[import-untyped]
 from direct._typing import AnyReal, Unused

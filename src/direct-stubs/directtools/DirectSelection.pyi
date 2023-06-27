@@ -1,5 +1,5 @@
 from collections.abc import Callable, Sequence
-from typing_extensions import Final
+from typing import Final
 
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3Like, Vec4Like

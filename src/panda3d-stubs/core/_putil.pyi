@@ -1,8 +1,8 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterator, Sequence
 from enum import Enum
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, final
+from typing import Any, ClassVar, Final, Literal, final, overload
+from typing_extensions import Self, TypeAlias
 
 from panda3d._typing import (
     DoubleMat4Like,

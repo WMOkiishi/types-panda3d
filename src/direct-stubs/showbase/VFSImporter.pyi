@@ -3,7 +3,7 @@ __all__ = ['register', 'reloadSharedPackage', 'reloadSharedPackages', 'sharedPac
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable
 from types import CodeType, ModuleType
-from typing_extensions import Final, Literal
+from typing import Final, Literal
 
 from direct._typing import Unused
 from panda3d.core import Filename, VirtualFile, VirtualFileSystem

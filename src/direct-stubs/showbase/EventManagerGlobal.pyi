@@ -1,6 +1,6 @@
 __all__ = ['eventMgr']
 
-from typing_extensions import Final
+from typing import Final
 
 from .EventManager import EventManager
 

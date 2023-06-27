@@ -1,6 +1,6 @@
 __all__ = ['ScanDirectoryNode']
 
-from typing_extensions import Final
+from typing import Final
 
 from panda3d.core import Filename, VirtualFileSystem
 

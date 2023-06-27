@@ -2,8 +2,8 @@ __all__ = ['AppShell']
 
 import tkinter
 from collections.abc import MutableMapping
-from typing import Any, ClassVar, TypeVar
-from typing_extensions import Literal, TypeAlias
+from typing import Any, ClassVar, Literal, TypeVar
+from typing_extensions import TypeAlias
 
 import Pmw  # type: ignore[import-untyped]
 from direct._typing import Unused

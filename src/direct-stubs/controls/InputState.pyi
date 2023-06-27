@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import ClassVar
-from typing_extensions import Final
+from typing import ClassVar, Final
 
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject

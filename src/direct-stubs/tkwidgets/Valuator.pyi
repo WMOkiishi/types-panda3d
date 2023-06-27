@@ -1,7 +1,6 @@
 __all__ = ['Valuator', 'ValuatorGroup', 'ValuatorGroupPanel']
 
-from typing import Any, ClassVar
-from typing_extensions import Final, Literal
+from typing import Any, ClassVar, Final, Literal
 
 import Pmw  # type: ignore[import-untyped]
 

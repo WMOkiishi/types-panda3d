@@ -2,8 +2,8 @@ __all__ = ['Actor']
 
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Mapping
-from typing import ClassVar, SupportsFloat
-from typing_extensions import Literal, TypeAlias, deprecated
+from typing import ClassVar, Literal, SupportsFloat
+from typing_extensions import TypeAlias, deprecated
 
 from direct.directnotify.Notifier import Notifier
 from direct.interval.ActorInterval import ActorInterval

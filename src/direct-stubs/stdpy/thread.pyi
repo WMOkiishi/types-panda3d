@@ -1,6 +1,5 @@
 from collections.abc import Callable, Iterable, Mapping
-from typing import Any, NoReturn
-from typing_extensions import Final
+from typing import Any, Final, NoReturn
 
 from direct._typing import Unused
 

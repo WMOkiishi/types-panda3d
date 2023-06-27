@@ -2,8 +2,8 @@ __all__ = ['Loader']
 
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Collection, Iterable, Sequence
-from typing import Any, ClassVar, overload
-from typing_extensions import Literal, Self, TypeAlias, deprecated
+from typing import Any, ClassVar, Literal, overload
+from typing_extensions import Self, TypeAlias, deprecated
 
 from direct.directnotify.Notifier import Notifier
 from panda3d import core

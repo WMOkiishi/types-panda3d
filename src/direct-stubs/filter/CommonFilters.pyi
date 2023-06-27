@@ -1,5 +1,4 @@
-from typing import Any
-from typing_extensions import Final, Literal
+from typing import Any, Final, Literal
 
 from direct.task.Task import Task
 from panda3d.core import Camera, GraphicsOutput, NodePath, Texture

@@ -1,8 +1,7 @@
 __all__ = ['Task', 'TaskManager', 'again', 'cont', 'done', 'exit', 'loop', 'pause', 'pickup', 'sequence']
 
 from collections.abc import Callable, Sequence
-from typing import Any, ClassVar, NoReturn, Protocol, overload
-from typing_extensions import Final, Literal
+from typing import Any, ClassVar, Final, Literal, NoReturn, Protocol, overload
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier

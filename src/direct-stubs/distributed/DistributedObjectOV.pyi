@@ -1,4 +1,4 @@
-from typing_extensions import Final, Literal
+from typing import Final, Literal
 
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass

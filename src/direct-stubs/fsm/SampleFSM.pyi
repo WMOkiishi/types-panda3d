@@ -2,8 +2,8 @@
 
 __all__ = ['ClassicStyle', 'NewStyle', 'ToonEyes']
 
-from typing import overload
-from typing_extensions import Literal, TypeVarTuple, Unpack
+from typing import Literal, overload
+from typing_extensions import TypeVarTuple, Unpack
 
 from direct._typing import Unused
 

@@ -3,8 +3,7 @@ __all__ = ['ActorControl', 'AnimPanel']
 import tkinter
 from collections.abc import Callable
 from types import CodeType
-from typing import ClassVar, SupportsFloat
-from typing_extensions import Final, Literal
+from typing import ClassVar, Final, Literal, SupportsFloat
 
 import Pmw  # type: ignore[import-untyped]
 from direct.directtools.DirectSession import DirectSession

@@ -1,7 +1,6 @@
 __all__ = ['BrowserObject', 'ConcreteStruct', 'MethodWrapper', 'UndefinedObject', 'Undefined']
 
-from typing import Any
-from typing_extensions import Final, Literal
+from typing import Any, Final, Literal
 
 class UndefinedObject:
     def __bool__(self) -> Literal[False]: ...

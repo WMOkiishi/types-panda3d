@@ -1,8 +1,8 @@
 __all__ = ['BufferViewer']
 
 from collections.abc import MutableMapping
-from typing import ClassVar
-from typing_extensions import Literal, TypeAlias, TypeGuard
+from typing import ClassVar, Literal
+from typing_extensions import TypeAlias, TypeGuard
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier

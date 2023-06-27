@@ -25,8 +25,8 @@ __all__ = [
 ]
 
 from collections.abc import Callable
-from typing import Any, ClassVar, TypeVar
-from typing_extensions import Literal, TypeAlias
+from typing import Any, ClassVar, Literal, TypeVar
+from typing_extensions import TypeAlias
 
 from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import ConfigVariableColor, LQuaternionf, LVecBase2f, NodePath, TextureStage

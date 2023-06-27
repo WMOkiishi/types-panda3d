@@ -3,8 +3,7 @@ __all__ = ['Installer', 'Standalone']
 from _typeshed import StrOrBytesPath
 from collections.abc import Generator, Mapping
 from tarfile import TarInfo
-from typing import AnyStr, ClassVar
-from typing_extensions import Final
+from typing import AnyStr, ClassVar, Final
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import Filename, HTTPClient, PNMImage

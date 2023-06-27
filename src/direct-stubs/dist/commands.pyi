@@ -1,7 +1,7 @@
 from _typeshed import Incomplete, StrOrBytesPath
 from collections.abc import Callable, Container, Iterable
-from typing import ClassVar, overload
-from typing_extensions import Final, TypeAlias
+from typing import ClassVar, Final, overload
+from typing_extensions import TypeAlias
 
 from direct.p3d.DeploymentTools import Icon
 from setuptools import Command  # type: ignore[import-untyped]

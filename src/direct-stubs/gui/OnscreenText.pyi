@@ -1,7 +1,7 @@
 __all__ = ['BlackOnWhite', 'NameConfirm', 'OnscreenText', 'Plain', 'ScreenPrompt', 'ScreenTitle']
 
-from typing import Any, overload
-from typing_extensions import Final, Literal, TypeAlias, deprecated
+from typing import Any, Final, Literal, overload
+from typing_extensions import TypeAlias, deprecated
 
 from direct._typing import Unused
 from panda3d._typing import Vec4Like

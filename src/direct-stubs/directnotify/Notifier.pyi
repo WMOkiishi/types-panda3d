@@ -1,5 +1,4 @@
-from typing import Any, ClassVar, NoReturn, SupportsInt, SupportsRound
-from typing_extensions import Literal
+from typing import Any, ClassVar, Literal, NoReturn, SupportsInt, SupportsRound
 
 from panda3d.core import ConfigVariableBool, StreamWriter
 

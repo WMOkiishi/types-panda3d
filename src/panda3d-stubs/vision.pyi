@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
-from typing import Any, ClassVar
-from typing_extensions import Final, Self
+from typing import Any, ClassVar, Final
+from typing_extensions import Self
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture

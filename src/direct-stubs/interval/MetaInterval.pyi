@@ -1,8 +1,8 @@
 __all__ = ['MetaInterval', 'Parallel', 'ParallelEndTogether', 'Sequence', 'Track']
 
 from collections.abc import Iterable, Iterator
-from typing import ClassVar, Generic, TypeVar
-from typing_extensions import Final, Literal, Self, SupportsIndex, TypeAlias, TypeGuard
+from typing import ClassVar, Final, Generic, Literal, SupportsIndex, TypeVar
+from typing_extensions import Self, TypeAlias, TypeGuard
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import PStatCollector, ostream

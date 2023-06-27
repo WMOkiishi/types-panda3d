@@ -1,6 +1,6 @@
 __all__ = ['AngleDial', 'Dial', 'DialWidget']
 
-from typing_extensions import Final, Literal
+from typing import Final, Literal
 
 import Pmw  # type: ignore[import-untyped]
 

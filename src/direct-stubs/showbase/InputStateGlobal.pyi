@@ -1,6 +1,6 @@
 __all__ = ['inputState']
 
-from typing_extensions import Final
+from typing import Final
 
 from direct.controls.InputState import InputState
 

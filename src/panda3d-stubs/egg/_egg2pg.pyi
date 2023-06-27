@@ -1,5 +1,6 @@
 from _typeshed import StrOrBytesPath
-from typing_extensions import Literal, TypeAlias
+from typing import Literal
+from typing_extensions import TypeAlias
 
 from panda3d.core._pgraph import PandaNode
 from panda3d.core._putil import BamCacheRecord

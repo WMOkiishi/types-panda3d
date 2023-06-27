@@ -1,5 +1,4 @@
-from typing import ClassVar, overload
-from typing_extensions import Final, Literal
+from typing import ClassVar, Final, Literal, overload
 
 import wx  # type: ignore
 import wx.siplib as sip  # type: ignore

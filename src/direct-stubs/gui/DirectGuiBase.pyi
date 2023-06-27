@@ -1,8 +1,8 @@
 __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 
 from collections.abc import Callable, Iterable, Mapping
-from typing import Any, ClassVar, TypeVar, overload
-from typing_extensions import Final, Literal, ParamSpec, Self, TypeAlias
+from typing import Any, ClassVar, Final, Literal, TypeVar, overload
+from typing_extensions import ParamSpec, Self, TypeAlias
 
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject

@@ -1,6 +1,5 @@
 import tkinter
-from typing import SupportsFloat
-from typing_extensions import Final
+from typing import Final, SupportsFloat
 
 import Pmw  # type: ignore[import-untyped]
 from direct.showbase.DirectObject import DirectObject

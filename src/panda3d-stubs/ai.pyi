@@ -1,5 +1,5 @@
-from typing import Any, ClassVar, overload
-from typing_extensions import Final, Self
+from typing import Any, ClassVar, Final, overload
+from typing_extensions import Self
 
 from panda3d._typing import Vec3Like
 from panda3d.core._express import ReferenceCount

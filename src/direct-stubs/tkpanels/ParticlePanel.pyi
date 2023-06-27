@@ -1,8 +1,8 @@
 __all__ = ['ParticlePanel']
 
 import tkinter
-from typing import Any, SupportsInt
-from typing_extensions import Literal, TypeAlias
+from typing import Any, Literal, SupportsInt
+from typing_extensions import TypeAlias
 
 import Pmw  # type: ignore[import-untyped]
 from direct.particles.ForceGroup import ForceGroup

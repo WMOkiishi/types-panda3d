@@ -1,8 +1,8 @@
 __all__: list[str] = []
 
 from collections.abc import Callable
-from typing import Any
-from typing_extensions import Final, Literal, TypeAlias, TypedDict
+from typing import Any, Final, Literal, TypedDict
+from typing_extensions import TypeAlias
 
 from panda3d.core import TextFont
 

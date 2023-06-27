@@ -1,4 +1,5 @@
-from typing_extensions import Final, Literal, TypeAlias
+from typing import Final, Literal
+from typing_extensions import TypeAlias
 
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.PyDatagram import PyDatagram

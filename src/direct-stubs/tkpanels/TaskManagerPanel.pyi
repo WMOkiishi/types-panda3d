@@ -1,6 +1,5 @@
 import tkinter
-from typing import Any
-from typing_extensions import Literal
+from typing import Any, Literal
 
 import Pmw  # type: ignore[import-untyped]
 from direct.showbase.DirectObject import DirectObject

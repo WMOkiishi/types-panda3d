@@ -1,4 +1,4 @@
-from typing_extensions import Final, Literal
+from typing import Final, Literal
 
 class StagedObject:
     UNKNOWN: Final = -1

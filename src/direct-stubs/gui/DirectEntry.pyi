@@ -1,7 +1,6 @@
 __all__ = ['DirectEntry']
 
-from typing import Any, ClassVar
-from typing_extensions import Final
+from typing import Any, ClassVar, Final
 
 from direct._typing import Unused
 from panda3d.core import ConfigVariableBool, NodePath, TextFont

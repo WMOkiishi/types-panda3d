@@ -1,6 +1,5 @@
 from collections.abc import Sequence
-from typing import Any
-from typing_extensions import Final, Literal, TypedDict
+from typing import Any, Final, Literal, TypedDict
 
 from direct.showbase.Messenger import Messenger
 

@@ -1,4 +1,4 @@
-from typing_extensions import Final
+from typing import Final
 
 from ._egg import *
 from ._egg2pg import *

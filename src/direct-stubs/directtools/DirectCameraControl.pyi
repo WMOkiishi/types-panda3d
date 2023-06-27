@@ -1,6 +1,6 @@
 from collections.abc import Sequence
-from typing import Any, ClassVar
-from typing_extensions import Final, Literal, TypeAlias
+from typing import Any, ClassVar, Final, Literal
+from typing_extensions import TypeAlias
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier

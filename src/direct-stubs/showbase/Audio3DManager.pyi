@@ -1,7 +1,7 @@
 __all__ = ['Audio3DManager']
 
 from _typeshed import StrOrBytesPath
-from typing_extensions import Literal
+from typing import Literal
 
 from direct._typing import Unused
 from panda3d.core import AudioManager, AudioSound, LVecBase3f, NodePath, WeakNodePath

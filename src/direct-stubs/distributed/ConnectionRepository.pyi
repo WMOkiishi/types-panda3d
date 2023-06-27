@@ -2,8 +2,7 @@ __all__ = ['ConnectionRepository', 'GCTrigger']
 
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Iterable, Mapping, Sequence
-from typing import Any, ClassVar
-from typing_extensions import Final, Literal
+from typing import Any, ClassVar, Final, Literal
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
