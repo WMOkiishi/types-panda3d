@@ -1070,7 +1070,7 @@ class RenderState(NodeCachedReferenceCount):
 
     @property
     def attribs(self) -> Mapping[TypeHandle, RenderAttrib]: ...
-    def compare_to(self, other: RenderAttrib | RenderState) -> int:
+    def compare_to(self, other: RenderState) -> int:
         """Provides an arbitrary ordering among all unique RenderStates, so we can
         store the essentially different ones in a big set and throw away the rest.
 
@@ -1078,14 +1078,14 @@ class RenderState(NodeCachedReferenceCount):
         equivalent RenderState objects are guaranteed to share the same pointer;
         thus, a pointer comparison is always sufficient.
         """
-    def compare_sort(self, other: RenderAttrib | RenderState) -> int:
+    def compare_sort(self, other: RenderState) -> int:
         """Returns -1, 0, or 1 according to the relative sorting of these two
         RenderStates, with regards to rendering performance, so that "heavier"
         RenderAttribs (as defined by RenderAttribRegistry::get_slot_sort()) are
         more likely to be grouped together.  This is not related to the sorting
         order defined by compare_to.
         """
-    def compare_mask(self, other: RenderAttrib | RenderState, compare_mask: BitMask32 | int) -> int:
+    def compare_mask(self, other: RenderState, compare_mask: BitMask32 | int) -> int:
         """This version of compare_to takes a slot mask that indicates which
         attributes to include in the comparison.  Unlike compare_to, this method
         compares the attributes by pointer.
@@ -1145,7 +1145,7 @@ class RenderState(NodeCachedReferenceCount):
         attrib5: RenderAttrib,
         override: int = ...,
     ) -> RenderState: ...
-    def compose(self, other: RenderAttrib | RenderState) -> RenderState:
+    def compose(self, other: RenderState) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state with the other state.
 
@@ -1154,7 +1154,7 @@ class RenderState(NodeCachedReferenceCount):
         exist.  Should one of them destruct, the cached entry will be removed, and
         its pointer will be allowed to destruct as well.
         """
-    def invert_compose(self, other: RenderAttrib | RenderState) -> RenderState:
+    def invert_compose(self, other: RenderState) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state's inverse with the other state.
 
@@ -2059,7 +2059,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """
     def clear_effect(self, type: TypeHandle | type) -> None:
         """Removes the render effect of the given type from this node."""
-    def set_state(self, state: RenderAttrib | RenderState, current_thread: Thread = ...) -> None:
+    def set_state(self, state: RenderState, current_thread: Thread = ...) -> None:
         """Sets the complete RenderState that will be applied to all nodes at this
         level and below.  (The actual state that will be applied to lower nodes is
         based on the composition of RenderStates from above this node as well).
@@ -2342,7 +2342,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Returns a ClipPlaneAttrib which represents the union of all of the clip
         planes that have been turned *off* at this level and below.
         """
-    def prepare_scene(self, gsg: GraphicsStateGuardianBase, node_state: RenderAttrib | RenderState) -> None:
+    def prepare_scene(self, gsg: GraphicsStateGuardianBase, node_state: RenderState) -> None:
         """Walks through the scene graph beginning at this node, and does whatever
         initialization is required to render the scene properly with the indicated
         GSG.  It is not strictly necessary to call this, since the GSG will
@@ -3416,7 +3416,7 @@ class NodePath(Generic[_N]):
     @overload
     def get_state(self, other: NodePath, current_thread: Thread = ...) -> RenderState: ...
     @overload
-    def set_state(self, state: RenderAttrib | RenderState, current_thread: Thread = ...) -> None:
+    def set_state(self, state: RenderState, current_thread: Thread = ...) -> None:
         """`(self, other: NodePath, state: RenderState, current_thread: Thread = ...)`:
         Sets the state object on this node, relative to the other node.  This
         computes a new state object that will have the indicated value when seen
@@ -3426,7 +3426,7 @@ class NodePath(Generic[_N]):
         Changes the complete state object on this node.
         """
     @overload
-    def set_state(self, other: NodePath, state: RenderAttrib | RenderState, current_thread: Thread = ...) -> None: ...
+    def set_state(self, other: NodePath, state: RenderState, current_thread: Thread = ...) -> None: ...
     def get_net_state(self, current_thread: Thread = ...) -> RenderState:
         """Returns the net state on this node from the root."""
     def set_attrib(self, attrib: RenderAttrib, priority: int = ...) -> None:
@@ -6853,7 +6853,7 @@ class Camera(LensNode):
         """Returns the point from which the LOD distances will be measured, if it was
         set by set_lod_center(), or the empty NodePath otherwise.
         """
-    def set_initial_state(self, state: RenderAttrib | RenderState) -> None:
+    def set_initial_state(self, state: RenderState) -> None:
         """Sets the initial state which is applied to all nodes in the scene, as if it
         were set at the top of the scene graph.
         """
@@ -6872,7 +6872,7 @@ class Camera(LensNode):
         """
     def get_lod_scale(self) -> float:
         """Returns the multiplier for LOD distances."""
-    def set_tag_state(self, tag_state: str, state: RenderAttrib | RenderState) -> None:
+    def set_tag_state(self, tag_state: str, state: RenderState) -> None:
         """Associates a particular state transition with the indicated tag value.
         When a node is encountered during traversal with the tag key specified by
         set_tag_state_key(), if the value of that tag matches tag_state, then the
@@ -7642,7 +7642,7 @@ class GeomNode(PandaNode):
         which the Geom is rendered will also be affected by RenderStates that
         appear on the scene graph in nodes above this GeomNode.
         """
-    def set_geom_state(self, n: int, state: RenderAttrib | RenderState) -> None:
+    def set_geom_state(self, n: int, state: RenderState) -> None:
         """Changes the RenderState associated with the nth geom of the node.  This is
         just the RenderState directly associated with the Geom; the actual state in
         which the Geom is rendered will also be affected by RenderStates that
@@ -7653,7 +7653,7 @@ class GeomNode(PandaNode):
         all the way to pipeline stage 0, which may step on changes that were made
         independently in pipeline stage 0. Use with caution.
         """
-    def add_geom(self, geom: Geom, state: RenderAttrib | RenderState = ...) -> None:
+    def add_geom(self, geom: Geom, state: RenderState = ...) -> None:
         """Adds a new Geom to the node.  The geom is given the indicated state (which
         may be RenderState::make_empty(), to completely inherit its state from the
         scene graph).
@@ -8153,7 +8153,7 @@ class SceneSetup(TypedReferenceCount):
         lens' bounding volume, but it may be overridden with
         Camera::set_cull_bounds().
         """
-    def set_initial_state(self, initial_state: RenderAttrib | RenderState) -> None:
+    def set_initial_state(self, initial_state: RenderState) -> None:
         """Sets the initial state which is applied to all nodes in the scene, as if it
         were set at the top of the scene graph.
         """
@@ -9227,13 +9227,13 @@ class Loader(TypedReferenceCount, Namable):
         false otherwise.
         @deprecated use task.cancel() to cancel the request instead.
         """
-    def load_sync(self, filename: StrOrBytesPath, options: LoaderOptions | int = ...) -> PandaNode:
+    def load_sync(self, filename: StrOrBytesPath, options: LoaderOptions = ...) -> PandaNode:
         """Loads the file immediately, waiting for it to complete.
 
         If search is true, the file is searched for along the model path;
         otherwise, only the exact filename is loaded.
         """
-    def make_async_request(self, filename: StrOrBytesPath, options: LoaderOptions | int = ...) -> AsyncTask:
+    def make_async_request(self, filename: StrOrBytesPath, options: LoaderOptions = ...) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to load_async() to start
         an asynchronous model load.
         """
@@ -9249,9 +9249,9 @@ class Loader(TypedReferenceCount, Namable):
         object and listen for that event.  When the model is ready, you may
         retrieve it via request->get_model().
         """
-    def save_sync(self, filename: StrOrBytesPath, options: LoaderOptions | int, node: PandaNode) -> bool:
+    def save_sync(self, filename: StrOrBytesPath, options: LoaderOptions, node: PandaNode) -> bool:
         """Saves the file immediately, waiting for it to complete."""
-    def make_async_save_request(self, filename: StrOrBytesPath, options: LoaderOptions | int, node: PandaNode) -> AsyncTask:
+    def make_async_save_request(self, filename: StrOrBytesPath, options: LoaderOptions, node: PandaNode) -> AsyncTask:
         """Returns a new AsyncTask object suitable for adding to save_async() to start
         an asynchronous model save.
         """
@@ -9308,11 +9308,11 @@ class LoaderFileType(TypedObject):
         """Returns true if this file type can transparently load compressed files
         (with a .pz or .gz extension), false otherwise.
         """
-    def get_allow_disk_cache(self, options: LoaderOptions | int) -> bool:
+    def get_allow_disk_cache(self, options: LoaderOptions) -> bool:
         """Returns true if the loader flags allow retrieving the model from the on-
         disk bam cache (if it is enabled), false otherwise.
         """
-    def get_allow_ram_cache(self, options: LoaderOptions | int) -> bool:
+    def get_allow_ram_cache(self, options: LoaderOptions) -> bool:
         """Returns true if the loader flags allow retrieving the model from the in-
         memory ModelPool cache, false otherwise.
         """
@@ -9465,7 +9465,7 @@ class ModelLoadRequest(AsyncTask):
         to begin an asynchronous load.
         """
     @overload
-    def __init__(self, name: str, filename: StrOrBytesPath, options: LoaderOptions | int, loader: Loader) -> None: ...
+    def __init__(self, name: str, filename: StrOrBytesPath, options: LoaderOptions, loader: Loader) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelLoadRequest."""
     def get_options(self) -> LoaderOptions:
@@ -9681,7 +9681,7 @@ class ModelPool:
         return NULL.
         """
     @staticmethod
-    def load_model(filename: StrOrBytesPath, options: LoaderOptions | int = ...) -> ModelRoot:
+    def load_model(filename: StrOrBytesPath, options: LoaderOptions = ...) -> ModelRoot:
         """Loads the given filename up as a model, if it has not already been loaded,
         and returns the new model.  If a model with the same filename was
         previously loaded, returns that one instead (unless cache-check-timestamps
@@ -9779,9 +9779,7 @@ class ModelSaveRequest(AsyncTask):
         to begin an asynchronous save.
         """
     @overload
-    def __init__(
-        self, name: str, filename: StrOrBytesPath, options: LoaderOptions | int, node: PandaNode, loader: Loader
-    ) -> None: ...
+    def __init__(self, name: str, filename: StrOrBytesPath, options: LoaderOptions, node: PandaNode, loader: Loader) -> None: ...
     def get_filename(self) -> Filename:
         """Returns the filename associated with this asynchronous ModelSaveRequest."""
     def get_options(self) -> LoaderOptions:
@@ -10895,7 +10893,7 @@ class SceneGraphReducer:
         GeomPrimitives, to remove holes in the GeomVertexDatas.  It is normally not
         necessary to call this explicitly.
         """
-    def premunge(self, root: PandaNode, initial_state: RenderAttrib | RenderState) -> None:
+    def premunge(self, root: PandaNode, initial_state: RenderState) -> None:
         """Walks the scene graph rooted at this node and below, and uses the indicated
         GSG to premunge every Geom found to optimize it for eventual rendering on
         the indicated GSG.  If there is no GSG indicated for the SceneGraphReducer,

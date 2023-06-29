@@ -328,17 +328,17 @@ class PGItem(PandaNode):
         """Returns the event name that will be thrown when the item loses the keyboard
         focus.
         """
-    def get_press_event(self, button: ButtonHandle | int | str) -> str:
+    def get_press_event(self, button: ButtonHandle | str) -> str:
         """Returns the event name that will be thrown when the item is active and the
         indicated mouse or keyboard button is depressed while the mouse is within
         the frame.
         """
-    def get_repeat_event(self, button: ButtonHandle | int | str) -> str:
+    def get_repeat_event(self, button: ButtonHandle | str) -> str:
         """Returns the event name that will be thrown when the item is active and the
         indicated mouse or keyboard button is continuously held down while the
         mouse is within the frame.
         """
-    def get_release_event(self, button: ButtonHandle | int | str) -> str:
+    def get_release_event(self, button: ButtonHandle | str) -> str:
         """Returns the event name that will be thrown when the item is active and the
         indicated mouse or keyboard button, formerly clicked down is within the
         frame, is released.
@@ -464,17 +464,17 @@ class PGButton(PGItem):
     def setup(self, label: str, bevel: float = ...) -> None: ...
     @overload
     def setup(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath = ...) -> None: ...
-    def add_click_button(self, button: ButtonHandle | int | str) -> bool:
+    def add_click_button(self, button: ButtonHandle | str) -> bool:
         """Adds the indicated button to the set of buttons that can effectively
         "click" the PGButton.  Normally, this is just MouseButton::one().  Returns
         true if the button was added, or false if it was already there.
         """
-    def remove_click_button(self, button: ButtonHandle | int | str) -> bool:
+    def remove_click_button(self, button: ButtonHandle | str) -> bool:
         """Removes the indicated button from the set of buttons that can effectively
         "click" the PGButton.  Normally, this is just MouseButton::one().  Returns
         true if the button was removed, or false if it was not in the set.
         """
-    def has_click_button(self, button: ButtonHandle | int | str) -> bool:
+    def has_click_button(self, button: ButtonHandle | str) -> bool:
         """Returns true if the indicated button is on the set of buttons that can
         effectively "click" the PGButton.  Normally, this is just
         MouseButton::one().
@@ -489,7 +489,7 @@ class PGButton(PGItem):
         PGButtons.  The click event is the concatenation of this string followed by
         get_id().
         """
-    def get_click_event(self, button: ButtonHandle | int | str) -> str:
+    def get_click_event(self, button: ButtonHandle | str) -> str:
         """Returns the event name that will be thrown when the button is clicked
         normally.
         """
@@ -776,11 +776,11 @@ class PGEntry(PGItem):
         PGEntries.  The cursor event is the concatenation of this string followed
         by get_id().
         """
-    def get_accept_event(self, button: ButtonHandle | int | str) -> str:
+    def get_accept_event(self, button: ButtonHandle | str) -> str:
         """Returns the event name that will be thrown when the entry is accepted
         normally.
         """
-    def get_accept_failed_event(self, button: ButtonHandle | int | str) -> str:
+    def get_accept_failed_event(self, button: ButtonHandle | str) -> str:
         """Returns the event name that will be thrown when the entry cannot accept an
         input
         """

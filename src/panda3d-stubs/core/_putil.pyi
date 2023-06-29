@@ -912,7 +912,7 @@ class BamReader(BamEnums):
         """Returns the LoaderOptions passed to the loader when the model was
         requested, if any.
         """
-    def set_loader_options(self, options: LoaderOptions | int) -> None:
+    def set_loader_options(self, options: LoaderOptions) -> None:
         """Specifies the LoaderOptions for this BamReader."""
     def read_object(self) -> TypedWritable:
         """Reads a single object from the Bam file.  If the object type is known, a
@@ -1767,13 +1767,13 @@ class ButtonHandle:
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
-    def __lt__(self, other: ButtonHandle | int | str) -> bool: ...
-    def __le__(self, other: ButtonHandle | int | str) -> bool: ...
-    def __gt__(self, other: ButtonHandle | int | str) -> bool: ...
-    def __ge__(self, other: ButtonHandle | int | str) -> bool: ...
+    def __lt__(self, other: ButtonHandle | str) -> bool: ...
+    def __le__(self, other: ButtonHandle | str) -> bool: ...
+    def __gt__(self, other: ButtonHandle | str) -> bool: ...
+    def __ge__(self, other: ButtonHandle | str) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
-    def compare_to(self, other: ButtonHandle | int | str) -> int:
+    def compare_to(self, other: ButtonHandle | str) -> int:
         """Sorts ButtonHandles arbitrarily (according to <, >, etc.).  Returns a
         number less than 0 if this type sorts before the other one, greater than
         zero if it sorts after, 0 if they are equivalent.
@@ -1798,7 +1798,7 @@ class ButtonHandle:
         can refer to the same alias.  The alias should be the more general name for
         the button, for instance, shift is an alias for lshift, but not vice-versa.
         """
-    def matches(self, other: ButtonHandle | int | str) -> bool:
+    def matches(self, other: ButtonHandle | str) -> bool:
         """Returns true if this ButtonHandle is the same as the other one, or if the
         other one is an alias for this one.  (Does not return true if this button
         is an alias for the other one, however.)
@@ -2853,17 +2853,17 @@ class ModifierButtons:
         other ModifierButtons object.  The buttons indicated as up are not
         relevant.
         """
-    def add_button(self, button: ButtonHandle | int | str) -> bool:
+    def add_button(self, button: ButtonHandle | str) -> bool:
         """Adds the indicated button to the set of buttons that will be monitored for
         upness and downness.  Returns true if the button was added, false if it was
         already being monitored or if too many buttons are currently being
         monitored.
         """
-    def has_button(self, button: ButtonHandle | int | str) -> bool:
+    def has_button(self, button: ButtonHandle | str) -> bool:
         """Returns true if the indicated button is in the set of buttons being
         monitored, false otherwise.
         """
-    def remove_button(self, button: ButtonHandle | int | str) -> bool:
+    def remove_button(self, button: ButtonHandle | str) -> bool:
         """Removes the indicated button from the set of buttons being monitored.
         Returns true if the button was removed, false if it was not being monitored
         in the first place.
@@ -2880,13 +2880,13 @@ class ModifierButtons:
         nth button passed to add_button()).  This must be in the range 0 <= index <
         get_num_buttons().
         """
-    def button_down(self, button: ButtonHandle | int | str) -> bool:
+    def button_down(self, button: ButtonHandle | str) -> bool:
         """Records that a particular button has been pressed.  If the given button is
         one of the buttons that is currently being monitored, this will update the
         internal state appropriately; otherwise, it will do nothing.  Returns true
         if the button is one that was monitored, or false otherwise.
         """
-    def button_up(self, button: ButtonHandle | int | str) -> bool:
+    def button_up(self, button: ButtonHandle | str) -> bool:
         """Records that a particular button has been released.  If the given button is
         one of the buttons that is currently being monitored, this will update the
         internal state appropriately; otherwise, it will do nothing.  Returns true
@@ -2986,7 +2986,7 @@ class MouseButton:
         Usually, you'll only find the horizontal scroll on laptops.
         """
     @staticmethod
-    def is_mouse_button(button: ButtonHandle | int | str) -> bool:
+    def is_mouse_button(button: ButtonHandle | str) -> bool:
         """Returns true if the indicated ButtonHandle is a mouse button, false if it
         is some other kind of button.
         """

@@ -10,7 +10,7 @@ from panda3d.core._express import Namable
 from panda3d.core._gobj import InternalName, Lens, Texture, TextureStage, VertexTransform
 from panda3d.core._linmath import LColor, LPoint3, LVecBase2, LVector3, LVertex
 from panda3d.core._movies import MovieVideo, MovieVideoCursor
-from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderAttrib, RenderState, TransformState
+from panda3d.core._pgraph import CullTraverser, GeomNode, NodePath, PandaNode, RenderState, TransformState
 from panda3d.core._pnmimage import PfmFile, PNMFileType, PNMImage
 from panda3d.core._putil import ClockObject, DrawMask
 from panda3d.core._text import TextNode
@@ -1039,7 +1039,7 @@ class MultitexReducer:
         flattening by the MultitexReducer.
         """
     @overload
-    def scan(self, node: PandaNode, state: RenderAttrib | RenderState, transform: TransformState) -> None: ...
+    def scan(self, node: PandaNode, state: RenderState, transform: TransformState) -> None: ...
     def set_target(self, stage: TextureStage) -> None: ...
     def set_use_geom(self, use_geom: bool) -> None: ...
     def set_allow_tex_mat(self, allow_tex_mat: bool) -> None: ...

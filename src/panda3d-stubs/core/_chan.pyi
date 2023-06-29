@@ -717,7 +717,7 @@ class BindAnimRequest(ModelLoadRequest):
         self,
         name: str,
         filename: StrOrBytesPath,
-        options: LoaderOptions | int,
+        options: LoaderOptions,
         loader: Loader,
         control: AnimControl,
         hierarchy_match_flags: int,

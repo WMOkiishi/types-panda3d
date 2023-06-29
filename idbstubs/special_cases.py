@@ -297,6 +297,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
 
 
 NO_COERCION: Final = TrackingMap({
+    'ButtonHandle': {'int'},
     'ColorInterpolationManager': {'LVecBase4f'},
     'ConfigVariableBool': {'str'},
     'ConfigVariableColor': {'str'},
@@ -306,6 +307,7 @@ NO_COERCION: Final = TrackingMap({
     'ConfigVariableInt64': {'str'},
     'ConfigVariableList': {'str'},
     'ConfigVariableString': {'str'},
+    'LoaderOptions': {'int'},
     'LOrientationf': {'LMatrix3f', 'LMatrix4f'},
     'LOrientationd': {'LMatrix3d', 'LMatrix4d'},
     'LRotationf': {'LMatrix3f', 'LMatrix4f'},
@@ -319,6 +321,7 @@ NO_COERCION: Final = TrackingMap({
     'OdeBody': {'OdeWorld'},
     'pixel': {'int'},
     'PNMImageHeader.PixelSpec': {'int'},
+    'RenderState': {'RenderAttrib'},
     'Shader': {'str'},
 })
 EXTRA_COERCION: Final = TrackingMap({
