@@ -1,4 +1,4 @@
-from typing_extensions import Final, Never
+from typing_extensions import Final
 
 MsgName2Id: Final[dict[str, int]]
 MsgId2Names: Final[dict[int, list[str]]]
@@ -125,7 +125,7 @@ CLIENTAGENT_ADD_INTEREST: Final = 1200
 CLIENTAGENT_ADD_INTEREST_MULTIPLE: Final = 1201
 CLIENTAGENT_REMOVE_INTEREST: Final = 1203
 
-QUIET_ZONE_IGNORED_LIST: Final[list[Never]]
+QUIET_ZONE_IGNORED_LIST: Final[list[int]] = []
 
 CLIENT_LOGIN_2_GREEN: Final = 1
 CLIENT_LOGIN_2_PLAY_TOKEN: Final = 2

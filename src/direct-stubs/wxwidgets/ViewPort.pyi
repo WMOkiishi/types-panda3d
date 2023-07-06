@@ -10,8 +10,8 @@ from panda3d.core import ButtonThrower, Camera, CollisionNode, Lens, LPoint3f, N
 
 from .WxPandaWindow import WxPandaWindow
 
-HORIZONTAL: Final[Any]
-VERTICAL: Final[Any]
+HORIZONTAL: Final = 1
+VERTICAL: Final = 2
 CREATENEW: Final = 99
 VPLEFT: Final = 10
 VPFRONT: Final = 11

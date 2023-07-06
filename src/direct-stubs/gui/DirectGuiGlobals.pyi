@@ -17,7 +17,7 @@ defaultDialogRelief: _PGFrameStyle_Type | None
 drawOrder: int
 panel: Any | None
 
-INITOPT: Final[list[Literal['initopt']]]
+INITOPT: Final = ['initopt']
 
 LMB: Final = 0
 MMB: Final = 1
