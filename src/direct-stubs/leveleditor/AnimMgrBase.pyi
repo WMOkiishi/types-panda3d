@@ -12,10 +12,8 @@ from .LevelEditor import LevelEditor
 
 _T = TypeVar('_T', contravariant=True)
 
-# Mypy says `_T` should be covariant, but Pyright says contravariant.
-# Pyright appears to be correct.
-class _SupportsAppend(Protocol[_T]):  # type: ignore[misc]
-    def append(__item: _T) -> object: ...
+class _SupportsAppend(Protocol[_T]):
+    def append(self, __item: _T) -> object: ...
 
 class AnimMgrBase:
     editor: LevelEditor
