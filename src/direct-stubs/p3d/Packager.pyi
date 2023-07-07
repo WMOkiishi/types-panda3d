@@ -160,7 +160,7 @@ class Packager:
             self,
             filename: Filename,
             newName: str | None = None,
-            delteTemp: bool = False,
+            deleteTemp: bool = False,
             explicit: bool = False,
             compress: bool | None = None,
             extract: bool | None = None,

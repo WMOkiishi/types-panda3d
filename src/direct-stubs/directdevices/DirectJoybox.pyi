@@ -36,7 +36,7 @@ class DirectJoybox(DirectObject):
     xyzMultiplier: ClassVar[float]
     hprMultiplier: ClassVar[float]
     name: str
-    devie: str
+    device: str
     analogs: DirectAnalogs
     buttons: DirectButtons
     aList: list[float]

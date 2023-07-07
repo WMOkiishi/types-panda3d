@@ -43,7 +43,7 @@ class PackageInstaller(DirectObject):
     appRunner: AppRunner
     taskChain: str
     callbackLock: Lock
-    calldedDownloadStarted: bool
+    calledDownloadStarted: bool
     calledDownloadFinished: bool
     packageLock: RLock
     packages: list[PackageInstaller.PendingPackage]

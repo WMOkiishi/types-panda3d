@@ -18,7 +18,7 @@ class DirectRadamec(DirectObject):
     radamecCount: ClassVar[int]
     notify: ClassVar[Notifier]
     name: str
-    devie: str
+    device: str
     analogs: DirectAnalogs
     numAnalogs: int
     aList: list[float]

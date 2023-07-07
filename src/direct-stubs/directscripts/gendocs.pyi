@@ -78,7 +78,7 @@ class InterrogateType:
 
 class InterrogateParameter:
     name: str
-    parameteflags: int
+    parameterflags: int
     type: int
     def __init__(self, tokzr: InterrogateTokenizer) -> None: ...
 

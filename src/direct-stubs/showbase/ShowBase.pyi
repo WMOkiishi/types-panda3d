@@ -149,7 +149,7 @@ class ShowBase(DirectObject):
     particleMgr: ParticleSystemManager | None
     particleMgrEnabled: bool
     physicsMgr: PhysicsManager | None
-    phyiscsMgrEnabled: bool
+    physicsMgrEnabled: bool
     physicsMgrAngular: bool
     devices: InputDeviceManager
     AppHasAudioFocus: bool

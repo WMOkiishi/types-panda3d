@@ -67,7 +67,7 @@ class DirectSession(DirectObject):
     specialKeys: list[str]
     keyEvents: list[str]
     mouseEvents: list[str]
-    directiOnlyKeyMap: dict[str, tuple[str, str]]
+    directOnlyKeyMap: dict[str, tuple[str, str]]
     hotKeyMap: dict[str, tuple[str, str]]
     specialKeyMap: dict[str, str]
     passThroughKeys: list[str]
