@@ -1214,9 +1214,9 @@ class PythonTask(AsyncTask):
     with the AsyncTaskManager.
     """
 
-    delay_time: float
+    delay_time: float | None
     """The delay value that has been set on this task, if any, or None."""
-    delayTime: float
+    delayTime: float | None
     """Alias of delay_time."""
     @property
     def time(self) -> float:

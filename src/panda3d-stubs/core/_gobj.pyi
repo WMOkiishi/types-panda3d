@@ -6340,11 +6340,11 @@ class Texture(TypedWritableReferenceCount, Namable):
     QLNormal: Final = 2
     QL_best: Final = 3
     QLBest: Final = 3
-    clear_color: LColor
-    filename: Filename
-    alpha_filename: Filename
-    fullpath: Filename
-    alpha_fullpath: Filename
+    clear_color: LColor | None
+    filename: Filename | None
+    alpha_filename: Filename | None
+    fullpath: Filename | None
+    alpha_fullpath: Filename | None
     x_size: int
     y_size: int
     z_size: int
@@ -6412,7 +6412,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     @property
     def simple_y_size(self) -> int: ...
     @property
-    def simple_ram_image(self) -> CPTA_uchar: ...
+    def simple_ram_image(self) -> CPTA_uchar | None: ...
     @property
     def properties_modified(self) -> UpdateSeq: ...
     @property
@@ -9421,11 +9421,11 @@ class Material(TypedWritableReferenceCount, Namable):
     in perceptually linear in the range of 0-1.
     """
 
-    base_color: LColor
-    ambient: LColor
-    diffuse: LColor
-    specular: LColor
-    emission: LColor
+    base_color: LColor | None
+    ambient: LColor | None
+    diffuse: LColor | None
+    specular: LColor | None
+    emission: LColor | None
     shininess: float
     roughness: float
     metallic: float
@@ -9863,7 +9863,7 @@ class ParamTextureImage(ParamValueBase):
     @property
     def bind_level(self) -> int: ...
     @property
-    def bind_layer(self) -> int: ...
+    def bind_layer(self) -> int | None: ...
     def __init__(self, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ...) -> None:
         """Creates a new ParamTextureImage storing the given texture and image binding
         parameters.

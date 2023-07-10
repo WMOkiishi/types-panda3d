@@ -1286,7 +1286,7 @@ class RopeNode(PandaNode):
     num_slices: int
     use_vertex_thickness: bool
     thickness: float
-    matrix: LMatrix4
+    matrix: LMatrix4 | None
     @property
     def vertex_color_dimension(self) -> int: ...
     @property

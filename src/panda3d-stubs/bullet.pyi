@@ -1712,7 +1712,7 @@ class BulletWorld(TypedReferenceCount):
     FA_callback: Final = 2
     FACallback: Final = 2
     gravity: LVector3
-    debug_node: BulletDebugNode
+    debug_node: BulletDebugNode | None
     force_update_all_aabbs: bool
     @property
     def world_info(self) -> BulletSoftBodyWorldInfo: ...

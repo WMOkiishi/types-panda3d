@@ -590,26 +590,26 @@ class TextProperties:
     D_rtl: Final = 1
     DRtl: Final = 1
     DtoolClassDict: ClassVar[dict[str, Any]]
-    font: TextFont
-    small_caps: bool
-    small_caps_scale: float
-    slant: float
-    underscore: bool
-    underscore_height: float
-    align: _TextProperties_Alignment
-    indent: float
-    wordwrap: float
-    preserve_trailing_whitespace: bool
-    text_color: LColor
-    shadow_color: LColor
-    shadow: LVector2
-    bin: str
-    draw_order: int
-    tab_width: float
-    glyph_scale: float
-    glyph_shift: float
-    text_scale: float
-    direction: _TextProperties_Direction
+    font: TextFont | None
+    small_caps: bool | None
+    small_caps_scale: float | None
+    slant: float | None
+    underscore: bool | None
+    underscore_height: float | None
+    align: _TextProperties_Alignment | None
+    indent: float | None
+    wordwrap: float | None
+    preserve_trailing_whitespace: bool | None
+    text_color: LColor | None
+    shadow_color: LColor | None
+    shadow: LVector2 | None
+    bin: str | None
+    draw_order: int | None
+    tab_width: float | None
+    glyph_scale: float | None
+    glyph_shift: float | None
+    text_scale: float | None
+    direction: _TextProperties_Direction | None
     def __init__(self, copy: TextProperties = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -1489,46 +1489,46 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
     coordinate_system: _CoordinateSystem
     usage_hint: _GeomEnums_UsageHint
     flatten_flags: int
-    font: TextFont
+    font: TextFont | None
     """Returns the font currently in use, if any.  If no font is in use, this
     returns the default font.
     """
-    small_caps: bool
+    small_caps: bool | None
     """Returns the small_caps flag.  See set_small_caps()."""
-    small_caps_scale: float
+    small_caps_scale: float | None
     """Returns the scale factor applied to lowercase letters from their uppercase
     equivalents, when the small_caps flag is in effect.  See set_small_caps()
     and set_small_caps_scale().
     """
-    slant: float
+    slant: float | None
     """Returns the factor by which the text is specified to slant to the right."""
-    underscore: bool
+    underscore: bool | None
     """Returns the underscore flag.  See set_underscore()."""
-    underscore_height: float
+    underscore_height: float | None
     """Returns the vertical height of the underscore; see set_underscore_height()."""
-    preserve_trailing_whitespace: bool
+    preserve_trailing_whitespace: bool | None
     """Returns the preserve_trailing_whitespace flag.  See
     set_preserve_trailing_whitespace().
     """
-    shadow: LVector2
+    shadow: LVector2 | None
     """Returns the offset of the shadow as set by set_shadow().  It is an error to
     call this if has_shadow() is false.
     """
-    bin: str
+    bin: str | None
     """Returns the drawing bin set with set_bin(), or empty string if no bin has
     been set.
     """
-    draw_order: int
+    draw_order: int | None
     """Returns the drawing order set with set_draw_order()."""
-    tab_width: float
+    tab_width: float | None
     """Returns the width set via set_tab_width()."""
-    glyph_scale: float
+    glyph_scale: float | None
     """Returns the scale factor of each letter as specified by set_glyph_scale()."""
-    glyph_shift: float
+    glyph_shift: float | None
     """Returns the vertical shift of each letter as specified by
     set_glyph_shift().
     """
-    text_scale: float
+    text_scale: float | None
     """Returns the scale factor of the text as specified by set_text_scale()."""
     def __init__(self, name: str, copy: TextProperties = ...) -> None:
         """It's sort of a copy constructor: it copies the indicated TextProperties,

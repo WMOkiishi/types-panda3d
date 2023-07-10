@@ -199,6 +199,10 @@ class IDBElement:
         return idb.interrogate_element_has_setter(self.index)
 
     @property
+    def has_has_function(self) -> bool:
+        return idb.interrogate_element_has_has_function(self.index)
+
+    @property
     def is_sequence(self) -> bool:
         return idb.interrogate_element_is_sequence(self.index)
 

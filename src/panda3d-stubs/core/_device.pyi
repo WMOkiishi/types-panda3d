@@ -150,10 +150,10 @@ class InputDevice(TypedReferenceCount):
         this could not be determined, it is set to DC_unknown.
         """
     @property
-    def tracker(self) -> TrackerData:
+    def tracker(self) -> TrackerData | None:
         """Getters for the various types of device data."""
     @property
-    def battery(self) -> InputDevice.BatteryData: ...
+    def battery(self) -> InputDevice.BatteryData | None: ...
     @property
     def buttons(self) -> Sequence[InputDevice.ButtonState]:
         """Make device buttons and axes iterable"""

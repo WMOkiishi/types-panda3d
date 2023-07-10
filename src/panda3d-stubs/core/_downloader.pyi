@@ -491,7 +491,7 @@ class HTTPCookie:
     value: str
     domain: str
     path: str
-    expires: HTTPDate
+    expires: HTTPDate | None
     secure: bool
     @overload
     def __init__(self, __param0: HTTPCookie = ...) -> None:
@@ -1031,8 +1031,8 @@ class DocumentSpec:
     CCNoCache: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
     url: URLSpec
-    tag: HTTPEntityTag
-    date: HTTPDate
+    tag: HTTPEntityTag | None
+    date: HTTPDate | None
     request_mode: _DocumentSpec_RequestMode
     cache_control: _DocumentSpec_CacheControl
     @overload

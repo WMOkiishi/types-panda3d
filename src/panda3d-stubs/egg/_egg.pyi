@@ -662,8 +662,8 @@ class EggAnimData(EggNode):
 class EggAnimPreload(EggNode):
     """This corresponds to an <AnimPreload> entry."""
 
-    fps: float
-    num_frames: int
+    fps: float | None
+    num_frames: int | None
     @overload
     def __init__(self, name: str = ...) -> None: ...
     @overload
@@ -1914,7 +1914,7 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):  # type: ignore[misc]
     BOOneMinusAlphaScale: Final = 19
     group_type: _EggGroup_GroupType
     billboard_type: _EggGroup_BillboardType
-    billboard_center: LPoint3d
+    billboard_center: LPoint3d | None
     cs_type: _EggGroup_CollisionSolidType
     collide_flags: _EggGroup_CollideFlags
     collision_name: str
@@ -1929,15 +1929,15 @@ class EggGroup(EggGroupNode, EggRenderMode, EggTransform):  # type: ignore[misc]
     direct_flag: bool
     portal_flag: bool
     occluder_flag: bool
-    indexed_flag: bool
-    collide_mask: CollideMask
-    from_collide_mask: CollideMask
-    into_collide_mask: CollideMask
+    indexed_flag: bool | None
+    collide_mask: CollideMask | None
+    from_collide_mask: CollideMask | None
+    into_collide_mask: CollideMask | None
     blend_mode: _EggGroup_BlendMode
     blend_operand_a: _EggGroup_BlendOperand
     blend_operand_b: _EggGroup_BlendOperand
-    blend_color: LColor
-    lod: EggSwitchCondition
+    blend_color: LColor | None
+    lod: EggSwitchCondition | None
     default_pose: EggTransform
     scroll_u: float
     scroll_v: float
@@ -2758,27 +2758,27 @@ class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):  # type: ignore[
     wrap_w: _EggTexture_WrapMode
     minfilter: _EggTexture_FilterType
     magfilter: _EggTexture_FilterType
-    anisotropic_degree: int
+    anisotropic_degree: int | None
     env_type: _EggTexture_EnvType
     saved_result: bool
     tex_gen: _EggTexture_TexGen
     quality_level: _EggTexture_QualityLevel
-    stage_name: str
-    priority: int
-    color: LColor
-    border_color: LColor
-    uv_name: str
-    rgb_scale: int
-    alpha_scale: int
-    alpha_filename: Filename
+    stage_name: str | None
+    priority: int | None
+    color: LColor | None
+    border_color: LColor | None
+    uv_name: str | None
+    rgb_scale: int | None
+    alpha_scale: int | None
+    alpha_filename: Filename | None
     alpha_fullpath: Filename
-    alpha_file_channel: int
+    alpha_file_channel: int | None
     multiview: bool
-    num_views: int
+    num_views: int | None
     read_mipmaps: bool
-    min_lod: float
-    max_lod: float
-    lod_bias: float
+    min_lod: float | None
+    max_lod: float | None
+    lod_bias: float | None
     @property
     def multitexture_sort(self) -> int: ...
     @overload
@@ -3356,16 +3356,16 @@ class EggMaterial(EggNode):
     EAttributes: Final = 1
     E_mref_name: Final = 2
     EMrefName: Final = 2
-    base: LColor
-    diff: LColor
-    amb: LColor
-    emit: LColor
-    spec: LColor
-    shininess: float
-    roughness: float
-    metallic: float
-    ior: float
-    local: bool
+    base: LColor | None
+    diff: LColor | None
+    amb: LColor | None
+    emit: LColor | None
+    spec: LColor | None
+    shininess: float | None
+    roughness: float | None
+    metallic: float | None
+    ior: float | None
+    local: bool | None
     @overload
     def __init__(self, copy: EggMaterial) -> None: ...
     @overload
@@ -3521,7 +3521,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):  # type: ignore[misc]
     SPerFace: Final = 2
     S_per_vertex: Final = 3
     SPerVertex: Final = 3
-    material: EggMaterial
+    material: EggMaterial | None
     bface_flag: bool
     @property
     def sort_name(self) -> str: ...

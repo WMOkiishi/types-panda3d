@@ -419,7 +419,7 @@ class BamCacheRecord(TypedWritableReferenceCount):
     record contains information needed to test the validity of the cache.
     """
 
-    data: TypedWritable
+    data: TypedWritable | None
     @property
     def source_pathname(self) -> Filename: ...
     @property
@@ -1738,7 +1738,7 @@ class ButtonHandle:
     @property
     def name(self) -> str: ...
     @property
-    def ascii_equivalent(self) -> str: ...
+    def ascii_equivalent(self) -> str | None: ...
     @property
     def alias(self) -> ButtonHandle: ...
     @overload

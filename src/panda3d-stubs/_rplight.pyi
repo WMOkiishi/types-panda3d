@@ -264,7 +264,7 @@ class RPLight(ReferenceCount):
     energy: float
     casts_shadows: bool
     shadow_map_resolution: int
-    ies_profile: int
+    ies_profile: int | None
     near_plane: float
     @property
     def light_type(self) -> _RPLight_LightType: ...

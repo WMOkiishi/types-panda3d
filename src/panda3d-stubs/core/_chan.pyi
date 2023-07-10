@@ -462,7 +462,7 @@ class AnimChannelScalarTable(AnimChannel_ACScalarSwitchType):
     such as might have been read from an egg file.
     """
 
-    table: CPTA_stdfloat
+    table: CPTA_stdfloat | None
     def __init__(self, parent: AnimGroup, name: str) -> None: ...
     def set_table(self, table: CPTA_stdfloat | PointerToArray_float) -> None:
         """Assigns the data table."""

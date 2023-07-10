@@ -580,21 +580,21 @@ class WindowProperties:
     MConfined: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
     default: WindowProperties
-    origin: LPoint2i
-    size: LVector2i
-    mouse_mode: _WindowProperties_MouseMode
-    title: str
-    undecorated: bool
-    fixed_size: bool
-    fullscreen: bool
-    foreground: bool
-    minimized: bool
-    open: bool
-    cursor_hidden: bool
-    icon_filename: Filename
-    cursor_filename: Filename
-    z_order: _WindowProperties_ZOrder
-    parent_window: WindowHandle
+    origin: LPoint2i | None
+    size: LVector2i | None
+    mouse_mode: _WindowProperties_MouseMode | None
+    title: str | None
+    undecorated: bool | None
+    fixed_size: bool | None
+    fullscreen: bool | None
+    foreground: bool | None
+    minimized: bool | None
+    open: bool | None
+    cursor_hidden: bool | None
+    icon_filename: Filename | None
+    cursor_filename: Filename | None
+    z_order: _WindowProperties_ZOrder | None
+    parent_window: WindowHandle | None
     @property
     def config_properties(self) -> WindowProperties: ...
     def __init__(self, *args, **kwds) -> None: ...

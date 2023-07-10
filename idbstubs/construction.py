@@ -200,6 +200,8 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
         read_only = True
     else:
         read_only = not element.has_setter
+        if element.has_has_function:
+            type_name += ' | None'
     doc = comment_to_docstring(element.comment)
     return Attribute(
         check_keyword(element.name),

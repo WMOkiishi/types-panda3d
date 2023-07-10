@@ -286,7 +286,7 @@ class CollisionTraverser(Namable):
 
     respect_preV_transform: bool
     respect_prev_transform: bool
-    recorder: CollisionRecorder
+    recorder: CollisionRecorder | None
     @property
     def colliders(self) -> Sequence[NodePath]: ...
     @overload
@@ -879,7 +879,7 @@ class CollisionHandlerPhysical(CollisionHandlerEvent):
     positions based on the effects of the collision.
     """
 
-    center: NodePath
+    center: NodePath | None
     def add_collider(self, collider: NodePath, target: NodePath, drive_interface: DriveInterface = ...) -> None:
         """`(self, collider: NodePath, target: NodePath)`:
         Adds a new collider to the list with a NodePath that will be updated with
