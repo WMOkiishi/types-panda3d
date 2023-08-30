@@ -93,7 +93,7 @@ class ShowBase(DirectObject):
     finalExitCallbacks: list[Callable[[], object]]
     windowType: _WindowType
     requireWindow: bool
-    win: GraphicsEngine
+    win: GraphicsOutput
     frameRateMeter: FrameRateMeter | None
     sceneGraphAnalyzerMeter: SceneGraphAnalyzerMeter | None
     winList: list[GraphicsEngine]
