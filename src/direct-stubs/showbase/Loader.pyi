@@ -79,6 +79,7 @@ class Loader(DirectObject):
         priority: float | None = None,
         blocking: Literal[True] | None = None,
     ) -> NodePath | None: ...
+    # If okMissing is False, the return value will not be None.
     @overload
     def load_model(
         self,
@@ -106,6 +107,7 @@ class Loader(DirectObject):
         priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> NodePath: ...
+    # If modelPath is a collection of strings, the return value will be a list.
     @overload
     def load_model(
         self,
@@ -119,6 +121,7 @@ class Loader(DirectObject):
         priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath | None]: ...
+    # okMissing has the same effect.
     @overload
     def load_model(
         self,
@@ -146,6 +149,7 @@ class Loader(DirectObject):
         priority: int | None = None,
         blocking: Literal[True] | None = None,
     ) -> list[NodePath]: ...
+    # If callback is not None, the return value will be a _Callback.
     @overload
     def load_model(
         self,
@@ -172,6 +176,34 @@ class Loader(DirectObject):
         extraArgs: Iterable[Any] = [],
         priority: int | None = None,
         blocking: Literal[False] | None = None,
+    ) -> _Callback: ...
+    # If blocking is False, the return value will be a _Callback.
+    @overload
+    def load_model(
+        self,
+        modelPath: str | list[str] | set[str] | tuple[str, ...],
+        loaderOptions: LoaderOptions | None = None,
+        noCache: bool | None = None,
+        allowInstance: bool = False,
+        okMissing: bool | None = None,
+        callback: Callable[..., object] | None = None,
+        extraArgs: Iterable[Any] = [],
+        priority: int | None = None,
+        *,
+        blocking: Literal[False],
+    ) -> _Callback: ...
+    @overload
+    def load_model(
+        self,
+        modelPath: str | list[str] | set[str] | tuple[str, ...],
+        loaderOptions: LoaderOptions | None,
+        noCache: bool | None,
+        allowInstance: bool,
+        okMissing: bool | None,
+        callback: Callable[..., object] | None,
+        extraArgs: Iterable[Any],
+        priority: int | None,
+        blocking: Literal[False],
     ) -> _Callback: ...
     def cancelRequest(self, cb: _Callback) -> None: ...
     def isRequestPending(self, cb: _Callback) -> bool: ...
