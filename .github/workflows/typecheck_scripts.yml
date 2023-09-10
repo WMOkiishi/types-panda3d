@@ -35,5 +35,5 @@ jobs:
         uses: jakebailey/pyright-action@v1
         with:
           extra-args: idbstubs tests
-          version: 1.1.316
+          version: 1.1.326
           python-version: '3.11'
