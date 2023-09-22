@@ -13,6 +13,11 @@ from panda3d.core._putil import AnimInterface, CallbackData, CallbackObject
 
 _SceneGraphAnalyzer_LodMode: TypeAlias = Literal[0, 1, 2, 3]
 
+LNT_pop: Final = 0
+LNTPop: Final = 0
+LNT_fade: Final = 1
+LNTFade: Final = 1
+
 class LightNode(Light, PandaNode):  # type: ignore[misc]
     """A derivative of Light and of PandaNode.  All kinds of Light except
     Spotlight (which must inherit from LensNode instead) inherit from this
@@ -814,8 +819,3 @@ class SceneGraphAnalyzer:
     getNumLongNormals = get_num_long_normals
     getNumShortNormals = get_num_short_normals
     getTotalNormalLength = get_total_normal_length
-
-LNT_pop: Final = 0
-LNTPop: Final = 0
-LNT_fade: Final = 1
-LNTFade: Final = 1

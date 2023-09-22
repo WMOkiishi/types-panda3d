@@ -43,6 +43,13 @@ class InputDevice(TypedReferenceCount):
     @since 1.10.0
     """
 
+    S_unknown: Final = 0
+    SUnknown: Final = 0
+    S_up: Final = 1
+    SUp: Final = 1
+    S_down: Final = 2
+    SDown: Final = 2
+
     class DeviceClass(Enum):
         unknown: int
         virtual_device: int
@@ -118,12 +125,6 @@ class InputDevice(TypedReferenceCount):
         def __copy__(self) -> Self: ...
         def __deepcopy__(self, __memo: object) -> Self: ...
 
-    S_unknown: Final = 0
-    SUnknown: Final = 0
-    S_up: Final = 1
-    SUp: Final = 1
-    S_down: Final = 2
-    SDown: Final = 2
     @property
     def name(self) -> str:
         """The human-readable name of this input device."""

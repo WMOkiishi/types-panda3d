@@ -454,9 +454,9 @@ class Package:
 _rep_matchers: list[Callable[[StubRep], bool]] = [
     lambda r: isinstance(r, TypeVariable),
     lambda r: isinstance(r, TypeAlias),
+    lambda r: isinstance(r, Constant),
     lambda r: isinstance(r, Class),
     lambda r: isinstance(r, Alias) and not r.of_local,
-    lambda r: isinstance(r, Constant),
     lambda r: isinstance(r, Attribute) and not r.read_only,
     lambda r: isinstance(r, Attribute),
     lambda r: isinstance(r, Function) and is_dunder(r.name),

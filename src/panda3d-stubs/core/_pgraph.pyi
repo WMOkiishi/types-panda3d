@@ -1737,6 +1737,29 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     properties.
     """
 
+    UC_parents: Final = 1
+    UCParents: Final = 1
+    UC_children: Final = 2
+    UCChildren: Final = 2
+    UC_transform: Final = 4
+    UCTransform: Final = 4
+    UC_state: Final = 8
+    UCState: Final = 8
+    UC_draw_mask: Final = 16
+    UCDrawMask: Final = 16
+    FB_transform: Final = 1
+    FBTransform: Final = 1
+    FB_state: Final = 2
+    FBState: Final = 2
+    FB_effects: Final = 4
+    FBEffects: Final = 4
+    FB_tag: Final = 16
+    FBTag: Final = 16
+    FB_draw_mask: Final = 32
+    FBDrawMask: Final = 32
+    FB_cull_callback: Final = 64
+    FBCullCallback: Final = 64
+
     class Children:
         """This class is returned from get_children().  Use it to walk through the
         list of children.  This is faster, and safer, than walking through the
@@ -1767,28 +1790,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         def __len__(self) -> int: ...
         def __iter__(self) -> Iterator[PandaNode]: ...  # Doesn't actually exist
 
-    UC_parents: Final = 1
-    UCParents: Final = 1
-    UC_children: Final = 2
-    UCChildren: Final = 2
-    UC_transform: Final = 4
-    UCTransform: Final = 4
-    UC_state: Final = 8
-    UCState: Final = 8
-    UC_draw_mask: Final = 16
-    UCDrawMask: Final = 16
-    FB_transform: Final = 1
-    FBTransform: Final = 1
-    FB_state: Final = 2
-    FBState: Final = 2
-    FB_effects: Final = 4
-    FBEffects: Final = 4
-    FB_tag: Final = 16
-    FBTag: Final = 16
-    FB_draw_mask: Final = 32
-    FBDrawMask: Final = 32
-    FB_cull_callback: Final = 64
-    FBCullCallback: Final = 64
     state: RenderState
     effects: RenderEffects
     transform: TransformState

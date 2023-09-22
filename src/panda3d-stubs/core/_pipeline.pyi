@@ -6,6 +6,15 @@ from panda3d.core._express import Namable, TypedReferenceCount
 
 _ThreadPriority: TypeAlias = Literal[0, 1, 2, 3]
 
+TP_low: Final = 0
+TPLow: Final = 0
+TP_normal: Final = 1
+TPNormal: Final = 1
+TP_high: Final = 2
+TPHigh: Final = 2
+TP_urgent: Final = 3
+TPUrgent: Final = 3
+
 class Thread(TypedReferenceCount, Namable):
     """A thread; that is, a lightweight process.  This is an abstract base class;
     to use it, you must subclass from it and redefine thread_main().
@@ -694,12 +703,3 @@ class PythonThread(Thread):
     args = ...
     def __init__(self, function, args, name: str, sync_name: str) -> None: ...
     def join(self): ...
-
-TP_low: Final = 0
-TPLow: Final = 0
-TP_normal: Final = 1
-TPNormal: Final = 1
-TP_high: Final = 2
-TPHigh: Final = 2
-TP_urgent: Final = 3
-TPUrgent: Final = 3

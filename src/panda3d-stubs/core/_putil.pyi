@@ -55,6 +55,25 @@ _BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
 _BamEnums_BamTextureMode: TypeAlias = Literal[0, 1, 2, 3, 4]
 _ClockObject_Mode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 
+ATS_none: Final = 0
+ATSNone: Final = 0
+ATS_down: Final = 1
+ATSDown: Final = 1
+ATS_up: Final = 2
+ATSUp: Final = 2
+ATS_pad: Final = 3
+ATSPad: Final = 3
+ATS_unspecified: Final = 4
+ATSUnspecified: Final = 4
+CS_unspecified: Final = 0
+CSUnspecified: Final = 0
+CS_linear: Final = 1
+CSLinear: Final = 1
+CS_sRGB: Final = 2
+CSSRGB: Final = 2
+CS_scRGB: Final = 3
+CSScRGB: Final = 3
+
 class PointerToBase_ReferenceCountedVector_ushort(PointerToVoid):
     def clear(self) -> None: ...
     def output(self, out: ostream) -> None: ...
@@ -3525,24 +3544,6 @@ class UniqueIdAllocator:
     initialReserveId = initial_reserve_id
     fractionUsed = fraction_used
 
-ATS_none: Final = 0
-ATSNone: Final = 0
-ATS_down: Final = 1
-ATSDown: Final = 1
-ATS_up: Final = 2
-ATSUp: Final = 2
-ATS_pad: Final = 3
-ATSPad: Final = 3
-ATS_unspecified: Final = 4
-ATSUnspecified: Final = 4
-CS_unspecified: Final = 0
-CSUnspecified: Final = 0
-CS_linear: Final = 1
-CSLinear: Final = 1
-CS_sRGB: Final = 2
-CSSRGB: Final = 2
-CS_scRGB: Final = 3
-CSScRGB: Final = 3
 def parse_color_space_string(str: str) -> _ColorSpace: ...
 def format_color_space(cs: _ColorSpace) -> str: ...
 def get_model_path() -> ConfigVariableSearchPath: ...

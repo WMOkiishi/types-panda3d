@@ -3585,6 +3585,15 @@ class CallbackGraphicsWindow(GraphicsWindow):
     already-created OpenGL context, for instance.
     """
 
+    RCT_begin_frame: Final = 0
+    RCTBeginFrame: Final = 0
+    RCT_end_frame: Final = 1
+    RCTEndFrame: Final = 1
+    RCT_begin_flip: Final = 2
+    RCTBeginFlip: Final = 2
+    RCT_end_flip: Final = 3
+    RCTEndFlip: Final = 3
+
     class WindowCallbackData(CallbackData):
         DtoolClassDict: ClassVar[dict[str, Any]]
         @property
@@ -3647,14 +3656,6 @@ class CallbackGraphicsWindow(GraphicsWindow):
         getRenderFlag = get_render_flag
         getClassType = get_class_type
 
-    RCT_begin_frame: Final = 0
-    RCTBeginFrame: Final = 0
-    RCT_end_frame: Final = 1
-    RCTEndFrame: Final = 1
-    RCT_begin_flip: Final = 2
-    RCTBeginFlip: Final = 2
-    RCT_end_flip: Final = 3
-    RCTEndFlip: Final = 3
     def set_events_callback(self, object: Callable | CallbackObject) -> None:
         """Sets the CallbackObject that will be notified when this window is polled
         for window events, including mouse and keyboard events, as well as window

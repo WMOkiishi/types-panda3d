@@ -20,6 +20,13 @@ _BulletConstraint_ConstraintParam: TypeAlias = Literal[1, 2, 3, 4]
 _BulletSoftBodyConfig_AeroModel: TypeAlias = Literal[0, 1, 2, 3, 4]
 _BulletSoftBodyConfig_CollisionFlag: TypeAlias = Literal[1, 2, 15, 16, 32, 48, 64]
 
+X_up: Final = 0
+XUp: Final = 0
+Y_up: Final = 1
+YUp: Final = 1
+Z_up: Final = 2
+ZUp: Final = 2
+
 class BulletRayHit:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
@@ -2671,12 +2678,6 @@ class BulletTriangleMeshShape(BulletShape):
     isStatic = is_static
     isDynamic = is_dynamic
 
-X_up: Final = 0
-XUp: Final = 0
-Y_up: Final = 1
-YUp: Final = 1
-Z_up: Final = 2
-ZUp: Final = 2
 def get_default_up_axis() -> _BulletUpAxis: ...
 def get_bullet_version() -> int:
     """Returns the version of the linked Bullet library."""

@@ -6,6 +6,13 @@ from panda3d.core._dtoolutil import istream, ostream
 
 _TiXmlEncoding: TypeAlias = Literal[0, 1, 2]
 
+TIXML_ENCODING_UNKNOWN: Final = 0
+TIXMLENCODINGUNKNOWN: Final = 0
+TIXML_ENCODING_UTF8: Final = 1
+TIXMLENCODINGUTF8: Final = 1
+TIXML_ENCODING_LEGACY: Final = 2
+TIXMLENCODINGLEGACY: Final = 2
+
 class TiXmlBase:
     """TiXmlBase is a base class for every class in TinyXml.
     It does little except to establish that TinyXml classes
@@ -970,12 +977,6 @@ class TiXmlPrinter(TiXmlVisitor):
     def Str(self) -> str:
         """Return the result."""
 
-TIXML_ENCODING_UNKNOWN: Final = 0
-TIXMLENCODINGUNKNOWN: Final = 0
-TIXML_ENCODING_UTF8: Final = 1
-TIXMLENCODINGUTF8: Final = 1
-TIXML_ENCODING_LEGACY: Final = 2
-TIXMLENCODINGLEGACY: Final = 2
 def read_xml_stream(_in: istream) -> TiXmlDocument:
     """Reads an XML document from the indicated stream.
     @returns the document, or NULL on error.

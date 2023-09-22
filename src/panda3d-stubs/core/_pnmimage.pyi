@@ -127,6 +127,17 @@ class PNMImageHeader:
     typically read from the image file's header.
     """
 
+    CT_invalid: Final = 0
+    CTInvalid: Final = 0
+    CT_grayscale: Final = 1
+    CTGrayscale: Final = 1
+    CT_two_channel: Final = 2
+    CTTwoChannel: Final = 2
+    CT_color: Final = 3
+    CTColor: Final = 3
+    CT_four_channel: Final = 4
+    CTFourChannel: Final = 4
+
     class PixelSpec:
         """Contains a single pixel specification used in compute_histogram() and
         make_histogram().  Note that pixels are stored by integer value, not by
@@ -215,16 +226,6 @@ class PNMImageHeader:
         getCount = get_count
         getPixels = get_pixels
 
-    CT_invalid: Final = 0
-    CTInvalid: Final = 0
-    CT_grayscale: Final = 1
-    CTGrayscale: Final = 1
-    CT_two_channel: Final = 2
-    CTTwoChannel: Final = 2
-    CT_color: Final = 3
-    CTColor: Final = 3
-    CT_four_channel: Final = 4
-    CTFourChannel: Final = 4
     DtoolClassDict: ClassVar[dict[str, Any]]
     comment: str
     @property

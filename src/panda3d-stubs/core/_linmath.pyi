@@ -22,6 +22,19 @@ from panda3d.core._prc import ConfigVariable
 
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 
+CS_default: Final = 0
+CSDefault: Final = 0
+CS_zup_right: Final = 1
+CSZupRight: Final = 1
+CS_yup_right: Final = 2
+CSYupRight: Final = 2
+CS_zup_left: Final = 3
+CSZupLeft: Final = 3
+CS_yup_left: Final = 4
+CSYupLeft: Final = 4
+CS_invalid: Final = 5
+CSInvalid: Final = 5
+
 class MathNumbers:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, __param0: MathNumbers = ...) -> None: ...
@@ -2958,6 +2971,9 @@ class LMatrix3f:
     (rotation, scale, translation) in 2-d, e.g.  for a texture matrix.
     """
 
+    num_components: Final = 9
+    is_int: Final = 0
+
     class Row:
         """These helper classes are used to support two-level operator []."""
 
@@ -2985,8 +3001,6 @@ class LMatrix3f:
         def operator_typecast(self) -> LVecBase3f: ...
         operatorTypecast = operator_typecast
 
-    num_components: Final = 9
-    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def rows(self) -> MutableSequence[LVecBase3f]: ...
@@ -3391,6 +3405,9 @@ class LMatrix3f:
 class LMatrix4f:
     """This is a 4-by-4 transform matrix."""
 
+    num_components: Final = 16
+    is_int: Final = 0
+
     class Row:
         """These helper classes are used to support two-level operator []."""
 
@@ -3418,8 +3435,6 @@ class LMatrix4f:
         def operator_typecast(self) -> LVecBase4f: ...
         operatorTypecast = operator_typecast
 
-    num_components: Final = 16
-    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def rows(self) -> MutableSequence[LVecBase4f]: ...
@@ -3923,6 +3938,9 @@ class LMatrix3d:
     (rotation, scale, translation) in 2-d, e.g.  for a texture matrix.
     """
 
+    num_components: Final = 9
+    is_int: Final = 0
+
     class Row:
         """These helper classes are used to support two-level operator []."""
 
@@ -3950,8 +3968,6 @@ class LMatrix3d:
         def operator_typecast(self) -> LVecBase3d: ...
         operatorTypecast = operator_typecast
 
-    num_components: Final = 9
-    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def rows(self) -> MutableSequence[LVecBase3d]: ...
@@ -4356,6 +4372,9 @@ class LMatrix3d:
 class LMatrix4d:
     """This is a 4-by-4 transform matrix."""
 
+    num_components: Final = 16
+    is_int: Final = 0
+
     class Row:
         """These helper classes are used to support two-level operator []."""
 
@@ -4383,8 +4402,6 @@ class LMatrix4d:
         def operator_typecast(self) -> LVecBase4d: ...
         operatorTypecast = operator_typecast
 
-    num_components: Final = 16
-    is_int: Final = 0
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def rows(self) -> MutableSequence[LVecBase4d]: ...
@@ -5449,18 +5466,6 @@ class ConfigVariableColor(ConfigVariable):
     getValue = get_value
     getDefaultValue = get_default_value
 
-CS_default: Final = 0
-CSDefault: Final = 0
-CS_zup_right: Final = 1
-CSZupRight: Final = 1
-CS_yup_right: Final = 2
-CSYupRight: Final = 2
-CS_zup_left: Final = 3
-CSZupLeft: Final = 3
-CS_yup_left: Final = 4
-CSYupLeft: Final = 4
-CS_invalid: Final = 5
-CSInvalid: Final = 5
 @overload
 def __mul__(v: LPoint2d, m: LMatrix3d) -> LPoint2d: ...
 @overload

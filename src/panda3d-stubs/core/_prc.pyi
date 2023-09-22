@@ -10,6 +10,21 @@ from panda3d.core._dtoolutil import DSearchPath, Filename, iostream, istream, os
 _ConfigFlags_ValueType: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 _NotifySeverity: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
 
+NS_unspecified: Final = 0
+NSUnspecified: Final = 0
+NS_spam: Final = 1
+NSSpam: Final = 1
+NS_debug: Final = 2
+NSDebug: Final = 2
+NS_info: Final = 3
+NSInfo: Final = 3
+NS_warning: Final = 4
+NSWarning: Final = 4
+NS_error: Final = 5
+NSError: Final = 5
+NS_fatal: Final = 6
+NSFatal: Final = 6
+
 class ConfigFlags:
     """This class is the base class of both ConfigVariable and ConfigVariableCore.
     It exists only to provide a convenient name scoping for some enumerated
@@ -1864,18 +1879,3 @@ class StreamWrapper(IStreamWrapper, OStreamWrapper):  # type: ignore[misc]
     upcastToIStreamWrapper = upcast_to_IStreamWrapper
     upcastToOStreamWrapper = upcast_to_OStreamWrapper
     getIostream = get_iostream
-
-NS_unspecified: Final = 0
-NSUnspecified: Final = 0
-NS_spam: Final = 1
-NSSpam: Final = 1
-NS_debug: Final = 2
-NSDebug: Final = 2
-NS_info: Final = 3
-NSInfo: Final = 3
-NS_warning: Final = 4
-NSWarning: Final = 4
-NS_error: Final = 5
-NSError: Final = 5
-NS_fatal: Final = 6
-NSFatal: Final = 6
