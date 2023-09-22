@@ -1016,7 +1016,14 @@ class NurbsSurfaceResult(ReferenceCount):
         vertices associated with the surface in the indicated dimension.
         """
     def eval_segment_extended_points(
-        self, ui: int, vi: int, u: float, v: float, d: int, result: array[float], num_values: int
+        self,
+        ui: int,
+        vi: int,
+        u: float,
+        v: float,
+        d: int,
+        result: array[float],
+        num_values: int,
     ) -> None:
         """Simultaneously performs eval_extended_point on a contiguous sequence of
         dimensions.  The dimensions evaluated are d through (d + num_values - 1);

@@ -911,7 +911,10 @@ class RenderModeAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @staticmethod
     def make(
-        mode: _RenderModeAttrib_Mode, thickness: float = ..., perspective: bool = ..., wireframe_color: Vec4Like = ...
+        mode: _RenderModeAttrib_Mode,
+        thickness: float = ...,
+        perspective: bool = ...,
+        wireframe_color: Vec4Like = ...,
     ) -> RenderAttrib:
         """Constructs a new RenderModeAttrib object that specifies whether to draw
         polygons in the normal, filled mode, or wireframe mode, or in some other
@@ -1133,7 +1136,11 @@ class RenderState(NodeCachedReferenceCount):
     @overload
     @staticmethod
     def make(
-        attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, attrib4: RenderAttrib, override: int = ...
+        attrib1: RenderAttrib,
+        attrib2: RenderAttrib,
+        attrib3: RenderAttrib,
+        attrib4: RenderAttrib,
+        override: int = ...,
     ) -> RenderState: ...
     @overload
     @staticmethod
@@ -2794,7 +2801,14 @@ class ShaderInput:
     def __init__(self, name: InternalName | str, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
     @overload
     def __init__(
-        self, name: InternalName | str, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
+        self,
+        name: InternalName | str,
+        tex: Texture,
+        read: bool,
+        write: bool,
+        z: int = ...,
+        n: int = ...,
+        priority: int = ...,
     ) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -3886,11 +3900,30 @@ class NodePath(Generic[_N]):
     def set_pos_hpr_scale(self, other: NodePath, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like) -> None: ...
     @overload
     def set_pos_hpr_scale(
-        self, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float
+        self,
+        x: float,
+        y: float,
+        z: float,
+        h: float,
+        p: float,
+        r: float,
+        sx: float,
+        sy: float,
+        sz: float,
     ) -> None: ...
     @overload
     def set_pos_hpr_scale(
-        self, other: NodePath, x: float, y: float, z: float, h: float, p: float, r: float, sx: float, sy: float, sz: float
+        self,
+        other: NodePath,
+        x: float,
+        y: float,
+        z: float,
+        h: float,
+        p: float,
+        r: float,
+        sx: float,
+        sy: float,
+        sz: float,
     ) -> None: ...
     @overload
     def set_pos_quat_scale(self, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like) -> None:
@@ -3916,7 +3949,12 @@ class NodePath(Generic[_N]):
         """
     @overload
     def set_pos_hpr_scale_shear(
-        self, other: NodePath, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like, shear: Vec3Like
+        self,
+        other: NodePath,
+        pos: Vec3Like,
+        hpr: Vec3Like,
+        scale: Vec3Like,
+        shear: Vec3Like,
     ) -> None: ...
     @overload
     def set_pos_quat_scale_shear(self, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like, shear: Vec3Like) -> None:
@@ -3930,7 +3968,12 @@ class NodePath(Generic[_N]):
         """
     @overload
     def set_pos_quat_scale_shear(
-        self, other: NodePath, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like, shear: Vec3Like
+        self,
+        other: NodePath,
+        pos: Vec3Like,
+        quat: Vec4Like,
+        scale: Vec3Like,
+        shear: Vec3Like,
     ) -> None: ...
     @overload
     def set_mat(self, mat: Mat4Like) -> None:
@@ -4496,11 +4539,24 @@ class NodePath(Generic[_N]):
     def set_shader_input(self, id: InternalName | str, tex: Texture, sampler: SamplerState, priority: int = ...) -> None: ...
     @overload
     def set_shader_input(
-        self, id: InternalName | str, n1: float, n2: float, n3: float = ..., n4: float = ..., priority: int = ...
+        self,
+        id: InternalName | str,
+        n1: float,
+        n2: float,
+        n3: float = ...,
+        n4: float = ...,
+        priority: int = ...,
     ) -> None: ...
     @overload
     def set_shader_input(
-        self, id: InternalName | str, tex: Texture, read: bool, write: bool, z: int = ..., n: int = ..., priority: int = ...
+        self,
+        id: InternalName | str,
+        tex: Texture,
+        read: bool,
+        write: bool,
+        z: int = ...,
+        n: int = ...,
+        priority: int = ...,
     ) -> None: ...
     def set_shader_inputs(self, *args, **kwargs) -> None: ...
     def clear_shader_input(self, id: InternalName | str) -> None: ...
@@ -4692,7 +4748,11 @@ class NodePath(Generic[_N]):
         """
     @overload
     def set_tex_gen(
-        self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3Like, priority: int = ...
+        self,
+        stage: TextureStage,
+        mode: _RenderAttrib_TexGenMode,
+        constant_value: Vec3Like,
+        priority: int = ...,
     ) -> None: ...
     def clear_tex_gen(self, stage: TextureStage = ...) -> None:
         """`(self)`:
@@ -5334,7 +5394,10 @@ class NodePath(Generic[_N]):
         without regard to its children, use node()->get_into_collide_mask().
         """
     def set_collide_mask(
-        self, new_mask: CollideMask | int, bits_to_change: CollideMask | int = ..., node_type: TypeHandle | type = ...
+        self,
+        new_mask: CollideMask | int,
+        bits_to_change: CollideMask | int = ...,
+        node_type: TypeHandle | type = ...,
     ) -> None:
         """Recursively applies the indicated CollideMask to the into_collide_masks for
         all nodes at this level and below.  If node_type is not TypeHandle::none(),
@@ -5413,7 +5476,11 @@ class NodePath(Generic[_N]):
         all of its descendants to the indicated output stream.
         """
     def calc_tight_bounds(
-        self, min_point: Vec3Like, max_point: Vec3Like, other: NodePath = ..., current_thread: Thread = ...
+        self,
+        min_point: Vec3Like,
+        max_point: Vec3Like,
+        other: NodePath = ...,
+        current_thread: Thread = ...,
     ) -> bool:
         """Calculates the minimum and maximum vertices of all Geoms at this NodePath's
         bottom node and below.  This is a tight bounding box; it will generally be
@@ -6037,7 +6104,10 @@ class NodePathCollection:
         without regard to its children, use node()->get_into_collide_mask().
         """
     def set_collide_mask(
-        self, new_mask: CollideMask | int, bits_to_change: CollideMask | int = ..., node_type: TypeHandle | type = ...
+        self,
+        new_mask: CollideMask | int,
+        bits_to_change: CollideMask | int = ...,
+        node_type: TypeHandle | type = ...,
     ) -> None:
         """Recursively applies the indicated CollideMask to the into_collide_masks for
         all nodes at this level and below.
@@ -7049,7 +7119,11 @@ class ClipPlaneAttrib(RenderAttrib):
     @overload
     @staticmethod
     def make(
-        op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode, plane4: PlaneNode
+        op: _ClipPlaneAttrib_Operation,
+        plane1: PlaneNode,
+        plane2: PlaneNode,
+        plane3: PlaneNode,
+        plane4: PlaneNode,
     ) -> RenderAttrib: ...
     @staticmethod
     def make_default() -> RenderAttrib:
@@ -7344,7 +7418,10 @@ class ColorBlendAttrib(RenderAttrib):
     @overload
     @staticmethod
     def make(
-        mode: _ColorBlendAttrib_Mode, a: _ColorBlendAttrib_Operand, b: _ColorBlendAttrib_Operand, color: Vec4Like = ...
+        mode: _ColorBlendAttrib_Mode,
+        a: _ColorBlendAttrib_Operand,
+        b: _ColorBlendAttrib_Operand,
+        color: Vec4Like = ...,
     ) -> RenderAttrib: ...
     @overload
     @staticmethod

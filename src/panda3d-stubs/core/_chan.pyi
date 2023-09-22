@@ -880,7 +880,12 @@ class PartBundle(PartGroup):
         goes to zero).
         """
     def load_bind_anim(
-        self, loader: Loader, filename: StrOrBytesPath, hierarchy_match_flags: int, subset: PartSubset, allow_async: bool
+        self,
+        loader: Loader,
+        filename: StrOrBytesPath,
+        hierarchy_match_flags: int,
+        subset: PartSubset,
+        allow_async: bool,
     ) -> AnimControl:
         """Binds an animation to the bundle.  The animation is loaded from the disk
         via the indicated Loader object.  In other respects, this behaves similarly

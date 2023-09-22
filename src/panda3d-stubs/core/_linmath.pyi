@@ -3045,7 +3045,16 @@ class LMatrix3f:
         questionable value, but is sometimes useful when initializing to zero.
         """
     def set(
-        self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e20: float,
+        e21: float,
+        e22: float,
     ) -> None: ...
     def set_row(self, row: int, v: Vec2Like | Vec3Like) -> None:
         """`(self, row: int, v: LVecBase2f)`:
@@ -3279,7 +3288,13 @@ class LMatrix3f:
     @overload
     @staticmethod
     def scale_shear_mat(
-        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+        sx: float,
+        sy: float,
+        sz: float,
+        shxy: float,
+        shxz: float,
+        shyz: float,
+        cs: _CoordinateSystem = ...,
     ) -> LMatrix3f: ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix3f:
@@ -3720,7 +3735,13 @@ class LMatrix4f:
     @overload
     @staticmethod
     def scale_shear_mat(
-        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+        sx: float,
+        sy: float,
+        sz: float,
+        shxy: float,
+        shxz: float,
+        shyz: float,
+        cs: _CoordinateSystem = ...,
     ) -> LMatrix4f: ...
     @staticmethod
     def y_to_z_up_mat() -> LMatrix4f:
@@ -3989,7 +4010,16 @@ class LMatrix3d:
         questionable value, but is sometimes useful when initializing to zero.
         """
     def set(
-        self, e00: float, e01: float, e02: float, e10: float, e11: float, e12: float, e20: float, e21: float, e22: float
+        self,
+        e00: float,
+        e01: float,
+        e02: float,
+        e10: float,
+        e11: float,
+        e12: float,
+        e20: float,
+        e21: float,
+        e22: float,
     ) -> None: ...
     def set_row(self, row: int, v: DoubleVec2Like | DoubleVec3Like) -> None:
         """`(self, row: int, v: LVecBase2d)`:
@@ -4223,7 +4253,13 @@ class LMatrix3d:
     @overload
     @staticmethod
     def scale_shear_mat(
-        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+        sx: float,
+        sy: float,
+        sz: float,
+        shxy: float,
+        shxz: float,
+        shyz: float,
+        cs: _CoordinateSystem = ...,
     ) -> LMatrix3d: ...
     @staticmethod
     def convert_mat(_from: _CoordinateSystem, to: _CoordinateSystem) -> LMatrix3d:
@@ -4369,7 +4405,11 @@ class LMatrix4d:
     def __init__(self, upper3: LMatrix3d, trans: DoubleVec3Like) -> None: ...
     @overload
     def __init__(
-        self, __param0: DoubleVec4Like, __param1: DoubleVec4Like, __param2: DoubleVec4Like, __param3: DoubleVec4Like
+        self,
+        __param0: DoubleVec4Like,
+        __param1: DoubleVec4Like,
+        __param2: DoubleVec4Like,
+        __param3: DoubleVec4Like,
     ) -> None: ...
     @overload
     def __init__(
@@ -4666,7 +4706,13 @@ class LMatrix4d:
     @overload
     @staticmethod
     def scale_shear_mat(
-        sx: float, sy: float, sz: float, shxy: float, shxz: float, shyz: float, cs: _CoordinateSystem = ...
+        sx: float,
+        sy: float,
+        sz: float,
+        shxy: float,
+        shxz: float,
+        shyz: float,
+        cs: _CoordinateSystem = ...,
     ) -> LMatrix4d: ...
     @staticmethod
     def y_to_z_up_mat() -> LMatrix4d:
@@ -5502,13 +5548,21 @@ def compose_matrix(mat: LMatrix3d, scale: DoubleVec3Like, hpr: DoubleVec3Like, c
 def compose_matrix(mat: LMatrix3f, scale: Vec3Like, hpr: Vec3Like, cs: _CoordinateSystem = ...) -> None: ...
 @overload
 def compose_matrix(
-    mat: LMatrix3d, scale: DoubleVec3Like, shear: DoubleVec3Like, hpr: DoubleVec3Like, cs: _CoordinateSystem = ...
+    mat: LMatrix3d,
+    scale: DoubleVec3Like,
+    shear: DoubleVec3Like,
+    hpr: DoubleVec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> None: ...
 @overload
 def compose_matrix(mat: LMatrix3f, scale: Vec3Like, shear: Vec3Like, hpr: Vec3Like, cs: _CoordinateSystem = ...) -> None: ...
 @overload
 def compose_matrix(
-    mat: DoubleMat4Like, scale: DoubleVec3Like, hpr: DoubleVec3Like, translate: DoubleVec3Like, cs: _CoordinateSystem = ...
+    mat: DoubleMat4Like,
+    scale: DoubleVec3Like,
+    hpr: DoubleVec3Like,
+    translate: DoubleVec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> None: ...
 @overload
 def compose_matrix(mat: Mat4Like, scale: Vec3Like, hpr: Vec3Like, translate: Vec3Like, cs: _CoordinateSystem = ...) -> None: ...
@@ -5523,7 +5577,12 @@ def compose_matrix(
 ) -> None: ...
 @overload
 def compose_matrix(
-    mat: Mat4Like, scale: Vec3Like, shear: Vec3Like, hpr: Vec3Like, translate: Vec3Like, cs: _CoordinateSystem = ...
+    mat: Mat4Like,
+    scale: Vec3Like,
+    shear: Vec3Like,
+    hpr: Vec3Like,
+    translate: Vec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> None: ...
 @overload
 def decompose_matrix(mat: LMatrix3d, scale: DoubleVec3Like, hpr: DoubleVec3Like, cs: _CoordinateSystem = ...) -> bool: ...
@@ -5531,13 +5590,21 @@ def decompose_matrix(mat: LMatrix3d, scale: DoubleVec3Like, hpr: DoubleVec3Like,
 def decompose_matrix(mat: LMatrix3f, scale: Vec3Like, hpr: Vec3Like, cs: _CoordinateSystem = ...) -> bool: ...
 @overload
 def decompose_matrix(
-    mat: LMatrix3d, scale: DoubleVec3Like, shear: DoubleVec3Like, hpr: DoubleVec3Like, cs: _CoordinateSystem = ...
+    mat: LMatrix3d,
+    scale: DoubleVec3Like,
+    shear: DoubleVec3Like,
+    hpr: DoubleVec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> bool: ...
 @overload
 def decompose_matrix(mat: LMatrix3f, scale: Vec3Like, shear: Vec3Like, hpr: Vec3Like, cs: _CoordinateSystem = ...) -> bool: ...
 @overload
 def decompose_matrix(
-    mat: DoubleMat4Like, scale: DoubleVec3Like, hpr: DoubleVec3Like, translate: DoubleVec3Like, cs: _CoordinateSystem = ...
+    mat: DoubleMat4Like,
+    scale: DoubleVec3Like,
+    hpr: DoubleVec3Like,
+    translate: DoubleVec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> bool: ...
 @overload
 def decompose_matrix(mat: Mat4Like, scale: Vec3Like, hpr: Vec3Like, translate: Vec3Like, cs: _CoordinateSystem = ...) -> bool: ...
@@ -5552,15 +5619,28 @@ def decompose_matrix(
 ) -> bool: ...
 @overload
 def decompose_matrix(
-    mat: Mat4Like, scale: Vec3Like, shear: Vec3Like, hpr: Vec3Like, translate: Vec3Like, cs: _CoordinateSystem = ...
+    mat: Mat4Like,
+    scale: Vec3Like,
+    shear: Vec3Like,
+    hpr: Vec3Like,
+    translate: Vec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> bool: ...
 @overload
 def decompose_matrix_old_hpr(
-    mat: LMatrix3d, scale: DoubleVec3Like, shear: DoubleVec3Like, hpr: DoubleVec3Like, cs: _CoordinateSystem = ...
+    mat: LMatrix3d,
+    scale: DoubleVec3Like,
+    shear: DoubleVec3Like,
+    hpr: DoubleVec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> bool: ...
 @overload
 def decompose_matrix_old_hpr(
-    mat: LMatrix3f, scale: Vec3Like, shear: Vec3Like, hpr: Vec3Like, cs: _CoordinateSystem = ...
+    mat: LMatrix3f,
+    scale: Vec3Like,
+    shear: Vec3Like,
+    hpr: Vec3Like,
+    cs: _CoordinateSystem = ...,
 ) -> bool: ...
 @overload
 def old_to_new_hpr(old_hpr: LMatrix3d.CRow | LMatrix3d.Row | LVecBase3d) -> LVecBase3d: ...

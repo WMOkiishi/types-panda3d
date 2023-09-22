@@ -570,7 +570,11 @@ class ConnectionWriter:
         """
     @overload
     def send(
-        self, datagram: Datagram, connection: Connection, address: NetAddress | Socket_Address, block: bool = ...
+        self,
+        datagram: Datagram,
+        connection: Connection,
+        address: NetAddress | Socket_Address,
+        block: bool = ...,
     ) -> bool: ...
     def is_valid_for_udp(self, datagram: Datagram) -> bool:
         """Returns true if the datagram is small enough to be sent over a UDP packet,

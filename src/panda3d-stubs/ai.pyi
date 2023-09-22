@@ -36,14 +36,22 @@ class AIBehaviors:
         """
     @overload
     def flee(
-        self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., flee_wt: float = ...
+        self,
+        target_object: NodePath,
+        panic_distance: float = ...,
+        relax_distance: float = ...,
+        flee_wt: float = ...,
     ) -> None: ...
     def pursue(self, target_object: NodePath, pursue_wt: float = ...) -> None:
         """This function activates pursue.  This is the function we want the user to
         call for pursue to be done.
         """
     def evade(
-        self, target_object: NodePath, panic_distance: float = ..., relax_distance: float = ..., evade_wt: float = ...
+        self,
+        target_object: NodePath,
+        panic_distance: float = ...,
+        relax_distance: float = ...,
+        evade_wt: float = ...,
     ) -> None:
         """This function activates evade_activate."""
     def arrival(self, distance: float = ...) -> None:

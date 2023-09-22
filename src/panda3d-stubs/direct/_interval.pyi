@@ -457,7 +457,13 @@ class CConstrainHprInterval(CConstraintInterval):
         """
     @overload
     def __init__(
-        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, hprOffset: Vec3Like = ...
+        self,
+        name: str,
+        duration: float,
+        node: NodePath,
+        target: NodePath,
+        wrt: bool,
+        hprOffset: Vec3Like = ...,
     ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
@@ -515,7 +521,13 @@ class CConstrainPosInterval(CConstraintInterval):
         """
     @overload
     def __init__(
-        self, name: str, duration: float, node: NodePath, target: NodePath, wrt: bool, posOffset: Vec3Like = ...
+        self,
+        name: str,
+        duration: float,
+        node: NodePath,
+        target: NodePath,
+        wrt: bool,
+        posOffset: Vec3Like = ...,
     ) -> None: ...
     def get_node(self) -> NodePath:
         """Returns the "source" node."""
@@ -902,7 +914,13 @@ class CMetaInterval(CInterval):
         interval.
         """
     def add_ext_index(
-        self, ext_index: int, name: str, duration: float, open_ended: bool, rel_time: float, rel_to: _CMetaInterval_RelativeStart
+        self,
+        ext_index: int,
+        name: str,
+        duration: float,
+        open_ended: bool,
+        rel_time: float,
+        rel_to: _CMetaInterval_RelativeStart,
     ) -> int:
         """Adds a new external interval to the list.  This represents some object in
         the external scripting language that has properties similar to a CInterval

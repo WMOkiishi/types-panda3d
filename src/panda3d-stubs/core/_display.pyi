@@ -1473,7 +1473,10 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         textures are dissociated from the GraphicsOuput.
         """
     def add_render_texture(
-        self, tex: Texture, mode: _GraphicsOutput_RenderTextureMode, bitplane: _DrawableRegion_RenderTexturePlane = ...
+        self,
+        tex: Texture,
+        mode: _GraphicsOutput_RenderTextureMode,
+        bitplane: _DrawableRegion_RenderTexturePlane = ...,
     ) -> None:
         """Creates a new Texture object, suitable for rendering the contents of this
         buffer into, and appends it to the list of render textures.
@@ -1693,7 +1696,10 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """
     @overload
     def set_side_by_side_stereo(
-        self, side_by_side_stereo: bool, sbs_left_dimensions: Vec4Like, sbs_right_dimensions: Vec4Like
+        self,
+        side_by_side_stereo: bool,
+        sbs_left_dimensions: Vec4Like,
+        sbs_right_dimensions: Vec4Like,
     ) -> None: ...
     def get_side_by_side_stereo(self) -> bool:
         """Returns whether side-by-side stereo mode is in effect for this particular
@@ -1877,7 +1883,13 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         get_num_active_display_regions().
         """
     def make_texture_buffer(
-        self, name: str, x_size: int, y_size: int, tex: Texture = ..., to_ram: bool = ..., fbp: FrameBufferProperties = ...
+        self,
+        name: str,
+        x_size: int,
+        y_size: int,
+        tex: Texture = ...,
+        to_ram: bool = ...,
+        fbp: FrameBufferProperties = ...,
     ) -> GraphicsOutput:
         """Creates and returns an offscreen buffer for rendering into, the result of
         which will be a texture suitable for applying to geometry within the scene

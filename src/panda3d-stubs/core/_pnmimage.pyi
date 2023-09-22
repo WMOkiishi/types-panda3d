@@ -326,7 +326,11 @@ class PNMImageHeader:
         """
     @overload
     def read_header(
-        self, data: istream, filename: str = ..., type: PNMFileType = ..., report_unknown_type: bool = ...
+        self,
+        data: istream,
+        filename: str = ...,
+        type: PNMFileType = ...,
+        report_unknown_type: bool = ...,
     ) -> bool: ...
     def output(self, out: ostream) -> None: ...
     getColorType = get_color_type
@@ -693,7 +697,11 @@ class PfmFile(PNMImageHeader):
         The return value is true if any points in the table, or false if none are.
         """
     def compute_planar_bounds(
-        self, center: DoubleVec2Like | Vec2Like, point_dist: float, sample_radius: float, points_only: bool
+        self,
+        center: DoubleVec2Like | Vec2Like,
+        point_dist: float,
+        sample_radius: float,
+        points_only: bool,
     ) -> BoundingHexahedron:
         """Computes the minmax bounding volume of the points in 3-D space, assuming
         the points represent a mostly-planar surface.
@@ -715,7 +723,14 @@ class PfmFile(PNMImageHeader):
         The point coordinates are given in UV space, in the range 0..1.
         """
     def copy_sub_image(
-        self, copy: PfmFile, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...
+        self,
+        copy: PfmFile,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
     ) -> None:
         """Copies a rectangular area of another image into a rectangular area of this
         image.  Both images must already have been initialized.  The upper-left
@@ -1504,7 +1519,14 @@ class PNMImage(PNMImageHeader):
     @overload
     def blend(self, x: int, y: int, r: float, g: float, b: float, alpha: float) -> None: ...
     def copy_sub_image(
-        self, copy: PNMImage, xto: int, yto: int, xfrom: int = ..., yfrom: int = ..., x_size: int = ..., y_size: int = ...
+        self,
+        copy: PNMImage,
+        xto: int,
+        yto: int,
+        xfrom: int = ...,
+        yfrom: int = ...,
+        x_size: int = ...,
+        y_size: int = ...,
     ) -> None:
         """Copies a rectangular area of another image into a rectangular area of this
         image.  Both images must already have been initialized.  The upper-left
@@ -1768,7 +1790,11 @@ class PNMImage(PNMImageHeader):
         """
     @overload
     def apply_exponent(
-        self, red_exponent: float, green_exponent: float, blue_exponent: float, alpha_exponent: float = ...
+        self,
+        red_exponent: float,
+        green_exponent: float,
+        blue_exponent: float,
+        alpha_exponent: float = ...,
     ) -> None: ...
     def get_average_xel(self) -> LRGBColorf:
         """Returns the average color of all of the pixels in the image."""

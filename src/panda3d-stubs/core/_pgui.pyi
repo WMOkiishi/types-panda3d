@@ -1165,7 +1165,15 @@ class PGScrollFrame(PGVirtualFrame):
 
     def upcast_to_PGVirtualFrame(self) -> PGVirtualFrame: ...
     def setup(  # type: ignore[override]
-        self, width: float, height: float, left: float, right: float, bottom: float, top: float, slider_width: float, bevel: float
+        self,
+        width: float,
+        height: float,
+        left: float,
+        right: float,
+        bottom: float,
+        top: float,
+        slider_width: float,
+        bevel: float,
     ) -> None:
         """Creates a PGScrollFrame with the indicated dimensions, and the indicated
         virtual frame.

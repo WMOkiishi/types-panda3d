@@ -714,7 +714,14 @@ class MeshDrawer(TypedObject):
         rotation component.  Frame contains u,v,u-size,v-size quadruple.
         """
     def blended_particle(
-        self, pos: Vec3Like, frame1: Vec4Like, frame2: Vec4Like, blend: float, size: float, color: Vec4Like, rotation: float
+        self,
+        pos: Vec3Like,
+        frame1: Vec4Like,
+        frame2: Vec4Like,
+        blend: float,
+        size: float,
+        color: Vec4Like,
+        rotation: float,
     ) -> None:
         """Works just like particle but accepts 2 frames and a blend (from 0 to 1)
         component between them Frame contains u,v,u-size,v-size quadruple.
@@ -756,13 +763,27 @@ class MeshDrawer(TypedObject):
         quadruple.
         """
     def explosion(
-        self, pos: Vec3Like, frame: Vec4Like, size: float, color: Vec4Like, seed: int, number: int, distance: float
+        self,
+        pos: Vec3Like,
+        frame: Vec4Like,
+        size: float,
+        color: Vec4Like,
+        seed: int,
+        number: int,
+        distance: float,
     ) -> None:
         """Draws number of particles in a sphere like emitter.  Frame contains
         u,v,u-size,v-size quadruple.
         """
     def stream(
-        self, start: Vec3Like, stop: Vec3Like, frame: Vec4Like, size: float, color: Vec4Like, number: int, offset: float
+        self,
+        start: Vec3Like,
+        stop: Vec3Like,
+        frame: Vec4Like,
+        size: float,
+        color: Vec4Like,
+        number: int,
+        offset: float,
     ) -> None:
         """Draws a number of particles in a big line with a shift dictated by the
         offset.  Frame contains u,v,u-size,v-size quadruple.
@@ -814,12 +835,30 @@ class MeshDrawer2D(TypedObject):
     ) -> None:
         """Draws a 2D rectangle.  Ignores the clipping rectangle."""
     def rectangle_raw(
-        self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4Like
+        self,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        u: float,
+        v: float,
+        us: float,
+        vs: float,
+        color: Vec4Like,
     ) -> None: ...
     def set_clip(self, x: float, y: float, w: float, h: float) -> None:
         """Sets the clipping rectangle."""
     def rectangle(
-        self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4Like
+        self,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        u: float,
+        v: float,
+        us: float,
+        vs: float,
+        color: Vec4Like,
     ) -> None:
         """Draws a 2D rectangle which can be clipped."""
     def rectangle_border(
@@ -869,7 +908,16 @@ class MeshDrawer2D(TypedObject):
         texture
         """
     def rectangle_tiled(
-        self, x: float, y: float, w: float, h: float, u: float, v: float, us: float, vs: float, color: Vec4Like
+        self,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        u: float,
+        v: float,
+        us: float,
+        vs: float,
+        color: Vec4Like,
     ) -> None:
         """Draws a tiled rectangle, size of tiles is in us and vs"""
     def begin(self) -> None:

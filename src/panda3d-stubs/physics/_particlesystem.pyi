@@ -197,7 +197,10 @@ class BaseParticleRenderer(ReferenceCount):
     def get_user_alpha(self) -> float:
         """gets alpha for "user" alpha mode"""
     def set_color_blend_mode(
-        self, bm: _ColorBlendAttrib_Mode, oa: _ColorBlendAttrib_Operand = ..., ob: _ColorBlendAttrib_Operand = ...
+        self,
+        bm: _ColorBlendAttrib_Mode,
+        oa: _ColorBlendAttrib_Operand = ...,
+        ob: _ColorBlendAttrib_Operand = ...,
     ) -> None:
         """sets the ColorBlendAttrib on the _render_node"""
     def set_ignore_scale(self, ignore_scale: bool) -> None:
@@ -314,7 +317,11 @@ class ColorInterpolationManager(ReferenceCount):
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def add_constant(
-        self, time_begin: float = ..., time_end: float = ..., color: Vec4Like = ..., is_modulated: bool = ...
+        self,
+        time_begin: float = ...,
+        time_end: float = ...,
+        color: Vec4Like = ...,
+        is_modulated: bool = ...,
     ) -> int: ...
     def add_linear(
         self,
@@ -903,7 +910,12 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         """
     @overload
     def add_from_node(
-        self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ..., resize: bool = ...
+        self,
+        node_path: NodePath,
+        model: str,
+        node: str,
+        size_from_texels: bool = ...,
+        resize: bool = ...,
     ) -> None: ...
     def set_texture(self, tex: Texture, texels_per_unit: float = ...) -> None:
         """Sets the renderer up to render the entire texture image.  The scale of each

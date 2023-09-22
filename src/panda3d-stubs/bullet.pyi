@@ -643,13 +643,23 @@ class BulletConeTwistConstraint(BulletConstraint):
     def __init__(self, node_a: BulletRigidBodyNode, frame_a: TransformState) -> None: ...
     @overload
     def __init__(
-        self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, frame_a: TransformState, frame_b: TransformState
+        self,
+        node_a: BulletRigidBodyNode,
+        node_b: BulletRigidBodyNode,
+        frame_a: TransformState,
+        frame_b: TransformState,
     ) -> None: ...
     @overload
     def set_limit(self, index: int, value: float) -> None: ...
     @overload
     def set_limit(
-        self, swing1: float, swing2: float, twist: float, softness: float = ..., bias: float = ..., relaxation: float = ...
+        self,
+        swing1: float,
+        swing2: float,
+        twist: float,
+        softness: float = ...,
+        bias: float = ...,
+        relaxation: float = ...,
     ) -> None: ...
     def set_damping(self, damping: float) -> None: ...
     def get_fix_threshold(self) -> float: ...
@@ -798,7 +808,14 @@ class BulletContactCallbackData(CallbackData):
     @property
     def index1(self) -> int: ...
     def __init__(
-        self, mp: BulletManifoldPoint, node0: PandaNode, node1: PandaNode, id0: int, id1: int, index0: int, index1: int
+        self,
+        mp: BulletManifoldPoint,
+        node0: PandaNode,
+        node1: PandaNode,
+        id0: int,
+        id1: int,
+        index0: int,
+        index1: int,
     ) -> None: ...
     def get_manifold(self) -> BulletManifoldPoint: ...
     def get_node0(self) -> PandaNode: ...
@@ -994,11 +1011,21 @@ class BulletSoftBodyNode(BulletBodyNode):
     def append_anchor(self, node: int, body: BulletRigidBodyNode, pivot: Vec3Like, disable: bool = ...) -> None: ...
     @overload
     def append_linear_joint(
-        self, body: BulletBodyNode, pos: Vec3Like, erp: float = ..., cfm: float = ..., split: float = ...
+        self,
+        body: BulletBodyNode,
+        pos: Vec3Like,
+        erp: float = ...,
+        cfm: float = ...,
+        split: float = ...,
     ) -> None: ...
     @overload
     def append_linear_joint(
-        self, body: BulletBodyNode, cluster: int, erp: float = ..., cfm: float = ..., split: float = ...
+        self,
+        body: BulletBodyNode,
+        cluster: int,
+        erp: float = ...,
+        cfm: float = ...,
+        split: float = ...,
     ) -> None: ...
     def append_angular_joint(
         self,
@@ -1043,12 +1070,18 @@ class BulletSoftBodyNode(BulletBodyNode):
     @overload
     @staticmethod
     def make_tri_mesh(
-        info: BulletSoftBodyWorldInfo, points: PTA_LVecBase3, indices: PTA_int, randomizeConstraints: bool = ...
+        info: BulletSoftBodyWorldInfo,
+        points: PTA_LVecBase3,
+        indices: PTA_int,
+        randomizeConstraints: bool = ...,
     ) -> BulletSoftBodyNode: ...
     @overload
     @staticmethod
     def make_tet_mesh(
-        info: BulletSoftBodyWorldInfo, points: PTA_LVecBase3, indices: PTA_int, tetralinks: bool = ...
+        info: BulletSoftBodyWorldInfo,
+        points: PTA_LVecBase3,
+        indices: PTA_int,
+        tetralinks: bool = ...,
     ) -> BulletSoftBodyNode: ...
     @overload
     @staticmethod
@@ -2200,7 +2233,9 @@ class BulletHelper:
     def add_sb_flip_column(format: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexFormat: ...
     @staticmethod
     def make_geom_from_faces(
-        node: BulletSoftBodyNode, format: GeomVertexArrayFormat | GeomVertexFormat = ..., two_sided: bool = ...
+        node: BulletSoftBodyNode,
+        format: GeomVertexArrayFormat | GeomVertexFormat = ...,
+        two_sided: bool = ...,
     ) -> Geom:
         """Geom utils"""
     @staticmethod
@@ -2530,7 +2565,11 @@ class BulletSphericalConstraint(BulletConstraint):
     def __init__(self, node_a: BulletRigidBodyNode, pivot_a: Vec3Like) -> None: ...
     @overload
     def __init__(
-        self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, pivot_a: Vec3Like, pivot_b: Vec3Like
+        self,
+        node_a: BulletRigidBodyNode,
+        node_b: BulletRigidBodyNode,
+        pivot_a: Vec3Like,
+        pivot_b: Vec3Like,
     ) -> None: ...
     def set_pivot_a(self, pivot_a: Vec3Like) -> None:
         """Pivots"""

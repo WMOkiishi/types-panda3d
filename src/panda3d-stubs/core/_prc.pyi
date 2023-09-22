@@ -772,7 +772,12 @@ class ConfigVariableManager:
         that one instead.
         """
     def make_variable_template(
-        self, pattern: str, type: _ConfigFlags_ValueType, default_value: str, description: str = ..., flags: int = ...
+        self,
+        pattern: str,
+        type: _ConfigFlags_ValueType,
+        default_value: str,
+        description: str = ...,
+        flags: int = ...,
     ) -> ConfigVariableCore:
         """Defines a variable "template" to match against dynamically-defined
         variables that may or may not be created in the future.

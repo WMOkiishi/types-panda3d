@@ -935,7 +935,14 @@ class DCClass(DCDeclaration):
         AI.
         """
     def ai_format_generate(
-        self, distobj, do_id: int, parent_id: int, zone_id: int, district_channel_id: int, from_channel_id: int, optional_fields
+        self,
+        distobj,
+        do_id: int,
+        parent_id: int,
+        zone_id: int,
+        district_channel_id: int,
+        from_channel_id: int,
+        optional_fields,
     ) -> Datagram: ...
     def client_format_generate_CMU(self, distobj, do_id: int, zone_id: int, optional_fields: Sequence[str] | None) -> Datagram:
         """Generates a datagram containing the message necessary to generate a new

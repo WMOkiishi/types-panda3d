@@ -81,7 +81,13 @@ class ProjectionScreen(PandaNode):
     def get_undist_lut(self) -> PfmFile:
         """Returns the distortion lookup table provided via set_undist_lut(), if any."""
     def generate_screen(
-        self, projector: NodePath, screen_name: str, num_x_verts: int, num_y_verts: int, distance: float, fill_ratio: float
+        self,
+        projector: NodePath,
+        screen_name: str,
+        num_x_verts: int,
+        num_y_verts: int,
+        distance: float,
+        fill_ratio: float,
     ) -> GeomNode:
         """Synthesizes a polygon mesh based on the projection area of the indicated
         projector.  This generates and returns a new GeomNode but does not
@@ -106,7 +112,13 @@ class ProjectionScreen(PandaNode):
         fraction, and make the screen smaller by the inverse fraction.
         """
     def regenerate_screen(
-        self, projector: NodePath, screen_name: str, num_x_verts: int, num_y_verts: int, distance: float, fill_ratio: float
+        self,
+        projector: NodePath,
+        screen_name: str,
+        num_x_verts: int,
+        num_y_verts: int,
+        distance: float,
+        fill_ratio: float,
     ) -> None:
         """Removes all the children from the ProjectionScreen node, and adds the newly
         generated child returned by generate_screen().

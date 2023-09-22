@@ -163,12 +163,8 @@ class Signature:
             yield sig_def
         else:
             yield f'{indent}{prefix}('
-            param_string = next_indent + self.param_string
-            if len(param_string) <= 130:
-                yield param_string
-            else:
-                for param in self.parameters:
-                    yield f'{next_indent}{param},'
+            for param in self.parameters:
+                yield f'{next_indent}{param},'
             yield f'{indent}) -> {self.return_type}:{postfix}'
 
 
