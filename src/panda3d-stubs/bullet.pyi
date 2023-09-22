@@ -2677,10 +2677,8 @@ Y_up: Final = 1
 YUp: Final = 1
 Z_up: Final = 2
 ZUp: Final = 2
-
 def get_default_up_axis() -> _BulletUpAxis: ...
 def get_bullet_version() -> int:
     """Returns the version of the linked Bullet library."""
-
 getDefaultUpAxis = get_default_up_axis
 getBulletVersion = get_bullet_version

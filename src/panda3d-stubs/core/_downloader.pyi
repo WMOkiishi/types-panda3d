@@ -2202,6 +2202,5 @@ class StringStream(iostream):
 
 def check_crc(name: StrOrBytesPath) -> int: ...
 def check_adler(name: StrOrBytesPath) -> int: ...
-
 checkCrc = check_crc
 checkAdler = check_adler

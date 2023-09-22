@@ -1089,7 +1089,6 @@ class MovingPartScalar(MovingPart_ACScalarSwitchType):
     """This is a particular kind of MovingPart that accepts a scalar each frame."""
 
 def auto_bind(root_node: PandaNode, controls: AnimControlCollection, hierarchy_match_flags: int = ...) -> None: ...
-
 autoBind = auto_bind
 AnimChannelACMatrixSwitchType = AnimChannel_ACMatrixSwitchType
 AnimChannelMatrix = AnimChannel_ACMatrixSwitchType

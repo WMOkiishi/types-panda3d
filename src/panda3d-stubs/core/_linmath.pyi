@@ -5461,7 +5461,6 @@ CS_yup_left: Final = 4
 CSYupLeft: Final = 4
 CS_invalid: Final = 5
 CSInvalid: Final = 5
-
 @overload
 def __mul__(v: LPoint2d, m: LMatrix3d) -> LPoint2d: ...
 @overload
@@ -5646,7 +5645,6 @@ def decompose_matrix_old_hpr(
 def old_to_new_hpr(old_hpr: LMatrix3d.CRow | LMatrix3d.Row | LVecBase3d) -> LVecBase3d: ...
 @overload
 def old_to_new_hpr(old_hpr: LMatrix3f.CRow | LMatrix3f.Row | LVecBase3f) -> LVecBase3f: ...
-
 deg2Rad = deg_2_rad
 rad2Deg = rad_2_deg
 getDefaultCoordinateSystem = get_default_coordinate_system

@@ -3543,7 +3543,6 @@ CS_sRGB: Final = 2
 CSSRGB: Final = 2
 CS_scRGB: Final = 3
 CSScRGB: Final = 3
-
 def parse_color_space_string(str: str) -> _ColorSpace: ...
 def format_color_space(cs: _ColorSpace) -> str: ...
 def get_model_path() -> ConfigVariableSearchPath: ...
@@ -3561,7 +3560,6 @@ def load_prc_file(filename: StrOrBytesPath) -> ConfigPage:
     prc stuff, so that it can take advantage of the virtual file system (which
     is defined in express), and the model path (which is in putil).
     """
-
 def load_prc_file_data(name: str, data: str) -> ConfigPage:
     """Another convenience function to load a prc file from an explicit string,
     which represents the contents of the prc file.
@@ -3571,7 +3569,6 @@ def load_prc_file_data(name: str, data: str) -> ConfigPage:
     name that is meaningful to you.  The name is only used when the set of
     loaded prc files is listed.
     """
-
 def unload_prc_file(page: ConfigPage) -> bool: ...
 def hash_prc_variables(hash: HashVal) -> None: ...
 def py_decode_TypedWritable_from_bam_stream(this_class, data: bytes):
@@ -3580,7 +3577,6 @@ def py_decode_TypedWritable_from_bam_stream(this_class, data: bytes):
     This hooks into the native pickle and cPickle modules, but it cannot
     properly handle self-referential BAM objects.
     """
-
 def py_decode_TypedWritable_from_bam_stream_persist(unpickler, this_class, data: bytes):
     """This wrapper is defined as a global function to suit pickle's needs.
 
@@ -3590,7 +3586,6 @@ def py_decode_TypedWritable_from_bam_stream_persist(unpickler, this_class, data:
     This hooks into the pickle and cPickle modules implemented in
     direct/src/stdpy.
     """
-
 parseColorSpaceString = parse_color_space_string
 formatColorSpace = format_color_space
 getModelPath = get_model_path

@@ -268,10 +268,6 @@ class Class:
     def __str__(self) -> str:
         return f'Class {self.name!r}'
 
-    def is_empty(self) -> bool:
-        """Return whether the class has any body (including a docstring)."""
-        return not (self.doc or self.body)
-
     def get_base_dependencies(self) -> Iterator[str]:
         for base in self.bases:
             yield from names_within(base)
@@ -295,20 +291,16 @@ class Class:
         if self.bases:
             declaration += f"({', '.join(self.bases)})"
         declaration += ':'
-        if self.is_empty():
+        if not (self.doc or self.body):
             declaration += ' ...'
             yield with_comment(declaration, self.comment)
             return
         yield with_comment(declaration, self.comment)
         yield from docstring_lines(self.doc, indent_level=indent_level+1)
         sorted_nested = sorted(self.body.values(), key=_sort_rep)
-        need_blank_line = bool(self.doc)
-        for item in sorted_nested:
-            is_class = isinstance(item, Class) and not item.is_empty()
-            if is_class or need_blank_line:
-                yield ''
-            need_blank_line = is_class
-            yield from item.definition(indent_level=indent_level+1)
+        if self.doc and sorted_nested:
+            yield ''
+        yield from definitions(sorted_nested, indent_level=indent_level+1)
 
 
 @define
@@ -407,16 +399,9 @@ class File:
 
     def lines(self) -> Iterator[str]:
         yield from self.import_lines()
-        need_blank_line = bool(self.imports and self.nested)
-        prev_was_function = False
-        for item in self.nested:
-            is_class = isinstance(item, Class) and not item.is_empty()
-            is_function = isinstance(item, Function)
-            if need_blank_line or is_class or prev_was_function != is_function:
-                yield ''
-            yield from item.definition()
-            need_blank_line = is_class or (is_function and item.doc)
-            prev_was_function = is_function
+        if self.imports and self.nested:
+            yield ''
+        yield from definitions(self.nested)
 
     def get_dependencies(self) -> Iterator[str]:
         for item in self.nested:
@@ -485,3 +470,22 @@ def _sort_rep(rep: StubRep) -> int:
         if f(rep):
             return i
     return len(_rep_matchers)
+
+
+def need_space_between(first: StubRep, second: StubRep) -> bool:
+    TypingConstruct = TypeVariable | TypeAlias
+    if isinstance(first, Class) or isinstance(second, Class):
+        return True
+    elif isinstance(first, TypingConstruct) != isinstance(second, TypingConstruct):
+        return True
+    else:
+        return False
+
+
+def definitions(reps: Iterable[StubRep], *, indent_level: int = 0) -> Iterator[str]:
+    previous: StubRep | None = None
+    for item in reps:
+        if previous is not None and need_space_between(previous, item):
+            yield ''
+        yield from item.definition(indent_level=indent_level)
+        previous = item

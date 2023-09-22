@@ -11435,6 +11435,5 @@ class ShaderPool:
 
 def py_decode_NodePath_from_bam_stream(data: bytes) -> NodePath: ...
 def py_decode_NodePath_from_bam_stream_persist(unpickler, data: bytes) -> NodePath: ...
-
 pyDecodeNodePathFromBamStream = py_decode_NodePath_from_bam_stream
 pyDecodeNodePathFromBamStreamPersist = py_decode_NodePath_from_bam_stream_persist

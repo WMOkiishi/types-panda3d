@@ -5104,9 +5104,7 @@ class EggXfmAnimData(EggAnimData):
 
 def parse_egg_data(egg_syntax: str) -> EggData:
     """Parses an EggData from the raw egg syntax."""
-
 def parse_egg_node(egg_syntax: str) -> EggNode:
     """Parses a single egg node from the raw egg syntax."""
-
 parseEggData = parse_egg_data
 parseEggNode = parse_egg_node
