@@ -40,25 +40,35 @@ class TypeVariable:
 
 
 @define
+class TypeAlias:
+    name: str
+    alias_of: str
+
+    def __str__(self) -> str:
+        return f'{self.name}: TypeAlias = {self.alias_of}'
+
+    def get_dependencies(self) -> Iterator[str]:
+        yield 'TypeAlias'
+        yield from names_within(self.alias_of)
+
+    def definition(self, *, indent_level: int = 0) -> Iterator[str]:
+        yield get_indent(indent_level) + str(self)
+
+
+@define
 class Alias:
     name: str
     alias_of: str
-    is_type_alias: bool = field(default=False, kw_only=True)
     of_local: bool = field(default=False, kw_only=True)
     comment: str = field(default='', kw_only=True, eq=False)
 
     def __str__(self) -> str:
-        if self.is_type_alias:
-            return f'{self.name}: TypeAlias = {self.alias_of}'
-        else:
-            return f'{self.name} = {self.alias_of}'
+        return f'{self.name} = {self.alias_of}'
 
     def get_dependencies(self) -> Iterator[str]:
         """Yield the names of types referenced by the alias."""
         if not self.of_local:
             yield from names_within(self.alias_of)
-        if self.is_type_alias:
-            yield 'TypeAlias'
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         line = get_indent(indent_level) + str(self)
@@ -458,7 +468,7 @@ class Package:
 
 _rep_matchers: list[Callable[[StubRep], bool]] = [
     lambda r: isinstance(r, TypeVariable),
-    lambda r: isinstance(r, Alias) and r.is_type_alias,
+    lambda r: isinstance(r, TypeAlias),
     lambda r: isinstance(r, Class),
     lambda r: isinstance(r, Alias) and not r.of_local,
     lambda r: isinstance(r, Constant),

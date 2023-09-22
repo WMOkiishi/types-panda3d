@@ -18,6 +18,7 @@ from .reps import (
     Parameter,
     Signature,
     StubRep,
+    TypeAlias,
     TypeVariable,
 )
 from .typedata import (
@@ -301,7 +302,7 @@ def process_dependencies(file: File) -> None:
         seen.add(name)
 
         def alias_of(definition: str) -> None:
-            alias = Alias(name, definition, is_type_alias=True)
+            alias = TypeAlias(name, definition)
             file.nested.append(alias)
 
         def as_type_var(parameters: Iterable[str]) -> None:

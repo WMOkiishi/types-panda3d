@@ -34,6 +34,7 @@ from .reps import (
     Parameter,
     Signature,
     StubRep,
+    TypeAlias,
 )
 from .special_cases import (
     ATTR_TYPE_OVERRIDES,
@@ -461,7 +462,7 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
 
 def make_typing_module() -> Module:
     aliases = [
-        Alias(name, definition, is_type_alias=True)
+        TypeAlias(name, definition)
         for name, definition in TYPE_ALIASES.items()
     ]
     return Module('_typing', {'typing': aliases}, namespace=('panda3d',))
