@@ -1,8 +1,9 @@
 import itertools
 import logging
 from collections import defaultdict
-from collections.abc import Iterator, Sequence
-from typing import Final, cast
+from collections.abc import Iterator
+from pathlib import Path
+from typing import Final
 
 from attrs import evolve
 
@@ -28,9 +29,8 @@ from .reps import (
     Attribute,
     Class,
     Constant,
+    File,
     Function,
-    Module,
-    Package,
     Parameter,
     Signature,
     StubRep,
@@ -421,7 +421,7 @@ def make_class_rep(idb_type: IDBType) -> Class:
     )
 
 
-def make_package_rep(package_name: str = 'panda3d') -> Package:
+def make_file_reps(package_name: str = 'panda3d') -> list[File]:
     nested_by_mod_by_lib = defaultdict[str, defaultdict[str, list[StubRep]]](lambda: defaultdict(list))
     # Gather global functions
     for idb_function in itertools.chain(
@@ -449,20 +449,37 @@ def make_package_rep(package_name: str = 'panda3d') -> Package:
         lib_name = '_' + idb_type.library_name.removeprefix('libp3')
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(idb_type)
 
-    # Make package
-    modules: list[Module] = []
-    for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
-        nested_by_lib = cast(dict[str, Sequence[StubRep]], nested_by_lib)
-        modules.append(Module(
-            mod_name.removeprefix(package_name + '.'),
-            nested_by_lib, namespace=(package_name,)
-        ))
-    return Package(package_name, modules)
-
-
-def make_typing_module() -> Module:
-    aliases = [
+    # Gather type aliases
+    type_aliases = [
         TypeAlias(name, definition)
         for name, definition in TYPE_ALIASES.items()
     ]
-    return Module('_typing', {'typing': aliases}, namespace=('panda3d',))
+
+    # Make package
+    directory = Path(package_name)
+    files: list[File] = [
+        File(directory / '__init__'),
+        File(directory / '_typing', type_aliases),
+    ]
+    for mod_name, nested_by_lib in nested_by_mod_by_lib.items():
+        mod_name = mod_name.removeprefix(package_name + '.')
+        if len(nested_by_lib) == 1:
+            nested, = nested_by_lib.values()
+            file = File(directory / mod_name, nested)
+            files.append(file)
+        else:
+            init_imports = defaultdict[str, list[str]](list)
+            for lib_name, nested in nested_by_lib.items():
+                file = File(directory / mod_name / lib_name, nested)
+                files.append(file)
+                init_imports['.' + lib_name].append('*')
+            init_nested: list[StubRep] = []
+            if mod_name == 'core':
+                init_nested += make_manifest_reps()
+            init_file = File(
+                directory / mod_name / '__init__',
+                init_nested,
+                imports=init_imports,
+            )
+            files.append(init_file)
+    return files

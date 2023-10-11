@@ -14,7 +14,6 @@ from .reps import (
     Class,
     File,
     Function,
-    Package,
     Parameter,
     Signature,
     StubRep,
@@ -278,23 +277,21 @@ def process_class(class_: Class) -> None:
         process_vector_class(class_)
 
 
-def process_package(package: Package) -> None:
+def process_files(files: Iterable[File]) -> None:
     classes: dict[str, Class] = {}
-    for module in package:
-        for file in module:
-            for item in file.nested:
-                match item:
-                    case Class():
-                        process_class(item)
-                        classes[item.name] = item
-                    case Function():
-                        process_function(item)
+    for file in files:
+        for item in file.nested:
+            if isinstance(item, Class):
+                process_class(item)
+                classes[item.name] = item
+            elif isinstance(item, Function):
+                process_function(item)
     for cls in classes.values():
         remove_redefinitions(cls, classes)
 
 
 def process_dependencies(file: File) -> None:
-    current_dir = '.'.join(file.this_namespace())
+    current_dir = '.'.join(file.path.parts)
     seen = set[str]()
     for name in file.get_dependencies():
         if name in seen:

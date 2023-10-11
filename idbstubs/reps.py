@@ -305,25 +305,17 @@ class Class:
 
 @define
 class File:
-    name: str
+    path: Path = field(converter=Path)
     nested: list[StubRep] = field(factory=list, converter=list)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
     imports: defaultdict[str, list[str]] = field(
         factory=lambda: defaultdict(list), kw_only=True)
 
-    @property
-    def scoped_name(self) -> str:
-        return '.'.join((*self.namespace, self.name))
-
-    def this_namespace(self) -> tuple[str, ...]:
-        return *self.namespace, self.name
-
     def stub_path(self) -> Path:
-        parts = self.this_namespace()
+        parts = self.path.parts
         return Path(parts[0] + '-stubs', *parts[1:])
 
     def __str__(self) -> str:
-        return f'Stub File {self.scoped_name!r}'
+        return f'Stub File {self.path!r}'
 
     def sort_items(self) -> None:
         seen = set(dir(builtins))
@@ -356,7 +348,7 @@ class File:
         self.nested = sorted_nested
 
     def import_lines(self) -> Iterator[str]:
-        this_package = self.namespace[0] if self.namespace else None
+        this_package = self.path.parts[0] if self.path.parts else None
         extended_stdlib = stdlib_module_names | {'_typeshed', 'typing_extensions'}
 
         stdlib_modules, other_modules, local_modules = set[str](), set[str](), set[str]()
@@ -406,49 +398,6 @@ class File:
     def get_dependencies(self) -> Iterator[str]:
         for item in self.nested:
             yield from item.get_dependencies()
-
-
-@define
-class Module:
-    name: str
-    nested: dict[str, Sequence[StubRep]] = Factory(dict)
-    namespace: Sequence[str] = field(default=(), converter=tuple, kw_only=True)
-
-    @property
-    def scoped_name(self) -> str:
-        return '.'.join((*self.namespace, self.name))
-
-    def __str__(self) -> str:
-        return f'Module {self.scoped_name!r}'
-
-    def __iter__(self) -> Iterator[File]:
-        if len(self.nested) == 1:
-            nested = next(iter(self.nested.values()))
-            # Convert to a list because the type checker doesn't know about
-            # attrs field converters.
-            nested = list(nested)
-            yield File(self.name, nested, namespace=self.namespace)
-            return
-        this_namespace = (*self.namespace, self.name)
-        for file_name, nested in self.nested.items():
-            # See previous comment.
-            nested = list(nested)
-            yield File(file_name, nested, namespace=this_namespace)
-
-
-@define
-class Package:
-    name: str
-    modules: list[Module] = Factory(list)
-
-    def __str__(self) -> str:
-        return f'Package {self.name!r}'
-
-    def __iter__(self) -> Iterator[Module]:
-        return iter(self.modules)
-
-    def add_module(self, module: Module) -> None:
-        self.modules.append(module)
 
 
 _rep_matchers: list[Callable[[StubRep], bool]] = [
