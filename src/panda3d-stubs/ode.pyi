@@ -10,6 +10,8 @@ from panda3d.core._linmath import LMatrix3f, LPoint3f, LQuaternionf, LVecBase3f,
 from panda3d.core._pgraph import NodePath
 from panda3d.core._putil import BitMask32
 
+Dtool_PyNativeInterface: Final = 1
+
 class dxBody:
     DtoolClassDict: ClassVar[dict[str, Any]]
 
@@ -1533,6 +1535,7 @@ class OdeUtil:
     randGetSeed = rand_get_seed
     randSetSeed = rand_set_seed
 
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...
 DxBody = dxBody
 DxGeom = dxGeom
 DxJoint = dxJoint

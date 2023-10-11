@@ -1,5 +1,9 @@
+from typing_extensions import Final
+
 from panda3d.core._device import ClientBase
 from panda3d.core._dtoolutil import ostream
+
+Dtool_PyNativeInterface: Final = 1
 
 class VrpnClient(ClientBase):
     """A specific ClientBase that connects to a VRPN server and records
@@ -24,3 +28,5 @@ class VrpnClient(ClientBase):
     getServerName = get_server_name
     isValid = is_valid
     isConnected = is_connected
+
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...

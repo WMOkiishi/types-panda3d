@@ -1,12 +1,14 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar
-from typing_extensions import Self
+from typing_extensions import Final, Self
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._gobj import Texture
 from panda3d.core._movies import MovieVideo
 from panda3d.core._pgraph import Camera, NodePath
+
+Dtool_PyNativeInterface: Final = 1
 
 class ARToolKit:
     """ARToolKit is a software library for building Augmented Reality (AR)
@@ -97,3 +99,5 @@ class WebcamVideo(MovieVideo):
     getFps = get_fps
     getPixelFormat = get_pixel_format
     getOptions = get_options
+
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...

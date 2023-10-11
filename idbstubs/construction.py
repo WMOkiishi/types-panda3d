@@ -421,6 +421,14 @@ def make_class_rep(idb_type: IDBType) -> Class:
     )
 
 
+def make_universal_reps() -> Iterator[StubRep]:
+    """Yield representations of items in every module compiled by interrogate."""
+    yield Constant('Dtool_PyNativeInterface', 1)
+    yield Function('Dtool_BorrowThisReference', [
+        Signature([Parameter('from_in'), Parameter('to_in')], 'None')
+    ])
+
+
 def make_file_reps(package_name: str = 'panda3d') -> list[File]:
     nested_by_mod_by_lib = defaultdict[str, defaultdict[str, list[StubRep]]](lambda: defaultdict(list))
     # Gather global functions
@@ -465,6 +473,7 @@ def make_file_reps(package_name: str = 'panda3d') -> list[File]:
         mod_name = mod_name.removeprefix(package_name + '.')
         if len(nested_by_lib) == 1:
             nested, = nested_by_lib.values()
+            nested += make_universal_reps()
             file = File(directory / mod_name, nested)
             files.append(file)
         else:
@@ -473,7 +482,7 @@ def make_file_reps(package_name: str = 'panda3d') -> list[File]:
                 file = File(directory / mod_name / lib_name, nested)
                 files.append(file)
                 init_imports['.' + lib_name].append('*')
-            init_nested: list[StubRep] = []
+            init_nested = list(make_universal_reps())
             if mod_name == 'core':
                 init_nested += make_manifest_reps()
             init_file = File(

@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Self
+from typing_extensions import Final, Self
 
 from panda3d._typing import Vec4Like
 from panda3d.core._display import DisplayRegion, GraphicsEngine, GraphicsOutput
@@ -8,6 +8,8 @@ from panda3d.core._linmath import LColor
 from panda3d.core._pgraph import GeomNode, NodePath, PandaNode
 from panda3d.core._pnmimage import PfmFile
 from panda3d.core._putil import UpdateSeq
+
+Dtool_PyNativeInterface: Final = 1
 
 class CylindricalLens(Lens):
     """A cylindrical lens.  This is the kind of lens generally used for extremely
@@ -493,3 +495,5 @@ class PSphereLens(Lens):
     """
 
     def __init__(self) -> None: ...
+
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...

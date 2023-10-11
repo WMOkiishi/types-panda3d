@@ -1,10 +1,12 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Self
+from typing_extensions import Final, Self
 
 from panda3d._typing import Vec3Like
 from panda3d.core._express import ReferenceCount
 from panda3d.core._linmath import LVecBase3
 from panda3d.core._pgraph import NodePath
+
+Dtool_PyNativeInterface: Final = 1
 
 class AIBehaviors:
     """This class implements all the steering behaviors of the AI framework, such
@@ -257,3 +259,5 @@ class AIWorld:
     addObstacle = add_obstacle
     removeObstacle = remove_obstacle
     printList = print_list
+
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...

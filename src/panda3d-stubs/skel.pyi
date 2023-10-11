@@ -1,7 +1,9 @@
 from typing import Any, ClassVar
-from typing_extensions import Self
+from typing_extensions import Final, Self
 
 from panda3d.core._dtoolbase import TypedObject
+
+Dtool_PyNativeInterface: Final = 1
 
 class BasicSkel:
     """This is the most basic of the skeleton classes.  It stores an integer, and
@@ -57,3 +59,5 @@ class TypedSkel(TypedObject):
     getValue = get_value
     setValueAlt = set_value_alt
     getValueAlt = get_value_alt
+
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...

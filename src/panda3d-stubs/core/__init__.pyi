@@ -35,6 +35,7 @@ from ._recorder import *
 from ._text import *
 from ._tform import *
 
+Dtool_PyNativeInterface: Final = 1
 END_PUBLISH: Final[str]
 ENDPUBLISH: Final[str]
 TINYXML_INCLUDED: Final[str]
@@ -63,3 +64,4 @@ PCT_T: Final[int]
 PCTT: Final[int]
 PCT_XYZ: Final[int]
 PCTXYZ: Final[int]
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...

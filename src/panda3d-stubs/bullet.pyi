@@ -26,6 +26,7 @@ Y_up: Final = 1
 YUp: Final = 1
 Z_up: Final = 2
 ZUp: Final = 2
+Dtool_PyNativeInterface: Final = 1
 
 class BulletRayHit:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -2681,5 +2682,6 @@ class BulletTriangleMeshShape(BulletShape):
 def get_default_up_axis() -> _BulletUpAxis: ...
 def get_bullet_version() -> int:
     """Returns the version of the linked Bullet library."""
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...
 getDefaultUpAxis = get_default_up_axis
 getBulletVersion = get_bullet_version

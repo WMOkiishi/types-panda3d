@@ -47,10 +47,6 @@ direct.stdpy.threading2?.local.__getattr__
 (direct.showbase.ShowBaseGlobal.base)?
 (direct.wxwidgets.WxPandaShell.base)?
 
-# These exist in every C++ module, but I don't know what they're for.
-panda3d\.\w+\.Dtool_BorrowThisReference
-panda3d\.\w+\.Dtool_PyNativeInterface
-
 # Stubtest doesn't understand these at runtime.
 panda3d.core.ExecutionEnvironment.args
 panda3d.core.ExecutionEnvironment.environment_variables

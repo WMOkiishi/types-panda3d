@@ -14,6 +14,8 @@ from panda3d.core._putil import BitMask32
 _GPUCommand_CommandType: TypeAlias = Literal[0, 1, 2, 3, 4]
 _RPLight_LightType: TypeAlias = Literal[0, 1, 2]
 
+Dtool_PyNativeInterface: Final = 1
+
 class GPUCommand:
     """@brief Class for storing data to be transferred to the GPU.
     @details This class can be seen like a packet, to be transferred to the GPU.
@@ -1186,3 +1188,5 @@ class RPSpotLight(RPLight):
     setDirection = set_direction
     getDirection = get_direction
     lookAt = look_at
+
+def Dtool_BorrowThisReference(from_in, to_in) -> None: ...
