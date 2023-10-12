@@ -1,8 +1,8 @@
 from typing import Any, SupportsFloat
 from typing_extensions import Final
 
-import wx  # type: ignore[import]
-import wx.siplib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore[import-untyped]
 from direct._typing import Unused
 from direct.wxwidgets.ViewPort import Viewport
 from direct.wxwidgets.WxPandaShell import WxPandaShell

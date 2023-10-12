@@ -6,7 +6,7 @@ from types import CodeType
 from typing import ClassVar, SupportsFloat
 from typing_extensions import Final, Literal
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct.directtools.DirectSession import DirectSession
 from direct.tkwidgets.AppShell import AppShell
 

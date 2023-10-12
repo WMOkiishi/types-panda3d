@@ -3,7 +3,7 @@ __all__ = ['FSMInspector', 'StateInspector']
 import tkinter
 from typing_extensions import TypeAlias
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct.fsm.ClassicFSM import ClassicFSM
 from direct.fsm.State import State
 from direct.tkwidgets.AppShell import AppShell

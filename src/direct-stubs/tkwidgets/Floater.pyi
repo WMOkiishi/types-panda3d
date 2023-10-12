@@ -3,7 +3,7 @@ __all__ = ['Floater', 'FloaterGroup', 'FloaterWidget']
 import tkinter
 from typing_extensions import Final, Literal
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 
 from .Valuator import Valuator
 

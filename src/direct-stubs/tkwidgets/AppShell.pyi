@@ -5,7 +5,7 @@ from collections.abc import MutableMapping
 from typing import Any, ClassVar, TypeVar
 from typing_extensions import Literal, TypeAlias
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 

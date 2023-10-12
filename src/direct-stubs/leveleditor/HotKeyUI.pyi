@@ -1,9 +1,9 @@
 from typing import Any
 
-import wx  # type: ignore[import]
-import wx.siplib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore[import-untyped]
 from direct._typing import Unused
-from wx.lib.scrolledpanel import ScrolledPanel  # type: ignore[import]
+from wx.lib.scrolledpanel import ScrolledPanel  # type: ignore[import-untyped]
 
 class EditHotKeyDialog(wx.Dialog, metaclass=sip.wrapper):
     currKey: str

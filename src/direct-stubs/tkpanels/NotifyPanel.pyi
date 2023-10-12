@@ -2,7 +2,7 @@ __all__ = ['NotifyPanel']
 
 import tkinter
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct._typing import Unused
 from direct.directnotify.DirectNotify import DirectNotify
 from direct.directnotify.Notifier import Notifier

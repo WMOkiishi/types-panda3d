@@ -2,7 +2,7 @@ import tkinter
 from typing import SupportsFloat
 from typing_extensions import Final
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath
 

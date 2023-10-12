@@ -3,7 +3,7 @@ __all__ = ['DirectSessionPanel']
 import tkinter
 from collections.abc import Callable, MutableMapping
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct.directtools.DirectLights import DirectLight
 from direct.tkwidgets.AppShell import AppShell
 from direct.tkwidgets.Dial import AngleDial

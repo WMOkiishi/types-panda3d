@@ -1,11 +1,11 @@
 from typing import ClassVar, overload
 from typing_extensions import Final, Literal
 
-import wx  # type: ignore[import]
-import wx.siplib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore[import-untyped]
 from direct.showbase.ShowBase import ShowBase
 from direct.task.Task import Task
-from wx.lib.agw.fourwaysplitter import FourWaySplitter  # type: ignore[import]
+from wx.lib.agw.fourwaysplitter import FourWaySplitter  # type: ignore[import-untyped]
 
 from .ViewPort import Viewport
 from .WxAppShell import WxAppShell

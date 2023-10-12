@@ -2,7 +2,7 @@ import tkinter
 from typing import Any
 from typing_extensions import Literal
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task, TaskManager
 from direct.tkwidgets.AppShell import AppShell

@@ -5,7 +5,7 @@ from collections.abc import Callable, MutableMapping
 from typing import Any, ClassVar, SupportsFloat, SupportsInt
 from typing_extensions import Final, Literal, TypeAlias
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct._typing import AnyReal, Unused
 from direct.directtools.DirectGeometry import LineNodePath
 from direct.directtools.DirectSelection import SelectionRay

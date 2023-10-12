@@ -1,7 +1,7 @@
 from typing import Any, TypeVar
 
-import wx  # type: ignore[import]
-import wx.siplib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore[import-untyped]
 from direct._typing import Incomplete
 
 from .LevelEditor import LevelEditor

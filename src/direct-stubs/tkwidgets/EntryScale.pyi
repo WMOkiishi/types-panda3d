@@ -4,7 +4,7 @@ import tkinter
 from collections.abc import Callable
 from typing import Any
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from panda3d.core import NodePath
 
 class EntryScale(Pmw.MegaWidget):

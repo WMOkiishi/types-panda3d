@@ -4,7 +4,7 @@ import tkinter
 from typing import Any, SupportsInt
 from typing_extensions import Literal, TypeAlias
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct.particles.ForceGroup import ForceGroup
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.tkwidgets.AppShell import AppShell

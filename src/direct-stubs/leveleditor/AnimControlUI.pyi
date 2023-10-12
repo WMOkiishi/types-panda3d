@@ -1,9 +1,9 @@
 from typing import Any
 
-import wx  # type: ignore[import]
-import wx.siplib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore[import-untyped]
 from direct._typing import Unused
-from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
+from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import-untyped]
 
 from .LevelEditor import LevelEditor
 

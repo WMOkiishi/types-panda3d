@@ -2,8 +2,8 @@ from collections.abc import Callable
 from typing import Any
 from typing_extensions import Final, Literal
 
-import wx  # type: ignore[import]
-import wx.siplib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore[import-untyped]
 from direct._typing import Obj, Unused
 
 from .LevelEditor import LevelEditor

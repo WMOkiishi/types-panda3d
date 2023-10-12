@@ -3,7 +3,7 @@ __all__ = ['SceneGraphExplorer', 'SceneGraphExplorerItem', 'explore']
 from collections.abc import Mapping
 from typing_extensions import Final
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import NodePath
 

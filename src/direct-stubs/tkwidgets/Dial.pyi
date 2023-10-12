@@ -2,7 +2,7 @@ __all__ = ['AngleDial', 'Dial', 'DialWidget']
 
 from typing_extensions import Final, Literal
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 
 from .Valuator import Valuator
 

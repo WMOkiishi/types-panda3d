@@ -5,7 +5,7 @@ from collections.abc import Iterable
 from typing import Any
 from typing_extensions import Self, TypeAlias
 
-import Pmw  # type: ignore[import]
+import Pmw  # type: ignore[import-untyped]
 
 _PropertyDict: TypeAlias = dict[str, tuple[Any, Any, Any, bool]]
 

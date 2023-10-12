@@ -1,13 +1,13 @@
 from collections.abc import Callable, Iterable
 from typing import Any
 
-import wx  # type: ignore[import]
-import wx.sipblib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.sipblib as sip  # type: ignore[import-untyped]
 from direct._typing import Incomplete, Unused
 from direct.wxwidgets.WxSlider import WxSlider
-from wx.lib.agw.cubecolourdialog import CubeColourDialog  # type: ignore[import]
-from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import]
-from wx.lib.scrolledpanel import ScrolledPanel  # type: ignore[import]
+from wx.lib.agw.cubecolourdialog import CubeColourDialog  # type: ignore[import-untyped]
+from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import-untyped]
+from wx.lib.scrolledpanel import ScrolledPanel  # type: ignore[import-untyped]
 
 from .LevelEditor import LevelEditor
 

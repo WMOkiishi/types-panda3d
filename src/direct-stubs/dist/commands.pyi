@@ -5,7 +5,7 @@ from typing_extensions import Final, TypeAlias
 
 from direct._typing import Incomplete
 from direct.p3d.DeploymentTools import Icon
-from setuptools import Command  # type: ignore[import]
+from setuptools import Command  # type: ignore[import-untyped]
 
 _FileHandler: TypeAlias = Callable[[build_apps, Incomplete, Incomplete], StrOrBytesPath]
 _OpenFile: TypeAlias = StrOrBytesPath | int

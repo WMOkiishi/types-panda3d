@@ -1,9 +1,9 @@
 import sys
 from typing import ClassVar
 
-import wx  # type: ignore[import]
-import wx.glcanvas as wxgl  # type: ignore[import]
-import wx.siplib as sip  # type: ignore[import]
+import wx  # type: ignore[import-untyped]
+import wx.glcanvas as wxgl  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore[import-untyped]
 from panda3d.core import ButtonHandle, ConfigVariableBool, GraphicsWindow, InputDevice
 
 class EmbeddedPandaWindow(wx.Window, metaclass=sip.wrapper):
