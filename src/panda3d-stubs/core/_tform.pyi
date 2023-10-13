@@ -342,9 +342,9 @@ class DriveInterface(MouseInterfaceNode):
     """
 
     @overload
-    def __init__(self, name: str = ...) -> None: ...
-    @overload
     def __init__(self, __param0: DriveInterface) -> None: ...
+    @overload
+    def __init__(self, name: str = ...) -> None: ...
     def set_forward_speed(self, speed: float) -> None:
         """Sets the speed of full forward motion, when the mouse is at the very top of
         the window.  This is in units (e.g.  feet) per second.

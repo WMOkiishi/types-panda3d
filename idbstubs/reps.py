@@ -145,14 +145,6 @@ class Signature:
         """Return the maximum number of arguments the signature will accept."""
         return len(self.parameters)
 
-    def get_arity(self) -> tuple[int, int]:
-        """Return the minimum and maximum number
-        of arguments the signature will accept.
-        """
-        min_arity = sum(not p.is_optional for p in self.parameters)
-        max_arity = len(self.parameters)
-        return min_arity, max_arity
-
     def get_dependencies(self) -> Iterator[str]:
         yield from names_within(self.return_type)
         for parameter in self.parameters:

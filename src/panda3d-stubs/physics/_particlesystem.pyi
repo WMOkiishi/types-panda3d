@@ -494,7 +494,7 @@ class ParticleSystem(Physical):
     """Contains and manages a particle system."""
 
     @overload
-    def __init__(self, pool_size: int = ...) -> None:
+    def __init__(self, copy: ParticleSystem) -> None:
         """`(self, copy: ParticleSystem)`:
         Copy Constructor.
 
@@ -502,7 +502,7 @@ class ParticleSystem(Physical):
         Default Constructor.
         """
     @overload
-    def __init__(self, copy: ParticleSystem) -> None: ...
+    def __init__(self, pool_size: int = ...) -> None: ...
     def set_pool_size(self, size: int) -> None:
         """accessqueries"""
     def set_birth_rate(self, new_br: float) -> None: ...
@@ -837,7 +837,7 @@ class SpriteParticleRenderer(BaseParticleRenderer):
     """Renders a particle system with high-speed nasty trick sprites."""
 
     @overload
-    def __init__(self, tex: Texture = ...) -> None:
+    def __init__(self, copy: SpriteParticleRenderer) -> None:
         """`(self, copy: SpriteParticleRenderer)`:
         copy constructor
 
@@ -845,7 +845,7 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         constructor
         """
     @overload
-    def __init__(self, copy: SpriteParticleRenderer) -> None: ...
+    def __init__(self, tex: Texture = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     @overload
@@ -1121,10 +1121,10 @@ class ParticleSystemManager:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, every_nth_frame: int = ...) -> None:
+    def __init__(self, __param0: ParticleSystemManager) -> None:
         """default constructor"""
     @overload
-    def __init__(self, __param0: ParticleSystemManager) -> None: ...
+    def __init__(self, every_nth_frame: int = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def set_frame_stepping(self, every_nth_frame: int) -> None: ...

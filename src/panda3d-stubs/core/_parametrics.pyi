@@ -820,7 +820,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         passed to the last call to reset().
         """
     @overload
-    def set_vertex(self, i: int, vertex: Vec4Like) -> None:
+    def set_vertex(self, i: int, vertex: Vec3Like, weight: float = ...) -> None:
         """`(self, i: int, vertex: LVecBase3, weight: float = ...)`:
         Sets the nth control vertex of the curve.  This flavor sets the vertex as a
         3-d coordinate and a weight; the 3-d coordinate values are implicitly
@@ -833,7 +833,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         weight.
         """
     @overload
-    def set_vertex(self, i: int, vertex: Vec3Like, weight: float = ...) -> None: ...
+    def set_vertex(self, i: int, vertex: Vec4Like) -> None: ...
     def get_vertex(self, i: int, rel_to: NodePath = ...) -> LVecBase4:
         """`(self, i: int)`:
         Returns the nth control vertex of the curve, relative to its indicated
@@ -1108,7 +1108,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         This is the number passed to the last call to reset().
         """
     @overload
-    def set_vertex(self, ui: int, vi: int, vertex: Vec4Like) -> None:
+    def set_vertex(self, ui: int, vi: int, vertex: Vec3Like, weight: float = ...) -> None:
         """`(self, ui: int, vi: int, vertex: LVecBase3, weight: float = ...)`:
         Sets the nth control vertex of the surface.  This flavor sets the vertex as
         a 3-d coordinate and a weight; the 3-d coordinate values are implicitly
@@ -1121,7 +1121,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         weight.
         """
     @overload
-    def set_vertex(self, ui: int, vi: int, vertex: Vec3Like, weight: float = ...) -> None: ...
+    def set_vertex(self, ui: int, vi: int, vertex: Vec4Like) -> None: ...
     def get_vertex(self, ui: int, vi: int, rel_to: NodePath = ...) -> LVecBase4:
         """`(self, ui: int, vi: int)`:
         Returns the nth control vertex of the surface, relative to its indicated

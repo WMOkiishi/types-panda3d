@@ -215,9 +215,9 @@ class PStatCollector:
         register the collector with; otherwise, the global client is used.
         """
     @overload
-    def __init__(self, name: str, client: PStatClient = ...) -> None: ...
-    @overload
     def __init__(self, parent: PStatCollector, name: str) -> None: ...
+    @overload
+    def __init__(self, name: str, client: PStatClient = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def assign(self, copy: Self) -> Self: ...
@@ -299,7 +299,7 @@ class PStatCollector:
         thread.
         """
     @overload
-    def set_level(self, level: float) -> None:
+    def set_level(self, thread: PStatThread | Thread, level: float) -> None:
         """`(self, thread: PStatThread, level: float)`:
         Sets the level setting associated with this collector for the indicated
         thread to the indicated value.
@@ -309,9 +309,9 @@ class PStatCollector:
         to the indicated value.  This implicitly calls flush_level().
         """
     @overload
-    def set_level(self, thread: PStatThread | Thread, level: float) -> None: ...
+    def set_level(self, level: float) -> None: ...
     @overload
-    def add_level(self, increment: float) -> None:
+    def add_level(self, thread: PStatThread | Thread, increment: float) -> None:
         """`(self, thread: PStatThread, increment: float)`:
         Adds the indicated increment (which may be negative) to the level setting
         associated with this collector for the indicated thread.  If the collector
@@ -328,9 +328,9 @@ class PStatCollector:
         will be sent the next time flush_level() is called.
         """
     @overload
-    def add_level(self, thread: PStatThread | Thread, increment: float) -> None: ...
+    def add_level(self, increment: float) -> None: ...
     @overload
-    def sub_level(self, decrement: float) -> None:
+    def sub_level(self, thread: PStatThread | Thread, decrement: float) -> None:
         """`(self, thread: PStatThread, decrement: float)`:
         Subtracts the indicated decrement (which may be negative) to the level
         setting associated with this collector for the indicated thread.  If the
@@ -347,7 +347,7 @@ class PStatCollector:
         will be sent the next time flush_level() is called.
         """
     @overload
-    def sub_level(self, thread: PStatThread | Thread, decrement: float) -> None: ...
+    def sub_level(self, decrement: float) -> None: ...
     def add_level_now(self, increment: float) -> None:
         """Calls add_level() and immediately calls flush_level()."""
     def sub_level_now(self, decrement: float) -> None:
@@ -424,7 +424,7 @@ class PStatThread:
     @property
     def index(self) -> int: ...
     @overload
-    def __init__(self, copy: PStatThread) -> None:
+    def __init__(self, client: PStatClient, index: int) -> None:
         """`(self, client: PStatClient, index: int)`:
         Normally, this constructor is called only from PStatClient.  Use one of the
         constructors below to create your own Thread.
@@ -434,9 +434,9 @@ class PStatThread:
         common thread, and differentiate tasks that occur in different threads.
         """
     @overload
-    def __init__(self, thread: Thread, client: PStatClient = ...) -> None: ...
+    def __init__(self, copy: PStatThread) -> None: ...
     @overload
-    def __init__(self, client: PStatClient, index: int) -> None: ...
+    def __init__(self, thread: Thread, client: PStatClient = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def assign(self, copy: PStatThread | Thread) -> Self: ...

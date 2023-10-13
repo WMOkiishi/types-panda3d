@@ -648,8 +648,6 @@ class BulletConeTwistConstraint(BulletConstraint):
     @property
     def frame_b(self) -> TransformState: ...
     @overload
-    def __init__(self, node_a: BulletRigidBodyNode, frame_a: TransformState) -> None: ...
-    @overload
     def __init__(
         self,
         node_a: BulletRigidBodyNode,
@@ -658,7 +656,7 @@ class BulletConeTwistConstraint(BulletConstraint):
         frame_b: TransformState,
     ) -> None: ...
     @overload
-    def set_limit(self, index: int, value: float) -> None: ...
+    def __init__(self, node_a: BulletRigidBodyNode, frame_a: TransformState) -> None: ...
     @overload
     def set_limit(
         self,
@@ -669,6 +667,8 @@ class BulletConeTwistConstraint(BulletConstraint):
         bias: float = ...,
         relaxation: float = ...,
     ) -> None: ...
+    @overload
+    def set_limit(self, index: int, value: float) -> None: ...
     def set_damping(self, damping: float) -> None: ...
     def get_fix_threshold(self) -> float: ...
     def set_fix_threshold(self, threshold: float) -> None: ...
@@ -888,9 +888,9 @@ class BulletDebugNode(PandaNode):
     bounding_boxes: bool
     normals: bool
     @overload
-    def __init__(self, name: str = ...) -> None: ...
-    @overload
     def __init__(self, __param0: BulletDebugNode) -> None: ...
+    @overload
+    def __init__(self, name: str = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def draw_mask_changed(self) -> None: ...
@@ -1013,10 +1013,10 @@ class BulletSoftBodyNode(BulletBodyNode):
     def link_surface(self, surface: NurbsSurfaceEvaluator) -> None: ...
     def unlink_surface(self) -> None: ...
     @overload
-    def append_anchor(self, node: int, body: BulletRigidBodyNode, disable: bool = ...) -> None:
+    def append_anchor(self, node: int, body: BulletRigidBodyNode, pivot: Vec3Like, disable: bool = ...) -> None:
         """Anchors"""
     @overload
-    def append_anchor(self, node: int, body: BulletRigidBodyNode, pivot: Vec3Like, disable: bool = ...) -> None: ...
+    def append_anchor(self, node: int, body: BulletRigidBodyNode, disable: bool = ...) -> None: ...
     @overload
     def append_linear_joint(
         self,
@@ -2159,8 +2159,6 @@ class BulletGenericConstraint(BulletConstraint):
     @property
     def frame_b(self) -> TransformState: ...
     @overload
-    def __init__(self, node_a: BulletRigidBodyNode, frame_a: TransformState, use_frame_a: bool) -> None: ...
-    @overload
     def __init__(
         self,
         node_a: BulletRigidBodyNode,
@@ -2169,6 +2167,8 @@ class BulletGenericConstraint(BulletConstraint):
         frame_b: TransformState,
         use_frame_a: bool,
     ) -> None: ...
+    @overload
+    def __init__(self, node_a: BulletRigidBodyNode, frame_a: TransformState, use_frame_a: bool) -> None: ...
     def get_axis(self, axis: int) -> LVector3:
         """Geometry"""
     def get_pivot(self, axis: int) -> float: ...
@@ -2276,7 +2276,16 @@ class BulletHingeConstraint(BulletConstraint):
     @property
     def frame_b(self) -> TransformState: ...
     @overload
-    def __init__(self, node_a: BulletRigidBodyNode, ts_a: TransformState, use_frame_a: bool = ...) -> None:
+    def __init__(
+        self,
+        node_a: BulletRigidBodyNode,
+        node_b: BulletRigidBodyNode,
+        pivot_a: Vec3Like,
+        pivot_b: Vec3Like,
+        axis_a: Vec3Like,
+        axis_b: Vec3Like,
+        use_frame_a: bool = ...,
+    ) -> None:
         """`(self, node_a: BulletRigidBodyNode, node_b: BulletRigidBodyNode, pivot_a: LPoint3, pivot_b: LPoint3, axis_a: LVector3, axis_b: LVector3, use_frame_a: bool = ...)`:
         Creates a hinge connecting node_a to node_b.  The pivot point is the point
         at which the body is fixed to the constraint.  In other words: It specifies
@@ -2297,8 +2306,6 @@ class BulletHingeConstraint(BulletConstraint):
         dpoint in the world.
         """
     @overload
-    def __init__(self, node_a: BulletRigidBodyNode, pivot_a: Vec3Like, axis_a: Vec3Like, use_frame_a: bool = ...) -> None: ...
-    @overload
     def __init__(
         self,
         node_a: BulletRigidBodyNode,
@@ -2308,16 +2315,9 @@ class BulletHingeConstraint(BulletConstraint):
         use_frame_a: bool = ...,
     ) -> None: ...
     @overload
-    def __init__(
-        self,
-        node_a: BulletRigidBodyNode,
-        node_b: BulletRigidBodyNode,
-        pivot_a: Vec3Like,
-        pivot_b: Vec3Like,
-        axis_a: Vec3Like,
-        axis_b: Vec3Like,
-        use_frame_a: bool = ...,
-    ) -> None: ...
+    def __init__(self, node_a: BulletRigidBodyNode, pivot_a: Vec3Like, axis_a: Vec3Like, use_frame_a: bool = ...) -> None: ...
+    @overload
+    def __init__(self, node_a: BulletRigidBodyNode, ts_a: TransformState, use_frame_a: bool = ...) -> None: ...
     def get_hinge_angle(self) -> float:
         """Returns the angle between node_a and node_b in degrees."""
     def get_lower_limit(self) -> float:
@@ -2458,8 +2458,6 @@ class BulletSliderConstraint(BulletConstraint):
     @property
     def frame_b(self) -> TransformState: ...
     @overload
-    def __init__(self, node_a: BulletRigidBodyNode, frame_a: TransformState, useFrame_a: bool) -> None: ...
-    @overload
     def __init__(
         self,
         node_a: BulletRigidBodyNode,
@@ -2468,6 +2466,8 @@ class BulletSliderConstraint(BulletConstraint):
         frame_b: TransformState,
         use_frame_a: bool,
     ) -> None: ...
+    @overload
+    def __init__(self, node_a: BulletRigidBodyNode, frame_a: TransformState, useFrame_a: bool) -> None: ...
     def get_linear_pos(self) -> float: ...
     def get_angular_pos(self) -> float: ...
     def get_lower_linear_limit(self) -> float:
@@ -2570,8 +2570,6 @@ class BulletSphericalConstraint(BulletConstraint):
     pivot_a: LPoint3
     pivot_b: LPoint3
     @overload
-    def __init__(self, node_a: BulletRigidBodyNode, pivot_a: Vec3Like) -> None: ...
-    @overload
     def __init__(
         self,
         node_a: BulletRigidBodyNode,
@@ -2579,6 +2577,8 @@ class BulletSphericalConstraint(BulletConstraint):
         pivot_a: Vec3Like,
         pivot_b: Vec3Like,
     ) -> None: ...
+    @overload
+    def __init__(self, node_a: BulletRigidBodyNode, pivot_a: Vec3Like) -> None: ...
     def set_pivot_a(self, pivot_a: Vec3Like) -> None:
         """Pivots"""
     def set_pivot_b(self, pivot_b: Vec3Like) -> None: ...
@@ -2663,13 +2663,13 @@ class BulletTriangleMeshShape(BulletShape):
     @property
     def dynamic(self) -> bool: ...
     @overload
-    def __init__(self, copy: BulletTriangleMeshShape) -> None:
+    def __init__(self, mesh: BulletTriangleMesh, dynamic: bool, compress: bool = ..., bvh: bool = ...) -> None:
         """The parameters 'compress' and 'bvh' are only used if 'dynamic' is set to
         FALSE.
         Assumes the lock(bullet global lock) is held by the caller
         """
     @overload
-    def __init__(self, mesh: BulletTriangleMesh, dynamic: bool, compress: bool = ..., bvh: bool = ...) -> None: ...
+    def __init__(self, copy: BulletTriangleMeshShape) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def refit_tree(self, aabb_min: Vec3Like, aabb_max: Vec3Like) -> None: ...

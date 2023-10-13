@@ -461,9 +461,9 @@ class PGButton(PGItem):
         to the size of the text.
         """
     @overload
-    def setup(self, label: str, bevel: float = ...) -> None: ...
-    @overload
     def setup(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath = ...) -> None: ...
+    @overload
+    def setup(self, label: str, bevel: float = ...) -> None: ...
     def add_click_button(self, button: ButtonHandle | str) -> bool:
         """Adds the indicated button to the set of buttons that can effectively
         "click" the PGButton.  Normally, this is just MouseButton::one().  Returns

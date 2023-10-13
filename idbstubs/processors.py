@@ -225,7 +225,7 @@ def process_signatures(signatures: Sequence[Signature]) -> list[Signature]:
     with_casts = expand_input(signatures)
     sorted_signatures = sort_signatures(with_casts)
     merged_signatures: list[Signature] = []
-    for new in sorted(sorted_signatures, key=Signature.get_arity):
+    for new in sorted_signatures:
         for i, old in enumerate(merged_signatures):
             if (merge_result := merge_signatures(old, new)) is not None:
                 # The signatures were successfully merged

@@ -1171,9 +1171,9 @@ class PointerEventList(ParamValueBase):
         dy, length, direction, and rotation for all but the first event.
         """
     @overload
-    def add_event(self, in_win: bool, xpos: int, ypos: int, seq: int, time: float) -> None: ...
-    @overload
     def add_event(self, in_win: bool, xpos: int, ypos: int, xdelta: float, ydelta: float, seq: int, time: float) -> None: ...
+    @overload
+    def add_event(self, in_win: bool, xpos: int, ypos: int, seq: int, time: float) -> None: ...
     def encircles(self, x: int, y: int) -> bool:
         """Returns true if the trail loops around the specified point."""
     def total_turns(self, sec: float) -> float:

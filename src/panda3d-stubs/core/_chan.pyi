@@ -22,12 +22,12 @@ class AnimGroup(TypedWritableReferenceCount, Namable):
     @property
     def children(self) -> Sequence[AnimGroup]: ...
     @overload
-    def __init__(self, __param0: AnimGroup) -> None:
+    def __init__(self, parent: AnimGroup, name: str) -> None:
         """Creates the AnimGroup, and adds it to the indicated parent.  The only way
         to delete it subsequently is to delete the entire hierarchy.
         """
     @overload
-    def __init__(self, parent: AnimGroup, name: str) -> None: ...
+    def __init__(self, __param0: AnimGroup) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def get_num_children(self) -> int:
@@ -912,7 +912,7 @@ class PartBundle(PartGroup):
         nonzero control effect, have been loaded and are properly bound.
         """
     @overload
-    def freeze_joint(self, joint_name: str, value: float) -> bool:
+    def freeze_joint(self, joint_name: str, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like) -> bool:
         """Specifies that the joint with the indicated name should be frozen with the
         specified transform.  It will henceforth always hold this fixed transform,
         regardless of any animations that may subsequently be bound to the joint.
@@ -921,9 +921,9 @@ class PartBundle(PartGroup):
         child is not a joint (or slider) or does not exist.
         """
     @overload
-    def freeze_joint(self, joint_name: str, transform: TransformState) -> bool: ...
+    def freeze_joint(self, joint_name: str, value: float) -> bool: ...
     @overload
-    def freeze_joint(self, joint_name: str, pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like) -> bool: ...
+    def freeze_joint(self, joint_name: str, transform: TransformState) -> bool: ...
     def control_joint(self, joint_name: str, node: PandaNode) -> bool:
         """Specifies that the joint with the indicated name should be animated with
         the transform on the indicated node.  It will henceforth always follow the

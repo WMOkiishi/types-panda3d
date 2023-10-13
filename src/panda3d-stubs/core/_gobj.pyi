@@ -695,8 +695,6 @@ class GeomVertexColumn(GeomEnums):
     """
 
     @overload
-    def __init__(self, copy: GeomVertexColumn) -> None: ...
-    @overload
     def __init__(
         self,
         name: InternalName | str,
@@ -708,6 +706,8 @@ class GeomVertexColumn(GeomEnums):
         num_elements: int = ...,
         element_stride: int = ...,
     ) -> None: ...
+    @overload
+    def __init__(self, copy: GeomVertexColumn) -> None: ...
     def assign(self, copy: Self) -> Self: ...
     def get_name(self) -> InternalName:
         """Returns the name of this particular data field, e.g.  "vertex" or "normal".
@@ -959,7 +959,15 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         including gaps between elements.
         """
     @overload
-    def add_column(self, column: GeomVertexColumn) -> int:
+    def add_column(
+        self,
+        name: InternalName | str,
+        num_components: int,
+        numeric_type: _GeomEnums_NumericType,
+        contents: _GeomEnums_Contents,
+        start: int = ...,
+        column_alignment: int = ...,
+    ) -> int:
         """`(self, name: InternalName, num_components: int, numeric_type: _GeomEnums_NumericType, contents: _GeomEnums_Contents, start: int = ..., column_alignment: int = ...)`:
         Adds a new column to the specification.  This is a table of per-vertex
         floating-point numbers such as "vertex" or "normal"; you must specify where
@@ -980,15 +988,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         The return value is the index number of the new data type.
         """
     @overload
-    def add_column(
-        self,
-        name: InternalName | str,
-        num_components: int,
-        numeric_type: _GeomEnums_NumericType,
-        contents: _GeomEnums_Contents,
-        start: int = ...,
-        column_alignment: int = ...,
-    ) -> int: ...
+    def add_column(self, column: GeomVertexColumn) -> int: ...
     def remove_column(self, name: InternalName | str) -> None:
         """Removes the column with the indicated name, if any.  This leaves a gap in
         the byte structure.
@@ -2115,12 +2115,6 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
     @overload
     def copy_data_from(self, buffer) -> None: ...
     @overload
-    def copy_subdata_from(self, to_start: int, to_size: int, buffer) -> None:
-        """Copies a portion of the data array from the other object into a portion of
-        the data array of this object.  If to_size != from_size, the size of this
-        data array is adjusted accordingly.
-        """
-    @overload
     def copy_subdata_from(
         self,
         to_start: int,
@@ -2128,7 +2122,13 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
         other: GeomVertexArrayDataHandle,
         from_start: int,
         from_size: int,
-    ) -> None: ...
+    ) -> None:
+        """Copies a portion of the data array from the other object into a portion of
+        the data array of this object.  If to_size != from_size, the size of this
+        data array is adjusted accordingly.
+        """
+    @overload
+    def copy_subdata_from(self, to_start: int, to_size: int, buffer) -> None: ...
     @overload
     def copy_subdata_from(self, to_start: int, to_size: int, buffer, from_start: int, from_size: int) -> None: ...
     def get_data(self) -> bytes:
@@ -4917,7 +4917,7 @@ class GeomVertexReader(GeomEnums):
     """
 
     @overload
-    def __init__(self, current_thread: Thread = ...) -> None:
+    def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
         Constructs a new reader to process the vertices of the indicated array
         only.
@@ -4937,15 +4937,15 @@ class GeomVertexReader(GeomEnums):
         use it.
         """
     @overload
-    def __init__(self, copy: GeomVertexReader) -> None: ...
-    @overload
-    def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None: ...
-    @overload
-    def __init__(self, vertex_data: GeomVertexData, current_thread: Thread = ...) -> None: ...
-    @overload
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
     def __init__(self, vertex_data: GeomVertexData, name: InternalName | str, current_thread: Thread = ...) -> None: ...
+    @overload
+    def __init__(self, vertex_data: GeomVertexData, current_thread: Thread = ...) -> None: ...
+    @overload
+    def __init__(self, copy: GeomVertexReader) -> None: ...
+    @overload
+    def __init__(self, current_thread: Thread = ...) -> None: ...
     def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader | Thread) -> Self: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the reader is processing.  This may
@@ -5222,7 +5222,7 @@ class GeomVertexWriter(GeomEnums):
     """
 
     @overload
-    def __init__(self, current_thread: Thread = ...) -> None:
+    def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
         Constructs a new writer to process the vertices of the indicated array
         only.
@@ -5242,15 +5242,15 @@ class GeomVertexWriter(GeomEnums):
         use it.
         """
     @overload
-    def __init__(self, copy: GeomVertexWriter) -> None: ...
-    @overload
-    def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None: ...
-    @overload
-    def __init__(self, vertex_data: GeomVertexData, current_thread: Thread = ...) -> None: ...
-    @overload
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
     def __init__(self, vertex_data: GeomVertexData, name: InternalName | str, current_thread: Thread = ...) -> None: ...
+    @overload
+    def __init__(self, vertex_data: GeomVertexData, current_thread: Thread = ...) -> None: ...
+    @overload
+    def __init__(self, copy: GeomVertexWriter) -> None: ...
+    @overload
+    def __init__(self, current_thread: Thread = ...) -> None: ...
     def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter | Thread) -> Self: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the writer is processing.  This may
@@ -5785,7 +5785,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[mi
     """
 
     @overload
-    def __init__(self, current_thread: Thread = ...) -> None:
+    def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None:
         """`(self, array_data: GeomVertexArrayData, current_thread: Thread = ...)`; `(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...)`:
         Constructs a new rewriter to process the vertices of the indicated array
         only.
@@ -5805,15 +5805,15 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[mi
         use it.
         """
     @overload
-    def __init__(self, copy: GeomVertexRewriter) -> None: ...
-    @overload
-    def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None: ...
-    @overload
-    def __init__(self, vertex_data: GeomVertexData, current_thread: Thread = ...) -> None: ...
-    @overload
     def __init__(self, array_data: GeomVertexArrayData, column: int, current_thread: Thread = ...) -> None: ...
     @overload
     def __init__(self, vertex_data: GeomVertexData, name: InternalName | str, current_thread: Thread = ...) -> None: ...
+    @overload
+    def __init__(self, vertex_data: GeomVertexData, current_thread: Thread = ...) -> None: ...
+    @overload
+    def __init__(self, copy: GeomVertexRewriter) -> None: ...
+    @overload
+    def __init__(self, current_thread: Thread = ...) -> None: ...
     def upcast_to_GeomVertexWriter(self) -> GeomVertexWriter: ...
     def upcast_to_GeomVertexReader(self) -> GeomVertexReader: ...
     def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter | Thread) -> Self: ...  # type: ignore[override]
@@ -6673,7 +6673,14 @@ class Texture(TypedWritableReferenceCount, Namable):
         color.
         """
     @overload
-    def read(self, fullpath: StrOrBytesPath, options: LoaderOptions = ...) -> bool:
+    def read(
+        self,
+        fullpath: StrOrBytesPath,
+        alpha_fullpath: StrOrBytesPath,
+        primary_file_num_channels: int,
+        alpha_file_channel: int,
+        options: LoaderOptions = ...,
+    ) -> bool:
         """`(self, fullpath: Filename, alpha_fullpath: Filename, primary_file_num_channels: int, alpha_file_channel: int, options: LoaderOptions = ...)`:
         Combine a 3-component image with a grayscale image to get a 4-component
         image.
@@ -6750,30 +6757,23 @@ class Texture(TypedWritableReferenceCount, Namable):
         alpha_fullpath: StrOrBytesPath,
         primary_file_num_channels: int,
         alpha_file_channel: int,
-        options: LoaderOptions = ...,
-    ) -> bool: ...
-    @overload
-    def read(
-        self,
-        fullpath: StrOrBytesPath,
-        z: int,
-        n: int,
-        read_pages: bool,
-        read_mipmaps: bool,
-        options: LoaderOptions = ...,
-    ) -> bool: ...
-    @overload
-    def read(
-        self,
-        fullpath: StrOrBytesPath,
-        alpha_fullpath: StrOrBytesPath,
-        primary_file_num_channels: int,
-        alpha_file_channel: int,
         z: int,
         n: int,
         read_pages: bool,
         read_mipmaps: bool,
         record: BamCacheRecord = ...,
+        options: LoaderOptions = ...,
+    ) -> bool: ...
+    @overload
+    def read(self, fullpath: StrOrBytesPath, options: LoaderOptions = ...) -> bool: ...
+    @overload
+    def read(
+        self,
+        fullpath: StrOrBytesPath,
+        z: int,
+        n: int,
+        read_pages: bool,
+        read_mipmaps: bool,
         options: LoaderOptions = ...,
     ) -> bool: ...
     @overload
@@ -6827,9 +6827,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         texture properties.
         """
     @overload
-    def write(self, out: ostream, indent_level: int) -> None: ...
-    @overload
     def write(self, fullpath: StrOrBytesPath, z: int, n: int, write_pages: bool, write_mipmaps: bool) -> bool: ...
+    @overload
+    def write(self, out: ostream, indent_level: int) -> None: ...
     def read_txo(self, _in: istream, filename: str = ...) -> bool:
         """Reads the texture from a Panda texture object.  This defines the complete
         Texture specification, including the image data as well as all texture
@@ -6880,9 +6880,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         Stores the indicated image in the given page and mipmap level.  See read().
         """
     @overload
-    def load(self, pfm: PfmFile, options: LoaderOptions = ...) -> bool: ...
-    @overload
     def load(self, pnmimage: PNMImage, z: int, n: int, options: LoaderOptions = ...) -> bool: ...
+    @overload
+    def load(self, pfm: PfmFile, options: LoaderOptions = ...) -> bool: ...
     @overload
     def load(self, pfm: PfmFile, z: int, n: int, options: LoaderOptions = ...) -> bool: ...
     def load_sub_image(self, pnmimage: PNMImage, x: int, y: int, z: int = ..., n: int = ...) -> bool:
@@ -6907,9 +6907,9 @@ class Texture(TypedWritableReferenceCount, Namable):
         Saves the indicated page and mipmap level of the texture to the PfmFile.
         """
     @overload
-    def store(self, pfm: PfmFile) -> bool: ...
-    @overload
     def store(self, pnmimage: PNMImage, z: int, n: int) -> bool: ...
+    @overload
+    def store(self, pfm: PfmFile) -> bool: ...
     @overload
     def store(self, pfm: PfmFile, z: int, n: int) -> bool: ...
     def reload(self) -> bool:
@@ -8203,7 +8203,14 @@ class Shader(TypedWritableReferenceCount):
     ) -> Shader: ...
     @overload
     @staticmethod
-    def make(body: str, lang: _Shader_ShaderLanguage = ...) -> Shader:
+    def make(
+        lang: _Shader_ShaderLanguage,
+        vertex: str,
+        fragment: str,
+        geometry: str = ...,
+        tess_control: str = ...,
+        tess_evaluation: str = ...,
+    ) -> Shader:
         """`(lang: _Shader_ShaderLanguage, vertex: str, fragment: str, geometry: str = ..., tess_control: str = ..., tess_evaluation: str = ...)`:
         Loads the shader, using the strings as shader bodies.
 
@@ -8212,14 +8219,7 @@ class Shader(TypedWritableReferenceCount):
         """
     @overload
     @staticmethod
-    def make(
-        lang: _Shader_ShaderLanguage,
-        vertex: str,
-        fragment: str,
-        geometry: str = ...,
-        tess_control: str = ...,
-        tess_evaluation: str = ...,
-    ) -> Shader: ...
+    def make(body: str, lang: _Shader_ShaderLanguage = ...) -> Shader: ...
     @staticmethod
     def load_compute(lang: _Shader_ShaderLanguage, fn: StrOrBytesPath) -> Shader:
         """Loads a compute shader."""
@@ -9484,9 +9484,9 @@ class Material(TypedWritableReferenceCount, Namable):
     local: bool
     twoside: bool
     @overload
-    def __init__(self, name: str = ...) -> None: ...
-    @overload
     def __init__(self, copy: Material) -> None: ...
+    @overload
+    def __init__(self, name: str = ...) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: Material) -> bool: ...
@@ -10259,24 +10259,26 @@ class TexturePool:
         """
     @overload
     @staticmethod
-    def get_texture(filename: StrOrBytesPath, primary_file_num_channels: int = ..., read_mipmaps: bool = ...) -> Texture:
-        """Returns the texture that has already been previously loaded, or NULL
-        otherwise.
-        """
-    @overload
-    @staticmethod
     def get_texture(
         filename: StrOrBytesPath,
         alpha_filename: StrOrBytesPath,
         primary_file_num_channels: int = ...,
         alpha_file_channel: int = ...,
         read_mipmaps: bool = ...,
-    ) -> Texture: ...
+    ) -> Texture:
+        """Returns the texture that has already been previously loaded, or NULL
+        otherwise.
+        """
+    @overload
+    @staticmethod
+    def get_texture(filename: StrOrBytesPath, primary_file_num_channels: int = ..., read_mipmaps: bool = ...) -> Texture: ...
     @overload
     @staticmethod
     def load_texture(
         filename: StrOrBytesPath,
+        alpha_filename: StrOrBytesPath,
         primary_file_num_channels: int = ...,
+        alpha_file_channel: int = ...,
         read_mipmaps: bool = ...,
         options: LoaderOptions = ...,
     ) -> Texture:
@@ -10304,9 +10306,7 @@ class TexturePool:
     @staticmethod
     def load_texture(
         filename: StrOrBytesPath,
-        alpha_filename: StrOrBytesPath,
         primary_file_num_channels: int = ...,
-        alpha_file_channel: int = ...,
         read_mipmaps: bool = ...,
         options: LoaderOptions = ...,
     ) -> Texture: ...

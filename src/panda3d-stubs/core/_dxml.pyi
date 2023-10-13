@@ -877,7 +877,7 @@ class TiXmlHandle:
     @overload
     def FirstChildElement(self, _value: str) -> TiXmlHandle: ...
     @overload
-    def Child(self, index: int) -> TiXmlHandle:
+    def Child(self, value: str, index: int) -> TiXmlHandle:
         """`(self, value: str, index: int)`:
         Return a handle to the "index" child with the given name.
         The first child is 0, the second 1, etc.
@@ -887,11 +887,11 @@ class TiXmlHandle:
         The first child is 0, the second 1, etc.
         """
     @overload
-    def Child(self, value: str, index: int) -> TiXmlHandle: ...
+    def Child(self, index: int) -> TiXmlHandle: ...
     @overload
     def Child(self, _value: str, index: int) -> TiXmlHandle: ...
     @overload
-    def ChildElement(self, index: int) -> TiXmlHandle:
+    def ChildElement(self, value: str, index: int) -> TiXmlHandle:
         """`(self, value: str, index: int)`:
         Return a handle to the "index" child element with the given name.
         The first child element is 0, the second 1, etc. Note that only TiXmlElements
@@ -903,7 +903,7 @@ class TiXmlHandle:
         are indexed: other types are not counted.
         """
     @overload
-    def ChildElement(self, value: str, index: int) -> TiXmlHandle: ...
+    def ChildElement(self, index: int) -> TiXmlHandle: ...
     @overload
     def ChildElement(self, _value: str, index: int) -> TiXmlHandle: ...
     def ToNode(self) -> TiXmlNode:

@@ -23,13 +23,13 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     @property
     def filename(self) -> Filename: ...
     @overload
-    def __init__(self, name: str = ...) -> None:
+    def __init__(self, __param0: MovieAudio) -> None:
         """This constructor returns a null audio stream --- a stream of total silence,
         at 8000 samples per second.  To get more interesting audio, you need to
         construct a subclass of this class.
         """
     @overload
-    def __init__(self, __param0: MovieAudio) -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def open(self) -> MovieAudioCursor:
@@ -199,12 +199,12 @@ class FlacAudioCursor(MovieAudioCursor):
     """
 
     @overload
-    def __init__(self, __param0: FlacAudioCursor) -> None:
+    def __init__(self, src: ConfigVariableFilename | Filename | FlacAudio, stream: istream) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: ConfigVariableFilename | Filename | FlacAudio, stream: istream) -> None: ...
+    def __init__(self, __param0: FlacAudioCursor) -> None: ...
 
 class MovieVideo(TypedWritableReferenceCount, Namable):
     """A MovieVideo is actually any source that provides a sequence of video
@@ -221,13 +221,13 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
     @property
     def subfile_info(self) -> SubfileInfo: ...
     @overload
-    def __init__(self, name: str = ...) -> None:
+    def __init__(self, __param0: MovieVideo) -> None:
         """This constructor returns a null video stream --- a stream of plain blue and
         white frames that last one second each.  To get more interesting video, you
         need to construct a subclass of this class.
         """
     @overload
-    def __init__(self, __param0: MovieVideo) -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def open(self) -> MovieVideoCursor:
@@ -478,12 +478,12 @@ class OpusAudioCursor(MovieAudioCursor):
     """
 
     @overload
-    def __init__(self, __param0: OpusAudioCursor) -> None:
+    def __init__(self, src: ConfigVariableFilename | Filename | OpusAudio, stream: istream) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: ConfigVariableFilename | Filename | OpusAudio, stream: istream) -> None: ...
+    def __init__(self, __param0: OpusAudioCursor) -> None: ...
 
 class UserDataAudio(MovieAudio):
     """A UserDataAudio is a way for the user to manually supply raw audio samples.
@@ -501,7 +501,7 @@ class UserDataAudio(MovieAudio):
     @overload
     def __init__(self, rate: int, channels: int, remove_after_read: bool = ...) -> None: ...
     @overload
-    def append(self, str: str) -> None:
+    def append(self, src: Datagram | DatagramIterator, len: int = ...) -> None:
         """`(self, src: DatagramIterator, len: int = ...)`:
         Appends audio samples to the buffer from a datagram.  This is intended to
         make it easy to send streaming raw audio over a network.
@@ -512,7 +512,7 @@ class UserDataAudio(MovieAudio):
         but it may be convenient to deal with samples in python.
         """
     @overload
-    def append(self, src: Datagram | DatagramIterator, len: int = ...) -> None: ...
+    def append(self, str: str) -> None: ...
     def done(self) -> None:
         """Promises not to append any more samples, ie, this marks the end of the
         audio stream.
@@ -548,12 +548,12 @@ class VorbisAudioCursor(MovieAudioCursor):
     """
 
     @overload
-    def __init__(self, __param0: VorbisAudioCursor) -> None:
+    def __init__(self, src: ConfigVariableFilename | Filename | VorbisAudio, stream: istream) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: ConfigVariableFilename | Filename | VorbisAudio, stream: istream) -> None: ...
+    def __init__(self, __param0: VorbisAudioCursor) -> None: ...
 
 class WavAudio(MovieAudio):
     """A native PCM .wav loader.  Supported formats are linear PCM, IEEE float,
@@ -575,9 +575,9 @@ class WavAudioCursor(MovieAudioCursor):
     """
 
     @overload
-    def __init__(self, __param0: WavAudioCursor) -> None:
+    def __init__(self, src: ConfigVariableFilename | Filename | WavAudio, stream: istream) -> None:
         """Reads the .wav header from the indicated stream.  This leaves the read
         pointer positioned at the start of the data.
         """
     @overload
-    def __init__(self, src: ConfigVariableFilename | Filename | WavAudio, stream: istream) -> None: ...
+    def __init__(self, __param0: WavAudioCursor) -> None: ...

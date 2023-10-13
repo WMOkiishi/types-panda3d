@@ -201,7 +201,7 @@ class PNMTextMaker(FreetypeFont):
     A_center: Final = 2
     ACenter: Final = 2
     @overload
-    def __init__(self, copy: FreetypeFont) -> None:
+    def __init__(self, font_filename: StrOrBytesPath, face_index: int) -> None:
         """`(self, font_filename: Filename, face_index: int)`:
         The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load
@@ -212,7 +212,7 @@ class PNMTextMaker(FreetypeFont):
         memory buffer instead of from a named file.
         """
     @overload
-    def __init__(self, font_filename: StrOrBytesPath, face_index: int) -> None: ...
+    def __init__(self, copy: FreetypeFont) -> None: ...
     @overload
     def __init__(self, font_data: str, data_length: int, face_index: int) -> None: ...
     def is_valid(self) -> bool:

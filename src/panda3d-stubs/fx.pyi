@@ -310,7 +310,7 @@ class NonlinearImager:
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     @overload
-    def add_screen(self, screen: ProjectionScreen) -> int:
+    def add_screen(self, screen: NodePath, name: str) -> int:
         """`(self, screen: NodePath, name: str)`:
         Adds a new ProjectionScreen to the list of screens that will be processed
         by the NonlinearImager.  Each ProjectionScreen represents a view into the
@@ -333,7 +333,7 @@ class NonlinearImager:
         @deprecated Use the version that takes two parameters instead.
         """
     @overload
-    def add_screen(self, screen: NodePath, name: str) -> int: ...
+    def add_screen(self, screen: ProjectionScreen) -> int: ...
     def find_screen(self, screen: NodePath) -> int:
         """Returns the index number of the first appearance of the indicated screen
         within the imager's list, or -1 if it does not appear.

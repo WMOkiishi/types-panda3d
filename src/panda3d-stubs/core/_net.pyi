@@ -373,7 +373,7 @@ class ConnectionManager:
     def interfaces(self) -> Sequence[ConnectionManager.Interface]: ...
     def __init__(self) -> None: ...
     @overload
-    def open_UDP_connection(self, port: int = ...) -> Connection:
+    def open_UDP_connection(self, hostname: str, port: int, for_broadcast: bool = ...) -> Connection:
         """`(self, hostname: str, port: int, for_broadcast: bool = ...)`:
         Opens a socket for sending and/or receiving UDP packets.  If the port
         number is greater than zero, the UDP connection will be opened for
@@ -401,7 +401,7 @@ class ConnectionManager:
         communication.
         """
     @overload
-    def open_UDP_connection(self, hostname: str, port: int, for_broadcast: bool = ...) -> Connection: ...
+    def open_UDP_connection(self, port: int = ...) -> Connection: ...
     @overload
     def open_TCP_server_rendezvous(self, address: NetAddress | Socket_Address, backlog: int) -> Connection:
         """`(self, address: NetAddress, backlog: int)`:
@@ -437,9 +437,9 @@ class ConnectionManager:
         backlog is the maximum length of the queue of pending connections.
         """
     @overload
-    def open_TCP_server_rendezvous(self, port: int, backlog: int) -> Connection: ...
-    @overload
     def open_TCP_server_rendezvous(self, hostname: str, port: int, backlog: int) -> Connection: ...
+    @overload
+    def open_TCP_server_rendezvous(self, port: int, backlog: int) -> Connection: ...
     @overload
     def open_TCP_client_connection(self, address: NetAddress | Socket_Address, timeout_ms: int) -> Connection:
         """`(self, address: NetAddress, timeout_ms: int)`:
@@ -541,7 +541,7 @@ class ConnectionWriter:
     def get_current_queue_size(self) -> int:
         """Returns the current number of things in the queue."""
     @overload
-    def send(self, datagram: Datagram, connection: Connection, block: bool = ...) -> bool:
+    def send(self, datagram: Datagram, connection: Connection, address: NetAddress | Socket_Address, block: bool = ...) -> bool:
         """`(self, datagram: Datagram, connection: Connection, address: NetAddress, block: bool = ...)`:
         Enqueues a datagram for transmittal on the indicated socket.  This form of
         the function allows the specification of a destination host address, and so
@@ -569,13 +569,7 @@ class ConnectionWriter:
         instead, it will wait until there is space available.
         """
     @overload
-    def send(
-        self,
-        datagram: Datagram,
-        connection: Connection,
-        address: NetAddress | Socket_Address,
-        block: bool = ...,
-    ) -> bool: ...
+    def send(self, datagram: Datagram, connection: Connection, block: bool = ...) -> bool: ...
     def is_valid_for_udp(self, datagram: Datagram) -> bool:
         """Returns true if the datagram is small enough to be sent over a UDP packet,
         false otherwise.

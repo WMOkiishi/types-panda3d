@@ -1057,9 +1057,9 @@ class ShowInterval(CInterval):
     """An interval that calls NodePath::show()."""
 
     @overload
-    def __init__(self, __param0: ShowInterval) -> None: ...
-    @overload
     def __init__(self, node: NodePath, name: str = ...) -> None: ...
+    @overload
+    def __init__(self, __param0: ShowInterval) -> None: ...
 
 class WaitInterval(CInterval):
     """This interval does absolutely nothing, and is mainly useful for marking

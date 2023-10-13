@@ -322,7 +322,7 @@ class Physical(TypedReferenceCount):
     @property
     def objects(self) -> PhysicsObjectCollection: ...
     @overload
-    def __init__(self, total_objects: int = ..., pre_alloc: bool = ...) -> None:
+    def __init__(self, copy: Physical) -> None:
         """`(self, copy: Physical)`:
         copy constructor (note- does deep copy of pn's) but does NOT attach itself
         to its template's physicsmanager.
@@ -339,7 +339,7 @@ class Physical(TypedReferenceCount):
         the speed-vs-overhead deal.
         """
     @overload
-    def __init__(self, copy: Physical) -> None: ...
+    def __init__(self, total_objects: int = ..., pre_alloc: bool = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def get_physics_manager(self) -> PhysicsManager:
@@ -452,7 +452,7 @@ class ActorNode(PhysicalNode):
     """
 
     @overload
-    def __init__(self, name: str = ...) -> None:
+    def __init__(self, copy: ActorNode) -> None:
         """`(self, copy: ActorNode)`:
         Copy Constructor.
 
@@ -460,7 +460,7 @@ class ActorNode(PhysicalNode):
         Constructor
         """
     @overload
-    def __init__(self, copy: ActorNode) -> None: ...
+    def __init__(self, name: str = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def get_physics_object(self) -> PhysicsObject: ...
@@ -579,7 +579,7 @@ class LinearControlForce(LinearForce):
     """
 
     @overload
-    def __init__(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...) -> None:
+    def __init__(self, copy: LinearControlForce) -> None:
         """`(self, copy: LinearControlForce)`:
         Copy Constructor
 
@@ -587,7 +587,7 @@ class LinearControlForce(LinearForce):
         Vector Constructor
         """
     @overload
-    def __init__(self, copy: LinearControlForce) -> None: ...
+    def __init__(self, po: PhysicsObject = ..., a: float = ..., mass: bool = ...) -> None: ...
     def clear_physics_object(self) -> None:
         """encapsulating wrapper"""
     def set_physics_object(self, po: PhysicsObject) -> None:
@@ -620,7 +620,7 @@ class LinearCylinderVortexForce(LinearForce):
     """
 
     @overload
-    def __init__(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...) -> None:
+    def __init__(self, copy: LinearCylinderVortexForce) -> None:
         """`(self, copy: LinearCylinderVortexForce)`:
         copy Constructor
 
@@ -628,7 +628,7 @@ class LinearCylinderVortexForce(LinearForce):
         Simple Constructor
         """
     @overload
-    def __init__(self, copy: LinearCylinderVortexForce) -> None: ...
+    def __init__(self, radius: float = ..., length: float = ..., coef: float = ..., a: float = ..., md: bool = ...) -> None: ...
     def set_coef(self, coef: float) -> None: ...
     def get_coef(self) -> float: ...
     def set_radius(self, radius: float) -> None: ...
@@ -690,7 +690,7 @@ class LinearFrictionForce(LinearForce):
     """Friction-based drag force"""
 
     @overload
-    def __init__(self, coef: float = ..., a: float = ..., m: bool = ...) -> None:
+    def __init__(self, copy: LinearFrictionForce) -> None:
         """`(self, copy: LinearFrictionForce)`:
         copy constructor
 
@@ -698,7 +698,7 @@ class LinearFrictionForce(LinearForce):
         Constructor
         """
     @overload
-    def __init__(self, copy: LinearFrictionForce) -> None: ...
+    def __init__(self, coef: float = ..., a: float = ..., m: bool = ...) -> None: ...
     def set_coef(self, coef: float) -> None: ...
     def get_coef(self) -> float: ...
     setCoef = set_coef
@@ -713,7 +713,7 @@ class LinearJitterForce(LinearRandomForce):
     """
 
     @overload
-    def __init__(self, a: float = ..., m: bool = ...) -> None:
+    def __init__(self, copy: LinearJitterForce) -> None:
         """`(self, copy: LinearJitterForce)`:
         copy constructor
 
@@ -721,13 +721,13 @@ class LinearJitterForce(LinearRandomForce):
         constructor
         """
     @overload
-    def __init__(self, copy: LinearJitterForce) -> None: ...
+    def __init__(self, a: float = ..., m: bool = ...) -> None: ...
 
 class LinearNoiseForce(LinearRandomForce):
     """Repeating noise force vector."""
 
     @overload
-    def __init__(self, a: float = ..., m: bool = ...) -> None:
+    def __init__(self, copy: LinearNoiseForce) -> None:
         """`(self, copy: LinearNoiseForce)`:
         copy constructor
 
@@ -735,7 +735,7 @@ class LinearNoiseForce(LinearRandomForce):
         constructor
         """
     @overload
-    def __init__(self, copy: LinearNoiseForce) -> None: ...
+    def __init__(self, a: float = ..., m: bool = ...) -> None: ...
 
 class LinearSinkForce(LinearDistanceForce):
     """Attractor force.  Think black hole."""
@@ -777,7 +777,7 @@ class LinearVectorForce(LinearForce):
     """
 
     @overload
-    def __init__(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...) -> None:
+    def __init__(self, vec: Vec3Like, a: float = ..., mass: bool = ...) -> None:
         """`(self, vec: LVector3, a: float = ..., mass: bool = ...)`:
         Vector Constructor
 
@@ -790,7 +790,7 @@ class LinearVectorForce(LinearForce):
     @overload
     def __init__(self, copy: LinearVectorForce) -> None: ...
     @overload
-    def __init__(self, vec: Vec3Like, a: float = ..., mass: bool = ...) -> None: ...
+    def __init__(self, x: float = ..., y: float = ..., z: float = ..., a: float = ..., mass: bool = ...) -> None: ...
     @overload
     def set_vector(self, v: Vec3Like) -> None:
         """`(self, v: LVector3)`:
