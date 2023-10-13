@@ -145,7 +145,7 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
     without introducing ambiguity or redundancy.
     """
     # Store all possible parameter type expansions in a two-layer mapping.
-    param_types: dict[int, dict[str, tc.Type]] = {
+    expanded_types: dict[int, dict[str, tc.Type]] = {
         i: {
             param.name: get_param_type_replacement(param.type)
             for param in signature.parameters
@@ -156,64 +156,42 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
         if not sig_1.has_arity_overlap(sig_2):
             continue
         r1, r2 = tc.get(sig_1.return_type), tc.get(sig_2.return_type)
-        r1_subtypes_r2, r2_subtypes_r1 = r1 <= r2, r2 <= r1
         new_types_1: dict[str, tc.Type] = {}
         new_types_2: dict[str, tc.Type] = {}
         for param_1, param_2 in zip(sig_1.parameters, sig_2.parameters):
-            type_1 = param_types[i][param_1.name]
-            type_2 = param_types[j][param_2.name]
+            type_1 = expanded_types[i][param_1.name]
+            type_2 = expanded_types[j][param_2.name]
             if not tc.types_intersect(type_1, type_2):
                 break
-            current_type_1 = tc.get(param_1.type)
-            current_type_2 = tc.get(param_2.type)
-            if not (r1_subtypes_r2 or r2_subtypes_r1):
-                # If there's no subtype relationship between the return types,
-                # we want to remove as much overlap as possible.
-                new_types_1[param_1.name] = current_type_1 | (type_1 - type_2)
-                new_types_2[param_2.name] = current_type_2 | (type_2 - type_1)
-                continue
-            t1_subtypes_t2, t2_subtypes_t1 = type_1 <= type_2, type_2 <= type_1
-            # If the expanded types are the same, try not expanding one of them.
-            if t1_subtypes_t2 and t2_subtypes_t1:
-                if r1_subtypes_r2:
-                    type_1 = current_type_1
-                if r2_subtypes_r1:
-                    type_2 = current_type_2
-                t1_subtypes_t2, t2_subtypes_t1 = type_1 <= type_2, type_2 <= type_1
-                # Re-expand the broader parameter if we un-expanded both.
-                if r1_subtypes_r2 and r2_subtypes_r1:
-                    if not t2_subtypes_t1:
-                        type_2 = param_types[j][param_2.name]
-                    if not t1_subtypes_t2:
-                        type_1 = param_types[i][param_1.name]
-            if not t1_subtypes_t2:
-                if t2_subtypes_t1:
-                    # Make sure type_2 remains narrower than type_1.
-                    new_types_2[param_2.name] = current_type_2
-                # Avoid unnecessary overlap between the parameter types.
+            core_type_1 = tc.get(param_1.type)
+            core_type_2 = tc.get(param_2.type)
+            if not r1 >= r2 or type_1 < type_2 or core_type_1 < core_type_2:
+                # If the return type is narrower or incompatible, or if
+                # the parameter type is narrower, avoid any overlap in
+                # the expanded parameter type.
+                new_types_1[param_1.name] = core_type_1 | (type_1 - type_2)
+            elif param_2.named:
+                # Otherwise, just avoid some overlap between the parameter types.
                 # Skip this if the other parameter isn't named, though,
                 # as in practice it can usually be merged later on.
-                if param_2.named:
-                    new_type_1 = current_type_1 | (type_1 - current_type_2)
-                    # Don't make the type more complicated.
-                    if str(new_type_1).count('|') <= str(type_1).count('|'):
-                        new_types_1[param_1.name] = new_type_1
-            # This is the same as above, but with the parameters swapped.
-            if not t2_subtypes_t1:
-                if t1_subtypes_t2:
-                    new_types_1[param_1.name] = current_type_1
-                if param_1.named:
-                    new_type_2 = current_type_2 | (type_2 - current_type_1)
-                    if str(new_type_2).count('|') <= str(type_2).count('|'):
-                        new_types_2[param_2.name] = new_type_2
+                new_type_1 = core_type_1 | (type_1 - core_type_2)
+                # Don't make the type more complicated.
+                if str(new_type_1).count('|') <= str(type_1).count('|'):
+                    new_types_1[param_1.name] = new_type_1
+            if not r2 >= r1 or type_2 < type_1 or core_type_2 < core_type_1:
+                new_types_2[param_2.name] = core_type_2 | (type_2 - type_1)
+            elif param_1.named:
+                new_type_2 = core_type_2 | (type_2 - core_type_1)
+                if str(new_type_2).count('|') <= str(type_2).count('|'):
+                    new_types_2[param_2.name] = new_type_2
         # If the signatures intersect, apply the changes to their types.
         else:
-            param_types[i] |= new_types_1
-            param_types[j] |= new_types_2
+            expanded_types[i] |= new_types_1
+            expanded_types[j] |= new_types_2
     new_signatures: list[Signature] = []
     for i, signature in enumerate(signatures):
         new_parameters = [
-            attrs.evolve(param, type=str(param_types[i][param.name]))
+            attrs.evolve(param, type=str(expanded_types[i][param.name]))
             for param in signature.parameters
         ]
         new_signatures.append(attrs.evolve(signature, parameters=new_parameters))
