@@ -131,6 +131,9 @@ class MissingType(Type):
     def __str__(self) -> str:
         return ''
 
+    def __bool__(self) -> bool:
+        return False
+
 
 def atomize(*types: Type, follow_aliases: bool = True) -> Iterator[Type]:
     for typ in types:
