@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import builtins
+import sys
 from collections import defaultdict
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
-from sys import stdlib_module_names
 from typing import Any, Protocol
 
 from attrs import Factory, define, evolve, field
@@ -24,7 +26,7 @@ class StubRep(Protocol):
 
 
 @define
-class TypeVariable:
+class TypeVariable(StubRep):
     name: str
     parameters: Iterable[str] = field(default=(), converter=tuple)
 
@@ -40,7 +42,7 @@ class TypeVariable:
 
 
 @define
-class TypeAlias:
+class TypeAlias(StubRep):
     name: str
     alias_of: str
 
@@ -56,7 +58,7 @@ class TypeAlias:
 
 
 @define
-class Alias:
+class Alias(StubRep):
     name: str
     alias_of: str
     of_local: bool = field(default=False, kw_only=True)
@@ -76,7 +78,7 @@ class Alias:
 
 
 @define
-class Constant:
+class Constant(StubRep):
     name: str
     value: int | float | complex | str | bytes | None
 
@@ -126,12 +128,12 @@ class Signature:
         else:
             return f'({self.param_string})'
 
-    def copy(self, **changes: Any) -> 'Signature':
+    def copy(self, **changes: Any) -> Signature:
         if 'parameters' not in changes:
             changes['parameters'] = tuple((evolve(p) for p in self.parameters))
         return evolve(self, **changes)
 
-    def has_arity_overlap(self, other: 'Signature') -> bool:
+    def has_arity_overlap(self, other: Signature) -> bool:
         return not (
             self.min_arity() > other.max_arity()
             or self.max_arity() < other.min_arity()
@@ -171,7 +173,7 @@ class Signature:
 
 
 @define
-class Function:
+class Function(StubRep):
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
     decorators: Sequence[str] = field(default=(), kw_only=True, converter=tuple)
@@ -212,7 +214,7 @@ class Function:
 
 
 @define
-class Attribute:
+class Attribute(StubRep):
     name: str
     type: str
     read_only: bool = field(default=False, kw_only=True)
@@ -248,7 +250,7 @@ class Attribute:
 
 
 @define
-class Class:
+class Class(StubRep):
     name: str
     bases: Sequence[str] = field(default=(), converter=tuple)
     body: Mapping[str, StubRep] = Factory(dict)
@@ -341,7 +343,7 @@ class File:
 
     def import_lines(self) -> Iterator[str]:
         this_package = self.path.parts[0] if self.path.parts else None
-        extended_stdlib = stdlib_module_names | {'_typeshed', 'typing_extensions'}
+        extended_stdlib = sys.stdlib_module_names | {'_typeshed', 'typing_extensions'}
 
         stdlib_modules, other_modules, local_modules = set[str](), set[str](), set[str]()
         for module in self.imports:
