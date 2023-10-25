@@ -9,6 +9,7 @@ from typing import Any, Protocol
 
 from attrs import Factory, define, evolve, field
 
+from . import typecmp as tc
 from .util import (
     docstring_lines,
     flatten,
@@ -17,6 +18,12 @@ from .util import (
     names_within,
     with_comment,
 )
+
+
+def _convert_type(t: tc.Type | str) -> tc.Type:
+    if isinstance(t, str):
+        return tc.BasicType(t)
+    return t
 
 
 class StubRep(Protocol):
@@ -95,7 +102,7 @@ class Constant(StubRep):
 @define
 class Parameter:
     name: str
-    type: str = ''
+    type: tc.Type = field(default=tc.MissingType(), converter=_convert_type)
     is_optional: bool = field(default=False, kw_only=True)
     named: bool = field(default=True, kw_only=True)
 
@@ -104,19 +111,19 @@ class Parameter:
         if not self.named:
             s = '__' + s.lstrip('_')
         if self.type:
-            s += ': ' + self.type
+            s += f': {self.type}'
         if self.is_optional:
             s += ' = ...' if self.type else '=...'
         return s
 
     def get_dependencies(self) -> Iterator[str]:
-        return names_within(self.type)
+        return names_within(str(self.type))
 
 
 @define
 class Signature:
     parameters: Sequence[Parameter] = field(converter=tuple)
-    return_type: str
+    return_type: tc.Type = field(converter=_convert_type)
 
     @property
     def param_string(self) -> str:
@@ -148,7 +155,7 @@ class Signature:
         return len(self.parameters)
 
     def get_dependencies(self) -> Iterator[str]:
-        yield from names_within(self.return_type)
+        yield from names_within(str(self.return_type))
         for parameter in self.parameters:
             yield from parameter.get_dependencies()
 
@@ -216,7 +223,7 @@ class Function(StubRep):
 @define
 class Attribute(StubRep):
     name: str
-    type: str
+    type: tc.Type = field(converter=_convert_type)
     read_only: bool = field(default=False, kw_only=True)
     doc: str = field(default='', kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
@@ -225,7 +232,7 @@ class Attribute(StubRep):
         return f'Attribute {self.name!r} ({self.type})'
 
     def get_dependencies(self) -> Iterator[str]:
-        return names_within(self.type)
+        return names_within(str(self.type))
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         indent = get_indent(indent_level)

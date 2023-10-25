@@ -2,7 +2,7 @@ import builtins
 import itertools
 import logging
 from collections import defaultdict
-from collections.abc import Callable, Iterable, Iterator, Mapping, Set
+from collections.abc import Callable, Iterable, Iterator, Mapping
 from functools import cache
 from sys import stdlib_module_names
 from typing import Final
@@ -12,12 +12,11 @@ from .idb_interface import IDBType, get_all_types
 from .idbutil import type_is_exposed
 from .special_cases import EXTRA_COERCION, NO_COERCION, TYPE_NAME_OVERRIDES
 from .translation import ATOMIC_TYPES, make_class_name
-from .util import unpack_union
 
 _logger: Final = logging.getLogger(__name__)
 
 _modules: dict[str, str] = {}
-_param_type_replacements: dict[str, str] = {}
+_param_type_replacements: dict[tc.Type, tc.Type] = {}
 _enum_definitions: dict[str, str] = {}
 
 BUILTIN_NAMES: Final = frozenset(dir(builtins))
@@ -129,8 +128,8 @@ def make_type(idb_type: IDBType) -> tc.Type:
 
 
 def load_data() -> None:
-    coercions = defaultdict[str, set[str]](set)
-    typecasts = defaultdict[str, set[str]](set)
+    coercions = defaultdict[tc.Type, tc.Type](tc.BottomType)
+    typecasts = defaultdict[tc.Type, tc.Type](tc.BottomType)
     for idb_type in get_all_types():
         typecmp_type = make_type(idb_type)
         type_name = get_type_name(idb_type)
@@ -153,12 +152,14 @@ def load_data() -> None:
                 lib_name = idb_type.library_name.removeprefix('libp3')
                 _modules[type_name] = mod_name + '._' + lib_name
         for cast_to in explicit_cast_to(idb_type):
-            typecasts[get_type_name(cast_to)].add(type_name)
-        coercions[type_name].update(
-            get_type_name(t) for t in implicit_cast_from(idb_type)
+            typecasts[make_type(cast_to)] |= typecmp_type
+        coercions[typecmp_type] |= tc.unify_types(
+            make_type(t) for t in implicit_cast_from(idb_type)
         )
+    union_aliases: list[tc.AliasType] = []
     for k, v in TYPE_ALIASES.items():
         alias = tc.AliasType(k, tc.get(v))
+        union_aliases.append(alias)
         tc.register(alias)
     tc.register(
         tc.ProtocolType(
@@ -169,18 +170,15 @@ def load_data() -> None:
             ))
         )
     )
-    union_aliases = [(k, frozenset(unpack_union(v))) for k, v in TYPE_ALIASES.items()]
-    for cast_to_name in tuple(coercions.keys() | typecasts.keys()):  # freeze keys
-        cast_from_name = combine_types(
-            get_all_coercible(
-                cast_to_name,
-                coercion_map=coercions,
-                typecast_map=typecasts,
-                union_aliases=union_aliases,
-            )
+    for cast_to in tuple(coercions.keys() | typecasts.keys()):  # freeze keys
+        cast_from = get_all_coercible(
+            cast_to,
+            coercion_map=coercions,
+            typecast_map=typecasts,
+            union_aliases=union_aliases,
         )
-        if cast_from_name and cast_to_name != cast_from_name:
-            _param_type_replacements[cast_to_name] = cast_from_name
+        if cast_from and cast_from != cast_to:
+            _param_type_replacements[cast_to] = cast_from
 
 
 def recursive_superclasses(idb_type: IDBType) -> frozenset[IDBType]:
@@ -223,44 +221,43 @@ def implicit_cast_from(idb_type: IDBType) -> Iterator[IDBType]:
 
 
 def get_all_coercible(
-        cast_to: str,
-        *, coercion_map: Mapping[str, Set[str]],
-        typecast_map: Mapping[str, Set[str]],
-        union_aliases: Iterable[tuple[str, Set[str]]] = ()) -> set[str]:
-    """Based on `coercion_map`, return a set of the names of the types
-    that can be automatically coerced to the type with the given name.
+        cast_to: tc.Type,
+        *, coercion_map: Mapping[tc.Type, tc.Type],
+        typecast_map: Mapping[tc.Type, tc.Type],
+        union_aliases: Iterable[tc.AliasType] = ()) -> tc.Type:
+    """Based on `coercion_map`, return a type representing all the types
+    that can be automatically coerced to the given type.
     """
-    cast_from = {cast_to} | coercion_map[cast_to]
-    if (remove := NO_COERCION.get(cast_to)) is not None:
-        cast_from -= remove
-    for name in tuple(cast_from):  # freeze entries
-        cast_from |= typecast_map[name]
-    if (add := EXTRA_COERCION.get(cast_to)) is not None:
-        cast_from |= add
-    for alias, alias_of in union_aliases:
-        if cast_from >= alias_of:
-            cast_from -= alias_of
-            cast_from.add(alias)
+    type_name = str(cast_to)
+    cast_from = cast_to | coercion_map[cast_to]
+    if (remove := NO_COERCION.get(type_name)) is not None:
+        cast_from -= tc.unify_types(tc.get(t) for t in remove)
+    for part in tc.atomize(cast_from):
+        cast_from |= typecast_map[part]
+    if (add := EXTRA_COERCION.get(type_name)) is not None:
+        cast_from |= tc.unify_types(tc.get(t) for t in add)
+    for alias in union_aliases:
+        if cast_from >= alias:
+            cast_from = (cast_from - alias) | alias
     return cast_from
 
 
-def get_param_type_replacement(type_name: str) -> tc.Type:
+def get_param_type_replacement(typ: tc.Type) -> tc.Type:
     """Return a type expressing all types that can be
     automatically coerced to the given type.
     """
-    typ = tc.get(type_name)
-    while isinstance(typ, tc.AliasType):
-        typ = typ.alias_of
-    alias_of = str(typ)
+    alias_of = typ
+    while isinstance(alias_of, tc.AliasType):
+        alias_of = alias_of.alias_of
     replacement = _param_type_replacements.get(alias_of)
     if replacement is None:
-        return tc.get(type_name)
-    replacement_types = set(unpack_union(replacement))
+        return typ
+    replacement_types = set(tc.atomize(replacement, follow_aliases=False))
     if alias_of not in replacement_types:
-        return tc.get(replacement)
+        return replacement
     replacement_types.discard(alias_of)
-    replacement_types.add(type_name)
-    return tc.unify_types(tc.get(t) for t in replacement_types)
+    replacement_types.add(typ)
+    return tc.unify_types(replacement_types)
 
 
 def get_module(name: str) -> str | None:
@@ -313,10 +310,3 @@ def process_dependency(
     else:
         return False
     return True
-
-
-def combine_types(types: Iterable[str]) -> str:
-    """Return a string representing a type equivalent to the union
-    of the types represented by the given strings.
-    """
-    return str(tc.unify_types(tc.get(t) for t in types))

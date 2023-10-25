@@ -20,15 +20,10 @@ from .reps import (
     TypeAlias,
     TypeVariable,
 )
-from .typedata import (
-    combine_types,
-    get_mro,
-    get_param_type_replacement,
-    process_dependency,
-)
+from .typedata import get_mro, get_param_type_replacement, process_dependency
 
 _logger: Final = logging.getLogger(__name__)
-_absent_param: Final = Parameter('', 'Never', is_optional=True, named=False)
+_absent_param: Final = Parameter('_', tc.BottomType(), is_optional=True, named=False)
 
 PTA_NAME_REGEX: Final = re.compile(r'(?:Const)?PointerToArray_(\w+)')
 VECTOR_NAME_REGEX: Final = re.compile(
@@ -53,17 +48,16 @@ def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
         return None
     if (p.type and not q.type) or (q.type and not p.type):
         return None
-    p_type, q_type = tc.get(p.type), tc.get(q.type)
 
     # Make sure assigning an argument by name will still work
-    if p.named and not q.named and not q_type <= p_type:
+    if p.named and not q.named and not q.type <= p.type:
         return None
-    if q.named and not p.named and not p_type <= q_type:
+    if q.named and not p.named and not p.type <= q.type:
         return None
 
     return Parameter(
         p.name if p.named else q.name,
-        str(p_type | q_type),
+        p.type | q.type,
         is_optional=p.is_optional or q.is_optional,
         named=p.named or q.named,
     )
@@ -90,8 +84,7 @@ def merge_signatures(a: Signature, b: Signature, /) -> Signature | None:
         w1_locked |= q_changed
         w2_locked |= p_changed
         merged_params.append(pq)
-    merged_return = combine_types((a.return_type, b.return_type))
-    return Signature(merged_params, merged_return)
+    return Signature(merged_params, a.return_type | b.return_type)
 
 
 def sort_signatures(signatures: Sequence[Signature]) -> list[Signature]:
@@ -116,9 +109,8 @@ def sort_signatures(signatures: Sequence[Signature]) -> list[Signature]:
             if not (sig_1_first or sig_2_first):
                 # These signatures don't overlap.
                 break
-            p_type, q_type = tc.get(p.type), tc.get(q.type)
-            sig_1_first &= p_type <= q_type
-            sig_2_first &= q_type <= p_type
+            sig_1_first &= p.type <= q.type
+            sig_2_first &= q.type <= p.type
         if sig_1_first:
             define_after[i].add(j)
         elif sig_2_first:
@@ -155,7 +147,7 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
     for (i, sig_1), (j, sig_2) in combinations(enumerate(signatures), 2):
         if not sig_1.has_arity_overlap(sig_2):
             continue
-        r1, r2 = tc.get(sig_1.return_type), tc.get(sig_2.return_type)
+        r1, r2 = sig_1.return_type, sig_2.return_type
         new_types_1: dict[str, tc.Type] = {}
         new_types_2: dict[str, tc.Type] = {}
         for param_1, param_2 in zip(sig_1.parameters, sig_2.parameters):
@@ -163,8 +155,8 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
             type_2 = expanded_types[j][param_2.name]
             if not tc.types_intersect(type_1, type_2):
                 break
-            core_type_1 = tc.get(param_1.type)
-            core_type_2 = tc.get(param_2.type)
+            core_type_1 = param_1.type
+            core_type_2 = param_2.type
             if not r1 >= r2 or type_1 < type_2 or core_type_1 < core_type_2:
                 # If the return type is narrower or incompatible, or if
                 # the parameter type is narrower, avoid any overlap in
@@ -191,7 +183,7 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
     new_signatures: list[Signature] = []
     for i, signature in enumerate(signatures):
         new_parameters = [
-            attrs.evolve(param, type=str(expanded_types[i][param.name]))
+            attrs.evolve(param, type=expanded_types[i][param.name])
             for param in signature.parameters
         ]
         new_signatures.append(attrs.evolve(signature, parameters=new_parameters))
@@ -223,7 +215,7 @@ def process_function(function: Function, *, class_name: str | None = None) -> No
             other_param.named = False
         case Function(
             'assign', [Signature([_, copy_param])]
-        ) if copy_param.type == class_name:
+        ) if str(copy_param.type) == class_name:
             copy_param.type = 'Self'
 
 
@@ -239,9 +231,9 @@ def process_class(class_: Class) -> None:
         case {
             '__len__': _,
             '__getitem__': Function(
-                signatures=[Signature([_, Parameter(type='int')], item_type)]
+                signatures=[Signature([_, Parameter(type=index_type)], item_type)]
             )
-        }:
+        } if str(index_type) == 'int':
             iter_return_type = f'Iterator[{item_type}]' if item_type else 'Iterator'
             class_body['__iter__'] = Function(
                 '__iter__',
@@ -302,14 +294,14 @@ def process_pointer_to_array_class(pta: Class) -> None:
     """
     match pta.body.get('set_data'):
         case Function(
-            signatures=[Signature([_, Parameter('data', '') as param])]
+            signatures=[Signature([_, Parameter('data', tc.MissingType()) as param])]
         ):
             param.type = 'bytes'
     match pta.body.get('get_data'):
-        case Function(signatures=[Signature(return_type='') as sig]):
+        case Function(signatures=[Signature(return_type=tc.MissingType()) as sig]):
             sig.return_type = 'bytes'
     match pta.body.get('get_subdata'):
-        case Function(signatures=[Signature(return_type='') as sig]):
+        case Function(signatures=[Signature(return_type=tc.MissingType()) as sig]):
             sig.return_type = 'bytes'
     match pta.body:
         case {
@@ -336,12 +328,11 @@ def process_vector_class(vector: Class) -> None:
     if suffix == 'i' and not kind.startswith('Unaligned'):
         class_body.pop('__truediv__', None)
         class_body.pop('__itruediv__', None)
-    replaceable_names = {vector.name, ''}
     for name in RETURN_SELF_IN_VECTORS & class_body.keys():
         match class_body[name]:
             case Function(signatures=[
                 Signature(return_type=return_type) as sig
-            ]) if return_type in replaceable_names:
+            ]) if not return_type or str(return_type) == vector.name:
                 sig.return_type = 'Self'
     vector.body = class_body
 

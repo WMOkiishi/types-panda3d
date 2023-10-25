@@ -7,6 +7,7 @@ from typing import Final
 
 from attrs import evolve
 
+from . import typecmp as tc
 from .idb_interface import (
     IDBElement,
     IDBFunction,
@@ -58,7 +59,7 @@ from .translation import (
     make_class_name,
     make_method_name,
 )
-from .typedata import TYPE_ALIASES, get_type_name
+from .typedata import TYPE_ALIASES, get_type_name, make_type
 from .util import is_dunder
 
 _logger: Final = logging.getLogger(__name__)
@@ -177,13 +178,16 @@ def make_typedef_rep(idb_type: IDBType) -> Alias:
 
 def make_attribute_rep(element: IDBElement) -> Attribute:
     """Return an attribute representation of an element known to interrogate."""
-    type_name = get_type_name(element.type)
+    if (override := ATTR_TYPE_OVERRIDES.get(element.scoped_name)) is not None:
+        attr_type = tc.get(override)
+    else:
+        attr_type = make_type(element.type)
     if element.is_sequence:
         if element.has_setter:
             seq_type = 'MutableSequence'
         else:
             seq_type = 'Sequence'
-        type_name = f'{seq_type}[{type_name}]' if type_name else seq_type
+        attr_type = f'{seq_type}[{attr_type}]' if attr_type else seq_type
         read_only = True
     elif element.is_mapping:
         getter_wrapper = element.getter.wrappers[0]
@@ -192,21 +196,21 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
         else:
             t = getter_wrapper.parameters[0].type
         from_type = get_type_name(t) or 'Any'
-        to_type = type_name or 'Any'
+        to_type = attr_type or 'Any'
         if element.has_setter:
             map_type = 'MutableMapping'
         else:
             map_type = 'Mapping'
-        type_name = f'{map_type}[{from_type}, {to_type}]'
+        attr_type = f'{map_type}[{from_type}, {to_type}]'
         read_only = True
     else:
         read_only = not element.has_setter
         if element.has_has_function:
-            type_name += ' | None'
+            attr_type |= tc.BasicType('None')
     doc = comment_to_docstring(element.comment)
     return Attribute(
         check_keyword(element.name),
-        ATTR_TYPE_OVERRIDES.get(element.scoped_name, type_name),
+        attr_type,
         read_only=read_only,
         doc=doc,
         comment=get_comment(element.scoped_name),
@@ -225,7 +229,7 @@ def make_signature_rep(
     elif function is not None and function.is_method and function.name in RETURN_SELF:
         return_type = 'Self'
     else:
-        return_type = get_type_name(wrapper.return_type)
+        return_type = make_type(wrapper.return_type)
     params: list[Parameter] = []
     if ensure_self_param:
         params.append(Parameter('self'))
@@ -236,7 +240,7 @@ def make_signature_rep(
             continue
         params.append(Parameter(
             check_keyword(param.name),
-            get_type_name(param.type),
+            make_type(param.type),
             is_optional=param.is_optional,
             named=param.has_name,
         ))
@@ -279,12 +283,12 @@ def make_function_rep(function: IDBFunction) -> Function:
             for j, param in enumerate(signature.parameters):
                 param_override = param_overrides.get((i, j))
                 if param_override is not None:
-                    param.type = param_override
+                    param.type = tc.get(param_override)
         return_override = return_overrides.get(i)
         if return_override is None and not signature.return_type:
             return_override = DEFAULT_RETURNS.get(function.name)
         if return_override is not None:
-            signature.return_type = return_override
+            signature.return_type = tc.get(return_override)
         signatures.append(signature)
     if len(sigs_by_doc) <= 1:
         doc = ''.join(sigs_by_doc)
