@@ -105,18 +105,27 @@ def get_type_name(idb_type: IDBType) -> str:
 @cache
 def make_type(idb_type: IDBType) -> tc.Type:
     type_name = get_type_name(idb_type)
-    if idb_type.is_typedef:
-        typ = tc.AliasType(
-            type_name, make_type(idb_type.wrapped_type),
-        )
+    if not type_name:
+        return tc.MissingType()
+    if idb_type.is_wrapped:
+        return make_type(idb_type.wrapped_type)
+    elif not type_name:
+        return tc.MissingType()
+    elif idb_type.is_atomic:
+        if type_name == 'float':
+            return tc.ProtocolType(type_name, frozenset({tc.BasicType('int')}))
+        return tc.BasicType(type_name)
+    elif idb_type.is_typedef:
+        if not idb_type.is_global:
+            return make_type(idb_type.wrapped_type)
+        return tc.AliasType(type_name, make_type(idb_type.wrapped_type))
     else:
         bases: list[tc.ClassType] = []
         for derivation in idb_type.derivations:
             base = make_type(derivation)
             assert isinstance(base, tc.ClassType)
             bases.append(base)
-        typ = tc.ClassType(type_name, bases)
-    return typ
+        return tc.ClassType(type_name, bases)
 
 
 def load_data() -> None:
