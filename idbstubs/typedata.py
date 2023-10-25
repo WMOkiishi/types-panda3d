@@ -132,6 +132,7 @@ def load_data() -> None:
     coercions = defaultdict[str, set[str]](set)
     typecasts = defaultdict[str, set[str]](set)
     for idb_type in get_all_types():
+        typecmp_type = make_type(idb_type)
         type_name = get_type_name(idb_type)
         if idb_type.is_wrapped:
             continue
@@ -143,12 +144,14 @@ def load_data() -> None:
             else:
                 definition = 'int'
             _enum_definitions[type_name] = definition
+            tc.register(typecmp_type)
             continue
-        if idb_type.is_global and not idb_type.is_nested:
-            tc.register(make_type(idb_type))
-            mod_name = idb_type.module_name
-            lib_name = idb_type.library_name.removeprefix('libp3')
-            _modules[type_name] = mod_name + '._' + lib_name
+        if idb_type.is_global:
+            tc.register(typecmp_type)
+            if not idb_type.is_nested:
+                mod_name = idb_type.module_name
+                lib_name = idb_type.library_name.removeprefix('libp3')
+                _modules[type_name] = mod_name + '._' + lib_name
         for cast_to in explicit_cast_to(idb_type):
             typecasts[get_type_name(cast_to)].add(type_name)
         coercions[type_name].update(
