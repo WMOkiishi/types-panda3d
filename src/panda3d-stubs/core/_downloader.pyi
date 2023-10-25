@@ -189,7 +189,7 @@ class URLSpec:
     @property
     def ssl(self) -> bool: ...
     @overload
-    def __init__(self, __param0: URLSpec = ...) -> None:
+    def __init__(self, __param0: URL = ...) -> None:
         """Creates a URLSpec by appending a path to the end of the old URLSpec,
         inserting an intervening forward slash if necessary.
         """
@@ -1036,7 +1036,7 @@ class DocumentSpec:
     request_mode: _DocumentSpec_RequestMode
     cache_control: _DocumentSpec_CacheControl
     @overload
-    def __init__(self, copy: DocumentSpec = ...) -> None: ...
+    def __init__(self, copy: DocumentSpec | URL = ...) -> None: ...
     @overload
     def __init__(self, url: URLSpec | str) -> None: ...
     def __eq__(self, __other: object) -> bool: ...

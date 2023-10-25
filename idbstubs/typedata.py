@@ -238,7 +238,7 @@ def get_all_coercible(
         cast_from |= tc.unify_types(tc.get(t) for t in add)
     for alias in union_aliases:
         if cast_from >= alias:
-            cast_from = (cast_from - alias) | alias
+            cast_from = tc.soft_difference(cast_from, alias) | alias
     return cast_from
 
 
@@ -249,15 +249,10 @@ def get_param_type_replacement(typ: tc.Type) -> tc.Type:
     alias_of = typ
     while isinstance(alias_of, tc.AliasType):
         alias_of = alias_of.alias_of
-    replacement = _param_type_replacements.get(alias_of)
-    if replacement is None:
-        return typ
-    replacement_types = set(tc.atomize(replacement, follow_aliases=False))
-    if alias_of not in replacement_types:
-        return replacement
-    replacement_types.discard(alias_of)
-    replacement_types.add(typ)
-    return tc.unify_types(replacement_types)
+    replacement = _param_type_replacements.get(alias_of, typ)
+    if alias_of != typ:
+        replacement = typ | tc.soft_difference(replacement, alias_of)
+    return replacement
 
 
 def get_module(name: str) -> str | None:

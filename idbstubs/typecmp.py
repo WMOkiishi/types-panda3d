@@ -174,6 +174,13 @@ def types_intersect(a: Type, b: Type, /) -> bool:
     return False
 
 
+def soft_difference(a: Type, b: Type, /) -> Type:
+    return unify_types(
+        t for t in atomize(a, follow_aliases=False)
+        if not t <= b
+    )
+
+
 def register(typ: Type) -> None:
     key = str(typ)
     if key in _type_cache:

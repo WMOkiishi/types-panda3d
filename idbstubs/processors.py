@@ -166,16 +166,15 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
                 # Otherwise, just avoid some overlap between the parameter types.
                 # Skip this if the other parameter isn't named, though,
                 # as in practice it can usually be merged later on.
-                new_type_1 = core_type_1 | (type_1 - core_type_2)
-                # Don't make the type more complicated.
-                if str(new_type_1).count('|') <= str(type_1).count('|'):
-                    new_types_1[param_1.name] = new_type_1
+                new_types_1[param_1.name] = (
+                    core_type_1 | tc.soft_difference(type_1, core_type_2)
+                )
             if not r2 >= r1 or type_2 < type_1 or core_type_2 < core_type_1:
                 new_types_2[param_2.name] = core_type_2 | (type_2 - type_1)
             elif param_1.named:
-                new_type_2 = core_type_2 | (type_2 - core_type_1)
-                if str(new_type_2).count('|') <= str(type_2).count('|'):
-                    new_types_2[param_2.name] = new_type_2
+                new_types_2[param_2.name] = (
+                    core_type_2 | tc.soft_difference(type_2, core_type_1)
+                )
         # If the signatures intersect, apply the changes to their types.
         else:
             expanded_types[i] |= new_types_1
