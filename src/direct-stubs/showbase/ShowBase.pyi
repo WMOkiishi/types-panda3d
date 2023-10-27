@@ -136,7 +136,7 @@ class ShowBase(DirectObject):
     cTrav: CollisionTraverser | Literal[0]
     shadowTrav: CollisionTraverser | Literal[0]
     cTravStack: Stack[CollisionTraverser]
-    appTrav: CollisionTraverser | Literal[0]
+    appTrav: Any | Literal[0]
     dgTrav: DataGraphTraverser
     recorder: RecorderController | None
     loader: Loader
