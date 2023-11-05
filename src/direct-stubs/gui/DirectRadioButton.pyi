@@ -1,15 +1,17 @@
 __all__ = ['DirectRadioButton']
 
+from _typeshed import SupportsGetItem
 from collections.abc import Iterable
 from typing import Any
 
-from panda3d.core import LColor, NodePath
+from panda3d._typing import Vec4Like
+from panda3d.core import NodePath
 
 from .DirectButton import DirectButton
 from .DirectLabel import DirectLabel
 
 class DirectRadioButton(DirectButton):
-    colors: list[LColor] | None
+    colors: SupportsGetItem[int, Vec4Like] | None
     indicator: DirectLabel
     def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
     def check(self) -> None: ...

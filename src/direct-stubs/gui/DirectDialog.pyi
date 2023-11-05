@@ -10,6 +10,7 @@ __all__ = [
 ]
 
 from _typeshed import Unused
+from collections.abc import Sequence
 from typing import Any, ClassVar
 
 from panda3d.core import NodePath
@@ -30,7 +31,7 @@ class DirectDialog(DirectFrame):
     def show(self) -> None: ...  # type: ignore[override]
     def hide(self) -> None: ...  # type: ignore[override]
     def buttonCommand(self, value: Any, event: Unused = None) -> None: ...
-    def setMessage(self, message: str) -> None: ...
+    def setMessage(self, message: str | Sequence[str] | None) -> None: ...
     def cleanup(self) -> None: ...
 
 class OkDialog(DirectDialog): ...

@@ -3,13 +3,12 @@ __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, ClassVar, Final, Literal, TypeVar, overload
-from typing_extensions import ParamSpec, Self, TypeAlias
+from typing_extensions import Self, TypeAlias
 
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGFrameStyle, PGItem, PStatCollector
 
 _T = TypeVar('_T')
-_P = ParamSpec('_P')
 
 _Args: TypeAlias = tuple[Any, ...] | list[Any] | set[Any]
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
@@ -43,26 +42,15 @@ class DirectGuiBase(DirectObject):
     def __setitem__(self, key: str, value: Any) -> None: ...
     def __getitem__(self, option: str) -> Any: ...
     cget = __getitem__
-    @overload
     def createcomponent(
         self,
         componentName: str,
         componentAliases: Iterable[tuple[str, str]],
         componentGroup: str,
-        widgetClass: Callable[_P, _T],
-        *widgetArgs: _P.args,
-        **kw: _P.kwargs,
+        widgetClass: Callable[..., _T],
+        *widgetArgs: Any,
+        **kw: Any,
     ) -> _T: ...
-    @overload
-    def createcomponent(
-        self,
-        componentName: str,
-        componentAliases: Iterable[tuple[str, str]],
-        componentGroup: str,
-        widgetClass: None,
-        *widgetArgs: object,
-        **kw: object,
-    ) -> None: ...
     def component(self, name: str) -> Any: ...
     def components(self) -> list[str]: ...
     def hascomponent(self, component: str) -> bool: ...
