@@ -1,10 +1,10 @@
 __all__ = ['PackageInfo']
 
+from _typeshed import Incomplete
 from collections.abc import Generator
 from typing import ClassVar
 from typing_extensions import Final, Literal
 
-from direct._typing import Incomplete
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import Filename, HTTPClient, PStatCollector, TiXmlElement
 

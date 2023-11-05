@@ -11,6 +11,5 @@ _ObjectGenT = TypeVar('_ObjectGenT', covariant=True, bound=ObjectGen)
 
 AnyReal = TypeVar('AnyReal', int, float)  # noqa: Y001
 
-Incomplete: TypeAlias = Any
 Obj: TypeAlias = tuple[str, _NodePathT, _ObjectGenT, Any, Any, Mapping[str, Any], Vec4Like]
 Unused: TypeAlias = object

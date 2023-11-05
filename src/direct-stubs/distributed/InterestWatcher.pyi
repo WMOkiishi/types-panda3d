@@ -1,6 +1,6 @@
+from _typeshed import Incomplete
 from typing import ClassVar
 
-from direct._typing import Incomplete
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.DoInterestManager import DoInterestManager
 from direct.showbase.DirectObject import DirectObject
