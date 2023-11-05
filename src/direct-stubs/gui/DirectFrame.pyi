@@ -1,22 +1,22 @@
 __all__ = ['DirectFrame']
 
-from collections.abc import Sequence
-from typing import Any, ClassVar, Literal
-from typing_extensions import TypeAlias
+from collections.abc import Callable, Sequence
+from typing import ClassVar, Literal
+from typing_extensions import Unpack
 
-from panda3d.core import NodePath, Texture
+from panda3d.core import NodePath
 
+from ._typing import FrameKeywords, MaybeGeomOrSequence, MaybeImageOrSequence, PGItemT
 from .DirectGuiBase import DirectGuiWidget
 
-_MaybeGeom: TypeAlias = NodePath | str | None
-_MaybeImage: TypeAlias = NodePath | Texture | tuple[str, str] | str | None
-
-class DirectFrame(DirectGuiWidget):
+class DirectFrame(DirectGuiWidget[PGItemT]):
     DefDynGroups: ClassVar[tuple[Literal['text'], Literal['geom'], Literal['image']]]
-    def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
+    def __init__(
+        self, parent: NodePath | None = None, *, pgFunc: Callable[[str], PGItemT] = ..., **kw: Unpack[FrameKeywords]
+    ) -> None: ...
     def clearText(self) -> None: ...
     def setText(self, text: str | Sequence[str] | None = None) -> None: ...
     def clearGeom(self) -> None: ...
-    def setGeom(self, geom: _MaybeGeom | Sequence[_MaybeGeom] = None) -> None: ...
+    def setGeom(self, geom: MaybeGeomOrSequence = None) -> None: ...
     def clearImage(self) -> None: ...
-    def setImage(self, image: _MaybeImage | Sequence[_MaybeImage] = None) -> None: ...
+    def setImage(self, image: MaybeImageOrSequence = None) -> None: ...

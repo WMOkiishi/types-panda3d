@@ -1,14 +1,15 @@
 __all__ = ['DirectButton']
 
 from _typeshed import Unused
-from typing import Any
+from typing_extensions import Unpack
 
-from panda3d.core import NodePath
+from panda3d.core import NodePath, PGButton
 
+from ._typing import ButtonKeywords
 from .DirectFrame import DirectFrame
 
-class DirectButton(DirectFrame):
-    def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
+class DirectButton(DirectFrame[PGButton]):
+    def __init__(self, parent: NodePath | None = None, **kw: Unpack[ButtonKeywords]) -> None: ...
     def setCommandButtons(self) -> None: ...
     def commandFunc(self, event: Unused) -> None: ...
     def setClickSound(self) -> None: ...

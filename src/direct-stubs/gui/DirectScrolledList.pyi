@@ -1,19 +1,24 @@
 __all__ = ['DirectScrolledList', 'DirectScrolledListItem']
 
-from typing import Any, ClassVar
+from collections.abc import Callable, Iterable, Sequence
+from typing import Any, ClassVar, Literal
+from typing_extensions import TypeAlias, Unpack
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import NodePath
 
+from ._typing import ButtonKeywords, FrameKeywords, PGItemT
 from .DirectButton import DirectButton
 from .DirectFrame import DirectFrame
 
+_TextProperties_Alignment: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
+
 class DirectScrolledListItem(DirectButton):
     notify: ClassVar[Notifier]
-    def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
+    def __init__(self, parent: NodePath | None = None, **kw: Unpack[ButtonKeywords]) -> None: ...
     def select(self) -> None: ...
 
-class DirectScrolledList(DirectFrame):
+class DirectScrolledList(DirectFrame[PGItemT]):
     notify: ClassVar[Notifier]
     index: int
     nextItemID: int
@@ -21,7 +26,25 @@ class DirectScrolledList(DirectFrame):
     decButton: DirectButton
     itemFrame: DirectFrame
     currentSelected: DirectScrolledListItem
-    def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
+    def __init__(
+        self,
+        parent: NodePath | None = None,
+        *,
+        pgFunc: Callable[[str], PGItemT] = ...,
+        items: Sequence[DirectFrame | str] = ...,
+        itemsAlign: _TextProperties_Alignment = 2,
+        itemsWordwrap=None,
+        command: Callable[..., object] | None = None,
+        extraArgs: Iterable[Any] = ...,
+        itemMakeFunction: Callable[[str, int, Any], DirectFrame] | None = None,
+        itemMakeExtraArgs: Any = ...,
+        numItemsVisible: int = 1,
+        scrollSpeed: float = 8,
+        forceHeight: float | None = None,
+        incButtonCallback: Callable[[], object] | None = None,
+        decButtonCallback: Callable[[], object] | None = None,
+        **kw: Unpack[FrameKeywords],
+    ) -> None: ...
     def setForceHeight(self) -> None: ...
     def recordMaxHeight(self) -> None: ...
     def setScrollSpeed(self) -> None: ...

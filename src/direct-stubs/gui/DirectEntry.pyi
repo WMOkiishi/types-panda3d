@@ -1,10 +1,12 @@
 __all__ = ['DirectEntry']
 
 from _typeshed import Unused
-from typing import Any, ClassVar, Final
+from collections.abc import Callable, Collection, Iterable
+from typing import Any, ClassVar, Final, Unpack
 
-from panda3d.core import ConfigVariableBool, NodePath, TextFont
+from panda3d.core import AudioSound, ConfigVariableBool, NodePath, PGEntry, TextFont
 
+from ._typing import FrameKeywords
 from .DirectFrame import DirectFrame
 from .OnscreenText import OnscreenText
 
@@ -12,13 +14,41 @@ ENTRY_FOCUS_STATE: Final = 0
 ENTRY_NO_FOCUS_STATE: Final = 1
 ENTRY_INACTIVE_STATE: Final = 2
 
-class DirectEntry(DirectFrame):
+class DirectEntry(DirectFrame[PGEntry]):
     directWtext: ClassVar[ConfigVariableBool]
     AllowCapNamePrefixes: ClassVar[tuple[str, ...]]
     ForceCapNamePrefixes: ClassVar[tuple[str, ...]]
     onscreenText: OnscreenText
     unicodeText: bool
-    def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
+    def __init__(
+        self,
+        parent: NodePath | None = None,
+        *,
+        pgFunc: Callable[[str], PGEntry] = ...,
+        entryFont: TextFont | None = None,
+        width: float = 10,
+        numLines: int = 1,
+        focus: bool = False,
+        cursorKeys: bool = True,
+        obscured: bool = False,
+        backgroundFocus: bool = False,
+        initialText: str = '',
+        overflow: bool = False,
+        command: Callable[..., object] | None = None,
+        extraArgs: list[Any] = ...,
+        failedCommand: Callable[..., object] | None = None,
+        failedExtraArgs: list[Any] = ...,
+        focusInCommand: Callable[..., object] | None = None,
+        focusInExtraArgs: Iterable[Any] = ...,
+        focusOutCommand: Callable[..., object] | None = None,
+        focusOutExtraArgs: Iterable[Any] = ...,
+        rolloverSound: AudioSound | None = ...,
+        clickSound: AudioSound | None = ...,
+        autoCapitalize: bool = False,
+        autoCapitalizeAllowPrefixes: Collection[str] = ...,
+        autoCapitalizeForcePrefixes: Collection[str] = ...,
+        **kw: Unpack[FrameKeywords],
+    ) -> None: ...
     def setup(self) -> None: ...
     def updateWidth(self) -> None: ...
     def updateNumLines(self) -> None: ...

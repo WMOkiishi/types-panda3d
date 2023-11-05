@@ -36,6 +36,7 @@ panda3d.core.VBase[2-4][DF]?.__pow__
 panda3d.\w+._\w+
 panda3d._typing
 direct._typing
+direct.gui._typing
 
 # These are set dynamically and may or may not exist.
 (direct.directscripts.gendocs.__warningregistry__)?

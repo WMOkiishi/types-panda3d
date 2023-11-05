@@ -3,10 +3,12 @@ __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, ClassVar, Final, Literal, TypeVar, overload
-from typing_extensions import Self, TypeAlias
+from typing_extensions import Self, TypeAlias, Unpack
 
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGFrameStyle, PGItem, PStatCollector
+
+from ._typing import GuiWidgetKeywords, PGItemT
 
 _T = TypeVar('_T')
 
@@ -62,19 +64,21 @@ class DirectGuiBase(DirectObject):
 def toggleGuiGridSnap() -> None: ...
 def setGuiGridSpacing(spacing: float) -> None: ...
 
-class DirectGuiWidget(DirectGuiBase, NodePath[PGItem]):
+class DirectGuiWidget(DirectGuiBase, NodePath[PGItemT]):
     snapToGrid: ClassVar[bool]
     gridSpacing: ClassVar[float]
     guiEdit: ClassVar[bool]
     inactiveInitState: ClassVar[Literal['normal', 'disabled']]
     guiDict: ClassVar[dict[str, DirectGuiWidget]]
-    guiItem: PGItem
+    guiItem: PGItemT
     stateNodePath: list[NodePath[PGItem]]
     frameStyle: list[PGFrameStyle]
     ll: LPoint3f
     ur: LPoint3f
     bounds: tuple[float, float, float, float]
-    def __init__(self, parent: NodePath | None = None, **kw: Any) -> None: ...
+    def __init__(
+        self, parent: NodePath | None = None, *, pgFunc: Callable[[str], PGItemT] = ..., **kw: Unpack[GuiWidgetKeywords]
+    ) -> None: ...
     def frameInitialiseFunc(self) -> None: ...
     def enableEdit(self) -> None: ...
     def disableEdit(self) -> None: ...
