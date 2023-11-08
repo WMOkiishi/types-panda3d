@@ -11,7 +11,8 @@ from .ParticleEffect import ParticleEffect
 class ForceGroup(DirectObject):
     notify: ClassVar[Notifier]
     id: ClassVar[int]
-    node: ForceGroup
+    name: str
+    node: ForceNode
     nodePath: NodePath[ForceNode]
     fEnabled: bool
     particleEffect: ParticleEffect | None
