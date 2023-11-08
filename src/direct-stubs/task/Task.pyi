@@ -77,7 +77,7 @@ class TaskManager:
         chainName: str,
         numThreads: int | None = None,
         tickClock: bool | None = None,
-        threadPriority: Literal[0, 1, 2, 3, None] = None,
+        threadPriority: Literal[0, 1, 2, 3] | None = None,
         frameBudget: float | None = None,
         frameSync: bool | None = None,
         timeslicePriority: bool | None = None,

@@ -30,7 +30,7 @@ class DirectManipulationControl(DirectObject):
     fScaling3D: bool
     fScaling1D: bool
     fMovable: bool
-    mode: Literal['select', 'camera', 'move', None]
+    mode: Literal['select', 'camera', 'move'] | None
     worldSpaceManip: bool
     useSeparateScaleHandles: bool
     actionEvents: list[Sequence[Any]]
