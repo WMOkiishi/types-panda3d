@@ -3,7 +3,7 @@ __all__ = ['Actor']
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterable, Mapping
 from typing import ClassVar, SupportsFloat
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, TypeAlias, deprecated
 
 from direct.directnotify.Notifier import Notifier
 from direct.interval.ActorInterval import ActorInterval
@@ -199,7 +199,9 @@ class Actor(DirectObject, NodePath):
         blendType: _BlendType | None = None,
         partName: str | None = None,
     ) -> None: ...
+    @deprecated('This method is deprecated.  You should use setBlend() instead.')
     def enable_blend(self, blendType: _BlendType = 1, partName: str | None = None) -> None: ...
+    @deprecated('This method is deprecated.  You should use setBlend() instead.')
     def disable_blend(self, partName: str | None = None) -> None: ...
     def set_control_effect(
         self, animName: str, effect: float, partName: str | None = None, lodName: str | None = None

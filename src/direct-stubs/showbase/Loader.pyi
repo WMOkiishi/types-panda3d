@@ -3,7 +3,7 @@ __all__ = ['Loader']
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Collection, Iterable, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, Self, TypeAlias
+from typing_extensions import Literal, Self, TypeAlias, deprecated
 
 from direct.directnotify.Notifier import Notifier
 from panda3d import core
@@ -205,10 +205,15 @@ class Loader(DirectObject):
         priority: int | None,
         blocking: Literal[False],
     ) -> _Callback: ...
+    @deprecated('This is now deprecated: call cb.cancel() instead.')
     def cancelRequest(self, cb: _Callback) -> None: ...
+    @deprecated('This is now deprecated: call cb.cancel() instead.')
     def isRequestPending(self, cb: _Callback) -> bool: ...
+    @deprecated('loader.loadModelOnce() is deprecated; use loader.loadModel() instead.')
     def loadModelOnce(self, modelPath: str) -> NodePath | None: ...
+    @deprecated('loader.loadModelCopy() is deprecated; use loader.loadModel() instead.')
     def loadModelCopy(self, modelPath: str, loaderOptions: LoaderOptions | None = None) -> NodePath | None: ...
+    @deprecated('loader.loadModelNode() is deprecated; use loader.loadModel() instead.')
     def loadModelNode(self, modelPath: str) -> PandaNode | None: ...
     def unload_model(self, model: NodePath | ModelNode | Filename | str) -> None: ...
     @overload

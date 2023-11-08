@@ -4,7 +4,7 @@ from _typeshed import StrOrBytesPath
 from collections.abc import Callable
 from types import ModuleType
 from typing import Any, ClassVar, overload
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, TypeAlias, deprecated
 
 from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
@@ -339,7 +339,9 @@ class ShowBase(DirectObject):
     def enable_sound_effects(self, bEnableSoundEffects: bool) -> None: ...
     def disable_all_audio(self) -> None: ...
     def enable_all_audio(self) -> None: ...
+    @deprecated('Use `.Loader.Loader.loadSfx()` instead.')
     def loadSfx(self, name: StrOrBytesPath) -> Any: ...
+    @deprecated('Use `.Loader.Loader.loadMusic()` instead.')
     def loadMusic(self, name: StrOrBytesPath) -> Any: ...
     def playSfx(
         self,

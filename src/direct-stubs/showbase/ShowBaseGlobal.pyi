@@ -1,6 +1,7 @@
 __all__: list[str] = []
 
 from typing import TypeVar
+from typing_extensions import deprecated
 
 from direct.tkpanels.Inspector import InspectorWindow
 from panda3d.core import (
@@ -31,5 +32,6 @@ aspect2d: NodePath[PGTop]
 hidden: NodePath[PandaNode]
 base: ShowBase  # only exists once an instance of ShowBase is created
 
+@deprecated('run() is deprecated, use base.run() instead')
 def run() -> None: ...
 def inspect(anObject: _T) -> InspectorWindow[_T]: ...
