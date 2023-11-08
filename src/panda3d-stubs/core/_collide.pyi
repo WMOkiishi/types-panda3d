@@ -1,6 +1,6 @@
 from collections.abc import MutableSequence, Sequence
 from typing import overload
-from typing_extensions import Self
+from typing_extensions import Self, deprecated
 
 from panda3d._typing import Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._dtoolbase import TypedObject
@@ -765,6 +765,7 @@ class CollisionHandlerEvent(CollisionHandler):
         again_pattern is thrown.  The first frame in which the collision is no
         longer detected, the out_pattern event is thrown.
         """
+    @deprecated('Use add_in_pattern() instead.')
     def set_in_pattern(self, in_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
@@ -791,6 +792,7 @@ class CollisionHandlerEvent(CollisionHandler):
         again_pattern is thrown.  The first frame in which the collision is no
         longer detected, the out_pattern event is thrown.
         """
+    @deprecated('Use add_again_pattern() instead.')
     def set_again_pattern(self, again_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.
@@ -815,6 +817,7 @@ class CollisionHandlerEvent(CollisionHandler):
         again_pattern is thrown.  The first frame in which the collision is no
         longer detected, the out_pattern event is thrown.
         """
+    @deprecated('Use add_out_pattern() instead.')
     def set_out_pattern(self, out_pattern: str) -> None:
         """This method is deprecated; it completely replaces all the in patterns that
         have previously been set with the indicated pattern.

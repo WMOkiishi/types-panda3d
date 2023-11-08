@@ -1,6 +1,6 @@
 from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
 
 from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
 from panda3d.core._collide import CollisionBox, CollisionCapsule, CollisionNode, CollisionPlane, CollisionSphere
@@ -318,6 +318,7 @@ class BulletCapsuleShape(BulletShape):
         """
     def get_radius(self) -> float:
         """Returns the radius that was used to construct this capsule."""
+    @deprecated('see get_height() instead.')
     def get_half_height(self) -> float:
         """Returns half of get_height().
         @deprecated see get_height() instead.
@@ -1857,26 +1858,37 @@ class BulletWorld(TypedReferenceCount):
     def clear_tick_callback(self) -> None: ...
     def set_filter_callback(self, obj: Callable | CallbackObject) -> None: ...
     def clear_filter_callback(self) -> None: ...
+    @deprecated('Please use BulletWorld::attach')
     def attach_ghost(self, node: BulletGhostNode) -> None:
         """@deprecated Please use BulletWorld::attach"""
+    @deprecated('Please use BulletWorld::remove')
     def remove_ghost(self, node: BulletGhostNode) -> None:
         """@deprecated Please use BulletWorld::remove"""
+    @deprecated('Please use BulletWorld::attach')
     def attach_rigid_body(self, node: BulletRigidBodyNode) -> None:
         """@deprecated Please use BulletWorld::attach"""
+    @deprecated('Please use BulletWorld::remove')
     def remove_rigid_body(self, node: BulletRigidBodyNode) -> None:
         """@deprecated Please use BulletWorld::remove"""
+    @deprecated('Please use BulletWorld::attach')
     def attach_soft_body(self, node: BulletSoftBodyNode) -> None:
         """@deprecated Please use BulletWorld::attach"""
+    @deprecated('Please use BulletWorld::remove')
     def remove_soft_body(self, node: BulletSoftBodyNode) -> None:
         """@deprecated Please use BulletWorld::remove"""
+    @deprecated('Please use BulletWorld::attach')
     def attach_character(self, node: BulletBaseCharacterControllerNode) -> None:
         """@deprecated Please use BulletWorld::attach"""
+    @deprecated('Please use BulletWorld::remove')
     def remove_character(self, node: BulletBaseCharacterControllerNode) -> None:
         """@deprecated Please use BulletWorld::remove"""
+    @deprecated('Please use BulletWorld::attach')
     def attach_vehicle(self, vehicle: BulletVehicle) -> None:
         """@deprecated Please use BulletWorld::attach"""
+    @deprecated('Please use BulletWorld::remove')
     def remove_vehicle(self, vehicle: BulletVehicle) -> None:
         """@deprecated Please use BulletWorld::remove"""
+    @deprecated('Please use BulletWorld::remove')
     def remove_constraint(self, constraint: BulletConstraint) -> None:
         """@deprecated Please use BulletWorld::remove"""
     def get_ghosts(self) -> tuple[BulletGhostNode, ...]: ...

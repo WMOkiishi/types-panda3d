@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
 
 from panda3d._typing import DoubleMat4Like, DoubleVec2Like, DoubleVec3Like, DoubleVec4Like, SearchPathLike, Vec4Like
 from panda3d.core._dtoolbase import TypeHandle
@@ -3601,6 +3601,7 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):  # type: ignore[misc]
         You may find it easiest to call these other methods on the EggData root
         node (they are defined on EggGroupNode).
         """
+    @deprecated('This method is used in support of single-texturing only.')
     def set_texture(self, texture: EggTexture) -> None:
         """Replaces the current list of textures with the indicated texture.
 

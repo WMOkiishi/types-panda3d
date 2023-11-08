@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from typing import overload
-from typing_extensions import Final, Literal, Self, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
 
 from panda3d._typing import Vec3Like
 from panda3d.core._dtoolutil import Filename, ostream
@@ -437,6 +437,7 @@ class AudioLoadRequest(AsyncTask):
         Equivalent to `req.done() and not req.cancelled()`.
         @see done()
         """
+    @deprecated('Use result() instead.')
     def get_sound(self) -> AudioSound:
         """Returns the sound that was loaded asynchronously, if any, or nullptr if
         there was an error.  It is an error to call this unless done() returns

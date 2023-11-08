@@ -76,3 +76,10 @@ def comment_to_docstring(comment: str) -> str:
         line = line.removesuffix('*/')
         docstring_lines.append(line.rstrip())
     return '\n'.join(docstring_lines).strip().replace('\\', '\\\\')
+
+
+def get_deprecation_note(doc: str) -> str | None:
+    for line in doc.splitlines():
+        if line.startswith('@deprecated'):
+            return line[12:]
+    return None

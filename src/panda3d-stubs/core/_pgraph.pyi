@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
 from typing import Any, ClassVar, Generic, TypeVar, overload
-from typing_extensions import Final, Literal, Never, Self, TypeAlias, final
+from typing_extensions import Final, Literal, Never, Self, TypeAlias, deprecated, final
 
 from panda3d._typing import Mat4Like, Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._display import DisplayRegion
@@ -1637,6 +1637,7 @@ class RenderEffects(TypedWritableReferenceCount):
         """Returns the nth effect in the state."""
     def is_empty(self) -> bool:
         """Returns true if the state is empty, false otherwise."""
+    @deprecated('in Python, use len(effects) instead, or effects.size() in C++.')
     def get_num_effects(self) -> int:
         """Returns the number of separate effects indicated in the state.
         @deprecated in Python, use len(effects) instead, or effects.size() in C++.
@@ -2383,6 +2384,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         Call clear_bounds() if you would like to return the bounding volume to its
         default behavior later.
         """
+    @deprecated('Use set_bounds() instead.')
     def set_bound(self, volume: BoundingVolume) -> None:
         """@deprecated Use set_bounds() instead."""
     def clear_bounds(self) -> None:
@@ -7078,6 +7080,7 @@ class ClipPlaneAttrib(RenderAttrib):
         """The following is the new, more general interface to the ClipPlaneAttrib."""
     @overload
     @staticmethod
+    @deprecated('Use add_on_plane() or add_off_plane() instead.')
     def make(op: _ClipPlaneAttrib_Operation, plane: PlaneNode) -> ClipPlaneAttrib:
         """Constructs a new ClipPlaneAttrib object that enables (or disables,
         according to op) the indicated plane(s).
@@ -7094,6 +7097,7 @@ class ClipPlaneAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
+    @deprecated('Use add_on_plane() or add_off_plane() instead.')
     def make(
         op: _ClipPlaneAttrib_Operation,
         plane1: PlaneNode,
@@ -7111,6 +7115,7 @@ class ClipPlaneAttrib(RenderAttrib):
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
+    @deprecated('ClipPlaneAttribs nowadays have a separate list of on_planes and')
     def get_operation(self) -> _ClipPlaneAttrib_Operation:
         """Returns the basic operation type of the ClipPlaneAttrib.  If this is O_set,
         the planes listed here completely replace any planes that were already on.
@@ -7122,6 +7127,7 @@ class ClipPlaneAttrib(RenderAttrib):
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('ClipPlaneAttribs nowadays have a separate list of on_planes and')
     def get_num_planes(self) -> int:
         """Returns the number of planes listed in the attribute.
 
@@ -7129,6 +7135,7 @@ class ClipPlaneAttrib(RenderAttrib):
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('ClipPlaneAttribs nowadays have a separate list of on_planes and')
     def get_plane(self, n: int) -> PlaneNode:
         """Returns the nth plane listed in the attribute.
 
@@ -7136,6 +7143,7 @@ class ClipPlaneAttrib(RenderAttrib):
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('ClipPlaneAttribs nowadays have a separate list of on_planes and')
     def has_plane(self, plane: PlaneNode) -> bool:
         """Returns true if the indicated plane is listed in the attrib, false
         otherwise.
@@ -7144,12 +7152,14 @@ class ClipPlaneAttrib(RenderAttrib):
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('Use add_on_plane() or add_off_plane() instead.')
     def add_plane(self, plane: PlaneNode) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes.
 
         @deprecated Use add_on_plane() or add_off_plane() instead.
         """
+    @deprecated('Use remove_on_plane() or remove_off_plane() instead.')
     def remove_plane(self, plane: PlaneNode) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes.
@@ -7380,6 +7390,7 @@ class ColorBlendAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
+    @deprecated('Use the three- or four-parameter constructor instead.')
     def make(mode: _ColorBlendAttrib_Mode) -> ColorBlendAttrib:
         """Constructs a new ColorBlendAttrib object.
 
@@ -8888,6 +8899,7 @@ class LightAttrib(RenderAttrib):
         """The following is the new, more general interface to the LightAttrib."""
     @overload
     @staticmethod
+    @deprecated('Use add_on_light() or add_off_light() instead.')
     def make(op: _LightAttrib_Operation, light: Light) -> LightAttrib:
         """Constructs a new LightAttrib object that turns on (or off, according to op)
         the indicated light(s).
@@ -8904,6 +8916,7 @@ class LightAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
+    @deprecated('Use add_on_light() or add_off_light() instead.')
     def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light, light4: Light) -> LightAttrib:
         """Constructs a new LightAttrib object that turns on (or off, according to op)
         the indicate light(s).
@@ -8915,6 +8928,7 @@ class LightAttrib(RenderAttrib):
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
+    @deprecated('LightAttribs nowadays have a separate list of on_lights and')
     def get_operation(self) -> _LightAttrib_Operation:
         """Returns the basic operation type of the LightAttrib.  If this is O_set, the
         lights listed here completely replace any lights that were already on.  If
@@ -8926,6 +8940,7 @@ class LightAttrib(RenderAttrib):
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('LightAttribs nowadays have a separate list of on_lights and')
     def get_num_lights(self) -> int:
         """Returns the number of lights listed in the attribute.
 
@@ -8933,6 +8948,7 @@ class LightAttrib(RenderAttrib):
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('LightAttribs nowadays have a separate list of on_lights and')
     def get_light(self, n: int) -> Light:
         """Returns the nth light listed in the attribute.
 
@@ -8940,6 +8956,7 @@ class LightAttrib(RenderAttrib):
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('LightAttribs nowadays have a separate list of on_lights and')
     def has_light(self, light: Light) -> bool:
         """Returns true if the indicated light is listed in the attrib, false
         otherwise.
@@ -8948,12 +8965,14 @@ class LightAttrib(RenderAttrib):
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
         """
+    @deprecated('Use add_on_light() or add_off_light() instead.')
     def add_light(self, light: Light) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights.
 
         @deprecated Use add_on_light() or add_off_light() instead.
         """
+    @deprecated('Use remove_on_light() or remove_off_light() instead.')
     def remove_light(self, light: Light) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights.
@@ -9260,6 +9279,7 @@ class Loader(TypedReferenceCount, Namable):
         """Returns the task chain that is used for asynchronous loads."""
     def stop_threads(self) -> None:
         """Stop any threads used for asynchronous loads."""
+    @deprecated('use task.cancel() to cancel the request instead.')
     def remove(self, task: AsyncTask) -> bool:
         """Removes a pending asynchronous load request.  Returns true if successful,
         false otherwise.
@@ -9476,6 +9496,7 @@ class ModelFlattenRequest(AsyncTask):
         Equivalent to `req.done() and not req.cancelled()`.
         @see done()
         """
+    @deprecated('Use result() instead.')
     def get_model(self) -> PandaNode:
         """Returns the flattened copy of the model.  It is an error to call this
         unless done() returns true.
@@ -9521,6 +9542,7 @@ class ModelLoadRequest(AsyncTask):
         Equivalent to `req.done() and not req.cancelled()`.
         @see done()
         """
+    @deprecated('Use result() instead.')
     def get_model(self) -> PandaNode:
         """Returns the model that was loaded asynchronously, if any, or null if there
         was an error.  It is an error to call this unless done() returns true.
@@ -9728,6 +9750,7 @@ class ModelPool:
         """
     @overload
     @staticmethod
+    @deprecated('Use the one-parameter add_model(model) instead.')
     def add_model(filename: StrOrBytesPath, model: ModelRoot) -> None:
         """Adds the indicated already-loaded model to the pool.  The model will
         replace any previously-loaded model in the pool that had the same filename.
@@ -9742,6 +9765,7 @@ class ModelPool:
         """
     @overload
     @staticmethod
+    @deprecated('Use release_model(model) instead.')
     def release_model(filename: StrOrBytesPath) -> None:
         """Removes the indicated model from the pool, indicating it will never be
         loaded again; the model may then be freed.  If this function is never

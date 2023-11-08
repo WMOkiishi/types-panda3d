@@ -1,6 +1,6 @@
 from collections.abc import Iterator, MutableSequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
 
 from panda3d._typing import (
     DoubleMat4Like,
@@ -1424,8 +1424,10 @@ class LVector3f(LVecBase3f):
 
         Vectors (except the ref vector) should be initially normalized.
         """
+    @deprecated('Do not use.')
     def relative_angle_rad(self, other: Vec3Like) -> float:
         """@deprecated Do not use."""
+    @deprecated('Do not use.')
     def relative_angle_deg(self, other: Vec3Like) -> float:
         """@deprecated Do not use."""
     @staticmethod
@@ -1541,8 +1543,10 @@ class LVector3d(LVecBase3d):
 
         Vectors (except the ref vector) should be initially normalized.
         """
+    @deprecated('Do not use.')
     def relative_angle_rad(self, other: DoubleVec3Like) -> float:
         """@deprecated Do not use."""
+    @deprecated('Do not use.')
     def relative_angle_deg(self, other: DoubleVec3Like) -> float:
         """@deprecated Do not use."""
     @staticmethod

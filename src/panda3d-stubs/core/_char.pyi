@@ -1,5 +1,5 @@
 from typing import overload
-from typing_extensions import Self
+from typing_extensions import Self, deprecated
 
 from panda3d._typing import Mat4Like, Vec3Like
 from panda3d.core._chan import MovingPartMatrix, MovingPartScalar, PartBundle, PartBundleHandle, PartBundleNode, PartGroup
@@ -159,6 +159,7 @@ class Character(PartBundleNode):
     def __deepcopy__(self, __memo: object) -> Self: ...
     def get_bundle(self, i: int) -> CharacterJointBundle: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     @overload
+    @deprecated('Use the newer version of this method, below.')
     def merge_bundles(self, old_bundle: PartBundle, other_bundle: PartBundle) -> None:
         """Merges old_bundle with new_bundle.  old_bundle must be one of the
         PartBundles within this node.  At the end of this call, the old_bundle
@@ -233,6 +234,7 @@ class Character(PartBundleNode):
         current position, in their hierchical structure, to the indicated output
         stream.
         """
+    @deprecated('Call update() instead.')
     def update_to_now(self) -> None:
         """Advances the character's frame to the current time, and then calls
         update().  This can be used by show code to force an update of the

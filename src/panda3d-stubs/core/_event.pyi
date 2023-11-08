@@ -1,6 +1,6 @@
 from collections.abc import Callable, Generator, Iterator, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, final
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated, final
 
 from panda3d._typing import TaskCoroutine, TaskFunction
 from panda3d.core._dtoolbase import TypedObject
@@ -1103,6 +1103,7 @@ class EventQueue:
     def clear(self) -> None:
         """Empties all events on the queue, throwing them on the floor."""
     def is_queue_empty(self) -> bool: ...
+    @deprecated('Always returns false; the queue can never be full.')
     def is_queue_full(self) -> Literal[False]:
         """@deprecated Always returns false; the queue can never be full."""
     def dequeue_event(self) -> Event: ...

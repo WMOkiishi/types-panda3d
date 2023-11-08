@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Self
+from typing_extensions import Self, deprecated
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Datagram, DatagramGenerator, DatagramSink, PointerToVoid, ReferenceCount
@@ -72,6 +72,7 @@ class NetAddress:
         """Returns the IP address to which this address refers, formatted as a string."""
     def is_any(self) -> bool:
         """Returns true if the IP address has only zeroes."""
+    @deprecated(' Does not work with IPv6 addresses.')
     def get_ip(self) -> int:
         """Returns the IP address to which this address refers, as a 32-bit integer,
         in host byte order.

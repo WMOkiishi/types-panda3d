@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Self
+from typing_extensions import Final, Self, deprecated
 
 from panda3d._typing import Vec4Like
 from panda3d.core._display import DisplayRegion, GraphicsEngine, GraphicsOutput
@@ -326,6 +326,7 @@ class NonlinearImager:
         The return value is the index number of the new screen.
         """
     @overload
+    @deprecated('Use the version that takes two parameters instead.')
     def add_screen(self, screen: ProjectionScreen) -> int:
         """This version of this method is deprecated and will soon be removed.  Use
         the version that takes two parameters instead.

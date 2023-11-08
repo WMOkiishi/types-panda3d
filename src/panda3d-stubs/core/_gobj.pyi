@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, final
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated, final
 
 from panda3d._typing import (
     DoubleMat4Like,
@@ -4293,6 +4293,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         """Returns the set of GeomRendering bits that represent the rendering
         properties required to properly render this Geom.
         """
+    @deprecated(' This is no longer very useful.')
     def get_usage_hint(self) -> _GeomEnums_UsageHint:
         """Returns the minimum (i.e.  most dynamic) usage_hint among all of the
         individual GeomPrimitives that have been added to the geom.
@@ -9746,8 +9747,10 @@ class Material(TypedWritableReferenceCount, Namable):
         differentiate different materials.
         """
     def write(self, out: ostream, indent: int) -> None: ...
+    @deprecated('This no longer has any meaning in 1.10.')
     def is_attrib_locked(self) -> bool:
         """@deprecated This no longer has any meaning in 1.10."""
+    @deprecated('This no longer has any meaning in 1.10.')
     def set_attrib_lock(self) -> None:
         """@deprecated This no longer has any meaning in 1.10."""
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount

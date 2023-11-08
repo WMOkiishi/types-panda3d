@@ -39,6 +39,7 @@ KNOWN_IMPORTS: Final = {
     'Enum': 'enum',
     'Any': 'typing',
     'ClassVar': 'typing',
+    'deprecated': 'typing_extensions',
     'Final': 'typing_extensions',  # Introduced in 3.8
     'final': 'typing_extensions',  # Introduced in 3.8
     'Generic': 'typing',

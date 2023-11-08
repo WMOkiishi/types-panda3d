@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
 
 from panda3d.core._dtoolutil import istream, ostream
 from panda3d.core._express import Datagram, DatagramIterator
@@ -770,6 +770,7 @@ class DCAtomicField(DCField):
         """Returns the number of elements (parameters) of the atomic field."""
     def get_element(self, n: int) -> DCParameter:
         """Returns the parameter object describing the nth element."""
+    @deprecated('use get_element() instead.')
     def get_element_default(self, n: int) -> bytes:
         """Returns the pre-formatted default value associated with the nth element of
         the field.  This is only valid if has_element_default() returns true, in
@@ -781,12 +782,14 @@ class DCAtomicField(DCField):
 
         @deprecated use get_element() instead.
         """
+    @deprecated('use get_element() instead.')
     def has_element_default(self, n: int) -> bool:
         """Returns true if the nth element of the field has a default value specified,
         false otherwise.
 
         @deprecated use get_element() instead.
         """
+    @deprecated('use get_element()->get_name() instead.')
     def get_element_name(self, n: int) -> str:
         """Returns the name of the nth element of the field.  This name is strictly
         for documentary purposes; it does not generally affect operation.  If a

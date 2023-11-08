@@ -57,6 +57,7 @@ from .special_cases import (
 from .translation import (
     check_keyword,
     comment_to_docstring,
+    get_deprecation_note,
     make_alias_name,
     make_class_name,
     make_method_name,
@@ -249,6 +250,7 @@ def make_signature_rep(
             named=param.has_name,
         ))
     docstring = comment_to_docstring(wrapper.comment)
+    deprecation_note = get_deprecation_note(docstring)
     match params:
         case [Parameter('args') as args]:
             args.name = '*' + args.name
@@ -259,7 +261,12 @@ def make_signature_rep(
         ]:
             args.name = '*' + args.name
             kwargs.name = '**' + kwargs.name
-    return Signature(params, return_type, doc=docstring)
+    return Signature(
+        params,
+        return_type,
+        doc=docstring,
+        deprecation_note=deprecation_note,
+    )
 
 
 def make_function_rep(function: IDBFunction) -> Function:

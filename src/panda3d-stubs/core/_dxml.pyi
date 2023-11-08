@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated
 
 from panda3d.core._dtoolutil import istream, ostream
 
@@ -866,18 +866,22 @@ class TiXmlHandle:
         """Return the handle as a TiXmlText. This may return null."""
     def ToUnknown(self) -> TiXmlUnknown:
         """Return the handle as a TiXmlUnknown. This may return null."""
+    @deprecated('use ToNode.')
     def Node(self) -> TiXmlNode:
         """@deprecated use ToNode.
         Return the handle as a TiXmlNode. This may return null.
         """
+    @deprecated('use ToElement.')
     def Element(self) -> TiXmlElement:
         """@deprecated use ToElement.
         Return the handle as a TiXmlElement. This may return null.
         """
+    @deprecated('use ToText()')
     def Text(self) -> TiXmlText:
         """@deprecated use ToText()
         Return the handle as a TiXmlText. This may return null.
         """
+    @deprecated('use ToUnknown()')
     def Unknown(self) -> TiXmlUnknown:
         """@deprecated use ToUnknown()
         Return the handle as a TiXmlUnknown. This may return null.

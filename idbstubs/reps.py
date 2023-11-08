@@ -125,6 +125,7 @@ class Signature:
     parameters: Sequence[Parameter] = field(converter=tuple)
     return_type: tc.Type = field(converter=_convert_type)
     doc: str = field(default='', kw_only=True, eq=False)
+    deprecation_note: str | None = field(default=None, kw_only=True, eq=False)
 
     @property
     def param_string(self) -> str:
@@ -156,6 +157,8 @@ class Signature:
         return len(self.parameters)
 
     def get_dependencies(self) -> Iterator[str]:
+        if self.deprecation_note is not None:
+            yield 'deprecated'
         yield from names_within(str(self.return_type))
         for parameter in self.parameters:
             yield from parameter.get_dependencies()
@@ -170,6 +173,8 @@ class Signature:
         next_indent = get_indent(indent_level + 1)
         for decorator in decorators:
             yield f'{indent}@{decorator}'
+        if self.deprecation_note is not None:
+            yield f'{indent}@deprecated({self.deprecation_note!r})'
         sig_def = f'{indent}{prefix}{self}:{postfix}'
         if len(sig_def) <= 130:
             yield sig_def

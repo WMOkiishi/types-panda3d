@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Final, Literal, Self, TypeAlias, final
+from typing_extensions import Final, Literal, Self, TypeAlias, deprecated, final
 
 from panda3d._typing import IntVec2Like, IntVec3Like, Vec4Like
 from panda3d.core._device import InputDevice
@@ -1520,6 +1520,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         Also see make_texture_buffer(), which is a higher-level interface for
         preparing render-to-a-texture mode.
         """
+    @deprecated('Use add_render_texture() instead.')
     def setup_render_texture(self, tex: Texture, allow_bind: bool, to_ram: bool) -> None:
         """This is a deprecated interface that made sense back when GraphicsOutputs
         could only render into one texture at a time.  From now on, use

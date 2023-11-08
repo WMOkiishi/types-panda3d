@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, overload
-from typing_extensions import Self
+from typing_extensions import Self, deprecated
 
 from panda3d.core._dtoolbase import TypedObject
 from panda3d.core._express import Datagram
@@ -54,6 +54,7 @@ class Socket_Address:
         """Return the ip address/port in dot notation string.  If this is an IPv6
         address, it will be enclosed in square brackets.
         """
+    @deprecated(' Does not work with IPv6 addresses.')
     def GetIPAddressRaw(self) -> int:
         """Returns a raw 32-bit unsigned integer representing the IPv4 address.
         @deprecated  Does not work with IPv6 addresses.
