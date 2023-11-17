@@ -373,10 +373,9 @@ class AnimChannelMatrixDynamic(AnimChannel_ACMatrixSwitchType):
 
     value_node: PandaNode
     def set_value(self, value: Mat4Like | TransformState) -> None:
-        """`(self, value: LMatrix4)`:
-        Explicitly sets the matrix value.
+        """Explicitly sets the matrix value.
 
-        `(self, value: TransformState)`:
+        or:
         Explicitly sets the matrix value, using the indicated TransformState object
         as a convenience.
         """
@@ -521,31 +520,30 @@ class AnimControlCollection:
     def play(self, anim_name: str) -> bool:
         """Starts the named animation playing."""
     @overload
-    def play(self, anim_name: str, _from: float, to: float) -> bool: ...
+    def play(self, anim_name: str, _from: float, to: float) -> bool:
+        """Starts the named animation playing."""
     @overload
     def loop(self, anim_name: str, restart: bool) -> bool:
         """Starts the named animation looping."""
     @overload
-    def loop(self, anim_name: str, restart: bool, _from: float, to: float) -> bool: ...
+    def loop(self, anim_name: str, restart: bool, _from: float, to: float) -> bool:
+        """Starts the named animation looping."""
     def stop(self, anim_name: str) -> bool:
         """Stops the named animation."""
     def pose(self, anim_name: str, frame: float) -> bool:
         """Sets to a particular frame in the named animation."""
     @overload
     def play_all(self) -> None:
-        """`(self)`:
-        These functions operate on all anims at once.
-
-        `(self, _from: float, to: float)`:
-        Starts all animations playing.
-        """
+        """These functions operate on all anims at once."""
     @overload
-    def play_all(self, _from: float, to: float) -> None: ...
+    def play_all(self, _from: float, to: float) -> None:
+        """Starts all animations playing."""
     @overload
     def loop_all(self, restart: bool) -> None:
         """Starts all animations looping."""
     @overload
-    def loop_all(self, restart: bool, _from: float, to: float) -> None: ...
+    def loop_all(self, restart: bool, _from: float, to: float) -> None:
+        """Starts all animations looping."""
     def stop_all(self) -> bool:
         """Stops all currently playing animations.  Returns true if any animations
         were stopped, false if none were playing.
@@ -553,27 +551,24 @@ class AnimControlCollection:
     def pose_all(self, frame: float) -> None:
         """Sets all animations to the indicated frame."""
     def get_frame(self, anim_name: str = ...) -> int:
-        """`(self)`:
-        Returns the current frame in the last-started animation.
+        """Returns the current frame in the last-started animation.
 
-        `(self, anim_name: str)`:
+        or:
         Returns the current frame in the named animation, or 0 if the animation is
         not found.
         """
     def get_num_frames(self, anim_name: str = ...) -> int:
-        """`(self)`:
-        Returns the total number of frames in the last-started animation.
+        """Returns the total number of frames in the last-started animation.
 
-        `(self, anim_name: str)`:
+        or:
         Returns the total number of frames in the named animation, or 0 if the
         animation is not found.
         """
     def is_playing(self, anim_name: str = ...) -> bool:
-        """`(self)`:
-        Returns true if the last-started animation is currently playing, false
+        """Returns true if the last-started animation is currently playing, false
         otherwise.
 
-        `(self, anim_name: str)`:
+        or:
         Returns true if the named animation is currently playing, false otherwise.
         """
     def which_anim_playing(self) -> str:
@@ -921,9 +916,23 @@ class PartBundle(PartGroup):
         child is not a joint (or slider) or does not exist.
         """
     @overload
-    def freeze_joint(self, joint_name: str, value: float) -> bool: ...
+    def freeze_joint(self, joint_name: str, value: float) -> bool:
+        """Specifies that the joint with the indicated name should be frozen with the
+        specified transform.  It will henceforth always hold this fixed transform,
+        regardless of any animations that may subsequently be bound to the joint.
+
+        Returns true if the joint is successfully frozen, or false if the named
+        child is not a joint (or slider) or does not exist.
+        """
     @overload
-    def freeze_joint(self, joint_name: str, transform: TransformState) -> bool: ...
+    def freeze_joint(self, joint_name: str, transform: TransformState) -> bool:
+        """Specifies that the joint with the indicated name should be frozen with the
+        specified transform.  It will henceforth always hold this fixed transform,
+        regardless of any animations that may subsequently be bound to the joint.
+
+        Returns true if the joint is successfully frozen, or false if the named
+        child is not a joint (or slider) or does not exist.
+        """
     def control_joint(self, joint_name: str, node: PandaNode) -> bool:
         """Specifies that the joint with the indicated name should be animated with
         the transform on the indicated node.  It will henceforth always follow the

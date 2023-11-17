@@ -639,7 +639,11 @@ class WindowProperties:
         left corner of the useful part of the window, not including decorations.
         """
     @overload
-    def set_origin(self, x_origin: int, y_origin: int) -> None: ...
+    def set_origin(self, x_origin: int, y_origin: int) -> None:
+        """Specifies the origin on the screen (in pixels, relative to the top-left
+        corner) at which the window should appear.  This is the origin of the top-
+        left corner of the useful part of the window, not including decorations.
+        """
     def get_origin(self) -> LPoint2i:
         """Returns the coordinates of the window's top-left corner, not including
         decorations.
@@ -662,7 +666,10 @@ class WindowProperties:
         the useful part of the window, not including decorations.
         """
     @overload
-    def set_size(self, x_size: int, y_size: int) -> None: ...
+    def set_size(self, x_size: int, y_size: int) -> None:
+        """Specifies the requested size of the window, in pixels.  This is the size of
+        the useful part of the window, not including decorations.
+        """
     def get_size(self) -> LVector2i:
         """Returns size in pixels of the useful part of the window, not including
         decorations.
@@ -822,8 +829,7 @@ class WindowProperties:
         """Removes the z_order specification from the properties."""
     @overload
     def set_parent_window(self, parent_window: WindowHandle | WindowHandle.OSHandle = ...) -> None:
-        """`(self, parent_window: WindowHandle = ...)`:
-        Specifies the window that this window should be attached to.  If this is
+        """Specifies the window that this window should be attached to.  If this is
         NULL or unspecified, the window will be created as a toplevel window on the
         desktop; if this is non-NULL, the window will be bound as a child window to
         the indicated parent window.
@@ -833,9 +839,10 @@ class WindowProperties:
         representation.  Each OS-specific GraphicsPipe class defines a
         make_window_handle() method that returns an appropriate WindowHandle object
         to wrap the particular OS-specific representation.
-
-        `(self, parent: int)`:
-        Specifies the window that this window should be attached to.
+        """
+    @overload
+    def set_parent_window(self, parent: int) -> None:
+        """Specifies the window that this window should be attached to.
 
         This is a deprecated variant on this method, and exists only for backward
         compatibility.  Future code should use the version of set_parent_window()
@@ -848,8 +855,6 @@ class WindowProperties:
         similarly cast.  On OSX, this is the NSWindow pointer, which doesn't appear
         to work at all.
         """
-    @overload
-    def set_parent_window(self, parent: int) -> None: ...
     def get_parent_window(self) -> WindowHandle:
         """Returns the parent window specification, or NULL if there is no parent
         window specified.
@@ -1004,13 +1009,19 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """
     @overload
     def set_dimensions(self, dimensions: Vec4Like) -> None:
-        """`(self, dimensions: LVecBase4)`; `(self, l: float, r: float, b: float, t: float)`; `(self, i: int, l: float, r: float, b: float, t: float)`:
-        Changes the portion of the framebuffer this DisplayRegion corresponds to.
+        """Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
         1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
-
-        `(self, i: int, dimensions: LVecBase4)`:
-        Changes the portion of the framebuffer this DisplayRegion corresponds to.
+        """
+    @overload
+    def set_dimensions(self, l: float, r: float, b: float, t: float) -> None:
+        """Changes the portion of the framebuffer this DisplayRegion corresponds to.
+        The parameters range from 0 to 1, where 0,0 is the lower left corner and
+        1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
+        """
+    @overload
+    def set_dimensions(self, i: int, dimensions: Vec4Like) -> None:
+        """Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
         1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
 
@@ -1018,11 +1029,11 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         away other changes you might have recently made in an upstream thread.
         """
     @overload
-    def set_dimensions(self, l: float, r: float, b: float, t: float) -> None: ...
-    @overload
-    def set_dimensions(self, i: int, dimensions: Vec4Like) -> None: ...
-    @overload
-    def set_dimensions(self, i: int, l: float, r: float, b: float, t: float) -> None: ...
+    def set_dimensions(self, i: int, l: float, r: float, b: float, t: float) -> None:
+        """Changes the portion of the framebuffer this DisplayRegion corresponds to.
+        The parameters range from 0 to 1, where 0,0 is the lower left corner and
+        1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
+        """
     def get_window(self) -> GraphicsOutput:
         """Returns the GraphicsOutput that this DisplayRegion is ultimately associated
         with, or NULL if no window is associated.
@@ -1278,16 +1289,14 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """
     @overload
     def get_screenshot(self) -> Texture:
-        """`(self)`:
-        Captures the most-recently rendered image from the framebuffer and returns
+        """Captures the most-recently rendered image from the framebuffer and returns
         it as a Texture, or NULL on failure.
-
-        `(self, image: PNMImage)`:
-        Captures the most-recently rendered image from the framebuffer into the
-        indicated PNMImage.  Returns true on success, false on failure.
         """
     @overload
-    def get_screenshot(self, image: PNMImage) -> bool: ...
+    def get_screenshot(self, image: PNMImage) -> bool:
+        """Captures the most-recently rendered image from the framebuffer into the
+        indicated PNMImage.  Returns true on success, false on failure.
+        """
     def clear_cull_result(self) -> None: ...
     def make_cull_result_graph(self) -> PandaNode:
         """Returns a special scene graph constructed to represent the results of the
@@ -1700,7 +1709,17 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         side_by_side_stereo: bool,
         sbs_left_dimensions: Vec4Like,
         sbs_right_dimensions: Vec4Like,
-    ) -> None: ...
+    ) -> None:
+        """Enables side-by-side stereo mode on this particular window.  When side-by-
+        side stereo mode is in effect, DisplayRegions that have the "left" channel
+        set will render on the part of the window specified by sbs_left_dimensions
+        (typically the left half: (0, 0.5, 0, 1)), while DisplayRegions that have
+        the "right" channel set will render on the part of the window specified by
+        sbs_right_dimensions (typically the right half: (0.5, 1, 0, 1)).
+
+        This is commonly used in a dual-monitor mode, where a window is opened that
+        spans two monitors, and each monitor represents a different eye.
+        """
     def get_side_by_side_stereo(self) -> bool:
         """Returns whether side-by-side stereo mode is in effect for this particular
         window.  See set_side_by_side_stereo().
@@ -1770,15 +1789,14 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """
     @overload
     def make_display_region(self, dimensions: Vec4Like = ...) -> DisplayRegion:
-        """`(self)`:
-        Creates a new DisplayRegion that covers the entire window.
+        """Creates a new DisplayRegion that covers the entire window.
 
         If is_stereo() is true for this window, and default-stereo-camera is
         configured true, this actually makes a StereoDisplayRegion.  Call
         make_mono_display_region() or make_stereo_display_region() if you want to
         insist on one or the other.
 
-        `(self, dimensions: LVecBase4)`; `(self, l: float, r: float, b: float, t: float)`:
+        or:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
 
@@ -1788,11 +1806,18 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         insist on one or the other.
         """
     @overload
-    def make_display_region(self, l: float, r: float, b: float, t: float) -> DisplayRegion: ...
+    def make_display_region(self, l: float, r: float, b: float, t: float) -> DisplayRegion:
+        """Creates a new DisplayRegion that covers the indicated sub-rectangle within
+        the window.  The range on all parameters is 0..1.
+
+        If is_stereo() is true for this window, and default-stereo-camera is
+        configured true, this actually makes a StereoDisplayRegion.  Call
+        make_mono_display_region() or make_stereo_display_region() if you want to
+        insist on one or the other.
+        """
     @overload
     def make_mono_display_region(self, dimensions: Vec4Like = ...) -> DisplayRegion:
-        """`(self)`; `(self, l: float, r: float, b: float, t: float)`:
-        Creates a new DisplayRegion that covers the entire window.
+        """Creates a new DisplayRegion that covers the entire window.
 
         This generally returns a mono DisplayRegion, even if is_stereo() is true.
         However, if side-by-side stereo is enabled, this will return a
@@ -1800,7 +1825,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         necessary because in side-by-side stereo mode, it is necessary to draw even
         mono DisplayRegions twice).
 
-        `(self, dimensions: LVecBase4)`:
+        or:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
 
@@ -1811,22 +1836,33 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         mono DisplayRegions twice).
         """
     @overload
-    def make_mono_display_region(self, l: float, r: float, b: float, t: float) -> DisplayRegion: ...
+    def make_mono_display_region(self, l: float, r: float, b: float, t: float) -> DisplayRegion:
+        """Creates a new DisplayRegion that covers the entire window.
+
+        This generally returns a mono DisplayRegion, even if is_stereo() is true.
+        However, if side-by-side stereo is enabled, this will return a
+        StereoDisplayRegion whose two eyes are both set to SC_mono.  (This is
+        necessary because in side-by-side stereo mode, it is necessary to draw even
+        mono DisplayRegions twice).
+        """
     @overload
     def make_stereo_display_region(self, dimensions: Vec4Like = ...) -> StereoDisplayRegion:
-        """`(self)`; `(self, l: float, r: float, b: float, t: float)`:
-        Creates a new DisplayRegion that covers the entire window.
+        """Creates a new DisplayRegion that covers the entire window.
 
         This always returns a stereo DisplayRegion, even if is_stereo() is false.
 
-        `(self, dimensions: LVecBase4)`:
+        or:
         Creates a new DisplayRegion that covers the indicated sub-rectangle within
         the window.  The range on all parameters is 0..1.
 
         This always returns a stereo DisplayRegion, even if is_stereo() is false.
         """
     @overload
-    def make_stereo_display_region(self, l: float, r: float, b: float, t: float) -> StereoDisplayRegion: ...
+    def make_stereo_display_region(self, l: float, r: float, b: float, t: float) -> StereoDisplayRegion:
+        """Creates a new DisplayRegion that covers the entire window.
+
+        This always returns a stereo DisplayRegion, even if is_stereo() is false.
+        """
     def remove_display_region(self, display_region: DisplayRegion) -> bool:
         """Removes the indicated DisplayRegion from the window, and destructs it if
         there are no other references.
@@ -1963,16 +1999,14 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """
     @overload
     def get_screenshot(self) -> Texture:
-        """`(self)`:
-        Captures the most-recently rendered image from the framebuffer and returns
+        """Captures the most-recently rendered image from the framebuffer and returns
         it as Texture, or NULL on failure.
-
-        `(self, image: PNMImage)`:
-        Captures the most-recently rendered image from the framebuffer into the
-        indicated PNMImage.  Returns true on success, false on failure.
         """
     @overload
-    def get_screenshot(self, image: PNMImage) -> bool: ...
+    def get_screenshot(self, image: PNMImage) -> bool:
+        """Captures the most-recently rendered image from the framebuffer into the
+        indicated PNMImage.  Returns true on success, false on failure.
+        """
     def get_texture_card(self) -> NodePath:
         """Returns a PandaNode containing a square polygon.  The dimensions are
         (-1,0,-1) to (1,0,1). The texture coordinates are such that the texture of
@@ -2521,12 +2555,11 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         lights, or false if we need to actually munge the color.
         """
     def get_alpha_scale_via_texture(self, tex_attrib: Texture | TextureAttrib = ...) -> bool:
-        """`(self)`:
-        Returns true if this particular GSG can implement (or would prefer to
+        """Returns true if this particular GSG can implement (or would prefer to
         implement) an alpha scale via an additional Texture layer, or false if we
         need to actually munge the alpha.
 
-        `(self, tex_attrib: TextureAttrib)`:
+        or:
         This variant of get_alpha_scale_via_texture() answers the question of
         whether the GSG can implement an alpha scale via an additional Texture
         layer, considering the current TextureAttrib that will be in effect.  This
@@ -2754,16 +2787,16 @@ class GraphicsEngine(ReferenceCount):
     ) -> GraphicsOutput: ...
     @overload
     def make_buffer(self, host: GraphicsOutput, name: str, sort: int, x_size: int, y_size: int) -> GraphicsOutput:
-        """`(self, host: GraphicsOutput, name: str, sort: int, x_size: int, y_size: int)`:
-        Syntactic shorthand for make_output.  This is the preferred way to create
+        """Syntactic shorthand for make_output.  This is the preferred way to create
         an offscreen buffer, when you already have an onscreen window or another
         buffer to start with.  For the first parameter, pass an existing
         GraphicsOutput object, e.g.  the main window; this allows the buffer to
         adapt itself to that window's framebuffer properties, and allows maximum
         sharing of resources.
-
-        `(self, gsg: GraphicsStateGuardian, name: str, sort: int, x_size: int, y_size: int)`:
-        Syntactic shorthand for make_output.  This flavor accepts a GSG rather than
+        """
+    @overload
+    def make_buffer(self, gsg: GraphicsStateGuardian, name: str, sort: int, x_size: int, y_size: int) -> GraphicsOutput:
+        """Syntactic shorthand for make_output.  This flavor accepts a GSG rather than
         a GraphicsOutput as the first parameter, which is too limiting and
         disallows the possibility of creating a ParasiteBuffer if the user's
         graphics hardware prefers that.  It also attempts to request specific
@@ -2776,8 +2809,6 @@ class GraphicsEngine(ReferenceCount):
         other flavor of make_buffer() instead, which accepts a GraphicsOutput as
         the first parameter.
         """
-    @overload
-    def make_buffer(self, gsg: GraphicsStateGuardian, name: str, sort: int, x_size: int, y_size: int) -> GraphicsOutput: ...
     def make_parasite(self, host: GraphicsOutput, name: str, sort: int, x_size: int, y_size: int) -> GraphicsOutput:
         """Syntactic shorthand for make_buffer."""
     def add_window(self, window: GraphicsOutput, sort: int) -> bool:
@@ -2931,7 +2962,9 @@ class GraphicsThreadingModel:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: GraphicsThreadingModel) -> None:
+    def __init__(self, copy: GraphicsThreadingModel) -> None: ...
+    @overload
+    def __init__(self, model: str = ...) -> None:
         """The threading model accepts a string representing the names of the two
         threads that will process cull and draw for the given window, separated by
         a slash.  The names are completely arbitrary and are used only to
@@ -2953,8 +2986,6 @@ class GraphicsThreadingModel:
         sorting.  It simplifies the cull process but it forces the scene to render
         in scene graph order; state sorting and alpha sorting is lost.
         """
-    @overload
-    def __init__(self, model: str = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def assign(self, copy: GraphicsThreadingModel | str) -> Self: ...
@@ -3811,21 +3842,19 @@ class GraphicsPipeSelection:
         """
     @overload
     def make_pipe(self, type: TypeHandle | type) -> GraphicsPipe:
-        """`(self, type: TypeHandle)`:
-        Creates a new GraphicsPipe of the indicated type (or a type more specific
+        """Creates a new GraphicsPipe of the indicated type (or a type more specific
         than the indicated type, if necessary) and returns it.  Returns NULL if the
         type cannot be matched.
-
-        `(self, type_name: str, module_name: str = ...)`:
-        Creates a new GraphicsPipe of the indicated type (or a type more specific
+        """
+    @overload
+    def make_pipe(self, type_name: str, module_name: str = ...) -> GraphicsPipe:
+        """Creates a new GraphicsPipe of the indicated type (or a type more specific
         than the indicated type, if necessary) and returns it.  Returns NULL if the
         type cannot be matched.
 
         If the type is not already defined, this will implicitly load the named
         module, or if module_name is empty, it will call load_aux_modules().
         """
-    @overload
-    def make_pipe(self, type_name: str, module_name: str = ...) -> GraphicsPipe: ...
     def make_module_pipe(self, module_name: str) -> GraphicsPipe:
         """Returns a new GraphicsPipe of a type defined by the indicated module.
         Returns NULL if the module is not found or does not properly recommend a

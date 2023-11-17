@@ -84,7 +84,11 @@ def merge_signatures(a: Signature, b: Signature, /) -> Signature | None:
         w1_locked |= q_changed
         w2_locked |= p_changed
         merged_params.append(pq)
-    return Signature(merged_params, a.return_type | b.return_type)
+    if a.doc and b.doc and a.doc != b.doc:
+        docstring = a.doc + '\n\nor:\n' + b.doc
+    else:
+        docstring = a.doc or b.doc
+    return Signature(merged_params, a.return_type | b.return_type, doc=docstring)
 
 
 def sort_signatures(signatures: Sequence[Signature]) -> list[Signature]:
@@ -372,9 +376,9 @@ def remove_redefinitions(class_: Class, classes: Mapping[str, Class]) -> None:
                 case Class() | Alias(of_local=True), _:
                     continue
                 case (
-                    Function(doc=doc_1),
-                    Function(doc=doc_2)
-                ) if doc_1 and doc_1 != doc_2:
+                    Function(signatures=sigs_1),
+                    Function(signatures=sigs_2)
+                ) if any(s1.doc and s1.doc != s2.doc for s1, s2 in zip(sigs_1, sigs_2)):
                     continue
                 case (
                     Attribute(doc=doc_1),

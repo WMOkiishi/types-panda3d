@@ -77,10 +77,9 @@ class RingEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
 
     def __init__(self, copy: RingEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: RingEmitter)`:
+        or:
         copy constructor
         """
     def set_radius(self, r: float) -> None: ...
@@ -104,10 +103,9 @@ class ArcEmitter(RingEmitter):
     """Describes a planar ring region in which particles are generated."""
 
     def __init__(self, copy: ArcEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: ArcEmitter)`:
+        or:
         copy constructor
         """
     def set_start_angle(self, angle: float) -> None: ...
@@ -232,10 +230,9 @@ class BoxEmitter(BaseParticleEmitter):
     """Describes a voluminous box region in which particles are generated."""
 
     def __init__(self, copy: BoxEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: BoxEmitter)`:
+        or:
         copy constructor
         """
     def set_min_bound(self, vmin: Vec3Like) -> None:
@@ -369,10 +366,9 @@ class DiscEmitter(BaseParticleEmitter):
     """Describes a planar disc region from which particles are generated"""
 
     def __init__(self, copy: DiscEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: DiscEmitter)`:
+        or:
         copy constructor
         """
     def set_radius(self, r: float) -> None: ...
@@ -495,14 +491,10 @@ class ParticleSystem(Physical):
 
     @overload
     def __init__(self, copy: ParticleSystem) -> None:
-        """`(self, copy: ParticleSystem)`:
-        Copy Constructor.
-
-        `(self, pool_size: int = ...)`:
-        Default Constructor.
-        """
+        """Copy Constructor."""
     @overload
-    def __init__(self, pool_size: int = ...) -> None: ...
+    def __init__(self, pool_size: int = ...) -> None:
+        """Default Constructor."""
     def set_pool_size(self, size: int) -> None:
         """accessqueries"""
     def set_birth_rate(self, new_br: float) -> None: ...
@@ -563,17 +555,14 @@ class ParticleSystem(Physical):
         """Causes system to use birth rate set by set_soft_birth_rate()"""
     @overload
     def soft_start(self, br: float = ...) -> None:
-        """`(self, br: float = ...)`:
-        Causes system to use birth rate set by set_birth_rate()
-
-        `(self, br: float, first_birth_delay: float)`:
-        Causes system to use birth rate set by set_birth_rate(), with the system's
+        """Causes system to use birth rate set by set_birth_rate()"""
+    @overload
+    def soft_start(self, br: float, first_birth_delay: float) -> None:
+        """Causes system to use birth rate set by set_birth_rate(), with the system's
         first birth being delayed by the value of first_birth_delay. Note that a
         negative delay is perfectly valid, causing the first birth to happen
         sooner rather than later.
         """
-    @overload
-    def soft_start(self, br: float, first_birth_delay: float) -> None: ...
     def update(self, dt: float) -> None: ...
     def write_free_particle_fifo(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
@@ -633,10 +622,9 @@ class PointEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""
 
     def __init__(self, copy: PointEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: PointEmitter)`:
+        or:
         copy constructor
         """
     def set_location(self, p: Vec3Like) -> None:
@@ -647,10 +635,9 @@ class PointEmitter(BaseParticleEmitter):
 
 class PointParticleFactory(BaseParticleFactory):
     def __init__(self, copy: PointParticleFactory = ...) -> None:
-        """`(self)`:
-        default constructor
+        """default constructor
 
-        `(self, copy: PointParticleFactory)`:
+        or:
         copy constructor
         """
     def __copy__(self) -> Self: ...
@@ -673,14 +660,10 @@ class PointParticleRenderer(BaseParticleRenderer):
         sc: Vec4Like = ...,
         ec: Vec4Like = ...,
     ) -> None:
-        """`(self, ad: _BaseParticleRenderer_ParticleRendererAlphaMode = ..., point_size: float = ..., bt: _PointParticleRenderer_PointParticleBlendType = ..., bm: _BaseParticleRenderer_ParticleRendererBlendMethod = ..., sc: LColor = ..., ec: LColor = ...)`:
-        special constructor
-
-        `(self, copy: PointParticleRenderer)`:
-        Copy constructor
-        """
+        """special constructor"""
     @overload
-    def __init__(self, copy: PointParticleRenderer) -> None: ...
+    def __init__(self, copy: PointParticleRenderer) -> None:
+        """Copy constructor"""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def set_point_size(self, point_size: float) -> None: ...
@@ -708,10 +691,9 @@ class RectangleEmitter(BaseParticleEmitter):
     """Describes a planar square region in which particles are generated."""
 
     def __init__(self, copy: RectangleEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: RectangleEmitter)`:
+        or:
         copy constructor
         """
     def set_min_bound(self, vmin: Vec2Like) -> None:
@@ -736,10 +718,9 @@ class SparkleParticleRenderer(BaseParticleRenderer):
     SPSCALE: Final = 1
     @overload
     def __init__(self, copy: SparkleParticleRenderer = ...) -> None:
-        """`(self)`:
-        Default Constructor
+        """Default Constructor
 
-        `(self, copy: SparkleParticleRenderer)`:
+        or:
         Copy Constructor
         """
     @overload
@@ -779,10 +760,9 @@ class SphereSurfaceEmitter(BaseParticleEmitter):
     """Describes a curved space in which particles are generated."""
 
     def __init__(self, copy: SphereSurfaceEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: SphereSurfaceEmitter)`:
+        or:
         copy constructor
         """
     def set_radius(self, r: float) -> None: ...
@@ -794,10 +774,9 @@ class SphereVolumeEmitter(BaseParticleEmitter):
     """Describes a voluminous spherical region in which particles are generated."""
 
     def __init__(self, copy: SphereVolumeEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: SphereVolumeEmitter)`:
+        or:
         copy constructor
         """
     def set_radius(self, r: float) -> None: ...
@@ -838,20 +817,15 @@ class SpriteParticleRenderer(BaseParticleRenderer):
 
     @overload
     def __init__(self, copy: SpriteParticleRenderer) -> None:
-        """`(self, copy: SpriteParticleRenderer)`:
-        copy constructor
-
-        `(self, tex: Texture = ...)`:
-        constructor
-        """
+        """copy constructor"""
     @overload
-    def __init__(self, tex: Texture = ...) -> None: ...
+    def __init__(self, tex: Texture = ...) -> None:
+        """constructor"""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     @overload
     def set_from_node(self, node_path: NodePath, size_from_texels: bool = ...) -> None:
-        """`(self, node_path: NodePath, size_from_texels: bool = ...)`:
-        Sets the properties on this renderer from the geometry referenced by the
+        """Sets the properties on this renderer from the geometry referenced by the
         indicated NodePath.  This should be a reference to a GeomNode or a
         SequenceNode; it extracts out the texture and UV range from the node.
 
@@ -873,9 +847,10 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         model and node are the two items used to construct node_path.  If the
         source type is important, use set_from_node(NodePath,string,string,bool)
         instead.
-
-        `(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ...)`:
-        If the source type is important, use this one.
+        """
+    @overload
+    def set_from_node(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ...) -> None:
+        """If the source type is important, use this one.
 
         model and node should lead to node_path like this: node_path =
         loader.loadModel(model).find(node)
@@ -884,19 +859,17 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         match the new geometry.
         """
     @overload
-    def set_from_node(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ...) -> None: ...
-    @overload
     def add_from_node(self, node_path: NodePath, size_from_texels: bool = ..., resize: bool = ...) -> None:
-        """`(self, node_path: NodePath, size_from_texels: bool = ..., resize: bool = ...)`:
-        This will allow the renderer to randomly choose from more than one texture
+        """This will allow the renderer to randomly choose from more than one texture
         or sequence at particle birth.
 
         If resize is true, or if there are no textures currently on the renderer,
         it will force the renderer to use the size information from this node from
         now on.  (Default is false)
-
-        `(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ..., resize: bool = ...)`:
-        This will allow the renderer to randomly choose from more than one texture
+        """
+    @overload
+    def add_from_node(self, node_path: NodePath, model: str, node: str, size_from_texels: bool = ..., resize: bool = ...) -> None:
+        """This will allow the renderer to randomly choose from more than one texture
         or sequence at particle birth.
 
         If the source type is important, use this one.
@@ -908,15 +881,6 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         it will force the renderer to use the size information from this node from
         now on.  (Default is false)
         """
-    @overload
-    def add_from_node(
-        self,
-        node_path: NodePath,
-        model: str,
-        node: str,
-        size_from_texels: bool = ...,
-        resize: bool = ...,
-    ) -> None: ...
     def set_texture(self, tex: Texture, texels_per_unit: float = ...) -> None:
         """Sets the renderer up to render the entire texture image.  The scale of each
         particle is based on the size of the texture in each dimension, modified by
@@ -939,7 +903,11 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         to something else to use only a portion of the texture.
         """
     @overload
-    def set_ll_uv(self, ll_uv: Vec2Like, anim: int, frame: int) -> None: ...
+    def set_ll_uv(self, ll_uv: Vec2Like, anim: int, frame: int) -> None:
+        """Sets the UV coordinate of the lower-left corner of all the sprites
+        generated by this renderer.  Normally this is (0, 0), but it might be set
+        to something else to use only a portion of the texture.
+        """
     @overload
     def set_ur_uv(self, ur_uv: Vec2Like) -> None:
         """Sets the UV coordinate of the upper-right corner of all the sprites
@@ -947,7 +915,11 @@ class SpriteParticleRenderer(BaseParticleRenderer):
         to something else to use only a portion of the texture.
         """
     @overload
-    def set_ur_uv(self, ur_uv: Vec2Like, anim: int, frame: int) -> None: ...
+    def set_ur_uv(self, ur_uv: Vec2Like, anim: int, frame: int) -> None:
+        """Sets the UV coordinate of the upper-right corner of all the sprites
+        generated by this renderer.  Normally this is (1, 1), but it might be set
+        to something else to use only a portion of the texture.
+        """
     def set_size(self, width: float, height: float) -> None:
         """Sets the size of each particle in world units."""
     def set_color(self, color: Vec4Like) -> None: ...
@@ -976,17 +948,14 @@ class SpriteParticleRenderer(BaseParticleRenderer):
     def get_ll_uv(self) -> LTexCoord:
         """Returns the UV coordinate of the lower-left corner; see set_ll_uv()."""
     @overload
-    def get_ll_uv(self, anim: int, frame: int) -> LTexCoord: ...
+    def get_ll_uv(self, anim: int, frame: int) -> LTexCoord:
+        """Returns the UV coordinate of the lower-left corner; see set_ll_uv()."""
     @overload
     def get_ur_uv(self) -> LTexCoord:
-        """`(self)`:
-        Returns the UV coordinate of the lower-left corner; see set_ur_uv().
-
-        `(self, anim: int, frame: int)`:
-        Returns the UV coordinate of the upper-right corner; see set_ur_uv().
-        """
+        """Returns the UV coordinate of the lower-left corner; see set_ur_uv()."""
     @overload
-    def get_ur_uv(self, anim: int, frame: int) -> LTexCoord: ...
+    def get_ur_uv(self, anim: int, frame: int) -> LTexCoord:
+        """Returns the UV coordinate of the upper-right corner; see set_ur_uv()."""
     def get_width(self) -> float:
         """Returns the width of each particle in world units."""
     def get_height(self) -> float:
@@ -1059,10 +1028,9 @@ class TangentRingEmitter(BaseParticleEmitter):
     """
 
     def __init__(self, copy: TangentRingEmitter = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: TangentRingEmitter)`:
+        or:
         copy constructor
         """
     def set_radius(self, r: float) -> None: ...
@@ -1076,10 +1044,9 @@ class TangentRingEmitter(BaseParticleEmitter):
 
 class ZSpinParticleFactory(BaseParticleFactory):
     def __init__(self, copy: ZSpinParticleFactory = ...) -> None:
-        """`(self)`:
-        constructor
+        """constructor
 
-        `(self, copy: ZSpinParticleFactory)`:
+        or:
         copy constructor
         """
     def __copy__(self) -> Self: ...
@@ -1121,10 +1088,10 @@ class ParticleSystemManager:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: ParticleSystemManager) -> None:
-        """default constructor"""
+    def __init__(self, __param0: ParticleSystemManager) -> None: ...
     @overload
-    def __init__(self, every_nth_frame: int = ...) -> None: ...
+    def __init__(self, every_nth_frame: int = ...) -> None:
+        """default constructor"""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def set_frame_stepping(self, every_nth_frame: int) -> None: ...
@@ -1135,19 +1102,17 @@ class ParticleSystemManager:
     def clear(self) -> None: ...
     @overload
     def do_particles(self, dt: float) -> None:
-        """`(self, dt: float)`:
-        does an update and render for each ps in the list.  this is probably the
+        """does an update and render for each ps in the list.  this is probably the
         one you want to use.  Rendering is the expensive operation, and particles
         REALLY should at least be updated every frame, so nth_frame stepping
         applies only to rendering.
-
-        `(self, dt: float, ps: ParticleSystem, do_render: bool = ...)`:
-        does an update and an optional render for a specific ps.  Since rendering
+        """
+    @overload
+    def do_particles(self, dt: float, ps: ParticleSystem, do_render: bool = ...) -> None:
+        """does an update and an optional render for a specific ps.  Since rendering
         is the expensive operation, multiple updates could be applied before
         calling the final render.
         """
-    @overload
-    def do_particles(self, dt: float, ps: ParticleSystem, do_render: bool = ...) -> None: ...
     def output(self, out: ostream) -> None:
         """Write a string representation of this instance to <out>."""
     def write_ps_list(self, out: ostream, indent: int = ...) -> None:

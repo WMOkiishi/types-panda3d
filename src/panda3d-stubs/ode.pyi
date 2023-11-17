@@ -1384,10 +1384,10 @@ class OdeTriMeshData(TypedReferenceCount):
 
 class OdeTriMeshGeom(OdeGeom):
     @overload
-    def __init__(self, space: OdeSpace, data: NodePath | OdeTriMeshData) -> None:
-        """ODE_API dGeomID dCreateTriMesh(dSpaceID space, dTriMeshDataID Data, dTriCallback* Callback, dTriArrayCallback* ArrayCallback, dTriRayCallback* RayCallback);"""
+    def __init__(self, space: OdeSpace, data: NodePath | OdeTriMeshData) -> None: ...
     @overload
-    def __init__(self, data: NodePath | OdeTriMeshData) -> None: ...
+    def __init__(self, data: NodePath | OdeTriMeshData) -> None:
+        """ODE_API dGeomID dCreateTriMesh(dSpaceID space, dTriMeshDataID Data, dTriCallback* Callback, dTriArrayCallback* ArrayCallback, dTriRayCallback* RayCallback);"""
     @overload
     def __init__(self, copy: OdeTriMeshGeom) -> None: ...
     def __copy__(self) -> Self: ...

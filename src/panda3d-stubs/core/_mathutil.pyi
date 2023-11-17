@@ -977,32 +977,25 @@ class GeometricBoundingVolume(BoundingVolume):
 
     @overload
     def extend_by(self, vol: Self) -> bool:
-        """`(self, vol: GeometricBoundingVolume)`:
-        Increases the size of the volume to include the given volume.
-
-        `(self, point: LPoint3)`:
-        Increases the size of the volume to include the given point.
-        """
+        """Increases the size of the volume to include the given volume."""
     @overload
-    def extend_by(self, point: Vec3Like) -> bool: ...
+    def extend_by(self, point: Vec3Like) -> bool:
+        """Increases the size of the volume to include the given point."""
     @overload
     def contains(self, vol: Self) -> int:
-        """`(self, vol: GeometricBoundingVolume)`:
-        Returns the appropriate set of IntersectionFlags to indicate the amount of
+        """Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated volume.
-
-        `(self, point: LPoint3)`:
-        Returns the appropriate set of IntersectionFlags to indicate the amount of
-        intersection with the indicated point.
-
-        `(self, a: LPoint3, b: LPoint3)`:
-        Returns the appropriate set of IntersectionFlags to indicate the amount of
-        intersection with the indicated line segment.
         """
     @overload
-    def contains(self, point: Vec3Like) -> int: ...
+    def contains(self, point: Vec3Like) -> int:
+        """Returns the appropriate set of IntersectionFlags to indicate the amount of
+        intersection with the indicated point.
+        """
     @overload
-    def contains(self, a: Vec3Like, b: Vec3Like) -> int: ...
+    def contains(self, a: Vec3Like, b: Vec3Like) -> int:
+        """Returns the appropriate set of IntersectionFlags to indicate the amount of
+        intersection with the indicated line segment.
+        """
     def get_approx_center(self) -> LPoint3: ...
     def xform(self, mat: Mat4Like) -> None: ...
     extendBy = extend_by
@@ -1037,15 +1030,12 @@ class LParabolaf:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: LParabolaf = ...) -> None:
-        """`(self)`:
-        Constructs a meaningless degenerate parabola.
-
-        `(self, a: LVecBase3f, b: LVecBase3f, c: LVecBase3f)`:
-        Constructs a parabola given the three points of the parametric equation:
+        """Constructs a meaningless degenerate parabola."""
+    @overload
+    def __init__(self, a: Vec3Like, b: Vec3Like, c: Vec3Like) -> None:
+        """Constructs a parabola given the three points of the parametric equation:
         the acceleration, initial velocity, and start point.
         """
-    @overload
-    def __init__(self, a: Vec3Like, b: Vec3Like, c: Vec3Like) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def assign(self, copy: Self) -> Self: ...
@@ -1104,15 +1094,12 @@ class LParabolad:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: LParabolad = ...) -> None:
-        """`(self)`:
-        Constructs a meaningless degenerate parabola.
-
-        `(self, a: LVecBase3d, b: LVecBase3d, c: LVecBase3d)`:
-        Constructs a parabola given the three points of the parametric equation:
+        """Constructs a meaningless degenerate parabola."""
+    @overload
+    def __init__(self, a: DoubleVec3Like, b: DoubleVec3Like, c: DoubleVec3Like) -> None:
+        """Constructs a parabola given the three points of the parametric equation:
         the acceleration, initial velocity, and start point.
         """
-    @overload
-    def __init__(self, a: DoubleVec3Like, b: DoubleVec3Like, c: DoubleVec3Like) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def assign(self, copy: Self) -> Self: ...
@@ -1168,28 +1155,23 @@ class LPlanef(LVecBase4f):
 
     @overload
     def __init__(self, copy: Vec4Like = ...) -> None:
-        """`(self)`:
-        Creates a default plane.  This plane happens to intersect the origin,
+        """Creates a default plane.  This plane happens to intersect the origin,
         perpendicular to the Z axis.  It's not clear how useful a default plane is.
-
-        `(self, a: LPoint3f, b: LPoint3f, c: LPoint3f)`:
-        Constructs a plane given three counter-clockwise points, as seen from the
-        front of the plane (that is, viewed from the end of the normal vector,
-        looking down).
-
-        `(self, normal: LVector3f, point: LPoint3f)`:
-        Constructs a plane given a surface normal vector and a point within the
-        plane.
-
-        `(self, a: float, b: float, c: float, d: float)`:
-        Constructs a plane given the four terms of the plane equation.
         """
     @overload
-    def __init__(self, a: Vec3Like, b: Vec3Like, c: Vec3Like) -> None: ...
+    def __init__(self, a: Vec3Like, b: Vec3Like, c: Vec3Like) -> None:
+        """Constructs a plane given three counter-clockwise points, as seen from the
+        front of the plane (that is, viewed from the end of the normal vector,
+        looking down).
+        """
     @overload
-    def __init__(self, normal: Vec3Like, point: Vec3Like) -> None: ...
+    def __init__(self, normal: Vec3Like, point: Vec3Like) -> None:
+        """Constructs a plane given a surface normal vector and a point within the
+        plane.
+        """
     @overload
-    def __init__(self, a: float, b: float, c: float, d: float) -> None: ...
+    def __init__(self, a: float, b: float, c: float, d: float) -> None:
+        """Constructs a plane given the four terms of the plane equation."""
     def __mul__(self, mat: Mat4Like) -> LPlanef: ...  # type: ignore[override]
     def __imul__(self, mat: Mat4Like) -> Self: ...  # type: ignore[override]
     def __neg__(self) -> LPlanef: ...
@@ -1254,28 +1236,23 @@ class LPlaned(LVecBase4d):
 
     @overload
     def __init__(self, copy: DoubleVec4Like = ...) -> None:
-        """`(self)`:
-        Creates a default plane.  This plane happens to intersect the origin,
+        """Creates a default plane.  This plane happens to intersect the origin,
         perpendicular to the Z axis.  It's not clear how useful a default plane is.
-
-        `(self, a: LPoint3d, b: LPoint3d, c: LPoint3d)`:
-        Constructs a plane given three counter-clockwise points, as seen from the
-        front of the plane (that is, viewed from the end of the normal vector,
-        looking down).
-
-        `(self, normal: LVector3d, point: LPoint3d)`:
-        Constructs a plane given a surface normal vector and a point within the
-        plane.
-
-        `(self, a: float, b: float, c: float, d: float)`:
-        Constructs a plane given the four terms of the plane equation.
         """
     @overload
-    def __init__(self, a: DoubleVec3Like, b: DoubleVec3Like, c: DoubleVec3Like) -> None: ...
+    def __init__(self, a: DoubleVec3Like, b: DoubleVec3Like, c: DoubleVec3Like) -> None:
+        """Constructs a plane given three counter-clockwise points, as seen from the
+        front of the plane (that is, viewed from the end of the normal vector,
+        looking down).
+        """
     @overload
-    def __init__(self, normal: DoubleVec3Like, point: DoubleVec3Like) -> None: ...
+    def __init__(self, normal: DoubleVec3Like, point: DoubleVec3Like) -> None:
+        """Constructs a plane given a surface normal vector and a point within the
+        plane.
+        """
     @overload
-    def __init__(self, a: float, b: float, c: float, d: float) -> None: ...
+    def __init__(self, a: float, b: float, c: float, d: float) -> None:
+        """Constructs a plane given the four terms of the plane equation."""
     def __mul__(self, mat: DoubleMat4Like) -> LPlaned: ...  # type: ignore[override]
     def __imul__(self, mat: DoubleMat4Like) -> Self: ...  # type: ignore[override]
     def __neg__(self) -> LPlaned: ...
@@ -1347,14 +1324,10 @@ class BoundingBox(FiniteBoundingVolume):
     def planes(self) -> Sequence[LPlane]: ...
     @overload
     def __init__(self) -> None:
-        """`(self)`:
-        Constructs an empty box object.
-
-        `(self, min: LPoint3, max: LPoint3)`:
-        Constructs a specific box object.
-        """
+        """Constructs an empty box object."""
     @overload
-    def __init__(self, min: Vec3Like, max: Vec3Like) -> None: ...
+    def __init__(self, min: Vec3Like, max: Vec3Like) -> None:
+        """Constructs a specific box object."""
     def get_num_points(self) -> int:
         """Returns 8: the number of vertices of a rectangular solid."""
     def get_point(self, n: int) -> LPoint3:
@@ -1384,12 +1357,14 @@ class LFrustumf:
     def make_ortho_2D(self) -> None:
         """Sets up a two-dimensional orthographic frustum"""
     @overload
-    def make_ortho_2D(self, l: float, r: float, t: float, b: float) -> None: ...
+    def make_ortho_2D(self, l: float, r: float, t: float, b: float) -> None:
+        """Sets up a two-dimensional orthographic frustum"""
     @overload
     def make_ortho(self, fnear: float, ffar: float) -> None:
         """Behaves like gluOrtho"""
     @overload
-    def make_ortho(self, fnear: float, ffar: float, l: float, r: float, t: float, b: float) -> None: ...
+    def make_ortho(self, fnear: float, ffar: float, l: float, r: float, t: float, b: float) -> None:
+        """Behaves like gluOrtho"""
     def make_perspective_hfov(self, xfov: float, aspect: float, fnear: float, ffar: float) -> None:
         """Behaves like gluPerspective (Aspect = width/height, Yfov in degrees)"""
     def make_perspective_vfov(self, yfov: float, aspect: float, fnear: float, ffar: float) -> None: ...
@@ -1409,12 +1384,14 @@ class LFrustumd:
     def make_ortho_2D(self) -> None:
         """Sets up a two-dimensional orthographic frustum"""
     @overload
-    def make_ortho_2D(self, l: float, r: float, t: float, b: float) -> None: ...
+    def make_ortho_2D(self, l: float, r: float, t: float, b: float) -> None:
+        """Sets up a two-dimensional orthographic frustum"""
     @overload
     def make_ortho(self, fnear: float, ffar: float) -> None:
         """Behaves like gluOrtho"""
     @overload
-    def make_ortho(self, fnear: float, ffar: float, l: float, r: float, t: float, b: float) -> None: ...
+    def make_ortho(self, fnear: float, ffar: float, l: float, r: float, t: float, b: float) -> None:
+        """Behaves like gluOrtho"""
     def make_perspective_hfov(self, xfov: float, aspect: float, fnear: float, ffar: float) -> None:
         """Behaves like gluPerspective (Aspect = width/height, Yfov in degrees)"""
     def make_perspective_vfov(self, yfov: float, aspect: float, fnear: float, ffar: float) -> None: ...
@@ -1507,14 +1484,10 @@ class BoundingSphere(FiniteBoundingVolume):
     radius: float
     @overload
     def __init__(self) -> None:
-        """`(self)`:
-        Constructs an empty sphere.
-
-        `(self, center: LPoint3, radius: float)`:
-        Constructs a specific sphere.
-        """
+        """Constructs an empty sphere."""
     @overload
-    def __init__(self, center: Vec3Like, radius: float) -> None: ...
+    def __init__(self, center: Vec3Like, radius: float) -> None:
+        """Constructs a specific sphere."""
     def get_center(self) -> LPoint3: ...
     def get_radius(self) -> float: ...
     def set_center(self, center: Vec3Like) -> None:
@@ -1562,10 +1535,10 @@ class Mersenne:
     max_value: Final = 2147483647
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: Mersenne) -> None:
-        """initializes mt[N] with a seed"""
+    def __init__(self, __param0: Mersenne) -> None: ...
     @overload
-    def __init__(self, seed: int) -> None: ...
+    def __init__(self, seed: int) -> None:
+        """initializes mt[N] with a seed"""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def get_uint31(self) -> int:
@@ -1619,12 +1592,12 @@ class Randomizer:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: Randomizer) -> None:
+    def __init__(self, copy: Randomizer) -> None: ...
+    @overload
+    def __init__(self, seed: int = ...) -> None:
         """If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
-    @overload
-    def __init__(self, seed: int = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def assign(self, copy: Self) -> Self: ...
@@ -1668,22 +1641,20 @@ class PerlinNoise2(PerlinNoise):
 
     @overload
     def __init__(self, copy: PerlinNoise2 = ...) -> None:
-        """`(self)`:
-        Randomizes the tables to make a unique noise function.  Uses a default
+        """Randomizes the tables to make a unique noise function.  Uses a default
         scale (noise frequency), table size, and seed.
 
-        `(self, copy: PerlinNoise2)`:
+        or:
         Makes an exact copy of the existing PerlinNoise object, including its
         random seed.
-
-        `(self, sx: float, sy: float, table_size: int = ..., seed: int = ...)`:
-        Randomizes the tables to make a unique noise function.
+        """
+    @overload
+    def __init__(self, sx: float, sy: float, table_size: int = ..., seed: int = ...) -> None:
+        """Randomizes the tables to make a unique noise function.
 
         If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
-    @overload
-    def __init__(self, sx: float, sy: float, table_size: int = ..., seed: int = ...) -> None: ...
     @overload
     def __call__(self, value: DoubleVec2Like | Vec2Like) -> float: ...
     @overload
@@ -1695,12 +1666,14 @@ class PerlinNoise2(PerlinNoise):
     def set_scale(self, scale: DoubleVec2Like | Vec2Like | float) -> None:
         """Changes the scale (frequency) of the noise."""
     @overload
-    def set_scale(self, sx: float, sy: float) -> None: ...
+    def set_scale(self, sx: float, sy: float) -> None:
+        """Changes the scale (frequency) of the noise."""
     @overload
     def noise(self, value: DoubleVec2Like | Vec2Like) -> float:
         """Returns the noise function of the three inputs."""
     @overload
-    def noise(self, x: float, y: float) -> float: ...
+    def noise(self, x: float, y: float) -> float:
+        """Returns the noise function of the three inputs."""
     setScale = set_scale
 
 class PerlinNoise3(PerlinNoise):
@@ -1711,22 +1684,20 @@ class PerlinNoise3(PerlinNoise):
 
     @overload
     def __init__(self, copy: PerlinNoise3 = ...) -> None:
-        """`(self)`:
-        Randomizes the tables to make a unique noise function.  Uses a default
+        """Randomizes the tables to make a unique noise function.  Uses a default
         scale (noise frequency), table size, and seed.
 
-        `(self, copy: PerlinNoise3)`:
+        or:
         Makes an exact copy of the existing PerlinNoise object, including its
         random seed.
-
-        `(self, sx: float, sy: float, sz: float, table_size: int = ..., seed: int = ...)`:
-        Randomizes the tables to make a unique noise function.
+        """
+    @overload
+    def __init__(self, sx: float, sy: float, sz: float, table_size: int = ..., seed: int = ...) -> None:
+        """Randomizes the tables to make a unique noise function.
 
         If seed is nonzero, it is used to define the tables; if it is zero a random
         seed is generated.
         """
-    @overload
-    def __init__(self, sx: float, sy: float, sz: float, table_size: int = ..., seed: int = ...) -> None: ...
     @overload
     def __call__(self, value: DoubleVec3Like | Vec3Like) -> float: ...
     @overload
@@ -1738,12 +1709,14 @@ class PerlinNoise3(PerlinNoise):
     def set_scale(self, scale: DoubleVec3Like | Vec3Like | float) -> None:
         """Changes the scale (frequency) of the noise."""
     @overload
-    def set_scale(self, sx: float, sy: float, sz: float) -> None: ...
+    def set_scale(self, sx: float, sy: float, sz: float) -> None:
+        """Changes the scale (frequency) of the noise."""
     @overload
     def noise(self, value: DoubleVec3Like | Vec3Like) -> float:
         """Returns the noise function of the three inputs."""
     @overload
-    def noise(self, x: float, y: float, z: float) -> float: ...
+    def noise(self, x: float, y: float, z: float) -> float:
+        """Returns the noise function of the three inputs."""
     setScale = set_scale
 
 class StackedPerlinNoise2:
@@ -1754,19 +1727,12 @@ class StackedPerlinNoise2:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: StackedPerlinNoise2 = ...) -> None:
-        """`(self)`:
-        Creates a StackedPerlinNoise2 object with no levels.  You should call
+        """Creates a StackedPerlinNoise2 object with no levels.  You should call
         add_level() to add each level by hand.
 
-        `(self, copy: StackedPerlinNoise2)`:
+        or:
         Creates an exact duplicate of the existing StackedPerlinNoise2 object,
         including the random seed.
-
-        `(self, sx: float, sy: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...)`:
-        Creates num_levels nested PerlinNoise2 objects.  Each stacked Perlin object
-        will have a scale of 1 scale_factor times the previous object (so that it
-        is higher-frequency, if scale_factor > 1), and an amplitude of amp_scale
-        times the previous object (so that it is less important, if amp_scale < 1).
         """
     @overload
     def __init__(
@@ -1778,7 +1744,12 @@ class StackedPerlinNoise2:
         amp_scale: float = ...,
         table_size: int = ...,
         seed: int = ...,
-    ) -> None: ...
+    ) -> None:
+        """Creates num_levels nested PerlinNoise2 objects.  Each stacked Perlin object
+        will have a scale of 1 scale_factor times the previous object (so that it
+        is higher-frequency, if scale_factor > 1), and an amplitude of amp_scale
+        times the previous object (so that it is less important, if amp_scale < 1).
+        """
     @overload
     def __call__(self, value: DoubleVec2Like | Vec2Like) -> float: ...
     @overload
@@ -1798,7 +1769,8 @@ class StackedPerlinNoise2:
     def noise(self, value: DoubleVec2Like | Vec2Like) -> float:
         """Returns the noise function of the three inputs."""
     @overload
-    def noise(self, x: float, y: float) -> float: ...
+    def noise(self, x: float, y: float) -> float:
+        """Returns the noise function of the three inputs."""
     addLevel = add_level
 
 class StackedPerlinNoise3:
@@ -1809,19 +1781,12 @@ class StackedPerlinNoise3:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, copy: StackedPerlinNoise3 = ...) -> None:
-        """`(self)`:
-        Creates a StackedPerlinNoise3 object with no levels.  You should call
+        """Creates a StackedPerlinNoise3 object with no levels.  You should call
         add_level() to add each level by hand.
 
-        `(self, copy: StackedPerlinNoise3)`:
+        or:
         Creates an exact duplicate of the existing StackedPerlinNoise3 object,
         including the random seed.
-
-        `(self, sx: float, sy: float, sz: float, num_levels: int = ..., scale_factor: float = ..., amp_scale: float = ..., table_size: int = ..., seed: int = ...)`:
-        Creates num_levels nested PerlinNoise3 objects.  Each stacked Perlin object
-        will have a scale of 1 scale_factor times the previous object (so that it
-        is higher-frequency, if scale_factor > 1), and an amplitude of amp_scale
-        times the previous object (so that it is less important, if amp_scale < 1).
         """
     @overload
     def __init__(
@@ -1834,7 +1799,12 @@ class StackedPerlinNoise3:
         amp_scale: float = ...,
         table_size: int = ...,
         seed: int = ...,
-    ) -> None: ...
+    ) -> None:
+        """Creates num_levels nested PerlinNoise3 objects.  Each stacked Perlin object
+        will have a scale of 1 scale_factor times the previous object (so that it
+        is higher-frequency, if scale_factor > 1), and an amplitude of amp_scale
+        times the previous object (so that it is less important, if amp_scale < 1).
+        """
     @overload
     def __call__(self, value: DoubleVec3Like | Vec3Like) -> float: ...
     @overload
@@ -1854,7 +1824,8 @@ class StackedPerlinNoise3:
     def noise(self, value: DoubleVec3Like | Vec3Like) -> float:
         """Returns the noise function of the three inputs."""
     @overload
-    def noise(self, x: float, y: float, z: float) -> float: ...
+    def noise(self, x: float, y: float, z: float) -> float:
+        """Returns the noise function of the three inputs."""
     addLevel = add_level
 
 class Triangulator:
@@ -1883,7 +1854,8 @@ class Triangulator:
     def add_vertex(self, point: DoubleVec2Like) -> int:
         """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
     @overload
-    def add_vertex(self, x: float, y: float) -> int: ...
+    def add_vertex(self, x: float, y: float) -> int:
+        """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
     def get_num_vertices(self) -> int:
         """Returns the number of vertices in the pool.  Note that the Triangulator
         might append new vertices, in addition to those added by the user, if any
@@ -1985,7 +1957,8 @@ class Triangulator3:
     def add_vertex(self, point: DoubleVec3Like) -> int:
         """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
     @overload
-    def add_vertex(self, x: float, y: float, z: float) -> int: ...
+    def add_vertex(self, x: float, y: float, z: float) -> int:
+        """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
     def get_num_vertices(self) -> int:
         """Returns the number of vertices in the pool.  Note that the Triangulator
         might append new vertices, in addition to those added by the user, if any

@@ -146,13 +146,12 @@ class PNMTextGlyph:
         rendering this glyph.
         """
     def place(self, dest_image: PNMImage, xp: int, yp: int, fg: Vec4Like, interior: Vec4Like = ...) -> None:
-        """`(self, dest_image: PNMImage, xp: int, yp: int, fg: LColor)`:
-        Copies the glyph to the indicated destination image at the indicated
+        """Copies the glyph to the indicated destination image at the indicated
         origin.  It colors the glyph pixels the indicated foreground color, blends
         antialiased pixels with the appropriate amount of the foreground color and
         the existing background color, and leaves other pixels alone.
 
-        `(self, dest_image: PNMImage, xp: int, yp: int, fg: LColor, interior: LColor)`:
+        or:
         This flavor of place() also fills in the interior color.  This requires
         that determine_interior was called earlier.
         """
@@ -202,19 +201,17 @@ class PNMTextMaker(FreetypeFont):
     ACenter: Final = 2
     @overload
     def __init__(self, font_filename: StrOrBytesPath, face_index: int) -> None:
-        """`(self, font_filename: Filename, face_index: int)`:
-        The constructor expects the name of some font file that FreeType can read,
+        """The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load
         (usually 0).
-
-        `(self, font_data: str, data_length: int, face_index: int)`:
-        This constructor works as above, but it takes the font data from an in-
-        memory buffer instead of from a named file.
         """
     @overload
     def __init__(self, copy: FreetypeFont) -> None: ...
     @overload
-    def __init__(self, font_data: str, data_length: int, face_index: int) -> None: ...
+    def __init__(self, font_data: str, data_length: int, face_index: int) -> None:
+        """This constructor works as above, but it takes the font data from an in-
+        memory buffer instead of from a named file.
+        """
     def is_valid(self) -> bool:
         """Returns true if the PNMTextMaker is valid and ready to generate text, false
         otherwise.

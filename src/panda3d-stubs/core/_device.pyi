@@ -488,10 +488,9 @@ class InputDeviceManager:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_devices(self, device_class: InputDevice.DeviceClass = ...) -> InputDeviceSet:
-        """`(self)`:
-        Description: Returns all currently connected devices.
+        """Description: Returns all currently connected devices.
 
-        `(self, device_class: InputDevice.DeviceClass)`:
+        or:
         Description: Returns all currently connected devices of the given device class.
         """
     def add_device(self, device: InputDevice) -> None:

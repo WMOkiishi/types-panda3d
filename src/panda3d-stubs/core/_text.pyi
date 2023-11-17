@@ -243,20 +243,18 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
     @property
     def pages(self) -> Sequence[DynamicTextPage]: ...
     @overload
-    def __init__(self, copy: ConfigVariableFilename | DynamicTextFont) -> None:
-        """`(self, font_filename: Filename, face_index: int = ...)`:
-        The constructor expects the name of some font file that FreeType can read,
+    def __init__(self, copy: ConfigVariableFilename | DynamicTextFont) -> None: ...
+    @overload
+    def __init__(self, font_filename: StrOrBytesPath, face_index: int = ...) -> None:
+        """The constructor expects the name of some font file that FreeType can read,
         along with face_index, indicating which font within the file to load
         (usually 0).
-
-        `(self, font_data: str, data_length: int, face_index: int)`:
-        This constructor accepts a table of data representing the font file, loaded
-        from some source other than a filename on disk.
         """
     @overload
-    def __init__(self, font_filename: StrOrBytesPath, face_index: int = ...) -> None: ...
-    @overload
-    def __init__(self, font_data: str, data_length: int, face_index: int) -> None: ...
+    def __init__(self, font_data: str, data_length: int, face_index: int) -> None:
+        """This constructor accepts a table of data representing the font file, loaded
+        from some source other than a filename on disk.
+        """
     def upcast_to_TextFont(self) -> TextFont: ...
     def upcast_to_FreetypeFont(self) -> FreetypeFont: ...
     def make_copy(self) -> TextFont:
@@ -303,7 +301,10 @@ class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
         DynamicTextFont.
         """
     @overload
-    def set_page_size(self, x_size: int, y_size: int) -> None: ...
+    def set_page_size(self, x_size: int, y_size: int) -> None:
+        """Sets the x, y size of the textures that are created for the
+        DynamicTextFont.
+        """
     def get_page_size(self) -> LVecBase2i:
         """Returns the size of the textures that are created for the DynamicTextFont.
         See set_page_size().
@@ -756,7 +757,10 @@ class TextProperties:
         copy of the text and offsetting it slightly behind the first.
         """
     @overload
-    def set_shadow(self, xoffset: float, yoffset: float) -> None: ...
+    def set_shadow(self, xoffset: float, yoffset: float) -> None:
+        """Specifies that the text should be drawn with a shadow, by creating a second
+        copy of the text and offsetting it slightly behind the first.
+        """
     def clear_shadow(self) -> None:
         """Specifies that a shadow will not be drawn behind the text."""
     def has_shadow(self) -> bool: ...
@@ -1009,7 +1013,10 @@ class TextGraphic:
         See get_frame().
         """
     @overload
-    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
+    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None:
+        """Specifies the (left, right, bottom, top) bounding frame for the graphic.
+        See get_frame().
+        """
     def get_instance_flag(self) -> bool:
         """Returns the instance_flag.  See set_instance_flag()."""
     def set_instance_flag(self, instance_flag: bool) -> None:
@@ -1078,14 +1085,14 @@ class TextPropertiesManager:
         """Removes the named TextProperties structure from the manager."""
     @overload
     def set_graphic(self, name: str, model: NodePath) -> None:
-        """`(self, name: str, model: NodePath)`:
-        This flavor of set_graphic implicitly creates a frame for the model using
+        """This flavor of set_graphic implicitly creates a frame for the model using
         the model's actual computed bounding volume, as derived from
         NodePath::calc_tight_bounds().  Create a TextGraphic object first if you
         want to have explicit control of the frame.
-
-        `(self, name: str, graphic: TextGraphic)`:
-        Defines the TextGraphic associated with the indicated name.  When the name
+        """
+    @overload
+    def set_graphic(self, name: str, graphic: TextGraphic) -> None:
+        """Defines the TextGraphic associated with the indicated name.  When the name
         is subsequently encountered in text embedded between \\5 characters in a
         TextNode string, the specified graphic will be embedded in the text at that
         point.
@@ -1093,8 +1100,6 @@ class TextPropertiesManager:
         If there was already a TextGraphic structure associated with this name, it
         is quietly replaced with the new definition.
         """
-    @overload
-    def set_graphic(self, name: str, graphic: TextGraphic) -> None: ...
     def get_graphic(self, name: str) -> TextGraphic:
         """Returns the TextGraphic associated with the indicated name.  If there was
         not previously a TextGraphic associated with this name, a warning is
@@ -1186,20 +1191,18 @@ class TextAssembler:
         """
     @overload
     def get_properties(self, n: int = ...) -> TextProperties:
-        """`(self)`:
-        Returns the default TextProperties that are applied to the text in the
+        """Returns the default TextProperties that are applied to the text in the
         absence of any nested property change sequences.
 
-        `(self, n: int)`:
+        or:
         Returns the TextProperties in effect for the object at the indicated
         position in the pre-wordwrapped string.
-
-        `(self, r: int, c: int)`:
-        Returns the TextProperties in effect for the object at the indicated
-        position in the indicated row.
         """
     @overload
-    def get_properties(self, r: int, c: int) -> TextProperties: ...
+    def get_properties(self, r: int, c: int) -> TextProperties:
+        """Returns the TextProperties in effect for the object at the indicated
+        position in the indicated row.
+        """
     def set_wtext(self, wtext: str) -> bool:
         """Accepts a new text string and associated properties structure, and
         precomputes the wordwrapping layout appropriately.  After this call,
@@ -1288,44 +1291,38 @@ class TextAssembler:
         """Returns the number of characters of text, before wordwrapping."""
     @overload
     def get_character(self, n: int) -> int:
-        """`(self, n: int)`:
-        Returns the character at the indicated position in the pre-wordwrapped
+        """Returns the character at the indicated position in the pre-wordwrapped
         string.  If the object at this position is a graphic object instead of a
         character, returns 0.
-
-        `(self, r: int, c: int)`:
-        Returns the character at the indicated position in the indicated row.  If
+        """
+    @overload
+    def get_character(self, r: int, c: int) -> int:
+        """Returns the character at the indicated position in the indicated row.  If
         the object at this position is a graphic object instead of a character,
         returns 0.
         """
     @overload
-    def get_character(self, r: int, c: int) -> int: ...
-    @overload
     def get_graphic(self, n: int) -> TextGraphic:
-        """`(self, n: int)`:
-        Returns the graphic object at the indicated position in the pre-wordwrapped
+        """Returns the graphic object at the indicated position in the pre-wordwrapped
         string.  If the object at this position is a character instead of a graphic
         object, returns NULL.
-
-        `(self, r: int, c: int)`:
-        Returns the graphic object at the indicated position in the indicated row.
+        """
+    @overload
+    def get_graphic(self, r: int, c: int) -> TextGraphic:
+        """Returns the graphic object at the indicated position in the indicated row.
         If the object at this position is a character instead of a graphic object,
         returns NULL.
         """
     @overload
-    def get_graphic(self, r: int, c: int) -> TextGraphic: ...
-    @overload
     def get_width(self, n: int) -> float:
-        """`(self, n: int)`:
-        Returns the width of the character or object at the indicated position in
+        """Returns the width of the character or object at the indicated position in
         the pre-wordwrapped string.
-
-        `(self, r: int, c: int)`:
-        Returns the width of the character or object at the indicated position in
-        the indicated row.
         """
     @overload
-    def get_width(self, r: int, c: int) -> float: ...
+    def get_width(self, r: int, c: int) -> float:
+        """Returns the width of the character or object at the indicated position in
+        the indicated row.
+        """
     def get_num_rows(self) -> int:
         """Returns the number of rows of text after it has all been wordwrapped and
         assembled.
@@ -1364,19 +1361,16 @@ class TextAssembler:
     @overload
     @staticmethod
     def calc_width(graphic: TextGraphic, properties: TextProperties) -> float:
-        """`(graphic: TextGraphic, properties: TextProperties)`:
-        Returns the width of a single TextGraphic image.
-
-        `(character: int, properties: TextProperties)`:
-        Returns the width of a single character, according to its associated font.
+        """Returns the width of a single TextGraphic image."""
+    @overload
+    @staticmethod
+    def calc_width(character: int, properties: TextProperties) -> float:
+        """Returns the width of a single character, according to its associated font.
         This also correctly calculates the width of cheesy ligatures and accented
         characters, which may not exist in the font as such.
 
         This does not take kerning into account, however.
         """
-    @overload
-    @staticmethod
-    def calc_width(character: int, properties: TextProperties) -> float: ...
     @staticmethod
     def has_exact_character(character: int, properties: TextProperties) -> bool:
         """Returns true if the named character exists in the font exactly as named,
@@ -1772,21 +1766,19 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         """
     @overload
     def calc_width(self, line: str) -> float:
-        """`(self, line: str)`:
-        Returns the width of a line of text of arbitrary characters.  The line
+        """Returns the width of a line of text of arbitrary characters.  The line
         should not include the newline character.
 
-        `(self, line: str)`:
+        or:
         Returns the width of a line of text of arbitrary characters.  The line
         should not include the newline character or any embedded control characters
         like \\1 or \\3.
-
-        `(self, character: int)`:
-        Returns the width of a single character of the font, or 0.0 if the
-        character is not known.  This may be a wide character (greater than 255).
         """
     @overload
-    def calc_width(self, character: int) -> float: ...
+    def calc_width(self, character: int) -> float:
+        """Returns the width of a single character of the font, or 0.0 if the
+        character is not known.  This may be a wide character (greater than 255).
+        """
     def has_exact_character(self, character: int) -> bool:
         """Returns true if the named character exists in the font exactly as named,
         false otherwise.  Note that because Panda can assemble glyphs together

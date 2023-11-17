@@ -248,6 +248,7 @@ def make_signature_rep(
             is_optional=param.is_optional,
             named=param.has_name,
         ))
+    docstring = comment_to_docstring(wrapper.comment)
     match params:
         case [Parameter('args') as args]:
             args.name = '*' + args.name
@@ -258,7 +259,7 @@ def make_signature_rep(
         ]:
             args.name = '*' + args.name
             kwargs.name = '**' + kwargs.name
-    return Signature(params, return_type)
+    return Signature(params, return_type, doc=docstring)
 
 
 def make_function_rep(function: IDBFunction) -> Function:
@@ -269,7 +270,6 @@ def make_function_rep(function: IDBFunction) -> Function:
         and not function.wrappers[0].parameters[0].is_this
     )
     signatures: list[Signature] = []
-    sigs_by_doc = defaultdict[str, list[str]](list)
     param_overrides = PARAM_TYPE_OVERRIDES.get(function.scoped_name)
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
     if isinstance(return_overrides, str):
@@ -281,8 +281,6 @@ def make_function_rep(function: IDBFunction) -> Function:
             wrapper, function,
             ensure_self_param=function.is_method and not is_static_method,
         )
-        if sig_doc := comment_to_docstring(wrapper.comment):
-            sigs_by_doc[sig_doc].append(f'`({signature.param_string})`')
         if param_overrides:
             for j, param in enumerate(signature.parameters):
                 param_override = param_overrides.get((i, j))
@@ -294,18 +292,10 @@ def make_function_rep(function: IDBFunction) -> Function:
         if return_override is not None:
             signature.return_type = tc.get(return_override)
         signatures.append(signature)
-    if len(sigs_by_doc) <= 1:
-        doc = ''.join(sigs_by_doc)
-    else:
-        doc = '\n\n'.join(
-            f"{'; '.join(p)}:\n{d}"
-            for d, p in sigs_by_doc.items()
-        )
     return Function(
         name,
         signatures,
         decorators=('staticmethod',) if is_static_method else (),
-        doc=doc,
         comment=get_comment(function.scoped_name),
     )
 
@@ -333,11 +323,14 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     """Return a representation of a MakeSeq known to interrogate."""
     element_getter = make_seq.element_getter
     return_type = get_type_name(element_getter.wrappers[0].return_type)
-    signature = Signature([Parameter('self')], f'tuple[{return_type}, ...]')
+    signature = Signature(
+        [Parameter('self')],
+        f'tuple[{return_type}, ...]',
+        doc=comment_to_docstring(make_seq.comment),
+    )
     return Function(
         make_seq.seq_name,
         [signature],
-        doc=comment_to_docstring(make_seq.comment),
         comment=get_comment(make_seq.scoped_name),
     )
 

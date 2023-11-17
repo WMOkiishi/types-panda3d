@@ -94,28 +94,25 @@ class EggObject(TypedReferenceCount):
         constructor.
         """
     def get_user_data(self, type: TypeHandle | type = ...) -> EggUserData:
-        """`(self)`:
-        Returns the user data pointer most recently stored on this object, or NULL
+        """Returns the user data pointer most recently stored on this object, or NULL
         if nothing was previously stored.
 
-        `(self, type: TypeHandle)`:
+        or:
         Returns the user data pointer of the indicated type, if it exists, or NULL
         if it does not.
         """
     def has_user_data(self, type: TypeHandle | type = ...) -> bool:
-        """`(self)`:
-        Returns true if a generic user data pointer has recently been set and not
+        """Returns true if a generic user data pointer has recently been set and not
         yet cleared, false otherwise.
 
-        `(self, type: TypeHandle)`:
+        or:
         Returns true if the user data pointer of the indicated type has been set,
         false otherwise.
         """
     def clear_user_data(self, type: TypeHandle | type = ...) -> None:
-        """`(self)`:
-        Removes *all* user data pointers from the node.
+        """Removes *all* user data pointers from the node.
 
-        `(self, type: TypeHandle)`:
+        or:
         Removes the user data pointer of the indicated type.
         """
     setUserData = set_user_data
@@ -907,19 +904,18 @@ class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
         later filled in, this vertex will be replaced with real data.
         """
     def set_pos(self, pos: DoubleVec2Like | DoubleVec3Like | DoubleVec4Like | float) -> None:
-        """`(self, pos: LPoint2d)`:
-        Sets the vertex position.  This variant sets the vertex to a two-
+        """Sets the vertex position.  This variant sets the vertex to a two-
         dimensional value.
 
-        `(self, pos: LPoint3d)`:
+        or:
         Sets the vertex position.  This variant sets the vertex to a three-
         dimensional value.
 
-        `(self, pos: LPoint4d)`:
+        or:
         Sets the vertex position.  This variant sets the vertex to a four-
         dimensional value.
 
-        `(self, pos: float)`:
+        or:
         Sets the vertex position.  This variant sets the vertex to a one-
         dimensional value.
         """
@@ -956,53 +952,48 @@ class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
         dimensional homogenous space, e.g.  by adding 1 as the fourth component.
         """
     def has_uv(self, name: str = ...) -> bool:
-        """`(self)`:
-        Returns true if the vertex has an unnamed UV coordinate pair, false
+        """Returns true if the vertex has an unnamed UV coordinate pair, false
         otherwise.
 
         This is the more restrictive interface, and is generally useful only in the
         absence of multitexturing; see has_uv(name) for the interface that supports
         multitexturing.
 
-        `(self, name: str)`:
+        or:
         Returns true if the vertex has the named UV coordinate pair, and the named
         UV coordinate pair is 2-d, false otherwise.
         """
     def get_uv(self, name: str = ...) -> LTexCoordd:
-        """`(self)`:
-        Returns the unnamed UV coordinate pair on the vertex.  It is an error to
+        """Returns the unnamed UV coordinate pair on the vertex.  It is an error to
         call this if has_uv() has returned false.
 
         This is the more restrictive interface, and is generally useful only in the
         absence of multitexturing; see get_uv(name) for the interface that supports
         multitexturing.
 
-        `(self, name: str)`:
+        or:
         Returns the named UV coordinate pair on the vertex.  It is an error to call
         this if has_uv(name) returned false.
         """
     @overload
     def set_uv(self, texCoord: DoubleVec2Like) -> None:
-        """`(self, texCoord: LTexCoordd)`:
-        Replaces the unnamed UV coordinate pair on the vertex with the indicated
+        """Replaces the unnamed UV coordinate pair on the vertex with the indicated
         value.
 
         This is the more restrictive interface, and is generally useful only in the
         absence of multitexturing; see set_uv(name, uv) for the interface that
         supports multitexturing.
-
-        `(self, name: str, texCoord: LTexCoordd)`:
-        Sets the indicated UV coordinate pair on the vertex.  This replaces any UV
+        """
+    @overload
+    def set_uv(self, name: str, texCoord: DoubleVec2Like) -> None:
+        """Sets the indicated UV coordinate pair on the vertex.  This replaces any UV
         coordinate pair with the same name already on the vertex, but preserves UV
         morphs.
         """
-    @overload
-    def set_uv(self, name: str, texCoord: DoubleVec2Like) -> None: ...
     def clear_uv(self, name: str = ...) -> None:
-        """`(self)`:
-        Removes all UV coordinate pairs from the vertex.
+        """Removes all UV coordinate pairs from the vertex.
 
-        `(self, name: str)`:
+        or:
         Removes the named UV coordinate pair from the vertex, along with any UV
         morphs.
         """
@@ -1036,17 +1027,15 @@ class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
         morphs.
         """
     def has_aux(self, name: str = ...) -> bool:
-        """`(self)`:
-        Returns true if the vertex has any auxiliary data, false otherwise.
+        """Returns true if the vertex has any auxiliary data, false otherwise.
 
-        `(self, name: str)`:
+        or:
         Returns true if the vertex has the named auxiliary data quadruple.
         """
     def clear_aux(self, name: str = ...) -> None:
-        """`(self)`:
-        Removes all auxiliary data from the vertex.
+        """Removes all auxiliary data from the vertex.
 
-        `(self, name: str)`:
+        or:
         Removes the named auxiliary data from the vertex.
         """
     def get_aux(self, name: str) -> LVecBase4d:
@@ -1295,11 +1284,31 @@ class EggVertexPool(EggNode):
         in the vertex pool and returned from this method.
         """
     def make_new_vertex(self, pos: DoubleVec2Like | DoubleVec3Like | DoubleVec4Like | float = ...) -> EggVertex:
-        """`(self)`:
+        """Allocates and returns a new vertex from the pool.  This is one of three
+        ways to add new vertices to a vertex pool.
+
+        or:
         Allocates and returns a new vertex from the pool.  This is one of three
         ways to add new vertices to a vertex pool.
 
-        `(self, pos: LPoint2d)`; `(self, pos: LPoint3d)`; `(self, pos: LPoint4d)`; `(self, pos: float)`:
+        This flavor of make_new_vertex() explicitly sets the vertex position as it
+        is allocated.  It does not attempt to share vertices.
+
+        or:
+        Allocates and returns a new vertex from the pool.  This is one of three
+        ways to add new vertices to a vertex pool.
+
+        This flavor of make_new_vertex() explicitly sets the vertex position as it
+        is allocated.  It does not attempt to share vertices.
+
+        or:
+        Allocates and returns a new vertex from the pool.  This is one of three
+        ways to add new vertices to a vertex pool.
+
+        This flavor of make_new_vertex() explicitly sets the vertex position as it
+        is allocated.  It does not attempt to share vertices.
+
+        or:
         Allocates and returns a new vertex from the pool.  This is one of three
         ways to add new vertices to a vertex pool.
 
@@ -1635,16 +1644,14 @@ class EggTransform:
         """
     @overload
     def add_rotate3d(self, quat: DoubleVec4Like) -> None:
-        """`(self, quat: LQuaterniond)`:
-        Appends an arbitrary 3-d rotation to the current transform, expressed as a
+        """Appends an arbitrary 3-d rotation to the current transform, expressed as a
         quaternion.  This is converted to axis-angle notation for the egg file.
-
-        `(self, angle: float, axis: LVector3d)`:
-        Appends a 3-d rotation about an arbitrary axis to the current transform.
-        The rotation angle is specified in degrees counterclockwise about the axis.
         """
     @overload
-    def add_rotate3d(self, angle: float, axis: DoubleVec3Like) -> None: ...
+    def add_rotate3d(self, angle: float, axis: DoubleVec3Like) -> None:
+        """Appends a 3-d rotation about an arbitrary axis to the current transform.
+        The rotation angle is specified in degrees counterclockwise about the axis.
+        """
     def add_scale2d(self, scale: DoubleVec2Like) -> None:
         """Appends a possibly non-uniform scale to the current transform."""
     def add_scale3d(self, scale: DoubleVec3Like) -> None:
@@ -3601,25 +3608,23 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):  # type: ignore[misc]
         Please use the multitexture variant add_texture instead.
         """
     def has_texture(self, texture: EggTexture = ...) -> bool:
-        """`(self)`:
-        Returns true if the primitive has any textures specified, false otherwise.
+        """Returns true if the primitive has any textures specified, false otherwise.
 
         @deprecated This method is used in support of single-texturing only.
         New code should be written to use the multitexture variants instead.
 
-        `(self, texture: EggTexture)`:
+        or:
         Returns true if the primitive has the particular indicated texture, false
         otherwise.
         """
     def get_texture(self, n: int = ...) -> EggTexture:
-        """`(self)`:
-        Returns the first texture on the primitive, if any, or NULL if there are no
+        """Returns the first texture on the primitive, if any, or NULL if there are no
         textures on the primitive.
 
         @deprecated This method is used in support of single-texturing only.
         New code should be written to use the multitexture variants instead.
 
-        `(self, n: int)`:
+        or:
         Returns the nth texture that has been applied to the primitive.
         """
     def add_texture(self, texture: EggTexture) -> None:
@@ -3759,15 +3764,12 @@ class EggPrimitive(EggNode, EggAttributes, EggRenderMode):  # type: ignore[misc]
         """
     @overload
     def remove_vertex(self, vertex: EggVertex) -> EggVertex:
-        """`(self, vertex: EggVertex)`:
-        Removes the indicated vertex from the primitive and returns it.  If the
+        """Removes the indicated vertex from the primitive and returns it.  If the
         vertex was not already in the primitive, does nothing and returns NULL.
-
-        `(self, index: int)`:
-        Removes the indicated vertex from the primitive.
         """
     @overload
-    def remove_vertex(self, index: int) -> None: ...
+    def remove_vertex(self, index: int) -> None:
+        """Removes the indicated vertex from the primitive."""
     def copy_vertices(self, other: EggPrimitive) -> None:
         """Replaces the current primitive's list of vertices with a copy of the list
         of vertices on the other primitive.
@@ -3904,15 +3906,15 @@ class EggData(EggGroupNode):
         """
     @overload
     def read(self, filename: StrOrBytesPath, display_name: str = ...) -> bool:
-        """`(self, filename: Filename, display_name: str = ...)`:
-        Opens the indicated filename and reads the egg data contents from it.
+        """Opens the indicated filename and reads the egg data contents from it.
         Returns true if the file was successfully opened and read, false if there
         were some errors, in which case the data may be partially read.
 
         error is the output stream to which to write error messages.
-
-        `(self, _in: istream)`:
-        Parses the egg syntax contained in the indicated input stream.  Returns
+        """
+    @overload
+    def read(self, _in: istream) -> bool:
+        """Parses the egg syntax contained in the indicated input stream.  Returns
         true if the stream was a completely valid egg file, false if there were
         some errors, in which case the data may be partially read.
 
@@ -3920,8 +3922,6 @@ class EggData(EggGroupNode):
         to set the name of the egg file we're processing, if at all possible.  If
         there is no such filename, you may set it to the empty string.
         """
-    @overload
-    def read(self, _in: istream) -> bool: ...
     def merge(self, other: EggData) -> None:
         """Appends the other egg structure to the end of this one.  The other egg
         structure is invalidated.
@@ -3935,7 +3935,13 @@ class EggData(EggGroupNode):
         externals were loaded successfully, false otherwise.
         """
     @overload
-    def load_externals(self, searchpath: SearchPathLike, record: BamCacheRecord) -> bool: ...
+    def load_externals(self, searchpath: SearchPathLike, record: BamCacheRecord) -> bool:
+        """Loads up all the egg files referenced by <File> entries within the egg
+        structure, and inserts their contents in place of the <File> entries.
+        Searches for files in the searchpath, if not found directly, and writes
+        error messages to the indicated output stream.  Returns true if all
+        externals were loaded successfully, false otherwise.
+        """
     def collapse_equivalent_textures(self) -> int:
         """Removes duplicate references to the same texture image with the same
         properties.  Considers two texture references with identical properties,
@@ -3952,7 +3958,8 @@ class EggData(EggGroupNode):
     def write_egg(self, filename: StrOrBytesPath) -> bool:
         """The main interface for writing complete egg files."""
     @overload
-    def write_egg(self, out: ostream) -> bool: ...
+    def write_egg(self, out: ostream) -> bool:
+        """The main interface for writing complete egg files."""
     def set_auto_resolve_externals(self, resolve: bool) -> None:
         """Indicates whether the EggData object will automatically resolve any
         external references when read() is called.  The default is false.
@@ -4987,15 +4994,12 @@ class EggXfmSAnim(EggGroupNode):
         """
     @overload
     def add_component_data(self, component: int, value: float) -> None:
-        """`(self, component: int, value: float)`:
-        Adds a new row to the indicated component (0-12) of the table.
-
-        `(self, component_name: str, value: float)`:
-        Adds a new row to the named component (one of matrix_component_letters) of
+        """Adds a new row to the indicated component (0-12) of the table."""
+    @overload
+    def add_component_data(self, component_name: str, value: float) -> None:
+        """Adds a new row to the named component (one of matrix_component_letters) of
         the table.
         """
-    @overload
-    def add_component_data(self, component_name: str, value: float) -> None: ...
     @staticmethod
     def compose_with_order(
         mat: DoubleMat4Like,
@@ -5037,10 +5041,10 @@ class EggXfmAnimData(EggAnimData):
     """
 
     @overload
-    def __init__(self, copy: EggXfmAnimData) -> None:
-        """Converts the newer-style XfmSAnim table to the older-style XfmAnim table."""
+    def __init__(self, copy: EggXfmAnimData) -> None: ...
     @overload
-    def __init__(self, convert_from: EggXfmSAnim) -> None: ...
+    def __init__(self, convert_from: EggXfmSAnim) -> None:
+        """Converts the newer-style XfmSAnim table to the older-style XfmAnim table."""
     @overload
     def __init__(self, name: str = ..., cs: _CoordinateSystem = ...) -> None: ...
     def assign(self, copy: EggXfmAnimData | EggXfmSAnim) -> Self: ...
@@ -5072,17 +5076,15 @@ class EggXfmAnimData(EggAnimData):
         """
     @overload
     def get_value(self, row: int, mat: DoubleMat4Like) -> None:
-        """`(self, row: int, mat: LMatrix4d)`:
-        Returns the value of the aggregate row of the table as a matrix.  This is a
+        """Returns the value of the aggregate row of the table as a matrix.  This is a
         convenience function that treats the 2-d table as if it were a single table
         of matrices.
-
-        `(self, row: int, col: int)`:
-        Returns the value at the indicated row.  Row must be in the range 0 <= row
-        < get_num_rows(); col must be in the range 0 <= col < get_num_cols().
         """
     @overload
-    def get_value(self, row: int, col: int) -> float: ...
+    def get_value(self, row: int, col: int) -> float:
+        """Returns the value at the indicated row.  Row must be in the range 0 <= row
+        < get_num_rows(); col must be in the range 0 <= col < get_num_cols().
+        """
     setOrder = set_order
     clearOrder = clear_order
     hasOrder = has_order

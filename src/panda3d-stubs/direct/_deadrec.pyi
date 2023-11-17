@@ -47,7 +47,16 @@ class SmoothMover:
         to set_pos(), or false if they are the same.
         """
     @overload
-    def set_pos(self, x: float, y: float, z: float) -> bool: ...
+    def set_pos(self, x: float, y: float, z: float) -> bool:
+        """Specifies the position of the SmoothMover at a particular time in the past.
+        When mark_position() is called, this will be recorded (along with hpr and
+        timestamp) in a position report, which will then be used along with all
+        other position reports to determine the smooth position at any particular
+        instant.
+
+        The return value is true if any parameter has changed since the last call
+        to set_pos(), or false if they are the same.
+        """
     def set_x(self, x: float) -> bool:
         """Sets the X position only.  See set_pos()."""
     def set_y(self, y: float) -> bool:
@@ -66,7 +75,16 @@ class SmoothMover:
         to set_hpr(), or false if they are the same.
         """
     @overload
-    def set_hpr(self, h: float, p: float, r: float) -> bool: ...
+    def set_hpr(self, h: float, p: float, r: float) -> bool:
+        """Specifies the orientation of the SmoothMover at a particular time in the
+        past.  When mark_position() is called, this will be recorded (along with
+        hpr and timestamp) in a position report, which will then be used along with
+        all other position reports to determine the smooth position at any
+        particular instant.
+
+        The return value is true if any parameter has changed since the last call
+        to set_hpr(), or false if they are the same.
+        """
     def set_h(self, h: float) -> bool:
         """Sets the heading only.  See set_hpr()."""
     def set_p(self, p: float) -> bool:
@@ -75,8 +93,7 @@ class SmoothMover:
         """Sets the roll only.  See set_hpr()."""
     @overload
     def set_pos_hpr(self, pos: Vec3Like, hpr: Vec3Like) -> bool:
-        """`(self, pos: LVecBase3, hpr: LVecBase3)`:
-        Specifies the position and orientation of the SmoothMover at a particular
+        """Specifies the position and orientation of the SmoothMover at a particular
         time in the past.  When mark_position() is called, this will be recorded
         (along with timestamp) in a position report, which will then be used along
         with all other position reports to determine the smooth position at any
@@ -84,9 +101,10 @@ class SmoothMover:
 
         The return value is true if any parameter has changed since the last call
         to set_pos_hpr(), or false if they are the same.
-
-        `(self, x: float, y: float, z: float, h: float, p: float, r: float)`:
-        Specifies the position of the SmoothMover at a particular time in the past.
+        """
+    @overload
+    def set_pos_hpr(self, x: float, y: float, z: float, h: float, p: float, r: float) -> bool:
+        """Specifies the position of the SmoothMover at a particular time in the past.
         When mark_position() is called, this will be recorded (along with
         timestamp) in a position report, which will then be used along with all
         other position reports to determine the smooth position at any particular
@@ -95,8 +113,6 @@ class SmoothMover:
         The return value is true if any parameter has changed since the last call
         to set_pos_hpr(), or false if they are the same.
         """
-    @overload
-    def set_pos_hpr(self, x: float, y: float, z: float, h: float, p: float, r: float) -> bool: ...
     def get_sample_pos(self) -> LPoint3:
         """Returns the current position of the working sample point.  This position is
         updated periodically by set_x(), set_y(), etc., and its current value is
@@ -137,8 +153,7 @@ class SmoothMover:
         velocity is also reset to 0.
         """
     def compute_smooth_position(self, timestamp: float = ...) -> bool:
-        """`(self)`:
-        Computes the smoothed position (and orientation) of the mover at the
+        """Computes the smoothed position (and orientation) of the mover at the
         indicated point in time, based on the previous position reports.  After
         this call has been made, get_smooth_pos() etc.  may be called to retrieve
         the smoothed position.
@@ -146,7 +161,7 @@ class SmoothMover:
         With no parameter, the function uses ClockObject::get_frame_time() as the
         default time.
 
-        `(self, timestamp: float)`:
+        or:
         Computes the smoothed position (and orientation) of the mover at the
         indicated point in time, based on the previous position reports.  After
         this call has been made, get_smooth_pos() etc.  may be called to retrieve

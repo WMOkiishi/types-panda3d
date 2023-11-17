@@ -38,16 +38,13 @@ class NetAddress:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: NetAddress = ...) -> None:
-        """`(self)`:
-        Constructs an unspecified address.
-
-        `(self, addr: Socket_Address)`:
-        Constructs an address from a given Socket_Address.  Normally, this
+        """Constructs an unspecified address."""
+    @overload
+    def __init__(self, addr: Socket_Address) -> None:
+        """Constructs an address from a given Socket_Address.  Normally, this
         constructor should not be used by user code; instead, create a default
         NetAddress and use one of the set_*() functions to set up an address.
         """
-    @overload
-    def __init__(self, addr: Socket_Address) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __copy__(self) -> Self: ...
@@ -374,8 +371,7 @@ class ConnectionManager:
     def __init__(self) -> None: ...
     @overload
     def open_UDP_connection(self, hostname: str, port: int, for_broadcast: bool = ...) -> Connection:
-        """`(self, hostname: str, port: int, for_broadcast: bool = ...)`:
-        Opens a socket for sending and/or receiving UDP packets.  If the port
+        """Opens a socket for sending and/or receiving UDP packets.  If the port
         number is greater than zero, the UDP connection will be opened for
         listening on the indicated port; otherwise, it will be useful only for
         sending.
@@ -390,9 +386,10 @@ class ConnectionManager:
 
         Use a ConnectionReader and ConnectionWriter to handle the actual
         communication.
-
-        `(self, port: int = ...)`:
-        Opens a socket for sending and/or receiving UDP packets.  If the port
+        """
+    @overload
+    def open_UDP_connection(self, port: int = ...) -> Connection:
+        """Opens a socket for sending and/or receiving UDP packets.  If the port
         number is greater than zero, the UDP connection will be opened for
         listening on the indicated port; otherwise, it will be useful only for
         sending.
@@ -401,11 +398,8 @@ class ConnectionManager:
         communication.
         """
     @overload
-    def open_UDP_connection(self, port: int = ...) -> Connection: ...
-    @overload
     def open_TCP_server_rendezvous(self, address: NetAddress | Socket_Address, backlog: int) -> Connection:
-        """`(self, address: NetAddress, backlog: int)`:
-        Creates a socket to be used as a rendezvous socket for a server to listen
+        """Creates a socket to be used as a rendezvous socket for a server to listen
         for TCP connections.  The socket returned by this call should only be added
         to a ConnectionListener (not to a generic ConnectionReader).
 
@@ -413,9 +407,10 @@ class ConnectionManager:
         specify a specific interface to listen to.
 
         backlog is the maximum length of the queue of pending connections.
-
-        `(self, hostname: str, port: int, backlog: int)`:
-        Creates a socket to be used as a rendezvous socket for a server to listen
+        """
+    @overload
+    def open_TCP_server_rendezvous(self, hostname: str, port: int, backlog: int) -> Connection:
+        """Creates a socket to be used as a rendezvous socket for a server to listen
         for TCP connections.  The socket returned by this call should only be added
         to a ConnectionListener (not to a generic ConnectionReader).
 
@@ -425,9 +420,10 @@ class ConnectionManager:
         it will listen on all interfaces.
 
         backlog is the maximum length of the queue of pending connections.
-
-        `(self, port: int, backlog: int)`:
-        Creates a socket to be used as a rendezvous socket for a server to listen
+        """
+    @overload
+    def open_TCP_server_rendezvous(self, port: int, backlog: int) -> Connection:
+        """Creates a socket to be used as a rendezvous socket for a server to listen
         for TCP connections.  The socket returned by this call should only be added
         to a ConnectionListener (not to a generic ConnectionReader).
 
@@ -437,22 +433,16 @@ class ConnectionManager:
         backlog is the maximum length of the queue of pending connections.
         """
     @overload
-    def open_TCP_server_rendezvous(self, hostname: str, port: int, backlog: int) -> Connection: ...
-    @overload
-    def open_TCP_server_rendezvous(self, port: int, backlog: int) -> Connection: ...
-    @overload
     def open_TCP_client_connection(self, address: NetAddress | Socket_Address, timeout_ms: int) -> Connection:
-        """`(self, address: NetAddress, timeout_ms: int)`:
-        Attempts to establish a TCP client connection to a server at the indicated
+        """Attempts to establish a TCP client connection to a server at the indicated
         address.  If the connection is not established within timeout_ms
         milliseconds, a null connection is returned.
-
-        `(self, hostname: str, port: int, timeout_ms: int)`:
-        This is a shorthand version of the function to directly establish
-        communications to a named host and port.
         """
     @overload
-    def open_TCP_client_connection(self, hostname: str, port: int, timeout_ms: int) -> Connection: ...
+    def open_TCP_client_connection(self, hostname: str, port: int, timeout_ms: int) -> Connection:
+        """This is a shorthand version of the function to directly establish
+        communications to a named host and port.
+        """
     def close_connection(self, connection: Connection) -> bool:
         """Terminates a UDP or TCP socket previously opened.  This also removes it
         from any associated ConnectionReader or ConnectionListeners.
@@ -542,8 +532,7 @@ class ConnectionWriter:
         """Returns the current number of things in the queue."""
     @overload
     def send(self, datagram: Datagram, connection: Connection, address: NetAddress | Socket_Address, block: bool = ...) -> bool:
-        """`(self, datagram: Datagram, connection: Connection, address: NetAddress, block: bool = ...)`:
-        Enqueues a datagram for transmittal on the indicated socket.  This form of
+        """Enqueues a datagram for transmittal on the indicated socket.  This form of
         the function allows the specification of a destination host address, and so
         is appropriate for UDP packets.  Use the other send() method for sending
         TCP packets.
@@ -554,9 +543,10 @@ class ConnectionWriter:
 
         If block is true, this will not return false if the send queue is filled;
         instead, it will wait until there is space available.
-
-        `(self, datagram: Datagram, connection: Connection, block: bool = ...)`:
-        Enqueues a datagram for transmittal on the indicated socket.  Since the
+        """
+    @overload
+    def send(self, datagram: Datagram, connection: Connection, block: bool = ...) -> bool:
+        """Enqueues a datagram for transmittal on the indicated socket.  Since the
         host address is not specified with this form, this function should only be
         used for sending TCP packets.  Use the other send() method for sending UDP
         packets.
@@ -568,8 +558,6 @@ class ConnectionWriter:
         If block is true, this will not return false if the send queue is filled;
         instead, it will wait until there is space available.
         """
-    @overload
-    def send(self, datagram: Datagram, connection: Connection, block: bool = ...) -> bool: ...
     def is_valid_for_udp(self, datagram: Datagram) -> bool:
         """Returns true if the datagram is small enough to be sent over a UDP packet,
         false otherwise.
@@ -726,13 +714,18 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
         """
     @overload
     def get_new_connection(self, new_connection: Connection | PointerTo_Connection) -> bool:
-        """`(self, new_connection: PointerTo_Connection)`:
-        This flavor of get_new_connection() simply returns a new connection,
+        """This flavor of get_new_connection() simply returns a new connection,
         assuming the user doesn't care about the rendezvous socket that originated
         it or the address it came from.
-
-        `(self, rendezvous: PointerTo_Connection, address: NetAddress, new_connection: PointerTo_Connection)`:
-        If a previous call to new_connection_available() returned true, this
+        """
+    @overload
+    def get_new_connection(
+        self,
+        rendezvous: Connection | PointerTo_Connection,
+        address: NetAddress | Socket_Address,
+        new_connection: Connection | PointerTo_Connection,
+    ) -> bool:
+        """If a previous call to new_connection_available() returned true, this
         function will return information about the newly established connection.
 
         The rendezvous parameter is the particular rendezvous socket this new
@@ -745,13 +738,6 @@ class QueuedConnectionListener(ConnectionListener, QueuedReturn_ConnectionListen
         false if there was, in fact, no new connection.  (This may happen if there
         are multiple threads accessing the QueuedConnectionListener).
         """
-    @overload
-    def get_new_connection(
-        self,
-        rendezvous: Connection | PointerTo_Connection,
-        address: NetAddress | Socket_Address,
-        new_connection: Connection | PointerTo_Connection,
-    ) -> bool: ...
     upcastToConnectionListener = upcast_to_ConnectionListener
     upcastToQueuedReturnConnectionListenerData = upcast_to_QueuedReturn_ConnectionListenerData
     newConnectionAvailable = new_connection_available
@@ -843,13 +829,12 @@ class QueuedConnectionReader(ConnectionReader, QueuedReturn_NetDatagram):
         extract the datagram.
         """
     def get_data(self, result: Datagram) -> bool:
-        """`(self, result: Datagram)`:
-        This flavor of QueuedConnectionReader::get_data(), works like the other,
+        """This flavor of QueuedConnectionReader::get_data(), works like the other,
         except that it only fills a Datagram object, not a NetDatagram object.
         This means that the Datagram cannot be queried for its source Connection
         and/or NetAddress, but it is useful in all other respects.
 
-        `(self, result: NetDatagram)`:
+        or:
         If a previous call to data_available() returned true, this function will
         return the datagram that has become available.
 
@@ -878,13 +863,12 @@ class RecentConnectionReader(ConnectionReader):
         extract the datagram.
         """
     def get_data(self, result: Datagram) -> bool:
-        """`(self, result: Datagram)`:
-        This flavor of RecentConnectionReader::get_data(), works like the other,
+        """This flavor of RecentConnectionReader::get_data(), works like the other,
         except that it only fills a Datagram object, not a NetDatagram object.
         This means that the Datagram cannot be queried for its source Connection
         and/or NetAddress, but it is useful in all other respects.
 
-        `(self, result: NetDatagram)`:
+        or:
         If a previous call to data_available() returned true, this function will
         return the datagram that has become available.
 

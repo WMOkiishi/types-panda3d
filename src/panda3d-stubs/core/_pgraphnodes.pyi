@@ -121,7 +121,11 @@ class ComputeNode(PandaNode):
         dimension should not be used.
         """
     @overload
-    def add_dispatch(self, num_groups_x: int, num_groups_y: int, num_groups_z: int) -> None: ...
+    def add_dispatch(self, num_groups_x: int, num_groups_y: int, num_groups_z: int) -> None:
+        """Adds a dispatch command with the given number of work groups in the X, Y,
+        and Z dimensions.  Any of these values may be set to 1 if the respective
+        dimension should not be used.
+        """
     def get_num_dispatches(self) -> int:
         """Returns the number of times add_dispatch has been called on this object."""
     def get_dispatch(self, i: int) -> LVecBase3i:
@@ -167,20 +171,18 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
         """Returns whether this light is configured to cast shadows or not."""
     @overload
     def set_shadow_caster(self, caster: bool) -> None:
-        """`(self, caster: bool)`:
-        Sets the flag indicating whether this light should cast shadows or not.
+        """Sets the flag indicating whether this light should cast shadows or not.
         This is the variant without buffer size, meaning that the current buffer
         size will be kept (512x512 is the default). Note that enabling shadows will
         require the shader generator to be enabled on the scene.
-
-        `(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...)`:
-        Sets the flag indicating whether this light should cast shadows or not.
+        """
+    @overload
+    def set_shadow_caster(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...) -> None:
+        """Sets the flag indicating whether this light should cast shadows or not.
         The xsize and ysize parameters specify the size of the shadow buffer that
         will be set up, the sort parameter specifies the sort.  Note that enabling
         shadows will require the shader generator to be enabled on the scene.
         """
-    @overload
-    def set_shadow_caster(self, caster: bool, buffer_xsize: int, buffer_ysize: int, sort: int = ...) -> None: ...
     def get_shadow_buffer_sort(self) -> int:
         """Returns the sort of the shadow buffer to be created for this light source."""
     def get_shadow_buffer_size(self) -> LVecBase2i:

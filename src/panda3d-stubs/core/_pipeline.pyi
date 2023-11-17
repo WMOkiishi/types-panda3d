@@ -327,8 +327,7 @@ class ConditionVarDirect:
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
     def wait(self, timeout: float = ...) -> None:
-        """`(self)`:
-        Waits on the condition.  The caller must already be holding the lock
+        """Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
 
         wait() will release the lock, then go to sleep until some other thread
@@ -344,7 +343,7 @@ class ConditionVarDirect:
         wait() is called, and it will still be held when wait() returns.  However,
         it will be temporarily released during the wait() call itself.
 
-        `(self, timeout: float)`:
+        or:
         Waits on the condition, with a timeout.  The function will return when the
         condition variable is notified, or the timeout occurs.  There is no way to
         directly tell which happened, and it is possible that neither in fact
@@ -395,8 +394,7 @@ class ConditionVarFullDirect:
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
     def wait(self, timeout: float = ...) -> None:
-        """`(self)`:
-        Waits on the condition.  The caller must already be holding the lock
+        """Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
 
         wait() will release the lock, then go to sleep until some other thread
@@ -412,7 +410,7 @@ class ConditionVarFullDirect:
         wait() is called, and it will still be held when wait() returns.  However,
         it will be temporarily released during the wait() call itself.
 
-        `(self, timeout: float)`:
+        or:
         Waits on the condition, with a timeout.  The function will return when the
         condition variable is notified, or the timeout occurs.  There is no way to
         directly tell which happened, and it is possible that neither in fact
@@ -467,8 +465,7 @@ class ReMutexDirect:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self, current_thread: Thread = ...) -> None:
-        """`(self)`:
-        Grabs the reMutex if it is available.  If it is not available, blocks until
+        """Grabs the reMutex if it is available.  If it is not available, blocks until
         it becomes available, then grabs it.  In either case, the function does not
         return until the reMutex is held; you should then call unlock().
 
@@ -477,7 +474,7 @@ class ReMutexDirect:
 
         Also see ReMutexHolder.
 
-        `(self, current_thread: Thread)`:
+        or:
         This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
         """
@@ -596,8 +593,7 @@ class LightReMutexDirect:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def acquire(self, current_thread: Thread = ...) -> None:
-        """`(self)`:
-        Grabs the lightReMutex if it is available.  If it is not available, blocks
+        """Grabs the lightReMutex if it is available.  If it is not available, blocks
         until it becomes available, then grabs it.  In either case, the function
         does not return until the lightReMutex is held; you should then call
         unlock().
@@ -607,7 +603,7 @@ class LightReMutexDirect:
 
         Also see LightReMutexHolder.
 
-        `(self, current_thread: Thread)`:
+        or:
         This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
         """

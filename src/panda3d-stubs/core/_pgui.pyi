@@ -41,7 +41,8 @@ class PGFrameStyle:
     def set_color(self, color: Vec4Like) -> None:
         """Sets the dominant color of the frame."""
     @overload
-    def set_color(self, r: float, g: float, b: float, a: float) -> None: ...
+    def set_color(self, r: float, g: float, b: float, a: float) -> None:
+        """Sets the dominant color of the frame."""
     def get_color(self) -> LColor:
         """Returns the dominant color of the frame."""
     def set_texture(self, texture: Texture) -> None:
@@ -61,7 +62,11 @@ class PGFrameStyle:
         The units are in screen units.
         """
     @overload
-    def set_width(self, x: float, y: float) -> None: ...
+    def set_width(self, x: float, y: float) -> None:
+        """Sets the width parameter, which has meaning only for certain frame types.
+        For instance, this is the width of the bevel for T_bevel_in or T_bevel_out.
+        The units are in screen units.
+        """
     def get_width(self) -> LVecBase2:
         """Returns the width parameter, which has meaning only for certain frame
         types.  For instance, this is the width of the bevel for T_bevel_in or
@@ -74,7 +79,11 @@ class PGFrameStyle:
         indicated by set_width.
         """
     @overload
-    def set_uv_width(self, u: float, v: float) -> None: ...
+    def set_uv_width(self, u: float, v: float) -> None:
+        """Sets the uv_width parameter, which indicates the amount of the texture that
+        is consumed by the inner bevel--the width in texture space of the amount
+        indicated by set_width.
+        """
     def get_uv_width(self) -> LVecBase2:
         """See set_uv_width()."""
     @overload
@@ -84,7 +93,11 @@ class PGFrameStyle:
         size of the visible frame representation within the actual frame border.
         """
     @overload
-    def set_visible_scale(self, x: float, y: float) -> None: ...
+    def set_visible_scale(self, x: float, y: float) -> None:
+        """Sets a scale factor on the visible representation of the frame, in the X
+        and Y directions.  If this scale factor is other than 1, it will affect the
+        size of the visible frame representation within the actual frame border.
+        """
     def get_visible_scale(self) -> LVecBase2:
         """Returns the scale factor on the visible representation of the frame, in the
         X and Y directions.  If this scale factor is other than 1, it will affect
@@ -132,7 +145,12 @@ class PGItem(PandaNode):
         visible geometry of the item.
         """
     @overload
-    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
+    def set_frame(self, left: float, right: float, bottom: float, top: float) -> None:
+        """Sets the bounding rectangle of the item, in local coordinates.  This is the
+        region on screen within which the mouse will be considered to be within the
+        item.  Normally, it should correspond to the bounding rectangle of the
+        visible geometry of the item.
+        """
     def get_frame(self) -> LVecBase4:
         """Returns the bounding rectangle of the item.  See set_frame().  It is an
         error to call this if has_frame() returns false.
@@ -451,19 +469,17 @@ class PGButton(PGItem):
     def click_prefix(self) -> str: ...
     @overload
     def setup(self, ready: NodePath, depressed: NodePath = ...) -> None:
-        """`(self, ready: NodePath)`; `(self, ready: NodePath, depressed: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath)`; `(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath)`:
-        Sets up the button using the indicated NodePath as arbitrary geometry.
-
-        `(self, label: str, bevel: float = ...)`:
-        Sets up the button as a default text button using the indicated label
+        """Sets up the button using the indicated NodePath as arbitrary geometry."""
+    @overload
+    def setup(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath = ...) -> None:
+        """Sets up the button using the indicated NodePath as arbitrary geometry."""
+    @overload
+    def setup(self, label: str, bevel: float = ...) -> None:
+        """Sets up the button as a default text button using the indicated label
         string.  The TextNode defined by PGItem::get_text_node() will be used to
         create the label geometry.  This automatically sets up the frame according
         to the size of the text.
         """
-    @overload
-    def setup(self, ready: NodePath, depressed: NodePath, rollover: NodePath, inactive: NodePath = ...) -> None: ...
-    @overload
-    def setup(self, label: str, bevel: float = ...) -> None: ...
     def add_click_button(self, button: ButtonHandle | str) -> bool:
         """Adds the indicated button to the set of buttons that can effectively
         "click" the PGButton.  Normally, this is just MouseButton::one().  Returns
@@ -925,7 +941,12 @@ class PGVirtualFrame(PGItem):
         the size of the bevel, or to make room for scroll bars).
         """
     @overload
-    def set_clip_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
+    def set_clip_frame(self, left: float, right: float, bottom: float, top: float) -> None:
+        """Sets the bounding rectangle of the clip frame.  This is the size of the
+        small window through which we can see the virtual canvas.  Normally, this
+        is the same size as the actual frame or smaller (typically it is smaller by
+        the size of the bevel, or to make room for scroll bars).
+        """
     def get_clip_frame(self) -> LVecBase4:
         """Returns the bounding rectangle of the clip frame.  See set_clip_frame().
         If has_clip_frame() is false, this returns the item's actual frame.
@@ -1184,7 +1205,10 @@ class PGScrollFrame(PGVirtualFrame):
         large, virtual canvas which we can see only a portion of at any given time.
         """
     @overload
-    def set_virtual_frame(self, left: float, right: float, bottom: float, top: float) -> None: ...
+    def set_virtual_frame(self, left: float, right: float, bottom: float, top: float) -> None:
+        """Sets the bounding rectangle of the virtual frame.  This is the size of the
+        large, virtual canvas which we can see only a portion of at any given time.
+        """
     def get_virtual_frame(self) -> LVecBase4:
         """Returns the bounding rectangle of the virtual frame.  See
         set_virtual_frame().  If has_virtual_frame() is false, this returns the

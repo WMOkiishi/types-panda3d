@@ -178,14 +178,10 @@ class TextEncoder:
         """
     @overload
     def get_text(self) -> str:
-        """`(self)`:
-        Returns the current text, as encoded via the current encoding system.
-
-        `(self, encoding: _TextEncoder_Encoding)`:
-        Returns the current text, as encoded via the indicated encoding system.
-        """
+        """Returns the current text, as encoded via the current encoding system."""
     @overload
-    def get_text(self, encoding: _TextEncoder_Encoding) -> bytes: ...
+    def get_text(self, encoding: _TextEncoder_Encoding) -> bytes:
+        """Returns the current text, as encoded via the indicated encoding system."""
     def append_text(self, text: str) -> None: ...
     def append_unicode_char(self, character: int) -> None:
         """Appends a single character to the end of the stored text.  This may be a
@@ -272,21 +268,19 @@ class TextEncoder:
         """
     @staticmethod
     def upper(source: str, encoding: _TextEncoder_Encoding = ...) -> str:
-        """`(source: str)`:
-        Converts the string to uppercase, assuming the string is encoded in the
+        """Converts the string to uppercase, assuming the string is encoded in the
         default encoding.
 
-        `(source: str, encoding: _TextEncoder_Encoding)`:
+        or:
         Converts the string to uppercase, assuming the string is encoded in the
         indicated encoding.
         """
     @staticmethod
     def lower(source: str, encoding: _TextEncoder_Encoding = ...) -> str:
-        """`(source: str)`:
-        Converts the string to lowercase, assuming the string is encoded in the
+        """Converts the string to lowercase, assuming the string is encoded in the
         default encoding.
 
-        `(source: str, encoding: _TextEncoder_Encoding)`:
+        or:
         Converts the string to lowercase, assuming the string is encoded in the
         indicated encoding.
         """
@@ -325,11 +319,10 @@ class TextEncoder:
         string, according to the given encoding system.
         """
     def encode_wtext(self, wtext: str, encoding: _TextEncoder_Encoding = ...) -> bytes:
-        """`(self, wtext: str)`:
-        Encodes a wide-text string into a single-char string, according to the
+        """Encodes a wide-text string into a single-char string, according to the
         current encoding.
 
-        `(self, wtext: str, encoding: _TextEncoder_Encoding)`:
+        or:
         Encodes a wide-text string into a single-char string, according to the
         given encoding.
         """
@@ -390,15 +383,12 @@ class Filename:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, path: StrOrBytesPath = ...) -> None:
-        """`(self)`:
-        Creates an empty Filename.
-
-        `(self, dirname: Filename, basename: Filename)`:
-        This constructor composes the filename out of a directory part and a
+        """Creates an empty Filename."""
+    @overload
+    def __init__(self, dirname: StrOrBytesPath, basename: StrOrBytesPath) -> None:
+        """This constructor composes the filename out of a directory part and a
         basename part.  It will insert an intervening '/' if necessary.
         """
-    @overload
-    def __init__(self, dirname: StrOrBytesPath, basename: StrOrBytesPath) -> None: ...
     def __getitem__(self, n: int) -> str: ...
     def __fspath__(self) -> str: ...
     def __iadd__(self, other: str) -> Self: ...
@@ -491,10 +481,10 @@ class Filename:
         subdirectory for storing application-specific data, common to all users.
         """
     @overload
-    def assign(self, copy: StrOrBytesPath) -> Self:
-        """Assignment is via the = operator."""
+    def assign(self, copy: StrOrBytesPath) -> Self: ...
     @overload
-    def assign(self, filename: str) -> Self: ...
+    def assign(self, filename: str) -> Self:
+        """Assignment is via the = operator."""
     def c_str(self) -> str: ...
     def empty(self) -> bool: ...
     def length(self) -> int: ...
@@ -643,8 +633,7 @@ class Filename:
         not refer to a filename on a search path somewhere).
         """
     def make_absolute(self, start_directory: StrOrBytesPath = ...) -> None:
-        """`(self)`:
-        Converts the filename to a fully-qualified pathname from the root (if it is
+        """Converts the filename to a fully-qualified pathname from the root (if it is
         a relative pathname), and then standardizes it (see standardize()).
 
         This is sometimes a little problematic, since it may convert the file to
@@ -654,7 +643,7 @@ class Filename:
         besides being ugly, filenames like this may not be consistent across
         multiple different platforms.
 
-        `(self, start_directory: Filename)`:
+        or:
         Converts the filename to a fully-qualified filename from the root (if it is
         a relative filename), and then standardizes it (see standardize()).  This
         flavor accepts a specific starting directory that the filename is known to
@@ -805,14 +794,13 @@ class Filename:
         """
     def scan_directory(self) -> list[str]: ...
     def open_read(self, stream: ifstream | pifstream) -> bool:
-        """`(self, stream: pifstream)`:
-        Opens the indicated pifstream for reading the file, if possible.  Returns
+        """Opens the indicated pifstream for reading the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
         it is an error to call open_read() without first calling one of set_text()
         or set_binary().
 
-        `(self, stream: ifstream)`:
+        or:
         Opens the indicated ifstream for reading the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -820,8 +808,7 @@ class Filename:
         or set_binary().
         """
     def open_write(self, stream: ofstream | pofstream, truncate: bool = ...) -> bool:
-        """`(self, stream: pofstream, truncate: bool = ...)`:
-        Opens the indicated pifstream for writing the file, if possible.  Returns
+        """Opens the indicated pifstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
         it is an error to call open_read() without first calling one of set_text()
@@ -830,7 +817,7 @@ class Filename:
         If truncate is true, the file is truncated to zero length upon opening it,
         if it already exists.  Otherwise, the file is kept at its original length.
 
-        `(self, stream: ofstream, truncate: bool = ...)`:
+        or:
         Opens the indicated ifstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -841,14 +828,13 @@ class Filename:
         if it already exists.  Otherwise, the file is kept at its original length.
         """
     def open_append(self, stream: ofstream | pofstream) -> bool:
-        """`(self, stream: pofstream)`:
-        Opens the indicated pifstream for writing the file, if possible.  Returns
+        """Opens the indicated pifstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
         it is an error to call open_read() without first calling one of set_text()
         or set_binary().
 
-        `(self, stream: ofstream)`:
+        or:
         Opens the indicated ofstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -863,14 +849,13 @@ class Filename:
         one of set_text() or set_binary().
         """
     def open_read_append(self, stream: fstream | pfstream) -> bool:
-        """`(self, stream: pfstream)`:
-        Opens the indicated pfstream for reading and writing the file, if possible;
+        """Opens the indicated pfstream for reading and writing the file, if possible;
         writes are appended to the end of the file.  Returns true if successful,
         false otherwise.  This requires the setting of the set_text()/set_binary()
         flags to open the file appropriately as indicated; it is an error to call
         open_read() without first calling one of set_text() or set_binary().
 
-        `(self, stream: fstream)`:
+        or:
         Opens the indicated ifstream for reading and writing the file, if possible;
         writes are appended to the end of the file.  Returns true if successful,
         false otherwise.  This requires the setting of the set_text()/set_binary()
@@ -1280,7 +1265,10 @@ class DSearchPath:
         search list.
         """
     @overload
-    def append_path(self, path: str, separator: str = ...) -> None: ...
+    def append_path(self, path: str, separator: str = ...) -> None:
+        """Adds all of the directories listed in the search path to the end of the
+        search list.
+        """
     def prepend_path(self, path: SearchPathLike) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
@@ -1298,21 +1286,19 @@ class DSearchPath:
         """
     @overload
     def find_all_files(self, filename: StrOrBytesPath) -> DSearchPath.Results:
-        """`(self, filename: Filename)`:
-        This variant of find_all_files() returns the new Results object, instead of
+        """This variant of find_all_files() returns the new Results object, instead of
         filling on in on the parameter list.  This is a little more convenient to
         call from Python.
-
-        `(self, filename: Filename, results: DSearchPath.Results)`:
-        Searches all the directories in the search list for the indicated file, in
+        """
+    @overload
+    def find_all_files(self, filename: StrOrBytesPath, results: DSearchPath.Results) -> int:
+        """Searches all the directories in the search list for the indicated file, in
         order.  Fills up the results list with *all* of the matching filenames
         found, if any.  Returns the number of matches found.
 
         It is the responsibility of the the caller to clear the results list first;
         otherwise, the newly-found files will be appended to the list.
         """
-    @overload
-    def find_all_files(self, filename: StrOrBytesPath, results: DSearchPath.Results) -> int: ...
     @staticmethod
     def search_path(filename: StrOrBytesPath, path: str, separator: str = ...) -> Filename:
         """A quick-and-easy way to search a searchpath for a file when you don't feel

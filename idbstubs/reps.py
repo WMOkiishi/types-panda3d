@@ -124,6 +124,7 @@ class Parameter:
 class Signature:
     parameters: Sequence[Parameter] = field(converter=tuple)
     return_type: tc.Type = field(converter=_convert_type)
+    doc: str = field(default='', kw_only=True, eq=False)
 
     @property
     def param_string(self) -> str:
@@ -162,9 +163,9 @@ class Signature:
     def definition(
             self,
             *, prefix: str = '',
-            postfix: str = '',
             indent_level: int = 0,
             decorators: Iterable[str] = ()) -> Iterator[str]:
+        postfix = '' if self.doc else ' ...'
         indent = get_indent(indent_level)
         next_indent = get_indent(indent_level + 1)
         for decorator in decorators:
@@ -177,6 +178,7 @@ class Signature:
             for param in self.parameters:
                 yield f'{next_indent}{param},'
             yield f'{indent}) -> {self.return_type}:{postfix}'
+        yield from docstring_lines(self.doc, indent_level=indent_level + 1)
 
 
 @define
@@ -184,7 +186,6 @@ class Function(StubRep):
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
     decorators: Sequence[str] = field(default=(), kw_only=True, converter=tuple)
-    doc: str = field(default='', kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
 
     def __str__(self) -> str:
@@ -201,12 +202,10 @@ class Function(StubRep):
         decorators = self.decorators
         if len(self.signatures) > 1:
             decorators = ('overload', *decorators)
-        doc_needed = bool(self.doc)
         comment_needed = bool(self.comment)
         for signature in self.signatures:
             definition_lines = signature.definition(
                 prefix=f'def {self.name}',
-                postfix='' if doc_needed else ' ...',
                 indent_level=indent_level,
                 decorators=decorators,
             )
@@ -215,9 +214,6 @@ class Function(StubRep):
                 yield with_comment(first_line, self.comment)
                 comment_needed = False
             yield from definition_lines
-            if doc_needed:
-                yield from docstring_lines(self.doc, indent_level=indent_level+1)
-                doc_needed = False
 
 
 @define

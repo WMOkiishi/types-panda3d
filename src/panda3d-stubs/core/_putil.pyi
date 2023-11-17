@@ -166,11 +166,10 @@ class AnimInterface:
     def playing(self) -> bool: ...
     @overload
     def play(self) -> None:
-        """`(self)`:
-        Runs the entire animation from beginning to end and stops.
-
-        `(self, _from: float, to: float)`:
-        Runs the animation from the frame "from" to and including the frame "to",
+        """Runs the entire animation from beginning to end and stops."""
+    @overload
+    def play(self, _from: float, to: float) -> None:
+        """Runs the animation from the frame "from" to and including the frame "to",
         at which point the animation is stopped.  Both "from" and "to" frame
         numbers may be outside the range (0, get_num_frames()) and the animation
         will follow the range correctly, reporting numbers modulo get_num_frames().
@@ -178,34 +177,28 @@ class AnimInterface:
         and then stop.
         """
     @overload
-    def play(self, _from: float, to: float) -> None: ...
-    @overload
     def loop(self, restart: bool) -> None:
-        """`(self, restart: bool)`:
-        Starts the entire animation looping.  If restart is true, the animation is
+        """Starts the entire animation looping.  If restart is true, the animation is
         restarted from the beginning; otherwise, it continues from the current
         frame.
-
-        `(self, restart: bool, _from: float, to: float)`:
-        Loops the animation from the frame "from" to and including the frame "to",
+        """
+    @overload
+    def loop(self, restart: bool, _from: float, to: float) -> None:
+        """Loops the animation from the frame "from" to and including the frame "to",
         indefinitely.  If restart is true, the animation is restarted from the
         beginning; otherwise, it continues from the current frame.
         """
     @overload
-    def loop(self, restart: bool, _from: float, to: float) -> None: ...
-    @overload
     def pingpong(self, restart: bool) -> None:
-        """`(self, restart: bool)`:
-        Starts the entire animation bouncing back and forth between its first frame
+        """Starts the entire animation bouncing back and forth between its first frame
         and last frame.  If restart is true, the animation is restarted from the
         beginning; otherwise, it continues from the current frame.
-
-        `(self, restart: bool, _from: float, to: float)`:
-        Loops the animation from the frame "from" to and including the frame "to",
-        and then back in the opposite direction, indefinitely.
         """
     @overload
-    def pingpong(self, restart: bool, _from: float, to: float) -> None: ...
+    def pingpong(self, restart: bool, _from: float, to: float) -> None:
+        """Loops the animation from the frame "from" to and including the frame "to",
+        and then back in the opposite direction, indefinitely.
+        """
     def stop(self) -> None:
         """Stops a currently playing or looping animation right where it is.  The
         animation remains posed at the current frame.
@@ -378,8 +371,7 @@ class TypedWritable(TypedObject):
         """
     @overload
     def encode_to_bam_stream(self) -> bytes:
-        """`(self)`:
-        Converts the TypedWritable object into a single stream of data using a
+        """Converts the TypedWritable object into a single stream of data using a
         BamWriter, and returns that data as a bytes object.  Returns an empty bytes
         object on failure.
 
@@ -387,9 +379,10 @@ class TypedWritable(TypedObject):
         only serializing a single object.  If you have many objects to process, it
         is more efficient to use the same BamWriter to serialize all of them
         together.
-
-        `(self, data: bytes, writer: BamWriter = ...)`:
-        Converts the TypedWritable object into a single stream of data using a
+        """
+    @overload
+    def encode_to_bam_stream(self, data: bytes, writer: BamWriter = ...) -> bool:
+        """Converts the TypedWritable object into a single stream of data using a
         BamWriter, and stores that data in the indicated string.  Returns true on
         success, false on failure.
 
@@ -398,8 +391,6 @@ class TypedWritable(TypedObject):
         is more efficient to use the same BamWriter to serialize all of them
         together.
         """
-    @overload
-    def encode_to_bam_stream(self, data: bytes, writer: BamWriter = ...) -> bool: ...
     markBamModified = mark_bam_modified
     getBamModified = get_bam_modified
     encodeToBamStream = encode_to_bam_stream
@@ -487,16 +478,13 @@ class BamCacheRecord(TypedWritableReferenceCount):
         """Empties the list of files that contribute to the data in this record."""
     @overload
     def add_dependent_file(self, pathname: StrOrBytesPath) -> None:
-        """`(self, pathname: Filename)`:
-        Adds the indicated file to the list of files that will be loaded to
+        """Adds the indicated file to the list of files that will be loaded to
         generate the data in this record.  This should be called once for the
         primary source file, and again for each secondary source file, if any.
-
-        `(self, file: VirtualFile)`:
-        Variant of add_dependent_file that takes an already opened VirtualFile.
         """
     @overload
-    def add_dependent_file(self, file: VirtualFile) -> None: ...
+    def add_dependent_file(self, file: VirtualFile) -> None:
+        """Variant of add_dependent_file that takes an already opened VirtualFile."""
     def has_data(self) -> bool:
         """Returns true if this cache record has an in-memory data object associated--
         that is, the object stored in the cache.
@@ -511,11 +499,10 @@ class BamCacheRecord(TypedWritableReferenceCount):
         """
     @overload
     def set_data(self, ptr: TypedWritable, ref_ptr: ReferenceCount = ...) -> None:
-        """`(self, ptr: TypedWritable)`:
-        This variant on set_data() is provided to easily pass objects deriving from
+        """This variant on set_data() is provided to easily pass objects deriving from
         TypedWritable.
 
-        `(self, ptr: TypedWritable, ref_ptr: ReferenceCount)`:
+        or:
         Stores a new data object on the record.  You should pass the same pointer
         twice, to both parameters; this allows the C++ typecasting to automatically
         convert the pointer into both a TypedWritable and a ReferenceCount pointer,
@@ -526,16 +513,15 @@ class BamCacheRecord(TypedWritableReferenceCount):
         to you to ensure the object is not deleted during the lifetime of the
         BamCacheRecord object.
 
-        `(self, ptr: TypedWritable, dummy: int)`:
-        This variant on set_data() is provided just to allow Python code to pass a
-        0 as the second parameter.
-
-        `(self, ptr: TypedWritableReferenceCount)`:
+        or:
         This variant on set_data() is provided to easily pass objects deriving from
         TypedWritableReferenceCount.
         """
     @overload
-    def set_data(self, ptr: TypedWritable, dummy: int) -> None: ...
+    def set_data(self, ptr: TypedWritable, dummy: int) -> None:
+        """This variant on set_data() is provided just to allow Python code to pass a
+        0 as the second parameter.
+        """
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     upcastToTypedWritableReferenceCount = upcast_to_TypedWritableReferenceCount
@@ -1762,27 +1748,24 @@ class ButtonHandle:
     def alias(self) -> ButtonHandle: ...
     @overload
     def __init__(self, __param0: ButtonHandle = ...) -> None:
-        """`(self)`:
-        The default constructor must do nothing, because we can't guarantee
+        """The default constructor must do nothing, because we can't guarantee
         ordering of static initializers.  If the constructor tried to initialize
         its value, it  might happen after the value had already been set
         previously by another static initializer!
-
-        `(self, index: int)`:
-        Constructs a ButtonHandle with the corresponding index number, which may
+        """
+    @overload
+    def __init__(self, index: int) -> None:
+        """Constructs a ButtonHandle with the corresponding index number, which may
         have been returned by an earlier call to ButtonHandle::get_index().
-
-        `(self, name: str)`:
-        Constructs a ButtonHandle with the corresponding name, which is looked up
+        """
+    @overload
+    def __init__(self, name: str) -> None:
+        """Constructs a ButtonHandle with the corresponding name, which is looked up
         in the ButtonRegistry.  This exists for the purpose of being able to
         automatically coerce a string into a ButtonHandle; for most purposes, you
         should use either the static KeyboardButton/MouseButton getters or
         ButtonRegistry::register_button().
         """
-    @overload
-    def __init__(self, index: int) -> None: ...
-    @overload
-    def __init__(self, name: str) -> None: ...
     def __bool__(self) -> bool: ...
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
@@ -1893,37 +1876,44 @@ class ButtonMap(TypedReferenceCount):
         """Returns the underlying raw button associated with the nth button."""
     @overload
     def get_mapped_button(self, raw: ButtonHandle) -> ButtonHandle:
-        """`(self, raw: ButtonHandle)`; `(self, raw_name: str)`:
-        Returns the button that the given button is mapped to, or
+        """Returns the button that the given button is mapped to, or
         ButtonHandle::none() if this map does not specify a mapped button for the
         given raw button.
-
-        `(self, i: int)`:
-        Returns the nth mapped button, meaning the button that the nth raw button
+        """
+    @overload
+    def get_mapped_button(self, i: int) -> ButtonHandle:
+        """Returns the nth mapped button, meaning the button that the nth raw button
         is mapped to.
         """
     @overload
-    def get_mapped_button(self, i: int) -> ButtonHandle: ...
-    @overload
-    def get_mapped_button(self, raw_name: str) -> ButtonHandle: ...
+    def get_mapped_button(self, raw_name: str) -> ButtonHandle:
+        """Returns the button that the given button is mapped to, or
+        ButtonHandle::none() if this map does not specify a mapped button for the
+        given raw button.
+        """
     @overload
     def get_mapped_button_label(self, raw: ButtonHandle) -> str:
-        """`(self, raw: ButtonHandle)`; `(self, raw_name: str)`:
-        If the button map specifies a special name for the button (eg.  if the
+        """If the button map specifies a special name for the button (eg.  if the
         operating system or keyboard device has a localized name describing the
         key), returns it, or the empty string otherwise.
 
         Note that this is not the same as get_mapped_button().get_name(), which
         returns the name of the Panda event associated with the button.
-
-        `(self, i: int)`:
-        Returns the label associated with the nth mapped button, meaning the button
+        """
+    @overload
+    def get_mapped_button_label(self, i: int) -> str:
+        """Returns the label associated with the nth mapped button, meaning the button
         that the nth raw button is mapped to.
         """
     @overload
-    def get_mapped_button_label(self, i: int) -> str: ...
-    @overload
-    def get_mapped_button_label(self, raw_name: str) -> str: ...
+    def get_mapped_button_label(self, raw_name: str) -> str:
+        """If the button map specifies a special name for the button (eg.  if the
+        operating system or keyboard device has a localized name describing the
+        key), returns it, or the empty string otherwise.
+
+        Note that this is not the same as get_mapped_button().get_name(), which
+        returns the name of the Panda event associated with the button.
+        """
     def output(self, out: ostream) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     getNumButtons = get_num_buttons
@@ -2340,10 +2330,9 @@ class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
 
     data: bytes
     def __init__(self, data: bytes = ...) -> None:
-        """`(self)`:
-        Initializes an empty datagram buffer.
+        """Initializes an empty datagram buffer.
 
-        `(self, data: bytes)`:
+        or:
         Initializes the buffer with the given data.
         """
     def upcast_to_DatagramSink(self) -> DatagramSink: ...
@@ -2361,19 +2350,20 @@ class DatagramInputFile(DatagramGenerator):
     def __init__(self) -> None: ...
     @overload
     def open(self, file: ConfigVariableFilename | FileReference) -> bool:
-        """`(self, file: FileReference)`; `(self, filename: Filename)`:
-        Opens the indicated filename for reading.  Returns true on success, false
+        """Opens the indicated filename for reading.  Returns true on success, false
         on failure.
-
-        `(self, _in: istream, filename: Filename = ...)`:
-        Starts reading from the indicated stream.  Returns true on success, false
+        """
+    @overload
+    def open(self, filename: StrOrBytesPath) -> bool:
+        """Opens the indicated filename for reading.  Returns true on success, false
+        on failure.
+        """
+    @overload
+    def open(self, _in: istream, filename: StrOrBytesPath = ...) -> bool:
+        """Starts reading from the indicated stream.  Returns true on success, false
         on failure.  The DatagramInputFile does not take ownership of the stream;
         you are responsible for closing or deleting it when you are done.
         """
-    @overload
-    def open(self, filename: StrOrBytesPath) -> bool: ...
-    @overload
-    def open(self, _in: istream, filename: StrOrBytesPath = ...) -> bool: ...
     def get_stream(self) -> istream:
         """Returns the istream represented by the input file."""
     def close(self) -> None:
@@ -2392,23 +2382,20 @@ class DatagramOutputFile(DatagramSink):
     def __init__(self) -> None: ...
     @overload
     def open(self, file: ConfigVariableFilename | FileReference) -> bool:
-        """`(self, file: FileReference)`:
-        Opens the indicated filename for writing.  Returns true if successful,
+        """Opens the indicated filename for writing.  Returns true if successful,
         false on failure.
-
-        `(self, filename: Filename)`:
-        Opens the indicated filename for writing.  Returns true on success, false
+        """
+    @overload
+    def open(self, filename: StrOrBytesPath) -> bool:
+        """Opens the indicated filename for writing.  Returns true on success, false
         on failure.
-
-        `(self, out: ostream, filename: Filename = ...)`:
-        Starts writing to the indicated stream.  Returns true on success, false on
+        """
+    @overload
+    def open(self, out: ostream, filename: StrOrBytesPath = ...) -> bool:
+        """Starts writing to the indicated stream.  Returns true on success, false on
         failure.  The DatagramOutputFile does not take ownership of the stream; you
         are responsible for closing or deleting it when you are done.
         """
-    @overload
-    def open(self, filename: StrOrBytesPath) -> bool: ...
-    @overload
-    def open(self, out: ostream, filename: StrOrBytesPath = ...) -> bool: ...
     def close(self) -> None:
         """Closes the file.  This is also implicitly done when the DatagramOutputFile
         destructs.
@@ -2915,16 +2902,14 @@ class ModifierButtons:
         """Marks all monitored buttons as being in the "up" state."""
     @overload
     def is_down(self, button: ButtonHandle | str) -> bool:
-        """`(self, button: ButtonHandle)`:
-        Returns true if the indicated button is known to be down, or false if it is
+        """Returns true if the indicated button is known to be down, or false if it is
         known to be up or if it is not in the set of buttons being tracked.
-
-        `(self, index: int)`:
-        Returns true if the indicated button is known to be down, or false if it is
-        known to be up.
         """
     @overload
-    def is_down(self, index: int) -> bool: ...
+    def is_down(self, index: int) -> bool:
+        """Returns true if the indicated button is known to be down, or false if it is
+        known to be up.
+        """
     def is_any_down(self) -> bool:
         """Returns true if any of the tracked button are known to be down, or false if
         all of them are up.
@@ -3508,10 +3493,10 @@ class UniqueIdAllocator:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, __param0: UniqueIdAllocator) -> None:
-        """Create a free id pool in the range [min:max]."""
+    def __init__(self, __param0: UniqueIdAllocator) -> None: ...
     @overload
-    def __init__(self, min: int = ..., max: int = ...) -> None: ...
+    def __init__(self, min: int = ..., max: int = ...) -> None:
+        """Create a free id pool in the range [min:max]."""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def allocate(self) -> int:

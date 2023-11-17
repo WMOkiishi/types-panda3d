@@ -189,12 +189,12 @@ class URLSpec:
     @property
     def ssl(self) -> bool: ...
     @overload
-    def __init__(self, __param0: URL = ...) -> None:
+    def __init__(self, __param0: URL = ...) -> None: ...
+    @overload
+    def __init__(self, url: URL, path: StrOrBytesPath) -> None:
         """Creates a URLSpec by appending a path to the end of the old URLSpec,
         inserting an intervening forward slash if necessary.
         """
-    @overload
-    def __init__(self, url: URL, path: StrOrBytesPath) -> None: ...
     @overload
     def __init__(self, url: str, server_name_expected: bool = ...) -> None: ...
     def __bool__(self) -> bool: ...
@@ -306,10 +306,9 @@ class URLSpec:
         be enclosed in square brackets.
         """
     def set_port(self, port: int | str) -> None:
-        """`(self, port: str)`:
-        Replaces the port part of the URL specification.
+        """Replaces the port part of the URL specification.
 
-        `(self, port: int)`:
+        or:
         Replaces the port part of the URL specification, given a numeric port
         number.
         """
@@ -438,12 +437,12 @@ class HTTPDate:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: HTTPDate = ...) -> None:
+    def __init__(self, copy: HTTPDate = ...) -> None: ...
+    @overload
+    def __init__(self, format: str) -> None:
         """Decodes the string into a sensible date.  Returns 0 (!is_valid()) if the
         string cannot be correctly decoded.
         """
-    @overload
-    def __init__(self, format: str) -> None: ...
     @overload
     def __init__(self, time: int) -> None: ...
     def __eq__(self, __other: object) -> bool: ...
@@ -495,23 +494,19 @@ class HTTPCookie:
     secure: bool
     @overload
     def __init__(self, __param0: HTTPCookie = ...) -> None:
-        """`(self)`:
-        Constructs an empty cookie.
-
-        `(self, format: str, url: URLSpec)`:
-        Constructs a cookie according to the indicated string, presumably the tag
+        """Constructs an empty cookie."""
+    @overload
+    def __init__(self, format: str, url: URL) -> None:
+        """Constructs a cookie according to the indicated string, presumably the tag
         of a Set-Cookie header.  There is no way to detect a formatting error in
         the string with this constructor.
-
-        `(self, name: str, path: str, domain: str)`:
-        Constructs a cookie with the indicated name, path, and domain values, but
+        """
+    @overload
+    def __init__(self, name: str, path: str, domain: str) -> None:
+        """Constructs a cookie with the indicated name, path, and domain values, but
         no other data.  This is most useful for looking up an existing cookie in
         the HTTPClient.
         """
-    @overload
-    def __init__(self, format: str, url: URL) -> None: ...
-    @overload
-    def __init__(self, name: str, path: str, domain: str) -> None: ...
     def __lt__(self, other: HTTPCookie) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
@@ -954,19 +949,17 @@ class HTTPEntityTag:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
-    def __init__(self, copy: HTTPEntityTag = ...) -> None:
-        """`(self, weak: bool, tag: str)`:
-        This constructor accepts an explicit weak flag and a literal (not quoted)
+    def __init__(self, copy: HTTPEntityTag = ...) -> None: ...
+    @overload
+    def __init__(self, weak: bool, tag: str) -> None:
+        """This constructor accepts an explicit weak flag and a literal (not quoted)
         tag string.
-
-        `(self, text: str)`:
-        This constructor accepts a string as formatted from an HTTP server (e.g.
-        the tag is quoted, with an optional W/ prefix.)
         """
     @overload
-    def __init__(self, weak: bool, tag: str) -> None: ...
-    @overload
-    def __init__(self, text: str) -> None: ...
+    def __init__(self, text: str) -> None:
+        """This constructor accepts a string as formatted from an HTTP server (e.g.
+        the tag is quoted, with an optional W/ prefix.)
+        """
     def __eq__(self, __other: object) -> bool: ...
     def __ne__(self, __other: object) -> bool: ...
     def __lt__(self, other: HTTPEntityTag | str) -> bool: ...
@@ -1858,12 +1851,11 @@ class Decompressor:
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def initiate(self, source_file: StrOrBytesPath, dest_file: StrOrBytesPath = ...) -> int:
-        """`(self, source_file: Filename)`:
-        Begins a background decompression of the named file (whose filename must
+        """Begins a background decompression of the named file (whose filename must
         end in ".pz") to a new file without the .pz extension.  The source file is
         removed after successful completion.
 
-        `(self, source_file: Filename, dest_file: Filename)`:
+        or:
         Begins a background decompression from the named source file to the named
         destination file.  The source file is removed after successful completion.
         """
@@ -1874,16 +1866,14 @@ class Decompressor:
         """
     @overload
     def decompress(self, source_file: StrOrBytesPath) -> bool:
-        """`(self, source_file: Filename)`:
-        Performs a foreground decompression of the named file; does not return
+        """Performs a foreground decompression of the named file; does not return
         until the decompression is complete.
-
-        `(self, source_and_dest_file: Ramfile)`:
-        Does an in-memory decompression of the indicated Ramfile.  The decompressed
-        contents are written back into the same Ramfile on completion.
         """
     @overload
-    def decompress(self, source_and_dest_file: Ramfile) -> bool: ...
+    def decompress(self, source_and_dest_file: Ramfile) -> bool:
+        """Does an in-memory decompression of the indicated Ramfile.  The decompressed
+        contents are written back into the same Ramfile on completion.
+        """
     def get_progress(self) -> float:
         """Returns the ratio through the decompression step in the background."""
     getProgress = get_progress
@@ -1908,14 +1898,10 @@ class DownloadDb:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @overload
     def __init__(self, __param0: DownloadDb = ...) -> None:
-        """`(self)`:
-        Primarily used for testing.
-
-        `(self, server_file: Filename, client_file: Filename)`; `(self, server_file: Ramfile, client_file: Filename)`:
-        Create a download db with these client and server dbs
-        """
+        """Primarily used for testing."""
     @overload
-    def __init__(self, server_file: Ramfile | StrOrBytesPath, client_file: StrOrBytesPath) -> None: ...
+    def __init__(self, server_file: Ramfile | StrOrBytesPath, client_file: StrOrBytesPath) -> None:
+        """Create a download db with these client and server dbs"""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, __memo: object) -> Self: ...
     def output(self, out: ostream) -> None: ...
