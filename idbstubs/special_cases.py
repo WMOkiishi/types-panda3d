@@ -182,6 +182,7 @@ ATTR_TYPE_OVERRIDES: Final = TrackingMap({
     'EggGroupNode::children': 'list[EggNode]',
 })
 PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
+    'AsyncFuture::add_done_callback': {(0, 1): 'Callable[[AsyncFuture], object]'},
     'AsyncFuture::gather': {(0, 0): 'AsyncFuture'},
     'CallbackObject::make': {(0, 0): 'Callable'},
     'Filename::Filename': {(2, 1): 'StrOrBytesPath'},
@@ -234,6 +235,7 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
         19: 'LVecBase3d',
         21: 'LVecBase3f',
     },
+    'AsyncFuture::add_done_callback': 'None',
     'AsyncFuture::gather': 'AsyncFuture',
     'BamReader::get_file_version': 'tuple[int, int]',
     'CallbackObject::make': 'PythonCallbackObject',
