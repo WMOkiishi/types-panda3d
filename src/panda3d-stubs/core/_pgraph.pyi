@@ -841,7 +841,7 @@ class RenderAttrib(TypedWritableReferenceCount):
         """
     def get_hash(self) -> int:
         """Returns a suitable hash value for phash_map."""
-    def get_unique(self) -> RenderAttrib:
+    def get_unique(self) -> Self:
         """Returns the pointer to the unique RenderAttrib in the cache that is
         equivalent to this one.  This may be the same pointer as this object, or it
         may be a different pointer; but it will be an equivalent object, and it
@@ -915,7 +915,7 @@ class RenderModeAttrib(RenderAttrib):
         thickness: float = ...,
         perspective: bool = ...,
         wireframe_color: Vec4Like = ...,
-    ) -> RenderAttrib:
+    ) -> RenderModeAttrib:
         """Constructs a new RenderModeAttrib object that specifies whether to draw
         polygons in the normal, filled mode, or wireframe mode, or in some other
         yet-to-be-defined mode.
@@ -934,7 +934,7 @@ class RenderModeAttrib(RenderAttrib):
         indicating the flat color to assign to the overlayed wireframe.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> RenderModeAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -978,7 +978,7 @@ class TexMatrixAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @overload
     @staticmethod
-    def make(mat: Mat4Like = ...) -> RenderAttrib:
+    def make(mat: Mat4Like = ...) -> TexMatrixAttrib:
         """`()`:
         Constructs a TexMatrixAttrib that applies no stages at all.
 
@@ -994,18 +994,18 @@ class TexMatrixAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
-    def make(stage: TextureStage, transform: TransformState) -> RenderAttrib: ...
+    def make(stage: TextureStage, transform: TransformState) -> TexMatrixAttrib: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> TexMatrixAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
-    def add_stage(self, stage: TextureStage, transform: TransformState, override: int = ...) -> RenderAttrib:
+    def add_stage(self, stage: TextureStage, transform: TransformState, override: int = ...) -> Self:
         """Returns a new TexMatrixAttrib just like this one, with the indicated
         transform for the given stage.  If this stage already exists, its transform
         is replaced.
         """
-    def remove_stage(self, stage: TextureStage) -> RenderAttrib:
+    def remove_stage(self, stage: TextureStage) -> Self:
         """Returns a new TexMatrixAttrib just like this one, with the indicated stage
         removed.
         """
@@ -1473,10 +1473,10 @@ class AlphaTestAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _RenderAttrib_PandaCompareFunc, reference_alpha: float) -> RenderAttrib:
+    def make(mode: _RenderAttrib_PandaCompareFunc, reference_alpha: float) -> AlphaTestAttrib:
         """Constructs a new AlphaTestAttrib object."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> AlphaTestAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -1523,7 +1523,7 @@ class AntialiasAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: int) -> RenderAttrib:
+    def make(mode: int) -> AntialiasAttrib:
         """Constructs a new AntialiasAttrib object.
 
         The mode should be either M_none, M_auto, or a union of any or all of
@@ -1551,7 +1551,7 @@ class AntialiasAttrib(RenderAttrib):
         results than M_multisample)
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> AntialiasAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -2346,7 +2346,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Returns the union of all into_collide_mask() values set at CollisionNodes
         at this level and below.
         """
-    def get_off_clip_planes(self, current_thread: Thread = ...) -> RenderAttrib:
+    def get_off_clip_planes(self, current_thread: Thread = ...) -> ClipPlaneAttrib:
         """Returns a ClipPlaneAttrib which represents the union of all of the clip
         planes that have been turned *off* at this level and below.
         """
@@ -2679,10 +2679,10 @@ class TransparencyAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _TransparencyAttrib_Mode) -> RenderAttrib:
+    def make(mode: _TransparencyAttrib_Mode) -> TransparencyAttrib:
         """Constructs a new TransparencyAttrib object."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> TransparencyAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -2741,15 +2741,15 @@ class LogicOpAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> LogicOpAttrib:
         """Constructs a new LogicOpAttrib object that disables special-effect
         blending, allowing normal transparency to be used instead.
         """
     @staticmethod
-    def make(op: _LogicOpAttrib_Operation) -> RenderAttrib:
+    def make(op: _LogicOpAttrib_Operation) -> LogicOpAttrib:
         """Constructs a new LogicOpAttrib object with the given logic operation."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> LogicOpAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -6317,21 +6317,21 @@ class AudioVolumeAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_identity() -> RenderAttrib:
+    def make_identity() -> AudioVolumeAttrib:
         """Constructs an identity audio volume attrib."""
     @staticmethod
-    def make(volume: float) -> RenderAttrib:
+    def make(volume: float) -> AudioVolumeAttrib:
         """Constructs a new AudioVolumeAttrib object that indicates audio volume
         should be scaled by the indicated factor.
         """
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> AudioVolumeAttrib:
         """Constructs a new AudioVolumeAttrib object that ignores any
         AudioVolumeAttrib inherited from above.  You may also specify an additional
         volume scale to apply to geometry below (using set_volume()).
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> AudioVolumeAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -6347,7 +6347,7 @@ class AudioVolumeAttrib(RenderAttrib):
         """
     def get_volume(self) -> float:
         """Returns the volume to be applied to sounds."""
-    def set_volume(self, volume: float) -> RenderAttrib:
+    def set_volume(self, volume: float) -> Self:
         """Returns a new AudioVolumeAttrib, just like this one, but with the volume
         changed to the indicated value.
         """
@@ -6400,7 +6400,7 @@ class AuxBitplaneAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(outputs: int = ...) -> RenderAttrib:
+    def make(outputs: int = ...) -> AuxBitplaneAttrib:
         """`()`:
         Constructs a default AuxBitplaneAttrib object.
 
@@ -6408,7 +6408,7 @@ class AuxBitplaneAttrib(RenderAttrib):
         Constructs a specified AuxBitplaneAttrib object.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> AuxBitplaneAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -7095,7 +7095,7 @@ class ClipPlaneAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @overload
     @staticmethod
-    def make() -> RenderAttrib:
+    def make() -> ClipPlaneAttrib:
         """`()`:
         The following is the new, more general interface to the ClipPlaneAttrib.
 
@@ -7113,10 +7113,15 @@ class ClipPlaneAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
-    def make(op: _ClipPlaneAttrib_Operation, plane: PlaneNode) -> RenderAttrib: ...
+    def make(op: _ClipPlaneAttrib_Operation, plane: PlaneNode) -> ClipPlaneAttrib: ...
     @overload
     @staticmethod
-    def make(op: _ClipPlaneAttrib_Operation, plane1: PlaneNode, plane2: PlaneNode, plane3: PlaneNode = ...) -> RenderAttrib: ...
+    def make(
+        op: _ClipPlaneAttrib_Operation,
+        plane1: PlaneNode,
+        plane2: PlaneNode,
+        plane3: PlaneNode = ...,
+    ) -> ClipPlaneAttrib: ...
     @overload
     @staticmethod
     def make(
@@ -7125,9 +7130,9 @@ class ClipPlaneAttrib(RenderAttrib):
         plane2: PlaneNode,
         plane3: PlaneNode,
         plane4: PlaneNode,
-    ) -> RenderAttrib: ...
+    ) -> ClipPlaneAttrib: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ClipPlaneAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -7164,20 +7169,20 @@ class ClipPlaneAttrib(RenderAttrib):
         off_planes, so this method no longer makes sense.  Query the lists
         independently.
         """
-    def add_plane(self, plane: PlaneNode) -> RenderAttrib:
+    def add_plane(self, plane: PlaneNode) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes.
 
         @deprecated Use add_on_plane() or add_off_plane() instead.
         """
-    def remove_plane(self, plane: PlaneNode) -> RenderAttrib:
+    def remove_plane(self, plane: PlaneNode) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes.
 
         @deprecated Use remove_on_plane() or remove_off_plane() instead.
         """
     @staticmethod
-    def make_all_off() -> RenderAttrib:
+    def make_all_off() -> ClipPlaneAttrib:
         """Constructs a new ClipPlaneAttrib object that disables all planes (and hence
         disables clipping).
         """
@@ -7207,19 +7212,19 @@ class ClipPlaneAttrib(RenderAttrib):
         """Returns true if this is an identity attrib: it does not change the set of
         planes in use.
         """
-    def add_on_plane(self, plane: NodePath) -> RenderAttrib:
+    def add_on_plane(self, plane: NodePath) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes enabled by this attrib.
         """
-    def remove_on_plane(self, plane: NodePath) -> RenderAttrib:
+    def remove_on_plane(self, plane: NodePath) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes enabled by this attrib.
         """
-    def add_off_plane(self, plane: NodePath) -> RenderAttrib:
+    def add_off_plane(self, plane: NodePath) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes disabled by this attrib.
         """
-    def remove_off_plane(self, plane: NodePath) -> RenderAttrib:
+    def remove_off_plane(self, plane: NodePath) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes disabled by this attrib.
         """
@@ -7273,22 +7278,22 @@ class ColorAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_vertex() -> RenderAttrib:
+    def make_vertex() -> ColorAttrib:
         """Constructs a new ColorAttrib object that indicates geometry should be
         rendered according to its own vertex color.
         """
     @staticmethod
-    def make_flat(color: Vec4Like) -> RenderAttrib:
+    def make_flat(color: Vec4Like) -> ColorAttrib:
         """Constructs a new ColorAttrib object that indicates geometry should be
         rendered in the indicated color.
         """
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> ColorAttrib:
         """Constructs a new ColorAttrib object that indicates geometry should be
         rendered in white.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ColorAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -7394,13 +7399,13 @@ class ColorBlendAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> ColorBlendAttrib:
         """Constructs a new ColorBlendAttrib object that disables special-effect
         blending, allowing normal transparency to be used instead.
         """
     @overload
     @staticmethod
-    def make(mode: _ColorBlendAttrib_Mode) -> RenderAttrib:
+    def make(mode: _ColorBlendAttrib_Mode) -> ColorBlendAttrib:
         """`(mode: _ColorBlendAttrib_Mode)`:
         Constructs a new ColorBlendAttrib object.
 
@@ -7426,7 +7431,7 @@ class ColorBlendAttrib(RenderAttrib):
         alpha_a: _ColorBlendAttrib_Operand,
         alpha_b: _ColorBlendAttrib_Operand,
         color: Vec4Like = ...,
-    ) -> RenderAttrib: ...
+    ) -> ColorBlendAttrib: ...
     @overload
     @staticmethod
     def make(
@@ -7434,9 +7439,9 @@ class ColorBlendAttrib(RenderAttrib):
         a: _ColorBlendAttrib_Operand,
         b: _ColorBlendAttrib_Operand,
         color: Vec4Like = ...,
-    ) -> RenderAttrib: ...
+    ) -> ColorBlendAttrib: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ColorBlendAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -7494,21 +7499,21 @@ class ColorScaleAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_identity() -> RenderAttrib:
+    def make_identity() -> ColorScaleAttrib:
         """Constructs an identity scale attrib."""
     @staticmethod
-    def make(scale: Vec4Like) -> RenderAttrib:
+    def make(scale: Vec4Like) -> ColorScaleAttrib:
         """Constructs a new ColorScaleAttrib object that indicates geometry should be
         scaled by the indicated factor.
         """
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> ColorScaleAttrib:
         """Constructs a new ColorScaleAttrib object that ignores any ColorScaleAttrib
         inherited from above.  You may also specify an additional color scale to
         apply to geometry below (using set_scale()).
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ColorScaleAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -7536,7 +7541,7 @@ class ColorScaleAttrib(RenderAttrib):
         """
     def get_scale(self) -> LVecBase4:
         """Returns the scale to be applied to colors."""
-    def set_scale(self, scale: Vec4Like) -> RenderAttrib:
+    def set_scale(self, scale: Vec4Like) -> Self:
         """Returns a new ColorScaleAttrib, just like this one, but with the scale
         changed to the indicated value.
         """
@@ -7579,10 +7584,10 @@ class ColorWriteAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(channels: int) -> RenderAttrib:
+    def make(channels: int) -> ColorWriteAttrib:
         """Constructs a new ColorWriteAttrib object."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ColorWriteAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -7828,7 +7833,7 @@ class CullBinAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(bin_name: str, draw_order: int) -> RenderAttrib:
+    def make(bin_name: str, draw_order: int) -> CullBinAttrib:
         """Constructs a new CullBinAttrib assigning geometry into the named bin.  If
         the bin name is the empty string, the default bin is used.
 
@@ -7836,7 +7841,7 @@ class CullBinAttrib(RenderAttrib):
         only to certain kinds of bins (in particular CullBinFixed type bins).
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> CullBinAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -8051,7 +8056,7 @@ class CullFaceAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _CullFaceAttrib_Mode = ...) -> RenderAttrib:
+    def make(mode: _CullFaceAttrib_Mode = ...) -> CullFaceAttrib:
         """Constructs a new CullFaceAttrib object that specifies how to cull geometry.
         By Panda convention, vertices are ordered counterclockwise when seen from
         the front, so the M_cull_clockwise will cull backfacing polygons.
@@ -8061,14 +8066,14 @@ class CullFaceAttrib(RenderAttrib):
         default attrib.
         """
     @staticmethod
-    def make_reverse() -> RenderAttrib:
+    def make_reverse() -> CullFaceAttrib:
         """Constructs a new CullFaceAttrib object that reverses the effects of any
         other CullFaceAttrib objects in the scene graph.  M_cull_clockwise will be
         treated as M_cull_counter_clockwise, and vice-versa.  M_cull_none is
         unchanged.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> CullFaceAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -8440,15 +8445,15 @@ class FogAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(fog: Fog) -> RenderAttrib:
+    def make(fog: Fog) -> FogAttrib:
         """Constructs a new FogAttrib object suitable for rendering the indicated fog
         onto geometry.
         """
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> FogAttrib:
         """Constructs a new FogAttrib object suitable for rendering unfogd geometry."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> FogAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -8632,13 +8637,13 @@ class RescaleNormalAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _RescaleNormalAttrib_Mode) -> RenderAttrib:
+    def make(mode: _RescaleNormalAttrib_Mode) -> RescaleNormalAttrib:
         """Constructs a new RescaleNormalAttrib object that specifies whether to
         rescale normals to compensate for transform scales or incorrectly defined
         normals.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> RescaleNormalAttrib:
         """Constructs a RescaleNormalAttrib object that's suitable for putting at the
         top of a scene graph.  This will contain whatever attrib was suggested by
         the user's rescale-normals Config variable.
@@ -8735,7 +8740,7 @@ class DepthOffsetAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @overload
     @staticmethod
-    def make(offset: int = ...) -> RenderAttrib:
+    def make(offset: int = ...) -> DepthOffsetAttrib:
         """`(offset: int = ...)`:
         Constructs a new DepthOffsetAttrib object that indicates the relative
         amount of bias to write to the depth buffer for subsequent geometry.
@@ -8749,9 +8754,9 @@ class DepthOffsetAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
-    def make(offset: int, min_value: float, max_value: float) -> RenderAttrib: ...
+    def make(offset: int, min_value: float, max_value: float) -> DepthOffsetAttrib: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> DepthOffsetAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -8781,10 +8786,10 @@ class DepthTestAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _RenderAttrib_PandaCompareFunc) -> RenderAttrib:
+    def make(mode: _RenderAttrib_PandaCompareFunc) -> DepthTestAttrib:
         """Constructs a new DepthTestAttrib object."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> DepthTestAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -8806,10 +8811,10 @@ class DepthWriteAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _DepthWriteAttrib_Mode) -> RenderAttrib:
+    def make(mode: _DepthWriteAttrib_Mode) -> DepthWriteAttrib:
         """Constructs a new DepthWriteAttrib object."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> DepthWriteAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -8925,7 +8930,7 @@ class LightAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @overload
     @staticmethod
-    def make() -> RenderAttrib:
+    def make() -> LightAttrib:
         """`()`:
         The following is the new, more general interface to the LightAttrib.
 
@@ -8943,15 +8948,15 @@ class LightAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
-    def make(op: _LightAttrib_Operation, light: Light) -> RenderAttrib: ...
+    def make(op: _LightAttrib_Operation, light: Light) -> LightAttrib: ...
     @overload
     @staticmethod
-    def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light = ...) -> RenderAttrib: ...
+    def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light = ...) -> LightAttrib: ...
     @overload
     @staticmethod
-    def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light, light4: Light) -> RenderAttrib: ...
+    def make(op: _LightAttrib_Operation, light1: Light, light2: Light, light3: Light, light4: Light) -> LightAttrib: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> LightAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -8988,20 +8993,20 @@ class LightAttrib(RenderAttrib):
         off_lights, so this method no longer makes sense.  Query the lists
         independently.
         """
-    def add_light(self, light: Light) -> RenderAttrib:
+    def add_light(self, light: Light) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights.
 
         @deprecated Use add_on_light() or add_off_light() instead.
         """
-    def remove_light(self, light: Light) -> RenderAttrib:
+    def remove_light(self, light: Light) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights.
 
         @deprecated Use remove_on_light() or remove_off_light() instead.
         """
     @staticmethod
-    def make_all_off() -> RenderAttrib:
+    def make_all_off() -> LightAttrib:
         """Constructs a new LightAttrib object that turns off all lights (and hence
         disables lighting).
         """
@@ -9037,27 +9042,27 @@ class LightAttrib(RenderAttrib):
         """Returns true if this is an identity attrib: it does not change the set of
         lights in use.
         """
-    def add_on_light(self, light: NodePath) -> RenderAttrib:
+    def add_on_light(self, light: NodePath) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights turned on by this attrib.
         """
-    def remove_on_light(self, light: NodePath) -> RenderAttrib:
+    def remove_on_light(self, light: NodePath) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights turned on by this attrib.
         """
-    def replace_on_light(self, source: NodePath, dest: NodePath) -> RenderAttrib:
+    def replace_on_light(self, source: NodePath, dest: NodePath) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         replaced with the given other light.
         """
-    def add_off_light(self, light: NodePath) -> RenderAttrib:
+    def add_off_light(self, light: NodePath) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights turned off by this attrib.
         """
-    def remove_off_light(self, light: NodePath) -> RenderAttrib:
+    def remove_off_light(self, light: NodePath) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights turned off by this attrib.
         """
-    def replace_off_light(self, source: NodePath, dest: NodePath) -> RenderAttrib:
+    def replace_off_light(self, source: NodePath, dest: NodePath) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         replaced with the given other light.
         """
@@ -9128,18 +9133,18 @@ class LightRampAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> LightRampAttrib:
         """Constructs a new LightRampAttrib object.  This is the standard OpenGL
         lighting ramp, which clamps the final light total to the 0-1 range.
         """
     @staticmethod
-    def make_identity() -> RenderAttrib:
+    def make_identity() -> LightRampAttrib:
         """Constructs a new LightRampAttrib object.  This differs from the usual
         OpenGL lighting model in that it does not clamp the final lighting total to
         (0,1).
         """
     @staticmethod
-    def make_single_threshold(thresh0: float, lev0: float) -> RenderAttrib:
+    def make_single_threshold(thresh0: float, lev0: float) -> LightRampAttrib:
         """Constructs a new LightRampAttrib object.  This causes the luminance of the
         diffuse lighting contribution to be quantized using a single threshold:
 
@@ -9152,7 +9157,7 @@ class LightRampAttrib(RenderAttrib):
         @endcode
         """
     @staticmethod
-    def make_double_threshold(thresh0: float, lev0: float, thresh1: float, lev1: float) -> RenderAttrib:
+    def make_double_threshold(thresh0: float, lev0: float, thresh1: float, lev1: float) -> LightRampAttrib:
         """Constructs a new LightRampAttrib object.  This causes the luminance of the
         diffuse lighting contribution to be quantized using two thresholds:
 
@@ -9167,7 +9172,7 @@ class LightRampAttrib(RenderAttrib):
         @endcode
         """
     @staticmethod
-    def make_hdr0() -> RenderAttrib:
+    def make_hdr0() -> LightRampAttrib:
         """Constructs a new LightRampAttrib object.  This causes an HDR tone mapping
         operation to be applied.
 
@@ -9187,7 +9192,7 @@ class LightRampAttrib(RenderAttrib):
         @endcode
         """
     @staticmethod
-    def make_hdr1() -> RenderAttrib:
+    def make_hdr1() -> LightRampAttrib:
         """Constructs a new LightRampAttrib object.  This causes an HDR tone mapping
         operation to be applied.
 
@@ -9207,7 +9212,7 @@ class LightRampAttrib(RenderAttrib):
         @endcode
         """
     @staticmethod
-    def make_hdr2() -> RenderAttrib:
+    def make_hdr2() -> LightRampAttrib:
         """Constructs a new LightRampAttrib object.  This causes an HDR tone mapping
         operation to be applied.
 
@@ -9461,17 +9466,17 @@ class MaterialAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(material: Material) -> RenderAttrib:
+    def make(material: Material) -> MaterialAttrib:
         """Constructs a new MaterialAttrib object suitable for rendering the indicated
         material onto geometry.
         """
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> MaterialAttrib:
         """Constructs a new MaterialAttrib object suitable for rendering unmateriald
         geometry.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> MaterialAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -9904,7 +9909,7 @@ class TextureAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(tex: Texture = ...) -> RenderAttrib:
+    def make(tex: Texture = ...) -> TextureAttrib:
         """`()`:
         The following methods define the new multitexture mode for TextureAttrib.
         Each TextureAttrib can add or remove individual texture stages from the
@@ -9916,12 +9921,12 @@ class TextureAttrib(RenderAttrib):
         texture onto geometry, using the default TextureStage.
         """
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> TextureAttrib:
         """Constructs a new TextureAttrib object suitable for rendering untextured
         geometry.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> TextureAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -9939,7 +9944,7 @@ class TextureAttrib(RenderAttrib):
         texture that is associated.  Otherwise, return NULL.
         """
     @staticmethod
-    def make_all_off() -> RenderAttrib:
+    def make_all_off() -> TextureAttrib:
         """Constructs a new TextureAttrib object that turns off all stages (and hence
         disables texturing).
         """
@@ -10000,30 +10005,30 @@ class TextureAttrib(RenderAttrib):
         stages in use.
         """
     @overload
-    def add_on_stage(self, stage: TextureStage, tex: Texture, sampler: SamplerState, override: int = ...) -> RenderAttrib:
+    def add_on_stage(self, stage: TextureStage, tex: Texture, sampler: SamplerState, override: int = ...) -> Self:
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage added to the list of stages turned on by this attrib.
         """
     @overload
-    def add_on_stage(self, stage: TextureStage, tex: Texture, override: int = ...) -> RenderAttrib: ...
-    def remove_on_stage(self, stage: TextureStage) -> RenderAttrib:
+    def add_on_stage(self, stage: TextureStage, tex: Texture, override: int = ...) -> Self: ...
+    def remove_on_stage(self, stage: TextureStage) -> Self:
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage removed from the list of stages turned on by this attrib.
         """
-    def add_off_stage(self, stage: TextureStage, override: int = ...) -> RenderAttrib:
+    def add_off_stage(self, stage: TextureStage, override: int = ...) -> Self:
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage added to the list of stages turned off by this attrib.
         """
-    def remove_off_stage(self, stage: TextureStage) -> RenderAttrib:
+    def remove_off_stage(self, stage: TextureStage) -> Self:
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage removed from the list of stages turned off by this attrib.
         """
-    def unify_texture_stages(self, stage: TextureStage) -> RenderAttrib:
+    def unify_texture_stages(self, stage: TextureStage) -> Self:
         """Returns a new TextureAttrib, just like this one, but with any included
         TextureAttribs that happen to have the same name as the given object
         replaced with the object.
         """
-    def replace_texture(self, tex: Texture, new_tex: Texture | None) -> RenderAttrib:
+    def replace_texture(self, tex: Texture, new_tex: Texture | None) -> Self:
         """`(self, tex: Texture, new_tex: Texture)`:
         Returns a new TextureAttrib, just like this one, but with all references to
         the given texture replaced with the new texture.
@@ -10082,7 +10087,7 @@ class TexGenAttrib(RenderAttrib):
     def class_slot(self) -> int: ...
     @overload
     @staticmethod
-    def make() -> RenderAttrib:
+    def make() -> TexGenAttrib:
         """`()`:
         Constructs a TexGenAttrib that generates no stages at all.
 
@@ -10091,13 +10096,13 @@ class TexGenAttrib(RenderAttrib):
         """
     @overload
     @staticmethod
-    def make(stage: TextureStage, mode: _RenderAttrib_TexGenMode) -> RenderAttrib: ...
+    def make(stage: TextureStage, mode: _RenderAttrib_TexGenMode) -> TexGenAttrib: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> TexGenAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
-    def add_stage(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3Like = ...) -> RenderAttrib:
+    def add_stage(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode, constant_value: Vec3Like = ...) -> Self:
         """`(self, stage: TextureStage, mode: _RenderAttrib_TexGenMode)`:
         Returns a new TexGenAttrib just like this one, with the indicated
         generation mode for the given stage.  If this stage already exists, its
@@ -10111,7 +10116,7 @@ class TexGenAttrib(RenderAttrib):
         This variant also accepts constant_value, which is only meaningful if mode
         is M_constant.
         """
-    def remove_stage(self, stage: TextureStage) -> RenderAttrib:
+    def remove_stage(self, stage: TextureStage) -> Self:
         """Returns a new TexGenAttrib just like this one, with the indicated stage
         removed.
         """
@@ -10480,15 +10485,15 @@ class ShaderAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(shader: Shader = ..., priority: int = ...) -> RenderAttrib:
+    def make(shader: Shader = ..., priority: int = ...) -> ShaderAttrib:
         """Constructs a new ShaderAttrib object with nothing set."""
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> ShaderAttrib:
         """Constructs a new ShaderAttrib object that disables the use of shaders (it
         does not clear out all shader data, however.)
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ShaderAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -10510,31 +10515,31 @@ class ShaderAttrib(RenderAttrib):
     def auto_gloss_on(self) -> bool: ...
     def auto_ramp_on(self) -> bool: ...
     def auto_shadow_on(self) -> bool: ...
-    def set_shader(self, s: Shader, priority: int = ...) -> RenderAttrib: ...
-    def set_shader_off(self, priority: int = ...) -> RenderAttrib: ...
+    def set_shader(self, s: Shader, priority: int = ...) -> Self: ...
+    def set_shader_off(self, priority: int = ...) -> Self: ...
     @overload
-    def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> RenderAttrib:
+    def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> Self:
         """Set auto shader with bitmask to customize use, e.g., to keep normal, glow,
         etc., on or off
         """
     @overload
-    def set_shader_auto(self, priority: int = ...) -> RenderAttrib: ...
-    def clear_shader(self) -> RenderAttrib: ...
+    def set_shader_auto(self, priority: int = ...) -> Self: ...
+    def clear_shader(self) -> Self: ...
     @overload
-    def set_shader_input(self, __param0: InternalName | str, __param1, priority: int = ...) -> RenderAttrib:
+    def set_shader_input(self, __param0: InternalName | str, __param1, priority: int = ...) -> Self:
         """Shader Inputs"""
     @overload
-    def set_shader_input(self, input: ShaderInput) -> RenderAttrib: ...
-    def set_shader_inputs(self, *args, **kwargs) -> RenderAttrib: ...
-    def set_instance_count(self, instance_count: int) -> RenderAttrib:
+    def set_shader_input(self, input: ShaderInput) -> Self: ...
+    def set_shader_inputs(self, *args, **kwargs) -> Self: ...
+    def set_instance_count(self, instance_count: int) -> Self:
         """Sets the geometry instance count.  Do not confuse this with instanceTo,
         which is used for animation instancing, and has nothing to do with this.  A
         value of 0 means not to use instancing at all.
         """
-    def set_flag(self, flag: int, value: bool) -> RenderAttrib: ...
-    def clear_flag(self, flag: int) -> RenderAttrib: ...
-    def clear_shader_input(self, id: InternalName | str) -> RenderAttrib: ...
-    def clear_all_shader_inputs(self) -> RenderAttrib:
+    def set_flag(self, flag: int, value: bool) -> Self: ...
+    def clear_flag(self, flag: int) -> Self: ...
+    def clear_shader_input(self, id: InternalName | str) -> Self: ...
+    def clear_all_shader_inputs(self) -> Self:
         """Clears all the shader inputs on the attrib."""
     def get_flag(self, flag: int) -> bool: ...
     def has_shader_input(self, id: InternalName | str) -> bool:
@@ -11155,22 +11160,22 @@ class ScissorAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> ScissorAttrib:
         """Constructs a new ScissorAttrib object that removes the scissor region and
         fills the DisplayRegion.
         """
     @overload
     @staticmethod
-    def make(frame: Vec4Like) -> RenderAttrib:
+    def make(frame: Vec4Like) -> ScissorAttrib:
         """Constructs a ScissorAttrib that restricts rendering to the indicated frame
         within the current DisplayRegion.  (0,0) is the lower-left corner of the
         DisplayRegion, and (1,1) is the upper-right corner.
         """
     @overload
     @staticmethod
-    def make(left: float, right: float, bottom: float, top: float) -> RenderAttrib: ...
+    def make(left: float, right: float, bottom: float, top: float) -> ScissorAttrib: ...
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ScissorAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -11205,12 +11210,12 @@ class ShadeModelAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _ShadeModelAttrib_Mode) -> RenderAttrib:
+    def make(mode: _ShadeModelAttrib_Mode) -> ShadeModelAttrib:
         """Constructs a new ShadeModelAttrib object that specifies whether to draw
         polygons with flat shading or with per-vertex (smooth) shading.
         """
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> ShadeModelAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -11292,10 +11297,10 @@ class StencilAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make_off() -> RenderAttrib:
+    def make_off() -> StencilAttrib:
         """Constructs a StencilAttrib that has stenciling turned off."""
     @staticmethod
-    def make_default() -> RenderAttrib:
+    def make_default() -> StencilAttrib:
         """Returns a RenderAttrib that corresponds to whatever the standard default
         properties for render attributes of this type ought to be.
         """
@@ -11309,7 +11314,7 @@ class StencilAttrib(RenderAttrib):
         reference: int,
         read_mask: int,
         write_mask: int = ...,
-    ) -> RenderAttrib:
+    ) -> StencilAttrib:
         """Constructs a front face StencilAttrib."""
     @staticmethod
     def make_2_sided(
@@ -11326,7 +11331,7 @@ class StencilAttrib(RenderAttrib):
         back_stencil_fail_operation: _StencilAttrib_StencilOperation,
         back_stencil_pass_z_fail_operation: _StencilAttrib_StencilOperation,
         back_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
-    ) -> RenderAttrib:
+    ) -> StencilAttrib:
         """Constructs a two-sided StencilAttrib."""
     @staticmethod
     def make_with_clear(
@@ -11340,7 +11345,7 @@ class StencilAttrib(RenderAttrib):
         write_mask: int,
         clear: bool,
         clear_value: int,
-    ) -> RenderAttrib:
+    ) -> StencilAttrib:
         """Constructs a front face StencilAttrib."""
     @staticmethod
     def make_2_sided_with_clear(
@@ -11359,7 +11364,7 @@ class StencilAttrib(RenderAttrib):
         back_stencil_pass_z_pass_operation: _StencilAttrib_StencilOperation,
         clear: bool,
         clear_value: int,
-    ) -> RenderAttrib:
+    ) -> StencilAttrib:
         """Constructs a two-sided StencilAttrib."""
     def get_render_state(self, render_state_identifier: _StencilAttrib_StencilRenderState) -> int:
         """Returns render state."""

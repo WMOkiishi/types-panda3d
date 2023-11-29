@@ -244,6 +244,8 @@ def process_class(class_: Class) -> None:
         process_pointer_to_array_class(class_)
     elif VECTOR_NAME_REGEX.match(class_.name):
         process_vector_class(class_)
+    elif 'RenderAttrib' in class_.bases:
+        process_render_attrib_class(class_)
 
 
 def process_files(files: Iterable[File]) -> None:
@@ -334,6 +336,20 @@ def process_vector_class(vector: Class) -> None:
             ]) if not return_type or str(return_type) == vector.name:
                 sig.return_type = 'Self'
     vector.body = class_body
+
+
+def process_render_attrib_class(render_attrib: Class) -> None:
+    """Process a subclass of `RenderAttrib`."""
+    for name, function in render_attrib.body.items():
+        if not isinstance(function, Function):
+            continue
+        if 'staticmethod' in function.decorators:
+            self_type = render_attrib.name
+        else:
+            self_type = 'Self'
+        for signature in function.signatures:
+            if str(signature.return_type) == 'RenderAttrib':
+                signature.return_type = self_type
 
 
 def remove_redefinitions(class_: Class, classes: Mapping[str, Class]) -> None:
