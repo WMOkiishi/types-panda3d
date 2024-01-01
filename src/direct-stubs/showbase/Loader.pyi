@@ -324,26 +324,99 @@ class Loader(DirectObject):
         multiview: bool | None = None,
     ) -> Texture: ...
     def unload_texture(self, texture: Texture) -> None: ...
+    @overload
+    def load_sfx(
+        self, soundPath: StrOrBytesPath, positional: bool = False, callback: None = None, extraArgs: Iterable[Any] = []
+    ) -> AudioSound | None: ...
+    @overload
+    def load_sfx(
+        self,
+        soundPath: list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
+        positional: bool = False,
+        callback: None = None,
+        extraArgs: Iterable[Any] = [],
+    ) -> list[AudioSound] | None: ...
+    @overload
+    def load_sfx(
+        self,
+        soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
+        positional: bool,
+        callback: Callable[..., object],
+        extraArgs: Iterable[Any] = [],
+    ) -> _Callback | None: ...
+    @overload
     def load_sfx(
         self,
         soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
         positional: bool = False,
-        callback: Callable[..., object] | None = None,
-        extraArgs: Iterable[Any] = ...,
+        *,
+        callback: Callable[..., object],
+        extraArgs: Iterable[Any] = [],
     ) -> _Callback | None: ...
+    @overload
+    def load_music(
+        self, soundPath: StrOrBytesPath, positional: bool = False, callback: None = None, extraArgs: Iterable[Any] = []
+    ) -> AudioSound | None: ...
+    @overload
+    def load_music(
+        self,
+        soundPath: list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
+        positional: bool = False,
+        callback: None = None,
+        extraArgs: Iterable[Any] = [],
+    ) -> list[AudioSound] | None: ...
+    @overload
+    def load_music(
+        self,
+        soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
+        positional: bool,
+        callback: Callable[..., object],
+        extraArgs: Iterable[Any] = [],
+    ) -> _Callback | None: ...
+    @overload
     def load_music(
         self,
         soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
         positional: bool = False,
-        callback: Callable[..., object] | None = None,
-        extraArgs: Iterable[Any] = ...,
+        *,
+        callback: Callable[..., object],
+        extraArgs: Iterable[Any] = [],
     ) -> _Callback | None: ...
+    @overload
+    def load_sound(
+        self,
+        manager: AudioManager,
+        soundPath: StrOrBytesPath,
+        positional: bool = False,
+        callback: None = None,
+        extraArgs: Iterable[Any] = [],
+    ) -> AudioSound: ...
+    @overload
+    def load_sound(
+        self,
+        manager: AudioManager,
+        soundPath: list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
+        positional: bool = False,
+        callback: None = None,
+        extraArgs: Iterable[Any] = [],
+    ) -> list[AudioSound]: ...
+    @overload
+    def load_sound(
+        self,
+        manager: AudioManager,
+        soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
+        positional: bool,
+        callback: Callable[..., object],
+        extraArgs: Iterable[Any] = [],
+    ) -> _Callback: ...
+    @overload
     def load_sound(
         self,
         manager: AudioManager,
         soundPath: StrOrBytesPath | list[StrOrBytesPath] | set[StrOrBytesPath] | tuple[StrOrBytesPath, ...],
         positional: bool = False,
-        callback: Callable[..., object] | None = None,
+        *,
+        callback: Callable[..., object],
         extraArgs: Iterable[Any] = [],
     ) -> _Callback: ...
     def unload_sfx(self, sfx: AudioSound) -> None: ...
