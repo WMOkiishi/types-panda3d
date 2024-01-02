@@ -25,13 +25,13 @@ class DirectLights(NodePath[PandaNode]):
     def asList(self) -> list[DirectLight | None]: ...
     def getNameList(self) -> list[str]: ...
     @overload
-    def create(self, type: Literal['ambient']) -> DirectLight[AmbientLight]: ...  # type: ignore[misc]
+    def create(self, type: Literal['ambient']) -> DirectLight[AmbientLight]: ...  # type: ignore[overload-overlap]
     @overload
-    def create(self, type: Literal['directional']) -> DirectLight[DirectionalLight]: ...  # type: ignore[misc]
+    def create(self, type: Literal['directional']) -> DirectLight[DirectionalLight]: ...  # type: ignore[overload-overlap]
     @overload
-    def create(self, type: Literal['point']) -> DirectLight[PointLight]: ...  # type: ignore[misc]
+    def create(self, type: Literal['point']) -> DirectLight[PointLight]: ...  # type: ignore[overload-overlap]
     @overload
-    def create(self, type: Literal['spot']) -> DirectLight[Spotlight]: ...  # type: ignore[misc]
+    def create(self, type: Literal['spot']) -> DirectLight[Spotlight]: ...  # type: ignore[overload-overlap]
     @overload
     def create(self, type: str) -> None: ...
     def createDefaultLights(self) -> None: ...

@@ -48,7 +48,6 @@ skip_magic_trailing_comma = true
 [tool.mypy]
 show_error_codes = true
 warn_unused_ignores = true
-enable_incomplete_feature = ["TypeVarTuple", "Unpack"]
 
 [tool.pyright]
 stubPath = "src"
