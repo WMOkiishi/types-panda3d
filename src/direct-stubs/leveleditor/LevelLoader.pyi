@@ -1,5 +1,5 @@
 from .LevelLoaderBase import LevelLoaderBase
 
 class LevelLoader(LevelLoaderBase):
-    defaultPath: str
+    defaultPath: str  # pyright: ignore[reportIncompatibleVariableOverride]
     def initLoader(self) -> None: ...

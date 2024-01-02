@@ -30,7 +30,7 @@ class ClientRepositoryBase(ConnectionRepository):
     deferredDoIds: dict[int, _DeferredInfo]
     lastGenerate: int
     noDefer: bool
-    recorder: RecorderController
+    recorder: RecorderController  # pyright: ignore[reportIncompatibleVariableOverride]
     cache: CRCache
     doDataCache: CRDataCache
     cacheOwner: CRCache

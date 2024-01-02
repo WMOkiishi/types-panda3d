@@ -516,7 +516,7 @@ class SequenceNode(SelectiveChildNode, AnimInterface):
     according to its frame rate.
     """
 
-    frame_rate: float
+    frame_rate: float  # pyright: ignore[reportIncompatibleMethodOverride]
     def upcast_to_SelectiveChildNode(self) -> SelectiveChildNode: ...
     def upcast_to_AnimInterface(self) -> AnimInterface: ...
     def set_frame_rate(self, frame_rate: float) -> None:

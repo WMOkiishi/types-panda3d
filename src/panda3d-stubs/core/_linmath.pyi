@@ -4972,7 +4972,7 @@ class LQuaternionf(LVecBase4f):
         """Returns true if two quaternions represent the same rotation within a
         specified tolerance.
         """
-    def output(self, __param0: ostream) -> None: ...
+    def output(self, __param0: ostream) -> None: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def extract_to_matrix(self, m: Mat4Like) -> None:
         """Based on the quat lib from VRPN."""
     def set_from_matrix(self, m: Mat4Like) -> None:
@@ -5179,7 +5179,7 @@ class LQuaterniond(LVecBase4d):
         """Returns true if two quaternions represent the same rotation within a
         specified tolerance.
         """
-    def output(self, __param0: ostream) -> None: ...
+    def output(self, __param0: ostream) -> None: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def extract_to_matrix(self, m: DoubleMat4Like) -> None:
         """Based on the quat lib from VRPN."""
     def set_from_matrix(self, m: DoubleMat4Like) -> None:

@@ -42,7 +42,8 @@ from .special_cases import (
     CONDITIONALS,
     DEFAULT_RETURNS,
     GENERIC,
-    IGNORE_ERRORS,
+    IGNORED_MYPY_ERRORS,
+    IGNORED_PYRIGHT_ERRORS,
     METHOD_RENAMES,
     NO_ALIAS,
     NO_STUBS,
@@ -67,9 +68,10 @@ _logger: Final = logging.getLogger(__name__)
 
 
 def get_comment(scoped_name: str) -> str:
+    comments: list[str] = []
     # Sneak in some "noqa" comments
     if scoped_name == 'StreamWrapper::iostream':
-        return 'noqa: F811'
+        comments.append('noqa: F811')
     elif (
         scoped_name.startswith('CallbackGraphicsWindow')
         and scoped_name.endswith((
@@ -78,11 +80,12 @@ def get_comment(scoped_name: str) -> str:
             'RenderCallbackData',
         ))
     ):
-        return 'noqa: F821'
-    ignored_errors = IGNORE_ERRORS.get(scoped_name)
-    if ignored_errors is None:
-        return ''
-    return f'type: ignore[{ignored_errors}]'
+        comments.append('noqa: F821')
+    if (mypy_errors := IGNORED_MYPY_ERRORS.get(scoped_name)) is not None:
+        comments.append(f'type: ignore[{mypy_errors}]')
+    if (pyright_errors := IGNORED_PYRIGHT_ERRORS.get(scoped_name)) is not None:
+        comments.append(f'pyright: ignore[{pyright_errors}]')
+    return '  # '.join(comments)
 
 
 def get_function_name(function: IDBFunction) -> str:

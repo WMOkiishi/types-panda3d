@@ -386,7 +386,7 @@ EXTRA_COERCION: Final = TrackingMap({
 
 
 # This adds comments to ignore Mypy errors
-IGNORE_ERRORS: Final = TrackingMap({
+IGNORED_MYPY_ERRORS: Final = TrackingMap({
     'AsyncTask': 'misc',
     'AsyncTaskSequence': 'misc',
     'DatagramBuffer': 'misc',
@@ -439,4 +439,12 @@ IGNORE_ERRORS: Final = TrackingMap({
     'EggTexture': 'misc',
     'EggTexture::write': 'override',
     'EggVertex': 'misc',
+})
+
+# This adds comments to ignore Pyright errors
+IGNORED_PYRIGHT_ERRORS: Final = TrackingMap({
+    'Character::get_bundle': 'reportIncompatibleMethodOverride',
+    'LQuaterniond::output': 'reportIncompatibleMethodOverride',
+    'LQuaternionf::output': 'reportIncompatibleMethodOverride',
+    'SequenceNode::frame_rate': 'reportIncompatibleMethodOverride',
 })

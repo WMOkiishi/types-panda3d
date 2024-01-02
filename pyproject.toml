@@ -58,3 +58,7 @@ reportSelfClsParameterName = false
 reportMissingModuleSource = false
 # Pmw throws Pyright off.
 useLibraryCodeForTypes = false
+# Use the default excluded directories.
+# This needs to be specified explicitly since Pyright version 1.1.334,
+# which might be a bug.
+exclude = []
