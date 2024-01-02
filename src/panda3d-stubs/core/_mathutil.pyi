@@ -955,9 +955,9 @@ class BoundingVolume(TypedReferenceCount):
         """Marks the volume as infinite, even if it is normally finite.  You can think
         of this as an infinite extend_by() operation.
         """
-    def extend_by(self, vol: BoundingVolume) -> bool:
+    def extend_by(self, vol: Self) -> bool:
         """Increases the size of the volume to include the given volume."""
-    def contains(self, vol: BoundingVolume) -> int:
+    def contains(self, vol: Self) -> int:
         """Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated volume.
         """
@@ -975,8 +975,8 @@ class GeometricBoundingVolume(BoundingVolume):
     spheres.
     """
 
-    @overload  # type: ignore[override]
-    def extend_by(self, vol: GeometricBoundingVolume) -> bool:
+    @overload
+    def extend_by(self, vol: Self) -> bool:
         """`(self, vol: GeometricBoundingVolume)`:
         Increases the size of the volume to include the given volume.
 
@@ -985,8 +985,8 @@ class GeometricBoundingVolume(BoundingVolume):
         """
     @overload
     def extend_by(self, point: Vec3Like) -> bool: ...
-    @overload  # type: ignore[override]
-    def contains(self, vol: GeometricBoundingVolume) -> int:
+    @overload
+    def contains(self, vol: Self) -> int:
         """`(self, vol: GeometricBoundingVolume)`:
         Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated volume.
@@ -1005,7 +1005,7 @@ class GeometricBoundingVolume(BoundingVolume):
     def contains(self, a: Vec3Like, b: Vec3Like) -> int: ...
     def get_approx_center(self) -> LPoint3: ...
     def xform(self, mat: Mat4Like) -> None: ...
-    extendBy = extend_by  # type: ignore[assignment]
+    extendBy = extend_by
     getApproxCenter = get_approx_center
 
 class FiniteBoundingVolume(GeometricBoundingVolume):
@@ -1962,34 +1962,53 @@ class Triangulator:
     getTriangleV2 = get_triangle_v2
     getVertices = get_vertices
 
-class Triangulator3(Triangulator):
+class Triangulator3:
     """This is an extension of Triangulator to handle polygons with three-
     dimensional points.  It assumes all of the points lie in a single plane,
     and internally projects the supplied points into 2-D for passing to the
     underlying Triangulator object.
     """
 
+    DtoolClassDict: ClassVar[dict[str, Any]]
     @property
-    def vertices(self) -> Sequence[LPoint3d]: ...  # type: ignore[override]
+    def vertices(self) -> Sequence[LPoint3d]: ...
     @property
     def plane(self) -> LPlaned: ...
     def __init__(self, __param0: Triangulator3 = ...) -> None: ...
-    @overload  # type: ignore[override]
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, __memo: object) -> Self: ...
+    def clear(self) -> None:
+        """Removes all vertices and polygon specifications from the Triangulator, and
+        prepares it to start over.
+        """
+    @overload
     def add_vertex(self, point: DoubleVec3Like) -> int:
         """Adds a new vertex to the vertex pool.  Returns the vertex index number."""
     @overload
     def add_vertex(self, x: float, y: float, z: float) -> int: ...
-    def get_vertex(self, n: int) -> LPoint3d:  # type: ignore[override]
+    def get_num_vertices(self) -> int:
+        """Returns the number of vertices in the pool.  Note that the Triangulator
+        might append new vertices, in addition to those added by the user, if any
+        of the polygon is self-intersecting, or if any of the holes intersect some
+        part of the polygon edges.
+        """
+    def get_vertex(self, n: int) -> LPoint3d:
         """Returns the nth vertex."""
+    def triangulate(self) -> None:
+        """Does the work of triangulating the specified polygon.  After this call, you
+        may retrieve the new triangles one at a time by iterating through
+        get_triangle_v0/1/2().
+        """
     def get_plane(self) -> LPlaned:
         """Returns the plane of the polygon.  This is only available after calling
         triangulate().
         """
-    def get_vertices(self) -> tuple[LPoint3d, ...]: ...  # type: ignore[override]
-    addVertex = add_vertex  # type: ignore[assignment]
-    getVertex = get_vertex  # type: ignore[assignment]
+    def get_vertices(self) -> tuple[LPoint3d, ...]: ...
+    addVertex = add_vertex
+    getNumVertices = get_num_vertices
+    getVertex = get_vertex
     getPlane = get_plane
-    getVertices = get_vertices  # type: ignore[assignment]
+    getVertices = get_vertices
 
 @overload
 def heads_up(mat: DoubleMat4Like, fwd: DoubleVec3Like, cs: _CoordinateSystem) -> None: ...

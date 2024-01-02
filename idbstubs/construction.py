@@ -50,6 +50,7 @@ from .special_cases import (
     PARAM_TYPE_OVERRIDES,
     RETURN_SELF,
     RETURN_TYPE_OVERRIDES,
+    SKIP_INHERITANCE,
     UNARY_METHOD_RENAMES,
 )
 from .translation import (
@@ -364,10 +365,12 @@ def make_class_rep(idb_type: IDBType) -> Class:
     """Return a representation of a class known to interrogate."""
     name = make_class_name(idb_type.name)
     class_body: dict[str, StubRep] = {}
+    skip_bases = SKIP_INHERITANCE.get(name, frozenset())
     bases = [
         get_type_name(derivation)
         for derivation in idb_type.derivations
         if type_is_exposed(derivation)
+        if derivation.name not in skip_bases
     ]
     if (type_vars := GENERIC.get(name)) is not None:
         bases.append(f'Generic[{type_vars}]')

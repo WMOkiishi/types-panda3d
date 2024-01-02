@@ -10,7 +10,12 @@ from typing import Final
 from . import typecmp as tc
 from .idb_interface import IDBType, get_all_types
 from .idbutil import type_is_exposed
-from .special_cases import EXTRA_COERCION, NO_COERCION, TYPE_NAME_OVERRIDES
+from .special_cases import (
+    EXTRA_COERCION,
+    NO_COERCION,
+    SKIP_INHERITANCE,
+    TYPE_NAME_OVERRIDES,
+)
 from .translation import ATOMIC_TYPES, make_class_name
 
 _logger: Final = logging.getLogger(__name__)
@@ -119,8 +124,11 @@ def make_type(idb_type: IDBType) -> tc.Type:
             return make_type(idb_type.wrapped_type)
         return tc.AliasType(type_name, make_type(idb_type.wrapped_type))
     else:
+        skip_bases = SKIP_INHERITANCE.get(idb_type.name, frozenset())
         bases: list[tc.ClassType] = []
         for derivation in idb_type.derivations:
+            if derivation.name in skip_bases:
+                continue
             base = make_type(derivation)
             assert isinstance(base, tc.ClassType)
             bases.append(base)

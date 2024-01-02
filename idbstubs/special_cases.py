@@ -164,6 +164,12 @@ GENERIC: Final = TrackingMap({
 })
 
 
+# Pretend these classes don't have these bases
+SKIP_INHERITANCE: Final = TrackingMap({
+    'Triangulator3': {'Triangulator'},
+})
+
+
 # These types only exist under certain conditions
 CONDITIONALS: Final = TrackingMap({
     'WindowsRegistry': "sys.platform == 'win32'",
@@ -184,8 +190,16 @@ ATTR_TYPE_OVERRIDES: Final = TrackingMap({
 PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'AsyncFuture::add_done_callback': {(0, 1): 'Callable[[AsyncFuture], object]'},
     'AsyncFuture::gather': {(0, 0): 'AsyncFuture'},
+    'BoundingVolume::contains': {(0, 1): 'Self'},
+    'BoundingVolume::extend_by': {(0, 1): 'Self'},
     'CallbackObject::make': {(0, 0): 'Callable'},
+    'EggAttributes::compare_to': {(0, 1): 'Self'},
+    'EggAttributes::sorts_less_than': {(0, 1): 'Self'},
+    'EggVertex::compare_to': {(0, 1): 'Self'},
+    'EggVertex::sorts_less_than': {(0, 1): 'Self'},
     'Filename::Filename': {(2, 1): 'StrOrBytesPath'},
+    'GeometricBoundingVolume::contains': {(0, 1): 'Self'},
+    'GeometricBoundingVolume::extend_by': {(0, 1): 'Self'},
     'InternalName::make': {(0, 0): 'str'},
     'IStreamWrapper::IStreamWrapper': {(0, 1): 'core.istream'},
     'NodePath::NodePath': {
@@ -380,8 +394,6 @@ IGNORE_ERRORS: Final = TrackingMap({
     'GeomVertexArrayData': 'misc',
     'GeomVertexRewriter': 'misc',
     'GeomVertexRewriter::operator =': 'override',
-    'GeometricBoundingVolume::contains': 'override',
-    'GeometricBoundingVolume::extend_by': 'override',
     'HTTPDate::operator -=': 'misc',
     'LOrientationd::operator *': 'override',
     'LOrientationf::operator *': 'override',
@@ -414,10 +426,6 @@ IGNORE_ERRORS: Final = TrackingMap({
     'TextNode::set_transform': 'override',
     'TextNode::transform': 'assignment',
     'TrackerNode::get_transform': 'override',
-    'Triangulator3::add_vertex': 'override',
-    'Triangulator3::get_vertex': 'override',
-    'Triangulator3::get_vertices': 'override',
-    'Triangulator3::vertices': 'override',
     'TypedReferenceCount': 'misc',
     'VertexDataPage::alloc': 'override',
     'VertexDataPage::write': 'override',
@@ -431,6 +439,4 @@ IGNORE_ERRORS: Final = TrackingMap({
     'EggTexture': 'misc',
     'EggTexture::write': 'override',
     'EggVertex': 'misc',
-    'EggVertex::compare_to': 'override',
-    'EggVertex::sorts_less_than': 'override',
 })

@@ -730,11 +730,11 @@ class EggAttributes:
         """
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes the attributes to the indicated output stream in Egg format."""
-    def sorts_less_than(self, other: EggAttributes) -> bool:
+    def sorts_less_than(self, other: Self) -> bool:
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
-    def compare_to(self, other: EggAttributes) -> int:
+    def compare_to(self, other: Self) -> int:
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
         """
@@ -1105,11 +1105,7 @@ class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
         """
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes the vertex to the indicated output stream in Egg format."""
-    def sorts_less_than(self, other: EggVertex) -> bool:  # type: ignore[override]
-        """An ordering operator to compare two vertices for sorting order.  This
-        imposes an arbitrary ordering useful to identify unique vertices.
-        """
-    def compare_to(self, other: EggVertex) -> int:  # type: ignore[override]
+    def compare_to(self, other: Self) -> int:
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
 
@@ -1192,8 +1188,7 @@ class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
     getExternalIndex = get_external_index
     setExternalIndex2 = set_external_index2
     getExternalIndex2 = get_external_index2
-    sortsLessThan = sorts_less_than  # type: ignore[assignment]
-    compareTo = compare_to  # type: ignore[assignment]
+    compareTo = compare_to
     getNumLocalCoord = get_num_local_coord
     getNumGlobalCoord = get_num_global_coord
     hasGref = has_gref
