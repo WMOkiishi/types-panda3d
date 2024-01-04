@@ -185,7 +185,7 @@ class Signature:
 class Function(StubRep):
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
-    decorators: Sequence[str] = field(default=(), kw_only=True, converter=tuple)
+    is_static_method: bool = field(default=False, kw_only=True)
     comment: str = field(default='', kw_only=True, eq=False)
 
     def __str__(self) -> str:
@@ -194,14 +194,15 @@ class Function(StubRep):
     def get_dependencies(self) -> Iterator[str]:
         if len(self.signatures) > 1:
             yield 'overload'
-        yield from self.decorators
         for signature in self.signatures:
             yield from signature.get_dependencies()
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
-        decorators = self.decorators
+        decorators: list[str] = []
         if len(self.signatures) > 1:
-            decorators = ('overload', *decorators)
+            decorators.append('overload')
+        if self.is_static_method:
+            decorators.append('staticmethod')
         comment_needed = bool(self.comment)
         for signature in self.signatures:
             definition_lines = signature.definition(

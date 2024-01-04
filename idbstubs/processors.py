@@ -347,7 +347,7 @@ def process_render_attrib_class(render_attrib: Class) -> None:
     for name, function in render_attrib.body.items():
         if not isinstance(function, Function):
             continue
-        if 'staticmethod' in function.decorators:
+        if function.is_static_method:
             self_type = render_attrib.name
         else:
             self_type = 'Self'

@@ -295,7 +295,7 @@ def make_function_rep(function: IDBFunction) -> Function:
     return Function(
         name,
         signatures,
-        decorators=('staticmethod',) if is_static_method else (),
+        is_static_method=is_static_method,
         comment=get_comment(function.scoped_name),
     )
 
