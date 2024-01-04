@@ -80,13 +80,13 @@ class OdeWorld(TypedObject):
     def step(self, stepsize: float) -> None: ...
     def quick_step(self, stepsize: float) -> None: ...
     def compare_to(self, other: OdeWorld) -> int: ...
-    def init_surface_table(self, num_surfaces: str) -> None: ...
+    def init_surface_table(self, num_surfaces: int) -> None: ...
     def add_body_dampening(self, body: OdeBody, surface: int) -> None:
         """void assign_surface_body(OdeBody& body, int surface);"""
     def set_surface_entry(
         self,
-        pos1: str,
-        pos2: str,
+        pos1: int,
+        pos2: int,
         mu: float,
         bounce: float,
         bounce_vel: float,

@@ -90,6 +90,9 @@ def get_type_name(idb_type: IDBType) -> str:
         # Wrapped types and local typedefs aren't exposed to Python.
         return get_type_name(idb_type.wrapped_type)
     if idb_type.is_atomic:
+        # `signed char` and `unsigned char` are mapped to `int` instead of `str`.
+        if idb_type.name in ('signed char', 'unsigned char'):
+            return 'int'
         return ATOMIC_TYPES[idb_type.atomic_token]
     # We can't use `str.removeprefix` because of `ParamValue< std::string >`
     name = idb_type.scoped_name.replace('std::', '')

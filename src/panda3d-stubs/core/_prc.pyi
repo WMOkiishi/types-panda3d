@@ -1602,9 +1602,9 @@ class StreamReader:
         """Returns the stream in use."""
     def get_bool(self) -> bool:
         """Extracts a boolean value."""
-    def get_int8(self) -> str:
+    def get_int8(self) -> int:
         """Extracts a signed 8-bit integer."""
-    def get_uint8(self) -> str:
+    def get_uint8(self) -> int:
         """Extracts an unsigned 8-bit integer."""
     def get_int16(self) -> int:
         """Extracts a signed 16-bit integer."""
@@ -1720,9 +1720,9 @@ class StreamWriter:
         """Returns the stream in use."""
     def add_bool(self, value: bool) -> None:
         """Adds a boolean value to the stream."""
-    def add_int8(self, value: str) -> None:
+    def add_int8(self, value: int) -> None:
         """Adds a signed 8-bit integer to the stream."""
-    def add_uint8(self, value: str) -> None:
+    def add_uint8(self, value: int) -> None:
         """Adds an unsigned 8-bit integer to the stream."""
     def add_int16(self, value: int) -> None:
         """Adds a signed 16-bit integer to the stream."""

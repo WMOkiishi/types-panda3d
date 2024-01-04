@@ -80,7 +80,7 @@ class NetAddress:
         in host byte order.
         @deprecated  Does not work with IPv6 addresses.
         """
-    def get_ip_component(self, n: int) -> str:
+    def get_ip_component(self, n: int) -> int:
         """Returns the nth 8-bit component of the IP address.  An IP address has four
         components; component 0 is the first (leftmost), and component 3 is the
         last (rightmost) in the dotted number convention.
