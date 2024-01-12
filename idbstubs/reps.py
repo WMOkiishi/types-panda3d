@@ -127,15 +127,12 @@ class Signature:
     doc: str = field(default='', kw_only=True, eq=False)
     deprecation_note: str | None = field(default=None, kw_only=True, eq=False)
 
-    @property
-    def param_string(self) -> str:
-        return ', '.join(str(p) for p in self.parameters)
-
     def __str__(self) -> str:
+        param_string = ', '.join(str(p) for p in self.parameters)
         if self.return_type:
-            return f'({self.param_string}) -> {self.return_type}'
+            return f'({param_string}) -> {self.return_type}'
         else:
-            return f'({self.param_string})'
+            return f'({param_string})'
 
     def copy(self, **changes: Any) -> Signature:
         if 'parameters' not in changes:
