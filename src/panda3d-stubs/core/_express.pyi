@@ -2580,14 +2580,16 @@ class VirtualFileSystem:
         otherwise, the newly-found files will be appended to the list.
         """
     def exists(self, filename: StrOrBytesPath) -> bool:
-        """Convenience function; returns true if the named file exists."""
+        """Convenience function; returns true if the named file exists in the virtual
+        file system hierarchy.
+        """
     def is_directory(self, filename: StrOrBytesPath) -> bool:
-        """Convenience function; returns true if the named file exists and is a
-        directory.
+        """Convenience function; returns true if the named file exists as a directory in
+        the virtual file system hierarchy.
         """
     def is_regular_file(self, filename: StrOrBytesPath) -> bool:
-        """Convenience function; returns true if the named file exists and is a
-        regular file.
+        """Convenience function; returns true if the named file exists as a regular file
+        in the virtual file system hierarchy.
         """
     def scan_directory(self, filename: StrOrBytesPath) -> VirtualFileList:
         """If the file represents a directory (that is, is_directory() returns true),

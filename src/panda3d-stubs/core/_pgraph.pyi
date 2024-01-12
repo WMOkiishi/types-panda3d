@@ -6463,6 +6463,8 @@ class BamFile(BamEnums):
     """
 
     @property
+    def file_version(self): ...
+    @property
     def file_endian(self) -> _BamEnums_BamEndian: ...
     @property
     def file_stdfloat_double(self) -> bool: ...
@@ -6720,7 +6722,8 @@ class LensNode(PandaNode):
     @overload
     def is_in_view(self, index: int, pos: Vec3Like) -> bool:
         """Returns true if the given point is within the bounds of the lens of the
-        LensNode (i.e.  if the camera can see the point).
+        LensNode (i.e.  if the camera can see the point).  The point is assumed to
+        be relative to the LensNode itself.
         """
     def show_frustum(self) -> None:
         """Enables the drawing of the lens's frustum to aid in visualization.  This

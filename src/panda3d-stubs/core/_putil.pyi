@@ -950,7 +950,7 @@ class BamReader(BamEnums):
         time to call it.
 
         This must be called at least once after reading a particular object via
-        get_object() in order to validate that object.
+        read_object() in order to validate that object.
 
         The return value is true if all objects have been resolved, or false if
         some objects are still outstanding (in which case you will need to call
@@ -1041,6 +1041,8 @@ class BamWriter(BamEnums):
     root_node: TypedWritable
     @property
     def filename(self) -> Filename: ...
+    @property
+    def file_version(self): ...
     @property
     def file_endian(self) -> _BamEnums_BamEndian: ...
     @property
@@ -2400,7 +2402,7 @@ class DatagramOutputFile(DatagramSink):
         """Closes the file.  This is also implicitly done when the DatagramOutputFile
         destructs.
         """
-    def write_header(self, header: str) -> bool:
+    def write_header(self, header: bytes | str) -> bool:
         """Writes a sequence of bytes to the beginning of the datagram file.  This may
         be called any number of times after the file has been opened and before the
         first datagram is written.  It may not be called once the first datagram is

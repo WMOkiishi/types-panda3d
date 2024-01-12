@@ -372,6 +372,11 @@ class Filename:
     convention, and it knows how to perform basic OS-specific I/O, like testing
     for file existence and searching a searchpath, as well as the best way to
     open an fstream for reading or writing.
+
+    Note that the methods of Filename that interact with the filesystem (such
+    as exists(), open_read(), etc.) directly interface with the operating system
+    and are not aware of Panda's virtual file system.  To interact with the VFS,
+    use the methods on VirtualFileSystem instead.
     """
 
     T_general: Final = 0
@@ -715,21 +720,30 @@ class Filename:
         returns the same thing as to_os_specific().
         """
     def exists(self) -> bool:
-        """Returns true if the filename exists on the disk, false otherwise.  If the
-        type is indicated to be executable, this also tests that the file has
+        """Returns true if the filename exists on the physical disk, false otherwise.
+        If the type is indicated to be executable, this also tests that the file has
         execute permission.
+
+        @see VirtualFileSystem::exists() for checking whether the filename exists in
+        the virtual file system.
         """
     def is_regular_file(self) -> bool:
-        """Returns true if the filename exists and is the name of a regular file (i.e.
-        not a directory or device), false otherwise.
+        """Returns true if the filename exists on the physical disk and is the name of
+        a regular file (i.e. not a directory or device), false otherwise.
+
+        @see VirtualFileSystem::is_regular_file() for checking whether the filename
+        exists and is a regular file in the virtual file system.
         """
     def is_writable(self) -> bool:
-        """Returns true if the filename exists and is either a directory or a regular
-        file that can be written to, or false otherwise.
+        """Returns true if the filename exists on the physical disk and is either a
+        directory or a regular file that can be written to, or false otherwise.
         """
     def is_directory(self) -> bool:
-        """Returns true if the filename exists and is a directory name, false
-        otherwise.
+        """Returns true if the filename exists on the physical disk and is a directory
+        name, false otherwise.
+
+        @see VirtualFileSystem::is_directory() for checking whether the filename
+        exists as a directory in the virtual file system.
         """
     def is_executable(self) -> bool:
         """Returns true if the filename exists and is executable"""

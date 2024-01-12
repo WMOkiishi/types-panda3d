@@ -94,6 +94,8 @@ class CardMaker(Namable):
     @overload
     def set_color(self, r: float, g: float, b: float, a: float) -> None:
         """Sets the color of the card."""
+    def clear_color(self) -> None:
+        """Unsets the color of the card."""
     def set_has_normals(self, flag: bool) -> None:
         """Sets the flag indicating whether vertices will be generated with normals or
         not.  Normals are required if you intend to enable lighting on the card,
@@ -122,6 +124,7 @@ class CardMaker(Namable):
     setFrame = set_frame
     setFrameFullscreenQuad = set_frame_fullscreen_quad
     setColor = set_color
+    clearColor = clear_color
     setHasNormals = set_has_normals
     setSourceGeometry = set_source_geometry
     clearSourceGeometry = clear_source_geometry
@@ -785,6 +788,11 @@ class MeshDrawer(TypedObject):
     def link_segment(self, pos: Vec3Like, frame: Vec4Like, thickness: float, color: Vec4Like) -> None:
         """Stars or continues linked segment.  Control position, frame, thickness and
         color with parameters.  Frame contains u,v,u-size,v-size quadruple.
+        Note that for the first two calls to this method, the "frame" parameter is
+        ignored; it first takes effect as of the third call.
+        Similarly, note that in the second call to this method, the "color" parameter
+        is ignored; it only has effect in the first call and calls from the third
+        onwards.
         """
     def link_segment_end(self, frame: Vec4Like, color: Vec4Like) -> None:
         """Finish drawing linked segments, needs at least two calls to link_segment

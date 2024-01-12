@@ -193,6 +193,11 @@ class DisplayInformation:
     def get_window_bits_per_pixel(self) -> int: ...
     def get_total_display_modes(self) -> int: ...
     def get_display_mode(self, display_index: int) -> DisplayMode: ...
+    def get_current_display_mode_index(self) -> int:
+        """Returns the index of the current display mode (determined at the time of
+        application start) in the display mode array, or -1 if this could not be
+        determined.
+        """
     def get_display_mode_width(self, display_index: int) -> int:
         """Older interface for display modes."""
     def get_display_mode_height(self, display_index: int) -> int: ...
@@ -258,6 +263,7 @@ class DisplayInformation:
     getWindowBitsPerPixel = get_window_bits_per_pixel
     getTotalDisplayModes = get_total_display_modes
     getDisplayMode = get_display_mode
+    getCurrentDisplayModeIndex = get_current_display_mode_index
     getDisplayModeWidth = get_display_mode_width
     getDisplayModeHeight = get_display_mode_height
     getDisplayModeBitsPerPixel = get_display_mode_bits_per_pixel

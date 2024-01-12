@@ -925,6 +925,9 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         """Changes the total number of bytes reserved in the array for each vertex.
         You may not reduce this below get_total_bytes(), but you may increase it
         arbitrarily.
+
+        You should avoid arrays with stride higher than 2048, which is the typical
+        limit supported by graphics hardware.
         """
     def get_pad_to(self) -> int:
         """Returns the byte divisor to which the data record must be padded to meet
