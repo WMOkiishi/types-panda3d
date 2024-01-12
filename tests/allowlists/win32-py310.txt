@@ -1,0 +1,3 @@
+direct.leveleditor.ProtoObjsUI.ProtoDropTarget  # Metaclass issues
+direct.leveleditor.LevelEditorBase.[A-Z_]+  # Imports from DirectGlobals through CurveEditor
+direct.leveleditor.LevelEditorBase.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)  # Imports from DirectGui

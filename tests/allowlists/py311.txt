@@ -1,1 +1,2 @@
 direct.directscripts.gendocs  # Errors on import
+direct.p3d.Packager.metaclass_def.__new__

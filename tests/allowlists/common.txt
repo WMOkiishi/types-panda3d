@@ -21,7 +21,6 @@ direct.distributed.StagedObject.StagedObject.goOffStage
 direct.interval.(MetaInterval|IntervalGlobal).MetaInterval.__repr__
 direct.interval.(MetaInterval|IntervalGlobal).MetaInterval.__str__
 direct.interval.(SoundInterval|IntervalGlobal).SoundInterval.finish
-direct.p3d.Packager.metaclass_def.__new__
 direct.showbase.ShowBase.ShowBase.set_background_color
 direct.stdpy.file.join
 direct.tkwidgets.Valuator.ValuatorGroupPanel.get

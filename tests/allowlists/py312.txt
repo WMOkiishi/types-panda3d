@@ -1,0 +1,14 @@
+# This tries to import 'parser':
+direct.directscripts.gendocs
+
+# These try to import 'imp':
+direct.p3d.AppRunner
+direct.p3d.DWBPackageInstaller
+direct.p3d.DeploymentTools
+direct.p3d.HostInfo
+direct.p3d.PackageInfo
+direct.p3d.PackageInstaller
+direct.p3d.Packager
+direct.p3d.runp3d
+
+direct.showbase.VFSImporter

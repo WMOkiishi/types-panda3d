@@ -1,0 +1,9 @@
+# These try to import 'imp':
+direct.leveleditor.FileMgr
+direct.leveleditor.LevelEditor
+direct.leveleditor.LevelLoader
+direct.leveleditor.LevelLoaderBase
+direct.leveleditor.ProtoObjs
+direct.leveleditor.ProtoObjsUI
+direct.leveleditor.ProtoPalette
+direct.leveleditor.ProtoPaletteBase

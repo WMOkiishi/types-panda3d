@@ -33,7 +33,6 @@ direct.leveleditor.ObjectPropertyUI.ObjectPropUISpinner
 direct.leveleditor.ObjectPropertyUI.ObjectPropUITime
 direct.leveleditor.ObjectPropertyUI.ObjectPropertyUI
 direct.leveleditor.PaletteTreeCtrl.PaletteTreeCtrl
-direct.leveleditor.ProtoObjsUI.ProtoDropTarget
 direct.leveleditor.ProtoPaletteUI.ProtoPaletteUI
 direct.leveleditor.ProtoPaletteUI.UniversalDropTarget
 direct.leveleditor.SceneGraphUIBase.SceneGraphUIDropTarget
@@ -62,7 +61,6 @@ direct.leveleditor.ObjectPropertyUI.(Vertex|Top|Left|Right|checkColour|HSVWheelI
 
 # From direct.directtools.DirectGlobals
 direct.leveleditor.CurveEditor.[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
-direct.leveleditor.LevelEditorBase.[A-Z_]+  # Through direct.leveleditor.CurveEditor
 direct.leveleditor.LevelEditorUIBase.(?!ID_)[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
 direct.wxwidgets.WxPandaShell.[A-Z_]+
 
@@ -73,7 +71,6 @@ direct.leveleditor.LevelEditorUIBase.ivalMgr  # Through direct.leveleditor.Curve
 
 # Other
 direct.leveleditor.LevelEditor.(?!LevelEditor$)\w+  # From various through direct.leveleditor.LevelEditorBase/LevelEditorUI
-direct.leveleditor.LevelEditorBase.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)  # From direct.gui.DirectGui
 direct.leveleditor.LevelEditorUI.(?!LevelEditorUI$)\w+  # From various through direct.leveleditor.LevelEditorUIBase
 direct.leveleditor.LevelEditorUIBase.(First|Last|Next|Pre)(Key)?Frame  # From direct.leveleditor.AnimControlUI
 direct.leveleditor.LevelEditorUIBase.(PrePlay|Play|Key|Stop|DeleteKey)  # From direct.leveleditor.AnimControlUI

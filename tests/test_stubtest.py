@@ -44,6 +44,7 @@ def main() -> int:
         'common',
         f'py{sys.version_info.major}{sys.version_info.minor}',
         sys.platform,
+        f'{sys.platform}-py{sys.version_info.major}{sys.version_info.minor}',
     ]
     args = [
         'panda3d', 'direct',

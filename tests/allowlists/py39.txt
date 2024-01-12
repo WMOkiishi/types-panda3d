@@ -1,0 +1,1 @@
+direct.p3d.Packager.metaclass_def.__new__
