@@ -13,7 +13,7 @@ from panda3d.core._linmath import LMatrix4, LPoint2, LPoint3, LVecBase3, LVecBas
 from panda3d.core._pgraph import GeomNode, NodePath, PandaNode
 from panda3d.core._putil import ButtonHandle, ModifierButtons, TypedWritableReferenceCount
 
-_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 2]
+_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2]
 _Trackball_ControlMode: TypeAlias = Literal[0, 1, 2, 3, 4]
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 

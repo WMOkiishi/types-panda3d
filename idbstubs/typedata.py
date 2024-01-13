@@ -149,8 +149,8 @@ def load_data() -> None:
             continue
         if idb_type.is_enum and not idb_type.is_scoped_enum:
             if 0 < len(idb_type.enum_values) < 25:
-                values = sorted(e.value for e in idb_type.enum_values)
-                values_str = ', '.join(str(v) for v in values)
+                values = frozenset(e.value for e in idb_type.enum_values)
+                values_str = ', '.join(str(v) for v in sorted(values))
                 definition = f'Literal[{values_str}]'
             else:
                 definition = 'int'

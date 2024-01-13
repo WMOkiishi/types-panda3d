@@ -8,7 +8,7 @@ from panda3d.core._dtoolbase import TypeHandle
 
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int
-_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 2]
+_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2]
 _Filename_Type: TypeAlias = Literal[0, 1, 2]
 
 class ios_base:

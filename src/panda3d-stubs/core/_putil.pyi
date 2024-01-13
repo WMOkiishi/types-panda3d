@@ -51,7 +51,7 @@ from panda3d.core._prc import ConfigPage, ConfigVariableFilename, ConfigVariable
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]
-_BamEnums_BamEndian: TypeAlias = Literal[0, 1, 1]
+_BamEnums_BamEndian: TypeAlias = Literal[0, 1]
 _BamEnums_BamTextureMode: TypeAlias = Literal[0, 1, 2, 3, 4]
 _ClockObject_Mode: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 
