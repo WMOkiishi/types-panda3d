@@ -1,8 +1,8 @@
 from collections.abc import Callable
 from typing import Any
 
-import wx  # type: ignore[import-untyped]
-import wx.siplib as sip  # type: ignore[import-untyped]
+import wx  # type: ignore
+import wx.siplib as sip  # type: ignore
 
 class WxSlider(wx.Slider, metaclass=sip.wrapper):
     maxValue: float

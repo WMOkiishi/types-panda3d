@@ -1,7 +1,7 @@
 from collections.abc import Mapping, MutableSet
 
-import wx  # type: ignore[import-untyped]
-import wx.siplib as sip  # type: ignore[import-untyped]
+import wx  # type: ignore
+import wx.siplib as sip  # type: ignore
 
 from .ObjectPaletteUI import ObjectPaletteUI
 from .ProtoPaletteUI import ProtoPaletteUI

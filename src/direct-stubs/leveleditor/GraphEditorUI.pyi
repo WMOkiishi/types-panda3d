@@ -1,11 +1,11 @@
 from collections.abc import Sequence
 from typing import Any, SupportsFloat
 
-import wx  # type: ignore[import-untyped]
-import wx.siplib as sip  # type: ignore[import-untyped]
+import wx  # type: ignore
+import wx.siplib as sip  # type: ignore
 from direct._typing import Obj, Unused
 from panda3d._typing import Vec2Like
-from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore[import-untyped]
+from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore
 
 from .LevelEditor import LevelEditor
 

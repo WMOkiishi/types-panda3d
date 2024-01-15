@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 from collections.abc import Iterable
 from typing import Any, TypeVar
 
-import wx  # type: ignore[import-untyped]
-import wx.siplib as sip  # type: ignore[import-untyped]
+import wx  # type: ignore
+import wx.siplib as sip  # type: ignore
 from direct._typing import Unused
 
 from .LevelEditor import LevelEditor

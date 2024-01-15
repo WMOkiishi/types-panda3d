@@ -1,8 +1,8 @@
 from _typeshed import Incomplete
 from typing import Any, TypeVar
 
-import wx  # type: ignore[import-untyped]
-import wx.siplib as sip  # type: ignore[import-untyped]
+import wx  # type: ignore
+import wx.siplib as sip  # type: ignore
 
 from .LevelEditor import LevelEditor
 from .PaletteTreeCtrl import PaletteTreeCtrl

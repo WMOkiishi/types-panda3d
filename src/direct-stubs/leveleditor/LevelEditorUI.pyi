@@ -1,4 +1,4 @@
-import wx.siplib as sip  # type: ignore[import-untyped]
+import wx.siplib as sip  # type: ignore
 
 from .LevelEditorUIBase import LevelEditorUIBase
 
