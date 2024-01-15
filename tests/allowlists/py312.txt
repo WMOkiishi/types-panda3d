@@ -12,3 +12,27 @@ direct.p3d.Packager
 direct.p3d.runp3d
 
 direct.showbase.VFSImporter
+
+# Due to lack of wxPython:
+direct.leveleditor.AnimControlUI
+direct.leveleditor.CurveAnimUI
+direct.leveleditor.CurveEditor
+direct.leveleditor.GraphEditorUI
+direct.leveleditor.HotKeyUI
+direct.leveleditor.LayerEditorUI
+direct.leveleditor.LevelEditorBase
+direct.leveleditor.LevelEditorStart
+direct.leveleditor.LevelEditorUI
+direct.leveleditor.LevelEditorUIBase
+direct.leveleditor.MayaConverter
+direct.leveleditor.ObjectPaletteUI
+direct.leveleditor.ObjectPropertyUI
+direct.leveleditor.PaletteTreeCtrl
+direct.leveleditor.ProtoPaletteUI
+direct.leveleditor.SceneGraphUI
+direct.leveleditor.SceneGraphUIBase
+direct.wxwidgets.ViewPort
+direct.wxwidgets.WxAppShell
+direct.wxwidgets.WxPandaShell
+direct.wxwidgets.WxPandaWindow
+direct.wxwidgets.WxSlider
