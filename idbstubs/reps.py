@@ -195,6 +195,7 @@ class Function(StubRep):
     name: str
     signatures: Sequence[Signature] = field(converter=tuple)
     is_static_method: bool = field(default=False, kw_only=True)
+    type_check_only: bool = field(default=False, kw_only=True)
     comment: str = field(default='', kw_only=True, eq=False)
 
     def __str__(self) -> str:
@@ -203,6 +204,8 @@ class Function(StubRep):
     def get_dependencies(self) -> Iterator[str]:
         if len(self.signatures) > 1:
             yield 'overload'
+        if self.type_check_only:
+            yield 'type_check_only'
         for signature in self.signatures:
             yield from signature.get_dependencies()
 
@@ -212,6 +215,8 @@ class Function(StubRep):
             decorators.append('overload')
         if self.is_static_method:
             decorators.append('staticmethod')
+        if self.type_check_only:
+            decorators.append('type_check_only')
         comment_needed = bool(self.comment)
         for signature in self.signatures:
             definition_lines = signature.definition(

@@ -243,7 +243,7 @@ def process_class(class_: Class) -> None:
             class_body['__iter__'] = Function(
                 '__iter__',
                 [Signature([Parameter('self')], iter_return_type)],
-                comment="Doesn't actually exist",
+                type_check_only=True,
             )
     class_.body = class_body
     if PTA_NAME_REGEX.match(class_.name):

@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, MutableMapping, Sequence
-from typing import Any, ClassVar, Final, Literal, overload
+from typing import Any, ClassVar, Final, Literal, overload, type_check_only
 from typing_extensions import Self, TypeAlias
 
 from panda3d._typing import SearchPathLike
@@ -1242,7 +1242,8 @@ class DSearchPath:
             """
         def __copy__(self) -> Self: ...
         def __deepcopy__(self, memo: object, /) -> Self: ...
-        def __iter__(self) -> Iterator[Filename]: ...  # Doesn't actually exist
+        @type_check_only
+        def __iter__(self) -> Iterator[Filename]: ...
         def assign(self, copy: DSearchPath.Results) -> Self: ...
         def clear(self) -> None:
             """Removes all the files from the list."""

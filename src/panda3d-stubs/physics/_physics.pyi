@@ -1,5 +1,5 @@
 from collections.abc import Iterator, MutableSequence, Sequence
-from typing import Any, ClassVar, Final, Literal, overload
+from typing import Any, ClassVar, Final, Literal, overload, type_check_only
 from typing_extensions import Self, TypeAlias
 
 from panda3d._typing import Vec3Like, Vec4Like
@@ -189,7 +189,8 @@ class PhysicsObjectCollection:
     def __add__(self, other: PhysicsObjectCollection) -> PhysicsObjectCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def __iter__(self) -> Iterator[PhysicsObject]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[PhysicsObject]: ...
     def assign(self, copy: Self) -> Self: ...
     def add_physics_object(self, physics_object: PhysicsObject) -> None:
         """Adds a new PhysicsObject to the collection."""

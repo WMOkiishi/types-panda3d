@@ -48,6 +48,7 @@ KNOWN_IMPORTS: Final = {
     'NoReturn': 'typing',
     'overload': 'typing',
     'Self': 'typing_extensions',  # Introduced in 3.11
+    'type_check_only': 'typing',
     'TypeAlias': 'typing_extensions',  # Introduced in 3.10
     'TypeVar': 'typing',
     'StrOrBytesPath': '_typeshed',

@@ -20,7 +20,7 @@ __all__ = [
 ]
 
 from collections.abc import Callable, Iterable, Mapping
-from typing import Any, Final, NoReturn
+from typing import Any, Final, NoReturn, type_check_only
 from typing_extensions import Never
 
 from direct._typing import Unused
@@ -33,6 +33,7 @@ TIMEOUT_MAX: Final[float]
 class local:
     def __del__(self) -> None: ...
     def __setattr__(self, key: str, value: Any) -> None: ...
+    @type_check_only
     def __getattr__(self, key: str) -> Any: ...
 
 class ThreadBase:

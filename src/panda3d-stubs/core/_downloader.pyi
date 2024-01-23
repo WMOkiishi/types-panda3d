@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator
-from typing import Any, ClassVar, Final, Literal, overload
+from typing import Any, ClassVar, Final, Literal, overload, type_check_only
 from typing_extensions import Self, TypeAlias
 
 from panda3d._typing import URL
@@ -205,7 +205,8 @@ class URLSpec:
     def __getitem__(self, n: int) -> str: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def __iter__(self) -> Iterator[str]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[str]: ...
     def assign(self, url: str) -> Self: ...
     def compare_to(self, other: URL) -> int:
         """Returns a number less than zero if this URLSpec sorts before the other one,

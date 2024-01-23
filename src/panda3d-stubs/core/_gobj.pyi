@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, Mapping, MutableMapping, MutableSequence, Sequence
-from typing import Any, ClassVar, Final, Literal, final, overload
+from typing import Any, ClassVar, Final, Literal, final, overload, type_check_only
 from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import (
@@ -10241,7 +10241,8 @@ class TextureCollection:
     def __add__(self, other: TextureCollection) -> TextureCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def __iter__(self) -> Iterator[Texture]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[Texture]: ...
     def assign(self, copy: Self) -> Self: ...
     def add_texture(self, texture: Texture) -> None:
         """Adds a new Texture to the collection."""

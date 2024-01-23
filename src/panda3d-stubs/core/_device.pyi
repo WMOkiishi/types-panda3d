@@ -1,6 +1,6 @@
 from collections.abc import Iterator, Sequence
 from enum import Enum
-from typing import Any, ClassVar, Final, Literal, overload
+from typing import Any, ClassVar, Final, Literal, overload, type_check_only
 from typing_extensions import Self, TypeAlias
 
 from panda3d.core._dgraph import DataNode
@@ -462,7 +462,8 @@ class InputDeviceSet:
         """Returns the number of devices in the collection."""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def __iter__(self) -> Iterator[InputDevice]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[InputDevice]: ...
     def assign(self, copy: Self) -> Self: ...
     def clear(self) -> None:
         """Removes all InputDevices from the collection."""

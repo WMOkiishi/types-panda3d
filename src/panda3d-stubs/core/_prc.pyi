@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, Sequence
-from typing import Any, ClassVar, Final, Literal, overload
+from typing import Any, ClassVar, Final, Literal, overload, type_check_only
 from typing_extensions import Self, TypeAlias
 
 from panda3d import core
@@ -1004,7 +1004,8 @@ class ConfigVariableBool(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> bool: ...
-    def __iter__(self) -> Iterator[bool]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[bool]: ...
     def assign(self, value: bool) -> Self: ...
     def set_value(self, value: bool) -> None:
         """Reassigns the variable's local value."""
@@ -1042,7 +1043,8 @@ class ConfigVariableDouble(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> float: ...
-    def __iter__(self) -> Iterator[float]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[float]: ...
     def assign(self, value: float) -> Self: ...
     def set_value(self, value: float) -> None:
         """Reassigns the variable's local value."""
@@ -1164,7 +1166,8 @@ class ConfigVariableInt(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> int: ...
-    def __iter__(self) -> Iterator[int]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[int]: ...
     def assign(self, value: int) -> Self: ...
     def set_value(self, value: int) -> None:
         """Reassigns the variable's local value."""
@@ -1202,7 +1205,8 @@ class ConfigVariableInt64(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int) -> int: ...
-    def __iter__(self) -> Iterator[int]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[int]: ...
     def assign(self, value: int) -> Self: ...
     def set_value(self, value: int) -> None:
         """Reassigns the variable's local value."""
@@ -1241,7 +1245,8 @@ class ConfigVariableList(ConfigVariableBase):
     def __len__(self) -> int:
         """Returns the number of unique values of the variable."""
     def __getitem__(self, n: int) -> str: ...
-    def __iter__(self) -> Iterator[str]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[str]: ...
     def get_num_values(self) -> int:
         """Returns the number of values in the variable."""
     def get_string_value(self, n: int) -> str:

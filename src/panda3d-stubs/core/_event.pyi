@@ -1,5 +1,5 @@
 from collections.abc import Callable, Generator, Iterator, Sequence
-from typing import Any, ClassVar, Final, Literal, final, overload
+from typing import Any, ClassVar, Final, Literal, final, overload, type_check_only
 from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import TaskCoroutine, TaskFunction
@@ -642,7 +642,8 @@ class AsyncTaskCollection:
     def __add__(self, other: AsyncTaskCollection) -> AsyncTaskCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def __iter__(self) -> Iterator[AsyncTask]: ...  # Doesn't actually exist
+    @type_check_only
+    def __iter__(self) -> Iterator[AsyncTask]: ...
     def assign(self, copy: Self) -> Self: ...
     def add_task(self, task: AsyncTask) -> None:
         """Adds a new AsyncTask to the collection."""
