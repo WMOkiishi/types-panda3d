@@ -163,6 +163,7 @@ class ShowBase(DirectObject):
     textureEnabled: bool
     wireframeEnabled: bool
     render2d: NodePath[PandaNode]
+    aspect2d: NodePath[PandaNode]
     a2dBackground: NodePath[PandaNode]
     a2dTop: float
     a2dBottom: float
