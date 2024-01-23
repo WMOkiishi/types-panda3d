@@ -34,12 +34,12 @@ all = true
 multi_line_output = 3
 include_trailing_comma = true
 combine_as_imports = true
-extra_standard_library = ["typing_extensions"]
+line_length = 130
+extra_standard_library = ["typing_extensions", "_typeshed"]
 
 [tool.black]
 preview = true
 line_length = 130
-target_version = ["py312"]
 include = '\.pyi$'
 force_exclude = '^/src/panda3d-stubs/'
 skip_string_normalization = true

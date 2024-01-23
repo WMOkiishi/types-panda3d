@@ -1,9 +1,19 @@
+# Byte-compiled files
 *.pyc
-*.log
-venv/*
-.idea/*
-.vscode/*
+
+# Log file
+idbstubs/log.log
+
+# Virtual environments
+.venv
+venv/
+env/
+
+# IDE settings
+.idea/
+.vscode/
 *.code-workspace
-dist/*
+
+# Packaging
+dist/
 *.egg-info/
-.tox/*
