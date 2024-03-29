@@ -11,6 +11,8 @@ _OpenFile: TypeAlias = StrOrBytesPath | int
 
 def egg2bam(_build_cmd: object, srcpath: str, dstpath: str) -> str: ...
 
+basestring: TypeAlias = str
+
 macosx_binary_magics: Final[tuple[bytes, ...]]
 PACKAGE_DATA_DIRS: Final[dict[str, list[tuple[str, str, set[str]]]]]
 PACKAGE_LIB_DIRS: Final[dict[str, list[tuple[str, str | None]]]]
