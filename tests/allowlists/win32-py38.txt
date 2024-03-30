@@ -50,24 +50,15 @@ direct.wxwidgets.WxSlider.WxSlider
 
 # From wx.lib.agw.cubecolourdialog
 direct.leveleditor.LevelEditorUIBase.(pi|colourAttributes|colourMaxValues|HTMLCodes)  # Through direct.leveleditor.ObjectPropertyUI
-direct.leveleditor.LevelEditorUIBase.(Vertex|Top|Left|Right|checkColour|HSVWheelImage|RGBCubeImage)  # Through direct.leveleditor.ObjectPropertyUI
 direct.leveleditor.ObjectPropertyUI.(pi|colourAttributes|colourMaxValues|HTMLCodes|[A-Z_]+)
-direct.leveleditor.ObjectPropertyUI.(Vertex|Top|Left|Right|checkColour|HSVWheelImage|RGBCubeImage)
 
 # From direct.directtools.DirectGlobals
 direct.leveleditor.CurveEditor.[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
 direct.leveleditor.LevelEditorUIBase.(?!ID_)[A-Z_]+  # Through direct.wxwidgets.WxPandaShell
 direct.wxwidgets.WxPandaShell.[A-Z_]+
 
-# From direct.interval.IntervalManager (through direct.interval.IntervalGlobal)
-direct.leveleditor.AnimControlUI.ivalMgr
-direct.leveleditor.CurveAnimUI.ivalMgr
-direct.leveleditor.LevelEditorUIBase.ivalMgr  # Through direct.leveleditor.CurveAnimUI
-
 # Other
 direct.leveleditor.LevelEditor.(?!LevelEditor$)\w+  # From various through direct.leveleditor.LevelEditorBase/LevelEditorUI
 direct.leveleditor.LevelEditorUI.(?!LevelEditorUI$)\w+  # From various through direct.leveleditor.LevelEditorUIBase
-direct.leveleditor.LevelEditorUIBase.(First|Last|Next|Pre)(Key)?Frame  # From direct.leveleditor.AnimControlUI
-direct.leveleditor.LevelEditorUIBase.(PrePlay|Play|Key|Stop|DeleteKey)  # From direct.leveleditor.AnimControlUI
 direct.leveleditor.LevelEditorUIBase.ID_(FOUR|FRONT|LEFT|PERSP|TOP)_VIEW  # From direct.wxwidgets.WxPandaShell
 direct.leveleditor.LevelEditorUIBase.(property|ZoomIn|ZoomOut|OneTangent|TwoTangents)  # From direct.leveleditor.GraphEditorUI
