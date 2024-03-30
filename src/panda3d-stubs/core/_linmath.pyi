@@ -4868,7 +4868,7 @@ class LQuaternionf(LVecBase4f):
     def __mul__(self, scalar: float) -> LQuaternionf: ...
     def __truediv__(self, scalar: float) -> LQuaternionf: ...
     def __imul__(self, param0: Vec4Like, /) -> Self: ...  # type: ignore[misc, override]
-    def __pow__(self, param0: float, /) -> LQuaternionf:
+    def __pow__(self, param0: float, /) -> LQuaternionf:  # pyright: ignore[reportIncompatibleMethodOverride]
         """Returns a new quaternion that represents this quaternion raised to the
         given power.
         """
@@ -5070,7 +5070,7 @@ class LQuaterniond(LVecBase4d):
     def __mul__(self, scalar: float) -> LQuaterniond: ...
     def __truediv__(self, scalar: float) -> LQuaterniond: ...
     def __imul__(self, param0: DoubleVec4Like, /) -> Self: ...  # type: ignore[misc, override]
-    def __pow__(self, param0: float, /) -> LQuaterniond:
+    def __pow__(self, param0: float, /) -> LQuaterniond:  # pyright: ignore[reportIncompatibleMethodOverride]
         """Returns a new quaternion that represents this quaternion raised to the
         given power.
         """
@@ -5277,7 +5277,7 @@ class LRotationf(LQuaternionf):
     @overload
     def __mul__(self, other: Vec4Like) -> LQuaternionf: ...
     @overload
-    def __mul__(self, scalar: float) -> LRotationf: ...
+    def __mul__(self, scalar: float) -> LRotationf: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def __truediv__(self, scalar: float) -> LRotationf: ...
 
 class LRotationd(LQuaterniond):
@@ -5307,7 +5307,7 @@ class LRotationd(LQuaterniond):
     @overload
     def __mul__(self, other: DoubleVec4Like) -> LQuaterniond: ...
     @overload
-    def __mul__(self, scalar: float) -> LRotationd: ...
+    def __mul__(self, scalar: float) -> LRotationd: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def __truediv__(self, scalar: float) -> LRotationd: ...
 
 class LOrientationf(LQuaternionf):
