@@ -39,11 +39,10 @@ from .reps import (
 )
 from .special_cases import (
     ATTR_TYPE_OVERRIDES,
+    COMMENTS,
     CONDITIONALS,
     DEFAULT_RETURNS,
     GENERIC,
-    IGNORED_MYPY_ERRORS,
-    IGNORED_PYRIGHT_ERRORS,
     METHOD_RENAMES,
     NO_ALIAS,
     NO_STUBS,
@@ -51,7 +50,6 @@ from .special_cases import (
     PARAM_TYPE_OVERRIDES,
     RETURN_SELF,
     RETURN_TYPE_OVERRIDES,
-    SKIP_INHERITANCE,
     UNARY_METHOD_RENAMES,
 )
 from .translation import (
@@ -66,27 +64,6 @@ from .typedata import TYPE_ALIASES, get_type_name, make_type
 from .util import is_dunder
 
 _logger: Final = logging.getLogger(__name__)
-
-
-def get_comment(scoped_name: str) -> str:
-    comments: list[str] = []
-    # Sneak in some "noqa" comments
-    if scoped_name == 'StreamWrapper::iostream':
-        comments.append('noqa: F811')
-    elif (
-        scoped_name.startswith('CallbackGraphicsWindow')
-        and scoped_name.endswith((
-            'EventsCallbackData',
-            'PropertiesCallbackData',
-            'RenderCallbackData',
-        ))
-    ):
-        comments.append('noqa: F821')
-    if (mypy_errors := IGNORED_MYPY_ERRORS.get(scoped_name)) is not None:
-        comments.append(f'type: ignore[{mypy_errors}]')
-    if (pyright_errors := IGNORED_PYRIGHT_ERRORS.get(scoped_name)) is not None:
-        comments.append(f'pyright: ignore[{pyright_errors}]')
-    return '  # '.join(comments)
 
 
 def get_function_name(function: IDBFunction) -> str:
@@ -218,7 +195,7 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
         attr_type,
         read_only=read_only,
         doc=doc,
-        comment=get_comment(element.scoped_name),
+        comment=COMMENTS.get(element.scoped_name, ''),
     )
 
 
@@ -288,6 +265,7 @@ def make_function_rep(function: IDBFunction) -> Function:
             wrapper, function,
             ensure_self_param=function.is_method and not is_static_method,
         )
+        signature.comment = COMMENTS.get((function.scoped_name, i), '')
         if param_overrides:
             for j, param in enumerate(signature.parameters):
                 param_override = param_overrides.get((i, j))
@@ -303,7 +281,7 @@ def make_function_rep(function: IDBFunction) -> Function:
         name,
         signatures,
         is_static_method=is_static_method,
-        comment=get_comment(function.scoped_name),
+        comment=COMMENTS.get(function.scoped_name, ''),
     )
 
 
@@ -338,7 +316,7 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     return Function(
         make_seq.seq_name,
         [signature],
-        comment=get_comment(make_seq.scoped_name),
+        comment=COMMENTS.get(make_seq.scoped_name, ''),
     )
 
 
@@ -368,12 +346,10 @@ def make_class_rep(idb_type: IDBType) -> Class:
     """Return a representation of a class known to interrogate."""
     name = make_class_name(idb_type.name)
     class_body: dict[str, StubRep] = {}
-    skip_bases = SKIP_INHERITANCE.get(name, frozenset())
     bases = [
         get_type_name(derivation)
         for derivation in idb_type.derivations
         if type_is_exposed(derivation)
-        if derivation.name not in skip_bases
     ]
     if (type_vars := GENERIC.get(name)) is not None:
         bases.append(f'Generic[{type_vars}]')
@@ -427,7 +403,7 @@ def make_class_rep(idb_type: IDBType) -> Class:
         is_final=idb_type.is_final,
         conditional=CONDITIONALS.get(idb_type.scoped_name, ''),
         doc=comment_to_docstring(idb_type.comment),
-        comment=get_comment(idb_type.scoped_name),
+        comment=COMMENTS.get(idb_type.scoped_name, ''),
     )
 
 

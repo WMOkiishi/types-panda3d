@@ -124,6 +124,7 @@ class Signature:
     return_type: tc.Type = field(converter=_convert_type)
     doc: str = field(default='', kw_only=True, eq=False)
     deprecation_note: str | None = field(default=None, kw_only=True, eq=False)
+    comment: str = field(default='', kw_only=True, eq=False)
 
     def __str__(self) -> str:
         strings: list[str] = []
@@ -179,11 +180,11 @@ class Signature:
             yield f'{indent}@{decorator}'
         if self.deprecation_note is not None:
             yield f'{indent}@deprecated({self.deprecation_note!r})'
-        sig_def = f'{indent}{prefix}{self}:{postfix}'
+        sig_def = with_comment(f'{indent}{prefix}{self}:{postfix}', self.comment)
         if len(sig_def) <= 130:
             yield sig_def
         else:
-            yield f'{indent}{prefix}('
+            yield with_comment(f'{indent}{prefix}(', self.comment)
             for param in self.parameters:
                 yield f'{next_indent}{param},'
             yield f'{indent}) -> {self.return_type}:{postfix}'
