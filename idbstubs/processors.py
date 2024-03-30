@@ -161,7 +161,9 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
                 break
             core_type_1 = param_1.type
             core_type_2 = param_2.type
-            if not r1 >= r2 or type_1 < type_2 or core_type_1 < core_type_2:
+            first_narrower = type_1 < type_2 or core_type_1 < core_type_2
+            second_narrower = type_2 < type_1 or core_type_2 < core_type_1
+            if (not r1 >= r2) or (first_narrower and not second_narrower):
                 # If the return type is narrower or incompatible, or if
                 # the parameter type is narrower, avoid any overlap in
                 # the expanded parameter type.
@@ -173,7 +175,7 @@ def expand_input(signatures: Sequence[Signature]) -> list[Signature]:
                 new_types_1[param_1.name] = (
                     core_type_1 | tc.soft_difference(type_1, core_type_2)
                 )
-            if not r2 >= r1 or type_2 < type_1 or core_type_2 < core_type_1:
+            if (not r2 >= r1) or (second_narrower and not first_narrower):
                 new_types_2[param_2.name] = core_type_2 | (type_2 - type_1)
             elif param_1.named:
                 new_types_2[param_2.name] = (
