@@ -91,10 +91,10 @@ def make_manifest_reps() -> Iterator[Attribute]:
     """Yield representations of all manifests known to interrogate."""
     for manifest in get_manifests():
         type_name = 'Final[int]' if manifest.has_int_value else 'Final[str]'
-        yield Attribute(manifest.name, type_name)
+        yield Attribute(manifest.name, tc.BasicType(type_name))
         alias_name = make_alias_name(manifest.name)
         if alias_name != manifest.name:
-            yield Attribute(alias_name, type_name)
+            yield Attribute(alias_name, tc.BasicType(type_name))
 
 
 def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
@@ -136,13 +136,18 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
         yield method
     if idb_type.check_for_copy_constructor() or 'make_copy' in method_names:
         if '__copy__' not in method_names:
-            yield Function('__copy__', [Signature([Parameter('self')], 'Self')])
+            yield Function('__copy__', [
+                Signature([Parameter('self')], tc.BasicType('Self'))
+            ])
         if '__deepcopy__' not in method_names:
             yield Function(
                 '__deepcopy__',
                 [Signature(
-                    [Parameter('self'), Parameter('memo', 'object', named=False)],
-                    'Self',
+                    [
+                        Parameter('self'),
+                        Parameter('memo', tc.BasicType('object'), named=False),
+                    ],
+                    tc.BasicType('Self'),
                 )],
             )
     for make_seq in idb_type.make_seqs:
@@ -169,7 +174,7 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
             seq_type = 'MutableSequence'
         else:
             seq_type = 'Sequence'
-        attr_type = f'{seq_type}[{attr_type}]' if attr_type else seq_type
+        attr_type = tc.BasicType(f'{seq_type}[{attr_type}]' if attr_type else seq_type)
         read_only = True
     elif element.is_mapping:
         getter_wrapper = element.getter.wrappers[0]
@@ -177,13 +182,13 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
             t = getter_wrapper.parameters[1].type
         else:
             t = getter_wrapper.parameters[0].type
-        from_type = get_type_name(t) or 'Any'
-        to_type = attr_type or 'Any'
+        from_type = get_type_name(t) or tc.BasicType('Any')
+        to_type = attr_type or tc.BasicType('Any')
         if element.has_setter:
             map_type = 'MutableMapping'
         else:
             map_type = 'Mapping'
-        attr_type = f'{map_type}[{from_type}, {to_type}]'
+        attr_type = tc.BasicType(f'{map_type}[{from_type}, {to_type}]')
         read_only = True
     else:
         read_only = not element.has_setter
@@ -207,9 +212,9 @@ def make_signature_rep(
     of a function wrapper known to interrogate.
     """
     if function is not None and function.is_constructor:
-        return_type = 'None'
+        return_type = tc.BasicType('None')
     elif function is not None and function.is_method and function.name in RETURN_SELF:
-        return_type = 'Self'
+        return_type = tc.BasicType('Self')
     else:
         return_type = make_type(wrapper.return_type)
     params: list[Parameter] = []
@@ -310,7 +315,7 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     return_type = get_type_name(element_getter.wrappers[0].return_type)
     signature = Signature(
         [Parameter('self')],
-        f'tuple[{return_type}, ...]',
+        tc.BasicType(f'tuple[{return_type}, ...]'),
         doc=comment_to_docstring(make_seq.comment),
     )
     return Function(
@@ -336,7 +341,7 @@ def make_scoped_enum_rep(idb_type: IDBType) -> Class:
     """Return a representation of a scoped enum known to interrogate."""
     name = make_class_name(idb_type.name)
     values = {
-        value.name: Attribute(value.name, 'int')
+        value.name: Attribute(value.name, tc.BasicType('int'))
         for value in idb_type.enum_values
     }
     return Class(name, ['Enum'], values, is_final=idb_type.is_final)
@@ -355,7 +360,7 @@ def make_class_rep(idb_type: IDBType) -> Class:
         bases.append(f'Generic[{type_vars}]')
     # Attributes
     class_body['DtoolClassDict'] = Attribute(
-        'DtoolClassDict', 'ClassVar[dict[str, Any]]'
+        'DtoolClassDict', tc.BasicType('ClassVar[dict[str, Any]]')
     )
     for elem in idb_type.elements:
         if element_is_exposed(elem) and elem.name not in NO_STUBS:
@@ -365,7 +370,7 @@ def make_class_rep(idb_type: IDBType) -> Class:
         value = name[11:]
         if value in ('string', 'wstring'):
             value = 'str'
-        class_body['value'] = Attribute('value', value)
+        class_body['value'] = Attribute('value', tc.BasicType(value))
     # Methods
     for method in get_type_methods(idb_type):
         if method.name in class_body:
@@ -411,7 +416,7 @@ def make_universal_reps() -> Iterator[StubRep]:
     """Yield representations of items in every module compiled by interrogate."""
     yield Constant('Dtool_PyNativeInterface', 1)
     yield Function('Dtool_BorrowThisReference', [
-        Signature([Parameter('from_in'), Parameter('to_in')], 'None')
+        Signature([Parameter('from_in'), Parameter('to_in')], tc.BasicType('None'))
     ])
 
 
@@ -444,7 +449,7 @@ def make_file_reps(package_name: str = 'panda3d') -> list[File]:
         nested_by_mod_by_lib[mod_name][lib_name] += make_type_reps(idb_type)
 
     # Gather type aliases
-    type_aliases = [
+    type_aliases: list[StubRep] = [
         TypeAlias(name, definition)
         for name, definition in TYPE_ALIASES.items()
     ]
