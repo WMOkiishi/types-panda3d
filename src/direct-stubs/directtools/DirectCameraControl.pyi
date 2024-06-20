@@ -7,7 +7,7 @@ from direct.directnotify.Notifier import Notifier
 from direct.interval.MetaInterval import MetaInterval
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
-from panda3d.core import AsyncTask, CollisionEntry, LPoint3f, LVector3f, NodePath, PandaNode
+from panda3d.core import AsyncTask, CollisionEntry, LPoint3f, LVector3f, NodePath
 
 CAM_MOVE_DURATION: Final = 1.2
 COA_MARKER_SF: Final = 0.0075
@@ -28,8 +28,8 @@ class DirectCameraControl(DirectObject):
     fLockCOA: bool
     nullHitPointCount: int
     cqEntries: list[CollisionEntry]
-    coaMarkerRef: NodePath[PandaNode]
-    camManipRef: NodePath[PandaNode]
+    coaMarkerRef: NodePath
+    camManipRef: NodePath
     switchDirBelowZero: bool
     manipulateCameraTask: AsyncTask | None
     manipulateCameraInterval: MetaInterval | None

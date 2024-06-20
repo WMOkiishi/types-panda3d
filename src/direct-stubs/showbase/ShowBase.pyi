@@ -118,8 +118,8 @@ class ShowBase(DirectObject):
     cam2d: NodePath[Camera]
     cam2dp: NodePath[Camera]
     camera: NodePath[ModelNode]
-    camera2d: NodePath[PandaNode]
-    camera2dp: NodePath[PandaNode]
+    camera2d: NodePath
+    camera2dp: NodePath
     camList: list[NodePath[Camera]]
     camNode: Camera
     camLens: Lens
@@ -130,7 +130,7 @@ class ShowBase(DirectObject):
     tkRoot: Any
     tkRootCreated: bool
     clusterSyncFlag: bool
-    hidden: NodePath[PandaNode]
+    hidden: NodePath
     graphicsEngine: GraphicsEngine
     graphics_engine: GraphicsEngine
     cTrav: CollisionTraverser | Literal[0]
@@ -158,50 +158,50 @@ class ShowBase(DirectObject):
     clientSleep: float
     multiClientSleep: bool
     bufferViewer: BufferViewer
-    render: NodePath[PandaNode]
+    render: NodePath
     backfaceCullingEnabled: bool
     textureEnabled: bool
     wireframeEnabled: bool
-    render2d: NodePath[PandaNode]
-    aspect2d: NodePath[PandaNode]
-    a2dBackground: NodePath[PandaNode]
+    render2d: NodePath
+    aspect2d: NodePath
+    a2dBackground: NodePath
     a2dTop: float
     a2dBottom: float
     a2dLeft: float
     a2dRight: float
-    a2dTopCenter: NodePath[PandaNode]
-    a2dTopCenterNs: NodePath[PandaNode]
-    a2dBottomCenter: NodePath[PandaNode]
-    a2dBottomCenterNs: NodePath[PandaNode]
-    a2dLeftCenter: NodePath[PandaNode]
-    a2dLeftCenterNs: NodePath[PandaNode]
-    a2dRightCenter: NodePath[PandaNode]
-    a2dRightCenterNs: NodePath[PandaNode]
-    a2dTopLeft: NodePath[PandaNode]
-    a2dTopLeftNs: NodePath[PandaNode]
-    a2dTopRight: NodePath[PandaNode]
-    a2dTopRightNs: NodePath[PandaNode]
-    a2dBottomLeft: NodePath[PandaNode]
-    a2dBottomLeftNs: NodePath[PandaNode]
-    a2dBottomRight: NodePath[PandaNode]
-    a2dBottomRightNs: NodePath[PandaNode]
+    a2dTopCenter: NodePath
+    a2dTopCenterNs: NodePath
+    a2dBottomCenter: NodePath
+    a2dBottomCenterNs: NodePath
+    a2dLeftCenter: NodePath
+    a2dLeftCenterNs: NodePath
+    a2dRightCenter: NodePath
+    a2dRightCenterNs: NodePath
+    a2dTopLeft: NodePath
+    a2dTopLeftNs: NodePath
+    a2dTopRight: NodePath
+    a2dTopRightNs: NodePath
+    a2dBottomLeft: NodePath
+    a2dBottomLeftNs: NodePath
+    a2dBottomRight: NodePath
+    a2dBottomRightNs: NodePath
     pixel2d: NodePath[PGTop]
-    render2dp: NodePath[PandaNode]
+    render2dp: NodePath
     aspect2dp: NodePath[PGTop]
     a2dpTop: float
     a2dpBottom: float
     a2dpLeft: float
     a2dpRight: float
-    a2dpTopCenter: NodePath[PandaNode]
-    a2dpBottomCenter: NodePath[PandaNode]
-    a2dpLeftCenter: NodePath[PandaNode]
-    a2dpRightCenter: NodePath[PandaNode]
-    a2dpTopLeft: NodePath[PandaNode]
-    a2dpTopRight: NodePath[PandaNode]
-    a2dpBottomLeft: NodePath[PandaNode]
-    a2dpBottomRight: NodePath[PandaNode]
+    a2dpTopCenter: NodePath
+    a2dpBottomCenter: NodePath
+    a2dpLeftCenter: NodePath
+    a2dpRightCenter: NodePath
+    a2dpTopLeft: NodePath
+    a2dpTopRight: NodePath
+    a2dpBottomLeft: NodePath
+    a2dpBottomRight: NodePath
     pixel2dp: NodePath[PGTop]
-    dataRoot: NodePath[PandaNode]
+    dataRoot: NodePath
     dataRootNode: PandaNode
     def __init__(self, fStartDirect: bool = True, windowType: _WindowType | None = None) -> None: ...
     def pushCTrav(self, cTrav: CollisionTraverser) -> None: ...

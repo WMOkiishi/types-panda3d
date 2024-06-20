@@ -31,7 +31,7 @@ from panda3d.core import (
 )
 
 _BlendType: TypeAlias = Literal[0, 1, 2, 3]
-_NodePathOrFilepath: TypeAlias = NodePath[PandaNode] | StrOrBytesPath
+_NodePathOrFilepath: TypeAlias = NodePath | StrOrBytesPath
 
 class Actor(DirectObject, NodePath):
     notify: ClassVar[Notifier]

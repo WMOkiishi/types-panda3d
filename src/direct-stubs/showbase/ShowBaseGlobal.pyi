@@ -9,7 +9,6 @@ from panda3d.core import (
     ConfigPageManager,
     ConfigVariableManager,
     NodePath,
-    PandaNode,
     PandaSystem,
     PGTop,
     VirtualFileSystem,
@@ -27,9 +26,9 @@ globalClock: ClockObject
 cpMgr: ConfigPageManager
 cvMgr: ConfigVariableManager
 pandaSystem: PandaSystem
-render2d: NodePath[PandaNode]
+render2d: NodePath
 aspect2d: NodePath[PGTop]
-hidden: NodePath[PandaNode]
+hidden: NodePath
 base: ShowBase  # only exists once an instance of ShowBase is created
 
 @deprecated('run() is deprecated, use base.run() instead')
