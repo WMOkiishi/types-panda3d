@@ -51,7 +51,7 @@ class BasicType(Type):
 @attrs.frozen
 class ClassType(Type):
     name: str
-    bases: Sequence[ClassType] = attrs.field(default=(), converter=tuple)
+    bases: Sequence[ClassType] = attrs.field(default=(), converter=tuple['ClassType'])
 
     def __str__(self) -> str:
         return self.name
@@ -88,7 +88,7 @@ class AliasType(Type):
 
 @attrs.frozen
 class UnionType(Type):
-    parts: Collection[Type] = attrs.field(converter=tuple)
+    parts: Collection[Type] = attrs.field(converter=tuple[Type])
 
     def __str__(self) -> str:
         return ' | '.join(str(part) for part in self.parts)

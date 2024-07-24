@@ -214,12 +214,12 @@ def process_function(function: Function, *, class_name: str | None = None) -> No
     function.signatures = process_signatures(function.signatures)
     match function:
         case Function('__eq__' | '__ne__', [Signature([_, other_param])]):
-            other_param.type = tc.BasicType('object')
+            other_param.type = 'object'
             other_param.named = False
         case Function(
             'assign', [Signature([_, copy_param])]
         ) if str(copy_param.type) == class_name:
-            copy_param.type = tc.BasicType('Self')
+            copy_param.type = 'Self'
         case Function('__deepcopy__', [Signature([_, Parameter(named=True) as memo])]):
             memo.named = False
 
@@ -242,7 +242,7 @@ def process_class(class_: Class) -> None:
             iter_return_type = f'Iterator[{item_type}]' if item_type else 'Iterator'
             class_body['__iter__'] = Function(
                 '__iter__',
-                [Signature([Parameter('self')], tc.BasicType(iter_return_type))],
+                [Signature([Parameter('self')], iter_return_type)],
                 type_check_only=True,
             )
     class_.body = class_body
@@ -303,13 +303,13 @@ def process_pointer_to_array_class(pta: Class) -> None:
         case Function(
             signatures=[Signature([_, Parameter('data', tc.MissingType()) as param])]
         ):
-            param.type = tc.BasicType('bytes')
+            param.type = 'bytes'
     match pta.body.get('get_data'):
         case Function(signatures=[Signature(return_type=tc.MissingType()) as sig]):
-            sig.return_type = tc.BasicType('bytes')
+            sig.return_type = 'bytes'
     match pta.body.get('get_subdata'):
         case Function(signatures=[Signature(return_type=tc.MissingType()) as sig]):
-            sig.return_type = tc.BasicType('bytes')
+            sig.return_type = 'bytes'
     match pta.body:
         case {
             '__getitem__': Function(signatures=[Signature(return_type=array_of)]),
@@ -318,7 +318,7 @@ def process_pointer_to_array_class(pta: Class) -> None:
             for sig in signatures:
                 match sig:
                     case Signature([_, Parameter('source') as param]):
-                        param.type = tc.BasicType(f'Sequence[{array_of}]')
+                        param.type = f'Sequence[{array_of}]'
 
 
 def process_vector_class(vector: Class) -> None:
@@ -340,7 +340,7 @@ def process_vector_class(vector: Class) -> None:
             case Function(signatures=[
                 Signature(return_type=return_type) as sig
             ]) if not return_type or str(return_type) == vector.name:
-                sig.return_type = tc.BasicType('Self')
+                sig.return_type = 'Self'
     vector.body = class_body
 
 
@@ -355,7 +355,7 @@ def process_render_attrib_class(render_attrib: Class) -> None:
             self_type = 'Self'
         for signature in function.signatures:
             if str(signature.return_type) == 'RenderAttrib':
-                signature.return_type = tc.BasicType(self_type)
+                signature.return_type = self_type
 
 
 def remove_redefinitions(class_: Class, classes: Mapping[str, Class]) -> None:

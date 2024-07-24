@@ -63,5 +63,5 @@ jobs:
         uses: jakebailey/pyright-action@v1
         with:
           extra-args: src
-          version: 1.1.368
+          version: 1.1.373
           python-version: ${{ matrix.python-version }}
