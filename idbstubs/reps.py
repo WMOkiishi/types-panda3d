@@ -88,12 +88,16 @@ class Alias(StubRep):
 class Constant(StubRep):
     name: str
     value: int | float | complex | str | bytes | None
+    annotation: str = 'Final'
 
     def __str__(self) -> str:
-        return f'{self.name}: Final = {self.value!r}'
+        if self.annotation:
+            return f'{self.name}: {self.annotation} = {self.value!r}'
+        else:
+            return f'{self.name} = {self.value!r}'
 
     def get_dependencies(self) -> Iterator[str]:
-        yield 'Final'
+        yield from names_within(self.annotation)
 
     def definition(self, *, indent_level: int = 0) -> Iterator[str]:
         yield get_indent(indent_level) + str(self)

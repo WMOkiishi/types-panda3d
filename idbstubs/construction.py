@@ -336,7 +336,7 @@ def make_scoped_enum_rep(idb_type: IDBType) -> Class:
     """Return a representation of a scoped enum known to interrogate."""
     name = make_class_name(idb_type.name)
     values = {
-        value.name: Attribute(value.name, 'int')
+        value.name: Constant(value.name, value.value, annotation='')
         for value in idb_type.enum_values
     }
     return Class(name, ['Enum'], values, is_final=idb_type.is_final)

@@ -51,46 +51,46 @@ class InputDevice(TypedReferenceCount):
     SDown: Final = 2
 
     class DeviceClass(Enum):
-        unknown: int
-        virtual_device: int
-        keyboard: int
-        mouse: int
-        touch: int
-        gamepad: int
-        flight_stick: int
-        steering_wheel: int
-        dance_pad: int
-        hmd: int
-        spatial_mouse: int
-        digitizer: int
+        unknown = 0
+        virtual_device = 1
+        keyboard = 2
+        mouse = 3
+        touch = 4
+        gamepad = 5
+        flight_stick = 6
+        steering_wheel = 7
+        dance_pad = 8
+        hmd = 9
+        spatial_mouse = 10
+        digitizer = 11
 
     class Feature(Enum):
-        pointer: int
-        keyboard: int
-        tracker: int
-        vibration: int
-        battery: int
+        pointer = 0
+        keyboard = 1
+        tracker = 2
+        vibration = 3
+        battery = 4
 
     class Axis(Enum):
-        none: int
-        x: int
-        y: int
-        z: int
-        yaw: int
-        pitch: int
-        roll: int
-        left_x: int
-        left_y: int
-        left_trigger: int
-        right_x: int
-        right_y: int
-        right_trigger: int
-        throttle: int
-        rudder: int
-        wheel: int
-        accelerator: int
-        brake: int
-        pressure: int
+        none = 0
+        x = 1
+        y = 2
+        z = 3
+        yaw = 4
+        pitch = 5
+        roll = 6
+        left_x = 7
+        left_y = 8
+        left_trigger = 9
+        right_x = 10
+        right_y = 11
+        right_trigger = 12
+        throttle = 13
+        rudder = 14
+        wheel = 15
+        accelerator = 16
+        brake = 17
+        pressure = 18
 
     class ButtonState:
         DtoolClassDict: ClassVar[dict[str, Any]]
