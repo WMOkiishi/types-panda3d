@@ -62,6 +62,9 @@ def main() -> int:
         'direct.directbase.TestStart',
         'direct.directutil.MemoryLeakHelpers',
     }))
+    # wxPython causes Python 3.12 to crash on exit.
+    if sys.version_info >= (3, 12):
+        sys.meta_path.insert(2, PathFilter({'wx'}))
     sys.argv += args
     return mypy.stubtest.main()
 
