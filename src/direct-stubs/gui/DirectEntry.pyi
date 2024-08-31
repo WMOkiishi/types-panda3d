@@ -2,7 +2,8 @@ __all__ = ['DirectEntry']
 
 from _typeshed import Unused
 from collections.abc import Callable, Collection, Iterable
-from typing import Any, ClassVar, Final, Unpack
+from typing import Any, ClassVar, Final
+from typing_extensions import Unpack
 
 from panda3d.core import AudioSound, ConfigVariableBool, NodePath, PGEntry, TextFont
 
