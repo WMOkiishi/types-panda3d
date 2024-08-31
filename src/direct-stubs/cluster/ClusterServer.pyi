@@ -1,7 +1,7 @@
+from _typeshed import Unused
 from typing import Any, ClassVar, Literal
 from typing_extensions import TypeAlias
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3Like

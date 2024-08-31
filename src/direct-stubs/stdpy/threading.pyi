@@ -19,11 +19,11 @@ __all__ = [
     'stack_size',
 ]
 
+from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, Final, NoReturn, type_check_only
 from typing_extensions import Never
 
-from direct._typing import Unused
 from panda3d import core
 
 from .thread import error as ThreadError

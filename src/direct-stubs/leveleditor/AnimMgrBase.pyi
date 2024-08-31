@@ -1,8 +1,8 @@
-from _typeshed import Incomplete
+from _typeshed import Incomplete, Unused
 from collections.abc import Callable, Sequence
 from typing import Protocol, TypeVar
 
-from direct._typing import Obj, Unused
+from direct._typing import Obj
 from direct.interval import MetaInterval
 from direct.interval.ActorInterval import ActorInterval
 from direct.interval.LerpInterval import LerpFunc

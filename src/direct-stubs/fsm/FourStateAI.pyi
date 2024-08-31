@@ -1,11 +1,10 @@
 __all__ = ['FourStateAI']
 
-from _typeshed import SupportsGetItem
+from _typeshed import SupportsGetItem, Unused
 from collections.abc import Sequence
 from typing import ClassVar, Literal
 from typing_extensions import TypeAlias
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import AsyncTask
 

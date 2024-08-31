@@ -1,10 +1,9 @@
-from _typeshed import StrOrBytesPath, SupportsRead
+from _typeshed import StrOrBytesPath, SupportsRead, Unused
 from collections.abc import Container, Iterable, Mapping, Sequence
 from modulefinder import Module, ModuleFinder
 from typing import IO, Any, Final, TypeVar
 from typing_extensions import TypeAlias
 
-from direct._typing import Unused
 from panda3d.core import Filename, Multifile
 
 _OpenFileT = TypeVar('_OpenFileT', bound=_OpenFile)

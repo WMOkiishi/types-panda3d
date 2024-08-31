@@ -1,6 +1,5 @@
+from _typeshed import Unused
 from typing import ClassVar, Literal
-
-from direct._typing import Unused
 
 from .DistributedObject import DistributedObject
 

@@ -1,9 +1,9 @@
 __all__ = ['Task', 'TaskManager', 'again', 'cont', 'done', 'exit', 'loop', 'pause', 'pickup', 'sequence']
 
+from _typeshed import Unused
 from collections.abc import Callable, Sequence
 from typing import Any, ClassVar, Final, Literal, NoReturn, Protocol, overload
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.fsm.StatePush import StateVar
 from direct.showbase.ProfileSession import ProfileSession

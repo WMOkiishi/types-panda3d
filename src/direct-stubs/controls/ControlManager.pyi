@@ -1,6 +1,6 @@
+from _typeshed import Unused
 from typing import Any, ClassVar, Literal, Protocol
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import ConfigVariableBool
 

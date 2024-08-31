@@ -1,8 +1,7 @@
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, Unused
 from collections.abc import Collection, Iterable, Sequence
 from typing import Any, ClassVar, Literal
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import (
     Connection,

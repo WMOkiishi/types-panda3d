@@ -1,8 +1,8 @@
+from _typeshed import Unused
 from collections.abc import Callable
 from typing import ClassVar, Final, Literal
 from typing_extensions import TypeAlias
 
-from direct._typing import Unused
 from direct.gui.OnscreenText import OnscreenText
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import ButtonRegistry, NodePath

@@ -1,9 +1,9 @@
 __all__ = ['OnscreenImage']
 
+from _typeshed import Unused
 from typing import Any
 from typing_extensions import Self
 
-from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3Like, Vec4Like
 from panda3d.core import NodePath, TransformState

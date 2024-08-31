@@ -1,8 +1,8 @@
+from _typeshed import Unused
 from collections.abc import Mapping
 from types import CodeType
 from typing import Any, ClassVar, Literal
 
-from direct._typing import Unused
 from panda3d.core import Datagram, DatagramIterator
 from panda3d.direct import DCClass
 

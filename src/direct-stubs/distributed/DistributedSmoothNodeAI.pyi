@@ -1,6 +1,5 @@
+from _typeshed import Unused
 from typing import Literal
-
-from direct._typing import Unused
 
 from .ClientRepository import ClientRepository
 from .DistributedNodeAI import DistributedNodeAI

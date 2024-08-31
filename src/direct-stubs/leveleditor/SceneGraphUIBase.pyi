@@ -1,9 +1,10 @@
+from _typeshed import Unused
 from abc import ABCMeta, abstractmethod
 from typing import Any
 
 import wx  # type: ignore
 import wx.siplib as sip  # type: ignore
-from direct._typing import Obj, Unused
+from direct._typing import Obj
 from panda3d.core import NodePath
 
 from .LevelEditor import LevelEditor

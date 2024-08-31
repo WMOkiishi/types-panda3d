@@ -1,7 +1,6 @@
+from _typeshed import Unused
 from types import CodeType
 from typing import Any, Literal
-
-from direct._typing import Unused
 
 from .DistributedObjectUD import DistributedObjectUD
 

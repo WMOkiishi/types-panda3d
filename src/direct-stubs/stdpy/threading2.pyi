@@ -20,10 +20,9 @@ __all__ = [
     'stack_size',
 ]
 
+from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any
-
-from direct._typing import Unused
 
 from .thread import (
     TIMEOUT_MAX as TIMEOUT_MAX,

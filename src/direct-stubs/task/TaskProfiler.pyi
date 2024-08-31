@@ -1,6 +1,6 @@
+from _typeshed import Unused
 from typing import ClassVar
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.ProfileSession import ProfileSession
 

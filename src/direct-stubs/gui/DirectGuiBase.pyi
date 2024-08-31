@@ -1,10 +1,10 @@
 __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 
+from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, ClassVar, Final, Literal, TypeVar, overload
 from typing_extensions import ParamSpec, Self, TypeAlias
 
-from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGFrameStyle, PGItem, PStatCollector
 

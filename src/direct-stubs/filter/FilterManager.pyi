@@ -1,9 +1,9 @@
 __all__ = ['FilterManager']
 
+from _typeshed import Unused
 from collections.abc import Mapping, Sequence
 from typing import Any, ClassVar
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec4Like

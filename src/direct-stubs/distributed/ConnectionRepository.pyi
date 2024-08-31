@@ -1,10 +1,9 @@
 __all__ = ['ConnectionRepository', 'GCTrigger']
 
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, Unused
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from typing import Any, ClassVar, Final, Literal
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import Datagram, DatagramIterator, HTTPChannel, HTTPClient, PythonTask, RecorderController
 from panda3d.direct import CConnectionRepository

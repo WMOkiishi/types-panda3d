@@ -1,6 +1,7 @@
 __all__ = ['ThreeUpShow']
 
-from direct._typing import Unused
+from _typeshed import Unused
+
 from panda3d.core import Camera, GraphicsOutput, NodePath
 
 from .ShowBase import ShowBase

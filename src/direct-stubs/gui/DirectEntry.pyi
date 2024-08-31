@@ -1,8 +1,8 @@
 __all__ = ['DirectEntry']
 
+from _typeshed import Unused
 from typing import Any, ClassVar, Final
 
-from direct._typing import Unused
 from panda3d.core import ConfigVariableBool, NodePath, TextFont
 
 from .DirectFrame import DirectFrame

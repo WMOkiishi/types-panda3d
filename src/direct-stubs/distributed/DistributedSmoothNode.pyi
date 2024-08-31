@@ -1,6 +1,6 @@
+from _typeshed import Unused
 from typing import Literal, SupportsFloat
 
-from direct._typing import Unused
 from panda3d.core import NodePath
 
 from .ClientRepository import ClientRepository

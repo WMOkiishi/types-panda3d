@@ -1,9 +1,9 @@
 __all__ = ['NotifyPanel']
 
 import tkinter
+from _typeshed import Unused
 
 import Pmw  # type: ignore[import-untyped]
-from direct._typing import Unused
 from direct.directnotify.DirectNotify import DirectNotify
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import NotifyCategory

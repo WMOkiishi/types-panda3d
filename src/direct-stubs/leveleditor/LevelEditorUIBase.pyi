@@ -1,8 +1,8 @@
+from _typeshed import Unused
 from typing import Any, Final, SupportsFloat
 
 import wx  # type: ignore
 import wx.siplib as sip  # type: ignore
-from direct._typing import Unused
 from direct.wxwidgets.ViewPort import Viewport
 from direct.wxwidgets.WxPandaShell import WxPandaShell
 from direct.wxwidgets.WxSlider import WxSlider

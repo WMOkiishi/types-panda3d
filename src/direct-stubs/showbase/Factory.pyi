@@ -1,8 +1,8 @@
 __all__ = ['Factory']
 
+from _typeshed import Unused
 from typing import Any, ClassVar
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 
 class Factory:

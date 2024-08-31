@@ -1,9 +1,8 @@
-from _typeshed import Incomplete
+from _typeshed import Incomplete, Unused
 from collections.abc import Callable, Iterable, Sequence
 from typing import Any, Final, Literal
 from typing_extensions import Never, TypeAlias
 
-from direct._typing import Unused
 from direct.distributed.CachedDOData import CachedDOData
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass

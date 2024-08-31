@@ -1,6 +1,7 @@
+from _typeshed import Unused
 from typing import Literal, overload
 
-from direct._typing import AnyReal, Unused
+from direct._typing import AnyReal
 from panda3d._typing import Vec2Like
 
 class CartesianGridBase:

@@ -1,8 +1,9 @@
+from _typeshed import Unused
 from typing import Any
 
 import wx  # type: ignore
 import wx.siplib as sip  # type: ignore
-from direct._typing import Obj, Unused
+from direct._typing import Obj
 from direct.interval import MetaInterval
 from panda3d.core import NodePath
 

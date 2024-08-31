@@ -1,7 +1,7 @@
+from _typeshed import Unused
 from collections.abc import Iterable, Sequence
 from typing import Any, Literal
 
-from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
 from panda3d._typing import Vec3Like

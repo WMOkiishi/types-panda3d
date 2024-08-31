@@ -2,10 +2,9 @@
 
 __all__ = ['ClassicStyle', 'NewStyle', 'ToonEyes']
 
+from _typeshed import Unused
 from typing import Literal, overload
 from typing_extensions import TypeVarTuple, Unpack
-
-from direct._typing import Unused
 
 from .FSM import FSM
 

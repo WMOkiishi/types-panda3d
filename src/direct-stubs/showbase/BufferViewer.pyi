@@ -1,10 +1,10 @@
 __all__ = ['BufferViewer']
 
+from _typeshed import Unused
 from collections.abc import MutableMapping
 from typing import ClassVar, Literal
 from typing_extensions import TypeAlias, TypeGuard
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import CardMaker, GeomNode, GraphicsEngine, GraphicsOutput, NodePath, PythonTask, Texture, WindowProperties
 

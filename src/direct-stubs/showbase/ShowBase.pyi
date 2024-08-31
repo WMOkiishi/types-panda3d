@@ -1,12 +1,11 @@
 __all__ = ['ShowBase', 'WindowControls']
 
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, Unused
 from collections.abc import Callable
 from types import ModuleType
 from typing import Any, ClassVar, Literal, overload
 from typing_extensions import TypeAlias, deprecated
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.directtools.DirectSession import DirectSession
 from direct.p3d.AppRunner import AppRunner

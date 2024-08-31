@@ -1,8 +1,8 @@
+from _typeshed import Unused
 from typing import Any
 
 import wx  # type: ignore
 import wx.siplib as sip  # type: ignore
-from direct._typing import Unused
 from wx.lib.embeddedimage import PyEmbeddedImage  # type: ignore
 
 from .LevelEditor import LevelEditor

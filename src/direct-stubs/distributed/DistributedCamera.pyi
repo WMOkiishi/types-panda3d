@@ -1,6 +1,6 @@
+from _typeshed import Unused
 from collections.abc import Sequence
 
-from direct._typing import Unused
 from direct.fsm.FSM import FSM
 from direct.interval import MetaInterval
 from panda3d._typing import Vec3Like

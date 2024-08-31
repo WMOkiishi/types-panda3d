@@ -1,10 +1,9 @@
-from _typeshed import Incomplete
+from _typeshed import Incomplete, Unused
 from collections.abc import Container, Iterable, Sequence
 from types import CodeType
 from typing import Any, ClassVar, Literal, NoReturn
 from typing_extensions import TypeAlias
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.showbase.DirectObject import DirectObject

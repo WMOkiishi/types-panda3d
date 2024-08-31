@@ -1,7 +1,6 @@
+from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, Final, NoReturn
-
-from direct._typing import Unused
 
 TIMEOUT_MAX: Final[float]
 

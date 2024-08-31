@@ -1,7 +1,8 @@
 __all__ = ['Slider', 'SliderWidget', 'rgbPanel']
 
+from _typeshed import Unused
+
 import Pmw  # type: ignore[import-untyped]
-from direct._typing import Unused
 
 from .Valuator import Valuator, rgbPanel as rgbPanel
 

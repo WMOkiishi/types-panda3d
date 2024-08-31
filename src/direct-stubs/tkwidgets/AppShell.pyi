@@ -1,12 +1,12 @@
 __all__ = ['AppShell']
 
 import tkinter
+from _typeshed import Unused
 from collections.abc import MutableMapping
 from typing import Any, ClassVar, Literal, TypeVar
 from typing_extensions import TypeAlias
 
 import Pmw  # type: ignore[import-untyped]
-from direct._typing import Unused
 from direct.showbase.DirectObject import DirectObject
 
 from .Dial import Dial

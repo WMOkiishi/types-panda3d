@@ -1,6 +1,6 @@
+from _typeshed import Unused
 from typing import ClassVar
 
-from direct._typing import Unused
 from direct.showbase.PythonUtil import Enum
 
 class DummyTaskClass:

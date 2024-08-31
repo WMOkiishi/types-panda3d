@@ -1,8 +1,8 @@
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, Unused
 from collections.abc import Callable, Iterable
 from typing import Literal
 
-from direct._typing import Obj, Unused
+from direct._typing import Obj
 from direct.gui.OnscreenText import OnscreenText
 from direct.showbase.DirectObject import DirectObject
 from direct.wxwidgets.ViewPort import Viewport

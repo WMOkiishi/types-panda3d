@@ -1,11 +1,10 @@
 __all__ = ['register', 'reloadSharedPackage', 'reloadSharedPackages', 'sharedPackages']
 
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, Unused
 from collections.abc import Iterable
 from types import CodeType, ModuleType
 from typing import Final, Literal
 
-from direct._typing import Unused
 from panda3d.core import Filename, VirtualFile, VirtualFileSystem
 
 sharedPackages: dict[str, Literal[True]]

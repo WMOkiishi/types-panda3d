@@ -9,9 +9,9 @@ __all__ = [
     'findDialog',
 ]
 
+from _typeshed import Unused
 from typing import Any, ClassVar
 
-from direct._typing import Unused
 from panda3d.core import NodePath
 
 from .DirectButton import DirectButton

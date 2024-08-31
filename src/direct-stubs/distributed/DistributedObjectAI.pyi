@@ -1,7 +1,6 @@
-from _typeshed import Incomplete
+from _typeshed import Incomplete, Unused
 from typing import ClassVar, Literal
 
-from direct._typing import Unused
 from panda3d.core import DatagramIterator
 from panda3d.direct import DCClass
 

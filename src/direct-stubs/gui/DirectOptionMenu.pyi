@@ -1,8 +1,8 @@
 __all__ = ['DirectOptionMenu']
 
+from _typeshed import Unused
 from typing import Any, overload
 
-from direct._typing import Unused
 from panda3d.core import NodePath
 
 from .DirectButton import DirectButton

@@ -1,9 +1,8 @@
 # undocumented
 __all__: list[str] = []
 
+from _typeshed import Unused
 from typing import Literal
-
-from direct._typing import Unused
 
 numTasks: int
 maxDelay: int

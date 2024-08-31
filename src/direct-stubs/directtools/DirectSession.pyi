@@ -1,7 +1,7 @@
+from _typeshed import Unused
 from collections.abc import Iterable, Sequence
 from typing import Any, ClassVar, Final, Literal
 
-from direct._typing import Unused
 from direct.directdevices.DirectDeviceManager import DirectDeviceManager
 from direct.directdevices.DirectFastrak import DirectFastrak
 from direct.directdevices.DirectJoybox import DirectJoybox

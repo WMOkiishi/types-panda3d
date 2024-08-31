@@ -1,6 +1,6 @@
+from _typeshed import Unused
 from collections.abc import Sequence
 
-from direct._typing import Unused
 from panda3d.core import Datagram, DatagramIterator, UniqueIdAllocator
 
 from .ClientRepositoryBase import ClientRepositoryBase

@@ -1,10 +1,9 @@
 __all__ = ['ArgumentError', 'OutsideOfPackageError', 'Packager', 'PackagerError']
 
-from _typeshed import StrOrBytesPath
+from _typeshed import StrOrBytesPath, Unused
 from collections.abc import Container, Iterable, Sequence
 from typing import Any, ClassVar, Literal
 
-from direct._typing import Unused
 from direct.directnotify.Notifier import Notifier
 from direct.dist.FreezeTool import Freezer
 from direct.showbase.Loader import Loader

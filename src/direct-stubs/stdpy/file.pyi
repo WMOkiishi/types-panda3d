@@ -1,12 +1,11 @@
 __all__ = ['execfile', 'exists', 'getmtime', 'getsize', 'isdir', 'isfile', 'join', 'lexists', 'listdir', 'open', 'walk']
 
-from _typeshed import ReadableBuffer, StrOrBytesPath
+from _typeshed import ReadableBuffer, StrOrBytesPath, Unused
 from collections.abc import Generator, Iterable, Mapping
 from io import IOBase
 from posixpath import join as join
 from typing import Any
 
-from direct._typing import Unused
 from panda3d.core import VirtualFile, istream, ostream
 
 def open(

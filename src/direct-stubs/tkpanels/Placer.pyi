@@ -1,11 +1,11 @@
 __all__ = ['Placer', 'place']
 
 import tkinter
+from _typeshed import Unused
 from collections.abc import Callable, MutableMapping
 from typing import Literal
 
 import Pmw  # type: ignore[import-untyped]
-from direct._typing import Unused
 from direct.tkwidgets.AppShell import AppShell
 from direct.tkwidgets.Dial import AngleDial
 from direct.tkwidgets.Floater import Floater

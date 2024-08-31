@@ -1,6 +1,6 @@
+from _typeshed import Unused
 from typing import ClassVar, Final, Literal, Protocol
 
-from direct._typing import Unused
 from panda3d.core import ConfigVariableBool, LVector3f
 
 from .CartesianGridBase import CartesianGridBase
