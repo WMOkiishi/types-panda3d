@@ -1,4 +1,4 @@
 -r requirements.txt
-attrs==23.2.0
-mypy==1.10.0
+attrs==24.2.0
+mypy==1.11.2
 pre-commit
