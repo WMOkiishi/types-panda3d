@@ -1,3 +1,5 @@
+__all__ = ['ExclusiveObjectPool', 'ObjectReport']
+
 from collections.abc import Iterable
 from typing import ClassVar, NoReturn
 

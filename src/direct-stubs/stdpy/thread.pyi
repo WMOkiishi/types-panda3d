@@ -1,3 +1,19 @@
+__all__ = [
+    'error',
+    'LockType',
+    'start_new_thread',
+    'interrupt_main',
+    'exit',
+    'allocate_lock',
+    'get_ident',
+    'stack_size',
+    'force_yield',
+    'consider_yield',
+    'forceYield',
+    'considerYield',
+    'TIMEOUT_MAX',
+]
+
 from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
 from typing import Any, Final, NoReturn

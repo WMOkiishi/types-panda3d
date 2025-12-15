@@ -35,7 +35,7 @@ class StubRep(Protocol):
 @define
 class TypeVariable(StubRep):
     name: str
-    parameters: Iterable[str] = field(default=(), converter=tuple)
+    parameters: Iterable[str] = field(default=(), converter=tuple[str])
 
     def __str__(self) -> str:
         parameters = [repr(self.name), *self.parameters]
@@ -124,7 +124,7 @@ class Parameter:
 
 @define
 class Signature:
-    parameters: Sequence[Parameter] = field(converter=tuple)
+    parameters: Sequence[Parameter] = field(converter=tuple[Parameter])
     return_type: tc.Type = field(converter=_convert_type)
     doc: str = field(default='', kw_only=True, eq=False)
     deprecation_note: str | None = field(default=None, kw_only=True, eq=False)
@@ -198,7 +198,7 @@ class Signature:
 @define
 class Function(StubRep):
     name: str
-    signatures: Sequence[Signature] = field(converter=tuple)
+    signatures: Sequence[Signature] = field(converter=tuple[Signature])
     is_static_method: bool = field(default=False, kw_only=True)
     type_check_only: bool = field(default=False, kw_only=True)
     comment: str = field(default='', kw_only=True, eq=False)
@@ -275,7 +275,7 @@ class Attribute(StubRep):
 @define
 class Class(StubRep):
     name: str
-    bases: Sequence[str] = field(default=(), converter=tuple)
+    bases: Sequence[str] = field(default=(), converter=tuple[str])
     body: Mapping[str, StubRep] = Factory(dict)
     is_final: bool = field(default=False, kw_only=True)
     conditional: str = field(default='', kw_only=True, eq=False)

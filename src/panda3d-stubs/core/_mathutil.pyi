@@ -1005,7 +1005,7 @@ class GeometricBoundingVolume(BoundingVolume):
     def extend_by(self, vol: Self) -> bool:
         """Increases the size of the volume to include the given volume."""
     @overload
-    def extend_by(self, point: Vec3Like) -> bool:
+    def extend_by(self, point: Vec3Like) -> bool:  # pyright: ignore[reportIncompatibleMethodOverride]
         """Increases the size of the volume to include the given point."""
     @overload
     def contains(self, vol: Self) -> int:
@@ -1018,7 +1018,7 @@ class GeometricBoundingVolume(BoundingVolume):
         intersection with the indicated point.
         """
     @overload
-    def contains(self, a: Vec3Like, b: Vec3Like) -> int:
+    def contains(self, a: Vec3Like, b: Vec3Like) -> int:  # pyright: ignore[reportIncompatibleMethodOverride]
         """Returns the appropriate set of IntersectionFlags to indicate the amount of
         intersection with the indicated line segment.
         """

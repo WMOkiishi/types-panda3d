@@ -154,7 +154,7 @@ class OSocketStream(ostream, SSWriter):
     upcastToOstream = upcast_to_ostream
     upcastToSSWriter = upcast_to_SSWriter
 
-class SocketStream(iostream, SSReader, SSWriter):  # type: ignore[misc]
+class SocketStream(iostream, SSReader, SSWriter):
     """A base class for iostreams that read and write to a (possibly non-blocking)
     socket.
     """

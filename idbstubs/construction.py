@@ -377,11 +377,8 @@ def make_class_rep(idb_type: IDBType) -> Class:
             if alias_name != method.name:
                 if (
                     method.comment == 'type: ignore[override]'
-                    # It is unclear why Mypy takes issue with these two.
-                    or (name, method.name) in (
-                        ('Character', 'get_bundle'),
-                        ('GeomVertexRewriter', 'set_column'),
-                    )
+                    # It is unclear why Mypy takes issue with this one.
+                    or (name, method.name) == ('Character', 'get_bundle')
                 ):
                     comment = 'type: ignore[assignment]'
                 else:

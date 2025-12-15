@@ -8,7 +8,7 @@ from .ShowBase import ShowBase
 
 class ThreeUpShow(ShowBase):
     def __init__(self) -> None: ...
-    def makeCamera(  # type: ignore[override]
+    def makeCamera(
         self,
         win: GraphicsOutput,
         sort: Unused = 0,

@@ -1864,7 +1864,7 @@ class OStreamWrapper(StreamWrapperBase):
     upcastToStreamWrapperBase = upcast_to_StreamWrapperBase
     getOstream = get_ostream
 
-class StreamWrapper(IStreamWrapper, OStreamWrapper):  # type: ignore[misc]
+class StreamWrapper(IStreamWrapper, OStreamWrapper):
     """This class provides a locking wrapper around a combination ostream/istream
     pointer.
     """

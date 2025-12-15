@@ -5,7 +5,7 @@ from os import PathLike
 from pathlib import Path
 from typing import Final
 
-import panda3d.interrogatedb as idb
+import interrogatedb as idb
 
 from .idb_interface import IDBElement, IDBFunction, IDBFunctionWrapper, IDBType
 from .special_cases import NOT_EXPOSED, TYPE_NAME_OVERRIDES

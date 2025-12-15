@@ -120,7 +120,7 @@ class EggObject(TypedReferenceCount):
     hasUserData = has_user_data
     clearUserData = clear_user_data
 
-class EggNamedObject(EggObject, Namable):  # type: ignore[misc]
+class EggNamedObject(EggObject, Namable):
     """This is a fairly low-level base class--any egg object that has a name."""
 
     @overload
@@ -875,7 +875,7 @@ class EggVertexAux(EggNamedObject):
     makeAverage = make_average
     compareTo = compare_to
 
-class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
+class EggVertex(EggObject, EggAttributes):
     """Any one-, two-, three-, or four-component vertex, possibly with attributes
     such as a normal.
     """
@@ -886,7 +886,7 @@ class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
         """
     def upcast_to_EggObject(self) -> EggObject: ...
     def upcast_to_EggAttributes(self) -> EggAttributes: ...
-    def assign(self, copy: Self) -> Self:
+    def assign(self, copy: Self) -> Self:  # pyright: ignore[reportIncompatibleMethodOverride]
         """Copies all properties of the vertex except its vertex pool, index number,
         and group membership.
         """
@@ -1094,7 +1094,7 @@ class EggVertex(EggObject, EggAttributes):  # type: ignore[misc]
         """
     def write(self, out: ostream, indent_level: int) -> None:
         """Writes the vertex to the indicated output stream in Egg format."""
-    def compare_to(self, other: Self) -> int:
+    def compare_to(self, other: Self) -> int:  # pyright: ignore[reportIncompatibleMethodOverride]
         """An ordering operator to compare two vertices for sorting order.  This
         imposes an arbitrary ordering useful to identify unique vertices.
 
@@ -1782,7 +1782,7 @@ class EggSwitchConditionDistance(EggSwitchCondition):
 
     def __init__(self, switch_in: float, switch_out: float, center: DoubleVec3Like, fade: float = ...) -> None: ...
 
-class EggGroup(EggGroupNode, EggRenderMode, EggTransform):  # type: ignore[misc]
+class EggGroup(EggGroupNode, EggRenderMode, EggTransform):
     """The main glue of the egg hierarchy, this corresponds to the <Group>,
     <Instance>, and <Joint> type nodes.
     """
@@ -2492,7 +2492,7 @@ class EggComment(EggNode):
     @overload
     def assign(self, copy: EggComment) -> Self: ...
     @overload
-    def assign(self, comment: str) -> Self: ...
+    def assign(self, comment: str) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def set_comment(self, comment: str) -> None: ...
     def get_comment(self) -> str: ...
     setComment = set_comment
@@ -2527,7 +2527,7 @@ class EggFilenameNode(EggNode):
     getFullpath = get_fullpath
     setFullpath = set_fullpath
 
-class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):  # type: ignore[misc]
+class EggTexture(EggFilenameNode, EggRenderMode, EggTransform):
     """Defines a texture map that may be applied to geometry."""
 
     E_basename: Final = 1
@@ -3505,7 +3505,7 @@ class EggMaterial(EggNode):
     hasLocal = has_local
     getLocal = get_local
 
-class EggPrimitive(EggNode, EggAttributes, EggRenderMode):  # type: ignore[misc]
+class EggPrimitive(EggNode, EggAttributes, EggRenderMode):
     """A base class for any of a number of kinds of geometry primitives: polygons,
     point lights, nurbs patches, parametrics curves, etc.  Things with a set of
     vertices and some rendering properties like color.
@@ -4910,7 +4910,7 @@ class EggXfmSAnim(EggGroupNode):
     def __init__(self, copy: EggXfmSAnim) -> None: ...
     @overload
     def __init__(self, name: str = ..., cs: _CoordinateSystem = ...) -> None: ...
-    def assign(self, copy: EggXfmAnimData | EggXfmSAnim) -> Self: ...
+    def assign(self, copy: EggXfmAnimData | EggXfmSAnim) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def set_fps(self, fps: float) -> None: ...
     def clear_fps(self) -> None: ...
     def has_fps(self) -> bool: ...
@@ -5050,7 +5050,7 @@ class EggXfmAnimData(EggAnimData):
         """Converts the newer-style XfmSAnim table to the older-style XfmAnim table."""
     @overload
     def __init__(self, name: str = ..., cs: _CoordinateSystem = ...) -> None: ...
-    def assign(self, copy: EggXfmAnimData | EggXfmSAnim) -> Self: ...
+    def assign(self, copy: EggXfmAnimData | EggXfmSAnim) -> Self: ...  # pyright: ignore[reportIncompatibleMethodOverride]
     def set_order(self, order: str) -> None: ...
     def clear_order(self) -> None: ...
     def has_order(self) -> bool: ...

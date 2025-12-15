@@ -101,7 +101,8 @@ class TransformState(NodeCachedReferenceCount):
     """
 
     @property
-    def pos(self) -> LPoint3: ...
+    def pos(self) -> LPoint3:
+        """Force interrogate to make a copy as a temporary solution for #1625."""
     @property
     def hpr(self) -> LVecBase3: ...
     @property

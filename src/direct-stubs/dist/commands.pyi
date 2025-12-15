@@ -23,7 +23,7 @@ SITE_PY: Final[str]
 
 class build_apps(Command):
     description: ClassVar[str]
-    user_options: ClassVar[list[tuple[str, str | None, str]]]
+    user_options: ClassVar[list[tuple[str, str, str]] | list[tuple[str, str | None, str]]]
     default_file_handlers: ClassVar[dict[str, _FileHandler]]
     build_base: str
     gui_apps: dict[str, str]
@@ -71,7 +71,7 @@ class build_apps(Command):
 class bdist_apps(Command):
     DEFAULT_INSTALLERS: ClassVar[dict[str, list[str]]]
     description: ClassVar[str]
-    user_options: ClassVar[list[tuple[str, str | None, str]]]
+    user_options: ClassVar[list[tuple[str, str, str]] | list[tuple[str, str | None, str]]]
     installers: dict[str, list[str]]
     dist_dir: str
     skip_build: bool

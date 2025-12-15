@@ -70,7 +70,7 @@ class LerpPosInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpHprInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -91,7 +91,7 @@ class LerpHprInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpQuatInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -113,7 +113,7 @@ class LerpQuatInterval(LerpNodePathInterval):
         name: str | None = None,
         hpr: Vec3Like | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpScaleInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -132,7 +132,7 @@ class LerpScaleInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpShearInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -151,7 +151,7 @@ class LerpShearInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosHprInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -176,7 +176,7 @@ class LerpPosHprInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosQuatInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -202,7 +202,7 @@ class LerpPosQuatInterval(LerpNodePathInterval):
         name: str | None = None,
         hpr: Vec3Like | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpHprScaleInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -227,7 +227,7 @@ class LerpHprScaleInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpQuatScaleInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -253,7 +253,7 @@ class LerpQuatScaleInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosHprScaleInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -282,7 +282,7 @@ class LerpPosHprScaleInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosQuatScaleInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -312,7 +312,7 @@ class LerpPosQuatScaleInterval(LerpNodePathInterval):
         name: str | None = None,
         hpr: Vec3Like | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosHprScaleShearInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -345,7 +345,7 @@ class LerpPosHprScaleShearInterval(LerpNodePathInterval):
         fluid: bool = ...,
         name: str | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpPosQuatScaleShearInterval(LerpNodePathInterval):
     paramSetup: bool
@@ -379,7 +379,7 @@ class LerpPosQuatScaleShearInterval(LerpNodePathInterval):
         name: str | None = None,
         hpr: Vec3Like | None = None,
     ) -> None: ...
-    def privDoEvent(self, t: float, event: _EventType) -> None: ...  # type: ignore[override]
+    def privDoEvent(self, t: float, event: _EventType) -> None: ...
 
 class LerpColorInterval(LerpNodePathInterval):
     def __init__(

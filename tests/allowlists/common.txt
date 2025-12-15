@@ -33,6 +33,7 @@ panda3d.core.Quat[DF]?.__pow__
 panda3d.core.VBase[2-4][DF]?.__pow__
 
 # Things that don't exist at runtime
+direct.showbase.PythonUtil.ScratchPad.__setattr__
 panda3d.\w+._\w+
 panda3d._typing
 direct._typing

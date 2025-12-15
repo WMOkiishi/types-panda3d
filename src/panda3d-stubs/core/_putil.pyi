@@ -1040,6 +1040,7 @@ class BamWriter(BamEnums):
     """
 
     target: DatagramSink
+    file_texture_mode: _BamEnums_BamTextureMode
     root_node: TypedWritable
     @property
     def filename(self) -> Filename: ...
@@ -1049,8 +1050,6 @@ class BamWriter(BamEnums):
     def file_endian(self) -> _BamEnums_BamEndian: ...
     @property
     def file_stdfloat_double(self) -> bool: ...
-    @property
-    def file_texture_mode(self) -> _BamEnums_BamTextureMode: ...
     @overload
     def __init__(self, param0: BamWriter, /) -> None: ...
     @overload
@@ -1129,6 +1128,9 @@ class BamWriter(BamEnums):
         """Changes the BamTextureMode preference for the Bam file currently being
         written.  Texture objects written to this Bam file will be encoded
         according to the specified mode.
+
+        This should be called after the call to init(), or it will be overwritten
+        with the default mode in the config file.
         """
     def get_root_node(self) -> TypedWritable:
         """Returns the root node of the part of the scene graph we are currently
@@ -2323,7 +2325,7 @@ class CopyOnWriteObject(CachedTypedWritableReferenceCount):
     cacheRef = cache_ref
     cacheUnref = cache_unref
 
-class DatagramBuffer(DatagramSink, DatagramGenerator):  # type: ignore[misc]
+class DatagramBuffer(DatagramSink, DatagramGenerator):
     """This class can be used to write a series of datagrams into a memory buffer.
     It acts as both a datagram sink and generator; you can fill it up with
     datagrams and then read as many datagrams from it.

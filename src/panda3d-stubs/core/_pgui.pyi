@@ -637,8 +637,10 @@ class PGEntry(PGItem):
         """
     def get_cursor_position(self) -> int:
         """Returns the current position of the cursor."""
-    def get_cursor_X(self) -> float: ...
-    def get_cursor_Y(self) -> float: ...
+    def get_cursor_X(self) -> float:
+        """Returns the node position x of the cursor"""
+    def get_cursor_Y(self) -> float:
+        """Returns the node position y of the cursor"""
     def set_max_chars(self, max_chars: int) -> None:
         """Sets the maximum number of characters that may be typed into the entry.
         This is a limit on the number of characters, as opposed to the width of the

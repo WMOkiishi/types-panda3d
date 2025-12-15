@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
-from typing import Literal, TypeAlias
+from typing import TypeAlias
 
 import attrs
-import panda3d.interrogatedb as idb
+import interrogatedb as idb
 
 TypeIndex: TypeAlias = int
 ElementIndex: TypeAlias = int
@@ -12,7 +12,7 @@ FunctionIndex: TypeAlias = int
 FunctionWrapperIndex: TypeAlias = int
 MakeSeqIndex: TypeAlias = int
 ManifestIndex: TypeAlias = int
-AtomicToken: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+AtomicToken: TypeAlias = int
 
 
 @attrs.define

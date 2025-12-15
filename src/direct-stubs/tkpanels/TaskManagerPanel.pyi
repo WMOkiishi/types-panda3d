@@ -1,3 +1,5 @@
+__all__ = ['TaskManagerPanel', 'TaskManagerWidget']
+
 import tkinter
 from typing import Any, Literal
 

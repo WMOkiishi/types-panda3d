@@ -213,7 +213,7 @@ class AsyncFuture(TypedReferenceCount):
     addDoneCallback = add_done_callback
     setResult = set_result
 
-class AsyncTask(AsyncFuture, Namable):  # type: ignore[misc]
+class AsyncTask(AsyncFuture, Namable):
     """This class represents a concrete task performed by an AsyncManager.
     Normally, you would subclass from this class, and override do_task(), to
     define the functionality you wish to have the task perform.
@@ -888,7 +888,7 @@ class AsyncTaskPause(AsyncTask):
     @overload
     def __init__(self, delay: float) -> None: ...
 
-class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):  # type: ignore[misc]
+class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
     """A special kind of task that serves as a list of tasks internally.  Each
     task on the list is executed in sequence, one per epoch.
 

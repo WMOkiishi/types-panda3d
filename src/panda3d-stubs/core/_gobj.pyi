@@ -1848,7 +1848,7 @@ class VertexDataBlock(SimpleAllocatorBlock, ReferenceCount):
     getPage = get_page
     getNextBlock = get_next_block
 
-class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):  # type: ignore[misc]
+class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
     """This is the data for one array of a GeomVertexData structure.  Many
     GeomVertexData structures will only define one array, with all data
     elements interleaved (DirectX 8.0 and before insisted on this format); some
@@ -5859,7 +5859,7 @@ class GeomVertexWriter(GeomEnums):
     addData3i = add_data3i
     addData4i = add_data4i
 
-class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[misc]
+class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
     """This object provides the functionality of both a GeomVertexReader and a
     GeomVertexWriter, combined together into one convenient package.  It is
     designed for making a single pass over a GeomVertexData object, modifying
@@ -5979,7 +5979,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):  # type: ignore[mi
     getArrayData = get_array_data
     getArrayHandle = get_array_handle
     getStride = get_stride
-    setColumn = set_column  # type: ignore[assignment]
+    setColumn = set_column
     getArray = get_array
     getColumn = get_column
     setRow = set_row
@@ -6989,7 +6989,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         name for identifying an image in show code.
         """
     def clear_filename(self) -> None:
-        """Removes the alpha filename, if it was previously set.  See set_filename()."""
+        """Removes the filename, if it was previously set.  See set_filename()."""
     def has_alpha_filename(self) -> bool:
         """Returns true if the alpha_filename has been set and is available.  See
         set_alpha_filename().
@@ -7007,8 +7007,8 @@ class Texture(TypedWritableReferenceCount, Namable):
         The Texture's get_filename() function returns the name of the image file
         that was loaded into the buffer.  In the case where a texture specified two
         separate files to load, a 1- or 3-channel color image and a 1-channel alpha
-        image, this Filename is update to contain the name of the image file that
-        was loaded into the buffer's alpha channel.
+        image, the alpha_filename is updated to contain the name of the image file
+        that was loaded into the buffer's alpha channel.
         """
     def clear_alpha_filename(self) -> None:
         """Removes the alpha filename, if it was previously set.  See
@@ -7028,7 +7028,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         image is loaded, for instance via Texture::read().
         """
     def clear_fullpath(self) -> None:
-        """Removes the alpha fullpath, if it was previously set.  See set_fullpath()."""
+        """Removes the fullpath, if it was previously set.  See set_fullpath()."""
     def has_alpha_fullpath(self) -> bool:
         """Returns true if the alpha_fullpath has been set and is available.  See
         set_alpha_fullpath().
@@ -8356,7 +8356,7 @@ class Shader(TypedWritableReferenceCount):
     releaseAll = release_all
     prepareNow = prepare_now
 
-class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):  # type: ignore[misc]
+class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):
     """This is a generic buffer object that lives in graphics memory.
 
     @since 1.10.0

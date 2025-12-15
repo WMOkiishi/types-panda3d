@@ -1,2 +1,0 @@
-direct.p3d.Packager.metaclass_def.__new__
-direct.tkwidgets.MemoryExplorer.wantobjects

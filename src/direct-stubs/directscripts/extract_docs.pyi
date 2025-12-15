@@ -1,3 +1,5 @@
+__all__: list[str] = []
+
 from _typeshed import SupportsWrite
 from typing import Final
 

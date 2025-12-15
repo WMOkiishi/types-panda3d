@@ -217,7 +217,7 @@ class DynamicTextPage(Texture):
     getYSize = get_y_size
     isEmpty = is_empty
 
-class DynamicTextFont(TextFont, FreetypeFont):  # type: ignore[misc]
+class DynamicTextFont(TextFont, FreetypeFont):
     """A DynamicTextFont is a special TextFont object that rasterizes its glyphs
     from a standard font file (e.g.  a TTF file) on the fly.  It requires the
     FreeType 2.0 library (or any higher, backward-compatible version).
@@ -507,7 +507,7 @@ class FontPool:
     def release_font(filename: str) -> None:
         """Removes the indicated font from the pool, indicating it will never be
         loaded again; the font may then be freed.  If this function is never
-        called, a reference count will be maintained on every font every loaded,
+        called, a reference count will be maintained on every font ever loaded,
         and fonts will never be freed.
         """
     @staticmethod
@@ -734,14 +734,23 @@ class TextProperties:
         set_preserve_trailing_whitespace().
         """
     @overload
-    def set_text_color(self, text_color: Vec4Like) -> None: ...
+    def set_text_color(self, text_color: Vec4Like) -> None:
+        """Sets the color of the text.  Note that this will modulate the color of all
+        components of the text, including the shadow and outline.  If you wish to
+        only set the foreground color, see DynamicTextFont::set_fg().
+        """
     @overload
-    def set_text_color(self, r: float, g: float, b: float, a: float) -> None: ...
+    def set_text_color(self, r: float, g: float, b: float, a: float) -> None:
+        """Sets the color of the text.  Note that this will modulate the color of all
+        components of the text, including the shadow and outline.  If you wish to
+        only set the foreground color, see DynamicTextFont::set_fg().
+        """
     def clear_text_color(self) -> None:
         """Removes the text color specification; the text will be colored whatever it
         was in the source font file.
         """
-    def has_text_color(self) -> bool: ...
+    def has_text_color(self) -> bool:
+        """Returns true if a text color was specified with set_text_color()."""
     def get_text_color(self) -> LColor: ...
     @overload
     def set_shadow_color(self, shadow_color: Vec4Like) -> None: ...

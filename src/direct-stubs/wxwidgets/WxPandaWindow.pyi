@@ -1,3 +1,5 @@
+__all__ = ['WxPandaWindow']
+
 import sys
 from typing import ClassVar
 
