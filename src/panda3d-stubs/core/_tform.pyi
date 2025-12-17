@@ -48,7 +48,7 @@ class ButtonThrower(DataNode):
     def __init__(self, name: str) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_button_down_event(self, button_down_event: str) -> None:
+    def set_button_down_event(self, button_down_event: str, /) -> None:
         """Specifies the generic event that is generated (if any) each time a key or
         button is depressed.  Unlike the specific events that are unique to each
         key, this same event name is used for *all* button events, and the name of
@@ -64,7 +64,7 @@ class ButtonThrower(DataNode):
         """Returns the button_down_event that has been set on this ButtonThrower.  See
         set_button_down_event().
         """
-    def set_button_up_event(self, button_up_event: str) -> None:
+    def set_button_up_event(self, button_up_event: str, /) -> None:
         """Specifies the generic event that is generated (if any) each time a key or
         button is released.  See set_button_down_event().
         """
@@ -72,7 +72,7 @@ class ButtonThrower(DataNode):
         """Returns the button_up_event that has been set on this ButtonThrower.  See
         set_button_up_event().
         """
-    def set_button_repeat_event(self, button_repeat_event: str) -> None:
+    def set_button_repeat_event(self, button_repeat_event: str, /) -> None:
         """Specifies the generic event that is generated (if any) repeatedly while a
         key or button is held down.  Unlike the specific events that are unique to
         each key, this same event name is used for *all* button events, and the
@@ -88,7 +88,7 @@ class ButtonThrower(DataNode):
         """Returns the button_repeat_event that has been set on this ButtonThrower.
         See set_button_repeat_event().
         """
-    def set_keystroke_event(self, keystroke_event: str) -> None:
+    def set_keystroke_event(self, keystroke_event: str, /) -> None:
         """Specifies the event that is generated (if any) for each keystroke that is
         received.  A keystroke is different than a button event: it represents the
         semantic meaning of the sequence of keys that have been pressed.  For
@@ -110,7 +110,7 @@ class ButtonThrower(DataNode):
         """Returns the keystroke_event that has been set on this ButtonThrower.  See
         set_keystroke_event().
         """
-    def set_candidate_event(self, candidate_event: str) -> None:
+    def set_candidate_event(self, candidate_event: str, /) -> None:
         """Specifies the event that is generated (if any) for each IME candidate
         string event received.  Events of this nature are received only when the
         user is entering data using a Microsoft Input Method Editor, typically used
@@ -129,7 +129,7 @@ class ButtonThrower(DataNode):
         """Returns the candidate_event that has been set on this ButtonThrower.  See
         set_candidate_event().
         """
-    def set_move_event(self, move_event: str) -> None:
+    def set_move_event(self, move_event: str, /) -> None:
         """Specifies the event that is generated (if any) each time the mouse is moved
         within the window.
         """
@@ -137,7 +137,7 @@ class ButtonThrower(DataNode):
         """Returns the move_event that has been set on this ButtonThrower.  See
         set_move_event().
         """
-    def set_raw_button_down_event(self, raw_button_down_event: str) -> None:
+    def set_raw_button_down_event(self, raw_button_down_event: str, /) -> None:
         """Like set_button_down_event, but uses the raw, untransformed scan key from
         the operating system.  This uses buttons that are independent of the user's
         selected keyboard layout.
@@ -146,7 +146,7 @@ class ButtonThrower(DataNode):
         """Returns the raw_button_down_event that has been set on this ButtonThrower.
         See set_raw_button_down_event().
         """
-    def set_raw_button_up_event(self, raw_button_up_event: str) -> None:
+    def set_raw_button_up_event(self, raw_button_up_event: str, /) -> None:
         """Specifies the generic event that is generated (if any) each time a key or
         button is released.  See set_raw_button_down_event().
         """
@@ -154,7 +154,7 @@ class ButtonThrower(DataNode):
         """Returns the raw_button_up_event that has been set on this ButtonThrower.
         See set_raw_button_up_event().
         """
-    def set_prefix(self, prefix: str) -> None:
+    def set_prefix(self, prefix: str, /) -> None:
         """Sets the prefix which is prepended to all specific event names (that is,
         event names generated from the button name itself, as opposed to the
         generic event names like set_button_down_event) thrown by this object.
@@ -163,7 +163,7 @@ class ButtonThrower(DataNode):
         """Returns the prefix that has been set on this ButtonThrower.  See
         set_prefix().
         """
-    def set_specific_flag(self, specific_flag: bool) -> None:
+    def set_specific_flag(self, specific_flag: bool, /) -> None:
         """Sets the flag that indicates whether specific events (events prefixed by
         set_prefix, and based on the event name) should be generated at all.  This
         is true by default, but may be disabled if you are only interested in the
@@ -173,7 +173,7 @@ class ButtonThrower(DataNode):
         """Returns the flag that indicates whether specific events should be
         generated.  See set_specific_flag().
         """
-    def set_time_flag(self, time_flag: bool) -> None:
+    def set_time_flag(self, time_flag: bool, /) -> None:
         """Sets the flag that indicates whether the time of the button event should be
         passed as a parameter or not.  When this is true, an additional parameter
         is generated on each event (before all the parameters named by
@@ -185,7 +185,11 @@ class ButtonThrower(DataNode):
         """Returns the flag that indicates whether the time of the button event should
         be passed as a parameter.
         """
-    def add_parameter(self, obj: EventParameter | TypedReferenceCount | TypedWritableReferenceCount | float | str | None) -> None:
+    def add_parameter(
+        self,
+        obj: EventParameter | TypedReferenceCount | TypedWritableReferenceCount | float | str | None,
+        /,
+    ) -> None:
         """Adds the indicated parameter to the list of parameters that will be passed
         with each event generated by this ButtonThrower.
         """
@@ -193,7 +197,7 @@ class ButtonThrower(DataNode):
         """Returns the number of parameters that have been added to the list of
         parameters to be passed with each event generated by this ButtonThrower.
         """
-    def get_parameter(self, n: int) -> EventParameter:
+    def get_parameter(self, n: int, /) -> EventParameter:
         """Returns the nth parameter that has been added to the list of parameters
         passed with each event generated by this ButtonThrower.
         """
@@ -205,7 +209,7 @@ class ButtonThrower(DataNode):
         this set, and those modifier buttons are set on the button event, then the
         event name will be prepended with the names of the modifier buttons.
         """
-    def set_modifier_buttons(self, mods: ModifierButtons) -> None:
+    def set_modifier_buttons(self, mods: ModifierButtons, /) -> None:
         """Changes the set of ModifierButtons that the ButtonThrower will consider
         important enough to prepend the event name with.  Normally, this set will
         be empty, and the ButtonThrower will therefore ignore all ModifierButtons
@@ -218,7 +222,7 @@ class ButtonThrower(DataNode):
         set_modifier_buttons().  This way the current state of the modifier buttons
         will not be lost.
         """
-    def set_throw_buttons_active(self, flag: bool) -> None:
+    def set_throw_buttons_active(self, flag: bool, /) -> None:
         """Sets the flag that indicates whether the ButtonThrower will only process
         events for the explicitly named buttons or not.  Normally this is false,
         meaning all buttons are processed; set it true to indicate that only some
@@ -321,7 +325,7 @@ class MouseInterfaceNode(DataNode):
         For instance, this may be called to make a Trackball object respect mouse
         input only when the control key is held down.
         """
-    def clear_button(self, button: ButtonHandle | str) -> None:
+    def clear_button(self, button: ButtonHandle | str, /) -> None:
         """Removes any requirement on the indicated button set by an earlier call to
         require_button().
         """
@@ -343,7 +347,7 @@ class DriveInterface(MouseInterfaceNode):
     def __init__(self, param0: DriveInterface, /) -> None: ...
     @overload
     def __init__(self, name: str = ...) -> None: ...
-    def set_forward_speed(self, speed: float) -> None:
+    def set_forward_speed(self, speed: float, /) -> None:
         """Sets the speed of full forward motion, when the mouse is at the very top of
         the window.  This is in units (e.g.  feet) per second.
         """
@@ -351,7 +355,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the speed of full forward motion, when the mouse is at the very top
         of the window.  This is in units (e.g.  feet) per second.
         """
-    def set_reverse_speed(self, speed: float) -> None:
+    def set_reverse_speed(self, speed: float, /) -> None:
         """Sets the speed of full reverse motion, when the mouse is at the very bottom
         of the window.  This is in units (e.g.  feet) per second.
         """
@@ -359,7 +363,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the speed of full reverse motion, when the mouse is at the very
         bottom of the window.  This is in units (e.g.  feet) per second.
         """
-    def set_rotate_speed(self, speed: float) -> None:
+    def set_rotate_speed(self, speed: float, /) -> None:
         """Sets the maximum rate at which the user can rotate left or right, when the
         mouse is at the very edge of the window.  This is in degrees per second.
         """
@@ -368,7 +372,7 @@ class DriveInterface(MouseInterfaceNode):
         the mouse is at the very edge of the window.  This is in degrees per
         second.
         """
-    def set_vertical_dead_zone(self, zone: float) -> None:
+    def set_vertical_dead_zone(self, zone: float, /) -> None:
         """Sets the size of the horizontal bar in the center of the screen that
         represents the "dead zone" of vertical motion: the region in which the
         mouse does not report vertical motion.  This is in a fraction of the window
@@ -380,7 +384,7 @@ class DriveInterface(MouseInterfaceNode):
         mouse does not report vertical motion.  This is in a fraction of the window
         height, so 0.5 will set a dead zone as large as half the screen.
         """
-    def set_horizontal_dead_zone(self, zone: float) -> None:
+    def set_horizontal_dead_zone(self, zone: float, /) -> None:
         """Sets the size of the vertical bar in the center of the screen that
         represents the "dead zone" of horizontal motion: the region in which the
         mouse does not report horizontal motion.  This is in a fraction of the
@@ -392,7 +396,7 @@ class DriveInterface(MouseInterfaceNode):
         mouse does not report horizontal motion.  This is in a fraction of the
         window width, so 0.5 will set a dead zone as large as half the screen.
         """
-    def set_vertical_ramp_up_time(self, ramp_up_time: float) -> None:
+    def set_vertical_ramp_up_time(self, ramp_up_time: float, /) -> None:
         """Sets the amount of time, in seconds, it takes between the time an up or
         down arrow key is pressed and the time it registers full forward or
         backward motion.
@@ -402,7 +406,7 @@ class DriveInterface(MouseInterfaceNode):
         down arrow key is pressed and the time it registers full forward or
         backward motion.
         """
-    def set_vertical_ramp_down_time(self, ramp_down_time: float) -> None:
+    def set_vertical_ramp_down_time(self, ramp_down_time: float, /) -> None:
         """Sets the amount of time, in seconds, it takes between the time an up or
         down arrow key is released and the time it registers no motion.
         """
@@ -410,7 +414,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the amount of time, in seconds, it takes between the time an up or
         down arrow key is released and the time it registers no motion.
         """
-    def set_horizontal_ramp_up_time(self, ramp_up_time: float) -> None:
+    def set_horizontal_ramp_up_time(self, ramp_up_time: float, /) -> None:
         """Sets the amount of time, in seconds, it takes between the time a left or
         right arrow key is pressed and the time it registers full rotation.
         """
@@ -418,7 +422,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the amount of time, in seconds, it takes between the time a left or
         right arrow key is pressed and the time it registers full rotation.
         """
-    def set_horizontal_ramp_down_time(self, ramp_down_time: float) -> None:
+    def set_horizontal_ramp_down_time(self, ramp_down_time: float, /) -> None:
         """Sets the amount of time, in seconds, it takes between the time a left or
         right arrow key is released and the time it registers no motion.
         """
@@ -444,9 +448,9 @@ class DriveInterface(MouseInterfaceNode):
         """Directly sets the driver's position."""
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
-    def set_x(self, x: float) -> None: ...
-    def set_y(self, y: float) -> None: ...
-    def set_z(self, z: float) -> None: ...
+    def set_x(self, x: float, /) -> None: ...
+    def set_y(self, y: float, /) -> None: ...
+    def set_z(self, z: float, /) -> None: ...
     def get_hpr(self) -> LVecBase3:
         """Returns the driver's orientation."""
     def get_h(self) -> float: ...
@@ -457,12 +461,12 @@ class DriveInterface(MouseInterfaceNode):
         """Directly sets the driver's orientation."""
     @overload
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
-    def set_h(self, h: float) -> None: ...
-    def set_p(self, p: float) -> None: ...
-    def set_r(self, r: float) -> None: ...
-    def set_force_roll(self, force_roll: float) -> None:
+    def set_h(self, h: float, /) -> None: ...
+    def set_p(self, p: float, /) -> None: ...
+    def set_r(self, r: float, /) -> None: ...
+    def set_force_roll(self, force_roll: float, /) -> None:
         """This function is no longer used and does nothing.  It will be removed soon."""
-    def set_ignore_mouse(self, ignore_mouse: bool) -> None:
+    def set_ignore_mouse(self, ignore_mouse: bool, /) -> None:
         """Changes the state of the ignore_mouse flag.  If this flag is true, the
         DriveInterface will ignore mouse down button events (but still recognize
         mouse up button events); the user will not be able to start the
@@ -474,7 +478,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the current setting of the ignore_mouse flag.  See
         set_ignore_mouse().
         """
-    def set_force_mouse(self, force_mouse: bool) -> None:
+    def set_force_mouse(self, force_mouse: bool, /) -> None:
         """Changes the state of the force_mouse flag.  If this flag is true, the mouse
         button need not be held down in order to drive the avatar around.
         """
@@ -482,7 +486,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the current setting of the force_mouse flag.  See
         set_force_mouse().
         """
-    def set_stop_this_frame(self, stop_this_frame: bool) -> None:
+    def set_stop_this_frame(self, stop_this_frame: bool, /) -> None:
         """If stop_this_frame is true, the next time the frame is computed no motion
         will be allowed, and then the flag is reset to false.  This can be used to
         prevent too much movement when we know a long time has artificially
@@ -493,7 +497,7 @@ class DriveInterface(MouseInterfaceNode):
         """Returns the current setting of the stop_this_frame flag.  See
         set_stop_this_frame().
         """
-    def set_mat(self, mat: Mat4Like) -> None:
+    def set_mat(self, mat: Mat4Like, /) -> None:
         """Stores the indicated transform in the DriveInterface."""
     def get_mat(self) -> LMatrix4:
         """Returns the current transform."""
@@ -626,7 +630,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
     def get_frame(self) -> LVecBase4: ...
     def get_area(self) -> float:
         """Returns the area of the rectangular region."""
-    def set_sort(self, sort: int) -> None:
+    def set_sort(self, sort: int, /) -> None:
         """Changes the sorting order of this particular region.  The sorting order is
         used to resolve conflicts in the case of overlapping region; the region
         with the highest sort value will be preferred, and between regions of the
@@ -635,7 +639,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
         """
     def get_sort(self) -> int:
         """Returns the current sorting order of this region.  See set_sort()."""
-    def set_active(self, active: bool) -> None:
+    def set_active(self, active: bool, /) -> None:
         """Sets whether the region is active or not.  If it is not active, the
         MouseWatcher will never consider the mouse to be over the region.  The
         region might still receive keypress events if its set_keyboard() flag is
@@ -643,7 +647,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
         """
     def get_active(self) -> bool:
         """Returns whether the region is active or not.  See set_active()."""
-    def set_keyboard(self, keyboard: bool) -> None:
+    def set_keyboard(self, keyboard: bool, /) -> None:
         """Sets whether the region is interested in global keyboard events.  If this
         is true, then any keyboard button events will be passed to press() and
         release() regardless of the position of the mouse onscreen; otherwise,
@@ -653,7 +657,7 @@ class MouseWatcherRegion(TypedWritableReferenceCount, Namable):
         """Returns whether the region is interested in global keyboard events; see
         set_keyboard().
         """
-    def set_suppress_flags(self, suppress_flags: int) -> None:
+    def set_suppress_flags(self, suppress_flags: int, /) -> None:
         """Sets which events are suppressed when the mouse is over the region.  This
         is the union of zero or more various SF_* values.  Normally, this is 0,
         indicating that no events are suppressed.
@@ -691,19 +695,19 @@ class MouseWatcherBase:
     def sorted(self) -> bool: ...
     @property
     def regions(self) -> Sequence[MouseWatcherRegion]: ...
-    def add_region(self, region: MouseWatcherRegion) -> None:
+    def add_region(self, region: MouseWatcherRegion, /) -> None:
         """Adds the indicated region to the set of regions in the group.  It is no
         longer an error to call this for the same region more than once.
         """
-    def has_region(self, region: MouseWatcherRegion) -> bool:
+    def has_region(self, region: MouseWatcherRegion, /) -> bool:
         """Returns true if the indicated region has already been added to the
         MouseWatcherBase, false otherwise.
         """
-    def remove_region(self, region: MouseWatcherRegion) -> bool:
+    def remove_region(self, region: MouseWatcherRegion, /) -> bool:
         """Removes the indicated region from the group.  Returns true if it was
         successfully removed, or false if it wasn't there in the first place.
         """
-    def find_region(self, name: str) -> MouseWatcherRegion:
+    def find_region(self, name: str, /) -> MouseWatcherRegion:
         """Returns a pointer to the first region found with the indicated name.  If
         multiple regions share the same name, the one that is returned is
         indeterminate.
@@ -716,19 +720,19 @@ class MouseWatcherBase:
         """Returns true if the group has already been sorted, false otherwise."""
     def get_num_regions(self) -> int:
         """Returns the number of regions in the group."""
-    def get_region(self, n: int) -> MouseWatcherRegion:
+    def get_region(self, n: int, /) -> MouseWatcherRegion:
         """Returns the nth region of the group; returns NULL if there is no nth
         region.  Note that this is not thread-safe; another thread might have
         removed the nth region before you called this method.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def show_regions(self, render2d: NodePath, bin_name: str, draw_order: int) -> None:
         """Enables the visualization of all of the regions handled by this
         MouseWatcherBase.  The supplied NodePath should be the root of the 2-d
         scene graph for the window.
         """
-    def set_color(self, color: Vec4Like) -> None:
+    def set_color(self, color: Vec4Like, /) -> None:
         """Specifies the color used to draw the region rectangles for the regions
         visualized by show_regions().
         """
@@ -853,11 +857,11 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Returns the smallest region the indicated point is over, or NULL if it is
         over no region.
         """
-    def is_button_down(self, button: ButtonHandle | str) -> bool:
+    def is_button_down(self, button: ButtonHandle | str, /) -> bool:
         """Returns true if the indicated button is currently being held down, false
         otherwise.
         """
-    def set_button_down_pattern(self, pattern: str) -> None:
+    def set_button_down_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when a button is depressed.  This is a string that may contain any of the
         following:
@@ -873,7 +877,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Returns the string that indicates how event names are generated when a
         button is depressed.  See set_button_down_pattern().
         """
-    def set_button_up_pattern(self, pattern: str) -> None:
+    def set_button_up_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when a button is released.  See set_button_down_pattern().
         """
@@ -881,7 +885,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Returns the string that indicates how event names are generated when a
         button is released.  See set_button_down_pattern().
         """
-    def set_button_repeat_pattern(self, pattern: str) -> None:
+    def set_button_repeat_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when a button is continuously held and generates keyrepeat "down" events.
         This is a string that may contain any of the following:
@@ -898,7 +902,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         when a button is continuously held and generates keyrepeat "down" events.
         See set_button_repeat_pattern().
         """
-    def set_enter_pattern(self, pattern: str) -> None:
+    def set_enter_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse enters a region.  This is different from within_pattern, in
         that a mouse is only "entered" in the topmost region at a given time, while
@@ -910,7 +914,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         mouse is only "entered" in the topmost region at a given time, while it
         might be "within" multiple nested regions.
         """
-    def set_leave_pattern(self, pattern: str) -> None:
+    def set_leave_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse leaves a region.  This is different from without_pattern, in
         that a mouse is only "entered" in the topmost region at a given time, while
@@ -922,7 +926,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         mouse is only "entered" in the topmost region at a given time, while it
         might be "within" multiple nested regions.
         """
-    def set_within_pattern(self, pattern: str) -> None:
+    def set_within_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse wanders over a region.  This is different from
         enter_pattern, in that a mouse is only "entered" in the topmost region at a
@@ -934,7 +938,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         a mouse is only "entered" in the topmost region at a given time, while it
         might be "within" multiple nested regions.
         """
-    def set_without_pattern(self, pattern: str) -> None:
+    def set_without_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when the mouse wanders out of a region.  This is different from
         leave_pattern, in that a mouse is only "entered" in the topmost region at a
@@ -946,7 +950,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         that a mouse is only "entered" in the topmost region at a given time, while
         it might be "within" multiple nested regions.
         """
-    def set_geometry(self, node: PandaNode) -> None:
+    def set_geometry(self, node: PandaNode, /) -> None:
         """Sets the node that will be transformed each frame by the mouse's
         coordinates.  It will also be hidden when the mouse goes outside the
         window.  This can be used to implement a software mouse pointer for when a
@@ -962,7 +966,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """
     def clear_geometry(self) -> None:
         """Stops the use of the software cursor set up via set_geometry()."""
-    def set_extra_handler(self, eh: EventHandler) -> None:
+    def set_extra_handler(self, eh: EventHandler, /) -> None:
         """As an optimization for the C++ Gui, an extra handler can be registered with
         a mouseWatcher so that events can be dealt with much sooner.
         """
@@ -970,7 +974,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """As an optimization for the C++ Gui, an extra handler can be registered with
         a mouseWatcher so that events can be dealt with much sooner.
         """
-    def set_modifier_buttons(self, mods: ModifierButtons) -> None:
+    def set_modifier_buttons(self, mods: ModifierButtons, /) -> None:
         """Sets the buttons that should be monitored as modifier buttons for
         generating events to the MouseWatcherRegions.
         """
@@ -978,7 +982,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Returns the set of buttons that are being monitored as modifier buttons, as
         well as their current state.
         """
-    def set_display_region(self, dr: DisplayRegion) -> None:
+    def set_display_region(self, dr: DisplayRegion, /) -> None:
         """Constrains the MouseWatcher to watching the mouse within a particular
         indicated region of the screen.  DataNodes parented under the MouseWatcher
         will observe the mouse and keyboard events only when the mouse is within
@@ -1001,7 +1005,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         returns true, get_display_region() may be used to return the particular
         region.
         """
-    def add_group(self, group: MouseWatcherGroup) -> bool:
+    def add_group(self, group: MouseWatcherGroup, /) -> bool:
         """Adds the indicated group of regions to the set of regions the MouseWatcher
         will monitor each frame.
 
@@ -1013,7 +1017,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         Returns true if the group was successfully added, or false if it was
         already on the list.
         """
-    def remove_group(self, group: MouseWatcherGroup) -> bool:
+    def remove_group(self, group: MouseWatcherGroup, /) -> bool:
         """Removes the indicated group from the set of extra groups associated with
         the MouseWatcher.  Returns true if successful, or false if the group was
         already removed or was never added via add_group().
@@ -1031,9 +1035,9 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Returns the number of separate groups added to the MouseWatcher via
         add_group().
         """
-    def get_group(self, n: int) -> MouseWatcherGroup:
+    def get_group(self, n: int, /) -> MouseWatcherGroup:
         """Returns the nth group added to the MouseWatcher via add_group()."""
-    def set_inactivity_timeout(self, timeout: float) -> None:
+    def set_inactivity_timeout(self, timeout: float, /) -> None:
         """Sets an inactivity timeout on the mouse activity.  When this timeout (in
         seconds) is exceeded with no keyboard or mouse activity, all currently-held
         buttons are automatically released.  This is intended to help protect
@@ -1053,7 +1057,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Removes the inactivity timeout and restores the MouseWatcher to its default
         behavior of allowing a key to be held indefinitely.
         """
-    def set_inactivity_timeout_event(self, event: str) -> None:
+    def set_inactivity_timeout_event(self, event: str, /) -> None:
         """Specifies the event string that will be generated when the inactivity
         timeout counter expires.  See set_inactivity_timeout().
         """
@@ -1075,7 +1079,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         frame.  The trail log is updated once per frame, during the process_events
         operation.
         """
-    def set_trail_log_duration(self, duration: float) -> None:
+    def set_trail_log_duration(self, duration: float, /) -> None:
         """If the duration is nonzero, causes the MouseWatcher to log the mouse's
         trail.  Events older than the specified duration are discarded.  If the
         duration is zero, logging is disabled.
@@ -1198,7 +1202,7 @@ class MouseWatcherParameter:
         """Returns true if this parameter has an associated candidate string, false
         otherwise.
         """
-    def get_candidate_string_encoded(self, encoding: _TextEncoder_Encoding = ...) -> str:
+    def get_candidate_string_encoded(self, encoding: _TextEncoder_Encoding = ..., /) -> str:
         """Returns the candidate string associated with this event.  If
         has_candidate(), above, returns false, this returns the empty string.
         """
@@ -1227,7 +1231,7 @@ class MouseWatcherParameter:
         """Returns true if the mouse was outside the region at the time the event was
         generated, false otherwise.  This is only valid for "release" type events.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     hasButton = has_button
     getButton = get_button
     isKeyrepeat = is_keyrepeat
@@ -1273,7 +1277,7 @@ class Trackball(MouseInterfaceNode):
         """Returns the scale factor applied to forward and backward motion.  See
         set_forward_scale().
         """
-    def set_forward_scale(self, fwdscale: float) -> None:
+    def set_forward_scale(self, fwdscale: float, /) -> None:
         """Changes the scale factor applied to forward and backward motion.  The
         larger this number, the faster the model will move in response to dollying
         in and out.
@@ -1288,9 +1292,9 @@ class Trackball(MouseInterfaceNode):
         """Directly set the offset from the rotational origin."""
     @overload
     def set_pos(self, x: float, y: float, z: float) -> None: ...
-    def set_x(self, x: float) -> None: ...
-    def set_y(self, y: float) -> None: ...
-    def set_z(self, z: float) -> None: ...
+    def set_x(self, x: float, /) -> None: ...
+    def set_y(self, y: float, /) -> None: ...
+    def set_z(self, z: float, /) -> None: ...
     def get_hpr(self) -> LVecBase3:
         """Return the trackball's orientation."""
     def get_h(self) -> float: ...
@@ -1301,9 +1305,9 @@ class Trackball(MouseInterfaceNode):
         """Directly set the mover's orientation."""
     @overload
     def set_hpr(self, h: float, p: float, r: float) -> None: ...
-    def set_h(self, h: float) -> None: ...
-    def set_p(self, p: float) -> None: ...
-    def set_r(self, r: float) -> None: ...
+    def set_h(self, h: float, /) -> None: ...
+    def set_p(self, p: float, /) -> None: ...
+    def set_r(self, r: float, /) -> None: ...
     def reset_origin_here(self) -> None:
         """Reposition the center of rotation to coincide with the current translation
         offset.  Future rotations will be about the current origin.
@@ -1312,9 +1316,9 @@ class Trackball(MouseInterfaceNode):
         """Moves the center of rotation by the given amount."""
     def get_origin(self) -> LPoint3:
         """Returns the current center of rotation."""
-    def set_origin(self, origin: Vec3Like) -> None:
+    def set_origin(self, origin: Vec3Like, /) -> None:
         """Directly sets the center of rotation."""
-    def set_control_mode(self, control_mode: _Trackball_ControlMode) -> None:
+    def set_control_mode(self, control_mode: _Trackball_ControlMode, /) -> None:
         """Sets the control mode.  Normally this is CM_default, which means each mouse
         button serves its normal function.  When it is CM_truck, CM_pan, CM_dolly,
         or CM_roll, all of the mouse buttons serve the indicated function instead
@@ -1323,7 +1327,7 @@ class Trackball(MouseInterfaceNode):
         """
     def get_control_mode(self) -> _Trackball_ControlMode:
         """Returns the control mode.  See set_control_mode()."""
-    def set_invert(self, flag: bool) -> None:
+    def set_invert(self, flag: bool, /) -> None:
         """Sets the invert flag.  When this is set, the inverse matrix is generated,
         suitable for joining to a camera, instead of parenting the scene under it.
         """
@@ -1332,7 +1336,7 @@ class Trackball(MouseInterfaceNode):
         generated, suitable for joining to a camera, instead of parenting the scene
         under it.
         """
-    def set_rel_to(self, rel_to: NodePath) -> None:
+    def set_rel_to(self, rel_to: NodePath, /) -> None:
         """Sets the NodePath that all trackball manipulations are to be assumed to be
         relative to.  For instance, set your camera node here to make the trackball
         motion camera relative.  The default is the empty path, which means
@@ -1342,7 +1346,7 @@ class Trackball(MouseInterfaceNode):
         """Returns the NodePath that all trackball manipulations are relative to, or
         the empty path.
         """
-    def set_coordinate_system(self, cs: _CoordinateSystem) -> None:
+    def set_coordinate_system(self, cs: _CoordinateSystem, /) -> None:
         """Sets the coordinate system of the Trackball.  Normally, this is the default
         coordinate system.  This changes the axes the Trackball manipulates so that
         the user interface remains consistent across different coordinate systems.
@@ -1351,7 +1355,7 @@ class Trackball(MouseInterfaceNode):
         """Returns the coordinate system of the Trackball.  See
         set_coordinate_system().
         """
-    def set_mat(self, mat: Mat4Like) -> None:
+    def set_mat(self, mat: Mat4Like, /) -> None:
         """Stores the indicated transform in the trackball.  This is a transform in
         global space, regardless of the rel_to node.
         """
@@ -1408,7 +1412,7 @@ class Transform2SG(DataNode):
     def __init__(self, name: str) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_node(self, node: PandaNode) -> None:
+    def set_node(self, node: PandaNode, /) -> None:
         """Sets the node that this object will adjust."""
     def get_node(self) -> PandaNode:
         """Returns the node that this object will adjust, or NULL if the node has not

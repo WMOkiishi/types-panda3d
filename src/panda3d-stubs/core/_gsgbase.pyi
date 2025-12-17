@@ -3,7 +3,7 @@ from panda3d.core._putil import TypedWritableReferenceCount
 class GraphicsOutputBase(TypedWritableReferenceCount):
     """An abstract base class for GraphicsOutput, for all the usual reasons."""
 
-    def set_sort(self, sort: int) -> None: ...
+    def set_sort(self, sort: int, /) -> None: ...
     setSort = set_sort
 
 class GraphicsStateGuardianBase(TypedWritableReferenceCount):
@@ -25,7 +25,7 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
     def get_max_vertices_per_array(self) -> int: ...
     def get_max_vertices_per_primitive(self) -> int: ...
     def get_max_texture_dimension(self) -> int: ...
-    def get_supports_compressed_texture_format(self, compression_mode: int) -> bool: ...
+    def get_supports_compressed_texture_format(self, compression_mode: int, /) -> bool: ...
     def get_supports_multisample(self) -> bool: ...
     def get_supported_geom_rendering(self) -> int: ...
     def get_supports_shadow_filter(self) -> bool: ...
@@ -41,7 +41,7 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
         The return value may be NULL if a GSG has not been created.
         """
     @staticmethod
-    def set_default_gsg(default_gsg: GraphicsStateGuardianBase) -> None:
+    def set_default_gsg(default_gsg: GraphicsStateGuardianBase, /) -> None:
         """Specifies a particular GSG to use as the "default" GSG.  See
         get_default_gsg().
         """
@@ -49,7 +49,7 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
     def get_num_gsgs() -> int:
         """Returns the total number of GSG's in the universe."""
     @staticmethod
-    def get_gsg(n: int) -> GraphicsStateGuardianBase:
+    def get_gsg(n: int, /) -> GraphicsStateGuardianBase:
         """Returns the nth GSG in the universe.  GSG's automatically add themselves
         and remove themselves from this list as they are created and destroyed.
         """

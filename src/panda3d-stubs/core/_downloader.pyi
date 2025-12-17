@@ -29,7 +29,7 @@ class SSReader:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def receive_datagram(self, dg: Datagram) -> bool:
+    def receive_datagram(self, dg: Datagram, /) -> bool:
         """Receives a datagram over the socket by expecting a little-endian 16-bit
         byte count as a prefix.  If the socket stream is non-blocking, may return
         false if the data is not available; otherwise, returns false only if the
@@ -37,7 +37,7 @@ class SSReader:
         """
     def is_closed(self) -> bool: ...
     def close(self) -> None: ...
-    def set_tcp_header_size(self, tcp_header_size: int) -> None:
+    def set_tcp_header_size(self, tcp_header_size: int, /) -> None:
         """Sets the header size for datagrams.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver
@@ -57,14 +57,14 @@ class SSWriter:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def send_datagram(self, dg: Datagram) -> bool:
+    def send_datagram(self, dg: Datagram, /) -> bool:
         """Transmits the indicated datagram over the socket by prepending it with a
         little-endian 16-bit byte count.  Does not return until the data is sent or
         the connection is closed, even if the socket stream is non-blocking.
         """
     def is_closed(self) -> bool: ...
     def close(self) -> None: ...
-    def set_collect_tcp(self, collect_tcp: bool) -> None:
+    def set_collect_tcp(self, collect_tcp: bool, /) -> None:
         """Enables or disables "collect-tcp" mode.  In this mode, individual TCP
         packets are not sent immediately, but rather they are collected together
         and accumulated to be sent periodically as one larger TCP packet.  This
@@ -80,7 +80,7 @@ class SSWriter:
         """
     def get_collect_tcp(self) -> bool:
         """Returns the current setting of "collect-tcp" mode.  See set_collect_tcp()."""
-    def set_collect_tcp_interval(self, interval: float) -> None:
+    def set_collect_tcp_interval(self, interval: float, /) -> None:
         """Specifies the interval in time, in seconds, for which to hold TCP packets
         before sending all of the recently received packets at once.  This only has
         meaning if "collect-tcp" mode is enabled; see set_collect_tcp().
@@ -90,7 +90,7 @@ class SSWriter:
         before sending all of the recently received packets at once.  This only has
         meaning if "collect-tcp" mode is enabled; see set_collect_tcp().
         """
-    def set_tcp_header_size(self, tcp_header_size: int) -> None:
+    def set_tcp_header_size(self, tcp_header_size: int, /) -> None:
         """Sets the header size for datagrams.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver
@@ -200,15 +200,15 @@ class URLSpec:
     def __bool__(self) -> bool: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: URL) -> bool: ...
+    def __lt__(self, other: URL, /) -> bool: ...
     def __len__(self) -> int: ...
-    def __getitem__(self, n: int) -> str: ...
+    def __getitem__(self, n: int, /) -> str: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[str]: ...
-    def assign(self, url: str) -> Self: ...
-    def compare_to(self, other: URL) -> int:
+    def assign(self, url: str, /) -> Self: ...
+    def compare_to(self, other: URL, /) -> int:
         """Returns a number less than zero if this URLSpec sorts before the other one,
         greater than zero if it sorts after, or zero if they are equivalent.
         """
@@ -273,7 +273,7 @@ class URLSpec:
         nonstandard port.
         """
     @staticmethod
-    def get_default_port_for_scheme(scheme: str) -> int:
+    def get_default_port_for_scheme(scheme: str, /) -> int:
         """Returns the default port number for the indicated scheme, or 0 if there is
         no known default.
         """
@@ -293,35 +293,35 @@ class URLSpec:
         """
     def get_url(self) -> str:
         """Returns the complete URL specification."""
-    def set_scheme(self, scheme: str) -> None:
+    def set_scheme(self, scheme: str, /) -> None:
         """Replaces the scheme part of the URL specification."""
-    def set_authority(self, authority: str) -> None:
+    def set_authority(self, authority: str, /) -> None:
         """Replaces the authority part of the URL specification.  This includes the
         username, server, and port.
         """
-    def set_username(self, username: str) -> None:
+    def set_username(self, username: str, /) -> None:
         """Replaces the username part of the URL specification."""
-    def set_server(self, server: str) -> None:
+    def set_server(self, server: str, /) -> None:
         """Replaces the server part of the URL specification.
         Unlike set_server_and_port, this method does not require IPv6 addresses to
         be enclosed in square brackets.
         """
-    def set_port(self, port: int | str) -> None:
+    def set_port(self, port: int | str, /) -> None:
         """Replaces the port part of the URL specification.
 
         or:
         Replaces the port part of the URL specification, given a numeric port
         number.
         """
-    def set_server_and_port(self, server_and_port: str) -> None:
+    def set_server_and_port(self, server_and_port: str, /) -> None:
         """Replaces the server and port parts of the URL specification simultaneously.
         The input string should be of the form "server:port", or just "server" to
         make the port number implicit.
         Any IPv6 address must be enclosed in square brackets.
         """
-    def set_path(self, path: str) -> None:
+    def set_path(self, path: str, /) -> None:
         """Replaces the path part of the URL specification."""
-    def set_query(self, query: str) -> None:
+    def set_query(self, query: str, /) -> None:
         """Replaces the query part of the URL specification."""
     def set_url(self, url: str, server_name_expected: bool = ...) -> None:
         """Completely replaces the URL with the indicated string.  If
@@ -334,8 +334,8 @@ class URLSpec:
         empty string.
         """
     def length(self) -> int: ...
-    def input(self, _in: istream) -> bool: ...
-    def output(self, out: ostream) -> None: ...
+    def input(self, _in: istream, /) -> bool: ...
+    def output(self, out: ostream, /) -> None: ...
     @staticmethod
     def quote(source: str, safe: str = ...) -> str:
         """Returns the source string with all "unsafe" characters quoted, making a
@@ -349,12 +349,12 @@ class URLSpec:
         plus signs.
         """
     @staticmethod
-    def unquote(source: str) -> str:
+    def unquote(source: str, /) -> str:
         """Reverses the operation of quote(): converts escaped characters of the form
         "%xx" to their ascii equivalent.
         """
     @staticmethod
-    def unquote_plus(source: str) -> str:
+    def unquote_plus(source: str, /) -> str:
         """Reverses the operation of quote_plus(): converts escaped characters of the
         form "%xx" to their ascii equivalent, and also converts plus signs to
         spaces.
@@ -448,18 +448,18 @@ class HTTPDate:
     def __init__(self, time: int) -> None: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: HTTPDate | int | str) -> bool: ...
-    def __gt__(self, other: HTTPDate | int | str) -> bool: ...
-    def __iadd__(self, seconds: int) -> Self: ...
-    def __isub__(self, seconds: int) -> Self: ...  # type: ignore[misc]
-    def __add__(self, seconds: int) -> HTTPDate: ...
+    def __lt__(self, other: HTTPDate | int | str, /) -> bool: ...
+    def __gt__(self, other: HTTPDate | int | str, /) -> bool: ...
+    def __iadd__(self, seconds: int, /) -> Self: ...
+    def __isub__(self, seconds: int, /) -> Self: ...  # type: ignore[misc]
+    def __add__(self, seconds: int, /) -> HTTPDate: ...
     @overload
-    def __sub__(self, other: HTTPDate | str) -> int: ...
+    def __sub__(self, other: HTTPDate | str, /) -> int: ...
     @overload
-    def __sub__(self, seconds: int) -> HTTPDate: ...
+    def __sub__(self, seconds: int, /) -> HTTPDate: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: HTTPDate | int | str) -> Self: ...
+    def assign(self, copy: HTTPDate | int | str, /) -> Self: ...
     @staticmethod
     def now() -> HTTPDate:
         """Returns an HTTPDate that represents the current time and date."""
@@ -470,12 +470,12 @@ class HTTPDate:
     def get_string(self) -> str: ...
     def get_time(self) -> int:
         """Returns the date as a C time_t value."""
-    def compare_to(self, other: HTTPDate | int | str) -> int:
+    def compare_to(self, other: HTTPDate | int | str, /) -> int:
         """Returns a number less than zero if this HTTPDate sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
         """
-    def input(self, _in: istream) -> bool: ...
-    def output(self, out: ostream) -> None: ...
+    def input(self, _in: istream, /) -> bool: ...
+    def output(self, out: ostream, /) -> None: ...
     isValid = is_valid
     getString = get_string
     getTime = get_time
@@ -508,27 +508,27 @@ class HTTPCookie:
         no other data.  This is most useful for looking up an existing cookie in
         the HTTPClient.
         """
-    def __lt__(self, other: HTTPCookie) -> bool: ...
+    def __lt__(self, other: HTTPCookie, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_name(self, name: str) -> None: ...
+    def set_name(self, name: str, /) -> None: ...
     def get_name(self) -> str:
         """Returns the name of the cookie.  This is the key value specified by the
         server.
         """
-    def set_value(self, value: str) -> None: ...
+    def set_value(self, value: str, /) -> None: ...
     def get_value(self) -> str:
         """Returns the value of the cookie.  This is the arbitrary string associated
         with the cookie's name, as specified by the server.
         """
-    def set_domain(self, domain: str) -> None: ...
+    def set_domain(self, domain: str, /) -> None: ...
     def get_domain(self) -> str: ...
-    def set_path(self, path: str) -> None: ...
+    def set_path(self, path: str, /) -> None: ...
     def get_path(self) -> str:
         """Returns the prefix of the URL paths on the server for which this cookie
         will be sent.
         """
-    def set_expires(self, expires: HTTPDate | int | str) -> None: ...
+    def set_expires(self, expires: HTTPDate | int | str, /) -> None: ...
     def clear_expires(self) -> None:
         """Removes the expiration date on the cookie."""
     def has_expires(self) -> bool:
@@ -537,12 +537,12 @@ class HTTPCookie:
         """Returns the expiration date of the cookie if it is set, or an invalid date
         if it is not.
         """
-    def set_secure(self, flag: bool) -> None: ...
+    def set_secure(self, flag: bool, /) -> None: ...
     def get_secure(self) -> bool:
         """Returns true if the server has indicated this is a "secure" cookie which
         should only be sent over an HTTPS channel.
         """
-    def update_from(self, other: HTTPCookie) -> None:
+    def update_from(self, other: HTTPCookie, /) -> None:
         """Assuming the operator < method, above, has already evaluated these two
         cookies as equal, then assign the remaining values (value, expiration date,
         secure flag) from the indicated cookie.  This is guaranteed not to change
@@ -554,15 +554,15 @@ class HTTPCookie:
         assigns the values of the cookie appropriate.  Returns true if the header
         is parsed correctly, false if something is not understood.
         """
-    def is_expired(self, now: HTTPDate | int | str = ...) -> bool:
+    def is_expired(self, now: HTTPDate | int | str = ..., /) -> bool:
         """Returns true if the cookie's expiration date is before the indicated date,
         false otherwise.
         """
-    def matches_url(self, url: URL) -> bool:
+    def matches_url(self, url: URL, /) -> bool:
         """Returns true if the cookie is appropriate to send with the indicated URL
         request, false otherwise.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     setName = set_name
     getName = get_name
     setValue = set_value
@@ -604,7 +604,7 @@ class HTTPClient(ReferenceCount):
     def __init__(self, copy: HTTPClient = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     @staticmethod
     def init_random_seed() -> None:
         """This may be called once, presumably at the beginning of an application, to
@@ -617,7 +617,7 @@ class HTTPClient(ReferenceCount):
         There is no harm in calling this method multiple times, or in not calling
         it at all.
         """
-    def set_proxy_spec(self, proxy_spec: str) -> None:
+    def set_proxy_spec(self, proxy_spec: str, /) -> None:
         """Specifies the complete set of proxies to use for all schemes.  This is
         either a semicolon-delimited set of hostname:ports, or a semicolon-
         delimited set of pairs of the form "scheme=hostname:port", or a
@@ -633,7 +633,7 @@ class HTTPClient(ReferenceCount):
         passed into set_proxy_spec(), since the string is regenerated from the
         internal storage structures and may therefore be reordered.
         """
-    def set_direct_host_spec(self, direct_host_spec: str) -> None:
+    def set_direct_host_spec(self, direct_host_spec: str, /) -> None:
         """Specifies the set of hosts that should be connected to directly, without
         using a proxy.  This is a semicolon-separated list of hostnames that may
         contain wildcard characters ("*").
@@ -643,7 +643,7 @@ class HTTPClient(ReferenceCount):
         using a proxy, as a semicolon-separated list of hostnames that may contain
         wildcard characters ("*").
         """
-    def set_try_all_direct(self, try_all_direct: bool) -> None:
+    def set_try_all_direct(self, try_all_direct: bool, /) -> None:
         """If this is set true, then after a connection attempt through a proxy fails,
         we always try a direct connection, regardless of whether the host is listed
         on the direct_host_spec list.  If this is false, a direct attempt is not
@@ -668,12 +668,12 @@ class HTTPClient(ReferenceCount):
         add_direct_host() may be made to build up the list of hosts that do not
         require a proxy connection.
         """
-    def add_direct_host(self, hostname: str) -> None:
+    def add_direct_host(self, hostname: str, /) -> None:
         """Adds the indicated name to the set of hostnames that are connected to
         directly, without using a proxy.  This name may be either a DNS name or an
         IP address, and it may include the * as a wildcard character.
         """
-    def get_proxies_for_url(self, url: URL) -> str:
+    def get_proxies_for_url(self, url: URL, /) -> str:
         """Returns a semicolon-delimited list of proxies, in the order in which they
         should be tried, that are appropriate for the indicated URL.  The keyword
         DIRECT indicates a direct connection should be tried.
@@ -691,31 +691,31 @@ class HTTPClient(ReferenceCount):
         """Returns the username:password string set for this server/realm pair, or
         empty string if nothing has been set.  See set_username().
         """
-    def set_cookie(self, cookie: HTTPCookie) -> None:
+    def set_cookie(self, cookie: HTTPCookie, /) -> None:
         """Stores the indicated cookie in the client's list of cookies, as if it had
         been received from a server.
         """
-    def clear_cookie(self, cookie: HTTPCookie) -> bool:
+    def clear_cookie(self, cookie: HTTPCookie, /) -> bool:
         """Removes the cookie with the matching domain/path/name from the client's
         list of cookies.  Returns true if it was removed, false if the cookie was
         not matched.
         """
     def clear_all_cookies(self) -> None:
         """Removes the all stored cookies from the client."""
-    def has_cookie(self, cookie: HTTPCookie) -> bool:
+    def has_cookie(self, cookie: HTTPCookie, /) -> bool:
         """Returns true if there is a cookie in the client matching the given cookie's
         domain/path/name, false otherwise.
         """
-    def get_cookie(self, cookie: HTTPCookie) -> HTTPCookie:
+    def get_cookie(self, cookie: HTTPCookie, /) -> HTTPCookie:
         """Looks up and returns the cookie in the client matching the given cookie's
         domain/path/name.  If there is no matching cookie, returns an empty cookie.
         """
-    def copy_cookies_from(self, other: HTTPClient) -> None:
+    def copy_cookies_from(self, other: HTTPClient, /) -> None:
         """Copies all the cookies from the indicated HTTPClient into this one.
         Existing cookies in this client are not affected, unless they are shadowed
         by the new cookies.
         """
-    def write_cookies(self, out: ostream) -> None:
+    def write_cookies(self, out: ostream, /) -> None:
         """Outputs the complete list of cookies stored on the client, for all domains,
         including the expired cookies (which will normally not be sent back to a
         host).
@@ -725,19 +725,19 @@ class HTTPClient(ReferenceCount):
         cookies appropriate to the indicated URL along with an HTTP request.  This
         also removes expired cookies.
         """
-    def set_client_certificate_filename(self, filename: StrOrBytesPath) -> None:
+    def set_client_certificate_filename(self, filename: StrOrBytesPath, /) -> None:
         """Sets the filename of the pem-formatted file that will be read for the
         client public and private keys if an SSL server requests a certificate.
         Either this or set_client_certificate_pem() may be used to specify a client
         certificate.
         """
-    def set_client_certificate_pem(self, pem: str) -> None:
+    def set_client_certificate_pem(self, pem: str, /) -> None:
         """Sets the pem-formatted contents of the certificate that will be parsed for
         the client public and private keys if an SSL server requests a certificate.
         Either this or set_client_certificate_filename() may be used to specify a
         client certificate.
         """
-    def set_client_certificate_passphrase(self, passphrase: str) -> None:
+    def set_client_certificate_passphrase(self, passphrase: str, /) -> None:
         """Sets the passphrase used to decrypt the private key in the certificate
         named by set_client_certificate_filename() or set_client_certificate_pem().
         """
@@ -793,13 +793,13 @@ class HTTPClient(ReferenceCount):
         The certificate name should be formatted in the form
         type0=value0/type1=value1/type2=...
         """
-    def clear_preapproved_server_certificates(self, url: URL) -> None:
+    def clear_preapproved_server_certificates(self, url: URL, /) -> None:
         """Removes all preapproved server certificates for the indicated server and
         port.
         """
     def clear_all_preapproved_server_certificates(self) -> None:
         """Removes all preapproved server certificates for all servers."""
-    def set_http_version(self, version: _HTTPEnum_HTTPVersion) -> None:
+    def set_http_version(self, version: _HTTPEnum_HTTPVersion, /) -> None:
         """Specifies the version of HTTP that the client uses to identify itself to
         the server.  The default is HV_11, or HTTP 1.0; you can set this to HV_10
         (HTTP 1.0) to request the server use the older interface.
@@ -813,18 +813,18 @@ class HTTPClient(ReferenceCount):
         "HTTP/1.1".
         """
     @staticmethod
-    def parse_http_version_string(version: str) -> _HTTPEnum_HTTPVersion:
+    def parse_http_version_string(version: str, /) -> _HTTPEnum_HTTPVersion:
         """Matches the string representing a particular HTTP version against any of
         the known versions and returns the appropriate enumerated value, or
         HV_other if the version is unknown.
         """
-    def load_certificates(self, filename: StrOrBytesPath) -> bool:
+    def load_certificates(self, filename: StrOrBytesPath, /) -> bool:
         """Reads the certificate(s) (delimited by -----BEGIN CERTIFICATE----- and
         -----END CERTIFICATE-----) from the indicated file and makes them known as
         trusted public keys for validating future connections.  Returns true on
         success, false otherwise.
         """
-    def set_verify_ssl(self, verify_ssl: _HTTPClient_VerifySSL) -> None:
+    def set_verify_ssl(self, verify_ssl: _HTTPClient_VerifySSL, /) -> None:
         """Specifies whether the client will insist on verifying the identity of the
         servers it connects to via SSL (that is, https).
 
@@ -835,7 +835,7 @@ class HTTPClient(ReferenceCount):
         """Returns whether the client will insist on verifying the identity of the
         servers it connects to via SSL (that is, https).  See set_verify_ssl().
         """
-    def set_cipher_list(self, cipher_list: str) -> None:
+    def set_cipher_list(self, cipher_list: str, /) -> None:
         """Specifies the set of ciphers that are to be made available for SSL
         connections.  This is a string as described in the ciphers(1) man page of
         the OpenSSL documentation (or see
@@ -847,7 +847,7 @@ class HTTPClient(ReferenceCount):
         """Returns the set of ciphers as set by set_cipher_list().  See
         set_cipher_list().
         """
-    def make_channel(self, persistent_connection: bool) -> HTTPChannel:
+    def make_channel(self, persistent_connection: bool, /) -> HTTPChannel:
         """Returns a new HTTPChannel object that may be used for reading multiple
         documents using the same connection, for greater network efficiency than
         calling HTTPClient::get_document() repeatedly (which would force a new
@@ -868,25 +868,25 @@ class HTTPClient(ReferenceCount):
         you can test is_valid() and get_return_code() to determine whether the
         document was retrieved.
         """
-    def get_document(self, url: URL) -> HTTPChannel:
+    def get_document(self, url: URL, /) -> HTTPChannel:
         """Opens the named document for reading.  Returns a new HTTPChannel object
         whether the document is successfully read or not; you can test is_valid()
         and get_return_code() to determine whether the document was retrieved.
         """
-    def get_header(self, url: URL) -> HTTPChannel:
+    def get_header(self, url: URL, /) -> HTTPChannel:
         """Like get_document(), except only the header associated with the document is
         retrieved.  This may be used to test for existence of the document; it
         might also return the size of the document (if the server gives us this
         information).
         """
     @staticmethod
-    def base64_encode(s: str) -> str:
+    def base64_encode(s: str, /) -> str:
         """Implements HTTPAuthorization::base64_encode().  This is provided here just
         as a convenient place to publish it for access by the scripting language;
         C++ code should probably use HTTPAuthorization directly.
         """
     @staticmethod
-    def base64_decode(s: str) -> str:
+    def base64_decode(s: str, /) -> str:
         """Implements HTTPAuthorization::base64_decode().  This is provided here just
         as a convenient place to publish it for access by the scripting language;
         C++ code should probably use HTTPAuthorization directly.
@@ -963,10 +963,10 @@ class HTTPEntityTag:
         """
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: HTTPEntityTag | str) -> bool: ...
+    def __lt__(self, other: HTTPEntityTag | str, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: HTTPEntityTag | str) -> Self: ...
+    def assign(self, copy: HTTPEntityTag | str, /) -> Self: ...
     def is_weak(self) -> bool:
         """Returns true if the entity tag is marked as "weak". A consistent weak
         entity tag does not guarantee that its resource has not changed in any way,
@@ -979,20 +979,20 @@ class HTTPEntityTag:
         """Returns the entity tag formatted for sending to an HTTP server (the tag is
         quoted, with a conditional W prefix).
         """
-    def strong_equiv(self, other: HTTPEntityTag | str) -> bool:
+    def strong_equiv(self, other: HTTPEntityTag | str, /) -> bool:
         """Returns true if the two tags have "strong" equivalence: they are the same
         tag, and both are "strong".
         """
-    def weak_equiv(self, other: HTTPEntityTag | str) -> bool:
+    def weak_equiv(self, other: HTTPEntityTag | str, /) -> bool:
         """Returns true if the two tags have "weak" equivalence: they are the same
         tag, and one or both may be "weak".
         """
-    def compare_to(self, other: HTTPEntityTag | str) -> int:
+    def compare_to(self, other: HTTPEntityTag | str, /) -> int:
         """Returns a number less than zero if this HTTPEntityTag sorts before the
         other one, greater than zero if it sorts after, or zero if they are
         equivalent.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     isWeak = is_weak
     getTag = get_tag
     getString = get_string
@@ -1035,12 +1035,12 @@ class DocumentSpec:
     def __init__(self, url: URLSpec | str) -> None: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: DocumentSpec | URL) -> bool: ...
+    def __lt__(self, other: DocumentSpec | URL, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: DocumentSpec | URL) -> Self: ...
-    def compare_to(self, other: DocumentSpec | URL) -> int: ...
-    def set_url(self, url: URL) -> None:
+    def assign(self, copy: DocumentSpec | URL, /) -> Self: ...
+    def compare_to(self, other: DocumentSpec | URL, /) -> int: ...
+    def set_url(self, url: URL, /) -> None:
         """Changes the URL of the DocumentSpec without modifying its other properties.
         Normally this would be a strange thing to do, because the tag and date are
         usually strongly associated with the URL.  To get a DocumentSpec pointing
@@ -1048,7 +1048,7 @@ class DocumentSpec:
         """
     def get_url(self) -> URLSpec:
         """Retrieves the URL of the DocumentSpec."""
-    def set_tag(self, tag: HTTPEntityTag | str) -> None:
+    def set_tag(self, tag: HTTPEntityTag | str, /) -> None:
         """Changes the identity tag associated with the DocumentSpec."""
     def has_tag(self) -> bool:
         """Returns true if an identity tag is associated with the DocumentSpec."""
@@ -1061,7 +1061,7 @@ class DocumentSpec:
         """
     def clear_tag(self) -> None:
         """Removes the identity tag associated with the DocumentSpec, if there is one."""
-    def set_date(self, date: HTTPDate | int | str) -> None:
+    def set_date(self, date: HTTPDate | int | str, /) -> None:
         """Changes the last-modified date associated with the DocumentSpec."""
     def has_date(self) -> bool:
         """Returns true if a last-modified date is associated with the DocumentSpec."""
@@ -1073,7 +1073,7 @@ class DocumentSpec:
         """Removes the last-modified date associated with the DocumentSpec, if there
         is one.
         """
-    def set_request_mode(self, request_mode: _DocumentSpec_RequestMode) -> None:
+    def set_request_mode(self, request_mode: _DocumentSpec_RequestMode, /) -> None:
         """Sets the request mode of this DocumentSpec.  This is only relevant when
         using the DocumentSpec to generate a request (for instance, in
         HTTPChannel).  This specifies whether the document request will ask the
@@ -1106,7 +1106,7 @@ class DocumentSpec:
         """
     def get_request_mode(self) -> _DocumentSpec_RequestMode:
         """Returns the request mode of this DocumentSpec.  See set_request_mode()."""
-    def set_cache_control(self, cache_control: _DocumentSpec_CacheControl) -> None:
+    def set_cache_control(self, cache_control: _DocumentSpec_CacheControl, /) -> None:
         """Specifies what kind of cached value is acceptable for this document.
         Warning: some HTTP proxies may not respect this setting and may return a
         cached result anyway.
@@ -1124,11 +1124,11 @@ class DocumentSpec:
         """
     def get_cache_control(self) -> _DocumentSpec_CacheControl:
         """Returns the request mode of this DocumentSpec.  See set_cache_control()."""
-    def input(self, _in: istream) -> bool:
+    def input(self, _in: istream, /) -> bool:
         """Can be used to read in the DocumentSpec from a stream generated either by
         output() or write().  Returns true on success, false on failure.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     compareTo = compare_to
     setUrl = set_url
@@ -1268,7 +1268,7 @@ class HTTPChannel(TypedReferenceCount):
         client will return a successful code and get_redirect() will return empty,
         but get_url() will return the new, redirected URL.
         """
-    def get_header_value(self, key: str) -> str:
+    def get_header_value(self, key: str, /) -> str:
         """Returns the HTML header value associated with the indicated key, or empty
         string if the key was not defined in the message returned by the server.
         """
@@ -1277,12 +1277,12 @@ class HTTPChannel(TypedReferenceCount):
         return the number of redirects that were automatically followed.  Use
         get_redirect_step() to retrieve each URL in sequence.
         """
-    def get_redirect_step(self, n: int) -> URLSpec:
+    def get_redirect_step(self, n: int, /) -> URLSpec:
         """Use in conjunction with get_num_redirect_steps() to extract the chain of
         URL's that the channel was automatically redirected through to arrive at
         the final document.
         """
-    def set_persistent_connection(self, persistent_connection: bool) -> None:
+    def set_persistent_connection(self, persistent_connection: bool, /) -> None:
         """Indicates whether the HTTPChannel should try to keep the connection to the
         server open and reuse that connection for multiple documents, or whether it
         should close the connection and open a new one for each request.  Set this
@@ -1303,7 +1303,7 @@ class HTTPChannel(TypedReferenceCount):
         this document has been read, or false if it will remain open (and future
         documents may be requested on the same connection).
         """
-    def set_allow_proxy(self, allow_proxy: bool) -> None:
+    def set_allow_proxy(self, allow_proxy: bool, /) -> None:
         """If this is true (the normal case), the HTTPClient will be consulted for
         information about the proxy to be used for each connection via this
         HTTPChannel.  If this has been set to false by the user, then all
@@ -1317,7 +1317,7 @@ class HTTPChannel(TypedReferenceCount):
         connections will be made directly, regardless of the proxy settings
         indicated on the HTTPClient.
         """
-    def set_proxy_tunnel(self, proxy_tunnel: bool) -> None:
+    def set_proxy_tunnel(self, proxy_tunnel: bool, /) -> None:
         """Normally, a proxy is itself asked for ordinary URL's, and the proxy decides
         whether to hand the client a cached version of the document or to contact
         the server for a fresh version.  The proxy may also modify the headers and
@@ -1337,7 +1337,7 @@ class HTTPChannel(TypedReferenceCount):
         normal case) if we allow the proxy to serve up documents.  See
         set_proxy_tunnel().
         """
-    def set_connect_timeout(self, timeout_seconds: float) -> None:
+    def set_connect_timeout(self, timeout_seconds: float, /) -> None:
         """Sets the maximum length of time, in seconds, that the channel will wait
         before giving up on establishing a TCP connection.
 
@@ -1349,7 +1349,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the length of time, in seconds, to wait for a new nonblocking
         socket to connect.  See set_connect_timeout().
         """
-    def set_blocking_connect(self, blocking_connect: bool) -> None:
+    def set_blocking_connect(self, blocking_connect: bool, /) -> None:
         """If this flag is true, a socket connect will block even for nonblocking I/O
         calls like begin_get_document(), begin_connect_to(), etc.  If false, a
         socket connect will not block for nonblocking I/O calls, but will block for
@@ -1367,7 +1367,7 @@ class HTTPChannel(TypedReferenceCount):
         socket connect will not block for nonblocking I/O calls, but will block for
         blocking I/O calls (get_document(), connect_to(), etc.).
         """
-    def set_http_timeout(self, timeout_seconds: float) -> None:
+    def set_http_timeout(self, timeout_seconds: float, /) -> None:
         """Sets the maximum length of time, in seconds, that the channel will wait for
         the HTTP server to finish sending its response to our request.
 
@@ -1382,7 +1382,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the length of time, in seconds, to wait for the HTTP server to
         respond to our request.  See set_http_timeout().
         """
-    def set_skip_body_size(self, skip_body_size: int) -> None:
+    def set_skip_body_size(self, skip_body_size: int, /) -> None:
         """Specifies the maximum number of bytes in a received (but unwanted) body
         that will be skipped past, in order to reset to a new request.
 
@@ -1399,7 +1399,7 @@ class HTTPChannel(TypedReferenceCount):
         will be skipped past, in order to reset to a new request.  See
         set_skip_body_size().
         """
-    def set_idle_timeout(self, idle_timeout: float) -> None:
+    def set_idle_timeout(self, idle_timeout: float, /) -> None:
         """Specifies the amount of time, in seconds, in which a previously-established
         connection is allowed to remain open and unused.  If a previous connection
         has remained unused for at least this number of seconds, it will be closed
@@ -1410,7 +1410,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the amount of time, in seconds, in which an previously-established
         connection is allowed to remain open and unused.  See set_idle_timeout().
         """
-    def set_download_throttle(self, download_throttle: bool) -> None:
+    def set_download_throttle(self, download_throttle: bool, /) -> None:
         """Specifies whether nonblocking downloads (via download_to_file() or
         download_to_ram()) will be limited so as not to use all available
         bandwidth.
@@ -1429,7 +1429,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns whether the nonblocking downloads will be bandwidth-limited.  See
         set_download_throttle().
         """
-    def set_max_bytes_per_second(self, max_bytes_per_second: float) -> None:
+    def set_max_bytes_per_second(self, max_bytes_per_second: float, /) -> None:
         """When bandwidth throttling is in effect (see set_download_throttle()), this
         specifies the maximum number of bytes per second that may be consumed by
         this channel.
@@ -1438,7 +1438,7 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the maximum number of bytes per second that may be consumed by this
         channel when get_download_throttle() is true.
         """
-    def set_max_updates_per_second(self, max_updates_per_second: float) -> None:
+    def set_max_updates_per_second(self, max_updates_per_second: float, /) -> None:
         """When bandwidth throttling is in effect (see set_download_throttle()), this
         specifies the maximum number of times per second that run() will attempt to
         do any downloading at all.
@@ -1447,13 +1447,13 @@ class HTTPChannel(TypedReferenceCount):
         """Returns the maximum number of times per second that run() will do anything
         at all, when get_download_throttle() is true.
         """
-    def set_content_type(self, content_type: str) -> None:
+    def set_content_type(self, content_type: str, /) -> None:
         """Specifies the Content-Type header, useful for applications that require
         different types of content, such as JSON.
         """
     def get_content_type(self) -> str:
         """Returns the value of the Content-Type header."""
-    def set_expected_file_size(self, file_size: int) -> None:
+    def set_expected_file_size(self, file_size: int, /) -> None:
         """This may be called immediately after a call to get_document() or some
         related function to specify the expected size of the document we are
         retrieving, if we happen to know.  This is used as the return value to
@@ -1504,7 +1504,7 @@ class HTTPChannel(TypedReferenceCount):
         request and always return the whole file, in which case this value will be
         0, regardless of what was requested to get_subdocument().
         """
-    def write_headers(self, out: ostream) -> None:
+    def write_headers(self, out: ostream, /) -> None:
         """Outputs a list of all headers defined by the server to the indicated output
         stream.
         """
@@ -1542,7 +1542,7 @@ class HTTPChannel(TypedReferenceCount):
         This is persistent for one request only; it must be set again for each new
         request.
         """
-    def get_document(self, url: DocumentSpec | URL) -> bool:
+    def get_document(self, url: DocumentSpec | URL, /) -> bool:
         """Opens the named document for reading, if available.  Returns true if
         successful, false otherwise.
         """
@@ -1553,7 +1553,7 @@ class HTTPChannel(TypedReferenceCount):
         report the number of bytes of the subdocument, not of the complete
         document.
         """
-    def get_header(self, url: DocumentSpec | URL) -> bool:
+    def get_header(self, url: DocumentSpec | URL, /) -> bool:
         """Like get_document(), except only the header associated with the document is
         retrieved.  This may be used to test for existence of the document; it
         might also return the size of the document (if the server gives us this
@@ -1565,24 +1565,24 @@ class HTTPChannel(TypedReferenceCount):
         """Uploads the indicated body to the server to replace the indicated URL, if
         the server allows this.
         """
-    def delete_document(self, url: DocumentSpec | URL) -> bool:
+    def delete_document(self, url: DocumentSpec | URL, /) -> bool:
         """Requests the server to remove the indicated URL."""
-    def get_trace(self, url: DocumentSpec | URL) -> bool:
+    def get_trace(self, url: DocumentSpec | URL, /) -> bool:
         """Sends a TRACE message to the server, which should return back the same
         message as the server received it, allowing inspection of proxy hops, etc.
         """
-    def connect_to(self, url: DocumentSpec | URL) -> bool:
+    def connect_to(self, url: DocumentSpec | URL, /) -> bool:
         """Establish a direct connection to the server and port indicated by the URL,
         but do not issue any HTTP requests.  If successful, the connection may then
         be taken to use for whatever purposes you like by calling get_connection().
 
         This establishes a blocking I/O socket.  Also see begin_connect_to().
         """
-    def get_options(self, url: DocumentSpec | URL) -> bool:
+    def get_options(self, url: DocumentSpec | URL, /) -> bool:
         """Sends an OPTIONS message to the server, which should query the available
         options, possibly in relation to a specified URL.
         """
-    def begin_get_document(self, url: DocumentSpec | URL) -> None:
+    def begin_get_document(self, url: DocumentSpec | URL, /) -> None:
         """Begins a non-blocking request to retrieve a given document.  This method
         will return immediately, even before a connection to the server has
         necessarily been established; you must then call run() from time to time
@@ -1598,7 +1598,7 @@ class HTTPChannel(TypedReferenceCount):
         get_bytes_downloaded() will report the number of bytes of the subdocument,
         not of the complete document.
         """
-    def begin_get_header(self, url: DocumentSpec | URL) -> None:
+    def begin_get_header(self, url: DocumentSpec | URL, /) -> None:
         """Begins a non-blocking request to retrieve a given header.  See
         begin_get_document() and get_header().
         """
@@ -1621,7 +1621,7 @@ class HTTPChannel(TypedReferenceCount):
         to be called again in the future), or false if the current task is
         complete.
         """
-    def begin_connect_to(self, url: DocumentSpec | URL) -> None:
+    def begin_connect_to(self, url: DocumentSpec | URL, /) -> None:
         """Begins a non-blocking request to establish a direct connection to the
         server and port indicated by the URL.  No HTTP requests will be issued
         beyond what is necessary to establish the connection.  When run() has
@@ -1646,7 +1646,7 @@ class HTTPChannel(TypedReferenceCount):
         The user is responsible for passing the returned istream to
         close_read_body() later.
         """
-    def close_read_body(self, stream: istream) -> None:
+    def close_read_body(self, stream: istream, /) -> None:
         """Closes a file opened by a previous call to open_read_body().  This really
         just deletes the istream pointer, but it is recommended to use this
         interface instead of deleting it explicitly, to help work around compiler
@@ -1865,14 +1865,12 @@ class Decompressor:
         Returns EU_ok if a chunk is completed but there is more to go, or
         EU_success when we're all done.  Any other return value indicates an error.
         """
-    @overload
-    def decompress(self, source_file: StrOrBytesPath) -> bool:
+    def decompress(self, source_file_or_source_and_dest_file: Ramfile | StrOrBytesPath, /) -> bool:
         """Performs a foreground decompression of the named file; does not return
         until the decompression is complete.
-        """
-    @overload
-    def decompress(self, source_and_dest_file: Ramfile) -> bool:
-        """Does an in-memory decompression of the indicated Ramfile.  The decompressed
+
+        or:
+        Does an in-memory decompression of the indicated Ramfile.  The decompressed
         contents are written back into the same Ramfile on completion.
         """
     def get_progress(self) -> float:
@@ -1905,49 +1903,49 @@ class DownloadDb:
         """Create a download db with these client and server dbs"""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
-    def write_version_map(self, out: ostream) -> None: ...
-    def write_client_db(self, file: StrOrBytesPath) -> bool:
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
+    def write_version_map(self, out: ostream, /) -> None: ...
+    def write_client_db(self, file: StrOrBytesPath, /) -> bool:
         """Write a database file"""
-    def write_server_db(self, file: StrOrBytesPath) -> bool: ...
+    def write_server_db(self, file: StrOrBytesPath, /) -> bool: ...
     def get_client_num_multifiles(self) -> int: ...
     def get_server_num_multifiles(self) -> int: ...
-    def get_client_multifile_name(self, index: int) -> str: ...
-    def get_server_multifile_name(self, index: int) -> str: ...
-    def get_client_multifile_size(self, mfname: str) -> int: ...
+    def get_client_multifile_name(self, index: int, /) -> str: ...
+    def get_server_multifile_name(self, index: int, /) -> str: ...
+    def get_client_multifile_size(self, mfname: str, /) -> int: ...
     def set_client_multifile_size(self, mfname: str, size: int) -> None: ...
     def set_client_multifile_delta_size(self, mfname: str, size: int) -> int: ...
-    def get_server_multifile_size(self, mfname: str) -> int: ...
+    def get_server_multifile_size(self, mfname: str, /) -> int: ...
     def set_server_multifile_size(self, mfname: str, size: int) -> None: ...
-    def get_client_multifile_phase(self, mfname: str) -> float: ...
-    def get_server_multifile_phase(self, mfname: str) -> float: ...
-    def set_client_multifile_incomplete(self, mfname: str) -> None: ...
-    def set_client_multifile_complete(self, mfname: str) -> None: ...
-    def set_client_multifile_decompressed(self, mfname: str) -> None: ...
-    def set_client_multifile_extracted(self, mfname: str) -> None: ...
-    def get_server_num_files(self, mfname: str) -> int: ...
+    def get_client_multifile_phase(self, mfname: str, /) -> float: ...
+    def get_server_multifile_phase(self, mfname: str, /) -> float: ...
+    def set_client_multifile_incomplete(self, mfname: str, /) -> None: ...
+    def set_client_multifile_complete(self, mfname: str, /) -> None: ...
+    def set_client_multifile_decompressed(self, mfname: str, /) -> None: ...
+    def set_client_multifile_extracted(self, mfname: str, /) -> None: ...
+    def get_server_num_files(self, mfname: str, /) -> int: ...
     def get_server_file_name(self, mfname: str, index: int) -> str: ...
-    def client_multifile_exists(self, mfname: str) -> bool:
+    def client_multifile_exists(self, mfname: str, /) -> bool:
         """Queries from the Launcher"""
-    def client_multifile_complete(self, mfname: str) -> bool:
+    def client_multifile_complete(self, mfname: str, /) -> bool:
         """A multifile is complete when it is completely downloaded.  Note: it may
         already be decompressed or extracted and it is still complete
         """
-    def client_multifile_decompressed(self, mfname: str) -> bool: ...
-    def client_multifile_extracted(self, mfname: str) -> bool: ...
-    def get_client_multifile_hash(self, mfname: str) -> HashVal:
+    def client_multifile_decompressed(self, mfname: str, /) -> bool: ...
+    def client_multifile_extracted(self, mfname: str, /) -> bool: ...
+    def get_client_multifile_hash(self, mfname: str, /) -> HashVal:
         """Return the hash value of the file we are working on"""
     def set_client_multifile_hash(self, mfname: str, val: HashVal) -> None:
         """Set the hash value of file we are working on"""
-    def get_server_multifile_hash(self, mfname: str) -> HashVal:
+    def get_server_multifile_hash(self, mfname: str, /) -> HashVal:
         """Return the hash value of the server file"""
     def set_server_multifile_hash(self, mfname: str, val: HashVal) -> None:
         """Set the hash value of file we are working on"""
-    def delete_client_multifile(self, mfname: str) -> None:
+    def delete_client_multifile(self, mfname: str, /) -> None:
         """Operations on multifiles"""
-    def add_client_multifile(self, server_mfname: str) -> None: ...
-    def expand_client_multifile(self, mfname: str) -> None: ...
+    def add_client_multifile(self, server_mfname: str, /) -> None: ...
+    def expand_client_multifile(self, mfname: str, /) -> None: ...
     def create_new_server_db(self) -> None:
         """Used on the server side makefiles to create a new clean server db"""
     def server_add_multifile(self, mfname: str, phase: float, size: int, status: int) -> None: ...
@@ -1962,12 +1960,12 @@ class DownloadDb:
         """Inserts a new version 1 copy of the file, sliding all the other versions up
         by one.
         """
-    def has_version(self, name: StrOrBytesPath) -> bool:
+    def has_version(self, name: StrOrBytesPath, /) -> bool:
         """Returns true if the indicated file has version information, false
         otherwise.  Some files recorded in the database may not bother to track
         versions.
         """
-    def get_num_versions(self, name: StrOrBytesPath) -> int:
+    def get_num_versions(self, name: StrOrBytesPath, /) -> int:
         """Returns the number of versions stored for the indicated file."""
     def set_num_versions(self, name: StrOrBytesPath, num_versions: int) -> None:
         """Reduces the number of versions of a particular file stored in the ddb by
@@ -2040,11 +2038,11 @@ class Extractor:
     @property
     def progress(self) -> float: ...
     def __init__(self) -> None: ...
-    def set_multifile(self, multifile_name: StrOrBytesPath) -> bool:
+    def set_multifile(self, multifile_name: StrOrBytesPath, /) -> bool:
         """Specifies the filename of the Multifile that the Extractor will read.
         Returns true on success, false if the mulifile name is invalid.
         """
-    def set_extract_dir(self, extract_dir: StrOrBytesPath) -> None:
+    def set_extract_dir(self, extract_dir: StrOrBytesPath, /) -> None:
         """Specifies the directory into which all extracted subfiles will be written.
         Relative paths of subfiles within the Multifile will be written as relative
         paths to this directory.
@@ -2053,7 +2051,7 @@ class Extractor:
         """Interrupts the Extractor in the middle of its business and makes it ready
         to accept a new list of subfiles to extract.
         """
-    def request_subfile(self, subfile_name: StrOrBytesPath) -> bool:
+    def request_subfile(self, subfile_name: StrOrBytesPath, /) -> bool:
         """Requests a particular subfile to be extracted when step() or run() is
         called.  Returns true if the subfile exists, false otherwise.
         """
@@ -2103,7 +2101,7 @@ class MultiplexStream(ostream):
         """
     def add_standard_output(self) -> None:
         """Adds the standard output channel."""
-    def add_file(self, file: StrOrBytesPath) -> bool:
+    def add_file(self, file: StrOrBytesPath, /) -> bool:
         """Adds the given file to the multiplex output.  The file is opened in append
         mode with line buffering.  Returns false if the file cannot be opened.
         """
@@ -2181,13 +2179,13 @@ class StringStream(iostream):
         """Returns the number of characters available to be read from the data stream."""
     def get_data(self) -> bytes:
         """Returns the contents of the data stream as a string."""
-    def set_data(self, data: bytes) -> None: ...
+    def set_data(self, data: bytes, /) -> None: ...
     clearData = clear_data
     getDataSize = get_data_size
     getData = get_data
     setData = set_data
 
-def check_crc(name: StrOrBytesPath) -> int: ...
-def check_adler(name: StrOrBytesPath) -> int: ...
+def check_crc(name: StrOrBytesPath, /) -> int: ...
+def check_adler(name: StrOrBytesPath, /) -> int: ...
 checkCrc = check_crc
 checkAdler = check_adler

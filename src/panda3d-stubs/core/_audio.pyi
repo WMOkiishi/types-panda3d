@@ -25,7 +25,7 @@ class FilterProperties(TypedReferenceCount):
         """Add a echo filter to the end of the DSP chain."""
     def add_flange(self, drymix: float, wetmix: float, depth: float, rate: float) -> None:
         """Add a flange filter to the end of the DSP chain."""
-    def add_distort(self, level: float) -> None:
+    def add_distort(self, level: float, /) -> None:
         """Add a distort filter to the end of the DSP chain."""
     def add_normalize(self, fadetime: float, threshold: float, maxamp: float) -> None:
         """Add a normalize filter to the end of the DSP chain."""
@@ -79,13 +79,13 @@ class AudioSound(TypedReferenceCount):
         again (creating a skipping or stuttering effect).
         """
     def stop(self) -> None: ...
-    def set_loop(self, loop: bool = ...) -> None:
+    def set_loop(self, loop: bool = ..., /) -> None:
         """loop: false = play once; true = play forever.  inits to false."""
     def get_loop(self) -> bool: ...
-    def set_loop_count(self, loop_count: int = ...) -> None:
+    def set_loop_count(self, loop_count: int = ..., /) -> None:
         """loop_count: 0 = forever; 1 = play once; n = play n times.  inits to 1."""
     def get_loop_count(self) -> int: ...
-    def set_time(self, start_time: float = ...) -> None:
+    def set_time(self, start_time: float = ..., /) -> None:
         """Control time position within the sound, in seconds.  This is similar (in
         concept) to the seek position within a file.  The value starts at 0.0 (the
         default) and ends at the value given by the length() method.
@@ -103,19 +103,19 @@ class AudioSound(TypedReferenceCount):
         @endcode
         """
     def get_time(self) -> float: ...
-    def set_volume(self, volume: float = ...) -> None:
+    def set_volume(self, volume: float = ..., /) -> None:
         """0 = minimum; 1.0 = maximum.  inits to 1.0."""
     def get_volume(self) -> float: ...
-    def set_balance(self, balance_right: float = ...) -> None:
+    def set_balance(self, balance_right: float = ..., /) -> None:
         """-1.0 is hard left 0.0 is centered 1.0 is hard right inits to 0.0."""
     def get_balance(self) -> float: ...
-    def set_play_rate(self, play_rate: float = ...) -> None:
+    def set_play_rate(self, play_rate: float = ..., /) -> None:
         """play_rate is any positive PN_stdfloat value.  inits to 1.0."""
     def get_play_rate(self) -> float: ...
-    def set_active(self, flag: bool = ...) -> None:
+    def set_active(self, flag: bool = ..., /) -> None:
         """inits to manager's state."""
     def get_active(self) -> bool: ...
-    def set_finished_event(self, event: str) -> None:
+    def set_finished_event(self, event: str, /) -> None:
         """Set (or clear) the event that will be thrown when the sound finishes
         playing.  To clear the event, pass an empty string.
         """
@@ -129,19 +129,19 @@ class AudioSound(TypedReferenceCount):
         emitter's position.  vx, vy and vz are the emitter's velocity in UNITS
         PER SECOND (default: meters).
         """
-    def set_3d_min_distance(self, dist: float) -> None:
+    def set_3d_min_distance(self, dist: float, /) -> None:
         """Controls the distance (in units) that this sound begins to fall off.
         Also affects the rate it falls off.  Default is 1.0 CloserFaster, <1.0
         FartherSlower, >1.0
         """
     def get_3d_min_distance(self) -> float: ...
-    def set_3d_max_distance(self, dist: float) -> None:
+    def set_3d_max_distance(self, dist: float, /) -> None:
         """Controls the maximum distance (in units) that this sound stops falling
         off.  The sound does not stop at that point, it just doesn't get any
         quieter.  You should rarely need to adjust this.  Default is 1000000000.0
         """
     def get_3d_max_distance(self) -> float: ...
-    def get_speaker_mix(self, speaker: int) -> float:
+    def get_speaker_mix(self, speaker: int, /) -> float:
         """speaker_mix and speaker_level(s) serve the same purpose.
         speaker_mix is for use with FMOD. speaker_level(s) is for use with
         Miles.  Both interfaces exist because of a significant difference in the
@@ -159,7 +159,7 @@ class AudioSound(TypedReferenceCount):
         sideleft: float,
         sideright: float,
     ) -> None: ...
-    def get_speaker_level(self, index: int) -> float: ...
+    def get_speaker_level(self, index: int, /) -> float: ...
     def set_speaker_levels(
         self,
         level1: float,
@@ -173,11 +173,11 @@ class AudioSound(TypedReferenceCount):
         level9: float = ...,
     ) -> None: ...
     def get_priority(self) -> int: ...
-    def set_priority(self, priority: int) -> None: ...
-    def configure_filters(self, config: FilterProperties) -> bool: ...
+    def set_priority(self, priority: int, /) -> None: ...
+    def configure_filters(self, config: FilterProperties, /) -> bool: ...
     def status(self) -> _AudioSound_SoundStatus: ...
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     setLoop = set_loop
     getLoop = get_loop
     setLoopCount = set_loop_count
@@ -256,8 +256,8 @@ class AudioManager(TypedReferenceCount):
     @property
     def dls_pathname(self) -> Filename: ...
     def get_speaker_setup(self) -> int: ...
-    def set_speaker_setup(self, cat: _AudioManager_SpeakerModeCategory) -> None: ...
-    def configure_filters(self, config: FilterProperties) -> bool: ...
+    def set_speaker_setup(self, cat: _AudioManager_SpeakerModeCategory, /) -> None: ...
+    def configure_filters(self, config: FilterProperties, /) -> bool: ...
     @staticmethod
     def create_AudioManager() -> AudioManager: ...
     def shutdown(self) -> None: ...
@@ -275,22 +275,22 @@ class AudioManager(TypedReferenceCount):
     @overload
     def get_sound(self, source: MovieAudio, positional: bool = ..., mode: int = ...) -> AudioSound: ...
     def get_null_sound(self) -> AudioSound: ...
-    def uncache_sound(self, file_name: StrOrBytesPath) -> None:
+    def uncache_sound(self, file_name: StrOrBytesPath, /) -> None:
         """Tell the AudioManager there is no need to keep this one cached.  This
         doesn't break any connection between AudioSounds that have already given
         by get_sound() from this manager.  It's only affecting whether the
         AudioManager keeps a copy of the sound in its poolcache.
         """
     def clear_cache(self) -> None: ...
-    def set_cache_limit(self, count: int) -> None: ...
+    def set_cache_limit(self, count: int, /) -> None: ...
     def get_cache_limit(self) -> int: ...
-    def set_volume(self, volume: float) -> None:
+    def set_volume(self, volume: float, /) -> None:
         """Control volume: FYI: If you start a sound with the volume off and turn
         the volume up later, you'll hear the sound playing at that late point.  0
         = minimum; 1.0 = maximum.  inits to 1.0.
         """
     def get_volume(self) -> float: ...
-    def set_active(self, flag: bool) -> None:
+    def set_active(self, flag: bool, /) -> None:
         """Turn the manager on or off.  If you play a sound while the manager is
         inactive, it won't start.  If you deactivate the manager while sounds are
         playing, they'll stop.  If you activate the manager while looping sounds
@@ -298,7 +298,7 @@ class AudioManager(TypedReferenceCount):
         playing from the beginning of their loop.  Defaults to true.
         """
     def get_active(self) -> bool: ...
-    def set_concurrent_sound_limit(self, limit: int = ...) -> None:
+    def set_concurrent_sound_limit(self, limit: int = ..., /) -> None:
         """This controls the number of sounds that you allow at once.  This is more
         of a user choice -- it avoids talk over and the creation of a cacophony.
         It can also be used to help performance.  0 == unlimited.  1 == mutually
@@ -306,7 +306,7 @@ class AudioManager(TypedReferenceCount):
         sounds to be playing at the same time.
         """
     def get_concurrent_sound_limit(self) -> int: ...
-    def reduce_sounds_playing_to(self, count: int) -> None:
+    def reduce_sounds_playing_to(self, count: int, /) -> None:
         """This is likely to be a utility function for the concurrent_sound_limit
         options.  It is exposed as an API, because it's reasonable that it may be
         useful to be here.  It reduces the number of concurrently playing sounds
@@ -341,7 +341,7 @@ class AudioManager(TypedReferenceCount):
         components of a unit forward-vector ux, uy and uz are the respective
         components of a unit up-vector
         """
-    def audio_3d_set_distance_factor(self, factor: float) -> None:
+    def audio_3d_set_distance_factor(self, factor: float, /) -> None:
         """Control the "relative scale that sets the distance factor" units for 3D
         spacialized audio. This is a float in units-per-meter. Default value is
         1.0, which means that Panda units are understood as meters; for e.g.
@@ -349,12 +349,12 @@ class AudioManager(TypedReferenceCount):
         moment.
         """
     def audio_3d_get_distance_factor(self) -> float: ...
-    def audio_3d_set_doppler_factor(self, factor: float) -> None:
+    def audio_3d_set_doppler_factor(self, factor: float, /) -> None:
         """Control the presence of the Doppler effect.  Default is 1.0 Exaggerated
         Doppler, use >1.0 Diminshed Doppler, use <1.0
         """
     def audio_3d_get_doppler_factor(self) -> float: ...
-    def audio_3d_set_drop_off_factor(self, factor: float) -> None:
+    def audio_3d_set_drop_off_factor(self, factor: float, /) -> None:
         """Exaggerate or diminish the effect of distance on sound.  Default is 1.0
         Valid range is 0 to 10 Faster drop off, use >1.0 Slower drop off, use
         <1.0
@@ -362,8 +362,8 @@ class AudioManager(TypedReferenceCount):
     def audio_3d_get_drop_off_factor(self) -> float: ...
     @staticmethod
     def get_dls_pathname() -> Filename: ...
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     def set_speaker_configuration(
         self,
         speaker1: Vec3Like,

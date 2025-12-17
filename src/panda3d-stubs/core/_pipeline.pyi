@@ -99,7 +99,7 @@ class Thread(TypedReferenceCount, Namable):
         """Returns the Pipeline stage number associated with this thread.  The default
         stage is 0 if no stage is specified otherwise.  See set_pipeline_stage().
         """
-    def set_pipeline_stage(self, pipeline_stage: int) -> None:
+    def set_pipeline_stage(self, pipeline_stage: int, /) -> None:
         """Specifies the Pipeline stage number associated with this thread.  The
         default stage is 0 if no stage is specified otherwise.
 
@@ -109,7 +109,7 @@ class Thread(TypedReferenceCount, Namable):
         may set it to 1 or 2 (to operate on the previous frame's data, or the
         second previous frame's data).
         """
-    def set_min_pipeline_stage(self, min_pipeline_stage: int) -> None:
+    def set_min_pipeline_stage(self, min_pipeline_stage: int, /) -> None:
         """Sets this thread's pipeline stage number to at least the indicated value,
         unless it is already larger.  See set_pipeline_stage().
         """
@@ -162,7 +162,7 @@ class Thread(TypedReferenceCount, Namable):
         true threads with mutex protection to ensure only one runs at a time.
         """
     @staticmethod
-    def sleep(seconds: float) -> None:
+    def sleep(seconds: float, /) -> None:
         """Suspends the current thread for at least the indicated amount of time.  It
         might be suspended for longer.
         """
@@ -175,13 +175,13 @@ class Thread(TypedReferenceCount, Namable):
         it has run for enough this epoch.  This is especially important for the
         simple thread implementation, which relies on cooperative yields like this.
         """
-    def output_blocker(self, out: ostream) -> None:
+    def output_blocker(self, out: ostream, /) -> None:
         """Writes a description of the mutex or condition variable that this thread is
         blocked on.  Writes nothing if there is no blocker, or if we are not in
         DEBUG_THREADS mode.
         """
     @staticmethod
-    def write_status(out: ostream) -> None: ...
+    def write_status(out: ostream, /) -> None: ...
     def is_started(self) -> bool:
         """Returns true if the thread has been started, false if it has not, or if
         join() has already been called.
@@ -221,7 +221,7 @@ class Thread(TypedReferenceCount, Namable):
         AsyncTaskManager), if any, or NULL if the thread is not currently servicing
         a task.
         """
-    def set_python_index(self, index: int) -> None:
+    def set_python_index(self, index: int, /) -> None:
         """Stores a Python index to be associated with this thread.  This is used
         internally by the thread module; you should not need to call this directly.
         """
@@ -291,7 +291,7 @@ class MutexDirect:
         in the MutexDirect case, it always returns true, since there's not a
         reliable way to determine this otherwise.
         """
-    def set_name(self, name: str) -> None:
+    def set_name(self, name: str, /) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
     def clear_name(self) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
@@ -299,7 +299,7 @@ class MutexDirect:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
     def get_name(self) -> str:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """This method is declared virtual in MutexDebug, but non-virtual in
         MutexDirect.
         """
@@ -326,7 +326,7 @@ class ConditionVarDirect:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
-    def wait(self, timeout: float = ...) -> None:
+    def wait(self, timeout: float = ..., /) -> None:
         """Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
 
@@ -363,7 +363,7 @@ class ConditionVarDirect:
 
         If no threads are waiting, this is a no-op: the notify event is lost.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """This method is declared virtual in ConditionVarDebug, but non-virtual in
         ConditionVarDirect.
         """
@@ -393,7 +393,7 @@ class ConditionVarFullDirect:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_mutex(self) -> MutexDirect:
         """Returns the mutex associated with this condition variable."""
-    def wait(self, timeout: float = ...) -> None:
+    def wait(self, timeout: float = ..., /) -> None:
         """Waits on the condition.  The caller must already be holding the lock
         associated with the condition variable before calling this function.
 
@@ -439,7 +439,7 @@ class ConditionVarFullDirect:
 
         If no threads are waiting, this is a no-op: the notify event is lost.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """This method is declared virtual in ConditionVarFullDebug, but non-virtual
         in ConditionVarFullDirect.
         """
@@ -464,7 +464,7 @@ class ReMutexDirect:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def acquire(self, current_thread: Thread = ...) -> None:
+    def acquire(self, current_thread: Thread = ..., /) -> None:
         """Grabs the reMutex if it is available.  If it is not available, blocks until
         it becomes available, then grabs it.  In either case, the function does not
         return until the reMutex is held; you should then call unlock().
@@ -478,7 +478,7 @@ class ReMutexDirect:
         This variant on acquire() accepts the current thread as a parameter, if it
         is already known, as an optimization.
         """
-    def try_acquire(self, current_thread: Thread = ...) -> bool:
+    def try_acquire(self, current_thread: Thread = ..., /) -> bool:
         """Returns immediately, with a true value indicating the mutex has been
         acquired, and false indicating it has not.
         """
@@ -505,7 +505,7 @@ class ReMutexDirect:
         in the ReMutexDirect case, it always returns true, since there's not a
         reliable way to determine this otherwise.
         """
-    def set_name(self, name: str) -> None:
+    def set_name(self, name: str, /) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
     def clear_name(self) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
@@ -513,7 +513,7 @@ class ReMutexDirect:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
     def get_name(self) -> str:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """This method is declared virtual in MutexDebug, but non-virtual in
         ReMutexDirect.
         """
@@ -564,7 +564,7 @@ class LightMutexDirect:
         method name; in the LightMutexDirect case, it always returns true, since
         there's not a reliable way to determine this otherwise.
         """
-    def set_name(self, name: str) -> None:
+    def set_name(self, name: str, /) -> None:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
     def clear_name(self) -> None:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
@@ -572,7 +572,7 @@ class LightMutexDirect:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
     def get_name(self) -> str:
         """The lightMutex name is only defined when compiling in DEBUG_THREADS mode."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """This method is declared virtual in LightMutexDebug, but non-virtual in
         LightMutexDirect.
         """
@@ -592,7 +592,7 @@ class LightReMutexDirect:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def acquire(self, current_thread: Thread = ...) -> None:
+    def acquire(self, current_thread: Thread = ..., /) -> None:
         """Grabs the lightReMutex if it is available.  If it is not available, blocks
         until it becomes available, then grabs it.  In either case, the function
         does not return until the lightReMutex is held; you should then call
@@ -630,7 +630,7 @@ class LightReMutexDirect:
         method name; in the LightReMutexDirect case, it always returns true, since
         there's not a reliable way to determine this otherwise.
         """
-    def set_name(self, name: str) -> None:
+    def set_name(self, name: str, /) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
     def clear_name(self) -> None:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
@@ -638,7 +638,7 @@ class LightReMutexDirect:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
     def get_name(self) -> str:
         """The mutex name is only defined when compiling in DEBUG_THREADS mode."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """This method is declared virtual in MutexDebug, but non-virtual in
         LightReMutexDirect.
         """
@@ -686,7 +686,7 @@ class Semaphore:
         """Returns the current semaphore count.  Note that this call is not thread-
         safe (the count may change at any time).
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     tryAcquire = try_acquire
     getCount = get_count
 

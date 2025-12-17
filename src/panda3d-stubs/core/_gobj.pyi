@@ -111,7 +111,7 @@ class AdaptiveLru(Namable):
         """Returns the max size of all objects that are allowed to be active on the
         LRU.
         """
-    def set_max_size(self, max_size: int) -> None:
+    def set_max_size(self, max_size: int, /) -> None:
         """Changes the max size of all objects that are allowed to be active on the
         LRU.
 
@@ -123,7 +123,7 @@ class AdaptiveLru(Namable):
         """
     def consider_evict(self) -> None:
         """Evicts a sequence of objects if the queue is full."""
-    def evict_to(self, target_size: int) -> None:
+    def evict_to(self, target_size: int, /) -> None:
         """Evicts a sequence of objects until the queue fits within the indicated
         target size, regardless of its normal max size.
         """
@@ -137,14 +137,14 @@ class AdaptiveLru(Namable):
         successful, false if there is some problem.
         """
     def write(self, out: ostream, indent_level: int) -> None: ...
-    def set_weight(self, weight: float) -> None:
+    def set_weight(self, weight: float, /) -> None:
         """The following methods are specific to AdaptiveLru, and do not exist in
         the SimpleLru implementation.  In most cases, the defaults will be
         sufficient, so you do not need to mess with them.
         """
     def get_weight(self) -> float:
         """Returns the weight value used to compute the exponential moving average."""
-    def set_max_updates_per_frame(self, max_updates_per_frame: int) -> None:
+    def set_max_updates_per_frame(self, max_updates_per_frame: int, /) -> None:
         """Specifies the maximum number of pages the AdaptiveLru will update each
         frame.  This is a performance optimization: keeping this number low limits
         the impact of the AdaptiveLru's adaptive algorithm.
@@ -182,12 +182,12 @@ class AdaptiveLruPage:
     def __init__(self, lru_size: int) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def get_lru(self) -> AdaptiveLru:
         """Returns the LRU that manages this page, or NULL if it is not currently
         managed by any LRU.
         """
-    def enqueue_lru(self, lru: AdaptiveLru) -> None:
+    def enqueue_lru(self, lru: AdaptiveLru, /) -> None:
         """Adds the page to the LRU for the first time, or marks it recently-accessed
         if it has already been added.
 
@@ -195,7 +195,7 @@ class AdaptiveLruPage:
         """
     def dequeue_lru(self) -> None:
         """Removes the page from its AdaptiveLru."""
-    def mark_used_lru(self, lru: AdaptiveLru = ...) -> None:
+    def mark_used_lru(self, lru: AdaptiveLru = ..., /) -> None:
         """To be called when the page is used; this will move it to the tail of the
         AdaptiveLru queue it is already on.
 
@@ -208,7 +208,7 @@ class AdaptiveLruPage:
         """
     def get_lru_size(self) -> int:
         """Returns the size of this page as reported to the LRU, presumably in bytes."""
-    def set_lru_size(self, lru_size: int) -> None:
+    def set_lru_size(self, lru_size: int, /) -> None:
         """Specifies the size of this page, presumably in bytes, although any unit is
         possible.
         """
@@ -222,7 +222,7 @@ class AdaptiveLruPage:
         epoch), or requeue itself on the tail of the queue (in which case the
         eviction will be requested again much later).
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def get_num_frames(self) -> int:
         """Returns the number of frames since the page was first added to its LRU.
@@ -400,7 +400,7 @@ class GeomVertexAnimationSpec(GeomEnums):
     @property
     def indexed_transforms(self) -> bool: ...
     def __init__(self, other: GeomVertexAnimationSpec = ...) -> None: ...
-    def assign(self, other: Self) -> Self: ...
+    def assign(self, other: Self, /) -> Self: ...
     def get_animation_type(self) -> _GeomEnums_AnimationType:
         """Returns the type of animation represented by this spec."""
     def get_num_transforms(self) -> int:
@@ -429,7 +429,7 @@ class GeomVertexAnimationSpec(GeomEnums):
         limits on number of transforms and/or indexed transforms.  Also, no current
         graphics API's support morphing.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     getAnimationType = get_animation_type
     getNumTransforms = get_num_transforms
     getIndexedTransforms = get_indexed_transforms
@@ -466,7 +466,7 @@ class InternalName(TypedWritableReferenceCount):
     @staticmethod
     def make(name: str, index: int) -> InternalName:
         """Make using a string and an integer.  Concatenates the two."""
-    def append(self, basename: str) -> InternalName:
+    def append(self, basename: str, /) -> InternalName:
         """Constructs a new InternalName based on this name, with the indicated string
         following it.  This is a cheaper way to construct a hierarchical name than
         InternalName::make(parent->get_name() + ".basename").
@@ -479,20 +479,20 @@ class InternalName(TypedWritableReferenceCount):
         """Returns the complete name represented by the InternalName and all of its
         parents.
         """
-    def join(self, sep: str) -> str:
+    def join(self, sep: str, /) -> str:
         """Like get_name, but uses a custom separator instead of "."."""
     def get_basename(self) -> str:
         """Return the name represented by just this particular InternalName object,
         ignoring its parents names.  This is everything after the rightmost dot.
         """
-    def find_ancestor(self, basename: str) -> int:
+    def find_ancestor(self, basename: str, /) -> int:
         """Returns the index of the ancestor with the indicated basename, or -1 if no
         ancestor has that basename.  Returns 0 if this name has the basename.
 
         This index value may be passed to get_ancestor() or get_net_basename() to
         retrieve more information about the indicated name.
         """
-    def get_ancestor(self, n: int) -> InternalName:
+    def get_ancestor(self, n: int, /) -> InternalName:
         """Returns the ancestor with the indicated index number.  0 is this name
         itself, 1 is the name's parent, 2 is the parent's parent, and so on.  If
         there are not enough ancestors, returns the root InternalName.
@@ -502,12 +502,12 @@ class InternalName(TypedWritableReferenceCount):
         root.  This will be the first name in the string, e.g.  "texcoord.foo.bar"
         will return the InternalName "texcoord".
         """
-    def get_net_basename(self, n: int) -> str:
+    def get_net_basename(self, n: int, /) -> str:
         """Returns the basename of this name prefixed by the indicated number of
         ancestors.  0 is this name's basename, 1 is parent.basename, 2 is
         grandparent.parent.basename, and so on.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_root() -> InternalName:
         """Returns the standard root InternalName.  This is the root of all other
@@ -535,7 +535,7 @@ class InternalName(TypedWritableReferenceCount):
         coordinate change.  It is used for deriving bump maps.
         """
     @staticmethod
-    def get_tangent_name(name: str) -> InternalName:
+    def get_tangent_name(name: str, /) -> InternalName:
         """Returns the InternalName "tangent.name", where name is the supplied string.
         This is the column header for the tangent associated with the named texture
         coordinate set.
@@ -549,7 +549,7 @@ class InternalName(TypedWritableReferenceCount):
         maps.
         """
     @staticmethod
-    def get_binormal_name(name: str) -> InternalName:
+    def get_binormal_name(name: str, /) -> InternalName:
         """Returns the InternalName "binormal.name", where name is the supplied
         string.  This is the column header for the binormal associated with the
         named texture coordinate set.
@@ -561,7 +561,7 @@ class InternalName(TypedWritableReferenceCount):
         for identifying the default texture coordinate set in a TextureStage.
         """
     @staticmethod
-    def get_texcoord_name(name: str) -> InternalName:
+    def get_texcoord_name(name: str, /) -> InternalName:
         """Returns the InternalName "texcoord.name", where name is the supplied
         string.  This is the column header for the named texture coordinate set for
         each vertex.  It is also used for identifying the named texture coordinate
@@ -704,7 +704,7 @@ class GeomVertexColumn(GeomEnums):
     ) -> None: ...
     @overload
     def __init__(self, copy: GeomVertexColumn) -> None: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def get_name(self) -> InternalName:
         """Returns the name of this particular data field, e.g.  "vertex" or "normal".
         The name may be a user-defined string, or it may be one of the standard
@@ -764,35 +764,35 @@ class GeomVertexColumn(GeomEnums):
         """Returns true if this column overlaps with any of the bytes in the indicated
         range, false if it does not.
         """
-    def is_bytewise_equivalent(self, other: GeomVertexColumn) -> bool:
+    def is_bytewise_equivalent(self, other: GeomVertexColumn, /) -> bool:
         """Returns true if the data store of this column is exactly the same as that
         of the other, irrespective of name or start position within the record.
         """
-    def set_name(self, name: InternalName | str) -> None:
+    def set_name(self, name: InternalName | str, /) -> None:
         """Replaces the name of an existing column.  This is only legal on an
         unregistered format (i.e.  when constructing the format initially).
         """
-    def set_num_components(self, num_components: int) -> None:
+    def set_num_components(self, num_components: int, /) -> None:
         """Changes the number of components of an existing column.  This is only legal
         on an unregistered format (i.e.  when constructing the format initially).
         """
-    def set_numeric_type(self, numeric_type: _GeomEnums_NumericType) -> None:
+    def set_numeric_type(self, numeric_type: _GeomEnums_NumericType, /) -> None:
         """Changes the numeric type an existing column.  This is only legal on an
         unregistered format (i.e.  when constructing the format initially).
         """
-    def set_contents(self, contents: _GeomEnums_Contents) -> None:
+    def set_contents(self, contents: _GeomEnums_Contents, /) -> None:
         """Changes the semantic meaning of an existing column.  This is only legal on
         an unregistered format (i.e.  when constructing the format initially).
         """
-    def set_start(self, start: int) -> None:
+    def set_start(self, start: int, /) -> None:
         """Changes the start byte of an existing column.  This is only legal on an
         unregistered format (i.e.  when constructing the format initially).
         """
-    def set_column_alignment(self, column_alignment: int) -> None:
+    def set_column_alignment(self, column_alignment: int, /) -> None:
         """Changes the column alignment of an existing column.  This is only legal on
         an unregistered format (i.e.  when constructing the format initially).
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     getName = get_name
     getNumComponents = get_num_components
     getNumValues = get_num_values
@@ -898,7 +898,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
     ) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def unref(self) -> bool:
         """This method overrides ReferenceCount::unref() to unregister the object when
         its reference count goes to zero.
@@ -909,7 +909,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         registered, it may no longer be modified.
         """
     @staticmethod
-    def register_format(format: GeomVertexArrayFormat) -> GeomVertexArrayFormat:
+    def register_format(format: GeomVertexArrayFormat, /) -> GeomVertexArrayFormat:
         """Adds the indicated format to the registry, if there is not an equivalent
         format already there; in either case, returns the pointer to the equivalent
         format now in the registry.
@@ -921,7 +921,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         """
     def get_stride(self) -> int:
         """Returns the total number of bytes reserved in the array for each vertex."""
-    def set_stride(self, stride: int) -> None:
+    def set_stride(self, stride: int, /) -> None:
         """Changes the total number of bytes reserved in the array for each vertex.
         You may not reduce this below get_total_bytes(), but you may increase it
         arbitrarily.
@@ -936,7 +936,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         automatically increased as needed to ensure the individual numeric
         components in the array are word-aligned.
         """
-    def set_pad_to(self, pad_to: int) -> None:
+    def set_pad_to(self, pad_to: int, /) -> None:
         """Explicitly sets the byte divisor to which the data record must be padded to
         meet hardware limitations.  See get_pad_to().  Normally it is not necessary
         to call this unless you have some specific requirements for row-to-row data
@@ -948,7 +948,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         contains per-vertex data.  If 1, it contains per-instance data.  If higher
         than 1, the read row is advanced for each n instances.
         """
-    def set_divisor(self, divisor: int) -> None:
+    def set_divisor(self, divisor: int, /) -> None:
         """Set this to 0 to indicate that this array contains per-vertex data, or to 1
         to indicate that it contains per-instance data.  If higher than 1, the read
         row is advanced for each n instances.
@@ -986,7 +986,7 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
 
         The return value is the index number of the new data type.
         """
-    def remove_column(self, name: InternalName | str) -> None:
+    def remove_column(self, name: InternalName | str, /) -> None:
         """Removes the column with the indicated name, if any.  This leaves a gap in
         the byte structure.
         """
@@ -1019,9 +1019,9 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         """Returns the first specification that overlaps with any of the indicated
         bytes in the range, or NULL if none do.
         """
-    def has_column(self, name: InternalName | str) -> bool:
+    def has_column(self, name: InternalName | str, /) -> bool:
         """Returns true if the array has the named column, false otherwise."""
-    def is_data_subset_of(self, other: GeomVertexArrayFormat) -> bool:
+    def is_data_subset_of(self, other: GeomVertexArrayFormat, /) -> bool:
         """Returns true if all of the fields in this array format are also present and
         equivalent in the other array format, and in the same byte positions, and
         the stride is the same.  That is, true if this format can share the same
@@ -1029,10 +1029,10 @@ class GeomVertexArrayFormat(TypedWritableReferenceCount, GeomEnums):
         """
     def count_unused_space(self) -> int:
         """Returns the number of bytes per row that are not assigned to any column."""
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_with_data(self, out: ostream, indent_level: int, array_data: GeomVertexArrayData) -> None: ...
-    def get_format_string(self, pad: bool = ...) -> str:
+    def get_format_string(self, pad: bool = ..., /) -> str:
         """Returns a string with format codes representing the exact memory layout of
         the columns in memory, as understood by Python's struct module.  If pad is
         true, extra padding bytes are added to the end as 'x' characters as needed.
@@ -1103,7 +1103,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     def __init__(self, copy: GeomVertexFormat) -> None: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: GeomVertexArrayFormat | GeomVertexFormat) -> Self: ...
+    def assign(self, copy: GeomVertexArrayFormat | GeomVertexFormat, /) -> Self: ...
     def unref(self) -> bool:
         """This method overrides ReferenceCount::unref() to unregister the object when
         its reference count goes to zero.
@@ -1114,7 +1114,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         registered, it may no longer be modified.
         """
     @staticmethod
-    def register_format(format: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexFormat:
+    def register_format(format: GeomVertexArrayFormat | GeomVertexFormat, /) -> GeomVertexFormat:
         """This flavor of register_format() implicitly creates a one-array vertex
         format from the array definition.
 
@@ -1132,7 +1132,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         """Returns the GeomVertexAnimationSpec that indicates how this format's
         vertices are set up for animation.
         """
-    def set_animation(self, animation: GeomVertexAnimationSpec) -> None:
+    def set_animation(self, animation: GeomVertexAnimationSpec, /) -> None:
         """Resets the GeomVertexAnimationSpec that indicates how this format's
         vertices are set up for animation.  You should also, of course, change the
         columns in the tables accordingly.
@@ -1147,7 +1147,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         This may only be called after the format has been registered.  The return
         value will have been already registered.
         """
-    def get_union_format(self, other: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexFormat:
+    def get_union_format(self, other: GeomVertexArrayFormat | GeomVertexFormat, /) -> GeomVertexFormat:
         """Returns a new GeomVertexFormat that includes all of the columns defined in
         either this GeomVertexFormat or the other one.  If any column is defined in
         both formats with different sizes (for instance, texcoord2 vs.  texcoord3),
@@ -1161,9 +1161,9 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         array data is completely interleaved, this will be 1; if it is completely
         parallel, this will be the same as the number of data types.
         """
-    def get_array(self, array: int) -> GeomVertexArrayFormat:
+    def get_array(self, array: int, /) -> GeomVertexArrayFormat:
         """Returns the description of the nth array used by the format."""
-    def modify_array(self, array: int) -> GeomVertexArrayFormat:
+    def modify_array(self, array: int, /) -> GeomVertexArrayFormat:
         """Returns a modifiable pointer to the indicated array.  This means
         duplicating it if it is shared or registered.
 
@@ -1174,12 +1174,12 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 
         This may not be called once the format has been registered.
         """
-    def remove_array(self, array: int) -> None:
+    def remove_array(self, array: int, /) -> None:
         """Removes the nth array from the format.
 
         This may not be called once the format has been registered.
         """
-    def add_array(self, array_format: GeomVertexArrayFormat) -> int:
+    def add_array(self, array_format: GeomVertexArrayFormat, /) -> int:
         """Adds the indicated array definition to the list of arrays included within
         this vertex format definition.  The return value is the index number of the
         new array.
@@ -1207,8 +1207,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         """Returns the total number of different columns in the specification, across
         all arrays.
         """
-    @overload
-    def get_array_with(self, name: InternalName | str) -> int:
+    def get_array_with(self, name_or_i: InternalName | int | str, /) -> int:
         """Returns the index number of the array with the indicated column, or -1 if
         no arrays contained that name.
 
@@ -1217,27 +1216,25 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         get_data() or set_data() to manipulate the actual array data.
 
         This may only be called after the format has been registered.
-        """
-    @overload
-    def get_array_with(self, i: int) -> int:
-        """Returns the index number of the array with the ith column.
+
+        or:
+        Returns the index number of the array with the ith column.
 
         The return value can be passed to get_array_format() to get the format of
         the array.  It may also be passed to GeomVertexData::get_array_data() or
         get_data() or set_data() to manipulate the actual array data.
         """
-    @overload
-    def get_column(self, name: InternalName | str) -> GeomVertexColumn:
+    def get_column(self, name_or_i: InternalName | int | str, /) -> GeomVertexColumn:
         """Returns the specification with the indicated name, or NULL if the name is
         not used.  Use get_array_with() to determine which array this column is
         associated with.
+
+        or:
+        Returns the ith column of the specification, across all arrays.
         """
-    @overload
-    def get_column(self, i: int) -> GeomVertexColumn:
-        """Returns the ith column of the specification, across all arrays."""
-    def has_column(self, name: InternalName | str) -> bool:
+    def has_column(self, name: InternalName | str, /) -> bool:
         """Returns true if the format has the named column, false otherwise."""
-    def get_column_name(self, i: int) -> InternalName:
+    def get_column_name(self, i: int, /) -> InternalName:
         """Returns the name of the ith column, across all arrays."""
     def remove_column(self, name: InternalName | str, keep_empty_array: bool = ...) -> None:
         """Removes the named column from the format, from whichever array it exists
@@ -1267,7 +1264,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 
         This may only be called after the format has been registered.
         """
-    def get_point(self, n: int) -> InternalName:
+    def get_point(self, n: int, /) -> InternalName:
         """Returns the name of the nth point column.  This represents a point in
         space, which should be transformed by any spatial transform matrix.
 
@@ -1279,7 +1276,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 
         This may only be called after the format has been registered.
         """
-    def get_vector(self, n: int) -> InternalName:
+    def get_vector(self, n: int, /) -> InternalName:
         """Returns the name of the nth vector column.  This represents a directional
         vector, which should be transformed by any spatial transform matrix as a
         vector.
@@ -1292,7 +1289,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 
         This may only be called after the format has been registered.
         """
-    def get_texcoord(self, n: int) -> InternalName:
+    def get_texcoord(self, n: int, /) -> InternalName:
         """Returns the name of the nth texcoord column.  This represents a texture
         coordinate.
 
@@ -1304,21 +1301,21 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 
         This may only be called after the format has been registered.
         """
-    def get_morph_slider(self, n: int) -> InternalName:
+    def get_morph_slider(self, n: int, /) -> InternalName:
         """Returns the slider name associated with the nth morph column.  This is the
         name of the slider that will control the morph, and should be defined
         within the SliderTable associated with the GeomVertexData.
 
         This may only be called after the format has been registered.
         """
-    def get_morph_base(self, n: int) -> InternalName:
+    def get_morph_base(self, n: int, /) -> InternalName:
         """Returns the name of the base column that the nth morph modifies.  This
         column will also be defined within the format, and can be retrieved via
         get_array_with() and/or get_column().
 
         This may only be called after the format has been registered.
         """
-    def get_morph_delta(self, n: int) -> InternalName:
+    def get_morph_delta(self, n: int, /) -> InternalName:
         """Returns the name of the column that defines the nth morph.  This contains
         the delta offsets that are to be applied to the column defined by
         get_morph_base().  This column will be defined within the format, and can
@@ -1326,7 +1323,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
 
         This may only be called after the format has been registered.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def write_with_data(self, out: ostream, indent_level: int, data: GeomVertexData) -> None: ...
     @staticmethod
@@ -1480,7 +1477,7 @@ class SimpleLru(Namable):
         """Returns the max size of all objects that are allowed to be active on the
         LRU.
         """
-    def set_max_size(self, max_size: int) -> None:
+    def set_max_size(self, max_size: int, /) -> None:
         """Changes the max size of all objects that are allowed to be active on the
         LRU.
 
@@ -1492,7 +1489,7 @@ class SimpleLru(Namable):
         """
     def consider_evict(self) -> None:
         """Evicts a sequence of objects if the queue is full."""
-    def evict_to(self, target_size: int) -> None:
+    def evict_to(self, target_size: int, /) -> None:
         """Evicts a sequence of objects until the queue fits within the indicated
         target size, regardless of its normal max size.
         """
@@ -1527,12 +1524,12 @@ class SimpleLruPage:
     def __init__(self, lru_size: int) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def get_lru(self) -> SimpleLru:
         """Returns the LRU that manages this page, or NULL if it is not currently
         managed by any LRU.
         """
-    def enqueue_lru(self, lru: SimpleLru) -> None:
+    def enqueue_lru(self, lru: SimpleLru, /) -> None:
         """Adds the page to the LRU for the first time, or marks it recently-accessed
         if it has already been added.
 
@@ -1540,7 +1537,7 @@ class SimpleLruPage:
         """
     def dequeue_lru(self) -> None:
         """Removes the page from its SimpleLru."""
-    def mark_used_lru(self, lru: SimpleLru = ...) -> None:
+    def mark_used_lru(self, lru: SimpleLru = ..., /) -> None:
         """To be called when the page is used; this will move it to the tail of the
         SimpleLru queue it is already on.
 
@@ -1553,7 +1550,7 @@ class SimpleLruPage:
         """
     def get_lru_size(self) -> int:
         """Returns the size of this page as reported to the LRU, presumably in bytes."""
-    def set_lru_size(self, lru_size: int) -> None:
+    def set_lru_size(self, lru_size: int, /) -> None:
         """Specifies the size of this page, presumably in bytes, although any unit is
         possible.
         """
@@ -1567,7 +1564,7 @@ class SimpleLruPage:
         epoch), or requeue itself on the tail of the queue (in which case the
         eviction will be requested again much later).
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     getLru = get_lru
     enqueueLru = enqueue_lru
@@ -1600,7 +1597,7 @@ class SimpleAllocator:
         """Returns the total size of allocated objects."""
     def get_max_size(self) -> int:
         """Returns the available space for allocated objects."""
-    def set_max_size(self, max_size: int) -> None:
+    def set_max_size(self, max_size: int, /) -> None:
         """Changes the available space for allocated objects.  This will not affect
         any already-allocated objects, but will have an effect on future calls to
         alloc().
@@ -1615,8 +1612,8 @@ class SimpleAllocator:
         """Returns a pointer to the first allocated block, or NULL if there are no
         allocated blocks.
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     isEmpty = is_empty
     getTotalSize = get_total_size
     getMaxSize = get_max_size
@@ -1648,7 +1645,7 @@ class SimpleAllocatorBlock:
         """Returns the maximum size this block can be reallocated to, as limited by
         the following block.
         """
-    def realloc(self, size: int) -> bool:
+    def realloc(self, size: int, /) -> bool:
         """Changes the size of this block to the specified size.  Returns true if the
         change is accepted, false if there was not enough room.
         """
@@ -1656,7 +1653,7 @@ class SimpleAllocatorBlock:
         """Returns a pointer to the next allocated block in the chain, or NULL if
         there are no more allocated blocks.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     getAllocator = get_allocator
     getStart = get_start
     getSize = get_size
@@ -1715,7 +1712,7 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
         """Ensures that the page will become resident soon.  Future calls to
         get_page_data() will eventually return non-NULL.
         """
-    def alloc(self, size: int) -> VertexDataBlock:  # type: ignore[override]
+    def alloc(self, size: int, /) -> VertexDataBlock:  # type: ignore[override]
         """Allocates a new block.  Returns NULL if a block of the requested size
         cannot be allocated.
 
@@ -1729,7 +1726,7 @@ class VertexDataPage(SimpleAllocator, SimpleLruPage):
     def get_book(self) -> VertexDataBook:
         """Returns a pointer to the book that owns this page."""
     @staticmethod
-    def get_global_lru(rclass: _VertexDataPage_RamClass) -> SimpleLru:
+    def get_global_lru(rclass: _VertexDataPage_RamClass, /) -> SimpleLru:
         """Returns a pointer to the global LRU object that manages the
         VertexDataPage's with the indicated RamClass.
         """
@@ -1801,18 +1798,18 @@ class VertexDataBook:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, block_size: int) -> None: ...
-    def alloc(self, size: int) -> VertexDataBlock:
+    def alloc(self, size: int, /) -> VertexDataBlock:
         """Allocates and returns a new VertexDataBuffer of the requested size."""
     def get_num_pages(self) -> int:
         """Returns the number of pages created for the book."""
-    def count_total_page_size(self, ram_class: _VertexDataPage_RamClass = ...) -> int:
+    def count_total_page_size(self, ram_class: _VertexDataPage_RamClass = ..., /) -> int:
         """Returns the total size of all bytes owned by all pages owned by this book.
 
         or:
         Returns the total size of all bytes owned by all pages owned by this book
         that have the indicated ram class.
         """
-    def count_allocated_size(self, ram_class: _VertexDataPage_RamClass = ...) -> int:
+    def count_allocated_size(self, ram_class: _VertexDataPage_RamClass = ..., /) -> int:
         """Returns the total size of all bytes allocated within pages owned by this
         book.
 
@@ -1878,7 +1875,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_SimpleLruPage(self) -> SimpleLruPage: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def compare_to(self, other: GeomVertexArrayData) -> int:
+    def compare_to(self, other: GeomVertexArrayData, /) -> int:
         """Returns 0 if the two arrays are equivalent, even if they are not the same
         pointer.
         """
@@ -1888,13 +1885,13 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         """Returns the usage hint that describes to the rendering backend how often
         the vertex data will be modified and/or rendered.  See geomEnums.h.
         """
-    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint) -> None:
+    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint, /) -> None:
         """Changes the UsageHint hint for this array.  See get_usage_hint().
 
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def has_column(self, name: InternalName | str) -> bool:
+    def has_column(self, name: InternalName | str, /) -> bool:
         """Returns true if the array has the named column, false otherwise.  This is
         really just a shortcut for asking the same thing from the format.
         """
@@ -1903,7 +1900,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         bytes and the stride.  This should be the same for all arrays within a
         given GeomVertexData object.
         """
-    def set_num_rows(self, n: int) -> bool:
+    def set_num_rows(self, n: int, /) -> bool:
         """Sets the length of the array to n rows.
 
         Normally, you would not call this directly, since all of the arrays in a
@@ -1919,7 +1916,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def unclean_set_num_rows(self, n: int) -> bool:
+    def unclean_set_num_rows(self, n: int, /) -> bool:
         """This method behaves like set_num_rows(), except the new data is not
         initialized.  Furthermore, after this call, *any* of the data in the
         GeomVertexArrayData may be uninitialized, including the earlier rows.
@@ -1928,7 +1925,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         particular GeomVertexData must have the same number of rows; instead, call
         GeomVertexData::unclean_set_num_rows().
         """
-    def reserve_num_rows(self, n: int) -> bool:
+    def reserve_num_rows(self, n: int, /) -> bool:
         """This ensures that enough memory space for n rows is allocated, so that you
         may increase the number of rows to n without causing a new memory
         allocation.  This is a performance optimization only; it is especially
@@ -1946,25 +1943,25 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         the array vertex data is modified.
         """
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
-    def request_resident(self, current_thread: Thread = ...) -> bool:
+    def request_resident(self, current_thread: Thread = ..., /) -> bool:
         """Returns true if the vertex data is currently resident in memory.  If this
         returns true, the next call to get_handle()->get_read_pointer() will
         probably not block.  If this returns false, the vertex data will be brought
         back into memory shortly; try again later.
         """
-    def get_handle(self, current_thread: Thread = ...) -> GeomVertexArrayDataHandle:
+    def get_handle(self, current_thread: Thread = ..., /) -> GeomVertexArrayDataHandle:
         """Returns an object that can be used to read the actual data bytes stored in
         the array.  Calling this method locks the data, and will block any other
         threads attempting to read or write the data, until the returned object
         destructs.
         """
-    def modify_handle(self, current_thread: Thread = ...) -> GeomVertexArrayDataHandle:
+    def modify_handle(self, current_thread: Thread = ..., /) -> GeomVertexArrayDataHandle:
         """Returns an object that can be used to read or write the actual data bytes
         stored in the array.  Calling this method locks the data, and will block
         any other threads attempting to read or write the data, until the returned
         object destructs.
         """
-    def prepare(self, prepared_objects: PreparedGraphicsObjects) -> None:
+    def prepare(self, prepared_objects: PreparedGraphicsObjects, /) -> None:
         """Indicates that the data should be enqueued to be prepared in the indicated
         prepared_objects at the beginning of the next frame.  This will ensure the
         data is already loaded into the GSG if it is expected to be rendered soon.
@@ -1972,7 +1969,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         Use this function instead of prepare_now() to preload datas from a user
         interface standpoint.
         """
-    def is_prepared(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def is_prepared(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if the data has already been prepared or enqueued for
         preparation on the indicated GSG, false otherwise.
         """
@@ -1987,7 +1984,7 @@ class GeomVertexArrayData(CopyOnWriteObject, SimpleLruPage, GeomEnums):
         a data does not need to be explicitly prepared by the user before it may be
         rendered.
         """
-    def release(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def release(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Frees the data context only on the indicated object, if it exists there.
         Returns true if it was released, false if it had not been prepared.
         """
@@ -2070,9 +2067,9 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
     def get_array_format(self) -> GeomVertexArrayFormat: ...
     def get_usage_hint(self) -> _GeomEnums_UsageHint: ...
     def get_num_rows(self) -> int: ...
-    def set_num_rows(self, n: int) -> bool: ...
-    def unclean_set_num_rows(self, n: int) -> bool: ...
-    def reserve_num_rows(self, n: int) -> bool: ...
+    def set_num_rows(self, n: int, /) -> bool: ...
+    def unclean_set_num_rows(self, n: int, /) -> bool: ...
+    def reserve_num_rows(self, n: int, /) -> bool: ...
     def clear_rows(self) -> None: ...
     def get_data_size_bytes(self) -> int: ...
     def get_modified(self) -> UpdateSeq: ...
@@ -2094,10 +2091,10 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
         rendered.
         """
     @overload
-    def copy_data_from(self, other: GeomVertexArrayDataHandle) -> None:
+    def copy_data_from(self, other: GeomVertexArrayDataHandle, /) -> None:
         """Copies the entire data array from the other object."""
     @overload
-    def copy_data_from(self, buffer) -> None: ...
+    def copy_data_from(self, buffer, /) -> None: ...
     @overload
     def copy_subdata_from(
         self,
@@ -2120,7 +2117,7 @@ class GeomVertexArrayDataHandle(ReferenceCount, GeomEnums):
         a string.  This is primarily for the benefit of high-level languages such
         as Python.
         """
-    def set_data(self, data: bytes) -> None:
+    def set_data(self, data: bytes, /) -> None:
         """Replaces the entire raw data array with the contents of the indicated
         string.  This is primarily for the benefit of high-level languages like
         Python.
@@ -2175,7 +2172,7 @@ class GeomCacheManager:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def set_max_size(self, max_size: int) -> None:
+    def set_max_size(self, max_size: int, /) -> None:
         """Specifies the maximum number of entries in the cache for storing pre-
         processed data for rendering vertices.  This limit is flexible, and may be
         temporarily exceeded if many different Geoms are pre-processed during the
@@ -2210,7 +2207,7 @@ class VertexTransform(TypedWritableReferenceCount):
 
     @property
     def modified(self) -> UpdateSeq: ...
-    def get_matrix(self, matrix: Mat4Like) -> None: ...
+    def get_matrix(self, matrix: Mat4Like, /) -> None: ...
     def mult_matrix(self, result: Mat4Like, previous: Mat4Like) -> None:
         """Premultiplies this transform's matrix with the indicated previous matrix,
         so that the result is the net composition of the given transform with this
@@ -2222,14 +2219,14 @@ class VertexTransform(TypedWritableReferenceCount):
         weight, into the indicated accumulation matrix.  This is used to compute
         the result of several blended transforms.
         """
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a sequence number that's guaranteed to change at least every time
         the value reported by get_matrix() changes.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     @staticmethod
-    def get_next_modified(current_thread: Thread) -> UpdateSeq:
+    def get_next_modified(current_thread: Thread, /) -> UpdateSeq:
         """Returns a monotonically increasing sequence.  Each time this is called, a
         new sequence number is returned, higher than the previous value.
 
@@ -2239,7 +2236,7 @@ class VertexTransform(TypedWritableReferenceCount):
         Geom::get_modified(), but it is in a different space.
         """
     @staticmethod
-    def get_global_modified(current_thread: Thread) -> UpdateSeq:
+    def get_global_modified(current_thread: Thread, /) -> UpdateSeq:
         """Returns the currently highest VertexTransform::get_modified() value in the
         world.  This can be used as a quick way to determine if any
         VertexTransforms have changed value recently.
@@ -2269,14 +2266,14 @@ class TransformTable(TypedWritableReferenceCount):
     def __init__(self, copy: TransformTable = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def is_registered(self) -> bool:
         """Returns true if this table has been registered.  Once it has been
         registered, the set of transforms in a TransformTable may not be further
         modified; but it must be registered before it can be assigned to a Geom.
         """
     @staticmethod
-    def register_table(table: TransformTable) -> TransformTable:
+    def register_table(table: TransformTable, /) -> TransformTable:
         """Registers a TransformTable for use.  This is similar to
         GeomVertexFormat::register_format().  Once registered, a TransformTable may
         no longer be modified (although the individual VertexTransform objects may
@@ -2289,9 +2286,9 @@ class TransformTable(TypedWritableReferenceCount):
         """
     def get_num_transforms(self) -> int:
         """Returns the number of transforms in the table."""
-    def get_transform(self, n: int) -> VertexTransform:
+    def get_transform(self, n: int, /) -> VertexTransform:
         """Returns the nth transform in the table."""
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a sequence number that's guaranteed to change at least when any
         VertexTransforms in the table change.  (However, this is only true for a
         registered table.  An unregistered table may or may not reflect an update
@@ -2307,16 +2304,16 @@ class TransformTable(TypedWritableReferenceCount):
         This does not automatically uniquify the pointer; if the transform is
         already present in the table, it will be added twice.
         """
-    def remove_transform(self, n: int) -> None:
+    def remove_transform(self, n: int, /) -> None:
         """Removes the nth transform.  Only valid for unregistered tables."""
-    def add_transform(self, transform: VertexTransform) -> int:
+    def add_transform(self, transform: VertexTransform, /) -> int:
         """Adds a new transform to the table and returns the index number of the new
         transform.  Only valid for unregistered tables.
 
         This does not automatically uniquify the pointer; if the transform is
         already present in the table, it will be added twice.
         """
-    def write(self, out: ostream) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     def get_transforms(self) -> tuple[VertexTransform, ...]: ...
     isRegistered = is_registered
     registerTable = register_table
@@ -2369,25 +2366,25 @@ class TransformBlend:
         transform3: VertexTransform,
         weight3: float,
     ) -> None: ...
-    def __lt__(self, other: TransformBlend) -> bool: ...
+    def __lt__(self, other: TransformBlend, /) -> bool: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
-    def compare_to(self, other: TransformBlend) -> int:
+    def assign(self, copy: Self, /) -> Self: ...
+    def compare_to(self, other: TransformBlend, /) -> int:
         """Defines an arbitrary ordering for TransformBlend objects."""
     def add_transform(self, transform: VertexTransform, weight: float) -> None:
         """Adds a new transform to the blend.  If the transform already existed,
         increases its weight factor.
         """
-    @overload
-    def remove_transform(self, transform: VertexTransform) -> None:
-        """Removes the indicated transform from the blend."""
-    @overload
-    def remove_transform(self, n: int) -> None:
-        """Removes the nth transform stored in the blend object."""
-    def limit_transforms(self, max_transforms: int) -> None:
+    def remove_transform(self, transform_or_n: VertexTransform | int, /) -> None:
+        """Removes the indicated transform from the blend.
+
+        or:
+        Removes the nth transform stored in the blend object.
+        """
+    def limit_transforms(self, max_transforms: int, /) -> None:
         """If the total number of transforms in the blend exceeds max_transforms,
         removes the n least-important transforms as needed to reduce the number of
         transforms to max_transforms.
@@ -2397,21 +2394,19 @@ class TransformBlend:
         1.0.  It is generally a good idea to call this after adding or removing
         transforms from the blend.
         """
-    def has_transform(self, transform: VertexTransform) -> bool:
+    def has_transform(self, transform: VertexTransform, /) -> bool:
         """Returns true if the blend has the indicated transform, false otherwise."""
-    @overload
-    def get_weight(self, transform: VertexTransform) -> float:
+    def get_weight(self, transform_or_n: VertexTransform | int, /) -> float:
         """Returns the weight associated with the indicated transform, or 0 if there
         is no entry for the transform.
-        """
-    @overload
-    def get_weight(self, n: int) -> float:
-        """Returns the weight associated with the nth transform stored in the blend
+
+        or:
+        Returns the weight associated with the nth transform stored in the blend
         object.
         """
     def get_num_transforms(self) -> int:
         """Returns the number of transforms stored in the blend object."""
-    def get_transform(self, n: int) -> VertexTransform:
+    def get_transform(self, n: int, /) -> VertexTransform:
         """Returns the nth transform stored in the blend object."""
     def set_transform(self, n: int, transform: VertexTransform) -> None:
         """Replaces the nth transform stored in the blend object."""
@@ -2419,7 +2414,7 @@ class TransformBlend:
         """Replaces the weight associated with the nth transform stored in the blend
         object.
         """
-    def update_blend(self, current_thread: Thread) -> None:
+    def update_blend(self, current_thread: Thread, /) -> None:
         """Recomputes the internal representation of the blend value, if necessary.
         You should call this before calling get_blend() or transform_point().
         """
@@ -2442,11 +2437,11 @@ class TransformBlend:
         You should call update_blend() to ensure that the cache is up-to-date
         before calling this.
         """
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a counter which is guaranteed to increment at least as often as the
         result of get_blend() changes.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -2494,20 +2489,20 @@ class TransformBlendTable(CopyOnWriteObject):
     def __init__(self, copy: TransformBlendTable = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def get_num_blends(self) -> int:
         """Returns the total number of different blend combinations in the table."""
-    def get_blend(self, n: int) -> TransformBlend:
+    def get_blend(self, n: int, /) -> TransformBlend:
         """Returns the nth blend in the table."""
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a counter which is guaranteed to increment at least when any
         TransformBlends within the table have changed.
         """
     def set_blend(self, n: int, blend: TransformBlend) -> None:
         """Replaces the blend at the nth position with the indicated value."""
-    def remove_blend(self, n: int) -> None:
+    def remove_blend(self, n: int, /) -> None:
         """Removes the blend at the nth position."""
-    def add_blend(self, blend: TransformBlend) -> int:
+    def add_blend(self, blend: TransformBlend, /) -> int:
         """Adds a new blend to the table, and returns its index number.  If there is
         already an identical blend in the table, simply returns that number
         instead.
@@ -2523,7 +2518,7 @@ class TransformBlendTable(CopyOnWriteObject):
         applied to any one vertex simultaneously.  This is the same limit reflected
         by GraphicsStateGuardian::get_max_vertex_transforms().
         """
-    def set_rows(self, rows: BitArray | SparseArray) -> None:
+    def set_rows(self, rows: BitArray | SparseArray, /) -> None:
         """Specifies the subset of rows (vertices) in the associated GeomVertexData
         that this TransformBlendTable actually affects.
         """
@@ -2572,11 +2567,11 @@ class VertexSlider(TypedWritableReferenceCount):
         shared by the slider that controls it.
         """
     def get_slider(self) -> float: ...
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a sequence number that's guaranteed to change at least every time
         the value reported by get_slider() changes.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     getName = get_name
     getSlider = get_slider
@@ -2597,14 +2592,14 @@ class SliderTable(TypedWritableReferenceCount):
     def __init__(self, copy: SliderTable = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def is_registered(self) -> bool:
         """Returns true if this table has been registered.  Once it has been
         registered, the set of sliders in a SliderTable may not be further
         modified; but it must be registered before it can be assigned to a Geom.
         """
     @staticmethod
-    def register_table(table: SliderTable) -> SliderTable:
+    def register_table(table: SliderTable, /) -> SliderTable:
         """Registers a SliderTable for use.  This is similar to
         GeomVertexFormat::register_format().  Once registered, a SliderTable may no
         longer be modified (although the individual VertexSlider objects may modify
@@ -2617,22 +2612,22 @@ class SliderTable(TypedWritableReferenceCount):
         """
     def get_num_sliders(self) -> int:
         """Returns the number of sliders in the table."""
-    def get_slider(self, n: int) -> VertexSlider:
+    def get_slider(self, n: int, /) -> VertexSlider:
         """Returns the nth slider in the table."""
-    def get_slider_rows(self, n: int) -> SparseArray:
+    def get_slider_rows(self, n: int, /) -> SparseArray:
         """Returns the set of rows (vertices) governed by the nth slider in the table."""
-    def find_sliders(self, name: InternalName | str) -> SparseArray:
+    def find_sliders(self, name: InternalName | str, /) -> SparseArray:
         """Returns a list of slider indices that represent the list of sliders with
         the indicated name, or an empty SparseArray if no slider in the table has
         that name.
         """
-    def has_slider(self, name: InternalName | str) -> bool:
+    def has_slider(self, name: InternalName | str, /) -> bool:
         """Returns true if the table has at least one slider by the indicated name,
         false otherwise.
         """
     def is_empty(self) -> bool:
         """Returns true if the table has no sliders, false if it has at least one."""
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a sequence number that's guaranteed to change at least when any
         VertexSliders in the table change.  (However, this is only true for a
         registered table.  An unregistered table may or may not reflect an update
@@ -2644,13 +2639,13 @@ class SliderTable(TypedWritableReferenceCount):
         """Replaces the rows affected by the nth slider.  Only valid for unregistered
         tables.
         """
-    def remove_slider(self, n: int) -> None:
+    def remove_slider(self, n: int, /) -> None:
         """Removes the nth slider.  Only valid for unregistered tables."""
     def add_slider(self, slider: VertexSlider, rows: BitArray | SparseArray) -> int:
         """Adds a new slider to the table, and returns the index number of the new
         slider.  Only valid for unregistered tables.
         """
-    def write(self, out: ostream) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     def get_sliders(self) -> tuple[VertexSlider, ...]: ...
     isRegistered = is_registered
     registerTable = register_table
@@ -2711,8 +2706,8 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     def __init__(self, name: str, format: GeomVertexArrayFormat | GeomVertexFormat, usage_hint: _GeomEnums_UsageHint) -> None: ...
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: Self) -> Self: ...
-    def compare_to(self, other: GeomVertexData) -> int:
+    def assign(self, copy: Self, /) -> Self: ...
+    def compare_to(self, other: GeomVertexData, /) -> int:
         """Returns 0 if the two objects are equivalent, even if they are not the same
         pointer.
         """
@@ -2720,7 +2715,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """Returns the name passed to the constructor, if any.  This name is reported
         on the PStats graph for vertex computations.
         """
-    def set_name(self, name: str) -> None:
+    def set_name(self, name: str, /) -> None:
         """Changes the name of the vertex data.  This name is reported on the PStats
         graph for vertex computations.
         """
@@ -2733,7 +2728,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         object with an independent usage hint specified, so there is no guarantee
         that the individual arrays all have the same usage_hint.
         """
-    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint) -> None:
+    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint, /) -> None:
         """Changes the UsageHint hint for this vertex data, and for all of the arrays
         that share this data.  See get_usage_hint().
 
@@ -2742,14 +2737,14 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """
     def get_format(self) -> GeomVertexFormat:
         """Returns a pointer to the GeomVertexFormat structure that defines this data."""
-    def set_format(self, format: GeomVertexArrayFormat | GeomVertexFormat) -> None:
+    def set_format(self, format: GeomVertexArrayFormat | GeomVertexFormat, /) -> None:
         """Changes the format of the vertex data.  If the data is not empty, this will
         implicitly change every row to match the new format.
 
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def unclean_set_format(self, format: GeomVertexArrayFormat | GeomVertexFormat) -> None:
+    def unclean_set_format(self, format: GeomVertexArrayFormat | GeomVertexFormat, /) -> None:
         """Changes the format of the vertex data, without reformatting the data to
         match.  The data is exactly the same after this operation, but will be
         reinterpreted according to the new format.  This assumes that the new
@@ -2757,7 +2752,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         must have the same number of arrays with the same stride in each one.  No
         checking is performed that the data remains sensible.
         """
-    def has_column(self, name: InternalName | str) -> bool:
+    def has_column(self, name: InternalName | str, /) -> bool:
         """Returns true if the data has the named column, false otherwise.  This is
         really just a shortcut for asking the same thing from the format.
         """
@@ -2765,7 +2760,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """Returns the number of rows stored within all the arrays.  All arrays store
         data for the same n rows.
         """
-    def set_num_rows(self, n: int) -> bool:
+    def set_num_rows(self, n: int, /) -> bool:
         """Sets the length of the array to n rows in all of the various arrays
         (presumably by adding rows).
 
@@ -2782,7 +2777,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def unclean_set_num_rows(self, n: int) -> bool:
+    def unclean_set_num_rows(self, n: int, /) -> bool:
         """This method behaves like set_num_rows(), except the new data is not
         initialized.  Furthermore, after this call, *any* of the data in the
         GeomVertexData may be uninitialized, including the earlier rows.
@@ -2794,7 +2789,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         This can be used when you know exactly how many rows you will be needing.
         It is faster than reserve_num_rows().
         """
-    def reserve_num_rows(self, n: int) -> bool:
+    def reserve_num_rows(self, n: int, /) -> bool:
         """This ensures that enough memory space for n rows is allocated, so that you
         may increase the number of rows to n without causing a new memory
         allocation.  This is a performance optimization only; it is especially
@@ -2815,14 +2810,14 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """Returns the number of individual arrays stored within the data.  This must
         match get_format()->get_num_arrays().
         """
-    def get_array(self, i: int) -> GeomVertexArrayData:
+    def get_array(self, i: int, /) -> GeomVertexArrayData:
         """Returns a const pointer to the vertex data for the indicated array, for
         application code to directly examine (but not modify) the underlying vertex
         data.
         """
-    def get_array_handle(self, i: int) -> GeomVertexArrayDataHandle:
+    def get_array_handle(self, i: int, /) -> GeomVertexArrayDataHandle:
         """Equivalent to get_array(i).get_handle()."""
-    def modify_array(self, i: int) -> GeomVertexArrayData:
+    def modify_array(self, i: int, /) -> GeomVertexArrayData:
         """Returns a modifiable pointer to the indicated vertex array, so that
         application code may directly manipulate the data.  You should avoid
         changing the length of this array, since all of the arrays should be kept
@@ -2831,7 +2826,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def modify_array_handle(self, i: int) -> GeomVertexArrayDataHandle:
+    def modify_array_handle(self, i: int, /) -> GeomVertexArrayDataHandle:
         """Equivalent to modify_array(i).modify_handle()."""
     def set_array(self, i: int, array: GeomVertexArrayData) -> None:
         """Replaces the indicated vertex data array with a completely new array.  You
@@ -2852,7 +2847,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         assigned (which implies the vertices will not be animated by the graphics
         hardware).
         """
-    def set_transform_table(self, table: TransformTable) -> None:
+    def set_transform_table(self, table: TransformTable, /) -> None:
         """Replaces the TransformTable on this vertex data with the indicated table.
         The length of this table should be consistent with the maximum table index
         assigned to the vertices under the "transform_index" name.
@@ -2882,7 +2877,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def set_transform_blend_table(self, table: TransformBlendTable) -> None:
+    def set_transform_blend_table(self, table: TransformBlendTable, /) -> None:
         """Replaces the TransformBlendTable on this vertex data with the indicated
         table.  The length of this table should be consistent with the maximum
         table index assigned to the vertices under the "transform_blend" name.
@@ -2902,7 +2897,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         This will return NULL if the vertex data does not have a SliderTable
         assigned.
         """
-    def set_slider_table(self, table: SliderTable) -> None:
+    def set_slider_table(self, table: SliderTable, /) -> None:
         """Replaces the SliderTable on this vertex data with the indicated table.
         There should be an entry in this table for each kind of morph offset
         defined in the vertex data.
@@ -2921,7 +2916,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """Returns the total number of bytes consumed by the different arrays of the
         vertex data.
         """
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a sequence number which is guaranteed to change at least every time
         the vertex data is modified.
         """
@@ -2952,7 +2947,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def convert_to(self, new_format: GeomVertexArrayFormat | GeomVertexFormat) -> GeomVertexData:
+    def convert_to(self, new_format: GeomVertexArrayFormat | GeomVertexFormat, /) -> GeomVertexData:
         """Returns a new GeomVertexData that represents the same contents as this one,
         with all data types matched up name-by-name to the indicated new format.
         """
@@ -3060,7 +3055,7 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         If num_components is 0, the indicated name is simply removed from the type,
         without replacing it with anything else.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def describe_vertex(self, out: ostream, row: int) -> None:
         """Writes a verbose, human-friendly description of the indicated vertex
@@ -3254,7 +3249,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
     def num_unused_vertices_per_primitive(self) -> int: ...
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def make_copy(self) -> GeomPrimitive: ...
     def get_primitive_type(self) -> _GeomEnums_PrimitiveType: ...
     def get_geom_rendering(self) -> int:
@@ -3266,7 +3261,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         to the renderer to tell it how the per-vertex colors and normals are
         applied.
         """
-    def set_shade_model(self, shade_model: _GeomEnums_ShadeModel) -> None:
+    def set_shade_model(self, shade_model: _GeomEnums_ShadeModel, /) -> None:
         """Changes the ShadeModel hint for this primitive.  This is different from the
         ShadeModelAttrib that might also be applied from the scene graph.  This
         does not affect the shade model that is in effect when rendering, but
@@ -3287,7 +3282,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         means that the vertices themselves will be animated, but the primitive will
         always reference the same set of vertices from the pool.
         """
-    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint) -> None:
+    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint, /) -> None:
         """Changes the UsageHint hint for this primitive.  See get_usage_hint().
 
         Don't call this in a downstream thread unless you don't mind it blowing
@@ -3297,7 +3292,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         """Returns the numeric type of the index column.  Normally, this will be
         either NT_uint16 or NT_uint32.
         """
-    def set_index_type(self, index_type: _GeomEnums_NumericType) -> None:
+    def set_index_type(self, index_type: _GeomEnums_NumericType, /) -> None:
         """Changes the numeric type of the index column.  Normally, this should be
         either NT_uint16 or NT_uint32.
 
@@ -3329,9 +3324,9 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         """
     def get_num_vertices(self) -> int:
         """Returns the number of indices used by all the primitives in this object."""
-    def get_vertex(self, i: int) -> int:
+    def get_vertex(self, i: int, /) -> int:
         """Returns the ith vertex index in the table."""
-    def add_vertex(self, vertex: int) -> None:
+    def add_vertex(self, vertex: int, /) -> None:
         """Adds the indicated vertex to the list of vertex indices used by the
         graphics primitive type.  To define a primitive, you must call add_vertex()
         for each vertex of the new primitive, and then call close_primitive() after
@@ -3353,7 +3348,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def add_next_vertices(self, num_vertices: int) -> None:
+    def add_next_vertices(self, num_vertices: int, /) -> None:
         """Adds the next n vertices in sequence, beginning from the last vertex added
         to the primitive + 1.
 
@@ -3361,7 +3356,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         GeomVertexData at the same time, and you just want the primitive to
         reference the first n vertices from the data, then the next n, and so on.
         """
-    def reserve_num_vertices(self, num_vertices: int) -> None:
+    def reserve_num_vertices(self, num_vertices: int, /) -> None:
         """This ensures that enough memory space for n vertices is allocated, so that
         you may increase the number of vertices to n without causing a new memory
         allocation.  This is a performance optimization only; it is especially
@@ -3434,7 +3429,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         """Returns the number of individual primitives stored within this object.  All
         primitives are the same type.
         """
-    def get_primitive_start(self, n: int) -> int:
+    def get_primitive_start(self, n: int, /) -> int:
         """Returns the element within the _vertices list at which the nth primitive
         starts.
 
@@ -3444,11 +3439,11 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         get_primitive_start(n) <= vi < get_primitive_start(n + 1) (although this
         range also includes the unused vertices between primitives).
         """
-    def get_primitive_end(self, n: int) -> int:
+    def get_primitive_end(self, n: int, /) -> int:
         """Returns the element within the _vertices list at which the nth primitive
         ends.  This is one past the last valid element for the nth primitive.
         """
-    def get_primitive_num_vertices(self, n: int) -> int:
+    def get_primitive_num_vertices(self, n: int, /) -> int:
         """Returns the number of vertices used by the nth primitive.  This is the same
         thing as get_primitive_end(n) - get_primitive_start(n).
         """
@@ -3462,7 +3457,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         """Returns the number of triangles or other fundamental type (such as line
         segments) represented by all the primitives in this object.
         """
-    def get_primitive_num_faces(self, n: int) -> int:
+    def get_primitive_num_faces(self, n: int, /) -> int:
         """Returns the number of triangles or other fundamental type (such as line
         segments) represented by the nth primitive in this object.
         """
@@ -3470,7 +3465,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         """Returns the minimum vertex index number used by all the primitives in this
         object.
         """
-    def get_primitive_min_vertex(self, n: int) -> int:
+    def get_primitive_min_vertex(self, n: int, /) -> int:
         """Returns the minimum vertex index number used by the nth primitive in this
         object.
         """
@@ -3478,7 +3473,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         """Returns the maximum vertex index number used by all the primitives in this
         object.
         """
-    def get_primitive_max_vertex(self, n: int) -> int:
+    def get_primitive_max_vertex(self, n: int, /) -> int:
         """Returns the maximum vertex index number used by the nth primitive in this
         object.
         """
@@ -3521,7 +3516,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         triangle without having to duplicate it (but which doesn't necessarily work
         in the presence of lighting).
         """
-    def match_shade_model(self, shade_model: _GeomEnums_ShadeModel) -> GeomPrimitive:
+    def match_shade_model(self, shade_model: _GeomEnums_ShadeModel, /) -> GeomPrimitive:
         """Returns a new primitive that is compatible with the indicated shade model,
         if possible, or NULL if this is not possible.
 
@@ -3565,17 +3560,17 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         """Returns a sequence number which is guaranteed to change at least every time
         the vertex index array is modified.
         """
-    def request_resident(self, current_thread: Thread = ...) -> bool:
+    def request_resident(self, current_thread: Thread = ..., /) -> bool:
         """Returns true if the primitive data is currently resident in memory.  If
         this returns false, the primitive data will be brought back into memory
         shortly; try again later.
         """
-    def check_valid(self, vertex_data: GeomVertexData) -> bool:
+    def check_valid(self, vertex_data: GeomVertexData, /) -> bool:
         """Verifies that the primitive only references vertices that actually exist
         within the indicated GeomVertexData.  Returns true if the primitive appears
         to be valid, false otherwise.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def get_vertices(self) -> GeomVertexArrayData:
         """Returns a const pointer to the vertex index array so application code can
@@ -3587,9 +3582,9 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         methods for more common usage.  We recommend you do not use this method
         directly.  If you do, be sure you know what you are doing!
         """
-    def get_vertices_handle(self, current_thread: Thread) -> GeomVertexArrayDataHandle:
+    def get_vertices_handle(self, current_thread: Thread, /) -> GeomVertexArrayDataHandle:
         """Equivalent to get_vertices().get_handle()."""
-    def modify_vertices(self, num_vertices: int = ...) -> GeomVertexArrayData:
+    def modify_vertices(self, num_vertices: int = ..., /) -> GeomVertexArrayData:
         """Returns a modifiable pointer to the vertex index list, so application code
         can directly fiddle with this data.  Use with caution, since there are no
         checks that the data will be left in a stable state.
@@ -3608,7 +3603,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         methods for more common usage.  We recommend you do not use this method
         directly.  If you do, be sure you know what you are doing!
         """
-    def modify_vertices_handle(self, current_thread: Thread) -> GeomVertexArrayDataHandle:
+    def modify_vertices_handle(self, current_thread: Thread, /) -> GeomVertexArrayDataHandle:
         """Equivalent to modify_vertices().get_handle()."""
     def set_vertices(self, vertices: GeomVertexArrayData, num_vertices: int = ...) -> None:
         """Completely replaces the vertex index list with a new table.  Chances are
@@ -3679,7 +3674,7 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
         methods for more common usage.  We recommend you do not use this method
         directly.  If you do, be sure you know what you are doing!
         """
-    def set_ends(self, ends: PTA_int) -> None:
+    def set_ends(self, ends: PTA_int, /) -> None:
         """Completely replaces the primitive ends array with a new table.  Chances are
         good that you should also replace the vertices list with set_vertices() at
         the same time.
@@ -3946,15 +3941,15 @@ class TextureStage(TypedWritableReferenceCount):
         """Initialize the texture stage at construction"""
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: TextureStage) -> bool: ...
+    def __lt__(self, other: TextureStage, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
-    def set_name(self, name: str) -> None:
+    def assign(self, copy: Self, /) -> Self: ...
+    def set_name(self, name: str, /) -> None:
         """Changes the name of this texture stage"""
     def get_name(self) -> str:
         """Returns the name of this texture stage"""
-    def set_sort(self, sort: int) -> None:
+    def set_sort(self, sort: int, /) -> None:
         """Changes the order in which the texture associated with this stage is
         rendered relative to the other texture stages.  When geometry is rendered
         with multiple textures, the textures are rendered in order from the lowest
@@ -3966,7 +3961,7 @@ class TextureStage(TypedWritableReferenceCount):
         """
     def get_sort(self) -> int:
         """Returns the sort order of this texture stage."""
-    def set_priority(self, priority: int) -> None:
+    def set_priority(self, priority: int, /) -> None:
         """Changes the relative importance of the texture associated with this stage
         relative to the other texture stages that are applied simultaneously.
 
@@ -3983,13 +3978,7 @@ class TextureStage(TypedWritableReferenceCount):
         This is specially helpful for cards that do not support more than n stages
         of multi-texturing.
         """
-    @overload
-    def set_texcoord_name(self, name: InternalName) -> None:
-        """Indicate which set of UV's this texture stage will use.  Geometry may have
-        any number of associated UV sets, each of which must have a unique name.
-        """
-    @overload
-    def set_texcoord_name(self, texcoord_name: str) -> None:
+    def set_texcoord_name(self, name_or_texcoord_name: InternalName | str, /) -> None:
         """Indicate which set of UV's this texture stage will use.  Geometry may have
         any number of associated UV sets, each of which must have a unique name.
         """
@@ -4003,7 +3992,7 @@ class TextureStage(TypedWritableReferenceCount):
         """Returns the set of binormals this texture stage will use.  This is the same
         as get_binormal_name(), except that the first part is "binormal".
         """
-    def set_mode(self, mode: _TextureStage_Mode) -> None:
+    def set_mode(self, mode: _TextureStage_Mode, /) -> None:
         """Set the mode of this texture stage"""
     def get_mode(self) -> _TextureStage_Mode:
         """Return the mode of this stage"""
@@ -4012,11 +4001,11 @@ class TextureStage(TypedWritableReferenceCount):
         pipeline.  This excludes texture stages such as normal mapping and the
         like.
         """
-    def set_color(self, color: Vec4Like) -> None:
+    def set_color(self, color: Vec4Like, /) -> None:
         """Set the color for this stage"""
     def get_color(self) -> LColor:
         """return the color for this stage"""
-    def set_rgb_scale(self, rgb_scale: int) -> None:
+    def set_rgb_scale(self, rgb_scale: int, /) -> None:
         """Sets an additional factor that will scale all three r, g, b components
         after the texture has been applied.  This is used only when the mode is
         CM_combine.
@@ -4025,7 +4014,7 @@ class TextureStage(TypedWritableReferenceCount):
         """
     def get_rgb_scale(self) -> int:
         """See set_rgb_scale()."""
-    def set_alpha_scale(self, alpha_scale: int) -> None:
+    def set_alpha_scale(self, alpha_scale: int, /) -> None:
         """Sets an additional factor that will scale the alpha component after the
         texture has been applied.  This is used only when the mode is CM_combine.
 
@@ -4033,7 +4022,7 @@ class TextureStage(TypedWritableReferenceCount):
         """
     def get_alpha_scale(self) -> int:
         """See set_alpha_scale()."""
-    def set_saved_result(self, saved_result: bool) -> None:
+    def set_saved_result(self, saved_result: bool, /) -> None:
         """Sets the saved_result flag.  When this is true, the output of this stage
         will be supplied as the "last_saved_result" source for any future stages,
         until the next TextureStage with a saved_result set true is encountered.
@@ -4048,7 +4037,7 @@ class TextureStage(TypedWritableReferenceCount):
         """Returns the current setting of the saved_result flag.  See
         set_saved_result().
         """
-    def set_tex_view_offset(self, tex_view_offset: int) -> None:
+    def set_tex_view_offset(self, tex_view_offset: int, /) -> None:
         """Sets the tex_view_offset value.  This is used only when a special multiview
         texture is bound to the TextureStage, and it selects the particular view of
         the texture that is to be used.
@@ -4186,7 +4175,7 @@ class TextureStage(TypedWritableReferenceCount):
         """Returns true if the TextureStage makes use of the CS_primary_color combine
         source.
         """
-    def compare_to(self, other: TextureStage) -> int:
+    def compare_to(self, other: TextureStage, /) -> int:
         """Returns a number less than zero if this TextureStage sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
         The sorting order is arbitrary and largely meaningless, except to
@@ -4194,7 +4183,7 @@ class TextureStage(TypedWritableReferenceCount):
         """
     def write(self, out: ostream, indent_level: int = ...) -> None:
         """Writes the details of this stage"""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Just a single line output"""
     @staticmethod
     def get_default() -> TextureStage:
@@ -4275,7 +4264,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
     def __init__(self, data: GeomVertexData) -> None: ...
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def make_copy(self) -> Geom:
         """Returns a newly-allocated Geom that is a shallow copy of this one.  It will
         be a different Geom pointer, but its internal data may or may not be shared
@@ -4302,14 +4291,14 @@ class Geom(CopyOnWriteObject, GeomEnums):
         individual GeomPrimitives that have been added to the geom.
         @deprecated  This is no longer very useful.
         """
-    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint) -> None:
+    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint, /) -> None:
         """Changes the UsageHint hint for all of the primitives on this Geom to the
         same value.  See get_usage_hint().
 
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def get_vertex_data(self, current_thread: Thread = ...) -> GeomVertexData:
+    def get_vertex_data(self, current_thread: Thread = ..., /) -> GeomVertexData:
         """Returns a const pointer to the GeomVertexData, for application code to
         directly examine (but not modify) the geom's underlying data.
         """
@@ -4320,7 +4309,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def set_vertex_data(self, data: GeomVertexData) -> None:
+    def set_vertex_data(self, data: GeomVertexData, /) -> None:
         """Replaces the Geom's underlying vertex data table with a completely new
         table.
 
@@ -4337,7 +4326,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def make_nonindexed(self, composite_only: bool) -> int:
+    def make_nonindexed(self, composite_only: bool, /) -> int:
         """Converts the geom from indexed to nonindexed by duplicating vertices as
         necessary.  If composite_only is true, then only composite primitives such
         as trifans and tristrips are converted.  Returns the number of
@@ -4371,12 +4360,12 @@ class Geom(CopyOnWriteObject, GeomEnums):
         """Returns the number of GeomPrimitive objects stored within the Geom, each of
         which represents a number of primitives of a particular type.
         """
-    def get_primitive(self, i: int) -> GeomPrimitive:
+    def get_primitive(self, i: int, /) -> GeomPrimitive:
         """Returns a const pointer to the ith GeomPrimitive object stored within the
         Geom.  Use this call only to inspect the ith object; use modify_primitive()
         or set_primitive() if you want to modify it.
         """
-    def modify_primitive(self, i: int) -> GeomPrimitive:
+    def modify_primitive(self, i: int, /) -> GeomPrimitive:
         """Returns a modifiable pointer to the ith GeomPrimitive object stored within
         the Geom, so application code can directly manipulate the properties of
         this primitive.
@@ -4399,7 +4388,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def add_primitive(self, primitive: GeomPrimitive) -> None:
+    def add_primitive(self, primitive: GeomPrimitive, /) -> None:
         """Inserts a new GeomPrimitive structure to the Geom object.  This specifies a
         particular subset of vertices that are used to define geometric primitives
         of the indicated type.
@@ -4407,7 +4396,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def remove_primitive(self, i: int) -> None:
+    def remove_primitive(self, i: int, /) -> None:
         """Removes the ith primitive from the list.
 
         Don't call this in a downstream thread unless you don't mind it blowing
@@ -4539,7 +4528,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
 
         @since 1.10.0
         """
-    def copy_primitives_from(self, other: Geom) -> bool:
+    def copy_primitives_from(self, other: Geom, /) -> bool:
         """Copies the primitives from the indicated Geom into this one.  This does
         require that both Geoms contain the same fundamental type primitives, both
         have a compatible shade model, and both use the same GeomVertexData.  Both
@@ -4553,7 +4542,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         """Returns the number of bytes consumed by the geom and its primitives (but
         not including its vertex table).
         """
-    def get_modified(self, current_thread: Thread = ...) -> UpdateSeq:
+    def get_modified(self, current_thread: Thread = ..., /) -> UpdateSeq:
         """Returns a sequence number which is guaranteed to change at least every time
         any of the primitives in the Geom is modified, or the set of primitives is
         modified.  However, this does not include modifications to the vertex data,
@@ -4567,7 +4556,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         This does not also test the Geom's associated GeomVertexData.  That must be
         tested separately.
         """
-    def transform_vertices(self, mat: Mat4Like) -> None:
+    def transform_vertices(self, mat: Mat4Like, /) -> None:
         """Applies the indicated transform to all of the vertices in the Geom.  If the
         Geom happens to share a vertex table with another Geom, this operation will
         duplicate the vertex table instead of breaking the other Geom; however, if
@@ -4576,7 +4565,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         GeomTransformer if you will be applying the same transform to multiple
         Geoms.
         """
-    def check_valid(self, vertex_data: GeomVertexData = ...) -> bool:
+    def check_valid(self, vertex_data: GeomVertexData = ..., /) -> bool:
         """Verifies that the all of the primitives within the geom reference vertices
         that actually exist within the geom's GeomVertexData.  Returns true if the
         geom appears to be valid, false otherwise.
@@ -4586,15 +4575,15 @@ class Geom(CopyOnWriteObject, GeomEnums):
         that actually exist within the indicated GeomVertexData.  Returns true if
         the geom appears to be valid, false otherwise.
         """
-    def get_bounds(self, current_thread: Thread = ...) -> BoundingVolume:
+    def get_bounds(self, current_thread: Thread = ..., /) -> BoundingVolume:
         """Returns the bounding volume for the Geom."""
-    def get_nested_vertices(self, current_thread: Thread = ...) -> int:
+    def get_nested_vertices(self, current_thread: Thread = ..., /) -> int:
         """Returns the number of vertices rendered by all primitives within the Geom."""
     def mark_bounds_stale(self) -> None:
         """Marks the bounding volume of the Geom as stale so that it should be
         recomputed.  Usually it is not necessary to call this explicitly.
         """
-    def set_bounds_type(self, bounds_type: _BoundingVolume_BoundsType) -> None:
+    def set_bounds_type(self, bounds_type: _BoundingVolume_BoundsType, /) -> None:
         """Specifies the desired type of bounding volume that will be created for this
         Geom.  This is normally BoundingVolume::BT_default, which means to set the
         type according to the config variable "bounds-type".
@@ -4608,7 +4597,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         """
     def get_bounds_type(self) -> _BoundingVolume_BoundsType:
         """Returns the bounding volume type set with set_bounds_type()."""
-    def set_bounds(self, volume: BoundingVolume) -> None:
+    def set_bounds(self, volume: BoundingVolume, /) -> None:
         """Resets the bounding volume so that it is the indicated volume.  When it is
         explicitly set, the bounding volume will no longer be automatically
         computed; call clear_bounds() if you would like to return the bounding
@@ -4625,7 +4614,7 @@ class Geom(CopyOnWriteObject, GeomEnums):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def clear_cache(self) -> None:
         """Removes all of the previously-cached results of munge_geom().
@@ -4634,14 +4623,14 @@ class Geom(CopyOnWriteObject, GeomEnums):
         Use clear_cache_stage() instead if you only want to blow away the cache at
         the current stage and upstream.
         """
-    def clear_cache_stage(self, current_thread: Thread) -> None:
+    def clear_cache_stage(self, current_thread: Thread, /) -> None:
         """Removes all of the previously-cached results of munge_geom(), at the
         current pipeline stage and upstream.  Does not affect the downstream cache.
 
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def prepare(self, prepared_objects: PreparedGraphicsObjects) -> None:
+    def prepare(self, prepared_objects: PreparedGraphicsObjects, /) -> None:
         """Indicates that the geom should be enqueued to be prepared in the indicated
         prepared_objects at the beginning of the next frame.  This will ensure the
         geom is already loaded into geom memory if it is expected to be rendered
@@ -4650,11 +4639,11 @@ class Geom(CopyOnWriteObject, GeomEnums):
         Use this function instead of prepare_now() to preload geoms from a user
         interface standpoint.
         """
-    def is_prepared(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def is_prepared(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if the geom has already been prepared or enqueued for
         preparation on the indicated GSG, false otherwise.
         """
-    def release(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def release(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Frees the geom context only on the indicated object, if it exists there.
         Returns true if it was released, false if it had not been prepared.
         """
@@ -4909,7 +4898,7 @@ class GeomVertexReader(GeomEnums):
         operator to assign a valid GeomVertexReader to this object before you can
         use it.
         """
-    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader | Thread) -> Self: ...
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader | Thread, /) -> Self: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the reader is processing.  This may
         return NULL if the reader was constructed with just an array pointer.
@@ -4931,7 +4920,7 @@ class GeomVertexReader(GeomEnums):
         """Returns the Thread pointer of the currently-executing thread, as passed to
         the constructor of this object.
         """
-    def set_force(self, force: bool) -> None:
+    def set_force(self, force: bool, /) -> None:
         """Sets the value of the force flag.  When this is true (the default), vertex
         data will be paged in from disk if necessary.  When this is false, the
         GeomVertexData will simply return a failure code when attempting to read
@@ -4989,14 +4978,14 @@ class GeomVertexReader(GeomEnums):
         """
     def get_column(self) -> GeomVertexColumn:
         """Returns the description of the data type that the reader is working on."""
-    def set_row_unsafe(self, row: int) -> None:
+    def set_row_unsafe(self, row: int, /) -> None:
         """Sets the start row to the indicated value, without internal checks.  This
         is the same as set_row(), but it does not check for the possibility that
         the array has been reallocated internally for some reason; use only when
         you are confident that the array is unchanged and you really need every bit
         of available performance.
         """
-    def set_row(self, row: int) -> None:
+    def set_row(self, row: int, /) -> None:
         """Sets the start row to the indicated value.  The reader will begin reading
         from the indicated row; each subsequent get_data*() call will return the
         data from the subsequent row.  If set_column() is called, the reader will
@@ -5109,7 +5098,7 @@ class GeomVertexReader(GeomEnums):
         """Returns the data associated with the read row, expressed as a 4-component
         value, and advances the read row.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     getVertexData = get_vertex_data
     getArrayData = get_array_data
     getArrayHandle = get_array_handle
@@ -5210,7 +5199,7 @@ class GeomVertexWriter(GeomEnums):
         operator to assign a valid GeomVertexWriter to this object before you can
         use it.
         """
-    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter | Thread) -> Self: ...
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter | Thread, /) -> Self: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the writer is processing.  This may
         return NULL if the writer was constructed with just an array pointer.
@@ -5266,7 +5255,7 @@ class GeomVertexWriter(GeomEnums):
         """
     def clear(self) -> None:
         """Resets the GeomVertexWriter to the initial state."""
-    def reserve_num_rows(self, num_rows: int) -> bool:
+    def reserve_num_rows(self, num_rows: int, /) -> bool:
         """This ensures that enough memory space for num_rows is allocated, so that
         you may add up to num_rows rows without causing a new memory allocation.
         This is a performance optimization only; it is especially useful when you
@@ -5282,14 +5271,14 @@ class GeomVertexWriter(GeomEnums):
         """
     def get_column(self) -> GeomVertexColumn:
         """Returns the description of the data type that the writer is working on."""
-    def set_row_unsafe(self, row: int) -> None:
+    def set_row_unsafe(self, row: int, /) -> None:
         """Sets the start row to the indicated value, without internal checks.  This
         is the same as set_row(), but it does not check for the possibility that
         the array has been reallocated internally for some reason; use only when
         you are confident that the array is unchanged and you really need every bit
         of available performance.
         """
-    def set_row(self, row: int) -> None:
+    def set_row(self, row: int, /) -> None:
         """Sets the start row to the indicated value.  The writer will begin writing
         to the indicated row; each subsequent set_data*() call will store the data
         into the subsequent row.  If set_column() is called, the writer will return
@@ -5308,7 +5297,7 @@ class GeomVertexWriter(GeomEnums):
         false otherwise.  If this is true, another call to set_data*() will result
         in a crash, but another call to add_data*() will add a new row.
         """
-    def set_data1f(self, data: float) -> None:
+    def set_data1f(self, data: float, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5356,19 +5345,19 @@ class GeomVertexWriter(GeomEnums):
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix3f(self, mat: LMatrix3f) -> None:
+    def set_matrix3f(self, mat: LMatrix3f, /) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix4f(self, mat: Mat4Like) -> None:
+    def set_matrix4f(self, mat: Mat4Like, /) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_data1d(self, data: float) -> None:
+    def set_data1d(self, data: float, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5416,19 +5405,19 @@ class GeomVertexWriter(GeomEnums):
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix3d(self, mat: LMatrix3d) -> None:
+    def set_matrix3d(self, mat: LMatrix3d, /) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix4d(self, mat: DoubleMat4Like) -> None:
+    def set_matrix4d(self, mat: DoubleMat4Like, /) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_data1(self, data: float) -> None:
+    def set_data1(self, data: float, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5476,19 +5465,19 @@ class GeomVertexWriter(GeomEnums):
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix3(self, mat: LMatrix3) -> None:
+    def set_matrix3(self, mat: LMatrix3, /) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_matrix4(self, mat: Mat4Like) -> None:
+    def set_matrix4(self, mat: Mat4Like, /) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         It is an error for the write row to advance past the end of data.
         """
-    def set_data1i(self, data: int) -> None:
+    def set_data1i(self, data: int, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5536,7 +5525,7 @@ class GeomVertexWriter(GeomEnums):
 
         It is an error for the write row to advance past the end of data.
         """
-    def add_data1f(self, data: float) -> None:
+    def add_data1f(self, data: float, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5591,21 +5580,21 @@ class GeomVertexWriter(GeomEnums):
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix3f(self, mat: LMatrix3f) -> None:
+    def add_matrix3f(self, mat: LMatrix3f, /) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix4f(self, mat: Mat4Like) -> None:
+    def add_matrix4f(self, mat: Mat4Like, /) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_data1d(self, data: float) -> None:
+    def add_data1d(self, data: float, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5660,21 +5649,21 @@ class GeomVertexWriter(GeomEnums):
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix3d(self, mat: LMatrix3d) -> None:
+    def add_matrix3d(self, mat: LMatrix3d, /) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix4d(self, mat: DoubleMat4Like) -> None:
+    def add_matrix4d(self, mat: DoubleMat4Like, /) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_data1(self, data: float) -> None:
+    def add_data1(self, data: float, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5729,21 +5718,21 @@ class GeomVertexWriter(GeomEnums):
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix3(self, mat: LMatrix3) -> None:
+    def add_matrix3(self, mat: LMatrix3, /) -> None:
         """Sets the write row to a 3-by-3 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_matrix4(self, mat: Mat4Like) -> None:
+    def add_matrix4(self, mat: Mat4Like, /) -> None:
         """Sets the write row to a 4-by-4 matrix, and advances the write row.  This is
         a special method that can only be used on matrix columns.
 
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def add_data1i(self, data: int) -> None:
+    def add_data1i(self, data: int, /) -> None:
         """Sets the write row to a particular 1-component value, and advances the
         write row.
 
@@ -5798,7 +5787,7 @@ class GeomVertexWriter(GeomEnums):
         If the write row advances past the end of data, implicitly adds a new row
         to the data.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     getVertexData = get_vertex_data
     getArrayData = get_array_data
     getArrayHandle = get_array_handle
@@ -5903,7 +5892,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
         """
     def upcast_to_GeomVertexWriter(self) -> GeomVertexWriter: ...
     def upcast_to_GeomVertexReader(self) -> GeomVertexReader: ...
-    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter | Thread) -> Self: ...  # type: ignore[override]
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter | Thread, /) -> Self: ...  # type: ignore[override]
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the rewriter is processing."""
     def get_array_data(self) -> GeomVertexArrayData:
@@ -5961,7 +5950,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
         """
     def get_column(self) -> GeomVertexColumn:
         """Returns the description of the data type that the rewriter is working on."""
-    def set_row(self, row: int) -> None:
+    def set_row(self, row: int, /) -> None:
         """Sets the start, write, and write index to the indicated value.  The
         rewriter will begin traversing from the given row.
         """
@@ -6043,33 +6032,33 @@ class SamplerState:
         """Creates a new SamplerState initialized to the default values."""
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: SamplerState) -> bool: ...
+    def __lt__(self, other: SamplerState, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
     def get_default() -> SamplerState:
         """Returns a reference to the global default immutable SamplerState object."""
-    def set_wrap_u(self, wrap: _SamplerState_WrapMode) -> None:
+    def set_wrap_u(self, wrap: _SamplerState_WrapMode, /) -> None:
         """This setting determines what happens when the SamplerState is sampled with
         a U value outside the range 0.0-1.0.  The default is WM_repeat, which
         indicates that the SamplerState should repeat indefinitely.
         """
-    def set_wrap_v(self, wrap: _SamplerState_WrapMode) -> None:
+    def set_wrap_v(self, wrap: _SamplerState_WrapMode, /) -> None:
         """This setting determines what happens when the SamplerState is sampled with
         a V value outside the range 0.0-1.0.  The default is WM_repeat, which
         indicates that the SamplerState should repeat indefinitely.
         """
-    def set_wrap_w(self, wrap: _SamplerState_WrapMode) -> None:
+    def set_wrap_w(self, wrap: _SamplerState_WrapMode, /) -> None:
         """The W wrap direction is only used for 3-d SamplerStates."""
-    def set_minfilter(self, filter: _SamplerState_FilterType) -> None:
+    def set_minfilter(self, filter: _SamplerState_FilterType, /) -> None:
         """Sets the filtering method that should be used when viewing the SamplerState
         from a distance.
         """
-    def set_magfilter(self, filter: _SamplerState_FilterType) -> None:
+    def set_magfilter(self, filter: _SamplerState_FilterType, /) -> None:
         """Sets the filtering method that should be used when viewing the SamplerState
         up close.
         """
-    def set_anisotropic_degree(self, anisotropic_degree: int) -> None:
+    def set_anisotropic_degree(self, anisotropic_degree: int, /) -> None:
         """Specifies the level of anisotropic filtering to apply to the SamplerState.
         Set this 0 to indicate the default value, which is specified in the
         SamplerState-anisotropic-degree config variable.
@@ -6078,20 +6067,20 @@ class SamplerState:
         explicitly enable anisotropic filtering, set it to a value higher than 1;
         larger numbers indicate greater degrees of filtering.
         """
-    def set_border_color(self, color: Vec4Like) -> None:
+    def set_border_color(self, color: Vec4Like, /) -> None:
         """Specifies the solid color of the SamplerState's border.  Some OpenGL
         implementations use a border for tiling SamplerStates; in Panda, it is only
         used for specifying the clamp color.
         """
-    def set_min_lod(self, min_lod: float) -> None:
+    def set_min_lod(self, min_lod: float, /) -> None:
         """Sets the minimum level of detail that will be used when sampling this
         texture.  This may be a negative value.
         """
-    def set_max_lod(self, max_lod: float) -> None:
+    def set_max_lod(self, max_lod: float, /) -> None:
         """Sets the maximum level of detail that will be used when sampling this
         texture.  This may exceed the number of mipmap levels that the texture has.
         """
-    def set_lod_bias(self, lod_bias: float) -> None:
+    def set_lod_bias(self, lod_bias: float, /) -> None:
         """Sets the value that will be added to the level of detail when sampling the
         texture.  This may be a negative value, although some graphics hardware may
         not support the use of negative LOD values.
@@ -6156,39 +6145,39 @@ class SamplerState:
         mipmapping, false otherwise.
         """
     @staticmethod
-    def is_mipmap(type: _SamplerState_FilterType) -> bool:
+    def is_mipmap(type: _SamplerState_FilterType, /) -> bool:
         """Returns true if the indicated filter type requires the use of mipmaps, or
         false if it does not.
         """
     @staticmethod
-    def format_filter_type(ft: _SamplerState_FilterType) -> str:
+    def format_filter_type(ft: _SamplerState_FilterType, /) -> str:
         """Returns the indicated FilterType converted to a string word."""
     @staticmethod
-    def string_filter_type(str: str) -> _SamplerState_FilterType:
+    def string_filter_type(str: str, /) -> _SamplerState_FilterType:
         """Returns the FilterType value associated with the given string
         representation, or FT_invalid if the string does not match any known
         FilterType value.
         """
     @staticmethod
-    def format_wrap_mode(wm: _SamplerState_WrapMode) -> str:
+    def format_wrap_mode(wm: _SamplerState_WrapMode, /) -> str:
         """Returns the indicated WrapMode converted to a string word."""
     @staticmethod
-    def string_wrap_mode(str: str) -> _SamplerState_WrapMode:
+    def string_wrap_mode(str: str, /) -> _SamplerState_WrapMode:
         """Returns the WrapMode value associated with the given string representation,
         or WM_invalid if the string does not match any known WrapMode value.
         """
-    def prepare(self, prepared_objects: PreparedGraphicsObjects) -> None:
+    def prepare(self, prepared_objects: PreparedGraphicsObjects, /) -> None:
         """Indicates that the sampler should be enqueued to be prepared in the
         indicated prepared_objects at the beginning of the next frame.
 
         Use this function instead of prepare_now() to preload samplers from a user
         interface standpoint.
         """
-    def is_prepared(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def is_prepared(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if the sampler has already been prepared or enqueued for
         preparation on the indicated GSG, false otherwise.
         """
-    def release(self, prepared_objects: PreparedGraphicsObjects) -> None:
+    def release(self, prepared_objects: PreparedGraphicsObjects, /) -> None:
         """Frees the texture context only on the indicated object, if it exists there.
         Returns true if it was released, false if it had not been prepared.
         """
@@ -6694,7 +6683,7 @@ class Texture(TypedWritableReferenceCount, Namable):
 
         Note that a buffer texture's format needs to match the component type.
         """
-    def generate_normalization_cube_map(self, size: int) -> None:
+    def generate_normalization_cube_map(self, size: int, /) -> None:
         """Generates a special cube map image in the texture that can be used to apply
         bump mapping effects: for each texel in the cube map that is indexed by the
         3-d texture coordinates (x, y, z), the resulting value is the normalized
@@ -6721,7 +6710,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns true if a color was previously set using set_clear_color."""
     def get_clear_color(self) -> LColor:
         """Returns the color that was previously set using set_clear_color."""
-    def set_clear_color(self, color: Vec4Like) -> None:
+    def set_clear_color(self, color: Vec4Like, /) -> None:
         """Sets the color that will be used to fill the texture image in absence of
         any image data.  It is used when any of the setup_texture functions or
         clear_image is called and image data is not provided using read() or
@@ -6966,7 +6955,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         Returns true on success, false on failure (in which case, the Texture may
         or may not still be valid).
         """
-    def load_related(self, suffix: InternalName | str) -> Texture:
+    def load_related(self, suffix: InternalName | str, /) -> Texture:
         """Loads a texture whose filename is derived by concatenating a suffix to the
         filename of this texture.  May return NULL, for example, if this texture
         doesn't have a filename.
@@ -6979,7 +6968,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the filename that has been set.  This is the name of the file as it
         was requested.  Also see get_fullpath().
         """
-    def set_filename(self, filename: StrOrBytesPath) -> None:
+    def set_filename(self, filename: StrOrBytesPath, /) -> None:
         """Sets the name of the file that contains the image's contents.  Normally,
         this is set automatically when the image is loaded, for instance via
         Texture::read().
@@ -6999,7 +6988,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         represents the name of the alpha component, which is stored in a separate
         file.  See also get_filename(), and get_alpha_fullpath().
         """
-    def set_alpha_filename(self, alpha_filename: StrOrBytesPath) -> None:
+    def set_alpha_filename(self, alpha_filename: StrOrBytesPath, /) -> None:
         """Sets the name of the file that contains the image's alpha channel contents.
         Normally, this is set automatically when the image is loaded, for instance
         via Texture::read().
@@ -7022,7 +7011,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the fullpath that has been set.  This is the full path to the file
         as it was found along the texture search path.
         """
-    def set_fullpath(self, fullpath: StrOrBytesPath) -> None:
+    def set_fullpath(self, fullpath: StrOrBytesPath, /) -> None:
         """Sets the full pathname to the file that contains the image's contents, as
         found along the search path.  Normally, this is set automatically when the
         image is loaded, for instance via Texture::read().
@@ -7037,7 +7026,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the alpha_fullpath that has been set.  This is the full path to the
         alpha part of the image file as it was found along the texture search path.
         """
-    def set_alpha_fullpath(self, alpha_fullpath: StrOrBytesPath) -> None:
+    def set_alpha_fullpath(self, alpha_fullpath: StrOrBytesPath, /) -> None:
         """Sets the full pathname to the file that contains the image's alpha channel
         contents, as found along the search path.  Normally, this is set
         automatically when the image is loaded, for instance via Texture::read().
@@ -7048,7 +7037,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """
     def get_x_size(self) -> int:
         """Returns the width of the texture image in texels."""
-    def set_x_size(self, x_size: int) -> None:
+    def set_x_size(self, x_size: int, /) -> None:
         """Changes the x size indicated for the texture.  This also implicitly unloads
         the texture if it has already been loaded.
         """
@@ -7056,7 +7045,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the height of the texture image in texels.  For a 1-d texture, this
         will be 1.
         """
-    def set_y_size(self, y_size: int) -> None:
+    def set_y_size(self, y_size: int, /) -> None:
         """Changes the y size indicated for the texture.  This also implicitly unloads
         the texture if it has already been loaded.
         """
@@ -7064,7 +7053,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the depth of the texture image in texels.  For a 1-d texture or 2-d
         texture, this will be 1. For a cube map texture, this will be 6.
         """
-    def set_z_size(self, z_size: int) -> None:
+    def set_z_size(self, z_size: int, /) -> None:
         """Changes the z size indicated for the texture.  This also implicitly unloads
         the texture if it has already been loaded.
         """
@@ -7077,7 +7066,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         If this value is greater than one, the additional views are accessed as
         additional pages beyond get_z_size().
         """
-    def set_num_views(self, num_views: int) -> None:
+    def set_num_views(self, num_views: int, /) -> None:
         """Sets the number of "views" within a texture.  A view is a completely
         separate image stored within the Texture object.  Most textures have only
         one view, but a stereo texture, for instance, may have two views, a left
@@ -7114,13 +7103,13 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the format of the texture, which represents both the semantic
         meaning of the texels and, to some extent, their storage information.
         """
-    def set_format(self, format: _Texture_Format) -> None:
+    def set_format(self, format: _Texture_Format, /) -> None:
         """Changes the format value for the texture components.  This implicitly sets
         num_components as well.
         """
     def get_component_type(self) -> _Texture_ComponentType:
         """Returns the numeric interpretation of each component of the texture."""
-    def set_component_type(self, component_type: _Texture_ComponentType) -> None:
+    def set_component_type(self, component_type: _Texture_ComponentType, /) -> None:
         """Changes the data value for the texture components.  This implicitly sets
         component_width as well.
         """
@@ -7130,14 +7119,14 @@ class Texture(TypedWritableReferenceCount, Namable):
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_wrap_u(self, wrap: _SamplerState_WrapMode) -> None: ...
+    def set_wrap_u(self, wrap: _SamplerState_WrapMode, /) -> None: ...
     def get_wrap_v(self) -> _SamplerState_WrapMode:
         """Returns the wrap mode of the texture in the V direction.
 
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_wrap_v(self, wrap: _SamplerState_WrapMode) -> None: ...
+    def set_wrap_v(self, wrap: _SamplerState_WrapMode, /) -> None: ...
     def get_wrap_w(self) -> _SamplerState_WrapMode:
         """Returns the wrap mode of the texture in the W direction.  This is the depth
         direction of 3-d textures.
@@ -7145,7 +7134,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_wrap_w(self, wrap: _SamplerState_WrapMode) -> None: ...
+    def set_wrap_w(self, wrap: _SamplerState_WrapMode, /) -> None: ...
     def get_minfilter(self) -> _SamplerState_FilterType:
         """Returns the filter mode of the texture for minification.  If this is one of
         the mipmap constants, then the texture requires mipmaps.  This may return
@@ -7162,7 +7151,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_minfilter(self, filter: _SamplerState_FilterType) -> None: ...
+    def set_minfilter(self, filter: _SamplerState_FilterType, /) -> None: ...
     def get_magfilter(self) -> _SamplerState_FilterType:
         """Returns the filter mode of the texture for magnification.  The mipmap
         constants are invalid here.  This may return FT_default; see also
@@ -7179,7 +7168,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_magfilter(self, filter: _SamplerState_FilterType) -> None: ...
+    def set_magfilter(self, filter: _SamplerState_FilterType, /) -> None: ...
     def get_anisotropic_degree(self) -> int:
         """Returns the degree of anisotropic filtering that should be applied to the
         texture.  This value may return 0, indicating the default value; see also
@@ -7196,7 +7185,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_anisotropic_degree(self, anisotropic_degree: int) -> None:
+    def set_anisotropic_degree(self, anisotropic_degree: int, /) -> None:
         """Specifies the level of anisotropic filtering to apply to the texture.  Set
         this 0 to indicate the default value, which is specified in the texture-
         anisotropic-degree config variable.
@@ -7216,7 +7205,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         This returns the default sampler state for this texture; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_border_color(self, color: Vec4Like) -> None:
+    def set_border_color(self, color: Vec4Like, /) -> None:
         """Specifies the solid color of the texture's border.  Some OpenGL
         implementations use a border for tiling textures; in Panda, it is only used
         for specifying the clamp color.
@@ -7242,7 +7231,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         GSG does not support the requested compression mode, in which case the
         texture may actually be stored uncompressed in texture memory.
         """
-    def set_compression(self, compression: _Texture_CompressionMode) -> None:
+    def set_compression(self, compression: _Texture_CompressionMode, /) -> None:
         """Requests that this particular Texture be compressed when it is loaded into
         texture memory.
 
@@ -7265,7 +7254,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         automatically by the low-level display code when a texture is bound to a
         framebuffer.
         """
-    def set_render_to_texture(self, render_to_texture: bool) -> None:
+    def set_render_to_texture(self, render_to_texture: bool, /) -> None:
         """Sets a flag on the texture that indicates whether the texture is intended
         to be used as a direct-render target, by binding a framebuffer to a texture
         and rendering directly into the texture.
@@ -7283,7 +7272,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         wrap and filter properties specified on the texture level; it may still be
         overridden by a sampler state specified at a higher level.
         """
-    def set_default_sampler(self, sampler: SamplerState) -> None:
+    def set_default_sampler(self, sampler: SamplerState, /) -> None:
         """This sets the default sampler state for this texture, containing the wrap
         and filter properties specified on the texture level; it may still be
         overridden by a sampler state specified at a higher level.  This
@@ -7307,7 +7296,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         if this texture doesn't specify a quality level.  This value will not
         normally return QL_default (unless there is an error in the config file)
         """
-    def set_quality_level(self, quality_level: _Texture_QualityLevel) -> None:
+    def set_quality_level(self, quality_level: _Texture_QualityLevel, /) -> None:
         """Sets a hint to the renderer about the desired performance / quality
         tradeoff for this particular texture.  This is most useful for the
         tinydisplay software renderer; for normal, hardware-accelerated renderers,
@@ -7320,19 +7309,19 @@ class Texture(TypedWritableReferenceCount, Namable):
         Note that this returns a number appropriate for mipmapping, even if the
         texture does not currently have mipmapping enabled.
         """
-    def get_expected_mipmap_x_size(self, n: int) -> int:
+    def get_expected_mipmap_x_size(self, n: int, /) -> int:
         """Returns the x_size that the nth mipmap level should have, based on the
         texture's size.
         """
-    def get_expected_mipmap_y_size(self, n: int) -> int:
+    def get_expected_mipmap_y_size(self, n: int, /) -> int:
         """Returns the y_size that the nth mipmap level should have, based on the
         texture's size.
         """
-    def get_expected_mipmap_z_size(self, n: int) -> int:
+    def get_expected_mipmap_z_size(self, n: int, /) -> int:
         """Returns the z_size that the nth mipmap level should have, based on the
         texture's size.
         """
-    def get_expected_mipmap_num_pages(self, n: int) -> int:
+    def get_expected_mipmap_num_pages(self, n: int, /) -> int:
         """Returns the total number of pages that the nth mipmap level should have,
         based on the texture's size.  This is usually the same as
         get_expected_mipmap_z_size(), except for a multiview texture, in which case
@@ -7436,7 +7425,7 @@ class Texture(TypedWritableReferenceCount, Namable):
 
         If an uncompressed image cannot be found, returns NULL.
         """
-    def get_ram_image_as(self, requested_format: str) -> CPTA_uchar:
+    def get_ram_image_as(self, requested_format: str, /) -> CPTA_uchar:
         """Returns the uncompressed system-RAM image data associated with the texture.
         Rather than just returning a pointer to the data, like
         get_uncompressed_ram_image, this function first processes the data and
@@ -7476,7 +7465,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     def set_ram_image_as(self, image, provided_format: str) -> None: ...
     def clear_ram_image(self) -> None:
         """Discards the current system-RAM image."""
-    def set_keep_ram_image(self, keep_ram_image: bool) -> None:
+    def set_keep_ram_image(self, keep_ram_image: bool, /) -> None:
         """Sets the flag that indicates whether this Texture is eligible to have its
         main RAM copy of the texture memory dumped when the texture is prepared for
         rendering.
@@ -7533,7 +7522,7 @@ class Texture(TypedWritableReferenceCount, Namable):
 
         Also see get_num_loadable_ram_mipmap_images().
         """
-    def has_ram_mipmap_image(self, n: int) -> bool:
+    def has_ram_mipmap_image(self, n: int, /) -> bool:
         """Returns true if the Texture has the nth mipmap level available in system
         memory, false otherwise.  If the texture's minfilter mode requires
         mipmapping (see uses_mipmaps()), and all the texture's mipmap levels are
@@ -7556,11 +7545,11 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns true if all expected mipmap levels have been defined and exist in
         the system RAM, or false if even one mipmap level is missing.
         """
-    def get_ram_mipmap_image_size(self, n: int) -> int:
+    def get_ram_mipmap_image_size(self, n: int, /) -> int:
         """Returns the number of bytes used by the in-memory image for mipmap level n,
         or 0 if there is no in-memory image for this mipmap level.
         """
-    def get_ram_mipmap_view_size(self, n: int) -> int:
+    def get_ram_mipmap_view_size(self, n: int, /) -> int:
         """Returns the number of bytes used by the in-memory image per view for mipmap
         level n, or 0 if there is no in-memory image for this mipmap level.
 
@@ -7572,7 +7561,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         a smaller value.  (We do assume that all pages will be the same size on a
         compressed texture).
         """
-    def get_ram_mipmap_page_size(self, n: int) -> int:
+    def get_ram_mipmap_page_size(self, n: int, /) -> int:
         """Returns the number of bytes used by the in-memory image per page for mipmap
         level n, or 0 if there is no in-memory image for this mipmap level.
 
@@ -7581,33 +7570,33 @@ class Texture(TypedWritableReferenceCount, Namable):
         a smaller value.  (We do assume that all pages will be the same size on a
         compressed texture).
         """
-    def get_expected_ram_mipmap_image_size(self, n: int) -> int:
+    def get_expected_ram_mipmap_image_size(self, n: int, /) -> int:
         """Returns the number of bytes that *ought* to be used by the in-memory image
         for mipmap level n, based on the texture parameters.
         """
-    def get_expected_ram_mipmap_view_size(self, n: int) -> int:
+    def get_expected_ram_mipmap_view_size(self, n: int, /) -> int:
         """Returns the number of bytes that *ought* to be used by each view of the in-
         memory image for mipmap level n, based on the texture parameters.  For a
         normal, non-multiview texture, this is the same as
         get_expected_ram_mipmap_image_size(n).
         """
-    def get_expected_ram_mipmap_page_size(self, n: int) -> int:
+    def get_expected_ram_mipmap_page_size(self, n: int, /) -> int:
         """Returns the number of bytes that should be used per each Z page of the 3-d
         texture, for mipmap level n.  For a 2-d or 1-d texture, this is the same as
         get_expected_ram_mipmap_view_size(n).
         """
-    def get_ram_mipmap_image(self, n: int) -> CPTA_uchar:
+    def get_ram_mipmap_image(self, n: int, /) -> CPTA_uchar:
         """Returns the system-RAM image data associated with the nth mipmap level, if
         present.  Returns NULL if the nth mipmap level is not present.
         """
-    def modify_ram_mipmap_image(self, n: int) -> PTA_uchar:
+    def modify_ram_mipmap_image(self, n: int, /) -> PTA_uchar:
         """Returns a modifiable pointer to the system-RAM image for the nth mipmap
         level.  This assumes the RAM image is uncompressed; if this is not the
         case, raises an assertion.
 
         This does *not* affect keep_ram_image.
         """
-    def make_ram_mipmap_image(self, n: int) -> PTA_uchar:
+    def make_ram_mipmap_image(self, n: int, /) -> PTA_uchar:
         """Discards the current system-RAM image for the nth mipmap level, if any, and
         allocates a new buffer of the appropriate size.  Returns the new buffer.
 
@@ -7627,7 +7616,7 @@ class Texture(TypedWritableReferenceCount, Namable):
 
         This does *not* affect keep_ram_image.
         """
-    def clear_ram_mipmap_image(self, n: int) -> None:
+    def clear_ram_mipmap_image(self, n: int, /) -> None:
         """Discards the current system-RAM image for the nth mipmap level."""
     def clear_ram_mipmap_images(self) -> None:
         """Discards the current system-RAM image for all mipmap levels, except level 0
@@ -7727,12 +7716,12 @@ class Texture(TypedWritableReferenceCount, Namable):
         particular texture when it is next loaded from disk.  See
         set_textures_power_2().
         """
-    def set_auto_texture_scale(self, scale: _AutoTextureScale) -> None:
+    def set_auto_texture_scale(self, scale: _AutoTextureScale, /) -> None:
         """Specifies the power-of-2 texture-scaling mode that will be applied to this
         particular texture when it is next loaded from disk.  See
         set_textures_power_2().
         """
-    def prepare(self, prepared_objects: PreparedGraphicsObjects) -> AsyncFuture:
+    def prepare(self, prepared_objects: PreparedGraphicsObjects, /) -> AsyncFuture:
         """Indicates that the texture should be enqueued to be prepared in the
         indicated prepared_objects at the beginning of the next frame.  This will
         ensure the texture is already loaded into texture memory if it is expected
@@ -7741,31 +7730,31 @@ class Texture(TypedWritableReferenceCount, Namable):
         Use this function instead of prepare_now() to preload textures from a user
         interface standpoint.
         """
-    def is_prepared(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def is_prepared(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if the texture has already been prepared or enqueued for
         preparation on the indicated GSG, false otherwise.
         """
-    def was_image_modified(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def was_image_modified(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if the texture needs to be re-loaded onto the indicated GSG,
         either because its image data is out-of-date, or because it's not fully
         prepared now.
         """
-    def get_data_size_bytes(self, prepared_objects: PreparedGraphicsObjects) -> int:
+    def get_data_size_bytes(self, prepared_objects: PreparedGraphicsObjects, /) -> int:
         """Returns the number of bytes which the texture is reported to consume within
         graphics memory, for the indicated GSG.  This may return a nonzero value
         even if the texture is not currently resident; you should also check
         get_resident() if you want to know how much space the texture is actually
         consuming right now.
         """
-    def get_active(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def get_active(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if this Texture was rendered in the most recent frame within
         the indicated GSG.
         """
-    def get_resident(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def get_resident(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if this Texture is reported to be resident within graphics
         memory for the indicated GSG.
         """
-    def release(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def release(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Frees the texture context only on the indicated object, if it exists there.
         Returns true if it was released, false if it had not been prepared.
         """
@@ -7790,14 +7779,14 @@ class Texture(TypedWritableReferenceCount, Namable):
 
         These data objects are not recorded to a bam or txo file.
         """
-    def clear_aux_data(self, key: str) -> None:
+    def clear_aux_data(self, key: str, /) -> None:
         """Removes a record previously recorded via set_aux_data()."""
-    def get_aux_data(self, key: str) -> TypedReferenceCount:
+    def get_aux_data(self, key: str, /) -> TypedReferenceCount:
         """Returns a record previously recorded via set_aux_data().  Returns NULL if
         there was no record associated with the indicated key.
         """
     @staticmethod
-    def set_textures_power_2(scale: _AutoTextureScale) -> None:
+    def set_textures_power_2(scale: _AutoTextureScale, /) -> None:
         """Set this flag to ATS_none, ATS_up, ATS_down, or ATS_pad to control the
         scaling of textures in general, if a particular texture does not override
         this.  See also set_auto_texture_scale() for the per-texture override.
@@ -7866,7 +7855,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Specifies the size of the texture as it exists in its original disk file,
         before any Panda scaling.
         """
-    def set_loaded_from_image(self, flag: bool = ...) -> None:
+    def set_loaded_from_image(self, flag: bool = ..., /) -> None:
         """Sets the flag that indicates the texture has been loaded from a disk file
         or PNMImage.  You should also ensure the filename has been set correctly.
         When this flag is true, the texture may be automatically reloaded when its
@@ -7876,7 +7865,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the flag that indicates the texture has been loaded from a disk
         file or PNMImage.  See set_loaded_from_image().
         """
-    def set_loaded_from_txo(self, flag: bool = ...) -> None:
+    def set_loaded_from_txo(self, flag: bool = ..., /) -> None:
         """Sets the flag that indicates the texture has been loaded from a txo file.
         You probably shouldn't be setting this directly; it is set automatically
         when a Texture is loaded.
@@ -7891,7 +7880,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         format, presumably because the application intends to copy image data from
         the framebuffer into the Texture (or vice-versa).
         """
-    def set_match_framebuffer_format(self, flag: bool) -> None:
+    def set_match_framebuffer_format(self, flag: bool, /) -> None:
         """Sets the special flag that, if true, indicates to the GSG that the
         Texture's format should be chosen to exactly match the framebuffer's
         format, presumably because the application intends to copy image data from
@@ -7904,7 +7893,7 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns the setting of the post_load_store_cache flag.  See
         set_post_load_store_cache().
         """
-    def set_post_load_store_cache(self, flag: bool) -> None:
+    def set_post_load_store_cache(self, flag: bool, /) -> None:
         """Sets the post_load_store_cache flag.  When this is set, the next time the
         texture is loaded on a GSG, it will automatically extract its RAM image
         from the GSG and save it to the global BamCache.
@@ -7925,10 +7914,10 @@ class Texture(TypedWritableReferenceCount, Namable):
         be rendered.
         """
     @staticmethod
-    def up_to_power_2(value: int) -> int:
+    def up_to_power_2(value: int, /) -> int:
         """Returns the smallest power of 2 greater than or equal to value."""
     @staticmethod
-    def down_to_power_2(value: int) -> int:
+    def down_to_power_2(value: int, /) -> int:
         """Returns the largest power of 2 less than or equal to value."""
     @overload
     def consider_rescale(self, pnmimage: PNMImage) -> None:
@@ -7960,36 +7949,36 @@ class Texture(TypedWritableReferenceCount, Namable):
         a disk file.  Returns true if the texture is changed, false if it was not.
         """
     @staticmethod
-    def format_texture_type(tt: _Texture_TextureType) -> str:
+    def format_texture_type(tt: _Texture_TextureType, /) -> str:
         """Returns the indicated TextureType converted to a string word."""
     @staticmethod
-    def string_texture_type(str: str) -> _Texture_TextureType:
+    def string_texture_type(str: str, /) -> _Texture_TextureType:
         """Returns the TextureType corresponding to the indicated string word."""
     @staticmethod
-    def format_component_type(ct: _Texture_ComponentType) -> str:
+    def format_component_type(ct: _Texture_ComponentType, /) -> str:
         """Returns the indicated ComponentType converted to a string word."""
     @staticmethod
-    def string_component_type(str: str) -> _Texture_ComponentType:
+    def string_component_type(str: str, /) -> _Texture_ComponentType:
         """Returns the ComponentType corresponding to the indicated string word."""
     @staticmethod
-    def format_format(f: _Texture_Format) -> str:
+    def format_format(f: _Texture_Format, /) -> str:
         """Returns the indicated Format converted to a string word."""
     @staticmethod
-    def string_format(str: str) -> _Texture_Format:
+    def string_format(str: str, /) -> _Texture_Format:
         """Returns the Format corresponding to the indicated string word."""
     @staticmethod
-    def format_compression_mode(cm: _Texture_CompressionMode) -> str:
+    def format_compression_mode(cm: _Texture_CompressionMode, /) -> str:
         """Returns the indicated CompressionMode converted to a string word."""
     @staticmethod
-    def string_compression_mode(str: str) -> _Texture_CompressionMode:
+    def string_compression_mode(str: str, /) -> _Texture_CompressionMode:
         """Returns the CompressionMode value associated with the given string
         representation.
         """
     @staticmethod
-    def format_quality_level(tql: _Texture_QualityLevel) -> str:
+    def format_quality_level(tql: _Texture_QualityLevel, /) -> str:
         """Returns the indicated QualityLevel converted to a string word."""
     @staticmethod
-    def string_quality_level(str: str) -> _Texture_QualityLevel:
+    def string_quality_level(str: str, /) -> _Texture_QualityLevel:
         """Returns the QualityLevel value associated with the given string
         representation.
         """
@@ -8274,13 +8263,13 @@ class Shader(TypedWritableReferenceCount):
     @staticmethod
     def make_compute(lang: _Shader_ShaderLanguage, body: str) -> Shader:
         """Loads the compute shader from the given string."""
-    def get_filename(self, type: _Shader_ShaderType = ...) -> Filename:
+    def get_filename(self, type: _Shader_ShaderType = ..., /) -> Filename:
         """Return the Shader's filename for the given shader type."""
     def set_filename(self, type: _Shader_ShaderType, filename: StrOrBytesPath) -> None:
         """Sets the Shader's filename for the given shader type.  Useful for
         associating a shader created with Shader.make with a name for diagnostics.
         """
-    def get_text(self, type: _Shader_ShaderType = ...) -> str:
+    def get_text(self, type: _Shader_ShaderType = ..., /) -> str:
         """Return the Shader's text for the given shader type."""
     def get_error_flag(self) -> bool:
         """Returns true if the shader contains a compile-time error.  This doesn't
@@ -8300,7 +8289,7 @@ class Shader(TypedWritableReferenceCount):
         """Returns the setting of the cache_compiled_shader flag.  See
         set_cache_compiled_shader().
         """
-    def set_cache_compiled_shader(self, flag: bool) -> None:
+    def set_cache_compiled_shader(self, flag: bool, /) -> None:
         """Sets the cache_compiled_shader flag.  When this is set, the next time the
         Shader is loaded on a GSG, it will automatically extract the compiled
         shader from the GSG and save it to the global BamCache.
@@ -8309,7 +8298,7 @@ class Shader(TypedWritableReferenceCount):
         not be set explicitly; it is set automatically by the ShaderPool when
         model-cache-compiled-shaders is set true.
         """
-    def prepare(self, prepared_objects: PreparedGraphicsObjects) -> AsyncFuture:
+    def prepare(self, prepared_objects: PreparedGraphicsObjects, /) -> AsyncFuture:
         """Indicates that the shader should be enqueued to be prepared in the
         indicated prepared_objects at the beginning of the next frame.  This will
         ensure the texture is already loaded into texture memory if it is expected
@@ -8318,11 +8307,11 @@ class Shader(TypedWritableReferenceCount):
         Use this function instead of prepare_now() to preload textures from a user
         interface standpoint.
         """
-    def is_prepared(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def is_prepared(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if the shader has already been prepared or enqueued for
         preparation on the indicated GSG, false otherwise.
         """
-    def release(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def release(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Frees the texture context only on the indicated object, if it exists there.
         Returns true if it was released, false if it had not been prepared.
         """
@@ -8381,7 +8370,7 @@ class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def prepare(self, prepared_objects: PreparedGraphicsObjects) -> None:
+    def prepare(self, prepared_objects: PreparedGraphicsObjects, /) -> None:
         """Indicates that the data should be enqueued to be prepared in the indicated
         prepared_objects at the beginning of the next frame.  This will ensure the
         data is already loaded into the GSG if it is expected to be rendered soon.
@@ -8389,7 +8378,7 @@ class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):
         Use this function instead of prepare_now() to preload datas from a user
         interface standpoint.
         """
-    def is_prepared(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def is_prepared(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Returns true if the data has already been prepared or enqueued for
         preparation on the indicated GSG, false otherwise.
         """
@@ -8404,7 +8393,7 @@ class ShaderBuffer(TypedWritableReferenceCount, Namable, GeomEnums):
         a data does not need to be explicitly prepared by the user before it may be
         rendered.
         """
-    def release(self, prepared_objects: PreparedGraphicsObjects) -> bool:
+    def release(self, prepared_objects: PreparedGraphicsObjects, /) -> bool:
         """Frees the data context only on the indicated object, if it exists there.
         Returns true if it was released, false if it had not been prepared.
         """
@@ -8439,7 +8428,7 @@ class PreparedGraphicsObjects(ReferenceCount):
         arbitrary name that serves mainly to uniquify the context for PStats
         reporting.
         """
-    def set_graphics_memory_limit(self, limit: int) -> None:
+    def set_graphics_memory_limit(self, limit: int, /) -> None:
         """Sets an artificial cap on graphics memory that will be imposed on this GSG.
 
         This limits the total amount of graphics memory, including texture memory
@@ -8453,11 +8442,11 @@ class PreparedGraphicsObjects(ReferenceCount):
         """Returns the artificial cap on graphics memory that will be imposed on this
         GSG.  See set_graphics_memory_limit().
         """
-    def show_graphics_memory_lru(self, out: ostream) -> None:
+    def show_graphics_memory_lru(self, out: ostream, /) -> None:
         """Writes to the indicated ostream a report of how the various textures and
         vertex buffers are allocated in the LRU.
         """
-    def show_residency_trackers(self, out: ostream) -> None:
+    def show_residency_trackers(self, out: ostream, /) -> None:
         """Writes to the indicated ostream a report of how the various textures and
         vertex buffers are allocated in the LRU.
         """
@@ -8471,13 +8460,13 @@ class PreparedGraphicsObjects(ReferenceCount):
         """Returns the number of objects of any kind that have already been prepared
         on this GSG.
         """
-    def enqueue_texture(self, tex: Texture) -> None:
+    def enqueue_texture(self, tex: Texture, /) -> None:
         """Indicates that a texture would like to be put on the list to be prepared
         when the GSG is next ready to do this (presumably at the next frame).
         """
-    def is_texture_queued(self, tex: Texture) -> bool:
+    def is_texture_queued(self, tex: Texture, /) -> bool:
         """Returns true if the texture has been queued on this GSG, false otherwise."""
-    def dequeue_texture(self, tex: Texture) -> bool:
+    def dequeue_texture(self, tex: Texture, /) -> bool:
         """Removes a texture from the queued list of textures to be prepared.
         Normally it is not necessary to call this, unless you change your mind
         about preparing it at the last minute, since the texture will automatically
@@ -8486,16 +8475,14 @@ class PreparedGraphicsObjects(ReferenceCount):
         The return value is true if the texture is successfully dequeued, false if
         it had not been queued.
         """
-    def is_texture_prepared(self, tex: Texture) -> bool:
+    def is_texture_prepared(self, tex: Texture, /) -> bool:
         """Returns true if the texture has been prepared on this GSG, false otherwise."""
-    @overload
-    def release_texture(self, tex: Texture) -> None:
+    def release_texture(self, tex_or_tc: Texture | TextureContext, /) -> None:
         """Releases a texture if it has already been prepared, or removes it from the
         preparation queue.
-        """
-    @overload
-    def release_texture(self, tc: TextureContext) -> None:
-        """Indicates that a texture context, created by a previous call to
+
+        or:
+        Indicates that a texture context, created by a previous call to
         prepare_texture(), is no longer needed.  The driver resources will not be
         freed until some GSG calls update(), indicating it is at a stage where it
         is ready to release textures--this prevents conflicts from threading or
@@ -8530,13 +8517,13 @@ class PreparedGraphicsObjects(ReferenceCount):
         When either the Texture or the PreparedGraphicsObjects object destructs,
         the TextureContext will be deleted.
         """
-    def enqueue_sampler(self, sampler: SamplerState) -> None:
+    def enqueue_sampler(self, sampler: SamplerState, /) -> None:
         """Indicates that a sampler would like to be put on the list to be prepared
         when the GSG is next ready to do this (presumably at the next frame).
         """
-    def is_sampler_queued(self, sampler: SamplerState) -> bool:
+    def is_sampler_queued(self, sampler: SamplerState, /) -> bool:
         """Returns true if the sampler has been queued on this GSG, false otherwise."""
-    def dequeue_sampler(self, sampler: SamplerState) -> bool:
+    def dequeue_sampler(self, sampler: SamplerState, /) -> bool:
         """Removes a sampler from the queued list of samplers to be prepared.
         Normally it is not necessary to call this, unless you change your mind
         about preparing it at the last minute, since the sampler will automatically
@@ -8545,9 +8532,9 @@ class PreparedGraphicsObjects(ReferenceCount):
         The return value is true if the sampler is successfully dequeued, false if
         it had not been queued.
         """
-    def is_sampler_prepared(self, sampler: SamplerState) -> bool:
+    def is_sampler_prepared(self, sampler: SamplerState, /) -> bool:
         """Returns true if the sampler has been prepared on this GSG, false otherwise."""
-    def release_sampler(self, sampler: SamplerState) -> None:
+    def release_sampler(self, sampler: SamplerState, /) -> None:
         """Releases a sampler if it has already been prepared, or removes it from the
         preparation queue.
         """
@@ -8561,13 +8548,13 @@ class PreparedGraphicsObjects(ReferenceCount):
         """
     def get_num_prepared_samplers(self) -> int:
         """Returns the number of samplers that have already been prepared on this GSG."""
-    def enqueue_geom(self, geom: Geom) -> None:
+    def enqueue_geom(self, geom: Geom, /) -> None:
         """Indicates that a geom would like to be put on the list to be prepared when
         the GSG is next ready to do this (presumably at the next frame).
         """
-    def is_geom_queued(self, geom: Geom) -> bool:
+    def is_geom_queued(self, geom: Geom, /) -> bool:
         """Returns true if the geom has been queued on this GSG, false otherwise."""
-    def dequeue_geom(self, geom: Geom) -> bool:
+    def dequeue_geom(self, geom: Geom, /) -> bool:
         """Removes a geom from the queued list of geoms to be prepared.  Normally it
         is not necessary to call this, unless you change your mind about preparing
         it at the last minute, since the geom will automatically be dequeued and
@@ -8576,11 +8563,11 @@ class PreparedGraphicsObjects(ReferenceCount):
         The return value is true if the geom is successfully dequeued, false if it
         had not been queued.
         """
-    def is_geom_prepared(self, geom: Geom) -> bool:
+    def is_geom_prepared(self, geom: Geom, /) -> bool:
         """Returns true if the vertex buffer has been prepared on this GSG, false
         otherwise.
         """
-    def release_geom(self, gc: GeomContext) -> None:
+    def release_geom(self, gc: GeomContext, /) -> None:
         """Indicates that a geom context, created by a previous call to
         prepare_geom(), is no longer needed.  The driver resources will not be
         freed until some GSG calls update(), indicating it is at a stage where it
@@ -8616,13 +8603,13 @@ class PreparedGraphicsObjects(ReferenceCount):
         When either the Geom or the PreparedGraphicsObjects object destructs, the
         GeomContext will be deleted.
         """
-    def enqueue_shader(self, shader: Shader) -> None:
+    def enqueue_shader(self, shader: Shader, /) -> None:
         """Indicates that a shader would like to be put on the list to be prepared
         when the GSG is next ready to do this (presumably at the next frame).
         """
-    def is_shader_queued(self, shader: Shader) -> bool:
+    def is_shader_queued(self, shader: Shader, /) -> bool:
         """Returns true if the shader has been queued on this GSG, false otherwise."""
-    def dequeue_shader(self, shader: Shader) -> bool:
+    def dequeue_shader(self, shader: Shader, /) -> bool:
         """Removes a shader from the queued list of shaders to be prepared.  Normally
         it is not necessary to call this, unless you change your mind about
         preparing it at the last minute, since the shader will automatically be
@@ -8631,9 +8618,9 @@ class PreparedGraphicsObjects(ReferenceCount):
         The return value is true if the shader is successfully dequeued, false if
         it had not been queued.
         """
-    def is_shader_prepared(self, shader: Shader) -> bool:
+    def is_shader_prepared(self, shader: Shader, /) -> bool:
         """Returns true if the shader has been prepared on this GSG, false otherwise."""
-    def release_shader(self, sc: ShaderContext) -> None:
+    def release_shader(self, sc: ShaderContext, /) -> None:
         """Indicates that a shader context, created by a previous call to
         prepare_shader(), is no longer needed.  The driver resources will not be
         freed until some GSG calls update(), indicating it is at a stage where it
@@ -8669,15 +8656,15 @@ class PreparedGraphicsObjects(ReferenceCount):
         When either the Shader or the PreparedGraphicsObjects object destructs, the
         ShaderContext will be deleted.
         """
-    def enqueue_vertex_buffer(self, data: GeomVertexArrayData) -> None:
+    def enqueue_vertex_buffer(self, data: GeomVertexArrayData, /) -> None:
         """Indicates that a buffer would like to be put on the list to be prepared
         when the GSG is next ready to do this (presumably at the next frame).
         """
-    def is_vertex_buffer_queued(self, data: GeomVertexArrayData) -> bool:
+    def is_vertex_buffer_queued(self, data: GeomVertexArrayData, /) -> bool:
         """Returns true if the vertex buffer has been queued on this GSG, false
         otherwise.
         """
-    def dequeue_vertex_buffer(self, data: GeomVertexArrayData) -> bool:
+    def dequeue_vertex_buffer(self, data: GeomVertexArrayData, /) -> bool:
         """Removes a buffer from the queued list of data arrays to be prepared.
         Normally it is not necessary to call this, unless you change your mind
         about preparing it at the last minute, since the data will automatically be
@@ -8686,11 +8673,11 @@ class PreparedGraphicsObjects(ReferenceCount):
         The return value is true if the buffer is successfully dequeued, false if
         it had not been queued.
         """
-    def is_vertex_buffer_prepared(self, data: GeomVertexArrayData) -> bool:
+    def is_vertex_buffer_prepared(self, data: GeomVertexArrayData, /) -> bool:
         """Returns true if the vertex buffer has been prepared on this GSG, false
         otherwise.
         """
-    def release_vertex_buffer(self, vbc: VertexBufferContext) -> None:
+    def release_vertex_buffer(self, vbc: VertexBufferContext, /) -> None:
         """Indicates that a data context, created by a previous call to
         prepare_vertex_buffer(), is no longer needed.  The driver resources will
         not be freed until some GSG calls update(), indicating it is at a stage
@@ -8729,15 +8716,15 @@ class PreparedGraphicsObjects(ReferenceCount):
         When either the Data or the PreparedGraphicsObjects object destructs, the
         VertexBufferContext will be deleted.
         """
-    def enqueue_index_buffer(self, data: GeomPrimitive) -> None:
+    def enqueue_index_buffer(self, data: GeomPrimitive, /) -> None:
         """Indicates that a buffer would like to be put on the list to be prepared
         when the GSG is next ready to do this (presumably at the next frame).
         """
-    def is_index_buffer_queued(self, data: GeomPrimitive) -> bool:
+    def is_index_buffer_queued(self, data: GeomPrimitive, /) -> bool:
         """Returns true if the index buffer has been queued on this GSG, false
         otherwise.
         """
-    def dequeue_index_buffer(self, data: GeomPrimitive) -> bool:
+    def dequeue_index_buffer(self, data: GeomPrimitive, /) -> bool:
         """Removes a buffer from the queued list of data arrays to be prepared.
         Normally it is not necessary to call this, unless you change your mind
         about preparing it at the last minute, since the data will automatically be
@@ -8746,11 +8733,11 @@ class PreparedGraphicsObjects(ReferenceCount):
         The return value is true if the buffer is successfully dequeued, false if
         it had not been queued.
         """
-    def is_index_buffer_prepared(self, data: GeomPrimitive) -> bool:
+    def is_index_buffer_prepared(self, data: GeomPrimitive, /) -> bool:
         """Returns true if the index buffer has been prepared on this GSG, false
         otherwise.
         """
-    def release_index_buffer(self, ibc: IndexBufferContext) -> None:
+    def release_index_buffer(self, ibc: IndexBufferContext, /) -> None:
         """Indicates that a data context, created by a previous call to
         prepare_index_buffer(), is no longer needed.  The driver resources will not
         be freed until some GSG calls update(), indicating it is at a stage where
@@ -8788,15 +8775,15 @@ class PreparedGraphicsObjects(ReferenceCount):
         When either the Data or the PreparedGraphicsObjects object destructs, the
         IndexBufferContext will be deleted.
         """
-    def enqueue_shader_buffer(self, data: ShaderBuffer) -> None:
+    def enqueue_shader_buffer(self, data: ShaderBuffer, /) -> None:
         """Indicates that a buffer would like to be put on the list to be prepared
         when the GSG is next ready to do this (presumably at the next frame).
         """
-    def is_shader_buffer_queued(self, data: ShaderBuffer) -> bool:
+    def is_shader_buffer_queued(self, data: ShaderBuffer, /) -> bool:
         """Returns true if the index buffer has been queued on this GSG, false
         otherwise.
         """
-    def dequeue_shader_buffer(self, data: ShaderBuffer) -> bool:
+    def dequeue_shader_buffer(self, data: ShaderBuffer, /) -> bool:
         """Removes a buffer from the queued list of data arrays to be prepared.
         Normally it is not necessary to call this, unless you change your mind
         about preparing it at the last minute, since the data will automatically be
@@ -8805,11 +8792,11 @@ class PreparedGraphicsObjects(ReferenceCount):
         The return value is true if the buffer is successfully dequeued, false if
         it had not been queued.
         """
-    def is_shader_buffer_prepared(self, data: ShaderBuffer) -> bool:
+    def is_shader_buffer_prepared(self, data: ShaderBuffer, /) -> bool:
         """Returns true if the index buffer has been prepared on this GSG, false
         otherwise.
         """
-    def release_shader_buffer(self, bc: BufferContext) -> None:
+    def release_shader_buffer(self, bc: BufferContext, /) -> None:
         """Indicates that a data context, created by a previous call to
         prepare_shader_buffer(), is no longer needed.  The driver resources will not
         be freed until some GSG calls update(), indicating it is at a stage where
@@ -9062,7 +9049,7 @@ class Lens(TypedWritableReferenceCount):
         (in which case point2d will be filled in with something, which may or may
         not be meaningful).
         """
-    def set_change_event(self, event: str) -> None:
+    def set_change_event(self, event: str, /) -> None:
         """Sets the name of the event that will be generated whenever any properties
         of the Lens have changed.  If this is not set for a particular lens, no
         event will be generated.
@@ -9074,7 +9061,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the name of the event that will be generated whenever any
         properties of this particular Lens have changed.
         """
-    def set_coordinate_system(self, cs: _CoordinateSystem) -> None:
+    def set_coordinate_system(self, cs: _CoordinateSystem, /) -> None:
         """Specifies the coordinate system that all 3-d computations are performed
         within for this Lens.  Normally, this is CS_default.
         """
@@ -9145,7 +9132,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the horizontal and vertical offset amounts of this Lens.  See
         set_film_offset().
         """
-    def set_focal_length(self, focal_length: float) -> None:
+    def set_focal_length(self, focal_length: float, /) -> None:
         """Sets the focal length of the lens.  This may adjust the field-of-view
         correspondingly, and is an alternate way to specify field of view.
 
@@ -9158,7 +9145,7 @@ class Lens(TypedWritableReferenceCount):
         lens' fov and film_size.  For certain kinds of lenses, the focal length has
         no meaning.
         """
-    def set_min_fov(self, min_fov: float) -> None:
+    def set_min_fov(self, min_fov: float, /) -> None:
         """Sets the field of view of the smallest dimension of the window.  If the
         window is wider than it is tall, this specifies the vertical field of view;
         if it is taller than it is wide, this specifies the horizontal field of
@@ -9204,7 +9191,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the field of view of the narrowest dimension of the window.  See
         set_min_fov().
         """
-    def set_aspect_ratio(self, aspect_ratio: float) -> None:
+    def set_aspect_ratio(self, aspect_ratio: float, /) -> None:
         """Sets the aspect ratio of the lens.  This is the ratio of the height to the
         width of the generated image.  Setting this overrides the two-parameter fov
         or film size setting.
@@ -9213,13 +9200,13 @@ class Lens(TypedWritableReferenceCount):
         """Returns the aspect ratio of the Lens.  This is determined based on the
         indicated film size; see set_film_size().
         """
-    def set_near(self, near_distance: float) -> None:
+    def set_near(self, near_distance: float, /) -> None:
         """Defines the position of the near plane (or cylinder, sphere, whatever).
         Points closer to the lens than this may not be rendered.
         """
     def get_near(self) -> float:
         """Returns the position of the near plane (or cylinder, sphere, whatever)."""
-    def set_far(self, far_distance: float) -> None:
+    def set_far(self, far_distance: float, /) -> None:
         """Defines the position of the far plane (or cylinder, sphere, whatever).
         Points farther from the lens than this may not be rendered.
         """
@@ -9277,7 +9264,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the center point of the lens: the point from which the lens is
         viewing.
         """
-    def set_interocular_distance(self, interocular_distance: float) -> None:
+    def set_interocular_distance(self, interocular_distance: float, /) -> None:
         """Sets the distance between the left and right eyes of a stereo camera.  This
         distance is used to apply a stereo effect when the lens is rendered on a
         stereo display region.  It only has an effect on a PerspectiveLens.
@@ -9290,7 +9277,7 @@ class Lens(TypedWritableReferenceCount):
         """
     def get_interocular_distance(self) -> float:
         """See set_interocular_distance()."""
-    def set_convergence_distance(self, convergence_distance: float) -> None:
+    def set_convergence_distance(self, convergence_distance: float, /) -> None:
         """Sets the distance between between the camera plane and the point in the
         distance that the left and right eyes are both looking at.  This distance
         is used to apply a stereo effect when the lens is rendered on a stereo
@@ -9317,7 +9304,7 @@ class Lens(TypedWritableReferenceCount):
         """
     def get_convergence_distance(self) -> float:
         """See set_convergence_distance()."""
-    def set_view_mat(self, view_mat: Mat4Like) -> None:
+    def set_view_mat(self, view_mat: Mat4Like, /) -> None:
         """Sets an arbitrary transformation on the lens.  This replaces the individual
         transformation components like set_view_hpr().
 
@@ -9331,7 +9318,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the direction in which the lens is facing."""
     def clear_view_mat(self) -> None:
         """Resets the lens transform to identity."""
-    def set_keystone(self, keystone: Vec2Like) -> None:
+    def set_keystone(self, keystone: Vec2Like, /) -> None:
         """Indicates the ratio of keystone correction to perform on the lens, in each
         of three axes.  This will build a special non-affine scale factor into the
         projection matrix that will compensate for keystoning of a projected image;
@@ -9347,7 +9334,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the keystone correction specified for the lens."""
     def clear_keystone(self) -> None:
         """Disables the lens keystone correction."""
-    def set_custom_film_mat(self, custom_film_mat: Mat4Like) -> None:
+    def set_custom_film_mat(self, custom_film_mat: Mat4Like, /) -> None:
         """Specifies a custom matrix to transform the points on the film after they
         have been converted into nominal film space (-1 .. 1 in U and V).  This can
         be used to introduce arbitrary scales, rotations, or other linear
@@ -9430,12 +9417,12 @@ class Lens(TypedWritableReferenceCount):
         for this kind of lens, if possible.  If a suitable bounding volume cannot
         be created, returns NULL.
         """
-    def get_projection_mat(self, channel: _Lens_StereoChannel = ...) -> LMatrix4:
+    def get_projection_mat(self, channel: _Lens_StereoChannel = ..., /) -> LMatrix4:
         """Returns the complete transformation matrix from a 3-d point in space to a
         point on the film, if such a matrix exists, or the identity matrix if the
         lens is nonlinear.
         """
-    def get_projection_mat_inv(self, channel: _Lens_StereoChannel = ...) -> LMatrix4:
+    def get_projection_mat_inv(self, channel: _Lens_StereoChannel = ..., /) -> LMatrix4:
         """Returns the matrix that transforms from a 2-d point on the film to a 3-d
         vector in space, if such a matrix exists.
         """
@@ -9455,7 +9442,7 @@ class Lens(TypedWritableReferenceCount):
         """Returns the matrix that transforms from a point in space to a point in
         front of the lens.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     def get_last_change(self) -> UpdateSeq:
         """Returns the UpdateSeq that is incremented whenever the lens properties are
@@ -9557,10 +9544,10 @@ class Material(TypedWritableReferenceCount, Namable):
     def __init__(self, name: str = ...) -> None: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: Material) -> bool: ...
+    def __lt__(self, other: Material, /) -> bool: ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     @staticmethod
     def get_default() -> Material:
         """Returns the default material."""
@@ -9572,7 +9559,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the base_color color setting, if it has been set.  If neither the
         base color nor the metallic have been set, this returns the diffuse color.
         """
-    def set_base_color(self, color: Vec4Like) -> None:
+    def set_base_color(self, color: Vec4Like, /) -> None:
         """Specifies the base color of the material.  In conjunction with
         set_metallic, this is an alternate way to specify the color of a material.
         For dielectrics, this will determine the value of the diffuse color, and
@@ -9593,7 +9580,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the ambient color setting, if it has been set.  Returns (0,0,0,0)
         if the ambient color has not been set.
         """
-    def set_ambient(self, color: Vec4Like) -> None:
+    def set_ambient(self, color: Vec4Like, /) -> None:
         """Specifies the ambient color setting of the material.  This will be the
         multiplied by any ambient lights in effect on the material to set its base
         color.
@@ -9613,7 +9600,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the diffuse color setting, if it has been set.  Returns (1,1,1,1)
         if the diffuse color has not been set.
         """
-    def set_diffuse(self, color: Vec4Like) -> None:
+    def set_diffuse(self, color: Vec4Like, /) -> None:
         """Specifies the diffuse color setting of the material.  This will be
         multiplied by any lights in effect on the material to get the color in the
         parts of the object illuminated by the lights.
@@ -9633,7 +9620,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the specular color setting, if it has been set.  Returns (0,0,0,0)
         if the specular color has not been set.
         """
-    def set_specular(self, color: Vec4Like) -> None:
+    def set_specular(self, color: Vec4Like, /) -> None:
         """Specifies the specular color setting of the material.  This will be
         multiplied by any lights in effect on the material to compute the color of
         specular highlights on the object.
@@ -9655,7 +9642,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the emission color setting, if it has been set.  Returns (0,0,0,0)
         if the emission color has not been set.
         """
-    def set_emission(self, color: Vec4Like) -> None:
+    def set_emission(self, color: Vec4Like, /) -> None:
         """Specifies the emission color setting of the material.  This is the color of
         the object as it appears in the absence of any light whatsover, including
         ambient light.  It is as if the object is glowing by this color (although
@@ -9668,7 +9655,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Removes the explicit emission color from the material."""
     def get_shininess(self) -> float:
         """Returns the shininess exponent of the material."""
-    def set_shininess(self, shininess: float) -> None:
+    def set_shininess(self, shininess: float, /) -> None:
         """Sets the shininess exponent of the material.  This controls the size of the
         specular highlight spot.  In general, larger number produce a smaller
         specular highlight, which makes the object appear shinier.  Smaller numbers
@@ -9686,7 +9673,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the roughness previously specified by set_roughness.  If none was
         previously set, this value is computed from the shininess value.
         """
-    def set_roughness(self, roughness: float) -> None:
+    def set_roughness(self, roughness: float, /) -> None:
         """Sets the roughness exponent of the material, where 0 is completely shiny
         (infinite shininess), and 1 is a completely dull object (0 shininess).
         This is a different, more perceptually intuitive way of controlling the
@@ -9703,7 +9690,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the metallic setting, if it has been set.  Returns 0 if it has not
         been set.
         """
-    def set_metallic(self, metallic: float) -> None:
+    def set_metallic(self, metallic: float, /) -> None:
         """Sets the metallic setting of the material, which is is used for physically-
         based rendering models.  This is usually 0 for dielectric materials and 1
         for metals.  It really does not make sense to set this to a value other
@@ -9720,7 +9707,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """Returns the index of refraction, or 1 if none has been set for this
         material.
         """
-    def set_refractive_index(self, refractive_index: float) -> None:
+    def set_refractive_index(self, refractive_index: float, /) -> None:
         """Sets the index of refraction of the material, which is used to determine
         the specular color in absence of an explicit specular color assignment.
         This is usually 1.5 for dielectric materials.  It is not very useful for
@@ -9730,7 +9717,7 @@ class Material(TypedWritableReferenceCount, Namable):
         """
     def get_local(self) -> bool:
         """Returns the local viewer flag.  Set set_local()."""
-    def set_local(self, local: bool) -> None:
+    def set_local(self, local: bool, /) -> None:
         """Sets the local viewer flag.  Set this true to enable camera-relative
         specular highlights, or false to use orthogonal specular highlights.  The
         default value is true.  Applications that use orthogonal projection should
@@ -9738,12 +9725,12 @@ class Material(TypedWritableReferenceCount, Namable):
         """
     def get_twoside(self) -> bool:
         """Returns the state of the two-sided lighting flag.  See set_twoside()."""
-    def set_twoside(self, twoside: bool) -> None:
+    def set_twoside(self, twoside: bool, /) -> None:
         """Set this true to enable two-sided lighting.  When two-sided lighting is on,
         both sides of a polygon will be lit by this material.  The default is for
         two-sided lighting to be off, in which case only the front surface is lit.
         """
-    def compare_to(self, other: Material) -> int:
+    def compare_to(self, other: Material, /) -> int:
         """Returns a number less than zero if this material sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
         The sorting order is arbitrary and largely meaningless, except to
@@ -9815,7 +9802,7 @@ class MaterialPool:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def get_material(temp: Material) -> Material:
+    def get_material(temp: Material, /) -> Material:
         """Returns a Material pointer that represents the same material described by
         temp, except that it is a shared pointer.
 
@@ -9832,7 +9819,7 @@ class MaterialPool:
         removed).
         """
     @staticmethod
-    def release_material(temp: Material) -> None:
+    def release_material(temp: Material, /) -> None:
         """Removes the indicated material from the pool."""
     @staticmethod
     def release_all_materials() -> None:
@@ -9846,10 +9833,10 @@ class MaterialPool:
         the pool.  Returns the number of materials released.
         """
     @staticmethod
-    def list_contents(out: ostream) -> None:
+    def list_contents(out: ostream, /) -> None:
         """Lists the contents of the material pool to the indicated output stream."""
     @staticmethod
-    def write(out: ostream) -> None:
+    def write(out: ostream, /) -> None:
         """Lists the contents of the material pool to the indicated output stream."""
     getMaterial = get_material
     releaseMaterial = release_material
@@ -9866,7 +9853,7 @@ class MatrixLens(Lens):
 
     user_mat: LMatrix4
     def __init__(self) -> None: ...
-    def set_user_mat(self, user_mat: Mat4Like) -> None:
+    def set_user_mat(self, user_mat: Mat4Like, /) -> None:
         """Explicitly specifies the projection matrix.  This matrix should convert X
         and Y to the range [-film_size/2, film_size/2], where (-fs/2,-fs/2) is the
         lower left corner of the screen and (fs/2, fs/2) is the upper right.  Z
@@ -9881,7 +9868,7 @@ class MatrixLens(Lens):
         """Returns the explicit projection matrix as set by the user.  This does not
         include transforms on the lens or film (e.g.  a film offset or view hpr).
         """
-    def set_left_eye_mat(self, user_mat: Mat4Like) -> None:
+    def set_left_eye_mat(self, user_mat: Mat4Like, /) -> None:
         """Sets a custom projection matrix for the left eye.  This is only used if the
         lens is attached to a stereo camera, in which case the left eye matrix will
         be used to draw the scene in the left eye (but the center matrix--the
@@ -9903,7 +9890,7 @@ class MatrixLens(Lens):
         """Returns the custom projection matrix for the left eye, if any, or the
         center matrix if there is no custom matrix set for the left eye.
         """
-    def set_right_eye_mat(self, user_mat: Mat4Like) -> None:
+    def set_right_eye_mat(self, user_mat: Mat4Like, /) -> None:
         """Sets a custom projection matrix for the right eye.  This is only used if
         the lens is attached to a stereo camera, in which case the right eye matrix
         will be used to draw the scene in the right eye (but the center matrix--the
@@ -10140,7 +10127,7 @@ class UserVertexSlider(VertexSlider):
     """
 
     def __init__(self, name: InternalName | str) -> None: ...
-    def set_slider(self, slider: float) -> None:
+    def set_slider(self, slider: float, /) -> None:
         """Stores the indicated slider value."""
     setSlider = set_slider
 
@@ -10153,7 +10140,7 @@ class UserVertexTransform(VertexTransform):
     def __init__(self, name: str) -> None: ...
     def get_name(self) -> str:
         """Returns the name passed to the constructor.  Completely arbitrary."""
-    def set_matrix(self, matrix: Mat4Like) -> None:
+    def set_matrix(self, matrix: Mat4Like, /) -> None:
         """Stores the indicated matrix."""
     getName = get_name
     setMatrix = set_matrix
@@ -10200,15 +10187,15 @@ class VertexBufferContext(BufferContext, AdaptiveLruPage):
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
     def get_data(self) -> GeomVertexArrayData:
         """Returns the pointer to the client-side array data object."""
-    def changed_size(self, reader: GeomVertexArrayDataHandle) -> bool:
+    def changed_size(self, reader: GeomVertexArrayDataHandle, /) -> bool:
         """Returns true if the data has changed size since the last time mark_loaded()
         was called.
         """
-    def changed_usage_hint(self, reader: GeomVertexArrayDataHandle) -> bool:
+    def changed_usage_hint(self, reader: GeomVertexArrayDataHandle, /) -> bool:
         """Returns true if the data has changed its usage hint since the last time
         mark_loaded() was called.
         """
-    def was_modified(self, reader: GeomVertexArrayDataHandle) -> bool:
+    def was_modified(self, reader: GeomVertexArrayDataHandle, /) -> bool:
         """Returns true if the data has been modified since the last time
         mark_loaded() was called.
         """
@@ -10229,7 +10216,7 @@ class TextureCollection:
     def __init__(self, copy: TextureCollection = ...) -> None: ...
     @overload
     def __init__(self, sequence) -> None: ...
-    def __getitem__(self, index: int) -> Texture:
+    def __getitem__(self, index: int, /) -> Texture:
         """Returns the nth Texture in the collection.  This is the same as
         get_texture(), but it may be a more convenient way to access it.
         """
@@ -10237,25 +10224,25 @@ class TextureCollection:
         """Returns the number of textures in the collection.  This is the same thing
         as get_num_textures().
         """
-    def __iadd__(self, other: TextureCollection) -> Self: ...
-    def __add__(self, other: TextureCollection) -> TextureCollection: ...
+    def __iadd__(self, other: TextureCollection, /) -> Self: ...
+    def __add__(self, other: TextureCollection, /) -> TextureCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[Texture]: ...
-    def assign(self, copy: Self) -> Self: ...
-    def add_texture(self, texture: Texture) -> None:
+    def assign(self, copy: Self, /) -> Self: ...
+    def add_texture(self, texture: Texture, /) -> None:
         """Adds a new Texture to the collection."""
-    def remove_texture(self, texture: Texture) -> bool:
+    def remove_texture(self, texture: Texture, /) -> bool:
         """Removes the indicated Texture from the collection.  Returns true if the
         texture was removed, false if it was not a member of the collection.
         """
-    def add_textures_from(self, other: TextureCollection) -> None:
+    def add_textures_from(self, other: TextureCollection, /) -> None:
         """Adds all the Textures indicated in the other collection to this texture.
         The other textures are simply appended to the end of the textures in this
         list; duplicates are not automatically removed.
         """
-    def remove_textures_from(self, other: TextureCollection) -> None:
+    def remove_textures_from(self, other: TextureCollection, /) -> None:
         """Removes from this collection all of the Textures listed in the other
         collection.
         """
@@ -10264,33 +10251,33 @@ class TextureCollection:
         a Texture appears multiple times, the first appearance is retained;
         subsequent appearances are removed.
         """
-    def has_texture(self, texture: Texture) -> bool:
+    def has_texture(self, texture: Texture, /) -> bool:
         """Returns true if the indicated Texture appears in this collection, false
         otherwise.
         """
     def clear(self) -> None:
         """Removes all Textures from the collection."""
-    def reserve(self, num: int) -> None:
+    def reserve(self, num: int, /) -> None:
         """This is a hint to Panda to allocate enough memory to hold the given number
         of NodePaths, if you know ahead of time how many you will be adding.
         """
-    def find_texture(self, name: str) -> Texture:
+    def find_texture(self, name: str, /) -> Texture:
         """Returns the texture in the collection with the indicated name, if any, or
         NULL if no texture has that name.
         """
     def get_num_textures(self) -> int:
         """Returns the number of Textures in the collection."""
-    def get_texture(self, index: int) -> Texture:
+    def get_texture(self, index: int, /) -> Texture:
         """Returns the nth Texture in the collection."""
-    def append(self, texture: Texture) -> None:
+    def append(self, texture: Texture, /) -> None:
         """Adds a new Texture to the collection.  This method duplicates the
         add_texture() method; it is provided to satisfy Python's naming convention.
         """
-    def extend(self, other: TextureCollection) -> None:
+    def extend(self, other: TextureCollection, /) -> None:
         """Appends the other list onto the end of this one.  This method duplicates
         the += operator; it is provided to satisfy Python's naming convention.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a brief one-line description of the TextureCollection to the
         indicated output stream.
         """
@@ -10318,10 +10305,10 @@ class TexturePool:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_texture(filename: StrOrBytesPath) -> bool:
+    def has_texture(filename: StrOrBytesPath, /) -> bool:
         """Returns true if the texture has ever been loaded, false otherwise."""
     @staticmethod
-    def verify_texture(filename: StrOrBytesPath) -> bool:
+    def verify_texture(filename: StrOrBytesPath, /) -> bool:
         """Loads the given filename up into a texture, if it has not already been
         loaded, and returns true to indicate success, or false to indicate failure.
         If this returns true, it is guaranteed that a subsequent call to
@@ -10420,7 +10407,7 @@ class TexturePool:
         and the second with the face number, 0 through 5.
         """
     @staticmethod
-    def get_normalization_cube_map(size: int) -> Texture:
+    def get_normalization_cube_map(size: int, /) -> Texture:
         """Returns a standard Texture object that has been created with
         Texture::generate_normalization_cube_map().  This Texture may be shared by
         any application code requiring a normalization cube map.  It will be at
@@ -10436,13 +10423,13 @@ class TexturePool:
         gsg->get_alpha_scale_via_texture() returns true.
         """
     @staticmethod
-    def add_texture(texture: Texture) -> None:
+    def add_texture(texture: Texture, /) -> None:
         """Adds the indicated already-loaded texture to the pool.  The texture must
         have a filename set for its name.  The texture will always replace any
         previously-loaded texture in the pool that had the same filename.
         """
     @staticmethod
-    def release_texture(texture: Texture) -> None:
+    def release_texture(texture: Texture, /) -> None:
         """Removes the indicated texture from the pool, indicating it will never be
         loaded again; the texture may then be freed.  If this function is never
         called, a reference count will be maintained on every texture every loaded,
@@ -10466,25 +10453,25 @@ class TexturePool:
         pool.  Returns the number of textures released.
         """
     @staticmethod
-    def list_contents(out: ostream = ...) -> None:
+    def list_contents(out: ostream = ..., /) -> None:
         """Lists the contents of the texture pool to cout
 
         or:
         Lists the contents of the texture pool to the indicated output stream.
         """
     @staticmethod
-    def find_texture(name: str) -> Texture:
+    def find_texture(name: str, /) -> Texture:
         """Returns the first texture found in the pool that matches the indicated name
         (which may contain wildcards).  Returns the texture if it is found, or NULL
         if it is not.
         """
     @staticmethod
-    def find_all_textures(name: str = ...) -> TextureCollection:
+    def find_all_textures(name: str = ..., /) -> TextureCollection:
         """Returns the set of all textures found in the pool that match the indicated
         name (which may contain wildcards).
         """
     @staticmethod
-    def set_fake_texture_image(filename: StrOrBytesPath) -> None:
+    def set_fake_texture_image(filename: StrOrBytesPath, /) -> None:
         """Sets a bogus filename that will be loaded in lieu of any textures requested
         from this point on.
         """
@@ -10502,13 +10489,13 @@ class TexturePool:
         set_fake_texture_image().
         """
     @staticmethod
-    def make_texture(extension: str) -> Texture:
+    def make_texture(extension: str, /) -> Texture:
         """Creates a new Texture object of the appropriate type for the indicated
         filename extension, according to the types that have been registered via
         register_texture_type().
         """
     @staticmethod
-    def write(out: ostream) -> None:
+    def write(out: ostream, /) -> None:
         """Lists the contents of the texture pool to the indicated output stream.  For
         debugging.
         """
@@ -10638,7 +10625,7 @@ class TextureStagePool:
     DtoolClassDict: ClassVar[dict[str, Any]]
     mode: _TextureStagePool_Mode
     @staticmethod
-    def get_stage(temp: TextureStage) -> TextureStage:
+    def get_stage(temp: TextureStage, /) -> TextureStage:
         """Returns a TextureStage pointer that represents the same TextureStage
         described by temp, except that it is a shared pointer.
 
@@ -10655,7 +10642,7 @@ class TextureStagePool:
         removed).
         """
     @staticmethod
-    def release_stage(temp: TextureStage) -> None:
+    def release_stage(temp: TextureStage, /) -> None:
         """Removes the indicated TextureStage from the pool."""
     @staticmethod
     def release_all_stages() -> None:
@@ -10663,7 +10650,7 @@ class TextureStagePool:
         state.
         """
     @staticmethod
-    def set_mode(mode: _TextureStagePool_Mode) -> None:
+    def set_mode(mode: _TextureStagePool_Mode, /) -> None:
         """Specifies the fundamental operating mode of the TextureStagePool.
 
         If this is M_none, each call to get_stage() returns the same TextureStage
@@ -10685,10 +10672,10 @@ class TextureStagePool:
         outside of the pool.  Returns the number of TextureStages released.
         """
     @staticmethod
-    def list_contents(out: ostream) -> None:
+    def list_contents(out: ostream, /) -> None:
         """Lists the contents of the TextureStage pool to the indicated output stream."""
     @staticmethod
-    def write(out: ostream) -> None:
+    def write(out: ostream, /) -> None:
         """Lists the contents of the TextureStage pool to the indicated output stream."""
     getStage = get_stage
     releaseStage = release_stage

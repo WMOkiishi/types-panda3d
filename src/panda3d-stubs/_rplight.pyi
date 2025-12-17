@@ -47,7 +47,7 @@ class GPUCommand:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def push_int(self, v: int) -> None:
+    def push_int(self, v: int, /) -> None:
         """@brief Appends an integer to the GPUCommand.
         @details This adds an integer to the back of the GPUCommand. Depending on the
           setting in convert_int_to_float, this will either just convert the int to a
@@ -55,7 +55,7 @@ class GPUCommand:
 
         @param v The integer to append.
         """
-    def push_float(self, v: float) -> None:
+    def push_float(self, v: float, /) -> None:
         """@brief Appends a float to the GPUCommand.
         @details This adds an integer to the back of the GPUCommand. Its used by all
           other push_xxx methods, and simply stores the value, then increments the write
@@ -64,7 +64,7 @@ class GPUCommand:
 
         @param v The float to append.
         """
-    def push_vec3(self, v: IntVec3Like | Vec3Like) -> None:
+    def push_vec3(self, v: IntVec3Like | Vec3Like, /) -> None:
         """@brief Appends a 3-component floating point vector to the GPUCommand.
         @details This appends a 3-component floating point vector to the command.
           It basically just calls push_float() for every component, in the order
@@ -80,7 +80,7 @@ class GPUCommand:
 
         @param v Int-Vector to append.
         """
-    def push_vec4(self, v: IntVec4Like | Vec4Like) -> None:
+    def push_vec4(self, v: IntVec4Like | Vec4Like, /) -> None:
         """@brief Appends a 4-component floating point vector to the GPUCommand.
         @details This appends a 4-component floating point vector to the command.
           It basically just calls push_float() for every component, in the order
@@ -96,7 +96,7 @@ class GPUCommand:
 
         @param v Int-Vector to append.
         """
-    def push_mat3(self, v: LMatrix3) -> None:
+    def push_mat3(self, v: LMatrix3, /) -> None:
         """@brief Appends a floating point 3x3 matrix to the GPUCommand.
         @details This appends a floating point 3x3 matrix to the GPUCommand, by
           pushing all components in row-order to the command. This occupies a space of
@@ -104,7 +104,7 @@ class GPUCommand:
 
         @param v Matrix to append
         """
-    def push_mat4(self, v: Mat4Like) -> None:
+    def push_mat4(self, v: Mat4Like, /) -> None:
         """@brief Appends a floating point 4x4 matrix to the GPUCommand.
         @details This appends a floating point 4x4 matrix to the GPUCommand, by
           pushing all components in row-order to the command. This occupies a space of
@@ -136,7 +136,7 @@ class GPUCommand:
           the GPUCommand in a GPUCommandList, the command_index will
           most likely be the index of the command in the list.
         """
-    def write(self, out: ostream) -> None:
+    def write(self, out: ostream, /) -> None:
         """@brief Prints out the GPUCommand to the console
         @details This method prints the type, size, and data of the GPUCommand to the
           console. This helps for debugging the contents of the GPUCommand. Keep
@@ -168,7 +168,7 @@ class GPUCommandList:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def add_command(self, cmd: GPUCommand | _GPUCommand_CommandType) -> None:
+    def add_command(self, cmd: GPUCommand | _GPUCommand_CommandType, /) -> None:
         """@brief Pushes a GPUCommand to the command list.
         @details This adds a new GPUCommand to the list of commands to be processed.
 
@@ -212,19 +212,19 @@ class IESDataset:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_vertical_angles(self, vertical_angles: PTA_float) -> None:
+    def set_vertical_angles(self, vertical_angles: PTA_float, /) -> None:
         """@brief Sets the vertical angles of the dataset.
         @details This sets the list of vertical angles of the dataset.
 
         @param vertical_angles Vector of all vertical angles.
         """
-    def set_horizontal_angles(self, horizontal_angles: PTA_float) -> None:
+    def set_horizontal_angles(self, horizontal_angles: PTA_float, /) -> None:
         """@brief Sets the horizontal angles of the dataset.
         @details This sets the list of horizontal angles of the dataset.
 
         @param horizontal_angles Vector of all horizontal angles.
         """
-    def set_candela_values(self, candela_values: PTA_float) -> None:
+    def set_candela_values(self, candela_values: PTA_float, /) -> None:
         """@brief Sets the candela values.
         @details This sets the candela values of the dataset. They should be an
           interleaved 2D array with the dimensions vertical_angles x horizontal_angles.
@@ -330,7 +330,7 @@ class RPLight(ReferenceCount):
           by its luminance.
         @return Light-color
         """
-    def set_color_from_temperature(self, temperature: float) -> None:
+    def set_color_from_temperature(self, temperature: float, /) -> None:
         """@brief Sets the lights color from a given color temperature
         @details This sets the lights color, given a temperature. This is more
           physically based than setting a user defined color. The color will be
@@ -338,7 +338,7 @@ class RPLight(ReferenceCount):
 
         @param temperature Light temperature
         """
-    def set_energy(self, energy: float) -> None:
+    def set_energy(self, energy: float, /) -> None:
         """@brief Sets the energy of the light
         @details This sets the energy of the light, which can be seen as the brightness
           of the light. It will get multiplied with the normalized color.
@@ -359,7 +359,7 @@ class RPLight(ReferenceCount):
           types.
         @return Type of the light
         """
-    def set_casts_shadows(self, flag: bool = ...) -> None:
+    def set_casts_shadows(self, flag: bool = ..., /) -> None:
         """@brief Controls whether the light casts shadows
         @details This sets whether the light casts shadows. You can not change this
           while the light is attached. When flag is set to true, the light will be
@@ -375,7 +375,7 @@ class RPLight(ReferenceCount):
 
         @return true if the light casts shadows, false otherwise
         """
-    def set_shadow_map_resolution(self, resolution: int) -> None:
+    def set_shadow_map_resolution(self, resolution: int, /) -> None:
         """@brief Sets the light's shadow map resolution
         @details This sets the light's shadow map resolution. This has no effect
           when the light is not told to cast shadows (Use RPLight::set_casts_shadows).
@@ -395,7 +395,7 @@ class RPLight(ReferenceCount):
 
         @return Shadow map resolution in pixels
         """
-    def set_ies_profile(self, profile: int) -> None:
+    def set_ies_profile(self, profile: int, /) -> None:
         """@brief Sets the IES profile
         @details This sets the ies profile of the light. The parameter should be a
           handle previously returned by RenderPipeline.load_ies_profile. Using a
@@ -426,7 +426,7 @@ class RPLight(ReferenceCount):
         @details This clears the IES profile of the light, telling it to no longer
           use an IES profile, and instead use the default attenuation.
         """
-    def set_near_plane(self, near_plane: float) -> None:
+    def set_near_plane(self, near_plane: float, /) -> None:
         """@brief Sets the near plane of the light
         @details This sets the near plane of all shadow sources of the light. It has
           no effects if the light does not cast shadows. This prevents artifacts from
@@ -576,7 +576,7 @@ class TagStateManager:
 
         @param source Camera to unregister
         """
-    def get_mask(self, container_name: str) -> BitMask32:
+    def get_mask(self, container_name: str, /) -> BitMask32:
         """@brief Returns the render mask for the given state
         @details This returns the mask of a given render pass, which can be used
           to either show or hide objects from this pass.
@@ -605,7 +605,7 @@ class ShadowManager(ReferenceCount):
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_max_updates(self, max_updates: int) -> None:
+    def set_max_updates(self, max_updates: int, /) -> None:
         """@brief Sets the maximum amount of updates per frame.
         @details This controls the maximum amount of updated ShadowSources per frame.
           The ShadowManager will take the first <max_updates> ShadowSources, and
@@ -628,7 +628,7 @@ class ShadowManager(ReferenceCount):
 
         @param max_updates Maximum amoumt of updates
         """
-    def set_scene(self, scene_parent: NodePath) -> None:
+    def set_scene(self, scene_parent: NodePath, /) -> None:
         """@brief Sets the target scene
         @details This sets the target scene for rendering shadows. All shadow cameras
           will be parented to this scene to render shadows.
@@ -641,7 +641,7 @@ class ShadowManager(ReferenceCount):
 
         @param scene_parent The target scene
         """
-    def set_tag_state_manager(self, tag_mgr: NodePath | TagStateManager) -> None:
+    def set_tag_state_manager(self, tag_mgr: NodePath | TagStateManager, /) -> None:
         """@brief Sets the handle to the TagStageManager.
         @details This sets the handle to the TagStateManager used by the pipeline.
           Usually this is RenderPipeline.get_tag_mgr().
@@ -651,7 +651,7 @@ class ShadowManager(ReferenceCount):
 
         @param tag_mgr [description]
         """
-    def set_atlas_graphics_output(self, graphics_output: GraphicsOutput) -> None:
+    def set_atlas_graphics_output(self, graphics_output: GraphicsOutput, /) -> None:
         """@brief Sets the handle to the Shadow targets output
         @details This sets the handle to the GraphicsOutput of the shadow atlas.
           Usually this is RenderTarget.get_internal_buffer(), whereas the RenderTarget
@@ -665,7 +665,7 @@ class ShadowManager(ReferenceCount):
 
         @param graphics_output [description]
         """
-    def set_atlas_size(self, atlas_size: int) -> None:
+    def set_atlas_size(self, atlas_size: int, /) -> None:
         """@brief Sets the shadow atlas size
         @details This sets the desired shadow atlas size. It should be big enough
           to store all important shadow sources, with some buffer, because the shadow
@@ -749,7 +749,7 @@ class InternalLightManager:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def add_light(self, light: RPLight) -> None:
+    def add_light(self, light: RPLight, /) -> None:
         """@brief Adds a new light.
         @details This adds a new light to the list of lights. This will throw an
           error and return if the light is already attached. You may only call
@@ -769,7 +769,7 @@ class InternalLightManager:
 
         @param light The light to add.
         """
-    def remove_light(self, light: RPLight) -> None:
+    def remove_light(self, light: RPLight, /) -> None:
         """@brief Removes a light
         @details This detaches a light. This prevents it from being rendered, and also
           cleans up all resources used by that light. If no reference is kept on the
@@ -796,14 +796,14 @@ class InternalLightManager:
 
           If the InternalLightManager was not initialized yet, an assertion is thrown.
         """
-    def set_camera_pos(self, pos: Vec3Like) -> None:
+    def set_camera_pos(self, pos: Vec3Like, /) -> None:
         """@brief Sets the camera position
         @details This sets the camera position, which will be used to determine which
           shadow sources have to get updated
 
         @param mat View projection mat
         """
-    def set_shadow_update_distance(self, dist: float) -> None:
+    def set_shadow_update_distance(self, dist: float, /) -> None:
         """@brief Sets the maximum shadow update distance
         @details This controls the maximum distance until which shadows are updated.
           If a shadow source is past that distance, it is ignored and no longer recieves
@@ -844,7 +844,7 @@ class InternalLightManager:
           all sources, even those out of frustum.
         @return Amount of shadow sources.
         """
-    def set_shadow_manager(self, mgr: ShadowManager) -> None:
+    def set_shadow_manager(self, mgr: ShadowManager, /) -> None:
         """@brief Sets the handle to the shadow manager
         @details This sets the handle to the global shadow manager. It is usually
           constructed on the python side, so we need to get a handle to it.
@@ -863,7 +863,7 @@ class InternalLightManager:
         @details This returns a handle to the internally used shadow manager
         @return Shadow manager
         """
-    def set_command_list(self, cmd_list: GPUCommandList) -> None:
+    def set_command_list(self, cmd_list: GPUCommandList, /) -> None:
         """@brief Sets a handle to the command list
         @details This sets a handle to the global GPUCommandList. This is required to
           emit GPUCommands, which are used for attaching and detaching lights, as well
@@ -904,7 +904,7 @@ class RPPointLight(RPLight):
           the light is set to be an infinitely small point light source. You can
           change this with RPPointLight::set_inner_radius.
         """
-    def set_radius(self, radius: float) -> None:
+    def set_radius(self, radius: float, /) -> None:
         """@brief Sets the radius of the light
         @details This sets the radius of the light. It controls the lights
           influence. After a distance greater than this radius, the light influence
@@ -918,7 +918,7 @@ class RPPointLight(RPLight):
           RPPointLight::set_radius
         @return Light radius in world space
         """
-    def set_inner_radius(self, inner_radius: float) -> None:
+    def set_inner_radius(self, inner_radius: float, /) -> None:
         """@brief Sets the inner radius of the light
         @details This sets the inner radius of the light. Anything greater than
           zero causes the light to get an area light. This has influence on the
@@ -981,7 +981,7 @@ class PSSMCameraRig:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_pssm_distance(self, distance: float) -> None:
+    def set_pssm_distance(self, distance: float, /) -> None:
         """@brief Sets the maximum pssm distance.
         @details This sets the maximum distance in world space until which shadows
           are rendered. After this distance, no shadows will be rendered.
@@ -990,7 +990,7 @@ class PSSMCameraRig:
 
         @param distance Maximum distance in world space
         """
-    def set_sun_distance(self, distance: float) -> None:
+    def set_sun_distance(self, distance: float, /) -> None:
         """@brief Sets the suns distance
         @details This sets the distance the cameras will have from the cameras frustum.
           This prevents far objects from having no shadows, which can occur when these
@@ -1004,7 +1004,7 @@ class PSSMCameraRig:
 
         @param distance The sun distance
         """
-    def set_use_fixed_film_size(self, flag: bool) -> None:
+    def set_use_fixed_film_size(self, flag: bool, /) -> None:
         """@brief Sets whether to use a fixed film size
         @details This controls if a fixed film size should be used. This will cause
           the camera rig to cache the current film size, and only change it in case
@@ -1015,7 +1015,7 @@ class PSSMCameraRig:
 
         @param flag Whether to use a fixed film size
         """
-    def set_resolution(self, resolution: int) -> None:
+    def set_resolution(self, resolution: int, /) -> None:
         """@brief Sets the resolution of each split
         @details This sets the resolution of each split. Currently it is equal for
           each split. This is required when using PSSMCameraRig::set_use_stable_csm,
@@ -1026,7 +1026,7 @@ class PSSMCameraRig:
 
         @param resolution The resolution of each split.
         """
-    def set_use_stable_csm(self, flag: bool) -> None:
+    def set_use_stable_csm(self, flag: bool, /) -> None:
         """@brief Sets whether to use stable CSM snapping.
         @details This option controls if stable CSM snapping should be used. When the
           option is enabled, all splits will snap to their texels, so that when moving,
@@ -1035,7 +1035,7 @@ class PSSMCameraRig:
 
         @param flag Whether to use stable CSM snapping
         """
-    def set_logarithmic_factor(self, factor: float) -> None:
+    def set_logarithmic_factor(self, factor: float, /) -> None:
         """@brief Sets the logarithmic factor
         @details This sets the logarithmic factor, which is the core of the algorithm.
           PSSM splits the camera frustum based on a linear and a logarithmic factor.
@@ -1051,7 +1051,7 @@ class PSSMCameraRig:
 
         @param factor The logarithmic factor
         """
-    def set_border_bias(self, bias: float) -> None:
+    def set_border_bias(self, bias: float, /) -> None:
         """@brief Sets the border bias for each split
         @details This sets the border bias for every split. This increases each
           splits frustum by multiplying it by (1 + bias), and helps reducing artifacts
@@ -1088,7 +1088,7 @@ class PSSMCameraRig:
           required. To prevent this, call this method once in a while, so an optimal
           distribution is ensured.
         """
-    def get_camera(self, index: int) -> NodePath:
+    def get_camera(self, index: int, /) -> NodePath:
         """@brief Returns the n-th camera
         @details This returns the n-th camera of the camera rig, which can be used
           for various stuff like showing its frustum, passing it as a shader input,
@@ -1104,7 +1104,7 @@ class PSSMCameraRig:
         @param index Index of the camera.
         @return [description]
         """
-    def reparent_to(self, parent: NodePath) -> None:
+    def reparent_to(self, parent: NodePath, /) -> None:
         """@brief Reparents the camera rig
         @details This reparents all cameras to the given parent. Usually the parent
           will be ShowBase.render. The parent should be the same node where the
@@ -1162,9 +1162,9 @@ class RPSpotLight(RPLight):
         @details This creates a new spot light with default properties set. You should
           set at least a direction, fov, radius and position to make the light useful.
         """
-    def set_radius(self, radius: float) -> None: ...
+    def set_radius(self, radius: float, /) -> None: ...
     def get_radius(self) -> float: ...
-    def set_fov(self, fov: float) -> None: ...
+    def set_fov(self, fov: float, /) -> None: ...
     def get_fov(self) -> float: ...
     @overload
     def set_direction(self, direction: Vec3Like) -> None: ...

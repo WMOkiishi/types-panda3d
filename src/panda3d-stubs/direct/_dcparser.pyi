@@ -87,7 +87,7 @@ class DCPackerInterface:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def get_name(self) -> str:
         """Returns the name of this field, or empty string if the field is unnamed."""
-    def find_seek_index(self, name: str) -> int:
+    def find_seek_index(self, name: str, /) -> int:
         """Returns the index number to be passed to a future call to DCPacker::seek()
         to seek directly to the named field without having to look up the field
         name in a table later, or -1 if the named field cannot be found.
@@ -129,21 +129,17 @@ class DCKeywordList:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def has_keyword(self, keyword: DCKeyword) -> bool:
-        """Returns true if this list includes the indicated keyword, false otherwise."""
-    @overload
-    def has_keyword(self, name: str) -> bool:
+    def has_keyword(self, keyword_or_name: DCKeyword | str, /) -> bool:
         """Returns true if this list includes the indicated keyword, false otherwise."""
     def get_num_keywords(self) -> int:
         """Returns the number of keywords in the list."""
-    def get_keyword(self, n: int) -> DCKeyword:
+    def get_keyword(self, n: int, /) -> DCKeyword:
         """Returns the nth keyword in the list."""
-    def get_keyword_by_name(self, name: str) -> DCKeyword:
+    def get_keyword_by_name(self, name: str, /) -> DCKeyword:
         """Returns the keyword in the list with the indicated name, or NULL if there
         is no keyword in the list with that name.
         """
-    def compare_keywords(self, other: DCKeywordList) -> bool:
+    def compare_keywords(self, other: DCKeywordList, /) -> bool:
         """Returns true if this list has the same keywords as the other list, false if
         some keywords differ.  Order is not considered important.
         """
@@ -178,12 +174,12 @@ class DCField(DCPackerInterface, DCKeywordList):
         string formatting it for human consumption.  Returns empty string if there
         is an error.
         """
-    def parse_string(self, formatted_string: str) -> bytes:
+    def parse_string(self, formatted_string: str, /) -> bytes:
         """Given a human-formatted string (for instance, as returned by format_data(),
         above) that represents the value of this field, parse the string and return
         the corresponding packed data.  Returns empty string if there is an error.
         """
-    def validate_ranges(self, packed_data: bytes) -> bool:
+    def validate_ranges(self, packed_data: bytes, /) -> bool:
         """Verifies that all of the packed values in the field data are within the
         specified ranges and that there are no extra bytes on the end of the
         record.  Returns true if all fields are valid, false otherwise.
@@ -223,7 +219,7 @@ class DCField(DCPackerInterface, DCKeywordList):
         """Returns true if the "ownrecv" flag is set for this field, false otherwise."""
     def is_airecv(self) -> bool:
         """Returns true if the "airecv" flag is set for this field, false otherwise."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Write a string representation of this instance to <out>."""
     def write(self, out: ostream, indent_level: int) -> None:
         """Write a string representation of this instance to <out>."""
@@ -233,7 +229,7 @@ class DCField(DCPackerInterface, DCKeywordList):
 
         It is assumed that the packer is currently positioned on this field.
         """
-    def unpack_args(self, packer: DCPacker):
+    def unpack_args(self, packer: DCPacker, /):
         """Unpacks the values from the packer, beginning at the current point in the
         unpack_buffer, into a Python tuple and returns the tuple.
 
@@ -321,7 +317,7 @@ class DCPacker:
         called between calls to begin_pack(), unless you want to concatenate all of
         the pack results together.
         """
-    def begin_pack(self, root: DCPackerInterface) -> None:
+    def begin_pack(self, root: DCPackerInterface, /) -> None:
         """Begins a packing session.  The parameter is the DC object that describes
         the packing format; it may be a DCParameter or DCField.
 
@@ -336,11 +332,11 @@ class DCPacker:
         The return value is true on success, or false if there has been some error
         during packing.
         """
-    def set_unpack_data(self, data: bytes) -> None:
+    def set_unpack_data(self, data: bytes, /) -> None:
         """Sets up the unpack_data pointer.  You may call this before calling the
         version of begin_unpack() that takes only one parameter.
         """
-    def begin_unpack(self, root: DCPackerInterface) -> None:
+    def begin_unpack(self, root: DCPackerInterface, /) -> None:
         """Begins an unpacking session.  You must have previously called
         set_unpack_data() to specify a buffer to unpack.
 
@@ -355,7 +351,7 @@ class DCPacker:
         The return value is true on success, or false if there has been some error
         during unpacking (or if all fields have not been unpacked).
         """
-    def begin_repack(self, root: DCPackerInterface) -> None:
+    def begin_repack(self, root: DCPackerInterface, /) -> None:
         """Begins a repacking session.  You must have previously called
         set_unpack_data() to specify a buffer to unpack.
 
@@ -373,18 +369,16 @@ class DCPacker:
         The return value is true on success, or false if there has been some error
         during repacking (or if all fields have not been repacked).
         """
-    @overload
-    def seek(self, seek_index: int) -> bool:
+    def seek(self, seek_index_or_field_name: int | str, /) -> bool:
         """Seeks to the field indentified by seek_index, which was returned by an
         earlier call to DCField::find_seek_index() to get the index of some nested
         field.  Also see the version of seek() that accepts a field name.
 
         Returns true if successful, false if the field is not known (or if the
         packer is in an invalid mode).
-        """
-    @overload
-    def seek(self, field_name: str) -> bool:
-        """Sets the current unpack (or repack) position to the named field.  In unpack
+
+        or:
+        Sets the current unpack (or repack) position to the named field.  In unpack
         mode, the next call to unpack_*() or push() will begin to read the named
         field.  In repack mode, the next call to pack_*() or push() will modify the
         named field.
@@ -462,21 +456,21 @@ class DCPacker:
         number of nested fields have been packed.  It is an error to call it too
         early, or too late.
         """
-    def pack_double(self, value: float) -> None:
+    def pack_double(self, value: float, /) -> None:
         """Packs the indicated numeric or string value into the stream."""
-    def pack_int(self, value: int) -> None:
+    def pack_int(self, value: int, /) -> None:
         """Packs the indicated numeric or string value into the stream."""
-    def pack_uint(self, value: int) -> None:
+    def pack_uint(self, value: int, /) -> None:
         """Packs the indicated numeric or string value into the stream."""
-    def pack_int64(self, value: int) -> None:
+    def pack_int64(self, value: int, /) -> None:
         """Packs the indicated numeric or string value into the stream."""
-    def pack_uint64(self, value: int) -> None:
+    def pack_uint64(self, value: int, /) -> None:
         """Packs the indicated numeric or string value into the stream."""
-    def pack_string(self, value: str) -> None:
+    def pack_string(self, value: str, /) -> None:
         """Packs the indicated numeric or string value into the stream."""
-    def pack_blob(self, value: bytes) -> None:
+    def pack_blob(self, value: bytes, /) -> None:
         """Packs the indicated numeric or string value into the stream."""
-    def pack_literal_value(self, value: bytes) -> None:
+    def pack_literal_value(self, value: bytes, /) -> None:
         """Adds the indicated string value into the stream, representing a single pre-
         packed field element, or a whole group of field elements at once.
         """
@@ -511,7 +505,7 @@ class DCPacker:
         """Skips the current field without unpacking it and advances to the next
         field.  If the current field contains nested fields, skips all of them.
         """
-    def pack_object(self, object) -> None:
+    def pack_object(self, object, /) -> None:
         """Packs the Python object of whatever type into the packer.  Each numeric
         object and string object maps to the corresponding pack_value() call; a
         tuple or sequence maps to a push() followed by all of the tuple's contents
@@ -523,14 +517,7 @@ class DCPacker:
         object; if the current field represents a list of fields it will be a
         tuple.
         """
-    @overload
-    def parse_and_pack(self, _in: istream) -> bool:
-        """Parses an object's value according to the DC file syntax (e.g.  as a
-        default value string) and packs it.  Returns true on success, false on a
-        parse error.
-        """
-    @overload
-    def parse_and_pack(self, formatted_object: str) -> bool:
+    def parse_and_pack(self, _in_or_formatted_object: istream | str, /) -> bool:
         """Parses an object's value according to the DC file syntax (e.g.  as a
         default value string) and packs it.  Returns true on success, false on a
         parse error.
@@ -603,27 +590,27 @@ class DCPacker:
         allocated; these are now either in active use or have been recycled into
         the deleted DCPacker::StackElement pool to be used again.
         """
-    def raw_pack_int8(self, value: int) -> None:
+    def raw_pack_int8(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_int16(self, value: int) -> None:
+    def raw_pack_int16(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_int32(self, value: int) -> None:
+    def raw_pack_int32(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_int64(self, value: int) -> None:
+    def raw_pack_int64(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_uint8(self, value: int) -> None:
+    def raw_pack_uint8(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_uint16(self, value: int) -> None:
+    def raw_pack_uint16(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_uint32(self, value: int) -> None:
+    def raw_pack_uint32(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_uint64(self, value: int) -> None:
+    def raw_pack_uint64(self, value: int, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_float64(self, value: float) -> None:
+    def raw_pack_float64(self, value: float, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_string(self, value: str) -> None:
+    def raw_pack_string(self, value: str, /) -> None:
         """Packs the data into the buffer between packing sessions."""
-    def raw_pack_blob(self, value: bytes) -> None:
+    def raw_pack_blob(self, value: bytes, /) -> None:
         """Packs the data into the buffer between packing sessions."""
     def raw_unpack_int8(self) -> int:
         """Unpacks the data from the buffer between unpacking sessions."""
@@ -768,10 +755,10 @@ class DCAtomicField(DCField):
 
     def get_num_elements(self) -> int:
         """Returns the number of elements (parameters) of the atomic field."""
-    def get_element(self, n: int) -> DCParameter:
+    def get_element(self, n: int, /) -> DCParameter:
         """Returns the parameter object describing the nth element."""
     @deprecated('use get_element() instead.')
-    def get_element_default(self, n: int) -> bytes:
+    def get_element_default(self, n: int, /) -> bytes:
         """Returns the pre-formatted default value associated with the nth element of
         the field.  This is only valid if has_element_default() returns true, in
         which case this string represents the bytes that should be assigned to the
@@ -783,25 +770,25 @@ class DCAtomicField(DCField):
         @deprecated use get_element() instead.
         """
     @deprecated('use get_element() instead.')
-    def has_element_default(self, n: int) -> bool:
+    def has_element_default(self, n: int, /) -> bool:
         """Returns true if the nth element of the field has a default value specified,
         false otherwise.
 
         @deprecated use get_element() instead.
         """
     @deprecated('use get_element()->get_name() instead.')
-    def get_element_name(self, n: int) -> str:
+    def get_element_name(self, n: int, /) -> str:
         """Returns the name of the nth element of the field.  This name is strictly
         for documentary purposes; it does not generally affect operation.  If a
         name is not specified, this will be the empty string.
 
         @deprecated use get_element()->get_name() instead.
         """
-    def get_element_type(self, n: int) -> _DCSubatomicType:
+    def get_element_type(self, n: int, /) -> _DCSubatomicType:
         """Returns the numeric type of the nth element of the field.  This method is
         deprecated; use get_element() instead.
         """
-    def get_element_divisor(self, n: int) -> int:
+    def get_element_divisor(self, n: int, /) -> int:
         """Returns the divisor associated with the nth element of the field.  This
         implements an implicit fixed-point system; floating-point values are to be
         multiplied by this value before encoding into a packet, and divided by this
@@ -828,7 +815,7 @@ class DCDeclaration:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def as_class(self) -> DCClass: ...
     def as_switch(self) -> DCSwitch: ...
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Write a string representation of this instance to <out>."""
     def write(self, out: ostream, indent_level: int) -> None:
         """Write a string representation of this instance to <out>."""
@@ -848,7 +835,7 @@ class DCClass(DCDeclaration):
         """
     def get_num_parents(self) -> int:
         """Returns the number of base classes this class inherits from."""
-    def get_parent(self, n: int) -> DCClass:
+    def get_parent(self, n: int, /) -> DCClass:
         """Returns the nth parent class this class inherits from."""
     def has_constructor(self) -> bool:
         """Returns true if this class has a constructor method, false if it just uses
@@ -862,18 +849,18 @@ class DCClass(DCDeclaration):
         """Returns the number of fields defined directly in this class, ignoring
         inheritance.
         """
-    def get_field(self, n: int) -> DCField:
+    def get_field(self, n: int, /) -> DCField:
         """Returns the nth field in the class.  This is not necessarily the field with
         index n; this is the nth field defined in the class directly, ignoring
         inheritance.
         """
-    def get_field_by_name(self, name: str) -> DCField:
+    def get_field_by_name(self, name: str, /) -> DCField:
         """Returns a pointer to the DCField that shares the indicated name.  If the
         named field is not found in the current class, the parent classes will be
         searched, so the value returned may not actually be a field within this
         class.  Returns NULL if there is no such field defined.
         """
-    def get_field_by_index(self, index_number: int) -> DCField:
+    def get_field_by_index(self, index_number: int, /) -> DCField:
         """Returns a pointer to the DCField that has the indicated index number.  If
         the numbered field is not found in the current class, the parent classes
         will be searched, so the value returned may not actually be a field within
@@ -883,7 +870,7 @@ class DCClass(DCDeclaration):
         """Returns the total number of field fields defined in this class and all
         ancestor classes.
         """
-    def get_inherited_field(self, n: int) -> DCField:
+    def get_inherited_field(self, n: int, /) -> DCField:
         """Returns the nth field field in the class and all of its ancestors.
 
         This *used* to be the same thing as get_field_by_index(), back when the
@@ -921,7 +908,7 @@ class DCClass(DCDeclaration):
         """Returns true if the DCClass object has an associated Python class
         definition, false otherwise.
         """
-    def set_class_def(self, class_def) -> None:
+    def set_class_def(self, class_def, /) -> None:
         """Sets the class object associated with this DistributedClass.  This object
         will be used to construct new instances of the class.
         """
@@ -933,7 +920,7 @@ class DCClass(DCDeclaration):
         """Returns true if the DCClass object has an associated Python owner class
         definition, false otherwise.
         """
-    def set_owner_class_def(self, owner_class_def) -> None:
+    def set_owner_class_def(self, owner_class_def, /) -> None:
         """Sets the owner class object associated with this DistributedClass.  This
         object will be used to construct new owner instances of the class.
         """
@@ -1121,17 +1108,17 @@ class DCFile:
         """
     def get_num_classes(self) -> int:
         """Returns the number of classes read from the .dc file(s)."""
-    def get_class(self, n: int) -> DCClass:
+    def get_class(self, n: int, /) -> DCClass:
         """Returns the nth class read from the .dc file(s)."""
-    def get_class_by_name(self, name: str) -> DCClass:
+    def get_class_by_name(self, name: str, /) -> DCClass:
         """Returns the class that has the indicated name, or NULL if there is no such
         class.
         """
-    def get_switch_by_name(self, name: str) -> DCSwitch:
+    def get_switch_by_name(self, name: str, /) -> DCSwitch:
         """Returns the switch that has the indicated name, or NULL if there is no such
         switch.
         """
-    def get_field_by_index(self, index_number: int) -> DCField:
+    def get_field_by_index(self, index_number: int, /) -> DCField:
         """Returns a pointer to the one DCField that has the indicated index number,
         of all the DCFields across all classes in the file.
 
@@ -1146,9 +1133,9 @@ class DCFile:
         """
     def get_num_import_modules(self) -> int:
         """Returns the number of import lines read from the .dc file(s)."""
-    def get_import_module(self, n: int) -> str:
+    def get_import_module(self, n: int, /) -> str:
         """Returns the module named by the nth import line read from the .dc file(s)."""
-    def get_num_import_symbols(self, n: int) -> int:
+    def get_num_import_symbols(self, n: int, /) -> int:
         """Returns the number of symbols explicitly imported by the nth import line.
         If this is 0, the line is "import modulename"; if it is more than 0, the
         line is "from modulename import symbol, symbol ... ".
@@ -1159,17 +1146,17 @@ class DCFile:
         """
     def get_num_typedefs(self) -> int:
         """Returns the number of typedefs read from the .dc file(s)."""
-    def get_typedef(self, n: int) -> DCTypedef:
+    def get_typedef(self, n: int, /) -> DCTypedef:
         """Returns the nth typedef read from the .dc file(s)."""
-    def get_typedef_by_name(self, name: str) -> DCTypedef:
+    def get_typedef_by_name(self, name: str, /) -> DCTypedef:
         """Returns the typedef that has the indicated name, or NULL if there is no
         such typedef name.
         """
     def get_num_keywords(self) -> int:
         """Returns the number of keywords read from the .dc file(s)."""
-    def get_keyword(self, n: int) -> DCKeyword:
+    def get_keyword(self, n: int, /) -> DCKeyword:
         """Returns the nth keyword read from the .dc file(s)."""
-    def get_keyword_by_name(self, name: str) -> DCKeyword:
+    def get_keyword_by_name(self, name: str, /) -> DCKeyword:
         """Returns the keyword that has the indicated name, or NULL if there is no
         such keyword name.
         """
@@ -1216,7 +1203,7 @@ class DCMolecularField(DCField):
 
     def get_num_atomics(self) -> int:
         """Returns the number of atomic fields that make up this molecular field."""
-    def get_atomic(self, n: int) -> DCAtomicField:
+    def get_atomic(self, n: int, /) -> DCAtomicField:
         """Returns the nth atomic field that makes up this molecular field.  This may
         or may not be a field of this particular class; it might be defined in a
         parent class.
@@ -1270,19 +1257,19 @@ class DCSwitch(DCDeclaration):
         """Returns the number of different cases within the switch.  The legal values
         for case_index range from 0 to get_num_cases() - 1.
         """
-    def get_case_by_value(self, case_value: bytes) -> int:
+    def get_case_by_value(self, case_value: bytes, /) -> int:
         """Returns the index number of the case with the indicated packed value, or -1
         if no case has this value.
         """
-    def get_case(self, n: int) -> DCPackerInterface:
+    def get_case(self, n: int, /) -> DCPackerInterface:
         """Returns the DCPackerInterface that packs the nth case."""
     def get_default_case(self) -> DCPackerInterface:
         """Returns the DCPackerInterface that packs the default case, or NULL if there
         is no default case.
         """
-    def get_value(self, case_index: int) -> bytes:
+    def get_value(self, case_index: int, /) -> bytes:
         """Returns the packed value associated with the indicated case."""
-    def get_num_fields(self, case_index: int) -> int:
+    def get_num_fields(self, case_index: int, /) -> int:
         """Returns the number of fields in the indicated case."""
     def get_field(self, case_index: int, n: int) -> DCField:
         """Returns the nth field in the indicated case."""

@@ -166,7 +166,7 @@ class InputDevice(TypedReferenceCount):
     def _battery_data(self) -> InputDevice.BatteryData: ...
     @property
     def _tracker_data(self) -> TrackerData: ...
-    def has_feature(self, feature: InputDevice.Feature) -> bool:
+    def has_feature(self, feature: InputDevice.Feature, /) -> bool:
         """Returns true if the device supports the indicated feature."""
     def map_button(self, index: int, handle: ButtonHandle | str) -> None:
         """Associates the indicated ButtonHandle with the button of the indicated index
@@ -185,11 +185,11 @@ class InputDevice(TypedReferenceCount):
         It is not necessary to call this if you simply want to query the state of
         the various axes by index number.
         """
-    def find_button(self, handle: ButtonHandle | str) -> InputDevice.ButtonState:
+    def find_button(self, handle: ButtonHandle | str, /) -> InputDevice.ButtonState:
         """Returns the first ButtonState found with the given axis, or throw an assert
         if the button handle was not found in the list.
         """
-    def find_axis(self, axis: InputDevice.Axis) -> InputDevice.AxisState:
+    def find_axis(self, axis: InputDevice.Axis, /) -> InputDevice.AxisState:
         """Returns the first AnalogAxis found with the given axis, or throw an assert
         if the axis was not found in the list.
         """
@@ -225,7 +225,7 @@ class InputDevice(TypedReferenceCount):
         """Returns a PointerEventList containing all the recent pointer events.
         Clears the list.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a one-line string describing the device."""
     hasFeature = has_feature
     mapButton = map_button
@@ -249,7 +249,7 @@ class ClientBase(TypedReferenceCount):
     data graph.
     """
 
-    def fork_asynchronous_thread(self, poll_time: float) -> bool:
+    def fork_asynchronous_thread(self, poll_time: float, /) -> bool:
         """Forks a separate thread to do all the polling of connected devices.  The
         forked thread will poll after every poll_time seconds has elapsed.  Returns
         true if the fork was successful, or false otherwise (for instance, because
@@ -268,7 +268,7 @@ class ClientBase(TypedReferenceCount):
         """Returns the time (according to the global ClockObject's get_real_time()
         method) of the last device poll.
         """
-    def set_coordinate_system(self, cs: _CoordinateSystem) -> None:
+    def set_coordinate_system(self, cs: _CoordinateSystem, /) -> None:
         """Specifies the coordinate system that all devices associated with this
         client will operate in.  Normally, this is CS_default.
         """
@@ -313,12 +313,12 @@ class AnalogNode(DataNode):
         """Returns the number of analog controls known to the AnalogNode.  This number
         may change as more controls are discovered.
         """
-    def get_control_state(self, index: int) -> float:
+    def get_control_state(self, index: int, /) -> float:
         """Returns the current position of indicated analog control identified by its
         index number, or 0.0 if the control is unknown.  The normal range of a
         single control is -1.0 to 1.0.
         """
-    def is_control_known(self, index: int) -> bool:
+    def is_control_known(self, index: int, /) -> bool:
         """Returns true if the state of the indicated analog control is known, or
         false if we have never heard anything about this particular control.
         """
@@ -328,16 +328,16 @@ class AnalogNode(DataNode):
         information, respectively; channels 0, 1, and 2 are available.  If flip is
         true, the analog control value will be reversed before outputting it.
         """
-    def clear_output(self, channel: int) -> None:
+    def clear_output(self, channel: int, /) -> None:
         """Removes the output to the data graph associated with the indicated channel.
         See set_output().
         """
-    def get_output(self, channel: int) -> int:
+    def get_output(self, channel: int, /) -> int:
         """Returns the analog control index that is output to the data graph on the
         indicated channel, or -1 if no control is output on that channel.  See
         set_output().
         """
-    def is_output_flipped(self, channel: int) -> bool:
+    def is_output_flipped(self, channel: int, /) -> bool:
         """Returns true if the analog control index that is output to the data graph
         on the indicated channel is flipped.  See set_output().
         """
@@ -389,16 +389,16 @@ class ButtonNode(DataNode):
         the various buttons by index number; this is only necessary in order to
         generate ButtonEvents when the buttons change state.
         """
-    def get_button_map(self, index: int) -> ButtonHandle:
+    def get_button_map(self, index: int, /) -> ButtonHandle:
         """Returns the ButtonHandle that was previously associated with the given
         index number by a call to set_button_map(), or ButtonHandle::none() if no
         button was associated.
         """
-    def get_button_state(self, index: int) -> bool:
+    def get_button_state(self, index: int, /) -> bool:
         """Returns true if the indicated button (identified by its index number) is
         currently known to be down, or false if it is up or unknown.
         """
-    def is_button_known(self, index: int) -> bool:
+    def is_button_known(self, index: int, /) -> bool:
         """Returns true if the state of the indicated button is known, or false if we
         have never heard anything about this particular button.
         """
@@ -434,12 +434,12 @@ class DialNode(DataNode):
         """Returns the number of dial dials known to the DialNode.  This number may
         change as more dials are discovered.
         """
-    def read_dial(self, index: int) -> float:
+    def read_dial(self, index: int, /) -> float:
         """Returns the number of complete revolutions of the dial since the last time
         read_dial() was called.  This is a destructive operation; it is not
         possible to read the dial without resetting the counter.
         """
-    def is_dial_known(self, index: int) -> bool:
+    def is_dial_known(self, index: int, /) -> bool:
         """Returns true if the state of the indicated dial dial is known, or false if
         we have never heard anything about this particular dial.
         """
@@ -456,7 +456,7 @@ class InputDeviceSet:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: InputDeviceSet = ...) -> None: ...
-    def __getitem__(self, index: int) -> InputDevice:
+    def __getitem__(self, index: int, /) -> InputDevice:
         """Returns the nth InputDevice in the collection."""
     def __len__(self) -> int:
         """Returns the number of devices in the collection."""
@@ -464,14 +464,14 @@ class InputDeviceSet:
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[InputDevice]: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def clear(self) -> None:
         """Removes all InputDevices from the collection."""
-    def reserve(self, num: int) -> None:
+    def reserve(self, num: int, /) -> None:
         """This is a hint to Panda to allocate enough memory to hold the given number
         of InputDevices, if you know ahead of time how many you will be adding.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a brief one-line description of the InputDeviceSet to the indicated
         output stream.
         """
@@ -488,19 +488,19 @@ class InputDeviceManager:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def get_devices(self, device_class: InputDevice.DeviceClass = ...) -> InputDeviceSet:
+    def get_devices(self, device_class: InputDevice.DeviceClass = ..., /) -> InputDeviceSet:
         """Description: Returns all currently connected devices.
 
         or:
         Description: Returns all currently connected devices of the given device class.
         """
-    def add_device(self, device: InputDevice) -> None:
+    def add_device(self, device: InputDevice, /) -> None:
         """Called when a new device has been discovered.  This may also be used to
         register virtual devices.
 
         This causes a connect-device event to be thrown.
         """
-    def remove_device(self, device: InputDevice) -> None:
+    def remove_device(self, device: InputDevice, /) -> None:
         """Called when a device has been removed, or when a device should otherwise no
         longer be tracked.
 
@@ -564,7 +564,7 @@ class TrackerNode(DataNode):
         """Returns the time of the tracker's last update."""
     def has_time(self) -> bool:
         """True if this data comes with timestamps."""
-    def set_tracker_coordinate_system(self, cs: _CoordinateSystem) -> None:
+    def set_tracker_coordinate_system(self, cs: _CoordinateSystem, /) -> None:
         """Specifies the coordinate system that the tracker associated with this node
         will operate in.  Normally, this is set from the ClientBase that's used to
         create the TrackerNode, so it should not need to be set on an individual
@@ -574,7 +574,7 @@ class TrackerNode(DataNode):
         """Returns the coordinate system that the tracker associated with this node
         will operate in.
         """
-    def set_graph_coordinate_system(self, cs: _CoordinateSystem) -> None:
+    def set_graph_coordinate_system(self, cs: _CoordinateSystem, /) -> None:
         """Specifies the coordinate system that the TrackerNode will convert its
         transform into for passing down the data graph.  Normally, this is
         CS_default.
@@ -616,17 +616,17 @@ class VirtualMouse(DataNode):
         """Sets the size of the "window" in which the mouse rolls.  This changes the
         meaning of the values passed to set_mouse_pos().
         """
-    def set_mouse_on(self, flag: bool) -> None:
+    def set_mouse_on(self, flag: bool, /) -> None:
         """Sets whether the mouse should appear to be within the window or not.  If
         this is true, the mouse is within the window; if false, the mouse is not
         within the window (and set_mouse_pos() means nothing).
         """
-    def press_button(self, button: ButtonHandle | str) -> None:
+    def press_button(self, button: ButtonHandle | str, /) -> None:
         """Simulates a mouse or keyboard button being depressed.  This should be
         followed up by a call to release_button() sometime later (possibly
         immediately).
         """
-    def release_button(self, button: ButtonHandle | str) -> None:
+    def release_button(self, button: ButtonHandle | str, /) -> None:
         """Simulates the button being released.  This should follow a previous call to
         press_button().
         """

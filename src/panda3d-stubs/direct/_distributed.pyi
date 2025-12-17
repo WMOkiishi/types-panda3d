@@ -29,7 +29,7 @@ class CConnectionRepository:
         """Returns true if this repository can have 'owner' views of distributed
         objects.
         """
-    def set_handle_c_updates(self, handle_c_updates: bool) -> None:
+    def set_handle_c_updates(self, handle_c_updates: bool, /) -> None:
         """Set true to specify this repository should process distributed updates
         internally in C++ code, or false if it should return them to Python.
         """
@@ -37,7 +37,7 @@ class CConnectionRepository:
         """Returns true if this repository will process distributed updates internally
         in C++ code, or false if it will return them to Python.
         """
-    def set_client_datagram(self, client_datagram: bool) -> None:
+    def set_client_datagram(self, client_datagram: bool, /) -> None:
         """Sets the client_datagram flag.  If this is true, incoming datagrams are not
         expected to be prefixed with the server routing information like message
         sender, channel number, etc.; otherwise, these server fields are parsed and
@@ -45,7 +45,7 @@ class CConnectionRepository:
         """
     def get_client_datagram(self) -> bool:
         """Returns the client_datagram flag."""
-    def set_handle_datagrams_internally(self, handle_datagrams_internally: bool) -> None:
+    def set_handle_datagrams_internally(self, handle_datagrams_internally: bool, /) -> None:
         """Sets the handle_datagrams_internally flag.  When true, certain message
         types can be handled by the C++ code in in this module.  When false, all
         datagrams, regardless of message type, are passed up to Python for
@@ -55,7 +55,7 @@ class CConnectionRepository:
         """
     def get_handle_datagrams_internally(self) -> bool:
         """Returns the handle_datagrams_internally flag."""
-    def set_tcp_header_size(self, tcp_header_size: int) -> None:
+    def set_tcp_header_size(self, tcp_header_size: int, /) -> None:
         """Sets the header size of TCP packets.  At the present, legal values for this
         are 0, 2, or 4; this specifies the number of bytes to use encode the
         datagram length at the start of each TCP datagram.  Sender and receiver
@@ -63,12 +63,12 @@ class CConnectionRepository:
         """
     def get_tcp_header_size(self) -> int:
         """Returns the current setting of TCP header size.  See set_tcp_header_size()."""
-    def set_python_repository(self, python_repository) -> None:
+    def set_python_repository(self, python_repository, /) -> None:
         """Records the pointer to the Python class that derives from
         CConnectionRepository.  This allows the C++ implementation to directly
         manipulation some python structures on the repository.
         """
-    def set_connection_http(self, channel: HTTPChannel) -> None:
+    def set_connection_http(self, channel: HTTPChannel, /) -> None:
         """Once a connection has been established via the HTTP interface, gets the
         connection and uses it.  The supplied HTTPChannel object must have a
         connection available via get_connection().
@@ -77,7 +77,7 @@ class CConnectionRepository:
         """Returns the SocketStream that internally represents the already-established
         HTTP connection.  Returns NULL if there is no current HTTP connection.
         """
-    def try_connect_net(self, url: URL) -> bool:
+    def try_connect_net(self, url: URL, /) -> bool:
         """Uses Panda's "net" library to try to connect to the server and port named
         in the indicated URL.  Returns true if successful, false otherwise.
         """
@@ -87,7 +87,7 @@ class CConnectionRepository:
         """Returns the ConnectionWriter object associated with the repository."""
     def get_qcr(self) -> QueuedConnectionReader:
         """Returns the QueuedConnectionReader object associated with the repository."""
-    def connect_native(self, url: URL) -> bool:
+    def connect_native(self, url: URL, /) -> bool:
         """Connects to the server using Panda's low-level and fast "native net"
         library.
         """
@@ -100,17 +100,17 @@ class CConnectionRepository:
         return value is true, the new datagram may be retrieved via get_datagram(),
         or preferably, with get_datagram_iterator() and get_msg_type().
         """
-    def get_datagram(self, dg: Datagram) -> None:
+    def get_datagram(self, dg: Datagram, /) -> None:
         """Fills the datagram object with the datagram most recently retrieved by
         check_datagram().
         """
-    def get_datagram_iterator(self, di: Datagram | DatagramIterator) -> None:
+    def get_datagram_iterator(self, di: Datagram | DatagramIterator, /) -> None:
         """Fills the DatagramIterator object with the iterator for the datagram most
         recently retrieved by check_datagram().  This iterator has already read
         past the datagram header and the message type, and is positioned at the
         beginning of data.
         """
-    def get_msg_channel(self, offset: int = ...) -> int:
+    def get_msg_channel(self, offset: int = ..., /) -> int:
         """Returns the channel(s) to which the current message was sent, according to
         the datagram headers.  This information is not available to the client.
         """
@@ -134,16 +134,16 @@ class CConnectionRepository:
         never successfully connected, (b) we explicitly called disconnect(), or (c)
         we were connected, but the connection was spontaneously lost.
         """
-    def send_datagram(self, dg: Datagram) -> bool:
+    def send_datagram(self, dg: Datagram, /) -> bool:
         """Queues the indicated datagram for sending to the server.  It may not get
         sent immediately if collect_tcp is in effect; call flush() to guarantee it
         is sent now.
         """
-    def set_want_message_bundling(self, flag: bool) -> None:
+    def set_want_message_bundling(self, flag: bool, /) -> None:
         """Enable/disable outbound message bundling"""
     def get_want_message_bundling(self) -> bool:
         """Returns true if message bundling enabled"""
-    def set_in_quiet_zone(self, flag: bool) -> None:
+    def set_in_quiet_zone(self, flag: bool, /) -> None:
         """Enables/disables quiet zone mode"""
     def get_in_quiet_zone(self) -> bool:
         """Returns true if repository is in quiet zone mode"""
@@ -161,7 +161,7 @@ class CConnectionRepository:
         """Send network messages queued up since startMessageBundle was called."""
     def abandon_message_bundles(self) -> None:
         """throw out any msgs that have been queued up for message bundles"""
-    def bundle_msg(self, dg: Datagram) -> None: ...
+    def bundle_msg(self, dg: Datagram, /) -> None: ...
     def consider_flush(self) -> bool:
         """Sends the most recently queued data if enough time has elapsed.  This only
         has meaning if set_collect_tcp() has been set to true.
@@ -174,7 +174,7 @@ class CConnectionRepository:
         """Closes the connection to the server."""
     def shutdown(self) -> None:
         """May be called at application shutdown to ensure all threads are cleaned up."""
-    def set_simulated_disconnect(self, simulated_disconnect: bool) -> None:
+    def set_simulated_disconnect(self, simulated_disconnect: bool, /) -> None:
         """Sets the simulated disconnect flag.  While this is true, no datagrams will
         be retrieved from or sent to the server.  The idea is to simulate a
         temporary network outage.
@@ -188,7 +188,7 @@ class CConnectionRepository:
         """Toggles the current setting of the verbose flag.  When true, this describes
         every message going back and forth on the wire.
         """
-    def set_verbose(self, verbose: bool) -> None:
+    def set_verbose(self, verbose: bool, /) -> None:
         """Directly sets the verbose flag.  When true, this describes every message
         going back and forth on the wire.
         """
@@ -196,7 +196,7 @@ class CConnectionRepository:
         """Returns the current setting of the verbose flag.  When true, this describes
         every message going back and forth on the wire.
         """
-    def set_time_warning(self, time_warning: float) -> None:
+    def set_time_warning(self, time_warning: float, /) -> None:
         """Directly sets the time_warning field.  When non zero, this describes every
         message going back and forth on the wire when the msg handling time is over
         it
@@ -263,7 +263,7 @@ class CDistributedSmoothNodeBase:
         """Tells the C++ instance definition about the AI or Client repository, used
         for sending datagrams.
         """
-    def set_clock_delta(self, clock_delta) -> None:
+    def set_clock_delta(self, clock_delta, /) -> None:
         """Tells the C++ instance definition about the global ClockDelta object."""
     def initialize(self, node_path: NodePath, dclass: DCClass, do_id: int) -> None:
         """Initializes the internal structures from some constructs that are normally
@@ -285,7 +285,7 @@ class CDistributedSmoothNodeBase:
         """Examines only X and Y of the pos/hpr information, and broadcasts the
         appropriate messages.
         """
-    def set_curr_l(self, l: int) -> None:
+    def set_curr_l(self, l: int, /) -> None:
         """Appends the timestamp and sends the update."""
     def print_curr_l(self) -> None: ...
     setRepository = set_repository

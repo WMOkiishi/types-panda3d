@@ -31,7 +31,7 @@ class ParametricCurve(PandaNode):
         the range 0.0f <= t <= get_max_t().  This base class function always
         returns 1.0f; derived classes might override this to return something else.
         """
-    def set_curve_type(self, type: int) -> None:
+    def set_curve_type(self, type: int, /) -> None:
         """Sets the flag indicating the use to which the curve is intended to be put.
         This flag is optional and only serves to provide a hint to the egg reader
         and writer code; it has no effect on the curve's behavior.
@@ -45,7 +45,7 @@ class ParametricCurve(PandaNode):
         """Returns the flag indicating the use to which the curve is intended to be
         put.
         """
-    def set_num_dimensions(self, num: int) -> None:
+    def set_num_dimensions(self, num: int, /) -> None:
         """Specifies the number of significant dimensions in the curve's vertices.
         This should be one of 1, 2, or 3. Normally, XYZ and HPR curves have three
         dimensions; time curves should always have one dimension.  This only serves
@@ -180,17 +180,17 @@ class ParametricCurveCollection(ReferenceCount):
         """
     def insert_curve(self, index: int, curve: ParametricCurve) -> None:
         """Adds a new ParametricCurve to the collection at the indicated index."""
-    def add_curves(self, node: PandaNode) -> int:
+    def add_curves(self, node: PandaNode, /) -> int:
         """Adds all the curves found in the scene graph rooted at the given node.
         Returns the number of curves found.
         """
     @overload
-    def remove_curve(self, curve: ParametricCurve) -> bool:
+    def remove_curve(self, curve: ParametricCurve, /) -> bool:
         """Removes the indicated ParametricCurve from the collection.  Returns true if
         the curve was removed, false if it was not a member of the collection.
         """
     @overload
-    def remove_curve(self, index: int) -> None:
+    def remove_curve(self, index: int, /) -> None:
         """Removes the indicated ParametricCurve from the collection, by its index
         number.
         """
@@ -198,7 +198,7 @@ class ParametricCurveCollection(ReferenceCount):
         """Replaces the indicated ParametricCurve from the collection, by its index
         number.
         """
-    def has_curve(self, curve: ParametricCurve) -> bool:
+    def has_curve(self, curve: ParametricCurve, /) -> bool:
         """Returns true if the indicated ParametricCurve appears in this collection,
         false otherwise.
         """
@@ -208,7 +208,7 @@ class ParametricCurveCollection(ReferenceCount):
         """Removes all the timewarp curves from the collection."""
     def get_num_curves(self) -> int:
         """Returns the number of ParametricCurves in the collection."""
-    def get_curve(self, index: int) -> ParametricCurve:
+    def get_curve(self, index: int, /) -> ParametricCurve:
         """Returns the nth ParametricCurve in the collection."""
     def get_xyz_curve(self) -> ParametricCurve:
         """Returns the first XYZ curve in the collection, if any, or NULL if there are
@@ -225,7 +225,7 @@ class ParametricCurveCollection(ReferenceCount):
         """
     def get_num_timewarps(self) -> int:
         """Returns the number of timewarp curves in the collection."""
-    def get_timewarp_curve(self, n: int) -> ParametricCurve:
+    def get_timewarp_curve(self, n: int, /) -> ParametricCurve:
         """Returns the nth timewarp curve in the collection."""
     def get_max_t(self) -> float:
         """Returns the maximum T value associated with the *last* curve in the
@@ -244,12 +244,12 @@ class ParametricCurveCollection(ReferenceCount):
         The new timewarp curve (and thus, the apparent range of the collection)
         will range from 0 to max_t.
         """
-    def face_forward(self, segments_per_unit: float) -> None:
+    def face_forward(self, segments_per_unit: float, /) -> None:
         """Discards the existing HPR curve and generates a new one that looks in the
         direction of travel along the XYZ curve, based on the XYZ curve's tangent
         at each point.
         """
-    def reset_max_t(self, max_t: float) -> None:
+    def reset_max_t(self, max_t: float, /) -> None:
         """Adjusts the apparent length of the curve by applying a new timewarp that
         maps the range [0..max_t] to the range [0..get_max_t()].  After this call,
         the curve collection will contain one more timewarp curve, and get_max_t()
@@ -278,7 +278,7 @@ class ParametricCurveCollection(ReferenceCount):
         by all the timewarp curves and within the bounds of the curves themselves),
         or false otherwise.
         """
-    def evaluate_t(self, t: float) -> float:
+    def evaluate_t(self, t: float, /) -> float:
         """Determines the value of t that should be passed to the XYZ and HPR curves,
         after applying the given value of t to all the timewarps.  Return -1.0f if
         the value of t exceeds one of the timewarps' ranges.
@@ -322,7 +322,7 @@ class ParametricCurveCollection(ReferenceCount):
 
         Returns true if successful, false on failure.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a brief one-line description of the ParametricCurveCollection to the
         indicated output stream.
         """
@@ -386,13 +386,13 @@ class CurveFitter:
         """Adds a single sample xyz & hpr simultaneously."""
     def get_num_samples(self) -> int:
         """Returns the number of sample points that have been added."""
-    def get_sample_t(self, n: int) -> float:
+    def get_sample_t(self, n: int, /) -> float:
         """Returns the parametric value of the nth sample added."""
-    def get_sample_xyz(self, n: int) -> LVecBase3:
+    def get_sample_xyz(self, n: int, /) -> LVecBase3:
         """Returns the point in space of the nth sample added."""
-    def get_sample_hpr(self, n: int) -> LVecBase3:
+    def get_sample_hpr(self, n: int, /) -> LVecBase3:
         """Returns the orientation of the nth sample added."""
-    def get_sample_tangent(self, n: int) -> LVecBase3:
+    def get_sample_tangent(self, n: int, /) -> LVecBase3:
         """Returns the tangent associated with the nth sample added.  This is only
         meaningful if compute_tangents() has already been called.
         """
@@ -414,12 +414,12 @@ class CurveFitter:
         """Sorts all the data points in order by parametric time, in case they were
         added in an incorrect order.
         """
-    def desample(self, factor: float) -> None:
+    def desample(self, factor: float, /) -> None:
         """Removes sample points in order to reduce the complexity of a sampled curve.
         Keeps one out of every factor samples.  Also keeps the first and the last
         samples.
         """
-    def compute_tangents(self, scale: float) -> None:
+    def compute_tangents(self, scale: float, /) -> None:
         """Once a set of points has been built, and prior to calling MakeHermite() or
         MakeNurbs(), ComputeTangents() must be called to set up the tangents
         correctly (unless the tangents were defined as the points were added).
@@ -430,8 +430,8 @@ class CurveFitter:
         """Converts the current set of data points into a NURBS curve.  This gives a
         smoother curve than produced by MakeHermite().
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
     addXyz = add_xyz
@@ -472,7 +472,7 @@ class HermiteCurve(PiecewiseCurve):
         """Constructs a Hermite from the indicated (possibly non-hermite) curve."""
     def get_num_cvs(self) -> int:
         """Returns the number of CV's in the curve."""
-    def insert_cv(self, t: float) -> int:
+    def insert_cv(self, t: float, /) -> int:
         """Inserts a new CV at the given parametric point along the curve.  If this
         parametric point is already on the curve, the CV is assigned an index
         between its two neighbors and the indices of all following CV's are
@@ -490,7 +490,7 @@ class HermiteCurve(PiecewiseCurve):
         """Adds a new CV to the end of the curve.  The new CV is given initial in/out
         tangents of 0.  The return value is the index of the new CV.
         """
-    def remove_cv(self, n: int) -> bool:
+    def remove_cv(self, n: int, /) -> bool:
         """Removes the given CV from the curve.  Returns true if the CV existed, false
         otherwise.
         """
@@ -533,7 +533,7 @@ class HermiteCurve(PiecewiseCurve):
         """
     def set_cv_name(self, n: int, name: str) -> bool:
         """Changes the name associated with a particular CV."""
-    def get_cv_type(self, n: int) -> int:
+    def get_cv_type(self, n: int, /) -> int:
         """Returns the given CV's continuity type, HC_CUT, HC_FREE, HC_G1, or
         HC_SMOOTH, or 0 if there is no such CV.
         """
@@ -552,9 +552,9 @@ class HermiteCurve(PiecewiseCurve):
         """Returns the out tangent of the given CV."""
     @overload
     def get_cv_out(self, n: int, v: Vec3Like) -> None: ...
-    def get_cv_tstart(self, n: int) -> float:
+    def get_cv_tstart(self, n: int, /) -> float:
         """Returns the starting point in parametric space of the given CV."""
-    def get_cv_name(self, n: int) -> str:
+    def get_cv_name(self, n: int, /) -> str:
         """Returns the name of the given CV, or NULL."""
     def write_cv(self, out: ostream, n: int) -> None: ...
     getNumCvs = get_num_cvs
@@ -584,16 +584,16 @@ class NurbsCurveInterface:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def set_order(self, order: int) -> None: ...
+    def set_order(self, order: int, /) -> None: ...
     def get_order(self) -> int: ...
     def get_num_cvs(self) -> int: ...
     def get_num_knots(self) -> int: ...
-    def insert_cv(self, t: float) -> bool: ...
+    def insert_cv(self, t: float, /) -> bool: ...
     @overload
     def append_cv(self, v: Vec3Like | Vec4Like) -> int: ...
     @overload
     def append_cv(self, x: float, y: float, z: float) -> int: ...
-    def remove_cv(self, n: int) -> bool: ...
+    def remove_cv(self, n: int, /) -> bool: ...
     def remove_all_cvs(self) -> None: ...
     @overload
     def set_cv_point(self, n: int, v: Vec3Like) -> bool:
@@ -601,18 +601,18 @@ class NurbsCurveInterface:
     @overload
     def set_cv_point(self, n: int, x: float, y: float, z: float) -> bool:
         """Repositions the indicated CV.  Returns true if successful, false otherwise."""
-    def get_cv_point(self, n: int) -> LVecBase3:
+    def get_cv_point(self, n: int, /) -> LVecBase3:
         """Returns the position of the indicated CV."""
     def set_cv_weight(self, n: int, w: float) -> bool:
         """Sets the weight of the indicated CV without affecting its position in 3-d
         space.
         """
-    def get_cv_weight(self, n: int) -> float:
+    def get_cv_weight(self, n: int, /) -> float:
         """Returns the weight of the indicated CV."""
     def set_cv(self, n: int, v: Vec4Like) -> bool: ...
-    def get_cv(self, n: int) -> LVecBase4: ...
+    def get_cv(self, n: int, /) -> LVecBase4: ...
     def set_knot(self, n: int, t: float) -> bool: ...
-    def get_knot(self, n: int) -> float: ...
+    def get_knot(self, n: int, /) -> float: ...
     def write_cv(self, out: ostream, n: int) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -740,7 +740,7 @@ class NurbsCurveResult(ReferenceCount):
         indicated segment (as in eval_segment_point()), and returns the
         corresponding t value in the entire curve (as in eval_point()).
         """
-    def adaptive_sample(self, tolerance: float) -> None:
+    def adaptive_sample(self, tolerance: float, /) -> None:
         """Determines the set of subdivisions necessary to approximate the curve with
         a set of linear segments, no point of which is farther than tolerance units
         from the actual curve.
@@ -752,11 +752,11 @@ class NurbsCurveResult(ReferenceCount):
         """Returns the number of sample points generated by the previous call to
         adaptive_sample().
         """
-    def get_sample_t(self, n: int) -> float:
+    def get_sample_t(self, n: int, /) -> float:
         """Returns the t value of the nth sample point generated by the previous call
         to adaptive_sample().
         """
-    def get_sample_point(self, n: int) -> LPoint3:
+    def get_sample_point(self, n: int, /) -> LPoint3:
         """Returns the point on the curve of the nth sample point generated by the
         previous call to adaptive_sample().
 
@@ -798,7 +798,7 @@ class NurbsCurveEvaluator(ReferenceCount):
     def __init__(self, param0: NurbsCurveEvaluator = ..., /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_order(self, order: int) -> None:
+    def set_order(self, order: int, /) -> None:
         """Sets the order of the curve.  This resets the knot vector to the default
         knot vector for the number of vertices.
 
@@ -807,7 +807,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         """
     def get_order(self) -> int:
         """Returns the order of the curve as set by a previous call to set_order()."""
-    def reset(self, num_vertices: int) -> None:
+    def reset(self, num_vertices: int, /) -> None:
         """Resets all the vertices and knots to their default values, and sets the
         curve up with the indicated number of vertices.  You must then call
         set_vertex() repeatedly to fill in all of the vertex values appropriately.
@@ -893,7 +893,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         equal to the preceding value.  If no knot values are set, a default knot
         vector is supplied.
         """
-    def get_knot(self, i: int) -> float:
+    def get_knot(self, i: int, /) -> float:
         """Returns the value of the nth knot."""
     def normalize_knots(self) -> None:
         """Normalizes the knot sequence so that the parametric range of the curve is 0
@@ -916,7 +916,7 @@ class NurbsCurveEvaluator(ReferenceCount):
         the indicated coordinate space, and then further transformed by the
         indicated matrix.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def get_vertices(self) -> tuple[LVecBase4, ...]: ...
     def get_knots(self) -> tuple[float, ...]: ...
     setOrder = set_order
@@ -1063,7 +1063,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
     def __init__(self, param0: NurbsSurfaceEvaluator = ..., /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_u_order(self, u_order: int) -> None:
+    def set_u_order(self, u_order: int, /) -> None:
         """Sets the order of the surface in the U direction.  This resets the knot
         vector to the default knot vector for the number of vertices.
 
@@ -1074,7 +1074,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         """Returns the order of the surface in the U direction as set by a previous
         call to set_u_order().
         """
-    def set_v_order(self, v_order: int) -> None:
+    def set_v_order(self, v_order: int, /) -> None:
         """Sets the order of the surface in the V direction.  This resets the knot
         vector to the default knot vector for the number of vertices.
 
@@ -1175,7 +1175,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         equal to the preceding value.  If no knot values are set, a default knot
         vector is supplied.
         """
-    def get_u_knot(self, i: int) -> float:
+    def get_u_knot(self, i: int, /) -> float:
         """Returns the value of the nth knot."""
     def normalize_u_knots(self) -> None:
         """Normalizes the knot sequence so that the parametric range of the surface in
@@ -1190,7 +1190,7 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         equal to the preceding value.  If no knot values are set, a default knot
         vector is supplied.
         """
-    def get_v_knot(self, i: int) -> float:
+    def get_v_knot(self, i: int, /) -> float:
         """Returns the value of the nth knot."""
     def normalize_v_knots(self) -> None:
         """Normalizes the knot sequence so that the parametric range of the surface in
@@ -1204,12 +1204,12 @@ class NurbsSurfaceEvaluator(ReferenceCount):
         """Returns the number of piecewise continuous segments in the surface in the V
         direction.  This is based on the knot vector.
         """
-    def evaluate(self, rel_to: NodePath = ...) -> NurbsSurfaceResult:
+    def evaluate(self, rel_to: NodePath = ..., /) -> NurbsSurfaceResult:
         """Returns a NurbsSurfaceResult object that represents the result of applying
         the knots to all of the current values of the vertices, transformed into
         the indicated coordinate space.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def get_u_knots(self) -> tuple[float, ...]: ...
     def get_v_knots(self) -> tuple[float, ...]: ...
     setUOrder = set_u_order
@@ -1285,21 +1285,21 @@ class RopeNode(PandaNode):
     def vertex_color_dimension(self) -> int: ...
     @property
     def vertex_thickness_dimension(self) -> int: ...
-    def set_curve(self, curve: NurbsCurveEvaluator) -> None:
+    def set_curve(self, curve: NurbsCurveEvaluator, /) -> None:
         """Sets the particular curve represented by the RopeNode."""
     def get_curve(self) -> NurbsCurveEvaluator:
         """Returns the curve represented by the RopeNode."""
-    def set_render_mode(self, render_mode: _RopeNode_RenderMode) -> None:
+    def set_render_mode(self, render_mode: _RopeNode_RenderMode, /) -> None:
         """Specifies the method used to render the rope.  The simplest is RM_thread,
         which just draws a one-pixel line segment.
         """
     def get_render_mode(self) -> _RopeNode_RenderMode:
         """Returns the method used to render the rope.  See set_render_mode()."""
-    def set_uv_mode(self, uv_mode: _RopeNode_UVMode) -> None:
+    def set_uv_mode(self, uv_mode: _RopeNode_UVMode, /) -> None:
         """Specifies the algorithm to use to generate UV's for the rope."""
     def get_uv_mode(self) -> _RopeNode_UVMode:
         """Returns the algorithm to use to generate UV's for the rope."""
-    def set_uv_direction(self, u_dominant: bool) -> None:
+    def set_uv_direction(self, u_dominant: bool, /) -> None:
         """Specify true to vary the U coordinate down the length of the rope, or false
         to vary the V coordinate.
         """
@@ -1307,14 +1307,14 @@ class RopeNode(PandaNode):
         """Returns true if the rope runs down the U coordinate of the texture, or
         false if it runs down the V coordinate.
         """
-    def set_uv_scale(self, scale: float) -> None:
+    def set_uv_scale(self, scale: float, /) -> None:
         """Specifies an additional scaling factor to apply to generated UV's along the
         rope.  This scale factor is applied in whichever direction is along the
         rope, as specified by set_uv_direction().
         """
     def get_uv_scale(self) -> float:
         """Returns the scaling factor to apply to generated UV's for the rope."""
-    def set_normal_mode(self, normal_mode: _RopeNode_NormalMode) -> None:
+    def set_normal_mode(self, normal_mode: _RopeNode_NormalMode, /) -> None:
         """Specifies the kind of normals to generate for the rope.  This is only
         applicable when the RenderMode is set to RM_tube; in the other render
         modes, normals are never generated.
@@ -1323,7 +1323,7 @@ class RopeNode(PandaNode):
         """Returns the kind of normals to generate for the rope.  This is only
         applicable when the RenderMode is set to RM_tube.
         """
-    def set_tube_up(self, tube_up: Vec3Like) -> None:
+    def set_tube_up(self, tube_up: Vec3Like, /) -> None:
         """Specifies a normal vector, generally perpendicular to the main axis of the
         starting point of the curve, that controls the "top" of the curve, when
         RenderMode is RM_tube.  This is used to orient the vertices that make up
@@ -1335,7 +1335,7 @@ class RopeNode(PandaNode):
         """Returns the normal vector used to control the "top" of the curve, when
         RenderMode is RM_tube.  See set_tube_up().
         """
-    def set_use_vertex_color(self, flag: bool) -> None:
+    def set_use_vertex_color(self, flag: bool, /) -> None:
         """Sets the "use vertex color" flag.  When this is true, the R, G, B, A vertex
         color is assumed to be stored as the dimensions n + 0, n + 1, n + 2, n + 3,
         respectively, of the extended vertex values, where n is the value returned
@@ -1351,7 +1351,7 @@ class RopeNode(PandaNode):
 
         The color components will be expected at (n, n + 1, n + 2, n + 3).
         """
-    def set_num_subdiv(self, num_subdiv: int) -> None:
+    def set_num_subdiv(self, num_subdiv: int, /) -> None:
         """Specifies the number of subdivisions per cubic segment (that is, per unique
         knot value) to draw in a fixed uniform tesselation of the curve.
         """
@@ -1359,7 +1359,7 @@ class RopeNode(PandaNode):
         """Returns the number of subdivisions per cubic segment to draw.  See
         set_num_subdiv().
         """
-    def set_num_slices(self, num_slices: int) -> None:
+    def set_num_slices(self, num_slices: int, /) -> None:
         """Specifies the number of radial subdivisions to make if RenderMode is
         RM_tube.  It is ignored in the other render modes.
 
@@ -1372,7 +1372,7 @@ class RopeNode(PandaNode):
         """Returns the number of radial subdivisions to make if RenderMode is RM_tube.
         It is ignored in the other render modes.  See set_num_slices().
         """
-    def set_use_vertex_thickness(self, flag: bool) -> None:
+    def set_use_vertex_thickness(self, flag: bool, /) -> None:
         """Sets the "use vertex thickness" flag.  When this is true, the vertex
         thickness is assumed to be stored as the dimension
         get_vertex_thickness_dimension(), of the extended vertex values.  Use
@@ -1388,7 +1388,7 @@ class RopeNode(PandaNode):
         """Returns the numeric extended dimension in which the thickness component
         should be found.  See NurbsCurveEvaluator::set_extended_vertex().
         """
-    def set_thickness(self, thickness: float) -> None:
+    def set_thickness(self, thickness: float, /) -> None:
         """Specifies the thickness of the rope, in pixels or in spatial units,
         depending on the render mode.  See set_render_mode().
 
@@ -1397,7 +1397,7 @@ class RopeNode(PandaNode):
         """
     def get_thickness(self) -> float:
         """Returns the thickness of the rope.  See set_thickness()."""
-    def set_matrix(self, matrix: Mat4Like) -> None:
+    def set_matrix(self, matrix: Mat4Like, /) -> None:
         """Specifies an optional matrix which is used to transform each control vertex
         after it has been transformed into the RopeNode's coordinate space, but
         before the polygon vertices are generated.
@@ -1413,7 +1413,7 @@ class RopeNode(PandaNode):
         after it has been transformed into the RopeNode's coordinate space, but
         before the polygon vertices are generated.
         """
-    def reset_bound(self, rel_to: NodePath) -> None:
+    def reset_bound(self, rel_to: NodePath, /) -> None:
         """Recomputes the bounding volume.  This is normally called automatically, but
         it must occasionally be called explicitly when the curve has changed
         properties outside of this node's knowledge.
@@ -1461,11 +1461,11 @@ class SheetNode(PandaNode):
     replace the whole ParametricSurface class hierarchy.
     """
 
-    def set_surface(self, surface: NurbsSurfaceEvaluator) -> None:
+    def set_surface(self, surface: NurbsSurfaceEvaluator, /) -> None:
         """Sets the particular surface represented by the SheetNode."""
     def get_surface(self) -> NurbsSurfaceEvaluator:
         """Returns the surface represented by the SheetNode."""
-    def set_use_vertex_color(self, flag: bool) -> None:
+    def set_use_vertex_color(self, flag: bool, /) -> None:
         """Sets the "use vertex color" flag.  When this is true, the R, G, B, A vertex
         color is assumed to be stored as the dimensions 0, 1, 2, 3, respectively,
         of the extended vertex values.  Use
@@ -1473,7 +1473,7 @@ class SheetNode(PandaNode):
         """
     def get_use_vertex_color(self) -> bool:
         """Returns the "use vertex color" flag.  See set_use_vertex_color()."""
-    def set_num_u_subdiv(self, num_u_subdiv: int) -> None:
+    def set_num_u_subdiv(self, num_u_subdiv: int, /) -> None:
         """Specifies the number of subdivisions per cubic segment (that is, per unique
         knot value) to draw in a fixed uniform tesselation of the surface in the U
         direction.
@@ -1482,7 +1482,7 @@ class SheetNode(PandaNode):
         """Returns the number of subdivisions per cubic segment to draw in the U
         direction.  See set_num_u_subdiv().
         """
-    def set_num_v_subdiv(self, num_v_subdiv: int) -> None:
+    def set_num_v_subdiv(self, num_v_subdiv: int, /) -> None:
         """Specifies the number of subdivisions per cubic segment (that is, per unique
         knot value) to draw in a fixed uniform tesselation of the surface in the V
         direction.
@@ -1491,7 +1491,7 @@ class SheetNode(PandaNode):
         """Returns the number of subdivisions per cubic segment to draw in the V
         direction.  See set_num_v_subdiv().
         """
-    def reset_bound(self, rel_to: NodePath) -> None:
+    def reset_bound(self, rel_to: NodePath, /) -> None:
         """Recomputes the bounding volume.  This is normally called automatically, but
         it must occasionally be called explicitly when the surface has changed
         properties outside of this node's knowledge.

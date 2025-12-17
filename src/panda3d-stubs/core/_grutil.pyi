@@ -63,15 +63,15 @@ class CardMaker(Namable):
         """Sets the range of UV's that will be applied to the vertices appropriately
         to show the non-pad region of the texture.
         """
-    def set_uv_range_cube(self, face: int) -> None:
+    def set_uv_range_cube(self, face: int, /) -> None:
         """Sets the range of UV's that will be applied to the vertices appropriately
         for a cube-map face.
         """
-    def set_has_uvs(self, flag: bool) -> None:
+    def set_has_uvs(self, flag: bool, /) -> None:
         """Sets the flag indicating whether vertices will be generated with UV's or
         not.
         """
-    def set_has_3d_uvs(self, flag: bool) -> None:
+    def set_has_3d_uvs(self, flag: bool, /) -> None:
         """Sets the flag indicating whether vertices will be generated with
         3-component UVW's (true) or 2-component UV's (the default, false).
         Normally, this will be implicitly set by setting the uv_range.
@@ -96,7 +96,7 @@ class CardMaker(Namable):
         """Sets the color of the card."""
     def clear_color(self) -> None:
         """Unsets the color of the card."""
-    def set_has_normals(self, flag: bool) -> None:
+    def set_has_normals(self, flag: bool, /) -> None:
         """Sets the flag indicating whether vertices will be generated with normals or
         not.  Normals are required if you intend to enable lighting on the card,
         but are just wasted space and bandwidth otherwise, so there is a (slight)
@@ -145,11 +145,11 @@ class FisheyeMaker(Namable):
     def __init__(self, name: str) -> None: ...
     def reset(self) -> None:
         """Resets all the parameters to their initial defaults."""
-    def set_fov(self, fov: float) -> None:
+    def set_fov(self, fov: float, /) -> None:
         """Specifies the field of view of the fisheye projection.  A sphere map will
         have a 360-degree field of view (and this is the default).
         """
-    def set_num_vertices(self, num_vertices: int) -> None:
+    def set_num_vertices(self, num_vertices: int, /) -> None:
         """Specifies the approximate number of vertices to be used to generate the
         rose.  This is the approximate number of vertices that will be located
         within the rose's unit circle, not counting the inscribing square (if any).
@@ -166,7 +166,7 @@ class FisheyeMaker(Namable):
         sphere map so that it does not have a sharp circular edge that might
         produce artifacts due to numerical imprecision when mapping.
         """
-    def set_reflection(self, reflection: bool) -> None:
+    def set_reflection(self, reflection: bool, /) -> None:
         """Sets the flag indicating whether the texture image should be mirrored
         (true) or normal (false).  When this is true, the 3-D texture coordinates
         will be reversed so that the image is appropriate for a reflection.  This
@@ -196,7 +196,7 @@ class FrameRateMeter(TextNode):
     def __init__(self, name: str) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def setup_window(self, window: GraphicsOutput) -> None:
+    def setup_window(self, window: GraphicsOutput, /) -> None:
         """Sets up the frame rate meter to create a DisplayRegion to render itself
         into the indicated window.
         """
@@ -211,7 +211,7 @@ class FrameRateMeter(TextNode):
         the window to setup_window(), or NULL if setup_window() has not been
         called.
         """
-    def set_update_interval(self, update_interval: float) -> None:
+    def set_update_interval(self, update_interval: float, /) -> None:
         """Specifies the number of seconds that should elapse between updates to the
         frame rate indication.  This should be reasonably slow (e.g.  0.2 to 1.0)
         so that the calculation of the frame rate text does not itself dominate the
@@ -221,14 +221,14 @@ class FrameRateMeter(TextNode):
         """Returns the number of seconds that will elapse between updates to the frame
         rate indication.
         """
-    def set_text_pattern(self, text_pattern: str) -> None:
+    def set_text_pattern(self, text_pattern: str, /) -> None:
         """Sets the sprintf() pattern that is used to format the text.  The string
         "%f" or some variant will be replaced with the current frame rate in frames
         per second.
         """
     def get_text_pattern(self) -> str:
         """Returns the sprintf() pattern that is used to format the text."""
-    def set_clock_object(self, clock_object: ClockObject | _ClockObject_Mode) -> None:
+    def set_clock_object(self, clock_object: ClockObject | _ClockObject_Mode, /) -> None:
         """Sets the clock that is used to determine the frame rate.  The default is
         the application's global clock (ClockObject::get_global_clock()).
         """
@@ -337,7 +337,7 @@ class GeoMipTerrain(TypedObject):
         get accurate normals, please divide it by the terrain scale and normalize
         it again!
         """
-    def set_bruteforce(self, bf: bool) -> None:
+    def set_bruteforce(self, bf: bool, /) -> None:
         """Sets a boolean specifying whether the terrain will be rendered bruteforce.
         If the terrain is rendered bruteforce, there will be no Level of Detail,
         and the update() call will only update the terrain if it is marked dirty.
@@ -346,7 +346,7 @@ class GeoMipTerrain(TypedObject):
         """Returns a boolean whether the terrain is rendered bruteforce or not.  See
         set_bruteforce for more information.
         """
-    def set_auto_flatten(self, mode: int) -> None:
+    def set_auto_flatten(self, mode: int, /) -> None:
         """The terrain can be automatically flattened (using flatten_light,
         flatten_medium, or flatten_strong) after each update.  This only affects
         future updates, it doesn't flatten the current terrain.
@@ -378,7 +378,7 @@ class GeoMipTerrain(TypedObject):
         replace the nodes which are parented to this root, but they don't replace
         this root itself.
         """
-    def set_block_size(self, newbs: int) -> None:
+    def set_block_size(self, newbs: int, /) -> None:
         """Sets the block size.  If it is not a power of two, the closest power of two
         is used.
         """
@@ -388,7 +388,7 @@ class GeoMipTerrain(TypedObject):
         """Returns the highest level possible for this block size.  When a block is at
         this level, it will be the worst quality possible.
         """
-    def set_min_level(self, minlevel: int) -> None:
+    def set_min_level(self, minlevel: int, /) -> None:
         """Sets the minimum level of detail at which blocks may be generated by
         generate() or update(). The default value is 0, which is the highest
         quality.  This value is also taken in respect when generating the terrain
@@ -405,7 +405,7 @@ class GeoMipTerrain(TypedObject):
         instance the heightfield has changed.  Once the terrain has been
         regenerated, the dirty flag automatically gets reset internally.
         """
-    def set_factor(self, factor: float) -> None:
+    def set_factor(self, factor: float, /) -> None:
         """DEPRECATED method.  Use set_near/far instead.  Sets the quality factor at
         which blocks must be generated.  The higher this level, the better quality
         the terrain will be, but more expensive to render.  A value of 0 makes the
@@ -414,11 +414,11 @@ class GeoMipTerrain(TypedObject):
         """
     def set_near_far(self, input_near: float, input_far: float) -> None:
         """Sets the near and far LOD distances in one call."""
-    def set_near(self, input_near: float) -> None:
+    def set_near(self, input_near: float, /) -> None:
         """Sets the near LOD distance, at which the terrain will be rendered at
         highest quality.  This distance is in the terrain's coordinate space!
         """
-    def set_far(self, input_far: float) -> None:
+    def set_far(self, input_far: float, /) -> None:
         """Sets the far LOD distance, at which the terrain will be rendered at lowest
         quality.  This distance is in the terrain's coordinate space!
         """
@@ -438,7 +438,7 @@ class GeoMipTerrain(TypedObject):
         contains the block index of the block which you can use in
         GeoMipTerrain::get_block_node_path.
         """
-    def set_border_stitching(self, stitching: bool) -> None:
+    def set_border_stitching(self, stitching: bool, /) -> None:
         """If this value is true, the LOD level at the borders of the terrain will be
         0. This is useful if you have multiple terrains attached and you want to
         stitch them together, to fix seams.  This setting also has effect when
@@ -523,11 +523,11 @@ class HeightfieldTesselator(Namable):
         """
     def set_heightfield(self, filename: StrOrBytesPath, type: PNMFileType = ...) -> bool:
         """Loads the specified greyscale image file into the heightfield."""
-    def set_poly_count(self, n: int) -> None:
+    def set_poly_count(self, n: int, /) -> None:
         """Sets the polygon-count target.  The tesselator usually manages to come
         within about 20% of the target, plus or minus.
         """
-    def set_visibility_radius(self, r: int) -> None:
+    def set_visibility_radius(self, r: int, /) -> None:
         """Sets the visibility radius.  Polygons that are completely outside the
         radius (relative to the focal point) are cropped away.  The cropping is
         imperfect (all approximations are conservative), so this should be used in
@@ -539,15 +539,15 @@ class HeightfieldTesselator(Namable):
         around the focal point, and progressively lower and lower resolution
         terrain as you get farther away.  The units are in pixels.
         """
-    def set_horizontal_scale(self, h: float) -> None:
+    def set_horizontal_scale(self, h: float, /) -> None:
         """Sets the horizontal scale.  The default scale is 1.0, meaning that each
         pixel in the heightfield is 1x1 panda units wide.
         """
-    def set_vertical_scale(self, v: float) -> None:
+    def set_vertical_scale(self, v: float, /) -> None:
         """Sets the vertical scale.  The default scale is 255.0, meaning that each as
         the gray value ranges from (0-1), the elevation ranges from (0-255) feet.
         """
-    def set_max_triangles(self, n: int) -> None:
+    def set_max_triangles(self, n: int, /) -> None:
         """Sets the max triangles per geom."""
     def get_elevation(self, x: float, y: float) -> float:
         """Fetches the elevation at (x,y), where the input coordinate is specified in
@@ -596,7 +596,7 @@ class LineSegs(Namable):
         """Establishes the color that will be assigned to all vertices created by
         future calls to move_to() and draw_to().
         """
-    def set_thickness(self, thick: float) -> None:
+    def set_thickness(self, thick: float, /) -> None:
         """Establishes the line thickness or point size in pixels that will be
         assigned to all lines and points created by future calls to create().
         """
@@ -657,7 +657,7 @@ class LineSegs(Namable):
         the last call to create().  The positions of these vertices may be read and
         adjusted through get_vertex() and set_vertex().
         """
-    def get_vertex(self, n: int) -> LVertex:
+    def get_vertex(self, n: int, /) -> LVertex:
         """Returns the nth point or vertex of the line segment sequence generated by
         the last call to create().  The first move_to() generates vertex 0;
         subsequent move_to() and draw_to() calls generate consecutively higher
@@ -675,7 +675,7 @@ class LineSegs(Namable):
         last call to create().  The first move_to() generates vertex 0; subsequent
         move_to() and draw_to() calls generate consecutively higher vertex numbers.
         """
-    def get_vertex_color(self, vertex: int) -> LColor:
+    def get_vertex_color(self, vertex: int, /) -> LColor:
         """Returns the color of the nth point or vertex."""
     @overload
     def set_vertex_color(self, vertex: int, c: Vec4Like) -> None:
@@ -713,7 +713,7 @@ class MeshDrawer(TypedObject):
 
     def __init__(self) -> None:
         """Creates the MeshDrawer low level system."""
-    def set_budget(self, budget: int) -> None:
+    def set_budget(self, budget: int, /) -> None:
         """Sets the total triangle budget of the drawer.  This will not be exceeded.
         Don't set some thing too large because it will be slow
         """
@@ -825,7 +825,7 @@ class MeshDrawer(TypedObject):
         """Draws a number of particles in a big line with a shift dictated by the
         offset.  Frame contains u,v,u-size,v-size quadruple.
         """
-    def geometry(self, node: NodePath) -> None:
+    def geometry(self, node: NodePath, /) -> None:
         """Draws the geometry that is inside this node path into the MeshDrawer
         object.  This performs a similar functions as RigidBodyCombiner but for
         very dynamic situations that share the same texture like physcal chunks of
@@ -849,7 +849,7 @@ class MeshDrawer2D(TypedObject):
 
     def __init__(self) -> None:
         """Creates the MeshDrawer2D low level system."""
-    def set_budget(self, budget: int) -> None:
+    def set_budget(self, budget: int, /) -> None:
         """Sets the total triangle budget of the drawer."""
     def get_budget(self) -> int:
         """Gets the total triangle budget of the drawer."""
@@ -1008,11 +1008,11 @@ class MovieTexture(Texture):
         necessarily the height of the actual texture, since the texture may have
         been expanded to raise it to a power of 2.
         """
-    def get_color_cursor(self, page: int) -> MovieVideoCursor:
+    def get_color_cursor(self, page: int, /) -> MovieVideoCursor:
         """Returns the MovieVideoCursor that is feeding the color channels for the
         indicated page, where 0 <= page < get_num_pages().
         """
-    def get_alpha_cursor(self, page: int) -> MovieVideoCursor:
+    def get_alpha_cursor(self, page: int, /) -> MovieVideoCursor:
         """Returns the MovieVideoCursor that is feeding the alpha channel for the
         indicated page, where 0 <= page < get_num_pages().
         """
@@ -1026,7 +1026,7 @@ class MovieTexture(Texture):
         """
     def play(self) -> None:
         """Plays the movie from the beginning."""
-    def set_time(self, t: float) -> None:
+    def set_time(self, t: float, /) -> None:
         """Sets the movie's cursor."""
     def get_time(self) -> float:
         """Returns the current value of the movie's cursor.  If the movie's loop count
@@ -1034,17 +1034,17 @@ class MovieTexture(Texture):
         purposes of this function.  In other words, the return value will be in the
         range 0.0 to (length * loopcount).
         """
-    def set_loop(self, enable: bool) -> None:
+    def set_loop(self, enable: bool, /) -> None:
         """If true, sets the movie's loop count to 1 billion.  If false, sets the
         movie's loop count to one.
         """
     def get_loop(self) -> bool:
         """Returns true if the movie's loop count is not equal to one."""
-    def set_loop_count(self, count: int) -> None:
+    def set_loop_count(self, count: int, /) -> None:
         """Sets the movie's loop count to the desired value."""
     def get_loop_count(self) -> int:
         """Returns the movie's loop count."""
-    def set_play_rate(self, play_rate: float) -> None:
+    def set_play_rate(self, play_rate: float, /) -> None:
         """Sets the movie's play-rate.  This is the speed at which the movie's cursor
         advances.  The default is to advance 1.0 movie-seconds per real-time
         second.
@@ -1053,7 +1053,7 @@ class MovieTexture(Texture):
         """Gets the movie's play-rate."""
     def is_playing(self) -> bool:
         """Returns true if the movie's cursor is advancing."""
-    def synchronize_to(self, sound: AudioSound) -> None:
+    def synchronize_to(self, sound: AudioSound, /) -> None:
         """Synchronize this texture to a sound.  Typically, you would load the texture
         and the sound from the same AVI file.
         """
@@ -1121,10 +1121,10 @@ class MultitexReducer:
         """
     @overload
     def scan(self, node: PandaNode, state: RenderState, transform: TransformState) -> None: ...
-    def set_target(self, stage: TextureStage) -> None: ...
-    def set_use_geom(self, use_geom: bool) -> None: ...
-    def set_allow_tex_mat(self, allow_tex_mat: bool) -> None: ...
-    def flatten(self, window: GraphicsOutput) -> None: ...
+    def set_target(self, stage: TextureStage, /) -> None: ...
+    def set_use_geom(self, use_geom: bool, /) -> None: ...
+    def set_allow_tex_mat(self, allow_tex_mat: bool, /) -> None: ...
+    def flatten(self, window: GraphicsOutput, /) -> None: ...
     setTarget = set_target
     setUseGeom = set_use_geom
     setAllowTexMat = set_allow_tex_mat
@@ -1176,7 +1176,7 @@ class ShaderTerrainMesh(PandaNode):
           on the mesh, causing it to range over the unit box from (0, 0, 0) to
           (1, 1, 1). Usually you want to set a custom transform with NodePath::set_scale()
         """
-    def set_heightfield(self, heightfield: Texture) -> None:
+    def set_heightfield(self, heightfield: Texture, /) -> None:
         """@brief Sets the heightfield texture
         @details This sets the heightfield texture. It should be 16bit
           single channel, and have a power-of-two resolution greater than 32.
@@ -1193,7 +1193,7 @@ class ShaderTerrainMesh(PandaNode):
 
         @return Path to the heightfield
         """
-    def set_chunk_size(self, chunk_size: int) -> None:
+    def set_chunk_size(self, chunk_size: int, /) -> None:
         """@brief Sets the chunk size
         @details This sets the chunk size of the terrain. A chunk is basically the
           smallest unit in LOD. If the chunk size is too small, the terrain will
@@ -1215,7 +1215,7 @@ class ShaderTerrainMesh(PandaNode):
         @details This returns the chunk size, previously set with set_chunk_size()
         @return Chunk size
         """
-    def set_generate_patches(self, generate_patches: bool) -> None:
+    def set_generate_patches(self, generate_patches: bool, /) -> None:
         """@brief Sets whether to generate patches
         @details If this option is set to true, GeomPatches will be used instead of
           GeomTriangles. This is required when the terrain is used with tesselation
@@ -1236,7 +1236,7 @@ class ShaderTerrainMesh(PandaNode):
 
         @return Whether to generate patches
         """
-    def set_update_enabled(self, update_enabled: bool) -> None:
+    def set_update_enabled(self, update_enabled: bool, /) -> None:
         """@brief Sets whether to enable terrain updates
         @details This flag controls whether the terrain should be updated. If this value
           is set to false, no updating of the terrain will happen. This can be useful
@@ -1251,7 +1251,7 @@ class ShaderTerrainMesh(PandaNode):
 
         @return Whether to update the terrain
         """
-    def set_target_triangle_width(self, target_triangle_width: float) -> None:
+    def set_target_triangle_width(self, target_triangle_width: float, /) -> None:
         """@brief Sets the desired triangle width
         @details This sets the desired width a triangle should have in pixels.
           A value of 10.0 for example will make the terrain tesselate everything
@@ -1320,7 +1320,7 @@ class SceneGraphAnalyzerMeter(TextNode):
     def __init__(self, name: str, node: PandaNode) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def setup_window(self, window: GraphicsOutput) -> None:
+    def setup_window(self, window: GraphicsOutput, /) -> None:
         """Sets up the frame rate meter to create a DisplayRegion to render itself
         into the indicated window.
         """
@@ -1335,7 +1335,7 @@ class SceneGraphAnalyzerMeter(TextNode):
         the window to setup_window(), or NULL if setup_window() has not been
         called.
         """
-    def set_update_interval(self, update_interval: float) -> None:
+    def set_update_interval(self, update_interval: float, /) -> None:
         """Specifies the number of seconds that should elapse between updates to the
         meter.  This should be reasonably slow (e.g.  0.5 to 2.0) so that the
         calculation of the scene graph analysis does not itself dominate the frame
@@ -1345,7 +1345,7 @@ class SceneGraphAnalyzerMeter(TextNode):
         """Returns the number of seconds that will elapse between updates to the frame
         rate indication.
         """
-    def set_node(self, node: PandaNode) -> None:
+    def set_node(self, node: PandaNode, /) -> None:
         """Sets the node to be analyzed."""
     def get_node(self) -> PandaNode:
         """Returns the node to be analyzed."""
@@ -1433,7 +1433,7 @@ class PipeOcclusionCullTraverser(CullTraverser):
         """Returns a Texture that can be used to visualize the efforts of the
         occlusion cull.
         """
-    def set_occlusion_mask(self, occlusion_mask: DrawMask | int) -> None:
+    def set_occlusion_mask(self, occlusion_mask: DrawMask | int, /) -> None:
         """Specifies the DrawMask that should be set on occlusion polygons for this
         scene.  This identifies the polygons that are to be treated as occluders.
         Polygons that do not have this draw mask set will not be considered
@@ -1497,7 +1497,7 @@ class PfmVizzer:
         and generate_vis_mesh()) that will apply the lens distortion to an
         arbitrary texture image.
         """
-    def extrude(self, lens: Lens) -> None:
+    def extrude(self, lens: Lens, /) -> None:
         """Converts each (u, v, depth) point of the Pfm file to an (x, y, z) point, by
         reversing project().  If the original file is only a 1-d file, assumes that
         it is a depth map with implicit (u, v) coordinates.
@@ -1506,7 +1506,7 @@ class PfmVizzer:
         OrthographicLens).  Non-linear lenses don't necessarily compute a sensible
         depth coordinate.
         """
-    def set_vis_inverse(self, vis_inverse: bool) -> None:
+    def set_vis_inverse(self, vis_inverse: bool, /) -> None:
         """Sets the vis_inverse flag.  When this flag is true, vis meshes and point
         clouds are generated with the 3-d depth value in the texture coordinates,
         and the 2-d index value in the vertex position.  When it is false, meshes
@@ -1517,7 +1517,7 @@ class PfmVizzer:
         """
     def get_vis_inverse(self) -> bool:
         """Returns the vis_inverse flag.  See set_vis_inverse()."""
-    def set_flat_texcoord_name(self, flat_texcoord_name: InternalName | str) -> None:
+    def set_flat_texcoord_name(self, flat_texcoord_name: InternalName | str, /) -> None:
         """If the flat_texcoord_name is specified, it is the name of an additional
         vertex column that will be created for the "flat" texture coordinates, i.e.
         the original 0..1 values that correspond to the 2-D index position of each
@@ -1536,7 +1536,7 @@ class PfmVizzer:
         """
     def get_flat_texcoord_name(self) -> InternalName:
         """Returns the flat_texcoord_name.  See set_flat_texcoord_name()."""
-    def set_vis_2d(self, vis_2d: bool) -> None:
+    def set_vis_2d(self, vis_2d: bool, /) -> None:
         """Sets the vis_2d flag.  When this flag is true, only the first two (x, y)
         value of each depth point is considered meaningful; the z component is
         ignored.  This is only relevant for generating visualizations.
@@ -1545,14 +1545,14 @@ class PfmVizzer:
         """
     def get_vis_2d(self) -> bool:
         """Returns the vis_2d flag.  See set_vis_2d()."""
-    def set_keep_beyond_lens(self, keep_beyond_lens: bool) -> None:
+    def set_keep_beyond_lens(self, keep_beyond_lens: bool, /) -> None:
         """Sets the keep_beyond_lens flag.  When this flag is true, points that fall
         outside of the normal lens range in project() or in add_vis_column() will
         be retained anyway; when it is false, these points will be discarded.
         """
     def get_keep_beyond_lens(self) -> bool:
         """Returns the keep_beyond_lens flag.  See set_keep_beyond_lens()."""
-    def set_vis_blend(self, vis_blend: PNMImage) -> None:
+    def set_vis_blend(self, vis_blend: PNMImage, /) -> None:
         """Specifies a blending map--a grayscale image--that will be applied to the
         vertex color during generate_vis_mesh() and generate_vis_points().  The
         image size must exactly match the mesh size of the PfmVizzer.
@@ -1568,7 +1568,7 @@ class PfmVizzer:
         """Returns the blending map set by the most recent call to set_vis_blend(), or
         NULL if there is no blending map in effect.
         """
-    def set_aux_pfm(self, pfm: PfmFile) -> None:
+    def set_aux_pfm(self, pfm: PfmFile, /) -> None:
         """Assigns an auxiliary PfmFile to this PfmVizzer.  This file will be queried
         by column types CT_aux_vertex1/2/3, but has no other meaning to the vizzer.
         This size of this PfmFile should exactly match the base PfmFile.  No
@@ -1613,7 +1613,7 @@ class PfmVizzer:
         space, and texture coordinates ranging from 0 .. 1 based on the position
         within the pfm grid.
         """
-    def generate_vis_mesh(self, face: _PfmVizzer_MeshFace = ...) -> NodePath:
+    def generate_vis_mesh(self, face: _PfmVizzer_MeshFace = ..., /) -> NodePath:
         """Creates a triangle mesh with the points of the pfm as 3-d coordinates in
         space, and texture coordinates ranging from 0 .. 1 based on the position
         within the pfm grid.

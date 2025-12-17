@@ -32,8 +32,8 @@ class PGFrameStyle:
     def __init__(self, copy: PGFrameStyle = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
-    def set_type(self, type: _PGFrameStyle_Type) -> None:
+    def assign(self, copy: Self, /) -> Self: ...
+    def set_type(self, type: _PGFrameStyle_Type, /) -> None:
         """Sets the basic type of frame."""
     def get_type(self) -> _PGFrameStyle_Type:
         """Returns the basic type of frame."""
@@ -45,7 +45,7 @@ class PGFrameStyle:
         """Sets the dominant color of the frame."""
     def get_color(self) -> LColor:
         """Returns the dominant color of the frame."""
-    def set_texture(self, texture: Texture) -> None:
+    def set_texture(self, texture: Texture, /) -> None:
         """Specifies a texture that should be applied to the frame."""
     def has_texture(self) -> bool:
         """Returns true if a texture has been applied to the frame."""
@@ -104,12 +104,12 @@ class PGFrameStyle:
         the size of the visible frame representation within the actual frame
         border.
         """
-    def get_internal_frame(self, frame: Vec4Like) -> LVecBase4:
+    def get_internal_frame(self, frame: Vec4Like, /) -> LVecBase4:
         """Computes the size of the internal frame, given the indicated external
         frame, appropriate for this kind of frame style.  This simply subtracts the
         border width for those frame styles that include a border.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     setType = set_type
     getType = get_type
     setColor = set_color
@@ -161,7 +161,7 @@ class PGItem(PandaNode):
         """Removes the bounding rectangle from the item.  It will no longer be
         possible to position the mouse within the item; see set_frame().
         """
-    def set_state(self, state: int) -> None:  # type: ignore[override]
+    def set_state(self, state: int, /) -> None:  # type: ignore[override]
         """Sets the "state" of this particular PGItem.
 
         The PGItem node will render as if it were the subgraph assigned to the
@@ -169,7 +169,7 @@ class PGItem(PandaNode):
         """
     def get_state(self) -> int:  # type: ignore[override]
         """Returns the "state" of this particular PGItem.  See set_state()."""
-    def set_active(self, active: bool) -> None:
+    def set_active(self, active: bool, /) -> None:
         """Sets whether the PGItem is active for mouse watching.  This is not
         necessarily related to the active/inactive appearance of the item, which is
         controlled by set_state(), but it does affect whether it responds to mouse
@@ -179,7 +179,7 @@ class PGItem(PandaNode):
         """Returns whether the PGItem is currently active for mouse events.  See
         set_active().
         """
-    def set_focus(self, focus: bool) -> None:
+    def set_focus(self, focus: bool, /) -> None:
         """Sets whether the PGItem currently has keyboard focus.  This simply means
         that the item may respond to keyboard events as well as to mouse events;
         precisely what this means is up to the individual item.
@@ -192,7 +192,7 @@ class PGItem(PandaNode):
         """Returns whether the PGItem currently has focus for keyboard events.  See
         set_focus().
         """
-    def set_background_focus(self, focus: bool) -> None:
+    def set_background_focus(self, focus: bool, /) -> None:
         """Sets the background_focus flag for this item.  When background_focus is
         enabled, the item will receive keypress events even if it is not in focus;
         in fact, even if it is not onscreen.  Unlike normal focus, many items may
@@ -202,7 +202,7 @@ class PGItem(PandaNode):
         """Returns whether background_focus is currently enabled.  See
         set_background_focus().
         """
-    def set_suppress_flags(self, suppress_flags: int) -> None:
+    def set_suppress_flags(self, suppress_flags: int, /) -> None:
         """This is just an interface to set the suppress flags on the underlying
         MouseWatcherRegion.  See MouseWatcherRegion::set_suppress_flags().
         """
@@ -218,16 +218,16 @@ class PGItem(PandaNode):
         This is only an upper limit on the actual number of state defs, since there
         may be holes in the list.
         """
-    def clear_state_def(self, state: int) -> None:
+    def clear_state_def(self, state: int, /) -> None:
         """Resets the NodePath assigned to the indicated state to its initial default,
         with only a frame representation if appropriate.
         """
-    def has_state_def(self, state: int) -> bool:
+    def has_state_def(self, state: int, /) -> bool:
         """Returns true if get_state_def() has ever been called for the indicated
         state (thus defining a render subgraph for this state index), false
         otherwise.
         """
-    def get_state_def(self, state: int) -> NodePath:
+    def get_state_def(self, state: int, /) -> NodePath:
         """Returns the Node that is the root of the subgraph that will be drawn when
         the PGItem is in the indicated state.  The first time this is called for a
         particular state index, it may create the Node.
@@ -236,7 +236,7 @@ class PGItem(PandaNode):
         """Parents an instance of the bottom node of the indicated NodePath to the
         indicated state index.
         """
-    def get_frame_style(self, state: int) -> PGFrameStyle:
+    def get_frame_style(self, state: int, /) -> PGFrameStyle:
         """Returns the kind of frame that will be drawn behind the item when it is in
         the indicated state.
         """
@@ -249,7 +249,7 @@ class PGItem(PandaNode):
         the region created with the MouseWatcher, and will thus be used to generate
         event names.
         """
-    def set_id(self, id: str) -> None:
+    def set_id(self, id: str, /) -> None:
         """Set the unique ID assigned to this PGItem.  It is the user's responsibility
         to ensure that this ID is unique.
 
@@ -346,17 +346,17 @@ class PGItem(PandaNode):
         """Returns the event name that will be thrown when the item loses the keyboard
         focus.
         """
-    def get_press_event(self, button: ButtonHandle | str) -> str:
+    def get_press_event(self, button: ButtonHandle | str, /) -> str:
         """Returns the event name that will be thrown when the item is active and the
         indicated mouse or keyboard button is depressed while the mouse is within
         the frame.
         """
-    def get_repeat_event(self, button: ButtonHandle | str) -> str:
+    def get_repeat_event(self, button: ButtonHandle | str, /) -> str:
         """Returns the event name that will be thrown when the item is active and the
         indicated mouse or keyboard button is continuously held down while the
         mouse is within the frame.
         """
-    def get_release_event(self, button: ButtonHandle | str) -> str:
+    def get_release_event(self, button: ButtonHandle | str, /) -> str:
         """Returns the event name that will be thrown when the item is active and the
         indicated mouse or keyboard button, formerly clicked down is within the
         frame, is released.
@@ -369,13 +369,13 @@ class PGItem(PandaNode):
         """Returns the inverse of the frame transform matrix"""
     def set_sound(self, event: str, sound: AudioSound) -> None:
         """Sets the sound that will be played whenever the indicated event occurs."""
-    def clear_sound(self, event: str) -> None:
+    def clear_sound(self, event: str, /) -> None:
         """Removes the sound associated with the indicated event."""
-    def get_sound(self, event: str) -> AudioSound:
+    def get_sound(self, event: str, /) -> AudioSound:
         """Returns the sound associated with the indicated event, or NULL if there is
         no associated sound.
         """
-    def has_sound(self, event: str) -> bool:
+    def has_sound(self, event: str, /) -> bool:
         """Returns true if there is a sound associated with the indicated event, or
         false otherwise.
         """
@@ -386,7 +386,7 @@ class PGItem(PandaNode):
         etc.
         """
     @staticmethod
-    def set_text_node(node: TextNode) -> None:
+    def set_text_node(node: TextNode, /) -> None:
         """Changes the TextNode object that will be used by all PGItems to generate
         default labels given a string.  This can be loaded with the default font,
         etc.
@@ -480,17 +480,17 @@ class PGButton(PGItem):
         create the label geometry.  This automatically sets up the frame according
         to the size of the text.
         """
-    def add_click_button(self, button: ButtonHandle | str) -> bool:
+    def add_click_button(self, button: ButtonHandle | str, /) -> bool:
         """Adds the indicated button to the set of buttons that can effectively
         "click" the PGButton.  Normally, this is just MouseButton::one().  Returns
         true if the button was added, or false if it was already there.
         """
-    def remove_click_button(self, button: ButtonHandle | str) -> bool:
+    def remove_click_button(self, button: ButtonHandle | str, /) -> bool:
         """Removes the indicated button from the set of buttons that can effectively
         "click" the PGButton.  Normally, this is just MouseButton::one().  Returns
         true if the button was removed, or false if it was not in the set.
         """
-    def has_click_button(self, button: ButtonHandle | str) -> bool:
+    def has_click_button(self, button: ButtonHandle | str, /) -> bool:
         """Returns true if the indicated button is on the set of buttons that can
         effectively "click" the PGButton.  Normally, this is just
         MouseButton::one().
@@ -505,7 +505,7 @@ class PGButton(PGItem):
         PGButtons.  The click event is the concatenation of this string followed by
         get_id().
         """
-    def get_click_event(self, button: ButtonHandle | str) -> str:
+    def get_click_event(self, button: ButtonHandle | str, /) -> str:
         """Returns the event name that will be thrown when the button is clicked
         normally.
         """
@@ -527,7 +527,7 @@ class PGTop(PandaNode):
     depth-first, left-to-right order, appropriate for 2-d objects.
     """
 
-    def set_mouse_watcher(self, watcher: MouseWatcher) -> None:
+    def set_mouse_watcher(self, watcher: MouseWatcher, /) -> None:
         """Sets the MouseWatcher pointer that the PGTop object registers its PG items
         with.  This must be set before the PG items are active.
         """
@@ -539,7 +539,7 @@ class PGTop(PandaNode):
         """Returns the MouseWatcherGroup pointer that the PGTop object registers its
         PG items with, or NULL if the MouseWatcher has not yet been set.
         """
-    def set_start_sort(self, start_sort: int) -> None:
+    def set_start_sort(self, start_sort: int, /) -> None:
         """Specifies the sort index that is assigned during the traversal to the first
         PGItem that is discovered during traversal.  Subsequent PGItems will be
         assigned consecutively higher sort indexes.
@@ -588,7 +588,7 @@ class PGEntry(PGItem):
         """
     def setup_minimal(self, width: float, num_lines: int) -> None:
         """Sets up the entry without creating any frame or other decoration."""
-    def set_text(self, text: str) -> bool:
+    def set_text(self, text: str, /) -> bool:
         """Changes the text currently displayed within the entry.  This uses the
         Unicode encoding currently specified for the "focus" TextNode; therefore,
         the TextNode must exist before calling set_text().
@@ -616,21 +616,21 @@ class PGEntry(PGItem):
 
         This is also the length of the string returned by get_plain_text().
         """
-    def get_character(self, n: int) -> int:
+    def get_character(self, n: int, /) -> int:
         """Returns the character at the indicated position in the entry.  If the
         object at this position is a graphic object instead of a character, returns
         0.
         """
-    def get_graphic(self, n: int) -> TextGraphic:
+    def get_graphic(self, n: int, /) -> TextGraphic:
         """Returns the graphic object at the indicated position in the pre-wordwrapped
         string.  If the object at this position is a character instead of a graphic
         object, returns NULL.
         """
-    def get_properties(self, n: int) -> TextProperties:
+    def get_properties(self, n: int, /) -> TextProperties:
         """Returns the TextProperties in effect for the object at the indicated
         position in the pre-wordwrapped string.
         """
-    def set_cursor_position(self, position: int) -> None:
+    def set_cursor_position(self, position: int, /) -> None:
         """Sets the current position of the cursor.  This is the position within the
         text at which the next letter typed by the user will be inserted; normally
         it is the same as the length of the text.
@@ -641,7 +641,7 @@ class PGEntry(PGItem):
         """Returns the node position x of the cursor"""
     def get_cursor_Y(self) -> float:
         """Returns the node position y of the cursor"""
-    def set_max_chars(self, max_chars: int) -> None:
+    def set_max_chars(self, max_chars: int, /) -> None:
         """Sets the maximum number of characters that may be typed into the entry.
         This is a limit on the number of characters, as opposed to the width of the
         entry; see also set_max_width().
@@ -652,7 +652,7 @@ class PGEntry(PGItem):
         """Returns the current maximum number of characters that may be typed into the
         entry, or 0 if there is no limit.  See set_max_chars().
         """
-    def set_max_width(self, max_width: float) -> None:
+    def set_max_width(self, max_width: float, /) -> None:
         """Sets the maximum width of all characters that may be typed into the entry.
         This is a limit on the width of the formatted text, not a fixed limit on
         the number of characters; also set_max_chars().
@@ -667,7 +667,7 @@ class PGEntry(PGItem):
         """Returns the current maximum width of the characters that may be typed into
         the entry, or 0 if there is no limit.  See set_max_width().
         """
-    def set_num_lines(self, num_lines: int) -> None:
+    def set_num_lines(self, num_lines: int, /) -> None:
         """Sets the number of lines of text the PGEntry will use.  This only has
         meaning if _max_width is not 0; _max_width indicates the wordwrap width of
         each line.
@@ -676,7 +676,7 @@ class PGEntry(PGItem):
         """Returns the number of lines of text the PGEntry will use, if _max_width is
         not 0.  See set_num_lines().
         """
-    def set_blink_rate(self, blink_rate: float) -> None:
+    def set_blink_rate(self, blink_rate: float, /) -> None:
         """Sets the number of times per second the cursor will blink while the entry
         has keyboard focus.
 
@@ -694,7 +694,7 @@ class PGEntry(PGItem):
         """Removes all the children from the cursor_def node, in preparation for
         adding a new definition.
         """
-    def set_cursor_keys_active(self, flag: bool) -> None:
+    def set_cursor_keys_active(self, flag: bool, /) -> None:
         """Sets whether the arrow keys (and home/end) control movement of the cursor.
         If true, they are active; if false, they are ignored.
         """
@@ -702,7 +702,7 @@ class PGEntry(PGItem):
         """Returns whether the arrow keys are currently set to control movement of the
         cursor; see set_cursor_keys_active().
         """
-    def set_obscure_mode(self, flag: bool) -> None:
+    def set_obscure_mode(self, flag: bool, /) -> None:
         """Specifies whether obscure mode should be enabled.  In obscure mode, a
         string of asterisks is displayed instead of the literal text, e.g.  for
         entering passwords.
@@ -714,7 +714,7 @@ class PGEntry(PGItem):
         """
     def get_obscure_mode(self) -> bool:
         """Specifies whether obscure mode is enabled.  See set_obscure_mode()."""
-    def set_overflow_mode(self, flag: bool) -> None:
+    def set_overflow_mode(self, flag: bool, /) -> None:
         """Specifies whether overflow mode should be enabled.  In overflow mode, text
         can overflow the boundaries of the Entry element horizontally.
 
@@ -722,7 +722,7 @@ class PGEntry(PGItem):
         """
     def get_overflow_mode(self) -> bool:
         """Specifies whether overflow mode is enabled.  See set_overflow_mode()."""
-    def set_candidate_active(self, candidate_active: str) -> None:
+    def set_candidate_active(self, candidate_active: str, /) -> None:
         """Specifies the name of the TextProperties structure added to the
         TextPropertiesManager that will be used to render candidate strings from
         the IME, used for typing characters in east Asian languages.  Each
@@ -736,7 +736,7 @@ class PGEntry(PGItem):
         """
     def get_candidate_active(self) -> str:
         """See set_candidate_active()."""
-    def set_candidate_inactive(self, candidate_inactive: str) -> None:
+    def set_candidate_inactive(self, candidate_inactive: str, /) -> None:
         """Specifies the name of the TextProperties structure added to the
         TextPropertiesManager that will be used to render candidate strings from
         the IME, used for typing characters in east Asian languages.  Each
@@ -755,7 +755,7 @@ class PGEntry(PGItem):
         when the entry is in the indicated state.  The default if nothing is
         specified is the same TextNode returned by PGItem::get_text_node().
         """
-    def get_text_def(self, state: int) -> TextNode:
+    def get_text_def(self, state: int, /) -> TextNode:
         """Returns the TextNode that will be used to render the text within the entry
         when the entry is in the indicated state.  See set_text_def().
         """
@@ -794,11 +794,11 @@ class PGEntry(PGItem):
         PGEntries.  The cursor event is the concatenation of this string followed
         by get_id().
         """
-    def get_accept_event(self, button: ButtonHandle | str) -> str:
+    def get_accept_event(self, button: ButtonHandle | str, /) -> str:
         """Returns the event name that will be thrown when the entry is accepted
         normally.
         """
-    def get_accept_failed_event(self, button: ButtonHandle | str) -> str:
+    def get_accept_failed_event(self, button: ButtonHandle | str, /) -> str:
         """Returns the event name that will be thrown when the entry cannot accept an
         input
         """
@@ -817,7 +817,7 @@ class PGEntry(PGItem):
         """
     def get_cursormove_event(self) -> str:
         """Returns the event name that will be thrown whenever the cursor moves"""
-    def set_wtext(self, wtext: str) -> bool:
+    def set_wtext(self, wtext: str, /) -> bool:
         """Changes the text currently displayed within the entry.
 
         The return value is true if all the text is accepted, or false if some was
@@ -829,7 +829,7 @@ class PGEntry(PGItem):
         """
     def get_wtext(self) -> str:
         """Returns the text currently displayed within the entry."""
-    def set_accept_enabled(self, enabled: bool) -> None:
+    def set_accept_enabled(self, enabled: bool, /) -> None:
         """Sets whether the input may be accepted--use to disable submission by the
         user
         """
@@ -959,7 +959,7 @@ class PGVirtualFrame(PGItem):
         """
     def clear_clip_frame(self) -> None:
         """Removes the clip frame from the item.  This disables clipping."""
-    def set_canvas_transform(self, transform: TransformState) -> None:
+    def set_canvas_transform(self, transform: TransformState, /) -> None:
         """Changes the transform of the virtual canvas.  This transform is applied to
         all child nodes of the canvas_node.
         """
@@ -1009,7 +1009,7 @@ class PGSliderBar(PGItem):
         This is functionally the same as a scroll bar, but it has a distinctive
         look.
         """
-    def set_axis(self, axis: Vec3Like) -> None:
+    def set_axis(self, axis: Vec3Like, /) -> None:
         """Specifies the axis of the slider bar's motion.  This should be only one of
         four vectors: (1, 0, 0), (0, 0, 1), (-1, 0, 0), or (0, 0, -1).
 
@@ -1030,13 +1030,13 @@ class PGSliderBar(PGItem):
         """Returns the value when the slider is all the way to the left."""
     def get_max_value(self) -> float:
         """Returns the value when the slider is all the way to the right."""
-    def set_scroll_size(self, scroll_size: float) -> None:
+    def set_scroll_size(self, scroll_size: float, /) -> None:
         """Specifies the amount the slider will move when the user clicks on the left
         or right buttons.
         """
     def get_scroll_size(self) -> float:
         """Returns the value last set by set_scroll_size()."""
-    def set_page_size(self, page_size: float) -> None:
+    def set_page_size(self, page_size: float, /) -> None:
         """Specifies the amount of data contained in a single page.  This indicates
         how much the thumb will jump when the trough is directly clicked; and if
         resize_thumb is true, it also controls the visible size of the thumb
@@ -1044,13 +1044,13 @@ class PGSliderBar(PGItem):
         """
     def get_page_size(self) -> float:
         """Returns the value last set by set_page_size()."""
-    def set_value(self, value: float) -> None:
+    def set_value(self, value: float, /) -> None:
         """Sets the current value of the slider programmatically.  This should range
         between get_min_value() and get_max_value().
         """
     def get_value(self) -> float:
         """Returns the current value of the slider."""
-    def set_ratio(self, ratio: float) -> None:
+    def set_ratio(self, ratio: float, /) -> None:
         """Sets the current value of the slider, expressed in the range 0 .. 1."""
     def get_ratio(self) -> float:
         """Returns the current value of the slider, expressed in the range 0 .. 1."""
@@ -1059,14 +1059,14 @@ class PGSliderBar(PGItem):
         manipulate the slider.  When true, calls to set_ratio() or set_value() will
         have no effect.
         """
-    def set_resize_thumb(self, resize_thumb: bool) -> None:
+    def set_resize_thumb(self, resize_thumb: bool, /) -> None:
         """Sets the resize_thumb flag.  When this is true, the thumb button's frame
         will be adjusted so that its width visually represents the page size.  When
         this is false, the thumb button will be left alone.
         """
     def get_resize_thumb(self) -> bool:
         """Returns the resize_thumb flag.  See set_resize_thumb()."""
-    def set_manage_pieces(self, manage_pieces: bool) -> None:
+    def set_manage_pieces(self, manage_pieces: bool, /) -> None:
         """Sets the manage_pieces flag.  When this is true, the sub-pieces of the
         slider bar--that is, the thumb, and the left and right scroll buttons--are
         automatically positioned and/or resized when the slider bar's overall frame
@@ -1074,7 +1074,7 @@ class PGSliderBar(PGItem):
         """
     def get_manage_pieces(self) -> bool:
         """Returns the manage_pieces flag.  See set_manage_pieces()."""
-    def set_thumb_button(self, thumb_button: PGButton) -> None:
+    def set_thumb_button(self, thumb_button: PGButton, /) -> None:
         """Sets the PGButton object that will serve as the thumb for this slider.
         This button visually represents the position of the slider, and can be
         dragged left and right by the user.
@@ -1090,7 +1090,7 @@ class PGSliderBar(PGItem):
         """Returns the PGButton that serves as the thumb for this slider, or NULL if
         it is not set.
         """
-    def set_left_button(self, left_button: PGButton) -> None:
+    def set_left_button(self, left_button: PGButton, /) -> None:
         """Sets the PGButton object that will serve as the left scroll button for this
         slider.  This button is optional; if present, the user can click on it to
         move scroll_size units at a time to the left.
@@ -1106,7 +1106,7 @@ class PGSliderBar(PGItem):
         """Returns the PGButton that serves as the left scroll button for this slider,
         if any, or NULL if it is not set.
         """
-    def set_right_button(self, right_button: PGButton) -> None:
+    def set_right_button(self, right_button: PGButton, /) -> None:
         """Sets the PGButton object that will serve as the right scroll button for
         this slider.  This button is optional; if present, the user can click on it
         to move scroll_size units at a time to the right.
@@ -1225,7 +1225,7 @@ class PGScrollFrame(PGVirtualFrame):
         frame to the same size as the clip frame.  Scrolling will no longer be
         possible.
         """
-    def set_manage_pieces(self, manage_pieces: bool) -> None:
+    def set_manage_pieces(self, manage_pieces: bool, /) -> None:
         """Sets the manage_pieces flag.  When this is true, the sub-pieces of the
         scroll frame--that is, the two scroll bars--are automatically positioned
         and/or resized when the scroll frame's overall frame is changed.  They are
@@ -1234,7 +1234,7 @@ class PGScrollFrame(PGVirtualFrame):
         """
     def get_manage_pieces(self) -> bool:
         """Returns the manage_pieces flag.  See set_manage_pieces()."""
-    def set_auto_hide(self, auto_hide: bool) -> None:
+    def set_auto_hide(self, auto_hide: bool, /) -> None:
         """Sets the auto_hide flag.  When this is true, the two scroll bars are
         automatically hidden if they are not needed (that is, if the virtual frame
         would fit within the clip frame without them), and they are automatically
@@ -1244,7 +1244,7 @@ class PGScrollFrame(PGVirtualFrame):
         """
     def get_auto_hide(self) -> bool:
         """Returns the auto_hide flag.  See set_auto_hide()."""
-    def set_horizontal_slider(self, horizontal_slider: PGSliderBar) -> None:
+    def set_horizontal_slider(self, horizontal_slider: PGSliderBar, /) -> None:
         """Sets the PGSliderBar object that will serve as the horizontal scroll bar
         for this frame.  It is your responsibility to parent this slider bar to the
         frame and move it to the appropriate place.
@@ -1257,7 +1257,7 @@ class PGScrollFrame(PGVirtualFrame):
         """Returns the PGSliderBar that serves as the horizontal scroll bar for this
         frame, if any, or NULL if it is not set.
         """
-    def set_vertical_slider(self, vertical_slider: PGSliderBar) -> None:
+    def set_vertical_slider(self, vertical_slider: PGSliderBar, /) -> None:
         """Sets the PGSliderBar object that will serve as the vertical scroll bar for
         this frame.  It is your responsibility to parent this slider bar to the
         frame and move it to the appropriate place.
@@ -1305,11 +1305,11 @@ class PGWaitBar(PGItem):
         """Creates a PGWaitBar with the indicated dimensions, with the indicated
         maximum range.
         """
-    def set_range(self, range: float) -> None:
+    def set_range(self, range: float, /) -> None:
         """Sets the value at which the WaitBar indicates 100%."""
     def get_range(self) -> float:
         """Returns the value at which the WaitBar indicates 100%."""
-    def set_value(self, value: float) -> None:
+    def set_value(self, value: float, /) -> None:
         """Sets the current value of the bar.  This should range between 0 and
         get_range().
         """
@@ -1317,7 +1317,7 @@ class PGWaitBar(PGItem):
         """Returns the current value of the bar."""
     def get_percent(self) -> float:
         """Returns the percentage complete."""
-    def set_bar_style(self, style: PGFrameStyle) -> None:
+    def set_bar_style(self, style: PGFrameStyle, /) -> None:
         """Sets the kind of frame that is drawn on top of the WaitBar to represent the
         amount completed.
         """

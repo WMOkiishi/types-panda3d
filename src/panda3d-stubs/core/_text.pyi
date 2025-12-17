@@ -61,7 +61,7 @@ class TextGlyph(TypedReferenceCount):
         """Returns true if this glyph represents invisible whitespace, or false if it
         corresponds to some visible character.
         """
-    def get_geom(self, usage_hint: _GeomEnums_UsageHint) -> Geom:
+    def get_geom(self, usage_hint: _GeomEnums_UsageHint, /) -> Geom:
         """Returns a Geom that renders the particular glyph.  It will be generated if
         necessary.
 
@@ -110,13 +110,13 @@ class TextFont(TypedReferenceCount, Namable):
         """Returns true if the font is valid and ready to use, false otherwise."""
     def get_line_height(self) -> float:
         """Returns the number of units high each line of text is."""
-    def set_line_height(self, line_height: float) -> None:
+    def set_line_height(self, line_height: float, /) -> None:
         """Changes the number of units high each line of text is."""
     def get_space_advance(self) -> float:
         """Returns the number of units wide a space is."""
-    def set_space_advance(self, space_advance: float) -> None:
+    def set_space_advance(self, space_advance: float, /) -> None:
         """Changes the number of units wide a space is."""
-    def get_glyph(self, character: int) -> TextGlyph:
+    def get_glyph(self, character: int, /) -> TextGlyph:
         """Gets the glyph associated with the given character code, as well as an
         optional scaling parameter that should be applied to the glyph's geometry
         and advance parameters.  Returns the glyph on success.  On failure, it may
@@ -263,7 +263,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Disambiguates the get_name() method between that inherited from TextFont
         and that inherited from FreetypeFont.
         """
-    def set_scale_factor(self, scale_factor: float) -> bool:
+    def set_scale_factor(self, scale_factor: float, /) -> bool:
         """Sets the factor by which the font is rendered larger by the FreeType
         library before being filtered down to its actual size in the texture as
         specified by set_pixels_per_unit().  This may be set to a number larger
@@ -274,7 +274,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         This should only be called before any characters have been requested out of
         the font, or immediately after calling clear().
         """
-    def set_texture_margin(self, texture_margin: int) -> None:
+    def set_texture_margin(self, texture_margin: int, /) -> None:
         """Sets the number of pixels of padding that is added around the border of
         each glyph before adding it to the texture map.  This reduces the bleed in
         from neighboring glyphs in the texture map.
@@ -283,7 +283,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Returns the number of pixels of padding that is added around the border of
         each glyph in the texture map.  See set_texture_margin().
         """
-    def set_poly_margin(self, poly_margin: float) -> None:
+    def set_poly_margin(self, poly_margin: float, /) -> None:
         """Sets the number of pixels of padding that is included around each glyph in
         the generated polygons.  This helps prevent the edges of the glyphs from
         being cut off at small minifications.  It is not related to the amount of
@@ -317,7 +317,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Returns the y size of the textures that are created for the
         DynamicTextFont.  See set_page_size().
         """
-    def set_minfilter(self, filter: _SamplerState_FilterType) -> None:
+    def set_minfilter(self, filter: _SamplerState_FilterType, /) -> None:
         """Sets the filter type used when minimizing the textures created for this
         font.
         """
@@ -325,7 +325,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Returns the filter type used when minimizing the textures created for this
         font.
         """
-    def set_magfilter(self, filter: _SamplerState_FilterType) -> None:
+    def set_magfilter(self, filter: _SamplerState_FilterType, /) -> None:
         """Sets the filter type used when enlarging the textures created for this
         font.
         """
@@ -333,7 +333,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Returns the filter type used when enlarging the textures created for this
         font.
         """
-    def set_anisotropic_degree(self, anisotropic_degree: int) -> None:
+    def set_anisotropic_degree(self, anisotropic_degree: int, /) -> None:
         """Enables or disables anisotropic filtering on the textures created for this
         font.  The default value is specified by the text-anisotropic-degree
         variable.  See Texture::set_anisotropic_degree().
@@ -342,7 +342,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Returns the current anisotropic degree for textures created for this font.
         See set_anisotropic_degree().
         """
-    def set_render_mode(self, render_mode: _TextFont_RenderMode) -> None:
+    def set_render_mode(self, render_mode: _TextFont_RenderMode, /) -> None:
         """Specifies the way the glyphs on this particular font are generated.  The
         default is RM_texture, which is the only mode supported for bitmap fonts.
         Other modes are possible for most modern fonts.
@@ -351,7 +351,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Returns the way the glyphs on this particular font are generated.  See
         set_render_mode().
         """
-    def set_fg(self, fg: Vec4Like) -> None:
+    def set_fg(self, fg: Vec4Like, /) -> None:
         """Changes the color of the foreground pixels of the font as they are rendered
         into the font texture.  The default is (1, 1, 1, 1), or opaque white, which
         allows text created with the font to be colored individually.  Normally,
@@ -365,7 +365,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         """Returns the color of the foreground pixels of the font as they are rendered
         into the font texture.  See set_fg().
         """
-    def set_bg(self, bg: Vec4Like) -> None:
+    def set_bg(self, bg: Vec4Like, /) -> None:
         """Changes the color of the background pixels of the font as they are rendered
         into the font texture.  The default is (1, 1, 1, 0), or transparent white,
         which allows text created with the font to be colored individually.  (Note
@@ -419,7 +419,7 @@ class DynamicTextFont(TextFont, FreetypeFont):
         will add additional pages as needed.  Each page is a Texture object that
         contains the images for each of the glyphs currently in use somewhere.
         """
-    def get_page(self, n: int) -> DynamicTextPage:
+    def get_page(self, n: int, /) -> DynamicTextPage:
         """Returns the nth page associated with the font.  Initially, the font has
         zero pages; when the first piece of text is rendered with the font, it will
         add additional pages as needed.  Each page is a Texture object that
@@ -482,17 +482,17 @@ class FontPool:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_font(filename: str) -> bool:
+    def has_font(filename: str, /) -> bool:
         """Returns true if the font has ever been loaded, false otherwise."""
     @staticmethod
-    def verify_font(filename: str) -> bool:
+    def verify_font(filename: str, /) -> bool:
         """Loads the given filename up into a font, if it has not already been loaded,
         and returns true to indicate success, or false to indicate failure.  If
         this returns true, it is guaranteed that a subsequent call to load_font()
         with the same font name will return a valid Font pointer.
         """
     @staticmethod
-    def load_font(filename: str) -> TextFont:
+    def load_font(filename: str, /) -> TextFont:
         """Loads the given filename up into a font, if it has not already been loaded,
         and returns the new font.  If a font with the same filename was previously
         loaded, returns that one instead.  If the font file cannot be found,
@@ -504,7 +504,7 @@ class FontPool:
         replace any previously-loaded font in the pool that had the same filename.
         """
     @staticmethod
-    def release_font(filename: str) -> None:
+    def release_font(filename: str, /) -> None:
         """Removes the indicated font from the pool, indicating it will never be
         loaded again; the font may then be freed.  If this function is never
         called, a reference count will be maintained on every font ever loaded,
@@ -520,10 +520,10 @@ class FontPool:
         pool.  Returns the number of fonts released.
         """
     @staticmethod
-    def list_contents(out: ostream) -> None:
+    def list_contents(out: ostream, /) -> None:
         """Lists the contents of the font pool to the indicated output stream."""
     @staticmethod
-    def write(out: ostream) -> None:
+    def write(out: ostream, /) -> None:
         """Lists the contents of the font pool to the indicated output stream."""
     hasFont = has_font
     verifyFont = verify_font
@@ -616,7 +616,7 @@ class TextProperties:
     def __ne__(self, other: object, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def clear(self) -> None:
         """Unsets all properties that have been specified so far, and resets the
         TextProperties structure to its initial empty state.
@@ -633,7 +633,7 @@ class TextProperties:
         """Specifies the default font to be used for any TextNode whose font is
         uninitialized or NULL.  See set_font().
         """
-    def set_font(self, font: TextFont) -> None:
+    def set_font(self, font: TextFont, /) -> None:
         """Sets the font that will be used when making text.  If this is set to NULL,
         the default font will be used, which can be set via set_default_font().
         """
@@ -644,7 +644,7 @@ class TextProperties:
         """Returns the font currently in use, if any.  If no font is in use, this
         returns the default font.
         """
-    def set_small_caps(self, small_caps: bool) -> None:
+    def set_small_caps(self, small_caps: bool, /) -> None:
         """Sets the small_caps flag.  When this is set, lowercase letters are
         generated as scaled-down versions of their uppercase equivalents.  This is
         particularly useful to set for fonts that do not have lowercase letters.
@@ -662,7 +662,7 @@ class TextProperties:
     def has_small_caps(self) -> bool: ...
     def get_small_caps(self) -> bool:
         """Returns the small_caps flag.  See set_small_caps()."""
-    def set_small_caps_scale(self, small_caps_scale: float) -> None:
+    def set_small_caps_scale(self, small_caps_scale: float, /) -> None:
         """Sets the scale factor applied to lowercase letters from their uppercase
         equivalents, when the small_caps flag is in effect.  See set_small_caps().
         Normally, this will be a number less than one.
@@ -674,13 +674,13 @@ class TextProperties:
         equivalents, when the small_caps flag is in effect.  See set_small_caps()
         and set_small_caps_scale().
         """
-    def set_slant(self, slant: float) -> None:
+    def set_slant(self, slant: float, /) -> None:
         """Specifies the factor by which the text slants to the right."""
     def clear_slant(self) -> None: ...
     def has_slant(self) -> bool: ...
     def get_slant(self) -> float:
         """Returns the factor by which the text is specified to slant to the right."""
-    def set_underscore(self, underscore: bool) -> None:
+    def set_underscore(self, underscore: bool, /) -> None:
         """Sets the underscore flag.  When this is set, the text is underscored with a
         one-pixel line the same color as the text foreground, drawn at the
         baseline.
@@ -689,7 +689,7 @@ class TextProperties:
     def has_underscore(self) -> bool: ...
     def get_underscore(self) -> bool:
         """Returns the underscore flag.  See set_underscore()."""
-    def set_underscore_height(self, underscore_height: float) -> None:
+    def set_underscore_height(self, underscore_height: float, /) -> None:
         """Specifies the vertical height of the underscore, relative to the text
         baseline.  This only has meaning if the underscore mode is enabled with
         set_underscore().
@@ -698,13 +698,13 @@ class TextProperties:
     def has_underscore_height(self) -> bool: ...
     def get_underscore_height(self) -> float:
         """Returns the vertical height of the underscore; see set_underscore_height()."""
-    def set_align(self, align_type: _TextProperties_Alignment) -> None:
+    def set_align(self, align_type: _TextProperties_Alignment, /) -> None:
         """Specifies the alignment of the text within its margins."""
     def clear_align(self) -> None:
         """Restores the default alignment of the text."""
     def has_align(self) -> bool: ...
     def get_align(self) -> _TextProperties_Alignment: ...
-    def set_indent(self, indent: float) -> None:
+    def set_indent(self, indent: float, /) -> None:
         """Specifies the amount of extra space that is inserted before the first
         character of each line.  This can be thought of as a left margin.
         """
@@ -712,7 +712,7 @@ class TextProperties:
         """Removes the indent setting from the text.  Text will be as wide as it is."""
     def has_indent(self) -> bool: ...
     def get_indent(self) -> float: ...
-    def set_wordwrap(self, wordwrap: float) -> None:
+    def set_wordwrap(self, wordwrap: float, /) -> None:
         """Sets the text up to automatically wordwrap when it exceeds the indicated
         width.  This can be thought of as a right margin or margin width.
         """
@@ -720,7 +720,7 @@ class TextProperties:
         """Removes the wordwrap setting from the text.  Text will be as wide as it is."""
     def has_wordwrap(self) -> bool: ...
     def get_wordwrap(self) -> float: ...
-    def set_preserve_trailing_whitespace(self, preserve_trailing_whitespace: bool) -> None:
+    def set_preserve_trailing_whitespace(self, preserve_trailing_whitespace: bool, /) -> None:
         """Sets the preserve_trailing_whitespace flag.  When this is set, trailing
         whitespace at the end of the line is not stripped when the text is
         wordwrapped (it is stripped by default).  Since the trailing whitespace is
@@ -777,7 +777,7 @@ class TextProperties:
         """Returns the offset of the shadow as set by set_shadow().  It is an error to
         call this if has_shadow() is false.
         """
-    def set_bin(self, bin: str) -> None:
+    def set_bin(self, bin: str, /) -> None:
         """Names the CullBin that the text geometry should be assigned to.  If this is
         set, then a CullBinAttrib will be created to explicitly place each
         component in the named bin.
@@ -798,7 +798,7 @@ class TextProperties:
         """Returns the drawing bin set with set_bin(), or empty string if no bin has
         been set.
         """
-    def set_draw_order(self, draw_order: int) -> int:
+    def set_draw_order(self, draw_order: int, /) -> int:
         """Sets the drawing order of text created by the TextNode.  This is actually
         the draw order of the card and frame.  The shadow is drawn at
         _draw_order+1, and the text at _draw_order+2.
@@ -813,7 +813,7 @@ class TextProperties:
     def has_draw_order(self) -> bool: ...
     def get_draw_order(self) -> int:
         """Returns the drawing order set with set_draw_order()."""
-    def set_tab_width(self, tab_width: float) -> None:
+    def set_tab_width(self, tab_width: float, /) -> None:
         """Sets the width of each tab stop, in screen units.  A tab character embedded
         in the text will advance the horizontal position to the next tab stop.
         """
@@ -821,7 +821,7 @@ class TextProperties:
     def has_tab_width(self) -> bool: ...
     def get_tab_width(self) -> float:
         """Returns the width set via set_tab_width()."""
-    def set_glyph_scale(self, glyph_scale: float) -> None:
+    def set_glyph_scale(self, glyph_scale: float, /) -> None:
         """Specifies the factor by which to scale each letter of the text as it is
         placed, in addition to any scales inherited from the node or from
         set_text_scale(). This can be used (possibly in conjunction with
@@ -836,7 +836,7 @@ class TextProperties:
     def has_glyph_scale(self) -> bool: ...
     def get_glyph_scale(self) -> float:
         """Returns the scale factor of each letter as specified by set_glyph_scale()."""
-    def set_glyph_shift(self, glyph_shift: float) -> None:
+    def set_glyph_shift(self, glyph_shift: float, /) -> None:
         """Specifies a vertical amount to shift each letter of the text as it is
         placed.  This can be used (possibly in conjunction with set_glyph_scale())
         to implement superscripting or subscripting.
@@ -847,7 +847,7 @@ class TextProperties:
         """Returns the vertical shift of each letter as specified by
         set_glyph_shift().
         """
-    def set_text_scale(self, text_scale: float) -> None:
+    def set_text_scale(self, text_scale: float, /) -> None:
         """Specifies the factor by which to scale the text, in addition to any
         scalings imposed by the node, as well as in addition to the glyph scale.
 
@@ -858,7 +858,7 @@ class TextProperties:
     def has_text_scale(self) -> bool: ...
     def get_text_scale(self) -> float:
         """Returns the scale factor of the text as specified by set_text_scale()."""
-    def set_direction(self, direction: _TextProperties_Direction) -> None:
+    def set_direction(self, direction: _TextProperties_Direction, /) -> None:
         """Specifies the text direction.  If none is specified, it will be guessed
         based on the contents of the string.
 
@@ -877,7 +877,7 @@ class TextProperties:
 
         @since 1.10.0
         """
-    def add_properties(self, other: TextProperties) -> None:
+    def add_properties(self, other: TextProperties, /) -> None:
         """Sets any properties that are explicitly specified in other on this object.
         Leaves other properties unchanged.
         """
@@ -1002,7 +1002,7 @@ class TextGraphic:
         """Returns the NodePath associated with the graphic, that renders the desired
         image.
         """
-    def set_model(self, model: NodePath) -> None:
+    def set_model(self, model: NodePath, /) -> None:
         """Changes the NodePath associated with the graphic.  This NodePath should
         contain geometry that will render the desired graphic image.
         """
@@ -1028,7 +1028,7 @@ class TextGraphic:
         """
     def get_instance_flag(self) -> bool:
         """Returns the instance_flag.  See set_instance_flag()."""
-    def set_instance_flag(self, instance_flag: bool) -> None:
+    def set_instance_flag(self, instance_flag: bool, /) -> None:
         """Sets the instance_flag.  When this is true, the graphic is directly
         instanced to the scene graph whenever it appears; when it is false, the
         graphic is copied.  The default is false, which is best for most
@@ -1074,7 +1074,7 @@ class TextPropertiesManager:
         If there was already a TextProperties structure associated with this name,
         it is quietly replaced with the new definition.
         """
-    def get_properties(self, name: str) -> TextProperties:
+    def get_properties(self, name: str, /) -> TextProperties:
         """Returns the TextProperties associated with the indicated name.  If there
         was not previously a TextProperties associated with this name, a warning is
         printed and then a default TextProperties structure is associated with the
@@ -1083,14 +1083,14 @@ class TextPropertiesManager:
         Call has_properties() instead to check whether a particular name has been
         defined.
         """
-    def has_properties(self, name: str) -> bool:
+    def has_properties(self, name: str, /) -> bool:
         """Returns true if a TextProperties structure has been associated with the
         indicated name, false otherwise.  Normally this means set_properties() has
         been called with this name, but because get_properties() will implicitly
         create a default TextProperties structure, it may also mean simply that
         get_properties() has been called with the indicated name.
         """
-    def clear_properties(self, name: str) -> None:
+    def clear_properties(self, name: str, /) -> None:
         """Removes the named TextProperties structure from the manager."""
     @overload
     def set_graphic(self, name: str, model: NodePath) -> None:
@@ -1109,7 +1109,7 @@ class TextPropertiesManager:
         If there was already a TextGraphic structure associated with this name, it
         is quietly replaced with the new definition.
         """
-    def get_graphic(self, name: str) -> TextGraphic:
+    def get_graphic(self, name: str, /) -> TextGraphic:
         """Returns the TextGraphic associated with the indicated name.  If there was
         not previously a TextGraphic associated with this name, a warning is
         printed and then a default TextGraphic structure is associated with the
@@ -1118,14 +1118,14 @@ class TextPropertiesManager:
         Call has_graphic() instead to check whether a particular name has been
         defined.
         """
-    def has_graphic(self, name: str) -> bool:
+    def has_graphic(self, name: str, /) -> bool:
         """Returns true if a TextGraphic structure has been associated with the
         indicated name, false otherwise.  Normally this means set_graphic() has
         been called with this name, but because get_graphic() will implicitly
         create a default TextGraphic structure, it may also mean simply that
         get_graphic() has been called with the indicated name.
         """
-    def clear_graphic(self, name: str) -> None:
+    def clear_graphic(self, name: str, /) -> None:
         """Removes the named TextGraphic structure from the manager."""
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     @staticmethod
@@ -1160,10 +1160,10 @@ class TextAssembler:
     def __init__(self, encoder: TextEncoder) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def clear(self) -> None:
         """Reinitializes the contents of the TextAssembler."""
-    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint) -> None:
+    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint, /) -> None:
         """Specifies the UsageHint that will be applied to generated geometry.  The
         default is UH_static, which is probably the right setting, but if you know
         the TextNode's geometry will have a short lifespan, it may be better to set
@@ -1173,7 +1173,7 @@ class TextAssembler:
         """Returns the UsageHint that will be applied to generated geometry.  See
         set_usage_hint().
         """
-    def set_max_rows(self, max_rows: int) -> None:
+    def set_max_rows(self, max_rows: int, /) -> None:
         """If max_rows is greater than zero, no more than max_rows will be accepted.
         Text beyond that will be truncated.
 
@@ -1184,17 +1184,17 @@ class TextAssembler:
         """If max_rows is greater than zero, no more than max_rows will be accepted.
         Text beyond that will be truncated.
         """
-    def set_dynamic_merge(self, dynamic_merge: bool) -> None:
+    def set_dynamic_merge(self, dynamic_merge: bool, /) -> None:
         """Sets the dynamic_merge flag.  See TextNode::set_flatten_flags()."""
     def get_dynamic_merge(self) -> bool:
         """Returns the dynamic_merge flag.  See TextNode::set_flatten_flags()."""
-    def set_multiline_mode(self, flag: bool) -> None:
+    def set_multiline_mode(self, flag: bool, /) -> None:
         """Sets the multiline mode flag.  Set the multiline mode to allow text to
         wrap.  It defaults to true.
         """
     def get_multiline_mode(self) -> bool:
         """Returns the multline_mode flag.  See TextNode::set_multiline_mode()."""
-    def set_properties(self, properties: TextProperties) -> None:
+    def set_properties(self, properties: TextProperties, /) -> None:
         """Specifies the default TextProperties that are applied to the text in the
         absence of any nested property change sequences.
         """
@@ -1212,7 +1212,7 @@ class TextAssembler:
         """Returns the TextProperties in effect for the object at the indicated
         position in the indicated row.
         """
-    def set_wtext(self, wtext: str) -> bool:
+    def set_wtext(self, wtext: str, /) -> bool:
         """Accepts a new text string and associated properties structure, and
         precomputes the wordwrapping layout appropriately.  After this call,
         get_wordwrapped_wtext() and get_num_rows() can be called.
@@ -1272,7 +1272,7 @@ class TextAssembler:
         This means it will be safe to divide the text up at the newline characters
         and treat each line as an independent piece.
         """
-    def calc_r(self, n: int) -> int:
+    def calc_r(self, n: int, /) -> int:
         """Computes the row index of the nth character or graphic object in the text
         and returns it.
 
@@ -1280,7 +1280,7 @@ class TextAssembler:
         the wordwrapped string, returns -1 (for instance, a soft-hyphen character,
         or a newline character, may not have a corresponding position).
         """
-    def calc_c(self, n: int) -> int:
+    def calc_c(self, n: int, /) -> int:
         """Computes the column index of the nth character or graphic object in the
         text and returns it.
 
@@ -1336,7 +1336,7 @@ class TextAssembler:
         """Returns the number of rows of text after it has all been wordwrapped and
         assembled.
         """
-    def get_num_cols(self, r: int) -> int:
+    def get_num_cols(self, r: int, /) -> int:
         """Returns the number of characters and/or graphic objects in the nth row."""
     def get_xpos(self, r: int, c: int) -> float:
         """Returns the x position of the origin of the character or graphic object at
@@ -1545,7 +1545,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         the font.  Note that it is possible for the text to include nested font
         change commands, in which case the value of this method is questionable.
         """
-    def set_max_rows(self, max_rows: int) -> None:
+    def set_max_rows(self, max_rows: int, /) -> None:
         """Sets the maximum number of rows that may be formatted by the TextNode.  If
         more text than this is attempted, it will be truncated and has_overflow()
         will return true.
@@ -1581,7 +1581,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
     @overload
     def set_card_color(self, r: float, g: float, b: float, a: float) -> None: ...
     def get_card_color(self) -> LColor: ...
-    def set_card_texture(self, card_texture: Texture) -> None: ...
+    def set_card_texture(self, card_texture: Texture, /) -> None: ...
     def clear_card_texture(self) -> None: ...
     def has_card_texture(self) -> bool: ...
     def get_card_texture(self) -> Texture: ...
@@ -1622,11 +1622,11 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         If the text has no frame at all, this returns the dimensions of the text
         itself, as if the frame were set with a margin of 0, 0, 0, 0.
         """
-    def set_frame_line_width(self, line_width: float) -> None:
+    def set_frame_line_width(self, line_width: float, /) -> None:
         """Specifies the thickness of the lines that will be used to draw the frame."""
     def get_frame_line_width(self) -> float:
         """Returns the thickness of the lines that will be used to draw the frame."""
-    def set_frame_corners(self, corners: bool) -> None:
+    def set_frame_corners(self, corners: bool, /) -> None:
         """Enables or disables the drawing of corners for the frame.  These are extra
         points drawn at each of the four corners, to soften the ugly edges
         generated when the line width is greater than one.
@@ -1644,7 +1644,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         of the text.  The left and bottom coordinates should generally be negative,
         while the right and top coordinates should generally be positive.
         """
-    def set_card_decal(self, card_decal: bool) -> None:
+    def set_card_decal(self, card_decal: bool, /) -> None:
         """Sets the card_decal flag.  When this is true, the text is decalled onto the
         card, which is necessary if the TextNode is to be rendered in the 3-d world
         without putting it in a bin.
@@ -1682,13 +1682,13 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         seen by the rest of the world.  Also see get_upper_left_3d() and
         get_lower_right_3d().
         """
-    def set_transform(self, transform: Mat4Like) -> None:  # type: ignore[override]
+    def set_transform(self, transform: Mat4Like, /) -> None:  # type: ignore[override]
         """Sets an additional transform that is applied to the entire text paragraph."""
     def get_transform(self) -> LMatrix4: ...  # type: ignore[override]
-    def set_coordinate_system(self, cs: _CoordinateSystem) -> None:
+    def set_coordinate_system(self, cs: _CoordinateSystem, /) -> None:
         """Specifies the coordinate system in which the text will be generated."""
     def get_coordinate_system(self) -> _CoordinateSystem: ...
-    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint) -> None:
+    def set_usage_hint(self, usage_hint: _GeomEnums_UsageHint, /) -> None:
         """Specifies the UsageHint that will be applied to generated geometry.  The
         default is UH_static, which is probably the right setting, but if you know
         the TextNode's geometry will have a short lifespan, it may be better to set
@@ -1698,7 +1698,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         """Returns the UsageHint that will be applied to generated geometry.  See
         set_usage_hint().
         """
-    def set_flatten_flags(self, flatten_flags: int) -> None:
+    def set_flatten_flags(self, flatten_flags: int, /) -> None:
         """Sets the flatten flags.  This should be a union of the
         TextNode::FlattenFlags options.  This controls the degree of flattening
         performed on the TextNode's internal geometry (i.e.  the scene graph
@@ -1741,7 +1741,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         """Removes the wordwrap setting from the TextNode.  Text will be as wide as it
         is.
         """
-    def set_bin(self, bin: str) -> None:
+    def set_bin(self, bin: str, /) -> None:
         """Names the GeomBin that the TextNode geometry should be assigned to.  If
         this is set, then a GeomBinTransition will be created to explicitly place
         each component in the named bin.
@@ -1750,7 +1750,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         appropriate; this is particularly useful if this names a GeomBinFixed, e.g.
         "fixed".
         """
-    def set_draw_order(self, draw_order: int) -> int:
+    def set_draw_order(self, draw_order: int, /) -> int:
         """Sets the drawing order of text created by the TextMaker.  This is actually
         the draw order of the card and frame.  The shadow is drawn at
         _draw_order+1, and the text at _draw_order+2.
@@ -1761,7 +1761,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         The return value is the first unused draw_order number, e.g.  _draw_order +
         3.
         """
-    def set_glyph_scale(self, glyph_scale: float) -> None:
+    def set_glyph_scale(self, glyph_scale: float, /) -> None:
         """Specifies the factor by which to scale each letter of the text as it is
         placed.  This can be used (possibly in conjunction with set_glyph_shift())
         to implement superscripting or subscripting.
@@ -1773,8 +1773,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         In earlier versions, this did not contain any embedded special characters
         like \\1 or \\3; now it does.
         """
-    @overload
-    def calc_width(self, line: str) -> float:
+    def calc_width(self, line_or_character: int | str, /) -> float:
         """Returns the width of a line of text of arbitrary characters.  The line
         should not include the newline character.
 
@@ -1782,13 +1781,12 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         Returns the width of a line of text of arbitrary characters.  The line
         should not include the newline character or any embedded control characters
         like \\1 or \\3.
-        """
-    @overload
-    def calc_width(self, character: int) -> float:
-        """Returns the width of a single character of the font, or 0.0 if the
+
+        or:
+        Returns the width of a single character of the font, or 0.0 if the
         character is not known.  This may be a wide character (greater than 255).
         """
-    def has_exact_character(self, character: int) -> bool:
+    def has_exact_character(self, character: int, /) -> bool:
         """Returns true if the named character exists in the font exactly as named,
         false otherwise.  Note that because Panda can assemble glyphs together
         automatically using cheesy accent marks, this is not a reliable indicator
@@ -1800,7 +1798,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         the "invalid glyph".  It also returns false for characters that would be
         synthesized within Panda, but see has_character().
         """
-    def has_character(self, character: int) -> bool:
+    def has_character(self, character: int, /) -> bool:
         """Returns true if the named character exists in the font or can be
         synthesized by Panda, false otherwise.  (Panda can synthesize some accented
         characters by combining similar-looking glyphs from the font.)
@@ -1809,7 +1807,7 @@ class TextNode(PandaNode, TextEncoder, TextProperties):  # type: ignore[misc]
         exist in the font), but returns false for characters that would render with
         the "invalid glyph".
         """
-    def is_whitespace(self, character: int) -> bool:
+    def is_whitespace(self, character: int, /) -> bool:
         """Returns true if the indicated character represents whitespace in the font,
         or false if anything visible will be rendered for it.
 

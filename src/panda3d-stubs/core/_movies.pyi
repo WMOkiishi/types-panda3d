@@ -35,7 +35,7 @@ class MovieAudio(TypedWritableReferenceCount, Namable):
     def open(self) -> MovieAudioCursor:
         """Open this audio, returning a MovieAudioCursor"""
     @staticmethod
-    def get(name: StrOrBytesPath) -> MovieAudio:
+    def get(name: StrOrBytesPath, /) -> MovieAudio:
         """Obtains a MovieAudio that references a file.  Just calls
         MovieTypeRegistry::make_audio().
         """
@@ -59,7 +59,7 @@ class FlacAudio(MovieAudio):
     @overload
     def __init__(self, param0: ConfigVariableFilename | FlacAudio, /) -> None: ...
     @staticmethod
-    def make(name: StrOrBytesPath) -> MovieAudio:
+    def make(name: StrOrBytesPath, /) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
 
 class MovieAudioCursor(TypedWritableReferenceCount):
@@ -119,7 +119,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         """Returns true if seek operations are constant time."""
     def tell(self) -> float:
         """Returns the current offset within the file."""
-    def skip_samples(self, n: int) -> None:
+    def skip_samples(self, n: int, /) -> None:
         """Skip audio samples from the stream.  This is mostly for debugging purposes."""
     def aborted(self) -> bool:
         """If aborted is true, it means that the "ready" samples are not being
@@ -147,7 +147,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         An audio consumer needs to check the length, the ready status, and the
         aborted flag.
         """
-    def seek(self, offset: float) -> None:
+    def seek(self, offset: float, /) -> None:
         """Skips to the specified offset within the file.
 
         If the movie reports that it cannot seek, then this method can still
@@ -233,7 +233,7 @@ class MovieVideo(TypedWritableReferenceCount, Namable):
         Returns NULL on error.
         """
     @staticmethod
-    def get(name: StrOrBytesPath) -> MovieVideo:
+    def get(name: StrOrBytesPath, /) -> MovieVideo:
         """Obtains a MovieVideo that references a file.  Just calls
         MovieTypeRegistry::make_video().
         """
@@ -276,7 +276,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         def __init__(self, param0: MovieVideoCursor.Buffer, /) -> None: ...
         def __copy__(self) -> Self: ...
         def __deepcopy__(self, memo: object, /) -> Self: ...
-        def compare_timestamp(self, other: MovieVideoCursor.Buffer) -> int:
+        def compare_timestamp(self, other: MovieVideoCursor.Buffer, /) -> int:
             """Used to sort different buffers to ensure they correspond to the same source
             frame, particularly important when synchronizing the different pages of a
             multi-page texture.
@@ -359,7 +359,7 @@ class MovieVideoCursor(TypedWritableReferenceCount):
         When streaming, you should still pay attention to last_start, but the value
         of next_start is only a guess.
         """
-    def setup_texture(self, tex: Texture) -> None:
+    def setup_texture(self, tex: Texture, /) -> None:
         """Set up the specified Texture object to contain content from this movie.
         This should be called once, not every frame.
         """
@@ -438,7 +438,7 @@ class MicrophoneAudio(MovieAudio):
         Line in at 44,100 samples/sec" would be an option.
         """
     @staticmethod
-    def get_option(n: int) -> MicrophoneAudio:
+    def get_option(n: int, /) -> MicrophoneAudio:
         """Returns the nth microphone option."""
     def get_channels(self) -> int:
         """Returns the number of channels."""
@@ -465,7 +465,7 @@ class OpusAudio(MovieAudio):
     @overload
     def __init__(self, param0: ConfigVariableFilename | OpusAudio, /) -> None: ...
     @staticmethod
-    def make(name: StrOrBytesPath) -> MovieAudio:
+    def make(name: StrOrBytesPath, /) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
 
 class OpusAudioCursor(MovieAudioCursor):
@@ -536,7 +536,7 @@ class VorbisAudio(MovieAudio):
     @overload
     def __init__(self, param0: ConfigVariableFilename | VorbisAudio, /) -> None: ...
     @staticmethod
-    def make(name: StrOrBytesPath) -> MovieAudio:
+    def make(name: StrOrBytesPath, /) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
 
 class VorbisAudioCursor(MovieAudioCursor):
@@ -563,7 +563,7 @@ class WavAudio(MovieAudio):
     @overload
     def __init__(self, param0: ConfigVariableFilename | WavAudio, /) -> None: ...
     @staticmethod
-    def make(name: StrOrBytesPath) -> MovieAudio:
+    def make(name: StrOrBytesPath, /) -> MovieAudio:
         """Obtains a MovieAudio that references a file."""
 
 class WavAudioCursor(MovieAudioCursor):

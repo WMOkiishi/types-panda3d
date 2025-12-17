@@ -17,11 +17,11 @@ class BasicSkel:
     def __init__(self, param0: BasicSkel = ..., /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_value(self, n: int) -> None:
+    def set_value(self, n: int, /) -> None:
         """These inline functions allow you to get and set _value."""
     def get_value(self) -> int:
         """Retreives a value that was previously stored."""
-    def set_value_alt(self, n: int) -> None:
+    def set_value_alt(self, n: int, /) -> None:
         """Stores an integer value.  Exact same functionality as set_value, except
         that this isn't an inline function.
         """
@@ -43,11 +43,11 @@ class TypedSkel(TypedObject):
     """
 
     def __init__(self) -> None: ...
-    def set_value(self, n: int) -> None:
+    def set_value(self, n: int, /) -> None:
         """These inline functions allow you to get and set _value."""
     def get_value(self) -> int:
         """Retreives a value that was previously stored."""
-    def set_value_alt(self, n: int) -> None:
+    def set_value_alt(self, n: int, /) -> None:
         """Stores an integer value.  Exact same functionality as set_value, except
         that this isn't an inline function.
         """

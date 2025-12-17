@@ -44,7 +44,7 @@ class istream(basic_ios_char):
 
 class ostream(basic_ios_char):
     def upcast_to_basic_ios_char(self) -> basic_ios_char: ...
-    def put(self, c: str) -> None: ...
+    def put(self, c: str, /) -> None: ...
     def flush(self) -> None: ...
     def tellp(self) -> int: ...
     @overload
@@ -138,7 +138,7 @@ class TextEncoder:
     def __init__(self, copy: TextEncoder = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_encoding(self, encoding: _TextEncoder_Encoding) -> None:
+    def set_encoding(self, encoding: _TextEncoder_Encoding, /) -> None:
         """Specifies how the string set via set_text() is to be interpreted.  The
         default, E_iso8859, means a standard string with one-byte characters (i.e.
         ASCII).  Other encodings are possible to take advantage of character sets
@@ -152,7 +152,7 @@ class TextEncoder:
         interpreted.  See set_encoding().
         """
     @staticmethod
-    def set_default_encoding(encoding: _TextEncoder_Encoding) -> None:
+    def set_default_encoding(encoding: _TextEncoder_Encoding, /) -> None:
         """Specifies the default encoding to be used for all subsequently created
         TextEncoder objects.  See set_encoding().
         """
@@ -180,10 +180,10 @@ class TextEncoder:
     def get_text(self) -> str:
         """Returns the current text, as encoded via the current encoding system."""
     @overload
-    def get_text(self, encoding: _TextEncoder_Encoding) -> bytes:
+    def get_text(self, encoding: _TextEncoder_Encoding, /) -> bytes:
         """Returns the current text, as encoded via the indicated encoding system."""
-    def append_text(self, text: str) -> None: ...
-    def append_unicode_char(self, character: int) -> None:
+    def append_text(self, text: str, /) -> None: ...
+    def append_unicode_char(self, character: int, /) -> None:
         """Appends a single character to the end of the stored text.  This may be a
         wide character, up to 16 bits in Unicode.
         """
@@ -192,7 +192,7 @@ class TextEncoder:
         wide characters, after the string has been decoded according to
         set_encoding().
         """
-    def get_unicode_char(self, index: int) -> int:
+    def get_unicode_char(self, index: int, /) -> int:
         """Returns the Unicode value of the nth character in the stored text.  This
         may be a wide character (greater than 255), after the string has been
         decoded according to set_encoding().
@@ -227,42 +227,42 @@ class TextEncoder:
         properties on the TextEncoder itself.
         """
     @staticmethod
-    def unicode_isalpha(character: int) -> bool:
+    def unicode_isalpha(character: int, /) -> bool:
         """Returns true if the indicated character is an alphabetic letter, false
         otherwise.  This is akin to ctype's isalpha(), extended to Unicode.
         """
     @staticmethod
-    def unicode_isdigit(character: int) -> bool:
+    def unicode_isdigit(character: int, /) -> bool:
         """Returns true if the indicated character is a numeric digit, false
         otherwise.  This is akin to ctype's isdigit(), extended to Unicode.
         """
     @staticmethod
-    def unicode_ispunct(character: int) -> bool:
+    def unicode_ispunct(character: int, /) -> bool:
         """Returns true if the indicated character is a punctuation mark, false
         otherwise.  This is akin to ctype's ispunct(), extended to Unicode.
         """
     @staticmethod
-    def unicode_islower(character: int) -> bool:
+    def unicode_islower(character: int, /) -> bool:
         """Returns true if the indicated character is a lowercase letter, false
         otherwise.  This is akin to ctype's islower(), extended to Unicode.
         """
     @staticmethod
-    def unicode_isupper(character: int) -> bool:
+    def unicode_isupper(character: int, /) -> bool:
         """Returns true if the indicated character is an uppercase letter, false
         otherwise.  This is akin to ctype's isupper(), extended to Unicode.
         """
     @staticmethod
-    def unicode_isspace(character: int) -> bool:
+    def unicode_isspace(character: int, /) -> bool:
         """Returns true if the indicated character is a whitespace letter, false
         otherwise.  This is akin to ctype's isspace(), extended to Unicode.
         """
     @staticmethod
-    def unicode_toupper(character: int) -> int:
+    def unicode_toupper(character: int, /) -> int:
         """Returns the uppercase equivalent of the given Unicode character.  This is
         akin to ctype's toupper(), extended to Unicode.
         """
     @staticmethod
-    def unicode_tolower(character: int) -> int:
+    def unicode_tolower(character: int, /) -> int:
         """Returns the uppercase equivalent of the given Unicode character.  This is
         akin to ctype's tolower(), extended to Unicode.
         """
@@ -284,7 +284,7 @@ class TextEncoder:
         Converts the string to lowercase, assuming the string is encoded in the
         indicated encoding.
         """
-    def set_wtext(self, wtext: str) -> None:
+    def set_wtext(self, wtext: str, /) -> None:
         """Changes the text that is stored in the encoder.  Subsequent calls to
         get_wtext() will return this same string, while get_text() will return the
         encoded version of the string.
@@ -293,7 +293,7 @@ class TextEncoder:
         """Returns the text associated with the TextEncoder, as a wide-character
         string.
         """
-    def append_wtext(self, text: str) -> None:
+    def append_wtext(self, text: str, /) -> None:
         """Appends the indicates string to the end of the stored wide-character text."""
     def get_wtext_as_ascii(self) -> str:
         """Returns the text associated with the node, converted as nearly as possible
@@ -394,15 +394,15 @@ class Filename:
         """This constructor composes the filename out of a directory part and a
         basename part.  It will insert an intervening '/' if necessary.
         """
-    def __getitem__(self, n: int) -> str: ...
+    def __getitem__(self, n: int, /) -> str: ...
     def __fspath__(self) -> str: ...
-    def __iadd__(self, other: str) -> Self: ...
-    def __add__(self, other: str) -> Filename: ...
-    def __truediv__(self, other: StrOrBytesPath) -> Filename: ...
+    def __iadd__(self, other: str, /) -> Self: ...
+    def __add__(self, other: str, /) -> Filename: ...
+    def __truediv__(self, other: StrOrBytesPath, /) -> Filename: ...
     def __eq__(self, other: object, /) -> bool:
         """Comparison operators are handy."""
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: str) -> bool: ...
+    def __lt__(self, other: str, /) -> bool: ...
     def __bool__(self) -> bool:
         """Returns true if the Filename is valid (not empty), or false if it is an
         empty string.
@@ -413,19 +413,19 @@ class Filename:
         instead.
         """
     @staticmethod
-    def text_filename(filename: StrOrBytesPath) -> Filename:
+    def text_filename(filename: StrOrBytesPath, /) -> Filename:
         """Static constructors to explicitly create a filename that refers to a text
         or binary file.  This is in lieu of calling set_text() or set_binary() or
         set_type().
         """
     @staticmethod
-    def binary_filename(filename: StrOrBytesPath) -> Filename: ...
+    def binary_filename(filename: StrOrBytesPath, /) -> Filename: ...
     @staticmethod
-    def dso_filename(filename: str) -> Filename: ...
+    def dso_filename(filename: str, /) -> Filename: ...
     @staticmethod
-    def executable_filename(filename: str) -> Filename: ...
+    def executable_filename(filename: str, /) -> Filename: ...
     @staticmethod
-    def pattern_filename(filename: str) -> Filename:
+    def pattern_filename(filename: str, /) -> Filename:
         """Constructs a filename that represents a sequence of numbered files.  See
         set_pattern().
         """
@@ -485,10 +485,7 @@ class Filename:
         """Returns a path to a system-defined directory appropriate for creating a
         subdirectory for storing application-specific data, common to all users.
         """
-    @overload
-    def assign(self, copy: StrOrBytesPath) -> Self: ...
-    @overload
-    def assign(self, filename: str) -> Self:
+    def assign(self, copy_or_filename: StrOrBytesPath, /) -> Self:
         """Assignment is via the = operator."""
     def c_str(self) -> str: ...
     def empty(self) -> bool: ...
@@ -518,25 +515,25 @@ class Filename:
         """Returns the file extension.  This is everything after the rightmost dot, if
         there is one, or the empty string if there is not.
         """
-    def set_fullpath(self, s: str) -> None:
+    def set_fullpath(self, s: str, /) -> None:
         """Replaces the entire filename: directory, basename, extension.  This can
         also be achieved with the assignment operator.
         """
-    def set_dirname(self, s: str) -> None:
+    def set_dirname(self, s: str, /) -> None:
         """Replaces the directory part of the filename.  This is everything in the
         filename up to, but not including the rightmost slash.
         """
-    def set_basename(self, s: str) -> None:
+    def set_basename(self, s: str, /) -> None:
         """Replaces the basename part of the filename.  This is everything in the
         filename after the rightmost slash, including any extensions.
         """
-    def set_fullpath_wo_extension(self, s: str) -> None:
+    def set_fullpath_wo_extension(self, s: str, /) -> None:
         """Replaces the full filename--directory and basename parts--except for the
         extension.
         """
-    def set_basename_wo_extension(self, s: str) -> None:
+    def set_basename_wo_extension(self, s: str, /) -> None:
         """Replaces the basename part of the filename, without the file extension."""
-    def set_extension(self, s: str) -> None:
+    def set_extension(self, s: str, /) -> None:
         """Replaces the file extension.  This is everything after the rightmost dot,
         if there is one, or the empty string if there is not.
         """
@@ -568,7 +565,7 @@ class Filename:
         filename has been specified as either binary or text.  If this is false,
         the filename has not been specified.
         """
-    def set_type(self, type: _Filename_Type) -> None:
+    def set_type(self, type: _Filename_Type, /) -> None:
         """Sets the type of the file represented by the filename.  This is useful for
         to_os_specific(), resolve_filename(), test_existence(), and all such real-
         world access functions.  It helps the Filename know how to map the internal
@@ -579,7 +576,7 @@ class Filename:
         """Returns the type of the file represented by the filename, as previously set
         by set_type().
         """
-    def set_pattern(self, pattern: bool) -> None:
+    def set_pattern(self, pattern: bool, /) -> None:
         """Sets the flag indicating whether this is a filename pattern.  When this is
         true, the filename is understood to be a placeholder for a numbered
         sequence of filename, such as an image sequence.  In this case, a sequence
@@ -603,7 +600,7 @@ class Filename:
         not include hash marks.  If this is true, then get_filename_index() will
         return a different filename each time.
         """
-    def get_filename_index(self, index: int) -> Filename:
+    def get_filename_index(self, index: int, /) -> Filename:
         """If the pattern flag is set for this Filename and the filename string
         actually includes a sequence of hash marks, then this returns a new
         Filename with the sequence of hash marks replaced by the indicated index
@@ -616,7 +613,7 @@ class Filename:
         """Returns the part of the filename beginning at the hash sequence (if any),
         and continuing to the end of the filename.
         """
-    def set_hash_to_end(self, s: str) -> None:
+    def set_hash_to_end(self, s: str, /) -> None:
         """Replaces the part of the filename from the beginning of the hash sequence
         to the end of the filename.
         """
@@ -637,7 +634,7 @@ class Filename:
         qualified (they are explicitly relative to the current directory, and do
         not refer to a filename on a search path somewhere).
         """
-    def make_absolute(self, start_directory: StrOrBytesPath = ...) -> None:
+    def make_absolute(self, start_directory: StrOrBytesPath = ..., /) -> None:
         """Converts the filename to a fully-qualified pathname from the root (if it is
         a relative pathname), and then standardizes it (see standardize()).
 
@@ -796,7 +793,7 @@ class Filename:
 
         Returns true if the file was adjusted, false if it was not.
         """
-    def find_on_searchpath(self, searchpath: SearchPathLike) -> int:
+    def find_on_searchpath(self, searchpath: SearchPathLike, /) -> int:
         """Performs the reverse of the resolve_filename() operation: assuming that the
         current filename is fully-specified pathname (i.e.  beginning with '/'),
         look on the indicated search path for a directory under which the file can
@@ -807,7 +804,7 @@ class Filename:
         found, or -1 if it was not found.
         """
     def scan_directory(self) -> list[str]: ...
-    def open_read(self, stream: ifstream | pifstream) -> bool:
+    def open_read(self, stream: ifstream | pifstream, /) -> bool:
         """Opens the indicated pifstream for reading the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -841,7 +838,7 @@ class Filename:
         If truncate is true, the file is truncated to zero length upon opening it,
         if it already exists.  Otherwise, the file is kept at its original length.
         """
-    def open_append(self, stream: ofstream | pofstream) -> bool:
+    def open_append(self, stream: ofstream | pofstream, /) -> bool:
         """Opens the indicated pifstream for writing the file, if possible.  Returns
         true if successful, false otherwise.  This requires the setting of the
         set_text()/set_binary() flags to open the file appropriately as indicated;
@@ -862,7 +859,7 @@ class Filename:
         indicated; it is an error to call open_read_write() without first calling
         one of set_text() or set_binary().
         """
-    def open_read_append(self, stream: fstream | pfstream) -> bool:
+    def open_read_append(self, stream: fstream | pfstream, /) -> bool:
         """Opens the indicated pfstream for reading and writing the file, if possible;
         writes are appended to the end of the file.  Returns true if successful,
         false otherwise.  This requires the setting of the set_text()/set_binary()
@@ -890,12 +887,12 @@ class Filename:
         Returns true if successful, false if failure (for instance, because the
         file did not exist, or because permissions were inadequate).
         """
-    def rename_to(self, other: StrOrBytesPath) -> bool:
+    def rename_to(self, other: StrOrBytesPath, /) -> bool:
         """Renames the file to the indicated new filename.  If the new filename is in
         a different directory, this will perform a move.  Returns true if
         successful, false on failure.
         """
-    def copy_to(self, other: StrOrBytesPath) -> bool:
+    def copy_to(self, other: StrOrBytesPath, /) -> bool:
         """Copies the file to the indicated new filename, by reading the contents and
         writing it to the new file.  Returns true if successful, false on failure.
         The copy is always binary, regardless of the filename settings.
@@ -919,14 +916,14 @@ class Filename:
         """The inverse of mkdir(): this removes the directory named by this Filename,
         if it is in fact a directory.
         """
-    def compare_to(self, other: StrOrBytesPath) -> int: ...
+    def compare_to(self, other: StrOrBytesPath, /) -> int: ...
     def get_hash(self) -> int:
         """Returns a hash code that attempts to be mostly unique for different
         Filenames.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     @staticmethod
-    def set_filesystem_encoding(encoding: _TextEncoder_Encoding) -> None:
+    def set_filesystem_encoding(encoding: _TextEncoder_Encoding, /) -> None:
         """Specifies the default encoding to be used for all subsequent Filenames.
         This is used to represent wide-character (Unicode) filenames internally.
         On non-Windows-based systems, the encoded filename is also passed to the
@@ -1154,7 +1151,7 @@ class PandaSystem:
         running on.  This will be something like "win32" or "osx_i386" or
         "linux_amd64".
         """
-    def has_system(self, system: str) -> bool:
+    def has_system(self, system: str, /) -> bool:
         """Returns true if the current version of Panda claims to have the indicated
         subsystem installed, false otherwise.  The set of available subsystems is
         implementation defined.
@@ -1164,7 +1161,7 @@ class PandaSystem:
         This can be used with get_system() to iterate through the entire list of
         available Panda subsystems.
         """
-    def get_system(self, n: int) -> str:
+    def get_system(self, n: int, /) -> str:
         """Returns the nth Panda subsystem that has registered itself.  This list will
         be sorted in alphabetical order.
         """
@@ -1177,13 +1174,13 @@ class PandaSystem:
         The return value is the empty string if the indicated system is undefined
         or if does not define the indicated tag.
         """
-    def add_system(self, system: str) -> None:
+    def add_system(self, system: str, /) -> None:
         """Intended for use by each subsystem to register itself at startup."""
     def set_system_tag(self, system: str, tag: str, value: str) -> None:
         """Intended for use by each subsystem to register its set of capabilities at
         startup.
         """
-    def heap_trim(self, pad: int) -> bool:
+    def heap_trim(self, pad: int, /) -> bool:
         """Attempts to release memory back to the system, if possible.  The pad
         argument is the minimum amount of unused memory to keep in the heap
         (against future allocations).  Any memory above that may be released to the
@@ -1192,8 +1189,8 @@ class PandaSystem:
 
         Returns true if any memory was actually released, false otherwise.
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_global_ptr() -> PandaSystem:
         """Returns the global PandaSystem object."""
@@ -1235,7 +1232,7 @@ class DSearchPath:
     class Results:
         DtoolClassDict: ClassVar[dict[str, Any]]
         def __init__(self, copy: DSearchPath.Results = ...) -> None: ...
-        def __getitem__(self, n: int) -> Filename: ...
+        def __getitem__(self, n: int, /) -> Filename: ...
         def __len__(self) -> int:
             """Returns the num of filenames in the set.  This method is defined to make
             the Results object appear to be a list in Python.
@@ -1244,14 +1241,14 @@ class DSearchPath:
         def __deepcopy__(self, memo: object, /) -> Self: ...
         @type_check_only
         def __iter__(self) -> Iterator[Filename]: ...
-        def assign(self, copy: DSearchPath.Results) -> Self: ...
+        def assign(self, copy: DSearchPath.Results, /) -> Self: ...
         def clear(self) -> None:
             """Removes all the files from the list."""
         def get_num_files(self) -> int:
             """Returns the number of files on the result list."""
-        def get_file(self, n: int) -> Filename:
+        def get_file(self, n: int, /) -> Filename:
             """Returns the nth file on the result list."""
-        def output(self, out: ostream) -> None: ...
+        def output(self, out: ostream, /) -> None: ...
         def write(self, out: ostream, indent_level: int = ...) -> None: ...
         getNumFiles = get_num_files
         getFile = get_file
@@ -1267,12 +1264,12 @@ class DSearchPath:
     def __init__(self, path: str, separator: str = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: SearchPathLike) -> Self: ...
+    def assign(self, copy: SearchPathLike, /) -> Self: ...
     def clear(self) -> None:
         """Removes all the directories from the search list."""
-    def append_directory(self, directory: StrOrBytesPath) -> None:
+    def append_directory(self, directory: StrOrBytesPath, /) -> None:
         """Adds a new directory to the end of the search list."""
-    def prepend_directory(self, directory: StrOrBytesPath) -> None:
+    def prepend_directory(self, directory: StrOrBytesPath, /) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
     def append_path(self, path: SearchPathLike) -> None:
@@ -1284,7 +1281,7 @@ class DSearchPath:
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """
-    def prepend_path(self, path: SearchPathLike) -> None:
+    def prepend_path(self, path: SearchPathLike, /) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
         """
@@ -1292,9 +1289,9 @@ class DSearchPath:
         """Returns true if the search list is empty, false otherwise."""
     def get_num_directories(self) -> int:
         """Returns the number of directories on the search list."""
-    def get_directory(self, n: int) -> Filename:
+    def get_directory(self, n: int, /) -> Filename:
         """Returns the nth directory on the search list."""
-    def find_file(self, filename: StrOrBytesPath) -> Filename:
+    def find_file(self, filename: StrOrBytesPath, /) -> Filename:
         """Searches all the directories in the search list for the indicated file, in
         order.  Returns the full matching pathname of the first match if found, or
         the empty string if not found.
@@ -1355,10 +1352,10 @@ class ExecutionEnvironment:
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
-    def has_environment_variable(var: str) -> bool:
+    def has_environment_variable(var: str, /) -> bool:
         """Returns true if the indicated environment variable is defined."""
     @staticmethod
-    def get_environment_variable(var: str) -> str:
+    def get_environment_variable(var: str, /) -> str:
         """Returns the definition of the indicated environment variable, or the empty
         string if the variable is undefined.
         """
@@ -1373,12 +1370,12 @@ class ExecutionEnvironment:
         will return this new value.
         """
     @staticmethod
-    def clear_shadow(var: str) -> None:
+    def clear_shadow(var: str, /) -> None:
         """Removes a value set by a previous call to shadow_environment_variable(),
         and lets the actual value of the variable show again.
         """
     @staticmethod
-    def expand_string(str: str) -> str:
+    def expand_string(str: str, /) -> str:
         """Reads the string, looking for environment variable names marked by a $.
         Expands all such variable names.  A repeated dollar sign ($$) is mapped to
         a single dollar sign.
@@ -1391,7 +1388,7 @@ class ExecutionEnvironment:
         the binary name.
         """
     @staticmethod
-    def get_arg(n: int) -> str:
+    def get_arg(n: int, /) -> str:
         """Returns the nth command-line argument.  The index n must be in the range [0
         .. get_num_args()).  The first parameter, n == 0, is the first actual
         parameter, not the binary name.
@@ -1407,10 +1404,10 @@ class ExecutionEnvironment:
         can be determined.
         """
     @staticmethod
-    def set_binary_name(name: str) -> None:
+    def set_binary_name(name: str, /) -> None:
         """Do not use."""
     @staticmethod
-    def set_dtool_name(name: str) -> None:
+    def set_dtool_name(name: str, /) -> None:
         """Do not use."""
     @staticmethod
     def get_cwd() -> Filename:
@@ -1451,15 +1448,15 @@ class GlobPattern:
     def __init__(self, pattern: str = ...) -> None: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: GlobPattern | str) -> bool: ...
+    def __lt__(self, other: GlobPattern | str, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: GlobPattern | str) -> Self: ...
-    def set_pattern(self, pattern: str) -> None:
+    def assign(self, copy: GlobPattern | str, /) -> Self: ...
+    def set_pattern(self, pattern: str, /) -> None:
         """Changes the pattern string that the GlobPattern object matches."""
     def get_pattern(self) -> str:
         """Returns the pattern string that the GlobPattern object matches."""
-    def set_case_sensitive(self, case_sensitive: bool) -> None:
+    def set_case_sensitive(self, case_sensitive: bool, /) -> None:
         """Sets whether the match is case sensitive (true) or case insensitive
         (false).  The default is case sensitive.
         """
@@ -1467,19 +1464,19 @@ class GlobPattern:
         """Returns whether the match is case sensitive (true) or case insensitive
         (false).  The default is case sensitive.
         """
-    def set_nomatch_chars(self, nomatch_chars: str) -> None:
+    def set_nomatch_chars(self, nomatch_chars: str, /) -> None:
         """Specifies a set of characters that are not matched by * or ?."""
     def get_nomatch_chars(self) -> str:
         """Returns the set of characters that are not matched by * or ?."""
-    def matches(self, candidate: str) -> bool:
+    def matches(self, candidate: str, /) -> bool:
         """Returns true if the candidate string matches the pattern, false otherwise."""
-    def matches_file(self, candidate: StrOrBytesPath) -> bool:
+    def matches_file(self, candidate: StrOrBytesPath, /) -> bool:
         """Treats the GlobPattern as a filename pattern, and returns true if the given
         filename matches the pattern.  Unlike matches(), this will not match slash
         characters for single asterisk characters, and it will ignore path
         components that only contain a dot.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def has_glob_characters(self) -> bool:
         """Returns true if the pattern includes any special globbing characters, or
         false if it is just a literal string.

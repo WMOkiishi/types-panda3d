@@ -57,11 +57,11 @@ class SmoothMover:
         The return value is true if any parameter has changed since the last call
         to set_pos(), or false if they are the same.
         """
-    def set_x(self, x: float) -> bool:
+    def set_x(self, x: float, /) -> bool:
         """Sets the X position only.  See set_pos()."""
-    def set_y(self, y: float) -> bool:
+    def set_y(self, y: float, /) -> bool:
         """Sets the Y position only.  See set_pos()."""
-    def set_z(self, z: float) -> bool:
+    def set_z(self, z: float, /) -> bool:
         """Sets the Z position only.  See set_pos()."""
     @overload
     def set_hpr(self, hpr: Vec3Like) -> bool:
@@ -85,11 +85,11 @@ class SmoothMover:
         The return value is true if any parameter has changed since the last call
         to set_hpr(), or false if they are the same.
         """
-    def set_h(self, h: float) -> bool:
+    def set_h(self, h: float, /) -> bool:
         """Sets the heading only.  See set_hpr()."""
-    def set_p(self, p: float) -> bool:
+    def set_p(self, p: float, /) -> bool:
         """Sets the pitch only.  See set_hpr()."""
-    def set_r(self, r: float) -> bool:
+    def set_r(self, r: float, /) -> bool:
         """Sets the roll only.  See set_hpr()."""
     @overload
     def set_pos_hpr(self, pos: Vec3Like, hpr: Vec3Like) -> bool:
@@ -129,7 +129,7 @@ class SmoothMover:
         is usually used for very old position reports for which we're not sure of
         the actual receipt time.
         """
-    def set_timestamp(self, timestamp: float) -> None:
+    def set_timestamp(self, timestamp: float, /) -> None:
         """Specifies the time that the current position report applies.  This should
         be called, along with set_pos() and set_hpr(), before a call to
         mark_position().
@@ -146,13 +146,13 @@ class SmoothMover:
         When compute_smooth_position() is called, it uses these stored position
         reports to base its computation of the known position.
         """
-    def clear_positions(self, reset_velocity: bool) -> None:
+    def clear_positions(self, reset_velocity: bool, /) -> None:
         """Erases all the old position reports.  This should be done, for instance,
         prior to teleporting the avatar to a new position; otherwise, the smoother
         might try to lerp the avatar there.  If reset_velocity is true, the
         velocity is also reset to 0.
         """
-    def compute_smooth_position(self, timestamp: float = ...) -> bool:
+    def compute_smooth_position(self, timestamp: float = ..., /) -> bool:
         """Computes the smoothed position (and orientation) of the mover at the
         indicated point in time, based on the previous position reports.  After
         this call has been made, get_smooth_pos() etc.  may be called to retrieve
@@ -186,7 +186,7 @@ class SmoothMover:
         """Returns the smoothed orientation as computed by a previous call to
         compute_smooth_position().
         """
-    def apply_smooth_pos(self, node: NodePath) -> None:
+    def apply_smooth_pos(self, node: NodePath, /) -> None:
         """Applies the smoothed position to the indicated NodePath.  This is
         equivalent to calling node.set_pos(smooth_mover->get_smooth_pos()).  It
         exists as an optimization only, to avoid the overhead of passing the return
@@ -199,13 +199,13 @@ class SmoothMover:
         smooth_mover->get_smooth_hpr()).  It exists as an optimization only, to
         avoid the overhead of passing the return value through Python.
         """
-    def apply_smooth_hpr(self, node: NodePath) -> None:
+    def apply_smooth_hpr(self, node: NodePath, /) -> None:
         """Applies the smoothed orientation to the indicated NodePath.  This is
         equivalent to calling node.set_hpr(smooth_mover->get_smooth_hpr()).  It
         exists as an optimization only, to avoid the overhead of passing the return
         value through Python.
         """
-    def compute_and_apply_smooth_pos(self, node: NodePath) -> None:
+    def compute_and_apply_smooth_pos(self, node: NodePath, /) -> None:
         """A further optimization to reduce Python calls.  This computes the smooth
         position and applies it to the indicated node in one call.
         """
@@ -214,7 +214,7 @@ class SmoothMover:
         position and applies it to the indicated node or nodes in one call.  The
         pos_node and hpr_node might be the same NodePath.
         """
-    def compute_and_apply_smooth_hpr(self, hpr_node: NodePath) -> None:
+    def compute_and_apply_smooth_hpr(self, hpr_node: NodePath, /) -> None:
         """A further optimization to reduce Python calls.  This computes the smooth
         position and applies it to the indicated node or nodes in one call.  The
         pos_node and hpr_node might be the same NodePath.
@@ -244,7 +244,7 @@ class SmoothMover:
         """Node is being wrtReparented, update recorded sample positions to reflect
         new parent
         """
-    def set_smooth_mode(self, mode: _SmoothMover_SmoothMode) -> None:
+    def set_smooth_mode(self, mode: _SmoothMover_SmoothMode, /) -> None:
         """Sets the smoothing mode of all SmoothMovers in the world.  If this is
         SM_off, no smoothing or prediction will be performed, and get_smooth_pos()
         will simply return the position last set by mark_position().
@@ -253,7 +253,7 @@ class SmoothMover:
         """Returns the smoothing mode of all SmoothMovers in the world.  See
         set_smooth_mode().
         """
-    def set_prediction_mode(self, mode: _SmoothMover_PredictionMode) -> None:
+    def set_prediction_mode(self, mode: _SmoothMover_PredictionMode, /) -> None:
         """Sets the predictioning mode of all SmoothMovers in the world.  If this is
         PM_off, no prediction will be performed, but smoothing might still be
         performed.
@@ -262,7 +262,7 @@ class SmoothMover:
         """Returns the predictioning mode of all SmoothMovers in the world.  See
         set_prediction_mode().
         """
-    def set_delay(self, delay: float) -> None:
+    def set_delay(self, delay: float, /) -> None:
         """Sets the amount of time, in seconds, to delay the computed position of a
         SmoothMover.  This is particularly useful when the prediction mode is off,
         because it can allow the apparent motion of an avatar to appear smooth
@@ -273,7 +273,7 @@ class SmoothMover:
         """Returns the amount of time, in seconds, to delay the computed position of a
         SmoothMover.  See set_delay().
         """
-    def set_accept_clock_skew(self, flag: bool) -> None:
+    def set_accept_clock_skew(self, flag: bool, /) -> None:
         """Sets the 'accept clock skew' flag.  When this flag is true, clock skew from
         the other clients will be tolerated by delaying each smooth mover's
         position an additional amount, on top of that specified by set_delay(),
@@ -289,7 +289,7 @@ class SmoothMover:
         """Returns the current state of the 'accept clock skew' flag.  See
         set_accept_clock_skew().
         """
-    def set_max_position_age(self, age: float) -> None:
+    def set_max_position_age(self, age: float, /) -> None:
         """Sets the maximum amount of time a position is allowed to remain unchanged
         before assuming it represents the avatar actually standing still.
         """
@@ -297,7 +297,7 @@ class SmoothMover:
         """Returns the maximum amount of time a position is allowed to remain
         unchanged before assuming it represents the avatar actually standing still.
         """
-    def set_expected_broadcast_period(self, period: float) -> None:
+    def set_expected_broadcast_period(self, period: float, /) -> None:
         """Sets the interval at which we expect the SmoothNodes to broadcast their
         position, in elapsed seconds.  This controls the length of time we assume
         the object has truly stopped, when we receive a long sequence of no
@@ -307,7 +307,7 @@ class SmoothMover:
         """Returns the interval at which we expect the SmoothNodes to broadcast their
         position, in elapsed seconds.  See set_expected_broadcast_period().
         """
-    def set_reset_velocity_age(self, age: float) -> None:
+    def set_reset_velocity_age(self, age: float, /) -> None:
         """Sets the amount of time that should elapse after the last position report
         before the velocity is reset to 0.  This is similar to max_position_age,
         but it is only used to determine the resetting of the reported velocity.
@@ -317,7 +317,7 @@ class SmoothMover:
         """Returns the amount of time that should elapse after the last position
         report before the velocity is reset to 0.  See set_reset_velocity_age().
         """
-    def set_directional_velocity(self, flag: bool) -> None:
+    def set_directional_velocity(self, flag: bool, /) -> None:
         """Sets the flag that indicates whether the avatar's direction is considered
         in computing the velocity.  When this is true, velocity is automatically
         decomposed into a forward and a lateral velocity (and both may be positive
@@ -328,7 +328,7 @@ class SmoothMover:
         """Returns the current state of the 'directional velocity' flag.  See
         set_directional_velocity().
         """
-    def set_default_to_standing_still(self, flag: bool) -> None:
+    def set_default_to_standing_still(self, flag: bool, /) -> None:
         """Sets the flag that indicates whether to assume that the node stopped moving
         during periods when we don't get enough position updates.  If true, the
         object will stand still momentarily.  If false, the object will
@@ -338,8 +338,8 @@ class SmoothMover:
         """Returns the current state of the 'default to standing still' flag.  See
         set_default_to_standing_still().
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     setPos = set_pos
     setX = set_x
     setY = set_y

@@ -146,22 +146,22 @@ class TransformState(NodeCachedReferenceCount):
         singular matrix.
         """
     @staticmethod
-    def make_pos(pos: Vec3Like) -> TransformState:
+    def make_pos(pos: Vec3Like, /) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_hpr(hpr: Vec3Like) -> TransformState:
+    def make_hpr(hpr: Vec3Like, /) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_quat(quat: Vec4Like) -> TransformState:
+    def make_quat(quat: Vec4Like, /) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
     def make_pos_hpr(pos: Vec3Like, hpr: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_scale(scale: Vec3Like | float) -> TransformState:
+    def make_scale(scale: Vec3Like | float, /) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_shear(shear: Vec3Like) -> TransformState:
+    def make_shear(shear: Vec3Like, /) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
     def make_pos_hpr_scale(pos: Vec3Like, hpr: Vec3Like, scale: Vec3Like) -> TransformState:
@@ -176,22 +176,22 @@ class TransformState(NodeCachedReferenceCount):
     def make_pos_quat_scale_shear(pos: Vec3Like, quat: Vec4Like, scale: Vec3Like, shear: Vec3Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
-    def make_mat(mat: Mat4Like) -> TransformState:
+    def make_mat(mat: Mat4Like, /) -> TransformState:
         """Makes a new TransformState with the specified transformation matrix."""
     @staticmethod
-    def make_pos2d(pos: Vec2Like) -> TransformState:
+    def make_pos2d(pos: Vec2Like, /) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
-    def make_rotate2d(rotate: float) -> TransformState:
+    def make_rotate2d(rotate: float, /) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
     def make_pos_rotate2d(pos: Vec2Like, rotate: float) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
-    def make_scale2d(scale: Vec2Like | float) -> TransformState:
+    def make_scale2d(scale: Vec2Like | float, /) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
-    def make_shear2d(shear: float) -> TransformState:
+    def make_shear2d(shear: float, /) -> TransformState:
         """Makes a new 2-d TransformState with the specified components."""
     @staticmethod
     def make_pos_rotate_scale2d(pos: Vec2Like, rotate: float, scale: Vec2Like) -> TransformState:
@@ -200,7 +200,7 @@ class TransformState(NodeCachedReferenceCount):
     def make_pos_rotate_scale_shear2d(pos: Vec2Like, rotate: float, scale: Vec2Like, shear: float) -> TransformState:
         """Makes a new two-dimensional TransformState with the specified components."""
     @staticmethod
-    def make_mat3(mat: LMatrix3) -> TransformState:
+    def make_mat3(mat: LMatrix3, /) -> TransformState:
         """Makes a new two-dimensional TransformState with the specified 3x3
         transformation matrix.
         """
@@ -352,50 +352,50 @@ class TransformState(NodeCachedReferenceCount):
         """Returns the 3x3 matrix that describes the 2-d transform.  It is an error to
         call this if is_2d() returned false.
         """
-    def set_pos(self, pos: Vec3Like) -> TransformState:
+    def set_pos(self, pos: Vec3Like, /) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its pos component replaced with the indicated value.
         """
-    def set_hpr(self, hpr: Vec3Like) -> TransformState:
+    def set_hpr(self, hpr: Vec3Like, /) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its rotation component replaced with the indicated
         value, if possible.
         """
-    def set_quat(self, quat: Vec4Like) -> TransformState:
+    def set_quat(self, quat: Vec4Like, /) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its rotation component replaced with the indicated
         value, if possible.
         """
-    def set_scale(self, scale: Vec3Like) -> TransformState:
+    def set_scale(self, scale: Vec3Like, /) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its scale component replaced with the indicated value,
         if possible.
         """
-    def set_shear(self, shear: Vec3Like) -> TransformState:
+    def set_shear(self, shear: Vec3Like, /) -> TransformState:
         """Returns a new TransformState object that represents the original
         TransformState with its shear component replaced with the indicated value,
         if possible.
         """
-    def set_pos2d(self, pos: Vec2Like) -> TransformState:
+    def set_pos2d(self, pos: Vec2Like, /) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its pos component replaced with the indicated value.
         """
-    def set_rotate2d(self, rotate: float) -> TransformState:
+    def set_rotate2d(self, rotate: float, /) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its rotation component replaced with the indicated
         value, if possible.
         """
-    def set_scale2d(self, scale: Vec2Like) -> TransformState:
+    def set_scale2d(self, scale: Vec2Like, /) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its scale component replaced with the indicated value,
         if possible.
         """
-    def set_shear2d(self, shear: float) -> TransformState:
+    def set_shear2d(self, shear: float, /) -> TransformState:
         """Returns a new TransformState object that represents the original 2-d
         TransformState with its shear component replaced with the indicated value,
         if possible.
         """
-    def compose(self, other: TransformState) -> TransformState:
+    def compose(self, other: TransformState, /) -> TransformState:
         """Returns a new TransformState object that represents the composition of this
         state with the other state.
 
@@ -404,7 +404,7 @@ class TransformState(NodeCachedReferenceCount):
         continue to exist.  Should one of them destruct, the cached entry will be
         removed, and its pointer will be allowed to destruct as well.
         """
-    def invert_compose(self, other: TransformState) -> TransformState:
+    def invert_compose(self, other: TransformState, /) -> TransformState:
         """Returns a new TransformState object that represents the composition of this
         state's inverse with the other state.
 
@@ -423,7 +423,7 @@ class TransformState(NodeCachedReferenceCount):
         will be a shared pointer.  This may be called from time to time to improve
         cache benefits.
         """
-    def get_geom_rendering(self, geom_rendering: int) -> int:
+    def get_geom_rendering(self, geom_rendering: int, /) -> int:
         """Returns the union of the Geom::GeomRendering bits that will be required
         once this TransformState is applied to a geom which includes the indicated
         geom_rendering bits.  The RenderState's get_geom_rendering() should already
@@ -458,7 +458,7 @@ class TransformState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_composition_cache_source(self, n: int) -> TransformState:
+    def get_composition_cache_source(self, n: int, /) -> TransformState:
         """Returns the source TransformState of the nth element in the composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.  See get_composition_cache_result().
@@ -466,7 +466,7 @@ class TransformState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_composition_cache_result(self, n: int) -> TransformState:
+    def get_composition_cache_result(self, n: int, /) -> TransformState:
         """Returns the result TransformState of the nth element in the composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.
@@ -486,7 +486,7 @@ class TransformState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_invert_composition_cache_source(self, n: int) -> TransformState:
+    def get_invert_composition_cache_source(self, n: int, /) -> TransformState:
         """Returns the source TransformState of the nth element in the invert
         composition cache.  Returns NULL if there doesn't happen to be an entry in
         the nth element.  See get_invert_composition_cache_result().
@@ -494,7 +494,7 @@ class TransformState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_invert_composition_cache_result(self, n: int) -> TransformState:
+    def get_invert_composition_cache_result(self, n: int, /) -> TransformState:
         """Returns the result TransformState of the nth element in the invert
         composition cache.  Returns NULL if there doesn't happen to be an entry in
         the nth element.
@@ -511,7 +511,7 @@ class TransformState(NodeCachedReferenceCount):
         """
     def get_composition_cache(self) -> list[tuple[Any, Any] | tuple[None, None]]: ...
     def get_invert_composition_cache(self) -> list[tuple[Any, Any] | tuple[None, None]]: ...
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def write_composition_cache(self, out: ostream, indent_level: int) -> None:
         """Writes a brief description of the composition cache and invert composition
@@ -560,7 +560,7 @@ class TransformState(NodeCachedReferenceCount):
         true, but there is probably no advantage in that case.
         """
     @staticmethod
-    def list_cycles(out: ostream) -> None:
+    def list_cycles(out: ostream, /) -> None:
         """Detects all of the reference-count cycles in the cache and reports them to
         standard output.
 
@@ -574,7 +574,7 @@ class TransformState(NodeCachedReferenceCount):
         be reclaimed automatically.
         """
     @staticmethod
-    def list_states(out: ostream) -> None:
+    def list_states(out: ostream, /) -> None:
         """Lists all of the TransformStates in the cache to the output stream, one per
         line.  This can be quite a lot of output if the cache is large, so be
         prepared.
@@ -689,7 +689,7 @@ class RenderAttribRegistry:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def get_slot(self, type_handle: TypeHandle | type) -> int:
+    def get_slot(self, type_handle: TypeHandle | type, /) -> int:
         """Returns the slot number assigned to the indicated TypeHandle, or 0 if no
         slot number has been assigned.
         """
@@ -699,20 +699,20 @@ class RenderAttribRegistry:
         """Returns the number of RenderAttrib slots that have been allocated.  This is
         one more than the highest slot number in use.
         """
-    def get_slot_type(self, slot: int) -> TypeHandle:
+    def get_slot_type(self, slot: int, /) -> TypeHandle:
         """Returns the TypeHandle associated with slot n."""
-    def get_slot_sort(self, slot: int) -> int:
+    def get_slot_sort(self, slot: int, /) -> int:
         """Returns the sort number associated with slot n."""
     def set_slot_sort(self, slot: int, sort: int) -> None:
         """Changes the sort number associated with slot n."""
-    def get_slot_default(self, slot: int) -> RenderAttrib:
+    def get_slot_default(self, slot: int, /) -> RenderAttrib:
         """Returns the default RenderAttrib object associated with slot n.  This is
         the attrib that should be applied in the absence of any other attrib of
         this type.
         """
     def get_num_sorted_slots(self) -> int:
         """Returns the number of entries in the sorted_slots list."""
-    def get_sorted_slot(self, n: int) -> int:
+    def get_sorted_slot(self, n: int, /) -> int:
         """Returns the nth slot in sorted order.  By traversing this list, you will
         retrieve all the slot numbers in order according to their registered sort
         value.
@@ -794,14 +794,14 @@ class RenderAttrib(TypedWritableReferenceCount):
     MConstant: Final = 11
     @property
     def slot(self) -> int: ...
-    def compose(self, other: RenderAttrib) -> RenderAttrib:
+    def compose(self, other: RenderAttrib, /) -> RenderAttrib:
         """Returns a new RenderAttrib object that represents the composition of this
         attrib with the other attrib.  In most cases, this is the same as the other
         attrib; a compose b produces b.  Some kinds of attributes, like a
         TextureTransform, for instance, might produce a new result: a compose b
         produces c.
         """
-    def invert_compose(self, other: RenderAttrib) -> RenderAttrib:
+    def invert_compose(self, other: RenderAttrib, /) -> RenderAttrib:
         """Returns a new RenderAttrib object that represents the composition of the
         inverse of this attrib with the other attrib.  In most cases, this is the
         same as the other attrib; !a compose b produces b.  Some kinds of
@@ -831,7 +831,7 @@ class RenderAttrib(TypedWritableReferenceCount):
         value, it always completely overrides.  And if both RenderAttribs have the
         same override value, they are always composed.
         """
-    def compare_to(self, other: RenderAttrib) -> int:
+    def compare_to(self, other: RenderAttrib, /) -> int:
         """Provides an arbitrary ordering among all unique RenderAttribs, so we can
         store the essentially different ones in a big set and throw away the rest.
 
@@ -848,7 +848,7 @@ class RenderAttrib(TypedWritableReferenceCount):
         will be a shared pointer.  This may be called from time to time to improve
         cache benefits.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     @staticmethod
     def get_num_attribs() -> int:
@@ -856,7 +856,7 @@ class RenderAttrib(TypedWritableReferenceCount):
         world.  This will go up and down during normal operations.
         """
     @staticmethod
-    def list_attribs(out: ostream) -> None:
+    def list_attribs(out: ostream, /) -> None:
         """Lists all of the RenderAttribs in the cache to the output stream, one per
         line.  This can be quite a lot of output if the cache is large, so be
         prepared.
@@ -956,7 +956,7 @@ class RenderModeAttrib(RenderAttrib):
         """Returns the color that is used in M_filled_wireframe mode to distinguish
         the wireframe from the rest of the geometry.
         """
-    def get_geom_rendering(self, geom_rendering: int) -> int:
+    def get_geom_rendering(self, geom_rendering: int, /) -> int:
         """Returns the union of the Geom::GeomRendering bits that will be required
         once this RenderModeAttrib is applied to a geom which includes the
         indicated geom_rendering bits.
@@ -1003,7 +1003,7 @@ class TexMatrixAttrib(RenderAttrib):
         transform for the given stage.  If this stage already exists, its transform
         is replaced.
         """
-    def remove_stage(self, stage: TextureStage) -> Self:
+    def remove_stage(self, stage: TextureStage, /) -> Self:
         """Returns a new TexMatrixAttrib just like this one, with the indicated stage
         removed.
         """
@@ -1011,18 +1011,18 @@ class TexMatrixAttrib(RenderAttrib):
         """Returns true if no stages are defined in the TexMatrixAttrib, false if at
         least one is.
         """
-    def has_stage(self, stage: TextureStage) -> bool:
+    def has_stage(self, stage: TextureStage, /) -> bool:
         """Returns true if there is a transform associated with the indicated stage,
         or false otherwise (in which case get_transform(stage) will return the
         identity transform).
         """
     def get_num_stages(self) -> int:
         """Returns the number of stages that are represented by this attrib."""
-    def get_stage(self, n: int) -> TextureStage:
+    def get_stage(self, n: int, /) -> TextureStage:
         """Returns the nth stage that is represented by this attrib.  The
         TextureStages are in no particular order.
         """
-    def get_mat(self, stage: TextureStage = ...) -> LMatrix4:
+    def get_mat(self, stage: TextureStage = ..., /) -> LMatrix4:
         """Returns the transformation matrix associated with the default texture
         stage.
 
@@ -1031,13 +1031,13 @@ class TexMatrixAttrib(RenderAttrib):
         stage, or identity matrix if nothing is associated with the indicated
         stage.
         """
-    def get_transform(self, stage: TextureStage) -> TransformState:
+    def get_transform(self, stage: TextureStage, /) -> TransformState:
         """Returns the transformation associated with the indicated texture stage, or
         identity matrix if nothing is associated with the indicated stage.
         """
-    def get_override(self, stage: TextureStage) -> int:
+    def get_override(self, stage: TextureStage, /) -> int:
         """Returns the override value associated with the indicated stage."""
-    def get_geom_rendering(self, geom_rendering: int) -> int:
+    def get_geom_rendering(self, geom_rendering: int, /) -> int:
         """Returns the union of the Geom::GeomRendering bits that will be required
         once this TexMatrixAttrib is applied to a geom which includes the indicated
         geom_rendering bits.
@@ -1070,7 +1070,7 @@ class RenderState(NodeCachedReferenceCount):
 
     @property
     def attribs(self) -> Mapping[TypeHandle, RenderAttrib]: ...
-    def compare_to(self, other: RenderState) -> int:
+    def compare_to(self, other: RenderState, /) -> int:
         """Provides an arbitrary ordering among all unique RenderStates, so we can
         store the essentially different ones in a big set and throw away the rest.
 
@@ -1078,7 +1078,7 @@ class RenderState(NodeCachedReferenceCount):
         equivalent RenderState objects are guaranteed to share the same pointer;
         thus, a pointer comparison is always sufficient.
         """
-    def compare_sort(self, other: RenderState) -> int:
+    def compare_sort(self, other: RenderState, /) -> int:
         """Returns -1, 0, or 1 according to the relative sorting of these two
         RenderStates, with regards to rendering performance, so that "heavier"
         RenderAttribs (as defined by RenderAttribRegistry::get_slot_sort()) are
@@ -1139,7 +1139,7 @@ class RenderState(NodeCachedReferenceCount):
     @staticmethod
     def make(attrib: RenderAttrib, override: int = ...) -> RenderState:
         """Returns a RenderState with one attribute set."""
-    def compose(self, other: RenderState) -> RenderState:
+    def compose(self, other: RenderState, /) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state with the other state.
 
@@ -1148,7 +1148,7 @@ class RenderState(NodeCachedReferenceCount):
         exist.  Should one of them destruct, the cached entry will be removed, and
         its pointer will be allowed to destruct as well.
         """
-    def invert_compose(self, other: RenderState) -> RenderState:
+    def invert_compose(self, other: RenderState, /) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state's inverse with the other state.
 
@@ -1172,53 +1172,33 @@ class RenderState(NodeCachedReferenceCount):
         with the same type, it is replaced unconditionally.  The override is also
         replaced unconditionally.
         """
-    @overload
-    def remove_attrib(self, type: TypeHandle | type) -> RenderState:
+    def remove_attrib(self, type_or_slot: TypeHandle | int | type, /) -> RenderState:
         """Returns a new RenderState object that represents the same as the source
         state, with the indicated RenderAttrib removed.
         """
-    @overload
-    def remove_attrib(self, slot: int) -> RenderState:
-        """Returns a new RenderState object that represents the same as the source
-        state, with the indicated RenderAttrib removed.
-        """
-    def adjust_all_priorities(self, adjustment: int) -> RenderState:
+    def adjust_all_priorities(self, adjustment: int, /) -> RenderState:
         """Returns a new RenderState object that represents the same as the source
         state, with all attributes' override values incremented (or decremented, if
         negative) by the indicated amount.  If the override would drop below zero,
         it is set to zero.
         """
-    @overload
-    def has_attrib(self, type: TypeHandle | type) -> bool:
+    def has_attrib(self, type_or_slot: TypeHandle | int | type, /) -> bool:
         """Returns true if an attrib of the indicated type is present, false
         otherwise.
         """
-    @overload
-    def has_attrib(self, slot: int) -> bool:
-        """Returns true if an attrib of the indicated type is present, false
-        otherwise.
-        """
-    @overload
-    def get_attrib(self, type: TypeHandle | type) -> RenderAttrib:
+    def get_attrib(self, type_or_slot: TypeHandle | int | type, /) -> RenderAttrib:
         """Looks for a RenderAttrib of the indicated type in the state, and returns it
         if it is found, or NULL if it is not.
-        """
-    @overload
-    def get_attrib(self, slot: int) -> RenderAttrib:
-        """Returns the RenderAttrib with the indicated slot index, or NULL if there is
+
+        or:
+        Returns the RenderAttrib with the indicated slot index, or NULL if there is
         no such RenderAttrib in the state.
         """
-    def get_attrib_def(self, slot: int) -> RenderAttrib:
+    def get_attrib_def(self, slot: int, /) -> RenderAttrib:
         """Returns the RenderAttrib with the indicated slot index, or the default
         attrib for that slot if there is no such RenderAttrib in the state.
         """
-    @overload
-    def get_override(self, type: TypeHandle | type) -> int:
-        """Looks for a RenderAttrib of the indicated type in the state, and returns
-        its override value if it is found, or 0 if it is not.
-        """
-    @overload
-    def get_override(self, slot: int) -> int:
+    def get_override(self, type_or_slot: TypeHandle | int | type, /) -> int:
         """Looks for a RenderAttrib of the indicated type in the state, and returns
         its override value if it is found, or 0 if it is not.
         """
@@ -1257,7 +1237,7 @@ class RenderState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_composition_cache_source(self, n: int) -> RenderState:
+    def get_composition_cache_source(self, n: int, /) -> RenderState:
         """Returns the source RenderState of the nth element in the composition cache.
         Returns NULL if there doesn't happen to be an entry in the nth element.
         See get_composition_cache_result().
@@ -1265,7 +1245,7 @@ class RenderState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_composition_cache_result(self, n: int) -> RenderState:
+    def get_composition_cache_result(self, n: int, /) -> RenderState:
         """Returns the result RenderState of the nth element in the composition cache.
         Returns NULL if there doesn't happen to be an entry in the nth element.
 
@@ -1284,7 +1264,7 @@ class RenderState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_invert_composition_cache_source(self, n: int) -> RenderState:
+    def get_invert_composition_cache_source(self, n: int, /) -> RenderState:
         """Returns the source RenderState of the nth element in the invert composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.  See get_invert_composition_cache_result().
@@ -1292,7 +1272,7 @@ class RenderState(NodeCachedReferenceCount):
         This has no practical value other than for examining the cache for
         performance analysis.
         """
-    def get_invert_composition_cache_result(self, n: int) -> RenderState:
+    def get_invert_composition_cache_result(self, n: int, /) -> RenderState:
         """Returns the result RenderState of the nth element in the invert composition
         cache.  Returns NULL if there doesn't happen to be an entry in the nth
         element.
@@ -1305,7 +1285,7 @@ class RenderState(NodeCachedReferenceCount):
         """
     def get_composition_cache(self) -> list[tuple[Any, Any] | tuple[None, None]]: ...
     def get_invert_composition_cache(self) -> list[tuple[Any, Any] | tuple[None, None]]: ...
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     @staticmethod
     def get_max_priority() -> int:
@@ -1362,7 +1342,7 @@ class RenderState(NodeCachedReferenceCount):
         This automatically calls RenderAttrib::garbage_collect() as well.
         """
     @staticmethod
-    def list_cycles(out: ostream) -> None:
+    def list_cycles(out: ostream, /) -> None:
         """Detects all of the reference-count cycles in the cache and reports them to
         standard output.
 
@@ -1376,7 +1356,7 @@ class RenderState(NodeCachedReferenceCount):
         be reclaimed automatically.
         """
     @staticmethod
-    def list_states(out: ostream) -> None:
+    def list_states(out: ostream, /) -> None:
         """Lists all of the RenderStates in the cache to the output stream, one per
         line.  This can be quite a lot of output if the cache is large, so be
         prepared.
@@ -1402,7 +1382,7 @@ class RenderState(NodeCachedReferenceCount):
         function is provided as an optimization for determining this at render
         time.
         """
-    def get_geom_rendering(self, geom_rendering: int) -> int:
+    def get_geom_rendering(self, geom_rendering: int, /) -> int:
         """Returns the union of the Geom::GeomRendering bits that will be required
         once this RenderState is applied to a geom which includes the indicated
         geom_rendering bits.
@@ -1516,7 +1496,7 @@ class AntialiasAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: int) -> AntialiasAttrib:
+    def make(mode: int, /) -> AntialiasAttrib:
         """Constructs a new AntialiasAttrib object.
 
         The mode should be either M_none, M_auto, or a union of any or all of
@@ -1586,7 +1566,7 @@ class RenderEffect(TypedWritableReferenceCount):
     if you wish to change its properties; instead, create a new one.
     """
 
-    def compare_to(self, other: RenderEffect) -> int:
+    def compare_to(self, other: RenderEffect, /) -> int:
         """Provides an arbitrary ordering among all unique RenderEffects, so we can
         store the essentially different ones in a big set and throw away the rest.
 
@@ -1594,7 +1574,7 @@ class RenderEffect(TypedWritableReferenceCount):
         equivalent RenderEffect objects are guaranteed to share the same pointer;
         thus, a pointer comparison is always sufficient.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     @staticmethod
     def get_num_effects() -> int:
@@ -1602,7 +1582,7 @@ class RenderEffect(TypedWritableReferenceCount):
         world.  This will go up and down during normal operations.
         """
     @staticmethod
-    def list_effects(out: ostream) -> None:
+    def list_effects(out: ostream, /) -> None:
         """Lists all of the RenderEffects in the cache to the output stream, one per
         line.  This can be quite a lot of output if the cache is large, so be
         prepared.
@@ -1627,15 +1607,15 @@ class RenderEffects(TypedWritableReferenceCount):
     instead of modifying a RenderEffects object, create a new one.
     """
 
-    def __lt__(self, other: RenderEffect | RenderEffects) -> bool: ...
+    def __lt__(self, other: RenderEffect | RenderEffects, /) -> bool: ...
     def __len__(self) -> int:
         """Returns the number of separate effects indicated in the state."""
-    @overload
-    def __getitem__(self, type: TypeHandle | type) -> RenderEffect:
-        """Returns the effect in the state with the given type."""
-    @overload
-    def __getitem__(self, n: int) -> RenderEffect:
-        """Returns the nth effect in the state."""
+    def __getitem__(self, type_or_n: TypeHandle | int | type, /) -> RenderEffect:
+        """Returns the effect in the state with the given type.
+
+        or:
+        Returns the nth effect in the state.
+        """
     def is_empty(self) -> bool:
         """Returns true if the state is empty, false otherwise."""
     @deprecated('in Python, use len(effects) instead, or effects.size() in C++.')
@@ -1643,15 +1623,14 @@ class RenderEffects(TypedWritableReferenceCount):
         """Returns the number of separate effects indicated in the state.
         @deprecated in Python, use len(effects) instead, or effects.size() in C++.
         """
-    @overload
-    def get_effect(self, type: TypeHandle | type) -> RenderEffect:
+    def get_effect(self, type_or_n: TypeHandle | int | type, /) -> RenderEffect:
         """Looks for a RenderEffect of the indicated type in the state, and returns it
         if it is found, or NULL if it is not.
+
+        or:
+        Returns the nth effect in the state.
         """
-    @overload
-    def get_effect(self, n: int) -> RenderEffect:
-        """Returns the nth effect in the state."""
-    def find_effect(self, type: TypeHandle | type) -> int:
+    def find_effect(self, type: TypeHandle | type, /) -> int:
         """Searches for an effect with the indicated type in the state, and returns
         its index if it is found, or -1 if it is not.
         """
@@ -1674,16 +1653,16 @@ class RenderEffects(TypedWritableReferenceCount):
     @staticmethod
     def make(effect1: RenderEffect, effect2: RenderEffect, effect3: RenderEffect, effect4: RenderEffect) -> RenderEffects:
         """Returns a RenderEffects with four effects set."""
-    def add_effect(self, effect: RenderEffect) -> RenderEffects:
+    def add_effect(self, effect: RenderEffect, /) -> RenderEffects:
         """Returns a new RenderEffects object that represents the same as the source
         state, with the new RenderEffect added.  If there is already a RenderEffect
         with the same type, it is replaced.
         """
-    def remove_effect(self, type: TypeHandle | type) -> RenderEffects:
+    def remove_effect(self, type: TypeHandle | type, /) -> RenderEffects:
         """Returns a new RenderEffects object that represents the same as the source
         state, with the indicated RenderEffect removed.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     @staticmethod
     def get_num_states() -> int:
@@ -1691,7 +1670,7 @@ class RenderEffects(TypedWritableReferenceCount):
         world.  This will go up and down during normal operations.
         """
     @staticmethod
-    def list_states(out: ostream) -> None:
+    def list_states(out: ostream, /) -> None:
         """Lists all of the RenderEffects in the cache to the output stream, one per
         line.  This can be quite a lot of output if the cache is large, so be
         prepared.
@@ -1752,7 +1731,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """
 
         DtoolClassDict: ClassVar[dict[str, Any]]
-        def __getitem__(self, n: int) -> PandaNode: ...
+        def __getitem__(self, n: int, /) -> PandaNode: ...
         def __len__(self) -> int: ...
         @type_check_only
         def __iter__(self) -> Iterator[PandaNode]: ...
@@ -1761,7 +1740,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Similarly for stashed children."""
 
         DtoolClassDict: ClassVar[dict[str, Any]]
-        def __getitem__(self, n: int) -> PandaNode: ...
+        def __getitem__(self, n: int, /) -> PandaNode: ...
         def __len__(self) -> int: ...
         @type_check_only
         def __iter__(self) -> Iterator[PandaNode]: ...
@@ -1770,7 +1749,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """This class is returned from get_parents()."""
 
         DtoolClassDict: ClassVar[dict[str, Any]]
-        def __getitem__(self, n: int) -> PandaNode: ...
+        def __getitem__(self, n: int, /) -> PandaNode: ...
         def __len__(self) -> int: ...
         @type_check_only
         def __iter__(self) -> Iterator[PandaNode]: ...
@@ -1817,7 +1796,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def __deepcopy__(self, memo, /): ...
     def upcast_to_TypedWritableReferenceCount(self) -> TypedWritableReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
-    def combine_with(self, other: PandaNode) -> PandaNode:
+    def combine_with(self, other: PandaNode, /) -> PandaNode:
         """Collapses this PandaNode with the other PandaNode, if possible, and returns
         a pointer to the combined PandaNode, or NULL if the two PandaNodes cannot
         safely be combined.
@@ -1833,13 +1812,13 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         will be a different pointer, but its internal data may or may not be shared
         with that of the original PandaNode.  No children will be copied.
         """
-    def copy_subgraph(self, current_thread: Thread = ...) -> PandaNode:
+    def copy_subgraph(self, current_thread: Thread = ..., /) -> PandaNode:
         """Allocates and returns a complete copy of this PandaNode and the entire
         scene graph rooted at this PandaNode.  Some data may still be shared from
         the original (e.g.  vertex index tables), but nothing that will impede
         normal use of the PandaNode.
         """
-    def get_num_parents(self, current_thread: Thread = ...) -> int:
+    def get_num_parents(self, current_thread: Thread = ..., /) -> int:
         """Returns the number of parent nodes this node has.  If this number is
         greater than 1, the node has been multiply instanced.  The order of the
         parent nodes is not meaningful and is not related to the order in which the
@@ -1854,7 +1833,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Returns the index of the indicated parent node, if it is a parent, or -1 if
         it is not.
         """
-    def get_num_children(self, current_thread: Thread = ...) -> int:
+    def get_num_children(self, current_thread: Thread = ..., /) -> int:
         """Returns the number of child nodes this node has.  The order of the child
         nodes *is* meaningful and is based on the sort number that was passed to
         add_child(), and also on the order in which the nodes were added.
@@ -1941,7 +1920,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
 
         This can only be called from the top pipeline stage (i.e.  from App).
         """
-    def get_num_stashed(self, current_thread: Thread = ...) -> int:
+    def get_num_stashed(self, current_thread: Thread = ..., /) -> int:
         """Returns the number of stashed nodes this node has.  These are former
         children of the node that have been moved to the special stashed list via
         stash_child().
@@ -1985,7 +1964,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """
     def remove_stashed(self, child_index: int, current_thread: Thread = ...) -> None:
         """Removes the nth stashed child from the node."""
-    def remove_all_children(self, current_thread: Thread = ...) -> None:
+    def remove_all_children(self, current_thread: Thread = ..., /) -> None:
         """Removes all the children from the node at once, including stashed children.
 
         This can only be called from the top pipeline stage (i.e.  from App).
@@ -2005,55 +1984,34 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         attribute will now apply to this node and everything below.  If there was
         already an attribute of the same type, it is replaced.
         """
-    @overload
-    def get_attrib(self, type: TypeHandle | type) -> RenderAttrib:
+    def get_attrib(self, type_or_slot: TypeHandle | int | type, /) -> RenderAttrib:
         """Returns the render attribute of the indicated type, if it is defined on the
         node, or NULL if it is not.  This checks only what is set on this
         particular node level, and has nothing to do with what render attributes
         may be inherited from parent nodes.
         """
-    @overload
-    def get_attrib(self, slot: int) -> RenderAttrib:
-        """Returns the render attribute of the indicated type, if it is defined on the
-        node, or NULL if it is not.  This checks only what is set on this
-        particular node level, and has nothing to do with what render attributes
-        may be inherited from parent nodes.
-        """
-    @overload
-    def has_attrib(self, type: TypeHandle | type) -> bool:
+    def has_attrib(self, type_or_slot: TypeHandle | int | type, /) -> bool:
         """Returns true if there is a render attribute of the indicated type defined
         on this node, or false if there is not.
         """
-    @overload
-    def has_attrib(self, slot: int) -> bool:
-        """Returns true if there is a render attribute of the indicated type defined
-        on this node, or false if there is not.
-        """
-    @overload
-    def clear_attrib(self, type: TypeHandle | type) -> None:
+    def clear_attrib(self, type_or_slot: TypeHandle | int | type, /) -> None:
         """Removes the render attribute of the given type from this node.  This node,
         and the subgraph below, will now inherit the indicated render attribute
         from the nodes above this one.
         """
-    @overload
-    def clear_attrib(self, slot: int) -> None:
-        """Removes the render attribute of the given type from this node.  This node,
-        and the subgraph below, will now inherit the indicated render attribute
-        from the nodes above this one.
-        """
-    def set_effect(self, effect: RenderEffect) -> None:
+    def set_effect(self, effect: RenderEffect, /) -> None:
         """Adds the indicated render effect to the scene graph on this node.  If there
         was already an effect of the same type, it is replaced.
         """
-    def get_effect(self, type: TypeHandle | type) -> RenderEffect:
+    def get_effect(self, type: TypeHandle | type, /) -> RenderEffect:
         """Returns the render effect of the indicated type, if it is defined on the
         node, or NULL if it is not.
         """
-    def has_effect(self, type: TypeHandle | type) -> bool:
+    def has_effect(self, type: TypeHandle | type, /) -> bool:
         """Returns true if there is a render effect of the indicated type defined on
         this node, or false if there is not.
         """
-    def clear_effect(self, type: TypeHandle | type) -> None:
+    def clear_effect(self, type: TypeHandle | type, /) -> None:
         """Removes the render effect of the given type from this node."""
     def set_state(self, state: RenderState, current_thread: Thread = ...) -> None:
         """Sets the complete RenderState that will be applied to all nodes at this
@@ -2062,13 +2020,13 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         This completely replaces whatever has been set on this node via repeated
         calls to set_attrib().
         """
-    def get_state(self, current_thread: Thread = ...) -> RenderState:
+    def get_state(self, current_thread: Thread = ..., /) -> RenderState:
         """Returns the complete RenderState that will be applied to all nodes at this
         level and below, as set on this node.  This returns only the RenderState
         set on this particular node, and has nothing to do with state that might be
         inherited from above.
         """
-    def clear_state(self, current_thread: Thread = ...) -> None:
+    def clear_state(self, current_thread: Thread = ..., /) -> None:
         """Resets this node to leave the render state alone.  Nodes at this level and
         below will once again inherit their render state unchanged from the nodes
         above this level.
@@ -2078,31 +2036,31 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         completely replaces whatever has been set on this node via repeated calls
         to set_attrib().
         """
-    def get_effects(self, current_thread: Thread = ...) -> RenderEffects:
+    def get_effects(self, current_thread: Thread = ..., /) -> RenderEffects:
         """Returns the complete RenderEffects that will be applied to this node."""
-    def clear_effects(self, current_thread: Thread = ...) -> None:
+    def clear_effects(self, current_thread: Thread = ..., /) -> None:
         """Resets this node to have no render effects."""
     def set_transform(self, transform: TransformState, current_thread: Thread = ...) -> None:
         """Sets the transform that will be applied to this node and below.  This
         defines a new coordinate space at this point in the scene graph and below.
         """
-    def get_transform(self, current_thread: Thread = ...) -> TransformState:
+    def get_transform(self, current_thread: Thread = ..., /) -> TransformState:
         """Returns the transform that has been set on this particular node.  This is
         not the net transform from the root, but simply the transform on this
         particular node.
         """
-    def clear_transform(self, current_thread: Thread = ...) -> None:
+    def clear_transform(self, current_thread: Thread = ..., /) -> None:
         """Resets the transform on this node to the identity transform."""
     def set_prev_transform(self, transform: TransformState, current_thread: Thread = ...) -> None:
         """Sets the transform that represents this node's "previous" position, one
         frame ago, for the purposes of detecting motion for accurate collision
         calculations.
         """
-    def get_prev_transform(self, current_thread: Thread = ...) -> TransformState:
+    def get_prev_transform(self, current_thread: Thread = ..., /) -> TransformState:
         """Returns the transform that has been set as this node's "previous" position.
         See set_prev_transform().
         """
-    def reset_prev_transform(self, current_thread: Thread = ...) -> None:
+    def reset_prev_transform(self, current_thread: Thread = ..., /) -> None:
         """Resets the transform that represents this node's "previous" position to the
         same as the current transform.  This is not the same thing as clearing it
         to identity.
@@ -2114,7 +2072,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         reset_prev_transform().
         """
     @staticmethod
-    def reset_all_prev_transform(current_thread: Thread = ...) -> None:
+    def reset_all_prev_transform(current_thread: Thread = ..., /) -> None:
         """Visits all nodes in the world with the _dirty_prev_transform flag--that is,
         all nodes whose _prev_transform is different from the _transform in
         pipeline stage 0--and resets the _prev_transform to be the same as
@@ -2146,15 +2104,15 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def get_tag_keys(self) -> tuple[str, ...]: ...
     def get_python_tags(self) -> dict[Any, Any]: ...
     def set_python_tag(self, key: Any, value: Any) -> None: ...
-    def get_python_tag(self, key: Any) -> Any | None: ...
-    def has_python_tag(self, key: Any) -> bool: ...
-    def clear_python_tag(self, key: Any) -> None: ...
+    def get_python_tag(self, key: Any, /) -> Any | None: ...
+    def has_python_tag(self, key: Any, /) -> bool: ...
+    def clear_python_tag(self, key: Any, /) -> None: ...
     def get_python_tag_keys(self) -> list[Any] | tuple[()]: ...
     def has_tags(self) -> bool:
         """Returns true if the node has any tags (or any Python tags) at all, false if
         it has none.
         """
-    def copy_tags(self, other: PandaNode) -> None:
+    def copy_tags(self, other: PandaNode, /) -> None:
         """Copies all of the tags stored on the other node onto this node.  If a
         particular tag exists on both nodes, the contents of this node's value is
         replaced by that of the other.
@@ -2168,20 +2126,20 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         This is mainly for the benefit of the realtime user, to see the list of all
         of the associated tag keys.
         """
-    def compare_tags(self, other: PandaNode) -> int:
+    def compare_tags(self, other: PandaNode, /) -> int:
         """Returns a number less than 0, 0, or greater than 0, to indicate the
         similarity of tags between this node and the other one.  If this returns 0,
         the tags are identical.  If it returns other than 0, then the tags are
         different; and the nodes may be sorted into a consistent (but arbitrary)
         ordering based on this number.
         """
-    def copy_all_properties(self, other: PandaNode) -> None:
+    def copy_all_properties(self, other: PandaNode, /) -> None:
         """Copies the TransformState, RenderState, RenderEffects, tags, Python tags,
         and the show/hide state from the other node onto this one.  Typically this
         is used to prepare a node to replace another node in the scene graph (also
         see replace_node()).
         """
-    def replace_node(self, other: PandaNode) -> None:
+    def replace_node(self, other: PandaNode, /) -> None:
         """Inserts this node into the scene graph in place of the other one, and
         removes the other node.  All scene graph attributes (TransformState,
         RenderState, etc.) are copied to this node.
@@ -2196,7 +2154,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         This method is intended to be used to replace a node of a given type in the
         scene graph with a node of a different type.
         """
-    def set_unexpected_change(self, flags: int) -> None:
+    def set_unexpected_change(self, flags: int, /) -> None:
         """Sets one or more of the PandaNode::UnexpectedChange bits on, indicating
         that the corresponding property should not change again on this node.  Once
         one of these bits has been set, if the property changes, an assertion
@@ -2209,7 +2167,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         Since this is a developer debugging tool only, this function does nothing
         in a production (NDEBUG) build.
         """
-    def get_unexpected_change(self, flags: int) -> int:
+    def get_unexpected_change(self, flags: int, /) -> int:
         """Returns nonzero if any of the bits in the input parameter are set on this
         node, or zero if none of them are set.  More specifically, this returns the
         particular set of bits (masked by the input parameter) that have been set
@@ -2218,7 +2176,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         Since this is a developer debugging tool only, this function always returns
         zero in a production (NDEBUG) build.
         """
-    def clear_unexpected_change(self, flags: int) -> None:
+    def clear_unexpected_change(self, flags: int, /) -> None:
         """Sets one or more of the PandaNode::UnexpectedChange bits off, indicating
         that the corresponding property may once again change on this node.  See
         set_unexpected_change().
@@ -2241,7 +2199,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Returns true if the node has been hidden to all cameras by clearing its
         overall bit.
         """
-    def set_overall_hidden(self, overall_hidden: bool) -> None:
+    def set_overall_hidden(self, overall_hidden: bool, /) -> None:
         """Sets or clears the hidden flag.  When the hidden flag is true, the node and
         all of its children are invisible to all cameras, regardless of the setting
         of any draw masks.  Setting the hidden flag to false restores the previous
@@ -2308,7 +2266,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         indicates that at least one child should be visible, while a 0 bit
         indicates that all children are hidden.
         """
-    def set_into_collide_mask(self, mask: CollideMask | int) -> None:
+    def set_into_collide_mask(self, mask: CollideMask | int, /) -> None:
         """Sets the "into" CollideMask.
 
         This specifies the set of bits that must be shared with a CollisionNode's
@@ -2330,11 +2288,11 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         For nodes that can be collided with, such as GeomNode and CollisionNode,
         this returns all bits on.
         """
-    def get_net_collide_mask(self, current_thread: Thread = ...) -> CollideMask:
+    def get_net_collide_mask(self, current_thread: Thread = ..., /) -> CollideMask:
         """Returns the union of all into_collide_mask() values set at CollisionNodes
         at this level and below.
         """
-    def get_off_clip_planes(self, current_thread: Thread = ...) -> ClipPlaneAttrib:
+    def get_off_clip_planes(self, current_thread: Thread = ..., /) -> ClipPlaneAttrib:
         """Returns a ClipPlaneAttrib which represents the union of all of the clip
         planes that have been turned *off* at this level and below.
         """
@@ -2362,7 +2320,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     def write(self, out: ostream, indent_level: int) -> None: ...
     def ls(self, out: ostream, indent_level: int) -> None:
         """Lists all the nodes at and below the current path hierarchically."""
-    def set_bounds_type(self, bounds_type: _BoundingVolume_BoundsType) -> None:
+    def set_bounds_type(self, bounds_type: _BoundingVolume_BoundsType, /) -> None:
         """Specifies the desired type of bounding volume that will be created for this
         node.  This is normally BoundingVolume::BT_default, which means to set the
         type according to the config variable "bounds-type".
@@ -2378,7 +2336,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """
     def get_bounds_type(self) -> _BoundingVolume_BoundsType:
         """Returns the bounding volume type set with set_bounds_type()."""
-    def set_bounds(self, volume: BoundingVolume) -> None:
+    def set_bounds(self, volume: BoundingVolume, /) -> None:
         """Resets the bounding volume so that it is the indicated volume.  When it is
         explicitly set, the bounding volume will no longer be automatically
         computed according to the contents of the node itself, for nodes like
@@ -2389,7 +2347,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         default behavior later.
         """
     @deprecated('Use set_bounds() instead.')
-    def set_bound(self, volume: BoundingVolume) -> None:
+    def set_bound(self, volume: BoundingVolume, /) -> None:
         """@deprecated Use set_bounds() instead."""
     def clear_bounds(self) -> None:
         """Reverses the effect of a previous call to set_bounds(), and allows the
@@ -2414,7 +2372,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         counter, so as long as this counter remains unchanged you can be confident
         the bounding volume is also unchanged.
         """
-    def get_nested_vertices(self, current_thread: Thread = ...) -> int:
+    def get_nested_vertices(self, current_thread: Thread = ..., /) -> int:
         """Returns the total number of vertices that will be rendered by this node and
         all of its descendents.
 
@@ -2423,18 +2381,18 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         also include hidden nodes.  It may also omit or only approximate certain
         kinds of dynamic geometry.  However, it will not include stashed nodes.
         """
-    def get_internal_bounds(self, current_thread: Thread = ...) -> BoundingVolume:
+    def get_internal_bounds(self, current_thread: Thread = ..., /) -> BoundingVolume:
         """Returns the node's internal bounding volume.  This is the bounding volume
         around the node alone, without including children.  If the user has called
         set_bounds(), it will be the specified bounding volume.
         """
-    def get_internal_vertices(self, current_thread: Thread = ...) -> int:
+    def get_internal_vertices(self, current_thread: Thread = ..., /) -> int:
         """Returns the total number of vertices that will be rendered by this
         particular node alone, not accounting for its children.
 
         This may not include all vertices for certain dynamic effects.
         """
-    def mark_bounds_stale(self, current_thread: Thread = ...) -> None:
+    def mark_bounds_stale(self, current_thread: Thread = ..., /) -> None:
         """Indicates that the bounding volume, or something that influences the
         bounding volume (or any of the other things stored in CData, like
         net_collide_mask), may have changed for this node, and that it must be
@@ -2447,7 +2405,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         user to call this directly.  It will be called automatically by derived
         classes when appropriate.
         """
-    def mark_internal_bounds_stale(self, current_thread: Thread = ...) -> None:
+    def mark_internal_bounds_stale(self, current_thread: Thread = ..., /) -> None:
         """Should be called by a derived class to mark the internal bounding volume
         stale, so that compute_internal_bounds() will be called when the bounding
         volume is next requested.
@@ -2463,7 +2421,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         implicitly recomputed at the next call to get_bounds(), or false if it is
         fresh and need not be recomputed.
         """
-    def set_final(self, flag: bool) -> None:
+    def set_final(self, flag: bool, /) -> None:
         """Sets the "final" flag on this PandaNode.  If this is true, than no bounding
         volume need be tested below it; a positive intersection with this node's
         bounding volume is deemed to be a positive intersection with all geometry
@@ -2475,7 +2433,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         bounding volume is tricked by some special properties, like billboards,
         that may move geometry out of its bounding volume otherwise.
         """
-    def is_final(self, current_thread: Thread = ...) -> bool:
+    def is_final(self, current_thread: Thread = ..., /) -> bool:
         """Returns the current state of the "final" flag.  Initially, this flag is off
         (false), but it may be changed by an explicit call to set_final().  See
         set_final().
@@ -2510,7 +2468,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         """Returns true if this is an AmbientLight, false if it is not a light, or it
         is some other kind of light.
         """
-    def get_fancy_bits(self, current_thread: Thread = ...) -> int:
+    def get_fancy_bits(self, current_thread: Thread = ..., /) -> int:
         """Returns the union of all of the enum FancyBits values corresponding to the
         various "fancy" attributes that are set on the node.  If this returns 0,
         the node has nothing interesting about it.  This is intended to speed
@@ -2666,7 +2624,7 @@ class TransparencyAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _TransparencyAttrib_Mode) -> TransparencyAttrib:
+    def make(mode: _TransparencyAttrib_Mode, /) -> TransparencyAttrib:
         """Constructs a new TransparencyAttrib object."""
     @staticmethod
     def make_default() -> TransparencyAttrib:
@@ -2733,7 +2691,7 @@ class LogicOpAttrib(RenderAttrib):
         blending, allowing normal transparency to be used instead.
         """
     @staticmethod
-    def make(op: _LogicOpAttrib_Operation) -> LogicOpAttrib:
+    def make(op: _LogicOpAttrib_Operation, /) -> LogicOpAttrib:
         """Constructs a new LogicOpAttrib object with the given logic operation."""
     @staticmethod
     def make_default() -> LogicOpAttrib:
@@ -2801,7 +2759,7 @@ class ShaderInput:
     def __bool__(self) -> bool: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: ShaderInput) -> bool: ...
+    def __lt__(self, other: ShaderInput, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -2809,7 +2767,7 @@ class ShaderInput:
         """Returns a static ShaderInput object with name NULL, priority zero, type
         INVALID, and all value-fields cleared.
         """
-    def add_hash(self, hash: int) -> int: ...
+    def add_hash(self, hash: int, /) -> int: ...
     def get_name(self) -> InternalName: ...
     def get_value_type(self) -> int: ...
     def get_priority(self) -> int: ...
@@ -2834,7 +2792,7 @@ class ShaderInput:
 class InternalNameCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: InternalNameCollection = ...) -> None: ...
-    def __getitem__(self, index: int) -> InternalName:
+    def __getitem__(self, index: int, /) -> InternalName:
         """Returns the nth InternalName in the collection.  This is the same as
         get_name(), but it may be a more convenient way to access it.
         """
@@ -2842,25 +2800,25 @@ class InternalNameCollection:
         """Returns the number of names in the collection.  This is the same thing as
         get_num_names().
         """
-    def __iadd__(self, other: InternalNameCollection) -> Self: ...
-    def __add__(self, other: InternalNameCollection) -> InternalNameCollection: ...
+    def __iadd__(self, other: InternalNameCollection, /) -> Self: ...
+    def __add__(self, other: InternalNameCollection, /) -> InternalNameCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[InternalName]: ...
-    def assign(self, copy: Self) -> Self: ...
-    def add_name(self, name: InternalName | str) -> None:
+    def assign(self, copy: Self, /) -> Self: ...
+    def add_name(self, name: InternalName | str, /) -> None:
         """Adds a new InternalName to the collection."""
-    def remove_name(self, name: InternalName | str) -> bool:
+    def remove_name(self, name: InternalName | str, /) -> bool:
         """Removes the indicated InternalName from the collection.  Returns true if
         the name was removed, false if it was not a member of the collection.
         """
-    def add_names_from(self, other: InternalNameCollection) -> None:
+    def add_names_from(self, other: InternalNameCollection, /) -> None:
         """Adds all the InternalNames indicated in the other collection to this name.
         The other names are simply appended to the end of the names in this list;
         duplicates are not automatically removed.
         """
-    def remove_names_from(self, other: InternalNameCollection) -> None:
+    def remove_names_from(self, other: InternalNameCollection, /) -> None:
         """Removes from this collection all of the InternalNames listed in the other
         collection.
         """
@@ -2869,7 +2827,7 @@ class InternalNameCollection:
         If a InternalName appears multiple times, the first appearance is retained;
         subsequent appearances are removed.
         """
-    def has_name(self, name: InternalName | str) -> bool:
+    def has_name(self, name: InternalName | str, /) -> bool:
         """Returns true if the indicated InternalName appears in this collection,
         false otherwise.
         """
@@ -2877,9 +2835,9 @@ class InternalNameCollection:
         """Removes all InternalNames from the collection."""
     def get_num_names(self) -> int:
         """Returns the number of InternalNames in the collection."""
-    def get_name(self, index: int) -> InternalName:
+    def get_name(self, index: int, /) -> InternalName:
         """Returns the nth InternalName in the collection."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a brief one-line description of the InternalNameCollection to the
         indicated output stream.
         """
@@ -2901,7 +2859,7 @@ class InternalNameCollection:
 class MaterialCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: MaterialCollection = ...) -> None: ...
-    def __getitem__(self, index: int) -> Material:
+    def __getitem__(self, index: int, /) -> Material:
         """Returns the nth Material in the collection.  This is the same as
         get_material(), but it may be a more convenient way to access it.
         """
@@ -2909,25 +2867,25 @@ class MaterialCollection:
         """Returns the number of materials in the collection.  This is the same thing
         as get_num_materials().
         """
-    def __iadd__(self, other: MaterialCollection) -> Self: ...
-    def __add__(self, other: MaterialCollection) -> MaterialCollection: ...
+    def __iadd__(self, other: MaterialCollection, /) -> Self: ...
+    def __add__(self, other: MaterialCollection, /) -> MaterialCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[Material]: ...
-    def assign(self, copy: Self) -> Self: ...
-    def add_material(self, node_material: Material) -> None:
+    def assign(self, copy: Self, /) -> Self: ...
+    def add_material(self, node_material: Material, /) -> None:
         """Adds a new Material to the collection."""
-    def remove_material(self, node_material: Material) -> bool:
+    def remove_material(self, node_material: Material, /) -> bool:
         """Removes the indicated Material from the collection.  Returns true if the
         material was removed, false if it was not a member of the collection.
         """
-    def add_materials_from(self, other: MaterialCollection) -> None:
+    def add_materials_from(self, other: MaterialCollection, /) -> None:
         """Adds all the Materials indicated in the other collection to this material.
         The other materials are simply appended to the end of the materials in this
         list; duplicates are not automatically removed.
         """
-    def remove_materials_from(self, other: MaterialCollection) -> None:
+    def remove_materials_from(self, other: MaterialCollection, /) -> None:
         """Removes from this collection all of the Materials listed in the other
         collection.
         """
@@ -2936,21 +2894,21 @@ class MaterialCollection:
         a Material appears multiple times, the first appearance is retained;
         subsequent appearances are removed.
         """
-    def has_material(self, material: Material) -> bool:
+    def has_material(self, material: Material, /) -> bool:
         """Returns true if the indicated Material appears in this collection, false
         otherwise.
         """
     def clear(self) -> None:
         """Removes all Materials from the collection."""
-    def find_material(self, name: str) -> Material:
+    def find_material(self, name: str, /) -> Material:
         """Returns the material in the collection with the indicated name, if any, or
         NULL if no material has that name.
         """
     def get_num_materials(self) -> int:
         """Returns the number of Materials in the collection."""
-    def get_material(self, index: int) -> Material:
+    def get_material(self, index: int, /) -> Material:
         """Returns the nth Material in the collection."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a brief one-line description of the MaterialCollection to the
         indicated output stream.
         """
@@ -2971,7 +2929,7 @@ class MaterialCollection:
 class TextureStageCollection:
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self, copy: TextureStageCollection = ...) -> None: ...
-    def __getitem__(self, index: int) -> TextureStage:
+    def __getitem__(self, index: int, /) -> TextureStage:
         """Returns the nth TextureStage in the collection.  This is the same as
         get_texture_stage(), but it may be a more convenient way to access it.
         """
@@ -2979,26 +2937,26 @@ class TextureStageCollection:
         """Returns the number of texture stages in the collection.  This is the same
         thing as get_num_texture_stages().
         """
-    def __iadd__(self, other: TextureStageCollection) -> Self: ...
-    def __add__(self, other: TextureStageCollection) -> TextureStageCollection: ...
+    def __iadd__(self, other: TextureStageCollection, /) -> Self: ...
+    def __add__(self, other: TextureStageCollection, /) -> TextureStageCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[TextureStage]: ...
-    def assign(self, copy: Self) -> Self: ...
-    def add_texture_stage(self, node_texture_stage: TextureStage) -> None:
+    def assign(self, copy: Self, /) -> Self: ...
+    def add_texture_stage(self, node_texture_stage: TextureStage, /) -> None:
         """Adds a new TextureStage to the collection."""
-    def remove_texture_stage(self, node_texture_stage: TextureStage) -> bool:
+    def remove_texture_stage(self, node_texture_stage: TextureStage, /) -> bool:
         """Removes the indicated TextureStage from the collection.  Returns true if
         the texture_stage was removed, false if it was not a member of the
         collection.
         """
-    def add_texture_stages_from(self, other: TextureStageCollection) -> None:
+    def add_texture_stages_from(self, other: TextureStageCollection, /) -> None:
         """Adds all the TextureStages indicated in the other collection to this
         texture_stage.  The other texture_stages are simply appended to the end of
         the texture_stages in this list; duplicates are not automatically removed.
         """
-    def remove_texture_stages_from(self, other: TextureStageCollection) -> None:
+    def remove_texture_stages_from(self, other: TextureStageCollection, /) -> None:
         """Removes from this collection all of the TextureStages listed in the other
         collection.
         """
@@ -3007,25 +2965,25 @@ class TextureStageCollection:
         If a TextureStage appears multiple times, the first appearance is retained;
         subsequent appearances are removed.
         """
-    def has_texture_stage(self, texture_stage: TextureStage) -> bool:
+    def has_texture_stage(self, texture_stage: TextureStage, /) -> bool:
         """Returns true if the indicated TextureStage appears in this collection,
         false otherwise.
         """
     def clear(self) -> None:
         """Removes all TextureStages from the collection."""
-    def find_texture_stage(self, name: str) -> TextureStage:
+    def find_texture_stage(self, name: str, /) -> TextureStage:
         """Returns the texture_stage in the collection with the indicated name, if
         any, or NULL if no texture_stage has that name.
         """
     def get_num_texture_stages(self) -> int:
         """Returns the number of TextureStages in the collection."""
-    def get_texture_stage(self, index: int) -> TextureStage:
+    def get_texture_stage(self, index: int, /) -> TextureStage:
         """Returns the nth TextureStage in the collection."""
     def sort(self) -> None:
         """Sorts the TextureStages in this collection into order by
         TextureStage::sort(), from lowest to highest.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a brief one-line description of the TextureStageCollection to the
         indicated output stream.
         """
@@ -3117,18 +3075,18 @@ class NodePath(Generic[_N]):
     def __bool__(self) -> bool: ...
     def __copy__(self) -> NodePath: ...
     def __deepcopy__(self, memo, /): ...
-    def __reduce_persist__(self, pickler): ...
+    def __reduce_persist__(self, pickler, /): ...
     def __eq__(self, other: object, /) -> bool:
         """Comparison methods"""
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: NodePath | WeakNodePath) -> bool: ...
+    def __lt__(self, other: NodePath | WeakNodePath, /) -> bool: ...
     @staticmethod
     def any_path(node: _M, current_thread: Thread = ...) -> NodePath[_M]:
         """Returns a new NodePath that represents any arbitrary path from the root to
         the indicated node.  This is the same thing that would be returned by
         NodePath(node), except that no warning is issued if the path is ambiguous.
         """
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def clear(self) -> None:
         """Sets this NodePath to the empty NodePath.  It will no longer point to any
         node.
@@ -3143,7 +3101,7 @@ class NodePath(Generic[_N]):
     def fail() -> NodePath:
         """Creates a NodePath with the ET_fail error type set."""
     @staticmethod
-    def set_max_search_depth(max_search_depth: int) -> None:
+    def set_max_search_depth(max_search_depth: int, /) -> None:
         """Certain operations, such as find() or find_all_matches(), require a
         traversal of the scene graph to search for the target node or nodes.  This
         traversal does not attempt to detect cycles, so an arbitrary cap is set on
@@ -3165,9 +3123,9 @@ class NodePath(Generic[_N]):
         """
     def is_empty(self) -> bool:
         """Returns true if the NodePath contains no nodes."""
-    def is_singleton(self, current_thread: Thread = ...) -> bool:
+    def is_singleton(self, current_thread: Thread = ..., /) -> bool:
         """Returns true if the NodePath contains exactly one node."""
-    def get_num_nodes(self, current_thread: Thread = ...) -> int:
+    def get_num_nodes(self, current_thread: Thread = ..., /) -> int:
         """Returns the number of nodes in the path."""
     def get_node(self, index: int, current_thread: Thread = ...) -> PandaNode:
         """Returns the nth node of the path, where 0 is the referenced (bottom) node
@@ -3192,11 +3150,11 @@ class NodePath(Generic[_N]):
         """If is_empty() is true, this returns a code that represents the reason why
         the NodePath is empty.
         """
-    def get_top_node(self, current_thread: Thread = ...) -> PandaNode:
+    def get_top_node(self, current_thread: Thread = ..., /) -> PandaNode:
         """Returns the top node of the path, or NULL if the path is empty.  This
         requires iterating through the path.
         """
-    def get_top(self, current_thread: Thread = ...) -> NodePath:
+    def get_top(self, current_thread: Thread = ..., /) -> NodePath:
         """Returns a singleton NodePath that represents the top of the path, or empty
         NodePath if this path is empty.
         """
@@ -3214,7 +3172,7 @@ class NodePath(Generic[_N]):
         instance (unless the app has been running long enough that we overflow the
         integer key value).
         """
-    def add_hash(self, hash: int) -> int:
+    def add_hash(self, hash: int, /) -> int:
         """Adds the NodePath into the running hash.  This is intended to be used by
         lower-level code that computes a hash for each NodePath.  It modifies the
         hash value passed in by a unique adjustment for each NodePath, and returns
@@ -3240,52 +3198,52 @@ class NodePath(Generic[_N]):
         common: the first ancestor that both of them share.  If the two NodePaths
         are unrelated, returns NodePath::not_found().
         """
-    def get_children(self, current_thread: Thread = ...) -> NodePathCollection:
+    def get_children(self, current_thread: Thread = ..., /) -> NodePathCollection:
         """Returns the set of all child nodes of the referenced node."""
-    def get_num_children(self, current_thread: Thread = ...) -> int:
+    def get_num_children(self, current_thread: Thread = ..., /) -> int:
         """Returns the number of children of the referenced node."""
     def get_child(self, n: int, current_thread: Thread = ...) -> NodePath:
         """Returns a NodePath representing the nth child of the referenced node."""
-    def get_stashed_children(self, current_thread: Thread = ...) -> NodePathCollection:
+    def get_stashed_children(self, current_thread: Thread = ..., /) -> NodePathCollection:
         """Returns the set of all child nodes of the referenced node that have been
         stashed.  These children are not normally visible on the node, and do not
         appear in the list returned by get_children().
         """
     def count_num_descendants(self) -> int:
         """Returns the number of nodes at and below this level."""
-    def has_parent(self, current_thread: Thread = ...) -> bool:
+    def has_parent(self, current_thread: Thread = ..., /) -> bool:
         """Returns true if the referenced node has a parent; i.e.  the NodePath chain
         contains at least two nodes.
         """
-    def get_parent(self, current_thread: Thread = ...) -> NodePath:
+    def get_parent(self, current_thread: Thread = ..., /) -> NodePath:
         """Returns the NodePath to the parent of the referenced node: that is, this
         NodePath, shortened by one node.  The parent of a singleton NodePath is
         defined to be the empty NodePath.
         """
-    def get_sort(self, current_thread: Thread = ...) -> int:
+    def get_sort(self, current_thread: Thread = ..., /) -> int:
         """Returns the sort value of the referenced node within its parent; that is,
         the sort number passed on the last reparenting operation for this node.
         This will control the position of the node within its parent's list of
         children.
         """
-    def find(self, path: str) -> NodePath:
+    def find(self, path: str, /) -> NodePath:
         """Searches for a node below the referenced node that matches the indicated
         string.  Returns the shortest match found, if any, or an empty NodePath if
         no match can be found.
 
         The referenced node itself is not considered in the search.
         """
-    def find_path_to(self, node: PandaNode) -> NodePath:
+    def find_path_to(self, node: PandaNode, /) -> NodePath:
         """Searches for the indicated node below this node and returns the shortest
         NodePath that connects them.
         """
-    def find_all_matches(self, path: str) -> NodePathCollection:
+    def find_all_matches(self, path: str, /) -> NodePathCollection:
         """Returns the complete set of all NodePaths that begin with this NodePath and
         can be extended by path.  The shortest paths will be listed first.
 
         The referenced node itself is not considered in the search.
         """
-    def find_all_paths_to(self, node: PandaNode) -> NodePathCollection:
+    def find_all_paths_to(self, node: PandaNode, /) -> NodePathCollection:
         """Returns the set of all NodePaths that extend from this NodePath down to the
         indicated node.  The shortest paths will be listed first.
         """
@@ -3358,7 +3316,7 @@ class NodePath(Generic[_N]):
         """Creates an ordinary PandaNode and attaches it below the current NodePath,
         returning a new NodePath that references it.
         """
-    def remove_node(self, current_thread: Thread = ...) -> None:
+    def remove_node(self, current_thread: Thread = ..., /) -> None:
         """Disconnects the referenced node from the scene graph.  This will also
         delete the node if there are no other pointers to it.
 
@@ -3373,7 +3331,7 @@ class NodePath(Generic[_N]):
         will keep at least one reference to the node for as long as the NodePath
         exists.
         """
-    def detach_node(self, current_thread: Thread = ...) -> None:
+    def detach_node(self, current_thread: Thread = ..., /) -> None:
         """Disconnects the referenced node from its parent, but does not immediately
         delete it.  The NodePath retains a pointer to the node, and becomes a
         singleton NodePath.
@@ -3388,7 +3346,7 @@ class NodePath(Generic[_N]):
         will keep at least one reference to the node for as long as the NodePath
         exists.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a sensible description of the NodePath to the indicated output
         stream.
         """
@@ -3421,43 +3379,43 @@ class NodePath(Generic[_N]):
     @overload
     def set_state(self, state: RenderState, current_thread: Thread = ...) -> None:
         """Changes the complete state object on this node."""
-    def get_net_state(self, current_thread: Thread = ...) -> RenderState:
+    def get_net_state(self, current_thread: Thread = ..., /) -> RenderState:
         """Returns the net state on this node from the root."""
     def set_attrib(self, attrib: RenderAttrib, priority: int = ...) -> None:
         """Adds the indicated render attribute to the scene graph on this node.  This
         attribute will now apply to this node and everything below.  If there was
         already an attribute of the same type, it is replaced.
         """
-    def get_attrib(self, type: TypeHandle | type) -> RenderAttrib:
+    def get_attrib(self, type: TypeHandle | type, /) -> RenderAttrib:
         """Returns the render attribute of the indicated type, if it is defined on the
         node, or NULL if it is not.  This checks only what is set on this
         particular node level, and has nothing to do with what render attributes
         may be inherited from parent nodes.
         """
-    def has_attrib(self, type: TypeHandle | type) -> bool:
+    def has_attrib(self, type: TypeHandle | type, /) -> bool:
         """Returns true if there is a render attribute of the indicated type defined
         on this node, or false if there is not.
         """
-    def clear_attrib(self, type: TypeHandle | type) -> None:
+    def clear_attrib(self, type: TypeHandle | type, /) -> None:
         """Removes the render attribute of the given type from this node.  This node,
         and the subgraph below, will now inherit the indicated render attribute
         from the nodes above this one.
         """
-    def set_effect(self, effect: RenderEffect) -> None:
+    def set_effect(self, effect: RenderEffect, /) -> None:
         """Adds the indicated render effect to the scene graph on this node.  If there
         was already an effect of the same type, it is replaced.
         """
-    def get_effect(self, type: TypeHandle | type) -> RenderEffect:
+    def get_effect(self, type: TypeHandle | type, /) -> RenderEffect:
         """Returns the render effect of the indicated type, if it is defined on the
         node, or NULL if it is not.
         """
-    def has_effect(self, type: TypeHandle | type) -> bool:
+    def has_effect(self, type: TypeHandle | type, /) -> bool:
         """Returns true if there is a render effect of the indicated type defined on
         this node, or false if there is not.
         """
-    def clear_effect(self, type: TypeHandle | type) -> None:
+    def clear_effect(self, type: TypeHandle | type, /) -> None:
         """Removes the render effect of the given type from this node."""
-    def set_effects(self, effects: RenderEffect | RenderEffects) -> None:
+    def set_effects(self, effects: RenderEffect | RenderEffects, /) -> None:
         """Sets the complete RenderEffects that will be applied this node.  This
         completely replaces whatever has been set on this node via repeated calls
         to set_attrib().
@@ -3492,7 +3450,7 @@ class NodePath(Generic[_N]):
     @overload
     def set_transform(self, transform: TransformState, current_thread: Thread = ...) -> None:
         """Changes the complete transform object on this node."""
-    def get_net_transform(self, current_thread: Thread = ...) -> TransformState:
+    def get_net_transform(self, current_thread: Thread = ..., /) -> TransformState:
         """Returns the net transform on this node from the root."""
     @overload
     def get_prev_transform(self, other: NodePath, current_thread: Thread = ...) -> TransformState:
@@ -3517,7 +3475,7 @@ class NodePath(Generic[_N]):
         frame ago, for the purposes of detecting motion for accurate collision
         calculations.
         """
-    def get_net_prev_transform(self, current_thread: Thread = ...) -> TransformState:
+    def get_net_prev_transform(self, current_thread: Thread = ..., /) -> TransformState:
         """Returns the net "previous" transform on this node from the root.  See
         set_prev_transform().
         """
@@ -3605,17 +3563,17 @@ class NodePath(Generic[_N]):
     def set_fluid_z(self, other: NodePath, z: float) -> None: ...
     @overload
     def set_fluid_z(self, z: float) -> None: ...
-    def get_pos(self, other: NodePath = ...) -> LPoint3:
+    def get_pos(self, other: NodePath = ..., /) -> LPoint3:
         """Retrieves the translation component of the transform.
 
         or:
         Returns the relative position of the referenced node as seen from the other
         node.
         """
-    def get_x(self, other: NodePath = ...) -> float: ...
-    def get_y(self, other: NodePath = ...) -> float: ...
-    def get_z(self, other: NodePath = ...) -> float: ...
-    def get_pos_delta(self, other: NodePath = ...) -> LVector3:
+    def get_x(self, other: NodePath = ..., /) -> float: ...
+    def get_y(self, other: NodePath = ..., /) -> float: ...
+    def get_z(self, other: NodePath = ..., /) -> float: ...
+    def get_pos_delta(self, other: NodePath = ..., /) -> LVector3:
         """Returns the delta vector from this node's position in the previous frame
         (according to set_prev_transform(), typically set via the use of
         set_fluid_pos()) and its position in the current frame.  This is the vector
@@ -3661,16 +3619,16 @@ class NodePath(Generic[_N]):
     def set_r(self, other: NodePath, r: float) -> None: ...
     @overload
     def set_r(self, r: float) -> None: ...
-    def get_hpr(self, other: NodePath = ...) -> LVecBase3:
+    def get_hpr(self, other: NodePath = ..., /) -> LVecBase3:
         """Retrieves the rotation component of the transform.
 
         or:
         Returns the relative orientation of the bottom node as seen from the other
         node.
         """
-    def get_h(self, other: NodePath = ...) -> float: ...
-    def get_p(self, other: NodePath = ...) -> float: ...
-    def get_r(self, other: NodePath = ...) -> float: ...
+    def get_h(self, other: NodePath = ..., /) -> float: ...
+    def get_p(self, other: NodePath = ..., /) -> float: ...
+    def get_r(self, other: NodePath = ..., /) -> float: ...
     @overload
     def set_quat(self, quat: Vec4Like) -> None:
         """Sets the rotation component of the transform, leaving translation and scale
@@ -3679,7 +3637,7 @@ class NodePath(Generic[_N]):
     @overload
     def set_quat(self, other: NodePath, quat: Vec4Like) -> None:
         """Sets the rotation component of the transform, relative to the other node."""
-    def get_quat(self, other: NodePath = ...) -> LQuaternion:
+    def get_quat(self, other: NodePath = ..., /) -> LQuaternion:
         """Retrieves the rotation component of the transform.
 
         or:
@@ -3723,18 +3681,18 @@ class NodePath(Generic[_N]):
         untouched.
         @see set_scale()
         """
-    def get_scale(self, other: NodePath = ...) -> LVecBase3:
+    def get_scale(self, other: NodePath = ..., /) -> LVecBase3:
         """Retrieves the scale component of the transform.
 
         or:
         Returns the relative scale of the bottom node as seen from the other node.
         """
-    def get_sx(self, other: NodePath = ...) -> float:
+    def get_sx(self, other: NodePath = ..., /) -> float:
         """Returns the relative scale of the referenced node as seen from the other
         node.
         """
-    def get_sy(self, other: NodePath = ...) -> float: ...
-    def get_sz(self, other: NodePath = ...) -> float: ...
+    def get_sy(self, other: NodePath = ..., /) -> float: ...
+    def get_sz(self, other: NodePath = ..., /) -> float: ...
     @overload
     def set_shear(self, shear: Vec3Like) -> None:
         """Sets the shear component of the transform, leaving translation and rotation
@@ -3763,18 +3721,18 @@ class NodePath(Generic[_N]):
     def set_shyz(self, other: NodePath, shyz: float) -> None: ...
     @overload
     def set_shyz(self, shyz: float) -> None: ...
-    def get_shear(self, other: NodePath = ...) -> LVecBase3:
+    def get_shear(self, other: NodePath = ..., /) -> LVecBase3:
         """Retrieves the shear component of the transform.
 
         or:
         Returns the relative shear of the bottom node as seen from the other node.
         """
-    def get_shxy(self, other: NodePath = ...) -> float:
+    def get_shxy(self, other: NodePath = ..., /) -> float:
         """Returns the relative shear of the referenced node as seen from the other
         node.
         """
-    def get_shxz(self, other: NodePath = ...) -> float: ...
-    def get_shyz(self, other: NodePath = ...) -> float: ...
+    def get_shxz(self, other: NodePath = ..., /) -> float: ...
+    def get_shyz(self, other: NodePath = ..., /) -> float: ...
     @overload
     def set_pos_hpr(self, pos: Vec3Like, hpr: Vec3Like) -> None:
         """Sets the translation and rotation component of the transform, leaving scale
@@ -3925,7 +3883,7 @@ class NodePath(Generic[_N]):
         """Returns true if a non-identity transform matrix has been applied to the
         referenced node, false otherwise.
         """
-    def get_mat(self, other: NodePath = ...) -> LMatrix4:
+    def get_mat(self, other: NodePath = ..., /) -> LMatrix4:
         """Returns the transform matrix that has been applied to the referenced node,
         or the identity matrix if no matrix has been applied.
 
@@ -3982,7 +3940,7 @@ class NodePath(Generic[_N]):
         """Given that the indicated vector is in the coordinate system of the other
         node, returns the same vector in this node's coordinate system.
         """
-    def get_distance(self, other: NodePath) -> float:
+    def get_distance(self, other: NodePath, /) -> float:
         """Returns the straight-line distance between this referenced node's
         coordinate frame's origin, and that of the other node's origin.
         """
@@ -3998,7 +3956,7 @@ class NodePath(Generic[_N]):
         to all geometry at this level and below (that does not specify a new color
         or a set_color_off()).
         """
-    def set_color_off(self, priority: int = ...) -> None:
+    def set_color_off(self, priority: int = ..., /) -> None:
         """Sets the geometry at this level and below to render using the geometry
         color.  This is normally the default, but it may be useful to use this to
         contradict set_color() at a higher node level (or, with a priority, to
@@ -4043,7 +4001,7 @@ class NodePath(Generic[_N]):
     @overload
     def compose_color_scale(self, sx: float, sy: float, sz: float, sa: float, priority: int = ...) -> None:
         """Sets the color scale component of the transform"""
-    def set_color_scale_off(self, priority: int = ...) -> None:
+    def set_color_scale_off(self, priority: int = ..., /) -> None:
         """Disables any color scale attribute inherited from above.  This is not the
         same thing as clear_color_scale(), which undoes any previous
         set_color_scale() operation on this node; rather, this actively disables
@@ -4064,19 +4022,19 @@ class NodePath(Generic[_N]):
         the object, without (much) affecting alpha.  Note that any priority
         specified will also apply to the alpha scale.
         """
-    def set_sr(self, sr: float) -> None:
+    def set_sr(self, sr: float, /) -> None:
         """Sets the red component of the color scale.
         @see set_color_scale()
         """
-    def set_sg(self, sg: float) -> None:
+    def set_sg(self, sg: float, /) -> None:
         """Sets the green component of the color scale.
         @see set_color_scale()
         """
-    def set_sb(self, sb: float) -> None:
+    def set_sb(self, sb: float, /) -> None:
         """Sets the blue component of the color scale.
         @see set_color_scale()
         """
-    def set_sa(self, sa: float) -> None:
+    def set_sa(self, sa: float, /) -> None:
         """Sets the alpha component of the color scale.
         @see set_color_scale()
         """
@@ -4127,7 +4085,7 @@ class NodePath(Generic[_N]):
         If no lights are in effect on a particular piece of geometry, that geometry
         is rendered with lighting disabled.
         """
-    def clear_light(self, light: NodePath = ...) -> None:
+    def clear_light(self, light: NodePath = ..., /) -> None:
         """Completely removes any lighting operations that may have been set via
         set_light() or set_light_off() from this particular node.
 
@@ -4135,12 +4093,12 @@ class NodePath(Generic[_N]):
         Removes any reference to the indicated Light or PolylightNode from the
         NodePath.
         """
-    def has_light(self, light: NodePath) -> bool:
+    def has_light(self, light: NodePath, /) -> bool:
         """Returns true if the indicated Light or PolylightNode has been specifically
         enabled on this particular node.  This means that someone called
         set_light() on this node with the indicated light.
         """
-    def has_light_off(self, light: NodePath = ...) -> bool:
+    def has_light_off(self, light: NodePath = ..., /) -> bool:
         """Returns true if all Lights have been specifically disabled on this
         particular node.  This means that someone called set_light_off() on this
         node with no parameters.
@@ -4179,19 +4137,19 @@ class NodePath(Generic[_N]):
         geometry is rendered without being clipped (other than by the viewing
         frustum).
         """
-    def clear_clip_plane(self, clip_plane: NodePath = ...) -> None:
+    def clear_clip_plane(self, clip_plane: NodePath = ..., /) -> None:
         """Completely removes any clip planes that may have been set via
         set_clip_plane() or set_clip_plane_off() from this particular node.
 
         or:
         Removes any reference to the indicated clipping plane from the NodePath.
         """
-    def has_clip_plane(self, clip_plane: NodePath) -> bool:
+    def has_clip_plane(self, clip_plane: NodePath, /) -> bool:
         """Returns true if the indicated clipping plane has been specifically applied
         to this particular node.  This means that someone called set_clip_plane()
         on this node with the indicated clip_plane.
         """
-    def has_clip_plane_off(self, clip_plane: NodePath = ...) -> bool:
+    def has_clip_plane_off(self, clip_plane: NodePath = ..., /) -> bool:
         """Returns true if all clipping planes have been specifically disabled on this
         particular node.  This means that someone called set_clip_plane_off() on
         this node with no parameters.
@@ -4250,21 +4208,21 @@ class NodePath(Generic[_N]):
         level ScissorAttrib, which is different from the ScissorEffect added by
         set_scissor.
         """
-    def set_occluder(self, occluder: NodePath) -> None:
+    def set_occluder(self, occluder: NodePath, /) -> None:
         """Adds the indicated occluder to the list of occluders that apply to geometry
         at this node and below.  The occluder itself, an OccluderNode, should be
         parented into the scene graph elsewhere, to represent the occluder's
         position in space; but until set_occluder() is called it will clip no
         geometry.
         """
-    def clear_occluder(self, occluder: NodePath = ...) -> None:
+    def clear_occluder(self, occluder: NodePath = ..., /) -> None:
         """Completely removes any occluders that may have been set via set_occluder()
         from this particular node.
 
         or:
         Removes any reference to the indicated occluder from the NodePath.
         """
-    def has_occluder(self, occluder: NodePath) -> bool:
+    def has_occluder(self, occluder: NodePath, /) -> bool:
         """Returns true if the indicated occluder has been specifically applied to
         this particular node.  This means that someone called set_occluder() on
         this node with the indicated occluder.
@@ -4360,7 +4318,7 @@ class NodePath(Generic[_N]):
         specifically contradicts set_texture() at a higher node level (or, with a
         priority, overrides a set_texture() at a lower level).
         """
-    def clear_texture(self, stage: TextureStage = ...) -> None:
+    def clear_texture(self, stage: TextureStage = ..., /) -> None:
         """Completely removes any texture adjustment that may have been set via
         set_texture() or set_texture_off() from this particular node.  This allows
         whatever textures might be otherwise affecting the geometry to show
@@ -4369,7 +4327,7 @@ class NodePath(Generic[_N]):
         or:
         Removes any reference to the indicated texture stage from the NodePath.
         """
-    def has_texture(self, stage: TextureStage = ...) -> bool:
+    def has_texture(self, stage: TextureStage = ..., /) -> bool:
         """Returns true if a texture has been applied to this particular node via
         set_texture(), false otherwise.  This is not the same thing as asking
         whether the geometry at this node will be rendered with texturing, as there
@@ -4381,7 +4339,7 @@ class NodePath(Generic[_N]):
         on this node with the indicated stage name, or the stage_name is the
         default stage_name, and someone called set_texture() on this node.
         """
-    def has_texture_off(self, stage: TextureStage = ...) -> bool:
+    def has_texture_off(self, stage: TextureStage = ..., /) -> bool:
         """Returns true if texturing has been specifically disabled on this particular
         node via set_texture_off(), false otherwise.  This is not the same thing as
         asking whether the geometry at this node will be rendered untextured, as
@@ -4393,7 +4351,7 @@ class NodePath(Generic[_N]):
         set_texture_off() on this node with the indicated stage name, or that
         someone called set_texture_off() on this node to remove all stages.
         """
-    def get_texture(self, stage: TextureStage = ...) -> Texture:
+    def get_texture(self, stage: TextureStage = ..., /) -> Texture:
         """Returns the base-level texture that has been set on this particular node,
         or NULL if no texture has been set.  This is not necessarily the texture
         that will be applied to the geometry at or below this level, as another
@@ -4416,7 +4374,7 @@ class NodePath(Generic[_N]):
         or:
         Let interrogate know this also accepts None
         """
-    def get_texture_sampler(self, stage: TextureStage = ...) -> SamplerState:
+    def get_texture_sampler(self, stage: TextureStage = ..., /) -> SamplerState:
         """Returns the sampler state that has been given for the base-level texture
         that has been set on this particular node.  If no sampler state was given,
         this returns the texture's default sampler settings.
@@ -4433,7 +4391,7 @@ class NodePath(Generic[_N]):
         this particular node.
         """
     def set_shader(self, sha: Shader, priority: int = ...) -> None: ...
-    def set_shader_off(self, priority: int = ...) -> None: ...
+    def set_shader_off(self, priority: int = ..., /) -> None: ...
     @overload
     def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> None:
         """overloaded for auto shader customization"""
@@ -4468,14 +4426,14 @@ class NodePath(Generic[_N]):
     @overload
     def set_shader_input(self, input: ShaderInput) -> None: ...
     def set_shader_inputs(self, *args, **kwargs) -> None: ...
-    def clear_shader_input(self, id: InternalName | str) -> None: ...
-    def set_instance_count(self, instance_count: int) -> None:
+    def clear_shader_input(self, id: InternalName | str, /) -> None: ...
+    def set_instance_count(self, instance_count: int, /) -> None:
         """Sets the geometry instance count, or 0 if geometry instancing should be
         disabled.  Do not confuse with instanceTo which only applies to animation
         instancing.
         """
     def get_shader(self) -> Shader: ...
-    def get_shader_input(self, id: InternalName | str) -> ShaderInput: ...
+    def get_shader_input(self, id: InternalName | str, /) -> ShaderInput: ...
     def get_instance_count(self) -> int:
         """Returns the geometry instance count, or 0 if disabled.  See
         set_instance_count.
@@ -4490,13 +4448,13 @@ class NodePath(Generic[_N]):
         """Sets the texture matrix on the current node to the indicated transform for
         the given stage.
         """
-    def clear_tex_transform(self, stage: TextureStage = ...) -> None:
+    def clear_tex_transform(self, stage: TextureStage = ..., /) -> None:
         """Removes all texture matrices from the current node.
 
         or:
         Removes the texture matrix on the current node for the given stage.
         """
-    def has_tex_transform(self, stage: TextureStage) -> bool:
+    def has_tex_transform(self, stage: TextureStage, /) -> bool:
         """Returns true if there is an explicit texture matrix on the current node for
         the given stage.
         """
@@ -4772,7 +4730,7 @@ class NodePath(Generic[_N]):
         """Enables automatic texture coordinate generation for the indicated texture
         stage.
         """
-    def clear_tex_gen(self, stage: TextureStage = ...) -> None:
+    def clear_tex_gen(self, stage: TextureStage = ..., /) -> None:
         """Removes the texture coordinate generation mode from all texture stages on
         this node.
 
@@ -4780,11 +4738,11 @@ class NodePath(Generic[_N]):
         Disables automatic texture coordinate generation for the indicated texture
         stage.
         """
-    def has_tex_gen(self, stage: TextureStage) -> bool:
+    def has_tex_gen(self, stage: TextureStage, /) -> bool:
         """Returns true if there is a mode for automatic texture coordinate generation
         on the current node for the given stage.
         """
-    def get_tex_gen(self, stage: TextureStage) -> _RenderAttrib_TexGenMode:
+    def get_tex_gen(self, stage: TextureStage, /) -> _RenderAttrib_TexGenMode:
         """Returns the texture coordinate generation mode for the given stage, or
         M_off if there is no explicit mode set for the given stage.
         """
@@ -4799,22 +4757,22 @@ class NodePath(Generic[_N]):
         If to is a LensNode, then the fourth parameter, lens_index, can be provided
         to select a particular lens to apply.  Otherwise lens_index is not used.
         """
-    def clear_tex_projector(self, stage: TextureStage = ...) -> None:
+    def clear_tex_projector(self, stage: TextureStage = ..., /) -> None:
         """Removes the TexProjectorEffect for all stages from this node.
 
         or:
         Removes the TexProjectorEffect for the indicated stage from this node.
         """
-    def has_tex_projector(self, stage: TextureStage) -> bool:
+    def has_tex_projector(self, stage: TextureStage, /) -> bool:
         """Returns true if this node has a TexProjectorEffect for the indicated stage,
         false otherwise.
         """
-    def get_tex_projector_from(self, stage: TextureStage) -> NodePath:
+    def get_tex_projector_from(self, stage: TextureStage, /) -> NodePath:
         """Returns the "from" node associated with the TexProjectorEffect on the
         indicated stage.  The relative transform between the "from" and the "to"
         nodes is automatically applied to the texture transform each frame.
         """
-    def get_tex_projector_to(self, stage: TextureStage) -> NodePath:
+    def get_tex_projector_to(self, stage: TextureStage, /) -> NodePath:
         """Returns the "to" node associated with the TexProjectorEffect on the
         indicated stage.  The relative transform between the "from" and the "to"
         nodes is automatically applied to the texture transform each frame.
@@ -4824,14 +4782,14 @@ class NodePath(Generic[_N]):
         and below, using the indicated NodePath (which should contain a LensNode)
         as the projector.
         """
-    def clear_project_texture(self, stage: TextureStage) -> None:
+    def clear_project_texture(self, stage: TextureStage, /) -> None:
         """Undoes the effect of project_texture()."""
-    def has_texcoord(self, texcoord_name: str) -> bool:
+    def has_texcoord(self, texcoord_name: str, /) -> bool:
         """Returns true if there are at least some vertices at this node and below
         that use the named texture coordinate set, false otherwise.  Pass the empty
         string for the default texture coordinate set.
         """
-    def has_vertex_column(self, name: InternalName | str) -> bool:
+    def has_vertex_column(self, name: InternalName | str, /) -> bool:
         """Returns true if there are at least some vertices at this node and below
         that contain a reference to the indicated vertex data column name, false
         otherwise.
@@ -4839,7 +4797,7 @@ class NodePath(Generic[_N]):
         This is particularly useful for testing whether a particular model has a
         given texture coordinate set (but see has_texcoord()).
         """
-    def find_all_vertex_columns(self, name: str = ...) -> InternalNameCollection:
+    def find_all_vertex_columns(self, name: str = ..., /) -> InternalNameCollection:
         """Returns a list of all vertex array columns stored on some geometry found at
         this node level and below.
 
@@ -4848,7 +4806,7 @@ class NodePath(Generic[_N]):
         this node level and below that match the indicated name (which may contain
         wildcard characters).
         """
-    def find_all_texcoords(self, name: str = ...) -> InternalNameCollection:
+    def find_all_texcoords(self, name: str = ..., /) -> InternalNameCollection:
         """Returns a list of all texture coordinate sets used by any geometry at this
         node level and below.
 
@@ -4857,37 +4815,33 @@ class NodePath(Generic[_N]):
         node level and below that match the indicated name (which may contain
         wildcard characters).
         """
-    @overload
-    def find_texture(self, stage: TextureStage) -> Texture:
+    def find_texture(self, stage_or_name: TextureStage | str, /) -> Texture:
         """Returns the first texture found applied to geometry at this node or below
         that is assigned to the indicated texture stage.  Returns the texture if it
         is found, or NULL if it is not.
-        """
-    @overload
-    def find_texture(self, name: str) -> Texture:
-        """Returns the first texture found applied to geometry at this node or below
+
+        or:
+        Returns the first texture found applied to geometry at this node or below
         that matches the indicated name (which may contain wildcards).  Returns the
         texture if it is found, or NULL if it is not.
         """
-    @overload
-    def find_all_textures(self, stage: TextureStage = ...) -> TextureCollection:
+    def find_all_textures(self, stage_or_name: TextureStage | str = ..., /) -> TextureCollection:
         """Returns a list of a textures applied to geometry at this node and below.
 
         or:
         Returns a list of a textures on geometry at this node and below that are
         assigned to the indicated texture stage.
-        """
-    @overload
-    def find_all_textures(self, name: str) -> TextureCollection:
-        """Returns a list of a textures applied to geometry at this node and below
+
+        or:
+        Returns a list of a textures applied to geometry at this node and below
         that match the indicated name (which may contain wildcard characters).
         """
-    def find_texture_stage(self, name: str) -> TextureStage:
+    def find_texture_stage(self, name: str, /) -> TextureStage:
         """Returns the first TextureStage found applied to geometry at this node or
         below that matches the indicated name (which may contain wildcards).
         Returns the TextureStage if it is found, or NULL if it is not.
         """
-    def find_all_texture_stages(self, name: str = ...) -> TextureStageCollection:
+    def find_all_texture_stages(self, name: str = ..., /) -> TextureStageCollection:
         """Returns a list of a TextureStages applied to geometry at this node and
         below.
 
@@ -4896,19 +4850,19 @@ class NodePath(Generic[_N]):
         below that match the indicated name (which may contain wildcard
         characters).
         """
-    def unify_texture_stages(self, stage: TextureStage) -> None:
+    def unify_texture_stages(self, stage: TextureStage, /) -> None:
         """Searches through all TextureStages at this node and below.  Any
         TextureStages that share the same name as the indicated TextureStage object
         are replaced with this object, thus ensuring that all geometry at this node
         and below with a particular TextureStage name is using the same
         TextureStage object.
         """
-    def find_material(self, name: str) -> Material:
+    def find_material(self, name: str, /) -> Material:
         """Returns the first material found applied to geometry at this node or below
         that matches the indicated name (which may contain wildcards).  Returns the
         material if it is found, or NULL if it is not.
         """
-    def find_all_materials(self, name: str = ...) -> MaterialCollection:
+    def find_all_materials(self, name: str = ..., /) -> MaterialCollection:
         """Returns a list of a materials applied to geometry at this node and below.
 
         or:
@@ -4922,7 +4876,7 @@ class NodePath(Generic[_N]):
         Previously, this operation made a copy of the material structure, but
         nowadays it assigns the pointer directly.
         """
-    def set_material_off(self, priority: int = ...) -> None:
+    def set_material_off(self, priority: int = ..., /) -> None:
         """Sets the geometry at this level and below to render using no material.
         This is normally the default, but it may be useful to use this to
         contradict set_material() at a higher node level (or, with a priority, to
@@ -4959,7 +4913,7 @@ class NodePath(Generic[_N]):
         """Sets the geometry at this level and below to render using the indicated
         fog.
         """
-    def set_fog_off(self, priority: int = ...) -> None:
+    def set_fog_off(self, priority: int = ..., /) -> None:
         """Sets the geometry at this level and below to render using no fog.  This is
         normally the default, but it may be useful to use this to contradict
         set_fog() at a higher node level (or, with a priority, to override a
@@ -4988,11 +4942,11 @@ class NodePath(Generic[_N]):
         the geometry at or below this level, as another fog at a higher or lower
         level may override.
         """
-    def set_render_mode_wireframe(self, priority: int = ...) -> None:
+    def set_render_mode_wireframe(self, priority: int = ..., /) -> None:
         """Sets up the geometry at this level and below (unless overridden) to render
         in wireframe mode.
         """
-    def set_render_mode_filled(self, priority: int = ...) -> None:
+    def set_render_mode_filled(self, priority: int = ..., /) -> None:
         """Sets up the geometry at this level and below (unless overridden) to render
         in filled (i.e.  not wireframe) mode.
         """
@@ -5184,7 +5138,7 @@ class NodePath(Generic[_N]):
         """Removes any billboard effect from the node."""
     def has_billboard(self) -> bool:
         """Returns true if there is any billboard effect on the node."""
-    def set_compass(self, reference: NodePath = ...) -> None:
+    def set_compass(self, reference: NodePath = ..., /) -> None:
         """Puts a compass effect on the node, so that it will retain a fixed rotation
         relative to the reference node (or render if the reference node is empty)
         regardless of the transforms above it.
@@ -5279,7 +5233,7 @@ class NodePath(Generic[_N]):
         """
     def set_audio_volume(self, volume: float, priority: int = ...) -> None:
         """Sets the audio volume component of the transform"""
-    def set_audio_volume_off(self, priority: int = ...) -> None:
+    def set_audio_volume_off(self, priority: int = ..., /) -> None:
         """Disables any audio volume attribute inherited from above.  This is not the
         same thing as clear_audio_volume(), which undoes any previous
         set_audio_volume() operation on this node; rather, this actively disables
@@ -5297,14 +5251,14 @@ class NodePath(Generic[_N]):
         """Returns the complete audio volume for this node taking highers nodes in the
         graph into account.
         """
-    def adjust_all_priorities(self, adjustment: int) -> None:
+    def adjust_all_priorities(self, adjustment: int, /) -> None:
         """Adds the indicated adjustment amount (which may be negative) to the
         priority for all transitions on the referenced node, and for all nodes in
         the subgraph below.  This can be used to force these nodes not to be
         overridden by a high-level state change above.  If the priority would drop
         below zero, it is set to zero.
         """
-    def show(self, camera_mask: DrawMask | int = ...) -> None:
+    def show(self, camera_mask: DrawMask | int = ..., /) -> None:
         """Undoes the effect of a previous hide() on this node: makes the referenced
         node (and the entire subgraph below this node) visible to all cameras.
 
@@ -5317,7 +5271,7 @@ class NodePath(Generic[_N]):
         This undoes the effect of a previous hide() call.  It will not reveal the
         node if a parent node has been hidden.  However, see show_through().
         """
-    def show_through(self, camera_mask: DrawMask | int = ...) -> None:
+    def show_through(self, camera_mask: DrawMask | int = ..., /) -> None:
         """Makes the referenced node visible just to the cameras whose camera_mask
         shares the indicated bits.
 
@@ -5333,7 +5287,7 @@ class NodePath(Generic[_N]):
         parent's hide().  (However, it will not show through a parent's hide() call
         if the no-parameter form of hide() was used.)
         """
-    def hide(self, camera_mask: DrawMask | int = ...) -> None:
+    def hide(self, camera_mask: DrawMask | int = ..., /) -> None:
         """Makes the referenced node (and the entire subgraph below this node)
         invisible to all cameras.  It remains part of the scene graph, its bounding
         volume still contributes to its parent's bounding volume, and it will still
@@ -5349,7 +5303,7 @@ class NodePath(Generic[_N]):
         those nodes for which show() has been called, but it will not hide
         descendent nodes for which show_through() has been called.
         """
-    def is_hidden(self, camera_mask: DrawMask | int = ...) -> bool:
+    def is_hidden(self, camera_mask: DrawMask | int = ..., /) -> bool:
         """Returns true if the referenced node is hidden from the indicated camera(s)
         either directly, or because some ancestor is hidden.
         """
@@ -5373,13 +5327,13 @@ class NodePath(Generic[_N]):
         node (and the entire subgraph below this node) once again part of the scene
         graph.
         """
-    def unstash_all(self, current_thread: Thread = ...) -> None:
+    def unstash_all(self, current_thread: Thread = ..., /) -> None:
         """Unstashes this node and all stashed child nodes."""
     def is_stashed(self) -> bool:
         """Returns true if the referenced node is stashed either directly, or because
         some ancestor is stashed.
         """
-    def get_stashed_ancestor(self, current_thread: Thread = ...) -> NodePath:
+    def get_stashed_ancestor(self, current_thread: Thread = ..., /) -> NodePath:
         """Returns the NodePath at or above the referenced node that is stashed, or an
         empty NodePath if no ancestor of the referenced node is stashed (and the
         node should be visible).
@@ -5406,7 +5360,7 @@ class NodePath(Generic[_N]):
         on, then only the bits that are set in bits_to_change are modified,
         allowing this call to change only a subset of the bits in the subgraph.
         """
-    def compare_to(self, other: NodePath | WeakNodePath) -> int:
+    def compare_to(self, other: NodePath | WeakNodePath, /) -> int:
         """Returns a number less than zero if this NodePath sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
 
@@ -5416,11 +5370,11 @@ class NodePath(Generic[_N]):
         ordering is useful only for placing the NodePaths in a sorted container
         like an STL set.
         """
-    def verify_complete(self, current_thread: Thread = ...) -> bool:
+    def verify_complete(self, current_thread: Thread = ..., /) -> bool:
         """Returns true if all of the nodes described in the NodePath are connected,
         or false otherwise.
         """
-    def premunge_scene(self, gsg: GraphicsStateGuardianBase = ...) -> None:
+    def premunge_scene(self, gsg: GraphicsStateGuardianBase = ..., /) -> None:
         """Walks through the scene graph beginning at the bottom node, and internally
         adjusts any GeomVertexFormats for optimal rendering on the indicated GSG.
         If this step is not done prior to rendering, the formats will be optimized
@@ -5429,7 +5383,7 @@ class NodePath(Generic[_N]):
         It is not normally necessary to do this on a model loaded directly from
         disk, since the loader will do this by default.
         """
-    def prepare_scene(self, gsg: GraphicsStateGuardianBase) -> None:
+    def prepare_scene(self, gsg: GraphicsStateGuardianBase, /) -> None:
         """Walks through the scene graph beginning at the bottom node, and does
         whatever initialization is required to render the scene properly with the
         indicated GSG.  It is not strictly necessary to call this, since the GSG
@@ -5453,7 +5407,7 @@ class NodePath(Generic[_N]):
         """
     def hide_bounds(self) -> None:
         """Stops the rendering of the bounding volume begun with show_bounds()."""
-    def get_bounds(self, current_thread: Thread = ...) -> BoundingVolume:
+    def get_bounds(self, current_thread: Thread = ..., /) -> BoundingVolume:
         """Returns a newly-allocated bounding volume containing the bottom node and
         all of its descendants.  This is the bounding volume on the bottom arc,
         converted to the local coordinate space of the node.
@@ -5469,7 +5423,7 @@ class NodePath(Generic[_N]):
         update their bounding volumes (which does not presently happen
         automatically).
         """
-    def write_bounds(self, out: ostream) -> None:
+    def write_bounds(self, out: ostream, /) -> None:
         """Writes a description of the bounding volume containing the bottom node and
         all of its descendants to the indicated output stream.
         """
@@ -5494,7 +5448,7 @@ class NodePath(Generic[_N]):
         The return value is true if any points are within the bounding volume, or
         false if none are.
         """
-    def get_tight_bounds(self, other: NodePath = ...) -> tuple[LPoint3f, LPoint3f] | None: ...
+    def get_tight_bounds(self, other: NodePath = ..., /) -> tuple[LPoint3f, LPoint3f] | None: ...
     def flatten_light(self) -> Literal[0]:
         """Lightly flattens out the hierarchy below this node by applying transforms,
         colors, and texture matrices from the nodes onto the vertices, but does not
@@ -5567,32 +5521,32 @@ class NodePath(Generic[_N]):
         limit on the number of different keys that may be stored or on the length
         of any one key's value.
         """
-    def get_tag(self, key: str) -> str:
+    def get_tag(self, key: str, /) -> str:
         """Retrieves the user-defined value that was previously set on this node for
         the particular key, if any.  If no value has been previously set, returns
         the empty string.  See also get_net_tag().
         """
     def get_tag_keys(self) -> tuple[str, ...] | None: ...
-    def has_tag(self, key: str) -> bool:
+    def has_tag(self, key: str, /) -> bool:
         """Returns true if a value has been defined on this node for the particular
         key (even if that value is the empty string), or false if no value has been
         set.  See also has_net_tag().
         """
-    def clear_tag(self, key: str) -> None:
+    def clear_tag(self, key: str, /) -> None:
         """Removes the value defined for this key on this particular node.  After a
         call to clear_tag(), has_tag() will return false for the indicated key.
         """
-    def get_net_tag(self, key: str) -> str:
+    def get_net_tag(self, key: str, /) -> str:
         """Returns the tag value that has been defined on this node, or the nearest
         ancestor node, for the indicated key.  If no value has been defined for the
         indicated key on any ancestor node, returns the empty string.  See also
         get_tag().
         """
-    def has_net_tag(self, key: str) -> bool:
+    def has_net_tag(self, key: str, /) -> bool:
         """Returns true if the indicated tag value has been defined on this node or on
         any ancestor node, or false otherwise.  See also has_tag().
         """
-    def find_net_tag(self, key: str) -> NodePath:
+    def find_net_tag(self, key: str, /) -> NodePath:
         """Returns the lowest ancestor of this node that contains a tag definition
         with the indicated key, if any, or an empty NodePath if no ancestor of this
         node contains this tag definition.  See set_tag().
@@ -5600,28 +5554,28 @@ class NodePath(Generic[_N]):
     def get_tags(self) -> MutableMapping[str, str] | None: ...
     def get_python_tags(self) -> dict[Any, Any] | None: ...
     def set_python_tag(self, keys: Any, value: Any) -> None: ...
-    def get_python_tag(self, keys: Any) -> Any | None: ...
+    def get_python_tag(self, keys: Any, /) -> Any | None: ...
     def get_python_tag_keys(self) -> list[Any] | tuple[()]: ...
-    def has_python_tag(self, keys: Any) -> bool: ...
-    def clear_python_tag(self, keys: Any) -> None: ...
-    def get_net_python_tag(self, keys: Any) -> Any | None: ...
-    def has_net_python_tag(self, keys: Any) -> bool: ...
-    def find_net_python_tag(self, keys: Any) -> NodePath: ...
+    def has_python_tag(self, keys: Any, /) -> bool: ...
+    def clear_python_tag(self, keys: Any, /) -> None: ...
+    def get_net_python_tag(self, keys: Any, /) -> Any | None: ...
+    def has_net_python_tag(self, keys: Any, /) -> bool: ...
+    def find_net_python_tag(self, keys: Any, /) -> NodePath: ...
     def list_tags(self) -> None:
         """Lists the tags to the nout stream, one per line.  See
         PandaNode::list_tags() for a variant that allows you to specify the output
         stream.
         """
-    def set_name(self, name: str) -> None:
+    def set_name(self, name: str, /) -> None:
         """Changes the name of the referenced node."""
     def get_name(self) -> str:
         """Returns the name of the referenced node."""
-    def write_bam_file(self, filename: StrOrBytesPath) -> bool:
+    def write_bam_file(self, filename: StrOrBytesPath, /) -> bool:
         """Writes the contents of this node and below out to a bam file with the
         indicated filename.  This file may then be read in again, as is, at some
         later point.  Returns true if successful, false on some kind of error.
         """
-    def write_bam_stream(self, out: ostream) -> bool:
+    def write_bam_stream(self, out: ostream, /) -> bool:
         """Writes the contents of this node and below out to the indicated stream."""
     @overload
     def encode_to_bam_stream(self) -> bytes:
@@ -6010,29 +5964,29 @@ class NodePathCollection:
     def __init__(self, param0: NodePathCollection = ..., /) -> None: ...
     @overload
     def __init__(self, sequence: Sequence[NodePath]) -> None: ...
-    def __getitem__(self, index: int) -> NodePath: ...
+    def __getitem__(self, index: int, /) -> NodePath: ...
     def __len__(self) -> int:
         """Returns the number of paths in the collection.  This is the same thing as
         get_num_paths().
         """
-    def __iadd__(self, other: NodePathCollection) -> Self: ...
-    def __add__(self, other: NodePathCollection) -> NodePathCollection: ...
+    def __iadd__(self, other: NodePathCollection, /) -> Self: ...
+    def __add__(self, other: NodePathCollection, /) -> NodePathCollection: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[NodePath]: ...
-    def add_path(self, node_path: NodePath) -> None:
+    def add_path(self, node_path: NodePath, /) -> None:
         """Adds a new NodePath to the collection."""
-    def remove_path(self, node_path: NodePath) -> bool:
+    def remove_path(self, node_path: NodePath, /) -> bool:
         """Removes the indicated NodePath from the collection.  Returns true if the
         path was removed, false if it was not a member of the collection.
         """
-    def add_paths_from(self, other: NodePathCollection) -> None:
+    def add_paths_from(self, other: NodePathCollection, /) -> None:
         """Adds all the NodePaths indicated in the other collection to this path.  The
         other paths are simply appended to the end of the paths in this list;
         duplicates are not automatically removed.
         """
-    def remove_paths_from(self, other: NodePathCollection) -> None:
+    def remove_paths_from(self, other: NodePathCollection, /) -> None:
         """Removes from this collection all of the NodePaths listed in the other
         collection.
         """
@@ -6041,13 +5995,13 @@ class NodePathCollection:
         a NodePath appears multiple times, the first appearance is retained;
         subsequent appearances are removed.
         """
-    def has_path(self, path: NodePath) -> bool:
+    def has_path(self, path: NodePath, /) -> bool:
         """Returns true if the indicated NodePath appears in this collection, false
         otherwise.
         """
     def clear(self) -> None:
         """Removes all NodePaths from the collection."""
-    def reserve(self, num: int) -> None:
+    def reserve(self, num: int, /) -> None:
         """This is a hint to Panda to allocate enough memory to hold the given number
         of NodePaths, if you know ahead of time how many you will be adding.
         """
@@ -6055,13 +6009,13 @@ class NodePathCollection:
         """Returns true if there are no NodePaths in the collection, false otherwise."""
     def get_num_paths(self) -> int:
         """Returns the number of NodePaths in the collection."""
-    def get_path(self, index: int) -> NodePath:
+    def get_path(self, index: int, /) -> NodePath:
         """Returns the nth NodePath in the collection."""
-    def append(self, node_path: NodePath) -> None:
+    def append(self, node_path: NodePath, /) -> None:
         """Adds a new NodePath to the collection.  This method duplicates the
         add_path() method; it is provided to satisfy Python's naming convention.
         """
-    def extend(self, other: NodePathCollection) -> None:
+    def extend(self, other: NodePathCollection, /) -> None:
         """Appends the other list onto the end of this one.  This method duplicates
         the += operator; it is provided to satisfy Python's naming convention.
         """
@@ -6075,14 +6029,14 @@ class NodePathCollection:
         """Lists all the nodes at and below each node in the collection
         hierarchically.
         """
-    def find_all_matches(self, path: str) -> NodePathCollection:
+    def find_all_matches(self, path: str, /) -> NodePathCollection:
         """Returns the complete set of all NodePaths that begin with any NodePath in
         this collection and can be extended by path.  The shortest paths will be
         listed first.
         """
-    def reparent_to(self, other: NodePath) -> None:
+    def reparent_to(self, other: NodePath, /) -> None:
         """Reparents all the NodePaths in the collection to the indicated node."""
-    def wrt_reparent_to(self, other: NodePath) -> None:
+    def wrt_reparent_to(self, other: NodePath, /) -> None:
         """Reparents all the NodePaths in the collection to the indicated node,
         adjusting each transform so as not to move in world coordinates.
         """
@@ -6189,7 +6143,7 @@ class NodePathCollection:
         effort is made to apply the attrib to many NodePaths as quickly as
         possible; redundant RenderState compositions are not duplicated.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Writes a brief one-line description of the NodePathCollection to the
         indicated output stream.
         """
@@ -6235,7 +6189,7 @@ class AttribNodeRegistry:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    def add_node(self, attrib_node: NodePath) -> None:
+    def add_node(self, attrib_node: NodePath, /) -> None:
         """Adds the indicated NodePath to the registry.  The name and type of the node
         are noted at the time of this call; if the name changes later, it will not
         update the registry index.
@@ -6249,7 +6203,7 @@ class AttribNodeRegistry:
         replaced.
         """
     @overload
-    def remove_node(self, attrib_node: NodePath) -> bool:
+    def remove_node(self, attrib_node: NodePath, /) -> bool:
         """Removes the indicated NodePath from the registry.  The name of the node
         must not have changed since the matching call to add_node(), or it will not
         be successfully removed.
@@ -6258,20 +6212,20 @@ class AttribNodeRegistry:
         (for instance, because the name has changed).
         """
     @overload
-    def remove_node(self, n: int) -> None:
+    def remove_node(self, n: int, /) -> None:
         """Removes the nth node from the registry."""
-    def lookup_node(self, orig_node: NodePath) -> NodePath:
+    def lookup_node(self, orig_node: NodePath, /) -> NodePath:
         """Looks up the indicated NodePath in the registry.  If there is a node
         already in the registry with the matching name and type, returns that
         NodePath instead; otherwise, returns the original NodePath.
         """
     def get_num_nodes(self) -> int:
         """Returns the total number of nodes in the registry."""
-    def get_node(self, n: int) -> NodePath:
+    def get_node(self, n: int, /) -> NodePath:
         """Returns the nth NodePath recorded in the registry."""
-    def get_node_type(self, n: int) -> TypeHandle:
+    def get_node_type(self, n: int, /) -> TypeHandle:
         """Returns the type of the nth node, as recorded in the registry."""
-    def get_node_name(self, n: int) -> str:
+    def get_node_name(self, n: int, /) -> str:
         """Returns the name of the nth node, as recorded in the registry.  This will
         be the node name as it was at the time the node was recorded; if the node
         has changed names since then, this will still return the original name.
@@ -6290,8 +6244,8 @@ class AttribNodeRegistry:
         """
     def clear(self) -> None:
         """Removes all nodes from the registry."""
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_global_ptr() -> AttribNodeRegistry: ...
     def get_nodes(self) -> tuple[NodePath, ...]: ...
@@ -6317,7 +6271,7 @@ class AudioVolumeAttrib(RenderAttrib):
     def make_identity() -> AudioVolumeAttrib:
         """Constructs an identity audio volume attrib."""
     @staticmethod
-    def make(volume: float) -> AudioVolumeAttrib:
+    def make(volume: float, /) -> AudioVolumeAttrib:
         """Constructs a new AudioVolumeAttrib object that indicates audio volume
         should be scaled by the indicated factor.
         """
@@ -6344,7 +6298,7 @@ class AudioVolumeAttrib(RenderAttrib):
         """
     def get_volume(self) -> float:
         """Returns the volume to be applied to sounds."""
-    def set_volume(self, volume: float) -> Self:
+    def set_volume(self, volume: float, /) -> Self:
         """Returns a new AudioVolumeAttrib, just like this one, but with the volume
         changed to the indicated value.
         """
@@ -6397,7 +6351,7 @@ class AuxBitplaneAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(outputs: int = ...) -> AuxBitplaneAttrib:
+    def make(outputs: int = ..., /) -> AuxBitplaneAttrib:
         """Constructs a default AuxBitplaneAttrib object.
 
         or:
@@ -6429,7 +6383,7 @@ class AuxSceneData(TypedReferenceCount):
     def __init__(self, param0: AuxSceneData, /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_duration(self, duration: float) -> None:
+    def set_duration(self, duration: float, /) -> None:
         """Specifies the minimum length in time, in seconds, to keep this AuxSceneData
         object around in the scene graph after the last time it was rendered.
         """
@@ -6437,7 +6391,7 @@ class AuxSceneData(TypedReferenceCount):
         """Returns the minimum length in time, in seconds, to keep this AuxSceneData
         object around in the scene graph after the last time it was rendered.
         """
-    def set_last_render_time(self, render_time: float) -> None:
+    def set_last_render_time(self, render_time: float, /) -> None:
         """Should be called with the current frame_time each time the AuxSceneData is
         used during traversal.
         """
@@ -6449,7 +6403,7 @@ class AuxSceneData(TypedReferenceCount):
         """Returns the frame_time at which this AuxSceneData object is currently
         scheduled to be removed from the scene graph.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int = ...) -> None: ...
     setDuration = set_duration
     getDuration = get_duration
@@ -6510,7 +6464,7 @@ class BamFile(BamEnums):
         objects are successfully resolved, or false if some have not been (in which
         case you must call resolve() again later).
         """
-    def read_node(self, report_errors: bool = ...) -> PandaNode:
+    def read_node(self, report_errors: bool = ..., /) -> PandaNode:
         """Although the bam file format is general enough to store a list of objects
         of arbitrary type, bam files on disk usually contain just one object, a
         PandaNode that is the root of a scene graph.  (Bam files that store other
@@ -6536,7 +6490,7 @@ class BamFile(BamEnums):
         """Attempts to open the indicated stream for writing.  The filename is just
         for information purposes only.  Returns true if successful, false on error.
         """
-    def write_object(self, object: TypedWritable) -> bool:
+    def write_object(self, object: TypedWritable, /) -> bool:
         """Writes the indicated object to the Bam file.  Returns true if successful,
         false on error.
         """
@@ -6705,7 +6659,7 @@ class LensNode(PandaNode):
         number.  The different lenses may be referenced by index number on the
         DisplayRegion.  Adding a new lens automatically makes it active.
         """
-    def get_lens(self, index: int = ...) -> Lens:
+    def get_lens(self, index: int = ..., /) -> Lens:
         """Returns a pointer to the particular Lens associated with this LensNode, or
         NULL if there is not yet a Lens associated.  If an index number is
         specified, returns the nth lens.
@@ -6716,11 +6670,11 @@ class LensNode(PandaNode):
         implicitly inactive as well.  Returns true if the flag is changed, false if
         it already had this value.
         """
-    def get_lens_active(self, index: int) -> bool:
+    def get_lens_active(self, index: int, /) -> bool:
         """Returns the active flag for the nth lens."""
-    def activate_lens(self, index: int) -> bool:
+    def activate_lens(self, index: int, /) -> bool:
         """An alternate way to call set_lens_active(index, true)."""
-    def deactivate_lens(self, index: int) -> bool:
+    def deactivate_lens(self, index: int, /) -> bool:
         """An alternate way to call set_lens_active(index, false)."""
     @overload
     def is_in_view(self, pos: Vec3Like) -> bool:
@@ -6768,13 +6722,10 @@ class WeakNodePath:
     def __bool__(self) -> bool: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: NodePath | WeakNodePath) -> bool: ...
+    def __lt__(self, other: NodePath | WeakNodePath, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    @overload
-    def assign(self, node_path: NodePath) -> Self: ...
-    @overload
-    def assign(self, copy: WeakNodePath) -> Self: ...
+    def assign(self, node_path_or_copy: NodePath | WeakNodePath, /) -> Self: ...
     def clear(self) -> None:
         """Sets this NodePath to the empty NodePath.  It will no longer point to any
         node.
@@ -6793,7 +6744,7 @@ class WeakNodePath:
         """Returns the PandaNode held within this object, or nullptr if the object was
         deleted.
         """
-    def compare_to(self, other: NodePath | WeakNodePath) -> int:
+    def compare_to(self, other: NodePath | WeakNodePath, /) -> int:
         """Returns a number less than zero if this NodePath sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
 
@@ -6815,7 +6766,7 @@ class WeakNodePath:
         """
     def get_key(self) -> int:
         """Returns the same values as NodePath::get_key()."""
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     isEmpty = is_empty
     wasDeleted = was_deleted
     getNodePath = get_node_path
@@ -6848,13 +6799,13 @@ class Camera(LensNode):
     def __init__(self, name: str, lens: Lens = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_active(self, active: bool) -> None:
+    def set_active(self, active: bool, /) -> None:
         """Sets the active flag on the camera.  When the camera is not active, nothing
         will be rendered.
         """
     def is_active(self) -> bool:
         """Returns the current setting of the active flag on the camera."""
-    def set_scene(self, scene: NodePath) -> None:
+    def set_scene(self, scene: NodePath, /) -> None:
         """Sets the scene that will be rendered by the camera.  This is normally the
         root node of a scene graph, typically a node called 'render', although it
         could represent the root of any subgraph.
@@ -6868,9 +6819,9 @@ class Camera(LensNode):
         """Returns the scene that will be rendered by the camera.  See set_scene()."""
     def get_num_display_regions(self) -> int:
         """Returns the number of display regions associated with the camera."""
-    def get_display_region(self, n: int) -> DisplayRegion:
+    def get_display_region(self, n: int, /) -> DisplayRegion:
         """Returns the nth display region associated with the camera."""
-    def set_camera_mask(self, mask: DrawMask | int) -> None:
+    def set_camera_mask(self, mask: DrawMask | int, /) -> None:
         """Changes the set of bits that represent the subset of the scene graph the
         camera will render.
 
@@ -6883,7 +6834,7 @@ class Camera(LensNode):
         """Returns the set of bits that represent the subset of the scene graph the
         camera will render.  See set_camera_mask().
         """
-    def set_cull_center(self, cull_center: NodePath) -> None:
+    def set_cull_center(self, cull_center: NodePath, /) -> None:
         """Specifies the point from which the culling operations are performed.
         Normally, this is the same as the camera, and that is the default if this
         is not specified; but it may sometimes be useful to perform the culling
@@ -6894,7 +6845,7 @@ class Camera(LensNode):
         """Returns the point from which the culling operations will be performed, if
         it was set by set_cull_center(), or the empty NodePath otherwise.
         """
-    def set_cull_bounds(self, cull_bounds: BoundingVolume) -> None:
+    def set_cull_bounds(self, cull_bounds: BoundingVolume, /) -> None:
         """Specifies the bounding volume that should be used to perform culling from
         this camera.  Normally, this is the bounding volume returned from the
         active lens' make_bounds() call, but you may override this to specify a
@@ -6905,7 +6856,7 @@ class Camera(LensNode):
         """Returns the custom cull volume that was set by set_cull_bounds(), if any,
         or NULL if no custom cull volume was set.
         """
-    def set_lod_center(self, lod_center: NodePath) -> None:
+    def set_lod_center(self, lod_center: NodePath, /) -> None:
         """Specifies the point from which the LOD distances are measured.  Normally,
         this is the same as the camera, and that is the default if this is not
         specified; but it may sometimes be useful to perform the distance test from
@@ -6916,20 +6867,20 @@ class Camera(LensNode):
         """Returns the point from which the LOD distances will be measured, if it was
         set by set_lod_center(), or the empty NodePath otherwise.
         """
-    def set_initial_state(self, state: RenderState) -> None:
+    def set_initial_state(self, state: RenderState, /) -> None:
         """Sets the initial state which is applied to all nodes in the scene, as if it
         were set at the top of the scene graph.
         """
     def get_initial_state(self) -> RenderState:
         """Returns the initial state as set by a previous call to set_initial_state()."""
-    def set_tag_state_key(self, tag_state_key: str) -> None:
+    def set_tag_state_key(self, tag_state_key: str, /) -> None:
         """Sets the tag key which, when encountered as a tag on nodes in the scene
         graph, causes this Camera to apply an arbitrary state transition based on
         the value of the tag (as specified to set_tag_state()).
         """
     def get_tag_state_key(self) -> str:
         """Returns the tag key as set by a previous call to set_tag_state_key()."""
-    def set_lod_scale(self, value: float) -> None:
+    def set_lod_scale(self, value: float, /) -> None:
         """Sets the multiplier for LOD distances.  This value is multiplied with the
         LOD scale set on LodNodes.
         """
@@ -6947,15 +6898,15 @@ class Camera(LensNode):
         which specialty cameras might be needed to render the scene with a
         particular set of effects.
         """
-    def clear_tag_state(self, tag_state: str) -> None:
+    def clear_tag_state(self, tag_state: str, /) -> None:
         """Removes the association established by a previous call to set_tag_state()."""
     def clear_tag_states(self) -> None:
         """Removes all associations established by previous calls to set_tag_state()."""
-    def has_tag_state(self, tag_state: str) -> bool:
+    def has_tag_state(self, tag_state: str, /) -> bool:
         """Returns true if set_tag_state() has previously been called with the
         indicated tag state, false otherwise.
         """
-    def get_tag_state(self, tag_state: str) -> RenderState:
+    def get_tag_state(self, tag_state: str, /) -> RenderState:
         """Returns the state associated with the indicated tag state by a previous
         call to set_tag_state(), or the empty state if nothing has been associated.
         """
@@ -6963,17 +6914,17 @@ class Camera(LensNode):
         """Associates the indicated AuxSceneData object with the given NodePath,
         possibly replacing a previous data defined for the same NodePath, if any.
         """
-    def clear_aux_scene_data(self, node_path: NodePath) -> bool:
+    def clear_aux_scene_data(self, node_path: NodePath, /) -> bool:
         """Removes the AuxSceneData associated with the indicated NodePath.  Returns
         true if it is removed successfully, false if it was already gone.
         """
-    def get_aux_scene_data(self, node_path: NodePath) -> AuxSceneData:
+    def get_aux_scene_data(self, node_path: NodePath, /) -> AuxSceneData:
         """Returns the AuxSceneData associated with the indicated NodePath, or NULL if
         nothing is associated.
         """
-    def list_aux_scene_data(self, out: ostream) -> None:
+    def list_aux_scene_data(self, out: ostream, /) -> None:
         """Outputs all of the NodePaths and AuxSceneDatas in use."""
-    def cleanup_aux_scene_data(self, current_thread: Thread = ...) -> int:
+    def cleanup_aux_scene_data(self, current_thread: Thread = ..., /) -> int:
         """Walks through the list of currently-assigned AuxSceneData objects and
         releases any that are past their expiration times.  Returns the number of
         elements released.
@@ -7026,11 +6977,11 @@ class PlaneNode(PandaNode):
     priority: int
     clip_effect: int
     def __init__(self, name: str, plane: Vec4Like = ...) -> None: ...
-    def set_plane(self, plane: Vec4Like) -> None:
+    def set_plane(self, plane: Vec4Like, /) -> None:
         """Sets the particular plane represented by the PlaneNode."""
     def get_plane(self) -> LPlane:
         """Returns the plane represented by the PlaneNode."""
-    def set_viz_scale(self, viz_scale: float) -> None:
+    def set_viz_scale(self, viz_scale: float, /) -> None:
         """Specifies the size of the visual representation of the plane that is drawn
         if the PlaneNode is shown.
         """
@@ -7038,7 +6989,7 @@ class PlaneNode(PandaNode):
         """Returns the size of the visual representation of the plane that is drawn if
         the PlaneNode is shown.
         """
-    def set_priority(self, priority: int) -> None:
+    def set_priority(self, priority: int, /) -> None:
         """Changes the relative importance of this PlaneNode (when it is used as a
         clip plane) relative to the other clip planes that are applied
         simultaneously.
@@ -7051,7 +7002,7 @@ class PlaneNode(PandaNode):
         """
     def get_priority(self) -> int:
         """Returns the priority associated with this clip plane.  See set_priority()."""
-    def set_clip_effect(self, clip_effect: int) -> None:
+    def set_clip_effect(self, clip_effect: int, /) -> None:
         """Specifies the sort of things this plane will actually clip (when it is used
         as a clip plane).  This is a bitmask union of ClipEffect values.  If it
         includes CE_visible, then it will clip visible geometry; if it includes
@@ -7147,7 +7098,7 @@ class ClipPlaneAttrib(RenderAttrib):
         independently.
         """
     @deprecated('ClipPlaneAttribs nowadays have a separate list of on_planes and')
-    def get_plane(self, n: int) -> PlaneNode:
+    def get_plane(self, n: int, /) -> PlaneNode:
         """Returns the nth plane listed in the attribute.
 
         @deprecated ClipPlaneAttribs nowadays have a separate list of on_planes and
@@ -7155,7 +7106,7 @@ class ClipPlaneAttrib(RenderAttrib):
         independently.
         """
     @deprecated('ClipPlaneAttribs nowadays have a separate list of on_planes and')
-    def has_plane(self, plane: PlaneNode) -> bool:
+    def has_plane(self, plane: PlaneNode, /) -> bool:
         """Returns true if the indicated plane is listed in the attrib, false
         otherwise.
 
@@ -7164,14 +7115,14 @@ class ClipPlaneAttrib(RenderAttrib):
         independently.
         """
     @deprecated('Use add_on_plane() or add_off_plane() instead.')
-    def add_plane(self, plane: PlaneNode) -> Self:
+    def add_plane(self, plane: PlaneNode, /) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes.
 
         @deprecated Use add_on_plane() or add_off_plane() instead.
         """
     @deprecated('Use remove_on_plane() or remove_off_plane() instead.')
-    def remove_plane(self, plane: PlaneNode) -> Self:
+    def remove_plane(self, plane: PlaneNode, /) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes.
 
@@ -7184,19 +7135,19 @@ class ClipPlaneAttrib(RenderAttrib):
         """
     def get_num_on_planes(self) -> int:
         """Returns the number of planes that are enabled by the attribute."""
-    def get_on_plane(self, n: int) -> NodePath:
+    def get_on_plane(self, n: int, /) -> NodePath:
         """Returns the nth plane enabled by the attribute, sorted in render order."""
-    def has_on_plane(self, plane: NodePath) -> bool:
+    def has_on_plane(self, plane: NodePath, /) -> bool:
         """Returns true if the indicated plane is enabled by the attrib, false
         otherwise.
         """
     def get_num_off_planes(self) -> int:
         """Returns the number of planes that are disabled by the attribute."""
-    def get_off_plane(self, n: int) -> NodePath:
+    def get_off_plane(self, n: int, /) -> NodePath:
         """Returns the nth plane disabled by the attribute, sorted in arbitrary
         (pointer) order.
         """
-    def has_off_plane(self, plane: NodePath) -> bool:
+    def has_off_plane(self, plane: NodePath, /) -> bool:
         """Returns true if the indicated plane is disabled by the attrib, false
         otherwise.
         """
@@ -7208,23 +7159,23 @@ class ClipPlaneAttrib(RenderAttrib):
         """Returns true if this is an identity attrib: it does not change the set of
         planes in use.
         """
-    def add_on_plane(self, plane: NodePath) -> Self:
+    def add_on_plane(self, plane: NodePath, /) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes enabled by this attrib.
         """
-    def remove_on_plane(self, plane: NodePath) -> Self:
+    def remove_on_plane(self, plane: NodePath, /) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes enabled by this attrib.
         """
-    def add_off_plane(self, plane: NodePath) -> Self:
+    def add_off_plane(self, plane: NodePath, /) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane added to the list of planes disabled by this attrib.
         """
-    def remove_off_plane(self, plane: NodePath) -> Self:
+    def remove_off_plane(self, plane: NodePath, /) -> Self:
         """Returns a new ClipPlaneAttrib, just like this one, but with the indicated
         plane removed from the list of planes disabled by this attrib.
         """
-    def filter_to_max(self, max_clip_planes: int) -> ClipPlaneAttrib:
+    def filter_to_max(self, max_clip_planes: int, /) -> ClipPlaneAttrib:
         """Returns a new ClipPlaneAttrib, very much like this one, but with the number
         of on_planes reduced to be no more than max_clip_planes.  The number of
         off_planes in the new ClipPlaneAttrib is undefined.
@@ -7279,7 +7230,7 @@ class ColorAttrib(RenderAttrib):
         rendered according to its own vertex color.
         """
     @staticmethod
-    def make_flat(color: Vec4Like) -> ColorAttrib:
+    def make_flat(color: Vec4Like, /) -> ColorAttrib:
         """Constructs a new ColorAttrib object that indicates geometry should be
         rendered in the indicated color.
         """
@@ -7453,14 +7404,14 @@ class ColorBlendAttrib(RenderAttrib):
         """Returns the alpha multiplier for the second component."""
     def get_color(self) -> LColor:
         """Returns the constant color associated with the attrib."""
-    def involves_constant_color(self, operand: _ColorBlendAttrib_Operand = ...) -> bool:
+    def involves_constant_color(self, operand: _ColorBlendAttrib_Operand = ..., /) -> bool:
         """Returns true if the this attrib uses the constant color, false otherwise.
 
         or:
         Returns true if the indicated operand uses the constant color, false
         otherwise.
         """
-    def involves_color_scale(self, operand: _ColorBlendAttrib_Operand = ...) -> bool:
+    def involves_color_scale(self, operand: _ColorBlendAttrib_Operand = ..., /) -> bool:
         """Returns true if the this attrib uses the color scale attrib, false
         otherwise.
 
@@ -7494,7 +7445,7 @@ class ColorScaleAttrib(RenderAttrib):
     def make_identity() -> ColorScaleAttrib:
         """Constructs an identity scale attrib."""
     @staticmethod
-    def make(scale: Vec4Like) -> ColorScaleAttrib:
+    def make(scale: Vec4Like, /) -> ColorScaleAttrib:
         """Constructs a new ColorScaleAttrib object that indicates geometry should be
         scaled by the indicated factor.
         """
@@ -7533,7 +7484,7 @@ class ColorScaleAttrib(RenderAttrib):
         """
     def get_scale(self) -> LVecBase4:
         """Returns the scale to be applied to colors."""
-    def set_scale(self, scale: Vec4Like) -> Self:
+    def set_scale(self, scale: Vec4Like, /) -> Self:
         """Returns a new ColorScaleAttrib, just like this one, but with the scale
         changed to the indicated value.
         """
@@ -7576,7 +7527,7 @@ class ColorWriteAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(channels: int) -> ColorWriteAttrib:
+    def make(channels: int, /) -> ColorWriteAttrib:
         """Constructs a new ColorWriteAttrib object."""
     @staticmethod
     def make_default() -> ColorWriteAttrib:
@@ -7684,7 +7635,7 @@ class GeomNode(PandaNode):
 
     @property
     def default_collide_mask(self) -> CollideMask: ...
-    def set_preserved(self, value: bool) -> None:
+    def set_preserved(self, value: bool, /) -> None:
         """Sets the "preserved" flag.  When this is true, the GeomNode will be left
         untouched by any flatten operations.
         """
@@ -7694,12 +7645,12 @@ class GeomNode(PandaNode):
         """
     def get_num_geoms(self) -> int:
         """Returns the number of geoms in the node."""
-    def get_geom(self, n: int) -> Geom:
+    def get_geom(self, n: int, /) -> Geom:
         """Returns the nth geom of the node.  This object should not be modified,
         since the same object might be shared between multiple different GeomNodes,
         but see modify_geom().
         """
-    def modify_geom(self, n: int) -> Geom:
+    def modify_geom(self, n: int, /) -> Geom:
         """Returns the nth geom of the node, suitable for modifying it.  If the nth
         Geom has multiple reference counts to it, reassigns it to an identical copy
         first, and returns the new copy--this provides a "copy on write" that
@@ -7711,7 +7662,7 @@ class GeomNode(PandaNode):
         all the way to pipeline stage 0, which may step on changes that were made
         independently in pipeline stage 0. Use with caution.
         """
-    def get_geom_state(self, n: int) -> RenderState:
+    def get_geom_state(self, n: int, /) -> RenderState:
         """Returns the RenderState associated with the nth geom of the node.  This is
         just the RenderState directly associated with the Geom; the actual state in
         which the Geom is rendered will also be affected by RenderStates that
@@ -7733,7 +7684,7 @@ class GeomNode(PandaNode):
         may be RenderState::make_empty(), to completely inherit its state from the
         scene graph).
         """
-    def add_geoms_from(self, other: GeomNode) -> None:
+    def add_geoms_from(self, other: GeomNode, /) -> None:
         """Copies the Geoms (and their associated RenderStates) from the indicated
         GeomNode into this one.
         """
@@ -7746,7 +7697,7 @@ class GeomNode(PandaNode):
         all the way to pipeline stage 0, which may step on changes that were made
         independently in pipeline stage 0. Use with caution.
         """
-    def remove_geom(self, n: int) -> None:
+    def remove_geom(self, n: int, /) -> None:
         """Removes the nth geom from the node."""
     def remove_all_geoms(self) -> None:
         """Removes all the geoms from the node at once."""
@@ -7863,7 +7814,7 @@ class CullBinManager(CullBinEnums):
         If there is already a bin with the same name returns its bin_index if it
         had the same properties; otherwise, reports an error and returns -1.
         """
-    def remove_bin(self, bin_index: int) -> None:
+    def remove_bin(self, bin_index: int, /) -> None:
         """Permanently removes the indicated bin.  This operation is not protected
         from the pipeline and will disturb whatever is currently rendering in draw.
         You should not call this during the normal course of rendering a frame; it
@@ -7872,29 +7823,28 @@ class CullBinManager(CullBinEnums):
         """
     def get_num_bins(self) -> int:
         """Returns the number of bins in the world."""
-    def get_bin(self, n: int) -> int:
+    def get_bin(self, n: int, /) -> int:
         """Returns the bin_index of the nth bin in the set, where n is a number
         between 0 and get_num_bins(). This returns the list of bin_index numbers,
         in sorted order (that is, in the order in which the bins should be
         rendered).
         """
-    def find_bin(self, name: str) -> int:
+    def find_bin(self, name: str, /) -> int:
         """Returns the bin_index associated with the bin of the given name, or -1 if
         no bin has that name.
         """
-    def get_bin_name(self, bin_index: int) -> str:
+    def get_bin_name(self, bin_index: int, /) -> str:
         """Returns the name of the bin with the indicated bin_index (where bin_index
         was retrieved by get_bin() or find_bin()).  The bin's name may not be
         changed during the life of the bin.
         """
-    @overload
-    def get_bin_type(self, bin_index: int) -> _CullBinEnums_BinType:
+    def get_bin_type(self, bin_index_or_name: int | str, /) -> _CullBinEnums_BinType:
         """Returns the type of the bin with the indicated bin_index (where bin_index
         was retrieved by get_bin() or find_bin()).
+
+        or:
+        Returns the type of the bin with the indicated name.
         """
-    @overload
-    def get_bin_type(self, name: str) -> _CullBinEnums_BinType:
-        """Returns the type of the bin with the indicated name."""
     @overload
     def set_bin_type(self, bin_index: int, type: _CullBinEnums_BinType) -> None:
         """Changes the type of the bin with the indicated bin_index (where bin_index
@@ -7910,17 +7860,15 @@ class CullBinManager(CullBinEnums):
         The change might be effective immediately, or it might take place next
         frame, depending on the bin type.
         """
-    @overload
-    def get_bin_sort(self, bin_index: int) -> int:
+    def get_bin_sort(self, bin_index_or_name: int | str, /) -> int:
         """Returns the sort order of the bin with the indicated bin_index (where
         bin_index was retrieved by get_bin() or find_bin()).
 
         The bins are rendered in increasing order by their sort order; this number
         may be changed from time to time to reorder the bins.
-        """
-    @overload
-    def get_bin_sort(self, name: str) -> int:
-        """Returns the sort order of the bin with the indicated name.
+
+        or:
+        Returns the sort order of the bin with the indicated name.
 
         The bins are rendered in increasing order by their sort order; this number
         may be changed from time to time to reorder the bins.
@@ -7940,16 +7888,14 @@ class CullBinManager(CullBinEnums):
         The bins are rendered in increasing order by their sort order; this number
         may be changed from time to time to reorder the bins.
         """
-    @overload
-    def get_bin_active(self, bin_index: int) -> bool:
+    def get_bin_active(self, bin_index_or_name: int | str, /) -> bool:
         """Returns the active flag of the bin with the indicated bin_index (where
         bin_index was retrieved by get_bin() or find_bin()).
 
         When a bin is marked inactive, all geometry assigned to it is not rendered.
-        """
-    @overload
-    def get_bin_active(self, name: str) -> bool:
-        """Returns the active flag of the bin with the indicated name.
+
+        or:
+        Returns the active flag of the bin with the indicated name.
 
         When a bin is marked inactive, all geometry assigned to it is not rendered.
         """
@@ -7966,14 +7912,14 @@ class CullBinManager(CullBinEnums):
 
         When a bin is marked inactive, all geometry assigned to it is not rendered.
         """
-    def get_bin_flash_active(self, bin_index: int) -> bool:
+    def get_bin_flash_active(self, bin_index: int, /) -> bool:
         """Returns true if the bin with the given bin_index is configured to flash at
         a predetermined color (where bin_index was retrieved by get_bin() or
         find_bin()).
 
         This method is not available in release builds.
         """
-    def get_bin_flash_color(self, bin_index: int) -> LColor:
+    def get_bin_flash_color(self, bin_index: int, /) -> LColor:
         """Returns the color that this bin has been configured to flash to, if
         configured.
 
@@ -7991,7 +7937,7 @@ class CullBinManager(CullBinEnums):
 
         This method is not available in release builds.
         """
-    def write(self, out: ostream) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_global_ptr() -> CullBinManager:
         """Returns the pointer to the global CullBinManager object."""
@@ -8035,7 +7981,7 @@ class CullFaceAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _CullFaceAttrib_Mode = ...) -> CullFaceAttrib:
+    def make(mode: _CullFaceAttrib_Mode = ..., /) -> CullFaceAttrib:
         """Constructs a new CullFaceAttrib object that specifies how to cull geometry.
         By Panda convention, vertices are ordered counterclockwise when seen from
         the front, so the M_cull_clockwise will cull backfacing polygons.
@@ -8123,34 +8069,34 @@ class CullTraverserData:
     def __deepcopy__(self, memo: object, /) -> Self: ...
     def node(self) -> PandaNode:
         """Returns the node traversed to so far."""
-    def get_modelview_transform(self, trav: CullTraverser) -> TransformState:
+    def get_modelview_transform(self, trav: CullTraverser, /) -> TransformState:
         """Returns the modelview transform: the relative transform from the camera to
         the model.
         """
-    def get_internal_transform(self, trav: CullTraverser) -> TransformState:
+    def get_internal_transform(self, trav: CullTraverser, /) -> TransformState:
         """Returns the internal transform: the modelview transform in the GSG's
         internal coordinate system.
         """
-    def get_net_transform(self, trav: CullTraverser) -> TransformState:
+    def get_net_transform(self, trav: CullTraverser, /) -> TransformState:
         """Returns the net transform: the relative transform from root of the scene
         graph to the current node.
         """
-    def is_in_view(self, camera_mask: DrawMask | int) -> bool:
+    def is_in_view(self, camera_mask: DrawMask | int, /) -> bool:
         """Returns true if the current node is within the view frustum, false
         otherwise.  If the node's bounding volume falls completely within the view
         frustum, this will also reset the view frustum pointer, saving some work
         for future nodes.
         """
-    def is_this_node_hidden(self, camera_mask: DrawMask | int) -> bool:
+    def is_this_node_hidden(self, camera_mask: DrawMask | int, /) -> bool:
         """Returns true if this particular node is hidden, even though we might be
         traversing past this node to find a child node that has had show_through()
         called for it.  If this returns true, the node should not be rendered.
         """
-    def apply_transform_and_state(self, trav: CullTraverser) -> None:
+    def apply_transform_and_state(self, trav: CullTraverser, /) -> None:
         """Applies the transform and state from the current node onto the current
         data.  This also evaluates billboards, etc.
         """
-    def apply_transform(self, node_transform: TransformState) -> None:
+    def apply_transform(self, node_transform: TransformState, /) -> None:
         """Applies the indicated transform changes onto the current data."""
     getModelviewTransform = get_modelview_transform
     getInternalTransform = get_internal_transform
@@ -8168,7 +8114,7 @@ class SceneSetup(TypedReferenceCount):
     def __init__(self, param0: SceneSetup, /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_display_region(self, display_region: DisplayRegion) -> None:
+    def set_display_region(self, display_region: DisplayRegion, /) -> None:
         """Specifies the display region for the scene."""
     def get_display_region(self) -> DisplayRegion:
         """Returns the display region for the scene."""
@@ -8178,23 +8124,23 @@ class SceneSetup(TypedReferenceCount):
         """Returns the width of the viewport (display region) in pixels."""
     def get_viewport_height(self) -> int:
         """Returns the height of the viewport (display region) in pixels."""
-    def set_scene_root(self, scene_root: NodePath) -> None:
+    def set_scene_root(self, scene_root: NodePath, /) -> None:
         """Specifies the root node of the scene."""
     def get_scene_root(self) -> NodePath:
         """Returns the root node of the scene."""
-    def set_camera_path(self, camera_path: NodePath) -> None:
+    def set_camera_path(self, camera_path: NodePath, /) -> None:
         """Specifies the NodePath to the camera."""
     def get_camera_path(self) -> NodePath:
         """Returns the NodePath to the camera."""
-    def set_camera_node(self, camera_node: Camera) -> None:
+    def set_camera_node(self, camera_node: Camera, /) -> None:
         """Specifies the camera used to render the scene."""
     def get_camera_node(self) -> Camera:
         """Returns the camera used to render the scene."""
-    def set_lens(self, lens: Lens) -> None:
+    def set_lens(self, lens: Lens, /) -> None:
         """Indicates the particular Lens used for rendering."""
     def get_lens(self) -> Lens:
         """Returns the particular Lens used for rendering."""
-    def set_inverted(self, inverted: bool) -> None:
+    def set_inverted(self, inverted: bool, /) -> None:
         """Changes the current setting of the inverted flag.  When this is true, the
         scene is rendered into the window upside-down and backwards, that is,
         inverted as if viewed through a mirror placed on the floor.
@@ -8215,17 +8161,17 @@ class SceneSetup(TypedReferenceCount):
         lens' bounding volume, but it may be overridden with
         Camera::set_cull_bounds().
         """
-    def set_initial_state(self, initial_state: RenderState) -> None:
+    def set_initial_state(self, initial_state: RenderState, /) -> None:
         """Sets the initial state which is applied to all nodes in the scene, as if it
         were set at the top of the scene graph.
         """
     def get_initial_state(self) -> RenderState:
         """Returns the initial state as set by a previous call to set_initial_state()."""
-    def set_camera_transform(self, camera_transform: TransformState) -> None:
+    def set_camera_transform(self, camera_transform: TransformState, /) -> None:
         """Specifies the position of the camera relative to the starting node."""
     def get_camera_transform(self) -> TransformState:
         """Returns the position of the camera relative to the starting node."""
-    def set_world_transform(self, world_transform: TransformState) -> None:
+    def set_world_transform(self, world_transform: TransformState, /) -> None:
         """Specifies the position of the starting node relative to the camera.  This
         is the inverse of the camera transform.
         """
@@ -8233,7 +8179,7 @@ class SceneSetup(TypedReferenceCount):
         """Returns the position of the starting node relative to the camera.  This is
         the inverse of the camera transform.
         """
-    def set_cs_transform(self, cs_transform: TransformState) -> None:
+    def set_cs_transform(self, cs_transform: TransformState, /) -> None:
         """Specifies the transform from the camera's coordinate system to the GSG's
         internal coordinate system.
         """
@@ -8241,7 +8187,7 @@ class SceneSetup(TypedReferenceCount):
         """Returns the transform from the camera's coordinate system to the GSG's
         internal coordinate system.
         """
-    def set_cs_world_transform(self, cs_world_transform: TransformState) -> None:
+    def set_cs_world_transform(self, cs_world_transform: TransformState, /) -> None:
         """Specifies the position from the starting node relative to the camera, in
         the GSG's internal coordinate system.
         """
@@ -8305,7 +8251,7 @@ class Fog(PandaNode):
     linear_opaque_point: LPoint3
     exp_density: float
     def get_mode(self) -> _Fog_Mode: ...
-    def set_mode(self, mode: _Fog_Mode) -> None:
+    def set_mode(self, mode: _Fog_Mode, /) -> None:
         """Specifies the computation that is used to determine the fog effect.  If
         this is M_linear, then the fog will range from linearly from the onset
         point to the opaque point (or for the distances specified in
@@ -8398,7 +8344,7 @@ class Fog(PandaNode):
         """Returns the density of the fog for exponential calculations.  This is only
         used if the mode is not M_linear.
         """
-    def set_exp_density(self, exp_density: float) -> None:
+    def set_exp_density(self, exp_density: float, /) -> None:
         """Sets the density of the fog for exponential calculations.  This is only
         used if the mode is not M_linear.
 
@@ -8426,7 +8372,7 @@ class FogAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(fog: Fog) -> FogAttrib:
+    def make(fog: Fog, /) -> FogAttrib:
         """Constructs a new FogAttrib object suitable for rendering the indicated fog
         onto geometry.
         """
@@ -8484,7 +8430,7 @@ class CullTraverser(TypedReferenceCount):
         """Returns the tag state key that has been specified for the scene's camera,
         if any.
         """
-    def set_camera_mask(self, camera_mask: DrawMask | int) -> None:
+    def set_camera_mask(self, camera_mask: DrawMask | int, /) -> None:
         """Changes the visibility mask for the camera viewing the scene.  This is
         normally set automatically at the time setup_scene() is called; you should
         change this only if you want to render some set of objects different from
@@ -8511,7 +8457,7 @@ class CullTraverser(TypedReferenceCount):
         """Returns true, as depth offsets are the only way that we implement decals
         nowadays.
         """
-    def set_view_frustum(self, view_frustum: GeometricBoundingVolume) -> None:
+    def set_view_frustum(self, view_frustum: GeometricBoundingVolume, /) -> None:
         """Specifies the bounding volume that corresponds to the view frustum.  Any
         primitives that fall entirely outside of this volume are not drawn.
         """
@@ -8531,16 +8477,15 @@ class CullTraverser(TypedReferenceCount):
         cull traversal; see GSG::get_effective_incomplete_render() for this same
         flag during the draw traversal.
         """
-    @overload
-    def traverse(self, data: CullTraverserData) -> None:
+    def traverse(self, data_or_root: CullTraverserData | NodePath, /) -> None:
         """Traverses from the next node with the given data, which has been
         constructed with the node but has not yet been converted into the node's
         space.
+
+        or:
+        Begins the traversal from the indicated node.
         """
-    @overload
-    def traverse(self, root: NodePath) -> None:
-        """Begins the traversal from the indicated node."""
-    def traverse_below(self, data: CullTraverserData) -> None:
+    def traverse_below(self, data: CullTraverserData, /) -> None:
         """Traverses all the children of the indicated node, with the given data,
         which has been converted into the node's space.
         """
@@ -8586,7 +8531,7 @@ class GeomDrawCallbackData(CallbackData):
         the data is not available (at least until the data becomes available
         later).
         """
-    def set_lost_state(self, lost_state: bool) -> None:
+    def set_lost_state(self, lost_state: bool, /) -> None:
         """Sets the lost_state flag.  If this is true, the callback does not have to
         be quite so careful to clean up after itself; Panda will assume that the
         graphics state is in an unknown state after the callback has finished, and
@@ -8615,7 +8560,7 @@ class RescaleNormalAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _RescaleNormalAttrib_Mode) -> RescaleNormalAttrib:
+    def make(mode: _RescaleNormalAttrib_Mode, /) -> RescaleNormalAttrib:
         """Constructs a new RescaleNormalAttrib object that specifies whether to
         rescale normals to compensate for transform scales or incorrectly defined
         normals.
@@ -8656,7 +8601,7 @@ class CullResult(ReferenceCount):
         process is finished for this frame and gives the bins a chance to do any
         post-processing (like sorting) before moving on to draw.
         """
-    def draw(self, current_thread: Thread) -> None:
+    def draw(self, current_thread: Thread, /) -> None:
         """Asks all the bins to draw themselves in the correct order."""
     def make_result_graph(self) -> PandaNode:
         """Returns a special scene graph constructed to represent the results of the
@@ -8762,7 +8707,7 @@ class DepthTestAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _RenderAttrib_PandaCompareFunc) -> DepthTestAttrib:
+    def make(mode: _RenderAttrib_PandaCompareFunc, /) -> DepthTestAttrib:
         """Constructs a new DepthTestAttrib object."""
     @staticmethod
     def make_default() -> DepthTestAttrib:
@@ -8787,7 +8732,7 @@ class DepthWriteAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _DepthWriteAttrib_Mode) -> DepthWriteAttrib:
+    def make(mode: _DepthWriteAttrib_Mode, /) -> DepthWriteAttrib:
         """Constructs a new DepthWriteAttrib object."""
     @staticmethod
     def make_default() -> DepthWriteAttrib:
@@ -8819,7 +8764,7 @@ class Light:
         """
     def get_color(self) -> LColor:
         """Returns the basic color of the light."""
-    def set_color(self, color: Vec4Like) -> None:
+    def set_color(self, color: Vec4Like, /) -> None:
         """Sets the basic color of the light."""
     def has_color_temperature(self) -> bool:
         """Returns true if the color was specified as a temperature in kelvins, and
@@ -8833,7 +8778,7 @@ class Light:
 
         @since 1.10.0
         """
-    def set_color_temperature(self, temperature: float) -> None:
+    def set_color_temperature(self, temperature: float, /) -> None:
         """Sets the color temperature of the light in kelvins.  This will recalculate
         the light's color.
 
@@ -8856,7 +8801,7 @@ class Light:
         order, the constant, linear, and quadratic terms based on the distance from
         the point to the vertex.
         """
-    def set_priority(self, priority: int) -> None:
+    def set_priority(self, priority: int, /) -> None:
         """Changes the relative importance of this light relative to the other lights
         that are applied simultaneously.
 
@@ -8960,7 +8905,7 @@ class LightAttrib(RenderAttrib):
         independently.
         """
     @deprecated('LightAttribs nowadays have a separate list of on_lights and')
-    def get_light(self, n: int) -> Light:
+    def get_light(self, n: int, /) -> Light:
         """Returns the nth light listed in the attribute.
 
         @deprecated LightAttribs nowadays have a separate list of on_lights and
@@ -8968,7 +8913,7 @@ class LightAttrib(RenderAttrib):
         independently.
         """
     @deprecated('LightAttribs nowadays have a separate list of on_lights and')
-    def has_light(self, light: Light) -> bool:
+    def has_light(self, light: Light, /) -> bool:
         """Returns true if the indicated light is listed in the attrib, false
         otherwise.
 
@@ -8977,14 +8922,14 @@ class LightAttrib(RenderAttrib):
         independently.
         """
     @deprecated('Use add_on_light() or add_off_light() instead.')
-    def add_light(self, light: Light) -> Self:
+    def add_light(self, light: Light, /) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights.
 
         @deprecated Use add_on_light() or add_off_light() instead.
         """
     @deprecated('Use remove_on_light() or remove_off_light() instead.')
-    def remove_light(self, light: Light) -> Self:
+    def remove_light(self, light: Light, /) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights.
 
@@ -9001,9 +8946,9 @@ class LightAttrib(RenderAttrib):
         """Returns the number of non-ambient lights that are turned on by this
         attribute.
         """
-    def get_on_light(self, n: int) -> NodePath:
+    def get_on_light(self, n: int, /) -> NodePath:
         """Returns the nth light turned on by the attribute, sorted in render order."""
-    def has_on_light(self, light: NodePath) -> bool:
+    def has_on_light(self, light: NodePath, /) -> bool:
         """Returns true if the indicated light is turned on by the attrib, false
         otherwise.
         """
@@ -9011,11 +8956,11 @@ class LightAttrib(RenderAttrib):
         """Returns true if any light is turned on by the attrib, false otherwise."""
     def get_num_off_lights(self) -> int:
         """Returns the number of lights that are turned off by the attribute."""
-    def get_off_light(self, n: int) -> NodePath:
+    def get_off_light(self, n: int, /) -> NodePath:
         """Returns the nth light turned off by the attribute, sorted in arbitrary
         (pointer) order.
         """
-    def has_off_light(self, light: NodePath) -> bool:
+    def has_off_light(self, light: NodePath, /) -> bool:
         """Returns true if the indicated light is turned off by the attrib, false
         otherwise.
         """
@@ -9027,11 +8972,11 @@ class LightAttrib(RenderAttrib):
         """Returns true if this is an identity attrib: it does not change the set of
         lights in use.
         """
-    def add_on_light(self, light: NodePath) -> Self:
+    def add_on_light(self, light: NodePath, /) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights turned on by this attrib.
         """
-    def remove_on_light(self, light: NodePath) -> Self:
+    def remove_on_light(self, light: NodePath, /) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights turned on by this attrib.
         """
@@ -9039,11 +8984,11 @@ class LightAttrib(RenderAttrib):
         """Returns a new LightAttrib, just like this one, but with the indicated light
         replaced with the given other light.
         """
-    def add_off_light(self, light: NodePath) -> Self:
+    def add_off_light(self, light: NodePath, /) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         added to the list of lights turned off by this attrib.
         """
-    def remove_off_light(self, light: NodePath) -> Self:
+    def remove_off_light(self, light: NodePath, /) -> Self:
         """Returns a new LightAttrib, just like this one, but with the indicated light
         removed from the list of lights turned off by this attrib.
         """
@@ -9218,9 +9163,9 @@ class LightRampAttrib(RenderAttrib):
         """
     def get_mode(self) -> _LightRampAttrib_LightRampMode:
         """Returns the LightRampAttrib mode."""
-    def get_level(self, n: int) -> float:
+    def get_level(self, n: int, /) -> float:
         """Returns the nth lighting level."""
-    def get_threshold(self, n: int) -> float:
+    def get_threshold(self, n: int, /) -> float:
         """Returns the nth threshold level."""
     @staticmethod
     def get_class_slot() -> int: ...
@@ -9253,14 +9198,14 @@ class Loader(TypedReferenceCount, Namable):
         def __init__(self, copy: Loader.Results = ...) -> None: ...
         def __copy__(self) -> Self: ...
         def __deepcopy__(self, memo: object, /) -> Self: ...
-        def assign(self, copy: Loader.Results) -> Self: ...
+        def assign(self, copy: Loader.Results, /) -> Self: ...
         def clear(self) -> None:
             """Removes all the files from the list."""
         def get_num_files(self) -> int:
             """Returns the number of files on the result list."""
-        def get_file(self, n: int) -> Filename:
+        def get_file(self, n: int, /) -> Filename:
             """Returns the nth file on the result list."""
-        def get_file_type(self, n: int) -> LoaderFileType:
+        def get_file_type(self, n: int, /) -> LoaderFileType:
             """Returns the file type of the nth file on the result list."""
         def get_files(self) -> tuple[Filename, ...]: ...
         def get_file_types(self) -> tuple[LoaderFileType, ...]: ...
@@ -9276,13 +9221,13 @@ class Loader(TypedReferenceCount, Namable):
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_TypedReferenceCount(self) -> TypedReferenceCount: ...
     def upcast_to_Namable(self) -> Namable: ...
-    def set_task_manager(self, task_manager: AsyncTaskManager) -> None:
+    def set_task_manager(self, task_manager: AsyncTaskManager, /) -> None:
         """Specifies the task manager that is used for asynchronous loads.  The
         default is the global task manager.
         """
     def get_task_manager(self) -> AsyncTaskManager:
         """Returns the task manager that is used for asynchronous loads."""
-    def set_task_chain(self, task_chain: str) -> None:
+    def set_task_chain(self, task_chain: str, /) -> None:
         """Specifies the task chain that is used for asynchronous loads.  The default
         is the initial name of the Loader object.
         """
@@ -9291,7 +9236,7 @@ class Loader(TypedReferenceCount, Namable):
     def stop_threads(self) -> None:
         """Stop any threads used for asynchronous loads."""
     @deprecated('use task.cancel() to cancel the request instead.')
-    def remove(self, task: AsyncTask) -> bool:
+    def remove(self, task: AsyncTask, /) -> bool:
         """Removes a pending asynchronous load request.  Returns true if successful,
         false otherwise.
         @deprecated use task.cancel() to cancel the request instead.
@@ -9306,7 +9251,7 @@ class Loader(TypedReferenceCount, Namable):
         """Returns a new AsyncTask object suitable for adding to load_async() to start
         an asynchronous model load.
         """
-    def load_async(self, request: AsyncTask) -> None:
+    def load_async(self, request: AsyncTask, /) -> None:
         """Begins an asynchronous load request.  To use this call, first call
         make_async_request() to create a new ModelLoadRequest object with the
         filename you wish to load, and then add that object to the Loader with
@@ -9324,7 +9269,7 @@ class Loader(TypedReferenceCount, Namable):
         """Returns a new AsyncTask object suitable for adding to save_async() to start
         an asynchronous model save.
         """
-    def save_async(self, request: AsyncTask) -> None:
+    def save_async(self, request: AsyncTask, /) -> None:
         """Begins an asynchronous save request.  To use this call, first call
         make_async_save_request() to create a new ModelSaveRequest object with the
         filename you wish to load, and then add that object to the Loader with
@@ -9336,7 +9281,7 @@ class Loader(TypedReferenceCount, Namable):
         object and listen for that event.  When the request is ready, you may
         retrieve the success or failure via request->get_success().
         """
-    def load_bam_stream(self, _in: istream) -> PandaNode:
+    def load_bam_stream(self, _in: istream, /) -> PandaNode:
         """Attempts to read a bam file from the indicated stream and return the scene
         graph defined there.
         """
@@ -9377,11 +9322,11 @@ class LoaderFileType(TypedObject):
         """Returns true if this file type can transparently load compressed files
         (with a .pz or .gz extension), false otherwise.
         """
-    def get_allow_disk_cache(self, options: LoaderOptions) -> bool:
+    def get_allow_disk_cache(self, options: LoaderOptions, /) -> bool:
         """Returns true if the loader flags allow retrieving the model from the on-
         disk bam cache (if it is enabled), false otherwise.
         """
-    def get_allow_ram_cache(self, options: LoaderOptions) -> bool:
+    def get_allow_ram_cache(self, options: LoaderOptions, /) -> bool:
         """Returns true if the loader flags allow retrieving the model from the in-
         memory ModelPool cache, false otherwise.
         """
@@ -9413,14 +9358,14 @@ class LoaderFileTypeRegistry:
     def __init__(self, param0: LoaderFileTypeRegistry, /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def register_type(self, type) -> None: ...
-    def register_deferred_type(self, entry_point) -> None: ...
-    def unregister_type(self, type) -> None: ...
+    def register_type(self, type, /) -> None: ...
+    def register_deferred_type(self, entry_point, /) -> None: ...
+    def unregister_type(self, type, /) -> None: ...
     def get_num_types(self) -> int:
         """Returns the total number of types registered."""
-    def get_type(self, n: int) -> LoaderFileType:
+    def get_type(self, n: int, /) -> LoaderFileType:
         """Returns the nth type registered."""
-    def get_type_from_extension(self, extension: str) -> LoaderFileType:
+    def get_type_from_extension(self, extension: str, /) -> LoaderFileType:
         """Determines the type of the file based on the indicated extension (without a
         leading dot).  Returns NULL if the extension matches no known file types.
         """
@@ -9452,7 +9397,7 @@ class MaterialAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(material: Material) -> MaterialAttrib:
+    def make(material: Material, /) -> MaterialAttrib:
         """Constructs a new MaterialAttrib object suitable for rendering the indicated
         material onto geometry.
         """
@@ -9586,7 +9531,7 @@ class ModelNode(PandaNode):
     PTDropNode: Final = 3
     PT_no_touch: Final = 4
     PTNoTouch: Final = 4
-    def set_preserve_transform(self, preserve_transform: _ModelNode_PreserveTransform) -> None:
+    def set_preserve_transform(self, preserve_transform: _ModelNode_PreserveTransform, /) -> None:
         """Sets the preserve_transform flag.  This restricts the ability of a flatten
         operation to affect the transform stored on this node, and/or the node
         itself.  In the order from weakest to strongest restrictions, the possible
@@ -9615,7 +9560,7 @@ class ModelNode(PandaNode):
         """Returns the current setting of the preserve_transform flag.  See
         set_preserve_transform().
         """
-    def set_preserve_attributes(self, attrib_mask: int) -> None:
+    def set_preserve_attributes(self, attrib_mask: int, /) -> None:
         """Sets the preserve_attributes flag.  This restricts the ability of a flatten
         operation to affect the render attributes stored on this node.
 
@@ -9626,7 +9571,7 @@ class ModelNode(PandaNode):
         """Returns the current setting of the preserve_attributes flag.  See
         set_preserve_attributes().
         """
-    def set_transform_limit(self, limit: float) -> None: ...
+    def set_transform_limit(self, limit: float, /) -> None: ...
     setPreserveTransform = set_preserve_transform
     getPreserveTransform = get_preserve_transform
     setPreserveAttributes = set_preserve_attributes
@@ -9669,7 +9614,7 @@ class ModelRoot(ModelNode):
         on disk.  This is mainly useful for reference purposes, but is also used to
         index the ModelRoot into the ModelPool.
         """
-    def set_fullpath(self, fullpath: StrOrBytesPath) -> None:
+    def set_fullpath(self, fullpath: StrOrBytesPath, /) -> None:
         """Sets the full pathname of the model represented by this node, as found on
         disk.  This is mainly useful for reference purposes, but is also used to
         index the ModelRoot into the ModelPool.
@@ -9685,7 +9630,7 @@ class ModelRoot(ModelNode):
         check to verify whether the file might have changed since the model was
         read.
         """
-    def set_timestamp(self, timestamp: int) -> None:
+    def set_timestamp(self, timestamp: int, /) -> None:
         """Sets the timestamp of the file on disk that was read for this model.  This
         is normally set automatically when a model is loaded, and should not be set
         directly by the user.
@@ -9696,7 +9641,7 @@ class ModelRoot(ModelNode):
         than a reference count, normally there's not much reason to get the pointer
         (though it may be compared pointerwise with other ModelRoot objects).
         """
-    def set_reference(self, ref: ModelRoot.ModelReference) -> None:
+    def set_reference(self, ref: ModelRoot.ModelReference, /) -> None:
         """Changes the pointer that represents the object shared between all copies of
         this ModelRoot.  This will disassociate this ModelRoot from all of its
         copies.  Normally, there's no reason to do this.
@@ -9728,12 +9673,12 @@ class ModelPool:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_model(filename: StrOrBytesPath) -> bool:
+    def has_model(filename: StrOrBytesPath, /) -> bool:
         """Returns true if the model has ever been loaded, false otherwise.  Note that
         this does not guarantee that the model is still up-to-date.
         """
     @staticmethod
-    def verify_model(filename: StrOrBytesPath) -> bool:
+    def verify_model(filename: StrOrBytesPath, /) -> bool:
         """Loads the given filename up as a model, if it has not already been loaded,
         and returns true to indicate success, or false to indicate failure.  If
         this returns true, it is probable that a subsequent call to load_model()
@@ -9774,21 +9719,17 @@ class ModelPool:
         """Adds the indicated already-loaded model to the pool.  The model will
         replace any previously-loaded model in the pool that had the same filename.
         """
-    @overload
     @staticmethod
-    @deprecated('Use release_model(model) instead.')
-    def release_model(filename: StrOrBytesPath) -> None:
+    def release_model(filename_or_model: ModelRoot | StrOrBytesPath, /) -> None:
         """Removes the indicated model from the pool, indicating it will never be
         loaded again; the model may then be freed.  If this function is never
         called, a reference count will be maintained on every model every loaded,
         and models will never be freed.
 
         @deprecated Use release_model(model) instead.
-        """
-    @overload
-    @staticmethod
-    def release_model(model: ModelRoot) -> None:
-        """Removes the indicated model from the pool, indicating it will never be
+
+        or:
+        Removes the indicated model from the pool, indicating it will never be
         loaded again; the model may then be freed.  If this function (and
         garbage_collect()) is never called, a reference count will be maintained on
         every model every loaded, and models will never be freed.
@@ -9806,14 +9747,14 @@ class ModelPool:
         pool.  Returns the number of models released.
         """
     @staticmethod
-    def list_contents(out: ostream = ...) -> None:
+    def list_contents(out: ostream = ..., /) -> None:
         """Lists the contents of the model pool to cout.
 
         or:
         Lists the contents of the model pool to the indicated output stream.
         """
     @staticmethod
-    def write(out: ostream) -> None:
+    def write(out: ostream, /) -> None:
         """Lists the contents of the model pool to the indicated output stream.  Helps
         with debugging.
         """
@@ -9894,7 +9835,7 @@ class TextureAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(tex: Texture = ...) -> TextureAttrib:
+    def make(tex: Texture = ..., /) -> TextureAttrib:
         """The following methods define the new multitexture mode for TextureAttrib.
         Each TextureAttrib can add or remove individual texture stages from the
         complete set of textures that are to be applied; this is similar to the
@@ -9934,49 +9875,49 @@ class TextureAttrib(RenderAttrib):
         """
     def get_num_on_stages(self) -> int:
         """Returns the number of stages that are turned on by the attribute."""
-    def get_on_stage(self, n: int) -> TextureStage:
+    def get_on_stage(self, n: int, /) -> TextureStage:
         """Returns the nth stage turned on by the attribute, sorted in render order."""
     def get_num_on_ff_stages(self) -> int:
         """Returns the number of on-stages that are relevant to the classic fixed
         function pipeline.  This excludes texture stages such as normal maps.
         """
-    def get_on_ff_stage(self, n: int) -> TextureStage:
+    def get_on_ff_stage(self, n: int, /) -> TextureStage:
         """Returns the nth stage turned on by the attribute, sorted in render order,
         including only those relevant to the classic fixed function pipeline.  This
         excludes texture stages such as normal maps.
         """
-    def get_ff_tc_index(self, n: int) -> int:
+    def get_ff_tc_index(self, n: int, /) -> int:
         """For each TextureStage listed in get_on_ff_stage(), this returns a unique
         index number for the texture coordinate name used by that TextureStage.  It
         is guaranteed to remain the same index number for each texcoord name (for a
         given set of TextureStages), even if the texture render order changes.
         """
-    def has_on_stage(self, stage: TextureStage) -> bool:
+    def has_on_stage(self, stage: TextureStage, /) -> bool:
         """Returns true if the indicated stage is turned on by the attrib, false
         otherwise.
         """
-    def get_on_texture(self, stage: TextureStage) -> Texture:
+    def get_on_texture(self, stage: TextureStage, /) -> Texture:
         """Returns the texture associated with the indicated stage, or NULL if no
         texture is associated.
         """
-    def get_on_sampler(self, stage: TextureStage) -> SamplerState:
+    def get_on_sampler(self, stage: TextureStage, /) -> SamplerState:
         """Returns the sampler associated with the indicated stage, or the one
         associated with its texture if no custom stage has been specified.  It is
         an error to call this if the stage does not exist.
         """
-    def get_on_stage_override(self, stage: TextureStage) -> int:
+    def get_on_stage_override(self, stage: TextureStage, /) -> int:
         """Returns the override value associated with the indicated stage."""
-    def find_on_stage(self, stage: TextureStage) -> int:
+    def find_on_stage(self, stage: TextureStage, /) -> int:
         """Returns the index number of the indicated TextureStage within the list of
         on_stages, or -1 if the indicated stage is not listed.
         """
     def get_num_off_stages(self) -> int:
         """Returns the number of stages that are turned off by the attribute."""
-    def get_off_stage(self, n: int) -> TextureStage:
+    def get_off_stage(self, n: int, /) -> TextureStage:
         """Returns the nth stage turned off by the attribute, sorted in arbitrary
         (pointer) order.
         """
-    def has_off_stage(self, stage: TextureStage) -> bool:
+    def has_off_stage(self, stage: TextureStage, /) -> bool:
         """Returns true if the indicated stage is turned off by the attrib, false
         otherwise.
         """
@@ -9998,7 +9939,7 @@ class TextureAttrib(RenderAttrib):
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage added to the list of stages turned on by this attrib.
         """
-    def remove_on_stage(self, stage: TextureStage) -> Self:
+    def remove_on_stage(self, stage: TextureStage, /) -> Self:
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage removed from the list of stages turned on by this attrib.
         """
@@ -10006,11 +9947,11 @@ class TextureAttrib(RenderAttrib):
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage added to the list of stages turned off by this attrib.
         """
-    def remove_off_stage(self, stage: TextureStage) -> Self:
+    def remove_off_stage(self, stage: TextureStage, /) -> Self:
         """Returns a new TextureAttrib, just like this one, but with the indicated
         stage removed from the list of stages turned off by this attrib.
         """
-    def unify_texture_stages(self, stage: TextureStage) -> Self:
+    def unify_texture_stages(self, stage: TextureStage, /) -> Self:
         """Returns a new TextureAttrib, just like this one, but with any included
         TextureAttribs that happen to have the same name as the given object
         replaced with the object.
@@ -10097,7 +10038,7 @@ class TexGenAttrib(RenderAttrib):
         This variant also accepts constant_value, which is only meaningful if mode
         is M_constant.
         """
-    def remove_stage(self, stage: TextureStage) -> Self:
+    def remove_stage(self, stage: TextureStage, /) -> Self:
         """Returns a new TexGenAttrib just like this one, with the indicated stage
         removed.
         """
@@ -10105,24 +10046,24 @@ class TexGenAttrib(RenderAttrib):
         """Returns true if no stages are defined in the TexGenAttrib, false if at
         least one is.
         """
-    def has_stage(self, stage: TextureStage) -> bool:
+    def has_stage(self, stage: TextureStage, /) -> bool:
         """Returns true if there is a mode associated with the indicated stage, or
         false otherwise (in which case get_transform(stage) will return M_off).
         """
-    def get_mode(self, stage: TextureStage) -> _RenderAttrib_TexGenMode:
+    def get_mode(self, stage: TextureStage, /) -> _RenderAttrib_TexGenMode:
         """Returns the generation mode associated with the named texture stage, or
         M_off if nothing is associated with the indicated stage.
         """
-    def has_gen_texcoord_stage(self, stage: TextureStage) -> bool:
+    def has_gen_texcoord_stage(self, stage: TextureStage, /) -> bool:
         """Returns true if the indicated TextureStage will have texture coordinates
         generated for it automatically (and thus there is no need to upload the
         texture coordinates encoded in the vertices).
         """
-    def get_constant_value(self, stage: TextureStage) -> LTexCoord3:
+    def get_constant_value(self, stage: TextureStage, /) -> LTexCoord3:
         """Returns the constant value associated with the named texture stage.  This
         is only meaningful if the mode is M_constant.
         """
-    def get_geom_rendering(self, geom_rendering: int) -> int:
+    def get_geom_rendering(self, geom_rendering: int, /) -> int:
         """Returns the union of the Geom::GeomRendering bits that will be required
         once this TexGenAttrib is applied to a geom which includes the indicated
         geom_rendering bits.
@@ -10157,11 +10098,11 @@ class OccluderNode(PandaNode):
         set_hpr(), set_scale() to position it appropriately, or replace the
         vertices with set_vertices().
         """
-    def set_double_sided(self, value: bool) -> None:
+    def set_double_sided(self, value: bool, /) -> None:
         """If true, the back-face will also be used to occlude"""
     def is_double_sided(self) -> bool:
         """Is this occluder double-sided"""
-    def set_min_coverage(self, value: float) -> None:
+    def set_min_coverage(self, value: float, /) -> None:
         """Minimum screen coverage needed before occluder used.  Range should be 0 to
         1. For example, setting to 0.2 would mean that the occluder needs to cover
         20% of the screen to be considered.
@@ -10177,7 +10118,7 @@ class OccluderNode(PandaNode):
         """Returns the number of vertices in the occluder polygon.  This should always
         return 4.
         """
-    def get_vertex(self, n: int) -> LPoint3:
+    def get_vertex(self, n: int, /) -> LPoint3:
         """Returns the nth vertex of the occluder polygon."""
     def set_vertex(self, n: int, v: Vec3Like) -> None:
         """Sets the nth vertex of the occluder polygon."""
@@ -10205,9 +10146,9 @@ class OccluderEffect(RenderEffect):
         """Constructs a new OccluderEffect object that does nothing."""
     def get_num_on_occluders(self) -> int:
         """Returns the number of occluders that are enabled by the effectute."""
-    def get_on_occluder(self, n: int) -> NodePath:
+    def get_on_occluder(self, n: int, /) -> NodePath:
         """Returns the nth occluder enabled by the effectute, sorted in render order."""
-    def has_on_occluder(self, occluder: NodePath) -> bool:
+    def has_on_occluder(self, occluder: NodePath, /) -> bool:
         """Returns true if the indicated occluder is enabled by the effect, false
         otherwise.
         """
@@ -10215,11 +10156,11 @@ class OccluderEffect(RenderEffect):
         """Returns true if this is an identity effect: it does not change the set of
         occluders in use.
         """
-    def add_on_occluder(self, occluder: NodePath) -> RenderEffect:
+    def add_on_occluder(self, occluder: NodePath, /) -> RenderEffect:
         """Returns a new OccluderEffect, just like this one, but with the indicated
         occluder added to the list of occluders enabled by this effect.
         """
-    def remove_on_occluder(self, occluder: NodePath) -> RenderEffect:
+    def remove_on_occluder(self, occluder: NodePath, /) -> RenderEffect:
         """Returns a new OccluderEffect, just like this one, but with the indicated
         occluder removed from the list of occluders enabled by this effect.
         """
@@ -10248,7 +10189,7 @@ class PolylightNode(PandaNode):
     def __eq__(self, other: object, /) -> bool:
         """Comparison methods"""
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: PolylightNode) -> bool: ...
+    def __lt__(self, other: PolylightNode, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     def enable(self) -> None:
@@ -10276,23 +10217,23 @@ class PolylightNode(PandaNode):
         to make sure that a color flattening external to the PolylightNode is not
         ignored.
         """
-    def set_radius(self, r: float) -> None:
+    def set_radius(self, r: float, /) -> None:
         """Set radius of the spherical light volume"""
     def get_radius(self) -> float:
         """Get radius of the spherical light volume"""
-    def set_attenuation(self, type: _PolylightNode_Attenuation_Type) -> bool:
+    def set_attenuation(self, type: _PolylightNode_Attenuation_Type, /) -> bool:
         """Set ALINEAR or AQUADRATIC attenuation"""
     def get_attenuation(self) -> _PolylightNode_Attenuation_Type:
         """Get "linear" or "quadratic" attenuation type"""
-    def set_a0(self, a0: float) -> None:
+    def set_a0(self, a0: float, /) -> None:
         """Set the quadratic attenuation factor a0 fd = 1 / ( a0 + a1*distance +
         a2*distance*distance)
         """
-    def set_a1(self, a1: float) -> None:
+    def set_a1(self, a1: float, /) -> None:
         """Set the quadratic attenuation factor a1 fd = 1 / ( a0 + a1*distance +
         a2*distance*distance)
         """
-    def set_a2(self, a2: float) -> None:
+    def set_a2(self, a2: float, /) -> None:
         """Set the quadratic attenuation factor a2 fd = 1 / ( a0 + a1*distance +
         a2*distance*distance)
         """
@@ -10316,26 +10257,26 @@ class PolylightNode(PandaNode):
         """Turn flickering off"""
     def is_flickering(self) -> bool:
         """Check is this light is flickering"""
-    def set_flicker_type(self, type: _PolylightNode_Flicker_Type) -> bool:
+    def set_flicker_type(self, type: _PolylightNode_Flicker_Type, /) -> bool:
         """Flicker type can be FRANDOM or FSIN At a later point there might be a
         FCUSTOM Custom flicker will be a set of fix points recorded by animating
         the light's intensity
         """
     def get_flicker_type(self) -> _PolylightNode_Flicker_Type:
         """Returns FRANDOM or FSIN"""
-    def set_offset(self, offset: float) -> None:
+    def set_offset(self, offset: float, /) -> None:
         """Set the offset value for the random and sin flicker variations... used to
         tweak the flicker This value is added to the variation
         """
     def get_offset(self) -> float:
         """Get the offset value for the random and sin flicker variations"""
-    def set_scale(self, scale: float) -> None:
+    def set_scale(self, scale: float, /) -> None:
         """Set the scale value for the random and sin flicker variations... used to
         tweak the flicker This value is multiplied with the variation
         """
     def get_scale(self) -> float:
         """Get the scale value for the random and sin flicker variations"""
-    def set_step_size(self, step: float) -> None:
+    def set_step_size(self, step: float, /) -> None:
         """Set the step size for the sin function in flicker This is the increment
         size for the value supplied to the sin function
         """
@@ -10343,11 +10284,11 @@ class PolylightNode(PandaNode):
         """Get the step size for the sin function in flicker This is the increment
         size for the value supplied to the sin function
         """
-    def set_freq(self, f: float) -> None:
+    def set_freq(self, f: float, /) -> None:
         """Set frequency of sin flicker"""
     def get_freq(self) -> float:
         """Get frequency of sin flicker"""
-    def compare_to(self, other: PolylightNode) -> int:
+    def compare_to(self, other: PolylightNode, /) -> int:
         """Returns a number less than zero if this PolylightNode sorts before the
         other one, greater than zero if it sorts after, or zero if they are
         equivalent.
@@ -10410,23 +10351,23 @@ class PolylightEffect(RenderEffect):
     @staticmethod
     def make(weight: float, contrib: _PolylightEffect_ContribType, effect_center: Vec3Like) -> RenderEffect:
         """Constructs a new PolylightEffect object."""
-    def add_light(self, newlight: NodePath) -> RenderEffect:
+    def add_light(self, newlight: NodePath, /) -> RenderEffect:
         """Add a PolylightNode object to this effect and return a new effect"""
-    def remove_light(self, newlight: NodePath) -> RenderEffect:
+    def remove_light(self, newlight: NodePath, /) -> RenderEffect:
         """Remove a light from this effect.  Return the new updated effect"""
-    def set_weight(self, w: float) -> RenderEffect:
+    def set_weight(self, w: float, /) -> RenderEffect:
         """Set weight and return a new effect... the reason this couldnt be done
         through make was because that would return a new effect without the
         lightgroup which is static and cant be accessed Here, we just pass that to
         the make
         """
-    def set_contrib(self, c: _PolylightEffect_ContribType) -> RenderEffect:
+    def set_contrib(self, c: _PolylightEffect_ContribType, /) -> RenderEffect:
         """Set Contrib Type and return a new effect... the reason this couldnt be done
         through make was because that would return a new effect without the
         lightgroup which is static and cant be accessed Here, we just pass that to
         the make
         """
-    def set_effect_center(self, ec: Vec3Like) -> RenderEffect:
+    def set_effect_center(self, ec: Vec3Like, /) -> RenderEffect:
         """Set weight and return a new effect... the reason this couldnt be done
         through make was because that would return a new effect without the
         lightgroup which is static and cant be accessed Here, we just pass that to
@@ -10438,7 +10379,7 @@ class PolylightEffect(RenderEffect):
         """Returns CT_all or CT_proximal"""
     def get_effect_center(self) -> LPoint3:
         """Return the value of the _effect_center"""
-    def has_light(self, light: NodePath) -> bool:
+    def has_light(self, light: NodePath, /) -> bool:
         """Returns true if the indicated light is listed in the PolylightEffect, false
         otherwise.
         """
@@ -10495,7 +10436,7 @@ class ShaderAttrib(RenderAttrib):
     def auto_ramp_on(self) -> bool: ...
     def auto_shadow_on(self) -> bool: ...
     def set_shader(self, s: Shader, priority: int = ...) -> Self: ...
-    def set_shader_off(self, priority: int = ...) -> Self: ...
+    def set_shader_off(self, priority: int = ..., /) -> Self: ...
     @overload
     def set_shader_auto(self, shader_switch: BitMask32, priority: int = ...) -> Self:
         """Set auto shader with bitmask to customize use, e.g., to keep normal, glow,
@@ -10510,33 +10451,33 @@ class ShaderAttrib(RenderAttrib):
     def set_shader_input(self, input: ShaderInput) -> Self:
         """Shader Inputs"""
     def set_shader_inputs(self, *args, **kwargs) -> Self: ...
-    def set_instance_count(self, instance_count: int) -> Self:
+    def set_instance_count(self, instance_count: int, /) -> Self:
         """Sets the geometry instance count.  Do not confuse this with instanceTo,
         which is used for animation instancing, and has nothing to do with this.  A
         value of 0 means not to use instancing at all.
         """
     def set_flag(self, flag: int, value: bool) -> Self: ...
-    def clear_flag(self, flag: int) -> Self: ...
-    def clear_shader_input(self, id: InternalName | str) -> Self: ...
+    def clear_flag(self, flag: int, /) -> Self: ...
+    def clear_shader_input(self, id: InternalName | str, /) -> Self: ...
     def clear_all_shader_inputs(self) -> Self:
         """Clears all the shader inputs on the attrib."""
-    def get_flag(self, flag: int) -> bool: ...
-    def has_shader_input(self, id: InternalName | str) -> bool:
+    def get_flag(self, flag: int, /) -> bool: ...
+    def has_shader_input(self, id: InternalName | str, /) -> bool:
         """Returns true if there is a ShaderInput of the given name."""
     def get_shader(self) -> Shader:
         """Returns the shader object associated with the node.  If get_override
         returns true, but get_shader returns NULL, that means that this attribute
         should disable the shader.
         """
-    def get_shader_input(self, id: InternalName | str) -> ShaderInput:
+    def get_shader_input(self, id: InternalName | str, /) -> ShaderInput:
         """Returns the ShaderInput of the given name.  If no such name is found, this
         function does not return NULL --- it returns the "blank" ShaderInput.
         """
-    def get_shader_input_nodepath(self, id: InternalName | str) -> NodePath:
+    def get_shader_input_nodepath(self, id: InternalName | str, /) -> NodePath:
         """Returns the ShaderInput as a nodepath.  Assertion fails if there is none,
         or if it is not a nodepath.
         """
-    def get_shader_input_vector(self, id: InternalName | str) -> LVecBase4:
+    def get_shader_input_vector(self, id: InternalName | str, /) -> LVecBase4:
         """Returns the ShaderInput as a vector.  Assertion fails if there is none, or
         if it is not a vector.
         """
@@ -10551,7 +10492,7 @@ class ShaderAttrib(RenderAttrib):
         """Returns the ShaderInput as a matrix.  Assertion fails if there is none, or
         if it is not a matrix or NodePath.
         """
-    def get_shader_input_buffer(self, id: InternalName | str) -> ShaderBuffer:
+    def get_shader_input_buffer(self, id: InternalName | str, /) -> ShaderBuffer:
         """Returns the ShaderInput as a ShaderBuffer.  Assertion fails if there is
         none, or if it is not a ShaderBuffer.
         """
@@ -10601,7 +10542,7 @@ class ShowBoundsEffect(RenderEffect):
     """
 
     @staticmethod
-    def make(tight: bool = ...) -> RenderEffect:
+    def make(tight: bool = ..., /) -> RenderEffect:
         """Constructs a new ShowBoundsEffect object."""
     def get_tight(self) -> bool:
         """Returns true if the "tight" flag was set, meaning the effect should compute
@@ -10649,7 +10590,7 @@ class TexProjectorEffect(RenderEffect):
         applied to the texture transform.  In this case, the lens_index may be used
         to select the particular lens that should be used.
         """
-    def remove_stage(self, stage: TextureStage) -> RenderEffect:
+    def remove_stage(self, stage: TextureStage, /) -> RenderEffect:
         """Returns a new TexProjectorEffect just like this one, with the indicated
         stage removed.
         """
@@ -10657,17 +10598,17 @@ class TexProjectorEffect(RenderEffect):
         """Returns true if no stages are defined in the TexProjectorEffect, false if
         at least one is.
         """
-    def has_stage(self, stage: TextureStage) -> bool:
+    def has_stage(self, stage: TextureStage, /) -> bool:
         """Returns true if there is a transform associated with the indicated stage,
         or false otherwise (in which case get_transform(stage) will return the
         identity transform).
         """
-    def get_from(self, stage: TextureStage) -> NodePath:
+    def get_from(self, stage: TextureStage, /) -> NodePath:
         """Returns the "from" node associated with the TexProjectorEffect on the
         indicated stage.  The relative transform between the "from" and the "to"
         nodes is automatically applied to the texture transform each frame.
         """
-    def get_to(self, stage: TextureStage) -> NodePath:
+    def get_to(self, stage: TextureStage, /) -> NodePath:
         """Returns the "to" node associated with the TexProjectorEffect on the
         indicated stage.  The relative transform between the "from" and the "to"
         nodes is automatically applied to the texture transform each frame.
@@ -10675,7 +10616,7 @@ class TexProjectorEffect(RenderEffect):
         Furthermore, if the "to" node is a LensNode, its projection matrix is also
         applied to the texture transform.
         """
-    def get_lens_index(self, stage: TextureStage) -> int:
+    def get_lens_index(self, stage: TextureStage, /) -> int:
         """Returns the lens_index associated with the TexProjectorEffect on the
         indicated stage.  This is only used if the "to" node is a LensNode, in
         which case it specifies the particular lens that should be used.
@@ -10743,13 +10684,13 @@ class ScissorEffect(RenderEffect):
         """
     def get_num_points(self) -> int:
         """Returns the number of node-based scissor points.  See get_point()."""
-    def get_point(self, n: int) -> LPoint3:
+    def get_point(self, n: int, /) -> LPoint3:
         """If is_screen() returns false, then get_num_points() and get_point() may be
         called to query the node-based scissor frame.  These return n points (at
         least two), which are understood to be in the space of this node, and which
         define any opposite corners of the scissor frame.
         """
-    def get_node(self, n: int) -> NodePath:
+    def get_node(self, n: int, /) -> NodePath:
         """Returns the node to which the nth point is relative, or empty NodePath to
         indicate the current node.
         """
@@ -10833,7 +10774,7 @@ class SceneGraphReducer:
     def __init__(self, param0: SceneGraphReducer, /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_gsg(self, gsg: GraphicsStateGuardianBase) -> None:
+    def set_gsg(self, gsg: GraphicsStateGuardianBase, /) -> None:
         """Specifies the particular GraphicsStateGuardian that this object will
         attempt to optimize to.  The GSG may specify parameters such as maximum
         number of vertices per vertex data, max number of vertices per primitive,
@@ -10849,7 +10790,7 @@ class SceneGraphReducer:
         """Returns the particular GraphicsStateGuardian that this object will attempt
         to optimize to.  See set_gsg().
         """
-    def set_combine_radius(self, combine_radius: float) -> None:
+    def set_combine_radius(self, combine_radius: float, /) -> None:
         """Specifies the radius that is used in conjunction with CS_within_radius to
         decide whether a subgraph's siblings should be combined into a single node
         or not.
@@ -10891,7 +10832,7 @@ class SceneGraphReducer:
         """Removes the indicated data column from any GeomVertexDatas found at the
         indicated root and below.  Returns the number of GeomNodes modified.
         """
-    def make_compatible_state(self, root: PandaNode) -> int:
+    def make_compatible_state(self, root: PandaNode, /) -> int:
         """Searches for GeomNodes that contain multiple Geoms that differ only in
         their ColorAttribs.  If such a GeomNode is found, then all the colors are
         pushed down into the vertices.  This makes it feasible for the geoms to be
@@ -10913,7 +10854,7 @@ class SceneGraphReducer:
 
         The return value is the number of vertex datas modified.
         """
-    def decompose(self, root: PandaNode) -> None:
+    def decompose(self, root: PandaNode, /) -> None:
         """Calls decompose() on every GeomNode at this level and below.
 
         There is usually no reason to call this explicitly, since unify() will do
@@ -10946,7 +10887,7 @@ class SceneGraphReducer:
         reduce the total number of individual Geoms and GeomPrimitives by combining
         these objects wherever possible.  See GeomNode::unify().
         """
-    def remove_unused_vertices(self, root: PandaNode) -> None:
+    def remove_unused_vertices(self, root: PandaNode, /) -> None:
         """Removes any vertices in GeomVertexDatas that are no longer used at this
         level and below.  This requires remapping vertex indices in all of the
         GeomPrimitives, to remove holes in the GeomVertexDatas.  It is normally not
@@ -10960,7 +10901,7 @@ class SceneGraphReducer:
 
         This operation will also apply to stashed children.
         """
-    def check_live_flatten(self, node: PandaNode) -> bool:
+    def check_live_flatten(self, node: PandaNode, /) -> bool:
         """In a non-release build, returns false if the node is correctly not in a
         live scene graph.  (Calling flatten on a node that is part of a live scene
         graph, for instance, a node somewhere under render, can cause problems in a
@@ -11020,16 +10961,16 @@ class PortalNode(PandaNode):
         """Create a default rectangle as portal.  Use this to create an arbitrary
         portal and setup from Python
         """
-    def set_portal_mask(self, mask: PortalMask | int) -> None:
+    def set_portal_mask(self, mask: PortalMask | int, /) -> None:
         """Simultaneously sets both the "from" and "into" PortalMask values to the
         same thing.
         """
-    def set_from_portal_mask(self, mask: PortalMask | int) -> None:
+    def set_from_portal_mask(self, mask: PortalMask | int, /) -> None:
         """Sets the "from" PortalMask.  In order for a portal to be detected from this
         object into another object, the intersection of this object's "from" mask
         and the other object's "into" mask must be nonzero.
         """
-    def set_into_portal_mask(self, mask: PortalMask | int) -> None:
+    def set_into_portal_mask(self, mask: PortalMask | int, /) -> None:
         """Sets the "into" PortalMask.  In order for a portal to be detected from
         another object into this object, the intersection of the other object's
         "from" mask and this object's "into" mask must be nonzero.
@@ -11044,7 +10985,7 @@ class PortalNode(PandaNode):
         detected from another object into this object, the intersection of the
         other object's "from" mask and this object's "into" mask must be nonzero.
         """
-    def set_portal_geom(self, flag: bool) -> None:
+    def set_portal_geom(self, flag: bool, /) -> None:
         """Sets the state of the "portal geom" flag for this PortalNode.  Normally,
         this is false; when this is set true, the PortalSolids in this node will
         test for portals with actual renderable geometry, in addition to whatever
@@ -11058,35 +10999,35 @@ class PortalNode(PandaNode):
         """Returns the current state of the portal_geom flag.  See set_portal_geom()."""
     def clear_vertices(self) -> None:
         """Resets the vertices of the portal to the empty list."""
-    def add_vertex(self, vertex: Vec3Like) -> None:
+    def add_vertex(self, vertex: Vec3Like, /) -> None:
         """Adds a new vertex to the portal polygon.  The vertices should be defined in
         a counterclockwise orientation when viewing through the portal.
         """
     def get_num_vertices(self) -> int:
         """Returns the number of vertices in the portal polygon."""
-    def get_vertex(self, n: int) -> LPoint3:
+    def get_vertex(self, n: int, /) -> LPoint3:
         """Returns the nth vertex of the portal polygon."""
-    def set_cell_in(self, cell: NodePath) -> None:
+    def set_cell_in(self, cell: NodePath, /) -> None:
         """Sets the cell that this portal belongs to"""
     def get_cell_in(self) -> NodePath:
         """Sets the cell that this portal belongs to"""
-    def set_cell_out(self, cell: NodePath) -> None:
+    def set_cell_out(self, cell: NodePath, /) -> None:
         """Sets the cell that this portal leads out to"""
     def get_cell_out(self) -> NodePath:
         """Sets the cell that this portal leads out to"""
-    def set_clip_plane(self, value: bool) -> None:
+    def set_clip_plane(self, value: bool, /) -> None:
         """this is set if the portal will clip against its left and right planes"""
     def is_clip_plane(self) -> bool:
         """Is this portal clipping against its left-right planes"""
-    def set_visible(self, value: bool) -> None:
+    def set_visible(self, value: bool, /) -> None:
         """this is set if the portal is facing camera"""
     def is_visible(self) -> bool:
         """Is this portal facing the camera"""
-    def set_max_depth(self, value: int) -> None:
+    def set_max_depth(self, value: int, /) -> None:
         """Set the maximum depth this portal will be visible at"""
     def get_max_depth(self) -> int:
         """Returns the maximum depth this portal will be visible at"""
-    def set_open(self, value: bool) -> None:
+    def set_open(self, value: bool, /) -> None:
         """Python sets this based on curent camera zone"""
     def is_open(self) -> bool:
         """Is this portal open from current camera zone"""
@@ -11188,7 +11129,7 @@ class ShadeModelAttrib(RenderAttrib):
     @property
     def class_slot(self) -> int: ...
     @staticmethod
-    def make(mode: _ShadeModelAttrib_Mode) -> ShadeModelAttrib:
+    def make(mode: _ShadeModelAttrib_Mode, /) -> ShadeModelAttrib:
         """Constructs a new ShadeModelAttrib object that specifies whether to draw
         polygons with flat shading or with per-vertex (smooth) shading.
         """
@@ -11344,7 +11285,7 @@ class StencilAttrib(RenderAttrib):
         clear_value: int,
     ) -> StencilAttrib:
         """Constructs a two-sided StencilAttrib."""
-    def get_render_state(self, render_state_identifier: _StencilAttrib_StencilRenderState) -> int:
+    def get_render_state(self, render_state_identifier: _StencilAttrib_StencilRenderState, /) -> int:
         """Returns render state."""
     @staticmethod
     def get_class_slot() -> int: ...
@@ -11364,17 +11305,17 @@ class ShaderPool:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     @staticmethod
-    def has_shader(filename: StrOrBytesPath) -> bool:
+    def has_shader(filename: StrOrBytesPath, /) -> bool:
         """Returns true if the shader has ever been loaded, false otherwise."""
     @staticmethod
-    def verify_shader(filename: StrOrBytesPath) -> bool:
+    def verify_shader(filename: StrOrBytesPath, /) -> bool:
         """Loads the given filename up into a shader, if it has not already been
         loaded, and returns true to indicate success, or false to indicate failure.
         If this returns true, it is guaranteed that a subsequent call to
         load_shader() with the same shader name will return a valid Shader pointer.
         """
     @staticmethod
-    def load_shader(filename: StrOrBytesPath) -> Shader:
+    def load_shader(filename: StrOrBytesPath, /) -> Shader:
         """Loads the given filename up into a shader, if it has not already been
         loaded, and returns the new shader.  If a shader with the same filename was
         previously loaded, returns that one instead.  If the shader file cannot be
@@ -11387,7 +11328,7 @@ class ShaderPool:
         filename.
         """
     @staticmethod
-    def release_shader(filename: StrOrBytesPath) -> None:
+    def release_shader(filename: StrOrBytesPath, /) -> None:
         """Removes the indicated shader from the pool, indicating it will never be
         loaded again; the shader may then be freed.  If this function is never
         called, a reference count will be maintained on every shader every loaded,
@@ -11403,10 +11344,10 @@ class ShaderPool:
         pool.  Returns the number of shaders released.
         """
     @staticmethod
-    def list_contents(out: ostream) -> None:
+    def list_contents(out: ostream, /) -> None:
         """Lists the contents of the shader pool to the indicated output stream."""
     @staticmethod
-    def write(out: ostream) -> None:
+    def write(out: ostream, /) -> None:
         """Lists the contents of the shader pool to the indicated output stream."""
     hasShader = has_shader
     verifyShader = verify_shader
@@ -11417,7 +11358,7 @@ class ShaderPool:
     garbageCollect = garbage_collect
     listContents = list_contents
 
-def py_decode_NodePath_from_bam_stream(data: bytes) -> NodePath: ...
+def py_decode_NodePath_from_bam_stream(data: bytes, /) -> NodePath: ...
 def py_decode_NodePath_from_bam_stream_persist(unpickler, data: bytes) -> NodePath: ...
 pyDecodeNodePathFromBamStream = py_decode_NodePath_from_bam_stream
 pyDecodeNodePathFromBamStreamPersist = py_decode_NodePath_from_bam_stream_persist

@@ -93,7 +93,7 @@ class CInterval(TypedReferenceCount):
         """Returns true if the interval is in either its initial or final states (but
         not in a running or paused state).
         """
-    def set_done_event(self, event: str) -> None:
+    def set_done_event(self, event: str, /) -> None:
         """Sets the event that is generated whenever the interval reaches its final
         state, whether it is explicitly finished or whether it gets there on its
         own.
@@ -103,7 +103,7 @@ class CInterval(TypedReferenceCount):
         state, whether it is explicitly finished or whether it gets there on its
         own.
         """
-    def set_t(self, t: float) -> None:
+    def set_t(self, t: float, /) -> None:
         """Explicitly sets the time within the interval.  Normally, you would use
         start() .. finish() to let the time play normally, but this may be used to
         set the time to some particular value.
@@ -112,7 +112,7 @@ class CInterval(TypedReferenceCount):
         """Returns the current time of the interval: the last value of t passed to
         priv_initialize(), priv_step(), or priv_finalize().
         """
-    def set_auto_pause(self, auto_pause: bool) -> None:
+    def set_auto_pause(self, auto_pause: bool, /) -> None:
         """Changes the state of the 'auto_pause' flag.  If this is true, the interval
         may be arbitrarily interrupted when the system needs to reset due to some
         external event by calling CIntervalManager::interrupt().  If this is false
@@ -120,7 +120,7 @@ class CInterval(TypedReferenceCount):
         """
     def get_auto_pause(self) -> bool:
         """Returns the state of the 'auto_pause' flag.  See set_auto_pause()."""
-    def set_auto_finish(self, auto_finish: bool) -> None:
+    def set_auto_finish(self, auto_finish: bool, /) -> None:
         """Changes the state of the 'auto_finish' flag.  If this is true, the interval
         may be arbitrarily finished when the system needs to reset due to some
         external event by calling CIntervalManager::interrupt().  If this is false
@@ -128,7 +128,7 @@ class CInterval(TypedReferenceCount):
         """
     def get_auto_finish(self) -> bool:
         """Returns the state of the 'auto_finish' flag.  See set_auto_finish()."""
-    def set_wants_t_callback(self, wants_t_callback: bool) -> None:
+    def set_wants_t_callback(self, wants_t_callback: bool, /) -> None:
         """Changes the state of the 'wants_t_callback' flag.  If this is true, the
         interval will be returned by CIntervalManager::get_event() each time the
         interval's time value has been changed, regardless of whether it has any
@@ -138,7 +138,7 @@ class CInterval(TypedReferenceCount):
         """Returns the state of the 'wants_t_callback' flag.  See
         set_wants_t_callback().
         """
-    def set_manager(self, manager: CIntervalManager) -> None:
+    def set_manager(self, manager: CIntervalManager, /) -> None:
         """Indicates the CIntervalManager object which will be responsible for playing
         this interval.  This defaults to the global CIntervalManager; you should
         need to change this only if you have special requirements for playing this
@@ -168,7 +168,7 @@ class CInterval(TypedReferenceCount):
         """Stops the interval from playing but leaves it in its current state.  It may
         later be resumed from this point by calling resume().
         """
-    def resume(self, start_t: float = ...) -> None:
+    def resume(self, start_t: float = ..., /) -> None:
         """Restarts the interval from its current point after a previous call to
         pause().
 
@@ -176,7 +176,7 @@ class CInterval(TypedReferenceCount):
         Restarts the interval from the indicated point after a previous call to
         pause().
         """
-    def resume_until(self, end_t: float) -> None:
+    def resume_until(self, end_t: float, /) -> None:
         """Restarts the interval from the current point after a previous call to
         pause() (or a previous play-to-point-and-stop), to play until the indicated
         point and then stop.
@@ -195,7 +195,7 @@ class CInterval(TypedReferenceCount):
         """Returns the play rate as set by the last call to start(), loop(), or
         set_play_rate().
         """
-    def set_play_rate(self, play_rate: float) -> None:
+    def set_play_rate(self, play_rate: float, /) -> None:
         """Changes the play rate of the interval.  If the interval is already started,
         this changes its speed on-the-fly.  Note that since play_rate is a
         parameter to start() and loop(), the next call to start() or loop() will
@@ -206,7 +206,7 @@ class CInterval(TypedReferenceCount):
         Python, but the method names are prefixed with priv_ to remind you that
         you probably don't want to be using them directly.
         """
-    def priv_initialize(self, t: float) -> None:
+    def priv_initialize(self, t: float, /) -> None:
         """This replaces the first call to priv_step(), and indicates that the
         interval has just begun.  This may be overridden by derived classes that
         need to do some explicit initialization on the first call.
@@ -216,7 +216,7 @@ class CInterval(TypedReferenceCount):
         priv_finalize(), when everything is to happen within one frame.  The
         interval should initialize itself, then leave itself in the final state.
         """
-    def priv_step(self, t: float) -> None:
+    def priv_step(self, t: float, /) -> None:
         """Advances the time on the interval.  The time may either increase (the
         normal case) or decrease (e.g.  if the interval is being played by a
         slider).
@@ -226,7 +226,7 @@ class CInterval(TypedReferenceCount):
         be after it played all the way through.  It's generally invoked by
         set_final_t().
         """
-    def priv_reverse_initialize(self, t: float) -> None:
+    def priv_reverse_initialize(self, t: float, /) -> None:
         """Similar to priv_initialize(), but this is called when the interval is being
         played backwards; it indicates that the interval should start at the
         finishing state and undo any intervening intervals.
@@ -251,7 +251,7 @@ class CInterval(TypedReferenceCount):
         The purpose of this function is to allow self-running intervals like sound
         intervals to stop the actual sound playback during the pause.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, indent_level: int) -> None: ...
     def setup_play(self, start_time: float, end_time: float, play_rate: float, do_loop: bool) -> None:
         """Called to prepare the interval for automatic timed playback, e.g.  via a
@@ -268,7 +268,7 @@ class CInterval(TypedReferenceCount):
         """Called to prepare the interval for restarting at the current point within
         the interval after an interruption.
         """
-    def setup_resume_until(self, end_t: float) -> None:
+    def setup_resume_until(self, end_t: float, /) -> None:
         """Called to prepare the interval for restarting from the current point after
         a previous call to pause() (or a previous play-to-point-and-stop), to play
         until the indicated point and then stop.
@@ -331,7 +331,7 @@ class CIntervalManager:
 
     DtoolClassDict: ClassVar[dict[str, Any]]
     def __init__(self) -> None: ...
-    def set_event_queue(self, event_queue: EventQueue) -> None:
+    def set_event_queue(self, event_queue: EventQueue, /) -> None:
         """Specifies a custom event queue to be used for throwing done events from
         intervals as they finish.  If this is not specified, the global event queue
         is used.
@@ -357,13 +357,13 @@ class CIntervalManager:
         get_next_removal().  If external is false, the interval's index will never
         be returned by these two functions.
         """
-    def find_c_interval(self, name: str) -> int:
+    def find_c_interval(self, name: str, /) -> int:
         """Returns the index associated with the named interval, if there is such an
         interval, or -1 if there is not.
         """
-    def get_c_interval(self, index: int) -> CInterval:
+    def get_c_interval(self, index: int, /) -> CInterval:
         """Returns the interval associated with the given index."""
-    def remove_c_interval(self, index: int) -> None:
+    def remove_c_interval(self, index: int, /) -> None:
         """Removes the indicated interval from the queue immediately.  It will not be
         returned from get_next_removal(), and none of its pending events, if any,
         will be returned by get_next_event().
@@ -415,8 +415,8 @@ class CIntervalManager:
         clean up its own data structures accordingly, and then call
         get_next_removal() again.
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_global_ptr() -> CIntervalManager:
         """Returns the pointer to the one global CIntervalManager object."""
@@ -580,7 +580,7 @@ class CLerpInterval(CInterval):
         linear interpolation behaves near the beginning and end of the lerp period.
         """
     @staticmethod
-    def string_blend_type(blend_type: str) -> _CLerpInterval_BlendType:
+    def string_blend_type(blend_type: str, /) -> _CLerpInterval_BlendType:
         """Returns the BlendType enumerated value corresponding to the indicated
         string, or BT_invalid if the string doesn't match anything.
         """
@@ -658,26 +658,25 @@ class CLerpNodePathInterval(CLerpInterval):
         If this is an empty node path, the lerped node is being moved in its own
         coordinate system.
         """
-    def set_start_pos(self, pos: Vec3Like) -> None:
+    def set_start_pos(self, pos: Vec3Like, /) -> None:
         """Indicates the initial position of the lerped node.  This is meaningful only
         if set_end_pos() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual position at the
         time the lerp is performed.
         """
-    def set_end_pos(self, pos: Vec3Like) -> None:
+    def set_end_pos(self, pos: Vec3Like, /) -> None:
         """Indicates that the position of the node should be lerped, and specifies the
         final position of the node.  This should be called before
         priv_initialize().  If this is not called, the node's position will not be
         affected by the lerp.
         """
-    def set_start_hpr(self, hpr: Vec3Like) -> None:
+    def set_start_hpr(self, hpr: Vec3Like, /) -> None:
         """Indicates the initial rotation of the lerped node.  This is meaningful only
         if either set_end_hpr() or set_end_quat() is also called.  This parameter
         is optional; if unspecified, the value will be taken from the node's actual
         rotation at the time the lerp is performed.
         """
-    @overload
-    def set_end_hpr(self, quat: Vec4Like) -> None:
+    def set_end_hpr(self, quat_or_hpr: Vec3Like | Vec4Like, /) -> None:
         """Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
@@ -686,10 +685,9 @@ class CLerpNodePathInterval(CLerpInterval):
         function name is set_end_hpr().  The quaternion will be implicitly
         converted to a HPR trio, and the lerp will be performed in HPR space,
         componentwise.
-        """
-    @overload
-    def set_end_hpr(self, hpr: Vec3Like) -> None:
-        """Indicates that the rotation of the node should be lerped, and specifies the
+
+        or:
+        Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
 
@@ -697,7 +695,7 @@ class CLerpNodePathInterval(CLerpInterval):
         nor set_end_quat() is called, the node's rotation will not be affected by
         the lerp.
         """
-    def set_start_quat(self, quat: Vec4Like) -> None:
+    def set_start_quat(self, quat: Vec4Like, /) -> None:
         """Indicates the initial rotation of the lerped node.  This is meaningful only
         if either set_end_quat() or set_end_hpr() is also called.  This parameter
         is optional; if unspecified, the value will be taken from the node's actual
@@ -705,8 +703,7 @@ class CLerpNodePathInterval(CLerpInterval):
 
         The given quaternion needs to be normalized.
         """
-    @overload
-    def set_end_quat(self, quat: Vec4Like) -> None:
+    def set_end_quat(self, quat_or_hpr: Vec3Like | Vec4Like, /) -> None:
         """Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
@@ -716,10 +713,9 @@ class CLerpNodePathInterval(CLerpInterval):
         the lerp.
 
         The given quaternion needs to be normalized.
-        """
-    @overload
-    def set_end_quat(self, hpr: Vec3Like) -> None:
-        """Indicates that the rotation of the node should be lerped, and specifies the
+
+        or:
+        Indicates that the rotation of the node should be lerped, and specifies the
         final rotation of the node.  This should be called before
         priv_initialize().
 
@@ -732,93 +728,93 @@ class CLerpNodePathInterval(CLerpInterval):
         quaternion, and the lerp will be performed in quaternion space, as a
         spherical lerp.
         """
-    def set_start_scale(self, scale: Vec3Like | float) -> None:
+    def set_start_scale(self, scale: Vec3Like | float, /) -> None:
         """Indicates the initial scale of the lerped node.  This is meaningful only if
         set_end_scale() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual scale at the
         time the lerp is performed.
         """
-    def set_end_scale(self, scale: Vec3Like | float) -> None:
+    def set_end_scale(self, scale: Vec3Like | float, /) -> None:
         """Indicates that the scale of the node should be lerped, and specifies the
         final scale of the node.  This should be called before priv_initialize().
         If this is not called, the node's scale will not be affected by the lerp.
         """
-    def set_start_shear(self, shear: Vec3Like) -> None:
+    def set_start_shear(self, shear: Vec3Like, /) -> None:
         """Indicates the initial shear of the lerped node.  This is meaningful only if
         set_end_shear() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual shear at the
         time the lerp is performed.
         """
-    def set_end_shear(self, shear: Vec3Like) -> None:
+    def set_end_shear(self, shear: Vec3Like, /) -> None:
         """Indicates that the shear of the node should be lerped, and specifies the
         final shear of the node.  This should be called before priv_initialize().
         If this is not called, the node's shear will not be affected by the lerp.
         """
-    def set_start_color(self, color: Vec4Like) -> None:
+    def set_start_color(self, color: Vec4Like, /) -> None:
         """Indicates the initial color of the lerped node.  This is meaningful only if
         set_end_color() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual color at the
         time the lerp is performed.
         """
-    def set_end_color(self, color: Vec4Like) -> None:
+    def set_end_color(self, color: Vec4Like, /) -> None:
         """Indicates that the color of the node should be lerped, and specifies the
         final color of the node.  This should be called before priv_initialize().
         If this is not called, the node's color will not be affected by the lerp.
         """
-    def set_start_color_scale(self, color_scale: Vec4Like) -> None:
+    def set_start_color_scale(self, color_scale: Vec4Like, /) -> None:
         """Indicates the initial color scale of the lerped node.  This is meaningful
         only if set_end_color_scale() is also called.  This parameter is optional;
         if unspecified, the value will be taken from the node's actual color scale
         at the time the lerp is performed.
         """
-    def set_end_color_scale(self, color_scale: Vec4Like) -> None:
+    def set_end_color_scale(self, color_scale: Vec4Like, /) -> None:
         """Indicates that the color scale of the node should be lerped, and specifies
         the final color scale of the node.  This should be called before
         priv_initialize().  If this is not called, the node's color scale will not
         be affected by the lerp.
         """
-    def set_texture_stage(self, stage: TextureStage) -> None:
+    def set_texture_stage(self, stage: TextureStage, /) -> None:
         """Indicates the texture stage that is adjusted by tex_offset, tex_rotate,
         and/or tex_scale.  If this is not set, the default is the default texture
         stage.
         """
-    def set_start_tex_offset(self, tex_offset: Vec2Like) -> None:
+    def set_start_tex_offset(self, tex_offset: Vec2Like, /) -> None:
         """Indicates the initial UV offset of the lerped node.  This is meaningful
         only if set_end_tex_offset() is also called.  This parameter is optional;
         if unspecified, the value will be taken from the node's actual UV offset at
         the time the lerp is performed.
         """
-    def set_end_tex_offset(self, tex_offset: Vec2Like) -> None:
+    def set_end_tex_offset(self, tex_offset: Vec2Like, /) -> None:
         """Indicates that the UV offset of the node should be lerped, and specifies
         the final UV offset of the node.  This should be called before
         priv_initialize().  If this is not called, the node's UV offset will not be
         affected by the lerp.
         """
-    def set_start_tex_rotate(self, tex_rotate: float) -> None:
+    def set_start_tex_rotate(self, tex_rotate: float, /) -> None:
         """Indicates the initial UV rotate of the lerped node.  This is meaningful
         only if set_end_tex_rotate() is also called.  This parameter is optional;
         if unspecified, the value will be taken from the node's actual UV rotate at
         the time the lerp is performed.
         """
-    def set_end_tex_rotate(self, tex_rotate: float) -> None:
+    def set_end_tex_rotate(self, tex_rotate: float, /) -> None:
         """Indicates that the UV rotate of the node should be lerped, and specifies
         the final UV rotate of the node.  This should be called before
         priv_initialize().  If this is not called, the node's UV rotate will not be
         affected by the lerp.
         """
-    def set_start_tex_scale(self, tex_scale: Vec2Like) -> None:
+    def set_start_tex_scale(self, tex_scale: Vec2Like, /) -> None:
         """Indicates the initial UV scale of the lerped node.  This is meaningful only
         if set_end_tex_scale() is also called.  This parameter is optional; if
         unspecified, the value will be taken from the node's actual UV scale at the
         time the lerp is performed.
         """
-    def set_end_tex_scale(self, tex_scale: Vec2Like) -> None:
+    def set_end_tex_scale(self, tex_scale: Vec2Like, /) -> None:
         """Indicates that the UV scale of the node should be lerped, and specifies the
         final UV scale of the node.  This should be called before
         priv_initialize().  If this is not called, the node's UV scale will not be
         affected by the lerp.
         """
-    def set_override(self, override: int) -> None:
+    def set_override(self, override: int, /) -> None:
         """Changes the override value that will be associated with any state changes
         applied by the lerp.  If this lerp is changing state (for instance, a color
         lerp or a tex matrix lerp), then the new attributes created by this lerp
@@ -879,7 +875,7 @@ class CMetaInterval(CInterval):
     def __init__(self, param0: CMetaInterval, /) -> None: ...
     @overload
     def __init__(self, name: str) -> None: ...
-    def set_precision(self, precision: float) -> None:
+    def set_precision(self, precision: float, /) -> None:
         """Indicates the precision with which time measurements are compared.  For
         numerical accuracy, all floating-point time values are converted to integer
         values internally by scaling by the precision factor.  The larger the
@@ -932,7 +928,7 @@ class CMetaInterval(CInterval):
         The return value is the index of the def entry representing the new
         interval.
         """
-    def pop_level(self, duration: float = ...) -> int:
+    def pop_level(self, duration: float = ..., /) -> int:
         """Finishes a level marked by a previous call to push_level(), and returns to
         the previous level.
 
@@ -949,12 +945,12 @@ class CMetaInterval(CInterval):
         intervals are adjusting accordingly, and true is returned.  If a matching
         interval is not found, nothing is changed and false is returned.
         """
-    def get_interval_start_time(self, name: str) -> float:
+    def get_interval_start_time(self, name: str, /) -> float:
         """Returns the actual start time, relative to the beginning of the interval,
         of the child interval with the given name, if found, or -1 if the interval
         is not found.
         """
-    def get_interval_end_time(self, name: str) -> float:
+    def get_interval_end_time(self, name: str, /) -> float:
         """Returns the actual end time, relative to the beginning of the interval, of
         the child interval with the given name, if found, or -1 if the interval is
         not found.
@@ -963,13 +959,13 @@ class CMetaInterval(CInterval):
         """Returns the number of interval and push/pop definitions that have been
         added to the meta interval.
         """
-    def get_def_type(self, n: int) -> _CMetaInterval_DefType:
+    def get_def_type(self, n: int, /) -> _CMetaInterval_DefType:
         """Returns the type of the nth interval definition that has been added."""
-    def get_c_interval(self, n: int) -> CInterval:
+    def get_c_interval(self, n: int, /) -> CInterval:
         """Return the CInterval pointer associated with the nth interval definition.
         It is only valid to call this if get_def_type(n) returns DT_c_interval.
         """
-    def get_ext_index(self, n: int) -> int:
+    def get_ext_index(self, n: int, /) -> int:
         """Return the external interval index number associated with the nth interval
         definition.  It is only valid to call this if get_def_type(n) returns
         DT_ext_index.
@@ -999,7 +995,7 @@ class CMetaInterval(CInterval):
         prepares the interval so the next call to is_event_ready() will return
         information about the next external interval on the queue, if any.
         """
-    def timeline(self, out: ostream) -> None:
+    def timeline(self, out: ostream, /) -> None:
         """Outputs a list of all events in the order in which they occur."""
     setPrecision = set_precision
     getPrecision = get_precision

@@ -38,7 +38,7 @@ class ARToolKit:
         parameter indicates how large you printed the physical markers.  You should
         use the same size units that you wish to use in the panda code.
         """
-    def set_threshold(self, n: float) -> None:
+    def set_threshold(self, n: float, /) -> None:
         """As part of its analysis, the ARToolKit occasionally converts images to
         black and white by thresholding them.  The threshold is set to 0.5 by
         default, but you can tweak it here.
@@ -75,7 +75,7 @@ class WebcamVideo(MovieVideo):
         at 640x480, 30 fps" is an option.
         """
     @staticmethod
-    def get_option(n: int) -> WebcamVideo:
+    def get_option(n: int, /) -> WebcamVideo:
         """Returns the nth webcam option."""
     def get_size_x(self) -> int:
         """Returns the camera's size_x."""
@@ -87,7 +87,7 @@ class WebcamVideo(MovieVideo):
         """
     def get_pixel_format(self) -> str:
         """Returns the camera's pixel format, as a FourCC code, if known."""
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Outputs the WebcamVideo.  This function simply writes the name, size and
         FPS to the output stream.
         """

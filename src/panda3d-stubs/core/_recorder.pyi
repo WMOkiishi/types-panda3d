@@ -64,11 +64,11 @@ class RecorderController(TypedReferenceCount):
     """
 
     def __init__(self) -> None: ...
-    def begin_record(self, filename: StrOrBytesPath) -> bool:
+    def begin_record(self, filename: StrOrBytesPath, /) -> bool:
         """Begins recording data to the indicated filename.  All of the recorders in
         use should already have been added.
         """
-    def begin_playback(self, filename: StrOrBytesPath) -> bool:
+    def begin_playback(self, filename: StrOrBytesPath, /) -> bool:
         """Begins playing back data from the indicated filename.  All of the recorders
         in use should already have been added, although this may define additional
         recorders if they are present in the file (these new recorders will not be
@@ -82,7 +82,7 @@ class RecorderController(TypedReferenceCount):
         recorded (or, in recording mode, the time at which the current session
         began).
         """
-    def set_random_seed(self, random_seed: int) -> None:
+    def set_random_seed(self, random_seed: int, /) -> None:
         """Indicates an arbitrary number to be recorded in the session file as a
         random seed, should the application wish to take advantage of it.  This
         must be set before begin_record() is called.
@@ -127,7 +127,7 @@ class RecorderController(TypedReferenceCount):
         mode and the name and type matches a recorder in the session file, the
         recorder will begin receiving data.
         """
-    def has_recorder(self, name: str) -> bool:
+    def has_recorder(self, name: str, /) -> bool:
         """Returns true if the named recorder has been added to the table by a
         previous call to add_recorder(), false otherwise.
 
@@ -135,7 +135,7 @@ class RecorderController(TypedReferenceCount):
         recorder that was found in the session file but was never explicitly added
         via add_recorder(); see get_recorder().
         """
-    def get_recorder(self, name: str) -> RecorderBase:
+    def get_recorder(self, name: str, /) -> RecorderBase:
         """Returns the recorder with the indicated name, or NULL if there is no such
         recorder.
 
@@ -144,7 +144,7 @@ class RecorderController(TypedReferenceCount):
         never added to the table by the user.  In this case, has_recorder() may
         return false, but get_recorder() will return a non-NULL value.
         """
-    def remove_recorder(self, name: str) -> bool:
+    def remove_recorder(self, name: str, /) -> bool:
         """Removes the named recorder from the table.  Returns true if successful,
         false if there was no such recorder.
 
@@ -154,7 +154,7 @@ class RecorderController(TypedReferenceCount):
         has data for this name, a default recorder will take its place to decode
         the data from the session file).
         """
-    def set_frame_tie(self, frame_tie: bool) -> None:
+    def set_frame_tie(self, frame_tie: bool, /) -> None:
         """Sets the frame_tie flag.
 
         When this is true, sessions are played back frame-for-frame, based on the
@@ -213,23 +213,23 @@ class SocketStreamRecorder(RecorderBase, ReferenceCount):
     def __init__(self, stream: SocketStream, owns_stream: bool) -> None: ...
     def upcast_to_RecorderBase(self) -> RecorderBase: ...
     def upcast_to_ReferenceCount(self) -> ReferenceCount: ...
-    def receive_datagram(self, dg: Datagram) -> bool:
+    def receive_datagram(self, dg: Datagram, /) -> bool:
         """Receives a datagram over the socket by expecting a little-endian 16-bit
         byte count as a prefix.  If the socket stream is non-blocking, may return
         false if the data is not available; otherwise, returns false only if the
         socket closes.
         """
-    def send_datagram(self, dg: Datagram) -> bool:
+    def send_datagram(self, dg: Datagram, /) -> bool:
         """See SocketStream::send_datagram()."""
     def is_closed(self) -> bool:
         """See SocketStream::is_closed()."""
     def close(self) -> None:
         """See SocketStream::close()."""
-    def set_collect_tcp(self, collect_tcp: bool) -> None:
+    def set_collect_tcp(self, collect_tcp: bool, /) -> None:
         """See SocketStream::set_collect_tcp()."""
     def get_collect_tcp(self) -> bool:
         """See SocketStream::get_collect_tcp()."""
-    def set_collect_tcp_interval(self, interval: float) -> None:
+    def set_collect_tcp_interval(self, interval: float, /) -> None:
         """See SocketStream::set_collect_tcp_interval()."""
     def get_collect_tcp_interval(self) -> float:
         """See SocketStream::get_collect_tcp_interval()."""

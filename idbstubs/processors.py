@@ -55,8 +55,15 @@ def merge_parameters(p: Parameter, q: Parameter, /) -> Parameter | None:
     if q.named and not p.named and not p.type <= q.type:
         return None
 
+    if p.named or q.name == '_':
+        merged_name = p.name
+    elif q.named or p.name == '_':
+        merged_name = q.name
+    else:
+        names = {n: None for n in p.name.split('_or_') + q.name.split('_or_')}
+        merged_name = '_or_'.join(names.keys())
     return Parameter(
-        p.name if p.named else q.name,
+        merged_name,
         p.type | q.type,
         is_optional=p.is_optional or q.is_optional,
         named=p.named or q.named,

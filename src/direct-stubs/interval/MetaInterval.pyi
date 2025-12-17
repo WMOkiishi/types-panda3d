@@ -6,7 +6,7 @@ from typing_extensions import Self, TypeAlias, TypeGuard
 
 from direct.directnotify.Notifier import Notifier
 from panda3d.core import PStatCollector, ostream
-from panda3d.direct import CInterval, CMetaInterval
+from panda3d.direct import CInterval, CIntervalManager, CMetaInterval
 
 from .Interval import Interval
 
@@ -43,6 +43,8 @@ class _MetaIntervalBase(CMetaInterval):
         duration: float,
     ) -> None: ...
     def add_interval(self, ival: _Interval, relTime: float, relTo: _RelativeStart) -> None: ...
+    def set_manager(self, manager: CIntervalManager) -> None: ...
+    def set_t(self, t: float) -> None: ...
     def start(  # pyright: ignore[reportIncompatibleMethodOverride]
         self, startT: float = 0.0, endT: float = -1.0, playRate: float = 1.0
     ) -> None: ...
@@ -62,8 +64,10 @@ class _MetaIntervalBase(CMetaInterval):
     addParallelEndTogether = add_parallel_end_together
     addTrack = add_track
     addInterval = add_interval
-    resumeUntil = resume_until  # type: ignore[assignment]
-    setPlayRate = set_play_rate  # type: ignore[assignment]
+    setManager = set_manager
+    setT = set_t
+    resumeUntil = resume_until
+    setPlayRate = set_play_rate
     privPostEvent = priv_post_event
 
 class _GenericIntervalSequence(Generic[_T]):

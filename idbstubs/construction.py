@@ -202,7 +202,8 @@ def make_attribute_rep(element: IDBElement) -> Attribute:
 def make_signature_rep(
         wrapper: IDBFunctionWrapper,
         function: IDBFunction | None = None,
-        *, ensure_self_param: bool = False) -> Signature:
+        *, ensure_self_param: bool = False,
+        ensure_pos_only: bool = False) -> Signature:
     """Return a representation of the signature
     of a function wrapper known to interrogate.
     """
@@ -224,13 +225,14 @@ def make_signature_rep(
             check_keyword(param.name),
             make_type(param.type),
             is_optional=param.is_optional,
-            named=param.has_name,
+            named=param.has_name and not ensure_pos_only,
         ))
     docstring = comment_to_docstring(wrapper.comment)
     deprecation_note = get_deprecation_note(docstring)
     match params:
         case [Parameter('args') as args]:
             args.name = '*' + args.name
+            args.named = True
         case [
             *_,
             Parameter('args') as args,
@@ -238,6 +240,7 @@ def make_signature_rep(
         ]:
             args.name = '*' + args.name
             kwargs.name = '**' + kwargs.name
+            args.named = kwargs.named = True
     return Signature(
         params,
         return_type,
@@ -258,12 +261,21 @@ def make_function_rep(function: IDBFunction) -> Function:
     return_overrides = RETURN_TYPE_OVERRIDES.get(function.scoped_name, {})
     if isinstance(return_overrides, str):
         return_overrides = {i: return_overrides for i in range(len(function.wrappers))}
+    at_most_one_arg = True
+    for wrapper in function.wrappers:
+        if len(wrapper.parameters) > 2 or (
+            len(wrapper.parameters) == 2
+            and not wrapper.parameters[0].is_this
+        ):
+            at_most_one_arg = False
+            break
     for i, wrapper in enumerate(function.wrappers):
         if not wrapper_is_exposed(wrapper):
             continue
         signature = make_signature_rep(
             wrapper, function,
             ensure_self_param=function.is_method and not is_static_method,
+            ensure_pos_only=at_most_one_arg and not function.is_constructor,
         )
         signature.comment = COMMENTS.get((function.scoped_name, i), '')
         if param_overrides:
@@ -377,11 +389,7 @@ def make_class_rep(idb_type: IDBType) -> Class:
         if method.name not in NO_ALIAS:
             alias_name = make_alias_name(method.name)
             if alias_name != method.name:
-                if (
-                    method.comment == 'type: ignore[override]'
-                    # It is unclear why Mypy takes issue with this one.
-                    or (name, method.name) == ('Character', 'get_bundle')
-                ):
+                if method.comment == 'type: ignore[override]':
                     comment = 'type: ignore[assignment]'
                 else:
                     comment = ''

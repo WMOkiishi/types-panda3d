@@ -20,13 +20,13 @@ class PStatClient:
     def current_thread(self) -> PStatThread: ...
     @property
     def real_time(self) -> float: ...
-    def set_client_name(self, name: str) -> None:
+    def set_client_name(self, name: str, /) -> None:
         """Sets the name of the client.  This is reported to the PStatsServer, and
         will presumably be written in the title bar or something.
         """
     def get_client_name(self) -> str:
         """Retrieves the name of the client as set."""
-    def set_max_rate(self, rate: float) -> None:
+    def set_max_rate(self, rate: float, /) -> None:
         """Controls the number of packets that will be sent to the server.  Normally,
         one packet is sent per frame, but this can flood the server with more
         packets than it can handle if the frame rate is especially good (e.g.  if
@@ -42,24 +42,24 @@ class PStatClient:
         """
     def get_num_collectors(self) -> int:
         """Returns the total number of collectors the Client knows about."""
-    def get_collector(self, index: int) -> PStatCollector:
+    def get_collector(self, index: int, /) -> PStatCollector:
         """Returns the nth collector."""
-    def get_collector_name(self, index: int) -> str:
+    def get_collector_name(self, index: int, /) -> str:
         """Returns the name of the indicated collector."""
-    def get_collector_fullname(self, index: int) -> str:
+    def get_collector_fullname(self, index: int, /) -> str:
         """Returns the "full name" of the indicated collector.  This will be the
         concatenation of all of the collector's parents' names (except Frame) and
         the collector's own name.
         """
     def get_num_threads(self) -> int:
         """Returns the total number of threads the Client knows about."""
-    def get_thread(self, index: int) -> PStatThread:
+    def get_thread(self, index: int, /) -> PStatThread:
         """Returns the nth thread."""
-    def get_thread_name(self, index: int) -> str:
+    def get_thread_name(self, index: int, /) -> str:
         """Returns the name of the indicated thread."""
-    def get_thread_sync_name(self, index: int) -> str:
+    def get_thread_sync_name(self, index: int, /) -> str:
         """Returns the sync_name of the indicated thread."""
-    def get_thread_object(self, index: int) -> Thread:
+    def get_thread_object(self, index: int, /) -> Thread:
         """Returns the Panda Thread object associated with the indicated PStatThread."""
     def get_main_thread(self) -> PStatThread:
         """Returns a handle to the client's Main thread.  This is the thread that
@@ -100,7 +100,7 @@ class PStatClient:
         thread, and any other threads with a sync_name of "Main".
         """
     @staticmethod
-    def thread_tick(sync_name: str) -> None:
+    def thread_tick(sync_name: str, /) -> None:
         """A convenience function to call new_frame() on any threads with the
         indicated sync_name
         """
@@ -108,7 +108,7 @@ class PStatClient:
         """A convenience function to call new_frame() on the given PStatClient's main
         thread, and any other threads with a sync_name of "Main".
         """
-    def client_thread_tick(self, sync_name: str) -> None:
+    def client_thread_tick(self, sync_name: str, /) -> None:
         """A convenience function to call new_frame() on all of the threads with the
         indicated sync name.
         """
@@ -218,7 +218,7 @@ class PStatCollector:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def is_valid(self) -> bool:
         """Returns true if collector is valid and may be used, or false if it was
         constructed with the default constructor (in which case any attempt to use
@@ -232,8 +232,8 @@ class PStatCollector:
         """Returns the full name of this collector.  This includes the names of all
         the collector's parents, concatenated together with colons.
         """
-    def output(self, out: ostream) -> None: ...
-    def is_active(self, thread: PStatThread | Thread = ...) -> bool:
+    def output(self, out: ostream, /) -> None: ...
+    def is_active(self, thread: PStatThread | Thread = ..., /) -> bool:
         """Returns true if this particular collector is active on the default thread,
         and we are currently transmitting PStats data.
 
@@ -241,7 +241,7 @@ class PStatCollector:
         Returns true if this particular collector is active on the indicated
         thread, and we are currently transmitting PStats data.
         """
-    def is_started(self, thread: PStatThread | Thread = ...) -> bool:
+    def is_started(self, thread: PStatThread | Thread = ..., /) -> bool:
         """Returns true if this particular collector has been started on the default
         thread, or false otherwise.
 
@@ -279,7 +279,7 @@ class PStatCollector:
         PStatClient::get_clock()), and care should be taken that all such calls
         exhibit a monotonically increasing series of time values.
         """
-    def clear_level(self, thread: PStatThread | Thread = ...) -> None:
+    def clear_level(self, thread: PStatThread | Thread = ..., /) -> None:
         """Removes the level setting associated with this collector for the main
         thread.  The collector will no longer show up on any level graphs in the
         main thread.  This implicitly calls flush_level().
@@ -333,15 +333,15 @@ class PStatCollector:
         As an optimization, the data is not immediately set to the PStatClient.  It
         will be sent the next time flush_level() is called.
         """
-    def add_level_now(self, increment: float) -> None:
+    def add_level_now(self, increment: float, /) -> None:
         """Calls add_level() and immediately calls flush_level()."""
-    def sub_level_now(self, decrement: float) -> None:
+    def sub_level_now(self, decrement: float, /) -> None:
         """Calls sub_level() and immediately calls flush_level()."""
     def flush_level(self) -> None:
         """Updates the PStatClient with the recent results from add_level() and
         sub_level().
         """
-    def get_level(self, thread: PStatThread | Thread = ...) -> float:
+    def get_level(self, thread: PStatThread | Thread = ..., /) -> float:
         """Returns the current level value of the given collector in the main thread.
         This implicitly calls flush_level().
 
@@ -353,17 +353,17 @@ class PStatCollector:
         thread.  The collector will no longer show up on any level graphs in the
         current thread.
         """
-    def set_thread_level(self, level: float) -> None:
+    def set_thread_level(self, level: float, /) -> None:
         """Sets the level setting associated with this collector for the current
         thread to the indicated value.
         """
-    def add_thread_level(self, increment: float) -> None:
+    def add_thread_level(self, increment: float, /) -> None:
         """Adds the indicated increment (which may be negative) to the level setting
         associated with this collector for the current thread.  If the collector
         did not already have a level setting for the current thread, it is
         initialized to 0.
         """
-    def sub_thread_level(self, decrement: float) -> None:
+    def sub_thread_level(self, decrement: float, /) -> None:
         """Subtracts the indicated decrement (which may be negative) to the level
         setting associated with this collector for the current thread.  If the
         collector did not already have a level setting for the current thread, it
@@ -421,7 +421,7 @@ class PStatThread:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: PStatThread | Thread) -> Self: ...
+    def assign(self, copy: PStatThread | Thread, /) -> Self: ...
     def new_frame(self) -> None:
         """This must be called at the start of every "frame", whatever a frame may be
         deemed to be, to accumulate all the stats that have collected so far for

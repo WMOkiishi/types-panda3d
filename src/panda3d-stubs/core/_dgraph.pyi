@@ -23,7 +23,7 @@ class DataGraphTraverser:
         """Returns the currently-executing thread object, as passed to the
         DataGraphTraverser constructor.
         """
-    def traverse(self, node: PandaNode) -> None:
+    def traverse(self, node: PandaNode, /) -> None:
         """Starts the traversal of the data graph at the indicated root node."""
     def collect_leftovers(self) -> None:
         """Pick up any nodes that didn't get completely traversed.  These must be
@@ -43,15 +43,15 @@ class DataNode(PandaNode):
     data graph is intended to be used only within a single thread.
     """
 
-    def write_inputs(self, out: ostream) -> None:
+    def write_inputs(self, out: ostream, /) -> None:
         """Writes to the indicated ostream a list of all the inputs this DataNode
         might expect to receive.
         """
-    def write_outputs(self, out: ostream) -> None:
+    def write_outputs(self, out: ostream, /) -> None:
         """Writes to the indicated ostream a list of all the outputs this DataNode
         might generate.
         """
-    def write_connections(self, out: ostream) -> None:
+    def write_connections(self, out: ostream, /) -> None:
         """Writes to the indicated ostream a list of all the connections currently
         showing between this DataNode and its parent(s).
         """

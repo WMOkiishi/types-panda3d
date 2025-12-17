@@ -122,7 +122,7 @@ class GraphicsPipe(TypedReferenceCount):
         A 1 bit in a particular position is not a guarantee of success, but a 0 bit
         is a guarantee of failure.
         """
-    def supports_type(self, flags: int) -> bool:
+    def supports_type(self, flags: int, /) -> bool:
         """A convenience function to ask if a particular type or types of
         GraphicsObjects are supported.  The parameter is a union of one or more
         bits defined in GrpahicsPipe::OutputTypes.
@@ -192,18 +192,18 @@ class DisplayInformation:
     def get_maximum_window_height(self) -> int: ...
     def get_window_bits_per_pixel(self) -> int: ...
     def get_total_display_modes(self) -> int: ...
-    def get_display_mode(self, display_index: int) -> DisplayMode: ...
+    def get_display_mode(self, display_index: int, /) -> DisplayMode: ...
     def get_current_display_mode_index(self) -> int:
         """Returns the index of the current display mode (determined at the time of
         application start) in the display mode array, or -1 if this could not be
         determined.
         """
-    def get_display_mode_width(self, display_index: int) -> int:
+    def get_display_mode_width(self, display_index: int, /) -> int:
         """Older interface for display modes."""
-    def get_display_mode_height(self, display_index: int) -> int: ...
-    def get_display_mode_bits_per_pixel(self, display_index: int) -> int: ...
-    def get_display_mode_refresh_rate(self, display_index: int) -> int: ...
-    def get_display_mode_fullscreen_only(self, display_index: int) -> int: ...
+    def get_display_mode_height(self, display_index: int, /) -> int: ...
+    def get_display_mode_bits_per_pixel(self, display_index: int, /) -> int: ...
+    def get_display_mode_refresh_rate(self, display_index: int, /) -> int: ...
+    def get_display_mode_fullscreen_only(self, display_index: int, /) -> int: ...
     def get_shader_model(self) -> _GraphicsStateGuardian_ShaderModel: ...
     def get_video_memory(self) -> int: ...
     def get_texture_memory(self) -> int: ...
@@ -239,7 +239,7 @@ class DisplayInformation:
         """Equivalent to the rdtsc processor instruction."""
     def get_maximum_cpu_frequency(self) -> int: ...
     def get_current_cpu_frequency(self) -> int: ...
-    def update_cpu_frequency(self, processor_number: int) -> None: ...
+    def update_cpu_frequency(self, processor_number: int, /) -> None: ...
     def get_num_cpu_cores(self) -> int:
         """Returns the number of individual CPU cores in the system, or 0 if this
         number is not available.  A hyperthreaded CPU counts once here.
@@ -360,7 +360,7 @@ class DrawableRegion:
     pixel_zoom: float
     @property
     def pixel_factor(self) -> float: ...
-    def set_clear_color_active(self, clear_color_active: bool) -> None:
+    def set_clear_color_active(self, clear_color_active: bool, /) -> None:
         """Toggles the flag that indicates whether the color buffer should be cleared
         every frame.  If this is true, the color buffer will be cleared to the
         color indicated by set_clear_color(); otherwise, it will be left alone.
@@ -369,7 +369,7 @@ class DrawableRegion:
         """Returns the current setting of the flag that indicates whether the color
         buffer should be cleared every frame.  See set_clear_color_active().
         """
-    def set_clear_depth_active(self, clear_depth_active: bool) -> None:
+    def set_clear_depth_active(self, clear_depth_active: bool, /) -> None:
         """Toggles the flag that indicates whether the depth buffer should be cleared
         every frame.  If this is true, the depth buffer will be cleared to the
         depth value indicated by set_clear_depth(); otherwise, it will be left
@@ -379,7 +379,7 @@ class DrawableRegion:
         """Returns the current setting of the flag that indicates whether the depth
         buffer should be cleared every frame.  See set_clear_depth_active().
         """
-    def set_clear_stencil_active(self, clear_stencil_active: bool) -> None:
+    def set_clear_stencil_active(self, clear_stencil_active: bool, /) -> None:
         """Toggles the flag that indicates whether the stencil buffer should be
         cleared every frame.  If this is true, the stencil buffer will be cleared
         to the value indicated by set_clear_stencil(); otherwise, it will be left
@@ -389,7 +389,7 @@ class DrawableRegion:
         """Returns the current setting of the flag that indicates whether the color
         buffer should be cleared every frame.  See set_clear_stencil_active().
         """
-    def set_clear_color(self, color: Vec4Like) -> None:
+    def set_clear_color(self, color: Vec4Like, /) -> None:
         """Sets the clear color to the indicated value.  This is the value that will
         be used to clear the color buffer every frame, but only if
         get_clear_color_active() returns true.  If get_clear_color_active() returns
@@ -401,7 +401,7 @@ class DrawableRegion:
         returns true.  If get_clear_color_active() returns false, this is
         meaningless.
         """
-    def set_clear_depth(self, depth: float) -> None:
+    def set_clear_depth(self, depth: float, /) -> None:
         """Sets the clear depth to the indicated value.  This is the value that will
         be used to clear the depth buffer every frame, but only if
         get_clear_depth_active() returns true.  If get_clear_depth_active() returns
@@ -413,7 +413,7 @@ class DrawableRegion:
         returns true.  If get_clear_depth_active() returns false, this is
         meaningless.
         """
-    def set_clear_stencil(self, stencil: int) -> None: ...
+    def set_clear_stencil(self, stencil: int, /) -> None: ...
     def get_clear_stencil(self) -> int:
         """Returns the current clear stencil value.  This is the value that will be
         used to clear the stencil buffer every frame, but only if
@@ -422,11 +422,11 @@ class DrawableRegion:
         """
     def set_clear_active(self, n: int, clear_aux_active: bool) -> None:
         """Sets the clear-active flag for any bitplane."""
-    def get_clear_active(self, n: int) -> bool:
+    def get_clear_active(self, n: int, /) -> bool:
         """Gets the clear-active flag for any bitplane."""
     def set_clear_value(self, n: int, clear_value: Vec4Like) -> None:
         """Sets the clear value for any bitplane."""
-    def get_clear_value(self, n: int) -> LColor:
+    def get_clear_value(self, n: int, /) -> LColor:
         """Returns the clear value for any bitplane."""
     def disable_clears(self) -> None:
         """Disables both the color and depth clear.  See set_clear_color_active and
@@ -437,7 +437,7 @@ class DrawableRegion:
         depth) have been set active, or false if none of them are active and there
         is no need to clear.
         """
-    def set_pixel_zoom(self, pixel_zoom: float) -> None:
+    def set_pixel_zoom(self, pixel_zoom: float, /) -> None:
         """Sets the amount by which the pixels of the region are scaled internally
         when filling the image interally.  Setting this number larger makes the
         pixels blockier, but may make the rendering faster, particularly for
@@ -477,7 +477,7 @@ class DrawableRegion:
         both set_clear_color() and set_clear_depth() enabled.
         """
     @staticmethod
-    def get_renderbuffer_type(plane: int) -> int:
+    def get_renderbuffer_type(plane: int, /) -> int:
         """Returns the RenderBuffer::Type that corresponds to a RenderTexturePlane."""
     setClearColorActive = set_clear_color_active
     getClearColorActive = get_clear_color_active
@@ -529,7 +529,7 @@ class WindowHandle(TypedReferenceCount):
             """Returns the OS-specific handle converted to an integer, if this is possible
             for the particular representation.  Returns 0 if it is not.
             """
-        def output(self, out: ostream) -> None: ...
+        def output(self, out: ostream, /) -> None: ...
         @staticmethod
         def get_class_type() -> TypeHandle: ...
         getIntHandle = get_int_handle
@@ -546,7 +546,7 @@ class WindowHandle(TypedReferenceCount):
         """Returns the OS-specific handle stored internally to the WindowHandle
         wrapper.
         """
-    def set_os_handle(self, os_handle: WindowHandle.OSHandle) -> None:
+    def set_os_handle(self, os_handle: WindowHandle.OSHandle, /) -> None:
         """Changes the OS-specific handle stored internally to the WindowHandle
         wrapper.
         """
@@ -560,7 +560,7 @@ class WindowHandle(TypedReferenceCount):
         """Returns the OS-specific handle converted to an integer, if this is possible
         for the particular representation.  Returns 0 if it is not.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     getOsHandle = get_os_handle
     setOsHandle = set_os_handle
     sendWindowsMessage = send_windows_message
@@ -606,7 +606,7 @@ class WindowProperties:
     def __init__(self, *args, **kwds) -> None: ...
     def __eq__(self, other: object, /) -> bool: ...
     def __ne__(self, other: object, /) -> bool: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     @staticmethod
     def get_config_properties() -> WindowProperties:
         """Returns a WindowProperties structure with all of the default values filled
@@ -619,7 +619,7 @@ class WindowProperties:
         get_config_properties().
         """
     @staticmethod
-    def set_default(default_properties: WindowProperties) -> None:
+    def set_default(default_properties: WindowProperties, /) -> None:
         """Replaces the "default" WindowProperties with the specified structure.  The
         specified WindowProperties will be returned by future calls to
         get_default(), until clear_default() is called.
@@ -693,7 +693,7 @@ class WindowProperties:
     def clear_size(self) -> None:
         """Removes the size specification from the properties."""
     def has_mouse_mode(self) -> bool: ...
-    def set_mouse_mode(self, mode: _WindowProperties_MouseMode) -> None:
+    def set_mouse_mode(self, mode: _WindowProperties_MouseMode, /) -> None:
         """Specifies the mode in which the window is to operate its mouse pointer.
 
         M_absolute: the normal mode in which a mouse pointer operates, where the
@@ -717,7 +717,7 @@ class WindowProperties:
         """See set_mouse_mode()."""
     def clear_mouse_mode(self) -> None:
         """Removes the mouse_mode specification from the properties."""
-    def set_title(self, title: str) -> None:
+    def set_title(self, title: str, /) -> None:
         """Specifies the title that should be assigned to the window."""
     def get_title(self) -> str:
         """Returns the window's title."""
@@ -725,7 +725,7 @@ class WindowProperties:
         """Returns true if the window title has been specified, false otherwise."""
     def clear_title(self) -> None:
         """Removes the title specification from the properties."""
-    def set_undecorated(self, undecorated: bool) -> None:
+    def set_undecorated(self, undecorated: bool, /) -> None:
         """Specifies whether the window should be created with a visible title and
         border (false, the default) or not (true).
         """
@@ -735,7 +735,7 @@ class WindowProperties:
         """Returns true if set_undecorated() has been specified."""
     def clear_undecorated(self) -> None:
         """Removes the undecorated specification from the properties."""
-    def set_fixed_size(self, fixed_size: bool) -> None:
+    def set_fixed_size(self, fixed_size: bool, /) -> None:
         """Specifies whether the window should be resizable by the user."""
     def get_fixed_size(self) -> bool:
         """Returns true if the window cannot be resized by the user, false otherwise."""
@@ -743,7 +743,7 @@ class WindowProperties:
         """Returns true if set_fixed_size() has been specified."""
     def clear_fixed_size(self) -> None:
         """Removes the fixed_size specification from the properties."""
-    def set_fullscreen(self, fullscreen: bool) -> None:
+    def set_fullscreen(self, fullscreen: bool, /) -> None:
         """Specifies whether the window should be opened in fullscreen mode (true) or
         normal windowed mode (false, the default).
         """
@@ -753,7 +753,7 @@ class WindowProperties:
         """Returns true if set_fullscreen() has been specified."""
     def clear_fullscreen(self) -> None:
         """Removes the fullscreen specification from the properties."""
-    def set_foreground(self, foreground: bool) -> None:
+    def set_foreground(self, foreground: bool, /) -> None:
         """Specifies whether the window should be opened in the foreground (true), or
         left in the background (false).
         """
@@ -763,7 +763,7 @@ class WindowProperties:
         """Returns true if set_foreground() has been specified."""
     def clear_foreground(self) -> None:
         """Removes the foreground specification from the properties."""
-    def set_minimized(self, minimized: bool) -> None:
+    def set_minimized(self, minimized: bool, /) -> None:
         """Specifies whether the window should be created minimized (true), or normal
         (false).
         """
@@ -773,7 +773,7 @@ class WindowProperties:
         """Returns true if set_minimized() has been specified."""
     def clear_minimized(self) -> None:
         """Removes the minimized specification from the properties."""
-    def set_raw_mice(self, raw_mice: bool) -> None:
+    def set_raw_mice(self, raw_mice: bool, /) -> None:
         """Specifies whether the window should read the raw mouse devices."""
     def get_raw_mice(self) -> bool:
         """Returns true if the window reads the raw mice."""
@@ -781,7 +781,7 @@ class WindowProperties:
         """Returns true if set_raw_mice() has been specified."""
     def clear_raw_mice(self) -> None:
         """Removes the raw_mice specification from the properties."""
-    def set_open(self, open: bool) -> None:
+    def set_open(self, open: bool, /) -> None:
         """Specifies whether the window should be open.  It is legal to create a
         GraphicsWindow in the closed state, and later request it to open by
         changing this flag.
@@ -792,7 +792,7 @@ class WindowProperties:
         """Returns true if set_open() has been specified."""
     def clear_open(self) -> None:
         """Removes the open specification from the properties."""
-    def set_cursor_hidden(self, cursor_hidden: bool) -> None:
+    def set_cursor_hidden(self, cursor_hidden: bool, /) -> None:
         """Specifies whether the mouse cursor should be visible."""
     def get_cursor_hidden(self) -> bool:
         """Returns true if the mouse cursor is invisible."""
@@ -800,7 +800,7 @@ class WindowProperties:
         """Returns true if set_cursor_hidden() has been specified."""
     def clear_cursor_hidden(self) -> None:
         """Removes the cursor_hidden specification from the properties."""
-    def set_icon_filename(self, icon_filename: StrOrBytesPath) -> None:
+    def set_icon_filename(self, icon_filename: StrOrBytesPath, /) -> None:
         """Specifies the file that contains the icon to associate with the window when
         it is minimized.
         """
@@ -810,7 +810,7 @@ class WindowProperties:
         """Returns true if set_icon_filename() has been specified."""
     def clear_icon_filename(self) -> None:
         """Removes the icon_filename specification from the properties."""
-    def set_cursor_filename(self, cursor_filename: StrOrBytesPath) -> None:
+    def set_cursor_filename(self, cursor_filename: StrOrBytesPath, /) -> None:
         """Specifies the file that contains the icon to associate with the mouse
         cursor when it is within the window (and visible).
         """
@@ -820,7 +820,7 @@ class WindowProperties:
         """Returns true if set_cursor_filename() has been specified."""
     def clear_cursor_filename(self) -> None:
         """Removes the cursor_filename specification from the properties."""
-    def set_z_order(self, z_order: _WindowProperties_ZOrder) -> None:
+    def set_z_order(self, z_order: _WindowProperties_ZOrder, /) -> None:
         """Specifies the relative ordering of the window with respect to other
         windows.  If the z_order is Z_top, the window will always be on top of
         other windows; if it is Z_bottom, it will always be below other windows.
@@ -833,8 +833,7 @@ class WindowProperties:
         """Returns true if the window z_order has been specified, false otherwise."""
     def clear_z_order(self) -> None:
         """Removes the z_order specification from the properties."""
-    @overload
-    def set_parent_window(self, parent_window: WindowHandle | WindowHandle.OSHandle = ...) -> None:
+    def set_parent_window(self, parent_window_or_parent: WindowHandle | WindowHandle.OSHandle | int = ..., /) -> None:
         """Specifies the window that this window should be attached to.  If this is
         NULL or unspecified, the window will be created as a toplevel window on the
         desktop; if this is non-NULL, the window will be bound as a child window to
@@ -845,10 +844,9 @@ class WindowProperties:
         representation.  Each OS-specific GraphicsPipe class defines a
         make_window_handle() method that returns an appropriate WindowHandle object
         to wrap the particular OS-specific representation.
-        """
-    @overload
-    def set_parent_window(self, parent: int) -> None:
-        """Specifies the window that this window should be attached to.
+
+        or:
+        Specifies the window that this window should be attached to.
 
         This is a deprecated variant on this method, and exists only for backward
         compatibility.  Future code should use the version of set_parent_window()
@@ -869,11 +867,11 @@ class WindowProperties:
         """Checks the S_parent_window specification from the properties."""
     def clear_parent_window(self) -> None:
         """Removes the S_parent_window specification from the properties."""
-    def add_properties(self, other: WindowProperties) -> None:
+    def add_properties(self, other: WindowProperties, /) -> None:
         """Sets any properties that are explicitly specified in other on this object.
         Leaves other properties unchanged.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Sets any properties that are explicitly specified in other on this object.
         Leaves other properties unchanged.
         """
@@ -987,29 +985,29 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     def upcast_to_DrawableRegion(self) -> DrawableRegion: ...
     def get_num_regions(self) -> int:
         """Returns the number of regions, see set_num_regions."""
-    def set_num_regions(self, i: int) -> None:
+    def set_num_regions(self, i: int, /) -> None:
         """Sets the number of regions that this DisplayRegion indicates.  Usually,
         this number is 1 (and it is always at least 1), and only the first is used
         for rendering.  However, if more than one is provided, you may select which
         one to render into using a geometry shader (gl_ViewportIndex in GLSL).
         """
-    def get_dimensions(self, i: int = ...) -> LVecBase4:
+    def get_dimensions(self, i: int = ..., /) -> LVecBase4:
         """Retrieves the coordinates of the DisplayRegion's rectangle within its
         GraphicsOutput.  These numbers will be in the range [0..1].
         """
-    def get_left(self, i: int = ...) -> float:
+    def get_left(self, i: int = ..., /) -> float:
         """Retrieves the x coordinate of the left edge of the rectangle within its
         GraphicsOutput.  This number will be in the range [0..1].
         """
-    def get_right(self, i: int = ...) -> float:
+    def get_right(self, i: int = ..., /) -> float:
         """Retrieves the x coordinate of the right edge of the rectangle within its
         GraphicsOutput.  This number will be in the range [0..1].
         """
-    def get_bottom(self, i: int = ...) -> float:
+    def get_bottom(self, i: int = ..., /) -> float:
         """Retrieves the y coordinate of the bottom edge of the rectangle within its
         GraphicsOutput.  This number will be in the range [0..1].
         """
-    def get_top(self, i: int = ...) -> float:
+    def get_top(self, i: int = ..., /) -> float:
         """Retrieves the y coordinate of the top edge of the rectangle within its
         GraphicsOutput.  This number will be in the range [0..1].
         """
@@ -1050,7 +1048,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """
     def is_stereo(self) -> bool:
         """Returns true if this is a StereoDisplayRegion, false otherwise."""
-    def set_camera(self, camera: NodePath) -> None:
+    def set_camera(self, camera: NodePath, /) -> None:
         """Sets the camera that is associated with this DisplayRegion.  There is a
         one-to-many association between cameras and DisplayRegions; one camera may
         be shared by multiple DisplayRegions.
@@ -1061,11 +1059,11 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
         """
-    def get_camera(self, current_thread: Thread = ...) -> NodePath:
+    def get_camera(self, current_thread: Thread = ..., /) -> NodePath:
         """Returns the camera associated with this DisplayRegion, or an empty NodePath
         if no camera is associated.
         """
-    def set_active(self, active: bool) -> None:
+    def set_active(self, active: bool, /) -> None:
         """Sets the active flag associated with the DisplayRegion.  If the
         DisplayRegion is marked inactive, nothing is rendered.
 
@@ -1074,7 +1072,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """
     def is_active(self) -> bool:
         """Returns the active flag associated with the DisplayRegion."""
-    def set_sort(self, sort: int) -> None:
+    def set_sort(self, sort: int, /) -> None:
         """Sets the sort value associated with the DisplayRegion.  Within a window,
         DisplayRegions will be rendered in order from the lowest sort value to the
         highest.
@@ -1084,7 +1082,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """
     def get_sort(self) -> int:
         """Returns the sort value associated with the DisplayRegion."""
-    def set_stereo_channel(self, stereo_channel: _Lens_StereoChannel) -> None:
+    def set_stereo_channel(self, stereo_channel: _Lens_StereoChannel, /) -> None:
         """Specifies whether the DisplayRegion represents the left or right channel of
         a stereo pair, or whether it is a normal, monocular image.  This
         automatically adjusts the lens that is used to render to this DisplayRegion
@@ -1115,7 +1113,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         of a stereo pair, or whether it is a normal, monocular image.  See
         set_stereo_channel().
         """
-    def set_tex_view_offset(self, tex_view_offset: int) -> None:
+    def set_tex_view_offset(self, tex_view_offset: int, /) -> None:
         """Sets the current texture view offset for this DisplayRegion.  This is
         normally set to zero.  If nonzero, it is used to select a particular view
         of any multiview textures that are rendered within this DisplayRegion.
@@ -1132,7 +1130,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         For a StereoDisplayRegion, this is normally 0 for the left eye, and 1 for
         the right eye, to support stereo textures.
         """
-    def set_incomplete_render(self, incomplete_render: bool) -> None:
+    def set_incomplete_render(self, incomplete_render: bool, /) -> None:
         """Sets the incomplete_render flag.  When this is true, the frame will be
         rendered even if some of the geometry or textures in the scene are not
         available (e.g.  they have been temporarily paged out).  When this is
@@ -1146,7 +1144,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """
     def get_incomplete_render(self) -> bool:
         """Returns the incomplete_render flag.  See set_incomplete_render()."""
-    def set_texture_reload_priority(self, texture_reload_priority: int) -> None:
+    def set_texture_reload_priority(self, texture_reload_priority: int, /) -> None:
         """Specifies an integer priority which is assigned to any asynchronous texture
         reload requests spawned while processing this DisplayRegion.  This controls
         which textures are loaded first when multiple textures need to be reloaded
@@ -1161,7 +1159,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Returns the priority which is assigned to asynchronous texture reload
         requests.  See set_texture_reload_priority().
         """
-    def set_lens_index(self, index: int) -> None:
+    def set_lens_index(self, index: int, /) -> None:
         """Sets the lens index, allows for multiple lenses to be attached to a camera.
         This is useful for a variety of setups, such as fish eye rendering.  The
         default is 0.
@@ -1174,7 +1172,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         rendering this scene.  Most Cameras hold only one lens, but for multiple
         lenses this method may be used to selected between them.
         """
-    def set_cull_traverser(self, trav: CullTraverser) -> None:
+    def set_cull_traverser(self, trav: CullTraverser, /) -> None:
         """Specifies the CullTraverser that will be used to draw the contents of this
         DisplayRegion.  Normally the default CullTraverser is sufficient, but this
         may be changed to change the default cull behavior.
@@ -1183,9 +1181,9 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Returns the CullTraverser that will be used to draw the contents of this
         DisplayRegion.
         """
-    def set_cube_map_index(self, cube_map_index: int) -> None:
+    def set_cube_map_index(self, cube_map_index: int, /) -> None:
         """Deprecated; replaced by set_target_tex_page()."""
-    def set_target_tex_page(self, page: int) -> None:
+    def set_target_tex_page(self, page: int, /) -> None:
         """This is a special parameter that is only used when rendering the faces of a
         cube map or multipage and/or multiview texture.
 
@@ -1205,7 +1203,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         DisplayRegion, or -1 if it is not associated with a page.  See
         set_target_tex_page().
         """
-    def set_scissor_enabled(self, scissor_enabled: bool) -> None:
+    def set_scissor_enabled(self, scissor_enabled: bool, /) -> None:
         """Sets whether or not scissor testing is enabled for this region.  The
         default is true, except for the overlay display region.
         """
@@ -1213,7 +1211,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Returns whether or not scissor testing is enabled for this region.  The
         default is true, except for the overlay display region.
         """
-    def set_cull_callback(self, object: Callable | CallbackObject) -> None:
+    def set_cull_callback(self, object: Callable | CallbackObject, /) -> None:
         """Sets the CallbackObject that will be notified when the DisplayRegion is
         visited during the cull traversal.  This callback will be made during the
         cull thread.
@@ -1238,7 +1236,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Removes the callback set by an earlier call to set_cull_callback()."""
     def get_cull_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_cull_callback()."""
-    def set_draw_callback(self, object: Callable | CallbackObject) -> None:
+    def set_draw_callback(self, object: Callable | CallbackObject, /) -> None:
         """Sets the CallbackObject that will be notified when the contents of
         DisplayRegion is drawn during the draw traversal.  This callback will be
         made during the draw thread.
@@ -1267,15 +1265,15 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Removes the callback set by an earlier call to set_draw_callback()."""
     def get_draw_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_draw_callback()."""
-    def get_pixel_width(self, i: int = ...) -> int:
+    def get_pixel_width(self, i: int = ..., /) -> int:
         """Returns the width of the DisplayRegion in pixels."""
-    def get_pixel_height(self, i: int = ...) -> int:
+    def get_pixel_height(self, i: int = ..., /) -> int:
         """Returns the height of the DisplayRegion in pixels."""
-    def get_pixel_size(self, i: int = ...) -> LVecBase2i:
+    def get_pixel_size(self, i: int = ..., /) -> LVecBase2i:
         """Returns the size of the DisplayRegion in pixels."""
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     @staticmethod
-    def make_screenshot_filename(prefix: str = ...) -> Filename:
+    def make_screenshot_filename(prefix: str = ..., /) -> Filename:
         """Synthesizes a suitable default filename for passing to save_screenshot().
 
         The default filename is generated from the supplied prefix and from the
@@ -1284,7 +1282,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         %~p - the supplied prefix %~f - the frame count %~e - the value of
         screenshot-extension All other % strings in strftime().
         """
-    def save_screenshot_default(self, prefix: str = ...) -> Filename:
+    def save_screenshot_default(self, prefix: str = ..., /) -> Filename:
         """Saves a screenshot of the region to a default filename, and returns the
         filename, or empty string if the screenshot failed.  The filename is
         generated by make_screenshot_filename().
@@ -1299,7 +1297,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         it as a Texture, or NULL on failure.
         """
     @overload
-    def get_screenshot(self, image: PNMImage) -> bool:
+    def get_screenshot(self, image: PNMImage, /) -> bool:
         """Captures the most-recently rendered image from the framebuffer into the
         indicated PNMImage.  Returns true on success, false on failure.
         """
@@ -1466,7 +1464,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """
     def has_texture(self) -> bool:
         """Returns true if the GraphicsOutput is rendering into any textures at all."""
-    def get_texture(self, i: int = ...) -> Texture:
+    def get_texture(self, i: int = ..., /) -> Texture:
         """Returns the nth texture into which the GraphicsOutput renders.  Returns
         NULL if there is no such texture.
 
@@ -1475,11 +1473,11 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         GraphicsOutput.  The effect is undefined for windows that share a different
         GSG; usually in these cases the texture will be invalid.
         """
-    def get_texture_plane(self, i: int = ...) -> _DrawableRegion_RenderTexturePlane:
+    def get_texture_plane(self, i: int = ..., /) -> _DrawableRegion_RenderTexturePlane:
         """Returns the RenderTexturePlane associated with the nth render-texture.
         Returns 0 if there is no such texture.
         """
-    def get_rtm_mode(self, i: int = ...) -> _GraphicsOutput_RenderTextureMode:
+    def get_rtm_mode(self, i: int = ..., /) -> _GraphicsOutput_RenderTextureMode:
         """Returns the RenderTextureMode associated with the nth render-texture.
         Returns RTM_none if there is no such texture.
         """
@@ -1620,13 +1618,13 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Returns true if the output has a nonzero size in both X and Y, or false if
         it is zero (and therefore invalid).
         """
-    def set_active(self, active: bool) -> None:
+    def set_active(self, active: bool, /) -> None:
         """Sets the active flag associated with the GraphicsOutput.  If the
         GraphicsOutput is marked inactive, nothing is rendered.
         """
     def is_active(self) -> bool:
         """Returns true if the window is ready to be rendered into, false otherwise."""
-    def set_one_shot(self, one_shot: bool) -> None:
+    def set_one_shot(self, one_shot: bool, /) -> None:
         """Changes the current setting of the one-shot flag.  When this is true, the
         GraphicsOutput will render the current frame and then automatically set
         itself inactive.  This is particularly useful for buffers that are created
@@ -1645,7 +1643,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Returns the current setting of the one-shot flag.  When this is true, the
         GraphicsOutput will automatically set itself inactive after the next frame.
         """
-    def set_inverted(self, inverted: bool) -> None:
+    def set_inverted(self, inverted: bool, /) -> None:
         """Changes the current setting of the inverted flag.  When this is true, the
         scene is rendered into the window upside-down and backwards, that is,
         inverted as if viewed through a mirror placed on the floor.
@@ -1661,7 +1659,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         scene is rendered into the window upside-down, flipped like a mirror along
         the X axis.  See set_inverted().
         """
-    def set_swap_eyes(self, swap_eyes: bool) -> None:
+    def set_swap_eyes(self, swap_eyes: bool, /) -> None:
         """Changes the "swap eyes" flag.  This flag is normally false.  When it is
         true, the left and right channels of a stereo DisplayRegion are sent to the
         opposite channels in the rendering backend.  This is meant to work around
@@ -1757,7 +1755,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         GraphicsOutput will automatically be removed before the beginning of the
         next frame by the GraphicsEngine.
         """
-    def set_sort(self, sort: int) -> None:
+    def set_sort(self, sort: int, /) -> None:
         """Adjusts the sorting order of this particular GraphicsOutput, relative to
         other GraphicsOutputs.
         """
@@ -1766,7 +1764,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         GraphicsOutputs within a particular thread will be rendered in the
         indicated order.
         """
-    def set_child_sort(self, child_sort: int) -> None:
+    def set_child_sort(self, child_sort: int, /) -> None:
         """Specifies the sort value of future offscreen buffers created by
         make_texture_sort().
 
@@ -1870,7 +1868,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
 
         This always returns a stereo DisplayRegion, even if is_stereo() is false.
         """
-    def remove_display_region(self, display_region: DisplayRegion) -> bool:
+    def remove_display_region(self, display_region: DisplayRegion, /) -> bool:
         """Removes the indicated DisplayRegion from the window, and destructs it if
         there are no other references.
 
@@ -1892,7 +1890,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         Normally, you should create your own DisplayRegion that covers the window,
         if you want to render to the window.
         """
-    def set_overlay_display_region(self, display_region: DisplayRegion) -> None:
+    def set_overlay_display_region(self, display_region: DisplayRegion, /) -> None:
         """Replaces the special "overlay" DisplayRegion that is created for each
         window or buffer.  See get_overlay_display_region().  This must be a new
         DisplayRegion that has already been created for this window, for instance
@@ -1909,7 +1907,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Returns the number of DisplayRegions that have been created within the
         window, active or otherwise.
         """
-    def get_display_region(self, n: int) -> DisplayRegion:
+    def get_display_region(self, n: int, /) -> DisplayRegion:
         """Returns the nth DisplayRegion of those that have been created within the
         window.  This may return NULL if n is out of bounds; particularly likely if
         the number of display regions has changed since the last call to
@@ -1919,7 +1917,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Returns the number of active DisplayRegions that have been created within
         the window.
         """
-    def get_active_display_region(self, n: int) -> DisplayRegion:
+    def get_active_display_region(self, n: int, /) -> DisplayRegion:
         """Returns the nth active DisplayRegion of those that have been created within
         the window.  This may return NULL if n is out of bounds; particularly
         likely if the number of display regions has changed since the last call to
@@ -1984,7 +1982,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         to apply a reflection of everything seen by the camera rig.
         """
     @staticmethod
-    def make_screenshot_filename(prefix: str = ...) -> Filename:
+    def make_screenshot_filename(prefix: str = ..., /) -> Filename:
         """Saves a screenshot of the region to a default filename, and returns the
         filename, or empty string if the screenshot failed.  The default filename
         is generated from the supplied prefix and from the Config variable
@@ -1993,7 +1991,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         %~p - the supplied prefix %~f - the frame count %~e - the value of
         screenshot-extension All other % strings in strftime().
         """
-    def save_screenshot_default(self, prefix: str = ...) -> Filename:
+    def save_screenshot_default(self, prefix: str = ..., /) -> Filename:
         """Saves a screenshot of the region to a default filename, and returns the
         filename, or empty string if the screenshot failed.  The filename is
         generated by make_screenshot_filename().
@@ -2010,7 +2008,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         it as Texture, or NULL on failure.
         """
     @overload
-    def get_screenshot(self, image: PNMImage) -> bool:
+    def get_screenshot(self, image: PNMImage, /) -> bool:
         """Captures the most-recently rendered image from the framebuffer into the
         indicated PNMImage.  Returns true on success, false on failure.
         """
@@ -2025,7 +2023,7 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         You can therefore safely modify the RenderAttribs of the PandaNode.  The
         PandaNode is initially textured with the texture of this GraphicOutput.
         """
-    def share_depth_buffer(self, graphics_output: GraphicsOutput) -> bool:
+    def share_depth_buffer(self, graphics_output: GraphicsOutput, /) -> bool:
         """Will attempt to use the depth buffer of the input graphics_output.  The
         buffer sizes must be exactly the same.
         """
@@ -2294,7 +2292,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """Frees the resources for all index buffers associated with this GSG."""
     def release_all_shader_buffers(self) -> int:
         """Frees the resources for all index buffers associated with this GSG."""
-    def set_active(self, active: bool) -> None:
+    def set_active(self, active: bool, /) -> None:
         """Sets the active flag associated with the GraphicsStateGuardian.  If the
         GraphicsStateGuardian is marked inactive, nothing is rendered.  This is not
         normally turned off unless there is a problem with the rendering detected
@@ -2309,7 +2307,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """
     def needs_reset(self) -> bool:
         """Returns true if the gsg is marked as needing a reset."""
-    def set_incomplete_render(self, incomplete_render: bool) -> None:
+    def set_incomplete_render(self, incomplete_render: bool, /) -> None:
         """Sets the incomplete_render flag.  When this is true, the frame will be
         rendered even if some of the geometry or textures in the scene are not
         available (e.g.  they have been temporarily paged out).  When this is
@@ -2329,7 +2327,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         considered true for a given DisplayRegion only if it is true on both the
         GSG and on the DisplayRegion.
         """
-    def set_loader(self, loader: Loader) -> None:
+    def set_loader(self, loader: Loader, /) -> None:
         """Sets the Loader object that will be used by this GSG to load textures when
         necessary, if get_incomplete_render() is true.
         """
@@ -2337,7 +2335,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """Returns the Loader object that will be used by this GSG to load textures
         when necessary, if get_incomplete_render() is true.
         """
-    def set_shader_generator(self, shader_generator: GraphicsStateGuardianBase | ShaderGenerator) -> None:
+    def set_shader_generator(self, shader_generator: GraphicsStateGuardianBase | ShaderGenerator, /) -> None:
         """Sets the ShaderGenerator object that will be used by this GSG to generate
         shaders when necessary.
         """
@@ -2551,17 +2549,17 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """
     def get_shader_model(self) -> _GraphicsStateGuardian_ShaderModel:
         """Returns the ShaderModel"""
-    def set_shader_model(self, shader_model: _GraphicsStateGuardian_ShaderModel) -> None:
+    def set_shader_model(self, shader_model: _GraphicsStateGuardian_ShaderModel, /) -> None:
         """Sets the ShaderModel.  This will override the auto- detected shader model
         during GSG reset.  Useful for testing lower-end shaders.
         """
-    def get_supports_cg_profile(self, name: str) -> bool: ...
+    def get_supports_cg_profile(self, name: str, /) -> bool: ...
     def get_color_scale_via_lighting(self) -> bool:
         """Returns true if this particular GSG can implement (or would prefer to
         implement) set color and/or color scale using materials and/or ambient
         lights, or false if we need to actually munge the color.
         """
-    def get_alpha_scale_via_texture(self, tex_attrib: Texture | TextureAttrib = ...) -> bool:
+    def get_alpha_scale_via_texture(self, tex_attrib: Texture | TextureAttrib = ..., /) -> bool:
         """Returns true if this particular GSG can implement (or would prefer to
         implement) an alpha scale via an additional Texture layer, or false if we
         need to actually munge the alpha.
@@ -2583,7 +2581,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """Returns the TextureStage that will be used to apply an alpha scale, if
         get_alpha_scale_via_texture() returns true.
         """
-    def set_coordinate_system(self, cs: _CoordinateSystem) -> None: ...
+    def set_coordinate_system(self, cs: _CoordinateSystem, /) -> None: ...
     def get_coordinate_system(self) -> _CoordinateSystem:
         """Returns the coordinate system in effect on this particular gsg.  Normally,
         this will be the default coordinate system, but it might be set differently
@@ -2591,10 +2589,10 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         """
     def get_internal_coordinate_system(self) -> _CoordinateSystem: ...
     def get_prepared_objects(self) -> PreparedGraphicsObjects: ...
-    def set_gamma(self, gamma: float) -> bool: ...
+    def set_gamma(self, gamma: float, /) -> bool: ...
     def get_gamma(self) -> float: ...
     def restore_gamma(self) -> None: ...
-    def set_texture_quality_override(self, quality_level: _Texture_QualityLevel) -> None:
+    def set_texture_quality_override(self, quality_level: _Texture_QualityLevel, /) -> None:
         """Specifies the global quality_level to be imposed for all Textures rendered
         by this GSG.  This overrides the value set on individual textures via
         Texture::set_quality_level().  Set this to Texture::QL_default in order to
@@ -2611,10 +2609,10 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
         Texture::set_quality_level().
         """
     def get_prepared_textures(self) -> list[Any]: ...
-    def set_flash_texture(self, tex: Texture) -> None: ...
+    def set_flash_texture(self, tex: Texture, /) -> None: ...
     def clear_flash_texture(self) -> None: ...
     def get_flash_texture(self) -> Texture: ...
-    def has_extension(self, extension: str) -> bool: ...
+    def has_extension(self, extension: str, /) -> bool: ...
     def get_driver_vendor(self) -> str: ...
     def get_driver_renderer(self) -> str: ...
     def get_driver_version(self) -> str: ...
@@ -2622,7 +2620,7 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def get_driver_version_minor(self) -> int: ...
     def get_driver_shader_version_major(self) -> int: ...
     def get_driver_shader_version_minor(self) -> int: ...
-    def set_scene(self, scene_setup: SceneSetup) -> bool: ...
+    def set_scene(self, scene_setup: SceneSetup, /) -> bool: ...
     def get_scene(self) -> SceneSetup: ...
     def begin_scene(self) -> bool: ...
     def end_scene(self) -> None: ...
@@ -2739,7 +2737,7 @@ class GraphicsEngine(ReferenceCount):
     def render_lock(self) -> ReMutex: ...
     @property
     def windows(self) -> Sequence[GraphicsOutput]: ...
-    def set_threading_model(self, threading_model: GraphicsThreadingModel | str) -> None:
+    def set_threading_model(self, threading_model: GraphicsThreadingModel | str, /) -> None:
         """Specifies how future objects created via make_gsg(), make_buffer(), and
         make_output() will be threaded.  This does not affect any already-created
         objects.
@@ -2754,7 +2752,7 @@ class GraphicsEngine(ReferenceCount):
         confident that no part of the frame will be rendered (at least by the app
         thread).
         """
-    def set_auto_flip(self, auto_flip: bool) -> None:
+    def set_auto_flip(self, auto_flip: bool, /) -> None:
         """Set this flag true to indicate the GraphicsEngine should automatically
         cause windows to sync and flip as soon as they have finished drawing,
         rather than waiting for all of the windows to finish drawing first so they
@@ -2767,13 +2765,13 @@ class GraphicsEngine(ReferenceCount):
         """
     def get_auto_flip(self) -> bool:
         """Returns the current setting for the auto-flip flag.  See set_auto_flip."""
-    def set_portal_cull(self, value: bool) -> None:
+    def set_portal_cull(self, value: bool, /) -> None:
         """Set this flag true to indicate the GraphicsEngine should start portal
         culling
         """
     def get_portal_cull(self) -> bool:
         """Returns the current setting for the portal culling flag."""
-    def set_default_loader(self, loader: Loader) -> None:
+    def set_default_loader(self, loader: Loader, /) -> None:
         """Sets the Loader object that will be assigned to every GSG created with this
         GraphicsEngine.  See GraphicsStateGuardian::set_loader().
         """
@@ -2830,7 +2828,7 @@ class GraphicsEngine(ReferenceCount):
         doesn't call open_windows(), however, it's not guaranteed that the window
         will succeed opening even if it returns true.
         """
-    def remove_window(self, window: GraphicsOutput) -> bool:
+    def remove_window(self, window: GraphicsOutput, /) -> bool:
         """Removes the indicated window or offscreen buffer from the set of windows
         that will be processed when render_frame() is called.  This also closes the
         window if it is open, and removes the window from its GraphicsPipe,
@@ -2851,7 +2849,7 @@ class GraphicsEngine(ReferenceCount):
         """Removes and closes all windows from the engine.  This also cleans up and
         terminates any threads that have been started to service those windows.
         """
-    def reset_all_windows(self, swapchain: bool) -> None:
+    def reset_all_windows(self, swapchain: bool, /) -> None:
         """Resets the framebuffer of the current window.  This is currently used by
         DirectX 8 only.  It calls a reset_window function on each active window to
         release/create old/new framebuffer
@@ -2862,7 +2860,7 @@ class GraphicsEngine(ReferenceCount):
         """
     def get_num_windows(self) -> int:
         """Returns the number of windows (or buffers) managed by the engine."""
-    def get_window(self, n: int) -> GraphicsOutput:
+    def get_window(self, n: int, /) -> GraphicsOutput:
         """Returns the nth window or buffers managed by the engine, in sorted order."""
     def render_frame(self) -> None:
         """Renders the next frame in all the registered windows, and flips all of the
@@ -2995,14 +2993,14 @@ class GraphicsThreadingModel:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: GraphicsThreadingModel | str) -> Self: ...
+    def assign(self, copy: GraphicsThreadingModel | str, /) -> Self: ...
     def get_model(self) -> str:
         """Returns the string that describes the threading model.  See the
         constructor.
         """
     def get_cull_name(self) -> str:
         """Returns the name of the thread that will handle culling in this model."""
-    def set_cull_name(self, cull_name: str) -> None:
+    def set_cull_name(self, cull_name: str, /) -> None:
         """Changes the name of the thread that will handle culling in this model.
         This won't change any windows that were already created with this model;
         this only has an effect on newly-opened windows.
@@ -3016,7 +3014,7 @@ class GraphicsThreadingModel:
         """Returns the name of the thread that will handle sending the actual graphics
         primitives to the graphics API in this model.
         """
-    def set_draw_name(self, cull_name: str) -> None:
+    def set_draw_name(self, cull_name: str, /) -> None:
         """Changes the name of the thread that will handle drawing in this model.
         This won't change any windows that were already created with this model;
         this only has an effect on newly-opened windows.
@@ -3031,7 +3029,7 @@ class GraphicsThreadingModel:
         """Returns true if the model involves a separate cull pass, or false if
         culling happens implicitly, at the same time as draw.
         """
-    def set_cull_sorting(self, cull_sorting: bool) -> None:
+    def set_cull_sorting(self, cull_sorting: bool, /) -> None:
         """Changes the flag that indicates whether the threading model involves a
         separate cull pass.  This won't change any windows that were already
         created with this model; this only has an effect on newly-opened windows.
@@ -3044,7 +3042,7 @@ class GraphicsThreadingModel:
         """Returns true if the threading model is the default, cull-then-draw single-
         threaded model, or false otherwise.
         """
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
     getModel = get_model
     getCullName = get_cull_name
     setCullName = set_cull_name
@@ -3140,9 +3138,9 @@ class FrameBufferProperties:
     def get_srgb_color(self) -> bool: ...
     def get_float_color(self) -> bool: ...
     def get_float_depth(self) -> bool: ...
-    def set_depth_bits(self, n: int) -> None:
+    def set_depth_bits(self, n: int, /) -> None:
         """Individual assigners."""
-    def set_color_bits(self, n: int) -> None:
+    def set_color_bits(self, n: int, /) -> None:
         """Sets the number of requested color bits as a single number that represents
         the sum of the individual numbers of red, green and blue bits.  Panda won't
         care how the individual bits are divided up.
@@ -3154,29 +3152,29 @@ class FrameBufferProperties:
         """Convenience method for setting the red, green, blue and alpha bits in one
         go.
         """
-    def set_red_bits(self, n: int) -> None: ...
-    def set_green_bits(self, n: int) -> None: ...
-    def set_blue_bits(self, n: int) -> None: ...
-    def set_alpha_bits(self, n: int) -> None: ...
-    def set_stencil_bits(self, n: int) -> None: ...
-    def set_accum_bits(self, n: int) -> None: ...
-    def set_aux_rgba(self, n: int) -> None: ...
-    def set_aux_hrgba(self, n: int) -> None: ...
-    def set_aux_float(self, n: int) -> None: ...
-    def set_multisamples(self, n: int) -> None: ...
-    def set_coverage_samples(self, n: int) -> None:
+    def set_red_bits(self, n: int, /) -> None: ...
+    def set_green_bits(self, n: int, /) -> None: ...
+    def set_blue_bits(self, n: int, /) -> None: ...
+    def set_alpha_bits(self, n: int, /) -> None: ...
+    def set_stencil_bits(self, n: int, /) -> None: ...
+    def set_accum_bits(self, n: int, /) -> None: ...
+    def set_aux_rgba(self, n: int, /) -> None: ...
+    def set_aux_hrgba(self, n: int, /) -> None: ...
+    def set_aux_float(self, n: int, /) -> None: ...
+    def set_multisamples(self, n: int, /) -> None: ...
+    def set_coverage_samples(self, n: int, /) -> None:
         """If coverage samples are specified, and there is hardware support, we use
         coverage multisampling
         """
-    def set_back_buffers(self, n: int) -> None: ...
-    def set_indexed_color(self, n: bool) -> None: ...
-    def set_rgb_color(self, n: bool) -> None: ...
-    def set_stereo(self, n: bool) -> None: ...
-    def set_force_hardware(self, n: bool) -> None: ...
-    def set_force_software(self, n: bool) -> None: ...
-    def set_srgb_color(self, n: bool) -> None: ...
-    def set_float_color(self, n: bool) -> None: ...
-    def set_float_depth(self, n: bool) -> None: ...
+    def set_back_buffers(self, n: int, /) -> None: ...
+    def set_indexed_color(self, n: bool, /) -> None: ...
+    def set_rgb_color(self, n: bool, /) -> None: ...
+    def set_stereo(self, n: bool, /) -> None: ...
+    def set_force_hardware(self, n: bool, /) -> None: ...
+    def set_force_software(self, n: bool, /) -> None: ...
+    def set_srgb_color(self, n: bool, /) -> None: ...
+    def set_float_color(self, n: bool, /) -> None: ...
+    def set_float_depth(self, n: bool, /) -> None: ...
     @staticmethod
     def get_default() -> FrameBufferProperties:
         """Returns a FrameBufferProperties structure with all of the default values
@@ -3188,15 +3186,15 @@ class FrameBufferProperties:
         """
     def set_all_specified(self) -> None:
         """Marks all bits as having been specified."""
-    def subsumes(self, other: FrameBufferProperties) -> bool:
+    def subsumes(self, other: FrameBufferProperties, /) -> bool:
         """Returns true if this set of properties makes strictly greater or equal
         demands of the framebuffer than the other set of framebuffer properties.
         """
-    def add_properties(self, other: FrameBufferProperties) -> None:
+    def add_properties(self, other: FrameBufferProperties, /) -> None:
         """Sets any properties that are explicitly specified in other on this object.
         Leaves other properties unchanged.
         """
-    def output(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None:
         """Generates a string representation."""
     def set_one_bit_per_channel(self) -> None:
         """If any of the depth, color, alpha, accum, or stencil properties is set to
@@ -3204,7 +3202,7 @@ class FrameBufferProperties:
         """
     def is_stereo(self) -> bool: ...
     def is_single_buffered(self) -> bool: ...
-    def get_quality(self, reqs: FrameBufferProperties) -> int:
+    def get_quality(self, reqs: FrameBufferProperties, /) -> int:
         """Assumes that these properties are a description of a window.
 
         Measures how well this window satisfies a specified set of requirements.  A
@@ -3240,7 +3238,7 @@ class FrameBufferProperties:
         (hardware or software).  If not, prints out an error message and returns
         false.
         """
-    def setup_color_texture(self, tex: Texture) -> bool:
+    def setup_color_texture(self, tex: Texture, /) -> bool:
         """Sets the texture up for render-to-texture matching these framebuffer
         properties.
 
@@ -3248,7 +3246,7 @@ class FrameBufferProperties:
         Of course, this is no guarantee that a particular graphics back-end
         supports rendering to textures of that format.
         """
-    def setup_depth_texture(self, tex: Texture) -> bool:
+    def setup_depth_texture(self, tex: Texture, /) -> bool:
         """Sets the texture up for render-to-texture matching these framebuffer
         properties.
 
@@ -3340,7 +3338,7 @@ class GraphicsWindowInputDevice(InputDevice):
         used to implement IME support for typing in international languages,
         especially Chinese/Japanese/Korean.
         """
-    def focus_lost(self, time: float = ...) -> None:
+    def focus_lost(self, time: float = ..., /) -> None:
         """This should be called when the window focus is lost, so that we may miss
         upcoming button events (especially "up" events) for the next period of
         time.  It generates keyboard and mouse "up" events for those buttons that
@@ -3359,7 +3357,7 @@ class GraphicsWindowInputDevice(InputDevice):
         """To be called by a particular kind of GraphicsWindow to indicate that the
         pointer is within the window, at the given pixel coordinates.
         """
-    def set_pointer_out_of_window(self, time: float = ...) -> None:
+    def set_pointer_out_of_window(self, time: float = ..., /) -> None:
         """To be called by a particular kind of GraphicsWindow to indicate that the
         pointer is no longer within the window.
         """
@@ -3371,7 +3369,7 @@ class GraphicsWindowInputDevice(InputDevice):
         """To be called by a particular kind of GraphicsWindow to indicate that the
         pointer has moved by the given relative amount.
         """
-    def remove_pointer(self, id: int) -> None:
+    def remove_pointer(self, id: int, /) -> None:
         """To be called by a particular kind of GraphicsWindow to indicate that the
         pointer no longer exists.
         """
@@ -3428,7 +3426,7 @@ class GraphicsWindowProcCallbackData(CallbackData):
         """Returns whether the event is a touch event."""
     def get_num_touches(self) -> int:
         """Returns the current number of touches on the window."""
-    def get_touch_info(self, index: int) -> TouchInfo:
+    def get_touch_info(self, index: int, /) -> TouchInfo:
         """Returns the TouchInfo object describing the specified touch."""
     getHwnd = get_hwnd
     getMsg = get_msg
@@ -3473,7 +3471,7 @@ class GraphicsWindow(GraphicsOutput):
         remain unchanged until they are changed by a new failed request, or
         clear_rejected_properties() is called.
         """
-    def request_properties(self, requested_properties: WindowProperties) -> None:
+    def request_properties(self, requested_properties: WindowProperties, /) -> None:
         """Requests a property change on the window.  For example, use this method to
         request a window change size or minimize or something.
 
@@ -3492,7 +3490,7 @@ class GraphicsWindow(GraphicsOutput):
         """Returns true if the window has been opened as a fullscreen window, false
         otherwise.
         """
-    def set_window_event(self, window_event: str) -> None:
+    def set_window_event(self, window_event: str, /) -> None:
         """Changes the name of the event that is generated when this window is
         modified externally, e.g.  to be resized or closed by the user.
 
@@ -3505,7 +3503,7 @@ class GraphicsWindow(GraphicsOutput):
         modified externally, e.g.  to be resized or closed by the user.  See
         set_window_event().
         """
-    def set_close_request_event(self, close_request_event: str) -> None:
+    def set_close_request_event(self, close_request_event: str, /) -> None:
         """Sets the event that is triggered when the user requests to close the
         window, e.g.  via alt-F4, or clicking on the close box.
 
@@ -3527,7 +3525,7 @@ class GraphicsWindow(GraphicsOutput):
         string is nonempty, then when the user requests to close window, this event
         will be generated instead.  See set_close_request_event().
         """
-    def set_unexposed_draw(self, unexposed_draw: bool) -> None:
+    def set_unexposed_draw(self, unexposed_draw: bool, /) -> None:
         """If this flag is false, the window is redrawn only after it has received a
         recent "unexpose" or "draw" event from the underlying windowing system.  If
         this flag is true, the window is redrawn every frame regardless.  Setting
@@ -3551,27 +3549,27 @@ class GraphicsWindow(GraphicsOutput):
         pair.  However, some windows may have no input devices, and others may add
         additional devices, for instance for a joystick.
         """
-    def get_input_device(self, i: int) -> InputDevice:
+    def get_input_device(self, i: int, /) -> InputDevice:
         """Returns the nth input device associated with the window.  Typically, a
         window will have exactly one input device: the keyboard/mouse pair.
         """
-    def get_input_device_name(self, device: int) -> str:
+    def get_input_device_name(self, device: int, /) -> str:
         """Returns the name of the nth input device."""
-    def has_pointer(self, device: int) -> bool:
+    def has_pointer(self, device: int, /) -> bool:
         """Returns true if the nth input device has a screen-space pointer (for
         instance, a mouse), false otherwise.
         """
-    def has_keyboard(self, device: int) -> bool:
+    def has_keyboard(self, device: int, /) -> bool:
         """Returns true if the nth input device has a keyboard, false otherwise."""
     def get_keyboard_map(self) -> ButtonMap:
         """Returns a ButtonMap containing the association between raw buttons and
         virtual buttons.
         """
-    def enable_pointer_events(self, device: int) -> None:
+    def enable_pointer_events(self, device: int, /) -> None:
         """Turn on the generation of pointer events."""
-    def disable_pointer_events(self, device: int) -> None:
+    def disable_pointer_events(self, device: int, /) -> None:
         """Turn off the generation of pointer events."""
-    def get_pointer(self, device: int) -> MouseData:
+    def get_pointer(self, device: int, /) -> MouseData:
         """Returns the MouseData associated with the nth input device's pointer.
         Using this to access raw mice (with an index other than 0) is deprecated,
         see the InputDeviceManager interface instead.
@@ -3678,7 +3676,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
             RCT_end_frame, then this method will return the particular frame mode
             indicating what, precisely, we want to do this frame.
             """
-        def set_render_flag(self, render_flag: bool) -> None:
+        def set_render_flag(self, render_flag: bool, /) -> None:
             """If the callback type is RCT_begin_frame, this call is available to specify
             the return value from the begin_frame() call.  If this is true (the
             default), the frame is rendered normally; if it is false, the frame is
@@ -3694,7 +3692,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         getRenderFlag = get_render_flag
         getClassType = get_class_type
 
-    def set_events_callback(self, object: Callable | CallbackObject) -> None:
+    def set_events_callback(self, object: Callable | CallbackObject, /) -> None:
         """Sets the CallbackObject that will be notified when this window is polled
         for window events, including mouse and keyboard events, as well as window
         resize events and other system-generated events.
@@ -3709,7 +3707,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         """Removes the callback set by an earlier call to set_events_callback()."""
     def get_events_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_events_callback()."""
-    def set_properties_callback(self, object: Callable | CallbackObject) -> None:
+    def set_properties_callback(self, object: Callable | CallbackObject, /) -> None:
         """Sets the CallbackObject that will be notified when this window receives a
         property change request from user code (e.g.  via request_properties).
 
@@ -3726,7 +3724,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         """Removes the callback set by an earlier call to set_properties_callback()."""
     def get_properties_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_properties_callback()."""
-    def set_render_callback(self, object: Callable | CallbackObject) -> None:
+    def set_render_callback(self, object: Callable | CallbackObject, /) -> None:
         """Sets the CallbackObject that will be notified when this window is invoked
         (in the draw thread) to render its contents, and/or flip the graphics
         buffers.
@@ -3739,7 +3737,7 @@ class CallbackGraphicsWindow(GraphicsWindow):
         """Removes the callback set by an earlier call to set_render_callback()."""
     def get_render_callback(self) -> CallbackObject:
         """Returns the CallbackObject set by set_render_callback()."""
-    def create_input_device(self, name: str) -> int:
+    def create_input_device(self, name: str, /) -> int:
         """Adds a new input device (mouse) to the window with the indicated name.
         Returns the index of the new device.
         """
@@ -3766,7 +3764,7 @@ class DisplayMode:
     def __ne__(self, other: object, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def output(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
 
 class DisplayRegionCullCallbackData(CallbackData):
     """This specialization on CallbackData is passed when the callback is
@@ -3802,12 +3800,12 @@ class DisplaySearchParameters:
     def __init__(self, param0: DisplaySearchParameters = ..., /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_minimum_width(self, minimum_width: int) -> None: ...
-    def set_maximum_width(self, maximum_width: int) -> None: ...
-    def set_minimum_height(self, minimum_height: int) -> None: ...
-    def set_maximum_height(self, maximum_height: int) -> None: ...
-    def set_minimum_bits_per_pixel(self, minimum_bits_per_pixel: int) -> None: ...
-    def set_maximum_bits_per_pixel(self, maximum_bits_per_pixel: int) -> None: ...
+    def set_minimum_width(self, minimum_width: int, /) -> None: ...
+    def set_maximum_width(self, maximum_width: int, /) -> None: ...
+    def set_minimum_height(self, minimum_height: int, /) -> None: ...
+    def set_maximum_height(self, maximum_height: int, /) -> None: ...
+    def set_minimum_bits_per_pixel(self, minimum_bits_per_pixel: int, /) -> None: ...
+    def set_maximum_bits_per_pixel(self, maximum_bits_per_pixel: int, /) -> None: ...
     setMinimumWidth = set_minimum_width
     setMaximumWidth = set_maximum_width
     setMinimumHeight = set_minimum_height
@@ -3841,7 +3839,7 @@ class GraphicsPipeSelection:
         """Returns the number of different types of GraphicsPipes that are available
         to create through this interface.
         """
-    def get_pipe_type(self, n: int) -> TypeHandle:
+    def get_pipe_type(self, n: int, /) -> TypeHandle:
         """Returns the nth type of GraphicsPipe available through this interface."""
     def print_pipe_types(self) -> None:
         """Writes a list of the currently known GraphicsPipe types to nout, for the
@@ -3862,7 +3860,7 @@ class GraphicsPipeSelection:
         If the type is not already defined, this will implicitly load the named
         module, or if module_name is empty, it will call load_aux_modules().
         """
-    def make_module_pipe(self, module_name: str) -> GraphicsPipe:
+    def make_module_pipe(self, module_name: str, /) -> GraphicsPipe:
         """Returns a new GraphicsPipe of a type defined by the indicated module.
         Returns NULL if the module is not found or does not properly recommend a
         GraphicsPipe.
@@ -3934,14 +3932,14 @@ class NativeWindowHandle(WindowHandle):
     """
 
     @staticmethod
-    def make_int(window: int) -> WindowHandle:
+    def make_int(window: int, /) -> WindowHandle:
         """Constructs a new WindowHandle with an int value, which is understood to be
         either an HWND or a Window, cast to int.  This method exists for the
         convenience of Python, which likes to deal with ints; C++ code should use
         one of the more specific make_x11() or make_win32() methods instead.
         """
     @staticmethod
-    def make_subprocess(filename: StrOrBytesPath) -> WindowHandle:
+    def make_subprocess(filename: StrOrBytesPath, /) -> WindowHandle:
         """Constructs a new WindowHandle that references a SubprocessWindowBuffer read
         in another process, with the named pipe filename that it uses for
         communication.

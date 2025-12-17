@@ -17,16 +17,16 @@ class Socket_Address:
         """Constructor that lets us set a port value"""
     def __eq__(self, _in: object, /) -> bool: ...
     def __ne__(self, _in: object, /) -> bool: ...
-    def __lt__(self, _in: Socket_Address) -> bool: ...
+    def __lt__(self, _in: Socket_Address, /) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def set_any_IP(self, port: int) -> bool:
+    def set_any_IP(self, port: int, /) -> bool:
         """Set to any address and a specified port"""
-    def set_any_IPv6(self, port: int) -> bool:
+    def set_any_IPv6(self, port: int, /) -> bool:
         """Set to any IPv6 address and a specified port."""
-    def set_port(self, port: int) -> bool:
+    def set_port(self, port: int, /) -> bool:
         """Set to a specified port"""
-    def set_broadcast(self, port: int) -> bool:
+    def set_broadcast(self, port: int, /) -> bool:
         """Set to the broadcast address and a specified port"""
     @overload
     def set_host(self, hostname: str, port: int = ...) -> bool:
@@ -102,17 +102,17 @@ class Socket_IP(TypedObject):
         """Set the socket to block on subsequent calls to socket functions that
         address this socket
         """
-    def SetReuseAddress(self, flag: bool = ...) -> bool:
+    def SetReuseAddress(self, flag: bool = ..., /) -> bool:
         """Informs a socket to reuse IP address as needed"""
-    def SetV6Only(self, flag: bool) -> bool:
+    def SetV6Only(self, flag: bool, /) -> bool:
         """Sets a flag indicating whether this IPv6 socket should operate in
         dual-stack mode or not.
         """
     def Active(self) -> bool:
         """Ask if the socket is open (allocated)"""
-    def SetRecvBufferSize(self, size: int) -> int:
+    def SetRecvBufferSize(self, size: int, /) -> int:
         """Ok it sets the recv buffer size for both tcp and UDP"""
-    def SetSocket(self, ins: int) -> None:
+    def SetSocket(self, ins: int, /) -> None:
         """Assigns an existing socket to this class"""
     def GetSocket(self) -> int:
         """Gets the base socket type
@@ -132,16 +132,16 @@ class Socket_TCP(Socket_IP):
     """
 
     def __init__(self, param0: int = ..., /) -> None: ...
-    def SetNoDelay(self, flag: bool = ...) -> int:
+    def SetNoDelay(self, flag: bool = ..., /) -> int:
         """Disable Nagle algorithm.  Don't delay send to coalesce packets"""
-    def SetLinger(self, interval_seconds: int = ...) -> int:
+    def SetLinger(self, interval_seconds: int = ..., /) -> int:
         """will control the behavior of SO_LINGER for a TCP socket"""
     def DontLinger(self) -> int:
         """Turn off the linger flag.  The socket will quickly release buffered items
         and free up OS resources.  You may lose a stream if you use this flag and
         do not negotiate the close at the application layer.
         """
-    def SetSendBufferSize(self, insize: int) -> int:
+    def SetSendBufferSize(self, insize: int, /) -> int:
         """Just like it sounds.  Sets a buffered socket recv buffer size.  This
         function does not refuse ranges outside hard-coded OS limits
         """
@@ -149,14 +149,14 @@ class Socket_TCP(Socket_IP):
         """This function will try and set the socket up for active open to a specified
         address and port provided by the input parameter
         """
-    def ActiveOpenNonBlocking(self, theaddress: Socket_Address) -> bool:
+    def ActiveOpenNonBlocking(self, theaddress: Socket_Address, /) -> bool:
         """This function will try and set the socket up for active open to a specified
         address and port provided by the input parameter (non-blocking version)
         """
-    def ErrorIs_WouldBlocking(self, err: int) -> bool: ...
+    def ErrorIs_WouldBlocking(self, err: int, /) -> bool: ...
     def ShutdownSend(self) -> bool: ...
-    def SendData(self, str: str) -> int: ...
-    def RecvData(self, max_len: int) -> str:
+    def SendData(self, str: str, /) -> int: ...
+    def RecvData(self, max_len: int, /) -> str:
         """Read the data from the connection - if error 0 if socket closed for read or
         length is 0 + bytes read (May be smaller than requested)
         """
@@ -178,13 +178,9 @@ class Socket_UDP_Incoming(Socket_IP):
     """Base functionality for a UDP Reader"""
 
     def __init__(self) -> None: ...
-    @overload
-    def OpenForInput(self, address: Socket_Address) -> bool:
+    def OpenForInput(self, address_or_port: Socket_Address | int, /) -> bool:
         """Starts a UDP socket listening on a port"""
-    @overload
-    def OpenForInput(self, port: int) -> bool:
-        """Starts a UDP socket listening on a port"""
-    def OpenForInputMCast(self, address: Socket_Address) -> bool:
+    def OpenForInputMCast(self, address: Socket_Address, /) -> bool:
         """Starts a UDP socket listening on a port"""
     def SendTo(self, data: str, len: int, address: Socket_Address) -> bool:
         """Send data to specified address"""
@@ -197,9 +193,9 @@ class Socket_UDP_Outgoing(Socket_IP):
     """Base functionality for a UDP sending socket"""
 
     def __init__(self) -> None: ...
-    def InitToAddress(self, address: Socket_Address) -> bool:
+    def InitToAddress(self, address: Socket_Address, /) -> bool:
         """Connects the Socket to a specified address"""
-    def Send(self, data: str) -> bool:
+    def Send(self, data: str, /) -> bool:
         """Send data to connected address"""
     def InitNoAddress(self) -> bool:
         """use this interface for a none tagreted UDP connection"""
@@ -214,8 +210,8 @@ class Socket_fdset:
         """The constructor"""
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def setForSocket(self, incon: Socket_IP | int) -> None: ...
-    def IsSetFor(self, incon: Socket_IP | int) -> bool:
+    def setForSocket(self, incon: Socket_IP | int, /) -> None: ...
+    def IsSetFor(self, incon: Socket_IP | int, /) -> bool:
         """check to see if a socket object has been marked for reading"""
     def WaitForRead(self, zeroFds: bool, sleep_time: int = ...) -> int: ...
     def WaitForWrite(self, zeroFds: bool, sleep_time: int = ...) -> int:
@@ -236,22 +232,22 @@ class Buffered_DatagramConnection(Socket_TCP):
     """
 
     def __init__(self, rbufsize: int, wbufsize: int, write_flush_point: int) -> None: ...
-    def GetMessage(self, val: Datagram) -> bool:
+    def GetMessage(self, val: Datagram, /) -> bool:
         """Reads a message.  Returns false on failure."""
     def DoConnect(self) -> bool:
         """all the real state magic is in here"""
     def IsConnected(self) -> bool:
         """all the real state magic is in here"""
-    def SendMessage(self, msg: Datagram) -> bool:
+    def SendMessage(self, msg: Datagram, /) -> bool:
         """the reason thsi all exists"""
     def Flush(self) -> bool:
         """Flush all writes."""
     def Reset(self) -> None:
         """Reset"""
-    def WaitForNetworkReadEvent(self, MaxTime: float) -> None: ...
+    def WaitForNetworkReadEvent(self, MaxTime: float, /) -> None: ...
     def AddressQueueSize(self) -> int:
         """address queue stuff"""
-    def AddAddress(self, inadr: Socket_Address) -> None:
+    def AddAddress(self, inadr: Socket_Address, /) -> None:
         """must be called to set value to the server"""
     def ClearAddresses(self) -> None: ...
 
@@ -261,9 +257,9 @@ class Socket_UDP(Socket_UDP_Incoming):
     inheritance.
     """
 
-    def InitToAddress(self, address: Socket_Address) -> bool:
+    def InitToAddress(self, address: Socket_Address, /) -> bool:
         """Connects the socket to a Specified address"""
-    def Send(self, data: str) -> bool:
+    def Send(self, data: str, /) -> bool:
         """Send data to connected address"""
     def SendTo(self, data: str, address: Socket_Address) -> bool:  # type: ignore[override]
         """Send data to specified address"""

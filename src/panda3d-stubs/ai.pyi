@@ -56,11 +56,11 @@ class AIBehaviors:
         evade_wt: float = ...,
     ) -> None:
         """This function activates evade_activate."""
-    def arrival(self, distance: float = ...) -> None:
+    def arrival(self, distance: float = ..., /) -> None:
         """This function activates arrival.  This is the function we want the user to
         call for arrival to be done.
         """
-    def flock(self, flock_wt: float) -> None:
+    def flock(self, flock_wt: float, /) -> None:
         """This function activates flock.  This is the function we want the user to
         call for flock to be done.
         """
@@ -68,19 +68,19 @@ class AIBehaviors:
         """This function activates wander.  This is the function we want the user to
         call for flock to be done.
         """
-    def obstacle_avoidance(self, feeler_length: float = ...) -> None:
+    def obstacle_avoidance(self, feeler_length: float = ..., /) -> None:
         """This function activates obstacle avoidance for a given character.  This is
         the function we want the user to call for obstacle avoidance to be
         performed.
         """
-    def path_follow(self, follow_wt: float = ...) -> None:
+    def path_follow(self, follow_wt: float = ..., /) -> None:
         """This function activates path following.  This is the function we want the
         user to call for path following.
         """
-    def add_to_path(self, pos: Vec3Like) -> None:
+    def add_to_path(self, pos: Vec3Like, /) -> None:
         """This function adds positions to the path to follow."""
-    def start_follow(self, type: str = ...) -> None: ...
-    def init_path_find(self, navmesh_filename: str) -> None:
+    def start_follow(self, type: str = ..., /) -> None: ...
+    def init_path_find(self, navmesh_filename: str, /) -> None:
         """This function activates path finding in the character.  This function
         accepts the meshdata in .csv format.
         """
@@ -96,23 +96,23 @@ class AIBehaviors:
         its availability and then finds the best path via the A* algorithm Then it
         calls the path follower to make the object follow the path.
         """
-    def add_static_obstacle(self, obstacle: NodePath) -> None:
+    def add_static_obstacle(self, obstacle: NodePath, /) -> None:
         """This function allows the user to dynamically add obstacles to the game
         environment.  The function will update the nodes within the bounding volume
         of the obstacle as non-traversable.  Hence will not be considered by the
         pathfinding algorithm.
         """
-    def add_dynamic_obstacle(self, obstacle: NodePath) -> None:
+    def add_dynamic_obstacle(self, obstacle: NodePath, /) -> None:
         """This function starts the pathfinding obstacle navigation for the passed in
         obstacle.
         """
-    def remove_ai(self, ai_type: str) -> None:
+    def remove_ai(self, ai_type: str, /) -> None:
         """This function removes individual or all the AIs."""
-    def pause_ai(self, ai_type: str) -> None:
+    def pause_ai(self, ai_type: str, /) -> None:
         """This function pauses individual or all the AIs."""
-    def resume_ai(self, ai_type: str) -> None:
+    def resume_ai(self, ai_type: str, /) -> None:
         """This function resumes individual or all the AIs"""
-    def behavior_status(self, ai_type: str) -> str:
+    def behavior_status(self, ai_type: str, /) -> str:
         """This function returns the status of an AI Type whether it is active, paused
         or disabled.  It returns -1 if an invalid string is passed.
         """
@@ -139,14 +139,14 @@ class AICharacter(ReferenceCount):
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     def get_mass(self) -> float: ...
-    def set_mass(self, m: float) -> None: ...
+    def set_mass(self, m: float, /) -> None: ...
     def get_velocity(self) -> LVecBase3: ...
     def get_max_force(self) -> float: ...
-    def set_max_force(self, max_force: float) -> None: ...
+    def set_max_force(self, max_force: float, /) -> None: ...
     def get_node_path(self) -> NodePath: ...
-    def set_node_path(self, np: NodePath) -> None: ...
+    def set_node_path(self, np: NodePath, /) -> None: ...
     def get_ai_behaviors(self) -> AIBehaviors: ...
-    def set_pf_guide(self, pf_guide: bool) -> None:
+    def set_pf_guide(self, pf_guide: bool, /) -> None:
         """This function is used to enable or disable the guides for path finding."""
     getMass = get_mass
     setMass = set_mass
@@ -198,7 +198,7 @@ class Flock:
     ) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def add_ai_char(self, ai_char: AICharacter) -> None:
+    def add_ai_char(self, ai_char: AICharacter, /) -> None:
         """This function adds AI characters to the flock."""
     def get_id(self) -> int:
         """Function to access the private member flock_id."""
@@ -220,28 +220,28 @@ class AIWorld:
     def __init__(self, render: NodePath) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def add_ai_char(self, ai_ch: AICharacter) -> None: ...
-    def remove_ai_char(self, name: str) -> None: ...
-    def add_flock(self, flock: Flock) -> None:
+    def add_ai_char(self, ai_ch: AICharacter, /) -> None: ...
+    def remove_ai_char(self, name: str, /) -> None: ...
+    def add_flock(self, flock: Flock, /) -> None:
         """This function adds all the AI characters in the Flock object to the
         AICharPool.  This function allows adding the AI characetrs as part of a
         flock.
         """
-    def flock_off(self, flock_id: int) -> None:
+    def flock_off(self, flock_id: int, /) -> None:
         """This function turns off the flock behavior temporarily.  Similar to pausing
         the behavior.
         """
-    def flock_on(self, flock_id: int) -> None:
+    def flock_on(self, flock_id: int, /) -> None:
         """This function turns on the flock behavior."""
-    def remove_flock(self, flock_id: int) -> None:
+    def remove_flock(self, flock_id: int, /) -> None:
         """This function removes the flock behavior completely."""
-    def get_flock(self, flock_id: int) -> Flock:
+    def get_flock(self, flock_id: int, /) -> Flock:
         """This function returns a handle to the Flock whose id is passed."""
-    def add_obstacle(self, obstacle: NodePath) -> None:
+    def add_obstacle(self, obstacle: NodePath, /) -> None:
         """This function adds the nodepath as an obstacle that is needed by the
         obstacle avoidance behavior.
         """
-    def remove_obstacle(self, obstacle: NodePath) -> None:
+    def remove_obstacle(self, obstacle: NodePath, /) -> None:
         """This function removes the nodepath from the obstacles list that is needed
         by the obstacle avoidance behavior.
         """

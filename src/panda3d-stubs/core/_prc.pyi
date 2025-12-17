@@ -116,7 +116,7 @@ class ConfigPage:
         on startup, or false if it was explicitly loaded by dynamic code after
         initial startup.
         """
-    def set_sort(self, sort: int) -> None:
+    def set_sort(self, sort: int, /) -> None:
         """Changes the explicit sort order of this particular ConfigPage.  Lower-
         numbered pages supercede higher-numbered pages.  Initially, all explicitly-
         loaded pages have sort value 0, and implicitly-loaded pages (found on disk)
@@ -144,7 +144,7 @@ class ConfigPage:
         level is the index number of the certificate that signed it.  Generally, a
         higher trust level value represents a greater level of trust.
         """
-    def set_trust_level(self, trust_level: int) -> None:
+    def set_trust_level(self, trust_level: int, /) -> None:
         """Explicitly sets the trust level on this particular page.  Note that any
         subsequent changes to the page, or to any variable declarations on it, will
         reset the trust level to zero.
@@ -155,7 +155,7 @@ class ConfigPage:
         """
     def clear(self) -> None:
         """Removes all of the declarations from the page."""
-    def read_prc(self, _in: istream) -> bool:
+    def read_prc(self, _in: istream, /) -> bool:
         """Reads the contents of a complete prc file, as returned by the indicated
         istream, into the current page file.  Returns true on success, or false on
         some I/O error.
@@ -170,32 +170,32 @@ class ConfigPage:
         """
     def make_declaration(self, variable: ConfigVariableCore | str, value: str) -> ConfigDeclaration:
         """Adds the indicated variable/value pair as a new declaration on the page."""
-    def delete_declaration(self, decl: ConfigDeclaration) -> bool:
+    def delete_declaration(self, decl: ConfigDeclaration, /) -> bool:
         """Removes the indicated declaration from the page and deletes it.  Returns
         true if the declaration is successfully removed, false if it was not on the
         page.
         """
     def get_num_declarations(self) -> int:
         """Returns the number of declarations on the page."""
-    def get_declaration(self, n: int) -> ConfigDeclaration:
+    def get_declaration(self, n: int, /) -> ConfigDeclaration:
         """Returns the nth declaration on the page."""
-    def modify_declaration(self, n: int) -> ConfigDeclaration:
+    def modify_declaration(self, n: int, /) -> ConfigDeclaration:
         """Returns a modifiable pointer to the nth declaration on the page.  Any
         modifications will appear in the output, if the page is written out with
         ConfigPage::write().
         """
-    def get_variable_name(self, n: int) -> str:
+    def get_variable_name(self, n: int, /) -> str:
         """Returns the variable named by the nth declaration on the page."""
-    def get_string_value(self, n: int) -> str:
+    def get_string_value(self, n: int, /) -> str:
         """Returns the value assigned by the nth declaration on the page."""
-    def is_variable_used(self, n: int) -> bool:
+    def is_variable_used(self, n: int, /) -> bool:
         """Returns true if the nth active variable on the page has been used by code,
         false otherwise.
         """
-    def output(self, out: ostream) -> None: ...
-    def output_brief_signature(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None: ...
+    def output_brief_signature(self, out: ostream, /) -> None:
         """Outputs the first few hex digits of the signature."""
-    def write(self, out: ostream) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     getDefaultPage = get_default_page
     getLocalPage = get_local_page
     getName = get_name
@@ -241,50 +241,50 @@ class ConfigDeclaration(ConfigFlags):
         text defined for the variable in the .prc file (or passed to
         ConfigPage::make_declaration()).
         """
-    def set_string_value(self, value: str) -> None:
+    def set_string_value(self, value: str, /) -> None:
         """Changes the value assigned to this variable."""
     def get_num_words(self) -> int:
         """Returns the number of words in the declaration's value.  A word is defined
         as a sequence of non-whitespace characters delimited by whitespace.
         """
-    def has_string_word(self, n: int) -> bool:
+    def has_string_word(self, n: int, /) -> bool:
         """Returns true if the declaration's value has a valid string value for the
         nth word.  This is really the same thing as asking if there are at least n
         words in the value.
         """
-    def has_bool_word(self, n: int) -> bool:
+    def has_bool_word(self, n: int, /) -> bool:
         """Returns true if the declaration's value has a valid boolean value for the
         nth word.
         """
-    def has_int_word(self, n: int) -> bool:
+    def has_int_word(self, n: int, /) -> bool:
         """Returns true if the declaration's value has a valid integer value for the
         nth word.
         """
-    def has_int64_word(self, n: int) -> bool:
+    def has_int64_word(self, n: int, /) -> bool:
         """Returns true if the declaration's value has a valid int64 value for the nth
         word.
         """
-    def has_double_word(self, n: int) -> bool:
+    def has_double_word(self, n: int, /) -> bool:
         """Returns true if the declaration's value has a valid integer value for the
         nth word.
         """
-    def get_string_word(self, n: int) -> str:
+    def get_string_word(self, n: int, /) -> str:
         """Returns the string value of the nth word of the declaration's value, or
         empty string if there is no nth value.  See also has_string_word().
         """
-    def get_bool_word(self, n: int) -> bool:
+    def get_bool_word(self, n: int, /) -> bool:
         """Returns the boolean value of the nth word of the declaration's value, or
         false if there is no nth value.  See also has_bool_word().
         """
-    def get_int_word(self, n: int) -> int:
+    def get_int_word(self, n: int, /) -> int:
         """Returns the integer value of the nth word of the declaration's value, or 0
         if there is no nth value.  See also has_int_word().
         """
-    def get_int64_word(self, n: int) -> int:
+    def get_int64_word(self, n: int, /) -> int:
         """Returns the int64 value of the nth word of the declaration's value, or 0 if
         there is no nth value.  See also has_int64_word().
         """
-    def get_double_word(self, n: int) -> float:
+    def get_double_word(self, n: int, /) -> float:
         """Returns the integer value of the nth word of the declaration's value, or 0
         if there is no nth value.  See also has_double_word().
         """
@@ -318,8 +318,8 @@ class ConfigDeclaration(ConfigFlags):
         given a higher sequence number than all the declarations created in the
         page before it.
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     getPage = get_page
     getVariable = get_variable
     getStringValue = get_string_value
@@ -419,23 +419,23 @@ class ConfigVariableCore(ConfigFlags):
         """Returns the default variable specified for this variable.  If the variable
         has not yet been defined, this will return NULL.
         """
-    def set_value_type(self, value_type: _ConfigFlags_ValueType) -> None:
+    def set_value_type(self, value_type: _ConfigFlags_ValueType, /) -> None:
         """Specifies the type of this variable.  See get_value_type().  It is not an
         error to call this multiple times, but if the value changes once
         get_declaration() has been called, a warning is printed.
         """
-    def set_flags(self, flags: int) -> None:
+    def set_flags(self, flags: int, /) -> None:
         """Specifies the trust level of this variable.  See get_flags().  It is not an
         error to call this multiple times, but if the value changes once
         get_declaration() has been called, a warning is printed.
         """
-    def set_description(self, description: str) -> None:
+    def set_description(self, description: str, /) -> None:
         """Specifies the one-line description of this variable.  See
         get_description().  It is not an error to call this multiple times, but if
         the value changes once get_declaration() has been called, a warning is
         printed.
         """
-    def set_default_value(self, default_value: str) -> None:
+    def set_default_value(self, default_value: str, /) -> None:
         """Specifies the default value for this variable if it is not defined in any
         prc file.
         """
@@ -470,7 +470,7 @@ class ConfigVariableCore(ConfigFlags):
         value.  If the variable has been defined, this will always be at least 1
         (for the default value, at least).
         """
-    def get_declaration(self, n: int) -> ConfigDeclaration:
+    def get_declaration(self, n: int, /) -> ConfigDeclaration:
         """Returns the nth declarations that contributes to this variable's value.
         The declarations are arranged in order such that earlier declarations
         shadow later declarations; thus, get_declaration(0) is always defined and
@@ -480,7 +480,7 @@ class ConfigVariableCore(ConfigFlags):
         """Returns the number of prc files that reference this variable.  This is not
         exactly the same as the number of declarations; see get_reference().
         """
-    def get_reference(self, n: int) -> ConfigDeclaration:
+    def get_reference(self, n: int, /) -> ConfigDeclaration:
         """Returns the nth declaration in a prc file that references this variable.
         This is similar, but not identical to, get_declaration().  The difference
         is that this will list *only* true references in a prc file, and will not
@@ -491,7 +491,7 @@ class ConfigVariableCore(ConfigFlags):
         """Returns the number of trusted prc files that reference this variable.  See
         also get_num_references().
         """
-    def get_trusted_reference(self, n: int) -> ConfigDeclaration:
+    def get_trusted_reference(self, n: int, /) -> ConfigDeclaration:
         """Returns the nth declaration in a trusted prc file that references this
         variable.  This is similar, but not identical to, get_declaration().  The
         difference is that this will list *only* true references in a prc file, and
@@ -504,12 +504,12 @@ class ConfigVariableCore(ConfigFlags):
         """Returns the number of trusted, unique (by string value) values there exist
         for this variable.
         """
-    def get_unique_reference(self, n: int) -> ConfigDeclaration:
+    def get_unique_reference(self, n: int, /) -> ConfigDeclaration:
         """Returns the nth trusted, unique value for this variable.  This is similar
         to get_trusted_reference(), except that duplicate values are removed.
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     def get_declarations(self) -> tuple[ConfigDeclaration, ...]: ...
     def get_references(self) -> tuple[ConfigDeclaration, ...]: ...
     def get_trusted_references(self) -> tuple[ConfigDeclaration, ...]: ...
@@ -628,7 +628,7 @@ class Notify:
         Category::out() when a particular Category and/or Severity is disabled.
         """
     @staticmethod
-    def write_string(str: str) -> None:
+    def write_string(str: str, /) -> None:
         """A convenient way for scripting languages, which may know nothing about
         ostreams, to write to Notify.  This writes a single string, followed by an
         implicit newline, to the Notify output stream.
@@ -695,7 +695,7 @@ class ConfigPageManager(ConfigFlags):
         one pattern, and it is `*.prc`, but others may be specified with the
         PRC_FILENAME variable in Config.pp.
         """
-    def get_prc_pattern(self, n: int) -> str:
+    def get_prc_pattern(self, n: int, /) -> str:
         """Returns the nth filename pattern that will be considered a match as a valid
         config file.  See get_num_prc_patterns().
         """
@@ -704,7 +704,7 @@ class ConfigPageManager(ConfigFlags):
         will be searched for as special config files that are understood to be
         encrypted.
         """
-    def get_prc_encrypted_pattern(self, n: int) -> str:
+    def get_prc_encrypted_pattern(self, n: int, /) -> str:
         """Returns the nth filename pattern that will be considered a match as a valid
         encrypted config file.  See get_num_prc_encrypted_patterns().
         """
@@ -713,16 +713,16 @@ class ConfigPageManager(ConfigFlags):
         will be searched for as special config files that are to be executed as a
         program, and their output taken to be input.  This is normally empty.
         """
-    def get_prc_executable_pattern(self, n: int) -> str:
+    def get_prc_executable_pattern(self, n: int, /) -> str:
         """Returns the nth filename pattern that will be considered a match as a valid
         executable-style config file.  See get_num_prc_executable_patterns().
         """
-    def make_explicit_page(self, name: str) -> ConfigPage:
+    def make_explicit_page(self, name: str, /) -> ConfigPage:
         """Creates and returns a new, empty ConfigPage.  This page will be stacked on
         top of any pages that were created before; it may shadow variable
         declarations that are defined in previous pages.
         """
-    def delete_explicit_page(self, page: ConfigPage) -> bool:
+    def delete_explicit_page(self, page: ConfigPage, /) -> bool:
         """Removes a previously-constructed ConfigPage from the set of active pages,
         and deletes it.  The ConfigPage object is no longer valid after this call.
         Returns true if the page is successfully deleted, or false if it was
@@ -734,7 +734,7 @@ class ConfigPageManager(ConfigFlags):
         These represent files that were automatically discovered on the disk as
         .prc files.
         """
-    def get_implicit_page(self, n: int) -> ConfigPage:
+    def get_implicit_page(self, n: int, /) -> ConfigPage:
         """Returns the nth implicit ConfigPage in the world.  See
         get_num_implicit_pages().
         """
@@ -743,12 +743,12 @@ class ConfigPageManager(ConfigFlags):
         These represent pages that were loaded dynamically at runtime by explicit
         calls to ConfigPageManager::make_explicit_page().
         """
-    def get_explicit_page(self, n: int) -> ConfigPage:
+    def get_explicit_page(self, n: int, /) -> ConfigPage:
         """Returns the nth explicit ConfigPage in the world.  See
         get_num_explicit_pages().
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_global_ptr() -> ConfigPageManager: ...
     loadedImplicitPages = loaded_implicit_pages
@@ -778,7 +778,7 @@ class ConfigVariableManager:
     DtoolClassDict: ClassVar[dict[str, Any]]
     @property
     def variables(self) -> Sequence[ConfigVariableCore]: ...
-    def make_variable(self, name: str) -> ConfigVariableCore:
+    def make_variable(self, name: str, /) -> ConfigVariableCore:
         """Creates and returns a new, undefined ConfigVariableCore with the indicated
         name; or if a variable with this name has already been created, returns
         that one instead.
@@ -811,17 +811,17 @@ class ConfigVariableManager:
         """
     def get_num_variables(self) -> int:
         """Returns the current number of active ConfigVariableCores in the world."""
-    def get_variable(self, n: int) -> ConfigVariableCore:
+    def get_variable(self, n: int, /) -> ConfigVariableCore:
         """Returns the nth active ConfigVariableCore in the world."""
-    def get_variable_name(self, n: int) -> str:
+    def get_variable_name(self, n: int, /) -> str:
         """Returns the name of the nth active ConfigVariable in the list."""
-    def is_variable_used(self, n: int) -> bool:
+    def is_variable_used(self, n: int, /) -> bool:
         """Returns true if the nth active ConfigVariable in the list has been used by
         code, false otherwise.
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
-    def write_prc_variables(self, out: ostream) -> None:
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
+    def write_prc_variables(self, out: ostream, /) -> None:
         """Writes all of the prc-set config variables, as they appear in a prc file
         somewhere, one per line, very concisely.  This lists the dominant value in
         the prc file; it does not list shadowed values, and it does not list
@@ -936,8 +936,8 @@ class ConfigVariableBase(ConfigFlags):
         """Returns true if this variable has an explicit value, either from a prc file
         or locally set, or false if variable has its default value.
         """
-    def output(self, out: ostream) -> None: ...
-    def write(self, out: ostream) -> None: ...
+    def output(self, out: ostream, /) -> None: ...
+    def write(self, out: ostream, /) -> None: ...
     getName = get_name
     getValueType = get_value_type
     getDescription = get_description
@@ -970,7 +970,7 @@ class ConfigVariable(ConfigVariableBase):
         """
     def get_string_value(self) -> str:
         """Returns the toplevel value of the variable, formatted as a string."""
-    def set_string_value(self, value: str) -> None:
+    def set_string_value(self, value: str, /) -> None:
         """Changes the value assigned to this variable.  This creates a local value
         that shadows any values defined in the .prc files, until
         clear_local_value() is called.
@@ -1003,17 +1003,17 @@ class ConfigVariableBool(ConfigVariable):
     def __bool__(self) -> bool: ...
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
-    def __getitem__(self, n: int) -> bool: ...
+    def __getitem__(self, n: int, /) -> bool: ...
     @type_check_only
     def __iter__(self) -> Iterator[bool]: ...
-    def assign(self, value: bool) -> Self: ...
-    def set_value(self, value: bool) -> None:
+    def assign(self, value: bool, /) -> Self: ...
+    def set_value(self, value: bool, /) -> None:
         """Reassigns the variable's local value."""
     def get_value(self) -> bool:
         """Returns the variable's value."""
     def get_default_value(self) -> bool:
         """Returns the variable's default value."""
-    def get_word(self, n: int) -> bool:
+    def get_word(self, n: int, /) -> bool:
         """Returns the variable's nth value."""
     def set_word(self, n: int, value: bool) -> None:
         """Reassigns the variable's nth value.  This makes a local copy of the
@@ -1042,17 +1042,17 @@ class ConfigVariableDouble(ConfigVariable):
     def __float__(self) -> float: ...
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
-    def __getitem__(self, n: int) -> float: ...
+    def __getitem__(self, n: int, /) -> float: ...
     @type_check_only
     def __iter__(self) -> Iterator[float]: ...
-    def assign(self, value: float) -> Self: ...
-    def set_value(self, value: float) -> None:
+    def assign(self, value: float, /) -> Self: ...
+    def set_value(self, value: float, /) -> None:
         """Reassigns the variable's local value."""
     def get_value(self) -> float:
         """Returns the variable's value."""
     def get_default_value(self) -> float:
         """Returns the variable's default value."""
-    def get_word(self, n: int) -> float:
+    def get_word(self, n: int, /) -> float:
         """Returns the variable's nth value."""
     def set_word(self, n: int, value: float) -> None:
         """Reassigns the variable's nth value.  This makes a local copy of the
@@ -1081,11 +1081,11 @@ class ConfigVariableFilename(ConfigVariable):
     def __init__(self, name: str) -> None: ...
     @overload
     def __init__(self, name: str, default_value: StrOrBytesPath, description: str = ..., flags: int = ...) -> None: ...
-    def __getitem__(self, n: int) -> str: ...
+    def __getitem__(self, n: int, /) -> str: ...
     def __eq__(self, other: object, /) -> bool:
         """Comparison operators are handy."""
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: StrOrBytesPath) -> bool: ...
+    def __lt__(self, other: StrOrBytesPath, /) -> bool: ...
     def __fspath__(self) -> str:
         """Allows a ConfigVariableFilename object to be passed to any Python function
         that accepts an os.PathLike object.
@@ -1093,7 +1093,7 @@ class ConfigVariableFilename(ConfigVariable):
         @since 1.10.13
         """
     def operator_typecast(self) -> Filename: ...
-    def assign(self, value: StrOrBytesPath) -> Self: ...
+    def assign(self, value: StrOrBytesPath, /) -> Self: ...
     def c_str(self) -> str:
         """These methods help the ConfigVariableFilename act like a Filename object."""
     def empty(self) -> bool: ...
@@ -1121,13 +1121,13 @@ class ConfigVariableFilename(ConfigVariable):
         """Returns the file extension.  This is everything after the rightmost dot, if
         there is one, or the empty string if there is not.
         """
-    def set_value(self, value: StrOrBytesPath) -> None:
+    def set_value(self, value: StrOrBytesPath, /) -> None:
         """Reassigns the variable's local value."""
     def get_value(self) -> Filename:
         """Returns the variable's value."""
     def get_default_value(self) -> Filename:
         """Returns the variable's default value."""
-    def get_word(self, n: int) -> Filename:
+    def get_word(self, n: int, /) -> Filename:
         """Returns the variable's nth value."""
     def set_word(self, n: int, value: StrOrBytesPath) -> None:
         """Reassigns the variable's nth value.  This makes a local copy of the
@@ -1165,17 +1165,17 @@ class ConfigVariableInt(ConfigVariable):
     def __int__(self) -> int: ...
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
-    def __getitem__(self, n: int) -> int: ...
+    def __getitem__(self, n: int, /) -> int: ...
     @type_check_only
     def __iter__(self) -> Iterator[int]: ...
-    def assign(self, value: int) -> Self: ...
-    def set_value(self, value: int) -> None:
+    def assign(self, value: int, /) -> Self: ...
+    def set_value(self, value: int, /) -> None:
         """Reassigns the variable's local value."""
     def get_value(self) -> int:
         """Returns the variable's value."""
     def get_default_value(self) -> int:
         """Returns the variable's default value."""
-    def get_word(self, n: int) -> int:
+    def get_word(self, n: int, /) -> int:
         """Returns the variable's nth value."""
     def set_word(self, n: int, value: int) -> None:
         """Reassigns the variable's nth value.  This makes a local copy of the
@@ -1204,17 +1204,17 @@ class ConfigVariableInt64(ConfigVariable):
     def __int__(self) -> int: ...
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
-    def __getitem__(self, n: int) -> int: ...
+    def __getitem__(self, n: int, /) -> int: ...
     @type_check_only
     def __iter__(self) -> Iterator[int]: ...
-    def assign(self, value: int) -> Self: ...
-    def set_value(self, value: int) -> None:
+    def assign(self, value: int, /) -> Self: ...
+    def set_value(self, value: int, /) -> None:
         """Reassigns the variable's local value."""
     def get_value(self) -> int:
         """Returns the variable's value."""
     def get_default_value(self) -> int:
         """Returns the variable's default value."""
-    def get_word(self, n: int) -> int:
+    def get_word(self, n: int, /) -> int:
         """Returns the variable's nth value."""
     def set_word(self, n: int, value: int) -> None:
         """Reassigns the variable's nth value.  This makes a local copy of the
@@ -1244,16 +1244,16 @@ class ConfigVariableList(ConfigVariableBase):
     def __init__(self, name: str, description: str = ..., flags: int = ...) -> None: ...
     def __len__(self) -> int:
         """Returns the number of unique values of the variable."""
-    def __getitem__(self, n: int) -> str: ...
+    def __getitem__(self, n: int, /) -> str: ...
     @type_check_only
     def __iter__(self) -> Iterator[str]: ...
     def get_num_values(self) -> int:
         """Returns the number of values in the variable."""
-    def get_string_value(self, n: int) -> str:
+    def get_string_value(self, n: int, /) -> str:
         """Returns the nth value of the variable."""
     def get_num_unique_values(self) -> int:
         """Returns the number of unique values in the variable."""
-    def get_unique_value(self, n: int) -> str:
+    def get_unique_value(self, n: int, /) -> str:
         """Returns the nth unique value of the variable."""
     getNumValues = get_num_values
     getStringValue = get_string_value
@@ -1297,9 +1297,9 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         """Removes all the directories locally added to the search list, and restores
         it to its original form.
         """
-    def append_directory(self, directory: StrOrBytesPath) -> None:
+    def append_directory(self, directory: StrOrBytesPath, /) -> None:
         """Adds a new directory to the end of the search list."""
-    def prepend_directory(self, directory: StrOrBytesPath) -> None:
+    def prepend_directory(self, directory: StrOrBytesPath, /) -> None:
         """Adds a new directory to the front of the search list."""
     @overload
     def append_path(self, path: SearchPathLike) -> None:
@@ -1311,7 +1311,7 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         """Adds all of the directories listed in the search path to the end of the
         search list.
         """
-    def prepend_path(self, path: SearchPathLike) -> None:
+    def prepend_path(self, path: SearchPathLike, /) -> None:
         """Adds all of the directories listed in the search path to the beginning of
         the search list.
         """
@@ -1319,9 +1319,9 @@ class ConfigVariableSearchPath(ConfigVariableBase):
         """Returns true if the search list is empty, false otherwise."""
     def get_num_directories(self) -> int:
         """Returns the number of directories on the search list."""
-    def get_directory(self, n: int) -> Filename:
+    def get_directory(self, n: int, /) -> Filename:
         """Returns the nth directory on the search list."""
-    def find_file(self, filename: StrOrBytesPath) -> Filename:
+    def find_file(self, filename: StrOrBytesPath, /) -> Filename:
         """Searches all the directories in the search list for the indicated file, in
         order.  Returns the full matching pathname of the first match if found, or
         the empty string if not found.
@@ -1369,23 +1369,23 @@ class ConfigVariableString(ConfigVariable):
     def __init__(self, name: str) -> None: ...
     @overload
     def __init__(self, name: str, default_value: str, description: str = ..., flags: int = ...) -> None: ...
-    def __getitem__(self, n: int) -> str: ...
+    def __getitem__(self, n: int, /) -> str: ...
     def __eq__(self, other: object, /) -> bool:
         """Comparison operators are handy."""
     def __ne__(self, other: object, /) -> bool: ...
-    def __lt__(self, other: str) -> bool: ...
-    def assign(self, value: str) -> Self: ...
+    def __lt__(self, other: str, /) -> bool: ...
+    def assign(self, value: str, /) -> Self: ...
     def c_str(self) -> str:
         """These methods help the ConfigVariableString act like a C++ string object."""
     def empty(self) -> bool: ...
     def length(self) -> int: ...
-    def set_value(self, value: str) -> None:
+    def set_value(self, value: str, /) -> None:
         """Reassigns the variable's local value."""
     def get_value(self) -> str:
         """Returns the variable's value."""
     def get_default_value(self) -> str:
         """Returns the variable's default value."""
-    def get_word(self, n: int) -> str:
+    def get_word(self, n: int, /) -> str:
         """Returns the variable's nth value."""
     def set_word(self, n: int, value: str) -> None:
         """Reassigns the variable's nth value.  This makes a local copy of the
@@ -1417,11 +1417,11 @@ class NotifyCategory(ConfigFlags):
     def get_fullname(self) -> str: ...
     def get_basename(self) -> str: ...
     def get_severity(self) -> _NotifySeverity: ...
-    def set_severity(self, severity: _NotifySeverity) -> None:
+    def set_severity(self, severity: _NotifySeverity, /) -> None:
         """Sets the severity level of messages that will be reported from this
         Category.  This allows any message of this severity level or higher.
         """
-    def is_on(self, severity: _NotifySeverity) -> bool:
+    def is_on(self, severity: _NotifySeverity, /) -> bool:
         """Returns true if messages of the indicated severity level ought to be
         reported for this Category.
         """
@@ -1449,24 +1449,24 @@ class NotifyCategory(ConfigFlags):
         the Notify::out() stream and returns that.  If the severity level is
         disabled, this returns Notify::null().
         """
-    def spam(self, prefix: bool = ...) -> ostream:
+    def spam(self, prefix: bool = ..., /) -> ostream:
         """A shorthand way to write out(NS_spam)."""
-    def debug(self, prefix: bool = ...) -> ostream:
+    def debug(self, prefix: bool = ..., /) -> ostream:
         """A shorthand way to write out(NS_debug)."""
-    def info(self, prefix: bool = ...) -> ostream:
+    def info(self, prefix: bool = ..., /) -> ostream:
         """A shorthand way to write out(NS_info)."""
-    def warning(self, prefix: bool = ...) -> ostream:
+    def warning(self, prefix: bool = ..., /) -> ostream:
         """A shorthand way to write out(NS_warning)."""
-    def error(self, prefix: bool = ...) -> ostream:
+    def error(self, prefix: bool = ..., /) -> ostream:
         """A shorthand way to write out(NS_error)."""
-    def fatal(self, prefix: bool = ...) -> ostream:
+    def fatal(self, prefix: bool = ..., /) -> ostream:
         """A shorthand way to write out(NS_fatal)."""
     def get_num_children(self) -> int:
         """Returns the number of child Categories of this particular Category."""
-    def get_child(self, i: int) -> NotifyCategory:
+    def get_child(self, i: int, /) -> NotifyCategory:
         """Returns the nth child Category of this particular Category."""
     @staticmethod
-    def set_server_delta(delta: int) -> None:
+    def set_server_delta(delta: int, /) -> None:
         """Sets a global delta (in seconds) between the local time and the server's
         time, for the purpose of synchronizing the time stamps in the log messages
         of the client with that of a known server.
@@ -1547,7 +1547,7 @@ class OEncryptStream(ostream):
         """Resets the EncryptStream to empty, but does not actually close the dest
         ostream unless owns_dest was true.
         """
-    def set_algorithm(self, algorithm: str) -> None:
+    def set_algorithm(self, algorithm: str, /) -> None:
         """Specifies the encryption algorithm that should be used for future calls to
         open().  The default is whatever is specified by the encryption-algorithm
         config variable.  The complete set of available algorithms is defined by
@@ -1556,7 +1556,7 @@ class OEncryptStream(ostream):
         If an invalid algorithm is specified, there is no immediate error return
         code, but open() will fail.
         """
-    def set_key_length(self, key_length: int) -> None:
+    def set_key_length(self, key_length: int, /) -> None:
         """Specifies the length of the key, in bits, that should be used to encrypt
         the stream in future calls to open().  The default is whatever is specified
         by the encryption-key-length config variable.
@@ -1564,7 +1564,7 @@ class OEncryptStream(ostream):
         If an invalid key_length for the chosen algorithm is specified, there is no
         immediate error return code, but open() will fail.
         """
-    def set_iteration_count(self, iteration_count: int) -> None:
+    def set_iteration_count(self, iteration_count: int, /) -> None:
         """Specifies the number of times to repeatedly hash the key before writing it
         to the stream in future calls to open().  Its purpose is to make it
         computationally more expensive for an attacker to search the key space
@@ -1597,7 +1597,7 @@ class StreamReader:
         """
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def get_istream(self) -> core.istream:
         """Returns the stream in use."""
     def get_bool(self) -> bool:
@@ -1650,13 +1650,13 @@ class StreamReader:
         """Extracts a variable-length string with a 32-bit length field."""
     def get_z_string(self) -> str:
         """Extracts a variable-length string, as a NULL-terminated string."""
-    def get_fixed_string(self, size: int) -> str:
+    def get_fixed_string(self, size: int, /) -> str:
         """Extracts a fixed-length string.  However, if a zero byte occurs within the
         string, it marks the end of the string.
         """
-    def skip_bytes(self, size: int) -> None:
+    def skip_bytes(self, size: int, /) -> None:
         """Skips over the indicated number of bytes in the stream."""
-    def extract_bytes(self, size: int) -> bytes:
+    def extract_bytes(self, size: int, /) -> bytes:
         """Extracts the indicated number of bytes in the stream and returns them as a
         string.  Returns empty string at end-of-file.
         """
@@ -1715,72 +1715,72 @@ class StreamWriter:
     def __init__(self, out: core.ostream, owns_stream: bool) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
-    def assign(self, copy: Self) -> Self: ...
+    def assign(self, copy: Self, /) -> Self: ...
     def get_ostream(self) -> core.ostream:
         """Returns the stream in use."""
-    def add_bool(self, value: bool) -> None:
+    def add_bool(self, value: bool, /) -> None:
         """Adds a boolean value to the stream."""
-    def add_int8(self, value: int) -> None:
+    def add_int8(self, value: int, /) -> None:
         """Adds a signed 8-bit integer to the stream."""
-    def add_uint8(self, value: int) -> None:
+    def add_uint8(self, value: int, /) -> None:
         """Adds an unsigned 8-bit integer to the stream."""
-    def add_int16(self, value: int) -> None:
+    def add_int16(self, value: int, /) -> None:
         """Adds a signed 16-bit integer to the stream."""
-    def add_int32(self, value: int) -> None:
+    def add_int32(self, value: int, /) -> None:
         """Adds a signed 32-bit integer to the stream."""
-    def add_int64(self, value: int) -> None:
+    def add_int64(self, value: int, /) -> None:
         """Adds a signed 64-bit integer to the stream."""
-    def add_uint16(self, value: int) -> None:
+    def add_uint16(self, value: int, /) -> None:
         """Adds an unsigned 16-bit integer to the stream."""
-    def add_uint32(self, value: int) -> None:
+    def add_uint32(self, value: int, /) -> None:
         """Adds an unsigned 32-bit integer to the stream."""
-    def add_uint64(self, value: int) -> None:
+    def add_uint64(self, value: int, /) -> None:
         """Adds an unsigned 64-bit integer to the stream."""
-    def add_float32(self, value: float) -> None:
+    def add_float32(self, value: float, /) -> None:
         """Adds a 32-bit single-precision floating-point number to the stream.  Since
         this kind of float is not necessarily portable across different
         architectures, special care is required.
         """
-    def add_float64(self, value: float) -> None:
+    def add_float64(self, value: float, /) -> None:
         """Adds a 64-bit floating-point number to the stream."""
-    def add_be_int16(self, value: int) -> None:
+    def add_be_int16(self, value: int, /) -> None:
         """Adds a signed 16-bit big-endian integer to the streamWriter."""
-    def add_be_int32(self, value: int) -> None:
+    def add_be_int32(self, value: int, /) -> None:
         """Adds a signed 32-bit big-endian integer to the streamWriter."""
-    def add_be_int64(self, value: int) -> None:
+    def add_be_int64(self, value: int, /) -> None:
         """Adds a signed 64-bit big-endian integer to the streamWriter."""
-    def add_be_uint16(self, value: int) -> None:
+    def add_be_uint16(self, value: int, /) -> None:
         """Adds an unsigned 16-bit big-endian integer to the streamWriter."""
-    def add_be_uint32(self, value: int) -> None:
+    def add_be_uint32(self, value: int, /) -> None:
         """Adds an unsigned 32-bit big-endian integer to the streamWriter."""
-    def add_be_uint64(self, value: int) -> None:
+    def add_be_uint64(self, value: int, /) -> None:
         """Adds an unsigned 64-bit big-endian integer to the streamWriter."""
-    def add_be_float32(self, value: float) -> None:
+    def add_be_float32(self, value: float, /) -> None:
         """Adds a 32-bit single-precision big-endian floating-point number to the
         stream.  Since this kind of float is not necessarily portable across
         different architectures, special care is required.
         """
-    def add_be_float64(self, value: float) -> None:
+    def add_be_float64(self, value: float, /) -> None:
         """Adds a 64-bit big-endian floating-point number to the streamWriter."""
-    def add_string(self, str: str) -> None:
+    def add_string(self, str: str, /) -> None:
         """Adds a variable-length string to the stream.  This actually adds a count
         followed by n bytes.
         """
-    def add_string32(self, str: str) -> None:
+    def add_string32(self, str: str, /) -> None:
         """Adds a variable-length string to the stream, using a 32-bit length field."""
-    def add_z_string(self, str: str) -> None:
+    def add_z_string(self, str: str, /) -> None:
         """Adds a variable-length string to the stream, as a NULL-terminated string."""
     def add_fixed_string(self, str: str, size: int) -> None:
         """Adds a fixed-length string to the stream.  If the string given is less than
         the requested size, this will pad the string out with zeroes; if it is
         greater than the requested size, this will silently truncate the string.
         """
-    def pad_bytes(self, size: int) -> None:
+    def pad_bytes(self, size: int, /) -> None:
         """Adds the indicated number of zero bytes to the stream."""
-    def append_data(self, data) -> None: ...
+    def append_data(self, data, /) -> None: ...
     def flush(self) -> None:
         """Calls flush() on the underlying stream."""
-    def write(self, str: str) -> None:
+    def write(self, str: str, /) -> None:
         """A synonym of append_data().  This is useful when assigning the StreamWriter
         to sys.stderr and/or sys.stdout in Python.
         """
