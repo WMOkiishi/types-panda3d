@@ -1001,7 +1001,7 @@ class GeometricBoundingVolume(BoundingVolume):
     spheres.
     """
 
-    def extend_by(self, vol_or_point: Self | Vec3Like, /) -> bool:
+    def extend_by(self, vol_or_point: Self | Vec3Like, /) -> bool:  # pyright: ignore[reportIncompatibleMethodOverride]
         """Increases the size of the volume to include the given volume.
 
         or:
