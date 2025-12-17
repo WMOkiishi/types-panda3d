@@ -130,17 +130,18 @@ class Signature:
     deprecation_note: str | None = field(default=None, kw_only=True, eq=False)
     comment: str = field(default='', kw_only=True, eq=False)
 
-    def __str__(self) -> str:
-        strings: list[str] = []
+    def get_param_strings(self) -> Iterator[str]:
         prev_was_unnamed = False
         for param in self.parameters:
             if param.named and prev_was_unnamed:
-                strings.append('/')
-            strings.append(str(param))
+                yield '/'
+            yield str(param)
             prev_was_unnamed = not param.named
         if prev_was_unnamed:
-            strings.append('/')
-        param_string = ', '.join(strings)
+            yield '/'
+
+    def __str__(self) -> str:
+        param_string = ', '.join(self.get_param_strings())
         if self.return_type:
             return f'({param_string}) -> {self.return_type}'
         else:
@@ -189,7 +190,7 @@ class Signature:
             yield sig_def
         else:
             yield with_comment(f'{indent}{prefix}(', self.comment)
-            for param in self.parameters:
+            for param in self.get_param_strings():
                 yield f'{next_indent}{param},'
             yield f'{indent}) -> {self.return_type}:{postfix}'
         yield from docstring_lines(self.doc, indent_level=indent_level + 1)

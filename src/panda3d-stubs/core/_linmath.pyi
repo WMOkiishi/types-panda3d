@@ -2984,6 +2984,7 @@ class LMatrix3f:
         param6: float,
         param7: float,
         param8: float,
+        /,
     ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix3f.CRow | LMatrix3f.Row: ...
     def __len__(self) -> int:
@@ -3429,6 +3430,7 @@ class LMatrix4f:
         param13: float,
         param14: float,
         param15: float,
+        /,
     ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix4f.CRow | LMatrix4f.Row: ...
     def __len__(self) -> int:
@@ -3945,6 +3947,7 @@ class LMatrix3d:
         param6: float,
         param7: float,
         param8: float,
+        /,
     ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix3d.CRow | LMatrix3d.Row: ...
     def __len__(self) -> int:
@@ -4390,6 +4393,7 @@ class LMatrix4d:
         param13: float,
         param14: float,
         param15: float,
+        /,
     ) -> None: ...
     def __getitem__(self, i: int) -> LMatrix4d.CRow | LMatrix4d.Row: ...
     def __len__(self) -> int:
