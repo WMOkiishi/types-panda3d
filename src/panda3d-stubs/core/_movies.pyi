@@ -444,7 +444,8 @@ class MicrophoneAudio(MovieAudio):
         """Returns the number of channels."""
     def get_rate(self) -> int:
         """Returns the sample rate."""
-    def get_options(self) -> tuple[MicrophoneAudio, ...]: ...
+    @staticmethod
+    def get_options() -> tuple[MicrophoneAudio, ...]: ...
     getNumOptions = get_num_options
     getOption = get_option
     getChannels = get_channels

@@ -53,7 +53,8 @@ class GraphicsStateGuardianBase(TypedWritableReferenceCount):
         """Returns the nth GSG in the universe.  GSG's automatically add themselves
         and remove themselves from this list as they are created and destroyed.
         """
-    def get_gsgs(self) -> tuple[GraphicsStateGuardianBase, ...]: ...
+    @staticmethod
+    def get_gsgs() -> tuple[GraphicsStateGuardianBase, ...]: ...
     getIncompleteRender = get_incomplete_render
     getEffectiveIncompleteRender = get_effective_incomplete_render
     prefersTriangleStrips = prefers_triangle_strips

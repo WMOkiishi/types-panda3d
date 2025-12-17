@@ -308,14 +308,16 @@ def make_make_seq_rep(make_seq: IDBMakeSeq) -> Function:
     """Return a representation of a MakeSeq known to interrogate."""
     element_getter = make_seq.element_getter
     return_type = get_type_name(element_getter.wrappers[0].return_type)
+    is_static_method = not element_getter.wrappers[0].parameters[0].is_this
     signature = Signature(
-        [Parameter('self')],
+        [] if is_static_method else [Parameter('self')],
         f'tuple[{return_type}, ...]',
         doc=comment_to_docstring(make_seq.comment),
     )
     return Function(
         make_seq.seq_name,
         [signature],
+        is_static_method=is_static_method,
         comment=COMMENTS.get(make_seq.scoped_name, ''),
     )
 

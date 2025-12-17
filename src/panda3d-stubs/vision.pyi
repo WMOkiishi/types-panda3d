@@ -91,7 +91,8 @@ class WebcamVideo(MovieVideo):
         """Outputs the WebcamVideo.  This function simply writes the name, size and
         FPS to the output stream.
         """
-    def get_options(self) -> tuple[WebcamVideo, ...]: ...
+    @staticmethod
+    def get_options() -> tuple[WebcamVideo, ...]: ...
     getNumOptions = get_num_options
     getOption = get_option
     getSizeX = get_size_x
