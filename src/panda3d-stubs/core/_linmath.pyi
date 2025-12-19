@@ -4807,7 +4807,7 @@ class LQuaternionf(LVecBase4f):
     def __mul__(self, param0_or_scalar: Vec4Like | float, /) -> LQuaternionf: ...
     def __truediv__(self, scalar: float, /) -> LQuaternionf: ...
     def __imul__(self, param0: Vec4Like, /) -> Self: ...  # type: ignore[misc, override]
-    def __pow__(self, param0: float, /) -> LQuaternionf:  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __pow__(self, param0: float, /) -> LQuaternionf:
         """Returns a new quaternion that represents this quaternion raised to the
         given power.
         """
@@ -4847,7 +4847,7 @@ class LQuaternionf(LVecBase4f):
         """Returns true if two quaternions represent the same rotation within a
         specified tolerance.
         """
-    def output(self, param0: ostream, /) -> None: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def output(self, param0: ostream, /) -> None: ...
     def extract_to_matrix(self, m: Mat4Like, /) -> None:
         """Based on the quat lib from VRPN."""
     def set_from_matrix(self, m: Mat4Like, /) -> None:
@@ -5007,7 +5007,7 @@ class LQuaterniond(LVecBase4d):
     def __mul__(self, param0_or_scalar: DoubleVec4Like | float, /) -> LQuaterniond: ...
     def __truediv__(self, scalar: float, /) -> LQuaterniond: ...
     def __imul__(self, param0: DoubleVec4Like, /) -> Self: ...  # type: ignore[misc, override]
-    def __pow__(self, param0: float, /) -> LQuaterniond:  # pyright: ignore[reportIncompatibleMethodOverride]
+    def __pow__(self, param0: float, /) -> LQuaterniond:
         """Returns a new quaternion that represents this quaternion raised to the
         given power.
         """
@@ -5047,7 +5047,7 @@ class LQuaterniond(LVecBase4d):
         """Returns true if two quaternions represent the same rotation within a
         specified tolerance.
         """
-    def output(self, param0: ostream, /) -> None: ...  # pyright: ignore[reportIncompatibleMethodOverride]
+    def output(self, param0: ostream, /) -> None: ...
     def extract_to_matrix(self, m: DoubleMat4Like, /) -> None:
         """Based on the quat lib from VRPN."""
     def set_from_matrix(self, m: DoubleMat4Like, /) -> None:
