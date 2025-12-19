@@ -70,7 +70,7 @@ METHOD_RENAMES: Final = TrackingMap({
     'operator =': 'assign',
     'operator ()': '__call__',
     'operator []': '__getitem__',
-    'operator [] =': '__setitem__',
+    # 'operator []=': '__setitem__',
     'operator ++': 'increment',
     # 'operator --': 'decrement',
     'operator ^': '__xor__',
@@ -152,7 +152,7 @@ NO_ALIAS: Final = TrackingSet({
     '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
     '__add__', '__sub__', '__mul__', '__truediv__', '__floordiv__',
     '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
-    '__ipow__', '__pow__',
+    '__pow__', '__ipow__',
     '__float__', '__int__', '__bool__', '__len__',
     '__copy__', '__deepcopy__', '__reduce_persist__',
 })

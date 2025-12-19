@@ -114,8 +114,7 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
         if method.name in NO_STUBS:
             continue
         elif method.name == '__getitem__':
-            # Sometimes, the signatures for '__setitem__' are mixed in
-            # with those for '__getitem__'. I'm not entirely sure why.
+            # The signatures for `operator []=` are mixed with those for `operator []`.
             getitem_sigs: list[Signature] = []
             setitem_sigs: list[Signature] = []
             for sig in method.signatures:
