@@ -5209,7 +5209,7 @@ class LRotationf(LQuaternionf):
         """Sets the rotation from the given Euler angles."""
     @overload
     def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
-    def __mul__(self, other_or_scalar: LMatrix3f | LMatrix4f | Vec4Like | float, /) -> LRotationf: ...  # type: ignore[override]
+    def __mul__(self, other_or_scalar: Vec4Like | float, /) -> LRotationf: ...  # type: ignore[override]
     def __truediv__(self, scalar: float, /) -> LRotationf: ...
 
 class LRotationd(LQuaterniond):
@@ -5234,7 +5234,7 @@ class LRotationd(LQuaterniond):
         """Sets the rotation from the given Euler angles."""
     @overload
     def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
-    def __mul__(self, other_or_scalar: DoubleVec4Like | LMatrix3d | LMatrix4d | float, /) -> LRotationd: ...  # type: ignore[override]
+    def __mul__(self, other_or_scalar: DoubleVec4Like | float, /) -> LRotationd: ...  # type: ignore[override]
     def __truediv__(self, scalar: float, /) -> LRotationd: ...
 
 class LOrientationf(LQuaternionf):
@@ -5254,7 +5254,7 @@ class LOrientationf(LQuaternionf):
         """vector + twist"""
     @overload
     def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
-    def __mul__(self, other: LMatrix3f | LMatrix4f | Vec4Like, /) -> LOrientationf: ...  # type: ignore[override]
+    def __mul__(self, other: Vec4Like, /) -> LOrientationf: ...  # type: ignore[override]
 
 class LOrientationd(LQuaterniond):
     """This is a unit quaternion representing an orientation."""
@@ -5273,7 +5273,7 @@ class LOrientationd(LQuaterniond):
         """vector + twist"""
     @overload
     def __init__(self, r: float, i: float, j: float, k: float) -> None: ...
-    def __mul__(self, other: DoubleVec4Like | LMatrix3d | LMatrix4d, /) -> LOrientationd: ...  # type: ignore[override]
+    def __mul__(self, other: DoubleVec4Like, /) -> LOrientationd: ...  # type: ignore[override]
 
 class ConfigVariableColor(ConfigVariable):
     """This is a convenience class to specialize ConfigVariable as a set of

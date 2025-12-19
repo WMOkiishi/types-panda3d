@@ -64,7 +64,7 @@ TYPE_ALIASES: Final = {
     'Mat4Like': 'LMatrix3f | LMatrix4f | UnalignedLMatrix4f',
     'DoubleMat4Like': 'LMatrix3d | LMatrix4d | UnalignedLMatrix4d',
     'URL': 'URLSpec | str',
-    'SearchPathLike': 'ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str',
+    'SearchPathLike': 'ConfigVariableSearchPath | DSearchPath',
     'TaskCoroutine': 'Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]',
     'TaskFunction': 'Callable[..., int | TaskCoroutine[int | None] | None]',
 }

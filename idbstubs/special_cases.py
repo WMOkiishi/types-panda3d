@@ -321,7 +321,15 @@ NO_COERCION: Final = TrackingMap({
     'ConfigVariableInt64': {'str'},
     'ConfigVariableList': {'str'},
     'ConfigVariableString': {'str'},
+    'DSearchPath': {'Filename', 'str'},
+    'GeomVertexReader': {'Thread'},
+    'GeomVertexRewriter': {'Thread'},
+    'GeomVertexWriter': {'Thread'},
     'LoaderOptions': {'int'},
+    'LOrientationd': {'LMatrix3d', 'LMatrix4d'},
+    'LOrientationf': {'LMatrix3f', 'LMatrix4f'},
+    'LRotationd': {'LMatrix3d', 'LMatrix4d'},
+    'LRotationf': {'LMatrix3f', 'LMatrix4f'},
     # We ignore coercion from unaligned vectors because it introduces
     # too much noise. They're not useful from Python anyway.
     'LVecBase4d': {'LVector3d', 'LPoint3d', 'UnalignedLVecBase4d'},

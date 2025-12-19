@@ -4898,7 +4898,7 @@ class GeomVertexReader(GeomEnums):
         operator to assign a valid GeomVertexReader to this object before you can
         use it.
         """
-    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader | Thread, /) -> Self: ...
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexReader, /) -> Self: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the reader is processing.  This may
         return NULL if the reader was constructed with just an array pointer.
@@ -5199,7 +5199,7 @@ class GeomVertexWriter(GeomEnums):
         operator to assign a valid GeomVertexWriter to this object before you can
         use it.
         """
-    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter | Thread, /) -> Self: ...
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexWriter, /) -> Self: ...
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the writer is processing.  This may
         return NULL if the writer was constructed with just an array pointer.
@@ -5892,7 +5892,7 @@ class GeomVertexRewriter(GeomVertexWriter, GeomVertexReader):
         """
     def upcast_to_GeomVertexWriter(self) -> GeomVertexWriter: ...
     def upcast_to_GeomVertexReader(self) -> GeomVertexReader: ...
-    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter | Thread, /) -> Self: ...  # type: ignore[override]
+    def assign(self, copy: GeomVertexArrayData | GeomVertexData | GeomVertexRewriter, /) -> Self: ...  # type: ignore[override]
     def get_vertex_data(self) -> GeomVertexData:
         """Returns the vertex data object that the rewriter is processing."""
     def get_array_data(self) -> GeomVertexArrayData:

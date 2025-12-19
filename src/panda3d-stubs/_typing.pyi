@@ -3,7 +3,7 @@ from typing import Any, TypeVar
 from typing_extensions import TypeAlias
 
 from panda3d.core._downloader import URLSpec
-from panda3d.core._dtoolutil import DSearchPath, Filename
+from panda3d.core._dtoolutil import DSearchPath
 from panda3d.core._linmath import (
     ConfigVariableColor,
     LMatrix3d,
@@ -22,7 +22,7 @@ from panda3d.core._linmath import (
     UnalignedLMatrix4d,
     UnalignedLMatrix4f,
 )
-from panda3d.core._prc import ConfigVariableFilename, ConfigVariableSearchPath
+from panda3d.core._prc import ConfigVariableSearchPath
 
 _T_co = TypeVar('_T_co', covariant=True)
 Vec2Like: TypeAlias = LVecBase2f | tuple[float, float]
@@ -37,6 +37,6 @@ IntVec4Like: TypeAlias = LVecBase4i | tuple[int, int, int, int]
 Mat4Like: TypeAlias = LMatrix3f | LMatrix4f | UnalignedLMatrix4f
 DoubleMat4Like: TypeAlias = LMatrix3d | LMatrix4d | UnalignedLMatrix4d
 URL: TypeAlias = URLSpec | str
-SearchPathLike: TypeAlias = ConfigVariableFilename | ConfigVariableSearchPath | DSearchPath | Filename | str
+SearchPathLike: TypeAlias = ConfigVariableSearchPath | DSearchPath
 TaskCoroutine: TypeAlias = Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]
 TaskFunction: TypeAlias = Callable[..., int | TaskCoroutine[int | None] | None]
