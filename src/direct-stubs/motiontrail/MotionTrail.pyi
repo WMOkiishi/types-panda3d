@@ -5,7 +5,7 @@ from typing_extensions import TypeAlias
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from direct.task.Task import Task
-from panda3d._typing import Vec3Like, Vec4Like
+from panda3d._typing import Vec2Like, Vec3Like, Vec4Like
 from panda3d.core import (
     GeomNode,
     GeomTriangles,
@@ -14,7 +14,6 @@ from panda3d.core import (
     GeomVertexWriter,
     LMatrix3f,
     LMatrix4f,
-    LVecBase2f,
     LVector4f,
     NodePath,
     Texture,
@@ -108,10 +107,10 @@ class MotionTrail(NodePath, DirectObject):
         c1: Vec4Like,
         c2: Vec4Like,
         c3: Vec4Like,
-        t0: LVecBase2f,
-        t1: LVecBase2f,
-        t2: LVecBase2f,
-        t3: LVecBase2f,
+        t0: Vec2Like,
+        t1: Vec2Like,
+        t2: Vec2Like,
+        t3: Vec2Like,
     ) -> None: ...
     def end_geometry(self) -> None: ...
     def check_for_update(self, current_time: float) -> bool: ...
