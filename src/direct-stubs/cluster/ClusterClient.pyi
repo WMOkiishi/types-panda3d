@@ -8,17 +8,8 @@ from direct.directnotify.Notifier import Notifier
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3Like, Vec4Like
-from panda3d.core import (
-    Connection,
-    ConnectionWriter,
-    DatagramIterator,
-    LVecBase2f,
-    LVector3f,
-    NetDatagram,
-    NodePath,
-    QueuedConnectionManager,
-    QueuedConnectionReader,
-)
+from panda3d.core import DatagramIterator, LVecBase2f, LVector3f, NodePath
+from panda3d.net import Connection, ConnectionWriter, NetDatagram, QueuedConnectionManager, QueuedConnectionReader
 
 from .ClusterMsgs import ClusterMsgHandler
 

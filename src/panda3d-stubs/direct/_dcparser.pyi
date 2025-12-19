@@ -223,34 +223,12 @@ class DCField(DCPackerInterface, DCKeywordList):
         """Write a string representation of this instance to <out>."""
     def write(self, out: ostream, indent_level: int) -> None:
         """Write a string representation of this instance to <out>."""
-    def pack_args(self, packer: DCPacker, sequence) -> bool:
-        """Packs the Python arguments from the indicated tuple into the packer.
-        Returns true on success, false on failure.
-
-        It is assumed that the packer is currently positioned on this field.
-        """
-    def unpack_args(self, packer: DCPacker, /):
-        """Unpacks the values from the packer, beginning at the current point in the
-        unpack_buffer, into a Python tuple and returns the tuple.
-
-        It is assumed that the packer is currently positioned on this field.
-        """
-    def receive_update(self, packer: DCPacker, distobj) -> None:
-        """Extracts the update message out of the datagram and applies it to the
-        indicated object by calling the appropriate method.
-        """
-    def client_format_update(self, do_id: int, args) -> Datagram:
-        """Generates a datagram containing the message necessary to send an update for
-        the indicated distributed object from the client.
-        """
-    def ai_format_update(self, do_id: int, to_id: int, from_id: int, args) -> Datagram:
-        """Generates a datagram containing the message necessary to send an update for
-        the indicated distributed object from the AI.
-        """
-    def ai_format_update_msg_type(self, do_id: int, to_id: int, from_id: int, msg_type: int, args) -> Datagram:
-        """Generates a datagram containing the message necessary to send an update,
-        with the msg type, for the indicated distributed object from the AI.
-        """
+    def pack_args(self, packer: DCPacker, sequence) -> bool: ...
+    def unpack_args(self, packer: DCPacker, /): ...
+    def receive_update(self, packer: DCPacker, distobj) -> None: ...
+    def client_format_update(self, do_id: int, args) -> Datagram: ...
+    def ai_format_update(self, do_id: int, to_id: int, from_id: int, args) -> Datagram: ...
+    def ai_format_update_msg_type(self, do_id: int, to_id: int, from_id: int, msg_type: int, args) -> Datagram: ...
     upcastToDCPackerInterface = upcast_to_DCPackerInterface
     upcastToDCKeywordList = upcast_to_DCKeywordList
     getNumber = get_number
@@ -505,18 +483,8 @@ class DCPacker:
         """Skips the current field without unpacking it and advances to the next
         field.  If the current field contains nested fields, skips all of them.
         """
-    def pack_object(self, object, /) -> None:
-        """Packs the Python object of whatever type into the packer.  Each numeric
-        object and string object maps to the corresponding pack_value() call; a
-        tuple or sequence maps to a push() followed by all of the tuple's contents
-        followed by a pop().
-        """
-    def unpack_object(self):
-        """Unpacks a Python object of the appropriate type from the stream for the
-        current field.  This may be an integer or a string for a simple field
-        object; if the current field represents a list of fields it will be a
-        tuple.
-        """
+    def pack_object(self, object, /) -> None: ...
+    def unpack_object(self): ...
     def parse_and_pack(self, _in_or_formatted_object: istream | str, /) -> bool:
         """Parses an object's value according to the DC file syntax (e.g.  as a
         default value string) and packs it.  Returns true on success, false on a
@@ -904,91 +872,36 @@ class DCClass(DCDeclaration):
         """Stops the PStats timer on the "generate" task.  This should balance with a
         preceding call to start_generate().
         """
-    def has_class_def(self) -> bool:
-        """Returns true if the DCClass object has an associated Python class
-        definition, false otherwise.
-        """
-    def set_class_def(self, class_def, /) -> None:
-        """Sets the class object associated with this DistributedClass.  This object
-        will be used to construct new instances of the class.
-        """
-    def get_class_def(self):
-        """Returns the class object that was previously associated with this
-        DistributedClass.  This will return a new reference to the object.
-        """
-    def has_owner_class_def(self) -> bool:
-        """Returns true if the DCClass object has an associated Python owner class
-        definition, false otherwise.
-        """
-    def set_owner_class_def(self, owner_class_def, /) -> None:
-        """Sets the owner class object associated with this DistributedClass.  This
-        object will be used to construct new owner instances of the class.
-        """
-    def get_owner_class_def(self):
-        """Returns the owner class object that was previously associated with this
-        DistributedClass.  This will return a new reference to the object.
-        """
-    def receive_update(self, distobj, di: Datagram | DatagramIterator) -> None:
-        """Extracts the update message out of the packer and applies it to the
-        indicated object by calling the appropriate method.
-        """
-    def receive_update_broadcast_required(self, distobj, di: Datagram | DatagramIterator) -> None:
-        """Processes a big datagram that includes all of the "required" fields that
-        are sent along with a normal "generate with required" message.  This is all
-        of the atomic fields that are marked "broadcast required".
-        """
-    def receive_update_broadcast_required_owner(self, distobj, di: Datagram | DatagramIterator) -> None:
-        """Processes a big datagram that includes all of the "required" fields that
-        are sent along with a normal "generate with required" message.  This is all
-        of the atomic fields that are marked "broadcast ownrecv". Should be used
-        for 'owner-view' objects.
-        """
-    def receive_update_all_required(self, distobj, di: Datagram | DatagramIterator) -> None:
-        """Processes a big datagram that includes all of the "required" fields that
-        are sent when an avatar is created.  This is all of the atomic fields that
-        are marked "required", whether they are broadcast or not.
-        """
-    def receive_update_other(self, distobj, di: Datagram | DatagramIterator) -> None:
-        """Processes a datagram that lists some additional fields that are broadcast
-        in one chunk.
-        """
+    def has_class_def(self) -> bool: ...
+    def set_class_def(self, class_def, /) -> None: ...
+    def get_class_def(self): ...
+    def has_owner_class_def(self) -> bool: ...
+    def set_owner_class_def(self, owner_class_def, /) -> None: ...
+    def get_owner_class_def(self): ...
+    def receive_update(self, distobj, di: Datagram | DatagramIterator) -> None: ...
+    def receive_update_broadcast_required(self, distobj, di: Datagram | DatagramIterator) -> None: ...
+    def receive_update_broadcast_required_owner(self, distobj, di: Datagram | DatagramIterator) -> None: ...
+    def receive_update_all_required(self, distobj, di: Datagram | DatagramIterator) -> None: ...
+    def receive_update_other(self, distobj, di: Datagram | DatagramIterator) -> None: ...
     @overload
-    def direct_update(self, distobj, field_name: str, datagram: Datagram) -> None:
-        """Processes an update for a named field from a packed datagram."""
+    def direct_update(self, distobj, field_name: str, datagram: Datagram) -> None: ...
     @overload
-    def direct_update(self, distobj, field_name: str, value_blob: bytes) -> None:
-        """Processes an update for a named field from a packed value blob."""
+    def direct_update(self, distobj, field_name: str, value_blob: bytes) -> None: ...
     @overload
-    def pack_required_field(self, packer: DCPacker, distobj, field: DCField) -> bool:
-        """Looks up the current value of the indicated field by calling the
-        appropriate get*() function, then packs that value into the packer.  This
-        field is presumably either a required field or a specified optional field,
-        and we are building up a datagram for the generate-with-required message.
-
-        Returns true on success, false on failure.
-        """
+    def pack_required_field(self, packer: DCPacker, distobj, field: DCField) -> bool: ...
     @overload
-    def pack_required_field(self, datagram: Datagram, distobj, field: DCField) -> bool:
-        """Looks up the current value of the indicated field by calling the
-        appropriate get*() function, then packs that value into the datagram.  This
-        field is presumably either a required field or a specified optional field,
-        and we are building up a datagram for the generate-with-required message.
-
-        Returns true on success, false on failure.
-        """
-    def client_format_update(self, field_name: str, do_id: int, args) -> Datagram:
-        """Generates a datagram containing the message necessary to send an update for
-        the indicated distributed object from the client.
-        """
-    def ai_format_update(self, field_name: str, do_id: int, to_id: int, from_id: int, args) -> Datagram:
-        """Generates a datagram containing the message necessary to send an update for
-        the indicated distributed object from the AI.
-        """
-    def ai_format_update_msg_type(self, field_name: str, do_id: int, to_id: int, from_id: int, msg_type: int, args) -> Datagram:
-        """Generates a datagram containing the message necessary to send an update,
-        using the indicated msg type for the indicated distributed object from the
-        AI.
-        """
+    def pack_required_field(self, datagram: Datagram, distobj, field: DCField) -> bool: ...
+    def client_format_update(self, field_name: str, do_id: int, args) -> Datagram: ...
+    def ai_format_update(self, field_name: str, do_id: int, to_id: int, from_id: int, args) -> Datagram: ...
+    def ai_format_update_msg_type(
+        self,
+        field_name: str,
+        do_id: int,
+        to_id: int,
+        from_id: int,
+        msg_type: int,
+        args,
+    ) -> Datagram: ...
     def ai_format_generate(
         self,
         distobj,
@@ -999,16 +912,13 @@ class DCClass(DCDeclaration):
         from_channel_id: int,
         optional_fields,
     ) -> Datagram: ...
-    def client_format_generate_CMU(self, distobj, do_id: int, zone_id: int, optional_fields: Sequence[str] | None) -> Datagram:
-        """Generates a datagram containing the message necessary to generate a new
-        distributed object from the client.  This requires querying the object for
-        the initial value of its required fields.
-
-        optional_fields is a list of fieldNames to generate in addition to the
-        normal required fields.
-
-        This method is only called by the CMU implementation.
-        """
+    def client_format_generate_CMU(
+        self,
+        distobj,
+        do_id: int,
+        zone_id: int,
+        optional_fields: Sequence[str] | None,
+    ) -> Datagram: ...
     getDcFile = get_dc_file
     getName = get_name
     getNumber = get_number

@@ -15,6 +15,10 @@ class AlreadyInTransition(FSMException): ...
 class RequestDenied(FSMException): ...
 
 class FSM(DirectObject):
+    class EnumStates:
+        ANY: int = 1
+        DEFAULT: int = 2
+
     notify: ClassVar[Notifier]
     SerialNum: ClassVar[int]
     fsmLock: RLock

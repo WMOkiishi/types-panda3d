@@ -5,7 +5,8 @@ from direct.directnotify.Notifier import Notifier
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from panda3d._typing import Vec3Like, Vec4Like
-from panda3d.core import Datagram, DatagramIterator, LVecBase2f, NetDatagram, QueuedConnectionReader
+from panda3d.core import Datagram, DatagramIterator, LVecBase2f
+from panda3d.net import NetDatagram, QueuedConnectionReader
 
 _NamedMovement: TypeAlias = tuple[
     str, float, float, float, float, float, float, float, float, float, float, float, float, float, bool

@@ -158,6 +158,7 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
     Camera serves no purpose unless shadows are enabled.
     """
 
+    shadow_buffer_sort: int
     shadow_buffer_size: LVecBase2i
     @property
     def shadow_caster(self) -> bool: ...
@@ -185,6 +186,8 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
         """
     def get_shadow_buffer_sort(self) -> int:
         """Returns the sort of the shadow buffer to be created for this light source."""
+    def set_shadow_buffer_sort(self, sort: int, /) -> None:
+        """Sets the sort of the shadow buffer to be created for this light source."""
     def get_shadow_buffer_size(self) -> LVecBase2i:
         """Returns the size of the shadow buffer to be created for this light source."""
     def set_shadow_buffer_size(self, size: IntVec2Like, /) -> None:
@@ -205,6 +208,7 @@ class LightLensNode(Light, Camera):  # type: ignore[misc]
     isShadowCaster = is_shadow_caster
     setShadowCaster = set_shadow_caster
     getShadowBufferSort = get_shadow_buffer_sort
+    setShadowBufferSort = set_shadow_buffer_sort
     getShadowBufferSize = get_shadow_buffer_size
     setShadowBufferSize = set_shadow_buffer_size
     getShadowBuffer = get_shadow_buffer
@@ -511,6 +515,8 @@ class RectangleLight(LightLensNode):
 class SelectiveChildNode(PandaNode):
     """A base class for nodes like LODNode and SequenceNode that select only one
     visible child at a time.
+
+    This class is now vestigial.
     """
 
 class SequenceNode(SelectiveChildNode, AnimInterface):

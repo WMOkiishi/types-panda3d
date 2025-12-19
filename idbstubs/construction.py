@@ -5,8 +5,6 @@ from collections.abc import Iterator
 from pathlib import Path
 from typing import Final
 
-from attrs import evolve
-
 from . import typecmp as tc
 from .idb_interface import (
     IDBElement,
@@ -113,20 +111,6 @@ def get_type_methods(idb_type: IDBType) -> Iterator[Function]:
         method = make_function_rep(idb_function)
         if method.name in NO_STUBS:
             continue
-        elif method.name == '__getitem__':
-            # The signatures for `operator []=` are mixed with those for `operator []`.
-            getitem_sigs: list[Signature] = []
-            setitem_sigs: list[Signature] = []
-            for sig in method.signatures:
-                if len(sig.parameters) <= 2:
-                    getitem_sigs.append(sig)
-                else:
-                    setitem_sigs.append(sig)
-            if getitem_sigs:
-                yield evolve(method, signatures=getitem_sigs)
-            if setitem_sigs:
-                yield evolve(method, name='__setitem__', signatures=setitem_sigs)
-            continue
         elif method.name == '__len__' and (
             'operator []' not in method_names
             and '__getitem__' not in method_names
@@ -229,7 +213,7 @@ def make_signature_rep(
     docstring = comment_to_docstring(wrapper.comment)
     deprecation_note = get_deprecation_note(docstring)
     match params:
-        case [Parameter('args') as args]:
+        case [Parameter('args' | 'points') as args]:
             args.name = '*' + args.name
             args.named = True
         case [
@@ -352,10 +336,12 @@ def make_enum_value_reps(idb_type: IDBType) -> Iterator[Constant]:
 def make_scoped_enum_rep(idb_type: IDBType) -> Class:
     """Return a representation of a scoped enum known to interrogate."""
     name = make_class_name(idb_type.name)
-    values = {
-        value.name: Constant(value.name, value.value, annotation='')
-        for value in idb_type.enum_values
-    }
+    values: dict[str, StubRep] = {}
+    for value in idb_type.enum_values:
+        if value.name.upper() in values:
+            values[value.name] = Alias(value.name, value.name.upper(), of_local=True)
+        else:
+            values[value.name] = Constant(value.name, value.value, annotation='')
     return Class(name, ['Enum'], values, is_final=idb_type.is_final)
 
 

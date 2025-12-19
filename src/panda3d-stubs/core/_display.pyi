@@ -10,14 +10,24 @@ from panda3d.core._dtoolbase import TypeHandle
 from panda3d.core._dtoolutil import Filename, ostream
 from panda3d.core._event import AsyncFuture
 from panda3d.core._express import ReferenceCount, TypedReferenceCount
-from panda3d.core._gobj import PreparedGraphicsObjects, Shader, Texture, TextureStage
+from panda3d.core._gobj import PreparedGraphicsObjects, Shader, ShaderBuffer, Texture, TextureStage
 from panda3d.core._gsgbase import GraphicsOutputBase, GraphicsStateGuardianBase
-from panda3d.core._linmath import LColor, LPoint2i, LVecBase2i, LVecBase4, LVector2i
-from panda3d.core._pgraph import CullResult, CullTraverser, Loader, NodePath, PandaNode, SceneSetup, ShaderAttrib, TextureAttrib
+from panda3d.core._linmath import LColor, LPoint2i, LVecBase2i, LVecBase3i, LVecBase4, LVector2i
+from panda3d.core._pgraph import (
+    CullResult,
+    CullTraverser,
+    Loader,
+    NodePath,
+    PandaNode,
+    RenderState,
+    SceneSetup,
+    ShaderAttrib,
+    TextureAttrib,
+)
 from panda3d.core._pgraphnodes import ShaderGenerator
 from panda3d.core._pipeline import ReMutex, Thread
 from panda3d.core._pnmimage import PNMImage
-from panda3d.core._putil import ButtonHandle, ButtonMap, CallbackData, CallbackObject, DrawMask, MouseData, PointerData
+from panda3d.core._putil import ButtonHandle, ButtonMap, CallbackData, CallbackObject, DrawMask, PointerData
 
 _GraphicsStateGuardian_ShaderModel: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6, 7]
 _WindowProperties_MouseMode: TypeAlias = Literal[0, 1, 2]
@@ -198,12 +208,21 @@ class DisplayInformation:
         application start) in the display mode array, or -1 if this could not be
         determined.
         """
+    @deprecated('use get_display_mode instead.')
     def get_display_mode_width(self, display_index: int, /) -> int:
-        """Older interface for display modes."""
-    def get_display_mode_height(self, display_index: int, /) -> int: ...
-    def get_display_mode_bits_per_pixel(self, display_index: int, /) -> int: ...
-    def get_display_mode_refresh_rate(self, display_index: int, /) -> int: ...
-    def get_display_mode_fullscreen_only(self, display_index: int, /) -> int: ...
+        """@deprecated use get_display_mode instead."""
+    @deprecated('use get_display_mode instead.')
+    def get_display_mode_height(self, display_index: int, /) -> int:
+        """@deprecated use get_display_mode instead."""
+    @deprecated('use get_display_mode instead.')
+    def get_display_mode_bits_per_pixel(self, display_index: int, /) -> int:
+        """@deprecated use get_display_mode instead."""
+    @deprecated('use get_display_mode instead.')
+    def get_display_mode_refresh_rate(self, display_index: int, /) -> float:
+        """@deprecated use get_display_mode instead."""
+    @deprecated('use get_display_mode instead.')
+    def get_display_mode_fullscreen_only(self, display_index: int, /) -> int:
+        """@deprecated use get_display_mode instead."""
     def get_shader_model(self) -> _GraphicsStateGuardian_ShaderModel: ...
     def get_video_memory(self) -> int: ...
     def get_texture_memory(self) -> int: ...
@@ -595,6 +614,7 @@ class WindowProperties:
     fullscreen: bool | None
     foreground: bool | None
     minimized: bool | None
+    maximized: bool | None
     open: bool | None
     cursor_hidden: bool | None
     icon_filename: Filename | None
@@ -700,18 +720,18 @@ class WindowProperties:
         mouse can move outside the window and the mouse coordinates are relative to
         its position in the window.
 
-        M_relative (OSX or Unix/X11 only): a mode where only relative movements are
-        reported; particularly useful for FPS-style mouse movements where you have
-        hidden the mouse pointer and are are more interested in how fast the mouse
-        is moving, rather than precisely where the pointer is hovering.
-
-        This has no effect on Windows.  On Unix/X11, this requires the Xxf86dga
-        extension to be available.
-
         M_confined: this mode reports absolute mouse positions, but confines the
-        mouse pointer to the window boundary.  It can portably replace M_relative
-        for an FPS, but you need to periodically move the pointer to the center of
-        the window and track movement deltas.
+        mouse pointer to the window boundary.  The reported mouse positions will
+        never be outside of the window boundary.
+
+        M_relative: a mode where only relative movements are reported; particularly
+        useful for FPS-style mouse movements where you have hidden the mouse
+        pointer and are are more interested in how fast the mouse is moving, rather
+        than precisely where the pointer is hovering.  The reported positions still
+        appear to be absolute, but they can go toward negative or positive infinity
+        without being constrained by the window (or screen) dimensions.  Since the
+        position of the mouse cursor becomes meaningless in this mode, it is
+        recommended to combine this with the cursor_hidden flag.
         """
     def get_mouse_mode(self) -> _WindowProperties_MouseMode:
         """See set_mouse_mode()."""
@@ -773,6 +793,16 @@ class WindowProperties:
         """Returns true if set_minimized() has been specified."""
     def clear_minimized(self) -> None:
         """Removes the minimized specification from the properties."""
+    def set_maximized(self, maximized: bool, /) -> None:
+        """Specifies whether the window should be created maximized (true), or normal
+        (false).
+        """
+    def get_maximized(self) -> bool:
+        """Returns true if the window is maximized."""
+    def has_maximized(self) -> bool:
+        """Returns true if set_maximized() has been specified."""
+    def clear_maximized(self) -> None:
+        """Removes the maximized specification from the properties."""
     def set_raw_mice(self, raw_mice: bool, /) -> None:
         """Specifies whether the window should read the raw mouse devices."""
     def get_raw_mice(self) -> bool:
@@ -920,6 +950,10 @@ class WindowProperties:
     getMinimized = get_minimized
     hasMinimized = has_minimized
     clearMinimized = clear_minimized
+    setMaximized = set_maximized
+    getMaximized = get_maximized
+    hasMaximized = has_maximized
+    clearMaximized = clear_maximized
     setRawMice = set_raw_mice
     getRawMice = get_raw_mice
     hasRawMice = has_raw_mice
@@ -1037,6 +1071,13 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
         """Changes the portion of the framebuffer this DisplayRegion corresponds to.
         The parameters range from 0 to 1, where 0,0 is the lower left corner and
         1,1 is the upper right; (0, 1, 0, 1) represents the whole screen.
+        """
+    def set_depth_range(self, near: float, far: float) -> None:
+        """Changes the range of the depth buffer this DisplayRegion writes to.
+        The parameters range from 0 to 1.  It is legal for the near value to be
+        larger than the far value.
+
+        @since 1.11.0
         """
     def get_window(self) -> GraphicsOutput:
         """Returns the GraphicsOutput that this DisplayRegion is ultimately associated
@@ -1327,6 +1368,7 @@ class DisplayRegion(TypedReferenceCount, DrawableRegion):
     getBottom = get_bottom
     getTop = get_top
     setDimensions = set_dimensions
+    setDepthRange = set_depth_range
     getWindow = get_window
     getPipe = get_pipe
     isStereo = is_stereo
@@ -1433,6 +1475,8 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     def active_display_regions(self) -> Sequence[DisplayRegion]: ...
     @property
     def supports_render_texture(self) -> bool: ...
+    @property
+    def host(self) -> GraphicsOutput: ...
     def upcast_to_GraphicsOutputBase(self) -> GraphicsOutputBase: ...
     def upcast_to_DrawableRegion(self) -> DrawableRegion: ...
     def get_gsg(self) -> GraphicsStateGuardian:
@@ -2012,6 +2056,25 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
         """Captures the most-recently rendered image from the framebuffer into the
         indicated PNMImage.  Returns true on success, false on failure.
         """
+    def save_async_screenshot(self, filename: StrOrBytesPath, image_comment: str = ...) -> ScreenshotRequest:
+        """Like save_screenshot, but performs both the texture transfer and the saving
+        to disk in the background.  Returns a future that can be awaited.
+
+        This captures the frame that was last submitted by the App stage to the
+        render_frame() call.  This may not be the latest frame shown on the screen
+        if the multi-threaded pipeline is used, in which case the request may take
+        several frames extra to complete.
+        """
+    def get_async_screenshot(self) -> ScreenshotRequest:
+        """Used to obtain a new Texture object containing the previously rendered frame.
+        Unlike get_screenshot, this works asynchronously, meaning that the contents
+        are transferred in the background.  Returns a future that can be awaited.
+
+        This captures the frame that was last submitted by the App stage to the
+        render_frame() call.  This may not be the latest frame shown on the screen
+        if the multi-threaded pipeline is used, in which case the request may take
+        several frames extra to complete.
+        """
     def get_texture_card(self) -> NodePath:
         """Returns a PandaNode containing a square polygon.  The dimensions are
         (-1,0,-1) to (1,0,1). The texture coordinates are such that the texture of
@@ -2118,6 +2181,8 @@ class GraphicsOutput(GraphicsOutputBase, DrawableRegion):
     saveScreenshotDefault = save_screenshot_default
     saveScreenshot = save_screenshot
     getScreenshot = get_screenshot
+    saveAsyncScreenshot = save_async_screenshot
+    getAsyncScreenshot = get_async_screenshot
     getTextureCard = get_texture_card
     shareDepthBuffer = share_depth_buffer
     unshareDepthBuffer = unshare_depth_buffer
@@ -2168,6 +2233,8 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def effective_incomplete_render(self) -> bool: ...
     @property
     def pipe(self) -> GraphicsPipe: ...
+    @property
+    def engine(self) -> GraphicsEngine: ...
     @property
     def max_vertices_per_array(self) -> int: ...
     @property
@@ -2262,6 +2329,12 @@ class GraphicsStateGuardian(GraphicsStateGuardianBase):
     def max_color_targets(self) -> int: ...
     @property
     def supports_dual_source_blending(self) -> bool: ...
+    @property
+    def max_compute_work_group_count(self) -> LVecBase3i: ...
+    @property
+    def max_compute_work_group_size(self) -> LVecBase3i: ...
+    @property
+    def max_compute_work_group_invocations(self) -> int: ...
     @property
     def prepared_objects(self) -> PreparedGraphicsObjects: ...
     @property
@@ -2915,7 +2988,18 @@ class GraphicsEngine(ReferenceCount):
 
         The return value is true if the operation is successful, false otherwise.
         """
-    def dispatch_compute(self, work_groups: IntVec3Like, sattr: Shader | ShaderAttrib, gsg: GraphicsStateGuardian) -> None:
+    def extract_shader_buffer_data(self, buffer: ShaderBuffer, gsg: GraphicsStateGuardian) -> bytes:
+        """Asks the indicated GraphicsStateGuardian to retrieve the buffer memory
+        image of the indicated ShaderBuffer and return it.
+
+        This is mainly useful for debugging.  It is a very slow call because it
+        introduces a pipeline stall both of Panda's pipeline and the graphics
+        pipeline.
+
+        The return value is empty if some kind of error occurred.
+        """
+    @overload
+    def dispatch_compute(self, work_groups: IntVec3Like, state: RenderState, gsg: GraphicsStateGuardian) -> None:
         """Asks the indicated GraphicsStateGuardian to dispatch the compute shader in
         the given ShaderAttrib using the given work group counts.  This can act as
         an interface for running a one-off compute shader, without having to store
@@ -2927,6 +3011,11 @@ class GraphicsEngine(ReferenceCount):
         times on different textures for little additional cost.
 
         The return value is true if the operation is successful, false otherwise.
+        """
+    @overload
+    def dispatch_compute(self, work_groups: IntVec3Like, sattr: Shader | ShaderAttrib, gsg: GraphicsStateGuardian) -> None:
+        """Version of dispatch_compute that takes a ShaderAttrib instead of a full
+        RenderState.
         """
     @staticmethod
     def get_global_ptr() -> GraphicsEngine: ...
@@ -2956,6 +3045,7 @@ class GraphicsEngine(ReferenceCount):
     readyFlip = ready_flip
     flipFrame = flip_frame
     extractTextureData = extract_texture_data
+    extractShaderBufferData = extract_shader_buffer_data
     dispatchCompute = dispatch_compute
     getGlobalPtr = get_global_ptr
     getWindows = get_windows
@@ -3055,6 +3145,7 @@ class GraphicsThreadingModel:
     isSingleThreaded = is_single_threaded
     isDefault = is_default
 
+@final
 class StereoDisplayRegion(DisplayRegion):
     """This is a special DisplayRegion wrapper that actually includes a pair of
     DisplayRegions internally: the left and right eyes.  The DisplayRegion
@@ -3314,6 +3405,15 @@ class FrameBufferProperties:
     setupColorTexture = setup_color_texture
     setupDepthTexture = setup_depth_texture
 
+class ScreenshotRequest(AsyncFuture):
+    """A class representing an asynchronous request to save a screenshot."""
+
+    def add_output_file(self, filename: StrOrBytesPath, image_comment: str = ...) -> None:
+        """Adds a filename to write the screenshot to when it is available.  If the
+        request is already done, performs the write synchronously.
+        """
+    addOutputFile = add_output_file
+
 class GraphicsWindowInputDevice(InputDevice):
     """This is a virtual input device that represents the keyboard and mouse pair
     that is associated with a particular window.  It collects mouse and
@@ -3471,14 +3571,7 @@ class GraphicsWindow(GraphicsOutput):
         remain unchanged until they are changed by a new failed request, or
         clear_rejected_properties() is called.
         """
-    def request_properties(self, requested_properties: WindowProperties, /) -> None:
-        """Requests a property change on the window.  For example, use this method to
-        request a window change size or minimize or something.
-
-        The change is not made immediately; rather, the request is saved and will
-        be applied the next time the window task is run (probably at the next
-        frame).
-        """
+    def request_properties(self, *args, **kwds) -> None: ...
     def is_closed(self) -> bool:
         """Returns true if the window has not yet been opened, or has been fully
         closed, false if it is open.  The window is not opened immediately after
@@ -3569,8 +3662,8 @@ class GraphicsWindow(GraphicsOutput):
         """Turn on the generation of pointer events."""
     def disable_pointer_events(self, device: int, /) -> None:
         """Turn off the generation of pointer events."""
-    def get_pointer(self, device: int, /) -> MouseData:
-        """Returns the MouseData associated with the nth input device's pointer.
+    def get_pointer(self, device: int, /) -> PointerData:
+        """Returns the PointerData associated with the nth input device's pointer.
         Using this to access raw mice (with an index other than 0) is deprecated,
         see the InputDeviceManager interface instead.
         """
@@ -3757,7 +3850,7 @@ class DisplayMode:
     width: int
     height: int
     bits_per_pixel: int
-    refresh_rate: int
+    refresh_rate: float
     fullscreen_only: int
     def __init__(self, param0: DisplayMode = ..., /) -> None: ...
     def __eq__(self, other: object, /) -> bool: ...

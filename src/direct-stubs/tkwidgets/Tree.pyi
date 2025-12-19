@@ -3,9 +3,7 @@ __all__ = ['TreeItem', 'TreeNode']
 import tkinter
 from abc import ABCMeta, abstractmethod
 from collections.abc import Mapping
-from typing import Any, Final
-
-ICONDIR: Final[str]
+from typing import Any
 
 class TreeNode:
     canvas: tkinter.Canvas

@@ -26,12 +26,11 @@ _logger: Final = logging.getLogger(__name__)
 _absent_param: Final = Parameter('_', tc.BottomType(), is_optional=True, named=False)
 
 PTA_NAME_REGEX: Final = re.compile(r'(?:Const)?PointerToArray_(\w+)')
-VECTOR_NAME_REGEX: Final = re.compile(
-    r'((?:Unaligned)?L(?:VecBase|Vector|Point))([2-4])([dfi])'
-)
+VECTOR_NAME_REGEX: Final = re.compile(r'L(VecBase|Vector|Point)([2-4])([dfi])')
 RETURN_SELF_IN_VECTORS: Final = frozenset({
     '__neg__',
     '__mul__',
+    '__rmul__',
     '__truediv__',
     '__floordiv__',
     '__pow__',
@@ -338,10 +337,10 @@ def process_vector_class(vector: Class) -> None:
     assert name_match is not None
     kind, _, suffix = name_match[1], name_match[2], name_match[3]
     class_body = dict(vector.body)
-    if kind.endswith('VecBase'):
+    if kind == 'VecBase':
         class_body.pop('get_data', None)
         class_body.pop('getData', None)
-    if suffix == 'i' and not kind.startswith('Unaligned'):
+    if suffix == 'i':
         class_body.pop('__truediv__', None)
         class_body.pop('__itruediv__', None)
     for name in RETURN_SELF_IN_VECTORS & class_body.keys():

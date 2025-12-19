@@ -4,7 +4,7 @@ from typing_extensions import Self, deprecated
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Datagram, DatagramGenerator, DatagramSink, PointerToVoid, ReferenceCount
-from panda3d.core._nativenet import Socket_Address, Socket_IP
+from panda3d.net._nativenet import Socket_Address, Socket_IP
 
 class PointerToBase_Connection(PointerToVoid):
     def clear(self) -> None: ...

@@ -19,8 +19,6 @@ from panda3d.core._linmath import (
     LVecBase4d,
     LVecBase4f,
     LVecBase4i,
-    UnalignedLMatrix4d,
-    UnalignedLMatrix4f,
 )
 from panda3d.core._prc import ConfigVariableSearchPath
 
@@ -34,8 +32,8 @@ IntVec3Like: TypeAlias = LVecBase3i | tuple[int, int, int]
 Vec4Like: TypeAlias = LVecBase4f | LMatrix4f.Row | LMatrix4f.CRow | tuple[float, float, float, float] | ConfigVariableColor
 DoubleVec4Like: TypeAlias = LVecBase4d | LMatrix4d.Row | LMatrix4d.CRow | tuple[float, float, float, float]
 IntVec4Like: TypeAlias = LVecBase4i | tuple[int, int, int, int]
-Mat4Like: TypeAlias = LMatrix3f | LMatrix4f | UnalignedLMatrix4f
-DoubleMat4Like: TypeAlias = LMatrix3d | LMatrix4d | UnalignedLMatrix4d
+Mat4Like: TypeAlias = LMatrix3f | LMatrix4f
+DoubleMat4Like: TypeAlias = LMatrix3d | LMatrix4d
 URL: TypeAlias = URLSpec | str
 SearchPathLike: TypeAlias = ConfigVariableSearchPath | DSearchPath
 TaskCoroutine: TypeAlias = Coroutine[Any, None, _T_co] | Generator[Any, None, _T_co]

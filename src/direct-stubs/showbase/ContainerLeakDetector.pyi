@@ -7,8 +7,7 @@ from .Job import Job
 
 _T = TypeVar('_T')
 
-intTypes: tuple[type[int]]
-deadEndTypes: tuple[type, ...]
+deadEndTypes: frozenset[type]
 
 class NoDictKey: ...
 

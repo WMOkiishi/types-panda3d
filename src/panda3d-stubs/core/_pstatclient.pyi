@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 from typing import Any, ClassVar, overload
-from typing_extensions import Self
+from typing_extensions import Self, deprecated
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import PStatCollectorForwardBase
@@ -89,10 +89,13 @@ class PStatClient:
         PStatServer, false otherwise.
         """
     @staticmethod
+    @deprecated('Do not use this, it creates inaccurate timing information.')
     def resume_after_pause() -> None:
         """Resumes the PStatClient after the simulation has been paused for a while.
         This allows the stats to continue exactly where it left off, instead of
         leaving a big gap that would represent a chug.
+
+        @deprecated Do not use this, it creates inaccurate timing information.
         """
     @staticmethod
     def main_tick() -> None:
@@ -100,16 +103,22 @@ class PStatClient:
         thread, and any other threads with a sync_name of "Main".
         """
     @staticmethod
-    def thread_tick(sync_name: str, /) -> None:
-        """A convenience function to call new_frame() on any threads with the
+    def thread_tick(sync_name: str = ..., /) -> None:
+        """A convenience function to call new_frame() for the current thread.
+
+        or:
+        A convenience function to call new_frame() on any threads with the
         indicated sync_name
         """
     def client_main_tick(self) -> None:
         """A convenience function to call new_frame() on the given PStatClient's main
         thread, and any other threads with a sync_name of "Main".
         """
-    def client_thread_tick(self, sync_name: str, /) -> None:
-        """A convenience function to call new_frame() on all of the threads with the
+    def client_thread_tick(self, sync_name: str = ..., /) -> None:
+        """A convenience function to call new_frame() on the current thread.
+
+        or:
+        A convenience function to call new_frame() on all of the threads with the
         indicated sync name.
         """
     def client_connect(self, hostname: str, port: int) -> bool:
@@ -422,7 +431,7 @@ class PStatThread:
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     def assign(self, copy: PStatThread | Thread, /) -> Self: ...
-    def new_frame(self) -> None:
+    def new_frame(self, frame_number: int = ..., /) -> None:
         """This must be called at the start of every "frame", whatever a frame may be
         deemed to be, to accumulate all the stats that have collected so far for
         the thread and ship them off to the server.

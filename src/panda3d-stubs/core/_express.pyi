@@ -921,6 +921,10 @@ class DatagramIterator:
         """Extracts a signed 8-bit integer."""
     def get_uint8(self) -> int:
         """Extracts an unsigned 8-bit integer."""
+    def peek_int16(self) -> int:
+        """Extracts a signed 16-bit integer without advancing the iterator."""
+    def peek_uint16(self) -> int:
+        """Extracts an unsigned 16-bit integer without advancing the iterator."""
     def get_int16(self) -> int:
         """Extracts a signed 16-bit integer."""
     def get_int32(self) -> int:
@@ -1000,6 +1004,8 @@ class DatagramIterator:
     getBool = get_bool
     getInt8 = get_int8
     getUint8 = get_uint8
+    peekInt16 = peek_int16
+    peekUint16 = peek_uint16
     getInt16 = get_int16
     getInt32 = get_int32
     getInt64 = get_int64
@@ -1220,34 +1226,20 @@ class HashVal:
     def read_stream(self, source: StreamReader, /) -> None: ...
     def hash_file(self, filename: StrOrBytesPath, /) -> bool:
         """Generates the hash value from the indicated file.  Returns true on success,
-        false if the file cannot be read.  This method is only defined if we have
-        the OpenSSL library (which provides md5 functionality) available.
+        false if the file cannot be read.
         """
     def hash_stream(self, stream: istream, /) -> bool:
         """Generates the hash value from the indicated file.  Returns true on success,
-        false if the file cannot be read.  This method is only defined if we have
-        the OpenSSL library (which provides md5 functionality) available.
+        false if the file cannot be read.
         """
     def hash_ramfile(self, ramfile: Ramfile, /) -> None:
-        """Generates the hash value by hashing the indicated data.  This method is
-        only defined if we have the OpenSSL library (which provides md5
-        functionality) available.
-        """
+        """Generates the hash value by hashing the indicated data."""
     def hash_string(self, data: str, /) -> None:
-        """Generates the hash value by hashing the indicated data.  This method is
-        only defined if we have the OpenSSL library (which provides md5
-        functionality) available.
-        """
+        """Generates the hash value by hashing the indicated data."""
     def hash_bytes(self, data: bytes, /) -> None:
-        """Generates the hash value by hashing the indicated data.  This method is
-        only defined if we have the OpenSSL library (which provides md5
-        functionality) available.
-        """
+        """Generates the hash value by hashing the indicated data."""
     def hash_buffer(self, buffer: str, length: int) -> None:
-        """Generates the hash value by hashing the indicated data.  This method is
-        only defined if we have the OpenSSL library (which provides md5
-        functionality) available.
-        """
+        """Generates the hash value by hashing the indicated data."""
     compareTo = compare_to
     mergeWith = merge_with
     outputDec = output_dec
@@ -1551,19 +1543,6 @@ class Multifile(ReferenceCount):
         """Returns the flag indicating whether subsequently-added subfiles should be
         encrypted before writing them to the multifile.  See set_encryption_flag().
         """
-    def set_encryption_password(self, encryption_password: str, /) -> None:
-        """Specifies the password that will be used to encrypt subfiles subsequently
-        added to the multifile, if the encryption flag is also set true (see
-        set_encryption_flag()).
-
-        It is possible to apply a different password to different files, but the
-        resulting file can't be mounted via VFS.  Changing this value may cause an
-        implicit call to flush().
-        """
-    def get_encryption_password(self) -> str:
-        """Returns the password that will be used to encrypt subfiles subsequently
-        added to the multifile.  See set_encryption_password().
-        """
     def set_encryption_algorithm(self, encryption_algorithm: str, /) -> None:
         """Specifies the encryption algorithm that should be used for future calls to
         add_subfile().  The default is whatever is specified by the encryption-
@@ -1655,6 +1634,11 @@ class Multifile(ReferenceCount):
         Either Filename:::set_binary() or set_text() must have been called
         previously to specify the nature of the source file.  If set_text() was
         called, the text flag will be set on the subfile.
+        """
+    def set_encryption_password(self, encryption_password, /): ...
+    def get_encryption_password(self):
+        """Returns the password that will be used to encrypt subfiles subsequently
+        added to the multifile.  See set_encryption_password().
         """
     @overload
     def add_signature(
@@ -1948,8 +1932,6 @@ class Multifile(ReferenceCount):
     getScaleFactor = get_scale_factor
     setEncryptionFlag = set_encryption_flag
     getEncryptionFlag = get_encryption_flag
-    setEncryptionPassword = set_encryption_password
-    getEncryptionPassword = get_encryption_password
     setEncryptionAlgorithm = set_encryption_algorithm
     getEncryptionAlgorithm = get_encryption_algorithm
     setEncryptionKeyLength = set_encryption_key_length
@@ -1958,6 +1940,8 @@ class Multifile(ReferenceCount):
     getEncryptionIterationCount = get_encryption_iteration_count
     addSubfile = add_subfile
     updateSubfile = update_subfile
+    setEncryptionPassword = set_encryption_password
+    getEncryptionPassword = get_encryption_password
     addSignature = add_signature
     getNumSignatures = get_num_signatures
     getSignatureSubjectName = get_signature_subject_name
@@ -2339,6 +2323,357 @@ class VirtualFileMountSystem(VirtualFileMount):
         """
     getPhysicalFilename = get_physical_filename
 
+class ZipArchive(ReferenceCount):
+    """A file that contains a set of files."""
+
+    def __init__(self) -> None: ...
+    @overload
+    def open_read(self, filename: StrOrBytesPath) -> bool:
+        """Opens the named ZipArchive on disk for reading.  The ZipArchive index is read
+        in, and the list of subfiles becomes available; individual subfiles may
+        then be extracted or read, but the list of subfiles may not be modified.
+
+        Also see the version of open_read() which accepts an istream.  Returns true
+        on success, false on failure.
+        """
+    @overload
+    def open_read(self, stream: IStreamWrapper, owns_pointer: bool = ...) -> bool:
+        """Opens an anonymous ZipArchive for reading using an istream.  There must be
+        seek functionality via seekg() and tellg() on the istream.
+
+        If owns_pointer is true, then the ZipArchive assumes ownership of the stream
+        pointer and will delete it when the ZIP file is closed, including if this
+        function returns false.
+
+        The given stream must be seekable.
+        """
+    @overload
+    def open_write(self, filename: StrOrBytesPath) -> bool:
+        """Opens the named ZipArchive on disk for writing.  If there already exists a
+        file by that name, it is truncated.  The ZipArchive is then prepared for
+        accepting a brand new set of subfiles, which will be written to the
+        indicated filename.  Individual subfiles may not be extracted or read.
+
+        Also see the version of open_write() which accepts an ostream.  Returns
+        true on success, false on failure.
+        """
+    @overload
+    def open_write(self, stream: ostream, owns_pointer: bool = ...) -> bool:
+        """Opens an anonymous ZipArchive for writing using an ostream.
+
+        If owns_pointer is true, then the ZipArchive assumes ownership of the stream
+        pointer and will delete it when the ZIP file is closed, including if this
+        function returns false.
+        """
+    @overload
+    def open_read_write(self, filename: StrOrBytesPath) -> bool:
+        """Opens the named ZipArchive on disk for reading and writing.  If there
+        already exists a file by that name, its index is read.  Subfiles may be
+        added or removed, and the resulting changes will be written to the named
+        file.
+
+        Also see the version of open_read_write() which accepts an iostream.
+        Returns true on success, false on failure.
+        """
+    @overload
+    def open_read_write(self, stream: iostream, owns_pointer: bool = ...) -> bool:
+        """Opens an anonymous ZipArchive for reading and writing using an iostream.
+        There must be seek functionality via seekg()/seekp() and tellg()/tellp() on
+        the iostream.
+
+        If owns_pointer is true, then the ZipArchive assumes ownership of the stream
+        pointer and will delete it when the ZIP file is closed, including if this
+        function returns false.
+        """
+    def verify(self) -> bool:
+        """Verifies the integrity of the contents of the ZIP archive."""
+    def close(self) -> None:
+        """Closes the ZipArchive if it is open.  All changes are flushed to disk, and
+        the file becomes invalid for further operations until the next call to
+        open().
+        """
+    def get_filename(self) -> Filename:
+        """Returns the filename of the ZipArchive, if it is available."""
+    def set_filename(self, filename: StrOrBytesPath, /) -> None:
+        """Replaces the filename of the ZipArchive.  This is primarily used for
+        documentation purposes only; changing this name does not open the indicated
+        file.  See open_read() or open_write() for that.
+        """
+    def is_read_valid(self) -> bool:
+        """Returns true if the ZipArchive has been opened for read mode and there have
+        been no errors, and individual Subfile contents may be extracted.
+        """
+    def is_write_valid(self) -> bool:
+        """Returns true if the ZipArchive has been opened for write mode and there have
+        been no errors, and Subfiles may be added or removed from the ZipArchive.
+        """
+    def needs_repack(self) -> bool:
+        """Returns true if the ZipArchive index is suboptimal and should be repacked.
+        Call repack() to achieve this.  It is not done automatically.
+        """
+    def set_record_timestamp(self, record_timestamp: bool, /) -> None:
+        """Sets the flag indicating whether timestamps should be recorded within the
+        ZipArchive or not.  The default is true, indicating the ZipArchive will
+        record timestamps for each subfile that is added.
+
+        If this is false, the ZipArchive will not record timestamps internally.  In
+        this case, the return value from get_subfile_timestamp() will be zero.
+
+        You may want to set this false to minimize the bitwise difference between
+        independently-generated ZipArchives.
+        """
+    def get_record_timestamp(self) -> bool:
+        """Returns the flag indicating whether timestamps should be recorded within
+        the ZipArchive or not.  See set_record_timestamp().
+        """
+    @overload
+    def add_subfile(self, subfile_name: str, filename: StrOrBytesPath, compression_level: int, data_alignment: int = ...) -> str:
+        """Adds a file on disk as a subfile to the ZipArchive.  The file named by
+        filename will be read and added to the ZipArchive immediately, but the index
+        will not be updated until you call flush().  If there already exists a
+        subfile with the indicated name, it is replaced without examining its
+        contents (but see also update_subfile).
+
+        Returns the subfile name on success (it might have been modified slightly),
+        or empty string on failure.
+        """
+    @overload
+    def add_subfile(self, subfile_name: str, subfile_data: istream, compression_level: int, data_alignment: int = ...) -> str:
+        """Adds a file from a stream as a subfile to the ZipArchive.  The indicated
+        istream will be read and its contents added to the end of the current ZIP
+        file immediately.
+
+        Note that the istream must remain untouched and unused by any other code
+        until flush() is called.  At that time, the index of the ZIP archive will be
+        rewritten to the end of the file.
+
+        Returns the subfile name on success (it might have been modified slightly),
+        or empty string on failure.
+        """
+    def update_subfile(
+        self,
+        subfile_name: str,
+        filename: StrOrBytesPath,
+        compression_level: int,
+        data_alignment: int = ...,
+    ) -> str:
+        """Adds a file on disk to the subfile.  If a subfile already exists with the
+        same name, its contents are compared byte-for-byte to the disk file, and it
+        is replaced only if it is different; otherwise, the ZIP file is left
+        unchanged.
+
+        Either Filename:::set_binary() or set_text() must have been called
+        previously to specify the nature of the source file.  If set_text() was
+        called, the text flag will be set on the subfile.
+        """
+    def add_jar_signature(self, certificate: StrOrBytesPath, pkey: StrOrBytesPath, password: str = ..., alias: str = ...) -> bool:
+        """Adds a new JAR-style signature to the .zip file.  The file must have been
+        opened in read/write mode.
+
+        This implicitly causes a repack() operation if one is needed.  Returns true
+        on success, false on failure.
+
+        This flavor of add_jar_signature() reads the certificate and private key
+        from a PEM-formatted file, for instance as generated by the openssl command.
+        If the private key file is password-encrypted, the third parameter will be
+        used as the password to decrypt it.
+
+        It's possible to add multiple signatures, by providing multiple unique
+        aliases.  Note that aliases are considered case-insensitively and only the
+        first 8 characters are considered.
+
+        There is no separate parameter to pass a certificate chain.  Instead, any
+        necessary certificates are expected to be in the certificate file.
+        """
+    def flush(self) -> bool:
+        """Ensures that any changes made to the ZIP archive have been synchronized to
+        disk.  In particular, this causes the central directory to be rewritten at
+        the end of the file.
+
+        This may result in a suboptimal packing in the ZIP file, especially if
+        existing files were changed or files were removed.  To guarantee that the
+        file is as compact as it can be, call repack() instead of flush().
+
+        It is not necessary to call flush() explicitly unless you are concerned
+        about reading the recently-added subfiles immediately.
+
+        Returns true on success, false on failure.
+        """
+    def repack(self) -> bool:
+        """Forces a complete rewrite of the ZipArchive and all of its contents, so that
+        the files are tightly packed in the file without any gaps.  This is useful to
+        do after removing files, to ensure that the file size is minimized.
+
+        It is only valid to call this if the ZipArchive was opened using
+        open_read_write() and an explicit filename, rather than an iostream.  Also,
+        we must have write permission to the directory containing the ZipArchive.
+
+        Returns true on success, false on failure.
+        """
+    def get_num_subfiles(self) -> int:
+        """Returns the number of subfiles within the ZipArchive.  The subfiles may be
+        accessed in alphabetical order by iterating through [0 ..
+        get_num_subfiles()).
+        """
+    def find_subfile(self, subfile_name: str, /) -> int:
+        """Returns the index of the subfile with the indicated name, or -1 if the
+        named subfile is not within the ZipArchive.
+        """
+    def has_directory(self, subfile_name: str, /) -> bool:
+        """Returns true if the indicated subfile name is the directory prefix to one
+        or more files within the ZipArchive.  That is, the ZipArchive contains at
+        least one file named "subfile_name/...".
+        """
+    @overload
+    def remove_subfile(self, index: int, /) -> None:
+        """Removes the nth subfile from the ZipArchive.  This will cause all subsequent
+        index numbers to decrease by one.  The file will not actually be removed
+        from the disk until the next call to flush().
+
+        Note that this does not actually remove the data from the indicated
+        subfile; it simply removes it from the index.  The ZipArchive will not be
+        reduced in size after this operation, until the next call to repack().
+        """
+    @overload
+    def remove_subfile(self, subfile_name: str, /) -> bool:
+        """Removes the named subfile from the ZipArchive, if it exists; returns true if
+        successfully removed, or false if it did not exist in the first place.  The
+        file will not actually be removed from the disk until the next call to
+        flush().
+
+        Note that this does not actually remove the data from the indicated
+        subfile; it simply removes it from the index.  The ZipArchive will not be
+        reduced in size after this operation, until the next call to repack().
+        """
+    def get_subfile_name(self, index: int, /) -> str:
+        """Returns the name of the nth subfile."""
+    def get_subfile_length(self, index: int, /) -> int:
+        """Returns the uncompressed data length of the nth subfile."""
+    def get_subfile_timestamp(self, index: int, /) -> int:
+        """Returns the modification time of the nth subfile.  If this is called on an
+        older .zip file, which did not store individual timestamps in the file (or
+        if get_record_timestamp() is false), this will return the modification time
+        of the overall ZIP file.
+        """
+    def is_subfile_compressed(self, index: int, /) -> bool:
+        """Returns true if the indicated subfile has been compressed when stored
+        within the archive, false otherwise.
+        """
+    def is_subfile_encrypted(self, index: int, /) -> bool:
+        """Returns true if the indicated subfile has been encrypted when stored within
+        the archive, false otherwise.
+        """
+    def get_subfile_internal_start(self, index: int, /) -> int:
+        """Returns the starting byte position within the ZipArchive at which the
+        indicated subfile begins.  This may be used, with
+        get_subfile_internal_length(), for low-level access to the subfile, but
+        usually it is better to use open_read_subfile() instead (which
+        automatically decrypts and/or uncompresses the subfile data).
+        """
+    def get_subfile_internal_length(self, index: int, /) -> int:
+        """Returns the number of bytes the indicated subfile consumes within the
+        archive.  For compressed subfiles, this will generally be smaller than
+        get_subfile_length(); for encrypted (but noncompressed) subfiles, it may be
+        slightly different, for noncompressed and nonencrypted subfiles, it will be
+        equal.
+        """
+    def read_subfile(self, index: int, /) -> bytes:
+        """Returns a vector_uchar that contains the entire contents of the indicated
+        subfile.
+        """
+    def open_read_subfile(self, index: int, /) -> istream:
+        """Returns an istream that may be used to read the indicated subfile.  You may
+        seek() within this istream to your heart's content; even though it will be
+        a reference to the already-opened pfstream of the ZipArchive itself, byte 0
+        appears to be the beginning of the subfile and EOF appears to be the end of
+        the subfile.
+
+        The returned istream will have been allocated via new; you should pass the
+        pointer to close_read_subfile() when you are finished with it to delete it
+        and release its resources.
+
+        Any future calls to repack() or close() (or the ZipArchive destructor) will
+        invalidate all currently open subfile pointers.
+
+        The return value will be NULL if the stream cannot be opened for some
+        reason.
+        """
+    @staticmethod
+    def close_read_subfile(stream: istream, /) -> None:
+        """Closes a file opened by a previous call to open_read_subfile().  This
+        really just deletes the istream pointer, but it is recommended to use this
+        interface instead of deleting it explicitly, to help work around compiler
+        issues.
+        """
+    def extract_subfile(self, index: int, filename: StrOrBytesPath) -> bool:
+        """Extracts the nth subfile into a file with the given name."""
+    def extract_subfile_to(self, index: int, out: ostream) -> bool:
+        """Extracts the nth subfile to the indicated ostream."""
+    def compare_subfile(self, index: int, filename: StrOrBytesPath) -> bool:
+        """Performs a byte-for-byte comparison of the indicated file on disk with the
+        nth subfile.  Returns true if the files are equivalent, or false if they
+        are different (or the file is missing).
+
+        If Filename::set_binary() or set_text() has already been called, it
+        specifies the nature of the source file.  If this is different from the
+        text flag of the subfile, the comparison will always return false.  If this
+        has not been specified, it will be set from the text flag of the subfile.
+        """
+    def output(self, out: ostream, /) -> None: ...
+    def ls(self, out: ostream = ..., /) -> None:
+        """Shows a list of all subfiles within the ZipArchive."""
+    def set_comment(self, comment: str, /) -> None:
+        """Sets the string which is appended to the very end of the ZIP archive.
+        This string may not be longer than 65535 characters.
+        """
+    def get_comment(self) -> str:
+        """Returns the comment string that was at the end of the ZIP end-of-directory
+        record, if any.
+        See set_comment().
+        """
+    def get_subfile_names(self) -> tuple[str, ...]: ...
+    openRead = open_read
+    openWrite = open_write
+    openReadWrite = open_read_write
+    getFilename = get_filename
+    setFilename = set_filename
+    isReadValid = is_read_valid
+    isWriteValid = is_write_valid
+    needsRepack = needs_repack
+    setRecordTimestamp = set_record_timestamp
+    getRecordTimestamp = get_record_timestamp
+    addSubfile = add_subfile
+    updateSubfile = update_subfile
+    addJarSignature = add_jar_signature
+    getNumSubfiles = get_num_subfiles
+    findSubfile = find_subfile
+    hasDirectory = has_directory
+    removeSubfile = remove_subfile
+    getSubfileName = get_subfile_name
+    getSubfileLength = get_subfile_length
+    getSubfileTimestamp = get_subfile_timestamp
+    isSubfileCompressed = is_subfile_compressed
+    isSubfileEncrypted = is_subfile_encrypted
+    getSubfileInternalStart = get_subfile_internal_start
+    getSubfileInternalLength = get_subfile_internal_length
+    readSubfile = read_subfile
+    openReadSubfile = open_read_subfile
+    closeReadSubfile = close_read_subfile
+    extractSubfile = extract_subfile
+    extractSubfileTo = extract_subfile_to
+    compareSubfile = compare_subfile
+    setComment = set_comment
+    getComment = get_comment
+    getSubfileNames = get_subfile_names
+
+class VirtualFileMountZip(VirtualFileMount):
+    """Maps a .zip archive into the VirtualFileSystem."""
+
+    def __init__(self, archive: ZipArchive, directory: StrOrBytesPath = ...) -> None: ...
+    def get_archive(self) -> ZipArchive:
+        """Returns the ZipArchive pointer that this mount object is based on."""
+    getArchive = get_archive
+
 class VirtualFileSimple(VirtualFile):
     """A simple file or directory within the VirtualFileSystem: this maps to
     exactly one file on one mount point.  Most directories, and all regular
@@ -2380,8 +2715,8 @@ class IDecompressStream(istream):
     @overload
     def __init__(self) -> None: ...
     @overload
-    def __init__(self, source: istream, owns_source: bool) -> None: ...
-    def open(self, source: istream, owns_source: bool) -> IDecompressStream: ...
+    def __init__(self, source: istream, owns_source: bool, source_length: int = ..., header: bool = ...) -> None: ...
+    def open(self, source: istream, owns_source: bool, source_length: int = ..., header: bool = ...) -> IDecompressStream: ...
     def close(self) -> IDecompressStream:
         """Resets the ZStream to empty, but does not actually close the source istream
         unless owns_source was true.
@@ -2401,8 +2736,8 @@ class OCompressStream(ostream):
     @overload
     def __init__(self) -> None: ...
     @overload
-    def __init__(self, dest: ostream, owns_dest: bool, compression_level: int = ...) -> None: ...
-    def open(self, dest: ostream, owns_dest: bool, compression_level: int = ...) -> OCompressStream: ...
+    def __init__(self, dest: ostream, owns_dest: bool, compression_level: int = ..., header: bool = ...) -> None: ...
+    def open(self, dest: ostream, owns_dest: bool, compression_level: int = ..., header: bool = ...) -> OCompressStream: ...
     def close(self) -> OCompressStream:
         """Resets the ZStream to empty, but does not actually close the dest ostream
         unless owns_dest was true.
@@ -2476,6 +2811,9 @@ class VirtualFileSystem:
         level function than the other flavors of mount(); it requires you to create
         a VirtualFileMount object specifically.
         """
+    @overload
+    def mount(self, archive: ZipArchive, mount_point: StrOrBytesPath, flags: int) -> bool:
+        """Mounts the indicated ZipArchive at the given mount point."""
     def mount_loop(self, virtual_filename: StrOrBytesPath, mount_point: StrOrBytesPath, flags: int, password: str = ...) -> bool:
         """This is similar to mount(), but it receives the name of a Multifile that
         already appears within the virtual file system.  It can be used to mount a
@@ -2488,7 +2826,11 @@ class VirtualFileSystem:
         Note that there is additional overhead, in the form of additional buffer
         copies of the data, for recursively mounting a multifile like this.
         """
-    def unmount(self, physical_filename_or_multifile_or_mount: Multifile | StrOrBytesPath | VirtualFileMount, /) -> int:
+    def unmount(
+        self,
+        physical_filename_or_multifile_or_mount_or_archive: Multifile | StrOrBytesPath | VirtualFileMount | ZipArchive,
+        /,
+    ) -> int:
         """Unmounts all appearances of the indicated directory name or multifile name
         from the file system.  Returns the number of appearances unmounted.
 
@@ -2498,6 +2840,10 @@ class VirtualFileSystem:
 
         or:
         Unmounts the indicated VirtualFileMount object from the file system.
+        Returns the number of appearances unmounted.
+
+        or:
+        Unmounts all appearances of the indicated ZipArchive from the file system.
         Returns the number of appearances unmounted.
         """
     def unmount_point(self, mount_point: StrOrBytesPath, /) -> int:
@@ -2739,6 +3085,29 @@ class PointerTo_VirtualFileMount(PointerToBase_VirtualFileMount):
         """
     def assign(self, copy_or_ptr: VirtualFileMount, /) -> Self: ...
 
+class StringStream(iostream):
+    """A bi-directional stream object that reads and writes data to an internal
+    buffer, which can be retrieved and/or set as a string in Python 2 or a
+    bytes object in Python 3.
+    """
+
+    data: bytes
+    @overload
+    def __init__(self) -> None: ...
+    @overload
+    def __init__(self, source) -> None: ...
+    def clear_data(self) -> None:
+        """Empties the buffer."""
+    def get_data_size(self) -> int:
+        """Returns the number of characters available to be read from the data stream."""
+    def get_data(self) -> bytes:
+        """Returns the contents of the data stream as a string."""
+    def set_data(self, data: bytes, /) -> None: ...
+    clearData = clear_data
+    getDataSize = get_data_size
+    getData = get_data
+    setData = set_data
+
 class TrueClock:
     """An interface to whatever real-time clock we might have available in the
     current environment.  There is only one TrueClock in existence, and it
@@ -2901,50 +3270,6 @@ class Patchfile:
     getSourceHash = get_source_hash
     getResultHash = get_result_hash
 
-class ProfileTimer:
-    """ProfileTimer
-
-    HowTo:
-      Create a ProfileTimer and hold onto it.
-      Call init() whenever you like (the timer doesn't
-        start yet).
-      Call on() to start the timer.
-      While the timer is on, call mark() at each point of interest,
-        in the code you are timing.
-      You can turn the timer off() and on() to skip things you
-        don't want to time.
-      When your timing is finished, call printTo() to see the
-        results (e.g. myTimer.printTo(cerr)).
-
-    Notes:
-      You should be able to time things down to the millisecond
-      well enough, but if you call on() and off() within micro-
-      seconds of each other, I don't think you'll get very good
-      results.
-    """
-
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self, other: ProfileTimer) -> None: ...
-    @overload
-    def __init__(self, name: str = ..., maxEntries: int = ...) -> None: ...
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, memo: object, /) -> Self: ...
-    def init(self, name: str, maxEntries: int = ...) -> None: ...
-    def on(self) -> None: ...
-    def mark(self, tag: str, /) -> None: ...
-    def off(self, tag: str = ..., /) -> None: ...
-    def getTotalTime(self) -> float:
-        """Don't call any of the following during timing: (Because they are slow,
-        not because anything will break).
-        """
-    @staticmethod
-    def consolidateAllTo(out: ostream = ..., /) -> None: ...
-    def consolidateTo(self, out: ostream = ..., /) -> None: ...
-    @staticmethod
-    def printAllTo(out: ostream = ..., /) -> None: ...
-    def printTo(self, out: ostream = ..., /) -> None: ...
-
 class WeakPointerToVoid(PointerToVoid):
     """This is the specialization of PointerToVoid for weak pointers.  It needs an
     additional flag to indicate that the pointer has been deleted.
@@ -3036,8 +3361,8 @@ def encrypt_string(
     algorithm: str = ...,
     key_length: int = ...,
     iteration_count: int = ...,
-) -> str: ...
-def decrypt_string(source: str, password: str) -> str: ...
+) -> bytes: ...
+def decrypt_string(source: bytes, password: str) -> str: ...
 def encrypt_file(
     source: StrOrBytesPath,
     dest: StrOrBytesPath,

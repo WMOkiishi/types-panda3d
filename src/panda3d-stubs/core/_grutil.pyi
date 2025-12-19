@@ -1,6 +1,6 @@
 from _typeshed import StrOrBytesPath
 from typing import Any, ClassVar, Final, Literal, overload
-from typing_extensions import Self, TypeAlias
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import DoubleVec2Like, DoubleVec3Like, Vec2Like, Vec3Like, Vec4Like
 from panda3d.core._audio import AudioSound
@@ -405,12 +405,15 @@ class GeoMipTerrain(TypedObject):
         instance the heightfield has changed.  Once the terrain has been
         regenerated, the dirty flag automatically gets reset internally.
         """
+    @deprecated('use set_near/set_far instead')
     def set_factor(self, factor: float, /) -> None:
         """DEPRECATED method.  Use set_near/far instead.  Sets the quality factor at
         which blocks must be generated.  The higher this level, the better quality
         the terrain will be, but more expensive to render.  A value of 0 makes the
         terrain the lowest quality possible, depending on blocksize.  The default
         value is 100.
+
+        @deprecated use set_near/set_far instead
         """
     def set_near_far(self, input_near: float, input_far: float) -> None:
         """Sets the near and far LOD distances in one call."""

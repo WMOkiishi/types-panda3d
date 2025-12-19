@@ -653,6 +653,9 @@ class InternalName(TypedWritableReferenceCount):
         """Returns the standard InternalName "view".  This is used as a keyword in the
         shader subsystem.
         """
+    @staticmethod
+    def get_instance_matrix() -> InternalName:
+        """Returns the standard InternalName "instance_matrix"."""
     getParent = get_parent
     getName = get_name
     getBasename = get_basename
@@ -683,6 +686,7 @@ class InternalName(TypedWritableReferenceCount):
     getCamera = get_camera
     getModel = get_model
     getView = get_view
+    getInstanceMatrix = get_instance_matrix
 
 class GeomVertexColumn(GeomEnums):
     """This defines how a single column is interleaved within a vertex array
@@ -1147,6 +1151,14 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         This may only be called after the format has been registered.  The return
         value will have been already registered.
         """
+    def get_post_instanced_format(self) -> GeomVertexFormat:
+        """Returns a suitable vertex format for sending the animated vertices to the
+        graphics backend.  This is the same format as the source format, with the
+        instancing columns added.
+
+        This may only be called after the format has been registered.  The return
+        value will have been already registered.
+        """
     def get_union_format(self, other: GeomVertexArrayFormat | GeomVertexFormat, /) -> GeomVertexFormat:
         """Returns a new GeomVertexFormat that includes all of the columns defined in
         either this GeomVertexFormat or the other one.  If any column is defined in
@@ -1399,6 +1411,27 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
         pair, a 4-component color, a 3-component normal, and a 3-component vertex
         position.
         """
+    @staticmethod
+    def get_v3c() -> GeomVertexFormat:
+        """These are like the above, but automatically select the appropriate format
+        based on the setting of vertex-colors-prefer-packed.
+        """
+    @staticmethod
+    def get_v3ct2() -> GeomVertexFormat:
+        """Returns a standard vertex format with a 2-component texture coordinate
+        pair, a 4-component color, and a 3-component vertex position.
+        """
+    @staticmethod
+    def get_v3n3c() -> GeomVertexFormat:
+        """Returns a standard vertex format with a 4-component color, a 3-component
+        normal, and a 3-component vertex position.
+        """
+    @staticmethod
+    def get_v3n3ct2() -> GeomVertexFormat:
+        """Returns a standard vertex format with a 2-component texture coordinate
+        pair, a 4-component color, a 3-component normal, and a 3-component vertex
+        position.
+        """
     def get_arrays(self) -> tuple[GeomVertexArrayFormat, ...]: ...
     def get_columns(self) -> tuple[GeomVertexColumn, ...]: ...
     def get_points(self) -> tuple[InternalName, ...]: ...
@@ -1414,6 +1447,7 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     getAnimation = get_animation
     setAnimation = set_animation
     getPostAnimatedFormat = get_post_animated_format
+    getPostInstancedFormat = get_post_instanced_format
     getUnionFormat = get_union_format
     getNumArrays = get_num_arrays
     getArray = get_array
@@ -1457,6 +1491,10 @@ class GeomVertexFormat(TypedWritableReferenceCount, GeomEnums):
     getV3c4t2 = get_v3c4t2
     getV3n3c4 = get_v3n3c4
     getV3n3c4t2 = get_v3n3c4t2
+    getV3c = get_v3c
+    getV3ct2 = get_v3ct2
+    getV3n3c = get_v3n3c
+    getV3n3ct2 = get_v3n3ct2
     getArrays = get_arrays
     getColumns = get_columns
     getPoints = get_points
@@ -2706,7 +2744,6 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     def __init__(self, name: str, format: GeomVertexArrayFormat | GeomVertexFormat, usage_hint: _GeomEnums_UsageHint) -> None: ...
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: Self, /) -> Self: ...
     def compare_to(self, other: GeomVertexData, /) -> int:
         """Returns 0 if the two objects are equivalent, even if they are not the same
         pointer.
@@ -2832,6 +2869,16 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
         """Replaces the indicated vertex data array with a completely new array.  You
         should be careful that the new array has the same length and format as the
         old one, unless you know what you are doing.
+
+        Don't call this in a downstream thread unless you don't mind it blowing
+        away other changes you might have recently made in an upstream thread.
+        """
+    def remove_array(self, i: int, /) -> None:
+        """Removes the array with the given index from the GeomVertexData."""
+    def insert_array(self, i: int, array: GeomVertexArrayData) -> None:
+        """Inserts the indicated vertex data array into the list of arrays, which also
+        modifies the format.  You should be careful that the new array has the same
+        number of rows as the vertex data.
 
         Don't call this in a downstream thread unless you don't mind it blowing
         away other changes you might have recently made in an upstream thread.
@@ -3098,6 +3145,8 @@ class GeomVertexData(CopyOnWriteObject, GeomEnums):
     modifyArray = modify_array
     modifyArrayHandle = modify_array_handle
     setArray = set_array
+    removeArray = remove_array
+    insertArray = insert_array
     getTransformTable = get_transform_table
     setTransformTable = set_transform_table
     clearTransformTable = clear_transform_table
@@ -3137,9 +3186,6 @@ class AnimateVerticesRequest(AsyncTask):
     the data has been computed by the time it's needed.
     """
 
-    @overload
-    def __init__(self, param0: AnimateVerticesRequest, /) -> None: ...
-    @overload
     def __init__(self, geom_vertex_data: GeomVertexData) -> None:
         """Create a new AnimateVerticesRequest."""
     def is_ready(self) -> bool:
@@ -3249,7 +3295,6 @@ class GeomPrimitive(CopyOnWriteObject, GeomEnums):
     def num_unused_vertices_per_primitive(self) -> int: ...
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: Self, /) -> Self: ...
     def make_copy(self) -> GeomPrimitive: ...
     def get_primitive_type(self) -> _GeomEnums_PrimitiveType: ...
     def get_geom_rendering(self) -> int:
@@ -4264,7 +4309,6 @@ class Geom(CopyOnWriteObject, GeomEnums):
     def __init__(self, data: GeomVertexData) -> None: ...
     def upcast_to_CopyOnWriteObject(self) -> CopyOnWriteObject: ...
     def upcast_to_GeomEnums(self) -> GeomEnums: ...
-    def assign(self, copy: Self, /) -> Self: ...
     def make_copy(self) -> Geom:
         """Returns a newly-allocated Geom that is a shallow copy of this one.  It will
         be a different Geom pointer, but its internal data may or may not be shared
@@ -5171,6 +5215,8 @@ class GeomVertexWriter(GeomEnums):
     """
 
     @overload
+    def __init__(self, copy: GeomVertexWriter) -> None: ...
+    @overload
     def __init__(self, array_data: GeomVertexArrayData, current_thread: Thread = ...) -> None:
         """Constructs a new writer to process the vertices of the indicated array
         only.
@@ -5191,8 +5237,6 @@ class GeomVertexWriter(GeomEnums):
         """Constructs a new writer to process the vertices of the indicated data
         object.
         """
-    @overload
-    def __init__(self, copy: GeomVertexWriter) -> None: ...
     @overload
     def __init__(self, current_thread: Thread = ...) -> None:
         """Constructs an invalid GeomVertexWriter.  You must use the assignment
@@ -6514,8 +6558,6 @@ class Texture(TypedWritableReferenceCount, Namable):
     @property
     def image_modified(self) -> UpdateSeq: ...
     @property
-    def simple_image_modified(self) -> UpdateSeq: ...
-    @property
     def aux_data(self) -> MutableMapping[str, TypedReferenceCount]: ...
     @property
     def orig_file_x_size(self) -> int: ...
@@ -7383,6 +7425,18 @@ class Texture(TypedWritableReferenceCount, Namable):
         texture.  For a 2-d or 1-d texture, this is the same as
         get_expected_ram_image_size().
         """
+    def async_ensure_ram_image(self, allow_compression: bool = ..., priority: int = ...) -> AsyncFuture:
+        """Schedules a background task that reloads the the Texture from its disk file
+        if there is not currently a RAM image (or uncompressed RAM image, if
+        allow_compression is false).
+
+        A higher priority value indicates that this texture should be reloaded sooner
+        than textures with a lower priority value.  If the reload hasn't taken place
+        yet, you can call this again to update the priority value.
+
+        If someone else reloads the texture using an explicit call to reload() while
+        an async reload request is pending, the async reload request is cancelled.
+        """
     def get_ram_image(self) -> CPTA_uchar:
         """Returns the system-RAM image data associated with the texture.  If the
         texture does not currently have an associated RAM image, and the texture
@@ -7703,10 +7757,12 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Returns a sequence number which is guaranteed to change at least every time
         the texture image data (including mipmap levels) are modified.
         """
-    def get_simple_image_modified(self) -> UpdateSeq:
-        """Returns a sequence number which is guaranteed to change at least every time
-        the texture's "simple" image data is modified.
+    def get_image_modified_pages(self, since: UpdateSeq, n: int = ...) -> SparseArray:
+        """Returns a SparseArray containing all the image pages that have been modified
+        since the given UpdateSeq value.
         """
+    def get_view_modified_pages(self, since: UpdateSeq, view: int, n: int = ...) -> SparseArray:
+        """Like get_image_modified_pages, but returns the result for a particular view."""
     def has_auto_texture_scale(self) -> bool:
         """Returns true if set_auto_texture_scale() has been set to something other
         than ATS_unspecified for this particular texture.
@@ -7720,6 +7776,22 @@ class Texture(TypedWritableReferenceCount, Namable):
         """Specifies the power-of-2 texture-scaling mode that will be applied to this
         particular texture when it is next loaded from disk.  See
         set_textures_power_2().
+        """
+    def setup_async_transfer(self, num_buffers: int, /) -> None:
+        """Sets the number of buffers for asynchronous upload of texture data.  If this
+        number is higher than 0, future texture uploads will occur in the background,
+        up to the provided amount at a time.  The asynchronous upload will be
+        triggered by calls to prepare() or when the texture comes into view and
+        allow-incomplete-render is true.
+
+        Each buffer is only large enough to contain a single view, so you may wish
+        to create twice as many buffers if you want to update twice as many views.
+
+        You can also pass the special value -1, which means to create as many
+        buffers as is necessary for all asynchronous uploads to take place, and they
+        will be deleted afterwards automatically.
+
+        This setting will take effect immediately.
         """
     def prepare(self, prepared_objects: PreparedGraphicsObjects, /) -> AsyncFuture:
         """Indicates that the texture should be enqueued to be prepared in the
@@ -7902,7 +7974,8 @@ class Texture(TypedWritableReferenceCount, Namable):
         should not be set explicitly; it is set automatically by the TexturePool
         when model-cache-compressed-textures is set true.
         """
-    def prepare_now(self, view: int, prepared_objects: PreparedGraphicsObjects, gsg: GraphicsStateGuardianBase) -> TextureContext:
+    @overload
+    def prepare_now(self, prepared_objects: PreparedGraphicsObjects, gsg: GraphicsStateGuardianBase) -> TextureContext:
         """Creates a context for the texture on the particular GSG, if it does not
         already exist.  Returns the new (or old) TextureContext.  This assumes that
         the GraphicsStateGuardian is the currently active rendering context and
@@ -7913,6 +7986,10 @@ class Texture(TypedWritableReferenceCount, Namable):
         a texture does not need to be explicitly prepared by the user before it may
         be rendered.
         """
+    @overload
+    @deprecated('See prepare_now() without a view parameter.')
+    def prepare_now(self, view: int, prepared_objects: PreparedGraphicsObjects, gsg: GraphicsStateGuardianBase) -> TextureContext:
+        """@deprecated See prepare_now() without a view parameter."""
     @staticmethod
     def up_to_power_2(value: int, /) -> int:
         """Returns the smallest power of 2 greater than or equal to value."""
@@ -8082,6 +8159,7 @@ class Texture(TypedWritableReferenceCount, Namable):
     getRamPageSize = get_ram_page_size
     getExpectedRamImageSize = get_expected_ram_image_size
     getExpectedRamPageSize = get_expected_ram_page_size
+    asyncEnsureRamImage = async_ensure_ram_image
     getRamImage = get_ram_image
     getRamImageCompression = get_ram_image_compression
     getUncompressedRamImage = get_uncompressed_ram_image
@@ -8126,10 +8204,12 @@ class Texture(TypedWritableReferenceCount, Namable):
     clearSimpleRamImage = clear_simple_ram_image
     getPropertiesModified = get_properties_modified
     getImageModified = get_image_modified
-    getSimpleImageModified = get_simple_image_modified
+    getImageModifiedPages = get_image_modified_pages
+    getViewModifiedPages = get_view_modified_pages
     hasAutoTextureScale = has_auto_texture_scale
     getAutoTextureScale = get_auto_texture_scale
     setAutoTextureScale = set_auto_texture_scale
+    setupAsyncTransfer = setup_async_transfer
     isPrepared = is_prepared
     wasImageModified = was_image_modified
     getDataSizeBytes = get_data_size_bytes
@@ -8501,7 +8581,7 @@ class PreparedGraphicsObjects(ReferenceCount):
         """
     def get_num_prepared_textures(self) -> int:
         """Returns the number of textures that have already been prepared on this GSG."""
-    def prepare_texture_now(self, tex: Texture, view: int, gsg: GraphicsStateGuardianBase) -> TextureContext:
+    def prepare_texture_now(self, tex: Texture, gsg: GraphicsStateGuardianBase) -> TextureContext:
         """Immediately creates a new TextureContext for the indicated texture and
         returns it.  This assumes that the GraphicsStateGuardian is the currently
         active rendering context and that it is ready to accept new textures.  If
@@ -10005,18 +10085,38 @@ class PerspectiveLens(Lens):
     @overload
     def __init__(self, hfov: float, vfov: float) -> None: ...
 
+class TexturePoolFilter(TypedObject):
+    """This is an abstract base class, a placeholder for any number of different
+    classes that may wish to implement an effect on every texture loaded from
+    disk via the TexturePool.
+
+    In practice, as of the time of this writing, only the TxaFileFilter (in
+    pandatool) actually implements this.  But other kinds of filters are
+    possible.
+
+    This filter, once registered, will get a callback and a chance to modify
+    each texture as it is loaded from disk the first time.  If more than one
+    filter is registered, each will be called in sequence, in the order in
+    which they were registered.
+
+    The filter does not get called again if the texture is subsequently
+    reloaded from disk.  It is suggested that filters for which this might be a
+    problem should call tex->set_keep_ram_image(true).
+    """
+
+    def __init__(self) -> None: ...
+
 class TextureReloadRequest(AsyncTask):
     """This loader request will call Texture::get_ram_image() in a sub-thread, to
     force the texture's image to be re-read from disk.  It is used by
     GraphicsStateGuardian::async_reload_texture(), when get_incomplete_render()
     is true.
+
+    @deprecated Use Texture::async_ensure_ram_image() instead.
     """
 
     @property
     def texture(self) -> Texture: ...
-    @overload
-    def __init__(self, param0: TextureReloadRequest, /) -> None: ...
-    @overload
     def __init__(self, name: str, pgo: PreparedGraphicsObjects, texture: Texture, allow_compressed: bool) -> None:
         """Create a new TextureReloadRequest, and add it to the loader via
         load_async(), to begin an asynchronous load.
@@ -10057,10 +10157,9 @@ class TextureContext(BufferContext, AdaptiveLruPage):
     def upcast_to_AdaptiveLruPage(self) -> AdaptiveLruPage: ...
     def get_texture(self) -> Texture:
         """Returns the pointer to the associated Texture object."""
+    @deprecated('since 1.11.0: always returns 0.')
     def get_view(self) -> int:
-        """Returns the specific view of a multiview texture this context represents.
-        In the usual case, with a non-multiview texture, this will be 0.
-        """
+        """@deprecated since 1.11.0: always returns 0."""
     def get_native_id(self) -> int:
         """Returns an implementation-defined handle or pointer that can be used
         to interface directly with the underlying API.
@@ -10084,9 +10183,9 @@ class TextureContext(BufferContext, AdaptiveLruPage):
         """Returns true if the texture image has been modified since the last time
         mark_loaded() was called.
         """
-    def was_simple_image_modified(self) -> bool:
-        """Returns true if the texture's "simple" image has been modified since the
-        last time mark_simple_loaded() was called.
+    def was_image_page_modified(self, z: int, n: int) -> bool:
+        """Returns true if the given page of the texture image has been modified since
+        the last time mark_loaded() was called.
         """
     def get_properties_modified(self) -> UpdateSeq:
         """Returns a sequence number which is guaranteed to change at least every time
@@ -10096,9 +10195,13 @@ class TextureContext(BufferContext, AdaptiveLruPage):
         """Returns a sequence number which is guaranteed to change at least every time
         the texture image data (including mipmap levels) are modified.
         """
-    def get_simple_image_modified(self) -> UpdateSeq:
-        """Returns a sequence number which is guaranteed to change at least every time
-        the texture's "simple" image data is modified.
+    def get_image_modified_pages(self, n: int = ..., /) -> SparseArray:
+        """Returns a SparseArray indicating which pages of the texture have been
+        modified since the last call to mark_loaded().
+        """
+    def get_view_modified_pages(self, view: int, n: int = ...) -> SparseArray:
+        """Returns a SparseArray indicating which pages of the texture have been
+        modified since the last call to mark_loaded().
         """
     upcastToBufferContext = upcast_to_BufferContext
     upcastToAdaptiveLruPage = upcast_to_AdaptiveLruPage
@@ -10109,10 +10212,11 @@ class TextureContext(BufferContext, AdaptiveLruPage):
     wasModified = was_modified
     wasPropertiesModified = was_properties_modified
     wasImageModified = was_image_modified
-    wasSimpleImageModified = was_simple_image_modified
+    wasImagePageModified = was_image_page_modified
     getPropertiesModified = get_properties_modified
     getImageModified = get_image_modified
-    getSimpleImageModified = get_simple_image_modified
+    getImageModifiedPages = get_image_modified_pages
+    getViewModifiedPages = get_view_modified_pages
 
 class ShaderContext(SavedContext):
     @property
@@ -10304,6 +10408,8 @@ class TexturePool:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
+    @property
+    def filters(self) -> Sequence[TexturePoolFilter]: ...
     @staticmethod
     def has_texture(filename: StrOrBytesPath, /) -> bool:
         """Returns true if the texture has ever been loaded, false otherwise."""
@@ -10342,6 +10448,7 @@ class TexturePool:
         alpha_file_channel: int = ...,
         read_mipmaps: bool = ...,
         options: LoaderOptions = ...,
+        sampler: SamplerState = ...,
     ) -> Texture:
         """Loads the given filename up into a texture, if it has not already been
         loaded, and returns the new texture.  If a texture with the same filename
@@ -10359,6 +10466,7 @@ class TexturePool:
         primary_file_num_channels: int = ...,
         read_mipmaps: bool = ...,
         options: LoaderOptions = ...,
+        sampler: SamplerState = ...,
     ) -> Texture:
         """Loads the given filename up into a texture, if it has not already been
         loaded, and returns the new texture.  If a texture with the same filename
@@ -10370,7 +10478,12 @@ class TexturePool:
         be defined with a series of images, one for each mipmap level.
         """
     @staticmethod
-    def load_3d_texture(filename_pattern: StrOrBytesPath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_3d_texture(
+        filename_pattern: StrOrBytesPath,
+        read_mipmaps: bool = ...,
+        options: LoaderOptions = ...,
+        sampler: SamplerState = ...,
+    ) -> Texture:
         """Loads a 3-D texture that is specified with a series of n pages, all
         numbered in sequence, and beginning with index 0.  The filename should
         include a sequence of one or more hash characters ("#") which will be
@@ -10385,6 +10498,7 @@ class TexturePool:
         filename_pattern: StrOrBytesPath,
         read_mipmaps: bool = ...,
         options: LoaderOptions = ...,
+        sampler: SamplerState = ...,
     ) -> Texture:
         """Loads a 2-D texture array that is specified with a series of n pages, all
         numbered in sequence, and beginning with index 0.  The filename should
@@ -10396,7 +10510,12 @@ class TexturePool:
         and the second with the index number of each 2-d level.
         """
     @staticmethod
-    def load_cube_map(filename_pattern: StrOrBytesPath, read_mipmaps: bool = ..., options: LoaderOptions = ...) -> Texture:
+    def load_cube_map(
+        filename_pattern: StrOrBytesPath,
+        read_mipmaps: bool = ...,
+        options: LoaderOptions = ...,
+        sampler: SamplerState = ...,
+    ) -> Texture:
         """Loads a cube map texture that is specified with a series of 6 pages,
         numbered 0 through 5.  The filename should include a sequence of one or
         more hash characters ("#") which will be filled in with the index number of
@@ -10494,6 +10613,28 @@ class TexturePool:
         filename extension, according to the types that have been registered via
         register_texture_type().
         """
+    def register_filter(self, tex_filter: TexturePoolFilter, /) -> bool:
+        """Records a TexturePoolFilter object that may operate on texture images as
+        they are loaded from disk.
+        """
+    def unregister_filter(self, tex_filter: TexturePoolFilter, /) -> bool:
+        """Stops a TexturePoolFilter object from operating on this pool."""
+    @staticmethod
+    def clear_filters() -> None:
+        """Stops all TexturePoolFilter objects from operating on this pool."""
+    def is_filter_registered(self, tex_filter: TexturePoolFilter, /) -> bool:
+        """Checks whether the given TexturePoolFilter object is
+        currently registered in the texture pool or not.
+        """
+    def get_num_filters(self) -> int:
+        """Returns the total number of registered texture pool filters."""
+    def get_filter(self, i: int, /) -> TexturePoolFilter:
+        """Returns the nth texture pool filter registered."""
+    @staticmethod
+    def get_global_ptr() -> TexturePool:
+        """Initializes and/or returns the global pointer to the one TexturePool object
+        in the system.
+        """
     @staticmethod
     def write(out: ostream, /) -> None:
         """Lists the contents of the texture pool to the indicated output stream.  For
@@ -10520,6 +10661,13 @@ class TexturePool:
     hasFakeTextureImage = has_fake_texture_image
     getFakeTextureImage = get_fake_texture_image
     makeTexture = make_texture
+    registerFilter = register_filter
+    unregisterFilter = unregister_filter
+    clearFilters = clear_filters
+    isFilterRegistered = is_filter_registered
+    getNumFilters = get_num_filters
+    getFilter = get_filter
+    getGlobalPtr = get_global_ptr
 
 class TexturePeeker(ReferenceCount):
     """An instance of this object is returned by Texture::peek().  This object

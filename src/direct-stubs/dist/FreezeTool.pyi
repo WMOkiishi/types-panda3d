@@ -1,4 +1,4 @@
-from _typeshed import StrOrBytesPath, SupportsRead, Unused
+from _typeshed import FileDescriptorOrPath, StrOrBytesPath, SupportsRead, Unused
 from collections.abc import Container, Iterable, Mapping, Sequence
 from modulefinder import Module, ModuleFinder
 from typing import IO, Any, Final, TypeVar
@@ -17,7 +17,7 @@ python: Final[str]
 isDebugBuild: Final[bool]
 startupModules: list[str]
 builtinInitFuncs: dict[str, str | None]
-hiddenImports: dict[str, list[str]]
+defaultHiddenImports: dict[str, list[str]]
 ignoreImports: dict[str, list[str]]
 overrideModules: dict[str, str]
 reportedMissing: dict[str, bool]
@@ -47,6 +47,17 @@ mainInitCode: str
 dllInitCode: str
 programFile: str
 okMissing: list[str]
+mach_header_64_layout: Final = '<IIIIIIII'
+lc_header_layout: Final = '<II'
+section64_header_layout: Final = '<16s16sQQIIIIIIII'
+LC_SEGMENT_64: Final = 0x19
+LC_DYLD_INFO_ONLY: Final = 0x80000022
+LC_SYMTAB: Final = 0x02
+LC_DYSYMTAB: Final = 0x0B
+LC_FUNCTION_STARTS: Final = 0x26
+LC_DATA_IN_CODE: Final = 0x29
+lc_layouts: dict[int, str]
+lc_indices_to_slide: dict[bytes | int, list[int]]
 
 class Freezer:
     class ModuleDef:
@@ -86,6 +97,7 @@ class Freezer:
     linkExtensionModules: bool
     previousModules: dict[str, Freezer.ModuleDef]
     modules: dict[str, Freezer.ModuleDef]
+    hiddenImports: dict[str, list[str]]
     mf: PandaModuleFinder | None
     optimize: int
     moduleSuffixes: list[tuple[str, str, int]]
@@ -95,6 +107,7 @@ class Freezer:
         debugLevel: Unused = 0,
         platform: str | None = None,
         path: list[str] | None = None,
+        hiddenImports: Mapping[str, list[str]] | None = None,
         optimize: int | None = None,
     ) -> None: ...
     def excludeFrom(self, freezer: Freezer) -> None: ...
@@ -131,6 +144,7 @@ class Freezer:
         fields: Mapping[str, str | None] = {},
         log_append: bool = False,
         log_filename_strftime: bool = False,
+        blob_path: FileDescriptorOrPath | None = None,
     ) -> _OpenFileT: ...
     def makeModuleDef(self, mangledName: str, code: bytes) -> str: ...
     def makeModuleListEntry(self, mangledName: str, code: bytes, moduleName: str, module: object) -> str: ...

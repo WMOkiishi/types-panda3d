@@ -705,9 +705,6 @@ class BindAnimRequest(ModelLoadRequest):
     as issued through PartBundle::load_bind_anim().
     """
 
-    @overload
-    def __init__(self, param0: BindAnimRequest, /) -> None: ...
-    @overload
     def __init__(
         self,
         name: str,

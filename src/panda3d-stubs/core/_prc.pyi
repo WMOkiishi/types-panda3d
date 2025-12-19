@@ -373,6 +373,7 @@ class ConfigVariableCore(ConfigFlags):
     def trusted_references(self) -> Sequence[ConfigDeclaration]: ...
     @property
     def unique_references(self) -> Sequence[ConfigDeclaration]: ...
+    def upcast_to_ConfigFlags(self) -> ConfigFlags: ...
     def get_name(self) -> str:
         """Returns the name of the variable."""
     def is_used(self) -> bool:
@@ -514,6 +515,7 @@ class ConfigVariableCore(ConfigFlags):
     def get_references(self) -> tuple[ConfigDeclaration, ...]: ...
     def get_trusted_references(self) -> tuple[ConfigDeclaration, ...]: ...
     def get_unique_references(self) -> tuple[ConfigDeclaration, ...]: ...
+    upcastToConfigFlags = upcast_to_ConfigFlags
     getName = get_name
     isUsed = is_used
     getValueType = get_value_type
@@ -617,10 +619,15 @@ class Notify:
         parent.  If the parent Category does not already exist, it will be created.
         """
     @staticmethod
-    def out() -> ostream:
+    def out(severity: _NotifySeverity = ..., /) -> ostream:
         """A convenient way to get the ostream that should be written to for a Notify-
         type message.  Also see Category::out() for a message that is specific to a
         particular Category.
+
+        or:
+        A convenient way to get the ostream that should be written to for a Notify-
+        type message of a particular severity.  Also see Category::out() for a
+        message that is specific to a particular Category.
         """
     @staticmethod
     def null() -> ostream:
@@ -883,6 +890,7 @@ class ConfigVariableBase(ConfigFlags):
     def trust_level(self) -> int: ...
     @property
     def dynamic(self) -> bool: ...
+    def upcast_to_ConfigFlags(self) -> ConfigFlags: ...
     def get_name(self) -> str:
         """Returns the name of the variable."""
     def get_value_type(self) -> _ConfigFlags_ValueType:
@@ -938,6 +946,7 @@ class ConfigVariableBase(ConfigFlags):
         """
     def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, /) -> None: ...
+    upcastToConfigFlags = upcast_to_ConfigFlags
     getName = get_name
     getValueType = get_value_type
     getDescription = get_description
@@ -1043,6 +1052,8 @@ class ConfigVariableDouble(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int, /) -> float: ...
+    def __bool__(self) -> bool:
+        """Returns true if the variable is not 0.0."""
     @type_check_only
     def __iter__(self) -> Iterator[float]: ...
     def assign(self, value: float, /) -> Self: ...
@@ -1086,6 +1097,8 @@ class ConfigVariableFilename(ConfigVariable):
         """Comparison operators are handy."""
     def __ne__(self, other: object, /) -> bool: ...
     def __lt__(self, other: StrOrBytesPath, /) -> bool: ...
+    def __bool__(self) -> bool:
+        """Returns true if the variable is not empty."""
     def __fspath__(self) -> str:
         """Allows a ConfigVariableFilename object to be passed to any Python function
         that accepts an os.PathLike object.
@@ -1166,6 +1179,8 @@ class ConfigVariableInt(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int, /) -> int: ...
+    def __bool__(self) -> bool:
+        """Returns true if the variable is not 0."""
     @type_check_only
     def __iter__(self) -> Iterator[int]: ...
     def assign(self, value: int, /) -> Self: ...
@@ -1205,6 +1220,8 @@ class ConfigVariableInt64(ConfigVariable):
     def __len__(self) -> int:
         """Returns the number of unique words in the variable."""
     def __getitem__(self, n: int, /) -> int: ...
+    def __bool__(self) -> bool:
+        """Returns true if the variable is not empty."""
     @type_check_only
     def __iter__(self) -> Iterator[int]: ...
     def assign(self, value: int, /) -> Self: ...
@@ -1374,6 +1391,8 @@ class ConfigVariableString(ConfigVariable):
         """Comparison operators are handy."""
     def __ne__(self, other: object, /) -> bool: ...
     def __lt__(self, other: str, /) -> bool: ...
+    def __bool__(self) -> bool:
+        """Returns true if the variable is not empty."""
     def assign(self, value: str, /) -> Self: ...
     def c_str(self) -> str:
         """These methods help the ConfigVariableString act like a C++ string object."""
@@ -1704,8 +1723,6 @@ class StreamWriter:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    softspace: int
-    """Python 2 needs this for printing to work correctly."""
     @property
     def ostream(self) -> ostream: ...
     @overload

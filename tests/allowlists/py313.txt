@@ -1,22 +1,6 @@
-# This tries to import 'parser':
-direct.directscripts.gendocs
-
-# These try to import 'imp':
-direct.p3d.AppRunner
-direct.p3d.DWBPackageInstaller
-direct.p3d.DeploymentTools
-direct.p3d.HostInfo
-direct.p3d.PackageInfo
-direct.p3d.PackageInstaller
-direct.p3d.Packager
-direct.p3d.runp3d
-
-direct.showbase.VFSImporter
-
 # Due to lack of wxPython:
 direct.leveleditor.AnimControlUI
 direct.leveleditor.CurveAnimUI
-direct.leveleditor.CurveEditor
 direct.leveleditor.GraphEditorUI
 direct.leveleditor.HotKeyUI
 direct.leveleditor.LayerEditorUI
@@ -34,5 +18,6 @@ direct.leveleditor.SceneGraphUIBase
 direct.wxwidgets.ViewPort
 direct.wxwidgets.WxAppShell
 direct.wxwidgets.WxPandaShell
+direct.wxwidgets.WxPandaStart
 direct.wxwidgets.WxPandaWindow
 direct.wxwidgets.WxSlider

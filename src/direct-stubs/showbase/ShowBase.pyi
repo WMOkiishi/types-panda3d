@@ -8,7 +8,6 @@ from typing_extensions import TypeAlias, deprecated
 
 from direct.directnotify.Notifier import Notifier
 from direct.directtools.DirectSession import DirectSession
-from direct.p3d.AppRunner import AppRunner
 from direct.showutil.TexMemWatcher import TexMemWatcher
 from direct.task.Task import Task, TaskManager
 from panda3d._typing import Vec4Like
@@ -71,8 +70,8 @@ class ShowBase(DirectObject):
     __dev__: bool
     mainDir: str
     main_dir: str
-    appRunner: AppRunner | None
-    app_runner: AppRunner | None
+    appRunner: None
+    app_runner: None
     debugRunningMultiplier: int
     nextWindowIndex: int
     sfxActive: bool
@@ -396,6 +395,7 @@ class ShowBase(DirectObject):
         defaultFilename: bool = ...,
         source: GraphicsEngine | None = None,
         imageComment: str = '',
+        blocking: bool = True,
     ) -> str | None: ...
     def save_cube_map(
         self,

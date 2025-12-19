@@ -1,7 +1,5 @@
 from _typeshed import Unused
-from typing import ClassVar
-
-from direct.showbase.PythonUtil import Enum
+from enum import IntEnum
 
 class DummyTaskClass:
     def setDelay(self, blah: Unused) -> None: ...
@@ -9,7 +7,11 @@ class DummyTaskClass:
 DummyTask: DummyTaskClass
 
 class DistributedSmoothNodeBase:
-    BroadcastTypes: ClassVar[Enum]
+    class BroadcastTypes(IntEnum):
+        FULL = 0
+        XYH = 1
+        XY = 2
+
     def __init__(self) -> None: ...
     def generate(self) -> None: ...
     def disable(self) -> None: ...

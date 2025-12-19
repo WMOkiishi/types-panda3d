@@ -44,6 +44,7 @@ from panda3d.core._putil import (
     BitMask32,
     CallbackData,
     CollideMask,
+    CopyOnWriteObject,
     DrawMask,
     LoaderOptions,
     NodeCachedReferenceCount,
@@ -156,6 +157,9 @@ class TransformState(NodeCachedReferenceCount):
         """Makes a new TransformState with the specified components."""
     @staticmethod
     def make_pos_hpr(pos: Vec3Like, hpr: Vec3Like) -> TransformState:
+        """Makes a new TransformState with the specified components."""
+    @staticmethod
+    def make_pos_quat(pos: Vec3Like, quat: Vec4Like) -> TransformState:
         """Makes a new TransformState with the specified components."""
     @staticmethod
     def make_scale(scale: Vec3Like | float, /) -> TransformState:
@@ -331,6 +335,8 @@ class TransformState(NodeCachedReferenceCount):
         """
     def get_mat(self) -> LMatrix4:
         """Returns the matrix that describes the transform."""
+    def get_inverse_mat(self) -> LMatrix4:
+        """Returns the inverse of the matrix, or nullptr if it's singular."""
     def get_pos2d(self) -> LVecBase2:
         """Returns the pos component of the 2-d transform.  It is an error to call
         this if has_pos() or is_2d() returned false.
@@ -598,6 +604,7 @@ class TransformState(NodeCachedReferenceCount):
     makeHpr = make_hpr
     makeQuat = make_quat
     makePosHpr = make_pos_hpr
+    makePosQuat = make_pos_quat
     makeScale = make_scale
     makeShear = make_shear
     makePosHprScale = make_pos_hpr_scale
@@ -638,6 +645,7 @@ class TransformState(NodeCachedReferenceCount):
     getUniformScale = get_uniform_scale
     getShear = get_shear
     getMat = get_mat
+    getInverseMat = get_inverse_mat
     getPos2d = get_pos2d
     getRotate2d = get_rotate2d
     getScale2d = get_scale2d
@@ -884,6 +892,7 @@ class RenderAttrib(TypedWritableReferenceCount):
     validateAttribs = validate_attribs
     getSlot = get_slot
 
+@final
 class RenderModeAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
 
@@ -971,6 +980,7 @@ class RenderModeAttrib(RenderAttrib):
     getGeomRendering = get_geom_rendering
     getClassSlot = get_class_slot
 
+@final
 class TexMatrixAttrib(RenderAttrib):
     """Applies a transform matrix to UV's before they are rendered."""
 
@@ -1106,39 +1116,8 @@ class RenderState(NodeCachedReferenceCount):
     @staticmethod
     def make_empty() -> RenderState:
         """Returns a RenderState with no attributes set."""
-    @overload
     @staticmethod
-    def make(
-        attrib1: RenderAttrib,
-        attrib2: RenderAttrib,
-        attrib3: RenderAttrib,
-        attrib4: RenderAttrib,
-        attrib5: RenderAttrib,
-        override: int = ...,
-    ) -> RenderState:
-        """Returns a RenderState with five attributes set."""
-    @overload
-    @staticmethod
-    def make(
-        attrib1: RenderAttrib,
-        attrib2: RenderAttrib,
-        attrib3: RenderAttrib,
-        attrib4: RenderAttrib,
-        override: int = ...,
-    ) -> RenderState:
-        """Returns a RenderState with four attributes set."""
-    @overload
-    @staticmethod
-    def make(attrib1: RenderAttrib, attrib2: RenderAttrib, attrib3: RenderAttrib, override: int = ...) -> RenderState:
-        """Returns a RenderState with three attributes set."""
-    @overload
-    @staticmethod
-    def make(attrib1: RenderAttrib, attrib2: RenderAttrib, override: int = ...) -> RenderState:
-        """Returns a RenderState with two attributes set."""
-    @overload
-    @staticmethod
-    def make(attrib: RenderAttrib, override: int = ...) -> RenderState:
-        """Returns a RenderState with one attribute set."""
+    def make(*args, **kwargs) -> RenderState: ...
     def compose(self, other: RenderState, /) -> RenderState:
         """Returns a new RenderState object that represents the composition of this
         state with the other state.
@@ -1434,6 +1413,7 @@ class RenderState(NodeCachedReferenceCount):
     getBinIndex = get_bin_index
     getGeomRendering = get_geom_rendering
 
+@final
 class AlphaTestAttrib(RenderAttrib):
     """Enables or disables writing of pixel to framebuffer based on its alpha
     value relative to a reference alpha value
@@ -1464,6 +1444,7 @@ class AlphaTestAttrib(RenderAttrib):
     getMode = get_mode
     getClassSlot = get_class_slot
 
+@final
 class AntialiasAttrib(RenderAttrib):
     """Specifies whether or how to enable antialiasing, if supported by the
     backend renderer.
@@ -1720,6 +1701,14 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     FBDrawMask: Final = 32
     FB_cull_callback: Final = 64
     FBCullCallback: Final = 64
+    FB_renderable: Final = 128
+    FBRenderable: Final = 128
+    FB_decal: Final = 256
+    FBDecal: Final = 256
+    FB_show_bounds: Final = 512
+    FBShowBounds: Final = 512
+    FB_show_tight_bounds: Final = 1024
+    FBShowTightBounds: Final = 1024
 
     class Children:
         """This class is returned from get_children().  Use it to walk through the
@@ -2065,18 +2054,19 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         same as the current transform.  This is not the same thing as clearing it
         to identity.
         """
+    @deprecated('Simply check prev_transform != transform instead.')
     def has_dirty_prev_transform(self) -> bool:
         """Returns true if this node has the _dirty_prev_transform flag set, which
         indicates its _prev_transform is different from its _transform value (in
         pipeline stage 0).  In this case, the node will be visited by
         reset_prev_transform().
+
+        @deprecated Simply check prev_transform != transform instead.
         """
     @staticmethod
     def reset_all_prev_transform(current_thread: Thread = ..., /) -> None:
-        """Visits all nodes in the world with the _dirty_prev_transform flag--that is,
-        all nodes whose _prev_transform is different from the _transform in
-        pipeline stage 0--and resets the _prev_transform to be the same as
-        _transform.
+        """Makes sure that all nodes reset their prev_transform value to be the same as
+        their transform value.  This should be called at the start of each frame.
         """
     def set_tag(self, key: str, value: str, current_thread: Thread = ...) -> None:
         """Associates a user-defined value with a user-defined key which is stored on
@@ -2346,9 +2336,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
         Call clear_bounds() if you would like to return the bounding volume to its
         default behavior later.
         """
-    @deprecated('Use set_bounds() instead.')
-    def set_bound(self, volume: BoundingVolume, /) -> None:
-        """@deprecated Use set_bounds() instead."""
     def clear_bounds(self) -> None:
         """Reverses the effect of a previous call to set_bounds(), and allows the
         node's bounding volume to be automatically computed once more based on the
@@ -2577,7 +2564,6 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     setBoundsType = set_bounds_type
     getBoundsType = get_bounds_type
     setBounds = set_bounds
-    setBound = set_bound
     clearBounds = clear_bounds
     getBounds = get_bounds
     getNestedVertices = get_nested_vertices
@@ -2598,6 +2584,7 @@ class PandaNode(TypedWritableReferenceCount, Namable):
     getParents = get_parents
     getChildren = get_children
 
+@final
 class TransparencyAttrib(RenderAttrib):
     """This controls the enabling of transparency.  Simply setting an alpha
     component to non-1 does not in itself make an object transparent; you must
@@ -2639,6 +2626,7 @@ class TransparencyAttrib(RenderAttrib):
     getMode = get_mode
     getClassSlot = get_class_slot
 
+@final
 class LogicOpAttrib(RenderAttrib):
     """If enabled, specifies that a custom logical operation be performed instead
     of any color blending.  Setting it to a value other than M_none will cause
@@ -5062,6 +5050,7 @@ class NodePath(Generic[_N]):
         specifically disabled.  If nothing has been specifically set, returns true.
         See also has_depth_write().
         """
+    @deprecated('See set_depth_bias() instead, which provides more controls.')
     def set_depth_offset(self, bias: int, priority: int = ...) -> None:
         """This instructs the graphics driver to apply an offset or bias to the
         generated depth values for rendered polygons, before they are written to
@@ -5070,6 +5059,8 @@ class NodePath(Generic[_N]):
         bias is always an integer number, and each integer increment represents the
         smallest possible increment in Z that is sufficient to completely resolve
         two coplanar polygons.  Positive numbers are closer towards the camera.
+
+        @deprecated See set_depth_bias() instead, which provides more controls.
         """
     def clear_depth_offset(self) -> None:
         """Completely removes any depth-offset adjustment that may have been set on
@@ -5083,6 +5074,22 @@ class NodePath(Generic[_N]):
     def get_depth_offset(self) -> int:
         """Returns the depth offset value if it has been specified using
         set_depth_offset, or 0 if not.
+        """
+    def set_depth_bias(self, slope_factor: float, constant_factor: float, clamp: float = ..., priority: int = ...) -> None:
+        """This instructs the graphics driver to apply an offset or bias to the
+        generated depth values for rendered polygons, before they are written to
+        the depth buffer.  This can be used to shift polygons forward slightly, to
+        resolve depth conflicts, or self-shadowing artifacts on thin objects.
+        Positive numbers are further away from the camera.
+        """
+    def clear_depth_bias(self) -> None:
+        """Completely removes any depth-bias adjustment that may have been set on
+        this node via set_depth_bias().
+        """
+    def has_depth_bias(self) -> bool:
+        """Returns true if a depth-bias adjustment has been explicitly set on this
+        particular node via set_depth_bias().  If this returns true, then
+        get_depth_bias() may be called to determine which has been set.
         """
     def do_billboard_axis(self, camera: NodePath, offset: float) -> None:
         """Performs a billboard-type rotate to the indicated camera node, one time
@@ -5360,6 +5367,7 @@ class NodePath(Generic[_N]):
         on, then only the bits that are set in bits_to_change are modified,
         allowing this call to change only a subset of the bits in the subgraph.
         """
+    def set_collide_owner(self, owner, /) -> None: ...
     def compare_to(self, other: NodePath | WeakNodePath, /) -> int:
         """Returns a number less than zero if this NodePath sorts before the other
         one, greater than zero if it sorts after, or zero if they are equivalent.
@@ -5869,6 +5877,9 @@ class NodePath(Generic[_N]):
     clearDepthOffset = clear_depth_offset
     hasDepthOffset = has_depth_offset
     getDepthOffset = get_depth_offset
+    setDepthBias = set_depth_bias
+    clearDepthBias = clear_depth_bias
+    hasDepthBias = has_depth_bias
     doBillboardAxis = do_billboard_axis
     doBillboardPointEye = do_billboard_point_eye
     doBillboardPointWorld = do_billboard_point_world
@@ -5907,6 +5918,7 @@ class NodePath(Generic[_N]):
     getStashedAncestor = get_stashed_ancestor
     getCollideMask = get_collide_mask
     setCollideMask = set_collide_mask
+    setCollideOwner = set_collide_owner
     compareTo = compare_to
     verifyComplete = verify_complete
     premungeScene = premunge_scene
@@ -6260,6 +6272,7 @@ class AttribNodeRegistry:
     getGlobalPtr = get_global_ptr
     getNodes = get_nodes
 
+@final
 class AudioVolumeAttrib(RenderAttrib):
     """Applies a scale to audio volume for positional sounds in the scene graph."""
 
@@ -6313,6 +6326,7 @@ class AudioVolumeAttrib(RenderAttrib):
     setVolume = set_volume
     getClassSlot = get_class_slot
 
+@final
 class AuxBitplaneAttrib(RenderAttrib):
     """Modern frame buffers can have 'aux' bitplanes, which are additional
     bitplanes above and beyond the standard depth and color.  This attrib
@@ -6445,7 +6459,7 @@ class BamFile(BamEnums):
         """Attempts to open the indicated stream for reading.  The filename is just
         for information purposes only.  Returns true if successful, false on error.
         """
-    def read_object(self) -> TypedWritable:
+    def read_object(self):
         """Reads and returns the next object from the Bam file, or NULL if the end of
         the file has been reached, or if there is an error condition.  Use is_eof()
         to differentiate these two cases.
@@ -7021,6 +7035,7 @@ class PlaneNode(PandaNode):
     setClipEffect = set_clip_effect
     getClipEffect = get_clip_effect
 
+@final
 class ClipPlaneAttrib(RenderAttrib):
     """This functions similarly to a LightAttrib.  It indicates the set of
     clipping planes that modify the geometry at this level and below.  A
@@ -7209,6 +7224,7 @@ class ClipPlaneAttrib(RenderAttrib):
     getOnPlanes = get_on_planes
     getOffPlanes = get_off_planes
 
+@final
 class ColorAttrib(RenderAttrib):
     """Indicates what color should be applied to renderable geometry."""
 
@@ -7268,6 +7284,7 @@ class ColorAttrib(RenderAttrib):
     getColor = get_color
     getClassSlot = get_class_slot
 
+@final
 class ColorBlendAttrib(RenderAttrib):
     """This specifies how colors are blended into the frame buffer, for special
     effects.  This overrides transparency if transparency is also specified.
@@ -7434,6 +7451,7 @@ class ColorBlendAttrib(RenderAttrib):
     involvesColorScale = involves_color_scale
     getClassSlot = get_class_slot
 
+@final
 class ColorScaleAttrib(RenderAttrib):
     """Applies a scale to colors in the scene graph and on vertices."""
 
@@ -7502,6 +7520,7 @@ class ColorScaleAttrib(RenderAttrib):
     setScale = set_scale
     getClassSlot = get_class_slot
 
+@final
 class ColorWriteAttrib(RenderAttrib):
     """Enables or disables writing to the color buffer.  This is primarily useful
     for certain special effects in which it is important to write to the depth
@@ -7764,6 +7783,7 @@ class GeomNode(PandaNode):
     modifyGeoms = modify_geoms
     getGeomStates = get_geom_states
 
+@final
 class CullBinAttrib(RenderAttrib):
     """Assigns geometry to a particular bin by name.  The bins must be created
     separately via the CullBinManager interface.
@@ -7961,6 +7981,7 @@ class CullBinManager(CullBinEnums):
     getGlobalPtr = get_global_ptr
     getBins = get_bins
 
+@final
 class CullFaceAttrib(RenderAttrib):
     """Indicates which faces should be culled based on their vertex ordering."""
 
@@ -8050,6 +8071,87 @@ class WorkingNodePath:
     @property
     def node_path(self) -> NodePath: ...
 
+class InstanceList(CopyOnWriteObject):
+    """This structure stores a list of per-instance data, used by InstancedNode.
+
+    @since 1.11.0
+    """
+
+    class Instance:
+        """An individual instance in an InstanceList.
+
+        @since 1.11.0
+        """
+
+        DtoolClassDict: ClassVar[dict[str, Any]]
+        @property
+        def transform(self) -> TransformState: ...
+        def __init__(self, param0: InstanceList.Instance, /) -> None: ...
+        def __copy__(self) -> Self: ...
+        def __deepcopy__(self, memo: object, /) -> Self: ...
+        def get_pos(self) -> LPoint3: ...
+        @overload
+        def set_pos(self, param0: Vec3Like, /) -> None: ...
+        @overload
+        def set_pos(self, x: float, y: float, z: float) -> None: ...
+        def get_hpr(self) -> LVecBase3: ...
+        @overload
+        def set_hpr(self, param0: Vec3Like, /) -> None: ...
+        @overload
+        def set_hpr(self, h: float, p: float, r: float) -> None: ...
+        def get_quat(self) -> LQuaternion: ...
+        def set_quat(self, param0: Vec4Like, /) -> None: ...
+        def get_scale(self) -> LVecBase3: ...
+        @overload
+        def set_scale(self, param0: Vec3Like, /) -> None: ...
+        @overload
+        def set_scale(self, sx: float, sy: float, sz: float) -> None: ...
+        def get_mat(self) -> LMatrix4: ...
+        def set_mat(self, mat: Mat4Like, /) -> None: ...
+        def get_transform(self) -> TransformState: ...
+        def set_transform(self, param0: TransformState, /) -> None: ...
+        getPos = get_pos
+        setPos = set_pos
+        getHpr = get_hpr
+        setHpr = set_hpr
+        getQuat = get_quat
+        setQuat = set_quat
+        getScale = get_scale
+        setScale = set_scale
+        getMat = get_mat
+        setMat = set_mat
+        getTransform = get_transform
+        setTransform = set_transform
+
+    def __init__(self, copy: InstanceList = ...) -> None: ...
+    def __len__(self) -> int:
+        """Returns the total number of instances in the list."""
+    def __getitem__(self, n: int, /) -> InstanceList.Instance:
+        """Returns the nth instance in the list."""
+    def __setitem__(self, n: int, assign_val: InstanceList.Instance, /) -> None: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
+    @type_check_only
+    def __iter__(self) -> Iterator[InstanceList.Instance]: ...
+    @overload
+    def append(self, instance: InstanceList.Instance) -> None:
+        """Adds a new instance with the indicated transformation to the list."""
+    @overload
+    def append(self, pos: Vec3Like, quat: Vec4Like, scale: Vec3Like = ...) -> None:
+        """Adds a new instance with the indicated transformation to the list."""
+    @overload
+    def append(self, pos: Vec3Like, hpr: Vec3Like = ..., scale: Vec3Like = ...) -> None:
+        """Adds a new instance with the indicated transformation to the list."""
+    @overload
+    def append(self, transform: TransformState) -> None:
+        """Adds a new instance with the indicated transformation to the list."""
+    def clear(self) -> None:
+        """Empties the instance list."""
+    def reserve(self, param0: int, /) -> None:
+        """Reserves space for the given number of instances."""
+    def xform(self, mat: Mat4Like, /) -> None:
+        """Transforms all of the instances in the list by the indicated matrix."""
+
 class CullTraverserData:
     """This collects together the pieces of data that are accumulated for each
     node while walking the scene graph during the cull traversal.
@@ -8062,6 +8164,7 @@ class CullTraverserData:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
+    view_frustum: GeometricBoundingVolume
     @property
     def node_path(self) -> NodePath: ...
     def __init__(self, param0: CullTraverserData, /) -> None: ...
@@ -8081,11 +8184,9 @@ class CullTraverserData:
         """Returns the net transform: the relative transform from root of the scene
         graph to the current node.
         """
-    def is_in_view(self, camera_mask: DrawMask | int, /) -> bool:
-        """Returns true if the current node is within the view frustum, false
-        otherwise.  If the node's bounding volume falls completely within the view
-        frustum, this will also reset the view frustum pointer, saving some work
-        for future nodes.
+    def is_in_view(self, camera_mask: DrawMask | int, /) -> int:
+        """Returns intersection flags if the current node may be within the view
+        frustum, 0 otherwise.
         """
     def is_this_node_hidden(self, camera_mask: DrawMask | int, /) -> bool:
         """Returns true if this particular node is hidden, even though we might be
@@ -8161,6 +8262,12 @@ class SceneSetup(TypedReferenceCount):
         lens' bounding volume, but it may be overridden with
         Camera::set_cull_bounds().
         """
+    def set_view_frustum(self, view_frustum: GeometricBoundingVolume, /) -> None:
+        """Returns the camera's cull bounds transformed to world space, or null if
+        view frustum culling is disabled.
+        """
+    def get_view_frustum(self) -> GeometricBoundingVolume:
+        """Returns the initial state as set by a previous call to set_initial_state()."""
     def set_initial_state(self, initial_state: RenderState, /) -> None:
         """Sets the initial state which is applied to all nodes in the scene, as if it
         were set at the top of the scene graph.
@@ -8212,6 +8319,8 @@ class SceneSetup(TypedReferenceCount):
     getInverted = get_inverted
     getCullCenter = get_cull_center
     getCullBounds = get_cull_bounds
+    setViewFrustum = set_view_frustum
+    getViewFrustum = get_view_frustum
     setInitialState = set_initial_state
     getInitialState = get_initial_state
     setCameraTransform = set_camera_transform
@@ -8364,6 +8473,7 @@ class Fog(PandaNode):
     getExpDensity = get_exp_density
     setExpDensity = set_exp_density
 
+@final
 class FogAttrib(RenderAttrib):
     """Applies a Fog to the geometry at and below this node."""
 
@@ -8460,6 +8570,8 @@ class CullTraverser(TypedReferenceCount):
     def set_view_frustum(self, view_frustum: GeometricBoundingVolume, /) -> None:
         """Specifies the bounding volume that corresponds to the view frustum.  Any
         primitives that fall entirely outside of this volume are not drawn.
+
+        Nowadays, this gets set automatically by set_scene().
         """
     def get_view_frustum(self) -> GeometricBoundingVolume:
         """Returns the bounding volume that corresponds to the view frustum, or NULL
@@ -8477,25 +8589,23 @@ class CullTraverser(TypedReferenceCount):
         cull traversal; see GSG::get_effective_incomplete_render() for this same
         flag during the draw traversal.
         """
-    def traverse(self, data_or_root: CullTraverserData | NodePath, /) -> None:
-        """Traverses from the next node with the given data, which has been
-        constructed with the node but has not yet been converted into the node's
-        space.
-
-        or:
-        Begins the traversal from the indicated node.
+    def get_fake_view_frustum_cull(self) -> bool:
+        """Returns true if fake view frustum culling is active."""
+    @staticmethod
+    def flush_level() -> None:
+        """Flushes the PStatCollectors used during traversal."""
+    def traverse(self, root: NodePath, /) -> None:
+        """Begins the traversal from the indicated node."""
+    def do_traverse(self, data: CullTraverserData, /) -> None:
+        """Internal method called by traverse() and traverse_down().  Traverses the
+        given node, assuming it has already been checked with is_in_view().
         """
     def traverse_below(self, data: CullTraverserData, /) -> None:
-        """Traverses all the children of the indicated node, with the given data,
-        which has been converted into the node's space.
-        """
+        """Calls traverse_down on each child."""
     def end_traverse(self) -> None:
         """Should be called when the traverser has finished traversing its scene, this
         gives it a chance to do any necessary finalization.
         """
-    @staticmethod
-    def flush_level() -> None:
-        """Flushes the PStatCollectors used during traversal."""
     def draw_bounding_volume(self, vol: BoundingVolume, internal_transform: TransformState) -> None:
         """Draws an appropriate visualization of the indicated bounding volume."""
     getGsg = get_gsg
@@ -8513,9 +8623,11 @@ class CullTraverser(TypedReferenceCount):
     setViewFrustum = set_view_frustum
     getViewFrustum = get_view_frustum
     getEffectiveIncompleteRender = get_effective_incomplete_render
+    getFakeViewFrustumCull = get_fake_view_frustum_cull
+    flushLevel = flush_level
+    doTraverse = do_traverse
     traverseBelow = traverse_below
     endTraverse = end_traverse
-    flushLevel = flush_level
     drawBoundingVolume = draw_bounding_volume
 
 class GeomDrawCallbackData(CallbackData):
@@ -8546,6 +8658,7 @@ class GeomDrawCallbackData(CallbackData):
     setLostState = set_lost_state
     getLostState = get_lost_state
 
+@final
 class RescaleNormalAttrib(RenderAttrib):
     """Specifies how polygons are to be drawn."""
 
@@ -8588,9 +8701,6 @@ class CullResult(ReferenceCount):
     to make next frame's traversal of the same scene a little easier.
     """
 
-    def __init__(self, param0: CullResult, /) -> None: ...
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, memo: object, /) -> Self: ...
     def make_next(self) -> CullResult:
         """Returns a newly-allocated CullResult object that contains a copy of just
         the subset of the data from this CullResult object that is worth keeping
@@ -8626,6 +8736,51 @@ class DecalEffect(RenderEffect):
     def make() -> RenderEffect:
         """Constructs a new DecalEffect object."""
 
+@final
+class DepthBiasAttrib(RenderAttrib):
+    """This is a special kind of attribute that instructs the graphics driver to
+    apply an offset or bias to the generated depth values for rendered
+    polygons, before they are written to the depth buffer.
+
+    This class replaces the old DepthOffsetAttrib, which had a more limited
+    parameterization.  The differences are:
+    - The sign of the factor parameter was inverted.
+    - The slope and constant factors are specified separately.
+    - The factors are specified as floating-point instead of integer.
+    - There is a new clamp parameter.
+
+    Nested DepthBiasAttrib values accumulate; that is, a DepthBiasAttrib
+    with a value of 1 beneath another DepthBiasAttrib with a value of 2
+    presents a net offset of 3.  (A DepthBiasAttrib will not, however,
+    combine with any other DepthBiasAttribs with a lower override parameter.)
+
+    @since 1.11.0
+    """
+
+    @property
+    def slope_factor(self) -> float: ...
+    @property
+    def constant_factor(self) -> float: ...
+    @property
+    def clamp(self) -> float: ...
+    @property
+    def class_slot(self) -> int: ...
+    @staticmethod
+    def make(slope_factor: float, constant_factor: float, clamp: float = ...) -> DepthBiasAttrib:
+        """Constructs a new DepthBiasAttrib object that indicates the slope factor,
+        constant factor, and an optional clamping value.
+        """
+    @staticmethod
+    def make_default() -> DepthBiasAttrib:
+        """Returns a RenderAttrib that corresponds to whatever the standard default
+        properties for render attributes of this type ought to be.
+        """
+    @staticmethod
+    def get_class_slot() -> int: ...
+    makeDefault = make_default
+    getClassSlot = get_class_slot
+
+@final
 class DepthOffsetAttrib(RenderAttrib):
     """This is a special kind of attribute that instructs the graphics driver to
     apply an offset or bias to the generated depth values for rendered
@@ -8651,6 +8806,8 @@ class DepthOffsetAttrib(RenderAttrib):
     Also, and only tangentially related, the DepthOffsetAttrib can be used to
     constrain the Z output value to a subset of the usual [0, 1] range (or
     reversing its direction) by specifying a new min_value and max_value.
+
+    @deprecated See DepthBiasAttrib and DisplayRegion::set_depth_range() instead.
     """
 
     @property
@@ -8699,6 +8856,7 @@ class DepthOffsetAttrib(RenderAttrib):
     getMaxValue = get_max_value
     getClassSlot = get_class_slot
 
+@final
 class DepthTestAttrib(RenderAttrib):
     """Enables or disables writing to the depth buffer."""
 
@@ -8722,6 +8880,7 @@ class DepthTestAttrib(RenderAttrib):
     getMode = get_mode
     getClassSlot = get_class_slot
 
+@final
 class DepthWriteAttrib(RenderAttrib):
     """Enables or disables writing to the depth buffer."""
 
@@ -8746,6 +8905,21 @@ class DepthWriteAttrib(RenderAttrib):
     makeDefault = make_default
     getMode = get_mode
     getClassSlot = get_class_slot
+
+class InstancedNode(PandaNode):
+    """This is a special node that instances its contents using a list of
+    transforms that get applied on top of the node's own transform.  This is a
+    bit more limited than the regular instance_to mechanism, but it is a better
+    choice for hardware instancing.
+
+    For best performance, it is highly recommended to flatten the nodes under
+    this (by calling flatten_strong()), since culling will not be performed for
+    individual sub-nodes under each instance.
+
+    @since 1.11.0
+    """
+
+    instances: InstanceList
 
 class Light:
     """The abstract interface to all kinds of lights.  The actual light objects
@@ -8831,6 +9005,7 @@ class Light:
     getClassPriority = get_class_priority
     getClassType = get_class_type
 
+@final
 class LightAttrib(RenderAttrib):
     """Indicates which set of lights should be considered "on" to illuminate
     geometry at this level and below.  A LightAttrib can either add lights or
@@ -9037,6 +9212,7 @@ class LightAttrib(RenderAttrib):
     getOnLights = get_on_lights
     getOffLights = get_off_lights
 
+@final
 class LightRampAttrib(RenderAttrib):
     """A Light Ramp is any unary operator that takes a rendered pixel as input,
     and adjusts the brightness of that pixel.  For example, gamma correction is
@@ -9386,6 +9562,7 @@ class LoaderFileTypeRegistry:
     getGlobalPtr = get_global_ptr
     getTypes = get_types
 
+@final
 class MaterialAttrib(RenderAttrib):
     """Indicates which, if any, material should be applied to geometry.  The
     material is used primarily to control lighting effects, and isn't necessary
@@ -9436,9 +9613,6 @@ class ModelFlattenRequest(AsyncTask):
 
     @property
     def orig(self) -> PandaNode: ...
-    @overload
-    def __init__(self, param0: ModelFlattenRequest, /) -> None: ...
-    @overload
     def __init__(self, orig: PandaNode) -> None:
         """Create a new ModelFlattenRequest, and add it to the loader via
         load_async(), to begin an asynchronous load.
@@ -9474,9 +9648,6 @@ class ModelLoadRequest(AsyncTask):
     def options(self) -> LoaderOptions: ...
     @property
     def loader(self) -> Loader: ...
-    @overload
-    def __init__(self, param0: ModelLoadRequest, /) -> None: ...
-    @overload
     def __init__(self, name: str, filename: StrOrBytesPath, options: LoaderOptions, loader: Loader) -> None:
         """Create a new ModelLoadRequest, and add it to the loader via load_async(),
         to begin an asynchronous load.
@@ -9598,6 +9769,8 @@ class ModelRoot(ModelNode):
     reference: ModelRoot.ModelReference
     @property
     def model_ref_count(self) -> int: ...
+    @property
+    def loader_type(self) -> TypeHandle: ...
     @overload
     def __init__(self, fullpath: StrOrBytesPath, timestamp: int) -> None: ...
     @overload
@@ -9782,9 +9955,6 @@ class ModelSaveRequest(AsyncTask):
     def node(self) -> PandaNode: ...
     @property
     def loader(self) -> Loader: ...
-    @overload
-    def __init__(self, param0: ModelSaveRequest, /) -> None: ...
-    @overload
     def __init__(self, name: str, filename: StrOrBytesPath, options: LoaderOptions, node: PandaNode, loader: Loader) -> None:
         """Create a new ModelSaveRequest, and add it to the loader via save_async(),
         to begin an asynchronous save.
@@ -9819,6 +9989,7 @@ class ModelSaveRequest(AsyncTask):
     isReady = is_ready
     getSuccess = get_success
 
+@final
 class TextureAttrib(RenderAttrib):
     """Indicates the set of TextureStages and their associated Textures that
     should be applied to (or removed from) a node.
@@ -10003,6 +10174,7 @@ class TextureAttrib(RenderAttrib):
     getOnFfStages = get_on_ff_stages
     getOffStages = get_off_stages
 
+@final
 class TexGenAttrib(RenderAttrib):
     """Computes texture coordinates for geometry automatically based on vertex
     position and/or normal.  This can be used to implement reflection and/or
@@ -10393,11 +10565,13 @@ class PolylightEffect(RenderEffect):
     getEffectCenter = get_effect_center
     hasLight = has_light
 
+@final
 class ShaderAttrib(RenderAttrib):
-    F_disable_alpha_write: Final = 0
-    F_subsume_alpha_test: Final = 1
-    F_hardware_skinning: Final = 2
-    F_shader_point_size: Final = 3
+    F_disable_alpha_write: Final = 1
+    F_subsume_alpha_test: Final = 2
+    F_hardware_skinning: Final = 4
+    F_shader_point_size: Final = 8
+    F_hardware_instancing: Final = 16
     @property
     def shader(self) -> Shader: ...
     @property
@@ -10428,7 +10602,7 @@ class ShaderAttrib(RenderAttrib):
     def get_shader_priority(self) -> int: ...
     def get_instance_count(self) -> int:
         """Returns the number of geometry instances.  A value of 0 means not to use
-        instancing at all.
+        instancing at all.  This value is ignored if F_hardware_instancing is set.
         """
     def auto_normal_on(self) -> bool: ...
     def auto_glow_on(self) -> bool: ...
@@ -10455,6 +10629,8 @@ class ShaderAttrib(RenderAttrib):
         """Sets the geometry instance count.  Do not confuse this with instanceTo,
         which is used for animation instancing, and has nothing to do with this.  A
         value of 0 means not to use instancing at all.
+
+        This value should not be set if F_hardware_instancing is also set.
         """
     def set_flag(self, flag: int, value: bool) -> Self: ...
     def clear_flag(self, flag: int, /) -> Self: ...
@@ -10535,6 +10711,7 @@ class ShaderAttrib(RenderAttrib):
     registerWithReadFactory = register_with_read_factory
     getClassSlot = get_class_slot
 
+@final
 class ShowBoundsEffect(RenderEffect):
     """Applied to a GeomNode to cause a visible bounding volume to be drawn for
     this node.  This is generally used only during development to help identify
@@ -11057,6 +11234,7 @@ class PortalNode(PandaNode):
     isOpen = is_open
     getVertices = get_vertices
 
+@final
 class ScissorAttrib(RenderAttrib):
     """This restricts rendering to within a rectangular region of the scene,
     without otherwise affecting the viewport or lens properties.  Geometry that
@@ -11115,6 +11293,7 @@ class ScissorAttrib(RenderAttrib):
     getFrame = get_frame
     getClassSlot = get_class_slot
 
+@final
 class ShadeModelAttrib(RenderAttrib):
     """Specifies whether flat shading (per-polygon) or smooth shading (per-vertex)
     is in effect.
@@ -11146,6 +11325,7 @@ class ShadeModelAttrib(RenderAttrib):
     getMode = get_mode
     getClassSlot = get_class_slot
 
+@final
 class StencilAttrib(RenderAttrib):
     """A StencilAttrib is a collection of all stencil render states.  The render
     states in a StencilAttrib are read-only.  A StencilAttrib is created with

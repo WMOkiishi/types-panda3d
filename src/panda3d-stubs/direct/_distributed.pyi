@@ -4,10 +4,10 @@ from typing_extensions import Self
 from panda3d._typing import URL
 from panda3d.core._downloader import HTTPChannel, SocketStream
 from panda3d.core._express import Datagram, DatagramIterator
-from panda3d.core._nativenet import Buffered_DatagramConnection
-from panda3d.core._net import ConnectionWriter, QueuedConnectionManager, QueuedConnectionReader
 from panda3d.core._pgraph import NodePath
 from panda3d.direct._dcparser import DCClass, DCFile
+from panda3d.net._nativenet import Buffered_DatagramConnection
+from panda3d.net._net import ConnectionWriter, QueuedConnectionManager, QueuedConnectionReader
 
 class CConnectionRepository:
     """This class implements the C++ side of the ConnectionRepository object.  In

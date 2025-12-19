@@ -180,7 +180,15 @@ class BulletBodyNode(PandaNode):
     def get_shape_transform(self, idx: int, /) -> TransformState: ...
     def get_shape_bounds(self) -> BoundingSphere:
         """Returns the current bounds of all collision shapes owned by this body."""
-    def add_shapes_from_collision_solids(self, cnode: CollisionNode, /) -> None: ...
+    def add_shapes_from_collision_solids(self, cnode: CollisionNode, relative_transform: TransformState = ...) -> None:
+        """Add shapes from the specified collision node to this body.
+
+        or:
+        Add shapes from the specified collision node to this body. Also apply the
+        given transform state to all solids. This is useful for example when the
+        collision node is rotated, is not centered to origin, or has several parent
+        transforms applied on it.
+        """
     def is_static(self) -> bool:
         """Static and kinematic"""
     def is_kinematic(self) -> bool: ...
@@ -1498,7 +1506,7 @@ class BulletVehicle(TypedReferenceCount):
         """Resets the vehicle's suspension."""
     def apply_engine_force(self, force: float, idx: int) -> None:
         """Applies force at the wheel with index idx for acceleration."""
-    def create_wheel(self) -> BulletWheel:
+    def create_wheel(self, suspension_rest_length: float = ..., /) -> BulletWheel:
         """Factory method for creating wheels for this vehicle instance."""
     def get_num_wheels(self) -> int:
         """Returns the number of wheels this vehicle has."""
@@ -1587,7 +1595,11 @@ class BulletWheel:
     def set_wheel_radius(self, value: float, /) -> None:
         """Sets the wheel radius."""
     def set_steering(self, value: float, /) -> None:
-        """Sets the steering angle."""
+        """Sets the steering angle.
+
+        @warning
+        As of 1.11, this method uses degrees.  Previous versions used radians.
+        """
     def set_rotation(self, value: float, /) -> None: ...
     def set_delta_rotation(self, value: float, /) -> None: ...
     def set_engine_force(self, value: float, /) -> None:
@@ -1630,7 +1642,11 @@ class BulletWheel:
     def get_wheel_radius(self) -> float:
         """Returns the wheel radius."""
     def get_steering(self) -> float:
-        """Returns the steering angle in degrees."""
+        """Returns the steering angle in degrees.
+
+        @warning
+        As of 1.11, this method uses degrees.  Previous versions used radians.
+        """
     def get_rotation(self) -> float: ...
     def get_delta_rotation(self) -> float: ...
     def get_engine_force(self) -> float:
@@ -1845,7 +1861,6 @@ class BulletWorld(TypedReferenceCount):
     def get_num_manifolds(self) -> int:
         """Manifolds"""
     def get_manifold(self, idx: int, /) -> BulletPersistentManifold: ...
-    def __get_manifold(self, idx: int, /) -> BulletPersistentManifold: ...
     def set_group_collision_flag(self, group1: int, group2: int, enable: bool) -> None:
         """Collision filtering"""
     def get_group_collision_flag(self, group1: int, group2: int) -> bool: ...
@@ -1927,7 +1942,6 @@ class BulletWorld(TypedReferenceCount):
     filterTest = filter_test
     getNumManifolds = get_num_manifolds
     getManifold = get_manifold
-    GetManifold = __get_manifold
     setGroupCollisionFlag = set_group_collision_flag
     getGroupCollisionFlag = get_group_collision_flag
     setForceUpdateAllAabbs = set_force_update_all_aabbs
@@ -1976,7 +1990,6 @@ class BulletPersistentManifold:
     def get_node1(self) -> PandaNode: ...
     def get_num_manifold_points(self) -> int: ...
     def get_manifold_point(self, idx: int, /) -> BulletManifoldPoint: ...
-    def __get_manifold_point(self, idx: int, /) -> BulletManifoldPoint: ...
     def get_contact_breaking_threshold(self) -> float: ...
     def get_contact_processing_threshold(self) -> float: ...
     def clear_manifold(self) -> None: ...
@@ -1985,7 +1998,6 @@ class BulletPersistentManifold:
     getNode1 = get_node1
     getNumManifoldPoints = get_num_manifold_points
     getManifoldPoint = get_manifold_point
-    GetManifoldPoint = __get_manifold_point
     getContactBreakingThreshold = get_contact_breaking_threshold
     getContactProcessingThreshold = get_contact_processing_threshold
     clearManifold = clear_manifold

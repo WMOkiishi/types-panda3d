@@ -1,18 +1,18 @@
 from _typeshed import Unused
 from typing import Literal, SupportsFloat
 
-from panda3d.core import NodePath
+from panda3d.core import ConfigVariableBool, ConfigVariableDouble, NodePath
 
 from .ClientRepository import ClientRepository
 from .DistributedNode import DistributedNode
 from .DistributedSmoothNodeBase import DistributedSmoothNodeBase
 
-MaxFuture: float
-MinSuggestResync: float
-EnableSmoothing: bool
-EnablePrediction: bool
-Lag: float
-PredictionLag: float
+MaxFuture: ConfigVariableDouble
+MinSuggestResync: ConfigVariableDouble
+EnableSmoothing: ConfigVariableBool
+EnablePrediction: ConfigVariableBool
+Lag: ConfigVariableDouble
+PredictionLag: ConfigVariableDouble
 GlobalSmoothing: bool
 GlobalPrediction: bool
 

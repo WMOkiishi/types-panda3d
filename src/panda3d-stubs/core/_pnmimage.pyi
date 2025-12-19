@@ -13,7 +13,7 @@ from panda3d.core._putil import TypedWritable
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
 _PNMImageHeader_ColorType: TypeAlias = Literal[0, 1, 2, 3, 4]
-_PNMBrush_BrushEffect: TypeAlias = Literal[0, 1, 2, 3]
+_PNMBrush_BrushEffect: TypeAlias = Literal[0, 1, 2, 3, 4]
 
 class pixel:
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -892,6 +892,8 @@ class PNMBrush(ReferenceCount):
     BEDarken: Final = 2
     BE_lighten: Final = 3
     BELighten: Final = 3
+    BE_add: Final = 4
+    BEAdd: Final = 4
     @staticmethod
     def make_transparent() -> PNMBrush:
         """Returns a new brush that does not paint anything.  Can be used as either a
@@ -1730,7 +1732,15 @@ class PNMImage(PNMImageHeader):
         object.
         """
     @overload
-    def perlin_noise_fill(self, sx: float, sy: float, table_size: int = ..., seed: int = ...) -> None:
+    def perlin_noise_fill(
+        self,
+        sx: float,
+        sy: float,
+        table_size: int = ...,
+        seed: int = ...,
+        ox: float = ...,
+        oy: float = ...,
+    ) -> None:
         """Fills the image with a grayscale perlin noise pattern based on the
         indicated parameters.  Uses set_xel to set the grayscale values.  The sx
         and sy parameters are in multiples of the size of this image.  See also the

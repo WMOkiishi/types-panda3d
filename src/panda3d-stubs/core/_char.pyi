@@ -138,6 +138,8 @@ class JointVertexTransform(VertexTransform):
     soft-skinned vertices for an animated character.
     """
 
+    @property
+    def joint(self) -> CharacterJoint: ...
     def __init__(self, joint: CharacterJoint) -> None:
         """Constructs a new object that converts vertices from the indicated joint's
         coordinate space, into the other indicated joint's space.
@@ -158,18 +160,11 @@ class Character(PartBundleNode):
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     def get_bundle(self, i: int, /) -> CharacterJointBundle: ...
-    @overload
-    @deprecated('Use the newer version of this method, below.')
-    def merge_bundles(self, old_bundle: PartBundle, other_bundle: PartBundle) -> None:
-        """Merges old_bundle with new_bundle.  old_bundle must be one of the
-        PartBundles within this node.  At the end of this call, the old_bundle
-        pointer within this node will be replaced with the new_bundle pointer, and
-        all geometry within this node will be updated to reference new_bundle.
-
-        @deprecated Use the newer version of this method, below.
-        """
-    @overload
-    def merge_bundles(self, old_bundle_handle: PartBundleHandle, other_bundle_handle: PartBundleHandle) -> None:
+    def merge_bundles(
+        self,
+        old_bundle_handle: PartBundle | PartBundleHandle,
+        other_bundle_handle: PartBundle | PartBundleHandle,
+    ) -> None:
         """Merges old_bundle_handle->get_bundle() with new_bundle.  old_bundle_handle
         must be one of the PartBundleHandle within this node.  At the end of this
         call, the bundle pointer within the old_bundle_handle will be replaced with

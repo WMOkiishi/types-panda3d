@@ -9,6 +9,7 @@ from panda3d.core._express import Datagram, DatagramIterator, Namable, TypedRefe
 from panda3d.core._linmath import LPoint3, LPoint3i, LVector3
 from panda3d.core._mathutil import BoundingVolume, LParabola, LPlane
 from panda3d.core._pgraph import LensNode, NodePath, PandaNode
+from panda3d.core._pnmimage import PNMImage
 from panda3d.core._putil import CollideMask, CopyOnWriteObject, TypedWritableReferenceCount
 from panda3d.core._tform import DriveInterface
 
@@ -110,8 +111,12 @@ class CollisionBox(CollisionSolid):
         """Returns the nth vertex of the OBB."""
     def get_num_planes(self) -> int:
         """Returns 6: the number of faces of a rectangular solid."""
+    @deprecated('Same as get_plane().')
     def set_plane(self, n: int, /) -> LPlane:
-        """Creates the nth face of the rectangular solid."""
+        """Creates the nth face of the rectangular solid.
+
+        @deprecated Same as get_plane().
+        """
     def get_plane(self, n: int, /) -> LPlane:
         """Returns the nth face of the rectangular solid."""
     @overload
@@ -174,7 +179,7 @@ class CollisionHandler(TypedReferenceCount):
     dispatch detected collisions.
     """
 
-    def __init__(self, param0: CollisionHandler, /) -> None: ...
+    def __init__(self, param0: CollisionHandler = ..., /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
 
@@ -187,6 +192,7 @@ class CollisionNode(PandaNode):
 
     from_collide_mask: CollideMask
     collider_sort: int
+    owner = ...
     @property
     def solids(self) -> MutableSequence[CollisionSolid]: ...
     @property
@@ -281,7 +287,6 @@ class CollisionTraverser(Namable):
     collision.
     """
 
-    respect_preV_transform: bool
     respect_prev_transform: bool
     recorder: CollisionRecorder | None
     @property
@@ -371,7 +376,7 @@ class CollisionTraverser(Namable):
         """Removes the CollisionRecorder from the traverser and restores normal low-
         overhead operation.
         """
-    def show_collisions(self, root: NodePath, /) -> CollisionVisualizer:
+    def show_collisions(self, root: NodePath, /) -> PandaNode:
         """This is a high-level function to create a CollisionVisualizer object to
         render the collision tests performed by this traverser.  The supplied root
         should be any node in the scene graph; typically, the top node (e.g.
@@ -693,12 +698,16 @@ class CollisionPolygon(CollisionPlane):
         """Returns the number of vertices of the CollisionPolygon."""
     def get_point(self, n: int, /) -> LPoint3:
         """Returns the nth vertex of the CollisionPolygon, expressed in 3-D space."""
+    @overload
     @staticmethod
     def verify_points(a: Vec3Like, b: Vec3Like, c: Vec3Like, d: Vec3Like = ...) -> bool:
         """Verifies that the indicated set of points will define a valid
         CollisionPolygon: that is, at least three non-collinear points, with no
         points repeated.
         """
+    @overload
+    @staticmethod
+    def verify_points(*points) -> bool: ...
     def is_valid(self) -> bool:
         """Returns true if the CollisionPolygon is valid (that is, it has at least
         three vertices), or false otherwise.
@@ -707,12 +716,14 @@ class CollisionPolygon(CollisionPlane):
         """Returns true if the CollisionPolygon appears to be concave, or false if it
         is safely convex.
         """
+    def setup_points(self, points, /) -> None: ...
     def get_points(self) -> tuple[LPoint3, ...]: ...
     getNumPoints = get_num_points
     getPoint = get_point
     verifyPoints = verify_points
     isValid = is_valid
     isConcave = is_concave
+    setupPoints = setup_points
     getPoints = get_points
 
 class CollisionHandlerEvent(CollisionHandler):
@@ -1145,6 +1156,38 @@ class CollisionHandlerQueue(CollisionHandler):
     getEntry = get_entry
     getEntries = get_entries
 
+class CollisionHeightfield(CollisionSolid):
+    """CollisionHeightfield efficiently deals with collisions on uneven
+    terrain given a heightfield image. A quad tree is implemented to
+    significantly reduce the amount of triangles tested. Each quad
+    tree node represents a sub-rectangle of the heightfield image
+    and thus a box in 3D space.
+    """
+
+    def __init__(self, heightfield: PNMImage, max_height: float, num_subdivisions: int) -> None: ...
+    def get_heightfield(self) -> PNMImage: ...
+    def set_heightfield(self, heightfield: PNMImage, /) -> None: ...
+    def get_max_height(self) -> float: ...
+    def set_max_height(self, max_height: float, /) -> None: ...
+    def get_num_subdivisions(self) -> int: ...
+    def set_num_subdivisions(self, num_subdivisions: int, /) -> None:
+        """Sets the number of quadtree subdivisions and modifies
+        the quadtree accordingly. This should be called when a
+        user wants to modify the number of quadtree subdivisions
+        or from a constructor to initialize the quadtree.
+
+        If the number of subdivisions is too high, it will
+        automatically be decremented.
+        """
+    def get_height(self, x: int, y: int) -> float: ...
+    getHeightfield = get_heightfield
+    setHeightfield = set_heightfield
+    getMaxHeight = get_max_height
+    setMaxHeight = set_max_height
+    getNumSubdivisions = get_num_subdivisions
+    setNumSubdivisions = set_num_subdivisions
+    getHeight = get_height
+
 class CollisionSphere(CollisionSolid):
     """A spherical collision volume or object."""
 
@@ -1330,55 +1373,5 @@ class CollisionSegment(CollisionSolid):
     setPointB = set_point_b
     getPointB = get_point_b
     setFromLens = set_from_lens
-
-class CollisionVisualizer(PandaNode, CollisionRecorder):
-    """This class is used to help debug the work the collisions system is doing.
-    It shows the polygons that are detected as collisions, as well as those
-    that are simply considered for collisions.
-
-    It may be parented anywhere in the scene graph where it will be rendered to
-    achieve this.
-    """
-
-    point_scale: float
-    normal_scale: float
-    @overload
-    def __init__(self, copy: CollisionVisualizer) -> None:
-        """Copy constructor."""
-    @overload
-    def __init__(self, name: str) -> None: ...
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, memo: object, /) -> Self: ...
-    def upcast_to_PandaNode(self) -> PandaNode: ...
-    def upcast_to_CollisionRecorder(self) -> CollisionRecorder: ...
-    def set_point_scale(self, point_scale: float, /) -> None:
-        """Scales the points that are drawn to represent the surface and interior
-        intersection points of the collisions.  By default, these objects are drawn
-        at an arbitrary scale which is appropriate if the window units are the
-        default range -1 .. 1.  Change this scale accordinatly if the window units
-        are measured on some other scale or if you need to observe these objects in
-        a smaller window.
-        """
-    def get_point_scale(self) -> float:
-        """Returns the value last set by set_point_scale()."""
-    def set_normal_scale(self, normal_scale: float, /) -> None:
-        """Scales the line segments that are drawn to represent the normals of the
-        collisions.  By default, these objects are drawn at an arbitrary scale
-        which is appropriate if the scene units are measured in feet.  Change this
-        scale accordinatly if the scene units are measured on some other scale or
-        if you need to observe these normals from farther away.
-        """
-    def get_normal_scale(self) -> float:
-        """Returns the value last set by set_normal_scale()."""
-    def clear(self) -> None:
-        """Removes all the visualization data from a previous traversal and resets the
-        visualizer to empty.
-        """
-    upcastToPandaNode = upcast_to_PandaNode
-    upcastToCollisionRecorder = upcast_to_CollisionRecorder
-    setPointScale = set_point_scale
-    getPointScale = get_point_scale
-    setNormalScale = set_normal_scale
-    getNormalScale = get_normal_scale
 
 CollisionTube = CollisionCapsule

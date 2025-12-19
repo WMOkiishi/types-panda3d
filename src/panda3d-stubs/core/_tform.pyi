@@ -13,7 +13,7 @@ from panda3d.core._linmath import LMatrix4, LPoint2, LPoint3, LVecBase3, LVecBas
 from panda3d.core._pgraph import GeomNode, NodePath, PandaNode
 from panda3d.core._putil import ButtonHandle, ModifierButtons, TypedWritableReferenceCount
 
-_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2]
+_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 3]
 _Trackball_ControlMode: TypeAlias = Literal[0, 1, 2, 3, 4]
 _CoordinateSystem: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 
@@ -861,6 +861,12 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
         """Returns true if the indicated button is currently being held down, false
         otherwise.
         """
+    def is_raw_button_down(self, button: ButtonHandle | str, /) -> bool:
+        """Similar to is_button_down(), but uses the raw button handle as reported by
+        the raw- prefixed events, and is not subject to the inactivity timer.
+
+        @since 1.11.0
+        """
     def set_button_down_pattern(self, pattern: str, /) -> None:
         """Sets the pattern string that indicates how the event names are generated
         when a button is depressed.  This is a string that may contain any of the
@@ -1128,6 +1134,7 @@ class MouseWatcher(DataNode, MouseWatcherBase):  # type: ignore[misc]
     isOverRegion = is_over_region
     getOverRegion = get_over_region
     isButtonDown = is_button_down
+    isRawButtonDown = is_raw_button_down
     setButtonDownPattern = set_button_down_pattern
     getButtonDownPattern = get_button_down_pattern
     setButtonUpPattern = set_button_up_pattern

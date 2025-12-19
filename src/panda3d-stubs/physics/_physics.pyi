@@ -9,7 +9,7 @@ from panda3d.core._express import ReferenceCount, TypedReferenceCount
 from panda3d.core._linmath import LMatrix4, LOrientation, LPoint3, LQuaternionf, LRotation, LVector3
 from panda3d.core._pgraph import NodePath, PandaNode
 
-_LinearDistanceForce_FalloffType: TypeAlias = Literal[0, 1, 2]
+_LinearDistanceForce_FalloffType: TypeAlias = Literal[0, 1, 2, 3, 4, 5]
 
 class PhysicsObject(TypedReferenceCount):
     """A body on which physics will be applied.  If you're looking to add physical
@@ -616,6 +616,12 @@ class LinearDistanceForce(LinearForce):
     FTONEOVERRSQUARED: Final = 1
     FT_ONE_OVER_R_CUBED: Final = 2
     FTONEOVERRCUBED: Final = 2
+    FT_ONE_OVER_R_OVER_DISTANCE: Final = 3
+    FTONEOVERROVERDISTANCE: Final = 3
+    FT_ONE_OVER_R_OVER_DISTANCE_SQUARED: Final = 4
+    FTONEOVERROVERDISTANCESQUARED: Final = 4
+    FT_ONE_OVER_R_OVER_DISTANCE_CUBED: Final = 5
+    FTONEOVERROVERDISTANCECUBED: Final = 5
     def set_radius(self, r: float, /) -> None:
         """set the radius"""
     def set_falloff_type(self, ft: _LinearDistanceForce_FalloffType, /) -> None:

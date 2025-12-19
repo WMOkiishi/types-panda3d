@@ -1,7 +1,7 @@
 from _typeshed import StrOrBytesPath
 from array import array
 from collections.abc import MutableSequence, Sequence
-from typing import Any, ClassVar, Final, Literal, overload
+from typing import Any, ClassVar, Final, Literal, final, overload
 from typing_extensions import Self, TypeAlias
 
 from panda3d._typing import Mat4Like, Vec3Like, Vec4Like
@@ -639,6 +639,7 @@ class NurbsCurveInterface:
     getCvs = get_cvs
     getKnots = get_knots
 
+@final
 class NurbsCurve(PiecewiseCurve, NurbsCurveInterface):
     """A Nonuniform Rational B-Spline.
 

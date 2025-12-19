@@ -30,6 +30,7 @@ from panda3d.core import (
     TransformState,
 )
 
+_AnimInterface_PlayMode: TypeAlias = Literal[0, 1, 2, 3]
 _BlendType: TypeAlias = Literal[0, 1, 2, 3]
 _NodePathOrFilepath: TypeAlias = NodePath | StrOrBytesPath
 
@@ -112,6 +113,7 @@ class Actor(DirectObject, NodePath):
     def set_lod(self, lodName: str, inDist: float = 0, outDist: float = 0) -> None: ...
     def get_lod_index(self, lodName: str) -> int: ...
     def get_lod(self, lodName: str) -> NodePath | None: ...
+    def get_play_mode(self, animName: str | None = None, partName: str | None = None) -> _AnimInterface_PlayMode | None: ...
     def has_lod(self) -> bool: ...
     def set_center(self, center: Vec3Like | None) -> None: ...
     def set_lod_animation(self, farDistance: float, nearDistance: float, delayFactor: float) -> None: ...
@@ -211,7 +213,12 @@ class Actor(DirectObject, NodePath):
         self, animName: str, partName: str | None = None, lodName: str | None = None, allowAsyncBind: bool = True
     ) -> AnimControl | None: ...
     def get_anim_controls(
-        self, animName: str | None = None, partName: str | None = None, lodName: str | None = None, allowAsyncBind: bool = True
+        self,
+        animName: str | None = None,
+        partName: str | None = None,
+        lodName: str | None = None,
+        allowAsyncBind: bool = True,
+        onlyPlaying: bool = True,
     ) -> list[AnimControl]: ...
     def load_model(
         self,
@@ -226,7 +233,7 @@ class Actor(DirectObject, NodePath):
         self,
         partName: str,
         includeJoints: Iterable[str],
-        excludeJoints: Iterable[str] = [],
+        excludeJoints: Iterable[str] = (),
         parent: str = 'modelRoot',
         overlapping: bool = False,
     ) -> None: ...
@@ -292,6 +299,7 @@ class Actor(DirectObject, NodePath):
     setLOD = set_lod
     getLODIndex = get_lod_index
     getLOD = get_lod
+    getPlayMode = get_play_mode
     hasLOD = has_lod
     setCenter = set_center
     setLODAnimation = set_lod_animation

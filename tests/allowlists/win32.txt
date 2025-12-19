@@ -1,6 +1,5 @@
 # Modules that error on import
 direct.leveleditor.testData
-direct.wxwidgets.WxPandaStart
 
 # These are required for the GitHub workflow, but not on my machine. I don't know why.
 (direct.leveleditor.CurveEditor.base)?

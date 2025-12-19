@@ -17,6 +17,7 @@ from panda3d.core._express import (
 )
 
 _ISocketStream_ReadState: TypeAlias = Literal[0, 1, 2, 3]
+_HTTPCookie_SameSite: TypeAlias = Literal[0, 1, 2, 3]
 _HTTPEnum_HTTPVersion: TypeAlias = Literal[0, 1, 2, 3]
 _HTTPClient_VerifySSL: TypeAlias = Literal[0, 1, 2]
 _DocumentSpec_RequestMode: TypeAlias = Literal[0, 1, 2, 3]
@@ -102,7 +103,7 @@ class SSWriter:
         """Sends the most recently queued data if enough time has elapsed.  This only
         has meaning if set_collect_tcp() has been set to true.
         """
-    def flush(self) -> bool:
+    def flush(self) -> None:
         """Sends the most recently queued data now.  This only has meaning if
         set_collect_tcp() has been set to true.
         """
@@ -147,7 +148,7 @@ class OSocketStream(ostream, SSWriter):
 
     def upcast_to_ostream(self) -> ostream: ...
     def upcast_to_SSWriter(self) -> SSWriter: ...
-    def flush(self) -> bool:  # type: ignore[override]
+    def flush(self) -> None:
         """Sends the most recently queued data now.  This only has meaning if
         set_collect_tcp() has been set to true.
         """
@@ -162,7 +163,7 @@ class SocketStream(iostream, SSReader, SSWriter):
     def upcast_to_iostream(self) -> iostream: ...
     def upcast_to_SSReader(self) -> SSReader: ...
     def upcast_to_SSWriter(self) -> SSWriter: ...
-    def flush(self) -> bool:  # type: ignore[override]
+    def flush(self) -> None:
         """Sends the most recently queued data now.  This only has meaning if
         set_collect_tcp() has been set to true.
         """
@@ -486,6 +487,14 @@ class HTTPCookie:
     when the path and/or domain matches.
     """
 
+    SS_unspecified: Final = 0
+    SSUnspecified: Final = 0
+    SS_lax: Final = 1
+    SSLax: Final = 1
+    SS_strict: Final = 2
+    SSStrict: Final = 2
+    SS_none: Final = 3
+    SSNone: Final = 3
     DtoolClassDict: ClassVar[dict[str, Any]]
     name: str
     value: str
@@ -494,8 +503,7 @@ class HTTPCookie:
     expires: HTTPDate | None
     secure: bool
     @overload
-    def __init__(self, param0: HTTPCookie = ..., /) -> None:
-        """Constructs an empty cookie."""
+    def __init__(self, param0: HTTPCookie = ..., /) -> None: ...
     @overload
     def __init__(self, format: str, url: URL) -> None:
         """Constructs a cookie according to the indicated string, presumably the tag
@@ -542,6 +550,8 @@ class HTTPCookie:
         """Returns true if the server has indicated this is a "secure" cookie which
         should only be sent over an HTTPS channel.
         """
+    def set_samesite(self, samesite: _HTTPCookie_SameSite, /) -> None: ...
+    def get_samesite(self) -> _HTTPCookie_SameSite: ...
     def update_from(self, other: HTTPCookie, /) -> None:
         """Assuming the operator < method, above, has already evaluated these two
         cookies as equal, then assign the remaining values (value, expiration date,
@@ -577,6 +587,8 @@ class HTTPCookie:
     getExpires = get_expires
     setSecure = set_secure
     getSecure = get_secure
+    setSamesite = set_samesite
+    getSamesite = get_samesite
     updateFrom = update_from
     parseSetCookie = parse_set_cookie
     isExpired = is_expired
@@ -1633,7 +1645,7 @@ class HTTPChannel(TypedReferenceCount):
 
         This establishes a nonblocking I/O socket.  Also see connect_to().
         """
-    def open_read_body(self) -> ISocketStream:
+    def open_read_body(self) -> istream:
         """Returns a newly-allocated istream suitable for reading the body of the
         document.  This may only be called immediately after a call to
         get_document() or post_form(), or after a call to run() has returned false.
@@ -2125,6 +2137,9 @@ class VirtualFileHTTP(VirtualFile):
     page.
     """
 
+    @property
+    def url(self) -> URLSpec: ...
+
 class VirtualFileMountHTTP(VirtualFileMount):
     """Maps a web page (URL root) into the VirtualFileSystem."""
 
@@ -2161,29 +2176,6 @@ class Patcher:
     def run(self) -> int: ...
     def get_progress(self) -> float: ...
     getProgress = get_progress
-
-class StringStream(iostream):
-    """A bi-directional stream object that reads and writes data to an internal
-    buffer, which can be retrieved and/or set as a string in Python 2 or a
-    bytes object in Python 3.
-    """
-
-    data: bytes
-    @overload
-    def __init__(self) -> None: ...
-    @overload
-    def __init__(self, source) -> None: ...
-    def clear_data(self) -> None:
-        """Empties the buffer."""
-    def get_data_size(self) -> int:
-        """Returns the number of characters available to be read from the data stream."""
-    def get_data(self) -> bytes:
-        """Returns the contents of the data stream as a string."""
-    def set_data(self, data: bytes, /) -> None: ...
-    clearData = clear_data
-    getDataSize = get_data_size
-    getData = get_data
-    setData = set_data
 
 def check_crc(name: StrOrBytesPath, /) -> int: ...
 def check_adler(name: StrOrBytesPath, /) -> int: ...

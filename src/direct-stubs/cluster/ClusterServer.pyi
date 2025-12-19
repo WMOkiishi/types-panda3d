@@ -5,18 +5,8 @@ from typing_extensions import TypeAlias
 from direct.directnotify.Notifier import Notifier
 from direct.showbase.DirectObject import DirectObject
 from panda3d._typing import Vec3Like
-from panda3d.core import (
-    Camera,
-    Connection,
-    ConnectionWriter,
-    DatagramIterator,
-    Lens,
-    LVector3f,
-    NodePath,
-    QueuedConnectionListener,
-    QueuedConnectionManager,
-    QueuedConnectionReader,
-)
+from panda3d.core import Camera, DatagramIterator, Lens, LVector3f, NodePath
+from panda3d.net import Connection, ConnectionWriter, QueuedConnectionListener, QueuedConnectionManager, QueuedConnectionReader
 
 from .ClusterMsgs import ClusterMsgHandler
 

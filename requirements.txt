@@ -1,1 +1,1 @@
-panda3d==1.10.15
+--pre --extra-index-url https://archive.panda3d.org/ panda3d

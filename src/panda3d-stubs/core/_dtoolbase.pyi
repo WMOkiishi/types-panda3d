@@ -216,10 +216,6 @@ class TypeRegistry:
         name; setting the original name as the alternate will allow the type to be
         correctly read from old Bam files.
         """
-    def record_python_type(self, type: TypeHandle | type, python_type) -> None:
-        """Records the given Python type pointer in the type registry for the benefit
-        of interrogate, which expects this to contain a Dtool_PyTypedObject.
-        """
     def find_type(self, name: str, /) -> TypeHandle:
         """Looks for a previously-registered type of the given name.  Returns its
         TypeHandle if it exists, or TypeHandle::none() if there is no such type.
@@ -316,7 +312,6 @@ class TypeRegistry:
     registerDynamicType = register_dynamic_type
     recordDerivation = record_derivation
     recordAlternateName = record_alternate_name
-    recordPythonType = record_python_type
     findType = find_type
     findTypeById = find_type_by_id
     getName = get_name

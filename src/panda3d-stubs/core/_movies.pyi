@@ -165,7 +165,7 @@ class MovieAudioCursor(TypedWritableReferenceCount):
         slightly offset location.
         """
     @overload
-    def read_samples(self, n: int) -> str:
+    def read_samples(self, n: int) -> bytes:
         """Read audio samples from the stream and returns them as a string.  The
         samples are stored little-endian in the string.  N is the number of samples
         you wish to read.  Multiple-channel audio will be interleaved.
@@ -505,7 +505,7 @@ class UserDataAudio(MovieAudio):
         make it easy to send streaming raw audio over a network.
         """
     @overload
-    def append(self, str: str) -> None:
+    def append(self, param0: bytes, /) -> None:
         """Appends audio samples to the buffer from a string.  The samples must be
         stored little-endian in the string.  This is not particularly efficient,
         but it may be convenient to deal with samples in python.

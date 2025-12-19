@@ -1,5 +1,5 @@
 from typing import Any, ClassVar, Final, Literal
-from typing_extensions import TypeAlias
+from typing_extensions import TypeAlias, deprecated
 
 from panda3d.core._dtoolutil import ostream
 from panda3d.core._express import Namable, TypedReferenceCount
@@ -16,14 +16,7 @@ TP_urgent: Final = 3
 TPUrgent: Final = 3
 
 class Thread(TypedReferenceCount, Namable):
-    """A thread; that is, a lightweight process.  This is an abstract base class;
-    to use it, you must subclass from it and redefine thread_main().
-
-    The thread itself will keep a reference count on the Thread object while it
-    is running; when the thread returns from its root function, the Thread
-    object will automatically be destructed if no other pointers are
-    referencing it.
-    """
+    """Due to a GCC bug, we can't use alignas() together with an attribute."""
 
     pipeline_stage: int
     @property
@@ -175,6 +168,11 @@ class Thread(TypedReferenceCount, Namable):
         it has run for enough this epoch.  This is especially important for the
         simple thread implementation, which relies on cooperative yields like this.
         """
+    @staticmethod
+    def relax() -> None:
+        """Equivalent to the pause instruction on x86 or the yield instruction on ARM,
+        to be called in spin loops.
+        """
     def output_blocker(self, out: ostream, /) -> None:
         """Writes a description of the mutex or condition variable that this thread is
         blocked on.  Writes nothing if there is no blocker, or if we are not in
@@ -274,9 +272,12 @@ class MutexDirect:
 
         Also see MutexHolder.
         """
+    @deprecated('Python users should use acquire(False), C++ users try_lock()')
     def try_acquire(self) -> bool:
         """Returns immediately, with a true value indicating the mutex has been
         acquired, and false indicating it has not.
+
+        @deprecated Python users should use acquire(False), C++ users try_lock()
         """
     def release(self) -> None:
         """Releases the mutex.  It is an error to call this if the mutex was not
@@ -312,6 +313,11 @@ class MutexDirect:
 
 class Mutex(MutexDirect):
     def __init__(self, name: str = ...) -> None: ...
+    def __enter__(self) -> bool: ...
+    def __exit__(self, param0, param1, param2, /) -> None: ...
+    def acquire(self, blocking: bool = ..., /) -> bool: ...  # type: ignore[override]
+    Enter = __enter__
+    Exit = __exit__
 
 class ConditionVarDirect:
     """A condition variable, usually used to communicate information about
@@ -358,8 +364,11 @@ class ConditionVarDirect:
         predict which one.  It is possible that more than one thread will be woken
         up.
 
-        The caller must be holding the mutex associated with the condition variable
-        before making this call, which will not release the mutex.
+        If no threads are waiting, this is a no-op: the notify event is lost.
+        """
+    def notify_all(self) -> None:
+        """Informs all of the other threads who are currently blocked on wait() that
+        the relevant condition has changed.
 
         If no threads are waiting, this is a no-op: the notify event is lost.
         """
@@ -368,85 +377,9 @@ class ConditionVarDirect:
         ConditionVarDirect.
         """
     getMutex = get_mutex
-
-class ConditionVar(ConditionVarDirect):
-    def __init__(self, mutex: Mutex) -> None:
-        """You must pass in a Mutex to the condition variable constructor.  This mutex
-        may be shared by other condition variables, if desired.  It is the caller's
-        responsibility to ensure the Mutex object does not destruct during the
-        lifetime of the condition variable.
-        """
-    def get_mutex(self) -> Mutex:
-        """Returns the mutex associated with this condition variable."""
-    getMutex = get_mutex
-
-class ConditionVarFullDirect:
-    """A condition variable, usually used to communicate information about
-    changing state to a thread that is waiting for something to happen.  A
-    condition variable can be used to "wake up" a thread when some arbitrary
-    condition has changed.
-
-    A condition variable is associated with a single mutex, and several
-    condition variables may share the same mutex.
-    """
-
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    def get_mutex(self) -> MutexDirect:
-        """Returns the mutex associated with this condition variable."""
-    def wait(self, timeout: float = ..., /) -> None:
-        """Waits on the condition.  The caller must already be holding the lock
-        associated with the condition variable before calling this function.
-
-        wait() will release the lock, then go to sleep until some other thread
-        calls notify() on this condition variable.  At that time at least one
-        thread waiting on the same ConditionVarFullDirect will grab the lock again,
-        and then return from wait().
-
-        It is possible that wait() will return even if no one has called notify().
-        It is the responsibility of the calling process to verify the condition on
-        return from wait, and possibly loop back to wait again if necessary.
-
-        Note the semantics of a condition variable: the mutex must be held before
-        wait() is called, and it will still be held when wait() returns.  However,
-        it will be temporarily released during the wait() call itself.
-
-        or:
-        Waits on the condition, with a timeout.  The function will return when the
-        condition variable is notified, or the timeout occurs.  There is no way to
-        directly tell which happened, and it is possible that neither in fact
-        happened (spurious wakeups are possible).
-
-        See wait() with no parameters for more.
-        """
-    def notify(self) -> None:
-        """Informs one of the other threads who are currently blocked on wait() that
-        the relevant condition has changed.  If multiple threads are currently
-        waiting, at least one of them will be woken up, although there is no way to
-        predict which one.  It is possible that more than one thread will be woken
-        up.
-
-        The caller must be holding the mutex associated with the condition variable
-        before making this call, which will not release the mutex.
-
-        If no threads are waiting, this is a no-op: the notify is lost.
-        """
-    def notify_all(self) -> None:
-        """Informs all of the other threads who are currently blocked on wait() that
-        the relevant condition has changed.
-
-        The caller must be holding the mutex associated with the condition variable
-        before making this call, which will not release the mutex.
-
-        If no threads are waiting, this is a no-op: the notify event is lost.
-        """
-    def output(self, out: ostream, /) -> None:
-        """This method is declared virtual in ConditionVarFullDebug, but non-virtual
-        in ConditionVarFullDirect.
-        """
-    getMutex = get_mutex
     notifyAll = notify_all
 
-class ConditionVarFull(ConditionVarFullDirect):
+class ConditionVar(ConditionVarDirect):
     def __init__(self, mutex: Mutex) -> None:
         """You must pass in a Mutex to the condition variable constructor.  This mutex
         may be shared by other condition variables, if desired.  It is the caller's
@@ -481,6 +414,8 @@ class ReMutexDirect:
     def try_acquire(self, current_thread: Thread = ..., /) -> bool:
         """Returns immediately, with a true value indicating the mutex has been
         acquired, and false indicating it has not.
+
+        @deprecated Python users should use acquire(False), C++ users try_lock()
         """
     def elevate_lock(self) -> None:
         """This method increments the lock count, assuming the calling thread already
@@ -527,6 +462,11 @@ class ReMutexDirect:
 
 class ReMutex(ReMutexDirect):
     def __init__(self, name: str = ...) -> None: ...
+    def __enter__(self) -> bool: ...
+    def __exit__(self, param0, param1, param2, /) -> None: ...
+    def acquire(self, blocking: bool = ..., /) -> bool: ...  # type: ignore[override]
+    Enter = __enter__
+    Exit = __exit__
 
 class ExternalThread(Thread):
     """The special "external thread" class.  There is one instance of these in the
@@ -699,3 +639,5 @@ class PythonThread(Thread):
     args = ...
     def __init__(self, function, args, name: str, sync_name: str) -> None: ...
     def join(self): ...
+
+ConditionVarFull = ConditionVar

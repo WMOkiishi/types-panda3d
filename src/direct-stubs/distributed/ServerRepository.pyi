@@ -3,18 +3,17 @@ from collections.abc import Collection, Iterable, Sequence
 from typing import Any, ClassVar, Literal
 
 from direct.directnotify.Notifier import Notifier
-from panda3d.core import (
+from panda3d.core import DatagramIterator, UniqueIdAllocator
+from panda3d.direct import DCClass, DCFile
+from panda3d.net import (
     Connection,
     ConnectionWriter,
-    DatagramIterator,
     NetAddress,
     NetDatagram,
     QueuedConnectionListener,
     QueuedConnectionManager,
     QueuedConnectionReader,
-    UniqueIdAllocator,
 )
-from panda3d.direct import DCClass, DCFile
 
 from .DistributedObjectBase import DistributedObjectBase
 

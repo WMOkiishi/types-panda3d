@@ -61,10 +61,10 @@ class _Callback:
 class Loader(DirectObject):
     notify: ClassVar[Notifier]
     loaderIndex: ClassVar[int]
-    base: ShowBase
+    base: ShowBase | None
     loader: core.Loader
     hook: str
-    def __init__(self, base: ShowBase) -> None: ...
+    def __init__(self, base: ShowBase | None = None) -> None: ...
     def destroy(self) -> None: ...
     @overload
     def load_model(

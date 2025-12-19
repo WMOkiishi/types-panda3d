@@ -33,8 +33,7 @@ class CMotionTrail(TypedReferenceCount):
     corresponds to the "shape" of the motion trail.
     """
 
-    def __init__(self, param0: CMotionTrail = ..., /) -> None:
-        """Constructor"""
+    def __init__(self, param0: CMotionTrail = ..., /) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     def reset(self) -> None:

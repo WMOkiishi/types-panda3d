@@ -50,6 +50,7 @@ from panda3d.core._pipeline import Thread
 from panda3d.core._prc import ConfigPage, ConfigVariableFilename, ConfigVariableSearchPath
 
 _ColorSpace: TypeAlias = Literal[0, 1, 2, 3]
+_AnimInterface_PlayMode: TypeAlias = Literal[0, 1, 2, 3]
 _AutoTextureScale: TypeAlias = Literal[0, 1, 2, 3, 4]
 _BamEnums_BamEndian: TypeAlias = Literal[0, 1]
 _BamEnums_BamTextureMode: TypeAlias = Literal[0, 1, 2, 3, 4]
@@ -74,20 +75,20 @@ CSSRGB: Final = 2
 CS_scRGB: Final = 3
 CSScRGB: Final = 3
 
-class PointerToBase_ReferenceCountedVector_ushort(PointerToVoid):
+class PointerToBase_ReferenceCountedVector_unsigned_short_int(PointerToVoid):
     def clear(self) -> None: ...
     def output(self, out: ostream, /) -> None: ...
 
-class PointerToArrayBase_ushort(PointerToBase_ReferenceCountedVector_ushort):
+class PointerToArrayBase_unsigned_short_int(PointerToBase_ReferenceCountedVector_unsigned_short_int):
     def __eq__(self, other: object, /) -> bool:
         """These are implemented in PointerToVoid, but expose them here."""
     def __ne__(self, other: object, /) -> bool: ...
 
-class ConstPointerToArray_ushort(PointerToArrayBase_ushort):
-    def __init__(self, copy: ConstPointerToArray_ushort | PointerToArray_ushort) -> None: ...
+class ConstPointerToArray_unsigned_short_int(PointerToArrayBase_unsigned_short_int):
+    def __init__(self, copy: ConstPointerToArray_unsigned_short_int | PointerToArray_unsigned_short_int) -> None: ...
     def __len__(self) -> int: ...
     def __getitem__(self, n: int, /) -> int: ...
-    def __deepcopy__(self, memo, /) -> ConstPointerToArray_ushort: ...
+    def __deepcopy__(self, memo, /) -> ConstPointerToArray_unsigned_short_int: ...
     def __copy__(self) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[int]: ...
@@ -103,9 +104,9 @@ class ConstPointerToArray_ushort(PointerToArrayBase_ushort):
     getRefCount = get_ref_count
     getNodeRefCount = get_node_ref_count
 
-class PointerToArray_ushort(PointerToArrayBase_ushort):
+class PointerToArray_unsigned_short_int(PointerToArrayBase_unsigned_short_int):
     @overload
-    def __init__(self, copy: PointerToArray_ushort) -> None: ...
+    def __init__(self, copy: PointerToArray_unsigned_short_int) -> None: ...
     @overload
     def __init__(self, source: Sequence[int]) -> None: ...
     @overload
@@ -113,12 +114,12 @@ class PointerToArray_ushort(PointerToArrayBase_ushort):
     def __len__(self) -> int: ...
     def __getitem__(self, n: int, /) -> int: ...
     def __setitem__(self, n: int, value: int, /) -> None: ...
-    def __deepcopy__(self, memo, /) -> PointerToArray_ushort: ...
+    def __deepcopy__(self, memo, /) -> PointerToArray_unsigned_short_int: ...
     def __copy__(self) -> Self: ...
     @type_check_only
     def __iter__(self) -> Iterator[int]: ...
     @staticmethod
-    def empty_array(n: int, type_handle: TypeHandle | type = ...) -> PointerToArray_ushort: ...
+    def empty_array(n: int, type_handle: TypeHandle | type = ...) -> PointerToArray_unsigned_short_int: ...
     def push_back(self, x: int, /) -> None: ...
     def pop_back(self) -> None: ...
     def get_element(self, n: int, /) -> int: ...
@@ -148,6 +149,14 @@ class AnimInterface:
     This is the base class for AnimControl and other, similar classes.
     """
 
+    PM_pose: Final = 0
+    PMPose: Final = 0
+    PM_play: Final = 1
+    PMPlay: Final = 1
+    PM_loop: Final = 2
+    PMLoop: Final = 2
+    PM_pingpong: Final = 3
+    PMPingpong: Final = 3
     DtoolClassDict: ClassVar[dict[str, Any]]
     play_rate: float
     @property
@@ -166,6 +175,8 @@ class AnimInterface:
     def full_fframe(self) -> float: ...
     @property
     def playing(self) -> bool: ...
+    @property
+    def play_mode(self) -> _AnimInterface_PlayMode: ...
     @overload
     def play(self) -> None:
         """Runs the entire animation from beginning to end and stops."""
@@ -273,6 +284,10 @@ class AnimInterface:
         (e.g.  because stop() or pose() was called, or because it reached the end
         of the animation after play() was called).
         """
+    def get_play_mode(self) -> _AnimInterface_PlayMode:
+        """Returns the current play mode of the animation; whether the animation is
+        playing normally, looping, posing, or in ping-pong mode.
+        """
     def output(self, out: ostream, /) -> None: ...
     @staticmethod
     def get_class_type() -> TypeHandle: ...
@@ -286,6 +301,7 @@ class AnimInterface:
     getFullFrame = get_full_frame
     getFullFframe = get_full_fframe
     isPlaying = is_playing
+    getPlayMode = get_play_mode
     getClassType = get_class_type
 
 class UpdateSeq:
@@ -353,7 +369,12 @@ class TypedWritable(TypedObject):
     See also TypedObject for detailed instructions.
     """
 
+    def __new__(self): ...
     def __reduce_persist__(self, pickler, /): ...
+    def write_datagram(self, manager: BamWriter, dg: Datagram) -> None:
+        """Writes the contents of this object to the datagram for shipping out to a
+        Bam file.
+        """
     def fillin(self, scan: Datagram | DatagramIterator, manager: BamReader) -> None:
         """This internal function is intended to be called by each class's
         make_from_bam() method to read in all of the relevant data from the BamFile
@@ -393,6 +414,7 @@ class TypedWritable(TypedObject):
         is more efficient to use the same BamWriter to serialize all of them
         together.
         """
+    writeDatagram = write_datagram
     markBamModified = mark_bam_modified
     getBamModified = get_bam_modified
     encodeToBamStream = encode_to_bam_stream
@@ -701,6 +723,22 @@ class BamCache:
         """Ensures the index is written to disk."""
     def list_index(self, out: ostream, indent_level: int = ...) -> None:
         """Writes the contents of the index to standard output."""
+    def clear(self) -> None:
+        """Clear the model cache.
+
+        Acquires the internal _lock for thread-safety (so callers do NOT need to
+        hold the lock). If no cache root is configured (_root.empty()), returns
+        immediately. If the cache is marked _read_only, resets only the in-memory
+        index and emits a warning message.
+        If the VirtualFileSystem global pointer is not available, logs an error,
+        resets only the in-memory index, and returns immediately. Otherwise, scans
+        the cache root directory and deletes cache files matching the known cache
+        extensions (.bam, .txo, .sho). Removes the on-disk index file (if known)
+        or the index reference file and clears the in-memory index reference
+        contents. Resets the in-memory index to an empty BamCacheIndex. Marks the
+        index stale and attempts to flush a new, empty on-disk index so other
+        processes will observe the cleared state.
+        """
     @staticmethod
     def get_global_ptr() -> BamCache:
         """Returns a pointer to the global BamCache object, which is used
@@ -812,6 +850,10 @@ class LoaderOptions:
     TFFloat: Final = 256
     TF_allow_compression: Final = 512
     TFAllowCompression: Final = 512
+    TF_no_filters: Final = 1024
+    TFNoFilters: Final = 1024
+    TF_force_srgb: Final = 2048
+    TFForceSrgb: Final = 2048
     DtoolClassDict: ClassVar[dict[str, Any]]
     flags: int
     texture_flags: int
@@ -829,6 +871,17 @@ class LoaderOptions:
     def get_flags(self) -> int: ...
     def set_texture_flags(self, flags: int, /) -> None: ...
     def get_texture_flags(self) -> int: ...
+    def set_texture_format(self, format: int, /) -> None: ...
+    def get_texture_format(self) -> int:
+        """Get the texture format"""
+    def set_texture_compression(self, compress: int, /) -> None:
+        """Set the texture compression"""
+    def get_texture_compression(self) -> int:
+        """Get the texture compression"""
+    def set_texture_quality(self, quality: int, /) -> None:
+        """Set the texture quality"""
+    def get_texture_quality(self) -> int:
+        """Get the texture quality"""
     def set_texture_num_views(self, num_views: int, /) -> None:
         """Specifies the expected number of views to load for the texture.  This is
         ignored unless TF_multiview is included in texture_flags.  This must be
@@ -851,6 +904,12 @@ class LoaderOptions:
     getFlags = get_flags
     setTextureFlags = set_texture_flags
     getTextureFlags = get_texture_flags
+    setTextureFormat = set_texture_format
+    getTextureFormat = get_texture_format
+    setTextureCompression = set_texture_compression
+    getTextureCompression = get_texture_compression
+    setTextureQuality = set_texture_quality
+    getTextureQuality = get_texture_quality
     setTextureNumViews = set_texture_num_views
     getTextureNumViews = get_texture_num_views
     setAutoTextureScale = set_auto_texture_scale
@@ -920,7 +979,7 @@ class BamReader(BamEnums):
         """
     def set_loader_options(self, options: LoaderOptions, /) -> None:
         """Specifies the LoaderOptions for this BamReader."""
-    def read_object(self) -> TypedWritable:
+    def read_object(self):
         """Reads a single object from the Bam file.  If the object type is known, a
         new object of the appropriate type is created and returned; otherwise, NULL
         is returned.  NULL is also returned when the end of the file is reached.
@@ -1176,6 +1235,7 @@ class BitMask_uint16_t_16:
     def __ilshift__(self, shift: int, /) -> Self: ...
     def __irshift__(self, shift: int, /) -> Self: ...
     def __bool__(self) -> bool: ...
+    def __int__(self) -> int: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -1293,6 +1353,7 @@ class BitMask_uint32_t_32:
     def __ilshift__(self, shift: int, /) -> Self: ...
     def __irshift__(self, shift: int, /) -> Self: ...
     def __bool__(self) -> bool: ...
+    def __int__(self) -> int: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -1410,6 +1471,7 @@ class BitMask_uint64_t_64:
     def __ilshift__(self, shift: int, /) -> Self: ...
     def __irshift__(self, shift: int, /) -> Self: ...
     def __bool__(self) -> bool: ...
+    def __int__(self) -> int: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -1533,6 +1595,7 @@ class BitArray:
     def __ixor__(self, other: BitArray | SparseArray | int, /) -> Self: ...
     def __ilshift__(self, shift: int, /) -> Self: ...
     def __irshift__(self, shift: int, /) -> Self: ...
+    def __bool__(self) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -1638,7 +1701,7 @@ class BitArray:
         """
     def get_num_words(self) -> int:
         """Returns the number of possibly-unique words stored in the array."""
-    def get_word(self, n: int, /) -> BitMask_uint32_t_32 | BitMask_uint64_t_64:
+    def get_word(self, n: int, /) -> int:
         """Returns the nth word in the array.  It is valid for n to be greater than
         get_num_words(), but the return value beyond get_num_words() will always be
         the same.
@@ -2409,6 +2472,8 @@ class DoubleBitMask_BitMaskNative:
     def __ixor__(self, other: DoubleBitMask_BitMaskNative, /) -> Self: ...
     def __ilshift__(self, shift: int, /) -> Self: ...
     def __irshift__(self, shift: int, /) -> Self: ...
+    def __bool__(self) -> bool: ...
+    def __int__(self) -> int: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -2507,6 +2572,8 @@ class DoubleBitMask_DoubleBitMaskNative:
     def __ixor__(self, other: DoubleBitMask_DoubleBitMaskNative, /) -> Self: ...
     def __ilshift__(self, shift: int, /) -> Self: ...
     def __irshift__(self, shift: int, /) -> Self: ...
+    def __bool__(self) -> bool: ...
+    def __int__(self) -> int: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -2979,44 +3046,6 @@ class MouseButton:
     wheelRight = wheel_right
     isMouseButton = is_mouse_button
 
-class PointerType(Enum):
-    unknown = 0
-    mouse = 1
-    finger = 2
-    stylus = 3
-    eraser = 4
-
-class PointerData:
-    """Holds the data that might be generated by a 2-d pointer input device, such
-    as the mouse in the GraphicsWindow.
-    """
-
-    DtoolClassDict: ClassVar[dict[str, Any]]
-    @property
-    def x(self) -> float: ...
-    @property
-    def y(self) -> float: ...
-    @property
-    def type(self) -> PointerType: ...
-    @property
-    def id(self) -> int: ...
-    @property
-    def in_window(self) -> bool: ...
-    @property
-    def pressure(self) -> float: ...
-    def __init__(self, param0: PointerData = ..., /) -> None: ...
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, memo: object, /) -> Self: ...
-    def get_x(self) -> float: ...
-    def get_y(self) -> float: ...
-    def get_in_window(self) -> bool:
-        """If this returns false, the pointer is not currently present in the window
-        and the values returned by get_x() and get_y() may not be meaningful.
-        """
-    getX = get_x
-    getY = get_y
-    getInWindow = get_in_window
-
 class NodeCachedReferenceCount(CachedTypedWritableReferenceCount):
     """This class further specializes CachedTypedWritableReferenceCount to also
     add a node_ref_count, for the purposes of counting the number of times the
@@ -3112,6 +3141,7 @@ class SparseArray:
     def __ixor__(self, other: BitArray | SparseArray, /) -> Self: ...
     def __ilshift__(self, shift: int, /) -> Self: ...
     def __irshift__(self, shift: int, /) -> Self: ...
+    def __bool__(self) -> bool: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
     @staticmethod
@@ -3199,7 +3229,7 @@ class SparseArray:
         """
     def get_lowest_on_bit(self) -> int:
         """Returns the index of the lowest 1 bit in the array.  Returns -1 if there
-        are no 1 bits or if there are an infinite number of 1 bits.
+        are no 1 bits and 0 if there are an infinite number of 1 bits.
         """
     def get_lowest_off_bit(self) -> int:
         """Returns the index of the lowest 0 bit in the array.  Returns -1 if there
@@ -3451,6 +3481,49 @@ class WritableConfigurable(TypedWritable):
     by by using the "dirty" flag.
     """
 
+class PointerType(Enum):
+    UNKNOWN = 0
+    MOUSE = 1
+    FINGER = 2
+    STYLUS = 3
+    ERASER = 4
+    unknown = UNKNOWN
+    mouse = MOUSE
+    finger = FINGER
+    stylus = STYLUS
+    eraser = ERASER
+
+class PointerData:
+    """Holds the data that might be generated by a 2-d pointer input device, such
+    as the mouse in the GraphicsWindow.
+    """
+
+    DtoolClassDict: ClassVar[dict[str, Any]]
+    @property
+    def x(self) -> float: ...
+    @property
+    def y(self) -> float: ...
+    @property
+    def type(self) -> PointerType: ...
+    @property
+    def id(self) -> int: ...
+    @property
+    def in_window(self) -> bool: ...
+    @property
+    def pressure(self) -> float: ...
+    def __init__(self, param0: PointerData = ..., /) -> None: ...
+    def __copy__(self) -> Self: ...
+    def __deepcopy__(self, memo: object, /) -> Self: ...
+    def get_x(self) -> float: ...
+    def get_y(self) -> float: ...
+    def get_in_window(self) -> bool:
+        """If this returns false, the pointer is not currently present in the window
+        and the values returned by get_x() and get_y() may not be meaningful.
+        """
+    getX = get_x
+    getY = get_y
+    getInWindow = get_in_window
+
 class UniqueIdAllocator:
     """Manage a set of ID values from min to max inclusive.  The ID numbers that
     are freed will be allocated (reused) in the same order.  I.e.  the oldest
@@ -3471,13 +3544,8 @@ class UniqueIdAllocator:
     """
 
     DtoolClassDict: ClassVar[dict[str, Any]]
-    @overload
-    def __init__(self, param0: UniqueIdAllocator, /) -> None: ...
-    @overload
     def __init__(self, min: int = ..., max: int = ...) -> None:
         """Create a free id pool in the range [min:max]."""
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, memo: object, /) -> Self: ...
     def allocate(self) -> int:
         """Returns an id between _min and _max (that were passed to the constructor).
         IndexEnd is returned if no ids are available.
@@ -3493,9 +3561,17 @@ class UniqueIdAllocator:
         a performance warning only; if performance is not an issue, any id may be
         reserved at any time.
         """
-    def free(self, index: int, /) -> None:
+    def is_allocated(self, index: int, /) -> bool:
+        """Checks the allocated state of an index. Returns true for
+        indices that are currently allocated and in use.
+        """
+    def free(self, index: int, /) -> bool:
         """Free an allocated index (index must be between _min and _max that were
         passed to the constructor).
+
+        Since 1.11.0, returns true if the index has been freed successfully
+        or false if the index has not been allocated yet, instead of
+        triggering an assertion.
         """
     def fraction_used(self) -> float:
         """return the decimal fraction of the pool that is used.  The range is 0 to
@@ -3506,6 +3582,7 @@ class UniqueIdAllocator:
     def write(self, out: ostream, /) -> None:
         """...intended for debugging only."""
     initialReserveId = initial_reserve_id
+    isAllocated = is_allocated
     fractionUsed = fraction_used
 
 def parse_color_space_string(str: str, /) -> _ColorSpace: ...
@@ -3561,10 +3638,10 @@ unloadPrcFile = unload_prc_file
 hashPrcVariables = hash_prc_variables
 pyDecodeTypedWritableFromBamStream = py_decode_TypedWritable_from_bam_stream
 pyDecodeTypedWritableFromBamStreamPersist = py_decode_TypedWritable_from_bam_stream_persist
-ConstPointerToArrayUshort = ConstPointerToArray_ushort
-PointerToArrayBaseUshort = PointerToArrayBase_ushort
-PointerToBaseReferenceCountedVectorUshort = PointerToBase_ReferenceCountedVector_ushort
-PointerToArrayUshort = PointerToArray_ushort
+ConstPointerToArrayUnsignedShortInt = ConstPointerToArray_unsigned_short_int
+PointerToArrayBaseUnsignedShortInt = PointerToArrayBase_unsigned_short_int
+PointerToBaseReferenceCountedVectorUnsignedShortInt = PointerToBase_ReferenceCountedVector_unsigned_short_int
+PointerToArrayUnsignedShortInt = PointerToArray_unsigned_short_int
 BitMaskUint16T16 = BitMask_uint16_t_16
 BitMask16 = BitMask_uint16_t_16
 BitMaskUint32T32 = BitMask_uint32_t_32
@@ -3577,7 +3654,10 @@ DoubleBitMaskNative = DoubleBitMask_BitMaskNative
 DoubleBitMaskDoubleBitMaskNative = DoubleBitMask_DoubleBitMaskNative
 QuadBitMaskNative = DoubleBitMask_DoubleBitMaskNative
 DrawMask = BitMask32
-MouseData = PointerData
+PTA_ushort = PointerToArray_unsigned_short_int
+PTAUshort = PTA_ushort
+CPTA_ushort = ConstPointerToArray_unsigned_short_int
+CPTAUshort = CPTA_ushort
 ParamValueString = ParamValue_string
 ParamString = ParamValue_string
 ParamValueWstring = ParamValue_wstring

@@ -51,46 +51,82 @@ class InputDevice(TypedReferenceCount):
     SDown: Final = 2
 
     class DeviceClass(Enum):
-        unknown = 0
+        UNKNOWN = 0
+        VIRTUAL = 1
+        KEYBOARD = 2
+        MOUSE = 3
+        TOUCH = 4
+        GAMEPAD = 5
+        FLIGHT_STICK = 6
+        STEERING_WHEEL = 7
+        DANCE_PAD = 8
+        HMD = 9
+        SPATIAL_MOUSE = 10
+        DIGITIZER = 11
         virtual_device = 1
-        keyboard = 2
-        mouse = 3
-        touch = 4
-        gamepad = 5
-        flight_stick = 6
-        steering_wheel = 7
-        dance_pad = 8
-        hmd = 9
-        spatial_mouse = 10
-        digitizer = 11
+        unknown = UNKNOWN
+        keyboard = KEYBOARD
+        mouse = MOUSE
+        touch = TOUCH
+        gamepad = GAMEPAD
+        flight_stick = FLIGHT_STICK
+        steering_wheel = STEERING_WHEEL
+        dance_pad = DANCE_PAD
+        hmd = HMD
+        spatial_mouse = SPATIAL_MOUSE
+        digitizer = DIGITIZER
 
     class Feature(Enum):
-        pointer = 0
-        keyboard = 1
-        tracker = 2
-        vibration = 3
-        battery = 4
+        POINTER = 0
+        KEYBOARD = 1
+        TRACKER = 2
+        VIBRATION = 3
+        BATTERY = 4
+        pointer = POINTER
+        keyboard = KEYBOARD
+        tracker = TRACKER
+        vibration = VIBRATION
+        battery = BATTERY
 
     class Axis(Enum):
-        none = 0
-        x = 1
-        y = 2
-        z = 3
-        yaw = 4
-        pitch = 5
-        roll = 6
-        left_x = 7
-        left_y = 8
-        left_trigger = 9
-        right_x = 10
-        right_y = 11
-        right_trigger = 12
-        throttle = 13
-        rudder = 14
-        wheel = 15
-        accelerator = 16
-        brake = 17
-        pressure = 18
+        NONE = 0
+        X = 1
+        Y = 2
+        Z = 3
+        YAW = 4
+        PITCH = 5
+        ROLL = 6
+        LEFT_X = 7
+        LEFT_Y = 8
+        LEFT_TRIGGER = 9
+        RIGHT_X = 10
+        RIGHT_Y = 11
+        RIGHT_TRIGGER = 12
+        THROTTLE = 13
+        RUDDER = 14
+        WHEEL = 15
+        ACCELERATOR = 16
+        BRAKE = 17
+        PRESSURE = 18
+        none = NONE
+        x = X
+        y = Y
+        z = Z
+        yaw = YAW
+        pitch = PITCH
+        roll = ROLL
+        left_x = LEFT_X
+        left_y = LEFT_Y
+        left_trigger = LEFT_TRIGGER
+        right_x = RIGHT_X
+        right_y = RIGHT_Y
+        right_trigger = RIGHT_TRIGGER
+        throttle = THROTTLE
+        rudder = RUDDER
+        wheel = WHEEL
+        accelerator = ACCELERATOR
+        brake = BRAKE
+        pressure = PRESSURE
 
     class ButtonState:
         DtoolClassDict: ClassVar[dict[str, Any]]
@@ -180,7 +216,7 @@ class InputDevice(TypedReferenceCount):
         """
     def map_axis(self, index: int, axis: InputDevice.Axis) -> None:
         """Associates the indicated Axis with the axis of the indicated index
-        number.  Pass Axis::none to turn off any association.
+        number.  Pass Axis::NONE to turn off any association.
 
         It is not necessary to call this if you simply want to query the state of
         the various axes by index number.

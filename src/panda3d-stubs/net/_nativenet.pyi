@@ -155,7 +155,7 @@ class Socket_TCP(Socket_IP):
         """
     def ErrorIs_WouldBlocking(self, err: int, /) -> bool: ...
     def ShutdownSend(self) -> bool: ...
-    def SendData(self, str: str, /) -> int: ...
+    def SendData(self, data: bytes, /) -> int: ...
     def RecvData(self, max_len: int, /) -> str:
         """Read the data from the connection - if error 0 if socket closed for read or
         length is 0 + bytes read (May be smaller than requested)
@@ -195,11 +195,11 @@ class Socket_UDP_Outgoing(Socket_IP):
     def __init__(self) -> None: ...
     def InitToAddress(self, address: Socket_Address, /) -> bool:
         """Connects the Socket to a specified address"""
-    def Send(self, data: str, /) -> bool:
+    def Send(self, data: bytes, /) -> bool:
         """Send data to connected address"""
     def InitNoAddress(self) -> bool:
         """use this interface for a none tagreted UDP connection"""
-    def SendTo(self, data: str, address: Socket_Address) -> bool:
+    def SendTo(self, data: bytes, address: Socket_Address) -> bool:
         """Send data to specified address"""
     def SetToBroadCast(self) -> bool:
         """Ask the OS to let us receive broadcast packets on this port."""
@@ -259,9 +259,9 @@ class Socket_UDP(Socket_UDP_Incoming):
 
     def InitToAddress(self, address: Socket_Address, /) -> bool:
         """Connects the socket to a Specified address"""
-    def Send(self, data: str, /) -> bool:
+    def Send(self, data: bytes, /) -> bool:
         """Send data to connected address"""
-    def SendTo(self, data: str, address: Socket_Address) -> bool:  # type: ignore[override]
+    def SendTo(self, data: bytes, address: Socket_Address) -> bool:  # type: ignore[override]
         """Send data to specified address"""
     def SetToBroadCast(self) -> bool:
         """Ask the OS to let us receive broadcast packets on this port."""

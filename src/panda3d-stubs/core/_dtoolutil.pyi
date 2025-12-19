@@ -1,14 +1,14 @@
 from _typeshed import StrOrBytesPath
 from collections.abc import Iterator, MutableMapping, Sequence
 from typing import Any, ClassVar, Final, Literal, overload, type_check_only
-from typing_extensions import Self, TypeAlias
+from typing_extensions import Self, TypeAlias, deprecated
 
 from panda3d._typing import SearchPathLike
 from panda3d.core._dtoolbase import TypeHandle
 
 _ios_base_seekdir: TypeAlias = Literal[0, 1, 2]
 _ios_base_openmode: TypeAlias = int
-_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2]
+_TextEncoder_Encoding: TypeAlias = Literal[0, 1, 2, 3]
 _Filename_Type: TypeAlias = Literal[0, 1, 2]
 
 class ios_base:
@@ -33,7 +33,14 @@ class basic_ios_char(ios_base):
     def clear(self) -> None: ...
 
 class istream(basic_ios_char):
+    def __iter__(self) -> Iterator: ...
     def upcast_to_basic_ios_char(self) -> basic_ios_char: ...
+    def read(self, size: int = ..., /): ...
+    def read1(self, size: int = ..., /): ...
+    def readall(self): ...
+    def readinto(self, b, /) -> int: ...
+    def readline(self, size: int = ..., /): ...
+    def readlines(self, hint: int = ..., /): ...
     def get(self) -> int: ...
     def tellg(self) -> int: ...
     @overload
@@ -44,6 +51,8 @@ class istream(basic_ios_char):
 
 class ostream(basic_ios_char):
     def upcast_to_basic_ios_char(self) -> basic_ios_char: ...
+    def write(self, b, /) -> None: ...
+    def writelines(self, lines, /) -> None: ...
     def put(self, c: str, /) -> None: ...
     def flush(self) -> None: ...
     def tellp(self) -> int: ...
@@ -130,6 +139,8 @@ class TextEncoder:
     EUtf8: Final = 1
     E_utf16be: Final = 2
     EUtf16be: Final = 2
+    E_cp437: Final = 3
+    ECp437: Final = 3
     E_unicode: Final = 2
     EUnicode: Final = 2
     DtoolClassDict: ClassVar[dict[str, Any]]
@@ -1050,50 +1061,6 @@ class PandaSystem:
         official version.
         """
     @staticmethod
-    def get_package_version_string() -> str:
-        """Returns the version of the Panda3D distributable package that provides this
-        build of Panda.
-
-        When the currently-executing version of Panda was loaded from a
-        distributable package, such as via the browser plugin, then this string
-        will be nonempty and will contain the corresponding version string.  You
-        can build applications that use this particular version of Panda by
-        requesting it in the pdef file, using "panda3d", this version string, and
-        the download host provided by get_package_host_url().
-
-        If this string is empty, then the currently-executing Panda was built
-        independently, and is not part of a distributable package.
-
-        This string is set explicitly at compilation time.  Normally, it should be
-        set to a nonempty string only when building a Panda3D package for
-        distribution.
-        """
-    @staticmethod
-    def get_package_host_url() -> str:
-        """Returns the URL of the download server that provides the Panda3D
-        distributable package currently running.  This can be used, along with the
-        get_package_version_string(), to uniquely identify the running version of
-        Panda among distributable Panda versions.
-
-        See get_package_version_string() for more information.
-
-        This string is set explicitly at compilation time.  Normally, it should be
-        set to a nonempty string only when building a Panda3D package for
-        distribution.
-        """
-    @staticmethod
-    def get_p3d_coreapi_version_string() -> str:
-        """Returns the current version of Panda's Core API, expressed as a string of
-        dot-delimited integers.  There are usually four integers in this version,
-        but this is not guaranteed.
-
-        The Core API is used during the runtime (plugin) environment only.  This
-        may be the empty string if the current version of Panda is not built to
-        provide a particular Core API, which will be the normal case in a
-        development SDK.  However, you should not use this method to determine
-        whether you are running in a runtime environment or not.
-        """
-    @staticmethod
     def get_major_version() -> int:
         """Returns the major version number of the current version of Panda.  This is
         the first number of the dotted triple returned by get_version_string().  It
@@ -1136,9 +1103,12 @@ class PandaSystem:
         version of Panda, if it is available, or "unknown" if it is not.
         """
     @staticmethod
+    @deprecated('')
     def get_build_date() -> str:
         """Returns a string representing the date and time at which this version of
         Panda (or at least dtool) was compiled, if available.
+
+        @deprecated
         """
     @staticmethod
     def get_git_commit() -> str:
@@ -1198,9 +1168,6 @@ class PandaSystem:
     def get_class_type() -> TypeHandle: ...
     def get_systems(self) -> tuple[str, ...]: ...
     getVersionString = get_version_string
-    getPackageVersionString = get_package_version_string
-    getPackageHostUrl = get_package_host_url
-    getP3dCoreapiVersionString = get_p3d_coreapi_version_string
     getMajorVersion = get_major_version
     getMinorVersion = get_minor_version
     getSequenceVersion = get_sequence_version

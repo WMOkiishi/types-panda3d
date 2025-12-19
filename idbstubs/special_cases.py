@@ -22,7 +22,8 @@ def log_unused() -> None:
 # Don't write stubs for anything with these names
 NO_STUBS: Final = TrackingSet({
     # Attribute access
-    '__dict__', '__getattr__', '__setattr__', '__delattr__',
+    '__dict__', '__getattribute__',
+    '__getattr__', '__setattr__', '__delattr__',
     # Pickle stuff
     '__getstate__', '__setstate__', '__reduce__',
     # The signatures for these don't change.
@@ -32,27 +33,22 @@ NO_STUBS: Final = TrackingSet({
 
 # These names are not exposed to Python, even though they may seem like they are
 NOT_EXPOSED: Final = TrackingSet({
-    'TIXML_NO_ATTRIBUTE',
-    'TIXML_SUCCESS',
-    'TIXML_WRONG_TYPE',
+    'operator *',
+    'operator *=',
     'LMatrix4f::begin',
     'LMatrix4f::end',
     'LMatrix4d::begin',
     'LMatrix4d::end',
     'PandaNode::__traverse__',
-    'NodePath::__traverse__',
     'PythonTask::__traverse__',
     'PythonTask::__clear__',
     'GraphicsOutputBase::get_texture',
     'Notify::get_assert_handler',
     'Texture::get_ram_mipmap_pointer',
-    'TiXmlBase::GetUserData',
     'LMatrix3f::get_data',
     'LMatrix3d::get_data',
     'LMatrix4f::get_data',
     'LMatrix4d::get_data',
-    'UnalignedLMatrix4f::get_data',
-    'UnalignedLMatrix4d::get_data',
 })
 
 
@@ -70,7 +66,7 @@ METHOD_RENAMES: Final = TrackingMap({
     'operator =': 'assign',
     'operator ()': '__call__',
     'operator []': '__getitem__',
-    # 'operator []=': '__setitem__',
+    'operator []=': '__setitem__',
     'operator ++': 'increment',
     # 'operator --': 'decrement',
     'operator ^': '__xor__',
@@ -91,7 +87,6 @@ METHOD_RENAMES: Final = TrackingMap({
     'operator <<=': '__ilshift__',
     'operator >>=': '__irshift__',
     'size': '__len__',
-    '__nonzero__': '__bool__',
 })
 UNARY_METHOD_RENAMES: Final = TrackingMap({
     'operator ++': 'increment',
@@ -120,6 +115,7 @@ DEFAULT_RETURNS: Final = TrackingMap({
     '__await__': 'Generator[Any, None, Any]',
     '__bytes__': 'bytes',
     '__fspath__': 'str',
+    '__int__': 'int',
     '__iter__': 'Iterator',
 })
 
@@ -144,7 +140,8 @@ RETURN_SELF: Final = TrackingSet({
 # Camel-case aliases are not generated for functions with these names.
 NO_ALIAS: Final = TrackingSet({
     '_del',
-    '__init__', '__call__', '__iter__', '__await__',
+    '__init__', '__new__',
+    '__call__', '__iter__', '__await__',
     '__getitem__', '__setitem__',
     '__eq__', '__ne__', '__lt__', '__le__', '__ge__', '__gt__',
     '__neg__', '__invert__',
@@ -152,7 +149,7 @@ NO_ALIAS: Final = TrackingSet({
     '__iand__', '__ior__', '__ixor__', '__ilshift__', '__irshift__',
     '__add__', '__sub__', '__mul__', '__truediv__', '__floordiv__',
     '__iadd__', '__isub__', '__imul__', '__itruediv__', '__ifloordiv__',
-    '__pow__', '__ipow__',
+    '__pow__', '__ipow__', '__rmul__',
     '__float__', '__int__', '__bool__', '__len__',
     '__copy__', '__deepcopy__', '__reduce_persist__',
 })
@@ -184,6 +181,7 @@ ATTR_TYPE_OVERRIDES: Final = TrackingMap({
 PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'AsyncFuture::add_done_callback': {(0, 1): 'Callable[[AsyncFuture], object]'},
     'AsyncFuture::gather': {(0, 0): 'AsyncFuture'},
+    'BitArray::BitArray': {(2, 1): 'int'},
     'BoundingVolume::contains': {(0, 1): 'Self'},
     'BoundingVolume::extend_by': {(0, 1): 'Self'},
     'CallbackObject::make': {(0, 0): 'Callable'},
@@ -231,18 +229,15 @@ PARAM_TYPE_OVERRIDES: Final = TrackingMap[str, dict[tuple[int, int], str]]({
     'TextEncoder::append_text': {(0, 1): 'str'},
     'TextEncoder::decode_text': {(0, 1): 'bytes', (1, 1): 'bytes'},
     'TextEncoder::set_text': {(0, 1): 'str', (1, 1): 'bytes'},
+    'TexturePool::is_filter_registered': {(0, 1): 'TexturePoolFilter'},
+    'TexturePool::register_filter': {(0, 1): 'TexturePoolFilter'},
+    'TexturePool::unregister_filter': {(0, 1): 'TexturePoolFilter'},
     'TypedObject::is_exact_type': {(0, 1): 'TypeHandle | builtins.type'},
     'TypedObject::is_of_type': {(0, 1): 'TypeHandle | builtins.type'},
     'DCClass::client_format_generate_CMU': {(0, 4): 'Sequence[str] | None'},
     'ARToolKit::make': {(0, 0): 'NodePath[Camera]'},
 })
 RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
-    'operator *': {
-        16: 'LVecBase2d',
-        17: 'LVecBase2f',
-        19: 'LVecBase3d',
-        21: 'LVecBase3f',
-    },
     'AsyncFuture::add_done_callback': 'None',
     'AsyncFuture::gather': 'AsyncFuture',
     'BamReader::get_file_version': 'tuple[int, int]',
@@ -311,38 +306,14 @@ RETURN_TYPE_OVERRIDES: Final = TrackingMap[str, str | dict[int, str]]({
 
 
 NO_COERCION: Final = TrackingMap({
-    'ButtonHandle': {'int'},
     'ColorInterpolationManager': {'LVecBase4f'},
-    'ConfigVariableBool': {'str'},
-    'ConfigVariableColor': {'str'},
-    'ConfigVariableDouble': {'str'},
-    'ConfigVariableFilename': {'str'},
-    'ConfigVariableInt': {'str'},
-    'ConfigVariableInt64': {'str'},
-    'ConfigVariableList': {'str'},
-    'ConfigVariableString': {'str'},
-    'DSearchPath': {'Filename', 'str'},
-    'GeomVertexReader': {'Thread'},
-    'GeomVertexRewriter': {'Thread'},
-    'GeomVertexWriter': {'Thread'},
-    'LoaderOptions': {'int'},
-    'LOrientationd': {'LMatrix3d', 'LMatrix4d'},
-    'LOrientationf': {'LMatrix3f', 'LMatrix4f'},
-    'LRotationd': {'LMatrix3d', 'LMatrix4d'},
-    'LRotationf': {'LMatrix3f', 'LMatrix4f'},
-    # We ignore coercion from unaligned vectors because it introduces
-    # too much noise. They're not useful from Python anyway.
-    'LVecBase4d': {'LVector3d', 'LPoint3d', 'UnalignedLVecBase4d'},
-    'LVecBase4f': {'LVector3f', 'LPoint3f', 'UnalignedLVecBase4f'},
-    'LVecBase4i': {'LVector3i', 'LPoint3i', 'UnalignedLVecBase4i'},
-    'MovieVideo': {'str'},
-    'OdeBody': {'OdeWorld'},
-    'pixel': {'int'},
-    'PNMImageHeader.PixelSpec': {'int'},
-    'RenderState': {'RenderAttrib'},
+    'LVecBase4d': {'LVector3d', 'LPoint3d'},
+    'LVecBase4f': {'LVector3f', 'LPoint3f'},
+    'LVecBase4i': {'LVector3i', 'LPoint3i'},
     'Shader': {'str'},
 })
 EXTRA_COERCION: Final = TrackingMap({
+    'BitArray': {'int'},
     'Filename': {'StrOrBytesPath'},
     'InternalName': {'str'},
     'CallbackObject': {'Callable'},
@@ -365,7 +336,6 @@ EXTRA_COERCION: Final = TrackingMap({
     'LVector3i': {'tuple[int, int, int]'},
     'LPoint3i': {'tuple[int, int, int]'},
     'LVecBase4f': {'tuple[float, float, float, float]'},
-    'UnalignedLVecBase4f': {'tuple[float, float, float, float]'},
     'LVector4f': {'tuple[float, float, float, float]'},
     'LPoint4f': {'tuple[float, float, float, float]'},
     'LQuaternionf': {'tuple[float, float, float, float]'},
@@ -377,11 +347,9 @@ EXTRA_COERCION: Final = TrackingMap({
     'LQuaterniond': {'tuple[float, float, float, float]'},
     'LRotationd': {'tuple[float, float, float, float]'},
     'LPlaned': {'tuple[float, float, float, float]'},
-    'UnalignedLVecBase4d': {'tuple[float, float, float, float]'},
     'LVecBase4i': {'tuple[int, int, int, int]'},
     'LVector4i': {'tuple[int, int, int, int]'},
     'LPoint4i': {'tuple[int, int, int, int]'},
-    'UnalignedLVecBase4i': {'tuple[int, int, int, int]'},
 })
 
 
@@ -416,13 +384,14 @@ COMMENTS: Final = TrackingMap[str | tuple[str, int], str]({
     'LightNode': 'type: ignore[misc]',
     'LightLensNode': 'type: ignore[misc]',
     'MouseWatcher': 'type: ignore[misc]',
-    'OSocketStream::flush': 'type: ignore[override]',
+    'Mutex::acquire': 'type: ignore[override]',
     'PGItem::get_state': 'type: ignore[override]',
     'PGItem::set_state': 'type: ignore[override]',
+    'PGItem::state': 'type: ignore[assignment]',
     'PGScrollFrame::setup': 'type: ignore[override]',
+    'ReMutex::acquire': 'type: ignore[override]',
     'SequenceNode::frame_rate': 'pyright: ignore[reportIncompatibleMethodOverride]',
     'Socket_UDP::SendTo': 'type: ignore[override]',
-    'SocketStream::flush': 'type: ignore[override]',
     'StreamWrapper::iostream': 'noqa: F811',
     'TextNode': 'type: ignore[misc]',
     'TextNode::get_transform': 'type: ignore[override]',

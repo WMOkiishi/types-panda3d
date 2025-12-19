@@ -172,12 +172,11 @@ class AsyncFuture(TypedReferenceCount):
     """
 
     done_event: str
-    def __init__(self, param0: AsyncFuture = ..., /) -> None:
+    def __init__(self) -> None:
         """Initializes the future in the pending state."""
     def __await__(self) -> Generator[Any, None, Any]: ...
     def __iter__(self) -> Iterator: ...
-    def __copy__(self) -> Self: ...
-    def __deepcopy__(self, memo: object, /) -> Self: ...
+    def upcast_to_TypedReferenceCount(self) -> TypedReferenceCount: ...
     def done(self) -> bool:
         """Returns true if the future is done or has been cancelled.  It is always
         safe to call this.
@@ -189,6 +188,11 @@ class AsyncFuture(TypedReferenceCount):
         """Cancels the future.  Returns true if it was cancelled, or false if the
         future was already done.  Either way, done() will return true after this
         call returns.
+
+        Please note that calling this is not a guarantee that the operation
+        corresponding this future does not run.  It could already be in the process
+        of running, or perhaps not respond to a cancel signal.  All this guarantees
+        is that the future is marked as done when this call returns.
 
         In the case of a task, this is equivalent to remove().
         """
@@ -204,14 +208,22 @@ class AsyncFuture(TypedReferenceCount):
     def add_done_callback(self, fn: Callable[[AsyncFuture], object], /) -> None: ...
     @staticmethod
     def gather(*args: AsyncFuture) -> AsyncFuture: ...
+    @staticmethod
+    def shield(future: AsyncFuture, /) -> AsyncFuture:
+        """Creates a new future that shields the given future from cancellation.
+        Calling `cancel()` on the returned future will not affect the given future.
+        """
     def output(self, out: ostream, /) -> None: ...
     def wait(self, timeout: float = ..., /) -> None:
         """Waits until the future is done.
 
         or:
-        Waits until the future is done, or until the timeout is reached.
+        Waits until the future is done, or until the timeout is reached.  Note that
+        this can be considerably less efficient than wait() without a timeout, so
+        it's generally not a good idea to use this unless you really need to.
         """
     def set_result(self, param0, /) -> None: ...
+    upcastToTypedReferenceCount = upcast_to_TypedReferenceCount
     setDoneEvent = set_done_event
     getDoneEvent = get_done_event
     addDoneCallback = add_done_callback
@@ -279,7 +291,6 @@ class AsyncTask(AsyncFuture, Namable):
     def max_dt(self) -> float: ...
     @property
     def average_dt(self) -> float: ...
-    def __init__(self, param0: AsyncTask, /) -> None: ...
     def upcast_to_AsyncFuture(self) -> AsyncFuture: ...
     def upcast_to_Namable(self) -> Namable: ...
     def get_state(self) -> _AsyncTask_State:
@@ -299,6 +310,9 @@ class AsyncTask(AsyncFuture, Namable):
         """Removes the task from its active manager, if any, and makes the state
         S_inactive (or possible S_servicing_removed).  This is a no-op if the state
         is already S_inactive.
+
+        If the task is a coroutine that is currently awaiting a future, this will
+        fail, but see also cancel().
         """
     def set_delay(self, delay: float, /) -> None:
         """Specifies the amount of time, in seconds, by which this task will be
@@ -510,10 +524,17 @@ class AsyncTaskManager(TypedReferenceCount, Namable):
         """Returns the number of different task chains."""
     def get_task_chain(self, n: int, /) -> AsyncTaskChain:
         """Returns the nth task chain."""
-    def make_task_chain(self, name: str, /) -> AsyncTaskChain:
+    @overload
+    def make_task_chain(self, name: str) -> AsyncTaskChain:
         """Creates a new AsyncTaskChain of the indicated name and stores it within the
         AsyncTaskManager.  If a task chain with this name already exists, returns
         it instead.
+        """
+    @overload
+    def make_task_chain(self, name: str, num_threads: int, thread_priority: _ThreadPriority) -> AsyncTaskChain:
+        """Creates a new threaded AsyncTaskChain of the indicated name and stores it
+        within the AsyncTaskManager.  If a task chain with this name already exists,
+        returns it instead.
         """
     def find_task_chain(self, name: str, /) -> AsyncTaskChain:
         """Searches a new AsyncTaskChain of the indicated name and returns it if it
@@ -819,6 +840,10 @@ class AsyncTaskChain(TypedReferenceCount, Namable):
         requests, false otherwise.  If this is false, the next call to add() or
         add_and_do() will automatically start the threads.
         """
+    def add(self, task: AsyncTask, /) -> None:
+        """Adds the indicated task to the active queue.  The task must be inactive, and
+        may not have been added to any queue (including the current one).
+        """
     def has_task(self, task: AsyncTask, /) -> bool:
         """Returns true if the indicated task has been added to this AsyncTaskChain,
         false otherwise.
@@ -887,9 +912,6 @@ class AsyncTaskPause(AsyncTask):
     within an AsyncTaskSequence.
     """
 
-    @overload
-    def __init__(self, param0: AsyncTaskPause, /) -> None: ...
-    @overload
     def __init__(self, delay: float) -> None: ...
 
 class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
@@ -902,9 +924,6 @@ class AsyncTaskSequence(AsyncTask, AsyncTaskCollection):
     duration changes during playback.
     """
 
-    @overload
-    def __init__(self, param0: AsyncTaskSequence, /) -> None: ...
-    @overload
     def __init__(self, name: str) -> None: ...
     def upcast_to_AsyncTask(self) -> AsyncTask: ...
     def upcast_to_AsyncTaskCollection(self) -> AsyncTaskCollection: ...
@@ -1234,10 +1253,7 @@ class PythonTask(AsyncTask):
         """The number of frames that have elapsed since the task was started,
         according to the task manager's clock.
         """
-    @overload
     def __init__(self, function: TaskCoroutine[Any] | TaskFunction | None = ..., name: str = ...) -> None: ...
-    @overload
-    def __init__(self, param0: PythonTask, /) -> None: ...
     def set_function(self, function: TaskFunction | None, /) -> None: ...
     def get_function(self) -> TaskFunction | None:
         """Returns the function that is called when the task runs."""

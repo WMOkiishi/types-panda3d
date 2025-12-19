@@ -6,6 +6,7 @@ from panda3d._typing import Vec3Like
 from panda3d.core._dtoolutil import Filename, ostream
 from panda3d.core._event import AsyncTask
 from panda3d.core._express import TypedReferenceCount
+from panda3d.core._linmath import LVector3
 from panda3d.core._movies import MovieAudio
 
 _AudioSound_SoundStatus: TypeAlias = Literal[0, 1, 2]
@@ -71,6 +72,16 @@ class AudioSound(TypedReferenceCount):
     BAD: Final = 0
     READY: Final = 1
     PLAYING: Final = 2
+    time: float
+    volume: float
+    balance: float
+    play_rate: float
+    active: bool
+    @property
+    def name(self) -> str:
+        """There is no set_name(), this is intentional."""
+    @property
+    def positional(self) -> bool: ...
     def play(self) -> None:
         """For best compatibility, set the loop_count, volume, and balance, prior to
         calling play().  You may set them while they're playing, but it's
@@ -85,16 +96,17 @@ class AudioSound(TypedReferenceCount):
     def set_loop_count(self, loop_count: int = ..., /) -> None:
         """loop_count: 0 = forever; 1 = play once; n = play n times.  inits to 1."""
     def get_loop_count(self) -> int: ...
+    def set_loop_start(self, loop_start: float = ..., /) -> None:
+        """loop_start: 0 = beginning.  expressed in seconds.  inits to 0."""
+    def get_loop_start(self) -> float: ...
     def set_time(self, start_time: float = ..., /) -> None:
         """Control time position within the sound, in seconds.  This is similar (in
         concept) to the seek position within a file.  The value starts at 0.0 (the
         default) and ends at the value given by the length() method.
 
-        The current time position will not change while the sound is playing; you
-        must call play() again to effect the change.  To play the same sound from
-        a time offset a second time, explicitly set the time position again.  When
-        looping, the second and later loops will start from the beginning of the
-        sound.
+        In the past, this call did nothing if the sound was currently playing, and
+        it was necessary to call play() to effect the change.  This is no longer
+        the case; the time change takes effect immediately.
 
         If a sound is playing, calling get_time() repeatedly will return different
         results over time.  e.g.
@@ -122,6 +134,8 @@ class AudioSound(TypedReferenceCount):
     def get_finished_event(self) -> str: ...
     def get_name(self) -> str:
         """There is no set_name(), this is intentional."""
+    def is_positional(self) -> bool:
+        """Returns true if this was created as a positional sound."""
     def length(self) -> float:
         """return: playing time in seconds."""
     def set_3d_attributes(self, px: float, py: float, pz: float, vx: float, vy: float, vz: float) -> None:
@@ -129,6 +143,9 @@ class AudioSound(TypedReferenceCount):
         emitter's position.  vx, vy and vz are the emitter's velocity in UNITS
         PER SECOND (default: meters).
         """
+    def set_3d_direction(self, d: Vec3Like, /) -> None:
+        """Controls the direction of this sound emitter. Currently implemented only for OpenAL."""
+    def get_3d_direction(self) -> LVector3: ...
     def set_3d_min_distance(self, dist: float, /) -> None:
         """Controls the distance (in units) that this sound begins to fall off.
         Also affects the rate it falls off.  Default is 1.0 CloserFaster, <1.0
@@ -141,13 +158,23 @@ class AudioSound(TypedReferenceCount):
         quieter.  You should rarely need to adjust this.  Default is 1000000000.0
         """
     def get_3d_max_distance(self) -> float: ...
-    def get_speaker_mix(self, speaker: int, /) -> float:
-        """speaker_mix and speaker_level(s) serve the same purpose.
-        speaker_mix is for use with FMOD. speaker_level(s) is for use with
-        Miles.  Both interfaces exist because of a significant difference in the
-        two APIs.  Hopefully the difference can be reconciled into a single
-        interface at some point.
+    def set_3d_cone_inner_angle(self, angle: float, /) -> None:
+        """Sets the angle of the inner cone of a directional sound source. In the zone inside of the inner cone
+        sound is emitted with the (normal) volume set by set_volume().
         """
+    def get_3d_cone_inner_angle(self) -> float: ...
+    def set_3d_cone_outer_angle(self, angle: float, /) -> None:
+        """Sets the angle of the outer cone of a directional sound source. In the zone between
+        the inner and the outer cone the volume is attenuated.
+        """
+    def get_3d_cone_outer_angle(self) -> float: ...
+    def set_3d_cone_outer_gain(self, gain: float, /) -> None:
+        """Sets a factor applied to the volume set by set_volume() for the zone outside the outer cone.
+        By default this is 0 (so no sound is heard inside the outer zone).
+        """
+    def get_3d_cone_outer_gain(self) -> float: ...
+    def get_speaker_mix(self, speaker: int, /) -> float:
+        """speaker_mix is for use with FMOD."""
     def set_speaker_mix(
         self,
         frontleft: float,
@@ -159,19 +186,6 @@ class AudioSound(TypedReferenceCount):
         sideleft: float,
         sideright: float,
     ) -> None: ...
-    def get_speaker_level(self, index: int, /) -> float: ...
-    def set_speaker_levels(
-        self,
-        level1: float,
-        level2: float = ...,
-        level3: float = ...,
-        level4: float = ...,
-        level5: float = ...,
-        level6: float = ...,
-        level7: float = ...,
-        level8: float = ...,
-        level9: float = ...,
-    ) -> None: ...
     def get_priority(self) -> int: ...
     def set_priority(self, priority: int, /) -> None: ...
     def configure_filters(self, config: FilterProperties, /) -> bool: ...
@@ -182,6 +196,8 @@ class AudioSound(TypedReferenceCount):
     getLoop = get_loop
     setLoopCount = set_loop_count
     getLoopCount = get_loop_count
+    setLoopStart = set_loop_start
+    getLoopStart = get_loop_start
     setTime = set_time
     getTime = get_time
     setVolume = set_volume
@@ -195,15 +211,22 @@ class AudioSound(TypedReferenceCount):
     setFinishedEvent = set_finished_event
     getFinishedEvent = get_finished_event
     getName = get_name
+    isPositional = is_positional
     set3dAttributes = set_3d_attributes
+    set3dDirection = set_3d_direction
+    get3dDirection = get_3d_direction
     set3dMinDistance = set_3d_min_distance
     get3dMinDistance = get_3d_min_distance
     set3dMaxDistance = set_3d_max_distance
     get3dMaxDistance = get_3d_max_distance
+    set3dConeInnerAngle = set_3d_cone_inner_angle
+    get3dConeInnerAngle = get_3d_cone_inner_angle
+    set3dConeOuterAngle = set_3d_cone_outer_angle
+    get3dConeOuterAngle = get_3d_cone_outer_angle
+    set3dConeOuterGain = set_3d_cone_outer_gain
+    get3dConeOuterGain = get_3d_cone_outer_gain
     getSpeakerMix = get_speaker_mix
     setSpeakerMix = set_speaker_mix
-    getSpeakerLevel = get_speaker_level
-    setSpeakerLevels = set_speaker_levels
     getPriority = get_priority
     setPriority = set_priority
     configureFilters = configure_filters
@@ -364,19 +387,6 @@ class AudioManager(TypedReferenceCount):
     def get_dls_pathname() -> Filename: ...
     def output(self, out: ostream, /) -> None: ...
     def write(self, out: ostream, /) -> None: ...
-    def set_speaker_configuration(
-        self,
-        speaker1: Vec3Like,
-        speaker2: Vec3Like = ...,
-        speaker3: Vec3Like = ...,
-        speaker4: Vec3Like = ...,
-        speaker5: Vec3Like = ...,
-        speaker6: Vec3Like = ...,
-        speaker7: Vec3Like = ...,
-        speaker8: Vec3Like = ...,
-        speaker9: Vec3Like = ...,
-    ) -> None:
-        """set_speaker_configuration is a Miles only method."""
     getSpeakerSetup = get_speaker_setup
     setSpeakerSetup = set_speaker_setup
     configureFilters = configure_filters
@@ -404,7 +414,6 @@ class AudioManager(TypedReferenceCount):
     audio3dSetDropOffFactor = audio_3d_set_drop_off_factor
     audio3dGetDropOffFactor = audio_3d_get_drop_off_factor
     getDlsPathname = get_dls_pathname
-    setSpeakerConfiguration = set_speaker_configuration
 
 class AudioLoadRequest(AsyncTask):
     """A class object that manages a single asynchronous audio load request.  This
@@ -413,9 +422,6 @@ class AudioLoadRequest(AsyncTask):
     the loader via load_async(), to begin an asynchronous load.
     """
 
-    @overload
-    def __init__(self, param0: AudioLoadRequest, /) -> None: ...
-    @overload
     def __init__(self, audio_manager: AudioManager, filename: str, positional: bool) -> None:
         """Create a new AudioLoadRequest, and add it to the loader via load_async(),
         to begin an asynchronous load.

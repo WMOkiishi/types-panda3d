@@ -1,15 +1,12 @@
 # Modules that error on import
 (direct.directbase.DirectStart.*)?  # This fails if a window cannot be opened
-direct.directdevices.DirectJoybox
-direct.directutil.DirectMySQLdb
-direct.directutil.DirectMySQLdbConnection
+direct.directscripts.extract_docs
 direct.showbase.ProfileSession
-direct.p3d.p(ackp3d|deploy|merge|package|patcher)
+panda3d.dtoolconfig
 
 # Variables not meant to be exported
-direct.cluster.ClusterClient.ClientConfigs
+direct.dist._proto.\w+
 direct.distributed.NetMessenger.i
-direct.particles.ForceGroup.physicsMgr
 
 # For some reason, Mypy checks the arguments for __init__ differently than
 # other methods.
@@ -21,6 +18,7 @@ direct.distributed.StagedObject.StagedObject.goOffStage
 direct.interval.(MetaInterval|IntervalGlobal).MetaInterval.__repr__
 direct.interval.(MetaInterval|IntervalGlobal).MetaInterval.__str__
 direct.interval.(SoundInterval|IntervalGlobal).SoundInterval.finish
+direct.showbase.BufferViewer.BufferViewer.isValidTextureSet
 direct.showbase.ShowBase.ShowBase.set_background_color
 direct.stdpy.file.join
 direct.tkwidgets.Valuator.ValuatorGroupPanel.get
@@ -28,7 +26,7 @@ direct.tkwidgets.Valuator.ValuatorGroupPanel.get
 # Stubtest thinks these have a "mod" parameter, but they don't.
 panda3d.core.L(RGB)?Color[df]?.__pow__
 panda3d.core.LQuaternion[df]?.__pow__
-panda3d.core.LVecBase[2-4][dfi]?.__pow__
+panda3d.core.(Unaligned)?LVecBase[2-4][dfi]?.__pow__
 panda3d.core.Quat[DF]?.__pow__
 panda3d.core.VBase[2-4][DF]?.__pow__
 
@@ -58,72 +56,11 @@ direct.distributed.DistributedCamera.Fixture.id
 # We skip writing the staticmethod in the stubs (it's deprecated anyway).
 panda3d.core.WindowProperties.size
 
-# These methods are overriden by attributes on initialization
-(direct.tkwidgets.EntryScale.EntryScale.entry)?
-direct.tkwidgets.EntryScale.EntryScale.label
-direct.tkwidgets.EntryScale.EntryScale.scale
-direct.tkwidgets.VectorWidgets.VectorEntry.entryList
-direct.tkwidgets.VectorWidgets.VectorEntry.menu
-
-# These exist, but stubtest insists they don't.
-panda3d.bullet.BulletPersistentManifold.__get_manifold_point
-panda3d.bullet.BulletWorld.__get_manifold
-
 
 # ====================================
 # Variables imported with star imports
 # ====================================
-
-# From math
-direct.directdevices.DirectFastrak.(e|inf|nan|pi|tau)
-direct.directdevices.DirectRadamec.(e|inf|nan|pi|tau)
-direct.showutil.BuildGeometry.(e|inf|nan|pi|tau)
-
-# From tkinter
-direct.showbase.TkGlobal.(?!spawnTkLoop$)\w+
-direct.tkwidgets.MemoryExplorer.(TclVersion|TkVersion|(?!DEFAULT_BT_WIDTH)[A-Z_]+)  # Through direct.showbase.TkGlobal
-
-# From panda3d.core
-direct.*\.Dtool_PyNativeInterface
-direct.*\.END_?PUBLISH
-direct.*\.(ATS|CS|ES|EU|HC|LNT|NS|PCT|PT|ST|TIXML|TINYXML|TP)[A-Z_]\w*
-
-# From direct.cluster.ClusterMsgs
-direct.cluster.ClusterClient.[A-Z_]+
-direct.cluster.ClusterConfig.[A-Z_]+  # Through direct.cluster.ClusterClient
-direct.cluster.ClusterServer.[A-Z_]+
-direct.cluster.ClusterServer.(MsgName2Id|MsgId2Names|[A-Z_23]+)
-
-# From direct.directdevices.DirectDeviceManager
-direct.directdevices.DirectFastrak.ANALOG_(MIN|MAX|DEADBAND|CENTER)
-direct.directdevices.DirectRadamec.ANALOG_(MIN|MAX|DEADBAND|CENTER)
-
-# From direct.directtools.DirectGlobals
-direct.directtools.DirectCameraControl.(?!CAM|COA|Y_AXIS)[A-Z_]+
-direct.directtools.DirectGeometry.[A-Z_]+
-direct.directtools.DirectGrid.[A-Z_]+  # Through direct.directtools.DirectGeometry
-direct.directtools.DirectManipulation.[A-Z_]+
-direct.directtools.DirectSelection.(?!COA)[A-Z_]+
-direct.directtools.DirectSession.[A-Z_]+  # Through direct.directtools.DirectUtil
-direct.directtools.DirectUtil.(?!ROUND|CLAMP)[A-Z_]+
-direct.directutil.Mopath.[A-Z_]+  # Through direct.directtools.DirectGeometry
-
-# From direct.distributed.ClockDelta
-direct.distributed.ClientRepositoryBase.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
-direct.distributed.DistributedSmoothNode.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
-direct.distributed.DistributedSmoothNodeBase.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
-direct.distributed.TimeManagerAI.(globalClockDelta|NetworkTime\w+|MaxTimeDelta|ClockDriftPer\w+|P2PResyncDelay)
-
-# From direct.distributed.MsgTypes
-direct.distributed.ClientRepositoryBase.(MsgName2Id|MsgId2Names|[A-Z_23]+)
-direct.distributed.DoInterestManager.(MsgName2Id|MsgId2Names|(?!NO_CONTEXT)[A-Z_23]+)
-direct.distributed.PyDatagram.(MsgName2Id|MsgId2Names|[A-Z_23]+)
-
-# From direct.distributed.MsgTypesCMU
-direct.distributed.ClientRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
-direct.distributed.ServerRepository.(MsgName2Id|MsgId2Names|[A-Z_]+)
-
-# Other
-direct.controls.TwoDWalker.CollisionHandlerRayStart  # From direct.controls.GravityWalker
-direct.distributed.DoInterestManager.(rad(90|180|270|360)|GoldenRatio)  # From direct.showbase.PythonUtil
-direct.gui.DirectCheckBox.(Plain|ScreenTitle|ScreenPrompt|NameConfirm|BlackOnWhite)  # From direct.gui.DirectGui
+direct.particles.ParticleEffect.Dtool_PyNativeInterface  # From panda3d.physics
+direct.particles.ParticleEffect.Dtool_PyNativeInterface  # From panda3d.core
+direct.particles.ParticleEffect.END_?PUBLISH  # From panda3d.core
+direct.particles.ParticleEffect.(ATS|CS|ES|EU|HC|LNT|NS|PCT|PT|ST|TIXML|TINYXML|TP)[A-Z_]\w*  # From panda3d.core

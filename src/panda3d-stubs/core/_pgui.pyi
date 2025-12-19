@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Any, ClassVar, Final, Literal, overload
 from typing_extensions import Self, TypeAlias
 
@@ -29,6 +30,12 @@ class PGFrameStyle:
     T_texture_border: Final = 6
     TTextureBorder: Final = 6
     DtoolClassDict: ClassVar[dict[str, Any]]
+    type: _PGFrameStyle_Type
+    color: LColor
+    texture: Texture | None
+    width: LVecBase2
+    uv_width: LVecBase2
+    visible_scale: LVecBase2
     def __init__(self, copy: PGFrameStyle = ...) -> None: ...
     def __copy__(self) -> Self: ...
     def __deepcopy__(self, memo: object, /) -> Self: ...
@@ -137,6 +144,35 @@ class PGItem(PandaNode):
     PGTop node in order for this behavior to work.
     """
 
+    frame: LVecBase4 | None
+    state: int  # type: ignore[assignment]
+    active: bool
+    focus: bool
+    background_focus: bool
+    suppress_flags: int
+    id: str
+    @property
+    def state_defs(self) -> Sequence[NodePath]: ...
+    @property
+    def enter_prefix(self) -> str: ...
+    @property
+    def exit_prefix(self) -> str: ...
+    @property
+    def within_prefix(self) -> str: ...
+    @property
+    def without_prefix(self) -> str: ...
+    @property
+    def focus_in_prefix(self) -> str: ...
+    @property
+    def focus_out_prefix(self) -> str: ...
+    @property
+    def press_prefix(self) -> str: ...
+    @property
+    def repeat_prefix(self) -> str: ...
+    @property
+    def release_prefix(self) -> str: ...
+    @property
+    def keystroke_prefix(self) -> str: ...
     @overload
     def set_frame(self, frame: Vec4Like) -> None:
         """Sets the bounding rectangle of the item, in local coordinates.  This is the
@@ -527,6 +563,10 @@ class PGTop(PandaNode):
     depth-first, left-to-right order, appropriate for 2-d objects.
     """
 
+    mouse_watcher: MouseWatcher
+    start_sort: int
+    @property
+    def group(self) -> MouseWatcherGroup: ...
     def set_mouse_watcher(self, watcher: MouseWatcher, /) -> None:
         """Sets the MouseWatcher pointer that the PGTop object registers its PG items
         with.  This must be set before the PG items are active.
@@ -580,6 +620,38 @@ class PGEntry(PGItem):
     SNoFocus: Final = 1
     S_inactive: Final = 2
     SInactive: Final = 2
+    cursor_position: int
+    max_chars: int
+    max_width: float
+    num_lines: int
+    blink_rate: float
+    cursor_keys_active: bool
+    obscure_mode: bool
+    overflow_mode: bool
+    candidate_active: str
+    candidate_inactive: str
+    active: bool
+    """Returns whether the PGItem is currently active for mouse events.  See
+    set_active().
+    """
+    focus: bool
+    """Returns whether the PGItem currently has focus for keyboard events.  See
+    set_focus().
+    """
+    @property
+    def cursor_def(self) -> NodePath: ...
+    @property
+    def accept_prefix(self) -> str: ...
+    @property
+    def accept_failed_prefix(self) -> str: ...
+    @property
+    def overflow_prefix(self) -> str: ...
+    @property
+    def type_prefix(self) -> str: ...
+    @property
+    def erase_prefix(self) -> str: ...
+    @property
+    def cursormove_prefix(self) -> str: ...
     def setup(self, width: float, num_lines: int) -> None:
         """Sets up the entry for normal use.  The width is the maximum width of
         characters that will be typed, and num_lines is the integer number of lines
@@ -932,6 +1004,12 @@ class PGVirtualFrame(PGItem):
     traditional scrolling canvas, with scroll bars.
     """
 
+    clip_frame: LVecBase4 | None
+    canvas_transform: TransformState
+    @property
+    def canvas_node(self) -> PandaNode: ...
+    @property
+    def canvas_parent(self) -> PandaNode: ...
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float) -> None:
         """Creates a PGVirtualFrame with the indicated dimensions."""
@@ -990,6 +1068,24 @@ class PGSliderBar(PGItem):
     DirectScrollBar.
     """
 
+    axis: LVector3
+    scroll_size: float
+    page_size: float
+    value: float
+    ratio: float
+    resize_thumb: bool
+    manage_pieces: bool
+    thumb_button: PGButton | None
+    left_button: PGButton | None
+    right_button: PGButton | None
+    active: bool
+    """Returns whether the PGItem is currently active for mouse events.  See
+    set_active().
+    """
+    @property
+    def button_down(self) -> bool: ...
+    @property
+    def adjust_prefix(self) -> str: ...
     def __init__(self, name: str = ...) -> None: ...
     def upcast_to_PGItem(self) -> PGItem: ...
     def setup_scroll_bar(self, vertical: bool, length: float, width: float, bevel: float) -> None:
@@ -1186,6 +1282,11 @@ class PGScrollFrame(PGVirtualFrame):
     scale or rotate).
     """
 
+    virtual_frame: LVecBase4 | None
+    manage_pieces: bool
+    auto_hide: bool
+    horizontal_slider: PGSliderBar | None
+    vertical_slider: PGSliderBar | None
     def upcast_to_PGVirtualFrame(self) -> PGVirtualFrame: ...
     def setup(  # type: ignore[override]
         self,
@@ -1300,6 +1401,9 @@ class PGWaitBar(PGItem):
     traditional "wait, loading" bar.
     """
 
+    range: float
+    value: float
+    bar_style: PGFrameStyle
     def __init__(self, name: str = ...) -> None: ...
     def setup(self, width: float, height: float, range: float) -> None:
         """Creates a PGWaitBar with the indicated dimensions, with the indicated

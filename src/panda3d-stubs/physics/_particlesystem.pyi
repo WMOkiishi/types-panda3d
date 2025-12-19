@@ -553,14 +553,11 @@ class ParticleSystem(Physical):
         """
     def soft_stop(self, br: float = ..., /) -> None:
         """Causes system to use birth rate set by set_soft_birth_rate()"""
-    @overload
-    def soft_start(self, br: float = ...) -> None:
-        """Causes system to use birth rate set by set_birth_rate()"""
-    @overload
-    def soft_start(self, br: float, first_birth_delay: float) -> None:
-        """Causes system to use birth rate set by set_birth_rate(), with the system's
-        first birth being delayed by the value of first_birth_delay. Note that a
-        negative delay is perfectly valid, causing the first birth to happen
+    def soft_start(self, br: float = ..., first_birth_delay: float = ...) -> None:
+        """Causes system to use birth rate set by set_birth_rate().
+        If first_birth_delay is specified, it specifies the number of seconds to wait
+        in addition to the birth rate before the first particle is birthed.  It is
+        legal for this to be a negative value, which causes the first birth to happen
         sooner rather than later.
         """
     def update(self, dt: float, /) -> None: ...
@@ -568,6 +565,8 @@ class ParticleSystem(Physical):
         """Write a string representation of this instance to <out>."""
     def write_spawn_templates(self, out: ostream, indent: int = ...) -> None:
         """Write a string representation of this instance to <out>."""
+    def birth_litter(self) -> None:
+        """spawns a new batch of particles"""
     setPoolSize = set_pool_size
     setBirthRate = set_birth_rate
     setSoftBirthRate = set_soft_birth_rate
@@ -617,6 +616,7 @@ class ParticleSystem(Physical):
     softStart = soft_start
     writeFreeParticleFifo = write_free_particle_fifo
     writeSpawnTemplates = write_spawn_templates
+    birthLitter = birth_litter
 
 class PointEmitter(BaseParticleEmitter):
     """Describes a planar ring region in which particles are generated."""

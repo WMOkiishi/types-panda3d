@@ -2,11 +2,11 @@ __all__ = ['DirectGuiBase', 'DirectGuiWidget']
 
 from _typeshed import Unused
 from collections.abc import Callable, Iterable, Mapping
-from typing import Any, ClassVar, Final, Literal, TypeVar, overload
+from typing import Any, ClassVar, Literal, TypeVar, overload
 from typing_extensions import Self, TypeAlias, Unpack
 
 from direct.showbase.DirectObject import DirectObject
-from panda3d.core import LPoint3f, MouseWatcherParameter, NodePath, PGFrameStyle, PGItem, PStatCollector
+from panda3d.core import ConfigVariableBool, LPoint3f, MouseWatcherParameter, NodePath, PGFrameStyle, PGItem
 
 from ._typing import GuiWidgetKeywords, PGItemT
 
@@ -14,8 +14,6 @@ _T = TypeVar('_T')
 
 _Args: TypeAlias = tuple[Any, ...] | list[Any] | set[Any]
 _PGFrameStyle_Type: TypeAlias = Literal[0, 1, 2, 3, 4, 5, 6]
-
-guiObjectCollector: Final[PStatCollector]
 
 class DirectGuiBase(DirectObject):
     guiId: str
@@ -67,7 +65,7 @@ def setGuiGridSpacing(spacing: float) -> None: ...
 class DirectGuiWidget(DirectGuiBase, NodePath[PGItemT]):
     snapToGrid: ClassVar[bool]
     gridSpacing: ClassVar[float]
-    guiEdit: ClassVar[bool]
+    guiEdit: ClassVar[ConfigVariableBool]
     inactiveInitState: ClassVar[Literal['normal', 'disabled']]
     guiDict: ClassVar[dict[str, DirectGuiWidget]]
     guiItem: PGItemT
