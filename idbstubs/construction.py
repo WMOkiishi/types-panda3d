@@ -268,13 +268,17 @@ def make_function_rep(function: IDBFunction) -> Function:
         ):
             at_most_one_arg = False
             break
+    ensure_pos_only = not function.is_constructor and (
+        at_most_one_arg
+        or function.is_method and is_dunder(name) and name != '__call__'
+    )
     for i, wrapper in enumerate(function.wrappers):
         if not wrapper_is_exposed(wrapper):
             continue
         signature = make_signature_rep(
             wrapper, function,
             ensure_self_param=function.is_method and not is_static_method,
-            ensure_pos_only=at_most_one_arg and not function.is_constructor,
+            ensure_pos_only=ensure_pos_only,
         )
         signature.comment = COMMENTS.get((function.scoped_name, i), '')
         if param_overrides:
