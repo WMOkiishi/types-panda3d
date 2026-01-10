@@ -3199,7 +3199,7 @@ class SparseArray:
         """
     def get_lowest_on_bit(self) -> int:
         """Returns the index of the lowest 1 bit in the array.  Returns -1 if there
-        are no 1 bits or if there are an infinite number of 1 bits.
+        are no 1 bits and 0 if there are an infinite number of 1 bits.
         """
     def get_lowest_off_bit(self) -> int:
         """Returns the index of the lowest 0 bit in the array.  Returns -1 if there

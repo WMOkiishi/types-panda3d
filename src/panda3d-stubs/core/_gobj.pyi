@@ -3875,6 +3875,8 @@ class TextureStage(TypedWritableReferenceCount):
     MNormalGloss: Final = 15
     M_emission: Final = 16
     MEmission: Final = 16
+    M_metallic_roughness: Final = 14
+    MMetallicRoughness: Final = 14
     CM_undefined: Final = 0
     CMUndefined: Final = 0
     CM_replace: Final = 1
