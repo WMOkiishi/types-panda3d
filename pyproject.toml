@@ -17,7 +17,7 @@ classifiers = [
 "Bug Tracker" = "https://github.com/WMOkiishi/types-panda3d/issues"
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
@@ -30,22 +30,18 @@ where = ["src"]
 all = true
 
 [tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-combine_as_imports = true
+profile = "black"
 line_length = 130
 extra_standard_library = ["typing_extensions", "_typeshed"]
 
 [tool.black]
-preview = true
-line_length = 130
+line-length = 130
 include = '\.pyi$'
-force_exclude = '^/src/panda3d-stubs/'
-skip_string_normalization = true
-skip_magic_trailing_comma = true
+force-exclude = '^/src/panda3d-stubs/'
+skip-string-normalization = true
+skip-magic-trailing-comma = true
 
 [tool.mypy]
-show_error_codes = true
 warn_unused_ignores = true
 
 [tool.pyright]
@@ -56,7 +52,3 @@ reportSelfClsParameterName = false
 reportMissingModuleSource = false
 # Pmw throws Pyright off.
 useLibraryCodeForTypes = false
-# Use the default excluded directories.
-# This needs to be specified explicitly since Pyright version 1.1.334,
-# which might be a bug.
-exclude = []
