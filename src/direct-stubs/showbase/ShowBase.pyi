@@ -102,7 +102,7 @@ class ShowBase(DirectObject):
     pipe: GraphicsPipe
     pipeList: list[GraphicsPipe]
     mouse2cam: NodePath[Transform2SG]
-    buttonThrowers: list[ButtonThrower]
+    buttonThrowers: list[NodePath[ButtonThrower]]
     mouseWatcher: NodePath[MouseWatcher]
     mouseWatcherNode: MouseWatcher
     pointerWatcherNodes: list[MouseWatcher]
